@@ -1,39 +1,53 @@
 @import "../chameleon/chameleon";
 @import "variables";
+@import "global";
+
+@import "components/breadcrumb.scss";
 
 @mixin mycollab {
 
   @include chameleon;
+  @include mycollab-global;
+  @include mycollab-breadcrumb;
 
   /**
    * "optional-" prefix means that the style is not necessarily used, it can be left blank
    * "generated-" prefix means that the style is calculated from some other color, and not directly selected by the editor user
    *
    **/
+  html {
+    overflow: hidden;
+  }
+
+  * {
+    :focus, :active {
+      outline: 0px none;
+      -moz-outline: 0px none;
+    }
+  }
+
+  .v-app {
+    background: rgb(243, 243, 243);
+  }
 
   /* Application background */
 
-  .v-app {
-    background: rgb(146, 189, 132);
-  }
-
   .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu {
     background-color: rgb(146, 189, 132);
-    background-color: rgba(146, 189, 132, 0.85);
   }
 
   .v-panel-content {
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
   }
 
   .v-panel-bubble {
     .v-panel-captionwrap, .v-panel-deco-bubble {
-      background-color: rgb(245, 245, 245);
+      background-color: #F5F5F5;
     }
   }
 
   .v-tabsheet-content, .v-tabsheet-tabitem-selected, .v-slider-base, .v-window-modalitycurtain, .v-window-opaque, .v-progressindicator-wrapper, .v-accordion-item-caption, .v-accordion-item-open .v-accordion-item-caption:active, .v-accordion-opaque div.v-accordion-item-open, .v-table-scrollposition, .v-table-body {
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
   }
 
   /* Base font size and color */
@@ -41,13 +55,6 @@
   .v-app, .v-window, .v-popupview-popup {
     font-size: $font-normal;
     color: rgb(15, 13, 13);
-  }
-
-  .v-app {
-    input, button, textarea {
-      font-size: $font-normal;
-      color: rgb(15, 13, 13);
-    }
   }
 
   .v-window {
@@ -73,21 +80,8 @@
     font-size: $font-normal;
   }
 
-  .v-label, .sidebar-menu .v-label, .v-table-scrollposition {
-    //@optional-generated-shadow@
-  }
-
-  /* Base background color */
-  /*.v-button:active,
-  .v-ie .v-button.v-pressed,
-  div.v-button-down,
-  .v-slider .v-slider-handle-active {
-  	background-color: rgb(82,104,75);
-  	border-color: rgb(55,66,51);
-  }*/
-
   div.v-button-down:active {
-    background-color: rgb(67, 83, 62);
+    background-color: #43533E;
   }
 
   .v-button {
@@ -95,35 +89,35 @@
       background-color: rgb(82, 104, 75);
     }
     &:active .v-button-wrap {
-      border-color: rgb(67, 83, 62);
+      border-color: #43533E;
     }
   }
 
   /* Base border color */
 
   .v-button-down .v-button-wrap, .v-datefield-calendarpanel-header td, .v-slider-base, .v-tabsheet-scrollerNext {
-    border-color: rgb(67, 83, 62);
+    border-color: #43533E;
   }
 
   .v-tabsheet-scrollerNext-disabled {
-    border-color: rgb(67, 83, 62);
+    border-color: #43533E;
     &:active {
-      border-color: rgb(67, 83, 62);
+      border-color: #43533E;
     }
   }
 
   .v-table-header-wrap, .v-table-body, .v-table-resizer {
-    border-color: rgb(67, 83, 62);
+    border-color: #43533E;
   }
 
   div {
     &.v-table-focus-slot-left, &.v-table-focus-slot-right {
-      border-color: rgb(67, 83, 62);
+      border-color: #43533E;
     }
   }
 
   input.v-textfield, textarea.v-textarea, .v-filterselect {
-    border-color: rgb(67, 83, 62);
+    border-color: #43533E;
   }
 
   input.v-textfield, textarea.v-textarea, .v-filterselect {
@@ -133,32 +127,30 @@
   }
 
   .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
-    background-color: rgb(100, 130, 90);
-    border-color: rgb(67, 83, 62);
+    background-color: #64825A;
+    border-color: #43533E;
   }
 
   .v-accordion-opaque {
-    background-color: rgb(100, 130, 90);
-    border-color: rgb(67, 83, 62);
+    background-color: #64825A;
+    border-color: #43533E;
     .v-accordion-item-open, .v-accordion-item-caption, .v-accordion-item-open .v-accordion-item-caption:active {
-      background-color: rgb(100, 130, 90);
-      border-color: rgb(67, 83, 62);
+      background-color: #64825A;
+      border-color: #43533E;
     }
   }
 
   .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-    background-color: rgb(100, 130, 90);
-    border-color: rgb(67, 83, 62);
+    background-color: #64825A;
+    border-color: #43533E;
   }
 
   .v-button .v-button-wrap {
-    /*background-image: url(../chameleon/img/grad-light-top2.png);*/
     background-position: left top;
   }
 
   .v-disabled.v-button {
     &:focus .v-button-wrap, &:active .v-button-wrap {
-      /*background-image: url(../chameleon/img/grad-light-top2.png);*/
       background-position: left top;
     }
   }
@@ -177,17 +169,17 @@
   }
 
   .v-button {
-    text-shadow: 0 -1px 0 rgb(67, 83, 62);
+    text-shadow: 0 -1px 0 #43533E;
   }
 
   .v-disabled.v-button {
     &:focus, &:active {
-      text-shadow: 0 -1px 0 rgb(67, 83, 62);
+      text-shadow: 0 -1px 0 #43533E;
     }
   }
 
   .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-tabsheet-tabitem-selected .v-caption, .v-window-header, .v-table-caption-container, .v-accordion-item-caption, .v-menubar .v-menubar-menuitem, .v-filterselect-select-button .v-filterselect-input {
-    text-shadow: 0 -1px 0 rgb(67, 83, 62);
+    text-shadow: 0 -1px 0 #43533E;
   }
 
   /* Background border color */
@@ -209,121 +201,121 @@
   /* Alternate colors */
 
   .v-label-color {
-    color: rgb(100, 130, 179);
+    color: #6482B3;
   }
 
   .v-button-link {
-    color: rgb(100, 130, 179);
+    color: #6482B3;
     &:focus, &:active {
-      color: rgb(100, 130, 179);
+      color: #6482B3;
     }
   }
 
   .v-disabled.v-button-link {
-    color: rgb(100, 130, 179);
+    color: #6482B3;
     &:focus {
-      color: rgb(100, 130, 179);
+      color: #6482B3;
     }
   }
 
   .v-app a, .v-popupview-popup a, .v-popupview, .sidebar-menu .v-label {
-    color: rgb(100, 130, 179);
+    color: #6482B3;
   }
 
   .v-button-default {
-    border-color: rgb(73, 89, 114);
+    border-color: #495972;
   }
 
   .v-disabled.v-button-default {
-    border-color: rgb(73, 89, 114);
+    border-color: #495972;
     &:focus {
-      border-color: rgb(73, 89, 114);
+      border-color: #495972;
     }
   }
 
-  .v-button-default:active, .v-ie7 .v-button-default.v-pressed, .v-ie8 .v-button-default.v-pressed {
-    border-color: rgb(73, 89, 114);
+  .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
+    border-color: #495972;
   }
 
   .sidebar-menu {
     .tab-selected, .selected {
-      border-color: rgb(73, 89, 114);
+      border-color: #495972;
     }
   }
 
   .v-horizontallayout-segment-alternate .v-button-down {
-    border-color: rgb(73, 89, 114);
+    border-color: #495972;
   }
 
   .v-button-default:focus, .v-horizontallayout-segment-alternate .v-button-down:active {
     background-color: rgb(86, 108, 143);
   }
 
-  .v-button-default:active .v-button-wrap, .v-ie7 .v-button-default.v-pressed .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap, .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
+  .v-button-default:active .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap, .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
     border-color: rgb(86, 108, 143);
   }
 
   .v-button-default {
-    background-color: rgb(100, 130, 179);
+    background-color: #6482B3;
     color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 rgb(73, 89, 114);
+    text-shadow: 0 -1px 0 #495972;
   }
 
   .v-disabled.v-button-default {
-    background-color: rgb(100, 130, 179);
+    background-color: #6482B3;
     color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 rgb(73, 89, 114);
+    text-shadow: 0 -1px 0 #495972;
     &:focus {
-      background-color: rgb(100, 130, 179);
+      background-color: #6482B3;
       color: rgb(244, 244, 245);
-      text-shadow: 0 -1px 0 rgb(73, 89, 114);
+      text-shadow: 0 -1px 0 #495972;
     }
   }
 
-  .v-button-default:active, .v-ie7 .v-button-default.v-pressed, .v-ie8 .v-button-default.v-pressed, .v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
-    background-color: rgb(100, 130, 179);
+  .v-button-default:active, .v-ie8 .v-button-default.v-pressed, .v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
+    background-color: #6482B3;
     color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 rgb(73, 89, 114);
+    text-shadow: 0 -1px 0 #495972;
   }
 
   .v-contextmenu .gwt-MenuItem-selected {
-    background-color: rgb(100, 130, 179);
+    background-color: #6482B3;
     color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 rgb(73, 89, 114);
+    text-shadow: 0 -1px 0 #495972;
     div {
-      background-color: rgb(100, 130, 179);
+      background-color: #6482B3;
       color: rgb(244, 244, 245);
-      text-shadow: 0 -1px 0 rgb(73, 89, 114);
+      text-shadow: 0 -1px 0 #495972;
     }
   }
 
   .v-filterselect-suggestpopup .gwt-MenuItem-selected, .v-progressindicator-indicator, .v-tree-node-selected span {
-    background-color: rgb(100, 130, 179);
+    background-color: #6482B3;
     color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 rgb(73, 89, 114);
+    text-shadow: 0 -1px 0 #495972;
   }
 
   .sidebar-menu {
     .tab-selected, .selected {
-      background-color: rgb(100, 130, 179);
+      background-color: #6482B3;
       color: rgb(244, 244, 245);
-      text-shadow: 0 -1px 0 rgb(73, 89, 114);
+      text-shadow: 0 -1px 0 #495972;
     }
   }
 
   .v-horizontallayout-segment-alternate .v-button-down, .v-menubar .v-menubar-menuitem-selected, .v-menubar-submenu .v-menubar-menuitem-selected {
-    background-color: rgb(100, 130, 179);
+    background-color: #6482B3;
     color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 rgb(73, 89, 114);
+    text-shadow: 0 -1px 0 #495972;
   }
 
   .v-panel-caption, .v-table-striped .v-table-row-odd {
-    background: rgb(247, 247, 247);
+    background: #F7F7F7;
   }
 
   .sidebar-menu {
     .tab-selected, .selected {
-      text-shadow: 0 1px 0 rgb(73, 89, 114);
+      text-shadow: 0 1px 0 #495972;
     }
   }
 
@@ -334,10 +326,6 @@
    **/
 
   /* Application background */
-
-  .v-app {
-    background: rgb(249, 249, 249);
-  }
 
   .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu {
     background-color: white;
@@ -366,7 +354,6 @@
   .v-window {
     input, button, textarea {
       font-size: $font-normal;
-      /*color: rgb(34,34,34);*/
       color: #525252;
     }
   }
@@ -374,7 +361,6 @@
   .v-popupview-popup {
     input, button, textarea {
       font-size: $font-normal;
-      /*color: rgb(34,34,34);*/
       color: #525252;
     }
   }
@@ -393,7 +379,7 @@
   }
 
   .v-button:focus {
-    background-color: rgb(161, 161, 161);
+    background-color: #A1A1A1;
   }
 
   /* Base border color */
@@ -424,194 +410,178 @@
   }
 
   .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
-    background-color: rgb(201, 201, 201);
+    background-color: #C9C9C9;
     border-color: $border-color;
   }
 
   .v-accordion-opaque {
-    background-color: rgb(201, 201, 201);
+    background-color: #C9C9C9;
     border-color: $border-color;
     .v-accordion-item-open, .v-accordion-item-caption, .v-accordion-item-open .v-accordion-item-caption:active {
-      background-color: rgb(201, 201, 201);
+      background-color: #C9C9C9;
       border-color: $border-color;
     }
   }
 
   .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-    background-color: rgb(201, 201, 201);
+    background-color: #C9C9C9;
     border-color: $border-color;
   }
 
-  .v-button .v-button-wrap {}
-
-  .v-disabled.v-button {
-    &:focus .v-button-wrap, &:active .v-button-wrap {}
-  }
-
-  .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-panel-bubble .v-panel-caption-bubble, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-accordion-item-caption, .v-accordion-item-open .v-accordion-item-caption:active, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar, .v-button:active .v-button-wrap, .v-ie7 .v-pressed.v-button .v-button-wrap, .v-ie8 .v-pressed.v-button .v-button-wrap, .v-button-down .v-button-wrap {}
+  .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-panel-bubble .v-panel-caption-bubble, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-accordion-item-caption, .v-accordion-item-open .v-accordion-item-caption:active, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar, .v-button:active .v-button-wrap, .v-ie8 .v-pressed.v-button .v-button-wrap, .v-button-down .v-button-wrap {}
 
   .v-datefield-calendarpanel-weekdays strong, .v-splitpanel-hsplitter-small, .v-splitpanel-vsplitter-small, .v-splitpanel-hsplitter-small-locked, .v-splitpanel-vsplitter-small-locked {
-    background-color: rgb(161, 161, 161);
+    background-color: #A1A1A1;
   }
 
   .v-progressindicator-wrapper {
-    border-color: rgb(161, 161, 161);
+    border-color: #A1A1A1;
   }
 
   .v-button {
-    text-shadow: 0 1px 0 rgb(223, 223, 223);
+    text-shadow: 0 1px 0 #DFDFDF;
   }
 
   .v-disabled.v-button {
     &:focus, &:active {
-      text-shadow: 0 1px 0 rgb(223, 223, 223);
+      text-shadow: 0 1px 0 #DFDFDF;
     }
   }
 
   .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-tabsheet-tabitem-selected .v-caption, .v-window-header, .v-table-caption-container, .v-accordion-item-caption, .v-menubar .v-menubar-menuitem, .v-filterselect-select-button .v-filterselect-input {
-    text-shadow: 0 1px 0 rgb(223, 223, 223);
+    text-shadow: 0 1px 0 #DFDFDF;
   }
 
   /* Background border color */
 
   .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
-    border-color: rgb(169, 169, 169);
+    border-color: #A9A9A9;
   }
 
   .v-panel-bubble {
     .v-panel-captionwrap, .v-panel-content-bubble, .v-panel-deco-bubble {
-      border-color: rgb(169, 169, 169);
+      border-color: #A9A9A9;
     }
   }
 
   .v-tabsheet-tabitem-selected, .v-tabsheet-tabitem, .v-tabsheet-spacertd div, .v-tabsheet-content, .v-tabsheet-deco, .v-slider, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked, .v-table-scrollposition, .v-accordion, .v-accordion-item-caption, .v-accordion-item-open, .v-menubar-separator span {
-    border-color: rgb(169, 169, 169);
+    border-color: #A9A9A9;
   }
 
   /* Alternate colors */
 
   .v-label-color {
-    /*color: rgb(40,126,206);*/
     color: #006dac;
   }
 
   .v-button-link {
-    /*color: rgb(40,126,206);*/
     color: #006dac;
     &:focus, &:active {
-      /*color: rgb(40,126,206);*/
       color: #006dac;
     }
   }
 
   .v-disabled.v-button-link {
-    /*color: rgb(40,126,206);*/
     color: #006dac;
     &:focus {
-      /*color: rgb(40,126,206);*/
       color: #006dac;
     }
   }
 
   .v-app a, .v-popupview-popup a, .v-popupview, .sidebar-menu .v-label {
-    /*color: rgb(40,126,206);*/
     color: #006dac;
   }
 
   .v-button-default {
-    border-color: rgb(46, 90, 132);
+    border-color: #2E5A84;
   }
 
   .v-disabled.v-button-default {
-    border-color: rgb(46, 90, 132);
+    border-color: #2E5A84;
     &:focus {
-      border-color: rgb(46, 90, 132);
+      border-color: #2E5A84;
     }
   }
 
-  .v-button-default:active, .v-ie7 .v-button-default.v-pressed, .v-ie8 .v-button-default.v-pressed {
-    border-color: rgb(46, 90, 132);
+  .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
+    border-color: #2E5A84;
   }
 
   .sidebar-menu {
     .tab-selected, .selected {
-      border-color: rgb(46, 90, 132);
+      border-color: #2E5A84;
     }
   }
 
   .v-horizontallayout-segment-alternate .v-button-down {
-    border-color: rgb(46, 90, 132);
+    border-color: #2E5A84;
   }
 
   .v-button-default:focus, .v-horizontallayout-segment-alternate .v-button-down:active {
     background-color: rgb(45, 107, 165);
   }
 
-  .v-button-default:active .v-button-wrap, .v-ie7 .v-button-default.v-pressed .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap, .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
+  .v-button-default:active .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap, .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
     border-color: rgb(45, 107, 165);
   }
 
   .v-button-default {
-    background-color: rgb(40, 126, 206);
-    color: rgb(247, 248, 249);
-    text-shadow: 0 -1px 0 rgb(46, 90, 132);
+    background-color: #287ECE;
+    color: #F7F8F9;
+    text-shadow: 0 -1px 0 #2E5A84;
   }
 
   .v-disabled.v-button-default {
-    background-color: rgb(40, 126, 206);
-    color: rgb(247, 248, 249);
-    text-shadow: 0 -1px 0 rgb(46, 90, 132);
+    background-color: #287ECE;
+    color: #F7F8F9;
+    text-shadow: 0 -1px 0 #2E5A84;
     &:focus {
-      background-color: rgb(40, 126, 206);
-      color: rgb(247, 248, 249);
-      text-shadow: 0 -1px 0 rgb(46, 90, 132);
+      background-color: #287ECE;
+      color: #F7F8F9;
+      text-shadow: 0 -1px 0 #2E5A84;
     }
   }
 
   .v-button-default:active, .v-ie7 .v-button-default.v-pressed, .v-ie8 .v-button-default.v-pressed, .v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
-    background-color: rgb(40, 126, 206);
-    color: rgb(247, 248, 249);
-    text-shadow: 0 -1px 0 rgb(46, 90, 132);
+    background-color: #287ECE;
+    color: #F7F8F9;
+    text-shadow: 0 -1px 0 #2E5A84;
   }
 
   .v-contextmenu .gwt-MenuItem-selected {
-    background-color: rgb(40, 126, 206);
-    color: rgb(247, 248, 249);
-    text-shadow: 0 -1px 0 rgb(46, 90, 132);
+    background-color: #287ECE;
+    color: #F7F8F9;
+    text-shadow: 0 -1px 0 #2E5A84;
     div {
-      background-color: rgb(40, 126, 206);
-      color: rgb(247, 248, 249);
-      text-shadow: 0 -1px 0 rgb(46, 90, 132);
+      background-color: #287ECE;
+      color: #F7F8F9;
+      text-shadow: 0 -1px 0 #2E5A84;
     }
   }
 
   .v-filterselect-suggestpopup .gwt-MenuItem-selected, .v-progressindicator-indicator, .v-tree-node-selected span {
-    background-color: rgb(40, 126, 206);
-    color: rgb(247, 248, 249);
-    text-shadow: 0 -1px 0 rgb(46, 90, 132);
+    background-color: #287ECE;
+    color: #F7F8F9;
+    text-shadow: 0 -1px 0 #2E5A84;
   }
 
   .sidebar-menu {
     .tab-selected, .selected {
-      background-color: rgb(40, 126, 206);
-      color: rgb(247, 248, 249);
-      text-shadow: 0 -1px 0 rgb(46, 90, 132);
+      background-color: #287ECE;
+      color: #F7F8F9;
+      text-shadow: 0 -1px 0 #2E5A84;
     }
   }
 
   .v-horizontallayout-segment-alternate .v-button-down, .v-menubar .v-menubar-menuitem-selected, .v-menubar-submenu .v-menubar-menuitem-selected {
-    background-color: rgb(40, 126, 206);
-    color: rgb(247, 248, 249);
-    text-shadow: 0 -1px 0 rgb(46, 90, 132);
-  }
-
-  .v-panel-caption, .v-table-striped .v-table-row-odd {
-    /*background: rgb(220,229,238);*/
+    background-color: #287ECE;
+    color: #F7F8F9;
+    text-shadow: 0 -1px 0 #2E5A84;
   }
 
   .sidebar-menu {
     .tab-selected, .selected {
-      text-shadow: 0 1px 0 rgb(46, 90, 132);
+      text-shadow: 0 1px 0 #2E5A84;
     }
   }
 
@@ -639,19 +609,8 @@
     }
   }
 
-  html {
-    overflow: hidden;
-  }
-
   button::-moz-focus-inner {
     border: 0;
-  }
-
-  * {
-    :focus, :active {
-      outline: 0px none;
-      -moz-outline: 0px none;
-    }
   }
 
   input {
@@ -659,14 +618,14 @@
       border-radius: 2px 0px 0px 2px;
     }
     &:focus {
-      background-color: #FFFFFF;
+      background-color: #FFF;
       border-color: #1185DE;
       box-shadow: 0 0 1px #0a58cd inset;
     }
   }
 
   textarea:focus {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     border-color: #1185DE;
     box-shadow: 0 0 1px #0a58cd inset;
   }
@@ -685,7 +644,7 @@
     border: none;
   }
 
-  .mycollab .v-richtextarea {
+  .v-richtextarea {
     border: 1px solid $border-color;
   }
 
@@ -763,7 +722,6 @@
 
   .v-button.v-button-link {
     &:active .v-button-wrap, &:focus .v-button-wrap {
-      /*padding: 1px;*/
     }
   }
 
@@ -806,23 +764,19 @@
   }
 
   input.v-textfield, textarea.v-textarea, .v-filterselect {
-    background: none no-repeat left top #FFFFFF;
+    background: none no-repeat left top #FFF;
     border-color: $border-color;
   }
 
   .v-ie {
     input.v-textfield, textarea.v-textarea, .v-filterselect {
-      background: none no-repeat left top #FFFFFF;
+      background: none no-repeat left top #FFF;
       border-color: $border-color;
     }
   }
 
   input.v-widget.v-textfield[type="text"], .v-filterselect {
     height: 25px;
-  }
-
-  .v-app {
-    background: rgb(243, 243, 243);
   }
 
   .v-button {
@@ -874,7 +828,7 @@
 
   .popupContent {
     .v-window-contents {
-      background-color: #FFFFFF;
+      background-color: #FFF;
     }
     .v-window-outerheader {
       background-color: #F7F7F7;
@@ -934,7 +888,7 @@
   }
 
   select.v-select-select {
-    background: none no-repeat left top #FFFFFF;
+    background: none no-repeat left top #FFF;
     border: 1px solid $border-color;
   }
 
@@ -962,24 +916,19 @@
     &.v-button-no-margin:focus {
       margin: 0px;
     }
-    /*padding: 0px;*/
     margin: 0px;
     &:focus {
-      /*padding: 0px;*/
       margin: 0px;
     }
   }
 
   .v-button-link:active {
-    /*padding: 0px;*/
     margin: 0px;
   }
 
   div.v-disabled.v-button-link {
-    /*padding: 0px;*/
     margin: 0px;
     &:focus {
-      /*padding: 0px;*/
       margin: 0px;
     }
   }
@@ -1314,7 +1263,6 @@
   }
 
   .splitbutton .v-popupbutton {
-    /* border-right-width: 1px; */
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     &:active {
@@ -1350,7 +1298,7 @@
   .v-button-greenbtn-no-radius-left {
     background: url("icons/grad-dark-bottom2.png") repeat-x left bottom #2599c8;
     border: 1px solid #093768;
-    color: #FFFFFF;
+    color: #FFF;
     text-shadow: 1px 1px 0px #1570cd;
     border-radius: 3px;
     padding: 3px 13px;
@@ -1441,10 +1389,6 @@
     height: 100%;
   }
 
-  .v-ie7 .v-button-link.v-button-wordWrap .v-button-caption {
-    white-space: nowrap;
-  }
-
   .v-table-cell-wrapper .v-button-link.v-button-wordWrap {
     .v-button-wrap {
       display: table;
@@ -1484,10 +1428,10 @@
         padding: 0px;
         background: none no-repeat 0 0 transparent;
         &.isSelected {
-          background-color: #FFFFFF;
+          background-color: #FFF;
         }
         &:focus .v-button-caption, &:active .v-button-caption {
-          color: #FFFFFF;
+          color: #FFF;
         }
       }
       border-radius: 0px;
@@ -1577,7 +1521,7 @@
       }
       .v-button-caption {
         text-decoration: none;
-        color: #FFFFFF;
+        color: #FFF;
         text-shadow: none;
         font-weight: bold;
         font-family: Arial, Helvetica, sans-serif;
@@ -1941,7 +1885,7 @@
   .crmContainer {
     width: 100%;
     .main-view {
-      background-color: #FFFFFF;
+      background-color: #FFF;
       min-height: 100%;
     }
     .crm-toolbar {
@@ -1965,9 +1909,9 @@
       height: 100% !important;
     }
     .navigator-wrap .basic-info {
-      color: #FFFFFF;
+      color: #FFF;
       .v-button-link .v-button-caption {
-        color: #FFFFFF;
+        color: #FFF;
       }
       &:after {
         content: "";
@@ -2173,7 +2117,7 @@
   #loginForm {
     input.v-textfield {
       width: 410px;
-      background: #FFFFFF;
+      background: #FFF;
       border-color: #BBB;
       border-radius: 0px;
       padding: 0em 0.2em;
@@ -2339,7 +2283,7 @@
 
   .addViewLayout {
     .addViewBody {
-      background-color: #FFFFFF;
+      background-color: #FFF;
       border-color: $border-color;
       border-style: solid;
       border-width: 1px 1px 0px;
@@ -2478,7 +2422,7 @@
       padding-top: 20px;
     }
     .v-horizontallayout-menuContent > div > div:first-child + div {
-      background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFFFFF;
+      background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFF;
     }
     .v-splitpanel-hsplitter-locked {
       width: 0px;
@@ -2552,7 +2496,7 @@
         margin: 3px 0px;
       }
       .tab-selected, .selected {
-        background: none no-repeat 0 0 rgb(40, 126, 206);
+        background: none no-repeat 0 0 #287ECE;
       }
     }
     .v-nativebutton .v-nativebutton-caption {
@@ -2684,7 +2628,7 @@
         }
       }
       .project-description {
-        color: #FFFFFF;
+        color: #FFF;
         padding: 10px 0px 20px;
         border-bottom: 1px solid $border-color;
       }
@@ -2705,13 +2649,13 @@
       padding-left: 20px;
     }
     .top-panel {
-      background-color: #FFFFFF;
+      background-color: #FFF;
       border-bottom: 1px solid $border-color;
     }
   }
 
   .accountViewContainer .container-wrap.main-content .top-panel {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     border-bottom: 1px solid $border-color;
   }
 
@@ -2806,7 +2750,7 @@
       background-color: #F5F5F5;
     }
     .v-tabsheet-content, .Milestones .v-tabsheet-content {
-      background-color: #FFFFFF;
+      background-color: #FFF;
     }
     .addViewLayout {
       padding: 0px 30px 10px;
@@ -2815,7 +2759,7 @@
       }
     }
     .v-horizontallayout-menuContent > div > div:first-child + div {
-      background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFFFFF;
+      background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFF;
     }
   }
 
@@ -2856,7 +2800,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid $border-color;
-    background: none no-repeat left top #FFFFFF;
+    background: none no-repeat left top #FFF;
     border-radius: 0px;
   }
 
@@ -2940,10 +2884,10 @@
     padding: 15px 30px;
     .h1 {
       padding: 0px;
-      color: #FFFFFF;
+      color: #FFF;
     }
     .h2, .v-button-link .v-button-caption {
-      color: #FFFFFF;
+      color: #FFF;
     }
   }
 
@@ -3036,15 +2980,6 @@
       border-color: $border-color;
       border-radius: 0px;
       background: none no-repeat 0 0 #F1F1F1;
-      .header-elements.colored-header {
-        .v-button .v-button-caption {
-          /* color: white; */
-        }
-        .v-popupbutton .v-popup-indicator {
-          /* background: url("icons/sprites-white.png") no-repeat scroll -5px -10px
-              transparent; */
-        }
-      }
     }
     &.collapsed .header-wrapper {
       border-width: 1px;
@@ -3133,7 +3068,7 @@
     border-color: $border-color;
     border-style: solid;
     border-width: 0px 1px 1px 1px;
-    background-color: #FFFFFF;
+    background-color: #FFF;
     &.v-margin-top {
       padding-top: 5px;
     }
@@ -3153,7 +3088,7 @@
   }
 
   .bug-list .widget-footer {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     border-color: $border-color;
     border-style: solid;
     border-width: 0px 1px 1px 1px;
@@ -3412,11 +3347,11 @@
   }
 
   .v-tabsheet-tabs {
-    background-color: rgb(247, 247, 247);
+    background-color: #F7F7F7;
   }
 
   .v-tabsheet-content {
-    background-color: rgb(255, 255, 255);
+    background-color: #FFF;
     border: none;
   }
 
@@ -3440,9 +3375,9 @@
         border-radius: 0px;
         background-image: none;
       }
-      background-color: rgb(255, 255, 255);
+      background-color: #FFF;
       border-radius: 0px;
-      border-bottom-color: rgb(255, 255, 255);
+      border-bottom-color: #FFF;
     }
     background: none repeat-x left top transparent;
     border-radius: 0px;
@@ -3489,13 +3424,13 @@
   }
 
   .activity-stream {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     border-color: $border-color;
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 5px;
     &.odd {
-      background-color: #FFFFFF;
+      background-color: #FFF;
     }
   }
 
@@ -3546,11 +3481,11 @@
     &.odd {
       background-color: rgb(212, 223, 239);
     }
-    background-color: rgb(247, 247, 247);
+    background-color: #F7F7F7;
   }
 
   .stream-wrapper {
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
     padding: 5px;
     border-width: 0px 1px 1px;
     border-style: solid;
@@ -3681,7 +3616,7 @@
         margin: 0px;
       }
       &:active {
-        background: none no-repeat 0 0 rgb(161, 161, 161);
+        background: none no-repeat 0 0 #A1A1A1;
         border-color: rgb(171, 171, 171);
       }
       &.graybtn:active {
@@ -3806,7 +3741,7 @@
   }
 
   .v-table-row {
-    background: none repeat scroll 0% 0% #FFFFFF;
+    background: none repeat scroll 0% 0% #FFF;
   }
 
   .v-table-row-odd, .v-table-striped .v-table-row-odd {
@@ -3827,7 +3762,7 @@
   }
 
   .v-table-row-spacer {
-    background: none no-repeat 0 0 #FFFFFF;
+    background: none no-repeat 0 0 #FFF;
   }
 
   /* End New Table */
@@ -3836,7 +3771,7 @@
 
   .tokenfield {
     border: 1px solid $border-color;
-    background: url("icons/input-bg.png") repeat-x scroll 0% 0% rgb(255, 255, 255);
+    background: url("icons/input-bg.png") repeat-x scroll 0% 0% #FFF;
     padding: 3px 2px 2px;
     border-radius: 3px;
     .v-filterselect {
@@ -3892,14 +3827,14 @@
       background-image: url('icons/grad-dark-bottom.png');
       background-repeat: repeat-x;
       background-position: left bottom;
-      background-color: rgb(28, 125, 206);
+      background-color: #1C7DCE;
       height: auto;
       &:focus, &:active {
         padding: 0px;
         background-image: url('icons/grad-dark-bottom.png');
         background-repeat: repeat-x;
         background-position: left bottom;
-        background-color: rgb(28, 125, 206);
+        background-color: #1C7DCE;
         height: auto;
       }
     }
@@ -3944,7 +3879,7 @@
   .message-list {
     .beanlist-content {
       padding: 5px 15px;
-      background: none no-repeat left top rgb(255, 255, 255);
+      background: none no-repeat left top #FFF;
       border-width: 0px 1px 1px;
       border-style: solid;
       border-color: $border-color;
@@ -4133,7 +4068,7 @@
     &.v-button-left, &.v-button-middle, &.v-button-right {
       background-color: $border-color;
       border-color: rgb(56, 56, 56);
-      color: #FFFFFF;
+      color: #FFF;
       border-top: none;
       border-bottom: none;
       border-bottom-left-radius: 0px;
@@ -4170,43 +4105,6 @@
   }
 
   /* End Multifiles Upload */
-
-  /* xBreadCrumb */
-
-  .xbreadcrumbs {
-    background-color: transparent !important;
-    > .v-slot:first-child > li {
-      padding-left: 0px;
-    }
-    li {
-      padding-bottom: 8px !important;
-      > div.xbreadcrumbbutton {
-        margin-top: 3px;
-        &.v-button-xbreadcrumbbutton-home {
-          margin: 0px;
-          margin: 0px;
-        }
-        margin-top: 3px;
-      }
-    }
-    .v-link a span {
-      font-size: 13px !important;
-    }
-  }
-
-  .xbreadcrumbbutton .v-button-caption {
-    font-size: 13px !important;
-  }
-
-  .v-button-xbreadcrumbbutton-home span.v-button-caption {
-    padding-left: 18px;
-  }
-
-  div.v-button-link.xbreadcrumbbutton .v-button-wrap {
-    padding: 0px;
-  }
-
-  /* End xBreadCrumb */
 
   /* Error Message */
 
@@ -4253,7 +4151,7 @@
   /* Bug Widget */
 
   .widget-title {
-    border-bottom: 1px solid rgb(183, 183, 183);
+    border-bottom: 1px solid #B7B7B7;
     padding-bottom: 0.2em;
     margin-bottom: 5px;
     font-weight: bold;
@@ -4277,7 +4175,7 @@
       padding-left: 5px;
     }
     &.odd {
-      background-color: #FFFFFF;
+      background-color: #FFF;
     }
   }
 
@@ -4347,7 +4245,7 @@
     border-top: 1px solid $border-color;
     .v-table-caption-container {
       color: black;
-      text-shadow: 0px 1px 0px rgb(223, 223, 223);
+      text-shadow: 0px 1px 0px #DFDFDF;
     }
   }
 
@@ -4382,12 +4280,12 @@
 
   .form-container div.v-button-link {
     height: 18px;
-    background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom rgb(57, 71, 84);
+    background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom #394757;
     padding: 0px 7px 1px;
     margin-right: 2px;
     &:active, &:focus {
       height: 18px;
-      background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom rgb(57, 71, 84);
+      background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom #394757;
       padding: 0px 7px 1px;
       margin-right: 2px;
     }
@@ -4397,7 +4295,7 @@
     background: none;
     padding: 0px 7px 1px;
     margin-right: 2px;
-    color: rgb(51, 51, 236);
+    color: #3333EC;
     pointer: none;
   }
 
@@ -4434,7 +4332,7 @@
 
   .v-progressbar-wrapper {
     height: 18px;
-    background: none no-repeat 0 0 rgb(245, 245, 245);
+    background: none no-repeat 0 0 #F5F5F5;
     border: 1px solid #CDCDCD;
   }
 
@@ -4481,7 +4379,7 @@
       border: none;
     }
     &.tab-selected > .v-button-wrap {
-      background: none no-repeat 0 0 rgb(40, 126, 206);
+      background: none no-repeat 0 0 #287ECE;
     }
     > .v-button-wrap {
       > .v-icon {
@@ -4510,10 +4408,10 @@
       }
       &.v-nativebutton-tab-selected {
         position: relative;
-        color: rgb(40, 126, 206);
+        color: #287ECE;
         &:hover {
           position: relative;
-          color: rgb(40, 126, 206);
+          color: #287ECE;
         }
       }
       .v-nativebutton-caption, &.tab-selected .v-nativebutton-caption {
@@ -4624,7 +4522,7 @@
     .depotComp {
       margin: 0px;
       .depotHeader {
-        background-color: rgb(245, 245, 245);
+        background-color: #F5F5F5;
         border-width: 1px 0px 1px 0px;
       }
       &.first-report .depotHeader {
@@ -4646,7 +4544,7 @@
     border: 1px solid $border-color;
     .report-content {
       border-left: 1px solid $border-color;
-      background-color: #FFFFFF;
+      background-color: #FFF;
       &.v-margin-top {
         padding-top: 20px;
       }
@@ -4697,12 +4595,12 @@
   /* Border Box 2 */
 
   .border-box2 {
-    /*background-color: rgb(245, 245, 245);*/
+    /*background-color: #F5F5F5;*/
     border: 1px solid $border-color;
   }
 
   .v-horizontallayout.border-box2-no-margin {
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
     border-radius: 5px;
     padding: 0px;
     border: 1px solid $border-color;
@@ -4755,7 +4653,7 @@
   .main-body {
     overflow-y: auto;
     /*CSS fix for Vaadin 7 */
-    background-color: #FFFFFF;
+    background-color: #FFF;
     position: relative;
   }
 
@@ -4765,7 +4663,7 @@
     width: 100%;
     border-top: 1px solid $border-color;
     padding: 6px 0px;
-    background-color: #FFFFFF;
+    background-color: #FFF;
   }
 
   .footer-wrapper {
@@ -4891,12 +4789,12 @@
       background-image: url("icons/grad-dark-top2.png");
       background-repeat: no-repeat;
       background-position: left bottom;
-      background-color: rgb(40, 126, 206);
+      background-color: #287ECE;
       &:active, &:focus {
         background-image: url("icons/grad-dark-top2.png");
         background-repeat: no-repeat;
         background-position: left bottom;
-        background-color: rgb(40, 126, 206);
+        background-color: #287ECE;
       }
     }
     &.v-button-left, &.v-button-middle, &.v-button-right {
@@ -4947,7 +4845,7 @@
     box-sizing: border-box;
     .legendBoxContent {
       padding: 0px;
-      background: rgb(245, 245, 245);
+      background: #F5F5F5;
       .v-csslayout > div {
         display: inline-block;
         zoom: 1;
@@ -5077,7 +4975,7 @@
 
   .milestone-view-body {
     width: 33%;
-    background-color: #FFFFFF;
+    background-color: #FFF;
     padding: 0px;
     .milestone-col {
       padding: 0px 25px 25px;
@@ -5198,7 +5096,7 @@
   /* New ReadViewLayout */
 
   .readViewLayout {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     border-radius: 0px;
     border: 1px solid $border-color;
     .readViewTopControls {
@@ -5288,7 +5186,7 @@
   }
 
   .readview-layout {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     padding: 0px;
     &.v-margin-left {
       padding-left: 30px;
@@ -5631,7 +5529,7 @@
     }
     .gwt-ListBox {
       margin-right: 3px;
-      background: url('../../themes/base/common/img/sprites.png') no-repeat right -8px #FFFFFF;
+      background: url('../../themes/base/common/img/sprites.png') no-repeat right -8px #FFF;
       border: 1px solid $border-color;
       -moz-appearance: none;
       -webkit-appearance: none;
@@ -5742,7 +5640,7 @@
   .bugdashboard-header {
     /* border: 1px solid $border-color; */
     border-radius: 3px 3px 0px 0px;
-    background: url("icons/grad-light-top2.png") repeat-x left top rgb(245, 245, 245);
+    background: url("icons/grad-light-top2.png") repeat-x left top #F5F5F5;
     border-bottom: none;
   }
 
@@ -5796,7 +5694,7 @@
   }
 
   .taskdisplay-component {
-    background-color: #FFFFFF;
+    background-color: #FFF;
   }
 
   .v-tabsheet-content {
@@ -5957,7 +5855,7 @@
     .phase-status-lbl {
       position: relative;
       z-index: 1;
-      background-color: rgb(247, 247, 247);
+      background-color: #F7F7F7;
       padding-right: 5px;
     }
     .phase-status-layout {
@@ -6021,7 +5919,7 @@
     border-width: 0 1px 1px 1px;
     border-style: solid;
     border-color: rgb(204, 203, 203);
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
   }
 
   div.v-button-link {
@@ -6075,7 +5973,7 @@
   .project-member-readview .depotComp {
     margin-top: 0px;
     .depotHeader {
-      background: none no-repeat left top rgb(245, 245, 245);
+      background: none no-repeat left top #F5F5F5;
       border-width: 0px 0px 1px 0px;
       border-radius: 0px;
     }
@@ -6100,7 +5998,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background: none no-repeat left top rgb(245, 245, 245);
+    background: none no-repeat left top #F5F5F5;
   }
 
   .limited-height-table {
@@ -6196,7 +6094,7 @@
     border-style: solid;
     border-color: $border-color;
     border-radius: 3px;
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
     .faq-layout {
       &.v-margin-left {
         padding-left: 25px;
@@ -6320,7 +6218,7 @@
     border-color: rgb(200, 200, 200);
     border-style: solid;
     border-width: 1px 0px 0px 1px;
-    background-color: rgb(245, 245, 245);
+    background-color: #F5F5F5;
   }
 
   .billing-plan-list > div > div:first-child > .billing-plan {
@@ -6625,7 +6523,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: rgb(247, 247, 247);
+    background-color: #F7F7F7;
     border: 1px solid rgb(157, 157, 157);
     .headerTitle {
       font-weight: bold;
@@ -6659,7 +6557,7 @@
   /* Custom Field Settings Section */
 
   .customFieldSection {
-    background-color: rgb(247, 247, 247);
+    background-color: #F7F7F7;
     border: 1px solid rgb(157, 157, 157);
     .header-wrapper {
       background-color: rgb(225, 225, 225);
@@ -6793,7 +6691,7 @@
   .eventdatepicker {
     border: 1px solid #093768;
     border-radius: 3px;
-    color: #FFFFFF;
+    color: #FFF;
     padding: 3px 13px;
     text-shadow: 1px 1px 0 #000000;
     &.v-margin-top {
@@ -6919,20 +6817,7 @@
     }
   }
 
-  .v-button-graybtn.v-popupbutton .v-popup-indicator {
-    background: url("icons/sprites.png");
-  }
-
-  .splitbutton .v-popupbutton {
-    &.greenbtn .v-popup-indicator, &.graybtn .v-popup-indicator, &.bluebtn .v-popup-indicator .v-button-graybtn.v-popupbutton .v-popup-indicator, &.greenbtn .v-popup-indicator, &.graybtn .v-popup-indicator, &.bluebtn .v-popup-indicator {
-      background: url("icons/sprites.png");
-    }
-  }
-
   .v-popupbutton {
-    &.bluebtn .v-popup-indicator {
-      background: url("icons/sprites.png");
-    }
     .v-popup-indicator {
       background-position: -7px -10px !important;
     }
@@ -6997,10 +6882,10 @@
         text-align: left;
         border: none;
         padding: 9px 25px;
-        color: #FFFFFF;
+        color: #FFF;
       }
       &.tab-selected > .v-button-wrap {
-        background: none no-repeat 0 0 #FFFFFF;
+        background: none no-repeat 0 0 #FFF;
         color: #525252;
       }
       > .v-button-wrap {
@@ -7122,7 +7007,7 @@
         color: #FFF;
       }
       > tbody > tr > .v-tabsheet-spacertd {
-        background: url(icons/tab-space-bg.jpg) repeat-x left bottom #FFFFFF;
+        background: url(icons/tab-space-bg.jpg) repeat-x left bottom #FFF;
         div {
           border-bottom: none;
         }
@@ -7340,7 +7225,7 @@
   /* New View's Styles */
 
   .hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
-    background-color: #FFFFFF;
+    background-color: #FFF;
   }
 
   .hdr-view.v-margin-top, .advSearchHeader .hdr-view.v-margin-top, .basicSearchHeader .hdr-view.v-margin-top {
@@ -7433,7 +7318,7 @@
     .date-lbl {
       padding: 12px 41px 3px 11px;
       background: url("icons/date-lbl.png") no-repeat left bottom transparent;
-      color: #FFFFFF;
+      color: #FFF;
       cursor: pointer;
     }
   }
@@ -7583,7 +7468,7 @@
   /* Popup select field */
 
   .v-popupbutton-popup.v-popupbutton-popup-select-bg {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     border: 1px solid #A8A8A8;
     border-radius: 3px;
     padding: 0px;
@@ -7666,11 +7551,11 @@
       .weekdays {
         border: none;
         TD {
-          color: #FFFFFF;
+          color: #FFF;
         }
       }
       .day {
-        color: #FFFFFF;
+        color: #FFF;
         &.othermonth {
           color: rgb(173, 173, 173);
         }
@@ -7698,7 +7583,7 @@
 
   .intro-text-wrap {
     .v-label {
-      color: #FFFFFF;
+      color: #FFF;
       border-bottom: 1px solid $border-color;
       padding-bottom: 13px;
     }
@@ -8033,7 +7918,7 @@
       font-size: $font-larger;
       line-height: 20px;
       font-weight: bold;
-      color: #FFFFFF;
+      color: #FFF;
     }
   }
 
@@ -8047,7 +7932,7 @@
       background-color: #17D61B;
       border-radius: 10px;
       border: none;
-      color: #FFFFFF;
+      color: #FFF;
       margin-right: 5px;
       text-align: center;
       line-height: 22px;
@@ -8280,14 +8165,14 @@
     .attachment-name-wrap .v-label {
       white-space: nowrap;
       text-overflow: ellipsis;
-      color: rgb(255, 255, 255);
+      color: #FFF;
       font-weight: bold;
     }
     .attachment-control {
       border-radius: 3px;
       background-color: rgb(0, 0, 0);
       opacity: 0;
-      color: rgb(255, 255, 255);
+      color: #FFF;
       -webkit-transition: opacity 218ms ease 0s;
       -moz-transition: opacity 218ms ease 0s;
       -o-transition: opacity 218ms ease 0s;
@@ -8508,7 +8393,7 @@
       border: none;
     }
     .v-table-header-wrap {
-      background: url("icons/grad-light-top.png") repeat-x scroll 0% 0% rgb(201, 201, 201);
+      background: url("icons/grad-light-top.png") repeat-x scroll 0% 0% #C9C9C9;
       border-radius: 0px;
       .v-table-caption-container {
         color: rgb(34, 34, 34);

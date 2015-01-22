@@ -86,7 +86,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
 		title.setStyleName("hdr-text");
 		title.setSizeUndefined();
 		final Image icon = new Image(null,
-				MyCollabResource.newResource("icons/24/project/bug.png"));
+				MyCollabResource.newResource(WebResourceIds._24_project_bug));
 		header.addComponent(icon);
 		header.addComponent(title);
 		header.setExpandRatio(title, 1.0f);
