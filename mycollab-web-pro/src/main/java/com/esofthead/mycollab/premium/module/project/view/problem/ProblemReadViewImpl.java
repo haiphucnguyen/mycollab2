@@ -1,13 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.teemu.ratingstars.RatingStars;
-
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
@@ -20,36 +12,23 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
-import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
-import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
+import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
  * 
@@ -82,14 +61,12 @@ public class ProblemReadViewImpl extends
 
 	@Override
 	protected AdvancedPreviewBeanForm<SimpleProblem> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleProblem>();
+		return new AdvancedPreviewBeanForm<>();
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return new ProjectPreviewFormControlsGenerator<SimpleProblem>(
-				previewForm)
-				.createButtonControls(ProjectRolePermissionCollections.PROBLEMS);
+		return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(ProjectRolePermissionCollections.PROBLEMS);
 	}
 
 	@Override
@@ -98,6 +75,7 @@ public class ProblemReadViewImpl extends
 				CurrentProjectVariables.getProjectId(), true, true,
 				ProjectRiskRelayEmailNotificationAction.class);
 		commentList.setWidth("100%");
+		commentList.setMargin(true);
 
 		historyList = new ProblemHistoryList(ModuleNameConstants.PRJ,
 				ProjectTypeConstants.PROBLEM);
@@ -108,7 +86,7 @@ public class ProblemReadViewImpl extends
 		peopleInfoComp = new PeopleInfoComp();
 		addToSideBar(peopleInfoComp);
 
-		followerSheet = new ProjectFollowersComp<SimpleProblem>(
+		followerSheet = new ProjectFollowersComp<>(
 				ProjectTypeConstants.PROBLEM,
 				ProjectRolePermissionCollections.PROBLEMS);
 		addToSideBar(followerSheet);
@@ -120,12 +98,7 @@ public class ProblemReadViewImpl extends
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
 
-		Date now = new GregorianCalendar().getTime();
-		if ("Open".equals(beanItem.getStatus())
-				&& ((beanItem.getActualenddate() != null && beanItem
-						.getActualenddate().before(now)) || (beanItem
-						.getDatedue() != null && beanItem.getDatedue().before(
-						now)))) {
+		if (beanItem.isOverdue()) {
 			previewLayout.setTitleStyleName("headerNameOverdue");
 		}
 		commentList.loadComments("" + beanItem.getId());
@@ -156,7 +129,6 @@ public class ProblemReadViewImpl extends
 	@Override
 	protected ComponentContainer createBottomPanel() {
 		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
-		tabContainer.setWidth("100%");
 
 		tabContainer.addTab(commentList, AppContext
 				.getMessage(ProjectCommonI18nEnum.TAB_COMMENT),

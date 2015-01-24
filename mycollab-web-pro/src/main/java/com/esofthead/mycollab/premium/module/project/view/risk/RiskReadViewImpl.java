@@ -1,13 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.teemu.ratingstars.RatingStars;
-
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
@@ -20,36 +12,23 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
-import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
-import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
+import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.TabsheetLazyLoadComp;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
-import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
  * 
@@ -83,12 +62,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	@Override
 	protected AdvancedPreviewBeanForm<SimpleRisk> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<SimpleRisk>();
+		return new AdvancedPreviewBeanForm<>();
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return new ProjectPreviewFormControlsGenerator<SimpleRisk>(previewForm)
+		return new ProjectPreviewFormControlsGenerator<>(previewForm)
 				.createButtonControls(ProjectRolePermissionCollections.RISKS);
 	}
 
@@ -114,7 +93,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		peopleInfoComp = new PeopleInfoComp();
 		addToSideBar(peopleInfoComp);
 
-		followerSheet = new ProjectFollowersComp<SimpleRisk>(
+		followerSheet = new ProjectFollowersComp<>(
 				ProjectTypeConstants.RISK,
 				ProjectRolePermissionCollections.RISKS);
 		addToSideBar(followerSheet);
@@ -126,9 +105,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 		}
 
-		Date now = new GregorianCalendar().getTime();
-		if (beanItem.getDatedue() != null && beanItem.getDatedue().before(now)
-				&& StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
+		if (beanItem.isOverdue()) {
 			previewLayout.setTitleStyleName("headerNameOverdue");
 		}
 
