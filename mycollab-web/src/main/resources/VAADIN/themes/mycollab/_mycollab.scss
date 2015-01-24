@@ -2,7 +2,7 @@
 @import "variables";
 @import "global";
 
-@import "components/breadcrumb.scss";
+@import "components/breadcrumb";
 
 @mixin mycollab {
 
@@ -310,7 +310,7 @@
   }
 
   .v-panel-caption, .v-table-striped .v-table-row-odd {
-    background: #F7F7F7;
+    background: $background-color;
   }
 
   .sidebar-menu {
@@ -831,7 +831,7 @@
       background-color: #FFF;
     }
     .v-window-outerheader {
-      background-color: #F7F7F7;
+      background-color: $background-color;
       padding: 0;
       .v-window-header {
         padding: 12px 30px 12px 10px;
@@ -1756,13 +1756,13 @@
 
   .time-tracking-summary-search-panel {
     border: 1px solid $border-color;
-    background-color: #F7F7F7;
+    background-color: $background-color;
   }
 
   .advSearch {
     .advSearchBody {
       border: 1px solid $border-color;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       .v-label {
         text-align: right;
       }
@@ -1772,7 +1772,7 @@
       border-color: $border-color;
       border-width: 0px 1px 1px;
       border-style: solid;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       .advSearchFooter {
         text-align: center;
         div:first-child {
@@ -1791,7 +1791,7 @@
   /* Basic Search Template */
 
   .basicSearch .basicSearchBody {
-    background-color: #F7F7F7;
+    background-color: $background-color;
     border: 1px solid $border-color;
     border-radius: 0;
     > .v-horizontallayout {
@@ -2600,7 +2600,7 @@
   }
 
   .project-list-comp-content .project-name {
-    background-color: #F7F7F7;
+    background-color: $background-color;
     cursor: pointer;
     .v-label {
       cursor: pointer;
@@ -2677,9 +2677,6 @@
 
   .projectDashboardView {
     .container-wrap.main-content > .v-slot > .tab-content {
-      /* border-width: 0px 1px 1px;
-      border-color: $border-color;
-      border-radius: 0px; */
       border: none;
     }
     .v-label-h1, .v-label h1 {
@@ -2809,7 +2806,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 1px solid $border-color;
-    background: none no-repeat left top #F7F7F7;
+    background: none no-repeat left top $background-color;
     border-radius: 0px;
   }
 
@@ -3347,7 +3344,7 @@
   }
 
   .v-tabsheet-tabs {
-    background-color: #F7F7F7;
+    background-color: $background-color;
   }
 
   .v-tabsheet-content {
@@ -3481,7 +3478,7 @@
     &.odd {
       background-color: rgb(212, 223, 239);
     }
-    background-color: #F7F7F7;
+    background-color: $background-color;
   }
 
   .stream-wrapper {
@@ -3701,7 +3698,7 @@
     background: url("icons/sprites.png") no-repeat scroll -5px -10px transparent;
   }
 
-  .mycollab .v-popupbutton .v-button-wrap * {
+  .v-popupbutton .v-button-wrap * {
     float: none;
   }
 
@@ -3745,7 +3742,7 @@
   }
 
   .v-table-row-odd, .v-table-striped .v-table-row-odd {
-    background: none repeat scroll 0% 0% #F7F7F7;
+    background: none repeat scroll 0% 0% $background-color;
   }
 
   .v-csslayout-listControl {
@@ -4123,7 +4120,7 @@
 
   .task-component {
     margin-bottom: 5px;
-    background-color: #F7F7F7;
+    background-color: $background-color;
     > .v-csslayout-margin {
       border: 1px solid rgba(0, 0, 0, 0.25);
       padding-left: 5px;
@@ -4158,7 +4155,7 @@
   }
 
   .widget-row {
-    background-color: #F7F7F7;
+    background-color: $background-color;
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: $border-color;
@@ -4540,7 +4537,7 @@
   }
 
   .standup-block {
-    background-color: #F7F7F7;
+    background-color: $background-color;
     border: 1px solid $border-color;
     .report-content {
       border-left: 1px solid $border-color;
@@ -5521,7 +5518,7 @@
   /* Richtext Editor */
 
   .v-richtextarea .gwt-RichTextToolbar {
-    background: none no-repeat left top #F7F7F7;
+    background: none no-repeat left top $background-color;
     border-bottom: 1px solid $border-color;
     padding: 3px;
     .gwt-ToggleButton, .gwt-PushButton {
@@ -5801,7 +5798,7 @@
     padding: 0px;
     .projectlink-wrapper {
       border-right: 1px solid $border-color;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       padding: 10px 15px 8px;
       .project-name {
         .v-button-wrap, &:focus .v-button-wrap, &:active .v-button-wrap {
@@ -5835,14 +5832,14 @@
       border: none;
     }
     .createdtime-lbl {
-      color: rgb(128, 128, 128);
+      color: #808080;
       font-size: 11px;
     }
     .status-lbl {
       color: #888;
     }
     .v-slot-phase-status-lbl:after {
-      border-top: 3px double rgb(207, 207, 207);
+      border-top: 3px double $border-color;
       display: block;
       height: 1px;
       content: " ";
@@ -5855,7 +5852,7 @@
     .phase-status-lbl {
       position: relative;
       z-index: 1;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       padding-right: 5px;
     }
     .phase-status-layout {
@@ -5918,14 +5915,14 @@
     padding: 7px;
     border-width: 0 1px 1px 1px;
     border-style: solid;
-    border-color: rgb(204, 203, 203);
+    border-color: #CBCBCB;
     background-color: #F5F5F5;
   }
 
   div.v-button-link {
     &.buttonPaging {
       color: #525252;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       .v-button-wrap {
         width: 17px;
         padding: 4px 0px 3px;
@@ -6192,7 +6189,7 @@
     }
     p {
       font-size: 12px;
-      color: #5f5c5c;
+      color: #5F5F5F;
       padding-bottom: 10px;
       text-align: justify;
       font-family: 'verdana';
@@ -6215,7 +6212,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-color: rgb(200, 200, 200);
+    border-color: #C8C8C8;
     border-style: solid;
     border-width: 1px 0px 0px 1px;
     background-color: #F5F5F5;
@@ -6237,7 +6234,7 @@
       box-sizing: border-box;
       color: rgb(25, 115, 154);
       text-transform: uppercase;
-      border-bottom: 1px solid rgb(200, 200, 200);
+      border-bottom: 1px solid #C8C8C8;
       background-color: white;
       text-align: center;
     }
@@ -6472,7 +6469,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: #F7F7F7;
+    background-color: $background-color;
     border-bottom: 1px solid $border-color;
     .popup-header {
       -moz-box-sizing: border-box;
@@ -6523,7 +6520,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: #F7F7F7;
+    background-color: $background-color;
     border: 1px solid rgb(157, 157, 157);
     .headerTitle {
       font-weight: bold;
@@ -6557,7 +6554,7 @@
   /* Custom Field Settings Section */
 
   .customFieldSection {
-    background-color: #F7F7F7;
+    background-color: $background-color;
     border: 1px solid rgb(157, 157, 157);
     .header-wrapper {
       background-color: rgb(225, 225, 225);
@@ -6712,41 +6709,6 @@
 
   .createCustomFieldWindow .panel-header {
     font-weight: bold;
-  }
-
-  .stickytooltip {
-    box-shadow: 5px 5px 8px #818181;
-    /*shadow for CSS3 capable browsers.*/
-    -webkit-box-shadow: 5px 5px 8px #818181;
-    -moz-box-shadow: 5px 5px 8px #818181;
-    display: none;
-    position: absolute;
-    display: none;
-    background-color: #FDFDEE;
-    z-index: 3000;
-    font: 11px Arial, Verdana, Helvetica, sans-serif !important;
-    line-height: normal;
-    tr {
-      line-height: 1.5;
-    }
-  }
-
-  .v-tooltip-text tr {
-    line-height: 1.5;
-  }
-
-  .stickytooltip a, .v-tooltip-text a {
-    vertical-align: top;
-  }
-
-  .stickytooltip .stickystatus {
-    /*Style for footer bar within tooltip*/
-    background: black;
-    color: white;
-    padding-top: 5px;
-    text-align: center;
-    font: 11px Arial, Verdana, Helvetica, sans-serif !important;
-    line-height: normal;
   }
 
   .addview-layout-header {
@@ -6967,7 +6929,7 @@
         }
         > .v-tabsheet-tabitemcell {
           > .v-tabsheet-tabitem {
-            background: none repeat-x scroll left bottom #F7F7F7;
+            background: none repeat-x scroll left bottom $background-color;
             border-width: 0px 1px 0px 0px;
             border-style: solid;
             border-color: $border-color;
@@ -7090,7 +7052,7 @@
   .lead-convert-window {
     padding-bottom: 5px;
     .colored-gridlayout > div > div.first-row {
-      border-top: 1px solid rgb(200, 200, 200);
+      border-top: 1px solid #C8C8C8;
     }
     .v-checkbox input[type="checkbox"] {
       margin-left: 0px;
@@ -7104,7 +7066,7 @@
     position: relative;
   }
 
-  .v-app .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
+  .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
     margin-left: -16px;
     padding-left: 18px;
   }
@@ -7335,7 +7297,7 @@
   }
 
   .feed-block {
-    background-color: #F7F7F7;
+    background-color: $background-color;
     padding: 3px 10px;
     border: 1px solid $border-color;
     border-radius: 3px;
@@ -7363,13 +7325,13 @@
       top: 10px;
       left: -10px;
       border-width: 10px 10px 10px 0;
-      border-color: transparent #F7F7F7;
+      border-color: transparent $background-color;
       border-radius: 0px;
     }
     .stream-wrapper {
       border-width: 1px 0px 0px;
       padding-bottom: 8px;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       &:first-child {
         border-width: 0px;
       }
@@ -7453,7 +7415,7 @@
     border: 1px solid $border-color;
     .header-wrap {
       border-bottom: 1px solid $border-color;
-      background-color: #F7F7F7;
+      background-color: $background-color;
       padding: 7px 10px;
       .v-label {
         font-size: $font-large;
@@ -8014,7 +7976,7 @@
   /* Page Read View */
 
   .page-read-layout {
-    border-bottom: 1px solid rgb(207, 207, 207);
+    border-bottom: 1px solid $border-color;
   }
 
   /* Sort button group */
@@ -8056,11 +8018,11 @@
       background-color: rgb(241, 241, 241);
       font-size: $font-large;
       color: rgb(49, 49, 49);
-      border: 1px solid rgb(207, 207, 207);
+      border: 1px solid $border-color;
     }
     .block-body {
       border-width: 0px 1px 1px;
-      border-color: rgb(207, 207, 207);
+      border-color: $border-color;
       border-style: solid;
     }
   }

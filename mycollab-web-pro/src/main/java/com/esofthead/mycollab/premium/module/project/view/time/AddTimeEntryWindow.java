@@ -77,7 +77,7 @@ public class AddTimeEntryWindow extends Window implements
 				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
 		isBillable.addComponent(billableTitle);
 
-		projectMemberSelectionBox = new ProjectMemberSelectionBox();
+		projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
 		grid.addComponent(projectMemberSelectionBox, 0, 1);
 
 		weekSelectionCalendar = new StyleCalendarFieldExp();

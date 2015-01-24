@@ -9385,7 +9385,7 @@ body .mycollab.v-app .v-app-loading {
 	background: url("icons/sprites.png") no-repeat scroll -5px -10px transparent;
 }
 
-.mycollab .mycollab .v-popupbutton .v-button-wrap * {
+.mycollab .v-popupbutton .v-button-wrap * {
 	float: none;
 }
 
@@ -11458,7 +11458,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .project-status .createdtime-lbl {
-	color: gray;
+	color: #808080;
 	font-size: 11px;
 }
 
@@ -11467,7 +11467,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .project-status .v-slot-phase-status-lbl:after {
-	border-top: 3px double #cfcfcf;
+	border-top: 3px double #CFCFCF;
 	display: block;
 	height: 1px;
 	content: " ";
@@ -11543,7 +11543,7 @@ body .mycollab.v-app .v-app-loading {
 	padding: 7px;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
-	border-color: #cccbcb;
+	border-color: #CBCBCB;
 	background-color: #F5F5F5;
 }
 
@@ -11822,7 +11822,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .pri-bott-block p {
 	font-size: 12px;
-	color: #5f5c5c;
+	color: #5F5F5F;
 	padding-bottom: 10px;
 	text-align: justify;
 	font-family: "verdana";
@@ -11842,7 +11842,7 @@ body .mycollab.v-app .v-app-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-color: #c8c8c8;
+	border-color: #C8C8C8;
 	border-style: solid;
 	border-width: 1px 0px 0px 1px;
 	background-color: #F5F5F5;
@@ -11864,7 +11864,7 @@ body .mycollab.v-app .v-app-loading {
 	box-sizing: border-box;
 	color: #19739a;
 	text-transform: uppercase;
-	border-bottom: 1px solid #c8c8c8;
+	border-bottom: 1px solid #C8C8C8;
 	background-color: white;
 	text-align: center;
 }
@@ -12336,40 +12336,6 @@ body .mycollab.v-app .v-app-loading {
 	font-weight: bold;
 }
 
-.mycollab .stickytooltip {
-	box-shadow: 5px 5px 8px #818181;
-	-webkit-box-shadow: 5px 5px 8px #818181;
-	-moz-box-shadow: 5px 5px 8px #818181;
-	display: none;
-	position: absolute;
-	display: none;
-	background-color: #FDFDEE;
-	z-index: 3000;
-	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
-	line-height: normal;
-}
-
-.mycollab .stickytooltip tr {
-	line-height: 1.5;
-}
-
-.mycollab .v-tooltip-text tr {
-	line-height: 1.5;
-}
-
-.mycollab .stickytooltip a, .mycollab .v-tooltip-text a {
-	vertical-align: top;
-}
-
-.mycollab .stickytooltip .stickystatus {
-	background: black;
-	color: white;
-	padding-top: 5px;
-	text-align: center;
-	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
-	line-height: normal;
-}
-
 .mycollab .addview-layout-header.v-margin-top {
 	padding-top: 4px;
 }
@@ -12672,7 +12638,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .lead-convert-window .colored-gridlayout > div > div.first-row {
-	border-top: 1px solid #c8c8c8;
+	border-top: 1px solid #C8C8C8;
 }
 
 .mycollab .lead-convert-window .v-checkbox input[type="checkbox"] {
@@ -12684,7 +12650,7 @@ body .mycollab.v-app .v-app-loading {
 	position: relative;
 }
 
-.mycollab .v-app .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
+.mycollab .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
 	margin-left: -16px;
 	padding-left: 18px;
 }
@@ -13591,7 +13557,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .page-read-layout {
-	border-bottom: 1px solid #cfcfcf;
+	border-bottom: 1px solid #CFCFCF;
 }
 
 .mycollab .v-buttongroup.toggle-btn-group .v-button.sort-btn {
@@ -13627,12 +13593,12 @@ body .mycollab.v-app .v-app-loading {
 	background-color: #f1f1f1;
 	font-size: 14px;
 	color: #313131;
-	border: 1px solid #cfcfcf;
+	border: 1px solid #CFCFCF;
 }
 
 .mycollab .block-widget .block-body {
 	border-width: 0px 1px 1px;
-	border-color: #cfcfcf;
+	border-color: #CFCFCF;
 	border-style: solid;
 }
 
@@ -14359,4 +14325,38 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-calendar-day-times-Hsized .v-datecellslot, .mycollab .v-calendar-day-times-Hsized .v-datecellslot-even {
 	width: 200px;
+}
+
+.stickytooltip {
+	box-shadow: 5px 5px 8px #818181;
+	-webkit-box-shadow: 5px 5px 8px #818181;
+	-moz-box-shadow: 5px 5px 8px #818181;
+	display: none;
+	position: absolute;
+	display: none;
+	background-color: #FDFDEE;
+	z-index: 3000;
+	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
+}
+
+.stickytooltip tr {
+	line-height: 1.5;
+}
+
+.v-tooltip-text tr {
+	line-height: 1.5;
+}
+
+.stickytooltip a, .v-tooltip-text a {
+	vertical-align: top;
+}
+
+.stickytooltip .stickystatus {
+	background: black;
+	color: white;
+	padding-top: 5px;
+	text-align: center;
+	font: 11px Arial, Verdana, Helvetica, sans-serif !important;
+	line-height: normal;
 }

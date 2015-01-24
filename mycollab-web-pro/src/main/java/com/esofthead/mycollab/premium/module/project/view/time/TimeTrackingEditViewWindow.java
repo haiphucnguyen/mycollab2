@@ -61,7 +61,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 		property = new ObjectProperty<>(item.getLogvalue());
 		timeField = new TextField("Hours:", property);
 
-		projectMemberSelectionBox = new ProjectMemberSelectionBox();
+		projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
 		projectMemberSelectionBox.setValue(this.item.getLoguser());
 		projectMemberSelectionBox.setCaption(AppContext
 				.getMessage(TimeTrackingI18nEnum.FORM_WHO));

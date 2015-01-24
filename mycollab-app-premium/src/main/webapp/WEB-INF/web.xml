@@ -31,6 +31,7 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 -->
+
     <context-param>
         <param-name>contextClass</param-name>
         <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
