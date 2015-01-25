@@ -2896,8 +2896,14 @@
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 5px;
-    &.odd {
+    &:nth-child(odd) {
+      background-color: aliceblue;
+    }
+    &:nth-child(even) {
       background-color: #FFF;
+    }
+    &:hover {
+      background-color: ghostwhite;
     }
   }
 

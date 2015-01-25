@@ -9381,8 +9381,16 @@ body .mycollab.v-app .v-app-loading {
 	padding: 5px;
 }
 
-.mycollab .activity-stream.odd {
+.mycollab .activity-stream:nth-child(odd) {
+	background-color: aliceblue;
+}
+
+.mycollab .activity-stream:nth-child(even) {
 	background-color: #FFF;
+}
+
+.mycollab .activity-stream:hover {
+	background-color: ghostwhite;
 }
 
 .mycollab .v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child .activity-stream {
