@@ -25,3 +25,8 @@ table {
   table-layout:auto;
   word-break: break-all;
 }
+
+.v-sa .mycollab .v-tooltip {
+  outline:none;
+  border-color: $border-color;
+}
