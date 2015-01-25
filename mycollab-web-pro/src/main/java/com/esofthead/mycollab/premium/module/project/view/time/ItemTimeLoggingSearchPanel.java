@@ -81,6 +81,7 @@ class ItemTimeLoggingSearchPanel extends
             Label headerText = new Label(
                     AppContext
                             .getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
+            headerText.setStyleName(UIConstants.HEADER_TEXT);
 
             createBtn = new Button(
                     AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
@@ -91,7 +92,7 @@ class ItemTimeLoggingSearchPanel extends
             createBtn.addStyleName("v-button-caption-bool");
 
             return new MHorizontalLayout()
-                    .withStyleName("hdr-view").withWidth("100%")
+                    .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
                     .withSpacing(true)
                     .withMargin(new MarginInfo(true, false, true, false))
                     .with(titleIcon, headerText, createBtn)
@@ -156,7 +157,7 @@ class ItemTimeLoggingSearchPanel extends
             gridLayout.addComponent(userField, "User", 1, 0);
             this.userField.setWidth(nameFieldWidth);
 
-            buttonControls = new MHorizontalLayout().withSpacing(true);
+            buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
 
             final Button searchBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH),
