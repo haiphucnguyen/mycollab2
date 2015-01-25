@@ -1,6 +1,10 @@
 package com.esofthead.mycollab.schedule.spring;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
+import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
+import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJobs;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
 import com.esofthead.mycollab.spring.DataSourceConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -32,17 +36,34 @@ public class DemandScheduleConfiguration {
         return bean;
     }
 
+    @Bean JobDetailFactoryBean sendAccountBillingEmailJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(BillingSendingNotificationJobs.class);
+        bean.setDurability(true);
+        return bean;
+    }
+
+    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(sendAccountBillingEmailJob().getObject());
+        bean.setCronExpression("0 0 0 * * ?");
+        return bean;
+    }
+
     @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-        bean.setDataSource(new DataSourceConfiguration().dataSource());
+        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
+            bean.setDataSource(new DataSourceConfiguration().dataSource());
+        }
+
+        bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setJobFactory(new AutowiringSpringBeanJobFactory());
         bean.setConfigLocation(new ClassPathResource("quartz.properties"));
         bean.setOverwriteExistingJobs(true);
         bean.setAutoStartup(true);
         bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
 
-        bean.setJobDetails(sendCountUserLoginByDateJob().getObject());
-        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject());
+        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(), sendAccountBillingEmailTrigger().getObject());
         return bean;
     }
 }
