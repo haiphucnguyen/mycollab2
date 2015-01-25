@@ -331,9 +331,9 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
             } else if (Task.Field.notes.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getNotes());
             }
-			else if (Task.Field.parenttaskid.equalTo(propertyId)) {
-				return new SubTasksComp();
-			}
+//			else if (Task.Field.parenttaskid.equalTo(propertyId)) {
+//				return new SubTasksComp();
+//			}
             return null;
         }
     }

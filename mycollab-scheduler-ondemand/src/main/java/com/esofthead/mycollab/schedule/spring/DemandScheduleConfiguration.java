@@ -36,19 +36,19 @@ public class DemandScheduleConfiguration {
         return bean;
     }
 
-    @Bean JobDetailFactoryBean sendAccountBillingEmailJob() {
-        JobDetailFactoryBean bean = new JobDetailFactoryBean();
-        bean.setJobClass(BillingSendingNotificationJobs.class);
-        bean.setDurability(true);
-        return bean;
-    }
-
-    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
-        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(sendAccountBillingEmailJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
-        return bean;
-    }
+//    @Bean JobDetailFactoryBean sendAccountBillingEmailJob() {
+//        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+//        bean.setJobClass(BillingSendingNotificationJobs.class);
+//        bean.setDurability(true);
+//        return bean;
+//    }
+//
+//    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
+//        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+//        bean.setJobDetail(sendAccountBillingEmailJob().getObject());
+//        bean.setCronExpression("0 0 0 * * ?");
+//        return bean;
+//    }
 
     @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
@@ -58,12 +58,11 @@ public class DemandScheduleConfiguration {
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setJobFactory(new AutowiringSpringBeanJobFactory());
-        bean.setConfigLocation(new ClassPathResource("quartz.properties"));
         bean.setOverwriteExistingJobs(true);
         bean.setAutoStartup(true);
         bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
 
-        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(), sendAccountBillingEmailTrigger().getObject());
+        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject());
         return bean;
     }
 }
