@@ -27,7 +27,7 @@ var stickytooltip = {
   rightclickstick: true, // sticky tooltip when user right clicks over the
               // triggering element (apart from pressing "s" key)
               // ?
-  stickybordercolors: ["black", "darkred"], // border color of tooltip
+  stickybordercolors: ["#CFCFCF", "darkred"], // border color of tooltip
                         // depending on sticky state
   stickynotice1: ["Press \"s\"", "or right click", "to sticky box"], // customize
                                     // tooltip
@@ -56,13 +56,13 @@ var stickytooltip = {
   hidebox:function($, $tooltip) { 
     if (!this.isdocked) { 
       $tooltip.stop(false, true).hide()
-      $tooltip.css({borderColor:'black'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[0]}).html(this.stickynotice1)
+      $tooltip.css({borderColor:'#CFCFCF'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[0]}).html(this.stickynotice1)
     }
   },
 
   docktooltip:function($, $tooltip, e) { 
     this.isdocked=true
-    $tooltip.css({borderColor:'black'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[0]}).html(this.stickynotice1)
+    $tooltip.css({borderColor:'#CFCFCF'}).find('.stickystatus:eq(0)').css({background:this.stickybordercolors[0]}).html(this.stickynotice1)
   },
 
   showboxForFirstTime:function($, $tooltip, position) {
