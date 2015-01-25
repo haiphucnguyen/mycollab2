@@ -140,6 +140,7 @@ public class DefaultScheduleConfiguration {
 
     @Bean public SchedulerFactoryBean quartzScheduler() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
+        bean.setDataSource(new DataSourceConfiguration().dataSource());
         bean.setConfigLocation(new ClassPathResource("quartz.properties"));
         bean.setOverwriteExistingJobs(true);
         AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();

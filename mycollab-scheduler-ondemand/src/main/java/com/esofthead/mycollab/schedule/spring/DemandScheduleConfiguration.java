@@ -2,6 +2,7 @@ package com.esofthead.mycollab.schedule.spring;
 
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
+import com.esofthead.mycollab.spring.DataSourceConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -33,6 +34,7 @@ public class DemandScheduleConfiguration {
 
     @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
+        bean.setDataSource(new DataSourceConfiguration().dataSource());
         bean.setJobFactory(new AutowiringSpringBeanJobFactory());
         bean.setConfigLocation(new ClassPathResource("quartz.properties"));
         bean.setOverwriteExistingJobs(true);
