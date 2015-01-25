@@ -17,11 +17,16 @@ import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean
 import org.quartz.{JobExecutionContext, JobExecutionException}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.config.BeanDefinition
+import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
 
 /**
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
+@Component
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class BillingSendingNotificationJobs extends GenericQuartzJobBean {
   private val LOG: Logger = LoggerFactory.getLogger(classOf[BillingSendingNotificationJobs])
   private val DATE_REMIND_FOR_FREEPLAN_1ST: Integer = 54
