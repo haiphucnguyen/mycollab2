@@ -3,6 +3,7 @@
 @import "global";
 
 @import "components/breadcrumb";
+@import "components/button";
 @import "components/tooltip";
 
 @mixin mycollab {
@@ -10,6 +11,7 @@
   @include chameleon;
   @include mycollab-global;
   @include mycollab-breadcrumb;
+  @include mycollab-button;
   @include mycollab-tooltip;
   @include mycollab-shared;
 

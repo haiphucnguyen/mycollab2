@@ -93,6 +93,19 @@ table {
 	word-break: break-all;
 }
 
+a.overdue {
+	color: red;
+}
+
+a.completed {
+	color: black;
+	text-decoration: line-through;
+}
+
+a.pending {
+	color: #108e2a;
+}
+
 .mycollab {
 	@media only screen and (max-width: 1024px), only screen and (max-device-width: 1024px) {
 	.projectDashboardView {
