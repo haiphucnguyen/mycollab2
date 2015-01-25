@@ -166,8 +166,7 @@ public class SimpleTask extends Task {
     public boolean isOverdue() {
         if (!isCompleted()) {
             Date now = DateTimeUtils.getCurrentDateWithoutMS();
-
-            return (getEnddate() != null && getEnddate().before(now));
+            return (getDeadline() != null && getDeadline().before(now));
         }
 
         return false;

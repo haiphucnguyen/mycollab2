@@ -69,6 +69,19 @@ a:visited, a:link {
 	color: #006DAC;
 }
 
+a.completed {
+	color: black;
+	text-decoration: line-through;
+}
+
+a.overdue {
+	color: red;
+}
+
+a.pending {
+	color: #108e2a;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -6550,6 +6563,19 @@ body .mycollab.v-app .v-app-loading {
 	color: #006DAC;
 }
 
+.mycollab a.completed {
+	color: black;
+	text-decoration: line-through;
+}
+
+.mycollab a.overdue {
+	color: red;
+}
+
+.mycollab a.pending {
+	color: #108e2a;
+}
+
 .mycollab html {
 	overflow: hidden;
 }
@@ -6937,10 +6963,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab ul {
 	padding-left: 20px;
-}
-
-.mycollab a {
-	text-decoration: none;
 }
 
 .mycollab .v-ie img {
