@@ -28,7 +28,7 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 
 	@InjectMocks
 	@Spy
-	private BillingSendingNotificationJobs billingNotificationJob;
+	private BillingSendingNotificationJob billingNotificationJob;
 
 	@Mock
 	private BillingService billingService;

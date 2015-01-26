@@ -106,6 +106,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		contentLayout.removeComponent(row);
 	}
 
+	public void appendRow(Component row) {
+		contentLayout.addComponent(row);
+	}
+
 	public void insetItemOnBottom(T item) {
 		RowDisplayHandler<T> rowHandler = constructRowDisplayHandler();
 		Component row = rowHandler.generateRow(item,

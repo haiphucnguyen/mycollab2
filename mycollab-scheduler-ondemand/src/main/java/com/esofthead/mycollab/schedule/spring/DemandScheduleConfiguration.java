@@ -4,16 +4,14 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
-import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJobs;
+import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
 import com.esofthead.mycollab.spring.DataSourceConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 /**
  * @author MyCollab Ltd.
@@ -36,12 +34,12 @@ public class DemandScheduleConfiguration {
         return bean;
     }
 
-//    @Bean JobDetailFactoryBean sendAccountBillingEmailJob() {
-//        JobDetailFactoryBean bean = new JobDetailFactoryBean();
-//        bean.setJobClass(BillingSendingNotificationJobs.class);
-//        bean.setDurability(true);
-//        return bean;
-//    }
+    @Bean JobDetailFactoryBean sendAccountBillingEmailJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(BillingSendingNotificationJob.class);
+        bean.setDurability(true);
+        return bean;
+    }
 //
 //    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
 //        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();

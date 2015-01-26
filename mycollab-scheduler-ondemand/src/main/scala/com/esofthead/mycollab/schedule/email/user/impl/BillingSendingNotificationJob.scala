@@ -27,8 +27,8 @@ import org.springframework.stereotype.Component
  */
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-class BillingSendingNotificationJobs extends GenericQuartzJobBean {
-  private val LOG: Logger = LoggerFactory.getLogger(classOf[BillingSendingNotificationJobs])
+class BillingSendingNotificationJob extends GenericQuartzJobBean {
+  private val LOG: Logger = LoggerFactory.getLogger(classOf[BillingSendingNotificationJob])
   private val DATE_REMIND_FOR_FREEPLAN_1ST: Integer = 54
   private val DATE_REMIND_FOR_FREEPLAN_2ND: Integer = 59
   private val DATE_NOTIFY_EXPIRE: Integer = 62

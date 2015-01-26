@@ -552,6 +552,7 @@
 
   .wordWrap.v-label {
     word-wrap: break-word;
+    white-space: normal;
   }
 
   .v-label {
@@ -2897,13 +2898,13 @@
     border-style: solid;
     padding: 5px;
     &:nth-child(odd) {
-      background-color: whitesmoke;
+      background-color: $background-color;
     }
     &:nth-child(even) {
       background-color: #FFF;
     }
     &:hover {
-      background-color: ghostwhite;
+      background-color: $hover-background-color;
     }
   }
 
@@ -3187,10 +3188,16 @@
 
   .v-table-row {
     background: none repeat scroll 0% 0% #FFF;
+    &:hover {
+      background-color: $hover-background-color;
+    }
   }
 
   .v-table-row-odd, .v-table-striped .v-table-row-odd {
     background: none repeat scroll 0% 0% $background-color;
+    &:hover {
+      background-color: $hover-background-color;
+    }
   }
 
   .v-csslayout-listControl {

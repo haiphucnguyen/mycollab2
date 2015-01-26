@@ -6429,7 +6429,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab div.v-button-link.buttonPaging {
 	color: #525252;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab div.v-button-link.buttonPaging .v-button-wrap {
@@ -6724,7 +6724,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .v-panel-caption, .mycollab .v-table-striped .v-table-row-odd {
-	background: #F7F7F7;
+	background: whitesmoke;
 }
 
 .mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
@@ -6973,6 +6973,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .wordWrap.v-label {
 	word-wrap: break-word;
+	white-space: normal;
 }
 
 .mycollab .v-label {
@@ -7051,7 +7052,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .popupContent .v-window-outerheader {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	padding: 0;
 }
 
@@ -7666,12 +7667,12 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .time-tracking-summary-search-panel {
 	border: 1px solid #CFCFCF;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .advSearch .advSearchBody {
 	border: 1px solid #CFCFCF;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .advSearch .advSearchBody .v-label {
@@ -7683,7 +7684,7 @@ body .mycollab.v-app .v-app-loading {
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .advSearch .advSearchFooterContainer .advSearchFooter {
@@ -7699,7 +7700,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .basicSearch .basicSearchBody {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	border: 1px solid #CFCFCF;
 	border-radius: 0;
 }
@@ -8497,7 +8498,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .project-list-comp-content .project-name {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	cursor: pointer;
 }
 
@@ -8712,7 +8713,7 @@ body .mycollab.v-app .v-app-loading {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border: 1px solid #CFCFCF;
-	background: none no-repeat left top #F7F7F7;
+	background: none no-repeat left top whitesmoke;
 	border-radius: 0px;
 }
 
@@ -9253,7 +9254,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .v-tabsheet-tabs {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .v-tabsheet-content {
@@ -9395,7 +9396,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream.odd {
@@ -9633,8 +9634,16 @@ body .mycollab.v-app .v-app-loading {
 	background: none repeat scroll 0% 0% #FFF;
 }
 
+.mycollab .v-table-row:hover {
+	background-color: ghostwhite;
+}
+
 .mycollab .v-table-row-odd, .mycollab .v-table-striped .v-table-row-odd {
-	background: none repeat scroll 0% 0% #F7F7F7;
+	background: none repeat scroll 0% 0% whitesmoke;
+}
+
+.mycollab .v-table-row-odd:hover, .mycollab .v-table-striped .v-table-row-odd:hover {
+	background-color: ghostwhite;
 }
 
 .mycollab .v-csslayout-listControl {
@@ -9996,7 +10005,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .task-component {
 	margin-bottom: 5px;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .task-component  > .v-csslayout-margin {
@@ -10026,7 +10035,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .widget-row {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: #CFCFCF;
@@ -10358,7 +10367,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .standup-block {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	border: 1px solid #CFCFCF;
 }
 
@@ -11307,7 +11316,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .v-richtextarea .gwt-RichTextToolbar {
-	background: none no-repeat left top #F7F7F7;
+	background: none no-repeat left top whitesmoke;
 	border-bottom: 1px solid #CFCFCF;
 	padding: 3px;
 }
@@ -11586,7 +11595,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .myprojectlist .stream-content .projectlink-wrapper {
 	border-right: 1px solid #CFCFCF;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	padding: 10px 15px 8px;
 }
 
@@ -11644,7 +11653,7 @@ body .mycollab.v-app .v-app-loading {
 .mycollab .project-status .phase-status-lbl {
 	position: relative;
 	z-index: 1;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	padding-right: 5px;
 }
 
@@ -12228,7 +12237,7 @@ body .mycollab.v-app .v-app-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	border-bottom: 1px solid #CFCFCF;
 }
 
@@ -12269,7 +12278,7 @@ body .mycollab.v-app .v-app-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	border: 1px solid #9d9d9d;
 }
 
@@ -12306,7 +12315,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .customFieldSection {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	border: 1px solid #9d9d9d;
 }
 
@@ -12635,7 +12644,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem {
-	background: none repeat-x scroll left bottom #F7F7F7;
+	background: none repeat-x scroll left bottom whitesmoke;
 	border-width: 0px 1px 0px 0px;
 	border-style: solid;
 	border-color: #CFCFCF;
@@ -12992,7 +13001,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .feed-block {
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	padding: 3px 10px;
 	border: 1px solid #CFCFCF;
 	border-radius: 3px;
@@ -13022,14 +13031,14 @@ body .mycollab.v-app .v-app-loading {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #F7F7F7;
+	border-color: transparent whitesmoke;
 	border-radius: 0px;
 }
 
 .mycollab .feed-block .stream-wrapper {
 	border-width: 1px 0px 0px;
 	padding-bottom: 8px;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 }
 
 .mycollab .feed-block .stream-wrapper:first-child {
@@ -13107,7 +13116,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .standup-missing-comp .header-wrap {
 	border-bottom: 1px solid #CFCFCF;
-	background-color: #F7F7F7;
+	background-color: whitesmoke;
 	padding: 7px 10px;
 }
 
