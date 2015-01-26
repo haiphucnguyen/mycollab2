@@ -6545,8 +6545,8 @@ body .mycollab.v-app .v-app-loading {
 	background: #f3f3f3;
 }
 
-.mycollab .v-window, .mycollab .v-popupview-popup, .mycollab .v-filterselect-suggestpopup, .mycollab .v-datefield-popup, .mycollab .v-contextmenu, .mycollab .v-Notification, .mycollab .v-menubar-submenu {
-	background-color: #92bd84;
+.mycollab .v-window, .mycollab .v-filterselect-suggestpopup, .mycollab .v-datefield-popup, .mycollab .v-contextmenu, .mycollab .v-Notification, .mycollab .v-menubar-submenu {
+	background-color: #92BD84;
 }
 
 .mycollab .v-panel-content {
@@ -6561,24 +6561,19 @@ body .mycollab.v-app .v-app-loading {
 	background-color: #F5F5F5;
 }
 
-.mycollab .v-app, .mycollab .v-window, .mycollab .v-popupview-popup {
+.mycollab .v-app, .mycollab .v-window {
 	font-size: 13px;
-	color: #0f0d0d;
+	color: #0D0D0D;
 }
 
 .mycollab .v-window input, .mycollab .v-window button, .mycollab .v-window textarea {
 	font-size: 13px;
-	color: #0f0d0d;
-}
-
-.mycollab .v-popupview-popup input, .mycollab .v-popupview-popup button, .mycollab .v-popupview-popup textarea {
-	font-size: 13px;
-	color: #0f0d0d;
+	color: #0D0D0D;
 }
 
 .mycollab .v-filterselect-suggestpopup, .mycollab .v-datefield-popup, .mycollab .v-datefield-calendarpanel-header button, .mycollab .v-contextmenu, .mycollab .v-Notification, .mycollab .v-menubar-submenu, .mycollab .v-table-header-drag, .mycollab .v-filterselect-select-button .v-filterselect-input, .mycollab .v-drag-element {
 	font-size: 13px;
-	color: #0f0d0d;
+	color: #0D0D0D;
 }
 
 .mycollab .v-app select, .mycollab .v-window select, .mycollab .v-popupview-popup select, .mycollab .v-datefield-popup select {
@@ -6651,23 +6646,19 @@ body .mycollab.v-app .v-app-loading {
 	text-shadow: 0 -1px 0 #43533E;
 }
 
-.mycollab .v-window, .mycollab .v-popupview-popup, .mycollab .v-filterselect-suggestpopup, .mycollab .v-datefield-popup, .mycollab .v-contextmenu, .mycollab .v-Notification, .mycollab .v-menubar-submenu, .mycollab .v-panel-caption, .mycollab .v-panel-nocaption, .mycollab .v-panel-content, .mycollab .v-panel-deco, .mycollab .v-panel-light .v-panel-caption-light {
-	border-color: #78976e;
+.mycollab .v-window, .mycollab .v-filterselect-suggestpopup, .mycollab .v-datefield-popup, .mycollab .v-contextmenu, .mycollab .v-Notification, .mycollab .v-menubar-submenu, .mycollab .v-panel-caption, .mycollab .v-panel-nocaption, .mycollab .v-panel-content, .mycollab .v-panel-deco, .mycollab .v-panel-light .v-panel-caption-light {
+	border-color: #78976E;
 }
 
 .mycollab .v-panel-bubble .v-panel-captionwrap, .mycollab .v-panel-bubble .v-panel-content-bubble, .mycollab .v-panel-bubble .v-panel-deco-bubble {
-	border-color: #78976e;
+	border-color: #78976E;
 }
 
 .mycollab .v-tabsheet-tabitem-selected, .mycollab .v-tabsheet-tabitem, .mycollab .v-tabsheet-spacertd div, .mycollab .v-tabsheet-content, .mycollab .v-tabsheet-deco, .mycollab .v-slider, .mycollab .v-splitpanel-hsplitter, .mycollab .v-splitpanel-vsplitter, .mycollab .v-splitpanel-hsplitter-locked, .mycollab .v-splitpanel-vsplitter-locked, .mycollab .v-table-scrollposition, .mycollab .v-accordion, .mycollab .v-accordion-item-caption, .mycollab .v-accordion-item-open, .mycollab .v-menubar-separator span {
-	border-color: #78976e;
+	border-color: #78976E;
 }
 
 .mycollab .v-label-color {
-	color: #6482B3;
-}
-
-.mycollab .v-app a, .mycollab .v-popupview-popup a, .mycollab .v-popupview, .mycollab .sidebar-menu .v-label {
 	color: #6482B3;
 }
 
@@ -6937,13 +6928,9 @@ body .mycollab.v-app .v-app-loading {
 	width: 24px;
 }
 
-.mycollab .v-popupbutton .v-button-wrap .v-button-caption:before {
+.mycollab .v-popupbutton .v-button-caption:before {
 	content: "";
 	display: inline-block;
-}
-
-.mycollab .v-popupbutton-noDefaultIcon .v-popup-indicator:before {
-	content: "";
 }
 
 .mycollab div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton {
@@ -7024,12 +7011,7 @@ body .mycollab.v-app .v-app-loading {
 	line-height: normal;
 }
 
-.mycollab .v-window input, .mycollab .v-window select, .mycollab .v-window button, .mycollab .v-window textarea {
-	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
-	line-height: normal;
-}
-
-.mycollab .v-popupview-popup input, .mycollab .v-popupview-popup select, .mycollab .v-popupview-popup button, .mycollab .v-popupview-popup textarea {
+.mycollab .v-windowm input, .mycollab .v-windowm select, .mycollab .v-windowm button, .mycollab .v-windowm textarea, .mycollab .v-popupview-popup input, .mycollab .v-popupview-popup select, .mycollab .v-popupview-popup button, .mycollab .v-popupview-popup textarea {
 	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
 	line-height: normal;
 }
@@ -8502,7 +8484,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .project-list-comp-content .project-name {
-	background-color: whitesmoke;
+	background-color: #FFF;
 	cursor: pointer;
 }
 
@@ -8515,8 +8497,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .project-list-comp-content .project-name:hover {
-	background: none no-repeat scroll 0px 0px #007EBB;
-	color: #FFF;
+	background: ghostwhite;
 }
 
 .mycollab .projectDashboardView .navigator-wrap .project-list-comp .project-name .v-label {

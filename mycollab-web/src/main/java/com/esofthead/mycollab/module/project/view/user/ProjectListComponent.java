@@ -63,12 +63,10 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.0
  * 
  */
-public class ProjectListComponent extends VerticalLayout {
+public class ProjectListComponent extends MVerticalLayout {
 	private static final long serialVersionUID = 6930971885172125913L;
 
 	final private PopupButton headerPopupButton;
-
-	private Label componentHeader;
 
 	private MVerticalLayout contentLayout;
 
@@ -78,9 +76,7 @@ public class ProjectListComponent extends VerticalLayout {
 
 	public ProjectListComponent() {
 		super();
-		setWidth("100%");
-		setSpacing(true);
-		setStyleName("project-list-comp");
+		withSpacing(true).withMargin(false).withWidth("100%").withStyleName("project-list-comp");
 
 		MHorizontalLayout headerBar = new MHorizontalLayout();
 
@@ -88,7 +84,7 @@ public class ProjectListComponent extends VerticalLayout {
 		headerPopupButton.setStyleName("project-list-comp-hdr");
 		headerPopupButton.setWidth("100%");
 
-		componentHeader = new Label();
+		Label componentHeader = new Label();
 		componentHeader.setStyleName("h2");
 
 		headerPopupButton.setIcon(MyCollabResource
@@ -137,7 +133,7 @@ public class ProjectListComponent extends VerticalLayout {
 		final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
-		searchCriteria.setProjectStatuses(new SetSearchField<String>(
+		searchCriteria.setProjectStatuses(new SetSearchField<>(
 				new String[] { StatusI18nEnum.Open.name() }));
 		this.projectList.setSearchCriteria(searchCriteria);
 		this.headerPopupButton.setCaption(CurrentProjectVariables.getProject()
@@ -162,7 +158,7 @@ public class ProjectListComponent extends VerticalLayout {
 		@Override
 		public int setSearchCriteria(ProjectSearchCriteria searchCriteria) {
 			currentCriteria = searchCriteria;
-			SearchRequest<ProjectSearchCriteria> searchRequest = new SearchRequest<ProjectSearchCriteria>(
+			SearchRequest<ProjectSearchCriteria> searchRequest = new SearchRequest<>(
 					searchCriteria, 0, 3);
 			return setSearchRequest(searchRequest);
 		}

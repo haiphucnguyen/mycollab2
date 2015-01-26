@@ -37,8 +37,8 @@
 
   /* Application background */
 
-  .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu {
-    background-color: rgb(146, 189, 132);
+  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu {
+    background-color: #92BD84
   }
 
   .v-panel-content {
@@ -57,28 +57,21 @@
 
   /* Base font size and color */
 
-  .v-app, .v-window, .v-popupview-popup {
+  .v-app, .v-window {
     font-size: $font-normal;
-    color: rgb(15, 13, 13);
+    color: #0D0D0D
   }
 
   .v-window {
     input, button, textarea {
       font-size: $font-normal;
-      color: rgb(15, 13, 13);
-    }
-  }
-
-  .v-popupview-popup {
-    input, button, textarea {
-      font-size: $font-normal;
-      color: rgb(15, 13, 13);
+      color: #0D0D0D
     }
   }
 
   .v-filterselect-suggestpopup, .v-datefield-popup, .v-datefield-calendarpanel-header button, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-filterselect-select-button .v-filterselect-input, .v-drag-element {
     font-size: $font-normal;
-    color: rgb(15, 13, 13);
+    color: #0D0D0D
   }
 
   .v-app select, .v-window select, .v-popupview-popup select, .v-datefield-popup select {
@@ -140,7 +133,6 @@
   }
 
   .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-panel-bubble .v-panel-caption-bubble, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-accordion-item-caption, .v-accordion-item-open .v-accordion-item-caption:active, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-    /*background-image: url(../chameleon/img/grad-light-top2.png);*/
     background-position: left top;
   }
 
@@ -158,27 +150,23 @@
 
   /* Background border color */
 
-  .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
-    border-color: rgb(120, 151, 110);
+  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
+    border-color: #78976E;
   }
 
   .v-panel-bubble {
     .v-panel-captionwrap, .v-panel-content-bubble, .v-panel-deco-bubble {
-      border-color: rgb(120, 151, 110);
+      border-color: #78976E;
     }
   }
 
   .v-tabsheet-tabitem-selected, .v-tabsheet-tabitem, .v-tabsheet-spacertd div, .v-tabsheet-content, .v-tabsheet-deco, .v-slider, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked, .v-table-scrollposition, .v-accordion, .v-accordion-item-caption, .v-accordion-item-open, .v-menubar-separator span {
-    border-color: rgb(120, 151, 110);
+    border-color: #78976E;
   }
 
   /* Alternate colors */
 
   .v-label-color {
-    color: #6482B3;
-  }
-
-  .v-app a, .v-popupview-popup a, .v-popupview, .sidebar-menu .v-label {
     color: #6482B3;
   }
 
@@ -516,13 +504,9 @@
     width: 24px;
   }
 
-  .v-popupbutton .v-button-wrap .v-button-caption:before {
+  .v-popupbutton .v-button-caption:before {
     content: "";
     display: inline-block;
-  }
-
-  .v-popupbutton-noDefaultIcon .v-popup-indicator:before {
-    content: "";
   }
 
   div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton {
@@ -604,14 +588,7 @@
     }
   }
 
-  .v-window {
-    input, select, button, textarea {
-      font: $font-small $font-family !important;
-      line-height: normal;
-    }
-  }
-
-  .v-popupview-popup {
+  .v-windowm, .v-popupview-popup {
     input, select, button, textarea {
       font: $font-small $font-family !important;
       line-height: normal;
@@ -2075,7 +2052,7 @@
   }
 
   .project-list-comp-content .project-name {
-    background-color: $background-color;
+    background-color: #FFF;
     cursor: pointer;
     .v-label {
       cursor: pointer;
@@ -2084,8 +2061,7 @@
       font-weight: bold;
     }
     &:hover {
-      background: none no-repeat scroll 0px 0px #007EBB;
-      color: #FFF;
+      background: $hover-background-color;
     }
   }
 
