@@ -6942,7 +6942,7 @@ body .mycollab.v-app .v-app-loading {
 	display: inline-block;
 }
 
-.mycollab .v-popupbutton .v-popup-indicator:before {
+.mycollab .v-popupbutton-noDefaultIcon .v-popup-indicator:before {
 	content: "";
 }
 
@@ -14495,7 +14495,7 @@ a.pending {
 
 table {
 	table-layout: auto;
-	word-break: break-all;
+	word-break: break-through;
 }
 
 .v-sa .mycollab .v-tooltip {
