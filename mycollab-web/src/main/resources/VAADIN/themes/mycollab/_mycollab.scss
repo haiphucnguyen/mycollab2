@@ -617,7 +617,7 @@
       background-color: #FFF;
     }
     .v-window-outerheader {
-      background-color: $background-color;
+      background-color: floralwhite;
       padding: 0;
       .v-window-header {
         padding: 12px 30px 12px 10px;
@@ -893,13 +893,10 @@
     line-height: 16px;
   }
 
-  .h-sidebar-menu, .projectfeed-hdr-wrapper {
-    background: none repeat-x left bottom rgb(71, 116, 157);
-  }
-
   .h-sidebar-menu {
     height: 50px;
     position: relative;
+    background-color:brown;
     > div {
       display: inline-block;
       zoom: 1;
@@ -956,6 +953,7 @@
     zoom: 1;
     position: relative;
     padding: 17px 18px;
+    color: #FFF;
   }
 
   .h-sidebar-menu {
@@ -2329,13 +2327,14 @@
   }
 
   .projectfeed-hdr-wrapper {
+    background: none repeat-x left bottom brown;
     padding: 15px 30px;
     .h1 {
       padding: 0px;
-      color: #FFF;
+      color: white;
     }
     .h2, .v-button-link .v-button-caption {
-      color: #FFF;
+      color: white;
     }
   }
 
@@ -3001,86 +3000,6 @@
     height: auto;
     .v-button {
       height: auto;
-    }
-  }
-
-  .v-splitbutton.esofthead {
-    .v-popupbutton .v-button-wrap, div.v-disabled.v-popupbutton .v-button-wrap {
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-  }
-
-  .v-splitbutton-esofthead {
-    font-weight: bold;
-    font-size: 13px !important;
-    font-family: $font-family;
-    .v-button-esofthead {
-      background: url("icons/grad-dark-bottom.png") repeat-x left bottom #fcfcfc;
-      border-radius: 3px 0px 0px 3px;
-      border-right: none;
-      padding: 4px 6px 4px 15px;
-      &.v-disabled, &:active {
-        background: url("icons/grad-dark-bottom.png") repeat-x left bottom #fcfcfc;
-        border-radius: 3px 0px 0px 3px;
-        border-right: none;
-        padding: 4px 6px 4px 15px;
-      }
-      &.greenbtn {
-        background-color: rgb(37, 153, 200);
-        border-color: rgb(9, 55, 104);
-        margin: 0px;
-        &:active {
-          background-color: rgb(19, 119, 179);
-          padding: 3px 8px;
-          border-color: rgb(9, 55, 104);
-        }
-      }
-      &.graybtn {
-        background-color: #b2b2b2;
-        border-color: rgb(56, 56, 56);
-        margin: 0px;
-      }
-      &:active {
-        background: none no-repeat 0 0 #A1A1A1;
-        border-color: rgb(171, 171, 171);
-      }
-      &.graybtn:active {
-        border-color: rgb(56, 56, 56);
-        padding: 3px 8px;
-      }
-    }
-    .v-button.v-button-esofthead {
-      .v-button-wrap, &:active .v-button-wrap {
-        border: none;
-      }
-    }
-    .v-button-esofthead {
-      &.v-popupbutton {
-        border-right: 1px solid rgb(171, 171, 171);
-        border-radius: 0px 3px 3px 0px;
-      }
-      &.greenbtn.v-popupbutton, &.graybtn.v-popupbutton {
-        border-right: 1px solid rgb(47, 91, 183);
-      }
-      &.greenbtn.v-popupbutton .v-popup-indicator, &.graybtn.v-popupbutton .v-popup-indicator {
-        background-image: url("icons/sprites-white.png");
-      }
-      &.v-popupbutton:focus {
-        border-left-color: rgb(171, 171, 171);
-      }
-      &.greenbtn.v-popupbutton:focus, &.graybtn.v-popupbutton:focus {
-        border-left-color: rgb(47, 91, 183);
-      }
-      &.greenbtn .v-button-wrap, &.graybtn .v-button-wrap {
-        background-image: none;
-      }
-    }
-    .v-button.v-button-esofthead.v-popupbutton {
-      padding: 4px 10px 4px 2px;
-      &:active {
-        padding: 4px 10px 4px 2px;
-      }
     }
   }
 
@@ -5064,6 +4983,7 @@
         padding-left: 18px;
       }
       border-bottom: 1px solid $border-color;
+      background-color: floralwhite;
     }
     .v-tabsheet {
       -moz-box-sizing: border-box;
@@ -5268,11 +5188,6 @@
         }
       }
     }
-  }
-
-  .esofthead-progessbar {
-    position: relative;
-    z-index: 0;
   }
 
   .progressbar-status {

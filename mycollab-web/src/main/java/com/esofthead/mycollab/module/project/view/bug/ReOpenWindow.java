@@ -121,20 +121,6 @@ class ReOpenWindow extends Window {
 				controlsBtn.setMargin(new MarginInfo(true, true, true, false));
 				layout.addComponent(controlsBtn);
 
-				final Button cancelBtn = new Button(
-						AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-						new Button.ClickListener() {
-							@Override
-							public void buttonClick(
-									final Button.ClickEvent event) {
-								ReOpenWindow.this.close();
-							}
-						});
-				cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-				controlsBtn.addComponent(cancelBtn);
-				controlsBtn.setComponentAlignment(cancelBtn,
-						Alignment.MIDDLE_LEFT);
-
 				final Button wonFixBtn = new Button(
 						AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
 						new Button.ClickListener() {
@@ -199,6 +185,20 @@ class ReOpenWindow extends Window {
 				controlsBtn.addComponent(wonFixBtn);
 				controlsBtn.setComponentAlignment(wonFixBtn,
 						Alignment.MIDDLE_RIGHT);
+
+				final Button cancelBtn = new Button(
+						AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(
+									final Button.ClickEvent event) {
+								ReOpenWindow.this.close();
+							}
+						});
+				cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+				controlsBtn.addComponent(cancelBtn);
+				controlsBtn.setComponentAlignment(cancelBtn,
+						Alignment.MIDDLE_LEFT);
 
 				layout.setComponentAlignment(controlsBtn,
 						Alignment.MIDDLE_RIGHT);

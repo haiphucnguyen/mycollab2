@@ -7038,7 +7038,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .popupContent .v-window-outerheader {
-	background-color: whitesmoke;
+	background-color: floralwhite;
 	padding: 0;
 }
 
@@ -7300,13 +7300,10 @@ body .mycollab.v-app .v-app-loading {
 	line-height: 16px;
 }
 
-.mycollab .h-sidebar-menu, .mycollab .projectfeed-hdr-wrapper {
-	background: none repeat-x left bottom #47749d;
-}
-
 .mycollab .h-sidebar-menu {
 	height: 50px;
 	position: relative;
+	background-color: brown;
 }
 
 .mycollab .h-sidebar-menu  > div {
@@ -7370,6 +7367,7 @@ body .mycollab.v-app .v-app-loading {
 	zoom: 1;
 	position: relative;
 	padding: 17px 18px;
+	color: #FFF;
 }
 
 .mycollab .h-sidebar-menu div.v-button-link:active .v-button-wrap, .mycollab .h-sidebar-menu div.v-button-link:focus .v-button-wrap {
@@ -8772,16 +8770,17 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .projectfeed-hdr-wrapper {
+	background: none repeat-x left bottom brown;
 	padding: 15px 30px;
 }
 
 .mycollab .projectfeed-hdr-wrapper .h1 {
 	padding: 0px;
-	color: #FFF;
+	color: white;
 }
 
 .mycollab .projectfeed-hdr-wrapper .h2, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-button-caption {
-	color: #FFF;
+	color: white;
 }
 
 .mycollab .v-wizardprogressbar .step {
@@ -9446,96 +9445,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab div.v-splitbutton .v-button {
 	height: auto;
-}
-
-.mycollab .v-splitbutton.esofthead .v-popupbutton .v-button-wrap, .mycollab .v-splitbutton.esofthead div.v-disabled.v-popupbutton .v-button-wrap {
-	padding-left: 0px;
-	padding-right: 0px;
-}
-
-.mycollab .v-splitbutton-esofthead {
-	font-weight: bold;
-	font-size: 13px !important;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead {
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom #fcfcfc;
-	border-radius: 3px 0px 0px 3px;
-	border-right: none;
-	padding: 4px 6px 4px 15px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.v-disabled, .mycollab .v-splitbutton-esofthead .v-button-esofthead:active {
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom #fcfcfc;
-	border-radius: 3px 0px 0px 3px;
-	border-right: none;
-	padding: 4px 6px 4px 15px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.greenbtn {
-	background-color: #2599c8;
-	border-color: #093768;
-	margin: 0px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.greenbtn:active {
-	background-color: #1377b3;
-	padding: 3px 8px;
-	border-color: #093768;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.graybtn {
-	background-color: #b2b2b2;
-	border-color: #383838;
-	margin: 0px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead:active {
-	background: none no-repeat 0 0 #A1A1A1;
-	border-color: #ababab;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.graybtn:active {
-	border-color: #383838;
-	padding: 3px 8px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button.v-button-esofthead .v-button-wrap, .mycollab .v-splitbutton-esofthead .v-button.v-button-esofthead:active .v-button-wrap {
-	border: none;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.v-popupbutton {
-	border-right: 1px solid #ababab;
-	border-radius: 0px 3px 3px 0px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.greenbtn.v-popupbutton, .mycollab .v-splitbutton-esofthead .v-button-esofthead.graybtn.v-popupbutton {
-	border-right: 1px solid #2f5bb7;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.greenbtn.v-popupbutton .v-popup-indicator, .mycollab .v-splitbutton-esofthead .v-button-esofthead.graybtn.v-popupbutton .v-popup-indicator {
-	background-image: url("icons/sprites-white.png");
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.v-popupbutton:focus {
-	border-left-color: #ababab;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.greenbtn.v-popupbutton:focus, .mycollab .v-splitbutton-esofthead .v-button-esofthead.graybtn.v-popupbutton:focus {
-	border-left-color: #2f5bb7;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button-esofthead.greenbtn .v-button-wrap, .mycollab .v-splitbutton-esofthead .v-button-esofthead.graybtn .v-button-wrap {
-	background-image: none;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton {
-	padding: 4px 10px 4px 2px;
-}
-
-.mycollab .v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton:active {
-	padding: 4px 10px 4px 2px;
 }
 
 .mycollab .v-splitbutton .greenbtn, .mycollab .v-splitbutton .graybtn {
@@ -11451,6 +11360,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .taskadd-popup .popup-header {
 	border-bottom: 1px solid #CFCFCF;
+	background-color: floralwhite;
 }
 
 .mycollab .taskadd-popup .popup-header.v-margin-top {
@@ -11672,11 +11582,6 @@ body .mycollab.v-app .v-app-loading {
 	font-weight: 400;
 	font-size: 12px;
 	display: block;
-}
-
-.mycollab .esofthead-progessbar {
-	position: relative;
-	z-index: 0;
 }
 
 .mycollab .progressbar-status {
