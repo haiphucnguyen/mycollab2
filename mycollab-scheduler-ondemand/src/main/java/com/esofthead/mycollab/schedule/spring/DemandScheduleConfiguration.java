@@ -34,19 +34,19 @@ public class DemandScheduleConfiguration {
         return bean;
     }
 
-    @Bean JobDetailFactoryBean sendAccountBillingEmailJob() {
+    @Bean public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(BillingSendingNotificationJob.class);
         bean.setDurability(true);
         return bean;
     }
-//
-//    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
-//        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-//        bean.setJobDetail(sendAccountBillingEmailJob().getObject());
-//        bean.setCronExpression("0 0 0 * * ?");
-//        return bean;
-//    }
+
+    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(sendAccountBillingRequestEmailJob().getObject());
+        bean.setCronExpression("0 0 0 * * ?");
+        return bean;
+    }
 
     @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
@@ -60,7 +60,7 @@ public class DemandScheduleConfiguration {
         bean.setAutoStartup(true);
         bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
 
-        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject());
+        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(), sendAccountBillingEmailTrigger().getObject());
         return bean;
     }
 }

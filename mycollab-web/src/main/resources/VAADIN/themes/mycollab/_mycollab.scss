@@ -521,6 +521,10 @@
     display: inline-block;
   }
 
+  .v-popupbutton .v-popup-indicator:before {
+    content: "";
+  }
+
   div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton {
     margin: 0px;
     text-align: center;
@@ -3629,6 +3633,9 @@
     }
     &.odd {
       background-color: #FFF;
+    }
+    &:hover {
+      background-color: $hover-background-color;
     }
   }
 

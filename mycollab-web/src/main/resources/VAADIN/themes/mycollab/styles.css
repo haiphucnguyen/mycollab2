@@ -6942,6 +6942,10 @@ body .mycollab.v-app .v-app-loading {
 	display: inline-block;
 }
 
+.mycollab .v-popupbutton .v-popup-indicator:before {
+	content: "";
+}
+
 .mycollab div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton {
 	margin: 0px;
 	text-align: center;
@@ -10059,6 +10063,10 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .widget-row.odd {
 	background-color: #FFF;
+}
+
+.mycollab .widget-row:hover {
+	background-color: ghostwhite;
 }
 
 .mycollab .v-window, .mycollab .v-Notification {

@@ -69,7 +69,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
     private PopupButton taskGroupSelection;
     private PopupButton taskSelection;
-    private TaskGroupDisplayWidget taskLists;
+    private TaskGroupDisplayWidget taskListsWidget;
 
     private VerticalLayout rightColumn;
     private TextField nameField;
@@ -362,10 +362,10 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth()
                 .withSpacing(true);
-        this.taskLists = new TaskGroupDisplayWidget();
+        this.taskListsWidget = new TaskGroupDisplayWidget();
 
         MVerticalLayout leftColumn = new MVerticalLayout().withMargin(
-                new MarginInfo(false, true, false, false)).with(taskLists);
+                new MarginInfo(false, true, false, false)).with(taskListsWidget);
 
         this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(
                 new MarginInfo(true, false, false, false));
@@ -578,23 +578,23 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
     private void displayActiveTaskGroups() {
         final TaskListSearchCriteria criteria = this.createBaseSearchCriteria();
         criteria.setStatus(new StringSearchField(StatusI18nEnum.Open.name()));
-        this.taskLists.setSearchCriteria(criteria);
+        this.taskListsWidget.setSearchCriteria(criteria);
     }
 
     private void displayInActiveTaskGroups() {
         final TaskListSearchCriteria criteria = this.createBaseSearchCriteria();
         criteria.setStatus(new StringSearchField(StatusI18nEnum.Closed.name()));
-        this.taskLists.setSearchCriteria(criteria);
+        this.taskListsWidget.setSearchCriteria(criteria);
     }
 
     private void displayAllTaskGroups() {
         final TaskListSearchCriteria criteria = this.createBaseSearchCriteria();
-        this.taskLists.setSearchCriteria(criteria);
+        this.taskListsWidget.setSearchCriteria(criteria);
     }
 
     @Override
     public void insertTaskList(final SimpleTaskList taskList) {
-        this.taskLists.insetItemOnBottom(taskList);
+        this.taskListsWidget.insetItemOnBottom(taskList);
     }
 
     private TaskSearchCriteria createTaskBaseSearchCriteria() {
