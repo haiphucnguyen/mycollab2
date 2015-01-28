@@ -6478,15 +6478,6 @@ body .mycollab.v-app .v-app-loading {
 	white-space: nowrap;
 }
 
-.mycollab .v-upload-immediate .v-button {
-	background-color: #17D61B;
-	margin: 10px 0px 0px 0px;
-}
-
-.mycollab .v-upload-immediate .v-button .v-button-caption {
-	color: white;
-}
-
 .mycollab .v-tooltip {
 	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
 	line-height: normal;
@@ -6568,6 +6559,35 @@ body .mycollab.v-app .v-app-loading {
 .mycollab .panel-body {
 	border: 1px solid #CFCFCF;
 	border-top: 0;
+}
+
+.mycollab .v-multifileupload-ext .v-verticallayout {
+	display: block;
+}
+
+.mycollab .v-multifileupload-uploads .v-upload .v-button {
+	border: none;
+	background: url("icons/16/attachment.png") no-repeat center left transparent;
+	padding-left: 20px;
+	color: #454545;
+}
+
+.mycollab .v-multifileupload-uploads .v-upload .v-button  > .v-button-wrap {
+	background: none;
+	padding-left: 5px;
+}
+
+.mycollab .v-multifileupload-uploads .v-upload-immediate input {
+	cursor: pointer;
+}
+
+.mycollab .v-upload-immediate .v-button {
+	background-color: #17D61B;
+	margin: 10px 0px 0px 0px;
+}
+
+.mycollab .v-upload-immediate .v-button .v-button-caption {
+	color: black;
 }
 
 .mycollab .date-wrapper {
@@ -9973,26 +9993,6 @@ body .mycollab.v-app .v-app-loading {
 	padding: 3px 13px;
 	text-shadow: 1px 1px 0px #1570cd;
 	text-shadow: 1px 1px 0px #1570cd;
-}
-
-.mycollab .v-multifileupload-ext .v-verticallayout {
-	display: block;
-}
-
-.mycollab .v-multifileupload-uploads .v-upload .v-button {
-	border: none;
-	background: url("icons/16/attachment.png") no-repeat center left transparent;
-	padding-left: 20px;
-	color: #454545;
-}
-
-.mycollab .v-multifileupload-uploads .v-upload .v-button  > .v-button-wrap {
-	background: none;
-	padding-left: 5px;
-}
-
-.mycollab .v-multifileupload-uploads .v-upload-immediate input {
-	cursor: pointer;
 }
 
 .mycollab .v-form-errormessage .gwt-HTML {
@@ -14349,6 +14349,35 @@ a.pending {
 .panel-body {
 	border: 1px solid #CFCFCF;
 	border-top: 0;
+}
+
+.v-multifileupload-ext .v-verticallayout {
+	display: block;
+}
+
+.v-multifileupload-uploads .v-upload .v-button {
+	border: none;
+	background: url("icons/16/attachment.png") no-repeat center left transparent;
+	padding-left: 20px;
+	color: #454545;
+}
+
+.v-multifileupload-uploads .v-upload .v-button  > .v-button-wrap {
+	background: none;
+	padding-left: 5px;
+}
+
+.v-multifileupload-uploads .v-upload-immediate input {
+	cursor: pointer;
+}
+
+.v-upload-immediate .v-button {
+	background-color: #17D61B;
+	margin: 10px 0px 0px 0px;
+}
+
+.v-upload-immediate .v-button .v-button-caption {
+	color: black;
 }
 
 .stickytooltip {
