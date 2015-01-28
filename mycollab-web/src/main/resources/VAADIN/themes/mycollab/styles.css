@@ -66,9 +66,6 @@
 	.projectDashboardView {
 		margin: 0px 15px 20px 0px;
 	}
-	.menuContent .v-csslayout-projectTabContent {
-		min-width: 700px;
-	}
 	.member-block {
 		width: 345px;
 		margin-right: 5px;
@@ -8829,33 +8826,6 @@ body .mycollab.v-app .v-app-loading {
 	background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFF;
 }
 
-.mycollab .v-csslayout-projectTabContent {
-	height: 100%;
-	padding: 6px;
-	border-style: solid;
-	border-color: #8f8f8f;
-	border-width: 1px 0px 0px 1px;
-	background-color: #fff;
-	height: 100%;
-}
-
-.mycollab .v-csslayout-projectTabContent.Milestones {
-	padding: 10px 0px 0px;
-}
-
-.mycollab .projectTabContent .h1 {
-	padding: 0.67em 0 0.33em 0;
-	font-size: 20px;
-	text-shadow: #F0F0F0 0 1px 0;
-	margin-bottom: 10px;
-}
-
-.mycollab .projectTabContent .readview-layout-header .h1 {
-	border: none;
-	text-shadow: none;
-	margin: 0px;
-}
-
 .mycollab .projectDashboardView .addViewLayout .depot-title .h2 {
 	padding: 0px 0px 0px 20px;
 }
@@ -8885,7 +8855,7 @@ body .mycollab.v-app .v-app-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: none no-repeat left top #F1F1F1;
+	background: none no-repeat left top bisque;
 	border-radius: 0px;
 }
 
@@ -9045,7 +9015,8 @@ body .mycollab.v-app .v-app-loading {
 	border-style: solid;
 	border-color: #CFCFCF;
 	border-radius: 0px;
-	background: none no-repeat 0 0 #F1F1F1;
+	background: none no-repeat 0 0 bisque;
+	height: 40px;
 }
 
 .mycollab .depotComp.collapsed .header-wrapper {
@@ -10736,7 +10707,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .milestone-view-header {
 	text-align: center;
-	background: none repeat-x left top #d4dfef;
+	background: none repeat-x left top bisque;
 	height: 30px;
 	color: #5e5e5e;
 	border-bottom: 1px solid #CFCFCF;
@@ -10947,10 +10918,6 @@ body .mycollab.v-app .v-app-loading {
 	display: block;
 }
 
-.mycollab .projectTabContent .usergroup-view .readview-layout {
-	margin: 0px;
-}
-
 .mycollab .readview-layout {
 	background-color: #FFF;
 	padding: 0px;
@@ -10970,14 +10937,6 @@ body .mycollab.v-app .v-app-loading {
 	overflow: visible !important;
 	bottom: 0px;
 	left: 0px;
-}
-
-.mycollab .projectTabContent .usergroup-view .readview-header-left .v-horizontallayout-margin {
-	padding: 0px 0px 5px 0px;
-}
-
-.mycollab .projectTabContent .usergroup-view .readview-header-left .h1 {
-	font-weight: bold;
 }
 
 .mycollab .readview-layout-header  > div {
@@ -11513,16 +11472,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-tabsheet-content .task-list .v-csslayout-comp-header {
 	padding: 5px;
-}
-
-.mycollab .projectTabContent .usergroup-view .readview-layout .v-table-header-wrap {
-	border: none;
-}
-
-.mycollab .projectTabContent .usergroup-view .readview-layout .v-table-body {
-	border-width: 1px 0px 1px 0px;
-	border-style: solid;
-	border-color: #CFCFCF;
 }
 
 .mycollab .relatedbug-comp-header.v-margin-top {

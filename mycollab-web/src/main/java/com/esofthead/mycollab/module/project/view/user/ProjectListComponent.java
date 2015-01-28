@@ -184,7 +184,7 @@ public class ProjectListComponent extends MVerticalLayout {
 								UI.getCurrent().addWindow(projectListWindow);
 							}
 						});
-				showMoreBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+				showMoreBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 				showMoreBtn.setWidth("100%");
 				btnWrap.addComponent(showMoreBtn);
 				getContentLayout().addComponent(btnWrap);

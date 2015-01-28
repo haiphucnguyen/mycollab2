@@ -171,8 +171,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
         private Div buildItemValue(ProjectGenericTask task) {
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
-            Img image = new Img("", ProjectResources.getResourceLink(task
-                    .getType()));
+            Img image = new Img("", ProjectResources.getResourceLink(task.getType()));
             A itemLink = new A();
             itemLink.setId("tag" + uid);
             itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
@@ -203,8 +202,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
         private Div buildAssigneeValue(ProjectGenericTask task) {
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
-            Img userAvatar = new Img("", StorageManager.getAvatarLink(
-                    task.getAssignUserAvatarId(), 16));
+            Img userAvatar = new Img("", StorageManager.getAvatarLink(task.getAssignUserAvatarId(), 16));
             A userLink = new A();
             userLink.setId("tag" + uid);
             userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(

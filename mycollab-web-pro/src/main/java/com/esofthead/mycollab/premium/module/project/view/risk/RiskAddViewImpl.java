@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
@@ -11,14 +8,12 @@ import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Layout;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -32,7 +27,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 
 	private static final long serialVersionUID = 1L;
 
-	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
+	private static Map<Integer, String> valueCaptions = new HashMap<>(
 			5);
 
 	static {
@@ -61,20 +56,17 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 
 	@Override
 	protected Resource initFormIconResource() {
-		return MyCollabResource
-				.newResource("icons/22/project/risk_selected.png");
+		return MyCollabResource.newResource("icons/22/project/risk_selected.png");
 	}
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		final Layout controlButtons = (new EditFormControlsGenerator<Risk>(
-				editForm)).createButtonControls();
-		return controlButtons;
+		return (new EditFormControlsGenerator<>(editForm)).createButtonControls();
 	}
 
 	@Override
 	protected AdvancedEditBeanForm<Risk> initPreviewForm() {
-		return new AdvancedEditBeanForm<Risk>();
+		return new AdvancedEditBeanForm<>();
 	}
 
 	@Override

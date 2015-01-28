@@ -447,9 +447,6 @@
     .projectDashboardView {
       margin: 0px 15px 20px 0px;
     }
-    .menuContent .v-csslayout-projectTabContent {
-      min-width: 700px;
-    }
     .member-block {
       width: 345px;
       margin-right: 5px;
@@ -2206,34 +2203,6 @@
     }
   }
 
-  .v-csslayout-projectTabContent {
-    height: 100%;
-    padding: 6px;
-    border-style: solid;
-    border-color: #8f8f8f;
-    border-width: 1px 0px 0px 1px;
-    background-color: #fff;
-    height: 100%;
-    &.Milestones {
-      padding: 10px 0px 0px;
-    }
-  }
-
-  .projectTabContent {
-    .h1 {
-      padding: .67em 0 .33em 0;
-      font-size: 20px;
-      /*  border-bottom: 1px solid #B7B7B7; */
-      text-shadow: #F0F0F0 0 1px 0;
-      margin-bottom: 10px;
-    }
-    .readview-layout-header .h1 {
-      border: none;
-      text-shadow: none;
-      margin: 0px;
-    }
-  }
-
   .projectDashboardView .addViewLayout .depot-title .h2 {
     padding: 0px 0px 0px 20px;
   }
@@ -2263,7 +2232,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background: none no-repeat left top #F1F1F1;
+    background: none no-repeat left top bisque;
     border-radius: 0px;
   }
 
@@ -2423,7 +2392,8 @@
       border-style: solid;
       border-color: $border-color;
       border-radius: 0px;
-      background: none no-repeat 0 0 #F1F1F1;
+      background: none no-repeat 0 0 bisque;
+      height: 40px;
     }
     &.collapsed .header-wrapper {
       border-width: 1px;
@@ -4186,7 +4156,7 @@
 
   .milestone-view-header {
     text-align: center;
-    background: none repeat-x left top rgb(212, 223, 239);
+    background: none repeat-x left top bisque;
     height: 30px;
     color: #5e5e5e;
     border-bottom: 1px solid $border-color;
@@ -4401,10 +4371,6 @@
     display: block;
   }
 
-  .projectTabContent .usergroup-view .readview-layout {
-    margin: 0px;
-  }
-
   .readview-layout {
     background-color: #FFF;
     padding: 0px;
@@ -4422,15 +4388,6 @@
     overflow: visible !important;
     bottom: 0px;
     left: 0px;
-  }
-
-  .projectTabContent .usergroup-view .readview-header-left {
-    .v-horizontallayout-margin {
-      padding: 0px 0px 5px 0px;
-    }
-    .h1 {
-      font-weight: bold;
-    }
   }
 
   .readview-layout-header {
@@ -4940,19 +4897,6 @@
     }
     .task-list .v-csslayout-comp-header {
       padding: 5px;
-    }
-  }
-
-  /* User Group */
-
-  .projectTabContent .usergroup-view .readview-layout {
-    .v-table-header-wrap {
-      border: none;
-    }
-    .v-table-body {
-      border-width: 1px 0px 1px 0px;
-      border-style: solid;
-      border-color: $border-color;
     }
   }
 
