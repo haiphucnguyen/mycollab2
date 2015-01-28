@@ -17,7 +17,16 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.List;
+import java.util.UUID;
 
+import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
+import com.esofthead.mycollab.utils.TooltipHelper;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -207,6 +216,8 @@ public class ProjectListComponent extends MVerticalLayout {
 			}
 
 			Label prjName = new Label(obj.getName());
+//			prjName.setDescription(ProjectTooltipGenerator.generateToolTipProject(AppContext.getUserLocale(), obj,
+//					AppContext.getSiteUrl(), AppContext.getTimezone()));
 			layout.addComponent(prjName);
 
 			layout.addLayoutClickListener(new LayoutClickListener() {

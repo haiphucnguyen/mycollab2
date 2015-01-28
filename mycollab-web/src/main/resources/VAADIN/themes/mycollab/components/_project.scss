@@ -120,4 +120,31 @@
       }
     }
   }
+
+  .prj-list-row {
+    background-color: #FFF;
+    border-color: $border-color;
+    border-width: 0px 1px 1px;
+    border-style: solid;
+    padding: 0px;
+    &:nth-child(odd) {
+      background-color: $background-color;
+    }
+    &:nth-child(even) {
+      background-color: #FFF;
+    }
+    &:hover {
+      background-color: $hover-background-color;
+    }
+  }
+
+  .widget-short-prj-name {
+    width: 60px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: $border-color;
+    background-color:lavenderblush;
+    font-weight:bold;
+    font-size:$font-large;
+  }
 }

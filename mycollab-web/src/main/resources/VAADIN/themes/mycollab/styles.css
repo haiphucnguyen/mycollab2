@@ -6534,7 +6534,7 @@ body .mycollab.v-app .v-app-loading {
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	padding: 5px;
+	padding: 10px;
 }
 
 .mycollab .list-row:nth-child(odd) {
@@ -6705,6 +6705,36 @@ body .mycollab.v-app .v-app-loading {
 	font-weight: 400;
 	font-size: 12px;
 	display: block;
+}
+
+.mycollab .prj-list-row {
+	background-color: #FFF;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	padding: 0px;
+}
+
+.mycollab .prj-list-row:nth-child(odd) {
+	background-color: whitesmoke;
+}
+
+.mycollab .prj-list-row:nth-child(even) {
+	background-color: #FFF;
+}
+
+.mycollab .prj-list-row:hover {
+	background-color: ghostwhite;
+}
+
+.mycollab .widget-short-prj-name {
+	width: 60px;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #CFCFCF;
+	background-color: lavenderblush;
+	font-weight: bold;
+	font-size: 14px;
 }
 
 .mycollab html {
@@ -14299,7 +14329,7 @@ a.pending {
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	padding: 5px;
+	padding: 10px;
 }
 
 .list-row:nth-child(odd) {
