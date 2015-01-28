@@ -40,8 +40,11 @@
             ${searchCriteria.saccountid.operation} m_prj_problem.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
         
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_problem.projectid = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation} m_prj_problem.projectid IN
+            #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                @{projectId}
+            #end
         #end
         
         #ifnotnull($searchCriteria.assignUser)
@@ -73,8 +76,11 @@
             ${searchCriteria.saccountid.operation} m_prj_risk.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
         
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_risk.projectid = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation} m_prj_risk.projectid IN
+            #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                @{projectId}
+            #end
         #end
         
         #ifnotnull($searchCriteria.assignUser)
@@ -106,8 +112,11 @@
             ${searchCriteria.saccountid.operation} m_tracker_bug.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
         
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_tracker_bug.projectid = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation} m_tracker_bug.projectid IN
+            #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                @{projectId}
+            #end
         #end
         
         #ifnotnull($searchCriteria.assignUser)
@@ -139,8 +148,11 @@
             ${searchCriteria.saccountid.operation} m_prj_task.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
         
-        #ifnotnull($searchCriteria.projectId)
-            ${searchCriteria.projectId.operation} m_prj_task.projectid = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
+        #ifnotnull($searchCriteria.projectIds)
+            ${searchCriteria.projectIds.operation} m_prj_task.projectid IN
+            #repeat(${searchCriteria.projectIds.values} $projectId "," "(" ")")
+                @{projectId}
+            #end
         #end
         
         #ifnotnull($searchCriteria.assignUser)

@@ -69,7 +69,7 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements
 		rightPanel.addComponent(messageWidget);
 
 		ProjectMembersWidget membersWidget = new ProjectMembersWidget();
-		ProjectTaskOverdueComponent taskOverdueWidget = new ProjectTaskOverdueComponent();
+		ProjectAssignmentsWidget taskOverdueWidget = new ProjectAssignmentsWidget();
 
 		rightPanel.addComponent(membersWidget);
 		rightPanel.addComponent(taskOverdueWidget);
@@ -77,7 +77,7 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements
 		activityPanel.showProjectFeeds();
 		prjView.displayProjectInformation();
 		membersWidget.showInformation();
-		taskOverdueWidget.showOverdueTasks();
+		taskOverdueWidget.showOpenAssignments();
 		messageWidget.showLatestMessages();
 	}
 }

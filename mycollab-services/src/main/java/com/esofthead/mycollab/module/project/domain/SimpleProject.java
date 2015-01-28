@@ -208,4 +208,8 @@ public class SimpleProject extends Project {
 	public void setCustomizeView(ProjectCustomizeView customizeView) {
 		this.customizeView = customizeView;
 	}
+
+	public boolean isArchived() {
+		return StatusI18nEnum.Archived.name().equals(getProjectstatus());
+	}
 }

@@ -1,11 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
-import java.util.Arrays;
-
-import org.vaadin.maddon.layouts.MHorizontalLayout;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
@@ -18,14 +14,11 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+
+import java.util.Arrays;
 
 /**
  * 
@@ -67,7 +60,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		});
 
 		searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setProjectId(new NumberSearchField(
+		searchCriteria.setProjectIds(new SetSearchField<>(
 				CurrentProjectVariables.getProjectId()));
 		taskTableDisplay.setSearchCriteria(searchCriteria);
 
@@ -124,8 +117,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 	}
 
 	private void callSearchAction() {
-		searchCriteria.setName(new StringSearchField(this.nameField.getValue()
-				.toString().trim()));
+		searchCriteria.setName(new StringSearchField(this.nameField.getValue().trim()));
 		taskTableDisplay.setSearchCriteria(searchCriteria);
 	}
 }

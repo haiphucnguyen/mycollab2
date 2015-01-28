@@ -54,6 +54,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 
@@ -63,7 +64,6 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 class ReOpenWindow extends Window {
 	private final SimpleBug bug;
-	private final EditForm editForm;
 	private VersionMultiSelectField fixedVersionSelect;
 	private final IBugCallbackStatusComp callbackForm;
 
@@ -74,13 +74,12 @@ class ReOpenWindow extends Window {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
 
-		VerticalLayout contentLayout = new VerticalLayout();
-		this.setWidth("750px");
-		this.editForm = new EditForm();
-		this.editForm.setBean(bug);
+		MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
+				false, true, false)).withWidth("750px");
 
-		contentLayout.addComponent(this.editForm);
-		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+		EditForm editForm = new EditForm();
+		editForm.setBean(bug);
+		contentLayout.addComponent(editForm);
 
 		this.setContent(contentLayout);
 

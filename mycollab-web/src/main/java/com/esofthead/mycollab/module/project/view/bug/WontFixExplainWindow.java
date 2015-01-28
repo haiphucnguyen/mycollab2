@@ -76,6 +76,7 @@ class WontFixExplainWindow extends Window {
 
 		VerticalLayout contentLayout = new VerticalLayout();
 		contentLayout.setMargin(new MarginInfo(false, false, true, false));
+
 		EditForm editForm = new EditForm();
 		contentLayout.addComponent(editForm);
 		editForm.setBean(bug);

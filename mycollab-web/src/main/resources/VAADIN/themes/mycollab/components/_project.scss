@@ -1,0 +1,123 @@
+@mixin mycollab-project {
+  /* My Project List */
+
+  .header {
+    border: 1px solid $border-color;
+    background-color: bisque;
+    margin-top: 10px;
+    .v-label {
+      font-size: $font-large;
+      font-weight: bold;
+    }
+  }
+
+  .myprojectlist {
+    .projectblock {
+      padding: 0px;
+      background-color: #FFF;
+      border-color: $border-color;
+      border-width: 0px 1px 1px;
+      border-style: solid;
+      &:hover {
+        background-color: $hover-background-color;
+      }
+      .projectlink-wrapper, .projectlink-wrapper-archived {
+        border-right: 1px solid $border-color;
+
+        padding: 10px 15px 8px;
+        .project-name {
+          .v-button-wrap {
+            padding: 0px 0px 10px;
+          }
+          a {
+            font-size: $font-large;
+            font-weight: bold;
+          }
+        }
+      }
+      .projectlink-wrapper {
+        background-color: lavenderblush;
+        &:hover {
+          background-color: $hover-background-color;
+        }
+      }
+      .projectlink-wrapper-archived {
+        background-color: darkgray;
+        &:hover {
+          background-color: $hover-background-color;
+        }
+      }
+    }
+  }
+
+  .v-window-contents .myprojectlist .bean-list {
+    border-top: 1px solid $border-color;
+  }
+
+  .project-status {
+    .v-verticallayout {
+      &.v-margin-top {
+        padding-top: 8px;
+      }
+      &.v-margin-right {
+        padding-right: 15px;
+      }
+      &.v-margin-bottom {
+        padding-bottom: 5px;
+      }
+      &.v-margin-left {
+        padding-left: 15px;
+      }
+    }
+    .member-count-lbl .v-button-wrap {
+      padding: 0px;
+      border: none;
+    }
+    .createdtime-lbl {
+      color: #808080;
+      font-size: $font-small;
+    }
+    .status-lbl {
+      color: #888;
+    }
+    .v-slot-phase-status-lbl:after {
+      border-top: 3px double $border-color;
+      display: block;
+      height: 1px;
+      content: " ";
+      width: 300px;
+      position: absolute;
+      left: 50px;
+      top: 1.1em;
+      z-index: 0;
+    }
+    .phase-status-lbl {
+      position: relative;
+      z-index: 1;
+      padding-right: 5px;
+    }
+    .phase-status-layout {
+      padding-top: 5px;
+    }
+    .phase-status-btn {
+      .v-button-wrap, &:hover .v-button-wrap {
+        padding: 0px;
+        border: none;
+        background: none;
+        border: none;
+      }
+      padding: 0px;
+      border: none;
+      background: none;
+      .v-button-caption {
+        font-size: 18px;
+        font-weight: 700;
+        small {
+          font-weight: 400;
+          font-size: $font-small;
+          display: block;
+        }
+      }
+    }
+  }
+}

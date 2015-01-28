@@ -5,6 +5,9 @@
 @import "components/breadcrumb";
 @import "components/button";
 @import "components/tooltip";
+@import "components/crm";
+@import "components/document";
+@import "components/project";
 
 @mixin mycollab {
 
@@ -14,6 +17,9 @@
   @include mycollab-button;
   @include mycollab-tooltip;
   @include mycollab-shared;
+  @include mycollab-crm;
+  @include mycollab-document;
+  @include mycollab-project;
 
   /**
    * "optional-" prefix means that the style is not necessarily used, it can be left blank
@@ -1849,15 +1855,6 @@
     }
   }
 
-  /* .addViewLayout .addViewBottomControls .depotComp {
-      margin: 0px;
-  } */
-
-  /* .addViewLayout .addViewBottomControls .depotComp .depotHeader {
-      border-radius: 0px;
-      border-width: 0px 0px 1px 0px;
-  } */
-
   /* End Add View Styles */
 
   /* Account Settings */
@@ -2864,34 +2861,7 @@
 
   /* End Tabsheet Styles */
 
-  /* Activity Stream Channel */
-
-  .popupContent .v-window-contents .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child > div > div.activity-stream {
-    border-width: 1px;
-  }
-
-  .activity-stream {
-    background-color: #FFF;
-    border-color: $border-color;
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    padding: 5px;
-    &:nth-child(odd) {
-      background-color: $background-color;
-    }
-    &:nth-child(even) {
-      background-color: #FFF;
-    }
-    &:hover {
-      background-color: $hover-background-color;
-    }
-  }
-
-  .v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child .activity-stream {
-    border-width: 1px;
-  }
-
-  .stream-content {
+  .project {
     padding-top: 3px;
     > .v-csslayout-margin > .v-csslayout-container > div {
       display: inline-block;
@@ -2905,38 +2875,6 @@
     }
   }
 
-  .activity-date {
-    color: gray;
-    font-size: $font-small;
-  }
-
-  .v-panel-caption-activity-panel {
-    border-width: 0px 0px 1px 0px;
-    border-color: #8f8f8f;
-    border-style: solid;
-    background-color: transparent;
-    padding-right: 0px;
-    text-align: right;
-    margin-top: 30px;
-  }
-
-  .v-panel-content-activity-panel {
-    border: none;
-    padding-top: 10px;
-    border-color: $border-color;
-  }
-
-  .v-panel-deco-activity-panel {
-    border: none;
-  }
-
-  .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream {
-    &.odd {
-      background-color: rgb(212, 223, 239);
-    }
-    background-color: $background-color;
-  }
-
   .stream-wrapper {
     background-color: #F5F5F5;
     padding: 5px;
@@ -2948,30 +2886,6 @@
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       height: 100%;
-    }
-  }
-
-  .date-wrapper {
-    background: url('icons/timehdr-bg.png') no-repeat left top rgb(212, 223, 239);
-    font-size: $font-small;
-    padding: 0px 5px;
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    color: white;
-    .v-label {
-      font-size: $font-small;
-    }
-    > .v-csslayout-margin {
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-    }
-  }
-
-  .project-member-readview {
-    .date-wrapper, .stream-wrapper {
-      border-width: 0px 0px 1px;
     }
   }
 
@@ -5094,102 +5008,6 @@
     border-right: none;
   }
 
-  /* My Project List */
-
-  .myprojectlist .activity-stream {
-    padding: 0px;
-  }
-
-  .v-window-contents .myprojectlist .bean-list {
-    border-top: 1px solid $border-color;
-  }
-
-  .myprojectlist .stream-content {
-    padding: 0px;
-    .projectlink-wrapper {
-      border-right: 1px solid $border-color;
-      background-color: $background-color;
-      padding: 10px 15px 8px;
-      .project-name {
-        .v-button-wrap, &:focus .v-button-wrap, &:active .v-button-wrap {
-          padding: 0px 0px 10px;
-        }
-        a {
-          font-size: $font-normal;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-
-  .project-status {
-    .v-verticallayout {
-      &.v-margin-top {
-        padding-top: 8px;
-      }
-      &.v-margin-right {
-        padding-right: 15px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 5px;
-      }
-      &.v-margin-left {
-        padding-left: 15px;
-      }
-    }
-    .member-count-lbl .v-button-wrap {
-      padding: 0px;
-      border: none;
-    }
-    .createdtime-lbl {
-      color: #808080;
-      font-size: $font-small;
-    }
-    .status-lbl {
-      color: #888;
-    }
-    .v-slot-phase-status-lbl:after {
-      border-top: 3px double $border-color;
-      display: block;
-      height: 1px;
-      content: " ";
-      width: 100%;
-      position: absolute;
-      left: 0;
-      top: 1.1em;
-      z-index: 0;
-    }
-    .phase-status-lbl {
-      position: relative;
-      z-index: 1;
-      background-color: $background-color;
-      padding-right: 5px;
-    }
-    .phase-status-layout {
-      padding-top: 5px;
-    }
-    .phase-status-btn {
-      .v-button-wrap, &:hover .v-button-wrap {
-        padding: 0px;
-        border: none;
-        background: none;
-        border: none;
-      }
-      padding: 0px;
-      border: none;
-      background: none;
-      .v-button-caption {
-        font-size: 18px;
-        font-weight: 700;
-        small {
-          font-weight: 400;
-          font-size: $font-small;
-          display: block;
-        }
-      }
-    }
-  }
-
   .progressbar-status {
     position: absolute;
     z-index: 1;
@@ -6604,14 +6422,6 @@
       .v-button-caption {
         font-size: $font-normal;
       }
-    }
-  }
-
-  /*Project Members Widget */
-
-  .project-member-widget .username {
-    .v-button-wrap, &:active .v-button-wrap, &:focus .v-button-wrap {
-      padding: 0px;
     }
   }
 

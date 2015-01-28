@@ -15,4 +15,26 @@
       color: #108e2a;
     }
   }
+
+  .list-row {
+    background-color: #FFF;
+    border-color: $border-color;
+    border-width: 0px 1px 1px;
+    border-style: solid;
+    padding: 5px;
+    &:nth-child(odd) {
+      background-color: $background-color;
+    }
+    &:nth-child(even) {
+      background-color: #FFF;
+    }
+    &:hover {
+      background-color: $hover-background-color;
+    }
+  }
+
+  .activity-date {
+    color: gray;
+    font-size: $font-small;
+  }
 }

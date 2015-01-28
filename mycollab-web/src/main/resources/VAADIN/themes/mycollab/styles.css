@@ -6532,6 +6532,184 @@ body .mycollab.v-app .v-app-loading {
 	color: #108e2a;
 }
 
+.mycollab .list-row {
+	background-color: #FFF;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	padding: 5px;
+}
+
+.mycollab .list-row:nth-child(odd) {
+	background-color: whitesmoke;
+}
+
+.mycollab .list-row:nth-child(even) {
+	background-color: #FFF;
+}
+
+.mycollab .list-row:hover {
+	background-color: ghostwhite;
+}
+
+.mycollab .activity-date {
+	color: gray;
+	font-size: 12px;
+}
+
+.mycollab .date-wrapper {
+	background: url(components/icons/timehdr-bg.png) no-repeat left top #d4dfef;
+	font-size: 12px;
+	padding: 0px 5px;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	border-color: #CFCFCF;
+	color: white;
+}
+
+.mycollab .date-wrapper .v-label {
+	font-size: 12px;
+}
+
+.mycollab .date-wrapper  > .v-csslayout-margin {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.mycollab .header {
+	border: 1px solid #CFCFCF;
+	background-color: bisque;
+	margin-top: 10px;
+}
+
+.mycollab .header .v-label {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.mycollab .myprojectlist .projectblock {
+	padding: 0px;
+	background-color: #FFF;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+}
+
+.mycollab .myprojectlist .projectblock:hover {
+	background-color: ghostwhite;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper, .mycollab .myprojectlist .projectblock .projectlink-wrapper-archived {
+	border-right: 1px solid #CFCFCF;
+	padding: 10px 15px 8px;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper .project-name .v-button-wrap, .mycollab .myprojectlist .projectblock .projectlink-wrapper-archived .project-name .v-button-wrap {
+	padding: 0px 0px 10px;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper .project-name a, .mycollab .myprojectlist .projectblock .projectlink-wrapper-archived .project-name a {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper {
+	background-color: lavenderblush;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper:hover {
+	background-color: ghostwhite;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper-archived {
+	background-color: darkgray;
+}
+
+.mycollab .myprojectlist .projectblock .projectlink-wrapper-archived:hover {
+	background-color: ghostwhite;
+}
+
+.mycollab .v-window-contents .myprojectlist .bean-list {
+	border-top: 1px solid #CFCFCF;
+}
+
+.mycollab .project-status .v-verticallayout.v-margin-top {
+	padding-top: 8px;
+}
+
+.mycollab .project-status .v-verticallayout.v-margin-right {
+	padding-right: 15px;
+}
+
+.mycollab .project-status .v-verticallayout.v-margin-bottom {
+	padding-bottom: 5px;
+}
+
+.mycollab .project-status .v-verticallayout.v-margin-left {
+	padding-left: 15px;
+}
+
+.mycollab .project-status .member-count-lbl .v-button-wrap {
+	padding: 0px;
+	border: none;
+}
+
+.mycollab .project-status .createdtime-lbl {
+	color: #808080;
+	font-size: 12px;
+}
+
+.mycollab .project-status .status-lbl {
+	color: #888;
+}
+
+.mycollab .project-status .v-slot-phase-status-lbl:after {
+	border-top: 3px double #CFCFCF;
+	display: block;
+	height: 1px;
+	content: " ";
+	width: 300px;
+	position: absolute;
+	left: 50px;
+	top: 1.1em;
+	z-index: 0;
+}
+
+.mycollab .project-status .phase-status-lbl {
+	position: relative;
+	z-index: 1;
+	padding-right: 5px;
+}
+
+.mycollab .project-status .phase-status-layout {
+	padding-top: 5px;
+}
+
+.mycollab .project-status .phase-status-btn {
+	padding: 0px;
+	border: none;
+	background: none;
+}
+
+.mycollab .project-status .phase-status-btn .v-button-wrap, .mycollab .project-status .phase-status-btn:hover .v-button-wrap {
+	padding: 0px;
+	border: none;
+	background: none;
+	border: none;
+}
+
+.mycollab .project-status .phase-status-btn .v-button-caption {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.mycollab .project-status .phase-status-btn .v-button-caption small {
+	font-weight: 400;
+	font-size: 12px;
+	display: block;
+}
+
 .mycollab html {
 	overflow: hidden;
 }
@@ -9310,81 +9488,20 @@ body .mycollab.v-app .v-app-loading {
 	border: none;
 }
 
-.mycollab .popupContent .v-window-contents .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child > div > div.activity-stream {
-	border-width: 1px;
-}
-
-.mycollab .activity-stream {
-	background-color: #FFF;
-	border-color: #CFCFCF;
-	border-width: 0px 1px 1px;
-	border-style: solid;
-	padding: 5px;
-}
-
-.mycollab .activity-stream:nth-child(odd) {
-	background-color: whitesmoke;
-}
-
-.mycollab .activity-stream:nth-child(even) {
-	background-color: #FFF;
-}
-
-.mycollab .activity-stream:hover {
-	background-color: ghostwhite;
-}
-
-.mycollab .v-tabsheet-tabsheetpanel .activity-panel .v-lazyloadingwrapper > .v-verticallayout > div > div:first-child .activity-stream {
-	border-width: 1px;
-}
-
-.mycollab .stream-content {
+.mycollab .project {
 	padding-top: 3px;
 }
 
-.mycollab .stream-content  > .v-csslayout-margin > .v-csslayout-container > div {
+.mycollab .project  > .v-csslayout-margin > .v-csslayout-container > div {
 	display: inline-block;
 	vertical-align: top;
 	margin: 0px 3px;
 	line-height: 16px;
 }
 
-.mycollab .stream-content img {
+.mycollab .project img {
 	display: inline-block;
 	vertical-align: top;
-}
-
-.mycollab .activity-date {
-	color: gray;
-	font-size: 12px;
-}
-
-.mycollab .v-panel-caption-activity-panel {
-	border-width: 0px 0px 1px 0px;
-	border-color: #8f8f8f;
-	border-style: solid;
-	background-color: transparent;
-	padding-right: 0px;
-	text-align: right;
-	margin-top: 30px;
-}
-
-.mycollab .v-panel-content-activity-panel {
-	border: none;
-	padding-top: 10px;
-	border-color: #CFCFCF;
-}
-
-.mycollab .v-panel-deco-activity-panel {
-	border: none;
-}
-
-.mycollab .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream {
-	background-color: whitesmoke;
-}
-
-.mycollab .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout .activity-stream.odd {
-	background-color: #d4dfef;
 }
 
 .mycollab .stream-wrapper {
@@ -9400,30 +9517,6 @@ body .mycollab.v-app .v-app-loading {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	height: 100%;
-}
-
-.mycollab .date-wrapper {
-	background: url('icons/timehdr-bg.png') no-repeat left top #d4dfef;
-	font-size: 12px;
-	padding: 0px 5px;
-	border-width: 0px 1px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
-	color: white;
-}
-
-.mycollab .date-wrapper .v-label {
-	font-size: 12px;
-}
-
-.mycollab .date-wrapper  > .v-csslayout-margin {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
-
-.mycollab .project-member-readview .date-wrapper, .mycollab .project-member-readview .stream-wrapper {
-	border-width: 0px 0px 1px;
 }
 
 .mycollab .v-panel-content-noneBorder-panel {
@@ -11480,110 +11573,6 @@ body .mycollab.v-app .v-app-loading {
 	border-right: none;
 }
 
-.mycollab .myprojectlist .activity-stream {
-	padding: 0px;
-}
-
-.mycollab .v-window-contents .myprojectlist .bean-list {
-	border-top: 1px solid #CFCFCF;
-}
-
-.mycollab .myprojectlist .stream-content {
-	padding: 0px;
-}
-
-.mycollab .myprojectlist .stream-content .projectlink-wrapper {
-	border-right: 1px solid #CFCFCF;
-	background-color: whitesmoke;
-	padding: 10px 15px 8px;
-}
-
-.mycollab .myprojectlist .stream-content .projectlink-wrapper .project-name .v-button-wrap, .mycollab .myprojectlist .stream-content .projectlink-wrapper .project-name:focus .v-button-wrap, .mycollab .myprojectlist .stream-content .projectlink-wrapper .project-name:active .v-button-wrap {
-	padding: 0px 0px 10px;
-}
-
-.mycollab .myprojectlist .stream-content .projectlink-wrapper .project-name a {
-	font-size: 13px;
-	font-weight: bold;
-}
-
-.mycollab .project-status .v-verticallayout.v-margin-top {
-	padding-top: 8px;
-}
-
-.mycollab .project-status .v-verticallayout.v-margin-right {
-	padding-right: 15px;
-}
-
-.mycollab .project-status .v-verticallayout.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.mycollab .project-status .v-verticallayout.v-margin-left {
-	padding-left: 15px;
-}
-
-.mycollab .project-status .member-count-lbl .v-button-wrap {
-	padding: 0px;
-	border: none;
-}
-
-.mycollab .project-status .createdtime-lbl {
-	color: #808080;
-	font-size: 12px;
-}
-
-.mycollab .project-status .status-lbl {
-	color: #888;
-}
-
-.mycollab .project-status .v-slot-phase-status-lbl:after {
-	border-top: 3px double #CFCFCF;
-	display: block;
-	height: 1px;
-	content: " ";
-	width: 100%;
-	position: absolute;
-	left: 0;
-	top: 1.1em;
-	z-index: 0;
-}
-
-.mycollab .project-status .phase-status-lbl {
-	position: relative;
-	z-index: 1;
-	background-color: whitesmoke;
-	padding-right: 5px;
-}
-
-.mycollab .project-status .phase-status-layout {
-	padding-top: 5px;
-}
-
-.mycollab .project-status .phase-status-btn {
-	padding: 0px;
-	border: none;
-	background: none;
-}
-
-.mycollab .project-status .phase-status-btn .v-button-wrap, .mycollab .project-status .phase-status-btn:hover .v-button-wrap {
-	padding: 0px;
-	border: none;
-	background: none;
-	border: none;
-}
-
-.mycollab .project-status .phase-status-btn .v-button-caption {
-	font-size: 18px;
-	font-weight: 700;
-}
-
-.mycollab .project-status .phase-status-btn .v-button-caption small {
-	font-weight: 400;
-	font-size: 12px;
-	display: block;
-}
-
 .mycollab .progressbar-status {
 	position: absolute;
 	z-index: 1;
@@ -12949,10 +12938,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .page-controls .v-button .v-button-caption {
 	font-size: 13px;
-}
-
-.mycollab .project-member-widget .username .v-button-wrap, .mycollab .project-member-widget .username:active .v-button-wrap, .mycollab .project-member-widget .username:focus .v-button-wrap {
-	padding: 0px;
 }
 
 .mycollab .v-buttongroup.navigation-btns .v-button-wrap, .mycollab .v-ie .v-buttongroup.navigation-btns .v-button-wrap {
@@ -14358,6 +14343,31 @@ a.overdue {
 
 a.pending {
 	color: #108e2a;
+}
+
+.list-row {
+	background-color: #FFF;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	padding: 5px;
+}
+
+.list-row:nth-child(odd) {
+	background-color: whitesmoke;
+}
+
+.list-row:nth-child(even) {
+	background-color: #FFF;
+}
+
+.list-row:hover {
+	background-color: ghostwhite;
+}
+
+.activity-date {
+	color: gray;
+	font-size: 12px;
 }
 
 .stickytooltip {
