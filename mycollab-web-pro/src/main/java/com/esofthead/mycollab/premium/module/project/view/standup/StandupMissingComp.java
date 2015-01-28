@@ -3,22 +3,33 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.StorageManager;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 
@@ -26,33 +37,26 @@ import com.vaadin.ui.VerticalLayout;
  * @since 4.0
  * 
  */
-public class StandupMissingComp extends VerticalLayout {
+public class StandupMissingComp extends MVerticalLayout {
 	private static final long serialVersionUID = 5332956503787026253L;
 
 	private VerticalLayout bodyWrap;
 	private Label headerLbl;
 
 	public StandupMissingComp() {
-		super();
-		this.setStyleName("standup-missing-comp");
-
-		initUI();
-	}
-
-	protected void initUI() {
-		CssLayout headerWrap = new CssLayout();
-		headerWrap.setStyleName("header-wrap");
-
+		this.withSpacing(false).withMargin(false);
 		headerLbl = new Label(
 				AppContext
 						.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
 		headerLbl.setSizeUndefined();
-		headerWrap.addComponent(headerLbl);
-		this.addComponent(headerWrap);
+		MHorizontalLayout header = new MHorizontalLayout().withSpacing(true).withMargin(new MarginInfo(false, true,
+				false, true)).withHeight("34px").withWidth("100%").with(headerLbl).withAlign(headerLbl, Alignment
+				.MIDDLE_LEFT);
+		header.setStyleName("panel-header");
 
-		bodyWrap = new VerticalLayout();
-		bodyWrap.setStyleName("comp-body-wrap");
-		this.addComponent(bodyWrap);
+		bodyWrap = new MVerticalLayout().withStyleName
+				("panel-body");
+		this.with(header, bodyWrap).withWidth("100%");
 	}
 
 	public void search(Date date) {
@@ -69,25 +73,31 @@ public class StandupMissingComp extends VerticalLayout {
 			Iterator<SimpleUser> iterator = someGuys.iterator();
 			while (iterator.hasNext()) {
 				final SimpleUser user = iterator.next();
-				HorizontalLayout row = new HorizontalLayout();
-				row.setWidth("100%");
-				row.setStyleName("row-wrap");
-				row.setMargin(true);
-				row.setSpacing(true);
-				row.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-				row.addComponent(UserAvatarControlFactory
-						.createUserAvatarEmbeddedComponent(user.getAvatarid(),
-								16));
-				LabelLink userBtn = new LabelLink(user.getDisplayName(),
-						ProjectLinkBuilder.generateProjectMemberFullLink(
-								CurrentProjectVariables.getProjectId(),
-								user.getUsername()));
-				userBtn.setStyleName("link");
-				row.addComponent(userBtn);
-				row.setExpandRatio(userBtn, 1.0f);
-				bodyWrap.addComponent(row);
+				Label rowUser = new Label(buildMemberLink(user), ContentMode.HTML);
+				bodyWrap.addComponent(rowUser);
 			}
 		}
+	}
+
+	private String buildMemberLink(SimpleUser user) {
+		String uid = UUID.randomUUID().toString();
+		DivLessFormatter div = new DivLessFormatter();
+		Img userAvatar = new Img("", StorageManager.getAvatarLink(
+				user.getAvatarid(), 16));
+		A userLink = new A();
+		userLink.setId("tag" + uid);
+		userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+				CurrentProjectVariables.getProjectId(),
+				user.getAvatarid()));
+
+		userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, user.getUsername()));
+
+		String arg10 = user.getDisplayName();
+		userLink.appendText(arg10);
+
+		div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
+				TooltipHelper.buildDivTooltipEnable(uid));
+		return div.write();
 	}
 
 }

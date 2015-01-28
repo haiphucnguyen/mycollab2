@@ -1,16 +1,6 @@
 @mixin mycollab-project {
   /* My Project List */
 
-  .header {
-    border: 1px solid $border-color;
-    background-color: bisque;
-    margin-top: 10px;
-    .v-label {
-      font-size: $font-large;
-      font-weight: bold;
-    }
-  }
-
   .myprojectlist {
     .projectblock {
       padding: 0px;
@@ -146,5 +136,13 @@
     background-color:lavenderblush;
     font-weight:bold;
     font-size:$font-large;
+  }
+
+  .instruction-box {
+    background-color: bisque;
+    padding: 10px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    margin-top: 15px;
   }
 }

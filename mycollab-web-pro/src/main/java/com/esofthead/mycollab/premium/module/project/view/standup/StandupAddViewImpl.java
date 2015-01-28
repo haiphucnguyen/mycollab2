@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
-import java.util.GregorianCalendar;
-
 import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -16,6 +14,8 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+
+import java.util.GregorianCalendar;
 
 /**
  * 
@@ -32,7 +32,7 @@ public class StandupAddViewImpl extends AbstractPageView implements
 
 	public StandupAddViewImpl() {
 		super();
-		this.editForm = new AdvancedEditBeanForm<StandupReportWithBLOBs>();
+		this.editForm = new AdvancedEditBeanForm<>();
 		this.addComponent(this.editForm);
 	}
 
@@ -75,9 +75,7 @@ public class StandupAddViewImpl extends AbstractPageView implements
 		}
 
 		private Layout createButtonControls() {
-			final Layout controlButtons = (new EditFormControlsGenerator<StandupReportWithBLOBs>(
-					editForm)).createButtonControls(true, false, true);
-			return controlButtons;
+			return (new EditFormControlsGenerator<>(editForm)).createButtonControls(true, false, true);
 		}
 
 		@Override

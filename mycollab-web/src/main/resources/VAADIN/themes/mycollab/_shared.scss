@@ -37,4 +37,19 @@
     color: gray;
     font-size: $font-small;
   }
+
+  .panel-header {
+    border: 1px solid $border-color;
+    background-color: bisque;
+    margin-top: 10px;
+    .v-label {
+      font-size: $font-large;
+      font-weight: bold;
+    }
+  }
+
+  .panel-body {
+    border: 1px solid $border-color;
+    border-top:0;
+  }
 }

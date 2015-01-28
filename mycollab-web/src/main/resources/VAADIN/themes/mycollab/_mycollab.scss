@@ -3660,14 +3660,6 @@
     color: white;
   }
 
-  .instructionStandupBox {
-    background-color: #E9E9E9;
-    padding: 10px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    margin-top: 15px;
-  }
-
   .report-row-content {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -6420,23 +6412,7 @@
     }
   }
 
-  /* Standup Missing Comp */
 
-  .standup-missing-comp {
-    border: 1px solid $border-color;
-    .header-wrap {
-      border-bottom: 1px solid $border-color;
-      background-color: $background-color;
-      padding: 7px 10px;
-      .v-label {
-        font-size: $font-large;
-        color: #313131;
-      }
-    }
-    .comp-body-wrap .v-label {
-      text-align: left;
-    }
-  }
 
   /* Popup select field */
 

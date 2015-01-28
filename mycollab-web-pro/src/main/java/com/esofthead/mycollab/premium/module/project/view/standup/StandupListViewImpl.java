@@ -48,6 +48,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * 
@@ -76,7 +77,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 		this.addCalendarEvent();
 		this.getListReport();
 
-		this.reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
+		this.reportInDay = new BeanList<>(
 				ApplicationContextUtil
 						.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
@@ -232,19 +233,15 @@ public class StandupListViewImpl extends AbstractPageView implements
 	}
 
 	private void constructHeader() {
-		final HorizontalLayout header = new HorizontalLayout();
-		header.setMargin(new MarginInfo(true, false, true, false));
-		header.setSpacing(true);
-		header.setWidth("100%");
-		header.setStyleName("hdr-view");
+		final MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false)
+				)).withWidth("100%").withStyleName("hdr-view");
 		header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		final HorizontalLayout headerLeft = new HorizontalLayout();
-		headerLeft.setSpacing(true);
+		final MHorizontalLayout headerLeft = new MHorizontalLayout();
 		headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		headerLeft.addComponent(new Image(null, MyCollabResource
-				.newResource("icons/22/project/standup_selected.png")));
+				.newResource(WebResourceIds._22_project_standup_selected)));
 
 		this.titleLbl = new Label(
 				AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));

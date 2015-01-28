@@ -82,7 +82,7 @@ public abstract class StandupReportFormLayoutFactory implements
 		mainLayout.setExpandRatio(layoutField, 2.0f);
 
 		final VerticalLayout instructionLayout = new VerticalLayout();
-		instructionLayout.setStyleName("instructionStandupBox");
+		instructionLayout.setStyleName("instruction-box");
 		instructionLayout.setSpacing(true);
 
 		final Label instruct1Lbl = new Label(
