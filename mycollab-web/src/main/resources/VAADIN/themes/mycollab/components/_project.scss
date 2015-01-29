@@ -185,4 +185,117 @@
     border-radius: 15px;
     margin-top: 15px;
   }
+
+  .projectinfo {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid $border-color;
+    background: none no-repeat left top #FFF;
+    border-radius: 0px;
+  }
+
+  .message-toppanel {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid $border-color;
+    background: none no-repeat left top $background-color;
+    border-radius: 0px;
+  }
+
+  .projectinfo-header, .message-toppanel-header {
+    font-size: $font-normal;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 0.2em;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: none no-repeat left top $panel-background-color;
+    border-radius: 0px;
+  }
+
+  .projectinfo-header {
+    &.v-margin-top {
+      padding-top: 7px;
+    }
+    &.v-margin-right {
+      padding-right: 10px;
+    }
+    &.v-margin-bottom {
+      padding-bottom: 7px;
+    }
+    &.v-margin-left {
+      padding-left: 18px;
+    }
+  }
+
+  .message-toppanel-header {
+    &.v-margin-top {
+      padding-top: 3px;
+    }
+    &.v-margin-right {
+      padding-right: 10px;
+    }
+    &.v-margin-bottom {
+      padding-bottom: 2px;
+    }
+    &.v-margin-left {
+      padding-left: 18px;
+    }
+  }
+
+  .projectinfo-header {
+    .project-name {
+      font-weight: bold;
+      font-size: $font-large;
+      color: #313131;
+    }
+    .project-shortname {
+      color: gray;
+    }
+  }
+
+  .projectinfo-footer {
+    &.v-margin-top {
+      padding-top: 5px;
+    }
+    &.v-margin-right {
+      padding-right: 5px;
+    }
+    &.v-margin-bottom {
+      padding-bottom: 5px;
+    }
+    &.v-margin-left {
+      padding-left: 18px;
+    }
+  }
+
+  .projectfeed-hdr-wrapper {
+    background: none repeat-x left bottom brown;
+    padding: 15px 30px;
+    .h1 {
+      padding: 0px;
+      color: white;
+    }
+    .h2, .v-button-link .v-button-caption {
+      color: white;
+    }
+  }
+
+  .member-preview-form {
+    border: 1px solid $border-color;
+    padding: 30px;
+    background-color: #E9F2F7;
+    div.v-csslayout.member-block {
+      border-radius: 0px;
+      border: none;
+      padding: 0px;
+      margin: 0px;
+      width: 350px;
+    }
+    .member-block .member-info.v-margin-left {
+      padding-left: 20px;
+    }
+  }
 }

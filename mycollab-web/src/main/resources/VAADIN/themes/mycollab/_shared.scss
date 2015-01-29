@@ -40,7 +40,7 @@
 
   .panel-header {
     border: 1px solid $border-color;
-    background-color: bisque;
+    background-color: $panel-background-color;
     margin-top: 10px;
     .v-label {
       font-size: $font-large;
@@ -123,4 +123,6 @@
       background-color: rgb(0, 136, 204);
     }
   }
+
+
 }

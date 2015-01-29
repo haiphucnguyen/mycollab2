@@ -2207,103 +2207,6 @@
     padding: 0px 0px 0px 20px;
   }
 
-  .projectinfo {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid $border-color;
-    background: none no-repeat left top #FFF;
-    border-radius: 0px;
-  }
-
-  .message-toppanel {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid $border-color;
-    background: none no-repeat left top $background-color;
-    border-radius: 0px;
-  }
-
-  .projectinfo-header, .message-toppanel-header {
-    font-size: $font-normal;
-    border-bottom: 1px solid $border-color;
-    padding-bottom: 0.2em;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background: none no-repeat left top bisque;
-    border-radius: 0px;
-  }
-
-  .projectinfo-header {
-    &.v-margin-top {
-      padding-top: 7px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 7px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
-  }
-
-  .message-toppanel-header {
-    &.v-margin-top {
-      padding-top: 3px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 2px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
-  }
-
-  .projectinfo-header {
-    .project-name {
-      font-weight: bold;
-      font-size: $font-large;
-      color: #313131;
-    }
-    .project-shortname {
-      color: gray;
-    }
-  }
-
-  .projectinfo-footer {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
-  }
-
-  .projectfeed-hdr-wrapper {
-    background: none repeat-x left bottom brown;
-    padding: 15px 30px;
-    .h1 {
-      padding: 0px;
-      color: white;
-    }
-    .h2, .v-button-link .v-button-caption {
-      color: white;
-    }
-  }
-
   /* End Project Management */
 
   /*Css for wizard*/
@@ -2392,7 +2295,7 @@
       border-style: solid;
       border-color: $border-color;
       border-radius: 0px;
-      background: none no-repeat 0 0 bisque;
+      background: none no-repeat 0 0 $panel-background-color;
       height: 40px;
     }
     &.collapsed .header-wrapper {
@@ -3585,41 +3488,6 @@
 
   .standup-calendar .selected-ext {
     border: 1px solid #EE7C08;
-  }
-
-  .report-row-header {
-    font-weight: bold;
-    background: url("icons/timehdr-bg.png") no-repeat left top transparent;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding-left: 15px;
-    color: white;
-  }
-
-  .report-row-content {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border-width: 1px 0px 1px 0px;
-    border-style: solid;
-    border-color: rgb(204, 204, 204);
-    background-color: rgb(229, 239, 240);
-    > div:first-child + div + div {
-      border-width: 0px 1px 0px 1px;
-      border-style: solid;
-      border-color: rgb(204, 204, 204);
-      background-color: rgb(212, 223, 239);
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      height: 100%;
-    }
-  }
-
-  .report-row-block {
-    height: 100%;
-    padding: 5px 8px 0px;
   }
 
   .addViewLayout .standup-edit-layout .h2 {
@@ -6278,37 +6146,6 @@
   .project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
     padding-right: 30px;
   }
-
-  /* New Project Member View */
-
-  .member-preview-form {
-    border: 1px solid $border-color;
-    padding: 30px;
-    background-color: #E9F2F7;
-    div.v-csslayout.member-block {
-      border-radius: 0px;
-      border: none;
-      padding: 0px;
-      margin: 0px;
-      width: 350px;
-    }
-    .member-block .member-info.v-margin-left {
-      padding-left: 20px;
-    }
-  }
-
-  .member-preview-bottom {
-    border-color: $border-color;
-    border-style: solid;
-    border-width: 0px 1px 1px;
-    .v-table-header-wrap {
-      border-width: 1px 0px;
-    }
-    .v-table-body-wrapper.v-table-body {
-      border-width: 0px;
-    }
-  }
-
 
 
   /* Popup select field */
