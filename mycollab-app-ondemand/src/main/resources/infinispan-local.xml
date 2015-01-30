@@ -3,7 +3,8 @@
     xmlns="urn:infinispan:config:7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <cache-container default-cache="mycollab">
         <distributed-cache name="mycollab">
-            <eviction max-entries="10000" strategy="LRU"/>
+            <eviction max-entries="100000" strategy="LRU"/>
+            <expiration lifespan="3600000"/>
         </distributed-cache>
     </cache-container>
     <jgroups>

@@ -6978,6 +6978,36 @@ body .mycollab.v-app .v-app-loading {
 	padding-left: 20px;
 }
 
+.mycollab .project-tableless {
+	display: table;
+	width: 100%;
+}
+
+.mycollab .project-tableless:hover {
+	background-color: beige;
+}
+
+.mycollab .project-tableless .columnExpand {
+	display: table-cell;
+	line-height: 20px;
+	padding: 5px;
+	padding-left: 0px;
+}
+
+.mycollab .project-tableless .column100 {
+	display: table-cell;
+	width: 100px;
+	padding: 5px;
+	padding-left: 0px;
+}
+
+.mycollab .project-tableless .column200 {
+	display: table-cell;
+	width: 200px;
+	padding: 5px;
+	padding-left: 0px;
+}
+
 .mycollab html {
 	overflow: hidden;
 }
@@ -11500,27 +11530,6 @@ body .mycollab.v-app .v-app-loading {
 	padding: 5px;
 }
 
-.mycollab .relatedbug-comp-header.v-margin-top {
-	padding-top: 5px;
-}
-
-.mycollab .relatedbug-comp-header.v-margin-right {
-	padding-right: 5px;
-}
-
-.mycollab .relatedbug-comp-header.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.mycollab .relatedbug-comp-header.v-margin-left {
-	padding-left: 5px;
-}
-
-.mycollab .addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .depotHeader, .mycollab .readViewLayout .readViewBottomControls .relatedbug-comp .depotComp .depotHeader {
-	border-width: 1px;
-	border-radius: 0px;
-}
-
 .mycollab div.v-ratingstars-wrapper {
 	border: 0px;
 	padding: 0px;
@@ -13352,14 +13361,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .gantt-container {
 	height: 100% !important;
-}
-
-.mycollab .phase-simple-view .v-slot:first-child + div .bean-list {
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .phase-simple-view .bean-list {
-	padding: 8px 0px 8px 18px;
 }
 
 .mycollab .add-project-btn {

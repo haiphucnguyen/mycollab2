@@ -76,4 +76,12 @@ public class SetSearchField<T> extends SearchField {
 	public void setValues(T[] values) {
 		this.values = values;
 	}
+
+	public void addValue(T value) {
+
+	}
+
+	public void removeValue(T value) {
+
+	}
 }
