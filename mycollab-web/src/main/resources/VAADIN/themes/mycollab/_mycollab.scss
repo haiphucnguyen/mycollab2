@@ -4657,28 +4657,6 @@
     }
   }
 
-  /* Related Bugs Component */
-
-  .relatedbug-comp-header {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 5px;
-    }
-  }
-
-  .addViewLayout .addViewBottomControls .relatedbug-comp .depotComp .depotHeader, .readViewLayout .readViewBottomControls .relatedbug-comp .depotComp .depotHeader {
-    border-width: 1px;
-    border-radius: 0px;
-  }
-
   /* Rating Stars */
 
   div {
@@ -6564,15 +6542,6 @@
 
   .gantt-container {
     height: 100% !important;
-  }
-
-  .phase-simple-view {
-    .v-slot:first-child + div .bean-list {
-      border-bottom: 1px solid $border-color;
-    }
-    .bean-list {
-      padding: 8px 0px 8px 18px;
-    }
   }
 
   /* add project button */

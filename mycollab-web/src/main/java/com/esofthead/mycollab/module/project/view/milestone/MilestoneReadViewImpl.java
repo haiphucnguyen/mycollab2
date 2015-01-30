@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
@@ -33,7 +32,6 @@ import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
@@ -42,10 +40,7 @@ import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemCo
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
 import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
-import com.esofthead.mycollab.module.project.view.bug.BugSimpleDisplayWidget;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.module.project.view.task.TaskDisplayWidget;
-import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -60,7 +55,6 @@ import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,15 +78,9 @@ public class MilestoneReadViewImpl extends
 
     private MilestoneHistoryLogList historyListComp;
 
-    private MilestoneBugListComp associateBugListComp;
-
-    private MilestoneTaskGroupListComp associateTaskGroupListComp;
-
     private DateInfoComp dateInfoComp;
 
     private PeopleInfoComp peopleInfoComp;
-
-    private boolean isSimpleView = false;
 
     public MilestoneReadViewImpl() {
         super(AppContext.getMessage(MilestoneI18nEnum.VIEW_DETAIL_TITLE),
@@ -108,24 +96,6 @@ public class MilestoneReadViewImpl extends
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleMilestone> controlsGenerator = new ProjectPreviewFormControlsGenerator<>(
                 this.previewForm);
-        Button toggleViewBtn = new Button("Toggle View",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 6800849985797693533L;
-
-                    @Override
-                    public void buttonClick(ClickEvent arg0) {
-                        if (!isSimpleView) {
-                            isSimpleView = true;
-                            displaySimpleView();
-                        } else {
-                            isSimpleView = false;
-                            addBottomPanel(createBottomPanel());
-                        }
-                    }
-                });
-        toggleViewBtn.setIcon(MyCollabResource
-                .newResource("icons/16/switch-view.png"));
-        controlsGenerator.addOptionButton(toggleViewBtn);
         return controlsGenerator
                 .createButtonControls(ProjectRolePermissionCollections.MILESTONES);
     }
@@ -143,57 +113,14 @@ public class MilestoneReadViewImpl extends
                         .getMessage(ProjectCommonI18nEnum.TAB_HISTORY),
                 MyCollabResource
                         .newResource(WebResourceIds._16_project_gray_history));
-        tabContainer.addTab(this.associateTaskGroupListComp,
-                AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_TASKS),
-                MyCollabResource.newResource(WebResourceIds._16_project_gray_task));
-        tabContainer.addTab(this.associateBugListComp,
-                AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS),
-                MyCollabResource.newResource(WebResourceIds._16_project_gray_bug));
 
         return tabContainer;
-    }
-
-    private void displaySimpleView() {
-        VerticalLayout simpleViewBottom = new VerticalLayout();
-        simpleViewBottom.setWidth("100%");
-        simpleViewBottom.setStyleName("phase-simple-view");
-
-        Label taskListLbl = new Label(
-                AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_TASKS));
-        taskListLbl.addStyleName("h2");
-        simpleViewBottom.addComponent(taskListLbl);
-        TaskSearchCriteria criteria = new TaskSearchCriteria();
-        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
-                .getProjectId()));
-        criteria.setMilestoneId(new NumberSearchField(this.beanItem.getId()));
-
-        TaskDisplayWidget taskDisplayWidget = new TaskDisplayWidget();
-        simpleViewBottom.addComponent(taskDisplayWidget);
-        taskDisplayWidget.setSearchCriteria(criteria);
-
-        Label bugListLbl = new Label(
-                AppContext.getMessage(MilestoneI18nEnum.TAB_RELATED_BUGS));
-        bugListLbl.addStyleName("h2");
-        simpleViewBottom.addComponent(bugListLbl);
-        final BugSearchCriteria bugCriteria = new BugSearchCriteria();
-        bugCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-                .getProjectId()));
-        bugCriteria.setMilestoneIds(new SetSearchField<>(this.beanItem
-                .getId()));
-
-        final BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
-        simpleViewBottom.addComponent(displayWidget);
-        displayWidget.setSearchCriteria(bugCriteria);
-
-        addBottomPanel(simpleViewBottom);
     }
 
     @Override
     protected void initRelatedComponents() {
         this.historyListComp = new MilestoneHistoryLogList(
                 ModuleNameConstants.PRJ, ProjectTypeConstants.MILESTONE);
-        this.associateBugListComp = new MilestoneBugListComp();
-        this.associateTaskGroupListComp = new MilestoneTaskGroupListComp();
         this.commentListComp = new CommentDisplay(CommentType.PRJ_MILESTONE,
                 CurrentProjectVariables.getProjectId(), true, true,
                 ProjectMilestoneRelayEmailNotificationAction.class);
@@ -218,8 +145,6 @@ public class MilestoneReadViewImpl extends
 
     @Override
     protected void onPreviewItem() {
-        this.associateTaskGroupListComp.displayTakLists(this.beanItem);
-        this.associateBugListComp.displayBugs(this.beanItem);
         this.commentListComp.loadComments("" + this.beanItem.getId());
 
         historyListComp.loadHistory(beanItem.getId());
@@ -330,9 +255,9 @@ public class MilestoneReadViewImpl extends
         }
     }
 
-    private static class AssignmentRowDisplay implements AbstractBeanPagedList.RowDisplayHandler {
+    private static class AssignmentRowDisplay implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
         @Override
-        public Component generateRow(Object obj, int rowIndex) {
+        public Component generateRow(ProjectGenericTask obj, int rowIndex) {
             return new Label("Hello world");
         }
     }
