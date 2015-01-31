@@ -111,7 +111,6 @@ public class MilestoneReadViewImpl extends
     @Override
     protected ComponentContainer createBottomPanel() {
         final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
-        tabContainer.setWidth("100%");
 
         tabContainer.addTab(this.commentListComp, AppContext
                         .getMessage(ProjectCommonI18nEnum.TAB_COMMENT),
@@ -293,6 +292,7 @@ public class MilestoneReadViewImpl extends
 
             assignmentsList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class), new
                     AssignmentRowDisplay(), 5);
+            assignmentsList.setControlStyle("borderlessControl");
 
             this.with(header, assignmentsList);
             searchCriteria = new ProjectGenericTaskSearchCriteria();
@@ -380,6 +380,9 @@ public class MilestoneReadViewImpl extends
         }
 
         private Div buildAssigneeValue(ProjectGenericTask task) {
+            if (task.getAssignUser() == null) {
+                return new Div().setCSSClass("column200");
+            }
             String uid = UUID.randomUUID().toString();
             Div div = new Div();
             Img userAvatar = new Img("", StorageManager.getAvatarLink(

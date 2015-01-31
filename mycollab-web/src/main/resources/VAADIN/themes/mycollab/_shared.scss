@@ -124,5 +124,50 @@
     }
   }
 
+  /* Pageable controls */
+  .listControl {
+    padding: 2px;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: $border-color;
+    border-radius: 0px 0px 3px 3px;
+    background: none no-repeat 0 0 #ffffff;
+  }
 
+  .borderlessControl {
+    padding: 4px;
+    border-width: 1px 0px 0px 0px;
+    border-style: solid;
+    border-color: $border-color;
+    border-radius: 0px;
+    background: none no-repeat 0 0 #ffffff;
+  }
+
+  div.v-button-link {
+    &.buttonPaging {
+      color: #525252;
+      background-color: $background-color;
+      .v-button-wrap {
+        width: 17px;
+        padding: 4px 0px 3px;
+        text-align: center;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid #C8C8C8;
+      }
+      &:active .v-button-wrap, &:focus .v-button-wrap {
+        padding: 4px 0px 3px;
+        border: 1px solid #777575;
+      }
+      .v-button-wrap .v-button-caption {
+        text-align: center;
+        padding: 0px;
+      }
+    }
+    &.buttonPagingcurrent, &.buttonPaging:hover {
+      background-color: #548BCE;
+      color: white;
+    }
+  }
 }

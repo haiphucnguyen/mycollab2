@@ -324,4 +324,34 @@
       padding-left:0px;
     }
   }
+
+  /* Form Container View Field */
+
+  .form-container div.v-button-link.v-button-block {
+    line-height: 22px;
+    background-color: blueviolet;
+    padding: 0px 7px 0px 7px;
+    &:active, &:focus {
+      line-height: 22px;
+      background-color: blueviolet;
+      padding: 0px 7px 0px 7px;
+      margin-right: 2px;
+    }
+  }
+
+  .form-container .v-button-link.v-button-block .v-button-caption {
+    color: white;
+  }
+
+  .task-attached {
+    background: none;
+    padding: 0px 7px 1px;
+    margin-right: 2px;
+    color: #3333EC;
+    pointer: none;
+  }
+
+
+
+  /* End Form Container View Field */
 }

@@ -2886,19 +2886,6 @@
     }
   }
 
-  .v-csslayout-listControl {
-    padding: 2px;
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    border-radius: 0px 0px 3px 3px;
-    background: none no-repeat 0 0 #ffffff;
-  }
-
-  .project-member-readview .v-csslayout-listControl {
-    border-width: 0px;
-  }
-
   .v-table-row-spacer {
     background: none no-repeat 0 0 #FFF;
   }
@@ -3359,35 +3346,6 @@
 
   /* End no border Panel */
 
-  /* Form Container View Field */
-
-  .form-container div.v-button-link {
-    height: 18px;
-    background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom #394757;
-    padding: 0px 7px 1px;
-    margin-right: 2px;
-    &:active, &:focus {
-      height: 18px;
-      background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom #394757;
-      padding: 0px 7px 1px;
-      margin-right: 2px;
-    }
-  }
-
-  .task-attached {
-    background: none;
-    padding: 0px 7px 1px;
-    margin-right: 2px;
-    color: #3333EC;
-    pointer: none;
-  }
-
-  .form-container .v-button-link .v-button-caption {
-    color: white;
-  }
-
-  /* End Form Container View Field */
-
   /* LazyLoad */
 
   div.v-lazyloadingwrapper-loading {
@@ -3481,10 +3439,6 @@
   /* End Horizontal Detached Tabs 3 */
 
   /* StandUp Report List */
-
-  .projectDashboardView .addViewLayout .depotContent .beanlist-content > .v-csslayout-margin {
-    border-top: 1px solid $border-color;
-  }
 
   .standup-calendar .selected-ext {
     border: 1px solid #EE7C08;
@@ -5752,32 +5706,6 @@
 
   .accountsettings-role .addViewBottomControls .depotComp .depotHeader {
     border-width: 1px 0px;
-  }
-
-  /* Project Member Read View */
-
-  .projectmember-view .v-tabsheet-content {
-    padding-bottom: 0px;
-    .listControl {
-      border-width: 0px;
-    }
-    .v-table-header-wrap, .v-table-body-wrapper {
-      border-width: 1px 0px 0px;
-    }
-    .comp-header {
-      &.v-margin-top {
-        padding-top: 5px;
-      }
-      &.v-margin-right {
-        padding-right: 5px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 5px;
-      }
-      &.v-margin-left {
-        padding-left: 5px;
-      }
-    }
   }
 
   /* Comment Display */

@@ -325,7 +325,7 @@
         #ifnotnull($_parameter.searchCriteria.orderByField)
 		    ${_parameter.searchCriteria.orderByField} ${_parameter.searchCriteria.sortDirection},
         #end
-        projectName ASC
+        lastUpdatedTime DESC
 	</sql>
 
 	<select id="findPagableListByCriteria" parameterType="ProjectGenericTaskSearchCriteria"
