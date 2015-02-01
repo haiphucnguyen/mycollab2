@@ -36,19 +36,16 @@ public class ReadViewLayout extends CustomLayoutExt {
 	private static final long serialVersionUID = 1L;
 
 	private Label titleLbl;
-	private Image icon;
-	private ComponentContainer headerPanel;
 
 	public ReadViewLayout(final String title) {
 		super("readView");
-		headerPanel = buildHeader(title);
+		ComponentContainer headerPanel = buildHeader(title);
 		this.addComponent(headerPanel, "readViewHeader");
 	}
 
 	private ComponentContainer buildHeader(String title) {
 		MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withSpacing(true);
 
-		this.icon = new Image();
 		this.titleLbl = new Label();
 		this.titleLbl.setStyleName("headerName");
 		this.titleLbl.setImmediate(true);
@@ -89,16 +86,5 @@ public class ReadViewLayout extends CustomLayoutExt {
 
 	public void setTitle(final String title) {
 		this.titleLbl.setValue(title);
-	}
-
-	public void setTitleIcon(final Resource resource) {
-		if (resource != null) {
-			this.icon.setSource(resource);
-			if (!this.icon.isAttached()) {
-				((HorizontalLayout) this.headerPanel).addComponentAsFirst(icon);
-			}
-		} else if (this.icon.isAttached()) {
-			this.headerPanel.removeComponent(icon);
-		}
 	}
 }

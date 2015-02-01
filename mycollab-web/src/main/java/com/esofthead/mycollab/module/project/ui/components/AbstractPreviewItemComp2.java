@@ -16,181 +16,171 @@
  */
 package com.esofthead.mycollab.module.project.ui.components;
 
-import org.vaadin.maddon.layouts.MHorizontalLayout;
-
 import com.esofthead.mycollab.vaadin.mvp.PageView;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
-import com.esofthead.mycollab.vaadin.ui.RightSidebarLayout;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.3.3
- *
  */
 public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
-		implements PageView {
-	private static final long serialVersionUID = 1L;
+        implements PageView {
+    private static final long serialVersionUID = 1L;
 
-	protected B beanItem;
-	protected AdvancedPreviewBeanForm<B> previewForm;
-	protected ReadViewLayout previewLayout;
-	protected MHorizontalLayout header;
-	private RightSidebarLayout bodyContainer;
+    protected B beanItem;
+    protected AdvancedPreviewBeanForm<B> previewForm;
+    protected ReadViewLayout previewLayout;
 
-	private MVerticalLayout sidebarContent;
-	private MVerticalLayout bodyContent;
+    protected ComponentContainer header;
 
-	protected Image titleIcon;
+    private MVerticalLayout sidebarContent;
+    private MVerticalLayout bodyContent;
 
-	abstract protected void initRelatedComponents();
+    public AbstractPreviewItemComp2(String headerText, Resource iconResource) {
+        Label headerLbl = new Label(headerText);
+        headerLbl.setSizeUndefined();
+        headerLbl.setStyleName("hdr-text");
 
-	public AbstractPreviewItemComp2(String headerText, Resource iconResource) {
-		if (iconResource != null)
-			this.titleIcon = new Image(null, iconResource);
-		this.addComponent(constructHeader(headerText));
+        header = new MHorizontalLayout();
 
-		previewForm = initPreviewForm();
-		ComponentContainer actionControls = createButtonControls();
-		if (actionControls != null) {
-			actionControls.addStyleName("control-buttons");
-			addHeaderRightContent(actionControls);
-		}
+        if (iconResource != null) {
+            Image titleIcon = new Image(null, iconResource);
+            ((MHorizontalLayout) header).with(titleIcon).withAlign(titleIcon, Alignment.MIDDLE_LEFT);
+        }
 
-		CssLayout contentWrapper = new CssLayout();
-		contentWrapper.setStyleName("content-wrapper");
+        ((MHorizontalLayout) header).with(headerLbl).withAlign
+                (headerLbl, Alignment.MIDDLE_LEFT)
+                .expand(headerLbl).withStyleName("hdr-view").withWidth("100%")
+                .withSpacing(true).withMargin(true);
 
-		previewLayout = new ReadViewLayout("");
+        this.addComponent(header);
+        initContent();
+    }
 
-		contentWrapper.addComponent(previewLayout);
+    public AbstractPreviewItemComp2(ComponentContainer customHeader) {
+        this.header = customHeader;
+        this.addComponent(header);
+        initContent();
+    }
 
-		bodyContainer = new RightSidebarLayout();
-		bodyContainer.setSizeFull();
-		bodyContainer.addStyleName("readview-body-wrap");
+    private void initContent() {
+        previewForm = initPreviewForm();
+        ComponentContainer actionControls = createButtonControls();
+        if (actionControls != null) {
+            actionControls.addStyleName("control-buttons");
+            addHeaderRightContent(actionControls);
+        }
 
-		bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).with(previewForm);
-		bodyContainer.setContent(bodyContent);
+        CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setStyleName("content-wrapper");
 
-		sidebarContent = new MVerticalLayout().withWidth("250px").withSpacing(true).withStyleName("readview-sidebar");
-		bodyContainer.setSidebar(sidebarContent);
+        previewLayout = new ReadViewLayout("");
 
-		FloatingComponent floatSidebar = FloatingComponent
-				.floatThis(sidebarContent);
-		floatSidebar.setContainerId("main-body");
+        contentWrapper.addComponent(previewLayout);
 
-		previewLayout.addBody(bodyContainer);
+        RightSidebarLayout bodyContainer = new RightSidebarLayout();
+        bodyContainer.setSizeFull();
+        bodyContainer.addStyleName("readview-body-wrap");
 
-		this.addComponent(contentWrapper);
-	}
+        bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).with(previewForm);
+        bodyContainer.setContent(bodyContent);
 
-	public void previewItem(final B item) {
-		this.beanItem = item;
-		initLayout();
-		previewLayout.setTitle(initFormTitle());
+        sidebarContent = new MVerticalLayout().withWidth("250px").withSpacing(true).withStyleName("readview-sidebar");
+        bodyContainer.setSidebar(sidebarContent);
 
-		previewForm.setFormLayoutFactory(initFormLayoutFactory());
-		previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
-		previewForm.setBean(item);
+        FloatingComponent floatSidebar = FloatingComponent
+                .floatThis(sidebarContent);
+        floatSidebar.setContainerId("main-body");
 
-		onPreviewItem();
-	}
+        previewLayout.addBody(bodyContainer);
 
-	private void initLayout() {
-		sidebarContent.removeAllComponents();
-		initRelatedComponents();
-		ComponentContainer bottomPanel = createBottomPanel();
-		addBottomPanel(bottomPanel);
-	}
+        this.addComponent(contentWrapper);
+    }
 
-	protected void addBottomPanel(ComponentContainer container) {
-		if (container != null) {
-			if (bodyContent.getComponentCount() >= 2) {
-				bodyContent.replaceComponent(bodyContent
-						.getComponent(bodyContent.getComponentCount() - 1),
-						container);
-			} else {
-				bodyContent.addComponent(container);
-			}
-		}
-	}
+    abstract protected void initRelatedComponents();
 
-	protected ComponentContainer constructHeader(String headerText) {
-		Label headerLbl = new Label(headerText);
-		headerLbl.setSizeUndefined();
-		headerLbl.setStyleName("hdr-text");
+    public void previewItem(final B item) {
+        this.beanItem = item;
+        initLayout();
+        previewLayout.setTitle(initFormTitle());
 
-		header = new MHorizontalLayout();
+        previewForm.setFormLayoutFactory(initFormLayoutFactory());
+        previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+        previewForm.setBean(item);
 
-		if (titleIcon != null) {
-			header.with(titleIcon).withAlign(titleIcon, Alignment.MIDDLE_LEFT);
-		}
+        onPreviewItem();
+    }
 
-		header.with(headerLbl).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
-				.expand(headerLbl).withStyleName("hdr-view").withWidth("100%")
-				.withSpacing(true).withMargin(true);
+    private void initLayout() {
+        sidebarContent.removeAllComponents();
+        initRelatedComponents();
+        ComponentContainer bottomPanel = createBottomPanel();
+        addBottomPanel(bottomPanel);
+    }
 
-		return header;
-	}
+    protected void addBottomPanel(ComponentContainer container) {
+        if (container != null) {
+            if (bodyContent.getComponentCount() >= 2) {
+                bodyContent.replaceComponent(bodyContent
+                                .getComponent(bodyContent.getComponentCount() - 1),
+                        container);
+            } else {
+                bodyContent.addComponent(container);
+            }
+        }
+    }
 
-	public void addHeaderRightContent(Component c) {
-		header.addComponent(c);
-	}
+    public void addHeaderRightContent(Component c) {
+        header.addComponent(c);
+    }
 
-	public void addToSideBar(Component component) {
-		sidebarContent.addComponent(component);
-	}
+    public void addToSideBar(Component component) {
+        sidebarContent.addComponent(component);
+    }
 
-	public B getBeanItem() {
-		return beanItem;
-	}
+    public B getBeanItem() {
+        return beanItem;
+    }
 
-	public AdvancedPreviewBeanForm<B> getPreviewForm() {
-		return previewForm;
-	}
+    public AdvancedPreviewBeanForm<B> getPreviewForm() {
+        return previewForm;
+    }
 
-	protected void addLayoutStyleName(String styleName) {
-		previewLayout.addTitleStyleName(styleName);
-	}
+    protected void addLayoutStyleName(String styleName) {
+        previewLayout.addTitleStyleName(styleName);
+    }
 
-	protected void removeLayoutStyleName(String styleName) {
-		previewLayout.removeTitleStyleName(styleName);
-	}
+    protected void removeLayoutStyleName(String styleName) {
+        previewLayout.removeTitleStyleName(styleName);
+    }
 
-	@Override
-	public ComponentContainer getWidget() {
-		return this;
-	}
+    @Override
+    public ComponentContainer getWidget() {
+        return this;
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	final public void addViewListener(ViewListener listener) {
+    @SuppressWarnings("rawtypes")
+    @Override
+    final public void addViewListener(ViewListener listener) {
 
-	}
+    }
 
-	abstract protected void onPreviewItem();
+    abstract protected void onPreviewItem();
 
-	abstract protected String initFormTitle();
+    abstract protected String initFormTitle();
 
-	abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
+    abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
 
-	abstract protected IFormLayoutFactory initFormLayoutFactory();
+    abstract protected IFormLayoutFactory initFormLayoutFactory();
 
-	abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
+    abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
 
-	abstract protected ComponentContainer createButtonControls();
+    abstract protected ComponentContainer createButtonControls();
 
-	abstract protected ComponentContainer createBottomPanel();
+    abstract protected ComponentContainer createBottomPanel();
 }
