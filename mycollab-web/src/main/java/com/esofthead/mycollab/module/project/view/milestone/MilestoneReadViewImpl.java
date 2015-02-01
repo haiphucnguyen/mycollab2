@@ -291,7 +291,7 @@ public class MilestoneReadViewImpl extends
                     .withAlign(chartBtn, Alignment.MIDDLE_RIGHT).expand(spacingLbl1, spacingLbl2);
 
             assignmentsList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class), new
-                    AssignmentRowDisplay(), 5);
+                    AssignmentRowDisplay(), 10);
             assignmentsList.setControlStyle("borderlessControl");
 
             this.with(header, assignmentsList);
