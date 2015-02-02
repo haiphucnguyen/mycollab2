@@ -42,9 +42,21 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
     private MVerticalLayout bodyContent;
 
     public AbstractPreviewItemComp2(String headerText, Resource iconResource) {
+        this(headerText, iconResource, null);
+    }
+
+    public AbstractPreviewItemComp2(ComponentContainer customHeader) {
+        this.header = customHeader;
+        this.addComponent(header);
+        initContent();
+    }
+
+    public AbstractPreviewItemComp2(String headerText, Resource iconResource, ReadViewLayout layout) {
         Label headerLbl = new Label(headerText);
         headerLbl.setSizeUndefined();
         headerLbl.setStyleName("hdr-text");
+
+        this.previewLayout = layout;
 
         header = new MHorizontalLayout();
 
@@ -62,12 +74,6 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
         initContent();
     }
 
-    public AbstractPreviewItemComp2(ComponentContainer customHeader) {
-        this.header = customHeader;
-        this.addComponent(header);
-        initContent();
-    }
-
     private void initContent() {
         previewForm = initPreviewForm();
         ComponentContainer actionControls = createButtonControls();
@@ -79,7 +85,8 @@ public abstract class AbstractPreviewItemComp2<B> extends VerticalLayout
         CssLayout contentWrapper = new CssLayout();
         contentWrapper.setStyleName("content-wrapper");
 
-        previewLayout = new ReadViewLayout("");
+        if (previewLayout == null)
+            previewLayout = new DefaultReadViewLayout("");
 
         contentWrapper.addComponent(previewLayout);
 

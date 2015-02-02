@@ -89,7 +89,6 @@ class ItemTimeLoggingSearchPanel extends
             createBtn.setIcon(MyCollabResource
                     .newResource(WebResourceIds._16_project_add_time));
             createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
-            createBtn.addStyleName("v-button-caption-bool");
 
             return new MHorizontalLayout()
                     .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
@@ -188,6 +187,9 @@ class ItemTimeLoggingSearchPanel extends
             buttonControls.with(searchBtn, clearBtn)
                     .alignAll(Alignment.MIDDLE_LEFT);
 
+            Label spaceLbl = new Label();
+            buttonControls.with(spaceLbl).expand(spaceLbl);
+
             gridLayout.addComponent(buttonControls, null, 2, 0);
 
             bodyWrap.addComponent(gridLayout.getLayout());
@@ -197,9 +199,7 @@ class ItemTimeLoggingSearchPanel extends
 
         @Override
         public ComponentContainer constructFooter() {
-            CssLayout c = new CssLayout();
-            c.setStyleName("empty-compnent");
-            return c;
+            return new CssLayout();
         }
 
         @SuppressWarnings("unchecked")
