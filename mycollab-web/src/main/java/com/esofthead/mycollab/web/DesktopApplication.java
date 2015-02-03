@@ -20,10 +20,7 @@ import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.ResourceNotFoundException;
-import com.esofthead.mycollab.core.SessionExpireException;
-import com.esofthead.mycollab.core.UnsupportedFeatureException;
-import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.*;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
@@ -122,6 +119,12 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     private void handleException(Throwable e) {
+        IgnoreException ignoreException = (IgnoreException) getExceptionType(
+                e, IgnoreException.class);
+        if (ignoreException != null) {
+            return;
+        }
+
         UserInvalidInputException invalidException = (UserInvalidInputException) getExceptionType(
                 e, UserInvalidInputException.class);
         if (invalidException != null) {
