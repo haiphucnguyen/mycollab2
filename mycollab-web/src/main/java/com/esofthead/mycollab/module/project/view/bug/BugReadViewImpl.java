@@ -360,7 +360,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
             }
         }).withIcon(FontAwesome.LINK);
         linkBtn.addStyleName("black");
-        bugPreviewFormControls.addOptionButton(linkBtn);
+//        bugPreviewFormControls.addOptionButton(linkBtn);
 
         final HorizontalLayout topPanel = bugPreviewFormControls
                 .createButtonControls(

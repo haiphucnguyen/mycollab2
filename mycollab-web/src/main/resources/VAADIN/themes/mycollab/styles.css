@@ -7239,24 +7239,6 @@ body .mycollab.v-app .v-app-loading {
 	text-shadow: 0 -1px 0 #495972;
 }
 
-.mycollab .v-contextmenu .gwt-MenuItem-selected {
-	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
-}
-
-.mycollab .v-contextmenu .gwt-MenuItem-selected div {
-	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
-}
-
-.mycollab .v-filterselect-suggestpopup .gwt-MenuItem-selected, .mycollab .v-progressindicator-indicator, .mycollab .v-tree-node-selected span {
-	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
-}
-
 .mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
 	background-color: #6482B3;
 	color: #f4f4f5;
