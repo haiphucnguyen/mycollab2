@@ -141,7 +141,7 @@ public class MobileApplication extends MyCollabUI {
 
 		initialUrl = this.getPage().getUriFragment();
 		MyCollabSession.putVariable(CURRENT_APP, this);
-		currentContext = new AppContext(this);
+		currentContext = new AppContext();
 		postSetupApp(request);
 		try {
 			currentContext.initDomain(initialSubDomain);

@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.project.view.bug.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -12,6 +28,8 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.vaadin.data.Property;
+import com.vaadin.data.util.PropertyFormatter;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -109,9 +127,6 @@ public class LinkIssueWindow extends Window {
         private class EditFormFieldFactory extends
                 AbstractBeanFieldGroupEditFieldFactory<RelatedBug> {
 
-            private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-            private BugSearchCriteria searchCriteria;
-
             EditFormFieldFactory(GenericBeanForm<RelatedBug> form) {
                 super(form);
             }
@@ -120,26 +135,45 @@ public class LinkIssueWindow extends Window {
             protected Field<?> onCreateField(Object propertyId) {
                 if (RelatedBug.Field.relatetype.equalTo(propertyId)) {
                     return new BugRelationComboBox();
-                } else if (RelatedBug.Field.bugid.equalTo(propertyId)) {
-                    searchCriteria = new BugSearchCriteria();
-                    searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-
-                    SuggestField bugSuggestField = new SuggestField();
-                    bugSuggestField.setInputPrompt("Type bug summary or key");
-                    bugSuggestField.setPopupWidth(600);
-                    bugSuggestField.setSuggestionHandler(new SuggestField.SuggestionHandler() {
-                        @Override
-                        public List<Object> searchItems(String query) {
-                            System.out.println("Query: " + query);
-                            return handleSearchQuery(query);
-                        }
-                    });
-                    bugSuggestField.setSuggestionConverter(new RelatedBuggestionConverter());
-                    return bugSuggestField;
+                } else if (RelatedBug.Field.relatedid.equalTo(propertyId)) {
+                    return new RelatedBugSuggestField();
                 } else if (RelatedBug.Field.comment.equalTo(propertyId)) {
                     return new RichTextArea();
                 }
                 return null;
+            }
+        }
+
+        private class RelatedBugSuggestField extends SuggestField {
+            private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+            private BugSearchCriteria searchCriteria;
+
+            RelatedBugSuggestField() {
+                this.setInputPrompt("Type bug summary or key");
+                this.setPopupWidth(600);
+                this.setSuggestionHandler(new SuggestField.SuggestionHandler() {
+                    @Override
+                    public List<Object> searchItems(String query) {
+                        return handleSearchQuery(query);
+                    }
+                });
+
+                this.addValueChangeListener(new Property.ValueChangeListener() {
+                    @Override
+                    public void valueChange(Property.ValueChangeEvent event) {
+                        System.out.println("SuugestField value changed");
+                        Notification.show("Selected " + RelatedBugSuggestField.this.getValue());
+                    }
+                });
+
+                this.setSuggestionConverter(new RelatedBuggestionConverter());
+                searchCriteria = new BugSearchCriteria();
+                searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+            }
+
+            @Override
+            public void setPropertyDataSource(Property newDataSource) {
+                super.setPropertyDataSource(newDataSource);
             }
 
             private List<Object> handleSearchQuery(String query) {
@@ -167,11 +201,9 @@ public class LinkIssueWindow extends Window {
                         break;
                     }
                 }
-                return result;
+                return result.getId();
             }
 
         }
     }
-
-
 }

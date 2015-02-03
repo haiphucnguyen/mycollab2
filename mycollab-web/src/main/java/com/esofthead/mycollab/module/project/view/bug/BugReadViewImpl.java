@@ -53,6 +53,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -63,6 +64,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.maddon.button.MButton;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import java.util.List;
@@ -350,12 +353,15 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
         ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new
                 ProjectPreviewFormControlsGenerator<>(
                 previewForm);
-        bugPreviewFormControls.addOptionButton(new Button("Link", new Button.ClickListener() {
+        MButton linkBtn = new MButton("Link", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 UI.getCurrent().addWindow(new LinkIssueWindow(beanItem));
             }
-        }));
+        }).withIcon(FontAwesome.LINK);
+        linkBtn.addStyleName("black");
+        bugPreviewFormControls.addOptionButton(linkBtn);
+
         final HorizontalLayout topPanel = bugPreviewFormControls
                 .createButtonControls(
                         ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
@@ -668,13 +674,12 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
         return this.previewForm;
     }
 
-    private class PeopleInfoComp extends VerticalLayout {
+    private class PeopleInfoComp extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
         private void displayEntryPeople(ValuedBean bean) {
             this.removeAllComponents();
-            this.setSpacing(true);
-            this.setMargin(new MarginInfo(false, false, false, true));
+            this.withMargin(new MarginInfo(false, false, false, true));
 
             Label peopleInfoHeader = new Label(
                     AppContext

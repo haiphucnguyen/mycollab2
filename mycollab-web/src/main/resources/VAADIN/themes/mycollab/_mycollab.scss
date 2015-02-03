@@ -5,6 +5,7 @@
 @import "components/breadcrumb";
 @import "components/button";
 @import "components/tooltip";
+@import "components/icons";
 @import "components/crm";
 @import "components/document";
 @import "components/project";
@@ -12,9 +13,11 @@
 @mixin mycollab {
 
   @include chameleon;
+  @include fonticons;
   @include mycollab-global;
   @include mycollab-breadcrumb;
   @include mycollab-button;
+  @include mycollab-icons;
   @include mycollab-tooltip;
   @include mycollab-shared;
   @include mycollab-crm;
@@ -6470,28 +6473,6 @@
 
   .gantt-container {
     height: 100% !important;
-  }
-
-  /* add project button */
-
-  .add-project-btn {
-    border: none;
-    border-radius: 10px;
-    background-color: #17D61B;
-    &:focus {
-      border: none;
-      border-radius: 10px;
-      background-color: #17D61B;
-    }
-    .v-button-wrap, &:active .v-button-wrap {
-      padding: 0px;
-    }
-    .v-button-wrap .v-button-caption {
-      font-size: $font-larger;
-      line-height: 20px;
-      font-weight: bold;
-      color: #FFF;
-    }
   }
 
   /* CRM toolbar quick add button */
