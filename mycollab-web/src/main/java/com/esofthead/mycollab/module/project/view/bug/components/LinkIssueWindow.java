@@ -28,19 +28,14 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.vaadin.data.Property;
-import com.vaadin.data.util.PropertyFormatter;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.zybnet.autocomplete.server.AutocompleteField;
+import com.zybnet.autocomplete.server.AutocompleteQueryListener;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
-import org.vaadin.suggestfield.BeanSuggestionConverter;
-import org.vaadin.suggestfield.SuggestField;
-import org.vaadin.suggestfield.client.SuggestFieldSuggestion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -127,8 +122,12 @@ public class LinkIssueWindow extends Window {
         private class EditFormFieldFactory extends
                 AbstractBeanFieldGroupEditFieldFactory<RelatedBug> {
 
+            private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+            private BugSearchCriteria searchCriteria = new BugSearchCriteria();
+
             EditFormFieldFactory(GenericBeanForm<RelatedBug> form) {
                 super(form);
+
             }
 
             @Override
@@ -136,74 +135,33 @@ public class LinkIssueWindow extends Window {
                 if (RelatedBug.Field.relatetype.equalTo(propertyId)) {
                     return new BugRelationComboBox();
                 } else if (RelatedBug.Field.relatedid.equalTo(propertyId)) {
-                    return new RelatedBugSuggestField();
+                    searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+
+                    AutocompleteField<SimpleBug> search = new AutocompleteField<>();
+                    search.setQueryListener(new AutocompleteQueryListener<SimpleBug>() {
+                        @Override
+                        public void handleUserQuery(AutocompleteField<SimpleBug> field, String query) {
+                            handleSearchQuery(field, query);
+                        }
+                    });
+                    return search;
                 } else if (RelatedBug.Field.comment.equalTo(propertyId)) {
                     return new RichTextArea();
                 }
                 return null;
             }
-        }
 
-        private class RelatedBugSuggestField extends SuggestField {
-            private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-            private BugSearchCriteria searchCriteria;
-
-            RelatedBugSuggestField() {
-                this.setInputPrompt("Type bug summary or key");
-                this.setPopupWidth(600);
-                this.setSuggestionHandler(new SuggestField.SuggestionHandler() {
-                    @Override
-                    public List<Object> searchItems(String query) {
-                        return handleSearchQuery(query);
+            private void handleSearchQuery(AutocompleteField<SimpleBug> field, String query) {
+                try {
+                    List<SimpleBug> result = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+                    for (SimpleBug bug : result) {
+                        field.addSuggestion(bug, bug.getSummary());
                     }
-                });
-
-                this.addValueChangeListener(new Property.ValueChangeListener() {
-                    @Override
-                    public void valueChange(Property.ValueChangeEvent event) {
-                        System.out.println("SuugestField value changed");
-                        Notification.show("Selected " + RelatedBugSuggestField.this.getValue());
-                    }
-                });
-
-                this.setSuggestionConverter(new RelatedBuggestionConverter());
-                searchCriteria = new BugSearchCriteria();
-                searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-            }
-
-            @Override
-            public void setPropertyDataSource(Property newDataSource) {
-                super.setPropertyDataSource(newDataSource);
-            }
-
-            private List<Object> handleSearchQuery(String query) {
-                if ("".equals(query) || query == null) {
-                    return Collections.emptyList();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
 
-                items = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
-                return new ArrayList<Object>(items);
             }
-        }
-
-        private class RelatedBuggestionConverter extends BeanSuggestionConverter {
-
-            public RelatedBuggestionConverter() {
-                super(SimpleBug.class, "id", "summary", "summary");
-            }
-
-            @Override
-            public Object toItem(SuggestFieldSuggestion suggestion) {
-                SimpleBug result = null;
-                for (SimpleBug bean : items) {
-                    if (bean.getId().toString().equals(suggestion.getId())) {
-                        result = bean;
-                        break;
-                    }
-                }
-                return result.getId();
-            }
-
         }
     }
 }

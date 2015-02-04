@@ -20,6 +20,7 @@ import static com.esofthead.mycollab.common.MyCollabSession.CURRENT_APP;
 
 import java.util.Collection;
 
+import com.esofthead.mycollab.core.IgnoreException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +84,12 @@ public class MobileApplication extends MyCollabUI {
 			@Override
 			public void error(com.vaadin.server.ErrorEvent event) {
 				Throwable e = event.getThrowable();
+                IgnoreException ignoreException = (IgnoreException) getExceptionType(
+                        e, IgnoreException.class);
+                if (ignoreException != null) {
+                    return;
+                }
+
 				UserInvalidInputException invalidException = (UserInvalidInputException) getExceptionType(
 						e, UserInvalidInputException.class);
 				if (invalidException != null) {

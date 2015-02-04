@@ -7,6 +7,8 @@ import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
 import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
 import com.esofthead.mycollab.spring.DataSourceConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
@@ -48,6 +50,9 @@ public class DemandScheduleConfiguration {
         return bean;
     }
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
         if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
@@ -55,7 +60,9 @@ public class DemandScheduleConfiguration {
         }
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
-        bean.setJobFactory(new AutowiringSpringBeanJobFactory());
+        AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();
+        factory.setApplicationContext(applicationContext);
+        bean.setJobFactory(factory);
         bean.setOverwriteExistingJobs(true);
         bean.setAutoStartup(true);
         bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
