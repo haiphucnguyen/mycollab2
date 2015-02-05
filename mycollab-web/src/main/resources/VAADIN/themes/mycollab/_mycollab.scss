@@ -3708,55 +3708,6 @@
     background-color: #FFF;
     border-radius: 0px;
     border: 1px solid $border-color;
-    .readViewTopControls {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      border-bottom: 1px solid $border-color;
-      .readNewControl {
-        border-bottom: none;
-      }
-    }
-    .readNewControl {
-      &.v-margin-top {
-        padding-top: 5px;
-      }
-      &.v-margin-right {
-        padding-right: 0px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 5px;
-      }
-      &.v-margin-left {
-        padding-left: 0px;
-      }
-    }
-    .readViewTopControls {
-      .edit-btn .v-horizontallayout-margin, .workflow-controls .v-horizontallayout-margin {
-        padding: 0px;
-      }
-    }
-  }
-
-  .readViewHeader {
-    padding: 10px 5px 10px 18px;
-    background: none repeat-x left top #EEEEEE;
-    border-radius: 0px;
-    border-bottom: 1px solid $border-color;
-    .readViewHeaderLeft {
-      float: left;
-    }
-    .readViewHeaderRight {
-      float: right;
-      min-height: 24px;
-    }
-  }
-
-  .readViewHeaderIcon, .readViewHeaderTitle {
-    float: left;
-  }
-
-  .readViewLayout {
     .readViewHeader {
       .headerName {
         font-size: $font-larger;
@@ -3786,6 +3737,13 @@
     }
   }
 
+  .readViewHeader {
+    padding: 10px 5px 10px 18px;
+    background: none repeat-x left top #EEEEEE;
+    border-radius: 0px;
+    border-bottom: 1px solid $border-color;
+  }
+
   .readViewBottomControls .v-verticallayout {
     display: block;
   }
@@ -3799,159 +3757,13 @@
     &.v-margin-right {
       padding-right: 30px;
     }
-  }
-
-  .readview-layout-header {
-    position: relative;
-    z-index: 0;
-    overflow: visible !important;
-    bottom: 0px;
-    left: 0px;
-  }
-
-  .readview-layout-header {
-    > div {
-      top: 1px;
-      position: absolute !important;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    .v-label-h1 {
-      padding: 0px;
-      padding-left: 5px;
-      font-size: $font-larger;
-      text-overflow: ellipsis;
-      -ms-text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      word-wrap: normal;
-    }
-    .detachedtabs {
-      .v-button-tab {
-        padding: 0px 2px;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        > .v-button-wrap {
-          background: none no-repeat 0 0 #e4e4e6;
-          -moz-box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-          border: 1px solid $border-color;
-        }
-      }
-      .v-button {
-        > .v-button-wrap, &:active > .v-button-wrap {
-          padding: 4px 8px;
-        }
-      }
-      .v-button-tab.tab-selected > .v-button-wrap {
-        background: url('icons/grad-light-top2.png') repeat-x 0 0 #f5f5f5;
-        border-bottom: 1px solid #f5f5f5;
-      }
-    }
-  }
-
-  .readview-layout-body {
-    .h2 {
-      padding: 8px 0px 8px 18px;
-      font-size: $font-normal;
-      border-bottom: 1px solid $border-color;
-      color: rgb(69, 69, 69);
-    }
-    .control-buttons {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      border-bottom: 1px solid $border-color;
-    }
-    .v-gridlayout-margin {
-      border-bottom: 1px solid $border-color;
-      .v-csslayout > .v-csslayout-margin {
-        padding: 8px 5px 8px 18px;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-    }
-    .v-horizontallayout-gridform-caption {
+    .colored-gridlayout .gridform-field, .readViewLayout .colored-gridlayout .gridform-field {
       &.v-margin-top {
-        padding-top: 5px;
-      }
-      &.v-margin-right {
-        padding-right: 5px;
+        padding-top: 8px;
       }
       &.v-margin-bottom {
-        padding-bottom: 5px;
+        padding-bottom: 8px;
       }
-      &.v-margin-left {
-        padding-left: 18px;
-      }
-    }
-    .v-horizontallayout-gridform-field .v-horizontallayout .v-horizontallayout-margin {
-      padding: 0px;
-    }
-    .v-gridlayout-margin {
-      .gridform-caption {
-        background-color: #E0E0E0;
-        border-left: 1px solid $border-color;
-        border-right: 1px solid #c8c8c8;
-        &.first-col {
-          border-left: none;
-        }
-      }
-      > div > div > div > div {
-        border-top: 1px solid #c8c8c8;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        &.first-row {
-          border-top: none;
-        }
-      }
-    }
-    .main-info .depotComp {
-      margin-top: 0px;
-      .v-csslayout-header-wrapper {
-        padding: 0px 5px 0px 0px;
-        border-width: 0px;
-        border-style: solid;
-        border-color: $border-color;
-      }
-      .header-wrapper {
-        border: none;
-        padding-bottom: 0px;
-        background: none;
-      }
-      .depotHeader {
-        border-width: 0px 0px 1px 0px;
-        .h2 {
-          color: rgb(69, 69, 69);
-          font-weight: bold;
-          padding: 8px 0px 8px 18px;
-          font-size: $font-normal;
-          color: rgb(69, 69, 69);
-        }
-      }
-      &.collapsed .depotHeader .h2 {
-        border-bottom: none;
-      }
-      .depot-title {
-        background-position: left center;
-        .v-csslayout-margin {
-          margin-left: 0px;
-        }
-      }
-    }
-  }
-
-  .readview-layout .colored-gridlayout .gridform-field, .readViewLayout .colored-gridlayout .gridform-field {
-    &.v-margin-top {
-      padding-top: 8px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 8px;
     }
   }
 
@@ -3961,31 +3773,6 @@
     background-color: #f5f5f5;
     padding: 0px;
     border-radius: 0;
-  }
-
-  .addview-layout-header {
-    background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
-    border-radius: 3px 3px 0px 0px;
-    border-bottom: 1px solid $border-color;
-    position: relative;
-    z-index: 0;
-    overflow: visible !important;
-    top: 0px;
-    > div {
-      position: absolute !important;
-      top: 0px;
-    }
-    .v-label-h1 {
-      padding: 0px 0px 15px 5px;
-      font-size: $font-normal;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  }
-
-  .v-ie .addview-layout-header .v-label-h1 {
-    word-wrap: normal;
   }
 
   .control-buttons {
@@ -4231,21 +4018,6 @@
 
   /* End The New GridLayout */
 
-  /* Bug Dashboard */
-
-  .bugdashboard-header {
-    /* border: 1px solid $border-color; */
-    border-radius: 3px 3px 0px 0px;
-    background: url("icons/grad-light-top2.png") repeat-x left top #F5F5F5;
-    border-bottom: none;
-  }
-
-  .bugdashboard-header-top {
-    border-radius: 3px 3px 0px 0px;
-    background-color: rgb(228, 228, 228);
-    padding: 2px 10px;
-  }
-
   /* Task Group */
 
   .taskgroup-header {
@@ -4409,35 +4181,6 @@
       background: none no-repeat left top #F5F5F5;
       border-width: 0px 0px 1px 0px;
       border-radius: 0px;
-    }
-  }
-
-  /* Generic Component */
-
-  .v-csslayout-component-header {
-    font-size: $font-normal;
-    border-width: 1px 1px 0px;
-    border-style: solid;
-    border-color: $border-color;
-    background: url('icons/grad-light-top2.png') repeat-x left top rgb(229, 229, 229);
-    border-radius: 3px 3px 0px 0px;
-    padding: 3px 5px 3px 15px;
-  }
-
-  .v-verticallayout-component-body {
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background: none no-repeat left top #F5F5F5;
-  }
-
-  .limited-height-table {
-    .v-table-body, .v-table-body-noselection {
-      max-height: 450px;
-      overflow-x: hidden;
     }
   }
 
@@ -4901,31 +4644,6 @@
     spacing: true;
   }
 
-  .timeAdd-popup {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: $background-color;
-    border-bottom: 1px solid $border-color;
-    .popup-header {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      padding-left: 11px;
-      font-size: $font-normal;
-      font-weight: bold;
-      text-align: left;
-      padding-top: 8px;
-      border-bottom: 1px solid $border-color;
-    }
-    .popup-groupBtn {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      padding-left: 11px;
-    }
-  }
-
   /* Activity Stream Image's alignment fix */
 
   .stream-wrapper .v-label {
@@ -5101,81 +4819,10 @@
     margin-left: -2px;
   }
 
-  .eventdatepicker {
-    border: 1px solid #093768;
-    border-radius: 3px;
-    color: #FFF;
-    padding: 3px 13px;
-    text-shadow: 1px 1px 0 #000;
-    &.v-margin-top {
-      padding-top: 3px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 3px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
-  }
-
   /* Create Custome Field Window */
 
   .createCustomFieldWindow .panel-header {
     font-weight: bold;
-  }
-
-  .addview-layout-header {
-    &.v-margin-top {
-      padding-top: 4px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 4px;
-    }
-    &.v-margin-left {
-      padding-left: 15px;
-    }
-  }
-
-  .readview-layout-header {
-    &.v-margin-top {
-      padding-top: 2px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 0px;
-    }
-    &.v-margin-left {
-      padding-left: 8px;
-    }
-  }
-
-  .readview-header-left {
-    .v-horizontallayout-margin {
-      padding: 0px 0px 0px 7px;
-    }
-    .v-label.h2 {
-      font-size: $font-normal;
-    }
-  }
-
-  .addview-layout-header .v-label.h2 {
-    font-size: $font-normal;
-  }
-
-  .v-horizontallayout-readview-header-left .readview-header-left {
-    padding-bottom: 10px;
-  }
-
-  .label-padding-left-5px {
-    padding-left: 5px;
   }
 
   .v-ie9 {
@@ -5325,9 +4972,6 @@
   .tab-style3 {
     > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
       > tbody > tr {
-        > td > div {
-          /* border-bottom: 1px solid $border-color; */
-        }
         > .v-tabsheet-tabitemcell {
           > .v-tabsheet-tabitem {
             background: none repeat-x scroll left bottom $background-color;
@@ -5409,17 +5053,13 @@
     }
   }
 
-  /* Text styles */
-
-  .greentxt {
-    color: rgb(10, 88, 205);
-  }
-
   /* Label Styles */
 
-  .v-label.has-checkmark {
+  .v-label.has-checkmark:before {
     padding-left: 18px;
-    background: url("icons/16/checkmark.png") no-repeat left top transparent;
+    font-size:1em;
+    font-family: FontAwesome;
+    content: '\f00c';
   }
 
   /* Lead Convert Window */

@@ -5,11 +5,7 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -52,7 +48,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 			VerticalLayout formLayout = new VerticalLayout();
 
 			Label organizationHeader = new Label("Risk Information");
-			organizationHeader.setStyleName("h2");
+			organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 			formLayout.addComponent(organizationHeader);
 
 			informationLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
@@ -65,8 +61,6 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 			formLayout.addComponent(informationLayout.getLayout());
 
 			formLayout.addComponent(buildButtonControls());
-			formLayout
-					.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
 
 			return formLayout;
 		}

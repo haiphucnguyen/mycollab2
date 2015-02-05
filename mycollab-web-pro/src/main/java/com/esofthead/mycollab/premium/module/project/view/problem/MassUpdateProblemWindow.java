@@ -4,11 +4,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -53,7 +49,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 			final VerticalLayout formLayout = new VerticalLayout();
 
 			final Label organizationHeader = new Label("Problem Information");
-			organizationHeader.setStyleName("h2");
+            organizationHeader.setStyleName(UIConstants.H2_STYLE2);
 			formLayout.addComponent(organizationHeader);
 
 			this.informationLayout = new GridFormLayoutHelper(2, 6, "100%",
@@ -66,9 +62,6 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 					"colored-gridlayout");
 			formLayout.addComponent(this.informationLayout.getLayout());
 			formLayout.addComponent(buildButtonControls());
-
-			formLayout
-					.addStyleName("v-csslayout v-csslayout-readview-layout-body readview-layout-body");
 			return formLayout;
 		}
 

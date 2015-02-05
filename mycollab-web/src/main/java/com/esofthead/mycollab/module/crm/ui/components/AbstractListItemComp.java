@@ -72,7 +72,7 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
         final CssLayout layoutWrapper = new CssLayout();
         layoutWrapper.setWidth("100%");
 
-        final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(true).withWidth("100%");
+        final MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
 
         layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
         layoutWrapper.addComponent(layout);

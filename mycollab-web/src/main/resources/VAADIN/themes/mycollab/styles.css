@@ -6472,6 +6472,20 @@ body .mycollab.v-app .v-app-loading {
 	padding-left: 8px;
 }
 
+.mycollab .popuplistindicator.v-popupbutton {
+	background-color: transparent;
+}
+
+.mycollab .popuplistindicator.v-popupbutton .v-popup-indicator:before {
+	font-size: 1em;
+	font-family: FontAwesome;
+	content: "\f150";
+}
+
+.mycollab .popuplistindicator.v-popupbutton .v-button-wrap {
+	background-color: transparent;
+}
+
 .mycollab .splitbutton .v-popupbutton {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
@@ -6499,49 +6513,22 @@ body .mycollab.v-app .v-app-loading {
 	padding: 0px;
 }
 
-.mycollab div.v-splitbutton {
-	height: auto;
-}
-
-.mycollab div.v-splitbutton .v-button {
-	height: auto;
-}
-
 .mycollab .v-splitbutton .greenbtn, .mycollab .v-splitbutton .graybtn {
 	margin: 0px;
 	border-radius: 3px 0px 0px 3px;
 	padding: 3px 3px 3px 8px;
 }
 
-.mycollab .v-ie .v-splitbutton .greenbtn {
+.mycollab .v-ie .v-splitbutton .greenbtn, .mycollab .v-ie .v-splitbutton .graybtn {
 	padding: 3px 3px 3px 8px;
 	box-sizing: border-box;
-}
-
-.mycollab .v-ie .v-splitbutton .graybtn {
-	padding: 3px 3px 3px 8px;
-	box-sizing: border-box;
-}
-
-.mycollab .v-ie .v-splitbutton .graybtn.v-popupbutton {
-	padding: 3px 7px 3px 2px;
-}
-
-.mycollab .v-ie .v-splitbutton .greenbtn.v-popupbutton {
-	padding: 3px 7px 3px 2px;
-}
-
-.mycollab .v-splitbutton .v-popupbutton.greenbtn, .mycollab .v-splitbutton .v-popupbutton.graybtn {
-	border-width: 1px 1px 1px 0px;
-	border-right: 1px solid #093768;
-	border-radius: 0px 3px 3px 0px;
 }
 
 .mycollab .v-splitbutton .v-popupbutton.greenbtn, .mycollab .v-splitbutton .v-popupbutton.graybtn {
 	padding: 3px 7px 3px 2px;
 }
 
-.mycollab .v-splitbutton .v-popupbutton.greenbtn:active, .mycollab .v-splitbutton .v-popupbutton.graybtn:active {
+.mycollab .v-splitbutton .v-popupbutton.greenbtn:active, .mycollab .v-splitbutton .v-popupbutton.greenbtn:focus, .mycollab .v-splitbutton .v-popupbutton.graybtn:active, .mycollab .v-splitbutton .v-popupbutton.graybtn:focus {
 	padding: 3px 7px 3px 2px;
 }
 
@@ -10927,57 +10914,6 @@ body .mycollab.v-app .v-app-loading {
 	border: 1px solid #CFCFCF;
 }
 
-.mycollab .readViewLayout .readViewTopControls {
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .readViewLayout .readViewTopControls .readNewControl {
-	border-bottom: none;
-}
-
-.mycollab .readViewLayout .readNewControl.v-margin-top {
-	padding-top: 5px;
-}
-
-.mycollab .readViewLayout .readNewControl.v-margin-right {
-	padding-right: 0px;
-}
-
-.mycollab .readViewLayout .readNewControl.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.mycollab .readViewLayout .readNewControl.v-margin-left {
-	padding-left: 0px;
-}
-
-.mycollab .readViewLayout .readViewTopControls .edit-btn .v-horizontallayout-margin, .mycollab .readViewLayout .readViewTopControls .workflow-controls .v-horizontallayout-margin {
-	padding: 0px;
-}
-
-.mycollab .readViewHeader {
-	padding: 10px 5px 10px 18px;
-	background: none repeat-x left top #EEEEEE;
-	border-radius: 0px;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .readViewHeader .readViewHeaderLeft {
-	float: left;
-}
-
-.mycollab .readViewHeader .readViewHeaderRight {
-	float: right;
-	min-height: 24px;
-}
-
-.mycollab .readViewHeaderIcon, .mycollab .readViewHeaderTitle {
-	float: left;
-}
-
 .mycollab .readViewLayout .readViewHeader .headerName {
 	font-size: 16px;
 	color: #303030;
@@ -11008,6 +10944,13 @@ body .mycollab.v-app .v-app-loading {
 	font-weight: bold;
 }
 
+.mycollab .readViewHeader {
+	padding: 10px 5px 10px 18px;
+	background: none repeat-x left top #EEEEEE;
+	border-radius: 0px;
+	border-bottom: 1px solid #CFCFCF;
+}
+
 .mycollab .readViewBottomControls .v-verticallayout {
 	display: block;
 }
@@ -11025,169 +10968,11 @@ body .mycollab.v-app .v-app-loading {
 	padding-right: 30px;
 }
 
-.mycollab .readview-layout-header {
-	position: relative;
-	z-index: 0;
-	overflow: visible !important;
-	bottom: 0px;
-	left: 0px;
-}
-
-.mycollab .readview-layout-header  > div {
-	top: 1px;
-	position: absolute !important;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.mycollab .readview-layout-header .v-label-h1 {
-	padding: 0px;
-	padding-left: 5px;
-	font-size: 16px;
-	text-overflow: ellipsis;
-	-ms-text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	word-wrap: normal;
-}
-
-.mycollab .readview-layout-header .detachedtabs .v-button-tab {
-	padding: 0px 2px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.mycollab .readview-layout-header .detachedtabs .v-button-tab  > .v-button-wrap {
-	background: none no-repeat 0 0 #e4e4e6;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border: 1px solid #CFCFCF;
-}
-
-.mycollab .readview-layout-header .detachedtabs .v-button  > .v-button-wrap, .mycollab .readview-layout-header .detachedtabs .v-button:active > .v-button-wrap {
-	padding: 4px 8px;
-}
-
-.mycollab .readview-layout-header .detachedtabs .v-button-tab.tab-selected > .v-button-wrap {
-	background: url('icons/grad-light-top2.png') repeat-x 0 0 #f5f5f5;
-	border-bottom: 1px solid #f5f5f5;
-}
-
-.mycollab .readview-layout-body .h2 {
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
-	color: #454545;
-}
-
-.mycollab .readview-layout-body .control-buttons {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .readview-layout-body .v-gridlayout-margin {
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .readview-layout-body .v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
-	padding: 8px 5px 8px 18px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.mycollab .readview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
-	padding-top: 5px;
-}
-
-.mycollab .readview-layout-body .v-horizontallayout-gridform-caption.v-margin-right {
-	padding-right: 5px;
-}
-
-.mycollab .readview-layout-body .v-horizontallayout-gridform-caption.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.mycollab .readview-layout-body .v-horizontallayout-gridform-caption.v-margin-left {
-	padding-left: 18px;
-}
-
-.mycollab .readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout .v-horizontallayout-margin {
-	padding: 0px;
-}
-
-.mycollab .readview-layout-body .v-gridlayout-margin .gridform-caption {
-	background-color: #E0E0E0;
-	border-left: 1px solid #CFCFCF;
-	border-right: 1px solid #c8c8c8;
-}
-
-.mycollab .readview-layout-body .v-gridlayout-margin .gridform-caption.first-col {
-	border-left: none;
-}
-
-.mycollab .readview-layout-body .v-gridlayout-margin  > div > div > div > div {
-	border-top: 1px solid #c8c8c8;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-.mycollab .readview-layout-body .v-gridlayout-margin  > div > div > div > div.first-row {
-	border-top: none;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp {
-	margin-top: 0px;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp .v-csslayout-header-wrapper {
-	padding: 0px 5px 0px 0px;
-	border-width: 0px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp .header-wrapper {
-	border: none;
-	padding-bottom: 0px;
-	background: none;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp .depotHeader {
-	border-width: 0px 0px 1px 0px;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp .depotHeader .h2 {
-	color: #454545;
-	font-weight: bold;
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	color: #454545;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp.collapsed .depotHeader .h2 {
-	border-bottom: none;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp .depot-title {
-	background-position: left center;
-}
-
-.mycollab .readview-layout-body .main-info .depotComp .depot-title .v-csslayout-margin {
-	margin-left: 0px;
-}
-
-.mycollab .readview-layout .colored-gridlayout .gridform-field.v-margin-top, .mycollab .readViewLayout .colored-gridlayout .gridform-field.v-margin-top {
+.mycollab .readview-layout .colored-gridlayout .gridform-field.v-margin-top, .mycollab .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-top {
 	padding-top: 8px;
 }
 
-.mycollab .readview-layout .colored-gridlayout .gridform-field.v-margin-bottom, .mycollab .readViewLayout .colored-gridlayout .gridform-field.v-margin-bottom {
+.mycollab .readview-layout .colored-gridlayout .gridform-field.v-margin-bottom, .mycollab .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-bottom {
 	padding-bottom: 8px;
 }
 
@@ -11195,33 +10980,6 @@ body .mycollab.v-app .v-app-loading {
 	background-color: #f5f5f5;
 	padding: 0px;
 	border-radius: 0;
-}
-
-.mycollab .addview-layout-header {
-	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
-	border-radius: 3px 3px 0px 0px;
-	border-bottom: 1px solid #CFCFCF;
-	position: relative;
-	z-index: 0;
-	overflow: visible !important;
-	top: 0px;
-}
-
-.mycollab .addview-layout-header  > div {
-	position: absolute !important;
-	top: 0px;
-}
-
-.mycollab .addview-layout-header .v-label-h1 {
-	padding: 0px 0px 15px 5px;
-	font-size: 13px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-}
-
-.mycollab .v-ie .addview-layout-header .v-label-h1 {
-	word-wrap: normal;
 }
 
 .mycollab .control-buttons.v-margin-top {
@@ -11479,18 +11237,6 @@ body .mycollab.v-app .v-app-loading {
 	border-top: none;
 }
 
-.mycollab .bugdashboard-header {
-	border-radius: 3px 3px 0px 0px;
-	background: url("icons/grad-light-top2.png") repeat-x left top #F5F5F5;
-	border-bottom: none;
-}
-
-.mycollab .bugdashboard-header-top {
-	border-radius: 3px 3px 0px 0px;
-	background-color: #e4e4e4;
-	padding: 2px 10px;
-}
-
 .mycollab .taskgroup-header {
 	padding: 7px 10px 7px 18px;
 	border: 1px solid #CFCFCF;
@@ -11651,31 +11397,6 @@ body .mycollab.v-app .v-app-loading {
 	background: none no-repeat left top #F5F5F5;
 	border-width: 0px 0px 1px 0px;
 	border-radius: 0px;
-}
-
-.mycollab .v-csslayout-component-header {
-	font-size: 13px;
-	border-width: 1px 1px 0px;
-	border-style: solid;
-	border-color: #CFCFCF;
-	background: url('icons/grad-light-top2.png') repeat-x left top #e5e5e5;
-	border-radius: 3px 3px 0px 0px;
-	padding: 3px 5px 3px 15px;
-}
-
-.mycollab .v-verticallayout-component-body {
-	border-width: 0px 1px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	background: none no-repeat left top #F5F5F5;
-}
-
-.mycollab .limited-height-table .v-table-body, .mycollab .limited-height-table .v-table-body-noselection {
-	max-height: 450px;
-	overflow-x: hidden;
 }
 
 .mycollab .v-listbuilder-buttons .v-button {
@@ -12138,33 +11859,6 @@ body .mycollab.v-app .v-app-loading {
 	line-height: 1.7em;
 }
 
-.mycollab .timeAdd-popup {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	background-color: whitesmoke;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .timeAdd-popup .popup-header {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding-left: 11px;
-	font-size: 13px;
-	font-weight: bold;
-	text-align: left;
-	padding-top: 8px;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.mycollab .timeAdd-popup .popup-groupBtn {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding-left: 11px;
-}
-
 .mycollab .stream-wrapper .v-label {
 	line-height: 1.5em;
 }
@@ -12339,84 +12033,8 @@ body .mycollab.v-app .v-app-loading {
 	margin-left: -2px;
 }
 
-.mycollab .eventdatepicker {
-	border: 1px solid #093768;
-	border-radius: 3px;
-	color: #FFF;
-	padding: 3px 13px;
-	text-shadow: 1px 1px 0 #000;
-}
-
-.mycollab .eventdatepicker.v-margin-top {
-	padding-top: 3px;
-}
-
-.mycollab .eventdatepicker.v-margin-right {
-	padding-right: 10px;
-}
-
-.mycollab .eventdatepicker.v-margin-bottom {
-	padding-bottom: 3px;
-}
-
-.mycollab .eventdatepicker.v-margin-left {
-	padding-left: 10px;
-}
-
 .mycollab .createCustomFieldWindow .panel-header {
 	font-weight: bold;
-}
-
-.mycollab .addview-layout-header.v-margin-top {
-	padding-top: 4px;
-}
-
-.mycollab .addview-layout-header.v-margin-right {
-	padding-right: 5px;
-}
-
-.mycollab .addview-layout-header.v-margin-bottom {
-	padding-bottom: 4px;
-}
-
-.mycollab .addview-layout-header.v-margin-left {
-	padding-left: 15px;
-}
-
-.mycollab .readview-layout-header.v-margin-top {
-	padding-top: 2px;
-}
-
-.mycollab .readview-layout-header.v-margin-right {
-	padding-right: 5px;
-}
-
-.mycollab .readview-layout-header.v-margin-bottom {
-	padding-bottom: 0px;
-}
-
-.mycollab .readview-layout-header.v-margin-left {
-	padding-left: 8px;
-}
-
-.mycollab .readview-header-left .v-horizontallayout-margin {
-	padding: 0px 0px 0px 7px;
-}
-
-.mycollab .readview-header-left .v-label.h2 {
-	font-size: 13px;
-}
-
-.mycollab .addview-layout-header .v-label.h2 {
-	font-size: 13px;
-}
-
-.mycollab .v-horizontallayout-readview-header-left .readview-header-left {
-	padding-bottom: 10px;
-}
-
-.mycollab .label-padding-left-5px {
-	padding-left: 5px;
 }
 
 .mycollab .v-ie9 .v-gridlayout-margin > div > div > .v-caption, .mycollab .v-ie9 .v-horizontallayout.gridform-field > div > div > .v-caption {
@@ -12615,13 +12233,11 @@ body .mycollab.v-app .v-app-loading {
 	display: block;
 }
 
-.mycollab .greentxt {
-	color: #0a58cd;
-}
-
-.mycollab .v-label.has-checkmark {
+.mycollab .v-label.has-checkmark:before {
 	padding-left: 18px;
-	background: url("icons/16/checkmark.png") no-repeat left top transparent;
+	font-size: 1em;
+	font-family: FontAwesome;
+	content: "\f00c";
 }
 
 .mycollab .lead-convert-window {

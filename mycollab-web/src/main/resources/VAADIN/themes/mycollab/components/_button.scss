@@ -680,6 +680,20 @@
     padding-left: 8px;
   }
 
+  .popuplistindicator {
+    &.v-popupbutton {
+      background-color:transparent;
+      .v-popup-indicator:before {
+        font-size: 1em;
+        font-family: FontAwesome;
+        content:'\f150';
+      }
+      .v-button-wrap {
+        background-color:transparent;
+      }
+    }
+  }
+
   .splitbutton .v-popupbutton {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -705,16 +719,6 @@
     .v-popupbutton.greenbtn .v-button-wrap, div.v-disabled.v-popupbutton.greenbtn .v-button-wrap, .v-popupbutton.graybtn .v-button-wrap, div.v-disabled.v-popupbutton.graybtn .v-button-wrap {
       padding: 0px;
     }
-  }
-
-  div.v-splitbutton {
-    height: auto;
-    .v-button {
-      height: auto;
-    }
-  }
-
-  .v-splitbutton {
     .greenbtn, .graybtn {
       margin: 0px;
       border-radius: 3px 0px 0px 3px;
@@ -723,31 +727,16 @@
   }
 
   .v-ie .v-splitbutton {
-    .greenbtn {
+    .greenbtn, .graybtn {
       padding: 3px 3px 3px 8px;
       box-sizing: border-box;
-    }
-    .graybtn {
-      padding: 3px 3px 3px 8px;
-      box-sizing: border-box;
-      &.v-popupbutton {
-        padding: 3px 7px 3px 2px;
-      }
-    }
-    .greenbtn.v-popupbutton {
-      padding: 3px 7px 3px 2px;
     }
   }
 
   .v-splitbutton .v-popupbutton {
     &.greenbtn, &.graybtn {
-      border-width: 1px 1px 1px 0px;
-      border-right: 1px solid #093768;
-      border-radius: 0px 3px 3px 0px;
-    }
-    &.greenbtn, &.graybtn {
       padding: 3px 7px 3px 2px;
-      &:active {
+      &:active, &:focus {
         padding: 3px 7px 3px 2px;
       }
     }
