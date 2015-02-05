@@ -6138,22 +6138,6 @@ body .mycollab.v-app .v-app-loading {
 	border: 0;
 }
 
-.mycollab .small-padding .v-button-wrap, .mycollab .small-padding:active .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .small-padding .v-button-wrap, .mycollab .v-ie .small-padding:active .v-button-wrap, .mycollab .v-ie .small-padding .v-button:active .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .v-pressed.v-button.small-padding .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .small-padding .v-pressed.v-button .v-button-wrap {
-	padding: 4px 6px;
-}
-
 .mycollab .v-button {
 	background-color: #F9F9F9;
 	border-width: 0px;
@@ -6464,6 +6448,177 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-upload-immediate .v-button .v-button-caption {
 	color: white;
+}
+
+.mycollab .splitbutton .parent-button {
+	border-right-width: 0px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.mycollab .splitbutton .parent-button.blankbtn .v-button-wrap {
+	border-right-color: #B3B3B3;
+}
+
+.mycollab .splitbutton .parent-button .v-button-wrap {
+	border-right: 1px solid #F9F9F9;
+	padding-right: 6px;
+	padding-left: 8px;
+}
+
+.mycollab .v-ie .splitbutton .parent-button .v-button-wrap {
+	border-right: 1px solid #F9F9F9;
+	padding-right: 6px;
+	padding-left: 8px;
+}
+
+.mycollab .splitbutton .v-popupbutton {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.mycollab .splitbutton .v-popupbutton:active {
+	padding: 0;
+}
+
+.mycollab .splitbutton .v-popupbutton .v-button-wrap {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.mycollab .v-ie .splitbutton .v-popupbutton .v-button-wrap {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.mycollab div.v-button-nonPopupIndicator div.v-popup-indicator {
+	display: none;
+}
+
+.mycollab .v-splitbutton .v-popupbutton.greenbtn .v-button-wrap, .mycollab .v-splitbutton div.v-disabled.v-popupbutton.greenbtn .v-button-wrap, .mycollab .v-splitbutton .v-popupbutton.graybtn .v-button-wrap, .mycollab .v-splitbutton div.v-disabled.v-popupbutton.graybtn .v-button-wrap {
+	padding: 0px;
+}
+
+.mycollab div.v-splitbutton {
+	height: auto;
+}
+
+.mycollab div.v-splitbutton .v-button {
+	height: auto;
+}
+
+.mycollab .v-splitbutton .greenbtn, .mycollab .v-splitbutton .graybtn {
+	margin: 0px;
+	border-radius: 3px 0px 0px 3px;
+	padding: 3px 3px 3px 8px;
+}
+
+.mycollab .v-ie .v-splitbutton .greenbtn {
+	padding: 3px 3px 3px 8px;
+	box-sizing: border-box;
+}
+
+.mycollab .v-ie .v-splitbutton .graybtn {
+	padding: 3px 3px 3px 8px;
+	box-sizing: border-box;
+}
+
+.mycollab .v-ie .v-splitbutton .graybtn.v-popupbutton {
+	padding: 3px 7px 3px 2px;
+}
+
+.mycollab .v-ie .v-splitbutton .greenbtn.v-popupbutton {
+	padding: 3px 7px 3px 2px;
+}
+
+.mycollab .v-splitbutton .v-popupbutton.greenbtn, .mycollab .v-splitbutton .v-popupbutton.graybtn {
+	border-width: 1px 1px 1px 0px;
+	border-right: 1px solid #093768;
+	border-radius: 0px 3px 3px 0px;
+}
+
+.mycollab .v-splitbutton .v-popupbutton.greenbtn, .mycollab .v-splitbutton .v-popupbutton.graybtn {
+	padding: 3px 7px 3px 2px;
+}
+
+.mycollab .v-splitbutton .v-popupbutton.greenbtn:active, .mycollab .v-splitbutton .v-popupbutton.graybtn:active {
+	padding: 3px 7px 3px 2px;
+}
+
+.mycollab .v-popupbutton.greenbtn .v-popup-indicator {
+	background: url(components/icons/sprites.png) no-repeat scroll -5px -10px transparent;
+}
+
+.mycollab .v-popupbutton .v-button-wrap * {
+	float: none;
+}
+
+.mycollab .splitbutton .v-popupbutton {
+	border-left: none;
+}
+
+.mycollab .splitbutton .v-popupbutton:active, .mycollab .splitbutton .v-popupbutton.greenbtn, .mycollab .splitbutton .v-popupbutton.graybtn, .mycollab .splitbutton .v-popupbutton.bluebtn, .mycollab .splitbutton .v-popupbutton.brownbtn {
+	border-left: none;
+}
+
+.mycollab .v-popupbutton .v-popup-indicator {
+	background-position: -7px -10px !important;
+}
+
+.mycollab .splitbutton .v-popupbutton.action-button {
+	padding: 0px 0px 0px 0px !important;
+	border: 0 !important;
+}
+
+.mycollab .splitbutton .parent-button.action-button {
+	border-color: #CFCFCF;
+	border-radius: 2px;
+	background-color: #F9F9F9;
+}
+
+.mycollab .splitbutton .parent-button.action-button:focus {
+	border-color: #CFCFCF;
+	border-radius: 2px;
+	background-color: #F9F9F9;
+}
+
+.mycollab .splitbutton .v-button.action-button {
+	border-radius: 2px;
+	border-width: 1px 1px 1px 1px !important;
+	height: 100%;
+	border-width: 0;
+}
+
+.mycollab .splitbutton .v-button.action-button:active {
+	border-color: #CFCFCF;
+}
+
+.mycollab .splitbutton .v-button.action-button .v-button-wrap {
+	padding: 6px 12px 6px 12px !important;
+	border: none;
+	border-top: 1px solid transparent;
+}
+
+.mycollab .splitbutton .v-button.action-button .v-button-wrap:active, .mycollab .splitbutton .v-button.action-button .v-button-wrap:hover {
+	background-color: #F0F0F0;
+	background-image: -webkit-linear-gradient(top, #F0F0F0, #E0E0E0);
+	background-image: -moz-linear-gradient(top, #F0F0F0, #E0E0E0);
+	background-image: -ms-linear-gradient(top, #F0F0F0, #E0E0E0);
+	background-image: -o-linear-gradient(top, #F0F0F0, #E0E0E0);
+	background-image: linear-gradient(top, #F0F0F0, #E0E0E0);
+}
+
+.mycollab .splitbutton .v-button.action-button .v-button-wrap:active {
+	border-top-color: #C7C7C7;
+}
+
+.mycollab .splitbutton .parent-button.action-button .v-button-wrap {
+	padding-left: 11px;
+	padding-right: 11px;
+}
+
+.mycollab .splitbutton .v-button.action-button .v-icon {
+	margin-right: 0;
 }
 
 .mycollab .v-icon .black {
@@ -7776,38 +7931,6 @@ body .mycollab.v-app .v-app-loading {
 	background: none repeat scroll 0% 0% #dbdee3;
 }
 
-.mycollab .splitbutton .small-padding.v-parent .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .splitbutton .small-padding.v-parent .v-button-wrap, .mycollab .v-ie .splitbutton .parent-button.small-padding .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .small-padding .v-popupbutton .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .splitbutton .small-padding.v-popupbutton .v-button-wrap, .mycollab .splitbutton .small-padding.v-popupbutton:active .v-button-wrap {
-	padding: 4px 2px;
-}
-
-.mycollab .v-ie .splitbutton .small-padding.v-popupbutton .v-button-wrap, .mycollab .v-ie .splitbutton .small-padding.v-popupbutton:active .v-button-wrap {
-	padding: 4px 2px;
-}
-
-.mycollab .v-ie .splitbutton .v-pressed.small-padding.v-popupbutton .v-button-wrap {
-	padding: 4px 2px;
-}
-
-.mycollab .small-padding .v-icon {
-	margin-right: 3px;
-}
-
-.mycollab .v-ie .small-padding .v-icon {
-	margin-right: 3px;
-}
-
 .mycollab .v-ie .v-popupbutton .v-button-wrap, .mycollab .v-ie .v-popupbutton:active .v-button-wrap, .mycollab .v-ie .v-popupbutton:focus .v-button-wrap {
 	padding: 6px;
 }
@@ -7857,55 +7980,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-buttongroup .v-button:focus .v-button-wrap {
 	background: none;
-}
-
-.mycollab .splitbutton .parent-button {
-	border-right-width: 0px;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
-}
-
-.mycollab .splitbutton .parent-button.blankbtn .v-button-wrap {
-	border-right-color: #B3B3B3;
-}
-
-.mycollab .splitbutton .parent-button .v-button-wrap {
-	border-right: 1px solid #F9F9F9;
-	padding-right: 6px;
-	padding-left: 8px;
-}
-
-.mycollab .v-ie .splitbutton .parent-button .v-button-wrap {
-	border-right: 1px solid #F9F9F9;
-	padding-right: 6px;
-	padding-left: 8px;
-}
-
-.mycollab .splitbutton .v-popupbutton {
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
-}
-
-.mycollab .splitbutton .v-popupbutton:active {
-	padding: 0;
-}
-
-.mycollab .splitbutton .v-popupbutton .v-button-wrap {
-	padding-left: 3px;
-	padding-right: 3px;
-}
-
-.mycollab .v-ie .splitbutton .v-popupbutton .v-button-wrap {
-	padding-left: 3px;
-	padding-right: 3px;
-}
-
-.mycollab div.v-button-nonPopupIndicator div.v-popup-indicator {
-	display: none;
-}
-
-.mycollab .v-splitbutton .v-popupbutton.greenbtn .v-button-wrap, .mycollab .v-splitbutton div.v-disabled.v-popupbutton.greenbtn .v-button-wrap, .mycollab .v-splitbutton .v-popupbutton.graybtn .v-button-wrap, .mycollab .v-splitbutton div.v-disabled.v-popupbutton.graybtn .v-button-wrap {
-	padding: 0px;
 }
 
 .mycollab .hdr-view .table-actionctls {
@@ -9762,60 +9836,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-panel-deco-noneBorder-panel, .mycollab .v-panel-nocaption-noneBorder-panel {
 	border: none;
-}
-
-.mycollab div.v-splitbutton {
-	height: auto;
-}
-
-.mycollab div.v-splitbutton .v-button {
-	height: auto;
-}
-
-.mycollab .v-splitbutton .greenbtn, .mycollab .v-splitbutton .graybtn {
-	margin: 0px;
-	border-radius: 3px 0px 0px 3px;
-	padding: 3px 3px 3px 8px;
-}
-
-.mycollab .v-ie .v-splitbutton .greenbtn {
-	padding: 3px 3px 3px 8px;
-	box-sizing: border-box;
-}
-
-.mycollab .v-ie .v-splitbutton .graybtn {
-	padding: 3px 3px 3px 8px;
-	box-sizing: border-box;
-}
-
-.mycollab .v-ie .v-splitbutton .graybtn.v-popupbutton {
-	padding: 3px 7px 3px 2px;
-}
-
-.mycollab .v-ie .v-splitbutton .greenbtn.v-popupbutton {
-	padding: 3px 7px 3px 2px;
-}
-
-.mycollab .v-splitbutton .v-popupbutton.greenbtn, .mycollab .v-splitbutton .v-popupbutton.graybtn {
-	border-width: 1px 1px 1px 0px;
-	border-right: 1px solid #093768;
-	border-radius: 0px 3px 3px 0px;
-}
-
-.mycollab .v-splitbutton .v-popupbutton.greenbtn, .mycollab .v-splitbutton .v-popupbutton.graybtn {
-	padding: 3px 7px 3px 2px;
-}
-
-.mycollab .v-splitbutton .v-popupbutton.greenbtn:active, .mycollab .v-splitbutton .v-popupbutton.graybtn:active {
-	padding: 3px 7px 3px 2px;
-}
-
-.mycollab .v-popupbutton.greenbtn .v-popup-indicator {
-	background: url("icons/sprites.png") no-repeat scroll -5px -10px transparent;
-}
-
-.mycollab .v-popupbutton .v-button-wrap * {
-	float: none;
 }
 
 .mycollab .v-table-header-wrap {
@@ -12407,18 +12427,6 @@ body .mycollab.v-app .v-app-loading {
 	width: 4px;
 }
 
-.mycollab .splitbutton .v-popupbutton {
-	border-left: none;
-}
-
-.mycollab .splitbutton .v-popupbutton:active, .mycollab .splitbutton .v-popupbutton.greenbtn, .mycollab .splitbutton .v-popupbutton.graybtn, .mycollab .splitbutton .v-popupbutton.bluebtn, .mycollab .splitbutton .v-popupbutton.brownbtn {
-	border-left: none;
-}
-
-.mycollab .v-popupbutton .v-popup-indicator {
-	background-position: -7px -10px !important;
-}
-
 .mycollab .tab-content {
 	background-color: #fff;
 	height: 100%;
@@ -12692,62 +12700,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-vertical.v-margin-top.case-noitem {
 	padding-top: 50px;
-}
-
-.mycollab .splitbutton .v-popupbutton.action-button {
-	padding: 0px 0px 0px 0px !important;
-	border: 0 !important;
-}
-
-.mycollab .splitbutton .parent-button.action-button {
-	border-color: #CFCFCF;
-	border-radius: 2px;
-	background-color: #F9F9F9;
-}
-
-.mycollab .splitbutton .parent-button.action-button:focus {
-	border-color: #CFCFCF;
-	border-radius: 2px;
-	background-color: #F9F9F9;
-}
-
-.mycollab .splitbutton .v-button.action-button {
-	border-radius: 2px;
-	border-width: 1px 1px 1px 1px !important;
-	height: 100%;
-	border-width: 0;
-}
-
-.mycollab .splitbutton .v-button.action-button:active {
-	border-color: #CFCFCF;
-}
-
-.mycollab .splitbutton .v-button.action-button .v-button-wrap {
-	padding: 6px 12px 6px 12px !important;
-	border: none;
-	border-top: 1px solid transparent;
-}
-
-.mycollab .splitbutton .v-button.action-button .v-button-wrap:active, .mycollab .splitbutton .v-button.action-button .v-button-wrap:hover {
-	background-color: #F0F0F0;
-	background-image: -webkit-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: -moz-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: -ms-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: -o-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: linear-gradient(top, #F0F0F0, #E0E0E0);
-}
-
-.mycollab .splitbutton .v-button.action-button .v-button-wrap:active {
-	border-top-color: #C7C7C7;
-}
-
-.mycollab .splitbutton .parent-button.action-button .v-button-wrap {
-	padding-left: 11px;
-	padding-right: 11px;
-}
-
-.mycollab .splitbutton .v-button.action-button .v-icon {
-	margin-right: 0;
 }
 
 .mycollab .hdr-view, .mycollab .v-horizontallayout.hdr-view, .mycollab .advSearchHeader .v-horizontallayout.hdr-view, .mycollab .basicSearchHeader .hdr-view {

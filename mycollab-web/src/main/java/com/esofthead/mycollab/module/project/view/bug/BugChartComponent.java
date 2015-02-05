@@ -100,7 +100,7 @@ public class BugChartComponent extends Depot {
 	private void initUI() {
 
 		final PopupButton bugChartPopup = new PopupButton("");
-		bugChartPopup.addStyleName(UIConstants.THEME_BLANK_LINK);
+		bugChartPopup.addStyleName(UIConstants.THEME_TRANSPARENT_LINK);
 		bugChartPopup.setIcon(MyCollabResource
 				.newResource(WebResourceIds._12_project_task_filter));
 

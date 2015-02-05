@@ -305,7 +305,6 @@ public class ProblemListViewImpl extends AbstractPageView implements
 				.newResource(WebResourceIds._16_customize));
 		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		customizeViewBtn.addStyleName(UIConstants.THEME_SMALL_PADDING);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 

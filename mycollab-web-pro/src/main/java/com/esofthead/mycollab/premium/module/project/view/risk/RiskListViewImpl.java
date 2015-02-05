@@ -269,7 +269,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
 		this.tableActionControls.setVisible(false);
 		this.tableActionControls.setWidthUndefined();
-		this.tableActionControls.addStyleName(UIConstants.THEME_SMALL_PADDING);
 
 		layout.addComponent(this.tableActionControls);
 		this.selectedItemsNumberLabel.setWidth("100%");
@@ -293,7 +292,6 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 				.newResource(WebResourceIds._16_customize));
 		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		customizeViewBtn.addStyleName(UIConstants.THEME_SMALL_PADDING);
 		layout.addComponent(customizeViewBtn);
 		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
