@@ -694,6 +694,10 @@
     }
   }
 
+  .noDefaultIcon.v-popupbutton .v-popup-indicator:before {
+    content: '';
+  }
+
   .splitbutton .v-popupbutton {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
