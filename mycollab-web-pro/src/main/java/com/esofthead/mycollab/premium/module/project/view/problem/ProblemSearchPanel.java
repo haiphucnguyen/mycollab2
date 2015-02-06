@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import org.vaadin.maddon.layouts.MHorizontalLayout;
-
 import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -18,22 +16,12 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * 
@@ -85,15 +73,14 @@ public class ProblemSearchPanel extends
 					}
 				});
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		createBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_addRecord));
+		createBtn.setIcon(FontAwesome.PLUS_SQUARE);
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
 		Label headerText = new Label("Problems");
 		headerText.setStyleName(UIConstants.HEADER_TEXT);
 
-		MHorizontalLayout header = new MHorizontalLayout()
+		return new MHorizontalLayout()
 				.withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
 				.withSpacing(true)
 				.withMargin(new MarginInfo(true, false, true, false))
@@ -102,7 +89,6 @@ public class ProblemSearchPanel extends
 				.withAlign(headerText, Alignment.MIDDLE_LEFT)
 				.withAlign(createBtn, Alignment.MIDDLE_RIGHT)
 				.expand(headerText);
-		return header;
 	}
 
 	private class ProblemBasicSearchLayout extends
@@ -138,8 +124,7 @@ public class ProblemSearchPanel extends
 			final Button searchBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			searchBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_search));
+			searchBtn.setIcon(FontAwesome.SEARCH);
 
 			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -191,8 +176,7 @@ public class ProblemSearchPanel extends
 			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
 					ProblemSearchPanel.this.project.getId()));
 
-			searchCriteria.setProblemname(new StringSearchField(this.nameField
-					.getValue().toString().trim()));
+			searchCriteria.setProblemname(new StringSearchField(this.nameField.getValue().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
 				searchCriteria.setAssignToUser(new StringSearchField(

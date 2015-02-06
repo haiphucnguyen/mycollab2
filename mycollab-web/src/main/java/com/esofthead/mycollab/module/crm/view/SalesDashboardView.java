@@ -84,7 +84,6 @@ public class SalesDashboardView extends Depot {
 	}
 
 	private void initUI() {
-
 		final PopupButton saleChartPopup = new PopupButton("");
 		saleChartPopup.addStyleName(UIConstants.THEME_BLANK_LINK);
 		saleChartPopup.setIcon(MyCollabResource

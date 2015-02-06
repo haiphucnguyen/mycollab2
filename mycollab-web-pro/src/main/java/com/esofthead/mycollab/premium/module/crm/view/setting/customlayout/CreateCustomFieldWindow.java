@@ -27,6 +27,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -156,7 +157,7 @@ public class CreateCustomFieldWindow extends Window {
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_save));
+		saveBtn.setIcon(FontAwesome.SAVE);
 		buttonControls.addComponent(saveBtn);
 		buttonControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 

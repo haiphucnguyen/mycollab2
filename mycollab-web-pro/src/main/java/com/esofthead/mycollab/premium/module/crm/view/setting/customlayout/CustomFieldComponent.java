@@ -16,26 +16,18 @@
  */
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
-import org.vaadin.hene.popupbutton.PopupButton;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 public class CustomFieldComponent extends CssLayout {
 
@@ -110,7 +102,7 @@ public class CustomFieldComponent extends CssLayout {
 			}
 		});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_save));
+		saveBtn.setIcon(FontAwesome.SAVE);
 		panelContentLayout.addComponent(saveBtn);
 		((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(
 				saveBtn, Alignment.MIDDLE_CENTER);

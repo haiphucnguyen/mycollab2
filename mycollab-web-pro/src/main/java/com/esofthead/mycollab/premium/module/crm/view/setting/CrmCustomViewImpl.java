@@ -16,11 +16,6 @@
  */
 package com.esofthead.mycollab.premium.module.crm.view.setting;
 
-import java.util.List;
-
-import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.maddon.layouts.MVerticalLayout;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.service.MasterFormService;
@@ -49,15 +44,14 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Property;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import java.util.List;
 
 /**
  * 
@@ -130,8 +124,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 					}
 				});
 		createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		createCustomFieldBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_addRecord));
+		createCustomFieldBtn.setIcon(FontAwesome.PLUS_SQUARE);
 		controlLayout.addComponent(createCustomFieldBtn);
 		controlLayout.setComponentAlignment(createCustomFieldBtn,
 				Alignment.MIDDLE_LEFT);
@@ -149,8 +142,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 					}
 				});
 		createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		createSectionBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_addRecord));
+		createSectionBtn.setIcon(FontAwesome.PLUS_SQUARE);
 		controlLayout.addComponent(createSectionBtn);
 		controlLayout.setComponentAlignment(createSectionBtn,
 				Alignment.MIDDLE_LEFT);
@@ -180,7 +172,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 					}
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_save));
+		saveBtn.setIcon(FontAwesome.SAVE);
 		buttonsLayout.addComponent(saveBtn);
 
 		Button cancelBtn = new Button(

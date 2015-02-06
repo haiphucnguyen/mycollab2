@@ -6612,6 +6612,39 @@ body .mycollab.v-app .v-app-loading {
 	margin-right: 0;
 }
 
+.mycollab .small-padding .v-button-wrap, .mycollab .small-padding:active .v-button-wrap {
+	padding: 4px 6px;
+}
+
+.mycollab .v-ie .small-padding .v-button-wrap, .mycollab .v-ie .small-padding:active .v-button-wrap, .mycollab .v-ie .small-padding .v-button:active .v-button-wrap {
+	padding: 4px 6px;
+}
+
+.mycollab .v-ie .v-pressed.v-button.small-padding .v-button-wrap {
+	padding: 4px 6px;
+}
+
+.mycollab .v-ie .small-padding .v-pressed.v-button .v-button-wrap {
+	padding: 4px 6px;
+}
+
+.mycollab .v-button.button-icon-only {
+	background-color: transparent;
+	font-size: 13px;
+}
+
+.mycollab .v-button.button-icon-only .v-button-wrap {
+	padding: 0px;
+}
+
+.mycollab .v-button.button-icon-only .v-button-wrap:hover {
+	background-color: transparent;
+}
+
+.mycollab .v-button.button-icon-only .v-button-wrap .v-icon.FontAwesome {
+	vertical-align: bottom;
+}
+
 .mycollab .v-icon .black {
 	color: black;
 }
@@ -6703,20 +6736,17 @@ body .mycollab.v-app .v-app-loading {
 	display: block;
 }
 
+.mycollab .v-multifileupload-uploads .v-upload .v-button:before {
+	font-family: FontAwesome;
+	content: "\f0c6";
+}
+
 .mycollab .v-multifileupload-uploads .v-upload .v-button {
 	border: none;
-	background: url("icons/16/attachment.png") no-repeat center left transparent;
+	background: transparent;
 	padding-left: 20px;
 	color: #454545;
-}
-
-.mycollab .v-multifileupload-uploads .v-upload .v-button  > .v-button-wrap {
-	background: none;
-	padding-left: 5px;
-}
-
-.mycollab .v-multifileupload-uploads .v-upload-immediate input {
-	cursor: pointer;
+	display: flex;
 }
 
 .mycollab .v-upload-immediate .v-button {
@@ -10123,25 +10153,6 @@ body .mycollab.v-app .v-app-loading {
 	padding-left: 5px;
 }
 
-.mycollab .message-header .v-button.delete-btn {
-	opacity: 0.7;
-	background-color: transparent;
-}
-
-.mycollab .message-header .v-button.delete-btn .v-button-wrap {
-	padding: 0px;
-	border: 0px;
-	clear: both;
-}
-
-.mycollab .message-header .v-button.delete-btn:hover .v-button-wrap {
-	background-color: transparent;
-}
-
-.mycollab .message-header .v-button.delete-btn .v-button-wrap .v-icon {
-	float: left;
-}
-
 .mycollab .message-body p {
 	margin: 4px 0px;
 	color: gray;
@@ -12348,6 +12359,14 @@ body .mycollab.v-app .v-app-loading {
 	font-weight: bold;
 }
 
+.mycollab .hdr-view .hdr-text  > img {
+	vertical-align: middle;
+}
+
+.mycollab .hdr-view .hdr-text .v-popup-indicator {
+	height: 14px;
+}
+
 .mycollab .hdr-view .hdr-text-overdue {
 	font-size: 16px;
 	color: red;
@@ -12360,12 +12379,10 @@ body .mycollab.v-app .v-app-loading {
 	font-weight: bold;
 }
 
-.mycollab .hdr-view .hdr-text  > img {
-	vertical-align: middle;
-}
-
-.mycollab .hdr-view .hdr-text .v-popup-indicator {
-	height: 14px;
+.mycollab .v-caption.v-caption-header-text {
+	font-size: 16px;
+	color: #525252;
+	font-weight: bold;
 }
 
 .mycollab .view-content {
@@ -13848,20 +13865,17 @@ a.pending {
 	display: block;
 }
 
+.v-multifileupload-uploads .v-upload .v-button:before {
+	font-family: FontAwesome;
+	content: "\f0c6";
+}
+
 .v-multifileupload-uploads .v-upload .v-button {
 	border: none;
-	background: url("icons/16/attachment.png") no-repeat center left transparent;
+	background: transparent;
 	padding-left: 20px;
 	color: #454545;
-}
-
-.v-multifileupload-uploads .v-upload .v-button  > .v-button-wrap {
-	background: none;
-	padding-left: 5px;
-}
-
-.v-multifileupload-uploads .v-upload-immediate input {
-	cursor: pointer;
+	display: flex;
 }
 
 .v-upload-immediate .v-button {

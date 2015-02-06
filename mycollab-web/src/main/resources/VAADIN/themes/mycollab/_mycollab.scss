@@ -2847,21 +2847,6 @@
       padding-right: 3px;
       padding-left: 5px;
     }
-    .v-button.delete-btn {
-      opacity: 0.7;
-      background-color: transparent;
-      .v-button-wrap {
-        padding: 0px;
-        border: 0px;
-        clear: both;
-      }
-      &:hover .v-button-wrap {
-        background-color: transparent;
-      }
-      .v-button-wrap .v-icon {
-        float: left;
-      }
-    }
   }
 
   .message-body p {
@@ -5179,6 +5164,12 @@
         color: #525252;
         font-weight: bold;
       }
+      > img {
+        vertical-align: middle;
+      }
+      .v-popup-indicator {
+        height: 14px;
+      }
     }
     .hdr-text-overdue {
       font-size: $font-larger;
@@ -5190,14 +5181,12 @@
         font-weight: bold;
       }
     }
-    .hdr-text {
-      > img {
-        vertical-align: middle;
-      }
-      .v-popup-indicator {
-        height: 14px;
-      }
-    }
+  }
+
+  .v-caption.v-caption-header-text {
+    font-size: $font-larger;
+    color: #525252;
+    font-weight: bold;
   }
 
   .view-content {

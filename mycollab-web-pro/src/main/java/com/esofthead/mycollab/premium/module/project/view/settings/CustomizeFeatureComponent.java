@@ -13,18 +13,13 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * 
@@ -180,23 +175,19 @@ public class CustomizeFeatureComponent extends BlockWidget {
 				});
 		updateFeaturesBtn.setEnabled(CurrentProjectVariables.isAdmin());
 		updateFeaturesBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		updateFeaturesBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_crm_refresh));
+		updateFeaturesBtn.setIcon(FontAwesome.REFRESH);
 		body.addComponent(updateFeaturesBtn);
 		this.addToBody(body);
 	}
 
-	private class SelectionBox extends HorizontalLayout {
+	private class SelectionBox extends MHorizontalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private CheckBox checkbox;
 
 		public SelectionBox(Resource iconResource, String caption,
 				Boolean selected) {
-			this.setSpacing(true);
-			this.setMargin(true);
-			this.setWidth("100%");
-			this.setStyleName("feature-select-box");
+			this.withMargin(true).withWidth("100%").withStyleName("feature-select-box");
 			Image image = new Image(null, iconResource);
 			this.addComponent(image);
 			this.setComponentAlignment(image, Alignment.MIDDLE_LEFT);

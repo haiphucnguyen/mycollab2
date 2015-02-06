@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
+import com.vaadin.server.FontAwesome;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import com.esofthead.mycollab.common.MyCollabSession;
@@ -81,8 +82,7 @@ public class RiskSearchPanel extends
 					}
 				});
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		createBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_addRecord));
+		createBtn.setIcon(FontAwesome.PLUS_SQUARE);
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.RISKS));
 
@@ -143,8 +143,7 @@ public class RiskSearchPanel extends
 
 			final Button searchBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-			searchBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_search));
+			searchBtn.setIcon(FontAwesome.SEARCH);
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.addClickListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -195,8 +194,7 @@ public class RiskSearchPanel extends
 			searchCriteria = new RiskSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
 					project.getId()));
-			searchCriteria.setRiskname(new StringSearchField(this.nameField
-					.getValue().toString().trim()));
+			searchCriteria.setRiskname(new StringSearchField(this.nameField.getValue().trim()));
 
 			if (this.myItemCheckbox.getValue()) {
 				searchCriteria.setAssignToUser(new StringSearchField(

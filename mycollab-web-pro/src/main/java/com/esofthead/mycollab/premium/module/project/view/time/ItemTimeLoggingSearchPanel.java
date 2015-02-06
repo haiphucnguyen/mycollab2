@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
@@ -86,8 +87,7 @@ class ItemTimeLoggingSearchPanel extends
             createBtn = new Button(
                     AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
             createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            createBtn.setIcon(MyCollabResource
-                    .newResource(WebResourceIds._16_project_add_time));
+            createBtn.setIcon(FontAwesome.PLUS_SQUARE);
             createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
             return new MHorizontalLayout()
@@ -169,8 +169,7 @@ class ItemTimeLoggingSearchPanel extends
                     });
 
             searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            searchBtn.setIcon(MyCollabResource
-                    .newResource(WebResourceIds._16_search));
+            searchBtn.setIcon(FontAwesome.SEARCH);
 
             final Button clearBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),

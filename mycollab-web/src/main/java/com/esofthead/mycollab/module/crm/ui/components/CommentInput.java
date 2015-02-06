@@ -17,12 +17,6 @@
 
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import java.util.GregorianCalendar;
-
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
-import org.vaadin.easyuploads.MultiFileUploadExt;
-
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -32,19 +26,19 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ReloadableComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
-import com.vaadin.addon.touchkit.settings.ApplicationCacheSettings;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.VerticalLayout;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import org.vaadin.easyuploads.MultiFileUploadExt;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import java.util.GregorianCalendar;
 
 /**
  * 
@@ -57,10 +51,6 @@ public class CommentInput extends VerticalLayout {
 	private CommentType type;
 	private String typeid;
 	private Integer extraTypeId;
-
-	com.vaadin.shared.VBrowserDetails a;
-
-	ApplicationCacheSettings b;
 
 	public CommentInput(final ReloadableComponent component,
 			final CommentType typeVal, final String typeidVal,
@@ -88,18 +78,11 @@ public class CommentInput extends VerticalLayout {
 
 		final AttachmentPanel attachments = new AttachmentPanel();
 
-		final HorizontalLayout controlsLayout = new HorizontalLayout();
-		controlsLayout.setWidth("100%");
-		controlsLayout.setSpacing(true);
+		final MHorizontalLayout controlsLayout = new MHorizontalLayout().withWidth("100%");
 
 		final MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 		uploadExt.addComponent(attachments);
-		controlsLayout.addComponent(uploadExt);
-		controlsLayout.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
-
-		final Label emptySpace = new Label();
-		controlsLayout.addComponent(emptySpace);
-		controlsLayout.setExpandRatio(emptySpace, 1.0f);
+		controlsLayout.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
 		if (cancelButtonEnable) {
 			final Button cancelBtn = new Button(
@@ -115,7 +98,7 @@ public class CommentInput extends VerticalLayout {
 			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 			controlsLayout.addComponent(cancelBtn);
 			controlsLayout.setComponentAlignment(cancelBtn,
-					Alignment.MIDDLE_RIGHT);
+					Alignment.TOP_RIGHT);
 		}
 
 		final Button saveBtn = new Button(
@@ -138,7 +121,7 @@ public class CommentInput extends VerticalLayout {
 
 						final CommentService commentService = ApplicationContextUtil
 								.getSpringBean(CommentService.class);
-						int commentId = 0;
+						int commentId;
 						if (isSendingEmailRelay) {
 							commentId = commentService.saveWithSession(comment,
 									AppContext.getUsername(),
@@ -171,17 +154,13 @@ public class CommentInput extends VerticalLayout {
 					}
 				});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_post));
-		controlsLayout.addComponent(saveBtn);
+		saveBtn.setIcon(FontAwesome.SEND);
+		controlsLayout.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
 
-		VerticalLayout editBox = new VerticalLayout();
-		editBox.setMargin(true);
-		editBox.setSpacing(true);
+		MVerticalLayout editBox = new MVerticalLayout();
 
-		HorizontalLayout commentWrap = new HorizontalLayout();
-		commentWrap.setSpacing(true);
+		MHorizontalLayout commentWrap = new MHorizontalLayout().withWidth("100%");
 		commentWrap.addStyleName("message");
-		commentWrap.setWidth("100%");
 
 		SimpleUser currentUser = AppContext.getSession();
 		VerticalLayout userBlock = new VerticalLayout();
@@ -207,10 +186,5 @@ public class CommentInput extends VerticalLayout {
 		editBox.addComponent(commentArea);
 		editBox.addComponent(controlsLayout);
 		this.addComponent(commentWrap);
-	}
-
-	void setTypeAndId(final CommentType type, final String typeid) {
-		this.type = type;
-		this.typeid = typeid;
 	}
 }

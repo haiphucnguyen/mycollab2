@@ -23,11 +23,13 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
@@ -132,16 +134,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 	@Override
 	protected ComponentContainer createBottomPanel() {
 		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
-
-		tabContainer.addTab(commentDisplay, AppContext
-				.getMessage(ProjectCommonI18nEnum.TAB_COMMENT),
-				MyCollabResource
-						.newResource(WebResourceIds._16_project_gray_comment));
-
-		tabContainer.addTab(historyList, AppContext
-				.getMessage(ProjectCommonI18nEnum.TAB_HISTORY),
-				MyCollabResource
-						.newResource(WebResourceIds._16_project_gray_history));
+		tabContainer.addTab(commentDisplay, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
+		tabContainer.addTab(historyList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
 		return tabContainer;
 	}
 
@@ -195,13 +189,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 		return previewForm;
 	}
 
-	private class PeopleInfoComp extends VerticalLayout {
+	private class PeopleInfoComp extends MVerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		public void displayEntryPeople(ValuedBean bean) {
 			this.removeAllComponents();
-			this.setSpacing(true);
-			this.setMargin(new MarginInfo(false, false, false, true));
+			this.withMargin(new MarginInfo(false, false, false, true));
 
 			Label peopleInfoHeader = new Label(
 					AppContext

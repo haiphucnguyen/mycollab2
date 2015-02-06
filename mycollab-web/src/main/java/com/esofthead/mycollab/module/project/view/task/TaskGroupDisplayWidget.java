@@ -64,8 +64,7 @@ public class TaskGroupDisplayWidget
         private static final long serialVersionUID = 1L;
 
         @Override
-        public Component generateRow(final SimpleTaskList taskList,
-                                     final int rowIndex) {
+        public Component generateRow(SimpleTaskList taskList, int rowIndex) {
             return new TaskListDepot(taskList);
         }
     }
@@ -297,5 +296,4 @@ public class TaskGroupDisplayWidget
             this.taskDisplayComponent.setSearchCriteria(searchCriteria);
         }
     }
-
 }

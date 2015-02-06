@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.vaadin.server.FontAwesome;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
@@ -275,8 +276,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 					}
 				});
 		addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
-		addNewReport.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_addRecord));
+		addNewReport.setIcon(FontAwesome.PLUS_SQUARE);
 		addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
 		header.addComponent(addNewReport);

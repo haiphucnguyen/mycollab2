@@ -9,11 +9,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
 import com.esofthead.mycollab.module.project.ui.components.GenericTaskTableDisplay;
 import com.esofthead.mycollab.module.project.ui.components.GenericTaskTableFieldDef;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -84,8 +83,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
 		final Button searchBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-		searchBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_search));
+		searchBtn.setIcon(FontAwesome.SEARCH);
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 		searchBtn.addClickListener(new Button.ClickListener() {

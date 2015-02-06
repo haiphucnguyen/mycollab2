@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import java.util.Arrays;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -30,17 +28,16 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
+
+import java.util.Arrays;
 
 /**
  * 
@@ -68,8 +65,7 @@ public class OpportunityListViewImpl extends
 
 			}
 		});
-		customizeViewBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_customize));
+		customizeViewBtn.setIcon(FontAwesome.ADJUST);
 		customizeViewBtn.setDescription("Layout Options");
 		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addExtraComponent(customizeViewBtn);
@@ -83,7 +79,7 @@ public class OpportunityListViewImpl extends
 			}
 		});
 		importBtn.setDescription("Import");
-		importBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_import));
+		importBtn.setIcon(FontAwesome.CLOUD_UPLOAD);
 		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		importBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
