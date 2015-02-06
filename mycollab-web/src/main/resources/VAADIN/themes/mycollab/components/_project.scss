@@ -44,6 +44,20 @@
     border-top: 1px solid $border-color;
   }
 
+  .project-list-comp-content .project-name {
+    background-color: #FFF;
+    cursor: pointer;
+    .v-label {
+      cursor: pointer;
+    }
+    &.current-project {
+      font-weight: bold;
+    }
+    &:hover {
+      background: $hover-background-color;
+    }
+  }
+
   .project-status {
     .v-verticallayout {
       &.v-margin-top {

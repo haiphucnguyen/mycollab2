@@ -179,12 +179,6 @@
     color: #6482B3;
   }
 
-  .sidebar-menu {
-    .tab-selected, .selected {
-      border-color: #495972;
-    }
-  }
-
   .v-horizontallayout-segment-alternate .v-button-down {
     border-color: #495972;
   }
@@ -203,14 +197,6 @@
     text-shadow: 0 -1px 0 #495972;
   }
 
-  .sidebar-menu {
-    .tab-selected, .selected {
-      background-color: #6482B3;
-      color: rgb(244, 244, 245);
-      text-shadow: 0 -1px 0 #495972;
-    }
-  }
-
   .v-horizontallayout-segment-alternate .v-button-down, .v-menubar .v-menubar-menuitem-selected, .v-menubar-submenu .v-menubar-menuitem-selected {
     background-color: #6482B3;
     color: rgb(244, 244, 245);
@@ -219,12 +205,6 @@
 
   .v-panel-caption, .v-table-striped .v-table-row-odd {
     background: $background-color;
-  }
-
-  .sidebar-menu {
-    .tab-selected, .selected {
-      text-shadow: 0 1px 0 #495972;
-    }
   }
 
   /**
@@ -366,12 +346,6 @@
     color: #006dac;
   }
 
-  .sidebar-menu {
-    .tab-selected, .selected {
-      border-color: #2E5A84;
-    }
-  }
-
   .v-horizontallayout-segment-alternate .v-button-down {
     border-color: #2E5A84;
   }
@@ -409,14 +383,6 @@
     text-shadow: 0 -1px 0 #2E5A84;
   }
 
-  .sidebar-menu {
-    .tab-selected, .selected {
-      background-color: #287ECE;
-      color: #F7F8F9;
-      text-shadow: 0 -1px 0 #2E5A84;
-    }
-  }
-
   .v-horizontallayout-segment-alternate .v-button-down, .v-menubar .v-menubar-menuitem-selected, .v-menubar-submenu .v-menubar-menuitem-selected {
     background-color: #287ECE;
     color: #F7F8F9;
@@ -425,7 +391,10 @@
 
   .sidebar-menu {
     .tab-selected, .selected {
+      border-color: #2E5A84;
       text-shadow: 0 1px 0 #2E5A84;
+      color: #F7F8F9;
+      background-color: #287ECE;
     }
   }
 
@@ -1806,20 +1775,6 @@
       position: absolute;
       right: 7px;
       top: 7px;
-    }
-  }
-
-  .project-list-comp-content .project-name {
-    background-color: #FFF;
-    cursor: pointer;
-    .v-label {
-      cursor: pointer;
-    }
-    &.current-project {
-      font-weight: bold;
-    }
-    &:hover {
-      background: $hover-background-color;
     }
   }
 

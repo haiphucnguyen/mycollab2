@@ -6624,18 +6624,6 @@ body .mycollab.v-app .v-app-loading {
 	padding: 4px 6px;
 }
 
-.mycollab .v-ie .small-padding .v-button-wrap, .mycollab .v-ie .small-padding:active .v-button-wrap, .mycollab .v-ie .small-padding .v-button:active .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .v-pressed.v-button.small-padding .v-button-wrap {
-	padding: 4px 6px;
-}
-
-.mycollab .v-ie .small-padding .v-pressed.v-button .v-button-wrap {
-	padding: 4px 6px;
-}
-
 .mycollab .v-button.button-icon-only {
 	background-color: transparent;
 	font-size: 13px;
@@ -7530,10 +7518,6 @@ body .mycollab.v-app .v-app-loading {
 	color: #6482B3;
 }
 
-.mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
-	border-color: #495972;
-}
-
 .mycollab .v-horizontallayout-segment-alternate .v-button-down {
 	border-color: #495972;
 }
@@ -7552,12 +7536,6 @@ body .mycollab.v-app .v-app-loading {
 	text-shadow: 0 -1px 0 #495972;
 }
 
-.mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
-	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
-}
-
 .mycollab .v-horizontallayout-segment-alternate .v-button-down, .mycollab .v-menubar .v-menubar-menuitem-selected, .mycollab .v-menubar-submenu .v-menubar-menuitem-selected {
 	background-color: #6482B3;
 	color: #f4f4f5;
@@ -7566,10 +7544,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-panel-caption, .mycollab .v-table-striped .v-table-row-odd {
 	background: whitesmoke;
-}
-
-.mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
-	text-shadow: 0 1px 0 #495972;
 }
 
 .mycollab .v-window, .mycollab .v-popupview-popup, .mycollab .v-filterselect-suggestpopup, .mycollab .v-datefield-popup, .mycollab .v-contextmenu, .mycollab .v-Notification, .mycollab .v-menubar-submenu {
@@ -7682,10 +7656,6 @@ body .mycollab.v-app .v-app-loading {
 	color: #006dac;
 }
 
-.mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
-	border-color: #2E5A84;
-}
-
 .mycollab .v-horizontallayout-segment-alternate .v-button-down {
 	border-color: #2E5A84;
 }
@@ -7722,12 +7692,6 @@ body .mycollab.v-app .v-app-loading {
 	text-shadow: 0 -1px 0 #2E5A84;
 }
 
-.mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
-	background-color: #287ECE;
-	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
-}
-
 .mycollab .v-horizontallayout-segment-alternate .v-button-down, .mycollab .v-menubar .v-menubar-menuitem-selected, .mycollab .v-menubar-submenu .v-menubar-menuitem-selected {
 	background-color: #287ECE;
 	color: #F7F8F9;
@@ -7735,7 +7699,10 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
+	border-color: #2E5A84;
 	text-shadow: 0 1px 0 #2E5A84;
+	color: #F7F8F9;
+	background-color: #287ECE;
 }
 
 .mycollab button::-moz-focus-inner {

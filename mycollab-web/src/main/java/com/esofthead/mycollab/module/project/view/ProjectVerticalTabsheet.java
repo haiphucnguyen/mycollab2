@@ -16,83 +16,45 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0
- * 
  */
 public class ProjectVerticalTabsheet extends VerticalTabsheet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void setDefaulButtonIcon(Component btn, Boolean selected) {
-		ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
-		String tabId = btnTabImpl.getTabId();
-		String suffix = (selected) ? "_selected" : "";
+    private static final Map<String, Resource> resources;
 
-		switch (tabId) {
-		case "dashboard":
-			btn.setIcon(MyCollabResource
-					.newResource("icons/22/project/dashboard" + suffix + ".png"));
-			break;
+    static {
+        resources = new HashMap<>();
+        resources.put("dashboard", FontAwesome.DASHBOARD);
+        resources.put("message", FontAwesome.COMMENT);
+        resources.put("milestone", FontAwesome.FLAG_CHECKERED);
+        resources.put("task", FontAwesome.TASKS);
+        resources.put("page", FontAwesome.FILE);
+        resources.put("bug", FontAwesome.BUG);
+        resources.put("file", FontAwesome.BRIEFCASE);
+        resources.put("risk", FontAwesome.SHIELD);
+        resources.put("problem", FontAwesome.EXCLAMATION_TRIANGLE);
+        resources.put("time", FontAwesome.CLOCK_O);
+        resources.put("standup", FontAwesome.CUBES);
+        resources.put("member", FontAwesome.USERS);
+    }
 
-		case "message":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/message"
-					+ suffix + ".png"));
-			break;
-		case "milestone":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/phase"
-					+ suffix + ".png"));
-			break;
+    @Override
+    protected void setDefaulButtonIcon(Component btn, Boolean selected) {
+        ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
+        String tabId = btnTabImpl.getTabId();
 
-		case "task":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/task"
-					+ suffix + ".png"));
-			break;
-			
-		case "page":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/page"
-					+ suffix + ".png"));
-			break;
-
-		case "bug":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/bug"
-					+ suffix + ".png"));
-			break;
-
-		case "file":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/file"
-					+ suffix + ".png"));
-			break;
-		case "risk":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/risk"
-					+ suffix + ".png"));
-			break;
-		case "problem":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/problem"
-					+ suffix + ".png"));
-			break;
-		case "time":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/time"
-					+ suffix + ".png"));
-			break;
-		case "standup":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/standup"
-					+ suffix + ".png"));
-			break;
-		case "member":
-			btn.setIcon(MyCollabResource.newResource("icons/22/project/user"
-					+ suffix + ".png"));
-			break;
-		default:
-
-		}
-
-	}
-
+        Resource resource = resources.get(tabId);
+        btn.setIcon(resource);
+    }
 }
