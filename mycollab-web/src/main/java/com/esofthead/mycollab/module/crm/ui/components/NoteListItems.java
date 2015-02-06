@@ -383,14 +383,10 @@ public class NoteListItems extends VerticalLayout {
 			setSpacing(true);
 			this.setWidth("600px");
 
-			VerticalLayout editBox = new VerticalLayout();
-			editBox.setMargin(true);
-			editBox.setSpacing(true);
+			MVerticalLayout editBox = new MVerticalLayout();
 
-			HorizontalLayout commentWrap = new HorizontalLayout();
-			commentWrap.setSpacing(true);
+			MHorizontalLayout commentWrap = new MHorizontalLayout().withWidth("100%");
 			commentWrap.addStyleName("message");
-			commentWrap.setWidth("100%");
 
 			SimpleUser currentUser = AppContext.getSession();
 			VerticalLayout userBlock = new VerticalLayout();
@@ -427,21 +423,6 @@ public class NoteListItems extends VerticalLayout {
 					attachments);
 			uploadExt.addComponent(attachments);
 			controls.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
-
-
-			final Button cancelBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							addCreateBtn();
-						}
-					});
-			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
-
-			controls.with(cancelBtn).withAlign(cancelBtn, Alignment.TOP_RIGHT);
 
 			final Button saveBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_POST),
@@ -535,8 +516,20 @@ public class NoteListItems extends VerticalLayout {
 					});
 			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			saveBtn.setIcon(FontAwesome.SEND);
-
 			controls.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
+
+            final Button cancelBtn = new Button(
+                    AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                    new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            addCreateBtn();
+                        }
+                    });
+            cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+            controls.with(cancelBtn).withAlign(cancelBtn, Alignment.TOP_RIGHT);
 
 			editBox.addComponent(controls);
 			this.addComponent(commentWrap);

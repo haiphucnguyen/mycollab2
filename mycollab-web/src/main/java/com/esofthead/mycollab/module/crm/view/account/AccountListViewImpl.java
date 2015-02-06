@@ -88,31 +88,30 @@ public class AccountListViewImpl extends
 
 		if (AppContext.canAccess(RolePermissionCollections.CRM_ACCOUNT)) {
 			container.addActionItem(MassItemActionHandler.DELETE_ACTION,
-					MyCollabResource
-							.newResource(WebResourceIds._16_action_delete),
+					FontAwesome.TRASH_O,
 					"delete", AppContext
 							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_mail),
+				FontAwesome.ENVELOPE_O,
 				"mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_pdf),
+				FontAwesome.FILE_PDF_O,
 				"export", "export.pdf",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_excel),
+				FontAwesome.FILE_EXCEL_O,
 				"export", "export.xlsx",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_csv),
+				FontAwesome.FILE_TEXT_O,
 				"export", "export.csv",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 
@@ -143,7 +142,7 @@ public class AccountListViewImpl extends
 		});
 		customizeViewBtn.setIcon(FontAwesome.ADJUST);
 		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		customizeViewBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
 		this.addExtraComponent(customizeViewBtn);
 
 		Button importBtn = new Button("", new Button.ClickListener() {
@@ -157,7 +156,7 @@ public class AccountListViewImpl extends
 		});
 		importBtn.setDescription("Import");
 		importBtn.setIcon(FontAwesome.CLOUD_UPLOAD);
-		importBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		importBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 		importBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		this.addExtraComponent(importBtn);

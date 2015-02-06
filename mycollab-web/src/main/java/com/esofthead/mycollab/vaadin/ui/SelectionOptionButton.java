@@ -16,16 +16,17 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -43,11 +44,6 @@ public class SelectionOptionButton extends SplitButton implements
 	@SuppressWarnings("rawtypes")
 	private final HasSelectableItemHandlers selectableItemHandlers;
 
-	private static Resource selectIcon = MyCollabResource
-			.newResource(WebResourceIds._16_checkbox);
-	private static Resource unSelectIcon = MyCollabResource
-			.newResource(WebResourceIds._16_checkbox_empty);
-
 	private Set<SelectionOptionHandler> handlers;
 
 	private final Button selectAllBtn;
@@ -60,7 +56,7 @@ public class SelectionOptionButton extends SplitButton implements
 		this.selectableItemHandlers = selectableItemHandlers;
 		addStyleName(UIConstants.THEME_BLUE_LINK);
         addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-		setIcon(SelectionOptionButton.unSelectIcon);
+		setIcon(FontAwesome.SQUARE_O);
 
 		addClickListener(new SplitButtonClickListener() {
 			@Override
@@ -93,7 +89,7 @@ public class SelectionOptionButton extends SplitButton implements
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = true;
 				SelectionOptionButton.this
-						.setIcon(SelectionOptionButton.selectIcon);
+						.setIcon(FontAwesome.CHECK_SQUARE_O);
 				fireSelectAll();
 				SelectionOptionButton.this.setPopupVisible(false);
 			}
@@ -105,7 +101,7 @@ public class SelectionOptionButton extends SplitButton implements
 			public void buttonClick(final ClickEvent event) {
 				isSelectAll = false;
 				SelectionOptionButton.this
-						.setIcon(SelectionOptionButton.selectIcon);
+						.setIcon(FontAwesome.CHECK_SQUARE_O);
 				fireSelectCurrentPage();
 				SelectionOptionButton.this.setPopupVisible(false);
 			}
@@ -118,7 +114,7 @@ public class SelectionOptionButton extends SplitButton implements
 					public void buttonClick(final ClickEvent event) {
 						isSelectAll = false;
 						SelectionOptionButton.this
-								.setIcon(SelectionOptionButton.unSelectIcon);
+								.setIcon(FontAwesome.SQUARE_O);
 						fireDeselect();
 						SelectionOptionButton.this.setPopupVisible(false);
 					}
@@ -162,8 +158,7 @@ public class SelectionOptionButton extends SplitButton implements
 
 	public void setSelectedChecbox(final boolean selected) {
 		isSelected = selected;
-		final Resource icon = (selected) ? SelectionOptionButton.selectIcon
-				: SelectionOptionButton.unSelectIcon;
+		final Resource icon = (selected) ? FontAwesome.CHECK_SQUARE_O : FontAwesome.SQUARE_O;
 		SelectionOptionButton.this.setIcon(icon);
 	}
 
@@ -173,8 +168,7 @@ public class SelectionOptionButton extends SplitButton implements
 		}
 
 		isSelected = !isSelected;
-		final Resource icon = (isSelected) ? SelectionOptionButton.selectIcon
-				: SelectionOptionButton.unSelectIcon;
+		final Resource icon = (isSelected) ? FontAwesome.CHECK_SQUARE_O : FontAwesome.SQUARE_O;
 		this.setIcon(icon);
 
 		if (isSelected) {

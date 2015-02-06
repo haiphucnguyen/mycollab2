@@ -84,23 +84,6 @@ public class CommentInput extends VerticalLayout {
 		uploadExt.addComponent(attachments);
 		controlsLayout.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
-		if (cancelButtonEnable) {
-			final Button cancelBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							component.cancel();
-						}
-					});
-			cancelBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
-			controlsLayout.addComponent(cancelBtn);
-			controlsLayout.setComponentAlignment(cancelBtn,
-					Alignment.TOP_RIGHT);
-		}
-
 		final Button saveBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_POST),
 				new Button.ClickListener() {
@@ -156,6 +139,23 @@ public class CommentInput extends VerticalLayout {
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		saveBtn.setIcon(FontAwesome.SEND);
 		controlsLayout.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
+
+        if (cancelButtonEnable) {
+            final Button cancelBtn = new Button(
+                    AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                    new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            component.cancel();
+                        }
+                    });
+            cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+            controlsLayout.addComponent(cancelBtn);
+            controlsLayout.setComponentAlignment(cancelBtn,
+                    Alignment.TOP_RIGHT);
+        }
 
 		MVerticalLayout editBox = new MVerticalLayout();
 

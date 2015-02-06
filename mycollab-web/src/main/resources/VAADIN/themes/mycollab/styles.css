@@ -6616,6 +6616,14 @@ body .mycollab.v-app .v-app-loading {
 	padding: 4px 6px;
 }
 
+.mycollab .small-padding.v-popupbutton .v-button-wrap {
+	padding: 4px 6px;
+}
+
+.mycollab .small-padding.v-popupbutton .v-button-wrap:active {
+	padding: 4px 6px;
+}
+
 .mycollab .v-ie .small-padding .v-button-wrap, .mycollab .v-ie .small-padding:active .v-button-wrap, .mycollab .v-ie .small-padding .v-button:active .v-button-wrap {
 	padding: 4px 6px;
 }
