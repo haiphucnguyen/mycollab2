@@ -220,32 +220,30 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.RISKS)) {
 			tableActionControls.addActionItem(
-					MassItemActionHandler.DELETE_ACTION, MyCollabResource
-							.newResource(WebResourceIds._16_action_delete),
+					MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
 					"delete", "Delete");
 		}
 
 		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_mail),
+                FontAwesome.ENVELOPE_O,
 				"mail", "Mail");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_pdf),
+                FontAwesome.FILE_PDF_O,
 				"export", "export.pdf", "Export pdf");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_excel),
+                FontAwesome.FILE_EXCEL_O,
 				"export", "export.xlsx", "Export excel");
 		tableActionControls.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_csv),
+				FontAwesome.FILE_TEXT_O,
 				"export", "export.csv", "Export csv");
 
 		if (CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.RISKS)) {
 			tableActionControls.addActionItem(
-					MassItemActionHandler.MASS_UPDATE_ACTION, MyCollabResource
-							.newResource(WebResourceIds._16_action_massupdate),
+					MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
 					"update", "Update");
 		}
 

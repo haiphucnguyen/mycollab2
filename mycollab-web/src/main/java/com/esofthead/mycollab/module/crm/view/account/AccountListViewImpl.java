@@ -26,7 +26,9 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
@@ -117,8 +119,7 @@ public class AccountListViewImpl extends
 
 		if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
 			container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
-					MyCollabResource
-							.newResource(WebResourceIds._16_action_massupdate),
+					FontAwesome.DATABASE,
 					"update", AppContext
 							.getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE));
 		}

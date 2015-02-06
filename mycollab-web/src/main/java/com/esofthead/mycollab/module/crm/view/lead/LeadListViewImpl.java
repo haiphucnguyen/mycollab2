@@ -123,38 +123,36 @@ public class LeadListViewImpl extends
 
 		if (AppContext.canAccess(RolePermissionCollections.CRM_LEAD)) {
 			container.addActionItem(MassItemActionHandler.DELETE_ACTION,
-					MyCollabResource
-							.newResource(WebResourceIds._16_action_delete),
+                    FontAwesome.TRASH_O,
 					"delete", AppContext
 							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 
 		container.addActionItem(MassItemActionHandler.MAIL_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_mail),
+                FontAwesome.ENVELOPE_O,
 				"mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_PDF_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_pdf),
+                FontAwesome.FILE_PDF_O,
 				"export", "export.pdf",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_EXCEL_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_excel),
+                FontAwesome.FILE_EXCEL_O,
 				"export", "export.xlsx",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		container.addDownloadActionItem(
 				MassItemActionHandler.EXPORT_CSV_ACTION,
-				MyCollabResource.newResource(WebResourceIds._16_action_csv),
+				FontAwesome.FILE_TEXT_O,
 				"export", "export.csv",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 
 		if (AppContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
 			container.addActionItem(MassItemActionHandler.MASS_UPDATE_ACTION,
-					MyCollabResource
-							.newResource(WebResourceIds._16_action_massupdate),
+                    FontAwesome.DATABASE,
 					"update", AppContext
 							.getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE));
 		}
