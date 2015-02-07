@@ -35,6 +35,9 @@
     .sidebar-menu {
       background: none;
       padding: 20px 0px 0px;
+      .v-button-wrap .v-icon {
+        font-size: $font-x-large;
+      }
     }
     .addViewLayout {
       padding: 0px 30px 10px;
@@ -304,7 +307,7 @@
   .projectinfo-header {
     .project-name {
       font-weight: bold;
-      font-size: $font-large;
+      font-size: $font-larger;
       color: #313131;
     }
     .project-shortname {

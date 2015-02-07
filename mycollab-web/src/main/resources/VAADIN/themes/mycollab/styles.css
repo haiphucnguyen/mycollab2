@@ -6632,6 +6632,10 @@ body .mycollab.v-app .v-app-loading {
 	vertical-align: bottom;
 }
 
+.mycollab .v-button.button-icon-only.icon-18px .v-button-wrap {
+	font-size: 18px;
+}
+
 .mycollab .v-icon .black {
 	color: black;
 }
@@ -7035,6 +7039,10 @@ body .mycollab.v-app .v-app-loading {
 	padding: 20px 0px 0px;
 }
 
+.mycollab .projectDashboardView .sidebar-menu .v-button-wrap .v-icon {
+	font-size: 18px;
+}
+
 .mycollab .projectDashboardView .addViewLayout {
 	padding: 0px 30px 10px;
 }
@@ -7320,7 +7328,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .projectinfo-header .project-name {
 	font-weight: bold;
-	font-size: 14px;
+	font-size: 16px;
 	color: #313131;
 }
 

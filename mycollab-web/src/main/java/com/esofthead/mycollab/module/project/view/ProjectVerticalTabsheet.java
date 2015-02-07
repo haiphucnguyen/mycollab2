@@ -16,14 +16,10 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -32,30 +28,12 @@ import java.util.Map;
 public class ProjectVerticalTabsheet extends VerticalTabsheet {
     private static final long serialVersionUID = 1L;
 
-    private static final Map<String, Resource> resources;
-
-    static {
-        resources = new HashMap<>();
-        resources.put(ProjectTypeConstants.DASHBOARD, FontAwesome.DASHBOARD);
-        resources.put(ProjectTypeConstants.MESSAGE, FontAwesome.COMMENT);
-        resources.put(ProjectTypeConstants.MILESTONE, FontAwesome.FLAG_CHECKERED);
-        resources.put(ProjectTypeConstants.TASK, FontAwesome.TASKS);
-        resources.put(ProjectTypeConstants.PAGE, FontAwesome.FILE);
-        resources.put(ProjectTypeConstants.BUG, FontAwesome.BUG);
-        resources.put(ProjectTypeConstants.FILE, FontAwesome.BRIEFCASE);
-        resources.put(ProjectTypeConstants.RISK, FontAwesome.SHIELD);
-        resources.put(ProjectTypeConstants.PROBLEM, FontAwesome.EXCLAMATION_TRIANGLE);
-        resources.put(ProjectTypeConstants.TIME, FontAwesome.CLOCK_O);
-        resources.put(ProjectTypeConstants.STANDUP, FontAwesome.CUBES);
-        resources.put(ProjectTypeConstants.MEMBER, FontAwesome.USERS);
-    }
-
     @Override
     protected void setDefaulButtonIcon(Component btn, Boolean selected) {
         ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
         String tabId = btnTabImpl.getTabId();
 
-        Resource resource = resources.get(tabId);
+        Resource resource = AssetsManager.getAsset(tabId);
         btn.setIcon(resource);
     }
 }
