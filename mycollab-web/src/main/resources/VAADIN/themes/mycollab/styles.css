@@ -6441,15 +6441,6 @@ body .mycollab.v-app .v-app-loading {
 	white-space: nowrap;
 }
 
-.mycollab .v-upload-immediate .v-button {
-	background-color: #17D61B;
-	margin: 10px 0px 0px 0px;
-}
-
-.mycollab .v-upload-immediate .v-button .v-button-caption {
-	color: white;
-}
-
 .mycollab .splitbutton .parent-button {
 	border-right-width: 0px;
 	border-top-right-radius: 0;
@@ -6735,14 +6726,18 @@ body .mycollab.v-app .v-app-loading {
 .mycollab .v-multifileupload-uploads .v-upload .v-button:before {
 	font-family: FontAwesome;
 	content: "\f0c6";
+	font-size: 16px;
 }
 
 .mycollab .v-multifileupload-uploads .v-upload .v-button {
 	border: none;
 	background: transparent;
-	padding-left: 20px;
 	color: #454545;
 	display: flex;
+}
+
+.mycollab .v-multifileupload-uploads .v-upload .v-button .v-button-wrap {
+	padding: 0px 10px 10px 10px;
 }
 
 .mycollab .v-upload-immediate .v-button {
@@ -7013,6 +7008,20 @@ body .mycollab.v-app .v-app-loading {
 	top: 0;
 	left: 0;
 	display: block;
+}
+
+.mycollab .projectDashboardView .navigator-wrap .project-list-comp .project-name {
+	padding: 9px 0px;
+}
+
+.mycollab .projectDashboardView .navigator-wrap .project-list-comp .project-name .v-label {
+	cursor: pointer;
+}
+
+.mycollab .projectDashboardView .navigator-wrap .project-list-comp .project-description {
+	color: #FFF;
+	padding: 10px 0px 20px;
+	border-bottom: 1px solid #CFCFCF;
 }
 
 .mycollab .projectDashboardView .container-wrap.main-content .top-panel {
@@ -13654,14 +13663,18 @@ a.pending {
 .v-multifileupload-uploads .v-upload .v-button:before {
 	font-family: FontAwesome;
 	content: "\f0c6";
+	font-size: 16px;
 }
 
 .v-multifileupload-uploads .v-upload .v-button {
 	border: none;
 	background: transparent;
-	padding-left: 20px;
 	color: #454545;
 	display: flex;
+}
+
+.v-multifileupload-uploads .v-upload .v-button .v-button-wrap {
+	padding: 0px 10px 10px 10px;
 }
 
 .v-upload-immediate .v-button {

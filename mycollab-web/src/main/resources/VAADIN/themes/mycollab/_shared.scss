@@ -63,13 +63,16 @@
     .v-upload .v-button:before {
       font-family: FontAwesome;
       content:'\f0c6';
+      font-size: $font-larger;
     }
     .v-upload .v-button {
       border: none;
       background: transparent;
-      padding-left: 20px;
       color: rgb(69, 69, 69);
       display: flex;
+      .v-button-wrap {
+        padding: 0px 10px 10px 10px;
+      }
     }
   }
 
