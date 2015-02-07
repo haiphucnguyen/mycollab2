@@ -1,4 +1,46 @@
 @mixin mycollab-project {
+  /* Project Management */
+
+  .project-module {
+    display: block;
+    min-height: 100%;
+  }
+
+  .projectDashboardView {
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    .navigator-wrap .project-list-comp {
+      .project-name {
+        .v-label {
+          cursor: pointer;
+        }
+        padding: 9px 0px;
+      }
+      .project-description {
+        color: #FFF;
+        padding: 10px 0px 20px;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+    .container-wrap.main-content {
+      .top-panel {
+        background-color: #FFF;
+        border-bottom: 1px solid $border-color;
+        padding: 10px 30px 10px 10px;
+      }
+    }
+    .sidebar-menu {
+      background: none;
+      padding: 20px 0px 0px;
+    }
+    .addViewLayout {
+      padding: 0px 30px 10px;
+    }
+  }
+
   /* My Project List */
 
   .myprojectlist {
@@ -366,7 +408,46 @@
   }
   /* End Form Container View Field */
 
-  /* add project button */
+  .project-list-comp {
+     padding: 13px 7px 0px;
+     .project-list-comp-hdr {
+       background-color: #EEEEEE;
+       cursor: pointer;
+       background-position: right 10px center;
+       background-repeat: no-repeat;
+       border-radius: 5px;
+       box-shadow: none;
+     }
+     .v-button-wrap {
+       text-align: left;
+       font-size: $font-normal;
+       position: relative;
+       padding-right: 20px;
+       text-overflow: ellipsis;
+       .v-icon, .v-button-caption {
+         vertical-align: middle;
+       }
+     }
+     &.v-margin-top {
+       padding-top: 8px;
+     }
+     &.v-margin-right {
+       padding-right: 13px;
+     }
+     &.v-margin-bottom {
+       padding-bottom: 8px;
+     }
+     &.v-margin-left {
+       padding-left: 13px;
+     }
+     .v-popup-indicator {
+       position: relative;
+       float: right;
+       position: absolute;
+       right: 7px;
+       top: 7px;
+     }
+   }
 
   .v-button.add-project-btn {
     border: none;
@@ -374,6 +455,7 @@
     background-color: #17D61B;
     .v-button-wrap, &:active .v-button-wrap {
       padding: 0px;
+      text-align:center;
     }
     .v-button-wrap .v-button-caption {
       font-size: $font-larger;

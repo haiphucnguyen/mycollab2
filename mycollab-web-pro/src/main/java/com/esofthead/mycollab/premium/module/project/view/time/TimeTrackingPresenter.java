@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.esofthead.mycollab.module.project.view.time.ITimeTrackingContainer;
@@ -29,10 +30,10 @@ public class TimeTrackingPresenter extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("time");
+		projectViewContainer.gotoSubView(ProjectTypeConstants.TIME);
 
 		view.removeAllComponents();
-		AbstractPresenter presenter = null;
+		AbstractPresenter presenter;
 
 		if (data instanceof TimeTrackingScreenData.Search) {
 			presenter = PresenterResolver

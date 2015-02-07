@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.file;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.file.IFileContainer;
 import com.esofthead.mycollab.module.project.view.file.IFilePresenter;
@@ -27,10 +28,10 @@ public class FilePresenter extends AbstractPresenter<IFileContainer> implements
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("file");
+		projectViewContainer.gotoSubView(ProjectTypeConstants.FILE);
 
 		view.removeAllComponents();
-		AbstractPresenter<?> presenter = null;
+		AbstractPresenter<?> presenter;
 
 		if (data instanceof FileScreenData.GotoDashboard) {
 			presenter = PresenterResolver

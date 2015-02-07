@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.standup.IStandupContainer;
@@ -34,7 +35,7 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer>
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("standup");
+		projectViewContainer.gotoSubView(ProjectTypeConstants.STANDUP);
 
 		view.removeAllComponents();
 

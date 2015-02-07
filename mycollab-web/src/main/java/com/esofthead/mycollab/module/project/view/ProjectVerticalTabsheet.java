@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -35,18 +36,18 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
 
     static {
         resources = new HashMap<>();
-        resources.put("dashboard", FontAwesome.DASHBOARD);
-        resources.put("message", FontAwesome.COMMENT);
-        resources.put("milestone", FontAwesome.FLAG_CHECKERED);
-        resources.put("task", FontAwesome.TASKS);
-        resources.put("page", FontAwesome.FILE);
-        resources.put("bug", FontAwesome.BUG);
-        resources.put("file", FontAwesome.BRIEFCASE);
-        resources.put("risk", FontAwesome.SHIELD);
-        resources.put("problem", FontAwesome.EXCLAMATION_TRIANGLE);
-        resources.put("time", FontAwesome.CLOCK_O);
-        resources.put("standup", FontAwesome.CUBES);
-        resources.put("member", FontAwesome.USERS);
+        resources.put(ProjectTypeConstants.DASHBOARD, FontAwesome.DASHBOARD);
+        resources.put(ProjectTypeConstants.MESSAGE, FontAwesome.COMMENT);
+        resources.put(ProjectTypeConstants.MILESTONE, FontAwesome.FLAG_CHECKERED);
+        resources.put(ProjectTypeConstants.TASK, FontAwesome.TASKS);
+        resources.put(ProjectTypeConstants.PAGE, FontAwesome.FILE);
+        resources.put(ProjectTypeConstants.BUG, FontAwesome.BUG);
+        resources.put(ProjectTypeConstants.FILE, FontAwesome.BRIEFCASE);
+        resources.put(ProjectTypeConstants.RISK, FontAwesome.SHIELD);
+        resources.put(ProjectTypeConstants.PROBLEM, FontAwesome.EXCLAMATION_TRIANGLE);
+        resources.put(ProjectTypeConstants.TIME, FontAwesome.CLOCK_O);
+        resources.put(ProjectTypeConstants.STANDUP, FontAwesome.CUBES);
+        resources.put(ProjectTypeConstants.MEMBER, FontAwesome.USERS);
     }
 
     @Override

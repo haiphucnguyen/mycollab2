@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.problem.IProblemContainer;
@@ -35,7 +36,7 @@ public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("problem");
+		projectViewContainer.gotoSubView(ProjectTypeConstants.PROBLEM);
 
 		view.removeAllComponents();
 

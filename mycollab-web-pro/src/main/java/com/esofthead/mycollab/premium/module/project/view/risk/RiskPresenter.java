@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,10 +39,10 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("risk");
+		projectViewContainer.gotoSubView(ProjectTypeConstants.RISK);
 
 		view.removeAllComponents();
-		AbstractPresenter presenter = null;
+		AbstractPresenter presenter;
 
 		if (data instanceof RiskScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
