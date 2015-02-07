@@ -338,9 +338,8 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 
 				}
 			});
-			deleteBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_delete));
-			deleteBtn.setStyleName("link");
+			deleteBtn.setIcon(FontAwesome.TRASH_O);
+			deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 			this.addComponent(deleteBtn);
 			this.setExpandRatio(deleteBtn, 1.0f);
 		}

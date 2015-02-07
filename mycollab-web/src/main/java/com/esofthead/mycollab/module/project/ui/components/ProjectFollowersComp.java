@@ -379,9 +379,8 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 												.loadMonitorItems();
 									}
 								});
-						deleteBtn.setStyleName("link");
-						deleteBtn.setIcon(MyCollabResource
-								.newResource(WebResourceIds._16_delete));
+						deleteBtn.setIcon(FontAwesome.TRASH_O);
+                        deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 						return deleteBtn;
 					}
 				});

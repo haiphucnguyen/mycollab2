@@ -384,9 +384,8 @@ public class CrmFollowersComp<V extends ValuedBean> extends VerticalLayout {
 												.loadMonitorItems();
 									}
 								});
-						deleteBtn.setStyleName("link");
-						deleteBtn.setIcon(MyCollabResource
-								.newResource(WebResourceIds._16_delete));
+						deleteBtn.setIcon(FontAwesome.TRASH_O);
+                        deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 						return deleteBtn;
 					}
 				});

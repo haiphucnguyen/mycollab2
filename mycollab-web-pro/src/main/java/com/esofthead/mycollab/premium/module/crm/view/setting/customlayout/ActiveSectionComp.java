@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.FontAwesome;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,9 +79,8 @@ class ActiveSectionComp extends GenericSectionComp {
 
 		Button deleteSectionBtn = new Button();
 		deleteSectionBtn.setDescription("Remove this Section");
-		deleteSectionBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._16_delete));
-		deleteSectionBtn.setStyleName("link");
+		deleteSectionBtn.setIcon(FontAwesome.TRASH_O);
+		deleteSectionBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 		header.addComponent(deleteSectionBtn);
 
 		headerWrapper.addComponent(header);

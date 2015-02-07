@@ -192,8 +192,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 									});
 						}
 					});
-			deleteBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_delete2));
+			deleteBtn.setIcon(FontAwesome.TRASH_O);
 			deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
 			deleteBtn.setEnabled(CurrentProjectVariables
 					.canAccess(ProjectRolePermissionCollections.MESSAGES));

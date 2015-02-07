@@ -849,8 +849,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 										}
 									});
 							deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
-							deleteBtn.setIcon(MyCollabResource
-									.newResource(WebResourceIds._16_delete2));
+							deleteBtn.setIcon(FontAwesome.TRASH_O);
 
 							filterBox.addComponent(deleteBtn, 1);
 							filterBox.addComponent(updateBtn, 1);

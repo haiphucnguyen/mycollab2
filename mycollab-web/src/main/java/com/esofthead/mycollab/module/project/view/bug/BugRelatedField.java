@@ -374,9 +374,8 @@ public class BugRelatedField extends CustomComponent {
 						BugRelatedField.this.setCriteria();
 					}
 				});
-				deleteBtn.setStyleName("link");
-				deleteBtn.setIcon(MyCollabResource
-						.newResource(WebResourceIds._16_delete));
+				deleteBtn.setIcon(FontAwesome.TRASH_O);
+                deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 				relatedItem.setExtraData(deleteBtn);
 
 				ProjectMemberService memberService = ApplicationContextUtil

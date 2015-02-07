@@ -192,9 +192,8 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 								TimeLogEditWindow.this.loadTimeValue();
 							}
 						});
-				deleteBtn.setStyleName("link");
-				deleteBtn.setIcon(MyCollabResource
-						.newResource(WebResourceIds._16_delete));
+				deleteBtn.setIcon(FontAwesome.TRASH_O);
+                deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 				itemTimeLogging.setExtraData(deleteBtn);
 
 				deleteBtn.setEnabled(CurrentProjectVariables.isAdmin()
