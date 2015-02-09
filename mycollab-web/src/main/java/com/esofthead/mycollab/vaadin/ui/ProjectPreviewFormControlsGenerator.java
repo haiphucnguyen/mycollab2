@@ -142,7 +142,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 							previewForm.fireDeleteForm(item);
 						}
 					});
-			deleteBtn.setIcon(FontAwesome.RECYCLE);
+			deleteBtn.setIcon(FontAwesome.TRASH_O);
 			deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
 			editButtons.addComponent(deleteBtn);
 			editButtons.setComponentAlignment(deleteBtn,

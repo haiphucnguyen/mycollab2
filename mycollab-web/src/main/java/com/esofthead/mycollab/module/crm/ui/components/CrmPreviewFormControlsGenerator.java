@@ -158,7 +158,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 							previewForm.fireDeleteForm(item);
 						}
 					});
-			deleteBtn.setIcon(FontAwesome.RECYCLE);
+			deleteBtn.setIcon(FontAwesome.TRASH_O);
 			deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
 			layout.addComponent(deleteBtn);
 			deleteBtn.setEnabled(canAccess);

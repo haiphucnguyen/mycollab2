@@ -697,12 +697,6 @@
     }
   }
 
-  .hdr-view .table-actionctls {
-    padding: 0;
-    border: 0;
-    background: none;
-  }
-
   .list-view {
     .v-table-header td, .v-table-header-wrap {
       height: 23px;
@@ -4824,6 +4818,11 @@
 
 
   /* New View's Styles */
+  .hdr-view .table-actionctls {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
 
   .hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
     background-color: #FFF;
@@ -4847,20 +4846,9 @@
 
   .hdr-view {
     .hdr-text {
-      font-size: $font-larger;
+      font-size: $font-x-large;
       color: #525252;
       font-weight: bold;
-      span {
-        font-size: $font-larger;
-        color: #525252;
-        font-weight: bold;
-      }
-      > img {
-        vertical-align: middle;
-      }
-      .v-popup-indicator {
-        height: 14px;
-      }
     }
     .hdr-text-overdue {
       font-size: $font-larger;

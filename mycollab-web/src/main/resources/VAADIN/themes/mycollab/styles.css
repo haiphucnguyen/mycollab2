@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.3.9";
+	content: "7.3.10";
 }
 
 .v-generated-body {
@@ -4041,8 +4041,8 @@ body .mycollab.v-app .v-app-loading {
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
-	background: white url(../chameleon/components/img/grad-light-top.png) repeat-x;
-	background: rgba(255, 255, 255, 0.9) url(../chameleon/components/img/grad-light-top.png) repeat-x;
+	background: white url(../chameleon/img/grad-light-top.png) repeat-x;
+	background: rgba(255, 255, 255, 0.9) url(../chameleon/img/grad-light-top.png) repeat-x;
 }
 
 .mycollab .v-Notification p {
@@ -6632,6 +6632,10 @@ body .mycollab.v-app .v-app-loading {
 	vertical-align: bottom;
 }
 
+.mycollab .v-button.button-icon-only .v-button-wrap .v-popup-indicator::before {
+	content: "";
+}
+
 .mycollab .v-button.button-icon-only.icon-18px .v-button-wrap {
 	font-size: 18px;
 }
@@ -8087,12 +8091,6 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .v-buttongroup .v-button:focus .v-button-wrap {
-	background: none;
-}
-
-.mycollab .hdr-view .table-actionctls {
-	padding: 0;
-	border: 0;
 	background: none;
 }
 
@@ -12130,6 +12128,12 @@ body .mycollab.v-app .v-app-loading {
 	padding-top: 50px;
 }
 
+.mycollab .hdr-view .table-actionctls {
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
 .mycollab .hdr-view, .mycollab .v-horizontallayout.hdr-view, .mycollab .advSearchHeader .v-horizontallayout.hdr-view, .mycollab .basicSearchHeader .hdr-view {
 	background-color: #FFF;
 }
@@ -12151,23 +12155,9 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .hdr-view .hdr-text {
-	font-size: 16px;
+	font-size: 18px;
 	color: #525252;
 	font-weight: bold;
-}
-
-.mycollab .hdr-view .hdr-text span {
-	font-size: 16px;
-	color: #525252;
-	font-weight: bold;
-}
-
-.mycollab .hdr-view .hdr-text  > img {
-	vertical-align: middle;
-}
-
-.mycollab .hdr-view .hdr-text .v-popup-indicator {
-	height: 14px;
 }
 
 .mycollab .hdr-view .hdr-text-overdue {

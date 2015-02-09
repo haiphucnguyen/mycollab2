@@ -832,7 +832,11 @@
         .v-icon.FontAwesome {
           vertical-align: bottom;
         }
+        .v-popup-indicator::before {
+          content: "";
+        }
       }
+
       &.icon-18px .v-button-wrap {
         font-size:$font-x-large;
       }
