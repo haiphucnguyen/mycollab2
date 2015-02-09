@@ -2,7 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -36,7 +36,7 @@ public abstract class StandupReportFormLayoutFactory implements
 	@Override
 	public ComponentContainer getLayout() {
 		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
-                AssetsManager.getAsset(ProjectTypeConstants.STANDUP));
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
 
 		reportAddLayout.addHeaderRight(this.createTopPanel());
 

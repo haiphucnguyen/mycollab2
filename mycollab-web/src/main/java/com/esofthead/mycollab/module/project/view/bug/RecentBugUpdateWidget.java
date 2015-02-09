@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -71,7 +71,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 					ProjectLinkBuilder.generateBugPreviewFullLink(
 							bug.getBugkey(), bug.getProjectShortName()));
 			defectLink.setWidth("100%");
-            defectLink.setIconLink(AssetsManager.getAsset(ProjectTypeConstants.BUG));
+            defectLink.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
 			defectLink.setDescription(ProjectTooltipGenerator
 					.generateToolTipBug(AppContext.getUserLocale(), bug,
 							AppContext.getSiteUrl(), AppContext.getTimezone()));

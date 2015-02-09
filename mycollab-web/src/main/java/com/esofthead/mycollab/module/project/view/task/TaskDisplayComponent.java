@@ -35,7 +35,7 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -137,7 +137,7 @@ class TaskDisplayComponent extends CssLayout {
                                                 .generateMilestonePreviewFullLink(
                                                         taskList.getProjectid(),
                                                         taskList.getMilestoneid()),
-                                        AssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+                                        ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
                             }
 
                             return null;

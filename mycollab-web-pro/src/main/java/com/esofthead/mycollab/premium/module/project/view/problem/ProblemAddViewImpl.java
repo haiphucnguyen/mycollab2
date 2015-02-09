@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.problem;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -61,7 +61,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	@Override
 	protected Resource initFormIconResource() {
-		return AssetsManager.getAsset(ProjectTypeConstants.PROBLEM);
+		return ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.HeaderView;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -78,7 +78,7 @@ class ItemTimeLoggingSearchPanel extends
 
         @Override
         public ComponentContainer constructHeader() {
-            Label headerText = new HeaderView(ProjectTypeConstants.TIME,
+            Label headerText = new ProjectViewHeader(ProjectTypeConstants.TIME,
                     AppContext
                             .getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
             headerText.setStyleName(UIConstants.HEADER_TEXT);

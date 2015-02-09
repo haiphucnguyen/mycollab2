@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.google.common.collect.Ordering;
@@ -67,7 +67,7 @@ public class TimeTrackingProjectOrderComponent
 			LabelLink link = new LabelLink(firstItem.getProjectName(),
 					ProjectLinkBuilder.generateProjectFullLink(firstItem
 							.getProjectid()));
-			link.setIconLink(AssetsManager.getAsset(ProjectTypeConstants.PROJECT));
+			link.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
 
 			addComponent(link);
 			addComponent(new TimeLoggingBockLayout(visibleFields,

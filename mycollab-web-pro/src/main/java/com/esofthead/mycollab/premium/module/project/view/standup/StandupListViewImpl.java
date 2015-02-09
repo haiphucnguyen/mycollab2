@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
-import com.esofthead.mycollab.module.project.ui.components.HeaderView;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -227,7 +227,7 @@ public class StandupListViewImpl extends AbstractPageView implements
         final MHorizontalLayout headerLeft = new MHorizontalLayout();
         headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        this.titleLbl = new HeaderView(ProjectTypeConstants.STANDUP,
+        this.titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
                 AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
         this.titleLbl.addStyleName("hdr-text");
 

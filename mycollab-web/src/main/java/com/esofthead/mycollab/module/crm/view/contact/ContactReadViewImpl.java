@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.*;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -66,7 +67,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 	private CrmFollowersComp<SimpleContact> compFollowers;
 
 	public ContactReadViewImpl() {
-		super(MyCollabResource.newResource("icons/22/crm/contact.png"));
+		super(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
 	}
 
 	@Override

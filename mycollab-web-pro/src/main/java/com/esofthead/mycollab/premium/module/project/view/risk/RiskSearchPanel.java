@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import com.esofthead.mycollab.module.project.ui.components.HeaderView;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.vaadin.server.FontAwesome;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
@@ -23,9 +23,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -34,7 +32,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
@@ -64,7 +61,7 @@ public class RiskSearchPanel extends
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		Label headerText = new HeaderView(ProjectTypeConstants.RISK,
+		Label headerText = new ProjectViewHeader(ProjectTypeConstants.RISK,
 				AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
 		headerText.setStyleName(UIConstants.HEADER_TEXT);
 

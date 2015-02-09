@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.HeaderView;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -75,7 +75,7 @@ public class ProblemSearchPanel extends
         createBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PROBLEMS));
 
-        Label headerText = new HeaderView(ProjectTypeConstants.PROBLEM, "Problems");
+        Label headerText = new ProjectViewHeader(ProjectTypeConstants.PROBLEM, "Problems");
         headerText.setStyleName(UIConstants.HEADER_TEXT);
 
         return new MHorizontalLayout()

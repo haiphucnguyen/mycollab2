@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
@@ -182,7 +182,7 @@ public class TimeTrackingTableDisplay
                                 LabelLink b = new LabelLink(itemLogging.getProjectName(),
                                         ProjectLinkBuilder.generateProjectFullLink(itemLogging
                                                 .getProjectid()));
-                                b.setIconLink(AssetsManager.getAsset(ProjectTypeConstants.PROJECT));
+                                b.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
                                 return b;
                             }
                         }

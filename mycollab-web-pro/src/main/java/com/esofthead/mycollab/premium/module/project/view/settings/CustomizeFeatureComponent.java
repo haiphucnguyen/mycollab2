@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.events.CustomizeUIEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectSettingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectCustomizeViewService;
-import com.esofthead.mycollab.module.project.ui.AssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BlockWidget;
@@ -53,31 +53,31 @@ public class CustomizeFeatureComponent extends BlockWidget {
 		leftColLayout.setWidth("100%");
 
 		final SelectionBox displayMsgSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE),
 				customizeView.getDisplaymessage());
 		leftColLayout.addComponent(displayMsgSelection);
 
 		final SelectionBox displayPhaseSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE),
 				customizeView.getDisplaymilestone());
 		leftColLayout.addComponent(displayPhaseSelection);
 
 		final SelectionBox displayTaskSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.TASK),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
 				customizeView.getDisplaytask());
 		leftColLayout.addComponent(displayTaskSelection);
 
 		final SelectionBox displayBugSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.BUG),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG),
 				customizeView.getDisplaybug());
 		leftColLayout.addComponent(displayBugSelection);
 
 		final SelectionBox displayPageSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.PAGE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.PAGE),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PAGE),
 				customizeView.getDisplaypage());
 		leftColLayout.addComponent(displayPageSelection);
@@ -89,31 +89,31 @@ public class CustomizeFeatureComponent extends BlockWidget {
 		rightColLayout.setSpacing(true);
 
 		final SelectionBox displayFileSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.FILE),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FILE),
 				customizeView.getDisplayfile());
 		rightColLayout.addComponent(displayFileSelection);
 
 		final SelectionBox displayRiskSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.RISK),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_RISK),
 				customizeView.getDisplayrisk());
 		rightColLayout.addComponent(displayRiskSelection);
 
 		final SelectionBox displayProblemSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.PROBLEM),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROBLEM),
 				customizeView.getDisplayproblem());
 		rightColLayout.addComponent(displayProblemSelection);
 
 		final SelectionBox displayTimeSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.TIME),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
 				customizeView.getDisplaytimelogging());
 		rightColLayout.addComponent(displayTimeSelection);
 
 		final SelectionBox displayStandupSelection = new SelectionBox(
-                AssetsManager.getAsset(ProjectTypeConstants.STANDUP),
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
 				AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
 				customizeView.getDisplaystandup());
 		rightColLayout.addComponent(displayStandupSelection);
