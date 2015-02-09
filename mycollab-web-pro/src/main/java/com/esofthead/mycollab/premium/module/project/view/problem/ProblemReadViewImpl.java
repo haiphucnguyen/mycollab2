@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
@@ -56,8 +57,7 @@ public class ProblemReadViewImpl extends
 
 	public ProblemReadViewImpl() {
 		super(AppContext.getMessage(ProblemI18nEnum.VIEW_READ_TITLE),
-				MyCollabResource
-						.newResource("icons/22/project/problem_selected.png"));
+                AssetsManager.getAsset(ProjectTypeConstants.PROBLEM));
 	}
 
 	@Override

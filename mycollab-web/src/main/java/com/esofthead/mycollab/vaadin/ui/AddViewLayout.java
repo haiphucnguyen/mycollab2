@@ -34,7 +34,6 @@ public class AddViewLayout extends CustomLayoutExt {
     private Resource viewIcon;
 
     private Label titleLbl;
-    private Image icon;
     private final MHorizontalLayout header;
 
     public AddViewLayout(String viewTitle, Resource viewIcon) {
@@ -49,11 +48,12 @@ public class AddViewLayout extends CustomLayoutExt {
         this.titleLbl.setStyleName("headerName");
 
         if (!(viewIcon instanceof FontAwesome)) {
-            this.icon = new Image(null);
-            this.icon.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-            this.header.addComponent(this.icon);
-            this.header.with(titleLbl).expand(titleLbl);
+            Image icon = new Image(null);
+            icon.setIcon(viewIcon);
+            icon.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+            this.header.with(icon);
         }
+        this.header.with(titleLbl).expand(titleLbl);
         setHeader(viewTitle);
         this.addComponent(this.header, "addViewHeader");
     }
@@ -99,6 +99,7 @@ public class AddViewLayout extends CustomLayoutExt {
     public void setTitle(final String title) {
         if (title != null) {
             CssLayout titleWrap = new CssLayout();
+            titleWrap.setStyleName("addViewTitle");
             titleWrap.setWidth("100%");
             titleWrap.addComponent(new Label(title));
             this.addComponent(titleWrap, "addViewTitle");

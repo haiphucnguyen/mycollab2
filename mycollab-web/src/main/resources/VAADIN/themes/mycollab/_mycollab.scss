@@ -1540,7 +1540,7 @@
 
   .addViewLayout {
     .addViewHeader .headerName {
-      font-size: $font-larger;
+      font-size: $font-x-large;
       font-weight: bold;
       color: #525252;
     }
@@ -3380,11 +3380,11 @@
     border: 1px solid $border-color;
     .readViewHeader {
       .headerName {
-        font-size: $font-larger;
+        font-size: $font-x-large;
         color: #303030;
       }
       .headerNameOverdue {
-        font-size: $font-larger;
+        font-size: $font-x-large;
         color: red;
       }
     }

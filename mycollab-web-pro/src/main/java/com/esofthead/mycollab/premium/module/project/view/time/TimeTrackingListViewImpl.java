@@ -28,10 +28,13 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -116,8 +119,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         });
         exportButtonControl = new SplitButton(exportBtn);
         exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
-        exportButtonControl.setIcon(MyCollabResource
-                .newResource(WebResourceIds._16_export));
+        exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
 
         VerticalLayout popupButtonsControl = new VerticalLayout();
         exportButtonControl.setContent(popupButtonsControl);
@@ -126,8 +128,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         FileDownloader exportPdfDownloader = new FileDownloader(
                 constructStreamResource(ReportExportType.PDF));
         exportPdfDownloader.extend(exportPdfBtn);
-        exportPdfBtn.setIcon(MyCollabResource
-                .newResource(WebResourceIds._16_filetypes_pdf));
+        exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
         exportPdfBtn.setStyleName("link");
         popupButtonsControl.addComponent(exportPdfBtn);
 
@@ -135,8 +136,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         FileDownloader excelDownloader = new FileDownloader(
                 constructStreamResource(ReportExportType.EXCEL));
         excelDownloader.extend(exportExcelBtn);
-        exportExcelBtn.setIcon(MyCollabResource
-                .newResource(WebResourceIds._16_filetypes_excel));
+        exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
         exportExcelBtn.setStyleName("link");
         popupButtonsControl.addComponent(exportExcelBtn);
 

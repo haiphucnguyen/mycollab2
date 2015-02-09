@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
+import com.esofthead.mycollab.module.project.ui.components.HeaderView;
 import com.vaadin.server.FontAwesome;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
@@ -63,10 +64,7 @@ public class RiskSearchPanel extends
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
-		Image titleIcon = new Image(null,
-				MyCollabResource
-						.newResource(WebResourceIds._22_project_risk_selected));
-		Label headerText = new Label(
+		Label headerText = new HeaderView(ProjectTypeConstants.RISK,
 				AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
 		headerText.setStyleName(UIConstants.HEADER_TEXT);
 
@@ -91,8 +89,7 @@ public class RiskSearchPanel extends
 				.withSpacing(true)
 				.withMargin(new MarginInfo(true, false, true, false));
 
-		header.with(titleIcon, headerText, createBtn)
-				.withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+		header.with(headerText, createBtn)
 				.withAlign(headerText, Alignment.MIDDLE_LEFT)
 				.withAlign(createBtn, Alignment.MIDDLE_RIGHT)
 				.expand(headerText);

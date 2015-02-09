@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
@@ -25,7 +26,10 @@ import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,8 +62,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	public RiskReadViewImpl() {
 		super(AppContext.getMessage(RiskI18nEnum.FORM_READ_TITLE),
-				MyCollabResource
-						.newResource(WebResourceIds._22_project_risk_selected));
+                AssetsManager.getAsset(ProjectTypeConstants.RISK));
 	}
 
 	@Override

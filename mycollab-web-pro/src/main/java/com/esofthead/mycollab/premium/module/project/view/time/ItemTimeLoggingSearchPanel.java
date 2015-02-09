@@ -4,8 +4,10 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
+import com.esofthead.mycollab.module.project.ui.components.HeaderView;
 import com.esofthead.mycollab.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -76,10 +78,7 @@ class ItemTimeLoggingSearchPanel extends
 
         @Override
         public ComponentContainer constructHeader() {
-            Image titleIcon = new Image(null,
-                    MyCollabResource
-                            .newResource(WebResourceIds._22_project_time_selected));
-            Label headerText = new Label(
+            Label headerText = new HeaderView(ProjectTypeConstants.TIME,
                     AppContext
                             .getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
             headerText.setStyleName(UIConstants.HEADER_TEXT);
@@ -94,8 +93,7 @@ class ItemTimeLoggingSearchPanel extends
                     .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
                     .withSpacing(true)
                     .withMargin(new MarginInfo(true, false, true, false))
-                    .with(titleIcon, headerText, createBtn)
-                    .withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+                    .with(headerText, createBtn)
                     .withAlign(headerText, Alignment.MIDDLE_LEFT)
                     .withAlign(createBtn, Alignment.MIDDLE_RIGHT)
                     .expand(headerText);

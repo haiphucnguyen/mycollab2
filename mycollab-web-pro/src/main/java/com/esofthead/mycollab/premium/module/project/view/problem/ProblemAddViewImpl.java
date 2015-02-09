@@ -1,11 +1,9 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -16,10 +14,12 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Layout;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -32,7 +32,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	private static final long serialVersionUID = 1L;
 
-	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
+	private static Map<Integer, String> valueCaptions = new HashMap<>(
 			5);
 
 	static {
@@ -61,8 +61,7 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 
 	@Override
 	protected Resource initFormIconResource() {
-		return MyCollabResource
-				.newResource("icons/22/project/problem_selected.png");
+		return AssetsManager.getAsset(ProjectTypeConstants.PROBLEM);
 	}
 
 	@Override

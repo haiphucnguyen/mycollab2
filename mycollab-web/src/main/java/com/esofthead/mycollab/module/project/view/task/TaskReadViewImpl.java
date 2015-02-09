@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
@@ -101,7 +102,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
 
     public TaskReadViewImpl() {
         super(AppContext.getMessage(TaskI18nEnum.VIEW_DETAIL_TITLE),
-                MyCollabResource.newResource(WebResourceIds._24_project_task), new TaskPreviewFormLayout());
+                AssetsManager.getAsset(ProjectTypeConstants.TASK), new TaskPreviewFormLayout());
     }
 
     @Override

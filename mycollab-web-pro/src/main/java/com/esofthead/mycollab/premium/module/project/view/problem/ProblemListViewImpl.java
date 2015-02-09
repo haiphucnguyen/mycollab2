@@ -61,7 +61,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 	}
 
 	private void generateDisplayTable() {
-		this.tableItem = new DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem>(
+		this.tableItem = new DefaultPagedBeanTable<>(
 				ApplicationContextUtil.getSpringBean(ProblemService.class),
 				SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
 				ProblemTableFieldDef.selected, Arrays.asList(

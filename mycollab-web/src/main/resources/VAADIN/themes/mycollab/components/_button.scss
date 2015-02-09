@@ -362,7 +362,7 @@
     &:hover .v-button-wrap {
       background-color: rgba(0, 0, 0, 0.1);
     }
-    &.link:hover .v-button-wrap, &.transparentbtn:hover .v-button-wrap {
+    &.link:hover .v-button-wrap, .v-button-wrap {
       background-color: transparent;
     }
     &.v-button-blankbtn {
@@ -445,7 +445,7 @@
 
   .v-button.v-button-transparentbtn, .v-button-transparentbtn:focus {
     background-color: transparent;
-    color: white;
+    color: black;
     font-weight: normal;
     border: none;
     padding: 0;
@@ -461,14 +461,6 @@
     }
   }
 
-  .v-button-transparentbtn {
-    &:hover, &:active {
-      background-color: transparent;
-      padding: 0;
-      background-image: none;
-    }
-  }
-
   .v-button.v-button-transparentbtn {
     &:active .v-button-wrap {
       border-top-color: transparent;
@@ -478,23 +470,6 @@
     .v-button-wrap {
       padding: 0;
     }
-  }
-
-  .v-button-greenbtn-no-radius-left {
-    background: url("icons/grad-dark-bottom2.png") repeat-x left bottom #2599c8;
-    border: 1px solid #093768;
-    color: #FFF;
-    text-shadow: 1px 1px 0px #1570cd;
-    border-radius: 3px;
-    padding: 3px 13px;
-    &:hover {
-      background: url("icons/grad-dark-bottom2.png") repeat-x left bottom #1377b3;
-      border: 1px solid #093768;
-    }
-  }
-
-  .v-button-link.medium-text .v-button-caption {
-    font-size: $font-large;
   }
 
   .v-button-link:focus .v-button-caption, .v-button-borderless:focus .v-button-caption {

@@ -6168,7 +6168,7 @@ body .mycollab.v-app .v-app-loading {
 	background-color: rgba(0, 0, 0, 0.1);
 }
 
-.mycollab .v-button.link:hover .v-button-wrap, .mycollab .v-button.transparentbtn:hover .v-button-wrap {
+.mycollab .v-button.link:hover .v-button-wrap, .mycollab .v-button .v-button-wrap {
 	background-color: transparent;
 }
 
@@ -6246,7 +6246,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-button.v-button-transparentbtn, .mycollab .v-button-transparentbtn:focus {
 	background-color: transparent;
-	color: white;
+	color: black;
 	font-weight: normal;
 	border: none;
 	padding: 0;
@@ -6260,12 +6260,6 @@ body .mycollab.v-app .v-app-loading {
 	-moz-box-shadow: 0 0 0;
 }
 
-.mycollab .v-button-transparentbtn:hover, .mycollab .v-button-transparentbtn:active {
-	background-color: transparent;
-	padding: 0;
-	background-image: none;
-}
-
 .mycollab .v-button.v-button-transparentbtn:active .v-button-wrap {
 	border-top-color: transparent;
 	background-image: none;
@@ -6274,24 +6268,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-button.v-button-transparentbtn .v-button-wrap {
 	padding: 0;
-}
-
-.mycollab .v-button-greenbtn-no-radius-left {
-	background: url(components/icons/grad-dark-bottom2.png) repeat-x left bottom #2599c8;
-	border: 1px solid #093768;
-	color: #FFF;
-	text-shadow: 1px 1px 0px #1570cd;
-	border-radius: 3px;
-	padding: 3px 13px;
-}
-
-.mycollab .v-button-greenbtn-no-radius-left:hover {
-	background: url(components/icons/grad-dark-bottom2.png) repeat-x left bottom #1377b3;
-	border: 1px solid #093768;
-}
-
-.mycollab .v-button-link.medium-text .v-button-caption {
-	font-size: 14px;
 }
 
 .mycollab .v-button-link:focus .v-button-caption, .mycollab .v-button-borderless:focus .v-button-caption {
@@ -8960,7 +8936,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .addViewLayout .addViewHeader .headerName {
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: bold;
 	color: #525252;
 }
@@ -10725,12 +10701,12 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .readViewLayout .readViewHeader .headerName {
-	font-size: 16px;
+	font-size: 18px;
 	color: #303030;
 }
 
 .mycollab .readViewLayout .readViewHeader .headerNameOverdue {
-	font-size: 16px;
+	font-size: 18px;
 	color: red;
 }
 
