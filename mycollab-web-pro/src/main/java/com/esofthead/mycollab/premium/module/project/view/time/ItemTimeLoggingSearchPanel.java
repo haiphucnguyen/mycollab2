@@ -86,7 +86,7 @@ class ItemTimeLoggingSearchPanel extends
             createBtn = new Button(
                     AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
             createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            createBtn.setIcon(FontAwesome.PLUS_SQUARE);
+            createBtn.setIcon(FontAwesome.PLUS);
             createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
             return new MHorizontalLayout()

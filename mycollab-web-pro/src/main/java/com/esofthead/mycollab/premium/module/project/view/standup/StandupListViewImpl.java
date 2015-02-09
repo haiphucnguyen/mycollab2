@@ -259,7 +259,7 @@ public class StandupListViewImpl extends AbstractPageView implements
                     }
                 });
         addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
-        addNewReport.setIcon(FontAwesome.PLUS_SQUARE);
+        addNewReport.setIcon(FontAwesome.PLUS);
         addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 
         header.addComponent(addNewReport);

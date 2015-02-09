@@ -104,7 +104,7 @@ public class VersionSearchPanel extends
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.VERSIONS));
 		createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		createBtn.setIcon(FontAwesome.PLUS_SQUARE);
+		createBtn.setIcon(FontAwesome.PLUS);
 
 		layout.with(createBtn).withAlign(createBtn, Alignment.MIDDLE_LEFT);
 

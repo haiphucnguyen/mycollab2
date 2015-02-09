@@ -71,7 +71,7 @@ public class ProblemSearchPanel extends
                     }
                 });
         createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        createBtn.setIcon(FontAwesome.PLUS_SQUARE);
+        createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PROBLEMS));
 

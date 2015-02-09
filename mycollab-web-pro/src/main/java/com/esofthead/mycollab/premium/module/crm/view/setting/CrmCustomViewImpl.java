@@ -54,233 +54,226 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 import java.util.List;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
  */
 @ViewComponent
 public class CrmCustomViewImpl extends AbstractPageView implements
-		ICrmCustomView {
+        ICrmCustomView {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Label headerLbl;
-	private ModuleSelectionComboBox moduleComboBox;
-	private CustomLayoutDDComp layoutComp;
-	private String moduleName;
+    private Label headerLbl;
+    private ModuleSelectionComboBox moduleComboBox;
+    private CustomLayoutDDComp layoutComp;
+    private String moduleName;
 
-	public CrmCustomViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(true);
+    public CrmCustomViewImpl() {
+        MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%")
+                .withSpacing(true);
 
-		MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%")
-				.withSpacing(true);
+        headerLbl = new Label("abcd");
+        Image titleIcon = new Image(null,
+                MyCollabResource.newResource(WebResourceIds._22_crm_layout));
 
-		headerLbl = new Label("abcd");
-		Image titleIcon = new Image(null,
-				MyCollabResource.newResource(WebResourceIds._22_crm_layout));
+        MHorizontalLayout headerTitle = new MHorizontalLayout()
+                .withWidth("100%").withSpacing(false)
+                .withMargin(new MarginInfo(true, false, true, false));
+        headerTitle.addStyleName(UIConstants.HEADER_VIEW);
+        headerTitle.with(titleIcon, headerLbl)
+                .withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+                .withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
 
-		MHorizontalLayout headerTitle = new MHorizontalLayout()
-				.withWidth("100%").withSpacing(false)
-				.withMargin(new MarginInfo(true, false, true, false));
-		headerTitle.addStyleName(UIConstants.HEADER_VIEW);
-		headerTitle.with(titleIcon, headerLbl)
-				.withAlign(titleIcon, Alignment.MIDDLE_LEFT)
-				.withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
+        headerBox.addComponent(headerTitle);
 
-		headerBox.addComponent(headerTitle);
+        VerticalLayout headerContent = new VerticalLayout();
+        headerContent.setWidth("100%");
+        headerContent.setMargin(new MarginInfo(false, true, true, true));
+        Label descLbl = new Label(
+                "Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
+        descLbl.setStyleName("instructionLbl");
+        headerContent.addComponent(descLbl);
 
-		VerticalLayout headerContent = new VerticalLayout();
-		headerContent.setWidth("100%");
-		headerContent.setMargin(new MarginInfo(false, true, true, true));
-		Label descLbl = new Label(
-				"Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
-		descLbl.setStyleName("instructionLbl");
-		headerContent.addComponent(descLbl);
+        MHorizontalLayout controlLayout = new MHorizontalLayout();
+        controlLayout.addStyleName("control-buttons");
+        moduleComboBox = new ModuleSelectionComboBox();
 
-		HorizontalLayout controlLayout = new HorizontalLayout();
-		controlLayout.addStyleName("control-buttons");
-		controlLayout.setSpacing(true);
-		moduleComboBox = new ModuleSelectionComboBox();
+        Label moduleLbl = new Label("Module: ");
+        controlLayout.addComponent(moduleLbl);
+        controlLayout.setComponentAlignment(moduleLbl, Alignment.MIDDLE_LEFT);
+        controlLayout.addComponent(moduleComboBox);
+        controlLayout.setComponentAlignment(moduleComboBox,
+                Alignment.MIDDLE_LEFT);
 
-		Label moduleLbl = new Label("Module: ");
-		controlLayout.addComponent(moduleLbl);
-		controlLayout.setComponentAlignment(moduleLbl, Alignment.MIDDLE_LEFT);
-		controlLayout.addComponent(moduleComboBox);
-		controlLayout.setComponentAlignment(moduleComboBox,
-				Alignment.MIDDLE_LEFT);
+        Button createCustomFieldBtn = new Button("New Custom Field",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		Button createCustomFieldBtn = new Button("New Custom Field",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
+                                CrmCustomViewImpl.this);
+                        UI.getCurrent().addWindow(createCustomFieldWindow);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
-								CrmCustomViewImpl.this);
-						UI.getCurrent().addWindow(createCustomFieldWindow);
+                    }
+                });
+        createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        createCustomFieldBtn.setIcon(FontAwesome.PLUS);
+        controlLayout.addComponent(createCustomFieldBtn);
+        controlLayout.setComponentAlignment(createCustomFieldBtn,
+                Alignment.MIDDLE_LEFT);
 
-					}
-				});
-		createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		createCustomFieldBtn.setIcon(FontAwesome.PLUS_SQUARE);
-		controlLayout.addComponent(createCustomFieldBtn);
-		controlLayout.setComponentAlignment(createCustomFieldBtn,
-				Alignment.MIDDLE_LEFT);
+        Button createSectionBtn = new Button("New Section",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		Button createSectionBtn = new Button("New Section",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        CreateSectionWindow createSectionWindow = new CreateSectionWindow(
+                                CrmCustomViewImpl.this);
+                        UI.getCurrent().addWindow(createSectionWindow);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						CreateSectionWindow createSectionWindow = new CreateSectionWindow(
-								CrmCustomViewImpl.this);
-						UI.getCurrent().addWindow(createSectionWindow);
+                    }
+                });
+        createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        createSectionBtn.setIcon(FontAwesome.PLUS);
+        controlLayout.addComponent(createSectionBtn);
+        controlLayout.setComponentAlignment(createSectionBtn,
+                Alignment.MIDDLE_LEFT);
+        headerTitle.addComponent(controlLayout);
+        headerBox.addComponent(headerContent);
+        this.addComponent(headerBox);
 
-					}
-				});
-		createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		createSectionBtn.setIcon(FontAwesome.PLUS_SQUARE);
-		controlLayout.addComponent(createSectionBtn);
-		controlLayout.setComponentAlignment(createSectionBtn,
-				Alignment.MIDDLE_LEFT);
-		headerTitle.addComponent(controlLayout);
-		headerBox.addComponent(headerContent);
-		this.addComponent(headerBox);
+        layoutComp = new CustomLayoutDDComp();
+        this.addComponent(layoutComp);
 
-		layoutComp = new CustomLayoutDDComp();
-		this.addComponent(layoutComp);
+        MHorizontalLayout buttonsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
 
-		HorizontalLayout buttonsLayout = new HorizontalLayout();
-		buttonsLayout.setSpacing(true);
-		buttonsLayout.setMargin(new MarginInfo(true, false, true, false));
-		Button saveBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						DynaForm rebuildForm = layoutComp.rebuildForm();
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        DynaForm rebuildForm = layoutComp.rebuildForm();
 
-						MasterFormService formService = ApplicationContextUtil
-								.getSpringBean(MasterFormService.class);
-						formService.saveCustomForm(AppContext.getAccountId(),
-								moduleName, rebuildForm);
-					}
-				});
-		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(FontAwesome.SAVE);
-		buttonsLayout.addComponent(saveBtn);
+                        MasterFormService formService = ApplicationContextUtil
+                                .getSpringBean(MasterFormService.class);
+                        formService.saveCustomForm(AppContext.getAccountId(),
+                                moduleName, rebuildForm);
+                    }
+                });
+        saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setIcon(FontAwesome.SAVE);
+        buttonsLayout.addComponent(saveBtn);
 
-		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						display(CrmCustomViewImpl.this.moduleName);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        display(CrmCustomViewImpl.this.moduleName);
 
-					}
-				});
-		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		buttonsLayout.addComponent(cancelBtn);
+                    }
+                });
+        cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        buttonsLayout.addComponent(cancelBtn);
 
-		headerContent.addComponent(buttonsLayout);
-		headerContent.setComponentAlignment(buttonsLayout,
-				Alignment.MIDDLE_CENTER);
-	}
+        headerContent.addComponent(buttonsLayout);
+        headerContent.setComponentAlignment(buttonsLayout,
+                Alignment.MIDDLE_CENTER);
+    }
 
-	@Override
-	public void display(String moduleName) {
-		this.moduleName = moduleName;
-		headerLbl.setValue(moduleName + ": Edit Page Layout (Beta)");
+    @Override
+    public void display(String moduleName) {
+        this.moduleName = moduleName;
+        headerLbl.setValue(moduleName + ": Edit Page Layout (Beta)");
 
-		headerLbl.setStyleName(UIConstants.HEADER_TEXT);
-		moduleComboBox.select(moduleName);
+        headerLbl.setStyleName(UIConstants.HEADER_TEXT);
+        moduleComboBox.select(moduleName);
 
-		layoutComp.displayLayoutCustom(getDynaForm(moduleName));
-	}
+        layoutComp.displayLayoutCustom(getDynaForm(moduleName));
+    }
 
-	private static DynaForm getDynaForm(String moduleName) {
-		MasterFormService formService = ApplicationContextUtil
-				.getSpringBean(MasterFormService.class);
-		DynaForm form = formService.findCustomForm(AppContext.getAccountId(),
-				moduleName);
+    private static DynaForm getDynaForm(String moduleName) {
+        MasterFormService formService = ApplicationContextUtil
+                .getSpringBean(MasterFormService.class);
+        DynaForm form = formService.findCustomForm(AppContext.getAccountId(),
+                moduleName);
 
-		if (form == null) {
-			if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
-				form = AccountDefaultDynaFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
-				form = ContactDefaultDynaFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {
-				form = CampaignDefaultDynaFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.LEAD.equals(moduleName)) {
-				form = LeadDefaultDynaFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.OPPORTUNITY.equals(moduleName)) {
-				form = OpportunityDefaultDynaFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.CASE.equals(moduleName)) {
-				form = CasesDefaultFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.CALL.equals(moduleName)) {
-				form = CallDefaultFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.MEETING.equals(moduleName)) {
-				form = MeetingDefaultFormLayoutFactory.getForm();
-			} else if (CrmTypeConstants.TASK.equals(moduleName)) {
-				form = AssignmentDefaultFormLayoutFactory.getForm();
-			} else {
-				throw new MyCollabException(
-						"Do not support custom layout of module " + moduleName);
-			}
-		}
+        if (form == null) {
+            if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
+                form = AccountDefaultDynaFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.CONTACT.equals(moduleName)) {
+                form = ContactDefaultDynaFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.CAMPAIGN.equals(moduleName)) {
+                form = CampaignDefaultDynaFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.LEAD.equals(moduleName)) {
+                form = LeadDefaultDynaFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.OPPORTUNITY.equals(moduleName)) {
+                form = OpportunityDefaultDynaFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.CASE.equals(moduleName)) {
+                form = CasesDefaultFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.CALL.equals(moduleName)) {
+                form = CallDefaultFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.MEETING.equals(moduleName)) {
+                form = MeetingDefaultFormLayoutFactory.getForm();
+            } else if (CrmTypeConstants.TASK.equals(moduleName)) {
+                form = AssignmentDefaultFormLayoutFactory.getForm();
+            } else {
+                throw new MyCollabException(
+                        "Do not support custom layout of module " + moduleName);
+            }
+        }
 
-		return form;
-	}
+        return form;
+    }
 
-	@Override
-	public void addActiveSection(DynaSection section) {
-		layoutComp.addActiveSection(section);
-	}
+    @Override
+    public void addActiveSection(DynaSection section) {
+        layoutComp.addActiveSection(section);
+    }
 
-	@Override
-	public List<DynaSection> getActiveSections() {
-		return layoutComp.getActiveSections();
-	}
+    @Override
+    public List<DynaSection> getActiveSections() {
+        return layoutComp.getActiveSections();
+    }
 
-	private class ModuleSelectionComboBox extends ValueComboBox {
-		private static final long serialVersionUID = 1L;
+    private class ModuleSelectionComboBox extends ValueComboBox {
+        private static final long serialVersionUID = 1L;
 
-		public ModuleSelectionComboBox() {
-			super(false, CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
-					CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
-					CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
-					CrmTypeConstants.TASK, CrmTypeConstants.CALL,
-					CrmTypeConstants.MEETING);
+        public ModuleSelectionComboBox() {
+            super(false, CrmTypeConstants.ACCOUNT, CrmTypeConstants.CONTACT,
+                    CrmTypeConstants.CAMPAIGN, CrmTypeConstants.LEAD,
+                    CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE,
+                    CrmTypeConstants.TASK, CrmTypeConstants.CALL,
+                    CrmTypeConstants.MEETING);
 
-			this.addValueChangeListener(new Property.ValueChangeListener() {
-				private static final long serialVersionUID = 1L;
+            this.addValueChangeListener(new Property.ValueChangeListener() {
+                private static final long serialVersionUID = 1L;
 
-				@Override
-				public void valueChange(Property.ValueChangeEvent event) {
-					String module = (String) ModuleSelectionComboBox.this
-							.getValue();
-					display(module);
+                @Override
+                public void valueChange(Property.ValueChangeEvent event) {
+                    String module = (String) ModuleSelectionComboBox.this
+                            .getValue();
+                    display(module);
 
-				}
-			});
-		}
-	}
+                }
+            });
+        }
+    }
 
-	@Override
-	public String getCandidateTextFieldName() {
-		return layoutComp.getCandidateTextFieldName();
-	}
+    @Override
+    public String getCandidateTextFieldName() {
+        return layoutComp.getCandidateTextFieldName();
+    }
 
-	@Override
-	public void refreshSectionLayout(DynaSection section) {
-		layoutComp.refreshSectionLayout(section);
+    @Override
+    public void refreshSectionLayout(DynaSection section) {
+        layoutComp.refreshSectionLayout(section);
 
-	}
+    }
 }

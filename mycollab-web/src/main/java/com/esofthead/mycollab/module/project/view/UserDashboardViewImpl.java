@@ -122,7 +122,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
 							UI.getCurrent().addWindow(projectNewWindow);
 						}
 					});
-			createProjectBtn.setIcon(FontAwesome.PLUS_SQUARE);
+			createProjectBtn.setIcon(FontAwesome.PLUS);
 			createProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			headerContentTop.addComponent(createProjectBtn);
 			headerContentTop.setComponentAlignment(createProjectBtn,

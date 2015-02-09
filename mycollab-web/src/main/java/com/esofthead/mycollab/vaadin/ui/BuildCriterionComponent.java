@@ -157,7 +157,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends
 					}
 				});
 		saveSearchBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		saveSearchBtn.setIcon(FontAwesome.PLUS_SQUARE);
+		saveSearchBtn.setIcon(FontAwesome.PLUS);
 		filterBox.addComponent(saveSearchBtn);
 	}
 

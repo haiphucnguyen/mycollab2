@@ -434,7 +434,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
                         }
                     });
             addNewTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            addNewTaskBtn.setIcon(FontAwesome.PLUS_SQUARE);
+            addNewTaskBtn.setIcon(FontAwesome.PLUS);
             addNewTaskBtn.setEnabled(CurrentProjectVariables
                     .canWrite(ProjectRolePermissionCollections.TASKS));
 

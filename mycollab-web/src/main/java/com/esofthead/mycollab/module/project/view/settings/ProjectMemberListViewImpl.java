@@ -88,7 +88,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements
         createBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.USERS));
         createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        createBtn.setIcon(FontAwesome.PLUS_SQUARE);
+        createBtn.setIcon(FontAwesome.PLUS);
 
         viewHeader.addComponent(createBtn);
 

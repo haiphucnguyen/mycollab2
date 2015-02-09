@@ -217,7 +217,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                     }
                 });
         newGroupBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        newGroupBtn.setIcon(FontAwesome.PLUS_SQUARE);
+        newGroupBtn.setIcon(FontAwesome.PLUS);
         newGroupBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PAGES));
         headerLayout.with(newGroupBtn).withAlign(newGroupBtn,
@@ -235,7 +235,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                     }
                 });
         newPageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        newPageBtn.setIcon(FontAwesome.PLUS_SQUARE);
+        newPageBtn.setIcon(FontAwesome.PLUS);
         newPageBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PAGES));
 
@@ -635,8 +635,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
             }
         }
 
-        private class EditFormFieldFactory extends
-                AbstractBeanFieldGroupEditFieldFactory<Folder> {
+        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Folder> {
             private static final long serialVersionUID = 1L;
 
             public EditFormFieldFactory(GenericBeanForm<Folder> form) {

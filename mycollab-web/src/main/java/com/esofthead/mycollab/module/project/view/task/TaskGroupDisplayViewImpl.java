@@ -258,7 +258,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
                 });
         newTaskListBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.TASKS));
-        newTaskListBtn.setIcon(FontAwesome.PLUS_SQUARE);
+        newTaskListBtn.setIcon(FontAwesome.PLUS);
         newTaskListBtn.setDescription(AppContext
                 .getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
         newTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

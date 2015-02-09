@@ -121,7 +121,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 							previewForm.fireAddForm(item);
 						}
 					});
-			addBtn.setIcon(FontAwesome.PLUS_SQUARE);
+			addBtn.setIcon(FontAwesome.PLUS);
 			addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			addBtn.setEnabled(canWrite);
 			layout.addComponent(addBtn);
