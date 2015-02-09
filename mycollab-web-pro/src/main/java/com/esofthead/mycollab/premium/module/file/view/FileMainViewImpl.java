@@ -193,7 +193,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         navButton.addButton(settingBtn);
 
         final PopupButton linkBtn = new PopupButton();
-        linkBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_link));
+        linkBtn.setIcon(FontAwesome.LINK);
         linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
         linkBtn.setWidth("65px");
 
@@ -203,8 +203,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         HorizontalLayout connectDropboxLayout = new HorizontalLayout();
         connectDropboxLayout.setSpacing(true);
 
-        final Image titleIcon = new Image(null,
-                MyCollabResource.newResource("icons/16/ecm/dropbox.png"));
+        final Image titleIcon = new Image(null);
+        titleIcon.setIcon(FontAwesome.DROPBOX);
         connectDropboxLayout.addComponent(titleIcon);
 
         Button uploadDropboxBtn = new Button("Connect Dropbox",
@@ -359,13 +359,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         private final Button connectAccountBtn;
         private final VerticalLayout bodyLayout;
-        private final VerticalLayout mainLayout;
+        private final MVerticalLayout mainLayout;
 
         public SettingConnectionDrive() {
-            mainLayout = new VerticalLayout();
-            mainLayout.setSpacing(true);
-            mainLayout.setWidth("100%");
-            mainLayout.setMargin(true);
+            mainLayout = new MVerticalLayout().withWidth("100%");
 
             connectAccountBtn = new Button("Connect account",
                     new ClickListener() {
@@ -430,20 +427,16 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             private Label foldernameLbl;
 
             public OneDriveConnectionBodyLayout(final ExternalDrive drive) {
-                final VerticalLayout externalDriveEditLayout = new VerticalLayout();
-                externalDriveEditLayout.setSpacing(true);
-                externalDriveEditLayout.setMargin(true);
+                final MVerticalLayout externalDriveEditLayout = new MVerticalLayout();
 
-                final HorizontalLayout title = new HorizontalLayout();
-                title.setSpacing(true);
-                title.setWidth("100%");
+                final MHorizontalLayout title = new MHorizontalLayout().withWidth("100%");
                 externalDriveEditLayout.addComponent(title);
 
                 CssLayout iconWapper = new CssLayout();
                 iconWapper.setWidth("60px");
                 final Embedded embed = new Embedded();
                 if (drive.getStoragename().equals(StorageNames.DROPBOX))
-                    embed.setSource(MyCollabResource
+                    embed.setIcon(MyCollabResource
                             .newResource("icons/48/ecm/dropbox.png"));
                 iconWapper.addComponent(embed);
                 title.addComponent(iconWapper);
