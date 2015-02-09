@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.FollowingTicketSear
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.service.ProjectFollowingTicketService;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -219,8 +220,7 @@ public class FollowingTicketTableDisplay
 								new ProjectEvent.GotoMyProject(this, chain));
 					}
 				});
-				projectLink.setIcon(MyCollabResource
-						.newResource("icons/16/project/project.png"));
+				projectLink.setIcon(AssetsManager.getAsset(ProjectTypeConstants.PROJECT));
 				return projectLink;
 			}
 		});

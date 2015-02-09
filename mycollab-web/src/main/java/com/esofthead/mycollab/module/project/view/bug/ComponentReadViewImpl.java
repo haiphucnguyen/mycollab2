@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.ui.AssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp2;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
@@ -93,8 +94,7 @@ public class ComponentReadViewImpl extends
 
     public ComponentReadViewImpl() {
         super(AppContext.getMessage(ComponentI18nEnum.VIEW_READ_TITLE),
-                MyCollabResource
-                        .newResource(WebResourceIds._22_project_component));
+                AssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
     }
 
     @Override

@@ -40,12 +40,15 @@ public class AssetsManager {
         resources.put(ProjectTypeConstants.TASK_LIST, FontAwesome.BUILDING_O);
         resources.put(ProjectTypeConstants.PAGE, FontAwesome.FILE);
         resources.put(ProjectTypeConstants.BUG, FontAwesome.BUG);
+        resources.put(ProjectTypeConstants.BUG_COMPONENT, FontAwesome.CUBE);
+        resources.put(ProjectTypeConstants.BUG_VERSION, FontAwesome.LEAF);
         resources.put(ProjectTypeConstants.FILE, FontAwesome.BRIEFCASE);
         resources.put(ProjectTypeConstants.RISK, FontAwesome.SHIELD);
         resources.put(ProjectTypeConstants.PROBLEM, FontAwesome.EXCLAMATION_TRIANGLE);
         resources.put(ProjectTypeConstants.TIME, FontAwesome.CLOCK_O);
         resources.put(ProjectTypeConstants.STANDUP, FontAwesome.CUBES);
         resources.put(ProjectTypeConstants.MEMBER, FontAwesome.USERS);
+        resources.put(ProjectTypeConstants.PROJECT, FontAwesome.CALENDAR_O);
     }
 
     public static FontAwesome getAsset(String resId) {

@@ -304,9 +304,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
         lastUpdateInfo.addStyleName("last-update-info");
         block.addComponent(lastUpdateInfo);
 
-        HorizontalLayout controlBtns = new HorizontalLayout();
-        controlBtns.setSpacing(true);
-        controlBtns.setStyleName("control-btns");
+        MHorizontalLayout controlBtns = new MHorizontalLayout().withStyleName("control-btns");
         Button editBtn = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 new Button.ClickListener() {
@@ -319,8 +317,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                                 .addWindow(new PageGroupWindow(resource));
                     }
                 });
-        editBtn.setIcon(MyCollabResource
-                .newResource(WebResourceIds._12_project_edit));
+        editBtn.setIcon(FontAwesome.EDIT);
         editBtn.setStyleName("link");
         editBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PAGES));
@@ -364,8 +361,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         deleteBtn.setEnabled(CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.PAGES));
-        deleteBtn.setIcon(MyCollabResource
-                .newResource(WebResourceIds._12_project_delete));
+        deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.setStyleName("link");
         controlBtns.addComponent(deleteBtn);
 
@@ -442,8 +438,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         editBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PAGES));
-        editBtn.setIcon(MyCollabResource
-                .newResource(WebResourceIds._12_project_edit));
+        editBtn.setIcon(FontAwesome.EDIT);
         editBtn.setStyleName("link");
         controlBtns.addComponent(editBtn);
 
@@ -485,8 +480,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         deleteBtn.setEnabled(CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.PAGES));
-        deleteBtn.setIcon(MyCollabResource
-                .newResource(WebResourceIds._12_project_delete));
+        deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.setStyleName("link");
         controlBtns.addComponent(deleteBtn);
 
@@ -509,9 +503,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
             this.setWidth("700px");
             this.setResizable(false);
             this.center();
-            VerticalLayout content = new VerticalLayout();
-            content.setSpacing(true);
-            content.setMargin(new MarginInfo(false, false, true, false));
+            MVerticalLayout content = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
 
             EditForm editForm = new EditForm();
 
