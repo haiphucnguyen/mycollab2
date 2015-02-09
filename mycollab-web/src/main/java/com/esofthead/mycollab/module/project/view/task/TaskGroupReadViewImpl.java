@@ -184,8 +184,7 @@ public class TaskGroupReadViewImpl extends
                                     .generateMilestonePreviewFullLink(
                                             beanItem.getProjectid(),
                                             beanItem.getMilestoneid()),
-                            MyCollabResource
-                                    .newResourceLink(WebResourceIds._16_project_milestone));
+                            AssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
                 } else if (TaskList.Field.owner.equalTo(propertyId)) {
                     return new ProjectUserFormLinkField(beanItem.getOwner(),
                             beanItem.getOwnerAvatarId(),

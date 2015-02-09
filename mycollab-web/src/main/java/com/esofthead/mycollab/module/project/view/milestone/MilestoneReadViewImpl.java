@@ -276,7 +276,7 @@ public class MilestoneReadViewImpl extends
             });
             Button chartBtn = new Button("");
 
-            chartBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_project_bug_advanced_display));
+            chartBtn.setIcon(FontAwesome.TH_LARGE);
             chartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
             header.with(openSelection, overdueSelection, spacingLbl1, taskSelection, bugSelection, spacingLbl2, chartBtn)

@@ -368,8 +368,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp2<SimpleTask>
                         ProjectLinkBuilder.generateTaskGroupPreviewFullLink(
                                 beanItem.getProjectid(),
                                 beanItem.getTasklistid()),
-                        MyCollabResource
-                                .newResourceLink("icons/16/crm/task_group.png"));
+                        AssetsManager.getAsset(ProjectTypeConstants.TASK_LIST));
             } else if (Task.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(
                         beanItem.getProjectid(),

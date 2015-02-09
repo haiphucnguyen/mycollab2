@@ -7342,7 +7342,7 @@ body .mycollab.v-app .v-app-loading {
 	color: white;
 }
 
-.mycollab .projectfeed-hdr-wrapper .h2, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-button-caption {
+.mycollab .projectfeed-hdr-wrapper .h2, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-button-caption, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-icon {
 	color: white;
 }
 

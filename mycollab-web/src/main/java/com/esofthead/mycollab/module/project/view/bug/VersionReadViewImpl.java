@@ -117,14 +117,12 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 			removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 			quickActionStatusBtn.setCaption(AppContext
 					.getMessage(GenericI18Enum.BUTTON_CLOSE));
-			quickActionStatusBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_project_closeTask));
+			quickActionStatusBtn.setIcon(FontAwesome.ARCHIVE);
 		} else {
 			addLayoutStyleName(UIConstants.LINK_COMPLETED);
 			quickActionStatusBtn.setCaption(AppContext
 					.getMessage(GenericI18Enum.BUTTON_REOPEN));
-			quickActionStatusBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_project_reopenTask));
+			quickActionStatusBtn.setIcon(FontAwesome.CLIPBOARD);
 
 		}
 
@@ -184,8 +182,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 							.removeLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
 							.getMessage(GenericI18Enum.BUTTON_CLOSE));
-					quickActionStatusBtn.setIcon(MyCollabResource
-							.newResource(WebResourceIds._16_project_closeTask));
+					quickActionStatusBtn.setIcon(FontAwesome.ARCHIVE);
 				} else {
 					beanItem.setStatus(StatusI18nEnum.Closed.name());
 
@@ -193,8 +190,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 							.addLayoutStyleName(UIConstants.LINK_COMPLETED);
 					quickActionStatusBtn.setCaption(AppContext
 							.getMessage(GenericI18Enum.BUTTON_REOPEN));
-					quickActionStatusBtn.setIcon(MyCollabResource
-							.newResource(WebResourceIds._16_project_reopenTask));
+					quickActionStatusBtn.setIcon(FontAwesome.CLIPBOARD);
 				}
 
 				VersionService service = ApplicationContextUtil
@@ -252,7 +248,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp2<Version>
 
 			Button chartBtn = new Button("");
 
-			chartBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_project_bug_advanced_display));
+			chartBtn.setIcon(FontAwesome.TH_LARGE);
 			chartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
 			header.with(openSelection, inprogressSelection, reOpenSelection, verifiedSelection, resolvedSelection, spacingLbl1,

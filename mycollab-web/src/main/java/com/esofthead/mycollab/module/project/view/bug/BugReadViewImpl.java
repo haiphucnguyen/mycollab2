@@ -606,8 +606,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
                                     .generateMilestonePreviewFullLink(
                                             beanItem.getProjectid(),
                                             beanItem.getMilestoneid()),
-                            MyCollabResource
-                                    .newResourceLink(WebResourceIds._16_project_milestone));
+                            AssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
                 } else {
                     return new DefaultViewField("");
                 }

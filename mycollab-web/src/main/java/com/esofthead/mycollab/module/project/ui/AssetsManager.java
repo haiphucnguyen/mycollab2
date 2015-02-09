@@ -37,7 +37,7 @@ public class AssetsManager {
         resources.put(ProjectTypeConstants.MESSAGE, FontAwesome.COMMENT);
         resources.put(ProjectTypeConstants.MILESTONE, FontAwesome.FLAG_CHECKERED);
         resources.put(ProjectTypeConstants.TASK, FontAwesome.TASKS);
-        resources.put(ProjectTypeConstants.TASK_LIST, FontAwesome.TASKS);
+        resources.put(ProjectTypeConstants.TASK_LIST, FontAwesome.BUILDING_O);
         resources.put(ProjectTypeConstants.PAGE, FontAwesome.FILE);
         resources.put(ProjectTypeConstants.BUG, FontAwesome.BUG);
         resources.put(ProjectTypeConstants.FILE, FontAwesome.BRIEFCASE);
