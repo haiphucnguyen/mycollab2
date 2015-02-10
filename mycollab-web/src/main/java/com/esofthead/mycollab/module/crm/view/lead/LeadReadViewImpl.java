@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
+import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.*;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -57,7 +58,7 @@ public class LeadReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 	private CrmFollowersComp<SimpleLead> compFollowers;
 
 	public LeadReadViewImpl() {
-		super(MyCollabResource.newResource(WebResourceIds._22_crm_lead));
+		super(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
 	}
 
 	@Override

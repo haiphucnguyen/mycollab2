@@ -42,4 +42,6 @@ public class CrmTypeConstants {
 	public static final String CALL = "Call";
 
 	public static final String NOTE = "Crm-Note";
+
+    public static final String ACTIVITY = "Crm-Activity";
 }

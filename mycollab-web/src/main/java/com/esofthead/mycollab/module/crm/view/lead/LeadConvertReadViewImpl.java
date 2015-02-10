@@ -21,6 +21,7 @@ import static com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormCont
 import static com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator.NEXT_BTN_PRESENTED;
 import static com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator.PREVIOUS_BTN_PRESENTED;
 
+import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +91,7 @@ public class LeadConvertReadViewImpl extends
 	private DateInfoComp dateInfoComp;
 
 	public LeadConvertReadViewImpl() {
-		super(MyCollabResource.newResource(WebResourceIds._22_crm_lead));
+		super(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
 	}
 
 	@Override

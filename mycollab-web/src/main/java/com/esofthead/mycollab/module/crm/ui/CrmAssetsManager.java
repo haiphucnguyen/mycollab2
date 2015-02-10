@@ -17,6 +17,14 @@ public class CrmAssetsManager {
         resources = new HashMap<>();
         resources.put(CrmTypeConstants.ACCOUNT, FontAwesome.INSTITUTION);
         resources.put(CrmTypeConstants.CONTACT, FontAwesome.USER);
+        resources.put(CrmTypeConstants.OPPORTUNITY, FontAwesome.MONEY);
+        resources.put(CrmTypeConstants.CASE, FontAwesome.BUG);
+        resources.put(CrmTypeConstants.LEAD, FontAwesome.BUILDING);
+        resources.put(CrmTypeConstants.ACTIVITY, FontAwesome.CALENDAR);
+        resources.put(CrmTypeConstants.TASK, FontAwesome.LIST_ALT);
+        resources.put(CrmTypeConstants.CALL, FontAwesome.PHONE);
+        resources.put(CrmTypeConstants.MEETING, FontAwesome.PLANE);
+        resources.put(CrmTypeConstants.CAMPAIGN, FontAwesome.TROPHY);
     }
 
     public static FontAwesome getAsset(String resId) {

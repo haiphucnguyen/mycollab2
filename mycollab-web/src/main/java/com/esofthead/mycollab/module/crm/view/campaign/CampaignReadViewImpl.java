@@ -16,28 +16,16 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
-import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.*;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.crm.ui.components.CrmFollowersComp;
-import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
-import com.esofthead.mycollab.module.crm.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.crm.ui.components.DynaFormLayout;
-import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.ui.components.PeopleInfoComp;
+import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
+import com.esofthead.mycollab.module.crm.ui.components.*;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRelatedItemListComp;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -47,11 +35,13 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * 
@@ -76,7 +66,7 @@ public class CampaignReadViewImpl extends
 	private CrmFollowersComp<SimpleCampaign> compFollowers;
 
 	public CampaignReadViewImpl() {
-		super(MyCollabResource.newResource("icons/22/crm/campaign.png"));
+		super(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
 	}
 
 	@Override
@@ -96,7 +86,7 @@ public class CampaignReadViewImpl extends
 
 	@Override
 	protected ComponentContainer createButtonControls() {
-		return new CrmPreviewFormControlsGenerator<SimpleCampaign>(previewForm)
+		return new CrmPreviewFormControlsGenerator<>(previewForm)
 				.createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
 	}
 
@@ -128,7 +118,7 @@ public class CampaignReadViewImpl extends
 		peopleInfoComp = new PeopleInfoComp();
 		basicInfo.addComponent(peopleInfoComp);
 
-		compFollowers = new CrmFollowersComp<SimpleCampaign>(
+		compFollowers = new CrmFollowersComp<>(
 				CrmTypeConstants.CAMPAIGN,
 				RolePermissionCollections.CRM_CAMPAIGN);
 		basicInfo.addComponent(compFollowers);
