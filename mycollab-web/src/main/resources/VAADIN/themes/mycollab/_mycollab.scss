@@ -454,29 +454,9 @@
     border: 1px solid $border-color;
   }
 
-  .v-button-buttonlinkcenter .v-button-wrap .v-popup-indicator {
-    background: url('icons/calendar_2.png') no-repeat scroll center center rgba(0, 0, 0, 0);
-    cursor: pointer;
-    display: inline-block;
-    height: 16px;
-    width: 24px;
-  }
-
   .v-popupbutton .v-button-caption:before {
     content: "";
     display: inline-block;
-  }
-
-  div.v-button .v-button-link .link .v-button-buttonlinkcenter .buttonlinkcenter .v-popupbutton {
-    margin: 0px;
-    text-align: center;
-  }
-
-  .v-button-link-buttonlinkcenter .v-button-caption {
-    text-decoration: none;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
   }
 
   .v-textarea {

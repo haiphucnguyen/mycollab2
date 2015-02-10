@@ -32,6 +32,8 @@
  */
 package com.esofthead.mycollab.module.project;
 
+import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -210,12 +212,14 @@ public class ProjectLinkBuilder {
 		SimpleMilestone milestone = milestoneService.findById(milestoneId,
 				AppContext.getAccountId());
 		if (milestone != null) {
+            DivLessFormatter div = new DivLessFormatter();
 			A link = new A();
 			link.setHref(generateMilestonePreviewFullLink(
 					milestone.getProjectid(), milestone.getId()));
 			Text text = new Text(milestone.getName());
 			link.appendChild(text);
-			return link.write();
+            return div.appendChild(new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml()),
+                    DivLessFormatter.EMPTY_SPACE(), link).write();
 		} else {
 			return null;
 		}
