@@ -6961,6 +6961,15 @@ body .mycollab.v-app .v-app-loading {
 	color: #535353;
 }
 
+.mycollab .v-vertical.case-noitem {
+	border-radius: 0 0px 4px 4px;
+	box-sizing: content-box;
+}
+
+.mycollab .v-vertical.case-noitem .v-icon {
+	font-size: 48px;
+}
+
 .mycollab .date-wrapper {
 	background: url(components/icons/timehdr-bg.png) no-repeat left top #d4dfef;
 	font-size: 12px;
@@ -12093,15 +12102,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .message-list > .v-slot > .v-verticallayout {
 	display: block;
-}
-
-.mycollab .v-vertical.case-noitem {
-	border-radius: 0 0px 4px 4px;
-	box-sizing: content-box;
-}
-
-.mycollab .v-vertical.v-margin-top.case-noitem {
-	padding-top: 50px;
 }
 
 .mycollab .hdr-view .table-actionctls {

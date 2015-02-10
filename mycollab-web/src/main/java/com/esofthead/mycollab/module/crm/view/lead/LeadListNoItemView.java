@@ -17,21 +17,16 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
+import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
+import com.esofthead.mycollab.module.crm.ui.components.ListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.Sizeable;
-import com.vaadin.ui.Alignment;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -40,69 +35,38 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 @ViewComponent
-public class LeadListNoItemView extends AbstractPageView {
+public class LeadListNoItemView extends ListNoItemView {
 	private static final long serialVersionUID = 1L;
 
-	public LeadListNoItemView() {
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.addStyleName("case-noitem");
-		layout.setWidth("800px");
-		layout.setSpacing(true);
-		layout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		layout.setMargin(true);
+    @Override
+    protected FontAwesome titleIcon() {
+        return CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
+    }
 
-		Image image = new Image(null,
-				MyCollabResource.newResource("icons/48/crm/lead.png"));
-		layout.addComponent(image);
+    @Override
+    protected String titleMessage() {
+        return AppContext.getMessage(LeadI18nEnum.VIEW_NO_ITEM_TITLE);
+    }
 
-		Label title = new Label(
-				AppContext.getMessage(LeadI18nEnum.VIEW_NO_ITEM_TITLE));
-		title.addStyleName("h2");
-		title.setWidthUndefined();
-		layout.addComponent(title);
+    @Override
+    protected String hintMessage() {
+        return AppContext.getMessage(LeadI18nEnum.VIEW_NO_ITEM_HINT);
+    }
 
-		Label body = new Label(
-				AppContext.getMessage(LeadI18nEnum.VIEW_NO_ITEM_HINT));
-		body.setWidthUndefined();
-		layout.addComponent(body);
+    @Override
+    protected String actionMessage() {
+        return AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD);
+    }
 
-		Button btCreateContact = new Button("New Lead",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBusFactory.getInstance().post(
-								new LeadEvent.GotoAdd(this, null));
-					}
-				});
-
-		HorizontalLayout links = new HorizontalLayout();
-
-		links.addComponent(btCreateContact);
-		btCreateContact.addStyleName(UIConstants.THEME_GREEN_LINK);
-
-		/*
-		 * Label or = new Label("Or"); or.setStyleName("h2");
-		 * links.addComponent(or);
-		 * 
-		 * Button btImportContact = new Button("Import Leads", new
-		 * Button.ClickListener() { private static final long serialVersionUID =
-		 * 1L;
-		 * 
-		 * @Override public void buttonClick(ClickEvent arg0) {
-		 * UI.getCurrent().addWindow(new CaseImportWindow()); } });
-		 * 
-		 * btImportContact.addStyleName(UIConstants.THEME_GRAY_LINK);
-		 * 
-		 * 
-		 * links.addComponent(btImportContact);
-		 */
-		links.setSpacing(true);
-
-		layout.addComponent(links);
-		this.addComponent(layout);
-		this.setComponentAlignment(layout, Alignment.TOP_CENTER);
-	}
+    @Override
+    protected Button.ClickListener actionListener() {
+        return new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(
+                        new LeadEvent.GotoAdd(this, null));
+            }
+        };
+    }
 }

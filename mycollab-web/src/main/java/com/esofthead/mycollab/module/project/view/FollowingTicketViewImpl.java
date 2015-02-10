@@ -77,9 +77,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 
 		final Label layoutHeader = new Label("My Following Tickets");
 		layoutHeader.addStyleName("h2");
-		header.addComponent(layoutHeader);
-		header.setComponentAlignment(layoutHeader, Alignment.MIDDLE_LEFT);
-		header.setExpandRatio(layoutHeader, 1.0f);
+		header.with(layoutHeader).withAlign(layoutHeader, Alignment.MIDDLE_LEFT).expand(layoutHeader);
 
 		headerWrapper.addComponent(header);
 		this.addComponent(headerWrapper);
