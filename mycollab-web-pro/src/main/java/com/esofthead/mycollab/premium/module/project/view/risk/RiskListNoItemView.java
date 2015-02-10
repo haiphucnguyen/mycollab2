@@ -19,22 +19,17 @@ package com.esofthead.mycollab.premium.module.project.view.risk;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.Sizeable;
-import com.vaadin.ui.Alignment;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -44,53 +39,42 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @ViewComponent(scope=ViewScope.PROTOTYPE)
-public class RiskListNoItemView extends AbstractPageView {
+public class RiskListNoItemView extends ProjectListNoItemView {
 	private static final long serialVersionUID = -2154602282175183516L;
 
-	public RiskListNoItemView() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addStyleName("risk-noitem");
-		layout.setSpacing(true);
-		layout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		layout.setMargin(true);
+    @Override
+    protected FontAwesome viewIcon() {
+        return ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK);
+    }
 
-		Image image = new Image(null,
-				MyCollabResource.newResource("icons/48/project/risk.png"));
-		layout.addComponent(image);
+    @Override
+    protected String viewTitle() {
+        return AppContext.getMessage(RiskI18nEnum.VIEW_NO_ITEM_TITLE);
+    }
 
-		Label title = new Label(
-				AppContext.getMessage(RiskI18nEnum.VIEW_NO_ITEM_TITLE));
-		title.addStyleName("h2");
-		title.setWidthUndefined();
-		layout.addComponent(title);
+    @Override
+    protected String viewHint() {
+        return AppContext.getMessage(RiskI18nEnum.VIEW_NO_ITEM_HINT);
+    }
 
-		Label body = new Label(
-				AppContext.getMessage(RiskI18nEnum.VIEW_NO_ITEM_HINT));
-		body.setWidthUndefined();
-		layout.addComponent(body);
+    @Override
+    protected String actionMessage() {
+        return AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK);
+    }
 
-		Button createRiskBtn = new Button(
-				AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+    @Override
+    protected Button.ClickListener actionListener() {
+        return new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(
+                        new RiskEvent.GotoAdd(this, null));
+            }
+        };
+    }
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						EventBusFactory.getInstance().post(
-								new RiskEvent.GotoAdd(this, null));
-					}
-				});
-		createRiskBtn.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.RISKS));
-
-		HorizontalLayout links = new HorizontalLayout();
-
-		links.addComponent(createRiskBtn);
-		createRiskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		links.setSpacing(true);
-
-		layout.addComponent(links);
-		this.addComponent(layout);
-		this.setComponentAlignment(layout, Alignment.TOP_CENTER);
-	}
+    @Override
+    protected boolean hasPermission() {
+        return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS);
+    }
 }

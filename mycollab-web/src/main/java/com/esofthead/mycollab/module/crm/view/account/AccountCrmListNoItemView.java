@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.view.campaign;
+package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.events.CampaignEvent;
-import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
-import com.esofthead.mycollab.module.crm.ui.components.ListNoItemView;
+import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -35,27 +35,27 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  */
 @ViewComponent
-public class CampaignListNoItemView extends ListNoItemView {
+public class AccountCrmListNoItemView extends CrmListNoItemView {
 	private static final long serialVersionUID = 1L;
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
     }
 
     @Override
     protected String titleMessage() {
-        return AppContext.getMessage(CampaignI18nEnum.VIEW_NO_ITEM_TITLE);
+        return AppContext.getMessage(AccountI18nEnum.VIEW_NO_ITEM_TITLE);
     }
 
     @Override
     protected String hintMessage() {
-        return AppContext.getMessage(CampaignI18nEnum.VIEW_NO_ITEM_HINT);
+        return AppContext.getMessage(AccountI18nEnum.VIEW_NO_ITEM_HINT);
     }
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN);
+        return AppContext.getMessage(AccountI18nEnum.BUTTON_NEW_ACCOUNT);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CampaignListNoItemView extends ListNoItemView {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(
-                        new CampaignEvent.GotoAdd(this, null));
+                        new AccountEvent.GotoAdd(this, null));
             }
         };
     }

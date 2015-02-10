@@ -14,8 +14,8 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 5.0.0
  */
-public abstract class ListNoItemView extends AbstractPageView {
-    public ListNoItemView() {
+public abstract class CrmListNoItemView extends AbstractPageView {
+    public CrmListNoItemView() {
         MVerticalLayout layout = new MVerticalLayout().withWidth("800px");
         layout.addStyleName("case-noitem");
         layout.setDefaultComponentAlignment(Alignment.TOP_CENTER);

@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.view.contact;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
-import com.esofthead.mycollab.module.crm.ui.components.ListNoItemView;
+import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -35,27 +35,27 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  */
 @ViewComponent
-public class ContactListNoItemView extends ListNoItemView {
+public class CampaignCrmListNoItemView extends CrmListNoItemView {
 	private static final long serialVersionUID = 1L;
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN);
     }
 
     @Override
     protected String titleMessage() {
-        return AppContext.getMessage(ContactI18nEnum.VIEW_NO_ITEM_TITLE);
+        return AppContext.getMessage(CampaignI18nEnum.VIEW_NO_ITEM_TITLE);
     }
 
     @Override
     protected String hintMessage() {
-        return AppContext.getMessage(ContactI18nEnum.VIEW_NO_ITEM_HINT);
+        return AppContext.getMessage(CampaignI18nEnum.VIEW_NO_ITEM_HINT);
     }
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(ContactI18nEnum.BUTTON_NEW_CONTACT);
+        return AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ContactListNoItemView extends ListNoItemView {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(
-                        new ContactEvent.GotoAdd(this, null));
+                        new CampaignEvent.GotoAdd(this, null));
             }
         };
     }

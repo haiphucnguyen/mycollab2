@@ -177,4 +177,14 @@
     font-weight: bold;
     padding: 0px;
   }
+
+  .v-vertical {
+    &.case-noitem {
+      border-radius: 0 0px 4px 4px;
+      box-sizing: content-box;
+      .v-icon {
+        font-size:48px;
+      }
+    }
+  }
 }

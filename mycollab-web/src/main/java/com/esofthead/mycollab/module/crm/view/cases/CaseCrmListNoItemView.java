@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.view.lead;
+package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
-import com.esofthead.mycollab.module.crm.ui.components.ListNoItemView;
+import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -29,34 +29,31 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0
- * 
  */
 @ViewComponent
-public class LeadListNoItemView extends ListNoItemView {
-	private static final long serialVersionUID = 1L;
-
+public class CaseCrmListNoItemView extends CrmListNoItemView {
+    private static final long serialVersionUID = 1L;
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.LEAD);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.CASE);
     }
 
     @Override
     protected String titleMessage() {
-        return AppContext.getMessage(LeadI18nEnum.VIEW_NO_ITEM_TITLE);
+        return AppContext.getMessage(CaseI18nEnum.VIEW_NO_ITEM_TITLE);
     }
 
     @Override
     protected String hintMessage() {
-        return AppContext.getMessage(LeadI18nEnum.VIEW_NO_ITEM_HINT);
+        return AppContext.getMessage(CaseI18nEnum.VIEW_NO_ITEM_HINT);
     }
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD);
+        return AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE);
     }
 
     @Override
@@ -65,7 +62,7 @@ public class LeadListNoItemView extends ListNoItemView {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(
-                        new LeadEvent.GotoAdd(this, null));
+                        new CaseEvent.GotoAdd(this, null));
             }
         };
     }

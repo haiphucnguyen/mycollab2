@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.crm.view.account;
+package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
-import com.esofthead.mycollab.module.crm.ui.components.ListNoItemView;
+import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -35,27 +35,27 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  */
 @ViewComponent
-public class AccountListNoItemView extends ListNoItemView {
+public class OpportunityCrmListNoItemView extends CrmListNoItemView {
 	private static final long serialVersionUID = 1L;
 
     @Override
     protected FontAwesome titleIcon() {
-        return CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT);
+        return CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY);
     }
 
     @Override
     protected String titleMessage() {
-        return AppContext.getMessage(AccountI18nEnum.VIEW_NO_ITEM_TITLE);
+        return AppContext.getMessage(OpportunityI18nEnum.VIEW_NO_ITEM_TITLE);
     }
 
     @Override
     protected String hintMessage() {
-        return AppContext.getMessage(AccountI18nEnum.VIEW_NO_ITEM_HINT);
+        return AppContext.getMessage(OpportunityI18nEnum.VIEW_NO_ITEM_HINT);
     }
 
     @Override
     protected String actionMessage() {
-        return AppContext.getMessage(AccountI18nEnum.BUTTON_NEW_ACCOUNT);
+        return AppContext.getMessage(OpportunityI18nEnum.BUTTON_NEW_OPPORTUNITY);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class AccountListNoItemView extends ListNoItemView {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(
-                        new AccountEvent.GotoAdd(this, null));
+                        new OpportunityEvent.GotoAdd(this, null));
             }
         };
     }
