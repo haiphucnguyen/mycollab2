@@ -79,6 +79,6 @@ public class MimeTypesUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(detectMimeType("aaa.docx"));
+        System.out.println(detectMimeType("aaa.tar"));
     }
 }

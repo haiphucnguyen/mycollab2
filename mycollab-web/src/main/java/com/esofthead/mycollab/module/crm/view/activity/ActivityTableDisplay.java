@@ -20,6 +20,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,7 +153,7 @@ public class ActivityTableDisplay
 				} else {
 					if (simpleEvent.getEndDate() != null
 							&& (simpleEvent.getEndDate()
-									.before(new GregorianCalendar().getTime()))) {
+									.before(DateTimeUtils.getCurrentDateWithoutMS()))) {
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}

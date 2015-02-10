@@ -6503,10 +6503,6 @@ body .mycollab.v-app .v-app-loading {
 	padding: 3px 7px 3px 2px;
 }
 
-.mycollab .v-popupbutton.greenbtn .v-popup-indicator {
-	background: url(components/icons/sprites.png) no-repeat scroll -5px -10px transparent;
-}
-
 .mycollab .v-popupbutton .v-button-wrap * {
 	float: none;
 }
@@ -8246,10 +8242,6 @@ body .mycollab.v-app .v-app-loading {
 	color: white;
 	text-decoration: none;
 	padding: 0 3px;
-}
-
-.mycollab .topNavigation .v-popupbutton .v-popup-indicator {
-	background: url("icons/sprites.png") no-repeat -5px -10px transparent;
 }
 
 .mycollab .topNavigation .v-popupbutton .v-popup-indicator:before {
