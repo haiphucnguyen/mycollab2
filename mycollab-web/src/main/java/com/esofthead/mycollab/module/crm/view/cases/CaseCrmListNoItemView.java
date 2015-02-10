@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -65,5 +66,10 @@ public class CaseCrmListNoItemView extends CrmListNoItemView {
                         new CaseEvent.GotoAdd(this, null));
             }
         };
+    }
+
+    @Override
+    protected boolean hasPermission() {
+        return AppContext.canWrite(RolePermissionCollections.CRM_CASE);
     }
 }

@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -67,5 +68,10 @@ public class ContactCrmListNoItemView extends CrmListNoItemView {
                         new ContactEvent.GotoAdd(this, null));
             }
         };
+    }
+
+    @Override
+    protected boolean hasPermission() {
+        return AppContext.canWrite(RolePermissionCollections.CRM_CONTACT);
     }
 }

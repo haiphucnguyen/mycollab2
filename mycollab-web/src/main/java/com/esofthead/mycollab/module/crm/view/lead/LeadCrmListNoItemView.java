@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
 import com.esofthead.mycollab.module.crm.ui.components.CrmListNoItemView;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.FontAwesome;
@@ -68,5 +69,10 @@ public class LeadCrmListNoItemView extends CrmListNoItemView {
                         new LeadEvent.GotoAdd(this, null));
             }
         };
+    }
+
+    @Override
+    protected boolean hasPermission() {
+        return AppContext.canWrite(RolePermissionCollections.CRM_LEAD);
     }
 }

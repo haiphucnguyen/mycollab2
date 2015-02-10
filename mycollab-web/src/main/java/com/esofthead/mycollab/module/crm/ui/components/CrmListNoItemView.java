@@ -34,6 +34,7 @@ public abstract class CrmListNoItemView extends AbstractPageView {
         layout.addComponent(hintLabel);
 
         Button btCreateContact = new Button(actionMessage(), actionListener());
+        btCreateContact.setEnabled(hasPermission());
 
         MHorizontalLayout links = new MHorizontalLayout();
 
@@ -70,4 +71,6 @@ public abstract class CrmListNoItemView extends AbstractPageView {
     abstract protected String actionMessage();
 
     abstract protected Button.ClickListener actionListener();
+
+    abstract protected boolean hasPermission();
 }
