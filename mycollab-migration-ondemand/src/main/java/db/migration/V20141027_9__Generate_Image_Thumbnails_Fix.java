@@ -1,20 +1,5 @@
 package db.migration;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.List;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.MimeTypesUtil;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -25,6 +10,19 @@ import com.esofthead.mycollab.module.ecm.service.ContentJcrDao;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import org.apache.commons.collections.CollectionUtils;
+import org.flywaydb.core.api.migration.spring.SpringJdbcMigration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Map;
 
 public class V20141027_9__Generate_Image_Thumbnails_Fix implements
 		SpringJdbcMigration {
@@ -62,7 +60,7 @@ public class V20141027_9__Generate_Image_Thumbnails_Fix implements
 					LOG.info("Check mimetype " + mimeType + " of content "
 							+ content.getPath() + "--" + content.getThumbnail()
 							+ ".");
-					if (MimeTypesUtil.isImageMimetype(mimeType)) {
+					if (MimeTypesUtil.isImage(mimeType)) {
 						try {
 							BufferedImage image = ImageUtil
 									.generateImageThumbnail(resourceService
