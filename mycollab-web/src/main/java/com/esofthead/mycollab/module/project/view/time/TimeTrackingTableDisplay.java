@@ -256,8 +256,7 @@ public class TimeTrackingTableDisplay
                                     }
                                 });
                                 editBtn.setStyleName("link");
-                                editBtn.setIcon(MyCollabResource
-                                        .newResource(WebResourceIds._16_edit));
+                                editBtn.setIcon(FontAwesome.EDIT);
                                 layout.addComponent(editBtn);
 
                                 Button deleteBtn = new Button("", new Button.ClickListener() {

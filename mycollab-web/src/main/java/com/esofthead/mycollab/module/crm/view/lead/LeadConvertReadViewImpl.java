@@ -275,8 +275,7 @@ public class LeadConvertReadViewImpl extends
 
 						}
 					});
-			contactLink.setIcon(MyCollabResource
-					.newResource("icons/16/crm/contact.png"));
+			contactLink.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
 			contactLink.setStyleName("link");
 			layoutHelper.addComponent(contactLink, "Contact", 0, 1);
 		} else {

@@ -21,13 +21,13 @@ import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.Reindeer;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 public class CustomFieldComponent extends CssLayout {
 
@@ -37,7 +37,7 @@ public class CustomFieldComponent extends CssLayout {
 	private Label fieldNameLbl;
 	private String fieldName;
 	private Panel fieldEditPanel;
-	private VerticalLayout panelContentLayout = new VerticalLayout();
+	private MVerticalLayout panelContentLayout;
 	private PopupButton editFieldBtn;
 
 	public CustomFieldComponent(AbstractDynaField field) {
@@ -64,14 +64,10 @@ public class CustomFieldComponent extends CssLayout {
 			editFieldBtn.setStyleName(UIConstants.POPUP_WITHOUT_INDICATOR);
 			editFieldBtn.addStyleName("editFieldBtn");
 			editFieldBtn.addStyleName("link");
-			editFieldBtn.setIcon(MyCollabResource
-					.newResource(WebResourceIds._16_edit));
+			editFieldBtn.setIcon(FontAwesome.EDIT);
 
 			fieldEditPanel = new Panel();
-			panelContentLayout = new VerticalLayout();
-			panelContentLayout.setSpacing(true);
-			panelContentLayout.setMargin(true);
-			panelContentLayout.setWidth("100%");
+			panelContentLayout = new MVerticalLayout().withWidth("100%");
 			fieldEditPanel.setContent(panelContentLayout);
 			fieldEditPanel.setStyleName(Reindeer.PANEL_LIGHT);
 			fieldEditPanel.setWidth("300px");

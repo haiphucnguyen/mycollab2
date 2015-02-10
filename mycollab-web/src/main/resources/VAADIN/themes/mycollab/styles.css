@@ -12314,6 +12314,10 @@ body .mycollab.v-app .v-app-loading {
 	padding: 0px 10px 0px 0px;
 }
 
+.mycollab .bean-block .icon-wrap .v-icon {
+	font-size: 48px;
+}
+
 .mycollab .notification-label {
 	background-color: #fff0e3;
 }

@@ -16,33 +16,25 @@
  */
 package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.HorizontalLocationIs;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ActiveSectionComp extends GenericSectionComp {
 	private static final long serialVersionUID = 1L;
@@ -73,7 +65,7 @@ class ActiveSectionComp extends GenericSectionComp {
 
 		Button editTitleBtn = new Button();
 		editTitleBtn.setDescription("Edit Section's Title");
-		editTitleBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_edit));
+		editTitleBtn.setIcon(FontAwesome.EDIT);
 		editTitleBtn.setStyleName("link");
 		header.addComponent(editTitleBtn);
 
