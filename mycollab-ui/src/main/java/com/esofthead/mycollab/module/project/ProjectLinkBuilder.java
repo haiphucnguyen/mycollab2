@@ -32,23 +32,22 @@
  */
 package com.esofthead.mycollab.module.project;
 
-import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Text;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
@@ -184,12 +183,14 @@ public class ProjectLinkBuilder {
 		SimpleTaskList taskList = taskListService.findById(taskgroupId,
 				AppContext.getAccountId());
 		if (taskList != null) {
+            DivLessFormatter div = new DivLessFormatter();
+            Text img = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK_LIST).getHtml());
 			A link = new A();
 			link.setHref(generateTaskGroupPreviewFullLink(
 					taskList.getProjectid(), taskList.getId()));
 			Text text = new Text(taskList.getName());
 			link.appendChild(text);
-			return link.write();
+			return div.appendChild(img, DivLessFormatter.EMPTY_SPACE(), link).write();
 		} else {
 			return null;
 		}
