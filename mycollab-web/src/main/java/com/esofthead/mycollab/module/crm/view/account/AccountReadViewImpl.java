@@ -177,20 +177,20 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "about",
+		previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-		previewItemContainer.addTab(associateContactList, "contact",
+		previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_CONTACT));
-		previewItemContainer.addTab(associateLeadList, "lead",
+		previewItemContainer.addTab(associateLeadList, CrmTypeConstants.LEAD,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_LEAD));
-		previewItemContainer.addTab(associateOpportunityList, "opportunity",
+		previewItemContainer.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_OPPORTUNITY));
-		previewItemContainer.addTab(associateCaseList, "case",
+		previewItemContainer.addTab(associateCaseList, CrmTypeConstants.CASE,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_CASE));
-		previewItemContainer.addTab(associateActivityList, "activity",
+		previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
 
-		previewItemContainer.selectTab("about");
+		previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
 	}
 
 	@Override
@@ -217,7 +217,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
 		dateInfoComp.displayEntryDateTime(beanItem);
 		compFollowers.displayFollowers(beanItem);
 
-		previewItemContainer.selectTab("about");
+		previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
 	}
 
 	@Override

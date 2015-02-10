@@ -44,4 +44,6 @@ public class CrmTypeConstants {
 	public static final String NOTE = "Crm-Note";
 
     public static final String ACTIVITY = "Crm-Activity";
+
+    public static final String DETAIL = "Crm-Detail";
 }

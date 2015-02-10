@@ -101,7 +101,7 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 		dateInfoComp.displayEntryDateTime(beanItem);
 		followersComp.displayFollowers(beanItem);
 
-		previewItemContainer.selectTab("about");
+		previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
 	}
 
 	@Override
@@ -131,11 +131,11 @@ public class CaseReadViewImpl extends AbstractPreviewItemComp<SimpleCase>
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "about",
+		previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-		previewItemContainer.addTab(associateContactList, "contact",
+		previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_CONTACT));
-		previewItemContainer.addTab(associateActivityList, "activity",
+		previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
 	}
 

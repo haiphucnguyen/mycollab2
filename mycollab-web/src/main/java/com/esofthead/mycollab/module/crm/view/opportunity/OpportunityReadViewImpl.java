@@ -115,7 +115,7 @@ public class OpportunityReadViewImpl extends
 		peopleInfoComp.displayEntryPeople(beanItem);
 		followersComp.displayFollowers(beanItem);
 
-		previewItemContainer.selectTab("about");
+		previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
 		
 		previewLayout.resetTitleStyle();
 
@@ -176,13 +176,13 @@ public class OpportunityReadViewImpl extends
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "about",
+		previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-		previewItemContainer.addTab(associateContactList, "contact",
+		previewItemContainer.addTab(associateContactList, CrmTypeConstants.CONTACT,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_CONTACT));
-		previewItemContainer.addTab(associateLeadList, "lead",
+		previewItemContainer.addTab(associateLeadList, CrmTypeConstants.LEAD,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_LEAD));
-		previewItemContainer.addTab(associateActivityList, "activity",
+		previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
 	}
 

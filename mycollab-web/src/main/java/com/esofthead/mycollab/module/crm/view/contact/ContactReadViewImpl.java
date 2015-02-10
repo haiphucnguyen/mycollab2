@@ -134,7 +134,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 		dateInfoComp.displayEntryDateTime(beanItem);
 		compFollowers.displayFollowers(beanItem);
 
-		previewItemContainer.selectTab("about");
+		previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
 	}
 
 	@Override
@@ -182,11 +182,11 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 
 		navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, "about",
+		previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-		previewItemContainer.addTab(associateOpportunityList, "opportunity",
+		previewItemContainer.addTab(associateOpportunityList, CrmTypeConstants.OPPORTUNITY,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_OPPORTUNITY));
-		previewItemContainer.addTab(associateActivityList, "activity",
+		previewItemContainer.addTab(associateActivityList, CrmTypeConstants.ACTIVITY,
 				AppContext.getMessage(CrmCommonI18nEnum.TAB_ACTIVITY));
 	}
 

@@ -58,7 +58,7 @@ public class AccountOpportunityListComp
 
 	private Account account;
 
-	public static Map<String, String> colormap = new HashMap<String, String>();
+	public static Map<String, String> colormap = new HashMap<>();
 
 	static {
 		for (int i = 0; i < CrmDataTypeFactory.getOpportunitySalesStageList().length; i++) {
