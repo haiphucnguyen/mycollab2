@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -192,9 +193,9 @@ public class ProblemReadViewImpl extends
 			this.setSpacing(true);
 			this.setMargin(new MarginInfo(false, false, false, true));
 
-			Label peopleInfoHeader = new Label(
+			Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
 					AppContext
-							.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE));
+							.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
 			peopleInfoHeader.setStyleName("info-hdr");
 			this.addComponent(peopleInfoHeader);
 

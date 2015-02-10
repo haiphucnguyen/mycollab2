@@ -467,4 +467,40 @@
       color: #FFF;
     }
   }
+
+  .v-icon.bug-severity-critical {
+    color:red;
+  }
+
+  .v-icon.bug-severity-major {
+    color:darkorange;
+  }
+
+  .v-icon.bug-severity-minor {
+    color:gold;
+  }
+
+  .v-icon.bug-severity-trivial {
+    color:lightgrey;
+  }
+
+  .v-icon.bug-priority-blocker {
+    color:red;
+  }
+
+  .v-icon.bug-priority-critical {
+    color:blue;
+  }
+
+  .v-icon.bug-priority-major {
+    color:darkorange;
+  }
+
+  .v-icon.bug-priority-minor {
+    color:gold;
+  }
+
+  .v-icon.bug-priority-trivial {
+    color:lightgrey;
+  }
 }

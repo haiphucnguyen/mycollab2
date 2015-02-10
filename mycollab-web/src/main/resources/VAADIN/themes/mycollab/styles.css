@@ -7496,6 +7496,42 @@ body .mycollab.v-app .v-app-loading {
 	color: #FFF;
 }
 
+.mycollab .v-icon.bug-severity-critical {
+	color: red;
+}
+
+.mycollab .v-icon.bug-severity-major {
+	color: darkorange;
+}
+
+.mycollab .v-icon.bug-severity-minor {
+	color: gold;
+}
+
+.mycollab .v-icon.bug-severity-trivial {
+	color: lightgrey;
+}
+
+.mycollab .v-icon.bug-priority-blocker {
+	color: red;
+}
+
+.mycollab .v-icon.bug-priority-critical {
+	color: blue;
+}
+
+.mycollab .v-icon.bug-priority-major {
+	color: darkorange;
+}
+
+.mycollab .v-icon.bug-priority-minor {
+	color: gold;
+}
+
+.mycollab .v-icon.bug-priority-trivial {
+	color: lightgrey;
+}
+
 .mycollab html {
 	overflow: hidden;
 }
@@ -8482,7 +8518,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .crmContainer .navigator-wrap .basic-info .info-hdr {
-	font-size: 16px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
