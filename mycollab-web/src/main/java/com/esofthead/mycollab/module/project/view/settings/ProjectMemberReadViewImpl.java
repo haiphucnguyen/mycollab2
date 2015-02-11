@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.AbstractProjectPageView;
 import com.esofthead.mycollab.module.project.view.user.ProjectActivityStreamPagedList;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -464,7 +465,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             private Div buildItemValue(ProjectGenericTask task) {
                 String uid = UUID.randomUUID().toString();
                 Div div = new DivLessFormatter();
-                Img image = new Img("", ProjectResources.getResourceLink(task.getType()));
+                Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
                 A itemLink = new A();
                 itemLink.setId("tag" + uid);
                 if (ProjectTypeConstants.TASK.equals(task.getType())
