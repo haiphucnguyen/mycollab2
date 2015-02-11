@@ -64,25 +64,21 @@ public class TaskSearchViewImpl extends AbstractPageView implements
     }
 
     public TaskSearchViewImpl() {
-        this.withMargin(new MarginInfo(false, true, true, true)).withSpacing(
-                true);
+        this.withMargin(new MarginInfo(false, true, true, true));
 
-        MVerticalLayout taskListLayout = new MVerticalLayout();
+        MVerticalLayout taskListLayout = new MVerticalLayout().withSpacing(false);
         with(taskListLayout);
 
         this.taskSearchPanel = new TaskSearchPanel();
         this.generateDisplayTable();
 
-        final MHorizontalLayout header = new MHorizontalLayout()
-                .withSpacing(true)
-                .withMargin(new MarginInfo(true, false, true, false))
-                .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%");
+        final MHorizontalLayout header = new MHorizontalLayout().withStyleName(UIConstants.HEADER_VIEW).withWidth("100%");
 
         headerText = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(), ContentMode.HTML);
         headerText.setSizeUndefined();
         headerText.setStyleName(UIConstants.HEADER_TEXT);
 
-        Button backtoTaskListBtn = new Button(
+        Button backBtn = new Button(
                 AppContext.getMessage(TaskI18nEnum.BUTTON_BACK_TO_DASHBOARD),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -95,12 +91,12 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 
                     }
                 });
-        backtoTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        backtoTaskListBtn.setIcon(FontAwesome.ARROW_LEFT);
+        backBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
-        header.with(headerText, backtoTaskListBtn)
+        header.with(headerText, backBtn)
                 .withAlign(headerText, Alignment.MIDDLE_LEFT)
-                .withAlign(backtoTaskListBtn, Alignment.MIDDLE_RIGHT)
+                .withAlign(backBtn, Alignment.MIDDLE_RIGHT)
                 .expand(headerText);
 
         taskListLayout.with(header, taskSearchPanel, tableItem);
@@ -140,7 +136,7 @@ public class TaskSearchViewImpl extends AbstractPageView implements
 
     @Override
     public void setTitle(String title) {
-        headerText.setValue(title);
+        headerText.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + title);
 
     }
 
