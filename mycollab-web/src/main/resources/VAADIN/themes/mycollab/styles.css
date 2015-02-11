@@ -8290,17 +8290,18 @@ body .mycollab.v-app .v-app-loading {
 	border-radius: 5px;
 }
 
-.mycollab .topNavigation .v-button.notification-button:focus {
-	background: none no-repeat left top #E4E4E4;
-	border-radius: 5px;
-}
-
-.mycollab .topNavigation .v-button.notification-button .v-button-caption, .mycollab .topNavigation .v-button.notification-button:focus .v-button-caption {
+.mycollab .topNavigation .v-button.notification-button .v-button-caption {
 	color: #c31616;
+	padding: 0px;
 }
 
 .mycollab .topNavigation .v-button.notification-button .v-popup-indicator {
 	display: none;
+}
+
+.mycollab .topNavigation .v-button.notification-button .v-icon {
+	font-size: 16px;
+	color: chocolate;
 }
 
 .mycollab .notification-type {

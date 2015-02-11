@@ -25,12 +25,15 @@ import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCo
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
+import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
+import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.web.CustomLayoutExt;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,6 +41,7 @@ import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import java.util.Iterator;
 
@@ -68,7 +72,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
 		AddViewLayout2 mainLayout = new AddViewLayout2(
 				AppContext.getMessage(AdminI18nEnum.VIEW_CUSTOMIZE),
-				MyCollabResource.newResource("icons/24/user/customize.png"));
+                SettingAssetsManager.getAsset(SettingUIConstants.CUSTOMIZATION));
 		mainLayout.setWidth("100%");
 		mainLayout.setStyleName("readview-layout");
 		mainLayout.addStyleName("theme-customize-view");
@@ -92,10 +96,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		mainBody.addComponent(constructTopNavigationBlock());
 		mainBody.addComponent(constructButtonCustomizeBlock());
 
-		HorizontalLayout controlButton = new HorizontalLayout();
-		controlButton.setWidth("100%");
-		controlButton.setMargin(true);
-		controlButton.setSpacing(true);
+		MHorizontalLayout controlButton = new MHorizontalLayout().withMargin(true).withWidth("100%");
 
 		Button saveBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
@@ -109,6 +110,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 										accountTheme));
 					}
 				});
+        saveBtn.setIcon(FontAwesome.SAVE);
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		saveBtn.setEnabled(AppContext
 				.canBeYes(RolePermissionCollections.ACCOUNT_THEME));

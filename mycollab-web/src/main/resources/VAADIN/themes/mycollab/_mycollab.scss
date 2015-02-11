@@ -905,15 +905,16 @@
   .topNavigation .v-button.notification-button {
     background: none no-repeat left top #E4E4E4;
     border-radius: 5px;
-    &:focus {
-      background: none no-repeat left top #E4E4E4;
-      border-radius: 5px;
-    }
-    .v-button-caption, &:focus .v-button-caption {
+    .v-button-caption {
       color: #c31616;
+      padding: 0px;
     }
     .v-popup-indicator {
       display: none;
+    }
+    .v-icon {
+      font-size: 16px;
+      color: chocolate;
     }
   }
 

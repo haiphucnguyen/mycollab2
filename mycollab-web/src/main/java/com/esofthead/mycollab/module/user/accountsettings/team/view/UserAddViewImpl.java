@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.TimeZoneSelectionField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -118,8 +119,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 			String title = (user.getUsername() == null) ? AppContext
 					.getMessage(UserI18nEnum.VIEW_NEW_USER) : user
 					.getDisplayName();
-			final AddViewLayout formAddLayout = new AddViewLayout(title,
-					MyCollabResource.newResource("icons/24/project/user.png"));
+			final AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
 
 			final VerticalLayout layout = new VerticalLayout();
 			final Label organizationHeader = new Label(
