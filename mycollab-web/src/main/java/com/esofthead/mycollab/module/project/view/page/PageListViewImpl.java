@@ -412,9 +412,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
         lastUpdateInfo.addStyleName("last-update-info");
         block.addComponent(lastUpdateInfo);
 
-        HorizontalLayout controlBtns = new HorizontalLayout();
-        controlBtns.setSpacing(true);
-        controlBtns.setStyleName("control-btns");
+        MHorizontalLayout controlBtns = new MHorizontalLayout().withStyleName("control-btns");
         Button editBtn = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                 new Button.ClickListener() {
@@ -553,9 +551,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
 
                     layout.addComponent(this.informationLayout.getLayout());
 
-                    final HorizontalLayout controlsBtn = new HorizontalLayout();
-                    controlsBtn.setSpacing(true);
-                    controlsBtn.setMargin(new MarginInfo(true, true, true,
+                    final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true,
                             false));
                     layout.addComponent(controlsBtn);
 
