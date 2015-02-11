@@ -84,6 +84,15 @@
     }
   }
 
+  .upload-field {
+    .v-upload-immediate .v-button {
+      background-color:#17d61b;
+      .v-button-caption {
+        color:white;
+      }
+    }
+  }
+
   /* End Multifiles Upload */
 
   /* Progress Indicator */

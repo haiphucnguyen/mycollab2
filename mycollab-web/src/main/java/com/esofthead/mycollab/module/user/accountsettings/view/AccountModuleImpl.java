@@ -44,6 +44,7 @@ import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * 
@@ -71,11 +72,8 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 		this.addStyleName("main-content-wrapper");
 		this.addStyleName("accountViewContainer");
 
-		final HorizontalLayout topPanel = new HorizontalLayout();
-		topPanel.setWidth("100%");
-		topPanel.setMargin(true);
-		topPanel.setStyleName("top-panel");
-
+		final MHorizontalLayout topPanel = new MHorizontalLayout().withWidth("100%").withStyleName("top-panel")
+                .withMargin(new MarginInfo(true, true, true, false));
 		this.breadcrumb = ViewManager
 				.getCacheComponent(AccountSettingBreadcrumb.class);
 

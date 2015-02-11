@@ -6729,6 +6729,14 @@ body .mycollab.v-app .v-app-loading {
 	color: black;
 }
 
+.mycollab .upload-field .v-upload-immediate .v-button {
+	background-color: #17d61b;
+}
+
+.mycollab .upload-field .v-upload-immediate .v-button .v-button-caption {
+	color: white;
+}
+
 .mycollab .v-progressbar {
 	width: 100%;
 }
@@ -9025,17 +9033,6 @@ body .mycollab.v-app .v-app-loading {
 	border-color: #CCC;
 	border-width: 0px 1px 0px 0px;
 	background: none;
-}
-
-.mycollab .accountViewContainer .userInfoContainer .avatar-pass-wrapper {
-	border-bottom: 1px solid #CFCFCF;
-	background-color: #E9F2F7;
-}
-
-.mycollab .avatar-pass-wrapper .v-upload .v-button {
-	color: #525252;
-	border-color: #CFCFCF;
-	border-width: 1px;
 }
 
 .mycollab .accountViewContainer .addview-layout-body {
@@ -13643,6 +13640,14 @@ a.pending {
 
 .v-upload-immediate .v-button .v-button-caption {
 	color: black;
+}
+
+.upload-field .v-upload-immediate .v-button {
+	background-color: #17d61b;
+}
+
+.upload-field .v-upload-immediate .v-button .v-button-caption {
+	color: white;
 }
 
 .v-progressbar {

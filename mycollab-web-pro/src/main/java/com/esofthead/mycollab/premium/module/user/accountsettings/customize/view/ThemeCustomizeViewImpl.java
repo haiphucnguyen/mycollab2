@@ -186,6 +186,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		};
 		logoUploadField.setButtonCaption(AppContext
 				.getMessage(SettingCommonI18nEnum.BUTTON_CHANGE_LOGO));
+        logoUploadField.addStyleName("upload-field");
 		logoUploadField.setSizeUndefined();
 		logoUploadField.setFieldType(FieldType.BYTE_ARRAY);
 		logoUploadField.setEnabled(AppContext
