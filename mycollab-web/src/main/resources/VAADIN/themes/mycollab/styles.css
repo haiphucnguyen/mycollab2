@@ -6612,6 +6612,11 @@ body .mycollab.v-app .v-app-loading {
 	font-size: 18px;
 }
 
+.mycollab .v-label.icon-48px .v-icon {
+	font-size: 48px;
+	color: #525252;
+}
+
 .mycollab .v-icon .black {
 	color: black;
 }
