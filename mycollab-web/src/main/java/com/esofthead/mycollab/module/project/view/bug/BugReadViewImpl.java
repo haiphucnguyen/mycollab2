@@ -22,10 +22,7 @@ import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.AttachmentType;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -57,7 +54,9 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -623,15 +622,36 @@ public class BugReadViewImpl extends AbstractPreviewItemComp2<SimpleBug>
                         BugStatus.class);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    String iconHtml = ProjectAssetsUtil.getBugPriorityHtml(beanItem.getPriority());
-                    String priority = AppContext.getMessage(BugPriority.class, beanItem.getPriority());
-                    return new DefaultViewField(iconHtml + " " + priority, ContentMode.HTML);
+                    final Resource iconPriority = new ExternalResource(
+                            ProjectResources
+                                    .getIconResourceLink12ByBugPriority(beanItem
+                                            .getPriority()));
+                    final Image iconEmbedded = new Image(null, iconPriority);
+                    final Label lbPriority = new Label(AppContext.getMessage(
+                            BugPriority.class, beanItem.getPriority()));
+
+                    final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
+                    containerField.addComponentField(iconEmbedded);
+                    containerField.addComponentField(lbPriority);
+                    containerField.getLayout().setExpandRatio(lbPriority, 1.0f);
+                    return containerField;
                 }
             } else if (BugWithBLOBs.Field.severity.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getSeverity())) {
-                    String iconHtml = ProjectAssetsUtil.getBugSeverityHtml(beanItem.getSeverity());
-                    String severity = AppContext.getMessage(BugSeverity.class, beanItem.getSeverity());
-                    return new DefaultViewField(iconHtml + " " + severity, ContentMode.HTML);
+                    final Resource iconPriority = new ExternalResource(
+                            ProjectResources
+                                    .getIconResourceLink12ByBugSeverity(beanItem
+                                            .getSeverity()));
+                    final Image iconEmbedded = new Image();
+                    iconEmbedded.setSource(iconPriority);
+                    final Label lbPriority = new Label(AppContext.getMessage(
+                            BugSeverity.class, beanItem.getSeverity()));
+
+                    final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
+                    containerField.addComponentField(iconEmbedded);
+                    containerField.addComponentField(lbPriority);
+                    containerField.getLayout().setExpandRatio(lbPriority, 1.0f);
+                    return containerField;
                 }
             } else if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getResolution(),

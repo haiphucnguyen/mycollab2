@@ -823,9 +823,6 @@
       font-weight: bold;
       font-size: $font-normal;
       padding: 0 6px 0 3px;
-      /* text-shadow: 1px 1px 0px #6b6b6b;
-      filter: progid:DXImageTransform.Microsoft.Shadow(color=#6B6B6B,
-          direction=45); */
     }
     .subdomain {
       font-weight: bold;
@@ -895,9 +892,36 @@
     background: none;
     border: none;
     .v-button-caption {
-      text-shadow: 1px 1px 0px #6b6b6b;
-      filter: progid:DXImageTransform.Microsoft.Shadow(color='#6B6B6B', direction=45);
       font-weight: bold;
+    }
+    .v-popup-indicator::before {
+      content:'\f0d7';
+      color:white;
+    }
+  }
+
+  /*Notification Button */
+
+  .topNavigation .v-button.notification-button {
+    background: none no-repeat left top #E4E4E4;
+    border-radius: 5px;
+    &:focus {
+      background: none no-repeat left top #E4E4E4;
+      border-radius: 5px;
+    }
+    .v-button-caption, &:focus .v-button-caption {
+      color: #c31616;
+    }
+    .v-popup-indicator {
+      display: none;
+    }
+  }
+
+  .notification-type {
+    text-transform: uppercase;
+    font-weight: bold;
+    &.notification-type-warning {
+      color: #c31616;
     }
   }
 
@@ -5246,33 +5270,6 @@
       height: 26px;
       line-height: 26px;
       padding: 0 20px 0 10px;
-    }
-  }
-
-
-
-  /*Notification Button */
-
-  .topNavigation .v-button.notification-button {
-    background: none no-repeat left top #E4E4E4;
-    border-radius: 5px;
-    &:focus {
-      background: none no-repeat left top #E4E4E4;
-      border-radius: 5px;
-    }
-    .v-button-caption, &:focus .v-button-caption {
-      color: #c31616;
-    }
-    .v-popup-indicator {
-      display: none;
-    }
-  }
-
-  .notification-type {
-    text-transform: uppercase;
-    font-weight: bold;
-    &.notification-type-warning {
-      color: #c31616;
     }
   }
 

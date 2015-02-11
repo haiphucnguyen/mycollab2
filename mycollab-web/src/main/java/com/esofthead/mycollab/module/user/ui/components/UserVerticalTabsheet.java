@@ -16,8 +16,9 @@
  */
 package com.esofthead.mycollab.module.user.ui.components;
 
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
+import com.vaadin.server.Resource;
 import com.vaadin.ui.Component;
 
 /**
@@ -31,33 +32,10 @@ public class UserVerticalTabsheet extends VerticalTabsheet {
 
 	@Override
 	protected void setDefaulButtonIcon(Component btn, Boolean selected) {
-		ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
-		String tabId = btnTabImpl.getTabId();
-		String suffix;
-		if (selected == true)
-			suffix = "_selected";
-		else
-			suffix = "";
+        ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
+        String tabId = btnTabImpl.getTabId();
 
-		switch (tabId) {
-		case "profile":
-			btn.setIcon(MyCollabResource
-					.newResource("icons/22/user/menu_profile" + suffix + ".png"));
-			break;
-		case "users":
-			btn.setIcon(MyCollabResource.newResource("icons/22/user/menu_team"
-					+ suffix + ".png"));
-			break;
-		case "billing":
-			btn.setIcon(MyCollabResource
-					.newResource("icons/22/user/menu_account" + suffix + ".png"));
-			break;
-		case "customize":
-			btn.setIcon(MyCollabResource
-					.newResource("icons/22/user/menu_customize" + suffix
-							+ ".png"));
-			break;
-		default:
-		}
-	}
+        Resource resource = SettingAssetsManager.getAsset(tabId);
+        btn.setIcon(resource);
+    }
 }

@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustom
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
+import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
@@ -72,7 +73,7 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AccountModule accountContainer = (AccountModule) container;
 
-		accountContainer.gotoSubView("customize");
+		accountContainer.gotoSubView(SettingUIConstants.CUSTOMIZATION);
 
 		AbstractPresenter<?> presenter = null;
 		if (data instanceof CustomizeScreenData.ThemeCustomize) {

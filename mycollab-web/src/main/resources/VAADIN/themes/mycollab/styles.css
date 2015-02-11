@@ -7496,42 +7496,6 @@ body .mycollab.v-app .v-app-loading {
 	color: #FFF;
 }
 
-.mycollab .v-icon.bug-severity-critical {
-	color: red;
-}
-
-.mycollab .v-icon.bug-severity-major {
-	color: darkorange;
-}
-
-.mycollab .v-icon.bug-severity-minor {
-	color: gold;
-}
-
-.mycollab .v-icon.bug-severity-trivial {
-	color: lightgrey;
-}
-
-.mycollab .v-icon.bug-priority-blocker {
-	color: red;
-}
-
-.mycollab .v-icon.bug-priority-critical {
-	color: blue;
-}
-
-.mycollab .v-icon.bug-priority-major {
-	color: darkorange;
-}
-
-.mycollab .v-icon.bug-priority-minor {
-	color: gold;
-}
-
-.mycollab .v-icon.bug-priority-trivial {
-	color: lightgrey;
-}
-
 .mycollab html {
 	overflow: hidden;
 }
@@ -8313,9 +8277,39 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .topNavigation .accountMenu .v-button-caption {
-	text-shadow: 1px 1px 0px #6b6b6b;
-	filter: progid:DXImageTransform.Microsoft.Shadow(color='#6B6B6B', direction=45);
 	font-weight: bold;
+}
+
+.mycollab .topNavigation .accountMenu .v-popup-indicator::before {
+	content: "\f0d7";
+	color: white;
+}
+
+.mycollab .topNavigation .v-button.notification-button {
+	background: none no-repeat left top #E4E4E4;
+	border-radius: 5px;
+}
+
+.mycollab .topNavigation .v-button.notification-button:focus {
+	background: none no-repeat left top #E4E4E4;
+	border-radius: 5px;
+}
+
+.mycollab .topNavigation .v-button.notification-button .v-button-caption, .mycollab .topNavigation .v-button.notification-button:focus .v-button-caption {
+	color: #c31616;
+}
+
+.mycollab .topNavigation .v-button.notification-button .v-popup-indicator {
+	display: none;
+}
+
+.mycollab .notification-type {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.mycollab .notification-type.notification-type-warning {
+	color: #c31616;
 }
 
 .mycollab .v-popupbutton-popup.v-popupbutton-popup-topNavPopup {
@@ -12582,33 +12576,6 @@ body .mycollab.v-app .v-app-loading {
 	height: 26px;
 	line-height: 26px;
 	padding: 0 20px 0 10px;
-}
-
-.mycollab .topNavigation .v-button.notification-button {
-	background: none no-repeat left top #E4E4E4;
-	border-radius: 5px;
-}
-
-.mycollab .topNavigation .v-button.notification-button:focus {
-	background: none no-repeat left top #E4E4E4;
-	border-radius: 5px;
-}
-
-.mycollab .topNavigation .v-button.notification-button .v-button-caption, .mycollab .topNavigation .v-button.notification-button:focus .v-button-caption {
-	color: #c31616;
-}
-
-.mycollab .topNavigation .v-button.notification-button .v-popup-indicator {
-	display: none;
-}
-
-.mycollab .notification-type {
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
-.mycollab .notification-type.notification-type-warning {
-	color: #c31616;
 }
 
 .mycollab .verticaltabsheet-fix {
