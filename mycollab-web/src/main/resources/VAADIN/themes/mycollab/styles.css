@@ -6332,32 +6332,6 @@ body .mycollab.v-app .v-app-loading {
 	float: left;
 }
 
-.mycollab .v-button.v-button-round-border {
-	background: url(components/icons/grad-dark-bottom.png) repeat-x left bottom #fcfcfc;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	border: 1px solid #8f8f8f;
-	display: inline-block;
-	color: #222222;
-	font-family: arial;
-	font-size: 13px;
-	font-weight: bold;
-	padding: 3px 13px;
-	text-decoration: none;
-	text-shadow: 0px 1px 0px #ffffff;
-}
-
-.mycollab .v-button.v-button-round-border .v-button-wrap, .mycollab .v-button.v-button-round-border:active .v-button-wrap {
-	border: none;
-	background: none;
-	padding: 3px 13px;
-}
-
-.mycollab .v-button.v-button-round-border:hover {
-	color: #0a58cd;
-}
-
 .mycollab .v-button.select-bg {
 	height: 25px;
 	width: 22px;
@@ -6366,21 +6340,6 @@ body .mycollab.v-app .v-app-loading {
 	border-width: 1px 1px 1px 0px;
 	border-color: #CFCFCF;
 	position: relative;
-}
-
-.mycollab .v-button.select-bg::after {
-	background: url(components/icons/sprites-black.png) no-repeat 0px -9px transparent;
-	content: "";
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	position: absolute;
-	opacity: 0.4;
-}
-
-.mycollab .v-button.select-bg:hover::after {
-	opacity: 0.7;
 }
 
 .mycollab .v-button.select-bg .v-button-wrap, .mycollab .v-button.select-bg:active .v-button-wrap, .mycollab .v-button.select-bg:hover .v-button-wrap {
@@ -7432,6 +7391,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .form-container .v-button-link.v-button-block .v-button-caption {
 	color: white;
+	vertical-align: sub;
 }
 
 .mycollab .task-attached {

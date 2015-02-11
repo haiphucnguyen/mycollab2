@@ -531,31 +531,7 @@
     }
   }
 
-  /* Round border button */
 
-  .v-button.v-button-round-border {
-    background: url("icons/grad-dark-bottom.png") repeat-x left bottom #fcfcfc;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid rgb(143, 143, 143);
-    display: inline-block;
-    color: rgb(34, 34, 34);
-    font-family: arial;
-    font-size: $font-normal;
-    font-weight: bold;
-    padding: 3px 13px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #ffffff;
-    .v-button-wrap, &:active .v-button-wrap {
-      border: none;
-      background: none;
-      padding: 3px 13px;
-    }
-    &:hover {
-      color: rgb(10, 88, 205);
-    }
-  }
 
   /* End round border button */
 
@@ -569,19 +545,6 @@
     border-width: 1px 1px 1px 0px;
     border-color: $border-color;
     position: relative;
-    &::after {
-      background: url('icons/sprites-black.png') no-repeat 0px -9px transparent;
-      content: "";
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      position: absolute;
-      opacity: .4;
-    }
-    &:hover::after {
-      opacity: .7;
-    }
     .v-button-wrap, &:active .v-button-wrap, &:hover .v-button-wrap {
       padding: 0px;
       margin: 0px;
