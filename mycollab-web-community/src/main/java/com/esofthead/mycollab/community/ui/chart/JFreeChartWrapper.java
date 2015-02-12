@@ -16,46 +16,38 @@
  */
 package com.esofthead.mycollab.community.ui.chart;
 
-import java.awt.Rectangle;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
-import java.util.zip.GZIPOutputStream;
+import com.vaadin.server.*;
+import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.ui.Embedded;
+import org.apache.batik.svggen.SVGGraphics2D;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import com.vaadin.server.*;
-import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.batik.svggen.SVGGraphics2DIOException;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.ui.Embedded;
+import java.awt.*;
+import java.io.*;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * A simple JFreeChart wrapper that renders charts in SVG to browser.
- *
+ * <p/>
  * To use this component, you'll need all the common JFreeChart and Batik
  * libraries.
- *
+ * <p/>
  * For MSIE it will fall back to PNG rendering (not that nice when printing).
- *
+ * <p/>
  * Supported sizes are currently just pixels, inches, centimeters (converted to
  * pixels by 96dpi). Set them to wrapper.
- *
+ * <p/>
  * TODO make it support relative sizes (should be possible to do cleanly with
  * SVG)
- *
+ * <p/>
  * TODO when browsers develop SVG could be painted to target instead of
  * registering application resource. This would shorten rendering time and
  * lessen memory consumption on server. This already works ok for webkit
@@ -69,6 +61,8 @@ public class JFreeChartWrapper extends Embedded {
     public enum RenderingMode {
         SVG, PNG, AUTO
     }
+
+    private static final Logger log = LoggerFactory.getLogger(JFreeChartWrapper.class);
 
     // 809x 500 ~g olden ratio
     private static final int DEFAULT_WIDTH = 809;
@@ -98,8 +92,7 @@ public class JFreeChartWrapper extends Embedded {
      * Compress SVG charts in wrapper. It makes sense to put this on if the
      * server does not automatically compress responses.
      *
-     * @param compress
-     * true to enable component level compression, default false
+     * @param compress true to enable component level compression, default false
      */
     public void setGzipCompression(boolean compress) {
         this.gzipEnabled = compress;
@@ -139,12 +132,12 @@ public class JFreeChartWrapper extends Embedded {
      * This method may be used to tune rendering of the chart when using
      * relative sizes. Most commonly you should use just use common methods
      * inherited from {@link Sizeable} interface.
-     * <p>
+     * <p/>
      * Sets the pixel size of the area where the graph is rendered. Most commonly developer may need to fine tune the value when the {@link JFreeChartWrapper} has a relative size.
      *
+     * @param width
      * @see JFreeChartWrapper#getGraphWidth()
      * @see #setSvgAspectRatio(String)
-     * @param width
      */
     public void setGraphWidth(int width) {
         graphWidthInPixels = width;
@@ -154,12 +147,12 @@ public class JFreeChartWrapper extends Embedded {
      * This method may be used to tune rendering of the chart when using
      * relative sizes. Most commonly you should use just use common methods
      * inherited from {@link Sizeable} interface.
-     * <p>
+     * <p/>
      * Sets the pixel size of the area where the graph is rendered. Most commonly developer may need to fine tune the value when the {@link JFreeChartWrapper} has a relative size.
      *
+     * @param height
      * @see JFreeChartWrapper#getGraphHeigt()
      * @see #setSvgAspectRatio(String)
-     * @param height
      */
     public void setGraphHeight(int height) {
         graphHeightInPixels = height;
@@ -250,7 +243,7 @@ public class JFreeChartWrapper extends Embedded {
 
                 ByteArrayInputStream getByteStream() {
                     if (chart != null && bytestream == null) {
-                        int widht = getGraphWidth();
+                        int width = getGraphWidth();
                         int height = getGraphHeight();
 
                         if (mode == RenderingMode.SVG) {
@@ -273,10 +266,10 @@ public class JFreeChartWrapper extends Embedded {
                                     document);
 
                             // draw the chart in the SVG generator
-                            chart.draw(svgGenerator, new Rectangle(widht,
+                            chart.draw(svgGenerator, new Rectangle(width,
                                     height));
                             Element el = svgGenerator.getRoot();
-                            el.setAttributeNS(null, "viewBox", "0 0 " + widht
+                            el.setAttributeNS(null, "viewBox", "0 0 " + width
                                     + " " + height + "");
                             el.setAttributeNS(null, "style",
                                     "width:100%;height:100%;");
@@ -291,7 +284,7 @@ public class JFreeChartWrapper extends Embedded {
                                         baoutputStream) : baoutputStream;
                                 out = new OutputStreamWriter(outputStream,
                                         "UTF-8");
-										/*
+                                        /*
 										 * don't use css, FF3 can'd deal with the result
 										 * perfectly: wrong font sizes
 										 */
@@ -301,25 +294,17 @@ public class JFreeChartWrapper extends Embedded {
                                 outputStream.close();
                                 bytestream = new ByteArrayInputStream(
                                         baoutputStream.toByteArray());
-                            } catch (UnsupportedEncodingException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (SVGGraphics2DIOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                            } catch (Exception e) {
+                                log.error("Error while generating SVG chart", e);
                             }
                         } else {
                             // Draw png to bytestream
                             try {
                                 byte[] bytes = ChartUtilities.encodeAsPNG(chart
-                                        .createBufferedImage(widht, height));
+                                        .createBufferedImage(width, height));
                                 bytestream = new ByteArrayInputStream(bytes);
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                            } catch (Exception e) {
+                                log.error("Error while generating PNG chart", e);
                             }
 
                         }
@@ -344,6 +329,7 @@ public class JFreeChartWrapper extends Embedded {
                         try {
                             return getStreamSource().getStream().available();
                         } catch (IOException e) {
+                            log.warn("Error while get stream info", e);
                             return 0;
                         }
                     } else {
