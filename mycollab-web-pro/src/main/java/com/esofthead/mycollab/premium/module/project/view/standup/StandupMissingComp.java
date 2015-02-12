@@ -1,35 +1,30 @@
 package com.esofthead.mycollab.premium.module.project.view.standup;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.LabelLink;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 
@@ -88,7 +83,7 @@ public class StandupMissingComp extends MVerticalLayout {
 		userLink.setId("tag" + uid);
 		userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
 				CurrentProjectVariables.getProjectId(),
-				user.getAvatarid()));
+				user.getUsername()));
 
 		userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, user.getUsername()));
 

@@ -89,7 +89,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
         previewForm.setWidth("100%");
         previewForm.setStyleName("member-preview-form");
 
-        bottomLayout = new MHorizontalLayout().withSpacing(true).withMargin(new MarginInfo(true, false, true, false))
+        bottomLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%");
 
         this.with(previewForm, bottomLayout);
