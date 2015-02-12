@@ -9125,21 +9125,16 @@ body .mycollab.v-app .v-app-loading {
 	height: 40px;
 }
 
-.mycollab .depotComp.collapsed .header-wrapper {
-	border-width: 1px;
+.mycollab .depotComp .depot-title::before {
+	content: "\f0d7";
+	font-family: FontAwesome;
+	font-size: 16px;
 }
 
-.mycollab .depotComp .depot-title {
-	background: url('icons/16/depot_arrow_down.png') no-repeat left center transparent;
-	cursor: pointer;
-}
-
-.mycollab .depotComp .depot-title .v-verticallayout-margin {
-	padding: 0px;
-}
-
-.mycollab .depotComp.collapsed .depot-title {
-	background: url('icons/16/depot_arrow_right.png') no-repeat left center transparent;
+.mycollab .depotComp.collapsed .depot-title::before {
+	content: "\f0da";
+	font-family: FontAwesome;
+	font-size: 16px;
 }
 
 .mycollab .depotHeader .h2, .mycollab .readview-layout-body .depotHeader .h2, .mycollab .readViewBody .depotHeader .h2, .mycollab .readViewBottomControls .depotHeader .h2 {
@@ -9150,7 +9145,7 @@ body .mycollab.v-app .v-app-loading {
 	line-height: 16px;
 	font-weight: 400;
 	cursor: pointer;
-	padding: 0px 0px 0px 20px;
+	padding: 0px 0px 0px 5px;
 	word-break: normal;
 	word-wrap: break-word;
 	white-space: normal;

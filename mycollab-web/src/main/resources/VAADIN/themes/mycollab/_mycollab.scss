@@ -1743,18 +1743,18 @@
       background: none no-repeat 0 0 $panel-background-color;
       height: 40px;
     }
-    &.collapsed .header-wrapper {
-      border-width: 1px;
-    }
+
     .depot-title {
-      background: url('icons/16/depot_arrow_down.png') no-repeat left center transparent;
-      cursor: pointer;
-      .v-verticallayout-margin {
-        padding: 0px;
+      &::before {
+        content:'\f0d7';
+        font-family: FontAwesome;
+        font-size:16px;
       }
     }
-    &.collapsed .depot-title {
-      background: url('icons/16/depot_arrow_right.png') no-repeat left center transparent;
+    &.collapsed .depot-title::before {
+      content:'\f0da';
+      font-family:FontAwesome;
+      font-size:16px;
     }
   }
 
@@ -1766,7 +1766,7 @@
     line-height: 16px;
     font-weight: 400;
     cursor: pointer;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 5px;
     word-break: normal;
     word-wrap: break-word;
     white-space: normal;
