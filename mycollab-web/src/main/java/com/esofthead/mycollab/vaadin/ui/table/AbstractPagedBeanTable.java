@@ -181,6 +181,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 		return this.currentViewCount;
 	}
 
+
 	@Override
 	public int totalItemsCount() {
 		return this.totalCount;
@@ -229,6 +230,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 				this.currentPage, this.displayNumItems);
 		this.doSearch();
 	}
+
+    public void setDisplayNumItems(int displayNumItems) {
+        this.displayNumItems = displayNumItems;
+    }
 
 	@Override
 	@SuppressWarnings("unchecked")
