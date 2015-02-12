@@ -121,6 +121,7 @@ public class JFreeChartWrapper extends Embedded {
                 setRenderingMode(RenderingMode.SVG);
             }
         }
+        setResource("src", getSource());
     }
 
     @Override
