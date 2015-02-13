@@ -138,9 +138,9 @@ public class DefaultScheduleConfiguration {
     @Bean public SchedulerFactoryBean quartzScheduler() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
 
-        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
-            bean.setDataSource(new DataSourceConfiguration().dataSource());
-        }
+//        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
+//            bean.setDataSource(new DataSourceConfiguration().dataSource());
+//        }
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
         bean.setOverwriteExistingJobs(true);

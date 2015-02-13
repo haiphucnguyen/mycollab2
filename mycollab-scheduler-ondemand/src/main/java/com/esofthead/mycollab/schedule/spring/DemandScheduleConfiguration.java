@@ -53,9 +53,9 @@ public class DemandScheduleConfiguration {
 
     @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
-            bean.setDataSource(new DataSourceConfiguration().dataSource());
-        }
+//        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
+//            bean.setDataSource(new DataSourceConfiguration().dataSource());
+//        }
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
         AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();
