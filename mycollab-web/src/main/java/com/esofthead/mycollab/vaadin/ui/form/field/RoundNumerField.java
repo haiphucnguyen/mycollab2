@@ -29,7 +29,6 @@ public class RoundNumerField extends CustomField<Number> {
     protected Component initContent() {
         final Label label = new Label();
         label.setWidth("100%");
-        label.setContentMode(contentMode);
 
         if (value != null) {
             double d = value.doubleValue();
