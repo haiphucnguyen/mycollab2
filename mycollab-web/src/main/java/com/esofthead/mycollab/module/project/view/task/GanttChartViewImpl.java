@@ -72,8 +72,6 @@ public class GanttChartViewImpl extends AbstractPageView implements
         GanttChartView {
     private static final long serialVersionUID = 1L;
 
-    private List<SimpleTask> taskList;
-
     private Gantt gantt;
     private LinkedHashMap<Step, SimpleTask> stepMap;
     private NativeSelect reso;
@@ -167,11 +165,16 @@ public class GanttChartViewImpl extends AbstractPageView implements
         gantt.setVerticalScrollDelegateTarget(taskTable.getTable());
 
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 1);
         cal.add(Calendar.DATE, -14);
 
         gantt.setStartDate(cal.getTime());
         cal.add(Calendar.DATE, 28);
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
         gantt.setEndDate(cal.getTime());
 
         gantt.addMoveListener(new Gantt.MoveListener() {
@@ -179,25 +182,7 @@ public class GanttChartViewImpl extends AbstractPageView implements
 
             @Override
             public void onGanttMove(MoveEvent event) {
-                SimpleTask task = stepMap.get(event.getStep());
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date());
-
-                GregorianCalendar gc = new GregorianCalendar();
-
-				/* check endate after deadline */
-                gc.setTimeInMillis(event.getEndDate());
-                if (task.getEnddate() != null
-                        && task.getEnddate().after(gc.getTime())) {
-                    task.setEnddate(null);
-                }
-                task.setDeadline(gc.getTime());
-
-                gc.setTimeInMillis(event.getStartDate());
-                task.setStartdate(gc.getTime());
-
-                taskService.updateWithSession(task, AppContext.getUsername());
-                taskTable.setCurrentDataList(stepMap.values());
+                updateTasksInfo(event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -206,27 +191,25 @@ public class GanttChartViewImpl extends AbstractPageView implements
 
             @Override
             public void onGanttResize(ResizeEvent event) {
-                SimpleTask task = stepMap.get(event.getStep());
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(new Date());
-
-                Date gc = DateTimeUtils.getCurrentDateWithoutMS();
-
-				/* check endate after deadline */
-                if (task.getEnddate() != null
-                        && task.getEnddate().after(gc)) {
-                    task.setEnddate(null);
-                }
-                task.setDeadline(gc);
-                task.setStartdate(gc);
-
-                taskService.updateWithSession(task, AppContext.getUsername());
-                taskTable.setCurrentDataList(stepMap.values());
+                updateTasksInfo(event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
         mainLayout.with(taskTable, gantt);
         return mainLayout;
+    }
+
+    private void updateTasksInfo(Step step, long startDate, long endDate) {
+        SimpleTask task = stepMap.get(step);
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(startDate);
+        task.setStartdate(calendar.getTime());
+
+        calendar.setTimeInMillis(endDate);
+        task.setEnddate(calendar.getTime());
+
+        taskService.updateWithSession(task, AppContext.getUsername());
+        taskTable.setCurrentDataList(stepMap.values());
     }
 
     public void displayGanttChart() {
@@ -238,7 +221,8 @@ public class GanttChartViewImpl extends AbstractPageView implements
         TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
                 .getProjectId()));
-        taskList = taskService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer.MAX_VALUE));
+        List<SimpleTask> taskList = taskService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer
+                .MAX_VALUE));
 
         gantt.removeSteps();
         stepMap = new LinkedHashMap<>();
@@ -246,41 +230,49 @@ public class GanttChartViewImpl extends AbstractPageView implements
 		/* Add steps */
         if (!taskList.isEmpty()) {
             for (SimpleTask task : taskList) {
-                Date startDate = null;
-                Date endDate = null;
+                Date startDate = task.getStartdate();
+                Date endDate = task.getEnddate();
 
-				/* Check for date */
-                if (task.getActualstartdate() != null) {
-                    startDate = task.getActualstartdate();
-                } else if (task.getStartdate() != null) {
-                    startDate = task.getStartdate();
-                }
-
-                if (task.getDeadline() != null) {
+                if (endDate == null) {
                     endDate = task.getDeadline();
-                } else if (task.getActualenddate() != null) {
-                    endDate = task.getActualenddate();
                 }
 
-				/* Add row block if both stardate and endate avalable */
-                if ((startDate != null && endDate != null) && (gantt.getStartDate().before(startDate) || gantt.getEndDate().after(startDate))) {
-                    Step step = new Step();
-                    step.setCaption(tooltipGenerate(task));
-                    step.setCaptionMode(Step.CaptionMode.HTML);
-                    step.setStartDate(startDate.getTime());
-                    step.setEndDate(endDate.getTime());
+                if (startDate != null) {
+                    if (startDate.after(gantt.getStartDate())) {
+                        endDate = getMinDate(gantt.getEndDate(), endDate);
+                    } else {
+                        if (endDate == null || endDate.before(gantt.getStartDate())) {
+                            continue;
+                        } else {
+                            startDate = gantt.getStartDate();
+                            endDate = getMinDate(gantt.getEndDate(), endDate);
+                        }
+                    }
+                } else {
+                    if (endDate != null && endDate.after(gantt.getStartDate())) {
+                        startDate = gantt.getStartDate();
+                        endDate = getMinDate(endDate, gantt.getEndDate());
+                    } else {
+                        continue;
+                    }
+                }
+
+                Step step = new Step();
+                step.setCaption(tooltipGenerate(task));
+                step.setCaptionMode(Step.CaptionMode.HTML);
+                step.setStartDate(startDate);
+                step.setEndDate(DateTimeUtils.subtractOrAddDayDuration(endDate, 1));
 
 					/* Add style for row block */
-                    if (task.isCompleted()) {
-                        step.setBackgroundColor("53C540");
-                        step.setStyleName("completed");
-                    } else if (task.isPending()) {
-                        step.setBackgroundColor("e2f852");
-                    } else if (task.isOverdue()) {
-                        step.setBackgroundColor("FC4350");
-                    }
-                    stepMap.put(step, task);
+                if (task.isCompleted()) {
+                    step.setBackgroundColor("53C540");
+                    step.setStyleName("completed");
+                } else if (task.isPending()) {
+                    step.setBackgroundColor("e2f852");
+                } else if (task.isOverdue()) {
+                    step.setBackgroundColor("FC4350");
                 }
+                stepMap.put(step, task);
 
             }
 
@@ -290,7 +282,22 @@ public class GanttChartViewImpl extends AbstractPageView implements
         for (Step key : stepMap.keySet()) {
             gantt.addStep(key);
         }
+    }
 
+    private Date getMinDate(Date... dates) {
+        Date minDate = null;
+        for (Date date : dates) {
+            if (date != null) {
+                if (minDate != null) {
+                    if (minDate.after(date)) {
+                        minDate = date;
+                    }
+                } else {
+                    minDate = date;
+                }
+            }
+        }
+        return minDate;
     }
 
     private String tooltipGenerate(SimpleTask task) {
