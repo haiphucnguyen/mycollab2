@@ -17,49 +17,60 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
-import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.hp.gagawa.java.elements.A;
 import com.vaadin.data.Property;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.Step;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.*;
+import java.util.Calendar;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0
- * 
  */
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent(scope = ViewScope.PROTOTYPE)
 public class GanttChartViewImpl extends AbstractPageView implements
-		GanttChartView {
-	private static final long serialVersionUID = 1L;
+        GanttChartView {
+    private static final long serialVersionUID = 1L;
 
     private List<SimpleTask> taskList;
 
@@ -71,25 +82,75 @@ public class GanttChartViewImpl extends AbstractPageView implements
 
     private final ProjectTaskService taskService;
 
-    private DateFieldExt start;
-    private DateFieldExt end;
-
     public GanttChartViewImpl() {
+        this.withMargin(new MarginInfo(false, true, true, true));
+
+        MHorizontalLayout header = new MHorizontalLayout()
+                .withMargin(new MarginInfo(true, false, true, false))
+                .withStyleName("hdr-view").withWidth("100%");
+        header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        Label headerText = new Label(FontAwesome.BAR_CHART_O.getHtml() + " Gantt chart", ContentMode.HTML);
+        headerText.setStyleName(UIConstants.HEADER_TEXT);
+
+        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(
+                        new TaskListEvent.GotoTaskListScreen(this, null));
+            }
+        });
+        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
+        advanceDisplayBtn.setDescription(AppContext
+                .getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
+
+        Button simpleDisplayBtn = new Button(null, new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+                searchCriteria.setProjectid(new NumberSearchField(
+                        CurrentProjectVariables.getProjectId()));
+                searchCriteria.setStatuses(new SetSearchField<>(new String[]{OptionI18nEnum.StatusI18nEnum.Open
+                        .name()}));
+                TaskFilterParameter taskFilter = new TaskFilterParameter(
+                        searchCriteria, "Task Search");
+                taskFilter.setAdvanceSearch(true);
+                EventBusFactory.getInstance().post(
+                        new TaskEvent.Search(this, taskFilter));
+            }
+        });
+        simpleDisplayBtn.setIcon(FontAwesome.LIST_UL);
+        simpleDisplayBtn.setDescription(AppContext
+                .getMessage(TaskGroupI18nEnum.LIST_VIEW_TOOLTIP));
+
+        Button chartDisplayBtn = new Button();
+        chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
+
+        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        viewButtons.addButton(simpleDisplayBtn);
+        viewButtons.addButton(advanceDisplayBtn);
+        viewButtons.addButton(chartDisplayBtn);
+        viewButtons.setDefaultButton(chartDisplayBtn);
+
+        header.with(headerText, viewButtons)
+                .withAlign(headerText, Alignment.MIDDLE_LEFT).expand(headerText);
+
         taskService = ApplicationContextUtil
                 .getSpringBean(ProjectTaskService.class);
-        constructGanttChart();
-        Panel controls = createControls();
-        this.setStyleName("gantt-view");
-        this.addComponent(controls);
-        HorizontalLayout mainLayout = new HorizontalLayout();
-        mainLayout.setWidth("100%");
-        mainLayout.setStyleName("gantt-wrap");
-        mainLayout.addComponent(taskTable);
-        mainLayout.addComponent(gantt);
-        this.addComponent(mainLayout);
+
+        HorizontalLayout ganttLayout = constructGanttChart();
+
+        MVerticalLayout wrapContent = new MVerticalLayout().withSpacing(false).withMargin(false).withStyleName
+                ("gantt-view").with(createControls(), ganttLayout);
+        this.with(header, wrapContent);
     }
 
-    private void constructGanttChart() {
+    private MHorizontalLayout constructGanttChart() {
+        MHorizontalLayout mainLayout = new MHorizontalLayout().withSpacing(false).withWidth("100%").withStyleName("gantt-wrap");
+
         stepMap = new LinkedHashMap<>();
 
         taskTable = new TaskTableDisplay(Arrays.asList(
@@ -149,24 +210,23 @@ public class GanttChartViewImpl extends AbstractPageView implements
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());
 
-                GregorianCalendar gc = new GregorianCalendar();
+                Date gc = DateTimeUtils.getCurrentDateWithoutMS();
 
 				/* check endate after deadline */
-                gc.setTimeInMillis(event.getEndDate());
-                gc.setTimeInMillis(event.getEndDate());
                 if (task.getEnddate() != null
-                        && task.getEnddate().after(gc.getTime())) {
+                        && task.getEnddate().after(gc)) {
                     task.setEnddate(null);
                 }
-                task.setDeadline(gc.getTime());
-
-                gc.setTimeInMillis(event.getStartDate());
-                task.setStartdate(gc.getTime());
+                task.setDeadline(gc);
+                task.setStartdate(gc);
 
                 taskService.updateWithSession(task, AppContext.getUsername());
                 taskTable.setCurrentDataList(stepMap.values());
             }
         });
+
+        mainLayout.with(taskTable, gantt);
+        return mainLayout;
     }
 
     public void displayGanttChart() {
@@ -175,27 +235,17 @@ public class GanttChartViewImpl extends AbstractPageView implements
 
     @SuppressWarnings("unchecked")
     private void updateStepList() {
-
         TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
                 .getProjectId()));
-        taskList = taskService
-                .findPagableListByCriteria(new SearchRequest<>(
-                        criteria, 0, Integer.MAX_VALUE));
+        taskList = taskService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer.MAX_VALUE));
 
-		/* Clear current Gantt chart */
-        if (stepMap != null) {
-            for (Step key : stepMap.keySet()) {
-                gantt.removeStep(key);
-            }
-            stepMap = new LinkedHashMap<>();
-        }
+        gantt.removeSteps();
+        stepMap = new LinkedHashMap<>();
 
 		/* Add steps */
         if (!taskList.isEmpty()) {
-
             for (SimpleTask task : taskList) {
-
                 Date startDate = null;
                 Date endDate = null;
 
@@ -213,9 +263,7 @@ public class GanttChartViewImpl extends AbstractPageView implements
                 }
 
 				/* Add row block if both stardate and endate avalable */
-                if (startDate != null && endDate != null
-                        && gantt.getStartDate().before(startDate)
-                        && gantt.getEndDate().after(startDate)) {
+                if ((startDate != null && endDate != null) && (gantt.getStartDate().before(startDate) || gantt.getEndDate().after(startDate))) {
                     Step step = new Step();
                     step.setCaption(tooltipGenerate(task));
                     step.setCaptionMode(Step.CaptionMode.HTML);
@@ -226,14 +274,10 @@ public class GanttChartViewImpl extends AbstractPageView implements
                     if (task.isCompleted()) {
                         step.setBackgroundColor("53C540");
                         step.setStyleName("completed");
-                    } else {
-                        if ("Pending".equals(task.getStatus())) {
-                            step.setBackgroundColor("e2f852");
-                        } else if ("Open".equals(task.getStatus())
-                                && endDate.before(new GregorianCalendar()
-                                .getTime())) {
-                            step.setBackgroundColor("FC4350");
-                        }
+                    } else if (task.isPending()) {
+                        step.setBackgroundColor("e2f852");
+                    } else if (task.isOverdue()) {
+                        step.setBackgroundColor("FC4350");
                     }
                     stepMap.put(step, task);
                 }
@@ -243,69 +287,57 @@ public class GanttChartViewImpl extends AbstractPageView implements
             taskTable.setCurrentDataList(stepMap.values());
         }
 
-        if (stepMap != null) {
-            for (Step key : stepMap.keySet()) {
-                gantt.addStep(key);
-            }
+        for (Step key : stepMap.keySet()) {
+            gantt.addStep(key);
         }
 
     }
 
     private String tooltipGenerate(SimpleTask task) {
-        String content;
+        String uid = UUID.randomUUID().toString();
+        DivLessFormatter div = new DivLessFormatter();
+        A itemLink = new A();
+        itemLink.setId("tag" + uid);
+        itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
+                task.getProjectShortname(),
+                task.getProjectid(), ProjectTypeConstants.TASK,
+                task.getTaskkey() + ""));
 
-        // --------------Item hidden div tooltip----------------
-        String randomStrId = UUID.randomUUID().toString();
-        String idDivSeverData = "projectOverViewserverdata" + randomStrId + "";
-        String idToopTipDiv = "projectOverViewtooltip" + randomStrId + "";
-        String idStickyToolTipDiv = "projectOverViewmystickyTooltip"
-                + randomStrId;
-        String idtagA = "projectOverViewtagA" + randomStrId;
+        String arg17 = "'" + uid + "'";
+        String arg18 = "'" + ProjectTypeConstants.TASK + "'";
+        String arg19 = "'" + task.getId() + "'";
+        String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+        String arg21 = "'" + AppContext.getAccountId() + "'";
+        String arg22 = "'" + AppContext.getSiteUrl() + "'";
+        String arg23 = AppContext.getSession().getTimezone();
+        String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
 
-        String arg0 = ProjectResources
-                .getResourceLink(ProjectTypeConstants.TASK);
-        String arg1 = idtagA;
-        String arg2 = ProjectLinkGenerator.generateTaskPreviewLink(
-                task.getTaskkey(), task.getProjectShortname());
-        String arg3 = "'" + randomStrId + "'";
-        String arg4 = "'" + ProjectTypeConstants.TASK + "'";
-        String arg5 = "'" + task.getId() + "'";
-        String arg6 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-        String arg7 = "'" + task.getSaccountid() + "'";
-        String arg8 = "'" + AppContext.getSiteUrl() + "'";
-        String arg9 = AppContext.getSession().getTimezone();
-        String arg10 = "'" + AppContext.getUserLocale().toString() + "'";
-        String arg11 = task.getTaskname();
+        String mouseOverFunc = String.format(
+                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
+                arg20, arg21, arg22, arg23, arg24);
+        itemLink.setAttribute("onmouseover", mouseOverFunc);
+        itemLink.appendText(task.getTaskname());
 
-        String arg12 = idStickyToolTipDiv;
-        String arg13 = idToopTipDiv;
-        String arg14 = idDivSeverData;
-
-        content = AppContext.getMessage(
-                ProjectCommonI18nEnum.TOOLTIP_GANTT_CHART_TITLE, arg0, arg1,
-                arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
-                arg12, arg13, arg14);
-        return content;
+        div.appendChild(itemLink, DivLessFormatter.EMPTY_SPACE(),
+                TooltipHelper.buildDivTooltipEnable(uid));
+        return div.write();
     }
 
     private Panel createControls() {
-
         Panel panel = new Panel();
         panel.setWidth(100, Unit.PERCENTAGE);
 
-        HorizontalLayout controls = new HorizontalLayout();
-        controls.setSpacing(true);
-        controls.setMargin(true);
+        MHorizontalLayout controls = new MHorizontalLayout().withMargin(true);
         panel.setContent(controls);
 
-        start = new DateFieldExt(
+        DateFieldExt start = new DateFieldExt(
                 AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
         start.setValue(gantt.getStartDate());
         start.setResolution(Resolution.DAY);
         start.setImmediate(true);
         start.addValueChangeListener(startDateValueChangeListener);
 
-        end = new DateFieldExt(
+        DateField end = new DateFieldExt(
                 AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
         end.setValue(gantt.getEndDate());
         end.setResolution(Resolution.DAY);
@@ -321,9 +353,7 @@ public class GanttChartViewImpl extends AbstractPageView implements
         reso.setImmediate(true);
         reso.addValueChangeListener(resolutionValueChangeListener);
 
-        controls.addComponent(start);
-        controls.addComponent(end);
-        controls.addComponent(reso);
+        controls.with(start, end, reso);
         panel.setStyleName(UIConstants.THEME_NO_BORDER);
 
         return panel;
@@ -388,10 +418,8 @@ public class GanttChartViewImpl extends AbstractPageView implements
                                 @Override
                                 public void onClose(final ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
-
                                         setResolution(res);
                                         gantt.setResolution(res);
-
                                     }
                                 }
                             });

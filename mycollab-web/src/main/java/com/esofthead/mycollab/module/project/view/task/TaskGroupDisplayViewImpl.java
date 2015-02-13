@@ -45,10 +45,8 @@ import com.esofthead.mycollab.vaadin.events.*;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.server.FileDownloader;
@@ -166,7 +164,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
         header = new MHorizontalLayout()
                 .withMargin(new MarginInfo(true, false, true, false))
-                .withStyleName("hdr-view").withSpacing(true).withWidth("100%");
+                .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         this.taskGroupSelection = new PopupButton(
@@ -326,7 +324,14 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
             @Override
             public void buttonClick(ClickEvent event) {
-                displaySimpleView();
+                TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+                searchCriteria.setProjectid(new NumberSearchField(
+                        CurrentProjectVariables.getProjectId()));
+                searchCriteria.setStatuses(new SetSearchField<>(new String[]{StatusI18nEnum.Open.name()}));
+                TaskFilterParameter taskFilter = new TaskFilterParameter(
+                        searchCriteria, "Task Search");
+                taskFilter.setAdvanceSearch(true);
+                moveToTaskSearch(taskFilter);
             }
         });
         simpleDisplayBtn.setIcon(FontAwesome.LIST_UL);
@@ -515,25 +520,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
         rightColumn.addComponent(unresolvedTaskByPriorityWidget);
         unresolvedTaskByPriorityWidget.setSearchCriteria(searchCriteria);
-    }
-
-    private void displaySimpleView() {
-        this.removeAllComponents();
-
-        final Image icon = new Image(null,
-                MyCollabResource.newResource(WebResourceIds._24_project_task));
-
-        header.with(icon, taskSelection, viewButtons)
-                .withAlign(taskSelection, Alignment.MIDDLE_LEFT)
-                .withAlign(viewButtons, Alignment.MIDDLE_RIGHT)
-                .expand(taskSelection);
-
-        this.addComponent(header);
-        basicSearchView.setMargin(new MarginInfo(false, false, true, false));
-
-        displayActiveTasksOnly();
-        this.addComponent(basicSearchView.getWidget());
-
     }
 
     private void displayAdvancedView() {

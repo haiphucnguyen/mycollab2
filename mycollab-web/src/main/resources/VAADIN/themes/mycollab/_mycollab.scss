@@ -5333,54 +5333,6 @@
     }
   }
 
-  /* Gantt Table */
-
-  .gantt-view {
-    border: 1px solid $border-color;
-  }
-
-  .gantt-wrap {
-    border-top: 1px solid $border-color;
-  }
-
-  .gantt-table {
-    .v-table-cell-wrapper a {
-      word-wrap: normal;
-      white-space: nowrap;
-      display: inline-block;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      width: 100%;
-      padding-left: 19px;
-      box-sizing: border-box;
-      margin-left: -19px;
-    }
-    .v-table-header-wrap {
-      border-width: 0px 1px 1px 0px;
-    }
-    &.list-view {
-      .v-table-header td, .v-table-header-wrap {
-        height: 44px;
-      }
-      .v-table-header {
-        .v-table-resizer {
-          height: 44px;
-        }
-        .v-table-caption-container {
-          line-height: 42px;
-          font-size: $font-small;
-        }
-      }
-    }
-    .v-table-body-wrapper.v-table-body {
-      border-width: 0px 1px 0px 0px;
-    }
-  }
-
-  .gantt-container {
-    height: 100% !important;
-  }
-
   /* CRM toolbar quick add button */
 
   .crm-toolbar .quickadd-btn .v-button-caption {
