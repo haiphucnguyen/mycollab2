@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>4.5.5</version>
+            <version>5.0.0</version>
         </dependency>
 
         <dependency>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-jetty-session-premium</artifactId>
-            <version>4.5.5</version>
+            <version>5.0.0</version>
         </dependency>
 
         <dependency>
