@@ -534,7 +534,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_NEW));
     }
 
-    public void gotoTaskFilter() {
+    public void gotoTaskSearch() {
         this.select(0);
         this.addLink(new Button(
                 AppContext.getMessage(BreadcrumbI18nEnum.TASKS),

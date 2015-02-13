@@ -76,9 +76,6 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
         } else if (data instanceof TaskGroupScreenData.GotoGanttChartView) {
             presenter = PresenterResolver
                     .getPresenter(GanttChartViewPresenter.class);
-        } else if (data instanceof TaskScreenData.Filter) {
-            presenter = PresenterResolver
-                    .getPresenter(FilterTaskPresenter.class);
         } else if (data instanceof TaskScreenData.Search) {
             presenter = PresenterResolver
                     .getPresenter(TaskSearchPresenter.class);
