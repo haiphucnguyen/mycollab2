@@ -13,16 +13,11 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.RichTextArea;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 
@@ -39,9 +34,8 @@ public class TimeTrackingEditViewWindow extends Window implements
 	private RichTextArea descArea;
 	private TimeTrackingListView parentView;
 	private ProjectGenericTask selectionTask;
-	private HorizontalLayout taskLayout;
+	private MHorizontalLayout taskLayout;
 	private DateFieldExt dateField;
-	private TextField timeField;
 	private SimpleItemTimeLogging item;
 	private ObjectProperty<Double> property;
 
@@ -59,7 +53,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 		dateField = new DateFieldExt("Select date:", this.item.getLogforday());
 
 		property = new ObjectProperty<>(item.getLogvalue());
-		timeField = new TextField("Hours:", property);
+		TextField timeField = new TextField("Hours:", property);
 
 		projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
 		projectMemberSelectionBox.setValue(this.item.getLoguser());
@@ -69,39 +63,31 @@ public class TimeTrackingEditViewWindow extends Window implements
 		isBillableCheckBox = new CheckBox();
 		isBillableCheckBox.setValue(this.item.getIsbillable());
 
-		VerticalLayout content = new VerticalLayout();
-		content.setSpacing(true);
-		content.setMargin(true);
 
-		HorizontalLayout isBillableBox = new HorizontalLayout();
-		isBillableBox.setSpacing(true);
+
+		MHorizontalLayout isBillableBox = new MHorizontalLayout();
 		isBillableBox.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
 		Label billableTitle = new Label(
 				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
 		isBillableBox.addComponent(billableTitle);
 		isBillableBox.addComponent(isBillableCheckBox);
 
-		HorizontalLayout grid = new HorizontalLayout();
-		grid.setSpacing(true);
-		grid.addComponent(projectMemberSelectionBox);
-		grid.addComponent(dateField);
-		grid.addComponent(timeField);
-		grid.addComponent(isBillableBox);
+		MHorizontalLayout grid = new MHorizontalLayout();
+		grid.with(projectMemberSelectionBox, dateField, timeField, isBillableBox);
 
+        MVerticalLayout content = new MVerticalLayout();
 		content.addComponent(grid);
 
-		Label descriptionLbl = new Label(
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
-		content.addComponent(descriptionLbl);
+		content.addComponent(new Label(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
 
 		descArea = new RichTextArea();
 		descArea.setValue(this.item.getNote());
 		descArea.setWidth("100%");
 		content.addComponent(descArea);
+
 		HorizontalLayout footer = new HorizontalLayout();
-		taskLayout = new HorizontalLayout();
+		taskLayout = new MHorizontalLayout();
 		taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		taskLayout.setSpacing(true);
 		createLinkTaskButton();
 
 		if (this.item.getType() != null && this.item.getTypeid() != null) {
@@ -117,8 +103,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 		footer.addComponent(taskLayout);
 
-		HorizontalLayout controlsLayout = new HorizontalLayout();
-		controlsLayout.setSpacing(true);
+		MHorizontalLayout controlsLayout = new MHorizontalLayout();
 		
 		Button cancelBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
@@ -131,7 +116,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 					}
 				});
 		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		controlsLayout.addComponent(cancelBtn);
+
 		
 		Button saveBtn = new Button(
 				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
@@ -144,8 +129,10 @@ public class TimeTrackingEditViewWindow extends Window implements
 						TimeTrackingEditViewWindow.this.close();
 					}
 				});
+        saveBtn.setIcon(FontAwesome.SAVE);
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		controlsLayout.addComponent(saveBtn);
+
+		controlsLayout.with(saveBtn, cancelBtn);
 
 		footer.addComponent(controlsLayout);
 		footer.setSizeFull();
@@ -176,14 +163,13 @@ public class TimeTrackingEditViewWindow extends Window implements
 						}
 					});
 			detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            detachTaskBtn.setIcon(FontAwesome.UNLINK);
 			taskLayout.addComponent(detachTaskBtn);
 
-			Label attachTaskBtn = new Label(
-					StringUtils.trim(taskName, 40, true));
+			Label attachTaskBtn = new Label(StringUtils.trim(taskName, 40, true));
 
 			attachTaskBtn.addStyleName("task-attached");
 			attachTaskBtn.setWidth("300px");
-
 			attachTaskBtn
 					.setDescription(new ProjectGenericTaskTooltipGenerator(
 							this.selectionTask.getType(), this.selectionTask
@@ -215,7 +201,6 @@ public class TimeTrackingEditViewWindow extends Window implements
 	}
 
 	private void saveTimeLoggingItems() {
-
 		SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox
 				.getValue();
 		item.setCreateduser(AppContext.getUsername());

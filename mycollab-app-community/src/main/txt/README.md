@@ -45,9 +45,10 @@ Version 5.0.0
 -----------------------------
 **Library Upgrades**
 
-* Upgrade Vaadin to 7.3.9
+* Upgrade Vaadin to 7.3.10
 * Upgrade Spring frameworks to 4.1.4.RELEASE
 * Upgrade several Vaadin addons
+* Upgrade several libraries
 
 **Improvements**
 

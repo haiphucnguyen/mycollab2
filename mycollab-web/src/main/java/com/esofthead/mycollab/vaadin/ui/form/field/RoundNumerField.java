@@ -1,10 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author MyCollab Ltd.
@@ -12,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class RoundNumerField extends CustomField<Number> {
     private Number value;
-    private ContentMode contentMode;
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +29,8 @@ public class RoundNumerField extends CustomField<Number> {
 
         if (value != null) {
             double d = value.doubleValue();
-            d = Math.round(d*100)/100;
+            d = Math.round(d*100);
+            d = d/100;
             label.setValue(d + "");
         } else {
             label.setValue("");
