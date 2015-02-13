@@ -453,7 +453,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements
 
             @Override
             public void buttonClick(final ClickEvent event) {
-
                 TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
                 searchCriteria.setProjectid(new NumberSearchField(
                         CurrentProjectVariables.getProjectId()));

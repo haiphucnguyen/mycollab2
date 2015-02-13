@@ -72,12 +72,8 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 		this.setMargin(new MarginInfo(false, true, true, true));
 
 		final MHorizontalLayout header = new MHorizontalLayout()
-				.withSpacing(true)
 				.withMargin(new MarginInfo(true, false, true, false))
 				.withStyleName(UIConstants.HEADER_VIEW).withWidth("100%");
-
-		Image titleIcon = new Image(null,
-				MyCollabResource.newResource(WebResourceIds._24_project_task));
 
 		headerText = new Label();
 		headerText.setSizeUndefined();
@@ -98,16 +94,14 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 				});
 		backtoTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
-		header.with(titleIcon, headerText, backtoTaskListBtn)
-				.withAlign(titleIcon, Alignment.TOP_LEFT)
+		header.with(headerText, backtoTaskListBtn)
 				.withAlign(headerText, Alignment.MIDDLE_LEFT)
 				.withAlign(backtoTaskListBtn, Alignment.MIDDLE_RIGHT)
 				.expand(headerText);
 
 		this.addComponent(header);
 
-		MHorizontalLayout contentLayout = new MHorizontalLayout().withWidth(
-				"100%").withSpacing(true);
+		MHorizontalLayout contentLayout = new MHorizontalLayout().withWidth("100%");
 		this.addComponent(contentLayout);
 
 		this.taskTableDisplay = new TaskTableDisplay(
@@ -154,7 +148,7 @@ public class FilterTaskViewImpl extends AbstractPageView implements
 		TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
 		searchCriteria.setProjectid(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		searchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+		searchCriteria.setStatuses(new SetSearchField<>(SearchField.AND,
 				new String[] { StatusI18nEnum.Open.name() }));
 
 		unresolvedTaskByAssigneeWidget.setSearchCriteria(searchCriteria);
