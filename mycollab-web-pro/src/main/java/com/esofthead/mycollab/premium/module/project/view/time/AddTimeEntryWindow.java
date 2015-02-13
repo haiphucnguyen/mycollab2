@@ -2,12 +2,15 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
@@ -48,7 +51,11 @@ public class AddTimeEntryWindow extends Window implements
 	private ProjectGenericTask selectionTask;
 	private HorizontalLayout taskLayout;
 
+    private ItemTimeLoggingService itemTimeLoggingService;
+
 	public AddTimeEntryWindow(TimeTrackingListView view) {
+        itemTimeLoggingService = ApplicationContextUtil
+                .getSpringBean(ItemTimeLoggingService.class);
 		this.setModal(true);
 		this.setResizable(false);
 		this.parentView = view;
@@ -284,8 +291,7 @@ public class AddTimeEntryWindow extends Window implements
 
 		List<ItemTimeLogging> timeLoggings = new ArrayList<>();
 
-		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar,
-				user);
+		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar, user);
 		if (timeLogging != null) {
 			timeLoggings.add(buildItemTimeLogging("Monday", calendar, user));
 		}
@@ -326,12 +332,24 @@ public class AddTimeEntryWindow extends Window implements
 			timeLoggings.add(timeLogging);
 		}
 
-		ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
-				.getSpringBean(ItemTimeLoggingService.class);
 		itemTimeLoggingService.batchSaveTimeLogging(timeLoggings,
 				AppContext.getAccountId());
+
+        updateProjectTimeLogging();
 		parentView.refresh();
 	}
+
+    private void updateProjectTimeLogging() {
+        ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        searchCriteria.setIsBillable(new BooleanSearchField(true));
+        double totalBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
+
+        searchCriteria.setIsBillable(new BooleanSearchField(false));
+        double totalNonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
+        CurrentProjectVariables.getProject().setTotalBillableHours(totalBillableHours);
+        CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);
+    }
 
 	private ItemTimeLogging buildItemTimeLogging(String headerId,
 			Calendar calendar, SimpleProjectMember logForMember) {
