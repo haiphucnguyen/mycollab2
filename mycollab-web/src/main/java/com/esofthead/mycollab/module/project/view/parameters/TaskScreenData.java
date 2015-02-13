@@ -61,6 +61,9 @@ public class TaskScreenData {
 	}
 	
 	
-	
-	
+	public static class GanttChart extends ScreenData {
+        public GanttChart() {
+            super(null);
+        }
+    }
 }

@@ -65,4 +65,12 @@ public class TaskEvent {
 			super(source, data);
 		}
 	}
+
+    public static class GotoGanttChart extends ApplicationEvent {
+        private static final long serialVersionUID = 1L;
+
+        public GotoGanttChart(Object source, Object data) {
+            super(source, data);
+        }
+    }
 }

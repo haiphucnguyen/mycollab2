@@ -270,6 +270,17 @@ public class ProjectController extends AbstractController {
 			}
 		});
 
+        this.register(new ApplicationEventListener<TaskEvent.GotoGanttChart>() {
+            private static final long serialVersionUID = 1L;
+
+            @Subscribe
+            @Override
+            public void handle(TaskEvent.GotoGanttChart event) {
+                TaskScreenData.GanttChart data = new TaskScreenData.GanttChart();
+                projectView.gotoTaskList(data);
+            }
+        });
+
 		this.register(new ApplicationEventListener<TaskEvent.Search>() {
 			private static final long serialVersionUID = 1L;
 

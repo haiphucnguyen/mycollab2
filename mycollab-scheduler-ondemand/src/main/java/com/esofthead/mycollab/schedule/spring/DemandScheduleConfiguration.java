@@ -25,7 +25,6 @@ public class DemandScheduleConfiguration {
     public JobDetailFactoryBean sendCountUserLoginByDateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(SendingCountUserLoginByDateJob.class);
-        bean.setDurability(true);
         return bean;
     }
 
@@ -39,7 +38,6 @@ public class DemandScheduleConfiguration {
     @Bean public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(BillingSendingNotificationJob.class);
-        bean.setDurability(true);
         return bean;
     }
 

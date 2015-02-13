@@ -16,34 +16,39 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import org.tltv.gantt.Gantt;
-import org.tltv.gantt.Gantt.MoveEvent;
-import org.tltv.gantt.Gantt.ResizeEvent;
-import org.tltv.gantt.client.shared.Step;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.data.Property;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
-import com.vaadin.ui.TreeTable;
+import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
+import org.tltv.gantt.Gantt;
+import org.tltv.gantt.Gantt.MoveEvent;
+import org.tltv.gantt.Gantt.ResizeEvent;
+import org.tltv.gantt.client.shared.Step;
+import org.vaadin.dialogs.ConfirmDialog;
+
+import java.util.*;
 
 /**
  * 
@@ -56,135 +61,352 @@ public class GanttChartViewImpl extends AbstractPageView implements
 		GanttChartView {
 	private static final long serialVersionUID = 1L;
 
-	private TreeTable taskTree;
-	private Gantt gantt;
+    private List<SimpleTask> taskList;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void displayGanttChart() {
-		this.removeAllComponents();
-		HorizontalLayout container = new HorizontalLayout();
-		container.setSizeFull();
-		this.addComponent(container);
+    private Gantt gantt;
+    private LinkedHashMap<Step, SimpleTask> stepMap;
+    private NativeSelect reso;
 
-		ProjectTaskListService taskListService = ApplicationContextUtil
-				.getSpringBean(ProjectTaskListService.class);
-		TaskListSearchCriteria searchCriteria = new TaskListSearchCriteria();
-		searchCriteria.setProjectId(new NumberSearchField(
-				CurrentProjectVariables.getProjectId()));
-		List<SimpleTaskList> taskList = taskListService
-				.findPagableListByCriteria(new SearchRequest<TaskListSearchCriteria>(
-						searchCriteria, 0, Integer.MAX_VALUE));
+    private TaskTableDisplay taskTable;
 
-		taskTree = new TreeTable();
-		container.addComponent(taskTree);
+    private final ProjectTaskService taskService;
 
-		taskTree.addContainerProperty(
-				AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME),
-				String.class, null);
-		taskTree.addContainerProperty(
-				AppContext.getMessage(TaskI18nEnum.FORM_START_DATE),
-				Date.class, null);
-		taskTree.addContainerProperty(
-				AppContext.getMessage(TaskI18nEnum.FORM_END_DATE), Date.class,
-				null);
-		taskTree.addContainerProperty(
-				AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE),
-				String.class, null);
-		taskTree.setSizeFull();
+    private DateFieldExt start;
+    private DateFieldExt end;
 
-		taskTree.addGeneratedColumn(
-				AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME),
-				new ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+    public GanttChartViewImpl() {
+        taskService = ApplicationContextUtil
+                .getSpringBean(ProjectTaskService.class);
+        constructGanttChart();
+        Panel controls = createControls();
+        this.setStyleName("gantt-view");
+        this.addComponent(controls);
+        HorizontalLayout mainLayout = new HorizontalLayout();
+        mainLayout.setWidth("100%");
+        mainLayout.setStyleName("gantt-wrap");
+        mainLayout.addComponent(taskTable);
+        mainLayout.addComponent(gantt);
+        this.addComponent(mainLayout);
+    }
 
-					@Override
-					public Object generateCell(Table source, Object itemId,
-							Object columnId) {
-						return null;
-					}
-				});
-		container.addComponent(taskTree);
+    private void constructGanttChart() {
+        stepMap = new LinkedHashMap<>();
 
-		gantt = new Gantt();
-		gantt.setWidth(100, Unit.PERCENTAGE);
-		gantt.setHeight(100, Unit.PERCENTAGE);
-		gantt.setResizableSteps(true);
-		gantt.setMovableSteps(true);
-		container.addComponent(gantt);
+        taskTable = new TaskTableDisplay(Arrays.asList(
+                TaskTableFieldDef.taskname, TaskTableFieldDef.startdate,
+                TaskTableFieldDef.duedate, TaskTableFieldDef.assignee));
+        taskTable.setWidth("100%");
+        taskTable.setHeightUndefined();
+        taskTable.addStyleName("gantt-table");
 
-		Calendar cal = Calendar.getInstance();
-		Date projectStartDate = cal.getTime(), projectEndDate = cal.getTime();
+        gantt = new Gantt();
+        gantt.setWidth(100, Unit.PERCENTAGE);
+        gantt.setResizableSteps(true);
+        gantt.setMovableSteps(true);
+        gantt.setVerticalScrollDelegateTarget(taskTable.getTable());
 
-		for (SimpleTaskList subTaskList : taskList) {
-			List<SimpleTask> subTasks = subTaskList.getSubTasks();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, -14);
 
-			// Add parent task for task list
-			Object parentId = taskTree.addItem(
-					new Object[] { subTaskList.getName(),
-							subTaskList.getStartDate(),
-							subTaskList.getEndDate(),
-							subTaskList.getOwnerFullName() }, subTaskList);
+        gantt.setStartDate(cal.getTime());
+        cal.add(Calendar.DATE, 28);
+        gantt.setEndDate(cal.getTime());
 
-			Step parentStep = new Step(subTaskList.getName());
-			parentStep.setStartDate(subTaskList.getStartDate().getTime());
-			parentStep.setEndDate(subTaskList.getEndDate().getTime());
-			gantt.addStep(parentStep);
+        gantt.addMoveListener(new Gantt.MoveListener() {
+            private static final long serialVersionUID = 1L;
 
-			for (SimpleTask subTask : subTasks) {
-				if (subTask.getStartdate().before(projectStartDate)) {
-					projectStartDate = subTask.getStartdate();
-				}
+            @Override
+            public void onGanttMove(MoveEvent event) {
+                SimpleTask task = stepMap.get(event.getStep());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date());
 
-				if (subTask.getEnddate().after(projectEndDate)) {
-					projectEndDate = subTask.getEnddate();
-				}
+                GregorianCalendar gc = new GregorianCalendar();
 
-				cal.setTime(subTask.getStartdate());
-				Step step = new Step(subTask.getTaskname());
-				step.setStartDate(cal.getTime().getTime());
-				cal.setTime(subTask.getEnddate());
-				step.setEndDate(cal.getTime().getTime());
-				gantt.addStep(step);
+				/* check endate after deadline */
+                gc.setTimeInMillis(event.getEndDate());
+                if (task.getEnddate() != null
+                        && task.getEnddate().after(gc.getTime())) {
+                    task.setEnddate(null);
+                }
+                task.setDeadline(gc.getTime());
 
-				Object childItem = taskTree.addItem(
-						new Object[] { subTask.getTaskname(),
-								subTask.getStartdate(), subTask.getEnddate(),
-								subTask.getAssignUserFullName() }, subTask);
-				taskTree.setParent(childItem, parentId);
-			}
-		}
+                gc.setTimeInMillis(event.getStartDate());
+                task.setStartdate(gc.getTime());
 
-		gantt.setStartDate(projectStartDate);
-		gantt.setEndDate(projectEndDate);
+                taskService.updateWithSession(task, AppContext.getUsername());
+                taskTable.setCurrentDataList(stepMap.values());
+            }
+        });
 
-		gantt.addClickListener(new Gantt.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        gantt.addResizeListener(new Gantt.ResizeListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void onGanttClick(org.tltv.gantt.Gantt.ClickEvent event) {
-				Notification.show("Clicked" + event.getStep().getCaption());
-			}
-		});
+            @Override
+            public void onGanttResize(ResizeEvent event) {
+                SimpleTask task = stepMap.get(event.getStep());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(new Date());
 
-		gantt.addMoveListener(new Gantt.MoveListener() {
-			private static final long serialVersionUID = 1L;
+                GregorianCalendar gc = new GregorianCalendar();
 
-			@Override
-			public void onGanttMove(MoveEvent event) {
-				Notification.show("Moved " + event.getStep().getCaption());
-			}
-		});
+				/* check endate after deadline */
+                gc.setTimeInMillis(event.getEndDate());
+                gc.setTimeInMillis(event.getEndDate());
+                if (task.getEnddate() != null
+                        && task.getEnddate().after(gc.getTime())) {
+                    task.setEnddate(null);
+                }
+                task.setDeadline(gc.getTime());
 
-		gantt.addResizeListener(new Gantt.ResizeListener() {
-			private static final long serialVersionUID = 1L;
+                gc.setTimeInMillis(event.getStartDate());
+                task.setStartdate(gc.getTime());
 
-			@Override
-			public void onGanttResize(ResizeEvent event) {
-				Notification.show("Resized " + event.getStep().getCaption());
-			}
-		});
+                taskService.updateWithSession(task, AppContext.getUsername());
+                taskTable.setCurrentDataList(stepMap.values());
+            }
+        });
+    }
 
-	}
+    public void displayGanttChart() {
+        updateStepList();
+    }
 
+    @SuppressWarnings("unchecked")
+    private void updateStepList() {
+
+        TaskSearchCriteria criteria = new TaskSearchCriteria();
+        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
+                .getProjectId()));
+        taskList = taskService
+                .findPagableListByCriteria(new SearchRequest<>(
+                        criteria, 0, Integer.MAX_VALUE));
+
+		/* Clear current Gantt chart */
+        if (stepMap != null) {
+            for (Step key : stepMap.keySet()) {
+                gantt.removeStep(key);
+            }
+            stepMap = new LinkedHashMap<>();
+        }
+
+		/* Add steps */
+        if (!taskList.isEmpty()) {
+
+            for (SimpleTask task : taskList) {
+
+                Date startDate = null;
+                Date endDate = null;
+
+				/* Check for date */
+                if (task.getActualstartdate() != null) {
+                    startDate = task.getActualstartdate();
+                } else if (task.getStartdate() != null) {
+                    startDate = task.getStartdate();
+                }
+
+                if (task.getDeadline() != null) {
+                    endDate = task.getDeadline();
+                } else if (task.getActualenddate() != null) {
+                    endDate = task.getActualenddate();
+                }
+
+				/* Add row block if both stardate and endate avalable */
+                if (startDate != null && endDate != null
+                        && gantt.getStartDate().before(startDate)
+                        && gantt.getEndDate().after(startDate)) {
+                    Step step = new Step();
+                    step.setCaption(tooltipGenerate(task));
+                    step.setCaptionMode(Step.CaptionMode.HTML);
+                    step.setStartDate(startDate.getTime());
+                    step.setEndDate(endDate.getTime());
+
+					/* Add style for row block */
+                    if (task.isCompleted()) {
+                        step.setBackgroundColor("53C540");
+                        step.setStyleName("completed");
+                    } else {
+                        if ("Pending".equals(task.getStatus())) {
+                            step.setBackgroundColor("e2f852");
+                        } else if ("Open".equals(task.getStatus())
+                                && endDate.before(new GregorianCalendar()
+                                .getTime())) {
+                            step.setBackgroundColor("FC4350");
+                        }
+                    }
+                    stepMap.put(step, task);
+                }
+
+            }
+
+            taskTable.setCurrentDataList(stepMap.values());
+        }
+
+        if (stepMap != null) {
+            for (Step key : stepMap.keySet()) {
+                gantt.addStep(key);
+            }
+        }
+
+    }
+
+    private String tooltipGenerate(SimpleTask task) {
+        String content;
+
+        // --------------Item hidden div tooltip----------------
+        String randomStrId = UUID.randomUUID().toString();
+        String idDivSeverData = "projectOverViewserverdata" + randomStrId + "";
+        String idToopTipDiv = "projectOverViewtooltip" + randomStrId + "";
+        String idStickyToolTipDiv = "projectOverViewmystickyTooltip"
+                + randomStrId;
+        String idtagA = "projectOverViewtagA" + randomStrId;
+
+        String arg0 = ProjectResources
+                .getResourceLink(ProjectTypeConstants.TASK);
+        String arg1 = idtagA;
+        String arg2 = ProjectLinkGenerator.generateTaskPreviewLink(
+                task.getTaskkey(), task.getProjectShortname());
+        String arg3 = "'" + randomStrId + "'";
+        String arg4 = "'" + ProjectTypeConstants.TASK + "'";
+        String arg5 = "'" + task.getId() + "'";
+        String arg6 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+        String arg7 = "'" + task.getSaccountid() + "'";
+        String arg8 = "'" + AppContext.getSiteUrl() + "'";
+        String arg9 = AppContext.getSession().getTimezone();
+        String arg10 = "'" + AppContext.getUserLocale().toString() + "'";
+        String arg11 = task.getTaskname();
+
+        String arg12 = idStickyToolTipDiv;
+        String arg13 = idToopTipDiv;
+        String arg14 = idDivSeverData;
+
+        content = AppContext.getMessage(
+                ProjectCommonI18nEnum.TOOLTIP_GANTT_CHART_TITLE, arg0, arg1,
+                arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11,
+                arg12, arg13, arg14);
+        return content;
+    }
+
+    private Panel createControls() {
+
+        Panel panel = new Panel();
+        panel.setWidth(100, Unit.PERCENTAGE);
+
+        HorizontalLayout controls = new HorizontalLayout();
+        controls.setSpacing(true);
+        controls.setMargin(true);
+        panel.setContent(controls);
+
+        start = new DateFieldExt(
+                AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
+        start.setValue(gantt.getStartDate());
+        start.setResolution(Resolution.DAY);
+        start.setImmediate(true);
+        start.addValueChangeListener(startDateValueChangeListener);
+
+        end = new DateFieldExt(
+                AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
+        end.setValue(gantt.getEndDate());
+        end.setResolution(Resolution.DAY);
+        end.setImmediate(true);
+        end.addValueChangeListener(endDateValueChangeListener);
+
+        reso = new NativeSelect("Resolution");
+        reso.setNullSelectionAllowed(false);
+        reso.addItem(org.tltv.gantt.client.shared.Resolution.Hour);
+        reso.addItem(org.tltv.gantt.client.shared.Resolution.Day);
+        reso.addItem(org.tltv.gantt.client.shared.Resolution.Week);
+        reso.setValue(gantt.getResolution());
+        reso.setImmediate(true);
+        reso.addValueChangeListener(resolutionValueChangeListener);
+
+        controls.addComponent(start);
+        controls.addComponent(end);
+        controls.addComponent(reso);
+        panel.setStyleName(UIConstants.THEME_NO_BORDER);
+
+        return panel;
+    }
+
+    private Property.ValueChangeListener startDateValueChangeListener = new Property.ValueChangeListener() {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void valueChange(Property.ValueChangeEvent event) {
+            gantt.setStartDate((Date) event.getProperty().getValue());
+            updateStepList();
+        }
+    };
+
+    private Property.ValueChangeListener endDateValueChangeListener = new Property.ValueChangeListener() {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void valueChange(Property.ValueChangeEvent event) {
+            gantt.setEndDate((Date) event.getProperty().getValue());
+            updateStepList();
+        }
+    };
+
+    private Property.ValueChangeListener resolutionValueChangeListener = new Property.ValueChangeListener() {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void valueChange(Property.ValueChangeEvent event) {
+            org.tltv.gantt.client.shared.Resolution res = (org.tltv.gantt.client.shared.Resolution) event
+                    .getProperty().getValue();
+            if (validateResolutionChange(res)) {
+                gantt.setResolution(res);
+            }
+        }
+    };
+
+    private boolean validateResolutionChange(
+            final org.tltv.gantt.client.shared.Resolution res) {
+        long max = 4 * 7 * 24 * 60 * 60000L;
+        if (res == org.tltv.gantt.client.shared.Resolution.Hour
+                && (gantt.getEndDate().getTime() - gantt.getStartDate()
+                .getTime()) > max) {
+
+            // revert to previous resolution
+            setResolution(gantt.getResolution());
+
+            // make user to confirm hour resolution, if the timeline range is
+            // more than one week long.
+
+            ConfirmDialogExt
+                    .show(UI.getCurrent(),
+                            AppContext
+                                    .getMessage(GenericI18Enum.WINDOW_WARNING_TITLE),
+                            "Timeline range is a quite long for hour resolution. Rendering may be slow. Continue anyway?",
+                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(final ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+
+                                        setResolution(res);
+                                        gantt.setResolution(res);
+
+                                    }
+                                }
+                            });
+            return false;
+        }
+        return true;
+    }
+
+    private void setResolution(
+            org.tltv.gantt.client.shared.Resolution resolution) {
+        reso.removeValueChangeListener(resolutionValueChangeListener);
+        try {
+            reso.setValue(resolution);
+        } finally {
+            reso.addValueChangeListener(resolutionValueChangeListener);
+        }
+    }
 }
