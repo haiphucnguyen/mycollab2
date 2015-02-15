@@ -29,13 +29,17 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
-import org.vaadin.viritin.fields.CaptionGenerator;
-import org.vaadin.viritin.fields.LazyComboBox;
+import org.vaadin.suggestfield.BeanSuggestionConverter;
+import org.vaadin.suggestfield.SuggestField;
+import org.vaadin.suggestfield.client.SuggestFieldSuggestion;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,13 +48,14 @@ import java.util.List;
  */
 public class LinkIssueWindow extends Window {
     private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-    private BugSearchCriteria searchCriteria = new BugSearchCriteria();
+    private BugSearchCriteria searchCriteria;
 
     public LinkIssueWindow(SimpleBug bug) {
         super("Link");
         this.setResizable(false);
         this.setModal(true);
 
+        searchCriteria = new BugSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 
         MVerticalLayout contentLayout = new MVerticalLayout().withMargin(false)
@@ -98,6 +103,7 @@ public class LinkIssueWindow extends Window {
 
                 Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE));
                 saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.setIcon(FontAwesome.SAVE);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
@@ -115,7 +121,7 @@ public class LinkIssueWindow extends Window {
             public void attachField(Object propertyId, Field<?> field) {
                 if (RelatedBug.Field.relatetype.equalTo(propertyId)) {
                     informationLayout.addComponent(field, "This bug", 0, 0);
-                } else if (RelatedBug.Field.bugid.equalTo(propertyId)) {
+                } else if (RelatedBug.Field.relatedid.equalTo(propertyId)) {
                     informationLayout.addComponent(field, "Bug", 0, 1);
                 } else if (RelatedBug.Field.comment.equalTo(propertyId)) {
                     informationLayout.addComponent(field, "Comment", 0, 2);
@@ -137,7 +143,7 @@ public class LinkIssueWindow extends Window {
                 if (RelatedBug.Field.relatetype.equalTo(propertyId)) {
                     return new BugRelationComboBox();
                 } else if (RelatedBug.Field.relatedid.equalTo(propertyId)) {
-                    return new BugSuggestionField();
+                    return new RelatedBugField();
                 } else if (RelatedBug.Field.comment.equalTo(propertyId)) {
                     return new RichTextArea();
                 }
@@ -145,28 +151,53 @@ public class LinkIssueWindow extends Window {
             }
         }
 
-        private class BugSuggestionField extends LazyComboBox<SimpleBug> {
-            public BugSuggestionField() {
-                super(SimpleBug.class, new LazyComboBox.FilterablePagingProvider<SimpleBug>() {
+        private class RelatedBugField extends SuggestField {
+            List<SimpleBug> items;
+
+            RelatedBugField() {
+                this.setEnabled(true);
+                this.setPopupWidth(600);
+                setInputPrompt("Related bug's name");
+
+                this.setSuggestionHandler(new SuggestionHandler() {
+
                     @Override
-                    public List<SimpleBug> findEntities(int firstRow, String filter) {
-                        searchCriteria.setDescription(new StringSearchField(filter));
-                        return bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, firstRow, 10));
-                    }
-                }, new LazyComboBox.FilterableCountProvider() {
-                    @Override
-                    public int size(String filter) {
-                        searchCriteria.setDescription(new StringSearchField(filter));
-                        return bugService.getTotalCount(searchCriteria);
+                    public List<Object> searchItems(String query) {
+                        return handleSearchQuery(query);
                     }
                 });
 
-                this.setCaptionGenerator(new CaptionGenerator<SimpleBug>() {
-                    @Override
-                    public String getCaption(SimpleBug bug) {
-                        return bug.getSummary();
+                this.setSuggestionConverter(new BugSuggestionConverter());
+            }
+
+            private List<Object> handleSearchQuery(String query) {
+                if ("".equals(query) || query == null) {
+                    return Collections.emptyList();
+                }
+                searchCriteria.setSummary(new StringSearchField(query));
+                items = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+                return new ArrayList<Object>(items);
+            }
+
+            private class BugSuggestionConverter extends BeanSuggestionConverter {
+
+                public BugSuggestionConverter() {
+                    super(SimpleBug.class, "id", "summary", "summary");
+                }
+
+                @Override
+                public Object toItem(SuggestFieldSuggestion suggestion) {
+                    SimpleBug result = null;
+                    for (SimpleBug bean : items) {
+                        if (bean.getId().toString().equals(suggestion.getId())) {
+                            result = bean;
+                            break;
+                        }
                     }
-                });
+                    assert result != null : "This should not be happening";
+                    return result;
+                }
+
             }
         }
     }

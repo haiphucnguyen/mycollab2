@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>4.5.5</version>
+            <version>5.0.0</version>
         </dependency>
 
         <dependency>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.8.10.1</version>
+            <version>1.9.19</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>

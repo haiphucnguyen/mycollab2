@@ -50,4 +50,6 @@
     <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
 
     <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
+
+    <inherits name="org.vaadin.suggestfield.WidgetSet" />
 </module>

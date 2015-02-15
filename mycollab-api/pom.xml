@@ -13,7 +13,7 @@
     </parent>
     <packaging>jar</packaging>
     <properties>
-        <restVersion>3.0.9.Final</restVersion>
+        <restVersion>3.0.10.Final</restVersion>
     </properties>
 
     <dependencies>
@@ -51,12 +51,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-spring</artifactId>
             <version>${restVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.3</version>
         </dependency>
 
     </dependencies>
