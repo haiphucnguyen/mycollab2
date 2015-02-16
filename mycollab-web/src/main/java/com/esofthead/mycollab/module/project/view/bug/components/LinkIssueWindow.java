@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.tracker.domain.RelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -49,6 +50,7 @@ import java.util.List;
 public class LinkIssueWindow extends Window {
     private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
     private BugSearchCriteria searchCriteria;
+    private RelatedBug relatedBug;
 
     public LinkIssueWindow(SimpleBug bug) {
         super("Link");
@@ -62,7 +64,7 @@ public class LinkIssueWindow extends Window {
                 .withWidth("100%");
 
         RelatedBugEditForm form = new RelatedBugEditForm();
-        RelatedBug relatedBug = new RelatedBug();
+        relatedBug = new RelatedBug();
         relatedBug.setBugid(bug.getId());
         relatedBug.setRelatetype(ProjectTypeConstants.BUG);
         form.setBean(relatedBug);
@@ -102,6 +104,14 @@ public class LinkIssueWindow extends Window {
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
                 Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE));
+                saveBtn.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        System.out.println("Related bug : " + relatedBug);
+                        RelatedBugService relatedBugService = ApplicationContextUtil.getSpringBean(RelatedBugService
+                                .class);
+                    }
+                });
                 saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 saveBtn.setIcon(FontAwesome.SAVE);
 
@@ -131,8 +141,6 @@ public class LinkIssueWindow extends Window {
 
         private class EditFormFieldFactory extends
                 AbstractBeanFieldGroupEditFieldFactory<RelatedBug> {
-
-
             EditFormFieldFactory(GenericBeanForm<RelatedBug> form) {
                 super(form);
 
@@ -151,15 +159,16 @@ public class LinkIssueWindow extends Window {
             }
         }
 
-        private class RelatedBugField extends SuggestField {
+        private class RelatedBugField extends CustomField<SimpleBug> implements FieldSelection<SimpleBug> {
+            SuggestField suggestField;
             List<SimpleBug> items;
 
             RelatedBugField() {
-                this.setEnabled(true);
-                this.setPopupWidth(600);
-                setInputPrompt("Related bug's name");
+                suggestField = new SuggestField();
+                suggestField.setPopupWidth(600);
+                suggestField.setInputPrompt("Enter related bug's name");
 
-                this.setSuggestionHandler(new SuggestionHandler() {
+                suggestField.setSuggestionHandler(new SuggestField.SuggestionHandler() {
 
                     @Override
                     public List<Object> searchItems(String query) {
@@ -167,7 +176,31 @@ public class LinkIssueWindow extends Window {
                     }
                 });
 
-                this.setSuggestionConverter(new BugSuggestionConverter());
+                suggestField.setSuggestionConverter(new BugSuggestionConverter());
+            }
+
+            @Override
+            protected Component initContent() {
+                MHorizontalLayout layout = new MHorizontalLayout();
+                Button browseBtn = new Button(FontAwesome.ELLIPSIS_H);
+                browseBtn.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        UI.getCurrent().addWindow(new BugSelectionWindow(RelatedBugField.this));
+                    }
+                });
+                layout.with(suggestField, new Label("or browse"), browseBtn);
+                return layout;
+            }
+
+            @Override
+            public Class<? extends SimpleBug> getType() {
+                return SimpleBug.class;
+            }
+
+            @Override
+            public void fireValueChange(SimpleBug data) {
+
             }
 
             private List<Object> handleSearchQuery(String query) {
