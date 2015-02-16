@@ -7816,6 +7816,10 @@ body .mycollab.v-app .v-app-loading {
 	text-shadow: 0 -1px 0 #2E5A84;
 }
 
+.mycollab .sidebar-menu {
+	background-color: #6C6C6C;
+}
+
 .mycollab .sidebar-menu .tab-selected, .mycollab .sidebar-menu .selected {
 	border-color: #2E5A84;
 	text-shadow: 0 1px 0 #2E5A84;
@@ -8506,11 +8510,7 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .crmContainer .navigator-wrap .basic-info {
-	color: #FFF;
-}
-
-.mycollab .crmContainer .navigator-wrap .basic-info .v-button-link .v-button-caption {
-	color: #FFF;
+	color: white;
 }
 
 .mycollab .crmContainer .navigator-wrap .basic-info:after {
@@ -8525,6 +8525,10 @@ body .mycollab.v-app .v-app-loading {
 .mycollab .crmContainer .navigator-wrap .basic-info .info-hdr {
 	font-size: 13px;
 	font-weight: bold;
+}
+
+.mycollab .crmContainer .navigator-wrap .basic-info .v-button-wrap .v-button-caption {
+	color: white;
 }
 
 .mycollab .crmContainer.preview-comp {
@@ -11847,10 +11851,6 @@ body .mycollab.v-app .v-app-loading {
 	height: 100%;
 }
 
-.mycollab .tab-content.Milestones {
-	padding: 10px 0px 0px;
-}
-
 .mycollab .vertical-tabsheet  > .v-csslayout {
 	display: -webkit-box;
 	display: -moz-box;
@@ -11865,6 +11865,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .vertical-tabsheet .navigator-wrap {
 	display: inline-block;
+	background-color: #6C6C6C;
 }
 
 .mycollab .vertical-tabsheet .container-wrap {
@@ -11883,7 +11884,7 @@ body .mycollab.v-app .v-app-loading {
 	-webkit-box-shadow: none;
 }
 
-.mycollab .vertical-tabsheet .v-button-tab  > .v-button-wrap, .mycollab .vertical-tabsheet .v-button-tab:active > .v-button-wrap, .mycollab .vertical-tabsheet .v-button-tab:focus > .v-button-wrap {
+.mycollab .vertical-tabsheet .v-button-tab .v-button-wrap, .mycollab .vertical-tabsheet .v-button-tab:active .v-button-wrap, .mycollab .vertical-tabsheet .v-button-tab:focus .v-button-wrap {
 	background: none no-repeat 0 0 transparent;
 	background-image: none;
 	border-radius: 0px;
@@ -11893,17 +11894,18 @@ body .mycollab.v-app .v-app-loading {
 	color: #FFF;
 }
 
-.mycollab .vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap {
+.mycollab .vertical-tabsheet .v-button-tab.tab-selected .v-button-wrap {
 	background: none no-repeat 0 0 #FFF;
 	color: #525252;
 }
 
-.mycollab .vertical-tabsheet .v-button-tab  > .v-button-wrap  > .v-icon {
+.mycollab .vertical-tabsheet .v-button-tab .v-button-wrap .v-icon {
 	margin-right: 8px;
+	font-size: 18px;
 	vertical-align: middle;
 }
 
-.mycollab .vertical-tabsheet .v-button-tab  > .v-button-wrap  > .v-button-caption {
+.mycollab .vertical-tabsheet .v-button-tab .v-button-wrap .v-button-caption {
 	line-height: 24px;
 	font-size: 13px;
 	vertical-align: middle;

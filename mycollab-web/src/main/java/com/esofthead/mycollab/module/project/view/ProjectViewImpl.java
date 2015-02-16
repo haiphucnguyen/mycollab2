@@ -87,6 +87,10 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 	private UserSettingPresenter userPresenter;
 	private IStandupPresenter standupPresenter;
 
+    public ProjectViewImpl() {
+        super(true);
+    }
+
 	@Override
 	public void initView(final SimpleProject project) {
 		this.removeAllComponents();
@@ -95,7 +99,6 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 
 		this.addStyleName("main-content-wrapper");
 		this.addStyleName("projectDashboardView");
-		this.setVerticalTabsheetFix(true);
 
 		myProjectTab = new ProjectVerticalTabsheet();
 		myProjectTab.setSizeFull();

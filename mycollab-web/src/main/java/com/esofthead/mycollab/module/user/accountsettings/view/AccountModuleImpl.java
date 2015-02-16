@@ -85,7 +85,6 @@ public class AccountModuleImpl extends AbstractCssPageView implements
 		this.accountTab.setNavigatorStyleName("sidebar-menu");
 		this.accountTab.setContainerStyleName("tab-content");
 		this.accountTab.setHeight(null);
-		this.setVerticalTabsheetFix(true);
 
 		VerticalLayout contentWrapper = this.accountTab.getContentWrapper();
 		contentWrapper.addStyleName("main-content");

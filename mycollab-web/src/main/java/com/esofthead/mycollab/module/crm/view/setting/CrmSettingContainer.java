@@ -62,8 +62,6 @@ public class CrmSettingContainer extends AbstractCssPageView implements
 		settingTab.setNavigatorStyleName("sidebar-menu");
 		settingTab.setContainerStyleName("tab-content");
 		settingTab.setHeight(null);
-		this.setVerticalTabsheetFix(true);
-		this.setVerticalTabsheetFixToLeft(false);
 
 		buildComponents();
 		contentWrapper.addComponent(settingTab);
@@ -121,8 +119,7 @@ public class CrmSettingContainer extends AbstractCssPageView implements
 	}
 
 	public Component gotoSubView(String viewId) {
-		PageView component = (PageView) settingTab.selectTab(viewId);
-		return component;
+		return settingTab.selectTab(viewId);
 	}
 
 }

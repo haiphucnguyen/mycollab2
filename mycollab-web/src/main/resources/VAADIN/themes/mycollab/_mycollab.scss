@@ -390,6 +390,7 @@
   }
 
   .sidebar-menu {
+    background-color:#6C6C6C;
     .tab-selected, .selected {
       border-color: #2E5A84;
       text-shadow: 0 1px 0 #2E5A84;
@@ -1102,10 +1103,7 @@
       height: 100% !important;
     }
     .navigator-wrap .basic-info {
-      color: #FFF;
-      .v-button-link .v-button-caption {
-        color: #FFF;
-      }
+      color: white;
       &:after {
         content: "";
         border-bottom: 1px solid $border-color;
@@ -1117,6 +1115,9 @@
       .info-hdr {
         font-size: $font-normal;
         font-weight: bold;
+      }
+      .v-button-wrap .v-button-caption {
+        color: white;
       }
     }
     &.preview-comp {
@@ -4504,9 +4505,6 @@
   .tab-content {
     background-color: #fff;
     height: 100%;
-    &.Milestones {
-      padding: 10px 0px 0px;
-    }
   }
 
   .vertical-tabsheet {
@@ -4528,6 +4526,7 @@
     }
     .navigator-wrap {
       display: inline-block;
+      background-color:#6C6C6C;
     }
     .container-wrap {
       -webkit-box-flex: 1;
@@ -4548,8 +4547,7 @@
       background: none no-repeat 0 0 transparent;
       border-radius: 0px;
       -webkit-box-shadow: none;
-      /* padding: 4px 13px; */
-      > .v-button-wrap, &:active > .v-button-wrap, &:focus > .v-button-wrap {
+      .v-button-wrap, &:active .v-button-wrap, &:focus .v-button-wrap {
         background: none no-repeat 0 0 transparent;
         background-image: none;
         border-radius: 0px;
@@ -4558,16 +4556,17 @@
         padding: 9px 25px;
         color: #FFF;
       }
-      &.tab-selected > .v-button-wrap {
+      &.tab-selected .v-button-wrap {
         background: none no-repeat 0 0 #FFF;
         color: #525252;
       }
-      > .v-button-wrap {
-        > .v-icon {
+      .v-button-wrap {
+        .v-icon {
           margin-right: 8px;
+          font-size: $font-x-large;
           vertical-align: middle;
         }
-        > .v-button-caption {
+        .v-button-caption {
           line-height: 24px;
           font-size: $font-normal;
           vertical-align: middle;

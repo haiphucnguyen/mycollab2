@@ -16,10 +16,10 @@
  */
 package com.esofthead.mycollab.vaadin.mvp;
 
-import java.io.Serializable;
-
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -33,42 +33,31 @@ public abstract class AbstractCssPageView extends CssLayout implements
 
 	private CssLayout vTabsheetFix;
 	private String vTabsheetFixWidth = "250px";
-	private boolean vTabsheetIsLeft = true;
-	private boolean showTabsheetFix = false;
+	private boolean vTabsheetIsLeft = false;
 
 	public AbstractCssPageView() {
-		this.setStyleName("page-view");
+		this(false);
 	}
+
+    public AbstractCssPageView(boolean isLeftAlign) {
+        this.setStyleName("page-view");
+        this.vTabsheetIsLeft = isLeftAlign;
+        this.updateVerticalTabsheetFixStatus();
+    }
 
 	private void updateVerticalTabsheetFixStatus() {
-		if (showTabsheetFix) {
-			if (vTabsheetFix == null) {
-				vTabsheetFix = new CssLayout();
-				vTabsheetFix.setStyleName("verticaltabsheet-fix");
-				this.addComponentAsFirst(vTabsheetFix);
-			} else if (vTabsheetFix.getParent() != this) {
-				this.addComponentAsFirst(vTabsheetFix);
-			}
-			vTabsheetFix.setWidth(this.vTabsheetFixWidth);
-			if (this.vTabsheetIsLeft)
-				vTabsheetFix.addStyleName("is-left");
-			else
-				vTabsheetFix.removeStyleName("is-left");
-		} else {
-			if (vTabsheetFix != null && vTabsheetFix.getParent() == this) {
-				this.removeComponent(vTabsheetFix);
-			}
-		}
-	}
-
-	public void setVerticalTabsheetFix(boolean value) {
-		this.showTabsheetFix = value;
-		updateVerticalTabsheetFixStatus();
-	}
-
-	public void setVerticalTabsheetFixToLeft(boolean isLeft) {
-		this.vTabsheetIsLeft = isLeft;
-		updateVerticalTabsheetFixStatus();
+        if (vTabsheetFix == null) {
+            vTabsheetFix = new CssLayout();
+            vTabsheetFix.setStyleName("verticaltabsheet-fix");
+            this.addComponentAsFirst(vTabsheetFix);
+        } else if (vTabsheetFix.getParent() != this) {
+            this.addComponentAsFirst(vTabsheetFix);
+        }
+        vTabsheetFix.setWidth(this.vTabsheetFixWidth);
+        if (this.vTabsheetIsLeft)
+            vTabsheetFix.addStyleName("is-left");
+        else
+            vTabsheetFix.removeStyleName("is-left");
 	}
 
 	@Override
