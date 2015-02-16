@@ -6466,14 +6466,6 @@ body .mycollab.v-app .v-app-loading {
 	float: none;
 }
 
-.mycollab .splitbutton .v-popupbutton {
-	border-left: none;
-}
-
-.mycollab .splitbutton .v-popupbutton:active, .mycollab .splitbutton .v-popupbutton.greenbtn, .mycollab .splitbutton .v-popupbutton.graybtn, .mycollab .splitbutton .v-popupbutton.bluebtn, .mycollab .splitbutton .v-popupbutton.brownbtn {
-	border-left: none;
-}
-
 .mycollab .v-popupbutton .v-popup-indicator {
 	background-position: -7px -10px !important;
 }

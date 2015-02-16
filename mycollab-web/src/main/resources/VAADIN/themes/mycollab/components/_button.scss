@@ -680,13 +680,6 @@
     float: none;
   }
 
-  .splitbutton .v-popupbutton {
-    border-left: none;
-    &:active, &.greenbtn, &.graybtn, &.bluebtn, &.brownbtn {
-      border-left: none;
-    }
-  }
-
   .v-popupbutton {
     .v-popup-indicator {
       background-position: -7px -10px !important;

@@ -17,16 +17,17 @@
 package com.esofthead.mycollab.module.project.view.bug.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.RelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
+import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -50,6 +51,8 @@ import java.util.List;
 public class LinkIssueWindow extends Window {
     private BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
     private BugSearchCriteria searchCriteria;
+
+    private SimpleBug selectedBug;
     private RelatedBug relatedBug;
 
     public LinkIssueWindow(SimpleBug bug) {
@@ -66,7 +69,7 @@ public class LinkIssueWindow extends Window {
         RelatedBugEditForm form = new RelatedBugEditForm();
         relatedBug = new RelatedBug();
         relatedBug.setBugid(bug.getId());
-        relatedBug.setRelatetype(ProjectTypeConstants.BUG);
+        relatedBug.setRelatetype(OptionI18nEnum.BugRelation.Duplicated.name());
         form.setBean(relatedBug);
         contentLayout.add(form);
         this.center();
@@ -107,12 +110,17 @@ public class LinkIssueWindow extends Window {
                 saveBtn.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        System.out.println("Related bug : " + relatedBug);
-                        RelatedBugService relatedBugService = ApplicationContextUtil.getSpringBean(RelatedBugService
+                        BugRelationService relatedBugService = ApplicationContextUtil.getSpringBean(BugRelationService
                                 .class);
+
+                        if (selectedBug == null) {
+                            throw new UserInvalidInputException("The related bug must be not null");
+                        }
+
+                        LinkIssueWindow.this.close();
                     }
                 });
-                saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
                 saveBtn.setIcon(FontAwesome.SAVE);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
@@ -121,7 +129,7 @@ public class LinkIssueWindow extends Window {
                         LinkIssueWindow.this.close();
                     }
                 });
-                cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+                cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 
                 controlsBtn.with(saveBtn, cancelBtn).alignAll(Alignment.MIDDLE_RIGHT);
                 return layout;
@@ -143,7 +151,6 @@ public class LinkIssueWindow extends Window {
                 AbstractBeanFieldGroupEditFieldFactory<RelatedBug> {
             EditFormFieldFactory(GenericBeanForm<RelatedBug> form) {
                 super(form);
-
             }
 
             @Override
@@ -166,10 +173,10 @@ public class LinkIssueWindow extends Window {
             RelatedBugField() {
                 suggestField = new SuggestField();
                 suggestField.setPopupWidth(600);
+                suggestField.setWidth("400px");
                 suggestField.setInputPrompt("Enter related bug's name");
 
                 suggestField.setSuggestionHandler(new SuggestField.SuggestionHandler() {
-
                     @Override
                     public List<Object> searchItems(String query) {
                         return handleSearchQuery(query);
@@ -183,6 +190,8 @@ public class LinkIssueWindow extends Window {
             protected Component initContent() {
                 MHorizontalLayout layout = new MHorizontalLayout();
                 Button browseBtn = new Button(FontAwesome.ELLIPSIS_H);
+                browseBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+                browseBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
                 browseBtn.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
@@ -200,7 +209,7 @@ public class LinkIssueWindow extends Window {
 
             @Override
             public void fireValueChange(SimpleBug data) {
-
+                selectedBug = data;
             }
 
             private List<Object> handleSearchQuery(String query) {
@@ -220,15 +229,14 @@ public class LinkIssueWindow extends Window {
 
                 @Override
                 public Object toItem(SuggestFieldSuggestion suggestion) {
-                    SimpleBug result = null;
                     for (SimpleBug bean : items) {
                         if (bean.getId().toString().equals(suggestion.getId())) {
-                            result = bean;
+                            selectedBug = bean;
                             break;
                         }
                     }
-                    assert result != null : "This should not be happening";
-                    return result;
+                    assert selectedBug != null : "This should not be happening";
+                    return selectedBug;
                 }
 
             }
