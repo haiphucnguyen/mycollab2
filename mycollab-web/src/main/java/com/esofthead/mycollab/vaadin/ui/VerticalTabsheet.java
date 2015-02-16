@@ -87,7 +87,6 @@ public class VerticalTabsheet extends CustomComponent {
 			contentLayout.addComponent(contentWrapper);
 			contentLayout.addComponent(navigatorWrapper);
 		}
-		// contentLayout.setExpandRatio(contentWrapper, 1.0f);
 
 		this.setCompositionRoot(contentLayout);
 		this.setStyleName(TABSHEET_STYLENAME);
