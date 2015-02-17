@@ -13,7 +13,7 @@
     </parent>
     <packaging>jar</packaging>
     <properties>
-        <restVersion>3.0.10.Final</restVersion>
+        <restVersion>3.0.9.Final</restVersion>
     </properties>
 
     <dependencies>
