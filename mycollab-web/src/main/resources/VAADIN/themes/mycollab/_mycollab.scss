@@ -112,16 +112,6 @@
     }
   }
 
-  input.v-textfield, textarea.v-textarea, .v-filterselect {
-    border-color: #43533E;
-  }
-
-  input.v-textfield, textarea.v-textarea, .v-filterselect {
-    border-bottom-color: rgb(82, 104, 75);
-    border-left-color: rgb(82, 104, 75);
-    border-right-color: rgb(82, 104, 75);
-  }
-
   .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
     background-color: #64825A;
     border-color: #43533E;
@@ -283,10 +273,6 @@
     &.v-table-focus-slot-left, &.v-table-focus-slot-right {
       border-color: $border-color;
     }
-  }
-
-  input.v-textfield, textarea.v-textarea, .v-filterselect, input.v-textfield, textarea.v-textarea, .v-filterselect {
-    border-color: $border-color;
   }
 
   .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
@@ -501,7 +487,7 @@
 
   .v-ie {
     input.v-textfield, textarea.v-textarea, .v-filterselect {
-      background: none no-repeat left top #FFF;
+      background-color: #FFF;
       border-color: $border-color;
     }
   }

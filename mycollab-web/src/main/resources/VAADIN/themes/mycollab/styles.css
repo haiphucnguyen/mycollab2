@@ -7601,16 +7601,6 @@ body .mycollab.v-app .v-app-loading {
 	border-color: #43533E;
 }
 
-.mycollab input.v-textfield, .mycollab textarea.v-textarea, .mycollab .v-filterselect {
-	border-color: #43533E;
-}
-
-.mycollab input.v-textfield, .mycollab textarea.v-textarea, .mycollab .v-filterselect {
-	border-bottom-color: #52684b;
-	border-left-color: #52684b;
-	border-right-color: #52684b;
-}
-
 .mycollab .v-button, .mycollab .v-datefield-button, .mycollab .v-datefield-calendarpanel-header button, .mycollab td.v-datefield-calendarpanel-month, .mycollab .v-datefield-calendarpanel-weekdays strong, .mycollab .v-slider-handle, .mycollab .v-table-header-wrap, .mycollab .v-table-generated-row, .mycollab .v-table-header-drag, .mycollab .v-filterselect-prevpage-off, .mycollab .v-filterselect-nextpage-off, .mycollab .v-filterselect-prevpage, .mycollab .v-filterselect-nextpage, .mycollab .v-filterselect-select-button, .mycollab .v-splitpanel-hsplitter, .mycollab .v-splitpanel-vsplitter, .mycollab .v-splitpanel-hsplitter-locked, .mycollab .v-splitpanel-vsplitter-locked {
 	background-color: #64825A;
 	border-color: #43533E;
@@ -7742,10 +7732,6 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab div.v-table-focus-slot-left, .mycollab div.v-table-focus-slot-right {
-	border-color: #CFCFCF;
-}
-
-.mycollab input.v-textfield, .mycollab textarea.v-textarea, .mycollab .v-filterselect {
 	border-color: #CFCFCF;
 }
 
@@ -7934,8 +7920,9 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .v-ie input.v-textfield, .mycollab .v-ie textarea.v-textarea, .mycollab .v-ie .v-filterselect {
-	background: none no-repeat left top #FFF;
+	background-color: #FFF;
 	border-color: #CFCFCF;
+	border-top-color: #CFCFCF;
 }
 
 .mycollab input.v-widget.v-textfield[type="text"], .mycollab .v-filterselect {
