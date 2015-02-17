@@ -6422,7 +6422,8 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .splitbutton .v-popupbutton:active {
-	padding: 0;
+	padding: 0px;
+	margin: 0px;
 }
 
 .mycollab .splitbutton .v-popupbutton .v-button-wrap {
@@ -6468,6 +6469,32 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-popupbutton .v-popup-indicator {
 	background-position: -7px -10px !important;
+}
+
+.mycollab .v-popupbutton .v-button-caption:before {
+	content: "";
+	display: inline-block;
+}
+
+.mycollab .v-ie .v-popupbutton .v-button-wrap, .mycollab .v-ie .v-popupbutton:active .v-button-wrap, .mycollab .v-ie .v-popupbutton:focus .v-button-wrap {
+	padding: 6px 3px;
+}
+
+.mycollab .v-popupbutton .v-button-wrap, .mycollab .v-popupbutton:active .v-button-wrap {
+	padding: 6px 3px;
+}
+
+.mycollab .v-popupbutton.h2 .v-button-wrap .v-button-caption {
+	font-size: 14px;
+	font-weight: bold;
+	color: #222222;
+}
+
+.mycollab .v-popupbutton-popup.v-popupbutton-popup-select-bg {
+	background-color: #FFF;
+	border: 1px solid #A8A8A8;
+	border-radius: 3px;
+	padding: 0px;
 }
 
 .mycollab .splitbutton .v-popupbutton.action-button {
@@ -7316,7 +7343,7 @@ body .mycollab.v-app .v-app-loading {
 	color: white;
 }
 
-.mycollab .projectfeed-hdr-wrapper .h2, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-button-caption, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-icon {
+.mycollab .projectfeed-hdr-wrapper .h2, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-button-caption, .mycollab .projectfeed-hdr-wrapper .v-button-link .v-icon, .mycollab .projectfeed-hdr-wrapper .v-label, .mycollab .projectfeed-hdr-wrapper .v-label a {
 	color: white;
 }
 
@@ -7859,11 +7886,6 @@ body .mycollab.v-app .v-app-loading {
 	border: 1px solid #CFCFCF;
 }
 
-.mycollab .v-popupbutton .v-button-caption:before {
-	content: "";
-	display: inline-block;
-}
-
 .mycollab .v-textarea {
 	overflow: auto;
 }
@@ -8021,14 +8043,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .v-table-row-odd {
 	background: none repeat scroll 0% 0% #dbdee3;
-}
-
-.mycollab .v-ie .v-popupbutton .v-button-wrap, .mycollab .v-ie .v-popupbutton:active .v-button-wrap, .mycollab .v-ie .v-popupbutton:focus .v-button-wrap {
-	padding: 6px;
-}
-
-.mycollab .v-popupbutton .v-button-wrap, .mycollab .v-popupbutton:active .v-button-wrap {
-	padding: 6px;
 }
 
 .mycollab .v-buttongroup.toggle-btn-group .v-button.active {
@@ -10271,12 +10285,6 @@ body .mycollab.v-app .v-app-loading {
 	margin-top: 0px !important;
 }
 
-.mycollab .v-popupbutton.h2 .v-button-wrap .v-button-caption {
-	font-size: 14px;
-	font-weight: bold;
-	color: #222222;
-}
-
 .mycollab .main-body {
 	overflow-y: auto;
 	background-color: #FFF;
@@ -12220,13 +12228,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .project-module .page-view.v-margin-right, .mycollab .accountViewContainer .page-view.v-margin-right {
 	padding-right: 30px;
-}
-
-.mycollab .v-popupbutton-popup.v-popupbutton-popup-select-bg {
-	background-color: #FFF;
-	border: 1px solid #A8A8A8;
-	border-radius: 3px;
-	padding: 0px;
 }
 
 .mycollab div.v-csslayout.bean-block {
