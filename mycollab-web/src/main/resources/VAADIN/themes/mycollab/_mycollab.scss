@@ -1102,6 +1102,15 @@
     .v-table-body-noselection {
       height: 100% !important;
     }
+    .page-view {
+      &.v-margin-left {
+        padding-left: 30px;
+      }
+      &.v-margin-right {
+        padding-right: 30px;
+      }
+      display:inline-block;
+    }
     .navigator-wrap .basic-info {
       color: white;
       &:after {
@@ -1127,15 +1136,6 @@
 
   input.v-textfield-errorField {
     border-color: red;
-  }
-
-  .crmContainer .page-view {
-    &.v-margin-left {
-      padding-left: 30px;
-    }
-    &.v-margin-right {
-      padding-right: 30px;
-    }
   }
 
   /* End CRM Service */
@@ -1645,6 +1645,7 @@
   .account-dashboard .addViewLayout {
     .depot-title .v-label-h2 {
       padding: 0px 0px 0px 18px;
+      font-weight: bold;
     }
     .depotComp .depotHeader {
       border-width: 0px 0px 1px 0px;
@@ -1764,8 +1765,8 @@
     color: #313131;
     text-shadow: none;
     font-size: $font-large;
+    font-weight: bold;
     line-height: 16px;
-    font-weight: 400;
     cursor: pointer;
     padding: 0px 0px 0px 5px;
     word-break: normal;
@@ -2638,16 +2639,16 @@
     border-style: solid;
     border-color: $border-color;
     &.v-margin-top {
-      padding-top: 3px;
+      padding-top: 10px;
     }
     &.v-margin-right {
-      padding-right: 5px;
+      padding-right: 10px;
     }
     &.v-margin-bottom {
-      padding-bottom: 3px;
+      padding-bottom: 10px;
     }
     &.v-margin-left {
-      padding-left: 5px;
+      padding-left: 10px;
     }
     &.odd {
       background-color: #FFF;

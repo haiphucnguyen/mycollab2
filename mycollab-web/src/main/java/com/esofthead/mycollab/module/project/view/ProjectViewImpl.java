@@ -105,7 +105,6 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 		myProjectTab.setNavigatorWidth("100%");
 		myProjectTab.setNavigatorStyleName("sidebar-menu");
 		myProjectTab.setContainerStyleName("tab-content");
-		myProjectTab.setHeight(null);
 
 		myProjectTab
 				.addSelectedTabChangeListener(new SelectedTabChangeListener() {

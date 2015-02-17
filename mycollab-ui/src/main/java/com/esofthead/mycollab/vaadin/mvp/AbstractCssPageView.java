@@ -41,11 +41,12 @@ public abstract class AbstractCssPageView extends CssLayout implements
 
     public AbstractCssPageView(boolean isLeftAlign) {
         this.setStyleName("page-view");
+        this.setWidth("100%");
         this.vTabsheetIsLeft = isLeftAlign;
         this.updateVerticalTabsheetFixStatus();
     }
 
-	private void updateVerticalTabsheetFixStatus() {
+	public void updateVerticalTabsheetFixStatus() {
         if (vTabsheetFix == null) {
             vTabsheetFix = new CssLayout();
             vTabsheetFix.setStyleName("verticaltabsheet-fix");

@@ -8509,6 +8509,18 @@ body .mycollab.v-app .v-app-loading {
 	height: 100% !important;
 }
 
+.mycollab .crmContainer .page-view {
+	display: inline-block;
+}
+
+.mycollab .crmContainer .page-view.v-margin-left {
+	padding-left: 30px;
+}
+
+.mycollab .crmContainer .page-view.v-margin-right {
+	padding-right: 30px;
+}
+
 .mycollab .crmContainer .navigator-wrap .basic-info {
 	color: white;
 }
@@ -8537,14 +8549,6 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab input.v-textfield-errorField {
 	border-color: red;
-}
-
-.mycollab .crmContainer .page-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.mycollab .crmContainer .page-view.v-margin-right {
-	padding-right: 30px;
 }
 
 .mycollab .loginView {
@@ -9068,6 +9072,7 @@ body .mycollab.v-app .v-app-loading {
 
 .mycollab .account-dashboard .addViewLayout .depot-title .v-label-h2 {
 	padding: 0px 0px 0px 18px;
+	font-weight: bold;
 }
 
 .mycollab .account-dashboard .addViewLayout .depotComp .depotHeader {
@@ -9183,8 +9188,8 @@ body .mycollab.v-app .v-app-loading {
 	color: #313131;
 	text-shadow: none;
 	font-size: 14px;
+	font-weight: bold;
 	line-height: 16px;
-	font-weight: 400;
 	cursor: pointer;
 	padding: 0px 0px 0px 5px;
 	word-break: normal;
@@ -10036,19 +10041,19 @@ body .mycollab.v-app .v-app-loading {
 }
 
 .mycollab .widget-row.v-margin-top {
-	padding-top: 3px;
+	padding-top: 10px;
 }
 
 .mycollab .widget-row.v-margin-right {
-	padding-right: 5px;
+	padding-right: 10px;
 }
 
 .mycollab .widget-row.v-margin-bottom {
-	padding-bottom: 3px;
+	padding-bottom: 10px;
 }
 
 .mycollab .widget-row.v-margin-left {
-	padding-left: 5px;
+	padding-left: 10px;
 }
 
 .mycollab .widget-row.odd {

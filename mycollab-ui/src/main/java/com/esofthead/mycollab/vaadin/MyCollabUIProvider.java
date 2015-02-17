@@ -19,6 +19,7 @@ package com.esofthead.mycollab.vaadin;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.server.UIClassSelectionEvent;
 import com.vaadin.server.UIProvider;
+import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
 
 /**
@@ -37,6 +38,7 @@ public class MyCollabUIProvider extends UIProvider {
 		try {
 			userAgent = event.getRequest().getHeader("user-agent")
 					.toLowerCase();
+            System.out.println(userAgent);
 		} catch (Exception e) {
 			return null;
 

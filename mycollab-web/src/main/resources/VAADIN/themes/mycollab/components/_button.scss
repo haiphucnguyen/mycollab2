@@ -225,11 +225,6 @@
     margin: 0px;
   }
 
-  .v-button.v-button-link {
-    &:active .v-button-wrap, &:focus .v-button-wrap {
-    }
-  }
-
   .v-button-link .v-button-caption {
     text-decoration: none;
     -moz-box-sizing: border-box;
