@@ -1181,6 +1181,7 @@
         margin-right: 3px;
         img {
           vertical-align: bottom;
+          border-style: none;
         }
       }
     }
@@ -2738,79 +2739,6 @@
   }
 
   /* End Mail Panel */
-
-  /* End Progress Indicator */
-
-  /* Vertical Detached Tabs 2 */
-
-  .detachedtabs .v-button-tab {
-    border: none;
-    background: none no-repeat 0 0 transparent;
-    border-radius: 0px;
-    padding: 4px 13px;
-    > .v-button-wrap {
-      background: none no-repeat 0 0 transparent;
-      border-radius: 0px;
-      text-align: left;
-      border: none;
-    }
-    &.tab-selected > .v-button-wrap {
-      background: none no-repeat 0 0 #287ECE;
-    }
-    > .v-button-wrap {
-      > .v-icon {
-        margin-right: 8px;
-      }
-      > .v-button-caption {
-        line-height: 24px;
-      }
-    }
-  }
-
-  /* End Vertical Detached Tabs 2 */
-
-  /* Horizontal Detached Tabs 3 */
-
-  .tab-style3 .detachedtabs {
-    background: url("icons/border-bottom2.png") repeat-x left bottom transparent;
-    position: relative;
-    .v-nativebutton {
-      background: none;
-      border: none;
-      padding: 0px 20px 0px 0px;
-      color: #918e8e;
-      &:hover {
-        color: rgb(94, 94, 94);
-      }
-      &.v-nativebutton-tab-selected {
-        position: relative;
-        color: #287ECE;
-        &:hover {
-          position: relative;
-          color: #287ECE;
-        }
-      }
-      .v-nativebutton-caption, &.tab-selected .v-nativebutton-caption {
-        background: none;
-        font-weight: bold;
-        width: 100%;
-        text-align: center;
-        padding: 5px 0px 4px 10px !important;
-      }
-    }
-    .v-nativebutton-tab-selected:after {
-      content: " ";
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: #2E9DFF;
-      position: absolute;
-      bottom: 0px;
-      left: 0px;
-    }
-  }
-
-  /* End Horizontal Detached Tabs 3 */
 
   /* StandUp Report List */
 

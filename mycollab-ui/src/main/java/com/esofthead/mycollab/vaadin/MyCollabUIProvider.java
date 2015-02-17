@@ -19,48 +19,38 @@ package com.esofthead.mycollab.vaadin;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.server.UIClassSelectionEvent;
 import com.vaadin.server.UIProvider;
-import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 3.0
- * 
  */
 public class MyCollabUIProvider extends UIProvider {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
-		String userAgent;
-		try {
-			userAgent = event.getRequest().getHeader("user-agent")
-					.toLowerCase();
-            System.out.println(userAgent);
-		} catch (Exception e) {
-			return null;
+    @SuppressWarnings("unchecked")
+    @Override
+    public Class<? extends UI> getUIClass(UIClassSelectionEvent event) {
+        String userAgent;
+        try {
+            userAgent = event.getRequest().getHeader("user-agent")
+                    .toLowerCase();
+        } catch (Exception e) {
+            return null;
 
-		}
+        }
 
-		String uiClass = userAgent.contains("mobile") ? "com.esofthead.mycollab.mobile.MobileApplication"
-				: "com.esofthead.mycollab.web.DesktopApplication";
+        String uiClass = userAgent.contains("mobile") ? "com.esofthead.mycollab.mobile.MobileApplication"
+                : "com.esofthead.mycollab.web.DesktopApplication";
 
-		// if (SiteConfiguration.getDeploymentMode() == DeploymentMode.site
-		// || SiteConfiguration.getDeploymentMode() ==
-		// DeploymentMode.standalone) {
-		// uiClass = "com.esofthead.mycollab.web.DesktopApplication";
-		// } else {
-		// uiClass = userAgent.contains("mobile") ?
-		// "com.esofthead.mycollab.mobile.MobileApplication"
-		// : "com.esofthead.mycollab.web.DesktopApplication";
-		// }
+        try {
+            return (Class<? extends UI>) Class.forName(uiClass);
+        } catch (ClassNotFoundException e) {
+            throw new MyCollabException(e);
+        }
+    }
 
-		try {
-			return (Class<? extends UI>) Class.forName(uiClass);
-		} catch (ClassNotFoundException e) {
-			throw new MyCollabException(e);
-		}
-	}
+    private boolean isBelowIE10Browser(String agent) {
+        return false;
+    }
 }

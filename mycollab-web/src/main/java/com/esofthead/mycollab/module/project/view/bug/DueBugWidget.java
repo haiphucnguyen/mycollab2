@@ -63,7 +63,7 @@ public class DueBugWidget extends BugDisplayWidget {
 
 		@Override
 		public Component generateRow(final SimpleBug bug, final int rowIndex) {
-			MVerticalLayout rowContent = new MVerticalLayout().withWidth("100%");
+			MVerticalLayout rowContent = new MVerticalLayout().withSpacing(false).withWidth("100%");
 			final LabelLink defectLink = new LabelLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"
 					+ bug.getBugkey() + "]: " + bug.getSummary(),

@@ -57,7 +57,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 
 		@Override
 		public Component generateRow(final SimpleBug bug, int rowIndex) {
-			MVerticalLayout rowContent = new MVerticalLayout();
+			MVerticalLayout rowContent = new MVerticalLayout().withSpacing(false).withWidth("100%");
 
 			LabelLink defectLink = new LabelLink("["
 					+ CurrentProjectVariables.getProject().getShortname() + "-"

@@ -137,7 +137,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 
 	@Override
 	protected ComponentContainer createBottomPanel() {
-		final TabsheetLazyLoadComp tabContainer = new TabsheetLazyLoadComp();
+		final TabSheetLazyLoadComp tabContainer = new TabSheetLazyLoadComp();
 		tabContainer.addTab(commentDisplay, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
 		tabContainer.addTab(historyList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
 		return tabContainer;
