@@ -1,7 +1,6 @@
 @import "mycollab";
-
-.mycollab {
-  @include mycollab;
-}
-
 @import "nottheme";
+
+
+  @include mycollab;
+

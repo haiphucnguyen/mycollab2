@@ -1678,22 +1678,7 @@
   .accountViewContainer .container-wrap.main-content .top-panel {
     background-color: #FFF;
     border-bottom: 1px solid $border-color;
-  }
-
-  .accountViewContainer .container-wrap.main-content .top-panel.v-margin-top {
-    padding-top: 10px;
-  }
-
-  .accountViewContainer .container-wrap.main-content .top-panel.v-margin-right {
-    padding-right: 30px;
-  }
-
-  .accountViewContainer .container-wrap.main-content .top-panel.v-margin-bottom {
-    padding-bottom: 10px;
-  }
-
-  .accountViewContainer .container-wrap.main-content .top-panel.v-margin-left {
-    padding-left: 30px;
+    padding: 10px 30px;
   }
 
   /* Depot */
