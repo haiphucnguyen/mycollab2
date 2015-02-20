@@ -8554,11 +8554,6 @@ input.v-textfield-pagedtable-pagefield {
 	color: chocolate;
 }
 
-.notification-type {
-	text-transform: uppercase;
-	font-weight: bold;
-}
-
 .notification-type.notification-type-warning {
 	color: #c31616;
 }

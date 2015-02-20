@@ -21,6 +21,10 @@ import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Span;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 
 /**
  * 
@@ -30,25 +34,19 @@ import com.hp.gagawa.java.elements.Span;
  */
 public class TimezoneNotification extends AbstractNotification {
 
-	/**
-	 * @param message
-	 * @param type
-	 */
 	public TimezoneNotification() {
-		super("You haven't chosen preferred timezone. Please set it ",
-				AbstractNotification.WARNING);
+		super(AbstractNotification.WARNING);
 	}
 
 	@Override
-	public String renderContent() {
+	public Component renderContent() {
 		Span spanEl = new Span();
-		spanEl.appendText(getMessage());
+		spanEl.appendText("You haven't chosen preferred timezone. Please set it ");
 
 		A link = new A(AccountLinkGenerator.generatePreviewFullUserLink(
 				AppContext.getSiteUrl(), AppContext.getSession().getUsername()));
 		link.appendText("here");
 		spanEl.appendChild(link);
-		return spanEl.write();
+		return new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);
 	}
-
 }

@@ -17,7 +17,6 @@ public class UserResourceTest extends RestServiceTest {
 	@Test
 	public void testGetSubDomainsOfUsersSuccessfully() {
 		String expected = String.format("[\"%s\",\"%s\"]", "abc", "xyz");
-		System.out.println(expected);
 		given().contentType(ContentType.TEXT).when()
 				.get("/user/subdomains/hai79").then().statusCode(200).and()
 				.contentType(ContentType.JSON)
