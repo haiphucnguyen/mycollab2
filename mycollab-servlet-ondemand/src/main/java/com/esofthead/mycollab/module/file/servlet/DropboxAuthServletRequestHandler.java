@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.file.servlet;
 
 import com.dropbox.core.*;
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.common.MyCollabSession;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -125,7 +124,7 @@ public class DropboxAuthServletRequestHandler extends
 
 		BasicCache<String, Object> cache = LocalCacheManager.getCache(appId);
 
-		EventBus eventBus = (EventBus) cache.get(MyCollabSession.EVENT_BUS_VAL);
+		EventBus eventBus = (EventBus) cache.get("eventBusVal");
 		if (eventBus != null) {
 			eventBus.post(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
 					DropboxAuthServletRequestHandler.this, cloudDriveInfo));

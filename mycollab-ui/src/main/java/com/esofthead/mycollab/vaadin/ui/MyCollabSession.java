@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common;
+package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.common.SessionIdGenerator;
+import com.vaadin.server.VaadinSession;
 import org.infinispan.commons.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

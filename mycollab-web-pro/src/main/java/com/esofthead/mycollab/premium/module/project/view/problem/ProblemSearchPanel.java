@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import com.esofthead.mycollab.common.MyCollabSession;
+import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;

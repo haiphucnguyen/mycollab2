@@ -4,7 +4,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.vaadin.server.FontAwesome;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
-import com.esofthead.mycollab.common.MyCollabSession;
+import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
