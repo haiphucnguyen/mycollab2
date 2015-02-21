@@ -41,7 +41,6 @@ public class ContactResourceImpl implements ContactResource {
 
 	@Override
 	public Response submit(@Form final ContactForm entity) {
-
 		contentGenerator.putVariable("name", entity.getName());
 		contentGenerator.putVariable("email", entity.getEmail());
 		contentGenerator.putVariable("company", entity.getCompany());

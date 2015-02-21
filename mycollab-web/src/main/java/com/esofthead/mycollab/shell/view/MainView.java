@@ -295,9 +295,9 @@ public final class MainView extends AbstractPageView {
 			accountLayout.setComponentAlignment(informBox,
 					Alignment.MIDDLE_LEFT);
 
-			Date createdtime = billingAccount.getCreatedtime();
+			Date createdTime = billingAccount.getCreatedtime();
 			long timeDeviation = System.currentTimeMillis()
-					- createdtime.getTime();
+					- createdTime.getTime();
 			int daysLeft = (int) Math.floor(timeDeviation
 					/ (1000 * 60 * 60 * 24));
 			if (daysLeft > 30) {
