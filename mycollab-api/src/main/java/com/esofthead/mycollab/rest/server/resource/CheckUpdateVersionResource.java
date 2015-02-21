@@ -8,10 +8,9 @@ import javax.ws.rs.core.Response;
  * @author MyCollab Ltd.
  * @since 5.0.0
  */
+@Path("/checkupdate")
 public interface CheckUpdateVersionResource {
     @GET
-    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/checkupdate")
-    Response getLatestVersion(String currentClientVersion);
+    Response getLatestVersion();
 }
