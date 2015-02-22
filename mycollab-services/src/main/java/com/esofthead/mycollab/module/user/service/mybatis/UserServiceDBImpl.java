@@ -300,13 +300,13 @@ public class UserServiceDBImpl extends
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public SimpleUser authentication(String username, String password,
-			String subdomain, boolean isPasswordEncrypt) {
+			String subDomain, boolean isPasswordEncrypt) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
 		criteria.setSaccountid(null);
 
 		if (SiteConfiguration.getDeploymentMode() == DeploymentMode.site) {
-			criteria.setSubdomain(new StringSearchField(subdomain));
+			criteria.setSubdomain(new StringSearchField(subDomain));
 		}
 
 		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<>(
