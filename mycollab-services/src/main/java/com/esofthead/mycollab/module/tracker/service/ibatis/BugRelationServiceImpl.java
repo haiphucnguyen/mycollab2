@@ -55,7 +55,6 @@ public class BugRelationServiceImpl extends DefaultCrudService<Integer, RelatedB
                 bugService.updateSelectiveWithSession(bug, username);
             }
         }
-
         return super.saveWithSession(record, username);
     }
 }
