@@ -75,13 +75,15 @@
         #end
     </select>
 
-    <insert id="saveMonitorItems" lang="velocity">
+    <insert id="saveMonitorItems">
         insert into m_monitor_item (id, user, monitor_date, type, typeid, extraTypeId, sAccountId)
         values
-        #repeat($monitors $monitorItem "," "" "")
-            (${monitorItem.id}, ${monitorItem.user}, ${monitorItem.monitorDate}, ${monitorItem.type},
-            ${monitorItem.typeid}, ${monitorItem.extratypeid}, ${monitorItem.saccountid})
-        #end
+        <foreach collection="monitors" item="monitorItem" separator=",">
+            (
+            #{monitorItem.id}, #{monitorItem.user}, #{monitorItem.monitorDate}, #{monitorItem.type},
+            #{monitorItem.typeid}, #{monitorItem.extratypeid}, #{monitorItem.saccountid}
+            )
+        </foreach>
     </insert>
 
     <select id="findPagableListByCriteria" parameterType="MonitorSearchCriteria"

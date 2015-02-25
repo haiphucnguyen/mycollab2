@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
+import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.module.project.ui.components.ProjectSubscribersComp;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.project.view.bug.components.BugPriorityComboBox;
@@ -97,6 +99,8 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 
         public EditFormFieldFactory(GenericBeanForm<SimpleBug> form) {
             super(form);
+            subcribersComp = new ProjectSubscribersComp(false, CurrentProjectVariables.getProjectId(), AppContext
+                    .getUsername());
         }
 
         @Override
@@ -111,7 +115,16 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
                 }
                 return new BugPriorityComboBox();
             } else if (propertyId.equals("assignuser")) {
-                return new ProjectMemberSelectionField();
+                ProjectMemberSelectionField field = new ProjectMemberSelectionField();
+                field.addValueChangeListener(new Property.ValueChangeListener() {
+                    @Override
+                    public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                        Property property = valueChangeEvent.getProperty();
+                        SimpleProjectMember member = (SimpleProjectMember)property.getValue();
+                        subcribersComp.addFollower(member.getUsername());
+                    }
+                });
+                return field;
             } else if (propertyId.equals("id")) {
                 attachmentUploadField = new ProjectFormAttachmentUploadField();
                 if (beanItem.getId() != null) {
@@ -162,7 +175,6 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
                     || (propertyId.equals("estimateremaintime"))) {
                 return new NumberField();
             } else if (propertyId.equals("selected")) {
-                subcribersComp = new ProjectSubscribersComp(false, CurrentProjectVariables.getProjectId());
                 return subcribersComp;
             }
 
@@ -204,7 +216,13 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new BugAddFormLayoutFactory();
+        if (beanItem.getId() == null) {
+            return new DynaFormLayout(ProjectTypeConstants.BUG,
+                    BugDefaultFormLayoutFactory.getForm());
+        } else {
+            return new DynaFormLayout(ProjectTypeConstants.BUG,
+                    BugDefaultFormLayoutFactory.getForm(), "selected");
+        }
     }
 
     @Override
@@ -213,7 +231,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
     }
 
     @Override
-    public List<SimpleUser> getFollowers() {
+    public List<String> getFollowers() {
         return subcribersComp.getFollowers();
     }
 }

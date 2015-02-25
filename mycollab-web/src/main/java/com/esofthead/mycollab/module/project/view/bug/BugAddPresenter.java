@@ -32,15 +32,10 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
-import com.esofthead.mycollab.vaadin.mvp.NullViewState;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -149,16 +144,16 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			CacheUtils.cleanCache(AppContext.getAccountId(),
 					BugService.class.getName());
 
-            List<SimpleUser> followers = view.getFollowers();
+            List<String> followers = view.getFollowers();
             if (followers.size() > 0) {
                 List<MonitorItem> monitorItems = new ArrayList<>();
-                for (SimpleUser follower:followers) {
+                for (String follower:followers) {
                     MonitorItem monitorItem = new MonitorItem();
                     monitorItem.setMonitorDate(new GregorianCalendar().getTime());
                     monitorItem.setSaccountid(AppContext.getAccountId());
                     monitorItem.setType(ProjectTypeConstants.BUG);
                     monitorItem.setTypeid(bugId);
-                    monitorItem.setUser(follower.getUsername());
+                    monitorItem.setUser(follower);
                     monitorItem.setExtratypeid(CurrentProjectVariables.getProjectId());
                     monitorItems.add(monitorItem);
                 }

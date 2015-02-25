@@ -44,5 +44,5 @@ public interface BugAddView extends IFormAddView<SimpleBug> {
     
     List<Version> getFixedVersion();
 
-    List<SimpleUser> getFollowers();
+    List<String> getFollowers();
 }

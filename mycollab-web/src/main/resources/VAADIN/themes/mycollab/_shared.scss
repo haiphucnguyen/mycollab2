@@ -69,7 +69,7 @@
       border: none;
       background: transparent;
       color: rgb(69, 69, 69);
-      display: flex;
+      @include flex-compatible;
       .v-button-wrap {
         padding: 0px 10px 10px 10px;
       }

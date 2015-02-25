@@ -11,9 +11,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomField;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -22,12 +20,14 @@ import java.util.List;
 public class ProjectSubscribersComp extends CustomField {
     private int projectId;
     private boolean defaultSelectAll;
+    private Set<String> selectedUsers;
 
     private Collection<FollowerCheckbox> memberSelections = new ArrayList<>();
 
-    public ProjectSubscribersComp(boolean defaultSelectionAll, int projectId) {
+    public ProjectSubscribersComp(boolean defaultSelectionAll, int projectId, String... selectedUsersParam) {
         this.projectId = projectId;
         this.defaultSelectAll = defaultSelectionAll;
+        this.selectedUsers = new HashSet<>(Arrays.asList(selectedUsersParam));
     }
 
     @Override
@@ -47,10 +47,17 @@ public class ProjectSubscribersComp extends CustomField {
             }
         });
         container.addComponent(selectAllCheckbox);
-
         for (SimpleUser user : members) {
-            FollowerCheckbox memberCheckbox = new FollowerCheckbox(user);
-            if (defaultSelectAll) {
+            final FollowerCheckbox memberCheckbox = new FollowerCheckbox(user);
+            memberCheckbox.addValueChangeListener(new ValueChangeListener() {
+                @Override
+                public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                    if (!memberCheckbox.getValue()) {
+                        selectAllCheckbox.setValue(false);
+                    }
+                }
+            });
+            if (defaultSelectAll || selectedUsers.contains(user.getUsername())) {
                 memberCheckbox.setValue(true);
             }
             memberSelections.add(memberCheckbox);
@@ -59,11 +66,20 @@ public class ProjectSubscribersComp extends CustomField {
         return container;
     }
 
-    public List<SimpleUser> getFollowers() {
-        List<SimpleUser> followers = new ArrayList<>();
+    public void addFollower(String follower) {
+        List<String> followers = new ArrayList<>();
+        for (FollowerCheckbox followerCheckbox : memberSelections) {
+            if (followerCheckbox.user.getUsername().equals(follower)) {
+                followerCheckbox.setValue(true);
+            }
+        }
+    }
+
+    public List<String> getFollowers() {
+        List<String> followers = new ArrayList<>();
         for (FollowerCheckbox followerCheckbox : memberSelections) {
             if (followerCheckbox.getValue()) {
-                followers.add(followerCheckbox.user);
+                followers.add(followerCheckbox.user.getUsername());
             }
         }
         return followers;

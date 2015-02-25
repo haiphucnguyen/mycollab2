@@ -516,4 +516,14 @@
   .gantt-container {
     height: 100% !important;
   }
+
+  div.v-csslayout.followers-container {
+    @include flex-compatible;
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
+    -ms-writing-mode:lr-tb;
+    .v-checkbox {
+      margin-right: 10px;
+    }
+  }
 }

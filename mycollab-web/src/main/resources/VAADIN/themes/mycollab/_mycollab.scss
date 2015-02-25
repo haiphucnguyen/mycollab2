@@ -4378,20 +4378,7 @@
 
   .vertical-tabsheet {
     > .v-csslayout {
-      display: -webkit-box;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      display: -moz-box;
-      /* OLD - Firefox 19- (buggy but mostly works) */
-      display: -ms-flexbox;
-      /* TWEENER - IE 10 */
-      display: -webkit-flex;
-      /* NEW - Chrome */
-      display: flex;
-      /* NEW, Spec - Opera 12.1, Firefox 20+ */
-      -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-      flex-direction: row;
-      -webkit-box-orient: horizontal;
+      @include flex-compatible;
     }
     .navigator-wrap {
       display: inline-block;
@@ -5465,15 +5452,7 @@
   /* Right Sidebar Layout */
 
   div.v-csslayout.rightsidebar-layout {
-    display: -webkit-box;
-    /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;
-    /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;
-    /* TWEENER - IE 10 */
-    display: -webkit-flex;
-    /* NEW - Chrome */
-    display: flex;
+    @include flex-compatible;
     /* NEW, Spec - Opera 12.1, Firefox 20+ */
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
