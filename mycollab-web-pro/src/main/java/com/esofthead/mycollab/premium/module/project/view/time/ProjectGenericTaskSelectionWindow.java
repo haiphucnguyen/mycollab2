@@ -16,6 +16,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 
@@ -39,9 +40,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		this.setResizable(false);
 		this.setModal(true);
 		this.setWidth("800px");
-		VerticalLayout content = new VerticalLayout();
-		content.setMargin(true);
-		content.setSpacing(true);
+		MVerticalLayout content = new MVerticalLayout();
 		taskTableDisplay = new GenericTaskTableDisplay(
 				Arrays.asList(GenericTaskTableFieldDef.name));
 		taskTableDisplay.addTableListener(new TableClickListener() {
@@ -70,8 +69,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 	}
 
 	private ComponentContainer constructTopPanel() {
-		final MHorizontalLayout basicSearchBody = new MHorizontalLayout()
-				.withSpacing(true).withMargin(true);
+		final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
 		Label nameLbl = new Label("Name:");
 		basicSearchBody.with(nameLbl).withAlign(nameLbl, Alignment.MIDDLE_LEFT);

@@ -22,6 +22,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -165,6 +166,7 @@ public class AddTimeEntryWindow extends Window implements
 					}
 				});
 		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 		controlsLayout.addComponent(saveBtn);
 
 		footer.addComponent(controlsLayout);
