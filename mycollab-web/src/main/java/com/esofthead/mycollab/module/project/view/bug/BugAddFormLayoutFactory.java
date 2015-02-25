@@ -43,7 +43,7 @@ public class BugAddFormLayoutFactory implements IFormLayoutFactory {
 	public ComponentContainer getLayout() {
 		final VerticalLayout layout = new VerticalLayout();
 
-		this.informationLayout = new GridFormLayoutHelper(2, 9, "100%",
+		this.informationLayout = new GridFormLayoutHelper(2, 10, "100%",
 				"167px", Alignment.TOP_LEFT);
 		this.informationLayout.getLayout().setWidth("100%");
 		this.informationLayout.getLayout().setMargin(false);
@@ -108,7 +108,9 @@ public class BugAddFormLayoutFactory implements IFormLayoutFactory {
 			this.informationLayout.addComponent(field,
 					AppContext.getMessage(BugI18nEnum.FORM_ATTACHMENT), 0, 8,
 					2, "100%");
-		}
+		} else if ("selected".equals(propertyId)) {
+            this.informationLayout.addComponent(field, "Notifiers", 0, 9, 2, "100%");
+        }
 
 	}
 }

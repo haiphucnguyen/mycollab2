@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
 import com.esofthead.mycollab.module.project.view.risk.RiskFormatter;
-import com.esofthead.mycollab.utils.FieldGroupFomatter;
+import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
@@ -19,7 +19,7 @@ public class RiskHistoryList extends HistoryLogComponent {
 	}
 
 	@Override
-	protected FieldGroupFomatter buildFormatter() {
+	protected FieldGroupFormatter buildFormatter() {
 		return RiskFormatter.instance;
 	}
 

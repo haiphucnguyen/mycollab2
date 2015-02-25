@@ -41,7 +41,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ProblemReadViewImpl extends
-		AbstractPreviewItemComp2<SimpleProblem> implements ProblemReadView {
+        AbstractPreviewItemComp<SimpleProblem> implements ProblemReadView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -77,21 +77,11 @@ public class ProblemReadViewImpl extends
 				CurrentProjectVariables.getProjectId(), true, true,
 				ProjectRiskRelayEmailNotificationAction.class);
 		commentList.setWidth("100%");
-		commentList.setMargin(true);
-
-		historyList = new ProblemHistoryList(ModuleNameConstants.PRJ,
-				ProjectTypeConstants.PROBLEM);
-
+		historyList = new ProblemHistoryList(ModuleNameConstants.PRJ, ProjectTypeConstants.PROBLEM);
 		dateInfoComp = new DateInfoComp();
-		addToSideBar(dateInfoComp);
-
 		peopleInfoComp = new PeopleInfoComp();
-		addToSideBar(peopleInfoComp);
-
-		followerSheet = new ProjectFollowersComp<>(
-				ProjectTypeConstants.PROBLEM,
-				ProjectRolePermissionCollections.PROBLEMS);
-		addToSideBar(followerSheet);
+		followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.PROBLEM, ProjectRolePermissionCollections.PROBLEMS);
+		addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
 	}
 
 	@Override

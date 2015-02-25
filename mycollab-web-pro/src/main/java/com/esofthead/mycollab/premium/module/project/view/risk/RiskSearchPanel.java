@@ -184,7 +184,7 @@ public class RiskSearchPanel extends
 		}
 
 		@Override
-		protected SearchCriteria fillupSearchCriteria() {
+		protected SearchCriteria fillUpSearchCriteria() {
 			searchCriteria = new RiskSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
 					project.getId()));
@@ -239,8 +239,8 @@ public class RiskSearchPanel extends
 		}
 
 		@Override
-		protected RiskSearchCriteria fillupSearchCriteria() {
-			searchCriteria = super.fillupSearchCriteria();
+		protected RiskSearchCriteria fillUpSearchCriteria() {
+			searchCriteria = super.fillUpSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
 					project.getId()));
 			return searchCriteria;

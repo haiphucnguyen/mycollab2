@@ -201,7 +201,7 @@ class ItemTimeLoggingSearchPanel extends
 
         @SuppressWarnings("unchecked")
         @Override
-        protected SearchCriteria fillupSearchCriteria() {
+        protected SearchCriteria fillUpSearchCriteria() {
             searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria
                     .setProjectIds(new SetSearchField<>(

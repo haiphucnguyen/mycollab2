@@ -168,7 +168,7 @@ public class ProblemSearchPanel extends
         }
 
         @Override
-        protected ProblemSearchCriteria fillupSearchCriteria() {
+        protected ProblemSearchCriteria fillUpSearchCriteria() {
             searchCriteria = new ProblemSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
                     ProblemSearchPanel.this.project.getId()));
@@ -224,8 +224,8 @@ public class ProblemSearchPanel extends
         }
 
         @Override
-        protected ProblemSearchCriteria fillupSearchCriteria() {
-            searchCriteria = super.fillupSearchCriteria();
+        protected ProblemSearchCriteria fillUpSearchCriteria() {
+            searchCriteria = super.fillUpSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
                     ProblemSearchPanel.this.project.getId()));
             return searchCriteria;

@@ -44,7 +44,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
  * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
+public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 		implements RiskReadView {
 
 	private static final long serialVersionUID = 1L;
@@ -88,21 +88,11 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp2<SimpleRisk>
 				CurrentProjectVariables.getProjectId(), true, true,
 				ProjectRiskRelayEmailNotificationAction.class);
 		commentDisplay.setWidth("100%");
-		commentDisplay.setMargin(true);
-
-		historyList = new RiskHistoryList(ModuleNameConstants.PRJ,
-				ProjectTypeConstants.RISK);
-
+		historyList = new RiskHistoryList(ModuleNameConstants.PRJ, ProjectTypeConstants.RISK);
 		dateInfoComp = new DateInfoComp();
-		addToSideBar(dateInfoComp);
-
 		peopleInfoComp = new PeopleInfoComp();
-		addToSideBar(peopleInfoComp);
-
-		followerSheet = new ProjectFollowersComp<>(
-				ProjectTypeConstants.RISK,
-				ProjectRolePermissionCollections.RISKS);
-		addToSideBar(followerSheet);
+		followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
+		addToSideBar(dateInfoComp, peopleInfoComp, followerSheet);
 	}
 
 	@Override
