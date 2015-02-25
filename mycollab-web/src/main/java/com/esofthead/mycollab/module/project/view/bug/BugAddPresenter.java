@@ -17,10 +17,13 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.cache.CacheUtils;
+import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
@@ -29,6 +32,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -40,6 +44,10 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * 
@@ -140,12 +148,29 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 					view.getComponents());
 			CacheUtils.cleanCache(AppContext.getAccountId(),
 					BugService.class.getName());
+
+            List<SimpleUser> followers = view.getFollowers();
+            if (followers.size() > 0) {
+                List<MonitorItem> monitorItems = new ArrayList<>();
+                for (SimpleUser follower:followers) {
+                    MonitorItem monitorItem = new MonitorItem();
+                    monitorItem.setMonitorDate(new GregorianCalendar().getTime());
+                    monitorItem.setSaccountid(AppContext.getAccountId());
+                    monitorItem.setType(ProjectTypeConstants.BUG);
+                    monitorItem.setTypeid(bugId);
+                    monitorItem.setUser(follower.getUsername());
+                    monitorItem.setExtratypeid(CurrentProjectVariables.getProjectId());
+                    monitorItems.add(monitorItem);
+                }
+                MonitorItemService monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
+                monitorItemService.saveMonitorItems(monitorItems);
+            }
 		} else {
 			bugService.updateWithSession(bug, AppContext.getUsername());
 			ProjectFormAttachmentUploadField uploadField = view
 					.getAttachUploadField();
 			uploadField.saveContentsToRepo(bug.getProjectid(),
-					AttachmentType.PROJECT_BUG_TYPE, bug.getId());
+                    AttachmentType.PROJECT_BUG_TYPE, bug.getId());
 
 			int bugId = bug.getId();
 			BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
@@ -153,7 +178,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			bugRelatedItemService.updateAfftedVersionsOfBug(bugId,
 					view.getAffectedVersions());
 			bugRelatedItemService.updateFixedVersionsOfBug(bugId,
-					view.getFixedVersion());
+                    view.getFixedVersion());
 			bugRelatedItemService.updateComponentsOfBug(bugId,
 					view.getComponents());
 			CacheUtils.cleanCache(AppContext.getAccountId(),

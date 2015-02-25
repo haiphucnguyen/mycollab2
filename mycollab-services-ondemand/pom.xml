@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
-            <version>1.9.21</version>
+            <version>1.9.22</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>

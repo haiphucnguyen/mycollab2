@@ -75,12 +75,12 @@
         #end
     </select>
 
-    <insert id="saveMonitorItems" parameterMap="java.util.Collection" lang="velocity">
+    <insert id="saveMonitorItems" lang="velocity">
         insert into m_monitor_item (id, user, monitor_date, type, typeid, extraTypeId, sAccountId)
         values
-        #repeat(monitors $monitorItem "," "(" ")")
-            @{monitorItem.id}, @{monitorItem.user}, @{monitorItem.monitor_date}, @{monitorItem.type},
-            @{monitorItem.typeid},@{monitorItem.extraTypeId}, @{monitorItem.sAccountId}
+        #repeat($monitors $monitorItem "," "" "")
+            (${monitorItem.id}, ${monitorItem.user}, ${monitorItem.monitorDate}, ${monitorItem.type},
+            ${monitorItem.typeid}, ${monitorItem.extratypeid}, ${monitorItem.saccountid})
         #end
     </insert>
 
