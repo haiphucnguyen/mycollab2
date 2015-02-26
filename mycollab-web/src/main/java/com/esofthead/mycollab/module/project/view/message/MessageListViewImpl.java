@@ -52,12 +52,11 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -96,7 +95,6 @@ public class MessageListViewImpl extends AbstractPageView implements
 	public MessageListViewImpl() {
 		super();
 		this.setWidth("100%");
-		this.setMargin(true);
 
 		this.topMessagePanel = new TopMessagePanel();
 		this.topMessagePanel.setWidth("100%");
@@ -352,7 +350,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 		private final SimpleProject project;
 		private MessageSearchCriteria messageSearchCriteria;
-		private String textSearch = "";
+        private TextField nameField;
 
 		public MessageSearchPanel() {
 			this.project = CurrentProjectVariables.getProject();
@@ -369,34 +367,17 @@ public class MessageListViewImpl extends AbstractPageView implements
 					.withStyleName("message-search").withSpacing(true);
 			basicSearchBody.setSizeUndefined();
 
-			final TextField nameField = new TextField();
-			nameField.addTextChangeListener(new TextChangeListener() {
-				@Override
-				public void textChange(final TextChangeEvent event) {
-					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
-
-					MessageSearchPanel.this.messageSearchCriteria
-							.setProjectids(new SetSearchField<>(
-									SearchField.AND,
-									MessageSearchPanel.this.project.getId()));
-
-					MessageSearchPanel.this.textSearch = event.getText().trim();
-
-					MessageSearchPanel.this.messageSearchCriteria
-							.setMessage(new StringSearchField(
-									MessageSearchPanel.this.textSearch));
-
-					MessageSearchPanel.this
-							.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
-				}
-			});
-
-			nameField.setTextChangeEventMode(TextChangeEventMode.LAZY);
-			nameField.setTextChangeTimeout(200);
+			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            nameField.addShortcutListener(new ShortcutListener("MessageTextSearch", ShortcutAction.KeyCode.ENTER,
+                    null) {
+                @Override
+                public void handleAction(Object o, Object o1) {
+                    doSearch();
+                }
+            });
 
-			basicSearchBody.with(nameField).withAlign(nameField,
-					Alignment.MIDDLE_LEFT);
+			basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_LEFT);
 
 			final Button searchBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
@@ -405,19 +386,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 				@Override
 				public void buttonClick(final Button.ClickEvent event) {
-					MessageSearchPanel.this.messageSearchCriteria = new MessageSearchCriteria();
-
-					MessageSearchPanel.this.messageSearchCriteria
-							.setProjectids(new SetSearchField<>(
-									SearchField.AND,
-									MessageSearchPanel.this.project.getId()));
-
-					MessageSearchPanel.this.messageSearchCriteria
-							.setMessage(new StringSearchField(
-									MessageSearchPanel.this.textSearch));
-
-					MessageSearchPanel.this
-							.notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
+					doSearch();
 				}
 			});
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -426,6 +395,13 @@ public class MessageListViewImpl extends AbstractPageView implements
 
 			this.setCompositionRoot(basicSearchBody);
 		}
+
+        private void doSearch() {
+            messageSearchCriteria = new MessageSearchCriteria();
+            messageSearchCriteria.setProjectids(new SetSearchField<>(SearchField.AND, project.getId()));
+            messageSearchCriteria.setMessage(new StringSearchField(nameField.getValue()));
+            notifySearchHandler(MessageSearchPanel.this.messageSearchCriteria);
+        }
 	}
 
 	private final class TopMessagePanel extends VerticalLayout {

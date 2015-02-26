@@ -57,6 +57,7 @@ Version 5.0.1
 
 * Attachment box in Safari display wrongly
 * Query project member tasks show wrong items
+* Query project roles did not work
 
 Version 5.0.0
 -----------------------------
