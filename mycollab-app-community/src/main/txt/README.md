@@ -50,10 +50,13 @@ Version 5.0.1
 **Improvements**
 
 * Add custom notifiers
+* Support default button in windows
+* Improve search result of task list
 
 **Bug Fixes**
 
 * Attachment box in Safari display wrongly
+* Query project member tasks show wrong items
 
 Version 5.0.0
 -----------------------------
