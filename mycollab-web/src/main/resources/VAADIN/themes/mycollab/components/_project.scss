@@ -526,4 +526,12 @@
       margin-right: 10px;
     }
   }
+
+  .project-tag-comp {
+    @include flex-compatible;
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
+    -ms-writing-mode:lr-tb;
+    padding: 0px 30px 10px 30px;
+  }
 }

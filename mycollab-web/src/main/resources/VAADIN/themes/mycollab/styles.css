@@ -7771,6 +7771,18 @@ div.v-csslayout.followers-container .v-checkbox {
 	margin-right: 10px;
 }
 
+.project-tag-comp {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-ms-writing-mode: lr-tb;
+	padding: 0px 30px 10px 30px;
+}
+
 html {
 	overflow: hidden;
 }
