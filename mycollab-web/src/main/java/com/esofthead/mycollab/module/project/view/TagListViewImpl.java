@@ -10,4 +10,5 @@ import com.esofthead.mycollab.vaadin.mvp.ViewScope;
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class TagListViewImpl extends AbstractPageView implements TagListView {
+
 }

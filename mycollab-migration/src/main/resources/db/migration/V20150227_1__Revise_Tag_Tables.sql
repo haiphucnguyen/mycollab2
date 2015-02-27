@@ -9,7 +9,7 @@ ALTER TABLE `s_tag_relationship`
 RENAME TO  `s_tag` ;
 
 ALTER TABLE `s_tag`
-CHANGE COLUMN `typeid` `typeid` VARCHAR(100) NOT NULL ;
+CHANGE COLUMN `typerid` `typeid` VARCHAR(100) NOT NULL ;
 
 ALTER TABLE `s_tag`
 ADD COLUMN `sAccountId` INT(11) NOT NULL,

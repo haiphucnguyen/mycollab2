@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
@@ -139,6 +140,16 @@ public class ProjectController extends AbstractController {
 				presenter.go(projectView, new ProjectScreenData.Edit(project));
 			}
 		});
+
+        this.register(new ApplicationEventListener<ProjectEvent.GotoTagListView>() {
+            @Override
+            public void handle(ProjectEvent.GotoTagListView event) {
+                Tag tag = (Tag)event.getData();
+                ProjectDashboardPresenter presenter = PresenterResolver
+                        .getPresenter(ProjectDashboardPresenter.class);
+                presenter.go(projectView, new ProjectScreenData.GotoTagList(tag));
+            }
+        });
 	}
 
 	private void bindTaskListEvents() {
