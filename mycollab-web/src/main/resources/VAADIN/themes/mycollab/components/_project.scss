@@ -527,11 +527,33 @@
     }
   }
 
-  .project-tag-comp {
+  .v-csslayout.project-tag-comp {
     @include flex-compatible;
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */
     flex-wrap: wrap;
     -ms-writing-mode:lr-tb;
     padding: 0px 30px 10px 30px;
+  }
+
+  .v-csslayout.tag-block {
+    @include flex-compatible;
+    margin: 0px 10px 5px 0px;
+    background-color:bisque;
+    height: 19px;
+    .v-button.link:focus .v-button-wrap, .v-button-wrap,  .v-pressed .v-button-wrap {
+      padding: 2px 5px 0px 5px;
+    }
+    .remove-btn-sup .v-button-wrap {
+      background-color: bisque;
+      padding: 0px;
+      margin: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-image-width: 0;
+      .v-icon {
+        font-size: 10px;
+        height: 19px;
+      }
+    }
   }
 }

@@ -9,5 +9,17 @@ ALTER TABLE `s_tag_relationship`
 RENAME TO  `s_tag` ;
 
 ALTER TABLE `s_tag`
-CHANGE COLUMN `typerid` `typerid` VARCHAR(100) NOT NULL ;
+CHANGE COLUMN `typeid` `typeid` VARCHAR(100) NOT NULL ;
 
+ALTER TABLE `s_tag`
+ADD COLUMN `sAccountId` INT(11) NOT NULL,
+ADD INDEX `FK_s_tag_1_idx` (`sAccountId` ASC);
+ALTER TABLE `s_tag`
+ADD CONSTRAINT `FK_s_tag_1`
+  FOREIGN KEY (`sAccountId`)
+  REFERENCES `s_account` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `s_tag`
+ADD COLUMN `extraTypeId` INT(11) NULL;

@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.common.service;
 
 import com.esofthead.mycollab.common.domain.Tag;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 import java.util.List;
@@ -26,5 +28,9 @@ import java.util.List;
  * @since 5.0.1
  */
 public interface TagService extends ICrudService<Integer, Tag> {
-    List<Tag> findTags(String type, String typeId);
+    @Cacheable
+    List<Tag> findTags(String type, String typeId, @CacheKey int accountId);
+
+    @Cacheable
+    List<Tag> findTagsInAccount(String name, String[] types, @CacheKey int accountId);
 }

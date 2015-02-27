@@ -242,6 +242,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         return topPanel;
     }
 
+    @Override
     protected ComponentContainer createExtraControls() {
         tagViewComponent = new TagViewComponent();
         return tagViewComponent;

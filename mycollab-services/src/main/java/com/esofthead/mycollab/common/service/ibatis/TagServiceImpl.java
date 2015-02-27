@@ -16,15 +16,18 @@
  */
 package com.esofthead.mycollab.common.service.ibatis;
 
+import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.common.dao.TagMapper;
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.domain.TagExample;
 import com.esofthead.mycollab.common.service.TagService;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -42,9 +45,30 @@ public class TagServiceImpl extends DefaultCrudService<Integer, Tag> implements 
     }
 
     @Override
-    public List<Tag> findTags(String type, String typeId) {
+    public int saveWithSession(Tag record, String username) {
         TagExample ex = new TagExample();
-        ex.createCriteria().andTypeEqualTo(type).andTyperidEqualTo(typeId);
+        ex.createCriteria().andTypeEqualTo(record.getType()).andTypeidEqualTo(record.getTypeid()).andNameEqualTo
+                (record.getName());
+        int count = tagMapper.countByExample(ex);
+        if (count > 0) {
+            return 0;
+        }
+        tagMapper.insertAndReturnKey(record);
+        CacheUtils.cleanCaches(record.getSaccountid(), TagService.class);
+        return record.getId();
+    }
+
+    @Override
+    public List<Tag> findTags(String type, String typeId, int accountId) {
+        TagExample ex = new TagExample();
+        ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeId);
+        return tagMapper.selectByExample(ex);
+    }
+
+    @Override
+    public List<Tag> findTagsInAccount(String name, String[] types, @CacheKey int accountId) {
+        TagExample ex = new TagExample();
+        ex.createCriteria().andNameLike(name).andTypeIn(Arrays.asList(types)).andSaccountidEqualTo(accountId);
         return tagMapper.selectByExample(ex);
     }
 }

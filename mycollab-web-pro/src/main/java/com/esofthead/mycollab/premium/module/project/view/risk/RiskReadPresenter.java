@@ -61,7 +61,6 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 					@Override
 					public void onDelete(final SimpleRisk data) {
-
 						ConfirmDialogExt.show(
 								UI.getCurrent(),
 								AppContext.getMessage(
