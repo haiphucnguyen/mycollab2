@@ -71,4 +71,11 @@ public class TagServiceImpl extends DefaultCrudService<Integer, Tag> implements 
         ex.createCriteria().andNameLike(name).andTypeIn(Arrays.asList(types)).andSaccountidEqualTo(accountId);
         return tagMapper.selectByExample(ex);
     }
+
+    @Override
+    public List<Tag> findTagsInProject(int projectId, @CacheKey int accountId) {
+        TagExample ex = new TagExample();
+        ex.createCriteria().andExtratypeidEqualTo(projectId).andSaccountidEqualTo(accountId);
+        return tagMapper.selectByExample(ex);
+    }
 }

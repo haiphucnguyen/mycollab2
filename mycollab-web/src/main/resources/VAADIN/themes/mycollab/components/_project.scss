@@ -556,4 +556,20 @@
       }
     }
   }
+
+  .v-csslayout.tagcloud {
+    border-style: solid;
+    border-top-style: none;
+    border-width: 1px;
+    border-color: $border-color;
+    .tagbutton {
+      margin: 2px;
+      &.selected {
+        background-color:blue;
+      }
+      &.nonselected {
+        background-color:red;
+      }
+    }
+  }
 }

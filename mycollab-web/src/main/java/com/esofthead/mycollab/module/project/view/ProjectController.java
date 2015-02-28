@@ -125,11 +125,11 @@ public class ProjectController extends AbstractController {
 		bindUserGroupEvents();
 		bindFileEvents();
 		bindPageEvents();
+        bindTagEvents();
 	}
 
 	private void bindProjectEvents() {
 		this.register(new ApplicationEventListener<ProjectEvent.GotoEdit>() {
-
 			@Subscribe
 			@Override
 			public void handle(ProjectEvent.GotoEdit event) {
@@ -140,16 +140,6 @@ public class ProjectController extends AbstractController {
 				presenter.go(projectView, new ProjectScreenData.Edit(project));
 			}
 		});
-
-        this.register(new ApplicationEventListener<ProjectEvent.GotoTagListView>() {
-            @Override
-            public void handle(ProjectEvent.GotoTagListView event) {
-                Tag tag = (Tag)event.getData();
-                ProjectDashboardPresenter presenter = PresenterResolver
-                        .getPresenter(ProjectDashboardPresenter.class);
-                presenter.go(projectView, new ProjectScreenData.GotoTagList(tag));
-            }
-        });
 	}
 
 	private void bindTaskListEvents() {
@@ -860,5 +850,18 @@ public class ProjectController extends AbstractController {
 			}
 		});
 	}
+
+    private void bindTagEvents() {
+        this.register(new ApplicationEventListener<ProjectEvent.GotoTagListView>() {
+            @Subscribe
+            @Override
+            public void handle(ProjectEvent.GotoTagListView event) {
+                Tag tag = (Tag)event.getData();
+                ProjectDashboardPresenter presenter = PresenterResolver
+                        .getPresenter(ProjectDashboardPresenter.class);
+                presenter.go(projectView, new ProjectScreenData.GotoTagList(tag));
+            }
+        });
+    }
 
 }

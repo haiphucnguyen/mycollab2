@@ -52,6 +52,8 @@ Version 5.0.1
 * Add custom notifiers
 * Support default button in windows
 * Improve search result of task list
+* Support tag for tasks, bugs
+* User is able to select the notifiers when he creates the new bug
 
 **Bug Fixes**
 

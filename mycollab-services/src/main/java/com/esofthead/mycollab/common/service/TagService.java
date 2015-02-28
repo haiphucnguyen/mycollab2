@@ -33,4 +33,7 @@ public interface TagService extends ICrudService<Integer, Tag> {
 
     @Cacheable
     List<Tag> findTagsInAccount(String name, String[] types, @CacheKey int accountId);
+
+    @Cacheable
+    List<Tag> findTagsInProject(int projectId, @CacheKey int accountId);
 }

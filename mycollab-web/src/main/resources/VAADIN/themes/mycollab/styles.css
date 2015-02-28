@@ -7812,6 +7812,25 @@ div.v-csslayout.followers-container .v-checkbox {
 	height: 19px;
 }
 
+.v-csslayout.tagcloud {
+	border-style: solid;
+	border-top-style: none;
+	border-width: 1px;
+	border-color: #CFCFCF;
+}
+
+.v-csslayout.tagcloud .tagbutton {
+	margin: 2px;
+}
+
+.v-csslayout.tagcloud .tagbutton.selected {
+	background-color: blue;
+}
+
+.v-csslayout.tagcloud .tagbutton.nonselected {
+	background-color: red;
+}
+
 html {
 	overflow: hidden;
 }
