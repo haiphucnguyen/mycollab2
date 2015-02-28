@@ -203,4 +203,22 @@
       color:red;
     }
   }
+
+  .v-button.favorite-btn {
+    background-color: transparent;
+    .v-icon {
+      font-size: $font-large;
+    }
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .v-button.favorite-btn-selected {
+    background-color: transparent;
+    .v-icon {
+      font-size: $font-large;
+      color:yellow;
+    }
+  }
 }

@@ -43,6 +43,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
     private MVerticalLayout sidebarContent;
     private MVerticalLayout bodyContent;
 
+    private Button favoriteBtn;
+
     public AbstractPreviewItemComp(String headerText, Resource iconResource) {
         this(headerText, iconResource, null);
     }
@@ -60,7 +62,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
 
         this.previewLayout = layout;
 
-        header = new MHorizontalLayout();
+        header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%").withMargin(true);
+        ((MHorizontalLayout) header).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {
             if (iconResource instanceof FontAwesome) {
@@ -75,10 +78,18 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
             headerLbl.setValue(headerText);
         }
 
-        ((MHorizontalLayout) header).with(headerLbl).withAlign
-                (headerLbl, Alignment.MIDDLE_LEFT)
-                .expand(headerLbl).withStyleName("hdr-view").withWidth("100%")
-                .withSpacing(true).withMargin(true);
+        favoriteBtn = new Button(FontAwesome.STAR);
+        favoriteBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                toggleFavorite();
+            }
+        });
+        favoriteBtn.addStyleName("favorite-btn");
+
+        Label spaceLbl = new Label();
+
+        ((MHorizontalLayout) header).with(headerLbl, favoriteBtn, spaceLbl).expand(spaceLbl);
 
         this.addComponent(header);
         ComponentContainer extraComp;
@@ -111,11 +122,10 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
         bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).with(previewForm);
         bodyContainer.setContent(bodyContent);
 
-        sidebarContent = new MVerticalLayout().withWidth("250px").withSpacing(true).withStyleName("readview-sidebar");
+        sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
         bodyContainer.setSidebar(sidebarContent);
 
-        FloatingComponent floatSidebar = FloatingComponent
-                .floatThis(sidebarContent);
+        FloatingComponent floatSidebar = FloatingComponent.floatThis(sidebarContent);
         floatSidebar.setContainerId("main-body");
 
         previewLayout.addBody(bodyContainer);
@@ -124,6 +134,12 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
     }
 
     abstract protected void initRelatedComponents();
+
+    abstract protected String getType();
+
+    protected void toggleFavorite() {
+
+    }
 
     public void previewItem(final B item) {
         this.beanItem = item;

@@ -272,6 +272,18 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	color: red;
 }
 
+.v-button.favorite-btn {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn .v-icon {
+	font-size: 14px;
+}
+
+.v-button.favorite-btn:hover {
+	background-color: transparent;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -7048,6 +7060,18 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .warning-icon .v-icon {
 	font-size: 48px;
 	color: red;
+}
+
+.v-button.favorite-btn {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn .v-icon {
+	font-size: 14px;
+}
+
+.v-button.favorite-btn:hover {
+	background-color: transparent;
 }
 
 .h-sidebar-menu {

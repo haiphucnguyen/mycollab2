@@ -126,7 +126,12 @@ public class ProblemReadViewImpl extends
 		return tabContainer;
 	}
 
-	private static class ProblemReadFormFieldFactory extends
+    @Override
+    protected String getType() {
+        return ProjectTypeConstants.PROBLEM;
+    }
+
+    private static class ProblemReadFormFieldFactory extends
 			AbstractBeanFieldGroupViewFieldFactory<SimpleProblem> {
 		private static final long serialVersionUID = 1L;
 

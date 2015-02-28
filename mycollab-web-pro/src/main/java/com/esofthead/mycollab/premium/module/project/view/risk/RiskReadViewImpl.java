@@ -133,7 +133,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 		return tabContainer;
 	}
 
-	private static class RiskReadFormFieldFactory extends
+    @Override
+    protected String getType() {
+        return ProjectTypeConstants.RISK;
+    }
+
+    private static class RiskReadFormFieldFactory extends
 			AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> {
 		private static final long serialVersionUID = 1L;
 
