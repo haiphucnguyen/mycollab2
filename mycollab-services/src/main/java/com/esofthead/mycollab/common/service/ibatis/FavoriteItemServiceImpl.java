@@ -7,11 +7,16 @@ import com.esofthead.mycollab.common.service.FavoriteItemService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
  * @since 5.0.1
  */
+@Service
 public class FavoriteItemServiceImpl extends DefaultCrudService<Integer, FavoriteItem> implements FavoriteItemService {
     @Autowired
     private FavoriteItemMapper favoriteItemMapper;
@@ -22,14 +27,25 @@ public class FavoriteItemServiceImpl extends DefaultCrudService<Integer, Favorit
     }
 
     @Override
-    public void saveOrUpdate(FavoriteItem item) {
+    public void saveOrDelete(FavoriteItem item) {
         FavoriteItemExample ex = new FavoriteItemExample();
-        ex.createCriteria().andTypeEqualTo(item.getType()).andTypeidEqualTo(item.getTypeid());
+        ex.createCriteria().andTypeEqualTo(item.getType()).andTypeidEqualTo(item.getTypeid()).andCreateduserEqualTo
+                (item.getCreateduser());
         int count = favoriteItemMapper.countByExample(ex);
         if (count > 0) {
-            favoriteItemMapper.updateByExample(item, ex);
+            favoriteItemMapper.deleteByExample(ex);
         } else {
+            Date now = new GregorianCalendar().getTime();
+            item.setLastupdatedtime(now);
+            item.setCreatedtime(now);
             favoriteItemMapper.insert(item);
         }
+    }
+
+    @Override
+    public boolean isUserFavorite(String username, String type, String typeId) {
+        FavoriteItemExample ex = new FavoriteItemExample();
+        ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeId).andCreateduserEqualTo(username);
+        return (favoriteItemMapper.countByExample(ex) > 0);
     }
 }

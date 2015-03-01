@@ -8,5 +8,7 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
  * @since 5.0.1
  */
 public interface FavoriteItemService extends ICrudService<Integer, FavoriteItem> {
-    void saveOrUpdate(FavoriteItem item);
+    void saveOrDelete(FavoriteItem item);
+
+    boolean isUserFavorite(String username, String type, String typeId);
 }

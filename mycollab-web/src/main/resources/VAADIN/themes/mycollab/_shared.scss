@@ -209,7 +209,7 @@
     .v-icon {
       font-size: $font-large;
     }
-    &:hover {
+    &:hover,&:focus {
       background-color: transparent;
     }
   }
@@ -218,7 +218,7 @@
     background-color: transparent;
     .v-icon {
       font-size: $font-large;
-      color:yellow;
+      color:coral;
     }
   }
 }

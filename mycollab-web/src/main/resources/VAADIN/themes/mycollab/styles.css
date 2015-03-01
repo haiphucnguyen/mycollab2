@@ -280,8 +280,17 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	font-size: 14px;
 }
 
-.v-button.favorite-btn:hover {
+.v-button.favorite-btn:hover, .v-button.favorite-btn:focus {
 	background-color: transparent;
+}
+
+.v-button.favorite-btn-selected {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn-selected .v-icon {
+	font-size: 14px;
+	color: coral;
 }
 
 .stickytooltip {
@@ -7070,8 +7079,17 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	font-size: 14px;
 }
 
-.v-button.favorite-btn:hover {
+.v-button.favorite-btn:hover, .v-button.favorite-btn:focus {
 	background-color: transparent;
+}
+
+.v-button.favorite-btn-selected {
+	background-color: transparent;
+}
+
+.v-button.favorite-btn-selected .v-icon {
+	font-size: 14px;
+	color: coral;
 }
 
 .h-sidebar-menu {

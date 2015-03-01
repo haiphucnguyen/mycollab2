@@ -1,5 +1,5 @@
 CREATE TABLE `s_favorite` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `typeid` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastUpdatedTime` datetime NOT NULL,

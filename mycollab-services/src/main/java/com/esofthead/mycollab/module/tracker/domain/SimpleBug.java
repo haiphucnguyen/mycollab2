@@ -16,14 +16,13 @@
  */
 package com.esofthead.mycollab.module.tracker.domain;
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-
-import com.esofthead.mycollab.core.arguments.NotBindable;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 
 /**
  * 
@@ -40,8 +39,6 @@ public class SimpleBug extends BugWithBLOBs {
 	private String assignuserFullName;
 	private String projectname;
 	private String projectShortName;
-
-    private boolean favorite;
 
 	@NotBindable
 	private List<Version> affectedVersions;
@@ -186,12 +183,4 @@ public class SimpleBug extends BugWithBLOBs {
 	public void setProjectShortName(String projectShortName) {
 		this.projectShortName = projectShortName;
 	}
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
-    }
 }

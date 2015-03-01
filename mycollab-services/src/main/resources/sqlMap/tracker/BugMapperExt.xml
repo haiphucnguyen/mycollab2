@@ -25,9 +25,6 @@
         <result column="milestoneName" jdbcType="VARCHAR"
             property="milestoneName" />
 
-        <result column="favorite" jdbcType="BOOLEAN"
-                property="favorite" />
-
         <collection columnPrefix="affectedversion_" notNullColumn="id"
             ofType="com.esofthead.mycollab.module.tracker.domain.Version"
             property="affectedVersions"
@@ -396,8 +393,7 @@
                  fixedversion.createdTime as fixedversion_createdTime, fixedversion.lastUpdatedTime as fixedversion_lastUpdatedTime,
                  component.id as component_id, component.projectid as component_projectid, component.componentname as component_componentname, 
                  component.userlead as component_userlead, component.description as component_description, component.createdUser as component_createdUser, 
-                 component.createdTime as component_createdTime, component.lastUpdatedTime as component_lastUpdatedTime,
-                 EXISTS (SELECT 1 FROM s_favorite WHERE s_favorite.type='Project-Bug' AND s_favorite.typeid=m_tracker_bug.id AND s_favorite.createdUser= LIMIT 1) AS favorite
+                 component.createdTime as component_createdTime, component.lastUpdatedTime as component_lastUpdatedTime
            FROM m_tracker_bug
                LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
                LEFT OUTER JOIN s_user AS assignuserTbl ON (m_tracker_bug.assignuser=assignuserTbl.username)

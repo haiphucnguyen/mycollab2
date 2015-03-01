@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.domain.FavoriteItem;
 import com.esofthead.mycollab.common.service.FavoriteItemService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
@@ -53,6 +54,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
     private MVerticalLayout bodyContent;
 
     private Button favoriteBtn;
+    private FavoriteItemService favoriteItemService = ApplicationContextUtil.getSpringBean(FavoriteItemService.class);
 
     public AbstractPreviewItemComp(String headerText, Resource iconResource) {
         this(headerText, iconResource, null);
@@ -152,18 +154,18 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
             if (isFavorite()) {
                 favoriteBtn.removeStyleName("favorite-btn-selected");
                 favoriteBtn.addStyleName("favorite-btn");
-                PropertyUtils.setProperty(beanItem, "isFavorite", false);
             } else {
                 favoriteBtn.addStyleName("favorite-btn-selected");
                 favoriteBtn.removeStyleName("favorite-btn");
-                PropertyUtils.setProperty(beanItem, "isFavorite", true);
             }
             FavoriteItem favoriteItem = new FavoriteItem();
             favoriteItem.setExtratypeid(CurrentProjectVariables.getProjectId());
             favoriteItem.setType(getType());
             favoriteItem.setTypeid(PropertyUtils.getProperty(beanItem, "id").toString());
+            favoriteItem.setSaccountid(AppContext.getAccountId());
+            favoriteItem.setCreateduser(AppContext.getUsername());
             FavoriteItemService favoriteItemService = ApplicationContextUtil.getSpringBean(FavoriteItemService.class);
-            favoriteItemService.saveOrUpdate(favoriteItem);
+            favoriteItemService.saveOrDelete(favoriteItem);
         } catch (Exception e) {
             LOG.error("Error while set favorite flag to bean", e);
         }
@@ -171,8 +173,9 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
 
     private boolean isFavorite() {
         try {
-            return (Boolean) PropertyUtils.getProperty(beanItem, "isFavorite");
+            return favoriteItemService.isUserFavorite(AppContext.getUsername(), getType(), PropertyUtils.getProperty(beanItem, "id").toString());
         } catch (Exception e) {
+            LOG.error("Error while check favorite", e);
             return false;
         }
     }

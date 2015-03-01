@@ -96,7 +96,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		mainBody.addComponent(constructTopNavigationBlock());
 		mainBody.addComponent(constructButtonCustomizeBlock());
 
-		MHorizontalLayout controlButton = new MHorizontalLayout().withMargin(true).withWidth("100%");
+		MHorizontalLayout controlButton = new MHorizontalLayout().withWidth("100%");
 
 		Button saveBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
@@ -149,10 +149,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 		blockLayout.addComponent(blockHeader);
 		blockLayout.setSpacing(true);
 
-		HorizontalLayout blockBody = new HorizontalLayout();
-		blockBody.setMargin(new MarginInfo(false, true, false, true));
-		blockBody.setWidth("100%");
-		blockBody.setSpacing(true);
+		MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
+                .withWidth("100%");
 		blockLayout.addComponent(blockBody);
 
 		final UploadField logoUploadField = new UploadField() {
