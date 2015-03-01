@@ -21,9 +21,14 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -51,7 +56,32 @@ public class TaskSearchPanel extends
 			TaskSearchCriteria.p_duedate, TaskSearchCriteria.p_lastupdatedtime,
 			TaskSearchCriteria.p_status };
 
-	@Override
+    @Override
+    protected Label buildSearchTitle() {
+        return new ProjectViewHeader(ProjectTypeConstants.TASK, "Tasks");
+    }
+
+    @Override
+    protected void buildExtraControls() {
+        Button backBtn = new Button(
+                AppContext.getMessage(TaskI18nEnum.BUTTON_BACK_TO_DASHBOARD),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        EventBusFactory.getInstance()
+                                .post(new TaskListEvent.GotoTaskListScreen(
+                                        this, null));
+
+                    }
+                });
+        backBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        backBtn.setIcon(FontAwesome.ARROW_LEFT);
+        addHeaderRight(backBtn);
+    }
+
+    @Override
 	protected SearchLayout<TaskSearchCriteria> createBasicSearchLayout() {
 		return new TaskBasicSearchLayout();
 	}
@@ -75,9 +105,7 @@ public class TaskSearchPanel extends
 		moveToBasicSearchLayout();
 	}
 
-	private class TaskBasicSearchLayout extends
-			BasicSearchLayout<TaskSearchCriteria> {
-
+	private class TaskBasicSearchLayout extends BasicSearchLayout<TaskSearchCriteria> {
 		private static final long serialVersionUID = 1L;
 
 		public TaskBasicSearchLayout() {
@@ -93,8 +121,7 @@ public class TaskSearchPanel extends
 
 		@Override
 		public ComponentContainer constructBody() {
-			final MHorizontalLayout basicSearchBody = new MHorizontalLayout()
-					.withSpacing(true).withMargin(true);
+			final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
 			Label nameLbl = new Label("Name:");
 			basicSearchBody.with(nameLbl).withAlign(nameLbl,

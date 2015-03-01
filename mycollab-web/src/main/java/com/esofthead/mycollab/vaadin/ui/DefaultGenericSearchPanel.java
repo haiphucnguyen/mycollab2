@@ -17,6 +17,11 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Label;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * 
@@ -29,6 +34,8 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria>
 		extends GenericSearchPanel<S> {
 	private static final long serialVersionUID = 1L;
 
+    private MHorizontalLayout rightComponent;
+
 	public DefaultGenericSearchPanel() {
 		moveToBasicSearchLayout();
 	}
@@ -36,6 +43,26 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria>
 	abstract protected SearchLayout<S> createBasicSearchLayout();
 
 	abstract protected SearchLayout<S> createAdvancedSearchLayout();
+
+    abstract protected Label buildSearchTitle();
+
+    abstract protected void buildExtraControls();
+
+    protected ComponentContainer constructHeader() {
+        Label headerText = buildSearchTitle();
+        rightComponent = new MHorizontalLayout();
+
+        MHorizontalLayout header = new MHorizontalLayout()
+                .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
+                .withMargin(new MarginInfo(true, false, true, false));
+
+        header.with(headerText, rightComponent)
+                .withAlign(headerText, Alignment.MIDDLE_LEFT)
+                .withAlign(rightComponent, Alignment.MIDDLE_RIGHT)
+                .expand(headerText);
+
+        return header;
+    }
 
 	protected void moveToBasicSearchLayout() {
 		SearchLayout<S> layout = createBasicSearchLayout();

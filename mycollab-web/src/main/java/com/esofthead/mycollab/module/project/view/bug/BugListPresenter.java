@@ -72,7 +72,6 @@ public class BugListPresenter extends
 
 			BugFilterParameter param = (BugFilterParameter) data.getParams();
 			searchCriteria = param.getSearchCriteria();
-			view.setTitle(param.getScreenTitle());
 			int totalCount = bugService
 					.getTotalCount(param.getSearchCriteria());
 

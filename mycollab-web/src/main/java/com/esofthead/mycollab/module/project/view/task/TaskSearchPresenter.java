@@ -67,8 +67,6 @@ public class TaskSearchPresenter extends AbstractPresenter<TaskSearchView>
 			trackerContainer.addComponent(view.getWidget());
 
 			TaskFilterParameter param = (TaskFilterParameter) data.getParams();
-
-			view.setTitle(param.getScreenTitle());
 			doSearch(param.getSearchCriteria());
 			if (param.getAdvanceSearch()) {
 				view.moveToAdvanceSearch();

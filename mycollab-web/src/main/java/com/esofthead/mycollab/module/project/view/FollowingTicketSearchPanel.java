@@ -55,7 +55,17 @@ public class FollowingTicketSearchPanel extends
 
 	private List<SimpleProject> projects;
 
-	@Override
+    @Override
+    protected Label buildSearchTitle() {
+        return null;
+    }
+
+    @Override
+    protected void buildExtraControls() {
+
+    }
+
+    @Override
 	@SuppressWarnings("unchecked")
 	protected SearchLayout<FollowingTicketSearchCriteria> createBasicSearchLayout() {
 		basicSearchLayout = new FollowingTicketBasicSearchLayout();

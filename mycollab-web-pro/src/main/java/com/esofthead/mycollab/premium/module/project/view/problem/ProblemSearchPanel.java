@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -10,7 +9,6 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
@@ -21,7 +19,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -30,8 +27,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProblemSearchPanel extends
-        DefaultGenericSearchPanel<ProblemSearchCriteria> {
+public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
     private static Param[] paramFields = new Param[]{
@@ -40,25 +36,13 @@ public class ProblemSearchPanel extends
             ProblemSearchCriteria.p_priority, ProblemSearchCriteria.p_status,
             ProblemSearchCriteria.p_duedate, ProblemSearchCriteria.p_raiseddate};
 
-    private final SimpleProject project;
-    protected ProblemSearchCriteria searchCriteria;
-
-    public ProblemSearchPanel() {
-        this.project = (SimpleProject) MyCollabSession.getVariable("project");
+    @Override
+    protected Label buildSearchTitle() {
+        return new ProjectViewHeader(ProjectTypeConstants.PROBLEM, "Problems");
     }
 
     @Override
-    protected SearchLayout<ProblemSearchCriteria> createBasicSearchLayout() {
-        return new ProblemBasicSearchLayout();
-    }
-
-    @Override
-    protected SearchLayout<ProblemSearchCriteria> createAdvancedSearchLayout() {
-        return new ProblemAdvancedSearchLayout();
-    }
-
-    private HorizontalLayout constructHeader() {
-
+    protected void buildExtraControls() {
         final Button createBtn = new Button(
                 AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
                 new Button.ClickListener() {
@@ -74,19 +58,19 @@ public class ProblemSearchPanel extends
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.PROBLEMS));
-
-        Label headerText = new ProjectViewHeader(ProjectTypeConstants.PROBLEM, "Problems");
-        headerText.setStyleName(UIConstants.HEADER_TEXT);
-
-        return new MHorizontalLayout()
-                .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
-                .withSpacing(true)
-                .withMargin(new MarginInfo(true, false, true, false))
-                .with(headerText, createBtn)
-                .withAlign(headerText, Alignment.MIDDLE_LEFT)
-                .withAlign(createBtn, Alignment.MIDDLE_RIGHT)
-                .expand(headerText);
+        this.addHeaderRight(createBtn);
     }
+
+    @Override
+    protected SearchLayout<ProblemSearchCriteria> createBasicSearchLayout() {
+        return new ProblemBasicSearchLayout();
+    }
+
+    @Override
+    protected SearchLayout<ProblemSearchCriteria> createAdvancedSearchLayout() {
+        return new ProblemAdvancedSearchLayout();
+    }
+
 
     private class ProblemBasicSearchLayout extends
             BasicSearchLayout<ProblemSearchCriteria> {
@@ -101,8 +85,7 @@ public class ProblemSearchPanel extends
 
         @Override
         public ComponentContainer constructBody() {
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout()
-                    .withSpacing(true).withMargin(true);
+            final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
             this.nameField = this.createSeachSupportTextField(new TextField(),
                     "NameFieldOfBasicSearch");
@@ -169,10 +152,9 @@ public class ProblemSearchPanel extends
 
         @Override
         protected ProblemSearchCriteria fillUpSearchCriteria() {
-            searchCriteria = new ProblemSearchCriteria();
+            ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-                    ProblemSearchPanel.this.project.getId()));
-
+                    CurrentProjectVariables.getProjectId()));
             searchCriteria.setProblemname(new StringSearchField(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
@@ -225,9 +207,9 @@ public class ProblemSearchPanel extends
 
         @Override
         protected ProblemSearchCriteria fillUpSearchCriteria() {
-            searchCriteria = super.fillUpSearchCriteria();
+            ProblemSearchCriteria searchCriteria = super.fillUpSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-                    ProblemSearchPanel.this.project.getId()));
+                    CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
     }
