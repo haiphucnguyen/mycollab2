@@ -41,6 +41,8 @@ public class SimpleBug extends BugWithBLOBs {
 	private String projectname;
 	private String projectShortName;
 
+    private boolean favorite;
+
 	@NotBindable
 	private List<Version> affectedVersions;
 
@@ -184,4 +186,12 @@ public class SimpleBug extends BugWithBLOBs {
 	public void setProjectShortName(String projectShortName) {
 		this.projectShortName = projectShortName;
 	}
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
 }

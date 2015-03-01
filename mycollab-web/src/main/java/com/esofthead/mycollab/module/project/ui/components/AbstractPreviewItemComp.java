@@ -16,6 +16,10 @@
  */
 package com.esofthead.mycollab.module.project.ui.components;
 
+import com.esofthead.mycollab.common.domain.FavoriteItem;
+import com.esofthead.mycollab.common.service.FavoriteItemService;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
@@ -23,6 +27,9 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -33,6 +40,8 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
         implements PageView {
     private static final long serialVersionUID = 1L;
+
+    private static Logger LOG = LoggerFactory.getLogger(AbstractPreviewItemComp.class);
 
     protected B beanItem;
     protected AdvancedPreviewBeanForm<B> previewForm;
@@ -62,7 +71,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
 
         this.previewLayout = layout;
 
-        header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%").withMargin(true);
+        header = new MHorizontalLayout().withSpacing(false).withStyleName("hdr-view").withWidth("100%").withMargin
+                (true);
         ((MHorizontalLayout) header).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {
@@ -138,7 +148,33 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
     abstract protected String getType();
 
     protected void toggleFavorite() {
+        try {
+            if (isFavorite()) {
+                favoriteBtn.removeStyleName("favorite-btn-selected");
+                favoriteBtn.addStyleName("favorite-btn");
+                PropertyUtils.setProperty(beanItem, "isFavorite", false);
+            } else {
+                favoriteBtn.addStyleName("favorite-btn-selected");
+                favoriteBtn.removeStyleName("favorite-btn");
+                PropertyUtils.setProperty(beanItem, "isFavorite", true);
+            }
+            FavoriteItem favoriteItem = new FavoriteItem();
+            favoriteItem.setExtratypeid(CurrentProjectVariables.getProjectId());
+            favoriteItem.setType(getType());
+            favoriteItem.setTypeid(PropertyUtils.getProperty(beanItem, "id").toString());
+            FavoriteItemService favoriteItemService = ApplicationContextUtil.getSpringBean(FavoriteItemService.class);
+            favoriteItemService.saveOrUpdate(favoriteItem);
+        } catch (Exception e) {
+            LOG.error("Error while set favorite flag to bean", e);
+        }
+    }
 
+    private boolean isFavorite() {
+        try {
+            return (Boolean) PropertyUtils.getProperty(beanItem, "isFavorite");
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void previewItem(final B item) {
@@ -149,6 +185,12 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
         previewForm.setFormLayoutFactory(initFormLayoutFactory());
         previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
         previewForm.setBean(item);
+
+        if (isFavorite()) {
+            favoriteBtn.addStyleName("favorite-btn-selected");
+        } else {
+            favoriteBtn.addStyleName("favorite-btn");
+        }
 
         onPreviewItem();
     }

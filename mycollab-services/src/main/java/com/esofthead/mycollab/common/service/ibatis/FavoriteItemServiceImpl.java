@@ -2,6 +2,7 @@ package com.esofthead.mycollab.common.service.ibatis;
 
 import com.esofthead.mycollab.common.dao.FavoriteItemMapper;
 import com.esofthead.mycollab.common.domain.FavoriteItem;
+import com.esofthead.mycollab.common.domain.FavoriteItemExample;
 import com.esofthead.mycollab.common.service.FavoriteItemService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
@@ -18,5 +19,17 @@ public class FavoriteItemServiceImpl extends DefaultCrudService<Integer, Favorit
     @Override
     public ICrudGenericDAO<Integer, FavoriteItem> getCrudMapper() {
         return favoriteItemMapper;
+    }
+
+    @Override
+    public void saveOrUpdate(FavoriteItem item) {
+        FavoriteItemExample ex = new FavoriteItemExample();
+        ex.createCriteria().andTypeEqualTo(item.getType()).andTypeidEqualTo(item.getTypeid());
+        int count = favoriteItemMapper.countByExample(ex);
+        if (count > 0) {
+            favoriteItemMapper.updateByExample(item, ex);
+        } else {
+            favoriteItemMapper.insert(item);
+        }
     }
 }
