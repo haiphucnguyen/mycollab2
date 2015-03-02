@@ -46,9 +46,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * 
  */
 public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteria> {
-
 	private static final long serialVersionUID = 1L;
-	private CaseSearchCriteria searchCriteria;
 
 	private static Param[] paramFields = new Param[] {
 			CaseSearchCriteria.p_account, CaseSearchCriteria.p_priority,
@@ -211,26 +209,26 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
 
 		@Override
 		protected SearchCriteria fillUpSearchCriteria() {
-			CaseSearchPanel.this.searchCriteria = new CaseSearchCriteria();
-			CaseSearchPanel.this.searchCriteria
+            CaseSearchCriteria searchCriteria = new CaseSearchCriteria();
+			searchCriteria
 					.setSaccountid(new NumberSearchField(SearchField.AND,
 							AppContext.getAccountId()));
 
 			if (StringUtils.isNotBlank(this.subjectField.getValue().trim())) {
-				CaseSearchPanel.this.searchCriteria
+				searchCriteria
 						.setSubject(new StringSearchField(SearchField.AND,
 								this.subjectField.getValue().trim()));
 			}
 
 			if (this.myItemCheckbox.getValue()) {
-				CaseSearchPanel.this.searchCriteria
+				searchCriteria
 						.setAssignUsers(new SetSearchField<>(
 								SearchField.AND, new String[] { AppContext
 										.getUsername() }));
 			} else {
-				CaseSearchPanel.this.searchCriteria.setAssignUsers(null);
+				searchCriteria.setAssignUsers(null);
 			}
-			return CaseSearchPanel.this.searchCriteria;
+			return searchCriteria;
 		}
 	}
 }
