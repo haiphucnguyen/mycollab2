@@ -389,4 +389,9 @@ public class FileActivityStreamPagedList
 			}
 		}
 	}
+
+    @Override
+    public void setTotalCountNumber(int totalCountNumber) {
+
+    }
 }

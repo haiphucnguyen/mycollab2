@@ -26,13 +26,13 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
-import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -45,9 +45,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @since 4.0
  * 
  */
-public class TaskSearchPanel extends
-		DefaultGenericSearchPanel<TaskSearchCriteria> {
-
+public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 	protected TaskSearchCriteria searchCriteria;
 
@@ -57,7 +55,7 @@ public class TaskSearchPanel extends
 			TaskSearchCriteria.p_status };
 
     @Override
-    protected Label buildSearchTitle() {
+    protected HeaderWithFontAwesome buildSearchTitle() {
         return new ProjectViewHeader(ProjectTypeConstants.TASK, "Tasks");
     }
 
@@ -124,23 +122,18 @@ public class TaskSearchPanel extends
 			final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
 			Label nameLbl = new Label("Name:");
-			basicSearchBody.with(nameLbl).withAlign(nameLbl,
-					Alignment.MIDDLE_LEFT);
+			basicSearchBody.with(nameLbl).withAlign(nameLbl, Alignment.MIDDLE_LEFT);
 
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			basicSearchBody.with(nameField).withAlign(nameField,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-			this.myItemCheckbox = new CheckBox(
-					AppContext
+			this.myItemCheckbox = new CheckBox(AppContext
 							.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
 			this.myItemCheckbox.setWidth("75px");
-			basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
-			final Button searchBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
+			final Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
 			searchBtn.setIcon(FontAwesome.SEARCH);
 			searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			searchBtn.addClickListener(new Button.ClickListener() {
@@ -151,11 +144,9 @@ public class TaskSearchPanel extends
 					callSearchAction();
 				}
 			});
-			basicSearchBody.with(searchBtn).withAlign(searchBtn,
-					Alignment.MIDDLE_LEFT);
+			basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
-			final Button cancelBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+			final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
 			cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			cancelBtn.addStyleName("cancel-button");
 			cancelBtn.addClickListener(new Button.ClickListener() {
@@ -166,11 +157,9 @@ public class TaskSearchPanel extends
 					nameField.setValue("");
 				}
 			});
-			basicSearchBody.with(cancelBtn).withAlign(cancelBtn,
-					Alignment.MIDDLE_CENTER);
+			basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-			final Button advancedSearchBtn = new Button(
-					AppContext
+			final Button advancedSearchBtn = new Button(AppContext
 							.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -204,13 +193,12 @@ public class TaskSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return new HorizontalLayout();
+			return TaskSearchPanel.this.constructHeader();
 		}
 
 	}
 
-	private class TaskAdvancedSearchLayout extends
-			DynamicQueryParamLayout<TaskSearchCriteria> {
+	private class TaskAdvancedSearchLayout extends DynamicQueryParamLayout<TaskSearchCriteria> {
 		private static final long serialVersionUID = 1L;
 
 		public TaskAdvancedSearchLayout() {
@@ -219,7 +207,7 @@ public class TaskSearchPanel extends
 
 		@Override
 		public ComponentContainer constructHeader() {
-			return new HorizontalLayout();
+            return TaskSearchPanel.this.constructHeader();
 		}
 
 		@Override
@@ -248,5 +236,4 @@ public class TaskSearchPanel extends
 			return searchCriteria;
 		}
 	}
-
 }

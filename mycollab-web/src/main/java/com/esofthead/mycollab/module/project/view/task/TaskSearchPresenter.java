@@ -67,12 +67,12 @@ public class TaskSearchPresenter extends AbstractPresenter<TaskSearchView>
 			trackerContainer.addComponent(view.getWidget());
 
 			TaskFilterParameter param = (TaskFilterParameter) data.getParams();
-			doSearch(param.getSearchCriteria());
 			if (param.getAdvanceSearch()) {
 				view.moveToAdvanceSearch();
 			} else {
 				view.moveToBasicSearch();
 			}
+            doSearch(param.getSearchCriteria());
 		} else {
 			NotificationUtil.showMessagePermissionAlert();
 		}
@@ -82,6 +82,8 @@ public class TaskSearchPresenter extends AbstractPresenter<TaskSearchView>
 	public void doSearch(TaskSearchCriteria searchCriteria) {
 		if (searchCriteria.getTaskName() != null)
 			view.setSearchInputValue(searchCriteria.getTaskName().getValue());
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+
+		int totalCountItems = view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        view.getSearchHandlers().setTotalCountNumber(totalCountItems);
 	}
 }

@@ -7,13 +7,12 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.ui.components.ItemOrderComboBox;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -28,21 +27,42 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 2.0
  */
-class ItemTimeLoggingSearchPanel extends
-        GenericSearchPanel<ItemTimeLoggingSearchCriteria> {
+class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggingSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
+    private TimeLoggingBasicSearchLayout layout;
+    private Button createBtn;
 
-    protected ItemTimeLoggingSearchCriteria searchCriteria;
-    private final TimeLoggingAdvancedSearchLayout layout;
+    @Override
+    protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
+        layout = new TimeLoggingBasicSearchLayout();
+        return layout;
+    }
 
-    public ItemTimeLoggingSearchPanel() {
-        layout = new TimeLoggingAdvancedSearchLayout();
-        this.setCompositionRoot(layout);
+    @Override
+    protected SearchLayout<ItemTimeLoggingSearchCriteria> createAdvancedSearchLayout() {
+        return null;
+    }
+
+    @Override
+    protected HeaderWithFontAwesome buildSearchTitle() {
+        return new ProjectViewHeader(ProjectTypeConstants.TIME,
+                AppContext
+                        .getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
+    }
+
+    @Override
+    protected void buildExtraControls() {
+        createBtn = new Button(
+                AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
+        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setIcon(FontAwesome.PLUS);
+        createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
+        addHeaderRight(createBtn);
     }
 
     public void addClickListener(Button.ClickListener listener) {
-        layout.createBtn.addClickListener(listener);
+        createBtn.addClickListener(listener);
     }
 
     public void addComponent(Component c, int index) {
@@ -60,43 +80,23 @@ class ItemTimeLoggingSearchPanel extends
     }
 
     @SuppressWarnings({"serial", "rawtypes"})
-    private class TimeLoggingAdvancedSearchLayout extends AdvancedSearchLayout {
-
+    private class TimeLoggingBasicSearchLayout extends BasicSearchLayout {
         private DateFieldExt dateStart, dateEnd;
 
         private ProjectMemberListSelect userField;
         private ComboBox groupField, orderField;
         private MHorizontalLayout buttonControls;
-        private Button createBtn;
         private VerticalLayout bodyWrap;
 
         @SuppressWarnings("unchecked")
-        public TimeLoggingAdvancedSearchLayout() {
+        public TimeLoggingBasicSearchLayout() {
             super(ItemTimeLoggingSearchPanel.this);
             this.setStyleName("time-tracking-logging");
         }
 
         @Override
         public ComponentContainer constructHeader() {
-            Label headerText = new ProjectViewHeader(ProjectTypeConstants.TIME,
-                    AppContext
-                            .getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
-            headerText.setStyleName(UIConstants.HEADER_TEXT);
-
-            createBtn = new Button(
-                    AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
-            createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            createBtn.setIcon(FontAwesome.PLUS);
-            createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
-
-            return new MHorizontalLayout()
-                    .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
-                    .withSpacing(true)
-                    .withMargin(new MarginInfo(true, false, true, false))
-                    .with(headerText, createBtn)
-                    .withAlign(headerText, Alignment.MIDDLE_LEFT)
-                    .withAlign(createBtn, Alignment.MIDDLE_RIGHT)
-                    .expand(headerText);
+            return ItemTimeLoggingSearchPanel.this.constructHeader();
         }
 
         @Override
@@ -161,7 +161,7 @@ class ItemTimeLoggingSearchPanel extends
                     new Button.ClickListener() {
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TimeLoggingAdvancedSearchLayout.this
+                            TimeLoggingBasicSearchLayout.this
                                     .callSearchAction();
                         }
                     });
@@ -174,7 +174,7 @@ class ItemTimeLoggingSearchPanel extends
                     new Button.ClickListener() {
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TimeLoggingAdvancedSearchLayout.this.userField
+                            TimeLoggingBasicSearchLayout.this.userField
                                     .setValue(null);
                             setDefaultValue();
                         }
@@ -194,32 +194,23 @@ class ItemTimeLoggingSearchPanel extends
             return bodyWrap;
         }
 
-        @Override
-        public ComponentContainer constructFooter() {
-            return new CssLayout();
-        }
-
         @SuppressWarnings("unchecked")
         @Override
         protected SearchCriteria fillUpSearchCriteria() {
-            searchCriteria = new ItemTimeLoggingSearchCriteria();
-            searchCriteria
-                    .setProjectIds(new SetSearchField<>(
+            ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+            searchCriteria.setProjectIds(new SetSearchField<>(
                             CurrentProjectVariables.getProjectId()));
 
-            searchCriteria
-                    .setRangeDate(getRangeSearchValue());
+            searchCriteria.setRangeDate(getRangeSearchValue());
 
             final Collection<String> selectedUsers = (Collection<String>) this.userField
                     .getValue();
 
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
-                searchCriteria
-                        .setLogUsers(new SetSearchField(SearchField.AND,
+                searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
                                 selectedUsers));
             }
-
-            return ItemTimeLoggingSearchPanel.this.searchCriteria;
+            return searchCriteria;
         }
 
         private RangeDateSearchField getRangeSearchValue() {

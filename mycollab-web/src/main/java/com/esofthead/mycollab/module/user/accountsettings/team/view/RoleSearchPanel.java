@@ -53,15 +53,13 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 	private HorizontalLayout createSearchTopPanel() {
 		final MHorizontalLayout layout = new MHorizontalLayout()
 				.withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
-				.withSpacing(true)
 				.withMargin(new MarginInfo(true, false, true, false));
 		layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		final Label searchtitle = new Label(FontAwesome.USERS.getHtml() + " " +
+		final Label searchTitleLbl = new Label(FontAwesome.USERS.getHtml() + " " +
 				AppContext.getMessage(RoleI18nEnum.VIEW_LIST_TITLE), ContentMode.HTML);
-		searchtitle.setStyleName(UIConstants.HEADER_TEXT);
-		layout.addComponent(searchtitle);
-		layout.setExpandRatio(searchtitle, 1.0f);
+		searchTitleLbl.setStyleName(UIConstants.HEADER_TEXT);
+		layout.with(searchTitleLbl).expand(searchTitleLbl);
 
 		final Button createBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_CREATE),
@@ -103,8 +101,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			final MHorizontalLayout basicSearchBody = new MHorizontalLayout()
-					.withSpacing(true).withMargin(true).with(new Label("Name"));
+			final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true).with(new Label("Name"));
 
 			this.nameField = new TextField();
 			this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -153,4 +150,9 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
 			return RoleSearchPanel.this.searchCriteria;
 		}
 	}
+
+    @Override
+    public void setTotalCountNumber(int totalCountNumber) {
+
+    }
 }

@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
@@ -45,9 +46,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class VersionSearchPanel extends
-        DefaultGenericSearchPanel<VersionSearchCriteria> {
-
+public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchCriteria> {
     private static final long serialVersionUID = 1L;
     protected VersionSearchCriteria searchCriteria;
 
@@ -61,29 +60,7 @@ public class VersionSearchPanel extends
     }
 
     @Override
-    protected ComponentContainer constructHeader() {
-        ComponentContainer header = super.constructHeader();
-        final Button createBtn = new Button(
-                AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final Button.ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new BugVersionEvent.GotoAdd(this, null));
-                    }
-                });
-        createBtn.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.VERSIONS));
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        createBtn.setIcon(FontAwesome.PLUS);
-        this.addHeaderRight(createBtn);
-        return header;
-    }
-
-    @Override
-    protected Label buildSearchTitle() {
+    protected HeaderWithFontAwesome buildSearchTitle() {
         return new ProjectViewHeader(ProjectTypeConstants.BUG_VERSION,
                 AppContext.getMessage(VersionI18nEnum.VIEW_LIST_TITLE));
     }
@@ -110,14 +87,13 @@ public class VersionSearchPanel extends
 
     @SuppressWarnings("rawtypes")
     private class VersionBasicSearchLayout extends BasicSearchLayout {
+        private static final long serialVersionUID = 1L;
+        private TextField nameField;
 
         @SuppressWarnings("unchecked")
         public VersionBasicSearchLayout() {
             super(VersionSearchPanel.this);
         }
-
-        private static final long serialVersionUID = 1L;
-        private TextField nameField;
 
         @Override
         public ComponentContainer constructHeader() {

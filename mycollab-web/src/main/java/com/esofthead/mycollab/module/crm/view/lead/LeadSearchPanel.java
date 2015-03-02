@@ -30,6 +30,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -55,7 +56,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
             LeadSearchCriteria.p_assignee};
 
     @Override
-    protected Label buildSearchTitle() {
+    protected HeaderWithFontAwesome buildSearchTitle() {
         return new CrmViewHeader(CrmTypeConstants.LEAD,
                 AppContext.getMessage(LeadI18nEnum.VIEW_LIST_TITLE));
     }

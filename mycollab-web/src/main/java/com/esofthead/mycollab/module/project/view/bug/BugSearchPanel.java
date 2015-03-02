@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
@@ -63,7 +64,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
             BugSearchCriteria.p_lastupdatedtime};
 
     @Override
-    protected Label buildSearchTitle() {
+    protected HeaderWithFontAwesome buildSearchTitle() {
         return new ProjectViewHeader(ProjectTypeConstants.BUG,
                 AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
     }

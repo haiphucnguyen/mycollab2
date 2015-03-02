@@ -20,36 +20,33 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
- * 
+ * @param <S>
  * @author MyCollab Ltd.
  * @since 2.0
- * 
- * @param <S>
  */
-public abstract class DefaultGenericSearchPanel<S extends SearchCriteria>
-		extends GenericSearchPanel<S> {
-	private static final long serialVersionUID = 1L;
+public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extends GenericSearchPanel<S> {
+    private static final long serialVersionUID = 1L;
 
+    private HeaderWithFontAwesome headerText;
     private MHorizontalLayout rightComponent;
 
-	public DefaultGenericSearchPanel() {
-		moveToBasicSearchLayout();
-	}
+    public DefaultGenericSearchPanel() {
+        moveToBasicSearchLayout();
+    }
 
-	abstract protected SearchLayout<S> createBasicSearchLayout();
+    abstract protected SearchLayout<S> createBasicSearchLayout();
 
-	abstract protected SearchLayout<S> createAdvancedSearchLayout();
+    abstract protected SearchLayout<S> createAdvancedSearchLayout();
 
-    abstract protected Label buildSearchTitle();
+    abstract protected HeaderWithFontAwesome buildSearchTitle();
 
     abstract protected void buildExtraControls();
 
     protected ComponentContainer constructHeader() {
-        Label headerText = buildSearchTitle();
+        headerText = buildSearchTitle();
         rightComponent = new MHorizontalLayout();
 
         MHorizontalLayout header = new MHorizontalLayout()
@@ -61,16 +58,21 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria>
                 .withAlign(rightComponent, Alignment.MIDDLE_RIGHT)
                 .expand(headerText);
 
+        buildExtraControls();
         return header;
     }
 
-	protected void moveToBasicSearchLayout() {
-		SearchLayout<S> layout = createBasicSearchLayout();
-		setCompositionRoot(layout);
-	}
+    public void setTotalCountNumber(int countNumber) {
+        headerText.appendToTitle(String.format("(%d Total)", countNumber));
+    }
 
-	protected void moveToAdvancedSearchLayout() {
-		SearchLayout<S> layout = createAdvancedSearchLayout();
-		setCompositionRoot(layout);
-	}
+    protected void moveToBasicSearchLayout() {
+        SearchLayout<S> layout = createBasicSearchLayout();
+        setCompositionRoot(layout);
+    }
+
+    protected void moveToAdvancedSearchLayout() {
+        SearchLayout<S> layout = createAdvancedSearchLayout();
+        setCompositionRoot(layout);
+    }
 }

@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -37,7 +38,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
             ProblemSearchCriteria.p_duedate, ProblemSearchCriteria.p_raiseddate};
 
     @Override
-    protected Label buildSearchTitle() {
+    protected HeaderWithFontAwesome buildSearchTitle() {
         return new ProjectViewHeader(ProjectTypeConstants.PROBLEM, "Problems");
     }
 

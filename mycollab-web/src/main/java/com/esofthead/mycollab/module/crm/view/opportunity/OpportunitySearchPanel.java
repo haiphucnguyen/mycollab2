@@ -32,6 +32,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -60,7 +61,7 @@ public class OpportunitySearchPanel extends
             OpportunitySearchCriteria.p_lastupdatedtime};
 
     @Override
-    protected Label buildSearchTitle() {
+    protected HeaderWithFontAwesome buildSearchTitle() {
         return new CrmViewHeader(CrmTypeConstants.OPPORTUNITY,
                 AppContext.getMessage(OpportunityI18nEnum.VIEW_LIST_TITLE));
     }

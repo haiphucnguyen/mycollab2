@@ -37,8 +37,8 @@ import com.vaadin.ui.TextField;
  * 
  */
 @SuppressWarnings("serial")
-public class GenericSearchPanel<S extends SearchCriteria> extends
-		CustomComponent implements HasSearchHandlers<S> {
+public abstract class GenericSearchPanel<S extends SearchCriteria> extends CustomComponent implements
+        HasSearchHandlers<S> {
 
 	private List<SearchHandler<S>> searchHandlers;
 

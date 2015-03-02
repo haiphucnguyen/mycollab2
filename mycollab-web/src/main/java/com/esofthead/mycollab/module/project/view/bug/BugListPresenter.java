@@ -92,7 +92,8 @@ public class BugListPresenter extends
 
 	@Override
 	public void doSearch(BugSearchCriteria searchCriteria) {
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+		int totalCountItems = view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        view.getSearchHandlers().setTotalCountNumber(totalCountItems);
 	}
 
 	@Override

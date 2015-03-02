@@ -40,9 +40,7 @@ import java.util.Arrays;
  * @since 4.0
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
-public class TaskSearchViewImpl extends AbstractPageView implements
-        TaskSearchView {
-
+public class TaskSearchViewImpl extends AbstractPageView implements TaskSearchView {
     private static final long serialVersionUID = 1L;
 
     private TaskSearchPanel taskSearchPanel;
