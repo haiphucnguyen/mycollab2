@@ -57,6 +57,7 @@ Version 5.0.1
 * User is able to select the notifiers when he creates the new bug
 * Display number of items in the search panel
 * Support tooltip for project message widget
+* Optimize SQL query and there are some processes are 2x faster !!!
 
 **Bug Fixes**
 
