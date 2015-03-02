@@ -209,8 +209,8 @@
     .v-icon {
       font-size: $font-large;
     }
-    &:hover,&:focus {
-      background-color: transparent;
+    .v-button-wrap:hover{
+      background-color:transparent;
     }
   }
 
@@ -219,6 +219,9 @@
     .v-icon {
       font-size: $font-large;
       color:coral;
+    }
+    .v-button-wrap:hover{
+      background-color:transparent;
     }
   }
 }

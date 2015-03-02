@@ -97,7 +97,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout
                 toggleFavorite();
             }
         });
-        favoriteBtn.addStyleName("favorite-btn");
 
         Label spaceLbl = new Label();
 

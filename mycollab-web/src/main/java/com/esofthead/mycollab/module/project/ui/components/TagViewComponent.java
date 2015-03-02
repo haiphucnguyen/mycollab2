@@ -164,7 +164,7 @@ public class TagViewComponent extends CssLayout {
             Button tagLink = new Button(tag.getName(), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoTagListView(TagBlock.this, tag));
+//                    EventBusFactory.getInstance().post(new ProjectEvent.GotoTagListView(TagBlock.this, tag));
                 }
             });
             tagLink.setStyleName("link");
