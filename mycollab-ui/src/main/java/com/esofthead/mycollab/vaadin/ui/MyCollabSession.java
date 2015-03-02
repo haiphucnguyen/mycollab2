@@ -69,8 +69,7 @@ public class MyCollabSession {
 	 * @param value
 	 */
 	public static void putVariable(String key, Object value) {
-		BasicCache<String, Object> cache = LocalCacheManager
-				.getCache(getSessionId());
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(getSessionId());
 		cache.put(key, value);
 	}
 
@@ -80,8 +79,7 @@ public class MyCollabSession {
 	 */
 	public static void removeVariable(String key) {
 		try {
-			BasicCache<String, Object> cache = LocalCacheManager
-					.getCache(getSessionId());
+			BasicCache<String, Object> cache = LocalCacheManager.getCache(getSessionId());
 			cache.remove(key);
 		} catch (Exception e) {
 			LOG.error("Can not remove cache key " + key, e);
@@ -94,8 +92,7 @@ public class MyCollabSession {
 	 * @return
 	 */
 	public static Object getVariable(String key) {
-		BasicCache<String, Object> cache = LocalCacheManager
-				.getCache(getSessionId());
+		BasicCache<String, Object> cache = LocalCacheManager.getCache(getSessionId());
 		return cache.get(key);
 	}
 

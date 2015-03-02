@@ -117,8 +117,8 @@
             s_roles.rolename AS roleName,  s_user_account.isAccountOwner, s_user_account.roleid, s_user_account.accountId AS accountId, 
             s_user_account.registerStatus
         FROM s_user 
-                LEFT OUTER JOIN s_user_account ON (s_user.username=s_user_account.username)
-                LEFT OUTER JOIN s_account ON (s_user_account.accountId = s_account.id)
+                INNER JOIN s_user_account ON (s_user.username=s_user_account.username)
+                INNER JOIN s_account ON (s_user_account.accountId = s_account.id)
                 LEFT OUTER JOIN s_roles ON (s_roles.id = s_user_account.roleid)
                 LEFT OUTER JOIN s_user_preference ON (s_user.username = s_user_preference.username AND s_user_preference.sAccountId=s_user_account.accountId)
         ]]>
