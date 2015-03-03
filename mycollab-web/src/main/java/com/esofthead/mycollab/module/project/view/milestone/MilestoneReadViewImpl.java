@@ -319,10 +319,10 @@ public class MilestoneReadViewImpl extends
         @Override
         public Component generateRow(ProjectGenericTask task, int rowIndex) {
             Label lbl = new Label(buildDivLine(task).write(), ContentMode.HTML);
-            if (task.isOverdue()) {
-                lbl.addStyleName("overdue");
-            } else if (task.isClosed()) {
+            if (task.isClosed()) {
                 lbl.addStyleName("completed");
+            } else if (task.isOverdue()) {
+                lbl.addStyleName("overdue");
             }
             return lbl;
         }
