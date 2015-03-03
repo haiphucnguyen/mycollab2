@@ -96,40 +96,40 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	@Transactional
-	public void registerAccount(final String subdomain,
+	public void registerAccount(final String subDomain,
 			final int billingPlanId, final String username,
 			final String password, final String email, final String timezoneId,
 			boolean isEmailVerified) {
 
 		// check subdomain is ascii string
-		if (!StringUtils.isAsciiString(subdomain)) {
+		if (!StringUtils.isAsciiString(subDomain)) {
 			throw new UserInvalidInputException(
 					"Subdomain must be an ascii string");
 		}
 
 		// check subdomain belong to keyword list
-		if (ACCOUNT_BLACK_LIST.contains(subdomain)) {
+		if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
 			throw new SubdomainExistedException(LocalizationHelper.getMessage(
 					LocalizationHelper.defaultLocale,
 					ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-					subdomain));
+					subDomain));
 		}
 
-		LOG.debug("Check whether subdomain {} is existed", subdomain);
+		LOG.debug("Check whether subdomain {} is existed", subDomain);
 		final BillingAccountExample billingEx = new BillingAccountExample();
-		billingEx.createCriteria().andSubdomainEqualTo(subdomain);
+		billingEx.createCriteria().andSubdomainEqualTo(subDomain);
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
 			throw new SubdomainExistedException(LocalizationHelper.getMessage(
 					LocalizationHelper.defaultLocale,
 					ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-					subdomain));
+					subDomain));
 		}
 
 		final BillingPlan billingPlan = this.billingPlanMapper
 				.selectByPrimaryKey(billingPlanId);
 		// Save billing account
 		LOG.debug("Saving billing account for user {} with subdomain {}",
-				username, subdomain);
+				username, subDomain);
 		final BillingAccount billingAccount = new BillingAccount();
 		billingAccount.setBillingplanid(billingPlan.getId());
 		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
@@ -140,13 +140,13 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31)
 				.getTime());
 		billingAccount.setStatus(AccountStatusConstants.TRIAL);
-		billingAccount.setSubdomain(subdomain);
+		billingAccount.setSubdomain(subDomain);
 
 		this.billingAccountMapper.insertAndReturnKey(billingAccount);
 		int accountid = billingAccount.getId();
 
 		// Save to account setting
-		LOG.debug("Save account setting for subdomain domain {}", subdomain);
+		LOG.debug("Save account setting for subdomain domain {}", subDomain);
 		final AccountSettings accountSettings = new AccountSettings();
 		accountSettings.setSaccountid(accountid);
 		accountSettings.setDefaulttimezone(timezoneId);
@@ -195,13 +195,13 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		// save default roles
-		LOG.debug("Save default roles for account of subdomain {}", subdomain);
+		LOG.debug("Save default roles for account of subdomain {}", subDomain);
 		saveEmployeeRole(accountid);
 		int adminRoleId = saveAdminRole(accountid);
 		saveGuestRole(accountid);
 
 		// save user account
-		LOG.debug("Register user {} to subdomain {}", username, subdomain);
+		LOG.debug("Register user {} to subdomain {}", username, subDomain);
 		UserAccount userAccount = new UserAccount();
 		userAccount.setAccountid(accountid);
 		userAccount.setIsaccountowner(true);
