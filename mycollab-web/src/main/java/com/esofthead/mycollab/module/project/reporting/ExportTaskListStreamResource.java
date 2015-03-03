@@ -46,8 +46,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -157,37 +155,9 @@ public class ExportTaskListStreamResource<S extends SearchCriteria> extends Expo
 			assigneeAndPhaseHorizontal.add(assigneeLbl).add(assignee)
 					.add(phaseLbl).add(phase);
 
-			// progress
-			LOG.debug("Progress start ----");
-			TextFieldBuilder<String> progressLbl = cmp.text("Progress :")
-					.setStyle(style).setFixedWidth(150);
-
-			DecimalFormat df = new DecimalFormat("#");
-			df.setRoundingMode(RoundingMode.HALF_EVEN);
-
-			TextFieldBuilder<String> progress = cmp
-					.text(df.format(taskList.getPercentageComplete()) + "%")
-					.setStyle(style).setFixedWidth(435);
-
-			TextFieldBuilder<String> numberTaskLbl = cmp
-					.text("Open tasks :").setStyle(style)
-					.setFixedWidth(150);
-
-			TextFieldBuilder<String> taskNumText = cmp
-					.text("(" + taskList.getNumOpenTasks() + "/"
-							+ taskList.getNumAllTasks() + ")")
-					.setFixedWidth(435).setStyle(style);
-
-			HorizontalListBuilder horizontalOfProgressAndNumberTask = cmp
-					.horizontalList();
-
-			horizontalOfProgressAndNumberTask.add(progressLbl).add(progress)
-					.add(numberTaskLbl).add(taskNumText);
-
 			// Add to Vertical List Builder -------
 			componentBuilder.add(taskGroupLabel).add(descContainer)
-					.add(assigneeAndPhaseHorizontal)
-					.add(horizontalOfProgressAndNumberTask);
+					.add(assigneeAndPhaseHorizontal);
 			SimpleTaskJasperReportBuilder subReportBuilder = new SimpleTaskJasperReportBuilder(
 					reportTemplate, taskList.getSubTasks(), parameters);
 			if (CollectionUtils.isNotEmpty(taskList.getSubTasks())) {

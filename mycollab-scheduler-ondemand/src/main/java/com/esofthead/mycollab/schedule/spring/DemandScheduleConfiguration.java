@@ -63,7 +63,7 @@ public class DemandScheduleConfiguration {
         bean.setJobFactory(factory);
         bean.setOverwriteExistingJobs(true);
         bean.setAutoStartup(true);
-        bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
+        bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey2");
 
         bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(), sendAccountBillingEmailTrigger().getObject());
         return bean;

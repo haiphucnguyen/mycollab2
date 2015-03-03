@@ -292,7 +292,7 @@ public class ProjectServiceImpl extends
 	public Integer getTotalActiveProjectsInAccount(@CacheKey Integer sAccountId) {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(sAccountId));
-		criteria.setProjectStatuses(new SetSearchField<String>(
+		criteria.setProjectStatuses(new SetSearchField<>(
 				new String[] { StatusI18nEnum.Open.name() }));
 		return projectMapperExt.getTotalCount(criteria);
 	}

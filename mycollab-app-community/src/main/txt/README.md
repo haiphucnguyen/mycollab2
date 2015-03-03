@@ -65,6 +65,7 @@ Version 5.0.1
 * Query project member tasks show wrong items
 * Query project roles did not work
 * Export task list to document throws exception
+* Can not sending email in several cases
 
 Version 5.0.0
 -----------------------------
