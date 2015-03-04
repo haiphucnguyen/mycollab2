@@ -101,11 +101,11 @@ class TaskAddPopup extends CustomComponent {
 
 					@Override
 					public void buttonClick(final ClickEvent event) {
+                        task.setTasklistid(taskList.getId());
 						if (taskInputForm.validateForm()) {
 							final ProjectTaskService taskService = ApplicationContextUtil
 									.getSpringBean(ProjectTaskService.class);
 
-							task.setTasklistid(taskList.getId());
 							task.setProjectid(CurrentProjectVariables
 									.getProjectId());
 							task.setSaccountid(AppContext.getAccountId());
