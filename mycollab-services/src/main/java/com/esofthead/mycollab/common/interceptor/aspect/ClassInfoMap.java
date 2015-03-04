@@ -14,20 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.esofthead.mycollab.common.interceptor.aspect;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 5.0.1
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.TYPE })
-public @interface Auditable {
+public class ClassInfoMap {
+    private static Map<Class, ClassInfo> mapWrapper = new HashMap<>();
+
+    public static void put(Class cls, ClassInfo classInfo) {
+        mapWrapper.put(cls, classInfo);
+    }
+
+    public static String getModule(Class cls) {
+        return mapWrapper.get(cls).getModule();
+    }
+
+    public static String getType(Class cls) {
+        return mapWrapper.get(cls).getType();
+    }
 }

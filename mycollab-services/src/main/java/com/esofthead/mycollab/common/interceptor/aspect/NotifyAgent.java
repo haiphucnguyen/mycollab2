@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.esofthead.mycollab.common.interceptor.aspect;
 
 import java.lang.annotation.ElementType;
@@ -23,11 +22,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 5.0.1
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.TYPE })
-public @interface Auditable {
+@Target(value = {ElementType.TYPE})
+public @interface NotifyAgent {
+    Class value() default String.class;
 }
