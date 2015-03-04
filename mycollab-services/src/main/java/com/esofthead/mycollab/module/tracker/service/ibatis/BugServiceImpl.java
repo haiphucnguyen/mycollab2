@@ -52,7 +52,6 @@ import java.util.concurrent.locks.Lock;
 @Transactional
 @Traceable(nameField = "summary", extraFieldName = "projectid")
 @Auditable()
-@Watchable(extraTypeId = "projectid")
 @NotifyAgent(BugRelayEmailNotificationAction.class)
 public class BugServiceImpl extends
         DefaultService<Integer, BugWithBLOBs, BugSearchCriteria> implements

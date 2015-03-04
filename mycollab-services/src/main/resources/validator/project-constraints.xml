@@ -95,6 +95,11 @@
                 <message>Name must not be null</message>
             </constraint>
         </field>
+        <field name="tasklistid">
+            <constraint annotation="javax.validation.constraints.NotNull">
+                <message>Task group must not be null</message>
+            </constraint>
+        </field>
     </bean>
 
     <bean class="TaskList" ignore-annotations="false">
