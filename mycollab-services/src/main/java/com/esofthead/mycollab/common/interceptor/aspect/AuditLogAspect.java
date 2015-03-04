@@ -130,17 +130,13 @@ public class AuditLogAspect {
             }
         }
 
-
         try {
-            Integer sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
-            Integer auditLogId = saveAuditLog(cls, bean, username, sAccountId,
-                    activityStreamId);
-            int typeId = (Integer) PropertyUtils.getProperty(bean,
-                    "id");
-
             Watchable watchableAnnotation = cls.getAnnotation(Watchable.class);
             if (watchableAnnotation != null) {
                 String monitorType = ClassInfoMap.getType(cls);
+                Integer sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
+                int typeId = (Integer) PropertyUtils.getProperty(bean,
+                        "id");
 
                 Integer extraTypeId = null;
                 if (!"".equals(watchableAnnotation.extraTypeId())) {
@@ -173,6 +169,11 @@ public class AuditLogAspect {
 
             NotifyAgent notifyAgent = cls.getAnnotation(NotifyAgent.class);
             if (notifyAgent != null) {
+                Integer sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
+                Integer auditLogId = saveAuditLog(cls, bean, username, sAccountId,
+                        activityStreamId);
+                int typeId = (Integer) PropertyUtils.getProperty(bean,
+                        "id");
                 // Save notification email
                 RelayEmailNotification relayNotification = new RelayEmailNotification();
                 relayNotification.setChangeby(username);
