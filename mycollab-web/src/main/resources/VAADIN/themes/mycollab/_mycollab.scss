@@ -11,9 +11,8 @@
 @import "components/project";
 
 @mixin mycollab {
-
-  @include chameleon;
   @include fonticons;
+  @include chameleon;
   @include mycollab-global;
   @include mycollab-breadcrumb;
   @include mycollab-button;
