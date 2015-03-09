@@ -52,6 +52,7 @@ Version 5.0.2
 
 * Template select the default locale if the user locale is not existed
 * The activity stream service throws exception when saving project page in several special cases
+* Export project page include the title in the document
 
 
 Version 5.0.1
