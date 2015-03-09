@@ -16,18 +16,13 @@
  */
 package com.esofthead.mycollab.common.service.ibatis;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.dao.CommentMapper;
 import com.esofthead.mycollab.common.dao.CommentMapperExt;
-import com.esofthead.mycollab.common.domain.ActivityStream;
+import com.esofthead.mycollab.common.domain.ActivityStreamWithBLOBs;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
@@ -42,6 +37,10 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectActivityStreamService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -107,8 +106,8 @@ public class CommentServiceImpl extends
 		return saveId;
 	}
 
-	private ActivityStream getActivityStream(Comment record, String username) {
-		ActivityStream activityStream = new ActivityStream();
+	private ActivityStreamWithBLOBs getActivityStream(Comment record, String username) {
+        ActivityStreamWithBLOBs activityStream = new ActivityStreamWithBLOBs();
 		activityStream.setAction(ActivityStreamConstants.ACTION_COMMENT);
 		activityStream.setCreateduser(username);
 		activityStream.setSaccountid(record.getSaccountid());
