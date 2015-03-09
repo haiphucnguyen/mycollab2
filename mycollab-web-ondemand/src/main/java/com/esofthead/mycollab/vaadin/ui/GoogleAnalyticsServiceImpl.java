@@ -10,15 +10,20 @@ import org.vaadin.googleanalytics.tracking.GoogleAnalyticsTracker;
  */
 @Service
 public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService {
-    private GoogleAnalyticsTracker tracker = new GoogleAnalyticsTracker("UA-46116533-1", "mycollab.com");
+    private GoogleAnalyticsTracker tracker;
 
     @Override
     public void registerUI(UI ui) {
+        GoogleAnalyticsTracker tracker = new GoogleAnalyticsTracker("UA-46116533-1", "mycollab.com");
         tracker.extend(ui);
+        MyCollabSession.putVariable("tracker", tracker);
     }
 
     @Override
     public void trackPageView(String pageId) {
-        tracker.trackPageview(pageId);
+        GoogleAnalyticsTracker tracker = (GoogleAnalyticsTracker) MyCollabSession.getVariable("tracker");
+        if (tracker != null) {
+            tracker.trackPageview(pageId);
+        }
     }
 }
