@@ -110,7 +110,7 @@ public class ProblemListPresenter
 		if (!isSelectAll) {
 			Collection<SimpleProblem> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
+			List<Integer> keyList = new ArrayList<>();
 			for (SimpleProblem item : currentDataList) {
 				if (item.isSelected()) {
 					keyList.add(item.getId());
@@ -142,7 +142,7 @@ public class ProblemListPresenter
 		if (!isSelectAll) {
 			Collection<SimpleProblem> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
+			List<Integer> keyList = new ArrayList<>();
 			for (SimpleProblem item : currentDataList) {
 				if (item.isSelected()) {
 					keyList.add(item.getId());

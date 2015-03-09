@@ -41,6 +41,19 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.2
+-----------------------------
+
+**Improvements**
+
+* Add help message for project views
+
+**Bug Fixes**
+
+* Template select the default locale if the user locale is not existed
+* The activity stream service throws exception when saving project page in several special cases
+
+
 Version 5.0.1
 -----------------------------
 **Library Upgrades**
