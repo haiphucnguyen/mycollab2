@@ -172,7 +172,7 @@ public class AuditLogAspect {
                 int typeId = (Integer) PropertyUtils.getProperty(bean,
                         "id");
                 // Save notification email
-                RelayEmailNotification relayNotification = new RelayEmailNotification();
+                RelayEmailNotificationWithBLOBs relayNotification = new RelayEmailNotificationWithBLOBs();
                 relayNotification.setChangeby(username);
                 relayNotification.setChangecomment("");
                 relayNotification.setSaccountid(sAccountId);
