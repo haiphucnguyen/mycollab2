@@ -37,6 +37,12 @@ class ItemFieldMapper {
     fieldNameMap += (fieldName.name -> format)
   }
 
+
+  def keySet(): java.util.Set[String] = {
+    import scala.collection.JavaConversions._
+    fieldNameMap.keySet;
+  }
+
   def hasField(fieldName: String): Boolean = fieldNameMap contains fieldName
 
   def getFieldLabel(fieldName: String): FieldFormat = fieldNameMap(fieldName)
