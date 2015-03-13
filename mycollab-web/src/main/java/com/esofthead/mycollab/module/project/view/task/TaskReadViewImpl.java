@@ -584,7 +584,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
             }
 
             this.addComponent(layout);
-
         }
     }
 }
