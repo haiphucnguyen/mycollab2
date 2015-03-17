@@ -1156,7 +1156,6 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             this.folderTree.removeAllItems();
 
             this.baseFolder = new Folder(rootPath);
-            this.rootPath = ResourcesDisplayComponent.this.rootPath;
             this.folderTree.addItem(new Object[]{
                             ResourcesDisplayComponent.this.rootFolderName, ""},
                     this.baseFolder);

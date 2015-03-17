@@ -54,7 +54,6 @@ public abstract class AbstractResourceMovingWindow extends Window {
     private final ExternalDriveService externalDriveService;
 
     protected TreeTable folderTree;
-    protected String rootPath;
     protected Folder baseFolder;
     private Collection<Resource> movedResources;
     private final ResourceMover resourceMover;
@@ -103,7 +102,7 @@ public abstract class AbstractResourceMovingWindow extends Window {
             public void nodeExpand(final ExpandEvent event) {
                 final Folder expandFolder = (Folder) event.getItemId();
                 // load externalResource if currentExpandFolder is rootFolder
-                if (rootPath.equals(expandFolder.getPath())) {
+                if (baseFolder.getPath().equals(expandFolder.getPath())) {
                     List<ExternalDrive> externalDrives = externalDriveService
                             .getExternalDrivesOfUser(AppContext.getUsername());
                     for (ExternalDrive externalDrive : externalDrives) {
@@ -153,16 +152,14 @@ public abstract class AbstractResourceMovingWindow extends Window {
 
                     if (subFolders != null) {
                         for (final Folder subFolder : subFolders) {
-                            if (!subFolder.getName().startsWith(".")) {
+                            String subFolderName = subFolder.getName();
+                            if (!subFolderName.startsWith(".")) {
                                 expandFolder.addChild(subFolder);
-                                folderTree.addItem(
-                                        new Object[]{
-                                                subFolder.getName(),
-                                                AppContext.formatDateTime(subFolder
-                                                        .getCreated().getTime())}, subFolder);
-
+                                folderTree.addItem(new Object[]{
+                                                subFolderName,
+                                        AppContext.formatDateTime(subFolder.getCreated().getTime())}, subFolder);
                                 folderTree.setItemIcon(subFolder, FontAwesome.FOLDER);
-                                folderTree.setItemCaption(subFolder, subFolder.getName());
+                                folderTree.setItemCaption(subFolder, subFolderName);
                                 folderTree.setParent(subFolder, expandFolder);
                             }
                         }
