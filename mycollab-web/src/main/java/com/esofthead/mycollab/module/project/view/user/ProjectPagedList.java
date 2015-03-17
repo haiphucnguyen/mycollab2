@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.vaadin.ui.*;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
@@ -97,18 +98,15 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                         }
                     }, false);
             projectMember.addStyleName("member-count-lbl");
-            HorizontalLayout metaInfo = new HorizontalLayout();
+            MHorizontalLayout metaInfo = new MHorizontalLayout().withWidth("100%");
             metaInfo.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-            metaInfo.setWidth("100%");
-            metaInfo.setSpacing(true);
             metaInfo.addComponent(projectMember);
             Label createdTimeLbl = new Label(" - "
                     + AppContext.getMessage(ProjectI18nEnum.OPT_CREATED_ON,
                     AppContext.formatDate(project.getCreatedtime())));
             createdTimeLbl.setStyleName("createdtime-lbl");
             createdTimeLbl.setSizeUndefined();
-            metaInfo.addComponent(createdTimeLbl);
-            metaInfo.setExpandRatio(createdTimeLbl, 1.0f);
+            metaInfo.with(createdTimeLbl).expand(createdTimeLbl);
             linkIconFix.addComponent(metaInfo);
 
             projectLink.setWidth("100%");

@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
+import com.esofthead.mycollab.vaadin.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.server.FontAwesome;
@@ -75,7 +76,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         headerWrapper.setWidth("100%");
         headerWrapper.setStyleName("projectfeed-hdr-wrapper");
 
-        final MHorizontalLayout header = new MHorizontalLayout().withMargin(false).withWidth("100%");
+        final MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
         header.addStyleName("projectfeed-hdr");
 
         Button avatar = UserAvatarControlFactory
@@ -101,7 +102,8 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         final Label headerLabel = new Label(AppContext.getSession().getDisplayName());
         headerLabel.setStyleName(Reindeer.LABEL_H1);
 
-        final MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false));
+        final MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false,
+                true, false));
         headerContentTop.with(headerLabel).withAlign(headerLabel, Alignment.TOP_LEFT);
 
         if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
@@ -119,11 +121,11 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
                     });
             createProjectBtn.setIcon(FontAwesome.PLUS);
             createProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            headerContentTop.addComponent(createProjectBtn);
-            headerContentTop.setComponentAlignment(createProjectBtn,
-                    Alignment.MIDDLE_LEFT);
+            headerContentTop.with(createProjectBtn).withAlign(createProjectBtn, Alignment.MIDDLE_LEFT);
         }
 
+        SearchTextField searchTextField = new SearchTextField();
+        headerContentTop.with(searchTextField).withAlign(searchTextField, Alignment.MIDDLE_RIGHT);
 
         followingTicketsLink = new LabelLink(AppContext.getMessage(
                 FollowerI18nEnum.OPT_MY_FOLLOWING_TICKETS, 0), AppContext.getSiteUrl() + "#project/following");

@@ -27,7 +27,6 @@ import com.esofthead.mycollab.vaadin.ui.NotPresentedView;
  * 
  */
 @ViewComponent
-public class BillingContainer extends NotPresentedView implements
-		IBillingContainer {
+public class BillingContainer extends NotPresentedView implements IBillingContainer {
 	private static final long serialVersionUID = 1L;
 }

@@ -300,7 +300,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
 	@Override
 	public void disableActionControls() {
 		this.tableActionControls.setVisible(false);
-		this.selectOptionButton.setSelectedChecbox(false);
+		this.selectOptionButton.setSelectedCheckbox(false);
 		this.selectedItemsNumberLabel.setValue("");
 	}
 

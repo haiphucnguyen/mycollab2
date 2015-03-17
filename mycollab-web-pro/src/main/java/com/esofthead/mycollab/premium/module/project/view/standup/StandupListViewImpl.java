@@ -33,6 +33,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -48,7 +49,6 @@ public class StandupListViewImpl extends AbstractPageView implements
         StandupListView {
     private static final long serialVersionUID = 1L;
 
-    private Label titleLbl;
     private PopupButton dateChooser;
     private final StyleCalendarExp standupCalendar = new StyleCalendarExp();
 
@@ -227,16 +227,17 @@ public class StandupListViewImpl extends AbstractPageView implements
         final MHorizontalLayout headerLeft = new MHorizontalLayout();
         headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        this.titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
+        Label titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
                 AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
-        this.titleLbl.addStyleName("hdr-text");
+        titleLbl.addStyleName("hdr-text");
 
-        headerLeft.addComponent(this.titleLbl);
+        headerLeft.addComponent(titleLbl);
 
         this.dateChooser = new PopupButton(
                 AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
         this.dateChooser.setContent(this.standupCalendar);
         this.dateChooser.setStyleName(UIConstants.THEME_BLANK_LINK);
+
         headerLeft.addComponent(this.dateChooser);
         headerLeft.setComponentAlignment(this.dateChooser,
                 Alignment.BOTTOM_RIGHT);
@@ -267,8 +268,7 @@ public class StandupListViewImpl extends AbstractPageView implements
         this.addComponent(header);
     }
 
-    public static class StandupReportRowDisplay extends
-            RowDisplayHandler<SimpleStandupReport> {
+    public static class StandupReportRowDisplay extends RowDisplayHandler<SimpleStandupReport> {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -290,12 +290,8 @@ public class StandupListViewImpl extends AbstractPageView implements
             super();
             this.setStyleName("standup-block");
 
-            VerticalLayout userInfo = new VerticalLayout();
-            userInfo.setWidth("200px");
-            userInfo.setStyleName("user-info");
-            userInfo.setSpacing(true);
+            MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withStyleName("user-info");
             userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-            userInfo.setMargin(true);
 
             userInfo.addComponent(UserAvatarControlFactory
                     .createUserAvatarEmbeddedComponent(
@@ -315,10 +311,7 @@ public class StandupListViewImpl extends AbstractPageView implements
             userInfo.addComponent(userBtn);
             this.addComponent(userInfo);
 
-            VerticalLayout reportContent = new VerticalLayout();
-            reportContent.setMargin(true);
-            reportContent.setStyleName("report-content");
-            reportContent.setSpacing(true);
+            MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content");
 
             final Label whatYesterdayLbl = new Label(
                     AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));

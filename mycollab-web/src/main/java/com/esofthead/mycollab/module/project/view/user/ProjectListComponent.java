@@ -70,9 +70,9 @@ public class ProjectListComponent extends MVerticalLayout {
 
 	public ProjectListComponent() {
 		super();
-		withSpacing(true).withMargin(false).withWidth("100%").withStyleName("project-list-comp");
+		withMargin(false).withWidth("100%").withStyleName("project-list-comp");
 
-		MHorizontalLayout headerBar = new MHorizontalLayout();
+		MHorizontalLayout headerBar = new MHorizontalLayout().withWidth("100%");
 
 		headerPopupButton = new PopupButton();
 		headerPopupButton.setStyleName("project-list-comp-hdr");
@@ -82,7 +82,7 @@ public class ProjectListComponent extends MVerticalLayout {
 		componentHeader.setStyleName("h2");
 
 		headerPopupButton.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
-		headerBar.with(headerPopupButton);
+		headerBar.with(headerPopupButton).expand(headerPopupButton);
 
 		if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
 			final Button createProjectBtn = new Button("+",
@@ -103,8 +103,6 @@ public class ProjectListComponent extends MVerticalLayout {
 			headerBar.with(createProjectBtn).withAlign(createProjectBtn,
 					Alignment.MIDDLE_RIGHT);
 		}
-
-		headerBar.withWidth("100%").withSpacing(true).expand(headerPopupButton);
 
 		this.addComponent(headerBar);
 
@@ -161,11 +159,9 @@ public class ProjectListComponent extends MVerticalLayout {
 			super.loadItems(currentListData);
 
 			if (searchService.getTotalCount(currentCriteria) > 3) {
-				MVerticalLayout btnWrap = new MVerticalLayout().withWidth(
-						"100%").withMargin(true);
+				MVerticalLayout btnWrap = new MVerticalLayout().withWidth("100%");
 
 				final MyProjectListWindow projectListWindow = new MyProjectListWindow();
-
 				Button showMoreBtn = new Button(
 						AppContext.getMessage(GenericI18Enum.BUTTON_MORE),
 						new Button.ClickListener() {

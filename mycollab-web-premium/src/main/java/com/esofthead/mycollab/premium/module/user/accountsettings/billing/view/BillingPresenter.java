@@ -41,8 +41,6 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer>
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AccountModule accountContainer = (AccountModule) container;
-
 		accountContainer.gotoSubView(SettingUIConstants.BILLING);
 	}
-
 }

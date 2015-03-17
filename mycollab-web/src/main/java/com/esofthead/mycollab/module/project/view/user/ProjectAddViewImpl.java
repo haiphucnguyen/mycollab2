@@ -43,7 +43,6 @@ public class ProjectAddViewImpl extends AbstractPageView implements
     public ProjectAddViewImpl() {
         this.editForm = new AdvancedEditBeanForm<>();
         this.addComponent(this.editForm);
-        this.setMargin(true);
     }
 
     @Override

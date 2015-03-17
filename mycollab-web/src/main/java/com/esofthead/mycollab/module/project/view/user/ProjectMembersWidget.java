@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -59,25 +60,25 @@ public class ProjectMembersWidget extends MVerticalLayout {
     public ProjectMembersWidget() {
         withSpacing(false).withMargin(false);
 
+        Button inviteMemberBtn = new Button();
+        inviteMemberBtn.setIcon(FontAwesome.PLUS);
+
         titleLbl = new Label();
-        MHorizontalLayout header = new MHorizontalLayout().withSpacing(true).withMargin(new MarginInfo(false, true,
-                false, true)).withHeight("34px").withWidth("100%").with(titleLbl).withAlign(titleLbl, Alignment
-                .MIDDLE_CENTER);
+        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
+                false, true)).withHeight("34px").withWidth("100%").with(titleLbl, inviteMemberBtn).withAlign(titleLbl, Alignment
+                .MIDDLE_CENTER).expand(titleLbl);
         header.addStyleName("panel-header");
 
         memberList = new DefaultBeanPagedList<>(
-                ApplicationContextUtil
-                        .getSpringBean(ProjectMemberService.class),
+                ApplicationContextUtil.getSpringBean(ProjectMemberService.class),
                 new MemberRowDisplayHandler());
         this.with(header, memberList);
     }
 
     public void showInformation() {
         ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
-        searchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
-        searchCriteria.setStatus(new StringSearchField(
-                ProjectMemberStatusConstants.ACTIVE));
+        searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        searchCriteria.setStatus(new StringSearchField(ProjectMemberStatusConstants.ACTIVE));
         memberList.setSearchCriteria(searchCriteria);
         titleLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_MEMBERS_TITLE, memberList.getTotalCount()));
     }
@@ -86,20 +87,15 @@ public class ProjectMembersWidget extends MVerticalLayout {
             AbstractBeanPagedList.RowDisplayHandler<SimpleProjectMember> {
 
         @Override
-        public Component generateRow(final SimpleProjectMember member,
-                                     int rowIndex) {
-            HorizontalLayout layout = new HorizontalLayout();
-            layout.setWidth("100%");
-            layout.setSpacing(true);
-            layout.setStyleName("list-row");
+        public Component generateRow(final SimpleProjectMember member, int rowIndex) {
+            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withStyleName("list-row");
             layout.addStyleName("odd");
             layout.addComponent(new Image(null, UserAvatarControlFactory
                     .createAvatarResource(member.getMemberAvatarId(), 48)));
 
             VerticalLayout content = new VerticalLayout();
             content.addComponent(new Label(buildAssigneeValue(member), ContentMode.HTML));
-            layout.addComponent(content);
-            layout.setExpandRatio(content, 1.0f);
+            layout.with(content).expand(content);
 
             CssLayout footer = new CssLayout();
             footer.setStyleName("activity-date");
@@ -140,6 +136,5 @@ public class ProjectMembersWidget extends MVerticalLayout {
                     DivLessFormatter.EMPTY_SPACE(),
                     TooltipHelper.buildDivTooltipEnable(uid)).write();
         }
-
     }
 }

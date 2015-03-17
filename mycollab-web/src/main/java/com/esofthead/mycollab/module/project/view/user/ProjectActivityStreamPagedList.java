@@ -321,5 +321,4 @@ public class ProjectActivityStreamPagedList extends
     protected List<ProjectActivityStream> queryCurrentData() {
         return null;
     }
-
 }

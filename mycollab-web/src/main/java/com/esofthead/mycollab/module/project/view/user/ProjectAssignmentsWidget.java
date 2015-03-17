@@ -56,13 +56,12 @@ import java.util.UUID;
  * @since 4.1
  */
 public class ProjectAssignmentsWidget extends MVerticalLayout {
-
     private static final long serialVersionUID = 1L;
 
     private  ProjectGenericTaskSearchCriteria searchCriteria;
 
     private Label titleLbl;
-    private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+    private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
     public ProjectAssignmentsWidget() {
         withSpacing(false).withMargin(false);
@@ -232,5 +231,4 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
             return div;
         }
     }
-
 }

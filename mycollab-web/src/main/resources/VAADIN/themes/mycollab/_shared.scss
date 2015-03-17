@@ -224,4 +224,21 @@
       background-color:transparent;
     }
   }
+
+  .v-horizontallayout.searchfield {
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    background-color:white;
+    .v-icon {
+      margin:5px;
+      color:black;
+    }
+    input.v-textfield[type='text'],  input.v-textfield-focus[type='text']{
+      border:none;
+      box-shadow:none;
+      margin-right: 5px;
+    }
+  }
 }
