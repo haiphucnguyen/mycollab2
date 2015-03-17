@@ -341,7 +341,7 @@ public class TaskGroupReadViewImpl extends
 
         private Div buildLastUpdateTime(SimpleTask task) {
             Div div = new Div();
-            div.appendChild(new Text(DateTimeUtils.getPrettyDateValue(task.getLastupdatedtime(), AppContext.getUserLocale())));
+            div.appendChild(new Text(AppContext.formatPrettyTime(task.getLastupdatedtime())));
             return div.setCSSClass("column100");
         }
     }

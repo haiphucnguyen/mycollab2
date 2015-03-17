@@ -501,9 +501,9 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                         @Override
                         public void buttonClick(ClickEvent event) {
                             if (res instanceof Folder) {
-                                ResourcesDisplayComponent.this.baseFolder = (Folder) res;
+                                baseFolder = (Folder) res;
                                 resourcesContainer.constructBody((Folder) res);
-                                ResourcesDisplayComponent.this.fileBreadCrumb.gotoFolder((Folder) res);
+                                fileBreadCrumb.gotoFolder((Folder) res);
                             } else {
                                 FileDownloadWindow fileDownloadWindow = new FileDownloadWindow((Content) res);
                                 UI.getCurrent().addWindow(fileDownloadWindow);
@@ -522,14 +522,15 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             // current user is created user
             if (StringUtils.isEmpty(res.getCreatedUser())) {
                 UserLink usernameLbl = new UserLink(AppContext.getUsername(), AppContext.getUserAvatarId(),
-                        AppContext.getSession().getDisplayName());
+                        AppContext.getSession().getDisplayName(), false);
                 usernameLbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {
                 UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
                 SimpleUser user = userService.findUserByUserNameInAccount(res.getCreatedUser(), AppContext.getAccountId());
                 if (user != null) {
-                    UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName());
+                    UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName(),
+                            false);
                     userLink.addStyleName("grayLabel");
                     moreInfoAboutResLayout.addComponent(userLink);
                 } else {
@@ -544,8 +545,9 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             // define the
             // created date so we do not need to display\
             if (res.getCreated() != null) {
-                Label createdTimeLbl = new Label((AppContext.formatDate(res
+                Label createdTimeLbl = new Label((AppContext.formatPrettyTime(res
                         .getCreated().getTime())));
+                createdTimeLbl.setDescription(AppContext.formatDateTime(res.getCreated().getTime()));
                 createdTimeLbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(createdTimeLbl);
             } else {

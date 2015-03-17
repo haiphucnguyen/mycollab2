@@ -111,12 +111,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         rightColumn.addComponent(mainBodyResourceLayout);
 
-        mainView.addComponent(rightColumn);
-        mainView.setComponentAlignment(rightColumn, Alignment.TOP_LEFT);
-        mainView.setExpandRatio(rightColumn, 1.0f);
+        mainView.with(rightColumn).withAlign(rightColumn, Alignment.TOP_LEFT).expand(rightColumn);
 
-        this.addComponent(mainView);
-        this.setComponentAlignment(mainView, Alignment.MIDDLE_CENTER);
+        this.with(mainView).withAlign(mainView, Alignment.MIDDLE_CENTER);
 
     }
 
@@ -559,14 +556,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     final ExternalDrive drive,
                     final HorizontalLayout parentLayout, final Label lbl,
                     final VerticalLayout externalDriveEditLayout) {
-                final HorizontalLayout layout = new HorizontalLayout();
-                layout.setSpacing(true);
+                final MHorizontalLayout layout = new MHorizontalLayout();
                 layout.addStyleName("resourceItem");
 
                 Label folderTitleLbl = new Label("Folder title");
-                layout.addComponent(folderTitleLbl);
-                layout.setComponentAlignment(folderTitleLbl,
-                        Alignment.MIDDLE_CENTER);
+                layout.with(folderTitleLbl).withAlign(folderTitleLbl, Alignment.MIDDLE_LEFT);
 
                 final TextField folderNameTextField = new TextField();
                 folderNameTextField.setImmediate(true);
@@ -613,8 +607,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                                                 break;
                                             }
                                         }
-                                        drive
-                                                .setFoldername(folderName);
+                                        drive.setFoldername(folderName);
                                         externalDriveService.updateWithSession(
                                                 drive,
                                                 AppContext.getUsername());
@@ -633,7 +626,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         });
                 saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
                 saveBtn.setIcon(FontAwesome.SAVE);
-                layout.addComponent(saveBtn);
 
                 Button cancelBtn = new Button(
                         AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
@@ -647,7 +639,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                             }
                         });
                 cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-                layout.addComponent(cancelBtn);
+                layout.with(saveBtn, cancelBtn);
                 return layout;
             }
 

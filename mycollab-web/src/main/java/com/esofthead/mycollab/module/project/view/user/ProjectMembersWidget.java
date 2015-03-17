@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -112,18 +111,17 @@ public class ProjectMembersWidget extends MVerticalLayout {
 
             Label memberRole = new Label();
             memberRole.setContentMode(ContentMode.HTML);
-            String textRole;
+            String joinDateMsg;
             if (member.isAdmin()) {
-                textRole = AppContext
+                joinDateMsg = AppContext
                         .getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY);
             } else {
-                textRole = member.getRoleName();
+                joinDateMsg = member.getRoleName();
             }
-            textRole += AppContext.getMessage(
-                    ProjectMemberI18nEnum.OPT_MEMBER_JOIN_DATE, DateTimeUtils
-                            .getPrettyDateValue(member.getJoindate(),
-                                    AppContext.getUserLocale()));
-            memberRole.setValue(textRole);
+            joinDateMsg += AppContext.getMessage(
+                    ProjectMemberI18nEnum.OPT_MEMBER_JOIN_DATE, AppContext.formatPrettyTime(member.getJoindate()));
+            memberRole.setValue(joinDateMsg);
+            memberRole.setDescription(AppContext.formatDateTime(member.getJoindate()));
 
             footer.addComponent(memberRole);
             content.addComponent(footer);

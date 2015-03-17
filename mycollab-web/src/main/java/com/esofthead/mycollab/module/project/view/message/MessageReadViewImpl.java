@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.project.view.message;
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -35,8 +34,8 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
+import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -79,8 +78,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
     public MessageReadViewImpl() {
         super();
 
-        this.header = new MHorizontalLayout().withStyleName("hdr-view")
-                .withWidth("100%").withSpacing(true).withMargin(true);
+        this.header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%");
 
         this.addComponent(header);
         previewForm = new AdvancedPreviewBeanForm<>();
@@ -248,22 +246,18 @@ public class MessageReadViewImpl extends AbstractPageView implements
             rowLayout.setWidth("100%");
 
             final MHorizontalLayout messageHeader = new MHorizontalLayout()
-                    .withStyleName("message-header").withSpacing(true)
+                    .withStyleName("message-header")
                     .withMargin(new MarginInfo(true, true, false, true))
                     .withWidth("100%");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             final Label timePostLbl = new Label(AppContext.getMessage(
-                    MessageI18nEnum.USER_COMMENT_ADD, message
-                            .getFullPostedUserName(), DateTimeUtils
-                            .getPrettyDateValue(message.getPosteddate(),
-                                    AppContext.getUserLocale())),
-                    ContentMode.HTML);
+                    MessageI18nEnum.USER_COMMENT_ADD, message.getFullPostedUserName(),
+                    AppContext.formatPrettyTime(message.getPosteddate())), ContentMode.HTML);
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
 
-            messageHeader.addComponent(timePostLbl);
-            messageHeader.setExpandRatio(timePostLbl, 1.0f);
+            messageHeader.with(timePostLbl).expand(timePostLbl);
 
             rowLayout.addComponent(messageHeader);
 
@@ -299,14 +293,12 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
                 MVerticalLayout messageFooter = new MVerticalLayout()
                         .withWidth("100%").withStyleName("message-footer")
-                        .withMargin(true).withSpacing(true)
                         .with(attachmentField, attachmentDisplayComp);
 
                 rowLayout.addComponent(messageFooter);
             }
 
-            messageLayout.addComponent(rowLayout);
-            messageLayout.setExpandRatio(rowLayout, 1.0f);
+            messageLayout.with(rowLayout).expand(rowLayout);
 
             messageAddLayout.addComponent(messageLayout);
 

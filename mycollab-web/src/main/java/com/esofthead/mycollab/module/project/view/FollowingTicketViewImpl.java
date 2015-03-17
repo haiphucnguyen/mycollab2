@@ -106,8 +106,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements
 		backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 		backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
-		controlBtns.addComponent(backBtn);
-		controlBtns.setExpandRatio(backBtn, 1.0f);
+		controlBtns.with(backBtn).expand(backBtn);
 
 		Button exportBtn = new Button("Export", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;

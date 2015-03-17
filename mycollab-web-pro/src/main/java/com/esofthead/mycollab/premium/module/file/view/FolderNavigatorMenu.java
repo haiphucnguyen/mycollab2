@@ -1,10 +1,5 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.EventListener;
-import java.util.List;
-
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
@@ -14,11 +9,16 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.vaadin.data.Container;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Tree;
 import com.vaadin.util.ReflectTools;
+
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.EventListener;
+import java.util.List;
 
 /**
  * 
@@ -30,7 +30,6 @@ public class FolderNavigatorMenu extends Tree {
 	private static final long serialVersionUID = 1L;
 
 	public FolderNavigatorMenu(final String rootPath) {
-
 		final ExternalDriveService externalDriveService = ApplicationContextUtil
 				.getSpringBean(ExternalDriveService.class);
 
@@ -71,8 +70,7 @@ public class FolderNavigatorMenu extends Tree {
 
 							FolderNavigatorMenu.this.setItemIcon(
 									externalMapFolder,
-									MyCollabResource
-											.newResource("icons/16/ecm/dropbox.png"));
+                                    FontAwesome.DROPBOX);
 							FolderNavigatorMenu.this.setItemCaption(
 									externalMapFolder,
 									externalMapFolder.getName());
@@ -91,8 +89,7 @@ public class FolderNavigatorMenu extends Tree {
 
 							FolderNavigatorMenu.this.setItemIcon(
 									subFolder,
-									MyCollabResource
-											.newResource("icons/16/ecm/dropbox_subfolder.png"));
+									FontAwesome.DROPBOX);
 							FolderNavigatorMenu.this.setItemCaption(subFolder,
 									subFolder.getName());
 							FolderNavigatorMenu.this.setParent(subFolder,
@@ -104,23 +101,21 @@ public class FolderNavigatorMenu extends Tree {
 
 						FolderNavigatorMenu.this.setItemIcon(
 								expandFolder,
-								MyCollabResource
-										.newResource("icons/16/ecm/folder_open.png"));
+								FontAwesome.FOLDER_OPEN);
 
 						if (subFolders != null) {
 							for (final Folder subFolder : subFolders) {
-								expandFolder.addChild(subFolder);
-								FolderNavigatorMenu.this.addItem(subFolder);
+                                if (!subFolder.getName().startsWith(".")) {
+                                    expandFolder.addChild(subFolder);
+                                    FolderNavigatorMenu.this.addItem(subFolder);
 
-								FolderNavigatorMenu.this
-										.setItemIcon(
-												subFolder,
-												MyCollabResource
-														.newResource("icons/16/ecm/folder_close.png"));
-								FolderNavigatorMenu.this.setItemCaption(
-										subFolder, subFolder.getName());
-								FolderNavigatorMenu.this.setParent(subFolder,
-										expandFolder);
+                                    FolderNavigatorMenu.this
+                                            .setItemIcon(subFolder, FontAwesome.FOLDER);
+                                    FolderNavigatorMenu.this.setItemCaption(
+                                            subFolder, subFolder.getName());
+                                    FolderNavigatorMenu.this.setParent(subFolder,
+                                            expandFolder);
+                                }
 							}
 						}
 					}

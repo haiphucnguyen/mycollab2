@@ -34,8 +34,6 @@ public class FileModulePresenter extends AbstractPresenter<IFileModule>
 				.getPresenter(FileMainPresenter.class);
 		mainPresenter.go(view, null);
 
-		AppContext.getInstance()
-				.updateLastModuleVisit(ModuleNameConstants.FILE);
+		AppContext.getInstance().updateLastModuleVisit(ModuleNameConstants.FILE);
 	}
-
 }

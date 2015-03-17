@@ -222,9 +222,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 		} else if (RegisterStatusConstants.ACTIVE.equals(member
 				.getRegisterstatus())) {
 			Label lastAccessTimeLbl = new Label("Logged in "
-					+ DateTimeUtils.getPrettyDateValue(
-							member.getLastaccessedtime(),
-							AppContext.getUserLocale()));
+					+ AppContext.formatPrettyTime(member.getLastaccessedtime()));
 			lastAccessTimeLbl.addStyleName("member-email");
 			memberInfo.addComponent(lastAccessTimeLbl);
 		} else if (RegisterStatusConstants.VERIFICATING.equals(member

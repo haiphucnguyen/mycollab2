@@ -316,6 +316,12 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	margin-right: 5px;
 }
 
+.v-label.headerName {
+	font-size: 18px;
+	font-weight: bold;
+	color: #303030;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -7657,6 +7663,12 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border: none;
 	box-shadow: none;
 	margin-right: 5px;
+}
+
+.v-label.headerName {
+	font-size: 18px;
+	font-weight: bold;
+	color: #303030;
 }
 
 .h-sidebar-menu {
