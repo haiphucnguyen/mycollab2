@@ -337,6 +337,10 @@ public class AppContext implements Serializable {
 		return getInstance().session.getAvatarid();
 	}
 
+    public static String getUserDisplayName() {
+        return getInstance().session.getDisplayName();
+    }
+
 	/**
 	 * Get preference info of current user
 	 * 

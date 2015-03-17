@@ -65,8 +65,7 @@ public class ProjectAddWindow extends Window {
 		this.setCaption(AppContext.getMessage(ProjectI18nEnum.VIEW_NEW_TITLE));
 
 		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+		this.editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
 		this.editForm.setBean(this.project);
 	}
 
@@ -128,40 +127,7 @@ public class ProjectAddWindow extends Window {
 
 			projectAddLayout.addComponent(this.informationLayout.getLayout());
 
-			final MHorizontalLayout buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(true).withStyleName("addNewControl");
-
-			final Button saveBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(final ClickEvent event) {
-							if (editForm.validateForm()) {
-								project.setSaccountid(AppContext.getAccountId());
-								final ProjectService projectService = ApplicationContextUtil
-										.getSpringBean(ProjectService.class);
-
-								projectService.saveWithSession(
-										ProjectAddWindow.this.project,
-										AppContext.getUsername());
-
-								EventBusFactory
-										.getInstance()
-										.post(new ProjectEvent.GotoMyProject(
-												this,
-												new PageActionChain(
-														new ProjectScreenData.Goto(
-																project.getId()))));
-								ProjectAddWindow.this.close();
-							}
-						}
-
-					});
-			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-			saveBtn.setIcon(FontAwesome.SAVE);
-            saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-			buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_RIGHT);
+			final MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(true).withStyleName("addNewControl");
 
 			final Button closeBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE),
@@ -176,6 +142,39 @@ public class ProjectAddWindow extends Window {
 					});
 			closeBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 			buttonControls.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
+
+            final Button saveBtn = new Button(
+                    AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+                    new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void buttonClick(final ClickEvent event) {
+                            if (editForm.validateForm()) {
+                                project.setSaccountid(AppContext.getAccountId());
+                                final ProjectService projectService = ApplicationContextUtil
+                                        .getSpringBean(ProjectService.class);
+
+                                projectService.saveWithSession(
+                                        ProjectAddWindow.this.project,
+                                        AppContext.getUsername());
+
+                                EventBusFactory
+                                        .getInstance()
+                                        .post(new ProjectEvent.GotoMyProject(
+                                                this,
+                                                new PageActionChain(
+                                                        new ProjectScreenData.Goto(
+                                                                project.getId()))));
+                                ProjectAddWindow.this.close();
+                            }
+                        }
+
+                    });
+            saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.setIcon(FontAwesome.SAVE);
+            saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+            buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_RIGHT);
 
 			projectAddLayout.addComponent(buttonControls);
 			projectAddLayout.setComponentAlignment(buttonControls,

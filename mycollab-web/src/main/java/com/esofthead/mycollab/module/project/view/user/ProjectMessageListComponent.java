@@ -120,7 +120,8 @@ public class ProjectMessageListComponent extends MVerticalLayout {
         private String buildAssigneeValue(SimpleMessage message) {
             String uid = UUID.randomUUID().toString();
             DivLessFormatter div = new DivLessFormatter();
-            Img avatar = new Img("", StorageManager.getAvatarLink(message.getPostedUserAvatarId(), 16));
+            Img avatar = new Img("", StorageManager.getAvatarLink(
+                    message.getPostedUserAvatarId(), 16));
             A assigneeLink = new A();
             assigneeLink.setId("tag" + uid);
             assigneeLink.setHref(ProjectLinkBuilder

@@ -7374,6 +7374,11 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	color: #525252;
 }
 
+.v-label.icon-38px .v-icon {
+	font-size: 38px;
+	color: #525252;
+}
+
 .v-icon .black {
 	color: black;
 }

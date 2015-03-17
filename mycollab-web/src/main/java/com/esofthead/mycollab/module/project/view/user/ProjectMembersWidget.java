@@ -20,12 +20,14 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
@@ -38,10 +40,10 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -60,13 +62,21 @@ public class ProjectMembersWidget extends MVerticalLayout {
     public ProjectMembersWidget() {
         withSpacing(false).withMargin(false);
 
-        Button inviteMemberBtn = new Button();
-        inviteMemberBtn.setIcon(FontAwesome.PLUS);
+        MButton inviteMemberBtn = new MButton("+").withStyleName("add-project-btn").withListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(
+                        new ProjectMemberEvent.GotoInviteMembers(this,
+                                null));
+            }
+        });
+        inviteMemberBtn.setWidth("20px");
+        inviteMemberBtn.setHeight("20px");
 
         titleLbl = new Label();
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                 false, true)).withHeight("34px").withWidth("100%").with(titleLbl, inviteMemberBtn).withAlign(titleLbl, Alignment
-                .MIDDLE_CENTER).expand(titleLbl);
+                .MIDDLE_CENTER).withAlign(inviteMemberBtn, Alignment.MIDDLE_CENTER).expand(titleLbl);
         header.addStyleName("panel-header");
 
         memberList = new DefaultBeanPagedList<>(

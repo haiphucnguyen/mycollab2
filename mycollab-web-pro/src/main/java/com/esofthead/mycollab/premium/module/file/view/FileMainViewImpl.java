@@ -57,8 +57,7 @@ import java.util.regex.Pattern;
 public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(FileMainViewImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FileMainViewImpl.class);
 
     private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
@@ -72,7 +71,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private ResourcesDisplayComponent resourceHandlerLayout;
 
     private SettingConnectionDrive settingConnectionDrive;
-    private VerticalLayout mainBodyResourceLayout;
+    private MVerticalLayout mainBodyResourceLayout;
 
     private ResourceService resourceService;
     private ExternalDriveService externalDriveService;
@@ -86,25 +85,17 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         externalResourceService = ApplicationContextUtil
                 .getSpringBean(ExternalResourceService.class);
 
-        this.setSpacing(true);
-        this.setMargin(false);
-        this.setStyleName("file-list-view");
+        this.withMargin(false).withStyleName("file-list-view");
 
-        HorizontalLayout mainView = new HorizontalLayout();
-        mainView.setSpacing(true);
-        mainView.setMargin(true);
-        mainView.setWidth("100%");
+        MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
 
         HorizontalLayout menuBarContainerHorizontalLayout = buildLeftColumn();
-        mainView.addComponent(menuBarContainerHorizontalLayout);
-        mainView.setComponentAlignment(menuBarContainerHorizontalLayout,
-                Alignment.TOP_LEFT);
+        mainView.with(menuBarContainerHorizontalLayout).withAlign(menuBarContainerHorizontalLayout, Alignment.TOP_LEFT);
 
         Separator separator = new Separator();
         separator.setHeight("100%");
         separator.setWidthUndefined();
-        mainView.addComponent(separator);
-        mainView.setComponentAlignment(separator, Alignment.TOP_LEFT);
+        mainView.with(separator).withAlign(separator, Alignment.TOP_LEFT);
 
         this.rootFolder = new Folder(rootPath);
         this.rootECMFolder = rootFolder;
@@ -113,11 +104,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         VerticalLayout rightColumn = new VerticalLayout();
         rightColumn.addComponent(constructHeader());
 
-        mainBodyResourceLayout = new VerticalLayout();
-        mainBodyResourceLayout.setSpacing(true);
+        mainBodyResourceLayout = new MVerticalLayout().withMargin(false);
 
-        resourceHandlerLayout = new ResourcesDisplayComponent(rootPath,
-                rootFolder);
+        resourceHandlerLayout = new ResourcesDisplayComponent(rootFolder);
         mainBodyResourceLayout.addComponent(resourceHandlerLayout);
 
         rightColumn.addComponent(mainBodyResourceLayout);
@@ -132,10 +121,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     }
 
     private HorizontalLayout constructHeader() {
-        final HorizontalLayout layout = new HorizontalLayout();
-        layout.setWidth("100%");
-        layout.setSpacing(true);
-        layout.setMargin(true);
+        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(true).withWidth("100%");
 
         final Image titleIcon = new Image(null,
                 MyCollabResource
@@ -155,16 +141,13 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         final MHorizontalLayout menuBarContainerHorizontalLayout = new MHorizontalLayout()
                 .withMargin(new MarginInfo(false, true, true, true));
 
-        final MVerticalLayout menuLayout = new MVerticalLayout().withSpacing(
-                true).withWidth("250px");
+        final MVerticalLayout menuLayout = new MVerticalLayout().withWidth("250px");
 
         menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
-        MVerticalLayout topControlMenuWrapper = new MVerticalLayout()
-                .withWidth("250px");
+        MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withWidth("250px");
 
-        MHorizontalLayout topControlMenu = new MHorizontalLayout()
-                .withWidth("100%");
+        MHorizontalLayout topControlMenu = new MHorizontalLayout().withWidth("100%");
         topControlMenu.addStyleName("border-box2-no-margin");
         topControlMenu.addStyleName("file-topcontrols");
 
@@ -172,8 +155,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         ButtonGroup navButton = new ButtonGroup();
         navButton.addStyleName(UIConstants.THEME_GRAY_LINK);
-        topControlMenu.with(navButton).withAlign(navButton,
-                Alignment.MIDDLE_RIGHT);
+        topControlMenu.with(navButton).withAlign(navButton, Alignment.MIDDLE_RIGHT);
 
         Button settingBtn = new Button();
         settingBtn.setIcon(MyCollabResource
@@ -184,7 +166,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             @Override
             public void buttonClick(ClickEvent event) {
                 mainBodyResourceLayout.removeAllComponents();
-
                 settingConnectionDrive = new SettingConnectionDrive();
                 mainBodyResourceLayout.addComponent(settingConnectionDrive);
             }
@@ -197,11 +178,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
         linkBtn.setWidth("65px");
 
-        final MVerticalLayout filterBtnLayout = new MVerticalLayout()
-                .withMargin(true).withSpacing(true).withWidth("180px");
+        final MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("180px");
 
-        HorizontalLayout connectDropboxLayout = new HorizontalLayout();
-        connectDropboxLayout.setSpacing(true);
+        MHorizontalLayout connectDropboxLayout = new MHorizontalLayout();
 
         final Image titleIcon = new Image(null);
         titleIcon.setIcon(FontAwesome.DROPBOX);
@@ -298,7 +277,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
         this.folderNavigator.collapseItem(this.rootFolder);
 
-        resourceHandlerLayout.displayComponent(this.rootFolder, rootPath,
+        resourceHandlerLayout.displayComponent(this.rootFolder,
                 rootFolderName);
 
         resourceHandlerLayout
@@ -358,7 +337,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         private static final long serialVersionUID = 1L;
 
         private final Button connectAccountBtn;
-        private final VerticalLayout bodyLayout;
+        private final MVerticalLayout bodyLayout;
         private final MVerticalLayout mainLayout;
 
         public SettingConnectionDrive() {
@@ -400,10 +379,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
             mainLayout.addComponent(connectAccountBtn);
 
-            bodyLayout = new VerticalLayout();
-            bodyLayout.setSpacing(false);
-            bodyLayout.setWidth("100%");
-            bodyLayout.setMargin(false);
+            bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("100%");
 
             mainLayout.addComponent(bodyLayout);
             this.addComponent(mainLayout);
@@ -415,9 +391,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             for (final ExternalDrive drive : lst) {
                 OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
                         drive);
-                bodyLayout.addComponent(layout);
-                bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-                bodyLayout.addComponent(new Hr());
+                bodyLayout.with(layout, new Hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
             }
         }
 
@@ -462,10 +436,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                             .newResource("icons/16/item_settings_big.png"));
                     popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 
-                    final VerticalLayout popupOptionActionLayout = new VerticalLayout();
-                    popupOptionActionLayout.setMargin(true);
-                    popupOptionActionLayout.setSpacing(true);
-                    popupOptionActionLayout.setWidth("100px");
+                    final MVerticalLayout popupOptionActionLayout = new MVerticalLayout().withWidth("100px");
 
                     Button editBtn = new Button(
                             AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),

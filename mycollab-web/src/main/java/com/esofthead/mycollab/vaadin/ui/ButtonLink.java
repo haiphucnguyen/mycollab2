@@ -27,7 +27,7 @@ import org.vaadin.maddon.button.MButton;
 public class ButtonLink extends MButton {
 	private static final long serialVersionUID = 1L;
 
-	public ButtonLink(String caption, Boolean wordWrap) {
+	private ButtonLink(String caption, Boolean wordWrap) {
 		super(caption);
 		this.setStyleName("link");
 		if (wordWrap)

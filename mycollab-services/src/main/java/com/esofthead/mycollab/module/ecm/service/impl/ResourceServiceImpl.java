@@ -47,8 +47,7 @@ import java.util.List;
 
 @Service(value = "resourceService")
 public class ResourceServiceImpl implements ResourceService {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ResourceServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ResourceServiceImpl.class);
 
 	@Autowired
 	private ContentJcrDao contentJcrDao;
@@ -70,7 +69,7 @@ public class ResourceServiceImpl implements ResourceService {
 			return resources;
 		}
 
-		return new ArrayList<Resource>();
+		return new ArrayList<>();
 	}
 
 	@Override

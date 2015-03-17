@@ -646,20 +646,17 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
     }
 
     private Component constructProjectDashboardComponent() {
-        dashboardPresenter = PresenterResolver
-                .getPresenter(ProjectDashboardPresenter.class);
+        dashboardPresenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
         return dashboardPresenter.getView();
     }
 
     private Component constructProjectUsers() {
-        userPresenter = PresenterResolver
-                .getPresenter(UserSettingPresenter.class);
+        userPresenter = PresenterResolver.getPresenter(UserSettingPresenter.class);
         return userPresenter.getView();
     }
 
     private Component constructProjectMessageComponent() {
-        messagePresenter = PresenterResolver
-                .getPresenter(MessagePresenter.class);
+        messagePresenter = PresenterResolver.getPresenter(MessagePresenter.class);
         return messagePresenter.getView();
     }
 
@@ -669,8 +666,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
     }
 
     private Component constructProjectMilestoneComponent() {
-        milestonesPresenter = PresenterResolver
-                .getPresenter(MilestonePresenter.class);
+        milestonesPresenter = PresenterResolver.getPresenter(MilestonePresenter.class);
         return milestonesPresenter.getView();
     }
 
@@ -680,20 +676,17 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
     }
 
     private Component constructProjectProblemComponent() {
-        problemPresenter = PresenterResolver
-                .getPresenter(IProblemPresenter.class);
+        problemPresenter = PresenterResolver.getPresenter(IProblemPresenter.class);
         return problemPresenter.getView();
     }
 
     private Component constructTimeTrackingComponent() {
-        timePresenter = PresenterResolver
-                .getPresenter(ITimeTrackingPresenter.class);
+        timePresenter = PresenterResolver.getPresenter(ITimeTrackingPresenter.class);
         return timePresenter.getView();
     }
 
     private Component constructProjectStandupMeeting() {
-        standupPresenter = PresenterResolver
-                .getPresenter(IStandupPresenter.class);
+        standupPresenter = PresenterResolver.getPresenter(IStandupPresenter.class);
         return standupPresenter.getView();
     }
 

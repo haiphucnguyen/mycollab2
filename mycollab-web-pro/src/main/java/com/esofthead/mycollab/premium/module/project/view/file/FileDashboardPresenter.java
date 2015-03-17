@@ -12,8 +12,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  * 
  */
-public class FileDashboardPresenter extends
-		AbstractPresenter<FileDashboardView> {
+public class FileDashboardPresenter extends AbstractPresenter<FileDashboardView> {
 	private static final long serialVersionUID = 1L;
 
 	public FileDashboardPresenter() {
@@ -28,9 +27,7 @@ public class FileDashboardPresenter extends
 
 		view.displayProjectFiles();
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getCacheComponent(ProjectBreadcrumb.class);
+		ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
 		breadcrumb.gotoFileList();
 	}
-
 }
