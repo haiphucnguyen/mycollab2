@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MMarginInfo;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
@@ -102,7 +103,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         MVerticalLayout rightColumn = new MVerticalLayout();
         rightColumn.addComponent(constructHeader());
 
-        mainBodyResourceLayout = new MVerticalLayout().withMargin(true);
+        mainBodyResourceLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
 
         resourceHandlerLayout = new ResourcesDisplayComponent(rootFolder);
         mainBodyResourceLayout.addComponent(resourceHandlerLayout);
@@ -116,7 +117,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     }
 
     private HorizontalLayout constructHeader() {
-        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(true).withWidth("100%");
+        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MMarginInfo(true, false, false, false))
+                .withWidth("100%");
         final Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() +  " Files", ContentMode.HTML);
         searchTitle.setStyleName("headerName");
         layout.with(searchTitle).expand(searchTitle);

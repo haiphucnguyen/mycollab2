@@ -124,7 +124,12 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
             headerContentTop.with(createProjectBtn).withAlign(createProjectBtn, Alignment.MIDDLE_LEFT);
         }
 
-        SearchTextField searchTextField = new SearchTextField();
+        SearchTextField searchTextField = new SearchTextField() {
+            @Override
+            public void doSearch(String value) {
+
+            }
+        };
         headerContentTop.with(searchTextField).withAlign(searchTextField, Alignment.MIDDLE_RIGHT);
 
         followingTicketsLink = new LabelLink(AppContext.getMessage(

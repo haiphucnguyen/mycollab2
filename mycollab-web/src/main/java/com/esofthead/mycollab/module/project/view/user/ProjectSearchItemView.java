@@ -14,23 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.parameters;
+package com.esofthead.mycollab.module.project.view.user;
 
-import java.util.List;
-
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 1.0
- *
+ * @since 5.0.3
  */
-public class FollowingTicketsScreenData {
-	public static class GotoMyFollowingItems extends ScreenData<List<Integer>> {
-
-		public GotoMyFollowingItems(List<Integer> prjKeys) {
-			super(prjKeys);
-		}
-	}
+public interface ProjectSearchItemView extends PageView {
 }

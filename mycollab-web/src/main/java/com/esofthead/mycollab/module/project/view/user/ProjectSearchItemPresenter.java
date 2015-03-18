@@ -14,21 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.parameters;
-
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+package com.esofthead.mycollab.module.project.view.user;
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 1.0
- *
+ * @since 5.0.3
  */
-public class FileScreenData {
-
-	public static class GotoDashboard extends ScreenData {
-		public GotoDashboard() {
-			super(null);
-		}
-	}
+public class ProjectSearchItemPresenter {
 }

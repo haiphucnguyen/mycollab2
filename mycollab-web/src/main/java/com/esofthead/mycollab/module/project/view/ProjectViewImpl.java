@@ -232,7 +232,11 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             activeProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             topPanel.with(activeProjectBtn).withAlign(activeProjectBtn, Alignment.MIDDLE_RIGHT);
         } else {
-            SearchTextField searchField = new SearchTextField();
+            SearchTextField searchField = new SearchTextField() {
+                public void doSearch(String value) {
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoSearchItemView(ProjectViewImpl.this, value));
+                }
+            };
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);

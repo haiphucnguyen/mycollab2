@@ -12318,7 +12318,7 @@ div.v-ratingstars-bar {
 	font-weight: bold;
 }
 
-.v-horizontallayout .resourceItem:hover, .v-verticallayout .driveEditting {
+.v-verticallayout .driveEditting {
 	background-color: #ddd;
 }
 

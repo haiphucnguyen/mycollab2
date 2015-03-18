@@ -14,44 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.parameters;
+package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.module.page.domain.Page;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 4.4.0
- *
+ * @since 5.0.3
  */
-public class PageScreenData {
-
-	public static class Read extends ScreenData<Page> {
-
-		public Read(Page params) {
-			super(params);
-		}
-	}
-
-	public static class Add extends ScreenData<Page> {
-
-		public Add(Page component) {
-			super(component);
-		}
-	}
-
-	public static class Edit extends ScreenData<Page> {
-
-		public Edit(Page component) {
-			super(component);
-		}
-	}
-
-	public static class Search extends ScreenData<String> {
-
-		public Search(String baseFolder) {
-			super(baseFolder);
-		}
-	}
+public class ProjectSearchItemViewImpl extends AbstractPageView implements ProjectSearchItemView {
 }

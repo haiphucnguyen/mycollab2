@@ -14,29 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.parameters;
+package com.esofthead.mycollab.module.project.view.parameters
 
-import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs
+import com.esofthead.mycollab.vaadin.mvp.ScreenData
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 1.0
- *
+ * @since 5.0.3
  */
-public class MessageScreenData {
-	public static class Read extends ScreenData<Integer> {
+object BugScreenData {
 
-		public Read(Integer params) {
-			super(params);
-		}
-	}
+  class GotoDashboard extends ScreenData {}
 
-	public static class Search extends ScreenData<MessageSearchCriteria> {
+  class Search(params: BugFilterParameter) extends ScreenData[BugFilterParameter](params) {}
 
-		public Search(MessageSearchCriteria params) {
-			super(params);
-		}
-	}
+  class Read(params: Integer) extends ScreenData[Integer](params) {}
+
+  class Add(params: BugWithBLOBs) extends ScreenData[BugWithBLOBs](params) {}
+
+  class Edit(params: BugWithBLOBs) extends ScreenData[BugWithBLOBs](params) {}
 }

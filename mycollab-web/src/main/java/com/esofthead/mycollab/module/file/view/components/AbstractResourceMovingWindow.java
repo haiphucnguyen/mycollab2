@@ -155,8 +155,7 @@ public abstract class AbstractResourceMovingWindow extends Window {
                             String subFolderName = subFolder.getName();
                             if (!subFolderName.startsWith(".")) {
                                 expandFolder.addChild(subFolder);
-                                folderTree.addItem(new Object[]{
-                                                subFolderName,
+                                folderTree.addItem(new Object[]{subFolderName,
                                         AppContext.formatDateTime(subFolder.getCreated().getTime())}, subFolder);
                                 folderTree.setItemIcon(subFolder, FontAwesome.FOLDER);
                                 folderTree.setItemCaption(subFolder, subFolderName);
@@ -234,6 +233,7 @@ public abstract class AbstractResourceMovingWindow extends Window {
             }
 
         });
+        moveBtn.setIcon(FontAwesome.ARROWS);
         moveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         controlGroupBtnLayout.addComponent(moveBtn);
         Button cancelBtn = new Button(

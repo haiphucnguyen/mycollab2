@@ -14,35 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.mvp;
+package com.esofthead.mycollab.vaadin.mvp
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import com.esofthead.mycollab.core.arguments.SearchCriteria
 
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.google.common.eventbus.EventBus;
+import scala.beans.BeanProperty
 
 /**
- * 
  * @author MyCollab Ltd.
- * @since 4.4.0
+ * @since 5.0.3
  */
-public abstract class AbstractController implements Serializable {
-	private static final long serialVersionUID = 1L;
+class ScreenData[P] (@BeanProperty var params: P) {}
 
-	private EventBus eventBus = EventBusFactory.getInstance();
-	private List<Object> subscribers = new ArrayList<>();
-
-	public void register(Object subscriber) {
-		eventBus.register(subscriber);
-		subscribers.add(subscriber);
-	}
-
-	public void unregisterAll() {
-		for (Object subscriber : subscribers) {
-			eventBus.unregister(subscriber);
-		}
-	}
-
+object ScreenData {
+  class Add[P](params:P) extends ScreenData[P](params) {}
+  class Edit[P](params:P) extends ScreenData[P](params) {}
+  class Preview[P](params:P) extends ScreenData[P](params) {}
+  class Search[P <: SearchCriteria](params:P) extends ScreenData(params) {}
 }

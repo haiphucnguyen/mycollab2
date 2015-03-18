@@ -679,27 +679,20 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             super("Rename folder/file");
             this.center();
             this.setResizable(false);
+            this.setModal(true);
             this.setWidth("400px");
             this.renameResource = resource;
             this.constructBody();
         }
 
         private void constructBody() {
-            final MVerticalLayout layout = new MVerticalLayout()
-                    .withMargin(new MarginInfo(false, true, true, true));
+            VerticalLayout contentLayout = new VerticalLayout();
+            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
+            final TextField folderName = new TextField();
+            layoutHelper.addComponent(folderName, "Folder Name", 0, 0);
+            contentLayout.addComponent(layoutHelper.getLayout());
 
-            final MHorizontalLayout topRename = new MHorizontalLayout().withMargin(true);
-
-            final Label label = new Label("Enter new name: ");
-
-            final TextField newName = new TextField();
-            newName.setWidth("150px");
-            topRename.with(label, newName).alignAll(Alignment.MIDDLE_CENTER);
-
-            layout.with(topRename)
-                    .withAlign(topRename, Alignment.MIDDLE_CENTER);
-
-            final MHorizontalLayout controlButtons = new MHorizontalLayout();
+            final MHorizontalLayout controlButtons = new MHorizontalLayout().withMargin(true);
             final Button saveBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                     new ClickListener() {
@@ -711,7 +704,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                             String parentOldPath = oldPath.substring(0,
                                     oldPath.lastIndexOf("/") + 1);
 
-                            String newNameValue = newName.getValue();
+                            String newNameValue = folderName.getValue();
                             String newPath = parentOldPath + newNameValue;
 
                             if (renameResource.isExternalResource()) {
@@ -728,6 +721,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                             RenameResourceWindow.this.close();
                         }
                     });
+            saveBtn.setIcon(FontAwesome.SAVE);
             saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
             final Button cancelBtn = new Button(
@@ -743,10 +737,10 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
             controlButtons.with(saveBtn, cancelBtn).alignAll(
                     Alignment.MIDDLE_CENTER);
-            layout.with(controlButtons).withAlign(controlButtons,
-                    Alignment.MIDDLE_CENTER);
+            contentLayout.addComponent(controlButtons);
+            contentLayout.setComponentAlignment(controlButtons, Alignment.MIDDLE_CENTER);
 
-            this.setContent(layout);
+            this.setContent(contentLayout);
         }
     }
 
@@ -769,11 +763,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             this.folderName = new TextField();
             layoutHelper.addComponent(folderName, "Folder Name", 0, 0);
             contentLayout.addComponent(layoutHelper.getLayout());
-
-            contentLayout.with(layoutHelper.getLayout());
-
             final MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
-
             final Button saveBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                     new Button.ClickListener() {

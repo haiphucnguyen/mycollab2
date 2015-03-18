@@ -84,14 +84,13 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 
         contentWrapper.addStyleName("member-preview");
 
-        this.addHeaderRightContent(createButtonControls());
         previewForm = initPreviewForm();
         previewForm.setWidth("100%");
         previewForm.setStyleName("member-preview-form");
 
         bottomLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%");
-
+        this.addHeaderRightContent(createButtonControls());
         this.with(previewForm, bottomLayout);
     }
 
