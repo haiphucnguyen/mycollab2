@@ -85,12 +85,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         externalResourceService = ApplicationContextUtil
                 .getSpringBean(ExternalResourceService.class);
 
-        this.withMargin(false).withStyleName("file-list-view");
-
         MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
 
-        HorizontalLayout menuBarContainerHorizontalLayout = buildLeftColumn();
-        mainView.with(menuBarContainerHorizontalLayout).withAlign(menuBarContainerHorizontalLayout, Alignment.TOP_LEFT);
+        HorizontalLayout leftColumn = buildLeftColumn();
+        mainView.with(leftColumn).withAlign(leftColumn, Alignment.TOP_LEFT);
 
         Separator separator = new Separator();
         separator.setHeight("100%");
@@ -101,10 +99,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         this.rootECMFolder = rootFolder;
 
         // here for MainBodyResourceLayout class
-        VerticalLayout rightColumn = new VerticalLayout();
+        MVerticalLayout rightColumn = new MVerticalLayout();
         rightColumn.addComponent(constructHeader());
 
-        mainBodyResourceLayout = new MVerticalLayout().withMargin(false);
+        mainBodyResourceLayout = new MVerticalLayout().withMargin(true);
 
         resourceHandlerLayout = new ResourcesDisplayComponent(rootFolder);
         mainBodyResourceLayout.addComponent(resourceHandlerLayout);
@@ -119,18 +117,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
     private HorizontalLayout constructHeader() {
         final MHorizontalLayout layout = new MHorizontalLayout().withMargin(true).withWidth("100%");
-
-        final Image titleIcon = new Image(null,
-                MyCollabResource
-                        .newResource("icons/24/ecm/document_preview.png"));
-        layout.addComponent(titleIcon);
-        layout.setComponentAlignment(titleIcon, Alignment.MIDDLE_LEFT);
-
-        final Label searchtitle = new Label("Files");
-        searchtitle.setStyleName(Reindeer.LABEL_H2);
-        layout.addComponent(searchtitle);
-        layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
-        layout.setExpandRatio(searchtitle, 1.0f);
+        final Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() +  " Files", ContentMode.HTML);
+        searchTitle.setStyleName("headerName");
+        layout.with(searchTitle).expand(searchTitle);
         return layout;
     }
 
@@ -142,7 +131,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
-        MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withWidth("250px");
+        MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withSpacing(false).withWidth("250px");
 
         MHorizontalLayout topControlMenu = new MHorizontalLayout().withWidth("100%");
         topControlMenu.addStyleName("border-box2-no-margin");
@@ -155,8 +144,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         topControlMenu.with(navButton).withAlign(navButton, Alignment.MIDDLE_RIGHT);
 
         Button settingBtn = new Button();
-        settingBtn.setIcon(MyCollabResource
-                .newResource("icons/16/ecm/settings.png"));
+        settingBtn.setIcon(FontAwesome.COG);
         settingBtn.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -176,12 +164,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         linkBtn.setWidth("65px");
 
         final MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("180px");
-
-        MHorizontalLayout connectDropboxLayout = new MHorizontalLayout();
-
-        final Image titleIcon = new Image(null);
-        titleIcon.setIcon(FontAwesome.DROPBOX);
-        connectDropboxLayout.addComponent(titleIcon);
 
         Button uploadDropboxBtn = new Button("Connect Dropbox",
                 new Button.ClickListener() {
@@ -208,8 +190,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     }
                 });
         uploadDropboxBtn.addStyleName("link");
-        connectDropboxLayout.addComponent(uploadDropboxBtn);
-        filterBtnLayout.addComponent(connectDropboxLayout);
+        uploadDropboxBtn.setIcon(FontAwesome.DROPBOX);
+        filterBtnLayout.addComponent(uploadDropboxBtn);
 
         linkBtn.setContent(filterBtnLayout);
 
@@ -271,7 +253,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         this.folderNavigator.addItem(this.rootFolder);
         this.folderNavigator.setItemCaption(this.rootFolder, rootFolderName);
         this.folderNavigator.setItemIcon(this.rootFolder,
-                MyCollabResource.newResource("icons/16/ecm/folder_close.png"));
+                FontAwesome.FOLDER);
         this.folderNavigator.collapseItem(this.rootFolder);
 
         resourceHandlerLayout.displayComponent(this.rootFolder,

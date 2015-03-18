@@ -66,16 +66,11 @@ public class FolderNavigatorMenu extends Tree {
 							externalMapFolder.setName(externalDrive
 									.getFoldername());
 							expandFolder.addChild(externalMapFolder);
-							FolderNavigatorMenu.this.addItem(externalMapFolder);
+							addItem(externalMapFolder);
 
-							FolderNavigatorMenu.this.setItemIcon(
-									externalMapFolder,
-                                    FontAwesome.DROPBOX);
-							FolderNavigatorMenu.this.setItemCaption(
-									externalMapFolder,
-									externalMapFolder.getName());
-							FolderNavigatorMenu.this.setParent(
-									externalMapFolder, expandFolder);
+							setItemIcon(externalMapFolder, FontAwesome.DROPBOX);
+							setItemCaption(externalMapFolder, externalMapFolder.getName());
+							setParent(externalMapFolder, expandFolder);
 						}
 					}
 					if (expandFolder instanceof ExternalFolder) {
@@ -85,36 +80,25 @@ public class FolderNavigatorMenu extends Tree {
 										.getPath());
 						for (final Folder subFolder : subFolders) {
 							expandFolder.addChild(subFolder);
-							FolderNavigatorMenu.this.addItem(subFolder);
-
-							FolderNavigatorMenu.this.setItemIcon(
-									subFolder,
-									FontAwesome.DROPBOX);
-							FolderNavigatorMenu.this.setItemCaption(subFolder,
-									subFolder.getName());
-							FolderNavigatorMenu.this.setParent(subFolder,
-									expandFolder);
+							addItem(subFolder);
+							setItemIcon(subFolder, FontAwesome.DROPBOX);
+							setItemCaption(subFolder, subFolder.getName());
+							setParent(subFolder, expandFolder);
 						}
 					} else {
 						final List<Folder> subFolders = resourceService
 								.getSubFolders(expandFolder.getPath());
 
-						FolderNavigatorMenu.this.setItemIcon(
-								expandFolder,
-								FontAwesome.FOLDER_OPEN);
+						setItemIcon(expandFolder, FontAwesome.FOLDER_OPEN);
 
 						if (subFolders != null) {
 							for (final Folder subFolder : subFolders) {
                                 if (!subFolder.getName().startsWith(".")) {
                                     expandFolder.addChild(subFolder);
-                                    FolderNavigatorMenu.this.addItem(subFolder);
-
-                                    FolderNavigatorMenu.this
-                                            .setItemIcon(subFolder, FontAwesome.FOLDER);
-                                    FolderNavigatorMenu.this.setItemCaption(
-                                            subFolder, subFolder.getName());
-                                    FolderNavigatorMenu.this.setParent(subFolder,
-                                            expandFolder);
+                                    addItem(subFolder);
+                                    setItemIcon(subFolder, FontAwesome.FOLDER);
+                                    setItemCaption(subFolder, subFolder.getName());
+                                    setParent(subFolder, expandFolder);
                                 }
 							}
 						}
