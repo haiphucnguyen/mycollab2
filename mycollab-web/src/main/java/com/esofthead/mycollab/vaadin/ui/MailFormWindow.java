@@ -235,7 +235,7 @@ public class MailFormWindow extends Window {
 					ExtMailService systemMailService = ApplicationContextUtil
 							.getSpringBean(ExtMailService.class);
 
-					List<File> listFile = attachments.getListFile();
+					List<File> listFile = attachments.files();
 					List<EmailAttachementSource> emailAttachmentSource = null;
 					if (listFile != null && listFile.size() > 0) {
 						emailAttachmentSource = new ArrayList<EmailAttachementSource>();

@@ -78,7 +78,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
     public MessageReadViewImpl() {
         super();
 
-        this.header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%");
+        this.header = new MHorizontalLayout().withMargin(true).withStyleName("hdr-view").withWidth("100%");
 
         this.addComponent(header);
         previewForm = new AdvancedPreviewBeanForm<>();
@@ -126,8 +126,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
         public ComponentContainer getLayout() {
             header.removeAllComponents();
 
-            MVerticalLayout messageAddLayout = new MVerticalLayout()
-                    .withSpacing(true).withMargin(false).withWidth("100%");
+            MVerticalLayout messageAddLayout = new MVerticalLayout().withMargin(false).withWidth("100%");
 
             Button deleteBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
@@ -204,15 +203,13 @@ public class MessageReadViewImpl extends AbstractPageView implements
                     .expand(headerText);
 
             MHorizontalLayout messageLayout = new MHorizontalLayout()
-                    .withStyleName("message").withWidth("100%")
-                    .withSpacing(true);
+                    .withStyleName("message").withWidth("100%");
 
             if (message.getIsstick() != null && message.getIsstick()) {
                 messageLayout.addStyleName("important-message");
             }
 
-            MVerticalLayout userBlock = new MVerticalLayout().withWidth("80px")
-                    .withSpacing(true).withMargin(false);
+            MVerticalLayout userBlock = new MVerticalLayout().withWidth("80px").withMargin(false);
             userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
             ClickListener gotoUser = new ClickListener() {
                 private static final long serialVersionUID = 1L;

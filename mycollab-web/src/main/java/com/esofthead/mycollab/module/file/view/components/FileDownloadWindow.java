@@ -44,10 +44,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 1.0
- *
  */
 public class FileDownloadWindow extends Window {
     private static final long serialVersionUID = 1L;
@@ -73,7 +71,7 @@ public class FileDownloadWindow extends Window {
         layout.with(iconWrapper).withAlign(iconWrapper, Alignment.MIDDLE_CENTER);
 
         final GridFormLayoutHelper info = new GridFormLayoutHelper(1, 4,
-                "100%", "80px", Alignment.TOP_LEFT);
+                "100%", "100px", Alignment.TOP_LEFT);
         info.getLayout().setWidth("100%");
         info.getLayout().setMargin(new MarginInfo(false, true, false, true));
         info.getLayout().setSpacing(false);
@@ -117,7 +115,7 @@ public class FileDownloadWindow extends Window {
 
         FileDownloader fileDownloader = new FileDownloader(downloadResource);
         fileDownloader.extend(downloadBtn);
-
+        downloadBtn.setIcon(FontAwesome.DOWNLOAD);
         downloadBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
         buttonControls.with(downloadBtn).withAlign(downloadBtn,

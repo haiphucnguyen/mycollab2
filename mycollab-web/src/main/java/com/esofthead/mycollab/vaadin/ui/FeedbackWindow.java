@@ -176,7 +176,7 @@ public class FeedbackWindow extends Window {
 				if (!email.equals("") && !subject.equals("")) {
 					ExtMailService systemMailService = ApplicationContextUtil
 							.getSpringBean(ExtMailService.class);
-					List<File> listFile = attachments.getListFile();
+					List<File> listFile = attachments.files();
 					List<EmailAttachementSource> emailAttachmentSource = null;
 
 					if (CollectionUtils.isNotEmpty(listFile)) {

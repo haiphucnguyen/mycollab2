@@ -117,14 +117,7 @@ public class ProjectAddWindow extends Window {
 		public ComponentContainer getLayout() {
 			final VerticalLayout projectAddLayout = new VerticalLayout();
 
-			this.informationLayout = new GridFormLayoutHelper(2, 4, "100%",
-					"167px", Alignment.TOP_LEFT);
-			this.informationLayout.getLayout().setWidth("100%");
-			this.informationLayout.getLayout().setMargin(false);
-			this.informationLayout.getLayout().setSpacing(false);
-			this.informationLayout.getLayout().addStyleName(
-					"colored-gridlayout");
-
+			this.informationLayout =  GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
 			projectAddLayout.addComponent(this.informationLayout.getLayout());
 
 			final MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(true).withStyleName("addNewControl");

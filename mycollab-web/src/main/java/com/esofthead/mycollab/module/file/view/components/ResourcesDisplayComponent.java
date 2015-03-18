@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
 import com.esofthead.mycollab.vaadin.resources.OnDemandFileDownloader;
 import com.esofthead.mycollab.vaadin.resources.StreamDownloadResourceUtil;
+import com.esofthead.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
@@ -75,12 +76,13 @@ import java.util.regex.Pattern;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ResourcesDisplayComponent extends VerticalLayout {
+public class ResourcesDisplayComponent extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ResourcesDisplayComponent.class);
 
-    private static final String illegalFileNamePattern = "[.<>:&/\\|?*&%()+-]";
+    private static final String illegalFileNamePattern = "[<>:&/\\|?*&%()]";
+    private static final String illegalFolderNamePattern = "[.<>:&/\\|?*&%()+-]";
 
     private ResourceService resourceService;
     private ExternalResourceService externalResourceService;
@@ -88,14 +90,14 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
     private FileBreadcrumb fileBreadCrumb;
     private ResourcesContainer resourcesContainer;
-    private ResourcePagingNavigator pagingResourceWapper;
+    private ResourcePagingNavigator pageNavigator;
 
     private Folder baseFolder;
     private String rootFolderName;
     private String rootPath;
 
     public ResourcesDisplayComponent(final Folder rootFolder) {
-        this.setSpacing(true);
+        this.withMargin(new MarginInfo(false, false, true, false));
         this.baseFolder = rootFolder;
         this.rootPath = rootFolder.getPath();
         externalResourceService = ApplicationContextUtil
@@ -431,7 +433,9 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             }
 
             if (CollectionUtils.isNotEmpty(resources)) {
-                if (resources.size() <= ResourcePagingNavigator.pageItemNum) {
+                pageNavigator = new ResourcePagingNavigator(resources);
+                pageNavigator.setWidth("100%");
+                if (resources.size() <= pageNavigator.pageItemNum) {
                     for (Resource res : resources) {
                         ComponentContainer resContainer = buildResourceRowComp(res);
                         if (resContainer != null) {
@@ -439,8 +443,8 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                             this.addComponent(new Hr());
                         }
                     }
-                } else if (resources.size() > ResourcePagingNavigator.pageItemNum) {
-                    for (int i = 0; i < ResourcePagingNavigator.pageItemNum; i++) {
+                } else if (resources.size() > pageNavigator.pageItemNum) {
+                    for (int i = 0; i < pageNavigator.pageItemNum; i++) {
                         Resource res = resources.get(i);
                         ComponentContainer resContainer = buildResourceRowComp(res);
                         if (resContainer != null) {
@@ -448,11 +452,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                             this.addComponent(new Hr());
                         }
                     }
-                    pagingResourceWapper = new ResourcePagingNavigator(resources);
-                    pagingResourceWapper.setWidth("100%");
-                    this.addComponent(pagingResourceWapper);
-                    this.setComponentAlignment(pagingResourceWapper,
-                            Alignment.MIDDLE_CENTER);
+                    this.with(pageNavigator).withAlign(pageNavigator, Alignment.MIDDLE_CENTER);
                 }
             }
         }
@@ -484,7 +484,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                 resourceIcon = (res instanceof ExternalFolder) ? new FontIconLabel(FontAwesome.DROPBOX) : new
                         FontIconLabel(FontAwesome.FOLDER);
             else {
-                resourceIcon = new FontIconLabel(FontAwesome.FILE);
+                resourceIcon = new FontIconLabel(FileAssetsUtil.getFileIconResource(res.getName()));
             }
             resourceIcon.addStyleName("icon-38px");
             resIconWrapper.addComponent(resourceIcon);
@@ -583,6 +583,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                         }
                     });
             renameBtn.addStyleName("link");
+            renameBtn.setIcon(FontAwesome.EDIT);
             filterBtnLayout.addComponent(renameBtn);
 
             final Button downloadBtn = new Button("Download");
@@ -609,6 +610,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             downloaderExt.extend(downloadBtn);
 
             downloadBtn.addStyleName("link");
+            downloadBtn.setIcon(FontAwesome.DOWNLOAD);
             filterBtnLayout.addComponent(downloadBtn);
 
             final Button moveBtn = new Button("Move to",
@@ -622,6 +624,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                         }
                     });
             moveBtn.addStyleName("link");
+            moveBtn.setIcon(FontAwesome.ARROWS);
             filterBtnLayout.addComponent(moveBtn);
 
             final Button deleteBtn = new Button(
@@ -636,6 +639,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                                     .deleteResourceAction();
                         }
                     });
+            deleteBtn.setIcon(FontAwesome.TRASH_O);
             deleteBtn.addStyleName("link");
             filterBtnLayout.addComponent(deleteBtn);
 
@@ -753,28 +757,20 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
         public AddNewFolderWindow() {
             this.setModal(true);
-            this.setCaption("New Folder");
             this.setResizable(false);
+            this.setWidth("500px");
+            this.setCaption("New Folder");
             this.center();
 
-            VerticalLayout contentLayout = new VerticalLayout();
-            contentLayout.setMargin(true);
+            MVerticalLayout contentLayout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, true, false));
             this.setContent(contentLayout);
 
-            final MHorizontalLayout fileLayout = new MHorizontalLayout();
-            fileLayout.setSizeUndefined();
-            final Label captionLbl = new Label("Enter folder name: ");
-            fileLayout.with(captionLbl).withAlign(captionLbl, Alignment.MIDDLE_LEFT);
-
+            GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
             this.folderName = new TextField();
-            fileLayout.addComponent(this.folderName);
-            fileLayout.setComponentAlignment(this.folderName,
-                    Alignment.MIDDLE_LEFT);
-            fileLayout.setExpandRatio(this.folderName, 1.0f);
+            layoutHelper.addComponent(folderName, "Folder Name", 0, 0);
+            contentLayout.addComponent(layoutHelper.getLayout());
 
-            contentLayout.addComponent(fileLayout);
-            contentLayout.setComponentAlignment(fileLayout,
-                    Alignment.MIDDLE_CENTER);
+            contentLayout.with(layoutHelper.getLayout());
 
             final MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
 
@@ -785,17 +781,15 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-
-                            final String folderVal = AddNewFolderWindow.this.folderName
-                                    .getValue();
+                            final String folderVal = folderName.getValue();
 
                             if (StringUtils.isNotBlank(folderVal)) {
-                                Pattern pattern = Pattern
-                                        .compile(illegalFileNamePattern);
+                                Pattern pattern = Pattern.compile(illegalFolderNamePattern);
                                 Matcher matcher = pattern.matcher(folderVal);
                                 if (matcher.find()) {
                                     NotificationUtil
-                                            .showWarningNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
+                                            .showWarningNotification("Please enter valid folder name except any " +
+                                                    "follow characters : " + illegalFolderNamePattern);
                                     return;
                                 }
 
@@ -836,9 +830,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             controlsLayout.setComponentAlignment(cancelBtn,
                     Alignment.MIDDLE_RIGHT);
 
-            contentLayout.addComponent(controlsLayout);
-            contentLayout.setComponentAlignment(controlsLayout,
-                    Alignment.MIDDLE_CENTER);
+            contentLayout.with(controlsLayout).withAlign(controlsLayout, Alignment.MIDDLE_CENTER);
         }
     }
 
@@ -852,25 +844,21 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             super("Upload");
             this.setWidth("500px");
             this.setResizable(false);
+            this.setModal(true);
+            center();
 
             VerticalLayout contentLayout = new VerticalLayout();
             contentLayout.setMargin(new MarginInfo(false, false, true, false));
             this.setContent(contentLayout);
-            this.setModal(true);
-            final AttachmentPanel attachments = new AttachmentPanel();
+            final AttachmentPanel attachmentPanel = new AttachmentPanel();
 
-            this.layoutHelper = new GridFormLayoutHelper(1, 2, "100%", "167px",
-                    Alignment.TOP_LEFT);
+            this.layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
 
-            multiFileUploadExt = new MultiFileUploadExt(attachments);
-            multiFileUploadExt.addComponent(attachments);
+            multiFileUploadExt = new MultiFileUploadExt(attachmentPanel);
+            multiFileUploadExt.addComponent(attachmentPanel);
             multiFileUploadExt.setWidth("100%");
 
             this.layoutHelper.addComponent(multiFileUploadExt, "File", 0, 0);
-
-            this.layoutHelper.getLayout().setWidth("100%");
-            this.layoutHelper.getLayout().setMargin(false);
-            this.layoutHelper.getLayout().addStyleName("colored-gridlayout");
             contentLayout.addComponent(this.layoutHelper.getLayout());
 
             final MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
@@ -881,18 +869,17 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            List<File> lstFileAttachments = attachments
-                                    .getListFile();
-                            if (lstFileAttachments != null
-                                    && lstFileAttachments.size() > 0) {
-                                for (File file : lstFileAttachments) {
+                            List<File> attachments = attachmentPanel
+                                    .files();
+                            if (CollectionUtils.isNotEmpty(attachments)) {
+                                for (File attachment : attachments) {
                                     try {
-                                        if (StringUtils.isNotBlank(file
+                                        if (StringUtils.isNotBlank(attachment
                                                 .getName())) {
                                             Pattern pattern = Pattern
                                                     .compile(illegalFileNamePattern);
                                             Matcher matcher = pattern
-                                                    .matcher(file.getName());
+                                                    .matcher(attachment.getName());
                                             if (matcher.find()) {
                                                 NotificationUtil
                                                         .showWarningNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
@@ -901,10 +888,10 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                                         }
                                         final Content content = new Content(
                                                 baseFolder.getPath() + "/"
-                                                        + file.getName());
-                                        content.setSize(file.length());
+                                                        + attachment.getName());
+                                        content.setSize(attachment.length());
                                         FileInputStream fileInputStream = new FileInputStream(
-                                                file);
+                                                attachment);
 
                                         if (baseFolder instanceof ExternalFolder) {
                                             externalResourceService
@@ -933,6 +920,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                         }
                     });
             uploadBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            uploadBtn.setIcon(FontAwesome.UPLOAD);
             controlsLayout.addComponent(uploadBtn);
 
             final Button cancelBtn = new Button(
@@ -959,15 +947,15 @@ public class ResourcesDisplayComponent extends VerticalLayout {
 
     private class ResourcePagingNavigator extends CssLayout {
         private static final long serialVersionUID = 1L;
-        private final int totalItem;
-        public static final int pageItemNum = 15;
+        private int totalItem;
+        public  int pageItemNum = 15;
         private int currentPage;
-        private final CssLayout controlBarWrapper;
-        private final HorizontalLayout pageManagement;
-        private final int totalPage;
-        private final List<Resource> lstResource;
+        private CssLayout controlBarWrapper;
+        private MHorizontalLayout navigator;
+        private int totalPage;
+        private List<Resource> lstResource;
         private Button currentBtn;
-        private final HorizontalLayout controlBar;
+        private HorizontalLayout controlBar;
 
         public ResourcePagingNavigator(List<Resource> lstResource) {
             this.totalItem = lstResource.size();
@@ -980,16 +968,17 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             this.controlBarWrapper.setStyleName("listControl");
             this.controlBarWrapper.setWidth("100%");
 
-            controlBar = new HorizontalLayout();
+            controlBar = new MHorizontalLayout().withMargin(false);
             controlBar.setWidth("100%");
             this.controlBarWrapper.addComponent(controlBar);
 
-            this.pageManagement = new HorizontalLayout();
+            navigator = new MHorizontalLayout();
+            navigator.setWidthUndefined();
             createPageControls();
         }
 
         private void createPageControls() {
-            this.pageManagement.removeAllComponents();
+            this.navigator.removeAllComponents();
             if (this.currentPage > 1) {
                 final Button firstLink = new ButtonLink("1",
                         new ClickListener() {
@@ -1001,12 +990,12 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                             }
                         }, false);
                 firstLink.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(firstLink);
+                this.navigator.addComponent(firstLink);
             }
             if (this.currentPage >= 5) {
                 final Label ss1 = new Label("...");
                 ss1.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(ss1);
+                this.navigator.addComponent(ss1);
             }
             if (this.currentPage > 3) {
                 final Button previous2 = new ButtonLink(""
@@ -1019,7 +1008,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                     }
                 }, false);
                 previous2.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(previous2);
+                this.navigator.addComponent(previous2);
             }
             if (this.currentPage > 2) {
                 final Button previous1 = new ButtonLink(""
@@ -1032,7 +1021,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                     }
                 }, false);
                 previous1.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(previous1);
+                this.navigator.addComponent(previous1);
             }
             // Here add current ButtonLink
             currentBtn = new ButtonLink("" + this.currentPage,
@@ -1047,7 +1036,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
             currentBtn.addStyleName("buttonPaging");
             currentBtn.addStyleName("buttonPagingcurrent");
 
-            this.pageManagement.addComponent(currentBtn);
+            this.navigator.addComponent(currentBtn);
             final int range = this.totalPage - this.currentPage;
             if (range >= 1) {
                 final Button next1 = new ButtonLink(
@@ -1060,7 +1049,7 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                     }
                 }, false);
                 next1.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(next1);
+                this.navigator.addComponent(next1);
             }
             if (range >= 2) {
                 final Button next2 = new ButtonLink(
@@ -1073,12 +1062,12 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                     }
                 }, false);
                 next2.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(next2);
+                this.navigator.addComponent(next2);
             }
             if (range >= 4) {
                 final Label ss2 = new Label("...");
                 ss2.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(ss2);
+                this.navigator.addComponent(ss2);
             }
             if (range >= 3) {
                 final Button last = new ButtonLink("" + this.totalPage,
@@ -1091,13 +1080,12 @@ public class ResourcesDisplayComponent extends VerticalLayout {
                             }
                         }, false);
                 last.addStyleName("buttonPaging");
-                this.pageManagement.addComponent(last);
+                this.navigator.addComponent(last);
             }
 
-            this.pageManagement.setWidth(null);
-            this.pageManagement.setSpacing(true);
-            controlBar.addComponent(this.pageManagement);
-            controlBar.setComponentAlignment(this.pageManagement,
+
+            controlBar.addComponent(navigator);
+            controlBar.setComponentAlignment(navigator,
                     Alignment.MIDDLE_RIGHT);
             this.addComponent(controlBarWrapper);
         }
