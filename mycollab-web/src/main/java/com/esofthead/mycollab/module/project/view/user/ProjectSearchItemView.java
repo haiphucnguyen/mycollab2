@@ -23,4 +23,5 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 5.0.3
  */
 public interface ProjectSearchItemView extends PageView {
+    void displayResults(String value);
 }

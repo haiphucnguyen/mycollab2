@@ -41,6 +41,23 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.3
+-----------------------------
+
+**Library Upgrades**
+
+* Upgrade Vaadin to 7.4.1
+* Upgrade other libraries
+
+**Improvements**
+
+* Add search of generic assignments to project
+* Revise and bug fixes the file module
+
+**Bug Fixes**
+
+* Edit project member throws exception
+
 Version 5.0.2
 -----------------------------
 

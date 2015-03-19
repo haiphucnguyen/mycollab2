@@ -17,10 +17,15 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.vaadin.ui.Label;
 
 /**
  * @author MyCollab Ltd.
  * @since 5.0.3
  */
 public class ProjectSearchItemViewImpl extends AbstractPageView implements ProjectSearchItemView {
+    @Override
+    public void displayResults(String value) {
+        this.addComponent(new Label("A"));
+    }
 }

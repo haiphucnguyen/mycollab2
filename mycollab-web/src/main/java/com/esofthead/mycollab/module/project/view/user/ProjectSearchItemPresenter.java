@@ -16,9 +16,26 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.vaadin.ui.ComponentContainer;
+
 /**
  * @author MyCollab Ltd.
  * @since 5.0.3
  */
-public class ProjectSearchItemPresenter {
+public class ProjectSearchItemPresenter extends AbstractPresenter<ProjectSearchItemView> {
+
+    public ProjectSearchItemPresenter() {
+        super(ProjectSearchItemView.class);
+    }
+
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
+        projectViewContainer.removeAllComponents();
+        projectViewContainer.addComponent(view.getWidget());
+        String params = (String)data.getParams();
+        view.displayResults(params);
+    }
 }

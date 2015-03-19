@@ -33,6 +33,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -164,12 +165,11 @@ public class TaskTableDisplay extends
                 final SimpleTask task = TaskTableDisplay.this
                         .getBeanByIndex(itemId);
                 PopupButton taskSettingPopupBtn = new PopupButton();
-                taskSettingPopupBtn.setIcon(MyCollabResource
-                        .newResource("icons/16/item_settings.png"));
+                taskSettingPopupBtn.setIcon(FontAwesome.COGS);
                 taskSettingPopupBtn.setStyleName("link");
                 taskSettingPopupBtn.addStyleName("noDefaultIcon");
 
-                MVerticalLayout filterBtnLayout = new MVerticalLayout().withSpacing(true).withMargin(true).withWidth("100px");
+                MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("100px");
 
                 Button editButton = new Button(AppContext
                         .getMessage(GenericI18Enum.BUTTON_EDIT),
@@ -185,6 +185,7 @@ public class TaskTableDisplay extends
                         });
                 editButton.setEnabled(CurrentProjectVariables
                         .canWrite(ProjectRolePermissionCollections.TASKS));
+                editButton.setIcon(FontAwesome.EDIT);
                 editButton.setStyleName("link");
                 filterBtnLayout.addComponent(editButton);
 
@@ -212,6 +213,7 @@ public class TaskTableDisplay extends
                                             "closeTask"));
                                 }
                             });
+                    closeBtn.setIcon(FontAwesome.CHECK_CIRCLE_O);
                     closeBtn.setStyleName("link");
                     closeBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
@@ -236,6 +238,7 @@ public class TaskTableDisplay extends
                                             "reopenTask"));
                                 }
                             });
+                    reOpenBtn.setIcon(FontAwesome.UNLOCK);
                     reOpenBtn.setStyleName("link");
                     reOpenBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
@@ -264,6 +267,7 @@ public class TaskTableDisplay extends
                                                 "pendingTask"));
                                     }
                                 });
+                        pendingBtn.setIcon(FontAwesome.HDD_O);
                         pendingBtn.setStyleName("link");
                         pendingBtn.setEnabled(CurrentProjectVariables
                                 .canWrite(ProjectRolePermissionCollections.TASKS));
@@ -290,6 +294,7 @@ public class TaskTableDisplay extends
                                             "reopenTask"));
                                 }
                             });
+                    reOpenBtn.setIcon(FontAwesome.UNLOCK);
                     reOpenBtn.setStyleName("link");
                     reOpenBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
@@ -327,10 +332,8 @@ public class TaskTableDisplay extends
                                                             .getSpringBean(ProjectTaskService.class);
                                                     projectTaskService.removeWithSession(
                                                             task.getId(),
-                                                            AppContext
-                                                                    .getUsername(),
-                                                            AppContext
-                                                                    .getAccountId());
+                                                            AppContext.getUsername(),
+                                                            AppContext.getAccountId());
                                                     fireTableEvent(new TableClickEvent(
                                                             TaskTableDisplay.this,
                                                             task, "deleteTask"));
@@ -339,9 +342,9 @@ public class TaskTableDisplay extends
                                         });
                             }
                         });
+                deleteBtn.setIcon(FontAwesome.TRASH_O);
                 deleteBtn.setStyleName("link");
-                deleteBtn.setEnabled(CurrentProjectVariables
-                        .canAccess(ProjectRolePermissionCollections.TASKS));
+                deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
                 filterBtnLayout.addComponent(deleteBtn);
 
                 taskSettingPopupBtn.setContent(filterBtnLayout);
