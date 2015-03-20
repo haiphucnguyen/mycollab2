@@ -20,7 +20,6 @@ package com.esofthead.mycollab.module.project.view.message;
 import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -258,9 +257,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
             rowLayout.addComponent(messageHeader);
 
-            final Label messageContent = new Label(
-                    StringUtils.formatRichText(message.getMessage()),
-                    ContentMode.HTML);
+            final SafeHtmlLabel messageContent = new SafeHtmlLabel(message.getMessage());
             messageContent.setStyleName("message-body");
             rowLayout.addComponent(messageContent);
 

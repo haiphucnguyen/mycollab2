@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.event.FieldEvents;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
@@ -51,18 +50,7 @@ public abstract class SearchTextField extends MHorizontalLayout {
         innerField.setInputPrompt("Search");
         innerField.setWidth("180px");
         this.with(icon, innerField).withStyleName("searchfield");
-        innerField.addFocusListener(new FieldEvents.FocusListener() {
-            @Override
-            public void focus(FieldEvents.FocusEvent focusEvent) {
-                innerField.addShortcutListener(shortcutListener);
-            }
-        });
-        innerField.addBlurListener(new FieldEvents.BlurListener() {
-            @Override
-            public void blur(FieldEvents.BlurEvent blurEvent) {
-                innerField.removeShortcutListener(shortcutListener);
-            }
-        });
+        ShortcutExtension.installShortcutAction(innerField, shortcutListener);
     }
 
     abstract public void doSearch(String value);

@@ -18,18 +18,36 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultSearchService;
+import com.esofthead.mycollab.module.project.dao.ProjectGenericItemMapper;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author MyCollab Ltd.
  * @since 5.0.3
  */
+@Service
 public class ProjectGenericItemServiceImpl extends DefaultSearchService<ProjectGenericItemSearchCriteria> implements
-        ProjectGenericItemService{
+        ProjectGenericItemService {
+
+    @Autowired
+    private ProjectGenericItemMapper projectGenericItemMapper;
 
     @Override
     public ISearchableDAO<ProjectGenericItemSearchCriteria> getSearchMapper() {
-        return null;
+        return projectGenericItemMapper;
+    }
+
+    @Override
+    public int getTotalCount(ProjectGenericItemSearchCriteria criteria) {
+        return projectGenericItemMapper.getTotalCountFromTask(criteria) + projectGenericItemMapper
+                .getTotalCountFromTaskGroup(criteria) + projectGenericItemMapper
+                .getTotalCountFromMessage(criteria) + projectGenericItemMapper.getTotalCountFromMilestone(criteria) +
+                projectGenericItemMapper.getTotalCountFromBug(criteria) + projectGenericItemMapper
+                .getTotalCountFromVersion(criteria) + projectGenericItemMapper.getTotalCountFromComponent(criteria)
+                + projectGenericItemMapper.getTotalCountFromRisk(criteria) + projectGenericItemMapper
+                .getTotalCountFromProblem(criteria);
     }
 }

@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.4.1";
+	content: "7.4.2";
 }
 
 .v-generated-body {
@@ -320,6 +320,21 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	font-size: 18px;
 	font-weight: bold;
 	color: #303030;
+}
+
+.v-label.icon-48px .v-icon {
+	font-size: 48px;
+	color: #525252;
+}
+
+.v-label.icon-38px .v-icon {
+	font-size: 38px;
+	color: #525252;
+}
+
+.v-label.icon-18px .v-icon {
+	font-size: 18px;
+	color: #525252;
 }
 
 .stickytooltip {
@@ -3609,6 +3624,10 @@ div.v-progressindicator-indeterminate-disabled {
 
 .v-off {
 	color: #ddd;
+}
+
+.v-table .v-checkbox {
+	display: inline-block;
 }
 
 .v-table-drag .v-table-body {
@@ -7375,16 +7394,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	font-size: 18px;
 }
 
-.v-label.icon-48px .v-icon {
-	font-size: 48px;
-	color: #525252;
-}
-
-.v-label.icon-38px .v-icon {
-	font-size: 38px;
-	color: #525252;
-}
-
 .v-icon .black {
 	color: black;
 }
@@ -7669,6 +7678,21 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	font-size: 18px;
 	font-weight: bold;
 	color: #303030;
+}
+
+.v-label.icon-48px .v-icon {
+	font-size: 48px;
+	color: #525252;
+}
+
+.v-label.icon-38px .v-icon {
+	font-size: 38px;
+	color: #525252;
+}
+
+.v-label.icon-18px .v-icon {
+	font-size: 18px;
+	color: #525252;
 }
 
 .h-sidebar-menu {

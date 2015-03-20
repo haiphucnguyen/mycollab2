@@ -21,7 +21,6 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -55,7 +54,6 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -269,9 +267,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
             rowLayout.addComponent(messageHeader);
 
-            final Label messageContent = new Label(
-                    StringUtils.formatRichText(message.getMessage()),
-                    ContentMode.HTML);
+            final SafeHtmlLabel messageContent = new SafeHtmlLabel(message.getMessage());
             messageContent.setStyleName("message-body");
             rowLayout.addComponent(messageContent);
 
@@ -350,15 +346,15 @@ public class MessageListViewImpl extends AbstractPageView implements
                     .withStyleName("message-search");
             basicSearchBody.setSizeUndefined();
 
-            nameField = new TextField();
+            nameField = ShortcutExtension.installShortcutAction(new TextField(),
+                    new ShortcutListener("MessageTextSearch", ShortcutAction.KeyCode.ENTER,
+                            null) {
+                        @Override
+                        public void handleAction(Object o, Object o1) {
+                            doSearch();
+                        }
+                    });
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            nameField.addShortcutListener(new ShortcutListener("MessageTextSearch", ShortcutAction.KeyCode.ENTER,
-                    null) {
-                @Override
-                public void handleAction(Object o, Object o1) {
-                    doSearch();
-                }
-            });
 
             basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_LEFT);
 

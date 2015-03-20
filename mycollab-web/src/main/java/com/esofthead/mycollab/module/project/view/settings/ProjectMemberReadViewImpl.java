@@ -444,8 +444,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             if (dueDate != null) {
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE,
-                        DateTimeUtils.getPrettyDateValue(dueDate,
-                                AppContext.getUserLocale()))));
+                        AppContext.formatPrettyTime(dueDate))));
             } else {
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE, "Undefined")));

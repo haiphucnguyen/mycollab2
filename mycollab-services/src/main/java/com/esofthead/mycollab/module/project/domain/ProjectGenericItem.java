@@ -25,6 +25,8 @@ import java.util.Date;
 public class ProjectGenericItem {
     private String type;
 
+    private String typeId;
+
     private String createdUser;
 
     private String createdUserAvatarId;
@@ -39,11 +41,13 @@ public class ProjectGenericItem {
 
     private String description;
 
-    private int projectId;
+    private Integer projectId;
 
     private String projectName;
 
     private String projectShortName;
+
+    private Integer extraTypeId;
 
     public String getType() {
         return type;
@@ -109,11 +113,11 @@ public class ProjectGenericItem {
         this.description = description;
     }
 
-    public int getProjectId() {
+    public Integer getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    public void setProjectId(Integer projectId) {
         this.projectId = projectId;
     }
 
@@ -131,5 +135,21 @@ public class ProjectGenericItem {
 
     public void setProjectShortName(String projectShortName) {
         this.projectShortName = projectShortName;
+    }
+
+    public Integer getExtraTypeId() {
+        return extraTypeId;
+    }
+
+    public void setExtraTypeId(Integer extraTypeId) {
+        this.extraTypeId = extraTypeId;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 }

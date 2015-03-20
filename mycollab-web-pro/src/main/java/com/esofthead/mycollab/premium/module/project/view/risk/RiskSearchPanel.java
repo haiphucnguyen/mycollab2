@@ -16,10 +16,9 @@ import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
-import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -91,12 +90,17 @@ public class RiskSearchPanel extends
 
         @Override
         public ComponentContainer constructBody() {
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout()
-                    .withSpacing(true).withMargin(true);
+            final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
-            this.nameField = this.createSeachSupportTextField(new TextField(),
-                    "NameFieldOfBasicSearch");
-            this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            nameField = ShortcutExtension.installShortcutAction(new TextField(),
+                    new ShortcutListener("RiskSearchRequest", ShortcutAction.KeyCode.ENTER,
+                            null) {
+                        @Override
+                        public void handleAction(Object o, Object o1) {
+                            callSearchAction();
+                        }
+                    });
+            nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.with(nameField).withAlign(nameField,
                     Alignment.MIDDLE_CENTER);
 

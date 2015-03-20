@@ -15,10 +15,9 @@ import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
-import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -88,17 +87,22 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
         public ComponentContainer constructBody() {
             final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
-            this.nameField = this.createSeachSupportTextField(new TextField(),
-                    "NameFieldOfBasicSearch");
-
-            this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            nameField = ShortcutExtension.installShortcutAction(new TextField(),
+                    new ShortcutListener("ProblemSearchRequest", ShortcutAction.KeyCode.ENTER,
+                            null) {
+                        @Override
+                        public void handleAction(Object o, Object o1) {
+                            callSearchAction();
+                        }
+                    });
+            nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
             basicSearchBody.with(nameField).withAlign(nameField,
                     Alignment.MIDDLE_CENTER);
 
-            this.myItemCheckbox = new CheckBox(
+            myItemCheckbox = new CheckBox(
                     AppContext
                             .getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
-            this.myItemCheckbox.setWidth("75px");
+            myItemCheckbox.setWidth("75px");
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox,
                     Alignment.MIDDLE_CENTER);
 

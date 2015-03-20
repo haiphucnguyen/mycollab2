@@ -86,7 +86,6 @@ public class NoteListItems extends VerticalLayout {
     public NoteListItems(final String title, final String type,
                          final Integer typeId) {
         super();
-
         Label header = new Label(title);
         header.addStyleName("h2");
         this.addComponent(header);
@@ -302,7 +301,7 @@ public class NoteListItems extends VerticalLayout {
 
             rowLayout.addComponent(messageHeader);
 
-            final Label messageContent = new UrlDetectableLabel(note.getNote());
+            final SafeHtmlLabel messageContent = new SafeHtmlLabel(note.getNote());
             messageContent.setStyleName("message-body");
             rowLayout.addComponent(messageContent);
 

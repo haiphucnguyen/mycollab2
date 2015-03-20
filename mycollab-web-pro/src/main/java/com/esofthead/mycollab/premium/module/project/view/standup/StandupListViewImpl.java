@@ -317,7 +317,7 @@ public class StandupListViewImpl extends AbstractPageView implements
                     AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
             whatYesterdayLbl.setStyleName("h2");
             reportContent.addComponent(whatYesterdayLbl);
-            final Label whatYesterdayField = new UrlDetectableLabel(
+            final Label whatYesterdayField = new SafeHtmlLabel(
                     report.getWhatlastday());
             whatYesterdayField.setSizeUndefined();
             whatYesterdayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
@@ -327,7 +327,7 @@ public class StandupListViewImpl extends AbstractPageView implements
                     AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
             whatTodayLbl.setStyleName("h2");
             reportContent.addComponent(whatTodayLbl);
-            final Label whatTodayField = new UrlDetectableLabel(
+            final Label whatTodayField = new SafeHtmlLabel(
                     report.getWhattoday());
             whatTodayField.setSizeUndefined();
             whatTodayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
@@ -337,7 +337,7 @@ public class StandupListViewImpl extends AbstractPageView implements
                     AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
             roadblockLbl.setStyleName("h2");
             reportContent.addComponent(roadblockLbl);
-            final Label whatProblemField = new UrlDetectableLabel(
+            final Label whatProblemField = new SafeHtmlLabel(
                     report.getWhatproblem());
             whatProblemField.setSizeUndefined();
             whatProblemField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);

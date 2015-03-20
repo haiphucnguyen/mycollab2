@@ -24,10 +24,10 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 5.0.3
  */
-public class ProjectSearchItemPresenter extends AbstractPresenter<ProjectSearchItemView> {
+public class ProjectSearchItemPresenter extends AbstractPresenter<ProjectSearchItemsView> {
 
     public ProjectSearchItemPresenter() {
-        super(ProjectSearchItemView.class);
+        super(ProjectSearchItemsView.class);
     }
 
     @Override
