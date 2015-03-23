@@ -77,8 +77,7 @@ public class TaskGroupReadViewImpl extends
         AbstractPreviewItemComp<SimpleTaskList> implements TaskGroupReadView {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(TaskGroupReadViewImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TaskGroupReadViewImpl.class);
 
     private CommentDisplay commentList;
 

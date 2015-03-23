@@ -46,17 +46,19 @@ Version 5.0.3
 
 **Library Upgrades**
 
-* Upgrade Vaadin to 7.4.1
+* Upgrade Vaadin to 7.4.2
 * Upgrade other libraries
 
 **Improvements**
 
+* Easier to navigate among projects
 * Add search of generic assignments to project
 * Revise and bug fixes the file module
 
 **Bug Fixes**
 
 * Edit project member throws exception
+* Display bug context menu properly according to coordination of mouse
 
 Version 5.0.2
 -----------------------------

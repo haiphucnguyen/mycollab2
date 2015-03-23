@@ -28,19 +28,22 @@ import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
 public class ProjectLinkBuilder {
-
     private static final Logger LOG = LoggerFactory
             .getLogger(ProjectLinkBuilder.class);
 
@@ -94,21 +97,20 @@ public class ProjectLinkBuilder {
                 AppContext.getSiteUrl(), projectId, memberName);
     }
 
-    public static String generateProjectMemberHtmlLink(String username,
-                                                       int projectId) {
+    public static String generateProjectMemberHtmlLink(int projectId, String username) {
         ProjectMemberService projectMemberService = ApplicationContextUtil
                 .getSpringBean(ProjectMemberService.class);
         SimpleProjectMember member = projectMemberService.findMemberByUsername(
                 username, projectId, AppContext.getAccountId());
         if (member != null) {
+            String uid = UUID.randomUUID().toString();
             Img userAvatar = new Img("", StorageManager.getAvatarLink(
                     member.getMemberAvatarId(), 16));
-            A link = new A();
-            link.setHref(generateProjectMemberFullLink(projectId,
-                    member.getUsername()));
-            Text text = new Text(member.getDisplayName());
-            link.appendChild(text);
-            return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link).write();
+            A link = new A().setId("tag" + uid).setHref(generateProjectMemberFullLink(projectId,
+                    member.getUsername())).appendText(member.getDisplayName());
+            link.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, username));
+            return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link,
+                    DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid)).write();
         } else {
             return null;
         }
@@ -214,9 +216,28 @@ public class ProjectLinkBuilder {
 
     public static String generateProjectItemHtmlLink(String prjShortName,
                                                      Integer projectId, String summary, String type, String typeId) {
-        A link = new A();
+        String uid = UUID.randomUUID().toString();
+        Text image = new Text(ProjectAssetsManager.getAsset(type).getHtml());
+        A link = new A().setId("tag" + uid);
         link.setHref(AppContext.getSiteUrl() + generateProjectItemLink(prjShortName, projectId, type, typeId)).appendChild(new Text(summary));
-        return link.write();
+
+        String arg17 = "'" + uid + "'";
+        String arg18 = "'" + type + "'";
+        String arg19 = "'" + typeId + "'";
+        String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+        String arg21 = "'" + AppContext.getAccountId() + "'";
+        String arg22 = "'" + AppContext.getSiteUrl() + "'";
+        String arg23 = AppContext.getSession().getTimezone();
+        String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
+
+        String mouseOverFunc = String.format(
+                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
+                arg20, arg21, arg22, arg23, arg24);
+        link.setAttribute("onmouseover", mouseOverFunc);
+
+        Div div = new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), link, DivLessFormatter
+                .EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+        return div.write();
     }
 
     public static String generateProjectItemLink(String prjShortName,

@@ -16,27 +16,36 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.apache.commons.lang3.StringUtils;
 import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -44,50 +53,69 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  */
 @ViewComponent
 public class ProjectSearchItemsViewImpl extends AbstractPageView implements ProjectSearchItemsView {
+    private static final String headerTitle = FontAwesome.SEARCH.getHtml() + " Search for '%s' (Found: %d)";
 
     private DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
             searchItemsTable;
+
+    public ProjectSearchItemsViewImpl() {
+        this.withMargin(true).withStyleName("searchitems-layout");
+    }
 
     @Override
     public void displayResults(String value) {
         this.removeAllComponents();
 
-        Label headerLbl = new Label(FontAwesome.SEARCH.getHtml() + " Search for " + value, ContentMode.HTML);
+        MVerticalLayout layout = new MVerticalLayout().withWidth("100%");
+        this.addComponent(layout);
+
+        Label headerLbl = new Label("", ContentMode.HTML);
         headerLbl.addStyleName("headerName");
 
         searchItemsTable = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new
                 ItemRowDisplayHandler());
+        searchItemsTable.setControlStyle("borderlessControl");
 
-        this.with(headerLbl, searchItemsTable);
+        layout.with(headerLbl, searchItemsTable);
         ProjectGenericItemSearchCriteria criteria = new ProjectGenericItemSearchCriteria();
         criteria.setPrjKeys(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setTxtValue(new StringSearchField(value));
-        searchItemsTable.setSearchCriteria(criteria);
+        int foundNum = searchItemsTable.setSearchCriteria(criteria);
+        headerLbl.setValue(String.format(headerTitle, value, foundNum));
     }
 
     private static class ItemRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
         @Override
         public Component generateRow(ProjectGenericItem obj, int rowIndex) {
-            MVerticalLayout layout = new MVerticalLayout();
-            MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
-            FontIconLabel icon = new FontIconLabel(ProjectAssetsManager.getAsset(obj.getType()));
-            icon.addStyleName("icon-18px");
-            CssLayout iconWrapper = new CssLayout();
-            iconWrapper.addComponent(icon);
+            MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, false))
+                    .withWidth("100%");
             Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(obj.getProjectShortName(), obj
                     .getProjectId(), obj.getSummary(), obj.getType(), obj.getTypeId()), ContentMode.HTML);
-            link.setStyleName("link");
-            header.with(iconWrapper, link).expand(link);
+            link.setStyleName("h2");
 
-            SafeHtmlLabel desc = new SafeHtmlLabel(obj.getDescription());
+            String desc = (StringUtils.isBlank(obj.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : obj
+                    .getDescription();
+            SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);
 
-            MHorizontalLayout footer = new MHorizontalLayout().withWidth("100%");
-            footer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-            UserLink createUserLink = new UserLink(obj.getCreatedUser(), obj.getCreatedUserAvatarId(), obj.getCreatedUserDisplayName());
-            Label lastUpdateLbl = new Label("Last updated on: " + AppContext.formatPrettyTime(obj.getLastUpdatedTime()));
-            footer.with(new Label("Created by: "), createUserLink, lastUpdateLbl);
+            Div div = new Div().setStyle("width:100%").setCSSClass("footer");
+            Text createdByTxt = new Text("Created by: ");
+            String uid = UUID.randomUUID().toString();
+            Img userAvatar = new Img("", StorageManager.getAvatarLink(obj.getCreatedUserAvatarId(), 16));
+            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(obj.getProjectId(), obj
+                    .getCreatedUser())).appendText(obj.getCreatedUserDisplayName());
+            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, obj.getCreatedUser()));
+            Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(obj.getLastUpdatedTime
+                    ()))).setStyle("float:right");
 
-            layout.with(header, desc, footer);
+            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
+                    userLink, TooltipHelper.buildDivTooltipEnable(uid),
+                    lastUpdatedOn);
+
+
+            Label footer = new Label(div.write(), ContentMode.HTML);
+            footer.setWidth("100%");
+            layout.with(link, descLbl, footer);
+            layout.addStyleName("project-item-search-box");
             return layout;
         }
     }

@@ -31,8 +31,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 
 	private static final long serialVersionUID = 1L;
 
-	private static Map<Integer, String> valueCaptions = new HashMap<>(
-			5);
+	private static Map<Integer, String> valueCaptions = new HashMap<>(5);
 
 	static {
 		RiskAddViewImpl.getValueCaptions().put(1, "Epic Fail");

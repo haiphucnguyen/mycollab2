@@ -253,7 +253,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 .v-label h2 {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: bold;
 	padding: 0px;
 }
@@ -7611,7 +7611,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 .v-label h2 {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: bold;
 	padding: 0px;
 }
@@ -7896,7 +7896,21 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	padding: 0px 30px 10px;
 }
 
-.myprojectlist .projectblock {
+.v-popupbutton.myprojectlist {
+	background-color: white;
+}
+
+.v-popupbutton-popup-myprojectlist, .myprojectlist {
+	background-color: white;
+}
+
+.v-popupbutton-popup-myprojectlist .contentWrapper, .myprojectlist .contentWrapper {
+	border-style: solid;
+	border-width: 1px 0px 0px 0px;
+	border-color: #CFCFCF;
+}
+
+.v-popupbutton-popup-myprojectlist .projectblock, .myprojectlist .projectblock {
 	padding: 0px;
 	background-color: #FFF;
 	border-color: #CFCFCF;
@@ -7904,59 +7918,38 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border-style: solid;
 }
 
-.myprojectlist .projectblock:hover {
+.v-popupbutton-popup-myprojectlist .projectblock:hover, .myprojectlist .projectblock:hover {
 	background-color: ghostwhite;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
 	border-right: 1px solid #CFCFCF;
 	padding: 10px 15px 8px;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper .project-name .v-button-wrap, .myprojectlist .projectblock .projectlink-wrapper-archived .project-name .v-button-wrap {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper .project-name .v-button-wrap, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived .project-name .v-button-wrap, .myprojectlist .projectblock .projectlink-wrapper .project-name .v-button-wrap, .myprojectlist .projectblock .projectlink-wrapper-archived .project-name .v-button-wrap {
 	padding: 0px 0px 10px;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper .project-name a, .myprojectlist .projectblock .projectlink-wrapper-archived .project-name a {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper .project-name a, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived .project-name a, .myprojectlist .projectblock .projectlink-wrapper .project-name a, .myprojectlist .projectblock .projectlink-wrapper-archived .project-name a {
 	font-size: 14px;
 	font-weight: bold;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper {
 	background-color: lavenderblush;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper:hover {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper:hover, .myprojectlist .projectblock .projectlink-wrapper:hover {
 	background-color: ghostwhite;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper-archived {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper-archived {
 	background-color: darkgray;
 }
 
-.myprojectlist .projectblock .projectlink-wrapper-archived:hover {
+.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived:hover, .myprojectlist .projectblock .projectlink-wrapper-archived:hover {
 	background-color: ghostwhite;
-}
-
-.v-window-contents .myprojectlist .bean-list {
-	border-top: 1px solid #CFCFCF;
-}
-
-.project-list-comp-content .project-name {
-	background-color: #FFF;
-	cursor: pointer;
-}
-
-.project-list-comp-content .project-name .v-label {
-	cursor: pointer;
-}
-
-.project-list-comp-content .project-name.current-project {
-	font-weight: bold;
-}
-
-.project-list-comp-content .project-name:hover {
-	background: ghostwhite;
 }
 
 .project-status .v-verticallayout.v-margin-top {
@@ -8293,15 +8286,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	padding: 13px 7px 0px;
 }
 
-.project-list-comp .project-list-comp-hdr {
-	background-color: #EEEEEE;
-	cursor: pointer;
-	background-position: right 10px center;
-	background-repeat: no-repeat;
-	border-radius: 5px;
-	box-shadow: none;
-}
-
 .project-list-comp .v-button-wrap {
 	text-align: left;
 	font-size: 13px;
@@ -8455,6 +8439,72 @@ div.v-csslayout.followers-container .v-checkbox {
 .v-csslayout.tag-block .remove-btn-sup .v-button-wrap .v-icon {
 	font-size: 10px;
 	height: 19px;
+}
+
+.pages-list-layout {
+	padding-top: 12px;
+}
+
+.pages-list-layout:after {
+	content: "";
+	width: 100%;
+	border-bottom: 1px solid #C8C8C8;
+	display: block;
+}
+
+.pages-list-layout .page-item-block {
+	border-top: 1px solid #C8C8C8;
+	padding: 12px 0px;
+}
+
+.pages-list-layout .page-item-block .h3 .v-button-caption {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.5em;
+}
+
+.pages-list-layout .page-item-block .control-btns {
+	padding-top: 5px;
+}
+
+.pages-list-layout .page-item-block .control-btns .link .v-button-wrap .v-icon {
+	vertical-align: middle;
+}
+
+.pages-list-layout .page-item-block .control-btns .link .v-button-caption {
+	vertical-align: middle;
+	color: #8a8a8a;
+}
+
+.pages-list-layout .page-item-block .control-btns .link:hover .v-button-caption {
+	color: #444444;
+}
+
+.pages-list-layout .page-item-block .last-update-info {
+	padding-top: 3px;
+	color: #8a8a8a;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.pages-list-layout .page-item-block .last-update-info a {
+	color: #8a8a8a;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.page-read-layout {
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.searchitems-layout .project-item-search-box {
+	border-bottom: 1px solid #C8C8C8;
+}
+
+.searchitems-layout .project-item-search-box .footer {
+	border-style: none;
+	color: gray;
+	font-size: 11px;
 }
 
 .v-csslayout.tagcloud {
@@ -13541,62 +13591,6 @@ div.v-csslayout.bean-block.olive-block {
 .readview-body-wrap .readview-sidebar .info-hdr {
 	font-weight: bold;
 	padding-top: 15px;
-}
-
-.pages-list-layout {
-	padding-top: 12px;
-}
-
-.pages-list-layout:after {
-	content: "";
-	width: 100%;
-	border-bottom: 1px solid #C8C8C8;
-	display: block;
-}
-
-.pages-list-layout .page-item-block {
-	border-top: 1px solid #C8C8C8;
-	padding: 12px 0px;
-}
-
-.pages-list-layout .page-item-block .h3 .v-button-caption {
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 1.5em;
-}
-
-.pages-list-layout .page-item-block .control-btns {
-	padding-top: 5px;
-}
-
-.pages-list-layout .page-item-block .control-btns .link .v-button-wrap .v-icon {
-	vertical-align: middle;
-}
-
-.pages-list-layout .page-item-block .control-btns .link .v-button-caption {
-	vertical-align: middle;
-	color: #8a8a8a;
-}
-
-.pages-list-layout .page-item-block .control-btns .link:hover .v-button-caption {
-	color: #444444;
-}
-
-.pages-list-layout .page-item-block .last-update-info {
-	padding-top: 3px;
-	color: #8a8a8a;
-	text-decoration: none;
-	font-size: 12px;
-}
-
-.pages-list-layout .page-item-block .last-update-info a {
-	color: #8a8a8a;
-	text-decoration: none;
-	font-size: 12px;
-}
-
-.page-read-layout {
-	border-bottom: 1px solid #CFCFCF;
 }
 
 .v-buttongroup.toggle-btn-group .v-button.sort-btn {

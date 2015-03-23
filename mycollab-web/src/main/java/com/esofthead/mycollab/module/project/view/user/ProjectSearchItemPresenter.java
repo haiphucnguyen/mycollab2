@@ -16,7 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -37,5 +39,9 @@ public class ProjectSearchItemPresenter extends AbstractPresenter<ProjectSearchI
         projectViewContainer.addComponent(view.getWidget());
         String params = (String)data.getParams();
         view.displayResults(params);
+
+        ProjectBreadcrumb breadcrumb = ViewManager
+                .getCacheComponent(ProjectBreadcrumb.class);
+        breadcrumb.gotoSearchProjectItems();
     }
 }

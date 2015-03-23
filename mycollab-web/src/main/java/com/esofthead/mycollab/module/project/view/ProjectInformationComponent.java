@@ -44,18 +44,17 @@ public class ProjectInformationComponent extends VerticalLayout {
     private SimpleProject project;
 
     private ProjectDisplayInformation prjDisplay;
-
-    private final MHorizontalLayout projectInfoHeader;
+    private MHorizontalLayout projectInfoHeader;
 
     public ProjectInformationComponent() {
-        this.setStyleName(UIConstants.PROJECT_INFO);
-        this.prjDisplay = new BasicProjectInformation();
-        this.projectInfoHeader = new MHorizontalLayout().withMargin(true).withWidth("100%");
-        this.projectInfoHeader
+        setStyleName(UIConstants.PROJECT_INFO);
+        prjDisplay = new BasicProjectInformation();
+        projectInfoHeader = new MHorizontalLayout().withMargin(true).withWidth("100%");
+        projectInfoHeader
                 .setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        this.projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
-        this.addComponent(this.projectInfoHeader);
-        this.addComponent(this.prjDisplay);
+        projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
+        this.addComponent(projectInfoHeader);
+        this.addComponent(prjDisplay);
 
         MHorizontalLayout projectInfoFooter = new MHorizontalLayout().withMargin(true).withStyleName(UIConstants.PROJECT_INFO_FOOTER);
         final Button toggleBtn = new Button(
@@ -70,29 +69,27 @@ public class ProjectInformationComponent extends VerticalLayout {
                         .getComponentIndex(ProjectInformationComponent.this.prjDisplay);
                 ProjectInformationComponent.this
                         .removeComponent(ProjectInformationComponent.this.prjDisplay);
-                if (ProjectInformationComponent.this.prjDisplay instanceof BasicProjectInformation) {
-                    ProjectInformationComponent.this.prjDisplay = new DetailProjectInformation();
+                if (prjDisplay instanceof BasicProjectInformation) {
+                    prjDisplay = new DetailProjectInformation();
                     event.getButton().setCaption(
                             AppContext.getMessage(GenericI18Enum.BUTTON_LESS));
                 } else {
-                    ProjectInformationComponent.this.prjDisplay = new BasicProjectInformation();
+                    prjDisplay = new BasicProjectInformation();
                     event.getButton().setCaption(
                             AppContext.getMessage(GenericI18Enum.BUTTON_MORE));
                 }
-                ProjectInformationComponent.this.addComponent(
-                        ProjectInformationComponent.this.prjDisplay,
-                        replaceIndex);
-                ProjectInformationComponent.this.prjDisplay.show();
+                ProjectInformationComponent.this.addComponent(prjDisplay, replaceIndex);
+                prjDisplay.show();
             }
         });
         toggleBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         projectInfoFooter.addComponent(toggleBtn);
-        this.addComponent(projectInfoFooter);
+        addComponent(projectInfoFooter);
     }
 
     public void displayProjectInformation() {
         this.project = CurrentProjectVariables.getProject();
-        this.projectInfoHeader.removeAllComponents();
+        projectInfoHeader.removeAllComponents();
         final Button icon = new Button(null, ProjectAssetsManager.getAsset(ProjectTypeConstants.DASHBOARD));
         icon.addStyleName(UIConstants.BUTTON_ICON_ONLY);
         icon.addStyleName("icon-18px");
@@ -104,9 +101,8 @@ public class ProjectInformationComponent extends VerticalLayout {
                 + this.project.getShortname() + ")");
         projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
 
-        this.projectInfoHeader.with(icon, projectName, projectShortname).expand(projectShortname);
-
-        this.prjDisplay.show();
+        projectInfoHeader.with(icon, projectName, projectShortname).expand(projectShortname);
+        prjDisplay.show();
     }
 
     private class BasicProjectInformation extends VerticalLayout implements
@@ -116,8 +112,8 @@ public class ProjectInformationComponent extends VerticalLayout {
         private final AdvancedPreviewBeanForm<SimpleProject> previewForm;
 
         public BasicProjectInformation() {
-            this.previewForm = new AdvancedPreviewBeanForm<>();
-            this.addComponent(this.previewForm);
+            previewForm = new AdvancedPreviewBeanForm<>();
+            addComponent(previewForm);
         }
 
         @Override
@@ -154,8 +150,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 
                 @Override
                 public ComponentContainer getLayout() {
-                    this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
-                    return this.informationLayout.getLayout();
+                    informationLayout =  GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
+                    return informationLayout.getLayout();
                 }
             });
             this.previewForm
@@ -166,22 +162,18 @@ public class ProjectInformationComponent extends VerticalLayout {
                         @Override
                         protected Field<?> onCreateField(Object propertyId) {
                             if (propertyId.equals("homepage")) {
-                                return new UrlLinkViewField(
-                                        ProjectInformationComponent.this.project
-                                                .getHomepage());
+                                return new UrlLinkViewField(project.getHomepage());
                             } else if (Project.Field.description.equalTo(propertyId)) {
-                                return new RichTextViewField(
-                                        ProjectInformationComponent.this.project
-                                                .getDescription());
+                                return new RichTextViewField(project.getDescription());
                             } else if (SimpleProject.Field.totalBillableHours.equalTo(propertyId)) {
-                                return new RoundNumerField(ProjectInformationComponent.this.project.getTotalBillableHours());
+                                return new RoundNumerField(project.getTotalBillableHours());
                             } else if (SimpleProject.Field.totalNonBillableHours.equalTo(propertyId)) {
-                                return new RoundNumerField(ProjectInformationComponent.this.project.getTotalNonBillableHours());
+                                return new RoundNumerField(project.getTotalNonBillableHours());
                             }
                             return null;
                         }
                     });
-            this.previewForm.setBean(ProjectInformationComponent.this.project);
+            previewForm.setBean(project);
         }
     }
 
@@ -191,8 +183,8 @@ public class ProjectInformationComponent extends VerticalLayout {
         private final AdvancedPreviewBeanForm<SimpleProject> previewForm;
 
         public DetailProjectInformation() {
-            this.previewForm = new AdvancedPreviewBeanForm<>();
-            this.addComponent(this.previewForm);
+            previewForm = new AdvancedPreviewBeanForm<>();
+            addComponent(previewForm);
         }
 
         @Override
@@ -202,58 +194,42 @@ public class ProjectInformationComponent extends VerticalLayout {
             this.previewForm
                     .setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<SimpleProject>(
                             previewForm) {
-
                         private static final long serialVersionUID = 1L;
 
                         @Override
                         protected Field<?> onCreateField(Object propertyId) {
                             if (propertyId.equals("planstartdate")) {
                                 return new DefaultViewField(
-                                        AppContext
-                                                .formatDate(ProjectInformationComponent.this.project
-                                                        .getPlanstartdate()));
+                                        AppContext.formatDate(project.getPlanstartdate()));
                             } else if (propertyId.equals("planenddate")) {
                                 return new DefaultViewField(
-                                        AppContext
-                                                .formatDate(ProjectInformationComponent.this.project
-                                                        .getPlanenddate()));
+                                        AppContext.formatDate(project.getPlanenddate()));
                             } else if (propertyId.equals("actualstartdate")) {
                                 return new DefaultViewField(
-                                        AppContext
-                                                .formatDate(ProjectInformationComponent.this.project
-                                                        .getActualstartdate()));
+                                        AppContext.formatDate(project.getActualstartdate()));
                             } else if (propertyId.equals("actualenddate")) {
                                 return new DefaultViewField(
-                                        AppContext
-                                                .formatDate(ProjectInformationComponent.this.project
-                                                        .getActualenddate()));
+                                        AppContext.formatDate(project.getActualenddate()));
                             } else if (propertyId.equals("homepage")) {
-                                return new UrlLinkViewField(
-                                        ProjectInformationComponent.this.project
-                                                .getHomepage());
+                                return new UrlLinkViewField(project.getHomepage());
                             } else if (propertyId.equals("description")) {
-                                return new RichTextViewField(
-                                        ProjectInformationComponent.this.project
-                                                .getDescription());
+                                return new RichTextViewField(project.getDescription());
                             } else if (propertyId.equals("currencyid")) {
-                                if (ProjectInformationComponent.this.project
-                                        .getCurrency() != null) {
+                                if (project.getCurrency() != null) {
                                     return new DefaultViewField(
-                                            ProjectInformationComponent.this.project
-                                                    .getCurrency()
-                                                    .getShortname());
+                                            project.getCurrency().getShortname());
                                 } else {
                                     return new DefaultViewField("");
                                 }
                             } else if (SimpleProject.Field.totalBillableHours.equalTo(propertyId)) {
-                                return new RoundNumerField(ProjectInformationComponent.this.project.getTotalBillableHours());
+                                return new RoundNumerField(project.getTotalBillableHours());
                             } else if (SimpleProject.Field.totalNonBillableHours.equalTo(propertyId)) {
-                                return new RoundNumerField(ProjectInformationComponent.this.project.getTotalNonBillableHours());
+                                return new RoundNumerField(project.getTotalNonBillableHours());
                             }
                             return null;
                         }
                     });
-            this.previewForm.setBean(ProjectInformationComponent.this.project);
+            previewForm.setBean(project);
         }
     }
 

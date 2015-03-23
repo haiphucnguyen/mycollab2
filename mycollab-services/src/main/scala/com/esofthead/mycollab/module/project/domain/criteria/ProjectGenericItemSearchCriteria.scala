@@ -27,4 +27,6 @@ import scala.beans.BeanProperty
 class ProjectGenericItemSearchCriteria extends SearchCriteria {
   @BeanProperty var prjKeys: SetSearchField[Integer] = _
   @BeanProperty var txtValue: StringSearchField = _
+  @BeanProperty var createdUsers: SetSearchField[String] = _
+  @BeanProperty var types: SetSearchField[String] = _
 }

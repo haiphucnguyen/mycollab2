@@ -234,7 +234,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
         } else {
             SearchTextField searchField = new SearchTextField() {
                 public void doSearch(String value) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoSearchItemView(ProjectViewImpl.this, value));
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectSearchItemsView(ProjectViewImpl.this, value));
                 }
             };
 

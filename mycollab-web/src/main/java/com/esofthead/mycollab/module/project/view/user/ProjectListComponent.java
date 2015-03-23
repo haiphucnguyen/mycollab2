@@ -16,41 +16,29 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectAddWindow;
-import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.security.RolePermissionCollections;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.BeanList;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.shared.ui.MarginInfo;
+import com.esofthead.mycollab.vaadin.ui.SearchTextField;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
-
-import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -59,13 +47,10 @@ import java.util.List;
 public class ProjectListComponent extends MVerticalLayout {
     private static final long serialVersionUID = 6930971885172125913L;
 
-    final private PopupButton headerPopupButton;
-
-    private MVerticalLayout contentLayout;
-
+    private PopupButton headerPopupButton;
     private ProjectPagedList projectList;
-
     private Label projectDesc;
+    private Label titleLbl;
 
     public ProjectListComponent() {
         super();
@@ -74,8 +59,36 @@ public class ProjectListComponent extends MVerticalLayout {
         MHorizontalLayout headerBar = new MHorizontalLayout().withWidth("100%");
 
         headerPopupButton = new PopupButton();
-        headerPopupButton.setStyleName("project-list-comp-hdr");
+        headerPopupButton.setStyleName("myprojectlist");
         headerPopupButton.setWidth("100%");
+
+        projectList = new ProjectPagedList();
+        projectList.addStyleName("contentWrapper");
+        titleLbl = new Label(AppContext.getMessage(
+                ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
+        titleLbl.setStyleName("h2");
+        MVerticalLayout contentLayout = new MVerticalLayout().withWidth("500px");
+
+        SearchTextField searchField = new SearchTextField() {
+            @Override
+            public void doSearch(String value) {
+                ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+                searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
+                        AppContext.getUsername()));
+                searchCriteria.setProjectStatuses(new SetSearchField<>(
+                        new String[]{StatusI18nEnum.Open.name()}));
+                searchCriteria.setProjectName(new StringSearchField(value));
+                int count = projectList.setSearchCriteria(searchCriteria);
+                titleLbl.setValue(AppContext.getMessage(
+                        ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, count));
+            }
+        };
+
+        MHorizontalLayout popupHeader = new MHorizontalLayout().withWidth("100%");
+        popupHeader.with(titleLbl, searchField).withAlign(titleLbl, Alignment.MIDDLE_LEFT).withAlign(searchField, Alignment
+                .MIDDLE_RIGHT);
+        contentLayout.with(popupHeader, projectList);
+        headerPopupButton.setContent(contentLayout);
 
         Label componentHeader = new Label();
         componentHeader.setStyleName("h2");
@@ -97,18 +110,10 @@ public class ProjectListComponent extends MVerticalLayout {
             createProjectBtn.withStyleName("add-project-btn").withDescription("New Project");
             createProjectBtn.setWidth("20px");
             createProjectBtn.setHeight("20px");
-
-            headerBar.with(createProjectBtn).withAlign(createProjectBtn,
-                    Alignment.MIDDLE_RIGHT);
+            headerBar.with(createProjectBtn).withAlign(createProjectBtn, Alignment.MIDDLE_RIGHT);
         }
 
         this.addComponent(headerBar);
-
-        contentLayout = new MVerticalLayout().withStyleName(
-                "project-list-comp-content").withWidth("205px");
-
-        projectList = new ProjectPagedList();
-        headerPopupButton.setContent(projectList);
 
         projectDesc = new Label("", ContentMode.HTML);
         projectDesc.setStyleName("project-description");
@@ -119,97 +124,18 @@ public class ProjectListComponent extends MVerticalLayout {
         if (headerPopupButton.isPopupVisible()) {
             headerPopupButton.setPopupVisible(false);
         }
-        final ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+        headerPopupButton.setCaption(CurrentProjectVariables.getProject().getName());
+        ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
         searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
                 AppContext.getUsername()));
         searchCriteria.setProjectStatuses(new SetSearchField<>(
                 new String[]{StatusI18nEnum.Open.name()}));
-        this.projectList.setSearchCriteria(searchCriteria);
-        this.headerPopupButton.setCaption(CurrentProjectVariables.getProject()
-                .getName());
+        int count = projectList.setSearchCriteria(searchCriteria);
+        titleLbl.setValue(AppContext.getMessage(
+                ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, count));
 
         String desc = CurrentProjectVariables.getProject().getDescription();
         desc = StringUtils.trim(desc, 150, true);
-        this.projectDesc.setValue(desc);
-    }
-
-    private class ProjectPagedList extends
-            BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> {
-        private static final long serialVersionUID = 1L;
-        protected ProjectSearchCriteria currentCriteria;
-
-        public ProjectPagedList() {
-            super(null, ApplicationContextUtil
-                            .getSpringBean(ProjectService.class),
-                    ProjectRowDisplayHandler.class, contentLayout);
-        }
-
-        @Override
-        public int setSearchCriteria(ProjectSearchCriteria searchCriteria) {
-            currentCriteria = searchCriteria;
-            SearchRequest<ProjectSearchCriteria> searchRequest = new SearchRequest<>(
-                    searchCriteria, 0, 3);
-            return setSearchRequest(searchRequest);
-        }
-
-        @Override
-        public void loadItems(List<SimpleProject> currentListData) {
-            super.loadItems(currentListData);
-
-            if (searchService.getTotalCount(currentCriteria) > 3) {
-                MVerticalLayout btnWrap = new MVerticalLayout().withWidth("100%");
-
-                final MyProjectListWindow projectListWindow = new MyProjectListWindow();
-                Button showMoreBtn = new Button(
-                        AppContext.getMessage(GenericI18Enum.BUTTON_MORE),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = -2178412846807704534L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                headerPopupButton.setPopupVisible(false);
-                                UI.getCurrent().addWindow(projectListWindow);
-                            }
-                        });
-                showMoreBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-                showMoreBtn.setWidth("100%");
-                btnWrap.addComponent(showMoreBtn);
-                getContentLayout().addComponent(btnWrap);
-            }
-        }
-    }
-
-    public static class ProjectRowDisplayHandler extends
-            BeanList.RowDisplayHandler<SimpleProject> {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public Component generateRow(final SimpleProject obj, int rowIndex) {
-            final MVerticalLayout layout = new MVerticalLayout()
-                    .withWidth("100%").withStyleName("project-name")
-                    .withMargin(new MarginInfo(true, false, true, true));
-
-            if (obj.getId() == CurrentProjectVariables.getProject().getId()) {
-                layout.addStyleName("current-project");
-            }
-
-            Label prjName = new Label(obj.getName());
-            layout.addComponent(prjName);
-
-            layout.addLayoutClickListener(new LayoutClickListener() {
-                private static final long serialVersionUID = -329135249853828402L;
-
-                @Override
-                public void layoutClick(LayoutClickEvent event) {
-                    EventBusFactory.getInstance().post(
-                            new ProjectEvent.GotoMyProject(this,
-                                    new PageActionChain(
-                                            new ProjectScreenData.Goto(obj
-                                                    .getId()))));
-                }
-            });
-
-            return layout;
-        }
+        projectDesc.setValue(desc);
     }
 }

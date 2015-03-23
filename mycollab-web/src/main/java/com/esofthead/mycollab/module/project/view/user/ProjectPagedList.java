@@ -57,8 +57,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             layout.setWidth("100%");
             layout.setStyleName("projectblock");
 
-            final HorizontalLayout projectLayout = new HorizontalLayout();
-            projectLayout.setWidth("100%");
+            final MHorizontalLayout projectLayout = new MHorizontalLayout().withSpacing(false).withWidth("100%");
             projectLayout.addStyleName("project-status");
 
             final CssLayout linkWrapper = new CssLayout();
@@ -249,9 +248,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
 
             linkIconFix.addComponent(phaseStatusLayout);
 
-            projectLayout.addComponent(projectStatusLayout);
-
-            projectLayout.setExpandRatio(linkWrapper, 1.0f);
+            projectLayout.with(projectStatusLayout).expand(linkWrapper);
 
             layout.addComponent(projectLayout);
             return layout;

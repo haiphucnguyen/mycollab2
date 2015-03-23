@@ -46,7 +46,17 @@
 
   /* My Project List */
 
-  .myprojectlist {
+  .v-popupbutton.myprojectlist {
+    background-color:white;
+  }
+
+  .v-popupbutton-popup-myprojectlist, .myprojectlist {
+    background-color: white;
+    .contentWrapper {
+      border-style: solid;
+      border-width: 1px 0px 0px 0px;
+      border-color: $border-color;
+    }
     .projectblock {
       padding: 0px;
       background-color: #FFF;
@@ -82,24 +92,6 @@
           background-color: $hover-background-color;
         }
       }
-    }
-  }
-
-  .v-window-contents .myprojectlist .bean-list {
-    border-top: 1px solid $border-color;
-  }
-
-  .project-list-comp-content .project-name {
-    background-color: #FFF;
-    cursor: pointer;
-    .v-label {
-      cursor: pointer;
-    }
-    &.current-project {
-      font-weight: bold;
-    }
-    &:hover {
-      background: $hover-background-color;
     }
   }
 
@@ -414,14 +406,6 @@
 
   .project-list-comp {
      padding: 13px 7px 0px;
-     .project-list-comp-hdr {
-       background-color: #EEEEEE;
-       cursor: pointer;
-       background-position: right 10px center;
-       background-repeat: no-repeat;
-       border-radius: 5px;
-       box-shadow: none;
-     }
      .v-button-wrap {
        text-align: left;
        font-size: $font-normal;
@@ -553,6 +537,70 @@
       .v-icon {
         font-size: 10px;
         height: 19px;
+      }
+    }
+  }
+
+  /* Pages List View */
+
+  .pages-list-layout {
+    padding-top: 12px;
+    &:after {
+      content: "";
+      width: 100%;
+      border-bottom: 1px solid $separator-color;
+      display: block;
+    }
+    .page-item-block {
+      border-top: 1px solid $separator-color;
+      padding: 12px 0px;
+      .h3 .v-button-caption {
+        font-size: $font-large;
+        font-weight: bold;
+        line-height: 1.5em;
+      }
+      .control-btns {
+        padding-top: 5px;
+        .link {
+          .v-button-wrap .v-icon {
+            vertical-align: middle;
+          }
+          .v-button-caption {
+            vertical-align: middle;
+            color: rgb(138, 138, 138);
+          }
+          &:hover .v-button-caption {
+            color: rgb(68, 68, 68);
+          }
+        }
+      }
+      .last-update-info {
+        padding-top: 3px;
+        color: rgb(138, 138, 138);
+        text-decoration: none;
+        font-size: $font-small;
+        a {
+          color: rgb(138, 138, 138);
+          text-decoration: none;
+          font-size: $font-small;
+        }
+      }
+    }
+  }
+
+  /* Page Read View */
+
+  .page-read-layout {
+    border-bottom: 1px solid $border-color;
+  }
+
+  .searchitems-layout {
+    .project-item-search-box {
+      border-bottom: 1px solid $separator-color;
+      .footer {
+        border-style:none;
+        color: gray;
+        font-size: $font-smaller;
       }
     }
   }

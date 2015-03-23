@@ -30,5 +30,5 @@ object ProjectEvent {
 
   class GotoTagListView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoSearchItemView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+  class GotoProjectSearchItemsView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 }

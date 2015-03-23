@@ -5219,59 +5219,6 @@
     padding-top: 15px;
   }
 
-  /* Pages List View */
-
-  .pages-list-layout {
-    padding-top: 12px;
-    &:after {
-      content: "";
-      width: 100%;
-      border-bottom: 1px solid #C8C8C8;
-      display: block;
-    }
-    .page-item-block {
-      border-top: 1px solid #C8C8C8;
-      padding: 12px 0px;
-      .h3 .v-button-caption {
-        font-size: $font-large;
-        font-weight: bold;
-        line-height: 1.5em;
-      }
-      .control-btns {
-        padding-top: 5px;
-        .link {
-          .v-button-wrap .v-icon {
-            vertical-align: middle;
-          }
-          .v-button-caption {
-            vertical-align: middle;
-            color: rgb(138, 138, 138);
-          }
-          &:hover .v-button-caption {
-            color: rgb(68, 68, 68);
-          }
-        }
-      }
-      .last-update-info {
-        padding-top: 3px;
-        color: rgb(138, 138, 138);
-        text-decoration: none;
-        font-size: $font-small;
-        a {
-          color: rgb(138, 138, 138);
-          text-decoration: none;
-          font-size: $font-small;
-        }
-      }
-    }
-  }
-
-  /* Page Read View */
-
-  .page-read-layout {
-    border-bottom: 1px solid $border-color;
-  }
-
   /* Sort button group */
 
   .v-buttongroup.toggle-btn-group .v-button.sort-btn {

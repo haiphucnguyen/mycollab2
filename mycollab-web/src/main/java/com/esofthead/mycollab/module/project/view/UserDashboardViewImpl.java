@@ -80,8 +80,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         header.addStyleName("projectfeed-hdr");
 
         Button avatar = UserAvatarControlFactory
-                .createUserAvatarEmbeddedButton(AppContext.getUserAvatarId(),
-                        64);
+                .createUserAvatarEmbeddedButton(AppContext.getUserAvatarId(), 64);
         avatar.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -134,7 +133,6 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
 
         followingTicketsLink = new LabelLink(AppContext.getMessage(
                 FollowerI18nEnum.OPT_MY_FOLLOWING_TICKETS, 0), AppContext.getSiteUrl() + "#project/following");
-
         followingTicketsLink.setIconLink(FontAwesome.EYE);
 
         LabelLink timeTrackingLink = new LabelLink(AppContext.getMessage(TimeTrackingI18nEnum.TIME_RECORD_HEADER), AppContext.getSiteUrl()
