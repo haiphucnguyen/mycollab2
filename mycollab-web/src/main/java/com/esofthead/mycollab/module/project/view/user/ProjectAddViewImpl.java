@@ -79,8 +79,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements
             }
             controlButtons.setSizeUndefined();
             controlPanel.addComponent(controlButtons);
-            controlPanel
-                    .setWidthUndefined();
+            controlPanel.setWidthUndefined();
             controlPanel.setComponentAlignment(controlButtons,
                     Alignment.MIDDLE_CENTER);
 
@@ -149,6 +148,6 @@ public class ProjectAddViewImpl extends AbstractPageView implements
 
     @Override
     public Project getItem() {
-        return this.project;
+        return project;
     }
 }

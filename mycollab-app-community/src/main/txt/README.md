@@ -59,6 +59,7 @@ Version 5.0.3
 
 * Edit project member throws exception
 * Display bug context menu properly according to coordination of mouse
+* Can not change the project information
 
 Version 5.0.2
 -----------------------------

@@ -65,8 +65,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(
-                        new ProjectMemberEvent.GotoInviteMembers(this,
-                                null));
+                        new ProjectMemberEvent.GotoInviteMembers(this, null));
             }
         });
         inviteMemberBtn.setWidth("20px");
@@ -113,8 +112,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
             memberRole.setContentMode(ContentMode.HTML);
             String joinDateMsg;
             if (member.isAdmin()) {
-                joinDateMsg = AppContext
-                        .getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY);
+                joinDateMsg = AppContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY);
             } else {
                 joinDateMsg = member.getRoleName();
             }

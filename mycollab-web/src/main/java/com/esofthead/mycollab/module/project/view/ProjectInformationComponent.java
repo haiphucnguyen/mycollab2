@@ -60,7 +60,6 @@ public class ProjectInformationComponent extends VerticalLayout {
         final Button toggleBtn = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_MORE));
         toggleBtn.addClickListener(new Button.ClickListener() {
-
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -97,11 +96,10 @@ public class ProjectInformationComponent extends VerticalLayout {
         final Label projectName = new Label(this.project.getName());
         projectName.setStyleName(UIConstants.PROJECT_NAME);
         projectName.setSizeUndefined();
-        final Label projectShortname = new Label("("
-                + this.project.getShortname() + ")");
-        projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
+        final Label projectShortName = new Label("(" + project.getShortname() + ")");
+        projectShortName.setStyleName(UIConstants.PROJECT_SHORT_NAME);
 
-        projectInfoHeader.with(icon, projectName, projectShortname).expand(projectShortname);
+        projectInfoHeader.with(icon, projectName, projectShortName).expand(projectShortName);
         prjDisplay.show();
     }
 

@@ -29,12 +29,11 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectAddWindow;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.SearchTextField;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -69,29 +68,35 @@ public class ProjectListComponent extends MVerticalLayout {
         titleLbl.setStyleName("h2");
         MVerticalLayout contentLayout = new MVerticalLayout().withWidth("500px");
 
-        SearchTextField searchField = new SearchTextField() {
+        final TextField searchField = new TextField();
+        searchField.setInputPrompt("Search");
+        searchField.setWidth("200px");
+        Button searchBtn = new Button("", new Button.ClickListener() {
             @Override
-            public void doSearch(String value) {
+            public void buttonClick(Button.ClickEvent clickEvent) {
                 ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
                 searchCriteria.setInvolvedMember(new StringSearchField(SearchField.AND,
                         AppContext.getUsername()));
                 searchCriteria.setProjectStatuses(new SetSearchField<>(
                         new String[]{StatusI18nEnum.Open.name()}));
-                searchCriteria.setProjectName(new StringSearchField(value));
+                searchCriteria.setProjectName(new StringSearchField(searchField.getValue()));
                 int count = projectList.setSearchCriteria(searchCriteria);
                 titleLbl.setValue(AppContext.getMessage(
                         ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, count));
             }
-        };
+        });
+        searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        searchBtn.setIcon(FontAwesome.SEARCH);
 
-        MHorizontalLayout popupHeader = new MHorizontalLayout().withWidth("100%");
-        popupHeader.with(titleLbl, searchField).withAlign(titleLbl, Alignment.MIDDLE_LEFT).withAlign(searchField, Alignment
-                .MIDDLE_RIGHT);
+        MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false))
+                .withWidth("100%");
+        MHorizontalLayout searchPanel = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
+        searchPanel.with(searchField, searchBtn);
+        popupHeader.with(titleLbl, searchPanel).withAlign(titleLbl, Alignment.MIDDLE_LEFT).withAlign
+                (searchPanel,
+                        Alignment.MIDDLE_RIGHT);
         contentLayout.with(popupHeader, projectList);
         headerPopupButton.setContent(contentLayout);
-
-        Label componentHeader = new Label();
-        componentHeader.setStyleName("h2");
 
         headerPopupButton.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
         headerBar.with(headerPopupButton).expand(headerPopupButton);

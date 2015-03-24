@@ -71,7 +71,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
 
             final VerticalLayout linkIconFix = new VerticalLayout();
             linkIconFix.setWidth("100%");
-            final LabelLink projectLink = new LabelLink(project.getName(),
+            final LabelLink projectLink = new LabelLink(project.getName() + " (" + project.getShortname() + ")",
                     ProjectLinkBuilder.generateProjectFullLink(project.getId()));
             projectLink.addStyleName("project-name");
             linkIconFix.addComponent(projectLink);

@@ -206,9 +206,18 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withStyleName("searchitems-layout");
         addComponent(layout);
 
+        MHorizontalLayout headerComp = new MHorizontalLayout();
         Label headerLbl = new Label(String.format(headerTitle, value, 0), ContentMode.HTML);
         headerLbl.addStyleName("headerName");
-        layout.with(headerLbl);
+        Button backDashboard = new Button("Back to workboard", new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                displayView();
+            }
+        });
+        backDashboard.setStyleName(UIConstants.THEME_GREEN_LINK);
+        headerComp.with(headerLbl, backDashboard);
+        layout.with(headerComp);
 
         ProjectService prjService = ApplicationContextUtil.getSpringBean(ProjectService.class);
         prjKeys = prjService.getProjectKeysUserInvolved(

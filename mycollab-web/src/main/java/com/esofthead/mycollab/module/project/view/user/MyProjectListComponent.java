@@ -32,7 +32,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Label;
-import org.apache.commons.lang3.StringUtils;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -161,7 +160,7 @@ public class MyProjectListComponent extends MVerticalLayout {
 
     private void displayResults() {
         projectList.setSearchCriteria(searchCriteria);
-        int totalCount = this.projectList.getTotalCount();
+        int totalCount = projectList.getTotalCount();
         titleLbl.setValue(AppContext.getMessage(currentTitleMsg, totalCount));
     }
 
