@@ -8480,6 +8480,12 @@ div.v-csslayout.followers-container .v-checkbox {
 	font-size: 11px;
 }
 
+.footer2 {
+	border-style: none;
+	color: gray;
+	font-size: 11px;
+}
+
 .v-csslayout.tagcloud {
 	border-style: solid;
 	border-top-style: none;

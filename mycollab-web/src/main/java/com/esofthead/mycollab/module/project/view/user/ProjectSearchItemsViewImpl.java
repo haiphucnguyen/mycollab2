@@ -86,25 +86,25 @@ public class ProjectSearchItemsViewImpl extends AbstractPageView implements Proj
 
     private static class ItemRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
         @Override
-        public Component generateRow(ProjectGenericItem obj, int rowIndex) {
+        public Component generateRow(ProjectGenericItem item, int rowIndex) {
             MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, false))
                     .withWidth("100%");
-            Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(obj.getProjectShortName(), obj
-                    .getProjectId(), obj.getSummary(), obj.getType(), obj.getTypeId()), ContentMode.HTML);
+            Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(item.getProjectShortName(), item
+                    .getProjectId(), item.getSummary(), item.getType(), item.getTypeId()), ContentMode.HTML);
             link.setStyleName("h2");
 
-            String desc = (StringUtils.isBlank(obj.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : obj
+            String desc = (StringUtils.isBlank(item.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : item
                     .getDescription();
             SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);
 
             Div div = new Div().setStyle("width:100%").setCSSClass("footer");
             Text createdByTxt = new Text("Created by: ");
             String uid = UUID.randomUUID().toString();
-            Img userAvatar = new Img("", StorageManager.getAvatarLink(obj.getCreatedUserAvatarId(), 16));
-            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(obj.getProjectId(), obj
-                    .getCreatedUser())).appendText(obj.getCreatedUserDisplayName());
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, obj.getCreatedUser()));
-            Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(obj.getLastUpdatedTime
+            Img userAvatar = new Img("", StorageManager.getAvatarLink(item.getCreatedUserAvatarId(), 16));
+            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(item.getProjectId(), item
+                    .getCreatedUser())).appendText(item.getCreatedUserDisplayName());
+            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, item.getCreatedUser()));
+            Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(item.getLastUpdatedTime
                     ()))).setStyle("float:right");
 
             div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
