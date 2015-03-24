@@ -378,21 +378,21 @@
 
   /* Form Container View Field */
 
-  .form-container div.v-button-link.v-button-block {
+  .form-container .v-button-link.block {
     line-height: 22px;
     background-color: blueviolet;
     padding: 0px 7px 0px 7px;
+    margin-right: 2px;
     &:active, &:focus {
       line-height: 22px;
       background-color: blueviolet;
       padding: 0px 7px 0px 7px;
       margin-right: 2px;
     }
-  }
-
-  .form-container .v-button-link.v-button-block .v-button-caption {
-    color: white;
-    vertical-align:sub;
+    .v-button-caption {
+      color: white;
+      vertical-align:sub;
+    }
   }
 
   .task-attached {
@@ -618,6 +618,24 @@
       &.nonselected {
         background-color:red;
       }
+    }
+  }
+
+  .v-button.multiselect {
+    height: 25px;
+    width: 22px;
+    background: none no-repeat 0px 0px transparent;
+    border-radius: 0px 2px 2px 0px;
+    border-width: 1px 1px 1px 0px;
+    border-color: $border-color;
+    position: relative;
+    .v-button-wrap, &:active .v-button-wrap, &:hover .v-button-wrap {
+      padding: 0px;
+      margin: 0px;
+      border-width: 0px;
+      height: 100%;
+      border-radius: 0px;
+      background-color: transparent;
     }
   }
 }

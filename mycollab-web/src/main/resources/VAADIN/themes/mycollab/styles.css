@@ -6655,18 +6655,6 @@ div.v-button-down:active {
 	color: #6482B3;
 }
 
-.v-button-default {
-	border-color: #495972;
-}
-
-.v-disabled.v-button-default {
-	border-color: #495972;
-}
-
-.v-disabled.v-button-default:focus {
-	border-color: #495972;
-}
-
 .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
 	border-color: #495972;
 }
@@ -6680,18 +6668,21 @@ div.v-button-down:active {
 }
 
 .v-button-default {
+	border-color: #495972;
 	background-color: #6482B3;
 	color: #f4f4f5;
 	text-shadow: 0 -1px 0 #495972;
 }
 
 .v-disabled.v-button-default {
+	border-color: #495972;
 	background-color: #6482B3;
 	color: #f4f4f5;
 	text-shadow: 0 -1px 0 #495972;
 }
 
 .v-disabled.v-button-default:focus {
+	border-color: #495972;
 	background-color: #6482B3;
 	color: #f4f4f5;
 	text-shadow: 0 -1px 0 #495972;
@@ -7134,25 +7125,6 @@ body.v-ie .v-pressed.v-button-borderless {
 
 .v-button.dropbox-icon-button  > .v-button-wrap > .v-icon {
 	float: left;
-}
-
-.v-button.select-bg {
-	height: 25px;
-	width: 22px;
-	background: none no-repeat 0px 0px transparent;
-	border-radius: 0px 2px 2px 0px;
-	border-width: 1px 1px 1px 0px;
-	border-color: #CFCFCF;
-	position: relative;
-}
-
-.v-button.select-bg .v-button-wrap, .v-button.select-bg:active .v-button-wrap, .v-button.select-bg:hover .v-button-wrap {
-	padding: 0px;
-	margin: 0px;
-	border-width: 0px;
-	height: 100%;
-	border-radius: 0px;
-	background-color: transparent;
 }
 
 .v-button-link .v-icon, .v-button-borderless .v-icon {
@@ -8256,20 +8228,21 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	padding-left: 0px;
 }
 
-.form-container div.v-button-link.v-button-block {
-	line-height: 22px;
-	background-color: blueviolet;
-	padding: 0px 7px 0px 7px;
-}
-
-.form-container div.v-button-link.v-button-block:active, .form-container div.v-button-link.v-button-block:focus {
+.form-container .v-button-link.block {
 	line-height: 22px;
 	background-color: blueviolet;
 	padding: 0px 7px 0px 7px;
 	margin-right: 2px;
 }
 
-.form-container .v-button-link.v-button-block .v-button-caption {
+.form-container .v-button-link.block:active, .form-container .v-button-link.block:focus {
+	line-height: 22px;
+	background-color: blueviolet;
+	padding: 0px 7px 0px 7px;
+	margin-right: 2px;
+}
+
+.form-container .v-button-link.block .v-button-caption {
 	color: white;
 	vertical-align: sub;
 }
@@ -8524,6 +8497,25 @@ div.v-csslayout.followers-container .v-checkbox {
 
 .v-csslayout.tagcloud .tagbutton.nonselected {
 	background-color: red;
+}
+
+.v-button.multiselect {
+	height: 25px;
+	width: 22px;
+	background: none no-repeat 0px 0px transparent;
+	border-radius: 0px 2px 2px 0px;
+	border-width: 1px 1px 1px 0px;
+	border-color: #CFCFCF;
+	position: relative;
+}
+
+.v-button.multiselect .v-button-wrap, .v-button.multiselect:active .v-button-wrap, .v-button.multiselect:hover .v-button-wrap {
+	padding: 0px;
+	margin: 0px;
+	border-width: 0px;
+	height: 100%;
+	border-radius: 0px;
+	background-color: transparent;
 }
 
 html {

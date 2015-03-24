@@ -54,6 +54,7 @@ Version 5.0.3
 * Easier to navigate among projects
 * Add search of generic assignments to project
 * Revise and bug fixes the file module
+* Support tooltip for multi select component
 
 **Bug Fixes**
 
