@@ -28,7 +28,6 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @since 1.0
  */
 public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchCriteria> {
-
     private static final long serialVersionUID = 1L;
     private static Param[] paramFields = new Param[]{
             ProblemSearchCriteria.p_assignee,
