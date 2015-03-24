@@ -209,11 +209,6 @@
     border-radius: 3px;
   }
 
-  .v-panel-bubble {
-    .v-panel-captionwrap, .v-panel-deco-bubble {
-    }
-  }
-
   /* Base font size and color */
 
   .v-app, .v-window, .v-popupview-popup {
@@ -221,21 +216,7 @@
     color: #525252;
   }
 
-  .v-app {
-    input, button, textarea {
-      font-size: $font-normal;
-      color: #525252;
-    }
-  }
-
-  .v-window {
-    input, button, textarea {
-      font-size: $font-normal;
-      color: #525252;
-    }
-  }
-
-  .v-popupview-popup {
+  .v-app, .v-window, .v-popupview-popup {
     input, button, textarea {
       font-size: $font-normal;
       color: #525252;
@@ -342,8 +323,6 @@
   .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
     border-color: rgb(45, 107, 165);
   }
-
-
 
   .v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
     background-color: #287ECE;

@@ -108,7 +108,7 @@ public class MilestoneReadViewImpl extends
     @Override
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleMilestone> controlsGenerator = new ProjectPreviewFormControlsGenerator<>(
-                this.previewForm);
+                previewForm);
         return controlsGenerator
                 .createButtonControls(ProjectRolePermissionCollections.MILESTONES);
     }
@@ -146,7 +146,7 @@ public class MilestoneReadViewImpl extends
 
     @Override
     protected void onPreviewItem() {
-        this.commentListComp.loadComments("" + this.beanItem.getId());
+        this.commentListComp.loadComments("" + beanItem.getId());
 
         historyListComp.loadHistory(beanItem.getId());
 

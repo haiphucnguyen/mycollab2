@@ -55,9 +55,6 @@ import java.util.UUID;
 public class ProjectSearchItemsViewImpl extends AbstractPageView implements ProjectSearchItemsView {
     private static final String headerTitle = FontAwesome.SEARCH.getHtml() + " Search for '%s' (Found: %d)";
 
-    private DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
-            searchItemsTable;
-
     public ProjectSearchItemsViewImpl() {
         this.withMargin(true).withStyleName("searchitems-layout");
     }
@@ -72,7 +69,8 @@ public class ProjectSearchItemsViewImpl extends AbstractPageView implements Proj
         Label headerLbl = new Label("", ContentMode.HTML);
         headerLbl.addStyleName("headerName");
 
-        searchItemsTable = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new
+        DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
+                searchItemsTable = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new
                 ItemRowDisplayHandler());
         searchItemsTable.setControlStyle("borderlessControl");
 
@@ -99,18 +97,23 @@ public class ProjectSearchItemsViewImpl extends AbstractPageView implements Proj
 
             Div div = new Div().setStyle("width:100%").setCSSClass("footer");
             Text createdByTxt = new Text("Created by: ");
-            String uid = UUID.randomUUID().toString();
-            Img userAvatar = new Img("", StorageManager.getAvatarLink(item.getCreatedUserAvatarId(), 16));
-            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(item.getProjectId(), item
-                    .getCreatedUser())).appendText(item.getCreatedUserDisplayName());
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, item.getCreatedUser()));
             Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(item.getLastUpdatedTime
                     ()))).setStyle("float:right");
 
-            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
-                    userLink, TooltipHelper.buildDivTooltipEnable(uid),
-                    lastUpdatedOn);
+            if (StringUtils.isBlank(item.getCreatedUser())) {
+                div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), new Text("None"), lastUpdatedOn);
+            } else {
+                String uid = UUID.randomUUID().toString();
+                Img userAvatar = new Img("", StorageManager.getAvatarLink(item.getCreatedUserAvatarId(), 16));
+                A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(item.getProjectId(), item
+                        .getCreatedUser())).appendText(item.getCreatedUserDisplayName());
+                userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, item.getCreatedUser()));
 
+
+                div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
+                        userLink, TooltipHelper.buildDivTooltipEnable(uid),
+                        lastUpdatedOn);
+            }
 
             Label footer = new Label(div.write(), ContentMode.HTML);
             footer.setWidth("100%");

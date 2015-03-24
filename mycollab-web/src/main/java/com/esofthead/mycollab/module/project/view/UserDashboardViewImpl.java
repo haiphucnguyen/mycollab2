@@ -266,23 +266,26 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
             SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);
 
             Div div = new Div().setStyle("width:100%").setCSSClass("footer");
-            Text createdByTxt = new Text("Created by: ");
-            String uid = UUID.randomUUID().toString();
-            Img userAvatar = new Img("", StorageManager.getAvatarLink(obj.getCreatedUserAvatarId(), 16));
-            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(obj.getProjectId(), obj
-                    .getCreatedUser())).appendText(obj.getCreatedUserDisplayName());
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, obj.getCreatedUser()));
-            Text belongPrjTxt = new Text(" - Project: ");
-            A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(obj.getProjectId()))
-                    .appendText(obj.getProjectName() + " (" + obj.getProjectShortName() + ")");
             Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(obj.getLastUpdatedTime
                     ()))).setStyle("float:right");
+            Text createdByTxt = new Text("Created by: ");
+            if (StringUtils.isBlank(obj.getCreatedUser())) {
+                div.appendChild(createdByTxt, new Text("None"), lastUpdatedOn);
+            } else {
+                String uid = UUID.randomUUID().toString();
+                Img userAvatar = new Img("", StorageManager.getAvatarLink(obj.getCreatedUserAvatarId(), 16));
+                A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(obj.getProjectId(), obj
+                        .getCreatedUser())).appendText(obj.getCreatedUserDisplayName());
+                userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, obj.getCreatedUser()));
+                Text belongPrjTxt = new Text(" - Project: ");
+                A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(obj.getProjectId()))
+                        .appendText(obj.getProjectName() + " (" + obj.getProjectShortName() + ")");
 
-            div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
-                    userLink, TooltipHelper.buildDivTooltipEnable(uid), DivLessFormatter.EMPTY_SPACE(), belongPrjTxt,
-                    DivLessFormatter.EMPTY_SPACE(), projectLink,
-                    lastUpdatedOn);
-
+                div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
+                        userLink, TooltipHelper.buildDivTooltipEnable(uid), DivLessFormatter.EMPTY_SPACE(), belongPrjTxt,
+                        DivLessFormatter.EMPTY_SPACE(), projectLink,
+                        lastUpdatedOn);
+            }
 
             Label footer = new Label(div.write(), ContentMode.HTML);
             footer.setWidth("100%");
