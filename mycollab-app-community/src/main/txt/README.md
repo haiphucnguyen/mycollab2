@@ -528,10 +528,6 @@ Version 3.0.0
 * Schedule runner can not send reports in some cases
 * Display activities throws exception in some cases
 * Invite member does not send when first name is null
-* Do not display tooltip of lead and contact if firstname is null
+* Do not display tooltip of lead and contact if first name is null
 * Can not save search result in CRM module
 * Fix spelling mistakes
-
-Well known issues
-=================
-Calendar view display badly on IE9 at the first time
