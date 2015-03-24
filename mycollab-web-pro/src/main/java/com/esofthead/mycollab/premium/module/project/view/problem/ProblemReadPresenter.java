@@ -31,7 +31,6 @@ import org.vaadin.dialogs.ConfirmDialog;
  * @since 1.0
  */
 public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
-
     private static final long serialVersionUID = 1L;
 
     public ProblemReadPresenter() {
@@ -73,9 +72,9 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                                     @Override
                                     public void onClose(ConfirmDialog dialog) {
                                         if (dialog.isConfirmed()) {
-                                            ProblemService riskService = ApplicationContextUtil
+                                            ProblemService problemService = ApplicationContextUtil
                                                     .getSpringBean(ProblemService.class);
-                                            riskService.removeWithSession(
+                                            problemService.removeWithSession(
                                                     data.getId(),
                                                     AppContext.getUsername(),
                                                     AppContext.getAccountId());
@@ -106,10 +105,8 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                         ProblemService problemService = ApplicationContextUtil
                                 .getSpringBean(ProblemService.class);
                         ProblemSearchCriteria criteria = new ProblemSearchCriteria();
-                        SimpleProject project = (SimpleProject) MyCollabSession
-                                .getVariable("project");
                         criteria.setProjectId(new NumberSearchField(
-                                SearchField.AND, project.getId()));
+                                SearchField.AND, CurrentProjectVariables.getProjectId()));
                         criteria.setId(new NumberSearchField(data.getId(),
                                 NumberSearchField.GREATER));
                         Integer nextId = problemService

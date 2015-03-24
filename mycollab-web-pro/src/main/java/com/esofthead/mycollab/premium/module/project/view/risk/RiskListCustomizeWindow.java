@@ -30,5 +30,4 @@ public class RiskListCustomizeWindow extends CustomizedTableWindow {
 				RiskTableFieldDef.rating, RiskTableFieldDef.response,
 				RiskTableFieldDef.status);
 	}
-
 }

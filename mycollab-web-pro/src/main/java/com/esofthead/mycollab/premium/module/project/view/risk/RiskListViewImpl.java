@@ -25,289 +25,271 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class RiskListViewImpl extends AbstractPageView implements RiskListView {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	private final RiskSearchPanel riskSearchPanel;
-	private SelectionOptionButton selectOptionButton;
-	private DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
-	private final VerticalLayout riskListLayout;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
+    private RiskSearchPanel riskSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
+    private VerticalLayout riskListLayout;
+    private DefaultMassItemActionHandlersContainer tableActionControls;
+    private Label selectedItemsNumberLabel = new Label();
 
-	public RiskListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, false, true));
+    public RiskListViewImpl() {
+        setMargin(new MarginInfo(false, true, false, true));
 
-		this.riskSearchPanel = new RiskSearchPanel();
-		this.addComponent(this.riskSearchPanel);
+        riskSearchPanel = new RiskSearchPanel();
+        addComponent(riskSearchPanel);
 
-		this.riskListLayout = new VerticalLayout();
-		this.addComponent(this.riskListLayout);
+        riskListLayout = new VerticalLayout();
+        this.addComponent(riskListLayout);
 
-		this.generateDisplayTable();
-	}
+        this.generateDisplayTable();
+    }
 
-	private void generateDisplayTable() {
-		this.tableItem = new DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk>(
-				ApplicationContextUtil.getSpringBean(RiskService.class),
-				SimpleRisk.class, RiskListView.VIEW_DEF_ID,
-				RiskTableFieldDef.selected, Arrays.asList(
-						RiskTableFieldDef.name, RiskTableFieldDef.assignUser,
-						RiskTableFieldDef.datedue, RiskTableFieldDef.rating));
+    private void generateDisplayTable() {
+        tableItem = new DefaultPagedBeanTable<>(
+                ApplicationContextUtil.getSpringBean(RiskService.class),
+                SimpleRisk.class, RiskListView.VIEW_DEF_ID,
+                RiskTableFieldDef.selected, Arrays.asList(
+                RiskTableFieldDef.name, RiskTableFieldDef.assignUser,
+                RiskTableFieldDef.datedue, RiskTableFieldDef.rating));
 
-		this.tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					final Object columnId) {
-				final SimpleRisk item = RiskListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final CheckBoxDecor cb = new CheckBoxDecor("", item
-						.isSelected());
-				cb.setImmediate(true);
-				cb.addValueChangeListener(new ValueChangeListener() {
-					private static final long serialVersionUID = 1L;
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                                       final Object columnId) {
+                final SimpleRisk item = tableItem.getBeanByIndex(itemId);
+                final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
+                cb.setImmediate(true);
+                cb.addValueChangeListener(new ValueChangeListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void valueChange(ValueChangeEvent event) {
-						RiskListViewImpl.this.tableItem
-								.fireSelectItemEvent(item);
-					}
-				});
+                    @Override
+                    public void valueChange(ValueChangeEvent event) {
+                        tableItem.fireSelectItemEvent(item);
+                    }
+                });
 
-				item.setExtraData(cb);
-				return cb;
-			}
-		});
+                item.setExtraData(cb);
+                return cb;
+            }
+        });
 
-		this.tableItem.addGeneratedColumn("riskname", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("riskname", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleRisk risk = RiskListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final LabelLink b = new LabelLink(risk.getRiskname(),
-						ProjectLinkBuilder.generateRiskPreviewFullLink(
-								risk.getProjectid(), risk.getId()));
+            @Override
+            public com.vaadin.ui.Component generateCell(final Table source,
+                                                        final Object itemId, final Object columnId) {
+                final SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+                final LabelLink b = new LabelLink(risk.getRiskname(),
+                        ProjectLinkBuilder.generateRiskPreviewFullLink(
+                                risk.getProjectid(), risk.getId()));
 
-				if ("Closed".equals(risk.getStatus())) {
-					b.addStyleName(UIConstants.LINK_COMPLETED);
-				} else {
-					if (risk.getDatedue() != null
-							&& (risk.getDatedue()
-									.before(new GregorianCalendar().getTime()))) {
-						b.addStyleName(UIConstants.LINK_OVERDUE);
-					}
-				}
-				b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(
-						AppContext.getUserLocale(), risk,
-						AppContext.getSiteUrl(), AppContext.getTimezone()));
-				return b;
+                if ("Closed".equals(risk.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (risk.isOverdue()) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
+                b.setDescription(ProjectTooltipGenerator.generateToolTipRisk(
+                        AppContext.getUserLocale(), risk,
+                        AppContext.getSiteUrl(), AppContext.getTimezone()));
+                return b;
 
-			}
-		});
+            }
+        });
 
-		this.tableItem.addGeneratedColumn("assignedToUserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("assignedToUserFullName",
+                new Table.ColumnGenerator() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleRisk risk = RiskListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(risk.getAssigntouser(), risk
-								.getAssignToUserAvatarId(), risk
-								.getAssignedToUserFullName());
+                    @Override
+                    public com.vaadin.ui.Component generateCell(
+                            final Table source, final Object itemId,
+                            final Object columnId) {
+                        final SimpleRisk risk = RiskListViewImpl.this.tableItem
+                                .getBeanByIndex(itemId);
+                        return new ProjectUserLink(risk.getAssigntouser(), risk
+                                .getAssignToUserAvatarId(), risk
+                                .getAssignedToUserFullName());
 
-					}
-				});
+                    }
+                });
 
-		this.tableItem.addGeneratedColumn("raisedByUserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("raisedByUserFullName",
+                new Table.ColumnGenerator() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleRisk risk = RiskListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(risk.getRaisedbyuser(), risk
-								.getRaisedByUserAvatarId(), risk
-								.getRaisedByUserFullName());
+                    @Override
+                    public com.vaadin.ui.Component generateCell(
+                            Table source, Object itemId,
+                            Object columnId) {
+                        SimpleRisk risk = tableItem
+                                .getBeanByIndex(itemId);
+                        return new ProjectUserLink(risk.getRaisedbyuser(), risk
+                                .getRaisedByUserAvatarId(), risk
+                                .getRaisedByUserFullName());
 
-					}
-				});
+                    }
+                });
 
-		this.tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleRisk item = RiskListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final Label l = new Label();
-				l.setValue(AppContext.formatDate(item.getDatedue()));
-				return l;
-			}
-		});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                                                        Object itemId, final Object columnId) {
+                SimpleRisk item = tableItem.getBeanByIndex(itemId);
+                return new Label(AppContext.formatDate(item.getDatedue()));
+            }
+        });
 
-		this.tableItem.addGeneratedColumn("level", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("level", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleRisk item = RiskListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final RatingStars tinyRs = new RatingStars();
-				tinyRs.setValue(item.getLevel());
-				tinyRs.setStyleName("tiny");
-				tinyRs.setReadOnly(true);
-				return tinyRs;
-			}
-		});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                                                        Object itemId, Object columnId) {
+                SimpleRisk item = tableItem.getBeanByIndex(itemId);
+                RatingStars tinyRs = new RatingStars();
+                tinyRs.setValue(item.getLevel());
+                tinyRs.setStyleName("tiny");
+                tinyRs.setReadOnly(true);
+                return tinyRs;
+            }
+        });
 
-		this.tableItem.setWidth("100%");
+        tableItem.setWidth("100%");
 
-		this.riskListLayout.addComponent(this.constructTableActionControls());
-		this.riskListLayout.addComponent(this.tableItem);
-	}
+        riskListLayout.addComponent(constructTableActionControls());
+        riskListLayout.addComponent(tableItem);
+    }
 
-	@Override
-	public HasSearchHandlers<RiskSearchCriteria> getSearchHandlers() {
-		return this.riskSearchPanel;
-	}
+    @Override
+    public HasSearchHandlers<RiskSearchCriteria> getSearchHandlers() {
+        return riskSearchPanel;
+    }
 
-	private ComponentContainer constructTableActionControls() {
-		final CssLayout layoutWrapper = new CssLayout();
-		layoutWrapper.setWidth("100%");
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
-		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-		layoutWrapper.addComponent(layout);
+    private ComponentContainer constructTableActionControls() {
+        final CssLayout layoutWrapper = new CssLayout();
+        layoutWrapper.setWidth("100%");
+        MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
+        layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+        layoutWrapper.addComponent(layout);
 
-		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-		this.selectOptionButton.setWidthUndefined();
-		layout.addComponent(this.selectOptionButton);
+        selectOptionButton = new SelectionOptionButton(tableItem);
+        selectOptionButton.setWidthUndefined();
+        layout.addComponent(selectOptionButton);
 
-		final Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
-		deleteBtn.setEnabled(CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.RISKS));
+        Button deleteBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
+        deleteBtn.setEnabled(CurrentProjectVariables
+                .canAccess(ProjectRolePermissionCollections.RISKS));
 
-		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+        tableActionControls = new DefaultMassItemActionHandlersContainer();
 
-		if (CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.RISKS)) {
-			tableActionControls.addActionItem(
-					MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
-					"delete", "Delete");
-		}
+        if (CurrentProjectVariables
+                .canAccess(ProjectRolePermissionCollections.RISKS)) {
+            tableActionControls.addActionItem(
+                    MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
+                    "delete", "Delete");
+        }
 
-		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
+        tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
                 FontAwesome.ENVELOPE_O,
-				"mail", "Mail");
-		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_PDF_ACTION,
+                "mail", "Mail");
+        tableActionControls.addDownloadActionItem(
+                MassItemActionHandler.EXPORT_PDF_ACTION,
                 FontAwesome.FILE_PDF_O,
-				"export", "export.pdf", "Export pdf");
-		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+                "export", "export.pdf", "Export pdf");
+        tableActionControls.addDownloadActionItem(
+                MassItemActionHandler.EXPORT_EXCEL_ACTION,
                 FontAwesome.FILE_EXCEL_O,
-				"export", "export.xlsx", "Export excel");
-		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_CSV_ACTION,
-				FontAwesome.FILE_TEXT_O,
-				"export", "export.csv", "Export csv");
+                "export", "export.xlsx", "Export excel");
+        tableActionControls.addDownloadActionItem(
+                MassItemActionHandler.EXPORT_CSV_ACTION,
+                FontAwesome.FILE_TEXT_O,
+                "export", "export.csv", "Export csv");
 
-		if (CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.RISKS)) {
-			tableActionControls.addActionItem(
-					MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
-					"update", "Update");
-		}
+        if (CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.RISKS)) {
+            tableActionControls.addActionItem(
+                    MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
+                    "update", "Update");
+        }
 
-		this.tableActionControls.setVisible(false);
-		this.tableActionControls.setWidthUndefined();
+        tableActionControls.setVisible(false);
+        tableActionControls.setWidthUndefined();
 
-		layout.addComponent(this.tableActionControls);
-		this.selectedItemsNumberLabel.setWidth("100%");
-		layout.addComponent(this.selectedItemsNumberLabel);
-		layout.setComponentAlignment(this.selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+        layout.addComponent(tableActionControls);
+        selectedItemsNumberLabel.setWidth("100%");
+        layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
-		Button customizeViewBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Button customizeViewBtn = new Button("", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				UI.getCurrent().addWindow(
-						new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID,
-								tableItem));
+            @Override
+            public void buttonClick(ClickEvent event) {
+                UI.getCurrent().addWindow(
+                        new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID,
+                                tableItem));
 
-			}
-		});
-		customizeViewBtn.setIcon(FontAwesome.ADJUST);
-		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		layout.addComponent(customizeViewBtn);
-		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+            }
+        });
+        customizeViewBtn.setIcon(FontAwesome.ADJUST);
+        customizeViewBtn.setDescription("Layout Options");
+        customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
-		return layoutWrapper;
-	}
+        return layoutWrapper;
+    }
 
-	@Override
-	public void enableActionControls(final int numOfSelectedItems) {
-		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue(AppContext.getMessage(
-				GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
-	}
+    @Override
+    public void enableActionControls(final int numOfSelectedItems) {
+        tableActionControls.setVisible(true);
+        selectedItemsNumberLabel.setValue(AppContext.getMessage(
+                GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
+    }
 
-	@Override
-	public void disableActionControls() {
-		this.tableActionControls.setVisible(false);
-		this.selectOptionButton.setSelectedCheckbox(false);
-		this.selectedItemsNumberLabel.setValue("");
-	}
+    @Override
+    public void disableActionControls() {
+        tableActionControls.setVisible(false);
+        selectOptionButton.setSelectedCheckbox(false);
+        selectedItemsNumberLabel.setValue("");
+    }
 
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return this.selectOptionButton;
-	}
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return selectOptionButton;
+    }
 
-	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
-		return this.tableActionControls;
-	}
+    @Override
+    public HasMassItemActionHandlers getPopupActionHandlers() {
+        return tableActionControls;
+    }
 
-	@Override
-	public HasSelectableItemHandlers<SimpleRisk> getSelectableItemHandlers() {
-		return this.tableItem;
-	}
+    @Override
+    public HasSelectableItemHandlers<SimpleRisk> getSelectableItemHandlers() {
+        return tableItem;
+    }
 
-	@Override
-	public AbstractPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
-		return this.tableItem;
-	}
+    @Override
+    public AbstractPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
+        return tableItem;
+    }
 }

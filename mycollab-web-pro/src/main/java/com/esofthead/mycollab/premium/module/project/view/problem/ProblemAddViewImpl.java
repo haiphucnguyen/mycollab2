@@ -29,7 +29,6 @@ import java.util.Map;
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 		ProblemAddView, IFormAddView<Problem> {
-
 	private static final long serialVersionUID = 1L;
 
 	private static Map<Integer, String> valueCaptions = new HashMap<>(

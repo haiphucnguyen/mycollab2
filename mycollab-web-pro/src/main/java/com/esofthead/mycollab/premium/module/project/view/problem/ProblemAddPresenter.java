@@ -21,7 +21,6 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  */
 public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
-
     private static final long serialVersionUID = 1L;
 
     public ProblemAddPresenter() {

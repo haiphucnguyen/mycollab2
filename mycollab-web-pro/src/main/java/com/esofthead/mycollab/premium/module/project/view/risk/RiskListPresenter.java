@@ -32,17 +32,15 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
-public class RiskListPresenter
-		extends
+public class RiskListPresenter extends
 		ProjectGenericListPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
-
 	private static final long serialVersionUID = 1L;
+
 	private RiskService riskService;
 
 	public RiskListPresenter() {
 		super(RiskListView.class, RiskListNoItemView.class);
-
 		riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
 	}
 

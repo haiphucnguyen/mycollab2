@@ -25,302 +25,282 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class ProblemListViewImpl extends AbstractPageView implements
-		ProblemListView {
+        ProblemListView {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
-	private final ProblemSearchPanel problemSearchPanel;
-	private SelectionOptionButton selectOptionButton;
-	private DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
-	private final VerticalLayout problemListLayout;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
+    private ProblemSearchPanel problemSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
+    private VerticalLayout problemListLayout;
+    private DefaultMassItemActionHandlersContainer tableActionControls;
+    private Label selectedItemsNumberLabel = new Label();
 
-	public ProblemListViewImpl() {
-		this.setMargin(new MarginInfo(false, true, false, true));
+    public ProblemListViewImpl() {
+        setMargin(new MarginInfo(false, true, false, true));
 
-		this.problemSearchPanel = new ProblemSearchPanel();
-		addComponent(this.problemSearchPanel);
+        problemSearchPanel = new ProblemSearchPanel();
+        addComponent(problemSearchPanel);
 
-		this.problemListLayout = new VerticalLayout();
-		addComponent(this.problemListLayout);
+        problemListLayout = new VerticalLayout();
+        addComponent(problemListLayout);
 
-		this.generateDisplayTable();
-	}
+        generateDisplayTable();
+    }
 
-	private void generateDisplayTable() {
-		this.tableItem = new DefaultPagedBeanTable<>(
-				ApplicationContextUtil.getSpringBean(ProblemService.class),
-				SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
-				ProblemTableFieldDef.selected, Arrays.asList(
-						ProblemTableFieldDef.name,
-						ProblemTableFieldDef.assignUser,
-						ProblemTableFieldDef.datedue,
-						ProblemTableFieldDef.rating));
+    private void generateDisplayTable() {
+        tableItem = new DefaultPagedBeanTable<>(
+                ApplicationContextUtil.getSpringBean(ProblemService.class),
+                SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
+                ProblemTableFieldDef.selected, Arrays.asList(
+                ProblemTableFieldDef.name,
+                ProblemTableFieldDef.assignUser,
+                ProblemTableFieldDef.datedue,
+                ProblemTableFieldDef.rating));
 
-		this.tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					final Object columnId) {
-				final SimpleProblem problem = ProblemListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final CheckBoxDecor cb = new CheckBoxDecor("", problem
-						.isSelected());
-				cb.setImmediate(true);
-				cb.addValueChangeListener(new ValueChangeListener() {
-					private static final long serialVersionUID = 1L;
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                                       final Object columnId) {
+                final SimpleProblem problem = tableItem
+                        .getBeanByIndex(itemId);
+                CheckBoxDecor cb = new CheckBoxDecor("", problem
+                        .isSelected());
+                cb.setImmediate(true);
+                cb.addValueChangeListener(new ValueChangeListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void valueChange(ValueChangeEvent event) {
-						ProblemListViewImpl.this.tableItem
-								.fireSelectItemEvent(problem);
-					}
-				});
+                    @Override
+                    public void valueChange(ValueChangeEvent event) {
+                        tableItem.fireSelectItemEvent(problem);
+                    }
+                });
 
-				problem.setExtraData(cb);
-				return cb;
-			}
-		});
+                problem.setExtraData(cb);
+                return cb;
+            }
+        });
 
-		this.tableItem.addGeneratedColumn("issuename", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("issuename", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleProblem problem = ProblemListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final LabelLink b = new LabelLink(problem.getIssuename(),
-						ProjectLinkBuilder.generateProblemPreviewFullLink(
-								problem.getProjectid(), problem.getId()));
+            @Override
+            public com.vaadin.ui.Component generateCell(final Table source,
+                                                        final Object itemId, final Object columnId) {
+                SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                LabelLink b = new LabelLink(problem.getIssuename(),
+                        ProjectLinkBuilder.generateProblemPreviewFullLink(
+                                problem.getProjectid(), problem.getId()));
 
-				if ("Closed".equals(problem.getStatus())) {
-					b.addStyleName(UIConstants.LINK_COMPLETED);
-				} else {
-					if (problem.getDatedue() != null
-							&& (problem.getDatedue()
-									.before(new GregorianCalendar().getTime()))) {
-						b.addStyleName(UIConstants.LINK_OVERDUE);
-					}
-				}
-				b.setDescription(ProjectTooltipGenerator
-						.generateToolTipProblem(AppContext.getUserLocale(),
-								problem, AppContext.getSiteUrl(),
-								AppContext.getTimezone()));
-				return b;
+                if ("Closed".equals(problem.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (problem.isOverdue()) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
+                b.setDescription(ProjectTooltipGenerator
+                        .generateToolTipProblem(AppContext.getUserLocale(),
+                                problem, AppContext.getSiteUrl(),
+                                AppContext.getTimezone()));
+                return b;
 
-			}
-		});
+            }
+        });
 
-		this.tableItem.addGeneratedColumn("assignedUserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("assignedUserFullName",
+                new Table.ColumnGenerator() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleProblem problem = ProblemListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(problem.getAssigntouser(),
-								problem.getAssignUserAvatarId(), problem
-										.getAssignedUserFullName());
+                    @Override
+                    public com.vaadin.ui.Component generateCell(
+                            Table source, Object itemId,
+                            Object columnId) {
+                        SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                        return new ProjectUserLink(problem.getAssigntouser(),
+                                problem.getAssignUserAvatarId(), problem
+                                .getAssignedUserFullName());
 
-					}
-				});
+                    }
+                });
 
-		this.tableItem.addGeneratedColumn("raisedByUserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("raisedByUserFullName",
+                new Table.ColumnGenerator() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(
-							final Table source, final Object itemId,
-							final Object columnId) {
-						final SimpleProblem problem = ProblemListViewImpl.this.tableItem
-								.getBeanByIndex(itemId);
-						return new ProjectUserLink(problem.getAssigntouser(),
-								problem.getRaisedByUserAvatarId(), problem
-										.getRaisedByUserFullName());
+                    @Override
+                    public com.vaadin.ui.Component generateCell(
+                            Table source, Object itemId,
+                            Object columnId) {
+                        SimpleProblem problem = tableItem
+                                .getBeanByIndex(itemId);
+                        return new ProjectUserLink(problem.getAssigntouser(),
+                                problem.getRaisedByUserAvatarId(), problem
+                                .getRaisedByUserFullName());
 
-					}
-				});
+                    }
+                });
 
-		this.tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleProblem item = ProblemListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final Label l = new Label();
-				l.setValue(AppContext.formatDate(item.getDatedue()));
-				return l;
-			}
-		});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                                                        Object itemId, Object columnId) {
+                SimpleProblem item = tableItem.getBeanByIndex(itemId);
+                return new Label(AppContext.formatDate(item.getDatedue()));
+            }
+        });
 
-		this.tableItem.addGeneratedColumn("level", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("level", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, final Object columnId) {
-				final SimpleProblem item = ProblemListViewImpl.this.tableItem
-						.getBeanByIndex(itemId);
-				final RatingStars tinyRs = new RatingStars();
-				tinyRs.setValue(item.getLevel());
-				tinyRs.setStyleName("tiny");
-				tinyRs.setReadOnly(true);
-				return tinyRs;
-			}
-		});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                                                        Object itemId, Object columnId) {
+                SimpleProblem item = tableItem.getBeanByIndex(itemId);
+                RatingStars tinyRs = new RatingStars();
+                tinyRs.setValue(item.getLevel());
+                tinyRs.setStyleName("tiny");
+                tinyRs.setReadOnly(true);
+                return tinyRs;
+            }
+        });
+        tableItem.setWidth("100%");
+        problemListLayout.addComponent(constructTableActionControls());
+        problemListLayout.addComponent(tableItem);
+    }
 
-		this.tableItem.setWidth("100%");
+    @Override
+    public HasSearchHandlers<ProblemSearchCriteria> getSearchHandlers() {
+        return problemSearchPanel;
+    }
 
-		this.problemListLayout
-				.addComponent(this.constructTableActionControls());
-		this.problemListLayout.addComponent(this.tableItem);
-	}
+    private ComponentContainer constructTableActionControls() {
+        CssLayout layoutWrapper = new CssLayout();
+        layoutWrapper.setWidth("100%");
+        MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
+        layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
+        layoutWrapper.addComponent(layout);
 
-	@Override
-	public HasSearchHandlers<ProblemSearchCriteria> getSearchHandlers() {
-		return this.problemSearchPanel;
-	}
+        selectOptionButton = new SelectionOptionButton(tableItem);
+        selectOptionButton.setWidthUndefined();
+        layout.addComponent(selectOptionButton);
 
-	private ComponentContainer constructTableActionControls() {
-		final CssLayout layoutWrapper = new CssLayout();
-		layoutWrapper.setWidth("100%");
-		final HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
-		layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-		layoutWrapper.addComponent(layout);
+        Button deleteBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
+        deleteBtn.setEnabled(CurrentProjectVariables
+                .canAccess(ProjectRolePermissionCollections.PROBLEMS));
 
-		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
-		this.selectOptionButton.setWidthUndefined();
-		layout.addComponent(this.selectOptionButton);
+        tableActionControls = new DefaultMassItemActionHandlersContainer();
 
-		final Button deleteBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
-		deleteBtn.setEnabled(CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.PROBLEMS));
+        if (CurrentProjectVariables
+                .canAccess(ProjectRolePermissionCollections.PROBLEMS)) {
+            tableActionControls.addActionItem(
+                    MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
+                    "delete", AppContext
+                            .getMessage(GenericI18Enum.BUTTON_DELETE));
+        }
 
-		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
-
-		if (CurrentProjectVariables
-				.canAccess(ProjectRolePermissionCollections.PROBLEMS)) {
-			tableActionControls.addActionItem(
-					MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
-					"delete", AppContext
-							.getMessage(GenericI18Enum.BUTTON_DELETE));
-		}
-
-		tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
+        tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
                 FontAwesome.ENVELOPE_O,
-				"mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
+                "mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
 
-		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_PDF_ACTION,
+        tableActionControls.addDownloadActionItem(
+                MassItemActionHandler.EXPORT_PDF_ACTION,
                 FontAwesome.FILE_PDF_O,
-				"export", "export.pdf",
-				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
+                "export", "export.pdf",
+                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
-		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+        tableActionControls.addDownloadActionItem(
+                MassItemActionHandler.EXPORT_EXCEL_ACTION,
                 FontAwesome.FILE_EXCEL_O,
-				"export", "export.xlsx",
-				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
+                "export", "export.xlsx",
+                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
-		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_CSV_ACTION,
-				FontAwesome.FILE_TEXT_O,
-				"export", "export.csv",
-				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
+        tableActionControls.addDownloadActionItem(
+                MassItemActionHandler.EXPORT_CSV_ACTION,
+                FontAwesome.FILE_TEXT_O,
+                "export", "export.csv",
+                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
 
-		if (CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
-			tableActionControls.addActionItem(
-					MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
-					"update", AppContext
-							.getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE));
-		}
+        if (CurrentProjectVariables
+                .canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
+            tableActionControls.addActionItem(
+                    MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
+                    "update", AppContext
+                            .getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE));
+        }
 
-		this.tableActionControls.setVisible(false);
-		this.tableActionControls.setWidthUndefined();
+        tableActionControls.setVisible(false);
+        tableActionControls.setWidthUndefined();
 
-		layout.addComponent(this.tableActionControls);
-		this.selectedItemsNumberLabel.setWidth("100%");
-		layout.addComponent(this.selectedItemsNumberLabel);
-		layout.setComponentAlignment(this.selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+        layout.addComponent(tableActionControls);
+        selectedItemsNumberLabel.setWidth("100%");
+        layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
 
-		Button customizeViewBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Button customizeViewBtn = new Button("", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				UI.getCurrent().addWindow(
-						new ProblemListCustomizeWindow(
-								ProblemListView.VIEW_DEF_ID, tableItem));
+            @Override
+            public void buttonClick(ClickEvent event) {
+                UI.getCurrent().addWindow(
+                        new ProblemListCustomizeWindow(
+                                ProblemListView.VIEW_DEF_ID, tableItem));
 
-			}
-		});
-		customizeViewBtn.setIcon(FontAwesome.ADJUST);
-		customizeViewBtn.setDescription("Layout Options");
-		customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		layout.addComponent(customizeViewBtn);
-		layout.setComponentAlignment(customizeViewBtn, Alignment.MIDDLE_RIGHT);
+            }
+        });
+        customizeViewBtn.setIcon(FontAwesome.ADJUST);
+        customizeViewBtn.setDescription("Layout Options");
+        customizeViewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
-		return layoutWrapper;
-	}
+        return layoutWrapper;
+    }
 
-	@Override
-	public void enableActionControls(final int numOfSelectedItems) {
-		this.tableActionControls.setVisible(true);
-		this.selectedItemsNumberLabel.setValue(AppContext.getMessage(
-				GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
-	}
+    @Override
+    public void enableActionControls(int numOfSelectedItems) {
+        tableActionControls.setVisible(true);
+        selectedItemsNumberLabel.setValue(AppContext.getMessage(
+                GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
+    }
 
-	@Override
-	public void disableActionControls() {
-		this.tableActionControls.setVisible(false);
-		this.selectOptionButton.setSelectedCheckbox(false);
-		this.selectedItemsNumberLabel.setValue("");
-	}
+    @Override
+    public void disableActionControls() {
+        tableActionControls.setVisible(false);
+        selectOptionButton.setSelectedCheckbox(false);
+        selectedItemsNumberLabel.setValue("");
+    }
 
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return this.selectOptionButton;
-	}
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return selectOptionButton;
+    }
 
-	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
-		return this.tableActionControls;
-	}
+    @Override
+    public HasMassItemActionHandlers getPopupActionHandlers() {
+        return tableActionControls;
+    }
 
-	@Override
-	public HasSelectableItemHandlers<SimpleProblem> getSelectableItemHandlers() {
-		return this.tableItem;
-	}
+    @Override
+    public HasSelectableItemHandlers<SimpleProblem> getSelectableItemHandlers() {
+        return tableItem;
+    }
 
-	@Override
-	public AbstractPagedBeanTable<ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
-		return this.tableItem;
-	}
+    @Override
+    public AbstractPagedBeanTable<ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
+        return tableItem;
+    }
 }
