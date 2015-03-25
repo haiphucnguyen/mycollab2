@@ -44,12 +44,12 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  */
 @ViewComponent
 public class UserReadViewImpl extends AbstractPageView implements UserReadView {
-
     private static final long serialVersionUID = 1L;
+
     protected AdvancedPreviewBeanForm<User> previewForm;
-    private final MVerticalLayout userAvatar;
-    private final HorizontalLayout avatarAndPass;
-    protected SimpleUser user;
+    private MVerticalLayout userAvatar;
+    private HorizontalLayout avatarAndPass;
+    private SimpleUser user;
 
     public UserReadViewImpl() {
         super();
@@ -64,10 +64,10 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%").withStyleName(UIConstants.HEADER_VIEW);
         header.with(avatarAndPass).withAlign(avatarAndPass, Alignment.MIDDLE_LEFT);
-        this.addComponent(header);
+        addComponent(header);
 
         previewForm = new PreviewForm();
-        this.addComponent(previewForm);
+        addComponent(previewForm);
 
         Layout controlButtons = createTopPanel();
         if (controlButtons != null) {
@@ -76,21 +76,21 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
     }
 
     private void displayUserAvatar() {
-        this.userAvatar.removeAllComponents();
-        final Image cropField = UserAvatarControlFactory
+        userAvatar.removeAllComponents();
+        Image cropField = UserAvatarControlFactory
                 .createUserAvatarEmbeddedComponent(user.getAvatarid(), 100);
         userAvatar.addComponent(cropField);
 
-        this.avatarAndPass.removeAllComponents();
+        avatarAndPass.removeAllComponents();
         avatarAndPass.addComponent(userAvatar);
 
-        final VerticalLayout basicLayout = new VerticalLayout();
+        VerticalLayout basicLayout = new VerticalLayout();
         basicLayout.setSpacing(true);
-        final HorizontalLayout userWrapper = new HorizontalLayout();
+        HorizontalLayout userWrapper = new HorizontalLayout();
 
         String nickName = user.getNickname();
 
-        final Label userName = new Label(user.getDisplayName()
+        Label userName = new Label(user.getDisplayName()
                 + (StringUtils.isEmpty(nickName) ? ""
                 : (" ( " + nickName + " )")));
         userName.setStyleName("h1");
@@ -127,7 +127,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         basicLayout.addComponent(new Label(AppContext
                 .getMessage(UserI18nEnum.FORM_TIMEZONE)
                 + ": "
-                + TimezoneMapper.getTimezone(user.getTimezone())
+                + TimezoneMapper.getTimezoneExt(user.getTimezone())
                 .getDisplayName()));
         basicLayout
                 .addComponent(new Label(AppContext
@@ -142,19 +142,17 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
     }
 
     protected Layout createTopPanel() {
-        PreviewFormControlsGenerator<User> previewForm = new PreviewFormControlsGenerator<>(
-                this.previewForm);
-        previewForm
-                .createButtonControls(RolePermissionCollections.ACCOUNT_USER);
-        previewForm.removeCloneButton();
-        return previewForm.getLayout();
+        PreviewFormControlsGenerator<User> controlGenerator = new PreviewFormControlsGenerator<>(previewForm);
+        controlGenerator.createButtonControls(RolePermissionCollections.ACCOUNT_USER);
+        controlGenerator.removeCloneButton();
+        return controlGenerator.getLayout();
     }
 
     @Override
     public void previewItem(SimpleUser user) {
         this.user = user;
         previewForm.setBean(user);
-        this.displayUserAvatar();
+        displayUserAvatar();
     }
 
     @Override
@@ -163,7 +161,6 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
     }
 
     private class PreviewForm extends AdvancedPreviewBeanForm<User> {
-
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -194,7 +191,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
                         return new DefaultViewField(AppContext.formatDate(user
                                 .getDateofbirth()));
                     } else if (propertyId.equals("timezone")) {
-                        return new DefaultViewField(TimezoneMapper.getTimezone(
+                        return new DefaultViewField(TimezoneMapper.getTimezoneExt(
                                 user.getTimezone()).getDisplayName());
                     } else if (propertyId.equals("facebookaccount")) {
                         return new UrlSocialNetworkLinkViewField(user

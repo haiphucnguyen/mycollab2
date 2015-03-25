@@ -152,7 +152,7 @@ public class UserLink extends Button {
 			Label timeLabel = new Label("Time");
 			timeLabel.setWidth("120px");
 			timeZoneLayout.addComponent(timeLabel);
-			timeZoneLayout.addComponent(new Label(TimezoneMapper.getTimezone(
+			timeZoneLayout.addComponent(new Label(TimezoneMapper.getTimezoneExt(
 					user.getTimezone()).getDisplayName()));
 			mainUserInfoLayout.addComponent(timeZoneLayout);
 
