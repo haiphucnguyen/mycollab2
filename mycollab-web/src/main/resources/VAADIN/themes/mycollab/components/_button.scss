@@ -50,6 +50,17 @@
     }
   }
 
+  .v-button-default {
+    border-color: #495972;
+  }
+
+  .v-disabled.v-button-default {
+    border-color: #495972;
+    &:focus {
+      border-color: #495972;
+    }
+  }
+
   .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
     border-color: #495972;
   }
@@ -63,19 +74,16 @@
   }
 
   .v-button-default {
-    border-color: #495972;
     background-color: #6482B3;
     color: rgb(244, 244, 245);
     text-shadow: 0 -1px 0 #495972;
   }
 
   .v-disabled.v-button-default {
-    border-color: #495972;
     background-color: #6482B3;
     color: rgb(244, 244, 245);
     text-shadow: 0 -1px 0 #495972;
     &:focus {
-      border-color: #495972;
       background-color: #6482B3;
       color: rgb(244, 244, 245);
       text-shadow: 0 -1px 0 #495972;
@@ -107,6 +115,16 @@
   .v-disabled.v-button {
     &:focus, &:active {
       text-shadow: 0 1px 0 #DFDFDF;
+    }
+  }
+
+  .v-button.v-button-action {
+    background-color:transparent;
+    &:focus, &:hover {
+      background-color:transparent;
+    }
+    .v-icon {
+      color: brown;
     }
   }
 
@@ -521,6 +539,28 @@
 
 
   /* End round border button */
+
+  /* Background has SELECT icon */
+
+  .v-button.select-bg {
+    height: 25px;
+    width: 22px;
+    background: none no-repeat 0px 0px transparent;
+    border-radius: 0px 2px 2px 0px;
+    border-width: 1px 1px 1px 0px;
+    border-color: $border-color;
+    position: relative;
+    .v-button-wrap, &:active .v-button-wrap, &:hover .v-button-wrap {
+      padding: 0px;
+      margin: 0px;
+      border-width: 0px;
+      height: 100%;
+      border-radius: 0px;
+      background-color: transparent;
+    }
+  }
+
+  /* End Background has SELECT icon */
 
   .v-button-link .v-icon, .v-button-borderless .v-icon {
     margin-left: 0;

@@ -34,7 +34,10 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.FontIconLabel;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -91,7 +94,7 @@ public class CampaignContactListComp extends
 						controlsBtn.setPopupVisible(false);
 					}
 				});
-		selectBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_select));
+		selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
 		selectBtn.setStyleName("link");
 		VerticalLayout buttonControlLayout = new VerticalLayout();
 		buttonControlLayout.addComponent(selectBtn);

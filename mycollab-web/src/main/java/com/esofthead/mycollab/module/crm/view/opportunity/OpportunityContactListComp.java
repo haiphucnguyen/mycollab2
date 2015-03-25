@@ -43,6 +43,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.button.MButton;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -143,7 +144,7 @@ public class OpportunityContactListComp
                         controlsBtn.setPopupVisible(false);
                     }
                 });
-        selectBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_select));
+        selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
         selectBtn.setStyleName("link");
         VerticalLayout buttonControlLayout = new VerticalLayout();
         buttonControlLayout.addComponent(selectBtn);
@@ -185,8 +186,7 @@ public class OpportunityContactListComp
             beanBlock.setWidth("350px");
 
             VerticalLayout blockContent = new VerticalLayout();
-            HorizontalLayout blockTop = new HorizontalLayout();
-            blockTop.setSpacing(true);
+            MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
             FontIconLabel contactAvatar = new FontIconLabel(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
@@ -277,9 +277,7 @@ public class OpportunityContactListComp
                 beanBlock.addStyleName(colormap.get(contact.getDecisionRole()));
             }
 
-            blockTop.addComponent(contactInfo);
-            blockTop.setExpandRatio(contactInfo, 1.0f);
-            blockTop.setWidth("100%");
+            blockTop.with(contactInfo).expand(contactInfo);
             blockContent.addComponent(blockTop);
 
             blockContent.setWidth("100%");

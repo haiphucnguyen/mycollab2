@@ -40,6 +40,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.button.MButton;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -94,7 +95,7 @@ public class ContactOpportunityListComp
                         controlsBtn.setPopupVisible(false);
                     }
                 });
-        selectBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_select));
+        selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
         selectBtn.setStyleName("link");
 
         VerticalLayout buttonControlsLayout = new VerticalLayout();
@@ -140,8 +141,7 @@ public class ContactOpportunityListComp
             beanBlock.setWidth("350px");
 
             VerticalLayout blockContent = new VerticalLayout();
-            HorizontalLayout blockTop = new HorizontalLayout();
-            blockTop.setSpacing(true);
+            MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
             FontIconLabel opportunityIcon = new FontIconLabel(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
@@ -232,9 +232,7 @@ public class ContactOpportunityListComp
                                     .getExpectedcloseddate()) : ""));
             opportunityInfo.addComponent(opportunityExpectedCloseDate);
 
-            blockTop.addComponent(opportunityInfo);
-            blockTop.setExpandRatio(opportunityInfo, 1.0f);
-            blockTop.setWidth("100%");
+            blockTop.with(opportunityInfo).expand(opportunityInfo);
             blockContent.addComponent(blockTop);
 
             blockContent.setWidth("100%");

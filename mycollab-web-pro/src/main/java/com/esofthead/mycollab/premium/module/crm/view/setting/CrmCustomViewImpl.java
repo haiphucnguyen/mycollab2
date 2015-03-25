@@ -69,8 +69,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
     private String moduleName;
 
     public CrmCustomViewImpl() {
-        MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%")
-                .withSpacing(true);
+        MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%");
 
         headerLbl = new Label("abcd");
         Image titleIcon = new Image(null,

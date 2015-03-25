@@ -34,13 +34,17 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.FontIconLabel;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.button.MButton;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -85,9 +89,9 @@ public class AccountLeadListComp extends
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        final AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(
+                        AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(
                                 AccountLeadListComp.this);
-                        final LeadSearchCriteria criteria = new LeadSearchCriteria();
+                        LeadSearchCriteria criteria = new LeadSearchCriteria();
                         criteria.setSaccountid(new NumberSearchField(AppContext
                                 .getAccountId()));
                         UI.getCurrent().addWindow(leadsWindow);
@@ -95,7 +99,7 @@ public class AccountLeadListComp extends
                         controlsBtn.setPopupVisible(false);
                     }
                 });
-        selectBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_select));
+        selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
         selectBtn.setStyleName("link");
         VerticalLayout buttonControlLayout = new VerticalLayout();
         buttonControlLayout.addComponent(selectBtn);
@@ -113,7 +117,7 @@ public class AccountLeadListComp extends
     }
 
     private void loadLeads() {
-        final LeadSearchCriteria criteria = new LeadSearchCriteria();
+        LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
                 AppContext.getAccountId()));
         criteria.setAccountId(new NumberSearchField(SearchField.AND, account
@@ -136,8 +140,7 @@ public class AccountLeadListComp extends
             beanBlock.setWidth("350px");
 
             VerticalLayout blockContent = new VerticalLayout();
-            HorizontalLayout blockTop = new HorizontalLayout();
-            blockTop.setSpacing(true);
+            MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
             CssLayout iconWrap = new CssLayout();
             iconWrap.setStyleName("icon-wrap");
             FontIconLabel leadAvatar = new FontIconLabel(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
@@ -214,16 +217,11 @@ public class AccountLeadListComp extends
                     : ""));
             leadInfo.addComponent(leadOfficePhone);
 
-            blockTop.addComponent(leadInfo);
-            blockTop.setExpandRatio(leadInfo, 1.0f);
-            blockTop.setWidth("100%");
+            blockTop.with(leadInfo).expand(leadInfo);
             blockContent.addComponent(blockTop);
-
             blockContent.setWidth("100%");
-
             beanBlock.addComponent(blockContent);
             return beanBlock;
         }
-
     }
 }

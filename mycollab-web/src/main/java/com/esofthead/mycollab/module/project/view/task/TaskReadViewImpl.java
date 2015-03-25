@@ -119,7 +119,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 
     @Override
     public HasPreviewFormHandlers<SimpleTask> getPreviewFormHandlers() {
-        return this.previewForm;
+        return previewForm;
     }
 
     @Override

@@ -34,7 +34,10 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.FontIconLabel;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -44,113 +47,111 @@ import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public class CampaignLeadListComp extends
-		RelatedListComp2<LeadService, LeadSearchCriteria, SimpleLead> {
-	private static final long serialVersionUID = 1L;
+        RelatedListComp2<LeadService, LeadSearchCriteria, SimpleLead> {
+    private static final long serialVersionUID = 1L;
 
-	private CampaignWithBLOBs campaign;
+    private CampaignWithBLOBs campaign;
 
-	public CampaignLeadListComp() {
-		super(ApplicationContextUtil.getSpringBean(LeadService.class), 20);
-		this.setBlockDisplayHandler(new CampaignLeadBlockDisplay());
-	}
+    public CampaignLeadListComp() {
+        super(ApplicationContextUtil.getSpringBean(LeadService.class), 20);
+        this.setBlockDisplayHandler(new CampaignLeadBlockDisplay());
+    }
 
-	@Override
-	protected Component generateTopControls() {
-		VerticalLayout controlsBtnWrap = new VerticalLayout();
-		controlsBtnWrap.setWidth("100%");
-		final SplitButton controlsBtn = new SplitButton();
-		controlsBtn.setSizeUndefined();
-		controlsBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_LEAD));
-		controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		controlsBtn.setCaption(AppContext
-				.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD));
-		controlsBtn.setIcon(FontAwesome.PLUS);
-		controlsBtn
-				.addClickListener(new SplitButton.SplitButtonClickListener() {
-					private static final long serialVersionUID = 1L;
+    @Override
+    protected Component generateTopControls() {
+        VerticalLayout controlsBtnWrap = new VerticalLayout();
+        controlsBtnWrap.setWidth("100%");
+        final SplitButton controlsBtn = new SplitButton();
+        controlsBtn.setSizeUndefined();
+        controlsBtn.setEnabled(AppContext
+                .canWrite(RolePermissionCollections.CRM_LEAD));
+        controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        controlsBtn.setCaption(AppContext
+                .getMessage(LeadI18nEnum.BUTTON_NEW_LEAD));
+        controlsBtn.setIcon(FontAwesome.PLUS);
+        controlsBtn
+                .addClickListener(new SplitButton.SplitButtonClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void splitButtonClick(
-							final SplitButton.SplitButtonClickEvent event) {
-						fireNewRelatedItem("");
-					}
-				});
-		final Button selectBtn = new Button("Select from existing leads",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void splitButtonClick(
+                            final SplitButton.SplitButtonClickEvent event) {
+                        fireNewRelatedItem("");
+                    }
+                });
+        final Button selectBtn = new Button("Select from existing leads",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(final ClickEvent event) {
-						final CampaignLeadSelectionWindow leadsWindow = new CampaignLeadSelectionWindow(
-								CampaignLeadListComp.this);
-						final LeadSearchCriteria criteria = new LeadSearchCriteria();
-						criteria.setSaccountid(new NumberSearchField(AppContext
-								.getAccountId()));
-						UI.getCurrent().addWindow(leadsWindow);
-						leadsWindow.setSearchCriteria(criteria);
-						controlsBtn.setPopupVisible(false);
-					}
-				});
-		selectBtn.setIcon(MyCollabResource.newResource(WebResourceIds._16_select));
-		selectBtn.setStyleName("link");
-		VerticalLayout buttonControlLayout = new VerticalLayout();
-		buttonControlLayout.addComponent(selectBtn);
-		controlsBtn.setContent(buttonControlLayout);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        final CampaignLeadSelectionWindow leadsWindow = new CampaignLeadSelectionWindow(
+                                CampaignLeadListComp.this);
+                        final LeadSearchCriteria criteria = new LeadSearchCriteria();
+                        criteria.setSaccountid(new NumberSearchField(AppContext
+                                .getAccountId()));
+                        UI.getCurrent().addWindow(leadsWindow);
+                        leadsWindow.setSearchCriteria(criteria);
+                        controlsBtn.setPopupVisible(false);
+                    }
+                });
+        selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
+        selectBtn.setStyleName("link");
+        VerticalLayout buttonControlLayout = new VerticalLayout();
+        buttonControlLayout.addComponent(selectBtn);
+        controlsBtn.setContent(buttonControlLayout);
 
-		controlsBtnWrap.addComponent(controlsBtn);
-		controlsBtnWrap.setComponentAlignment(controlsBtn,
-				Alignment.MIDDLE_RIGHT);
-		return controlsBtnWrap;
-	}
+        controlsBtnWrap.addComponent(controlsBtn);
+        controlsBtnWrap.setComponentAlignment(controlsBtn,
+                Alignment.MIDDLE_RIGHT);
+        return controlsBtnWrap;
+    }
 
-	public void displayLeads(final CampaignWithBLOBs campaign) {
-		this.campaign = campaign;
-		loadLeads();
-	}
+    public void displayLeads(final CampaignWithBLOBs campaign) {
+        this.campaign = campaign;
+        loadLeads();
+    }
 
-	private void loadLeads() {
-		final LeadSearchCriteria criteria = new LeadSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setCampaignId(new NumberSearchField(SearchField.AND, campaign
-				.getId()));
-		setSearchCriteria(criteria);
-	}
+    private void loadLeads() {
+        final LeadSearchCriteria criteria = new LeadSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        criteria.setCampaignId(new NumberSearchField(SearchField.AND, campaign
+                .getId()));
+        setSearchCriteria(criteria);
+    }
 
-	@Override
-	public void refresh() {
-		loadLeads();
-	}
+    @Override
+    public void refresh() {
+        loadLeads();
+    }
 
-	public class CampaignLeadBlockDisplay implements
-			BlockDisplayHandler<SimpleLead> {
+    public class CampaignLeadBlockDisplay implements
+            BlockDisplayHandler<SimpleLead> {
 
-		@Override
-		public Component generateBlock(final SimpleLead lead, int blockIndex) {
-			CssLayout beanBlock = new CssLayout();
-			beanBlock.addStyleName("bean-block");
-			beanBlock.setWidth("350px");
+        @Override
+        public Component generateBlock(final SimpleLead lead, int blockIndex) {
+            CssLayout beanBlock = new CssLayout();
+            beanBlock.addStyleName("bean-block");
+            beanBlock.setWidth("350px");
 
-			VerticalLayout blockContent = new VerticalLayout();
-			MHorizontalLayout blockTop = new MHorizontalLayout();
-			CssLayout iconWrap = new CssLayout();
-			iconWrap.setStyleName("icon-wrap");
+            VerticalLayout blockContent = new VerticalLayout();
+            MHorizontalLayout blockTop = new MHorizontalLayout();
+            CssLayout iconWrap = new CssLayout();
+            iconWrap.setStyleName("icon-wrap");
             FontIconLabel leadAvatar = new FontIconLabel(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
             leadAvatar.addStyleName("icon-48px");
-			iconWrap.addComponent(leadAvatar);
-			blockTop.addComponent(iconWrap);
+            iconWrap.addComponent(leadAvatar);
+            blockTop.addComponent(iconWrap);
 
-			VerticalLayout leadInfo = new VerticalLayout();
-			leadInfo.setSpacing(true);
+            VerticalLayout leadInfo = new VerticalLayout();
+            leadInfo.setSpacing(true);
 
-			MButton btnDelete = new MButton(FontAwesome.TRASH_O);
+            MButton btnDelete = new MButton(FontAwesome.TRASH_O);
             btnDelete.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
@@ -188,45 +189,45 @@ public class CampaignLeadListComp extends
                             });
                 }
             });
-			btnDelete.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+            btnDelete.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 
-			blockContent.addComponent(btnDelete);
-			blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
+            blockContent.addComponent(btnDelete);
+            blockContent.setComponentAlignment(btnDelete, Alignment.TOP_RIGHT);
 
-			Label leadName = new Label("Name: <a href='"
-					+ SiteConfiguration.getSiteUrl(AppContext.getSession()
-							.getSubdomain())
-					+ CrmLinkGenerator.generateCrmItemLink(
-							CrmTypeConstants.LEAD, lead.getId()) + "'>"
-					+ lead.getLeadName() + "</a>", ContentMode.HTML);
+            Label leadName = new Label("Name: <a href='"
+                    + SiteConfiguration.getSiteUrl(AppContext.getSession()
+                    .getSubdomain())
+                    + CrmLinkGenerator.generateCrmItemLink(
+                    CrmTypeConstants.LEAD, lead.getId()) + "'>"
+                    + lead.getLeadName() + "</a>", ContentMode.HTML);
 
-			leadInfo.addComponent(leadName);
+            leadInfo.addComponent(leadName);
 
-			Label leadStatus = new Label("Status: "
-					+ (lead.getStatus() != null ? lead.getStatus() : ""));
-			leadInfo.addComponent(leadStatus);
+            Label leadStatus = new Label("Status: "
+                    + (lead.getStatus() != null ? lead.getStatus() : ""));
+            leadInfo.addComponent(leadStatus);
 
-			Label leadEmail = new Label("Email: "
-					+ (lead.getEmail() != null ? "<a href='mailto:"
-							+ lead.getEmail() + "'>" + lead.getEmail() + "</a>"
-							: ""), ContentMode.HTML);
-			leadInfo.addComponent(leadEmail);
+            Label leadEmail = new Label("Email: "
+                    + (lead.getEmail() != null ? "<a href='mailto:"
+                    + lead.getEmail() + "'>" + lead.getEmail() + "</a>"
+                    : ""), ContentMode.HTML);
+            leadInfo.addComponent(leadEmail);
 
-			Label leadOfficePhone = new Label("Office Phone: "
-					+ (lead.getOfficephone() != null ? lead.getOfficephone()
-							: ""));
-			leadInfo.addComponent(leadOfficePhone);
+            Label leadOfficePhone = new Label("Office Phone: "
+                    + (lead.getOfficephone() != null ? lead.getOfficephone()
+                    : ""));
+            leadInfo.addComponent(leadOfficePhone);
 
-			blockTop.addComponent(leadInfo);
-			blockTop.setExpandRatio(leadInfo, 1.0f);
-			blockTop.setWidth("100%");
-			blockContent.addComponent(blockTop);
+            blockTop.addComponent(leadInfo);
+            blockTop.setExpandRatio(leadInfo, 1.0f);
+            blockTop.setWidth("100%");
+            blockContent.addComponent(blockTop);
 
-			blockContent.setWidth("100%");
+            blockContent.setWidth("100%");
 
-			beanBlock.addComponent(blockContent);
-			return beanBlock;
-		}
+            beanBlock.addComponent(blockContent);
+            return beanBlock;
+        }
 
-	}
+    }
 }

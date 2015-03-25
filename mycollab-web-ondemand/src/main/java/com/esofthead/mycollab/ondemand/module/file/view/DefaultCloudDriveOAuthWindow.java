@@ -1,11 +1,5 @@
 package com.esofthead.mycollab.ondemand.module.file.view;
 
-import java.util.GregorianCalendar;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -22,20 +16,19 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+
+import java.util.GregorianCalendar;
 
 /**
  * 
@@ -138,8 +131,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 
 		Button dropboxIconBtn = new Button();
 		dropboxIconBtn.setStyleName("dropbox-icon-button");
-		dropboxIconBtn.setIcon(MyCollabResource
-				.newResource(WebResourceIds._12_ecm_dropbox));
+		dropboxIconBtn.setIcon(FontAwesome.DROPBOX);
 		folderNameLayout.addComponent(dropboxIconBtn);
 
 		folderName = new TextField();
@@ -157,10 +149,8 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 		dropboxVerticalLayout.setComponentAlignment(iconEmbedded,
 				Alignment.MIDDLE_CENTER);
 
-		HorizontalLayout controllGroupBtn = new HorizontalLayout();
-		controllGroupBtn.setSpacing(true);
-		controllGroupBtn.setHeight("50px");
-		controllGroupBtn.setMargin(new MarginInfo(true, false, false, false));
+		MHorizontalLayout controllGroupBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false,
+                false)).withHeight("50px");
 
 		Button doneBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_OK),
@@ -170,8 +160,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 					@Override
 					public void buttonClick(ClickEvent event) {
 						try {
-							String name = folderName.getValue().toString()
-									.trim();
+							String name = folderName.getValue().trim();
 							if (StringUtils.isBlank(name)) {
 								NotificationUtil
 										.showWarningNotification("Please enter the folder name");
@@ -224,7 +213,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 	}
 
 	public String getCloudDriveFolderName() {
-		return folderName.getValue().toString().trim();
+		return folderName.getValue().trim();
 	}
 
 	protected abstract String buildAuthUrl();
