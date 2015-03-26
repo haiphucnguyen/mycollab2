@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,10 +36,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Text;
+import com.hp.gagawa.java.elements.*;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -90,7 +87,7 @@ public class DueBugWidget extends BugDisplayWidget {
 
             rowContent.addComponent(defectLink);
 
-            final LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
+            LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
                     bug.getDescription());
             descInfo.setWidth("100%");
             rowContent.addComponent(descInfo);
@@ -101,7 +98,8 @@ public class DueBugWidget extends BugDisplayWidget {
                     AppContext.getMessage(BugI18nEnum.FORM_STATUS),
                     AppContext.getMessage(BugStatus.class, bug.getStatus()), AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE));
             Div footer = new Div().setStyle("width:100%").setCSSClass("footer2");
-            Text bugInfoTxt = new Text(bugInfo);
+            Span bugInfoTxt = new Span().appendText(bugInfo).setTitle(AppContext.formatDate
+                    (bug.getDuedate()));
             if (StringUtils.isBlank(bug.getAssignuser())) {
                 footer.appendChild(bugInfoTxt, DivLessFormatter.EMPTY_SPACE(), new Text("None"));
             } else {

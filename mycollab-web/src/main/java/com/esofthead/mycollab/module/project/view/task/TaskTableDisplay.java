@@ -184,7 +184,7 @@ public class TaskTableDisplay extends
                 editButton.setEnabled(CurrentProjectVariables
                         .canWrite(ProjectRolePermissionCollections.TASKS));
                 editButton.setIcon(FontAwesome.EDIT);
-                editButton.setStyleName("action");
+                editButton.setStyleName("link");
                 filterBtnLayout.addComponent(editButton);
 
                 if ((task.getPercentagecomplete() != null && task
@@ -212,7 +212,7 @@ public class TaskTableDisplay extends
                                 }
                             });
                     closeBtn.setIcon(FontAwesome.CHECK_CIRCLE_O);
-                    closeBtn.setStyleName("action");
+                    closeBtn.setStyleName("link");
                     closeBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addComponent(closeBtn);
@@ -237,7 +237,7 @@ public class TaskTableDisplay extends
                                 }
                             });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
-                    reOpenBtn.setStyleName("action");
+                    reOpenBtn.setStyleName("link");
                     reOpenBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addComponent(reOpenBtn);
@@ -266,7 +266,7 @@ public class TaskTableDisplay extends
                                     }
                                 });
                         pendingBtn.setIcon(FontAwesome.HDD_O);
-                        pendingBtn.setStyleName("action");
+                        pendingBtn.setStyleName("link");
                         pendingBtn.setEnabled(CurrentProjectVariables
                                 .canWrite(ProjectRolePermissionCollections.TASKS));
                         filterBtnLayout.addComponent(pendingBtn);
@@ -293,7 +293,7 @@ public class TaskTableDisplay extends
                                 }
                             });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
-                    reOpenBtn.setStyleName("action");
+                    reOpenBtn.setStyleName("link");
                     reOpenBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addComponent(reOpenBtn);
@@ -341,7 +341,7 @@ public class TaskTableDisplay extends
                             }
                         });
                 deleteBtn.setIcon(FontAwesome.TRASH_O);
-                deleteBtn.setStyleName("action");
+                deleteBtn.setStyleName("link");
                 deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
                 filterBtnLayout.addComponent(deleteBtn);
 
@@ -357,7 +357,7 @@ public class TaskTableDisplay extends
                     @Override
                     public com.vaadin.ui.Component generateCell(Table source,
                                                                 final Object itemId, Object columnId) {
-                        final SimpleTask task = getBeanByIndex(itemId);
+                        SimpleTask task = getBeanByIndex(itemId);
                         return new ProjectUserLink(task.getAssignuser(), task
                                 .getAssignUserAvatarId(), task
                                 .getAssignUserFullName());

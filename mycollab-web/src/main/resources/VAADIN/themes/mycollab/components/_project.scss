@@ -609,6 +609,7 @@
     border-style:none;
     color: gray;
     font-size: $font-small;
+    @include flex-compatible;
   }
 
   .v-csslayout.tagcloud {

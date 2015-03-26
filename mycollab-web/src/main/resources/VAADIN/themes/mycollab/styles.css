@@ -8535,6 +8535,11 @@ div.v-csslayout.followers-container .v-checkbox {
 	border-style: none;
 	color: gray;
 	font-size: 12px;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
 }
 
 .v-csslayout.tagcloud {
