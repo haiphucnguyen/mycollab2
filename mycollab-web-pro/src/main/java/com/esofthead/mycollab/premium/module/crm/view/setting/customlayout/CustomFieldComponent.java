@@ -26,6 +26,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.Reindeer;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
@@ -57,15 +58,13 @@ public class CustomFieldComponent extends CssLayout {
             fieldNameLbl.setContentMode(ContentMode.HTML);
             this.addComponent(fieldNameLbl);
         } else {
-            HorizontalLayout fieldWrapper = new HorizontalLayout();
-            fieldWrapper.setWidth("100%");
-            fieldWrapper.addComponent(fieldNameLbl);
-            fieldWrapper.setExpandRatio(fieldNameLbl, 1.0f);
+            MHorizontalLayout fieldWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
+            fieldWrapper.with(fieldNameLbl).expand(fieldNameLbl);
 
             editFieldBtn = new PopupButton();
             editFieldBtn.setStyleName(UIConstants.POPUP_WITHOUT_INDICATOR);
             editFieldBtn.addStyleName("editFieldBtn");
-            editFieldBtn.addStyleName("link");
+            editFieldBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
             editFieldBtn.setIcon(FontAwesome.EDIT);
 
             fieldEditPanel = new Panel();
@@ -125,7 +124,7 @@ public class CustomFieldComponent extends CssLayout {
     public void setMandatory(boolean isMandatory) {
         if (isMandatory) {
             fieldNameLbl.setContentMode(ContentMode.HTML);
-            fieldNameLbl.setValue(FontAwesome.LOCK.getHtml()
+            fieldNameLbl.setValue(FontAwesome.LOCK.getHtml() + " "
                     + fieldName);
 
         } else if (fieldNameLbl.getContentMode() == ContentMode.HTML) {

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -86,16 +86,14 @@ public class CommentRowDisplayHandler extends
                 true, false, true)).withWidth("100%").withStyleName("message-header");
         messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        Label timePostLbl = new Label(AppContext.getMessage(
+        ELabel timePostLbl = new ELabel(AppContext.getMessage(
                 GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
-                AppContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML);
-        timePostLbl.setDescription(AppContext.formatDateTime(comment
+                AppContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML).withDescription(AppContext.formatDateTime(comment
                 .getCreatedtime()));
 
         timePostLbl.setSizeUndefined();
         timePostLbl.setStyleName("time-post");
-        messageHeader.addComponent(timePostLbl);
-        messageHeader.setExpandRatio(timePostLbl, 1.0f);
+        messageHeader.with(timePostLbl).expand(timePostLbl);
 
         // Message delete button
         Button msgDeleteBtn = new Button();

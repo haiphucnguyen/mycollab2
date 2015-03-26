@@ -1,61 +1,58 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.Date;
-
-import org.vaadin.risto.stylecalendar.StyleCalendarField;
-
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
+import org.vaadin.risto.stylecalendar.StyleCalendarField;
+
+import java.util.Date;
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 4.0
- * 
+ *
  */
 public class StyleCalendarFieldExp extends StyleCalendarField {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public void setPopupClose() {
-		this.setShowPopup(false);
-	}
+    public void setPopupClose() {
+        this.setShowPopup(false);
+    }
 
-	protected String getPaintValue() {
-		Object value = getValue();
+    protected String getPaintValue() {
+        Object value = getValue();
 
-		if (value == null) {
-			if (getNullRepresentation() != null) {
-				return getNullRepresentation();
+        if (value == null) {
+            if (getNullRepresentation() != null) {
+                return getNullRepresentation();
 
-			} else {
-				return "null";
-			}
+            } else {
+                return "null";
+            }
 
-		} else {
-			Date selectedDate = (Date) value;
-			Date[] bounceDateofWeek = DateTimeUtils
-					.getBounceDateofWeek(selectedDate);
-			return DateTimeUtils.formatDate(bounceDateofWeek[0],
-					AppContext.getUserDateFormat())
-					+ " - "
-					+ DateTimeUtils.formatDate(bounceDateofWeek[1],
-							AppContext.getUserDateFormat());
-		}
-	}
+        } else {
+            Date selectedDate = (Date) value;
+            Date[] bounceDateofWeek = DateTimeUtils
+                    .getBounceDateofWeek(selectedDate);
+            return AppContext.formatDate(bounceDateofWeek[0])
+                    + " - "
+                    + AppContext.formatDate(bounceDateofWeek[1]);
+        }
+    }
 }

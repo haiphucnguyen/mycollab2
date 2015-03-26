@@ -237,7 +237,7 @@ public class AddTimeEntryWindow extends Window implements
 	}
 
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			AppContext.getUserDayMonthFormat());
+			AppContext.getUserDateFormat().getDayMonthFormat());
 
 	private void updateTimeTableHeader() {
 		Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];

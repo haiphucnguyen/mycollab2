@@ -55,12 +55,14 @@ Version 5.0.3
 * Add search of generic assignments to project
 * Revise and bug fixes the file module
 * Support tooltip for multi select component
+* Display pretty time on label and detail date tooltip
 
 **Bug Fixes**
 
 * Edit project member throws exception
 * Display bug context menu properly according to coordination of mouse
 * Can not change the project information
+* Correct year format of contact birthday
 
 Version 5.0.2
 -----------------------------

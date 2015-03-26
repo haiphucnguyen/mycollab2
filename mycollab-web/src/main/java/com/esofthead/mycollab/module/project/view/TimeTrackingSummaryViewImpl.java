@@ -245,7 +245,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 
 			this.fromDateField = new PopupDateFieldExt();
 			this.fromDateField.setResolution(Resolution.DAY);
-			this.fromDateField.setDateFormat(AppContext.getUserDateFormat());
+			this.fromDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
 			this.fromDateField.setWidth("100px");
 			selectionLayout.addComponent(this.fromDateField, 1, 0);
 
@@ -255,7 +255,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 
 			this.toDateField = new PopupDateFieldExt();
 			this.toDateField.setResolution(Resolution.DAY);
-			this.toDateField.setDateFormat(AppContext.getUserDateFormat());
+			this.toDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
 			this.toDateField.setWidth("100px");
 			selectionLayout.addComponent(this.toDateField, 3, 0);
 

@@ -188,7 +188,7 @@ public class StandupListViewImpl extends AbstractPageView implements
 
         for (final GroupItem groupItem : reportsCount) {
             final Date date = DateTimeUtils.convertDateByString(
-                    groupItem.getGroupname(), AppContext.getUserDateFormat());
+                    groupItem.getGroupname(), AppContext.getUserDateFormat().getDateFormat());
             this.standupCalendar.addSelectedDate(date);
         }
     }

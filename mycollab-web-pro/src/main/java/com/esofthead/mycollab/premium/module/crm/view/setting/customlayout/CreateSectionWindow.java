@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,97 +26,89 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
 public class CreateSectionWindow extends Window {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CreateSectionWindow(final ICrmCustomView customView) {
-		super("New Section");
-		center();
-		this.setWidth("600px");
-		this.setResizable(false);
-		this.setModal(true);
+    public CreateSectionWindow(final ICrmCustomView customView) {
+        super("New Section");
+        center();
+        this.setWidth("600px");
+        this.setResizable(false);
+        this.setModal(true);
 
-		VerticalLayout contentLayout = new VerticalLayout();
-		contentLayout.setMargin(false);
-		this.setContent(contentLayout);
+        MVerticalLayout contentLayout = new MVerticalLayout().withMargin(false).withSpacing(false);
+        this.setContent(contentLayout);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 2,
-				"100%", "167px", Alignment.TOP_LEFT);
-		layoutHelper.getLayout().setMargin(false);
-		layoutHelper.getLayout().setWidth("100%");
-		layoutHelper.getLayout().addStyleName(UIConstants.COLORED_GRIDLAYOUT);
+        GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
 
-		final TextField sectionName = new TextField();
-		layoutHelper.addComponent(sectionName, "Name", 0, 0);
+        final TextField sectionName = new TextField();
+        layoutHelper.addComponent(sectionName, "Name", 0, 0);
 
-		final SectionLayoutComboBox sectionLayoutComboBox = new SectionLayoutComboBox();
-		layoutHelper.addComponent(sectionLayoutComboBox, "Column Layout", 0, 1);
+        final SectionLayoutComboBox sectionLayoutComboBox = new SectionLayoutComboBox();
+        layoutHelper.addComponent(sectionLayoutComboBox, "Column Layout", 0, 1);
 
-		contentLayout.addComponent(layoutHelper.getLayout());
+        contentLayout.addComponent(layoutHelper.getLayout());
 
-		HorizontalLayout controlLayout = new HorizontalLayout();
-		controlLayout.setWidth("100%");
-		controlLayout.setMargin(true);
-		controlLayout.setSpacing(true);
+        MHorizontalLayout controlLayout = new MHorizontalLayout().withMargin(true);
 
-		Button saveBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						DynaSection section = new DynaSection();
-						section.setDeletedSection(false);
-						section.setHeader(sectionName.getValue());
-						section.setLayoutType((LayoutType) sectionLayoutComboBox
-								.getValue());
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        DynaSection section = new DynaSection();
+                        section.setDeletedSection(false);
+                        section.setHeader(sectionName.getValue());
+                        section.setLayoutType((LayoutType) sectionLayoutComboBox
+                                .getValue());
 
-						customView.addActiveSection(section);
-						CreateSectionWindow.this.close();
-					}
-				});
-		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-		saveBtn.setIcon(FontAwesome.SAVE);
-		controlLayout.addComponent(saveBtn);
-		controlLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_LEFT);
+                        customView.addActiveSection(section);
+                        CreateSectionWindow.this.close();
+                    }
+                });
+        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setIcon(FontAwesome.SAVE);
 
-		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						CreateSectionWindow.this.close();
-					}
-				});
-		cancelBtn.addStyleName("link");
-		controlLayout.addComponent(cancelBtn);
-		controlLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
-		controlLayout.setExpandRatio(cancelBtn, 1.0f);
+        Button cancelBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		contentLayout.addComponent(controlLayout);
-	}
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        CreateSectionWindow.this.close();
+                    }
+                });
+        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-	private static class SectionLayoutComboBox extends ComboBox {
-		private static final long serialVersionUID = 1L;
+        controlLayout.with(saveBtn, cancelBtn);
 
-		public SectionLayoutComboBox() {
-			this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
-			this.setNullSelectionAllowed(false);
-			this.addItem(LayoutType.ONE_COLUMN);
-			this.setItemCaption(LayoutType.ONE_COLUMN, "One Column");
+        contentLayout.with(controlLayout).withAlign(controlLayout, Alignment.MIDDLE_RIGHT);
+    }
 
-			this.addItem(LayoutType.TWO_COLUMN);
-			this.setItemCaption(LayoutType.TWO_COLUMN, "Two Columns");
-			this.select(LayoutType.ONE_COLUMN);
-		}
-	}
+    private static class SectionLayoutComboBox extends ComboBox {
+        private static final long serialVersionUID = 1L;
+
+        public SectionLayoutComboBox() {
+            this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+            this.setNullSelectionAllowed(false);
+            this.addItem(LayoutType.ONE_COLUMN);
+            this.setItemCaption(LayoutType.ONE_COLUMN, "One Column");
+
+            this.addItem(LayoutType.TWO_COLUMN);
+            this.setItemCaption(LayoutType.TWO_COLUMN, "Two Columns");
+            this.select(LayoutType.ONE_COLUMN);
+        }
+    }
 
 }

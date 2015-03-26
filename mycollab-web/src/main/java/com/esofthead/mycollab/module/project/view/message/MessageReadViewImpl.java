@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -124,7 +124,6 @@ public class MessageReadViewImpl extends AbstractPageView implements
         @Override
         public ComponentContainer getLayout() {
             header.removeAllComponents();
-
             MVerticalLayout messageAddLayout = new MVerticalLayout().withMargin(false).withWidth("100%");
 
             Button deleteBtn = new Button(
@@ -247,9 +246,10 @@ public class MessageReadViewImpl extends AbstractPageView implements
                     .withWidth("100%");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-            final Label timePostLbl = new Label(AppContext.getMessage(
+            final ELabel timePostLbl = new ELabel(AppContext.getMessage(
                     MessageI18nEnum.USER_COMMENT_ADD, message.getFullPostedUserName(),
-                    AppContext.formatPrettyTime(message.getPosteddate())), ContentMode.HTML);
+                    AppContext.formatPrettyTime(message.getPosteddate())), ContentMode.HTML).withDescription
+                    (AppContext.formatDateTime(message.getPosteddate()));
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
 

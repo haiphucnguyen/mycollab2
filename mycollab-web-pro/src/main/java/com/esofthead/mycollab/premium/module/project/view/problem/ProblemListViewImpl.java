@@ -160,7 +160,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
             public com.vaadin.ui.Component generateCell(Table source,
                                                         Object itemId, Object columnId) {
                 SimpleProblem item = tableItem.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDate(item.getDatedue()));
+                return new ELabel().prettyDate(item.getDatedue());
             }
         });
 

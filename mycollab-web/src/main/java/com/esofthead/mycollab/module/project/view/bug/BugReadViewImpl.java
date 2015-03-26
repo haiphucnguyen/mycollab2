@@ -535,9 +535,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
-                return new DateViewField(beanItem.getDuedate());
+                return new PrettyDateViewField(beanItem.getDuedate());
             } else if (BugWithBLOBs.Field.createdtime.equalTo(propertyId)) {
-                return new DateViewField(beanItem.getCreatedtime());
+                return new PrettyDateTimeViewField(beanItem.getCreatedtime());
             } else if (SimpleBug.Field.assignuserFullName.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(beanItem.getAssignuser(),
                         beanItem.getAssignUserAvatarId(),

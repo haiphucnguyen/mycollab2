@@ -66,7 +66,6 @@ public class StandupAddViewImpl extends AbstractPageView implements
 	}
 
 	class FormLayoutFactory extends StandupReportFormLayoutFactory {
-
 		private static final long serialVersionUID = 1L;
 
 		public FormLayoutFactory() {

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,10 +28,7 @@ import com.esofthead.mycollab.module.project.view.parameters.*;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.LabelLink;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -100,9 +97,10 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             MHorizontalLayout metaInfo = new MHorizontalLayout().withWidth("100%");
             metaInfo.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             metaInfo.addComponent(projectMember);
-            Label createdTimeLbl = new Label(" - "
+            Label createdTimeLbl = new ELabel(" - "
                     + AppContext.getMessage(ProjectI18nEnum.OPT_CREATED_ON,
-                    AppContext.formatDate(project.getCreatedtime())));
+                    AppContext.formatPrettyTime(project.getCreatedtime()))).withDescription(AppContext.formatDateTime
+                    (project.getCreatedtime()));
             createdTimeLbl.setStyleName("createdtime-lbl");
             createdTimeLbl.setSizeUndefined();
             metaInfo.with(createdTimeLbl).expand(createdTimeLbl);

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -188,8 +188,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
                     } else if (propertyId.equals("website")) {
                         return new UrlLinkViewField(user.getWebsite());
                     } else if (propertyId.equals("dateofbirth")) {
-                        return new DefaultViewField(AppContext.formatDate(user
-                                .getDateofbirth()));
+                        return new DateViewField(user.getDateofbirth());
                     } else if (propertyId.equals("timezone")) {
                         return new DefaultViewField(TimezoneMapper.getTimezoneExt(
                                 user.getTimezone()).getDisplayName());

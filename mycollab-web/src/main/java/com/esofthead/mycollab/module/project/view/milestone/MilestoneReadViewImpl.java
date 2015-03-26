@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -54,8 +54,8 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -193,10 +193,10 @@ public class MilestoneReadViewImpl extends
         protected Field<?> onCreateField(final Object propertyId) {
             SimpleMilestone milestone = attachForm.getBean();
             if (Milestone.Field.startdate.equalTo(propertyId)) {
-                return new DateViewField(
+                return new PrettyDateViewField(
                         milestone.getStartdate());
             } else if (Milestone.Field.enddate.equalTo(propertyId)) {
-                return new DateViewField(
+                return new PrettyDateViewField(
                         milestone.getEnddate());
             } else if (Milestone.Field.owner.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(milestone.getOwner(),

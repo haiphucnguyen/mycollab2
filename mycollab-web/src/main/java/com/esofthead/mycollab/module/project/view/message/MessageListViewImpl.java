@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -77,13 +77,13 @@ public class MessageListViewImpl extends AbstractPageView implements
         MessageListView, HasEditFormHandlers<Message> {
 
     private static final long serialVersionUID = 8433776359091397422L;
-    private final DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
+    private DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
 
     private Set<EditFormHandler<Message>> editFormHandlers;
 
     private MessageSearchCriteria searchCriteria;
 
-    private final TopMessagePanel topMessagePanel;
+    private TopMessagePanel topMessagePanel;
 
     private boolean isEmpty;
 
@@ -98,8 +98,7 @@ public class MessageListViewImpl extends AbstractPageView implements
                 new SearchHandler<MessageSearchCriteria>() {
                     @Override
                     public void onSearch(final MessageSearchCriteria criteria) {
-                        MessageListViewImpl.this.tableItem
-                                .setSearchCriteria(criteria);
+                        tableItem.setSearchCriteria(criteria);
                     }
                 });
         this.tableItem = new DefaultBeanPagedList<>(
@@ -143,10 +142,10 @@ public class MessageListViewImpl extends AbstractPageView implements
         this.addComponent(topMessagePanel);
 
         if (this.isEmpty) {
-            this.addComponent(new MessageListNoItemView());
+            addComponent(new MessageListNoItemView());
         } else {
-            this.tableItem.setSearchCriteria(searchCriteria);
-            this.addComponent(tableItem);
+            tableItem.setSearchCriteria(searchCriteria);
+            addComponent(tableItem);
         }
 
     }
@@ -156,7 +155,7 @@ public class MessageListViewImpl extends AbstractPageView implements
 
         @Override
         public Component generateRow(final SimpleMessage message,
-                                     final int rowIndex) {
+                                     int rowIndex) {
             final MHorizontalLayout messageLayout = new MHorizontalLayout().withStyleName("message").withWidth("100%");
             if (message.getIsstick() != null && message.getIsstick()) {
                 messageLayout.addStyleName("important-message");
@@ -216,8 +215,8 @@ public class MessageListViewImpl extends AbstractPageView implements
             title.addStyleName("message-title");
             leftHeader.addComponent(title);
 
-            final Label timePostLbl = new Label(
-                    AppContext.formatPrettyTime(message.getPosteddate()));
+            final ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
+
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
 

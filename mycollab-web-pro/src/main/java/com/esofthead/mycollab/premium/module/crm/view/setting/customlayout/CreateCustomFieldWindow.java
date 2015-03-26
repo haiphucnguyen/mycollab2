@@ -117,14 +117,14 @@ public class CreateCustomFieldWindow extends Window {
 		this.setModal(true);
 		this.viewParent = crmCustomView;
 		center();
-		this.setWidth("600px");
 
-		MVerticalLayout content = new MVerticalLayout().withStyleName("createCustomFieldWindow");
+		MVerticalLayout content = new MVerticalLayout().withStyleName("createCustomFieldWindow").withWidth("600px")
+				.withHeight("600px");
 		this.setContent(content);
 
 		MHorizontalLayout body = new MHorizontalLayout();
 		VerticalLayout rightPanel = constructRightBodyPanel();
-		body.with(constructLeftBodyPanel(), rightPanel).expand(rightPanel).withAlign(rightPanel, Alignment.TOP_RIGHT);
+		body.with(constructLeftBodyPanel(), rightPanel);
 		content.with(body).expand(body);
 
 		MHorizontalLayout buttonControls = new MHorizontalLayout();
@@ -155,18 +155,18 @@ public class CreateCustomFieldWindow extends Window {
 
 					}
 				});
-		cancelBtn.addStyleName("link");
+		cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		buttonControls.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-		content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
+		content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
 	}
 
 	private VerticalLayout constructLeftBodyPanel() {
-		VerticalLayout panel = new VerticalLayout();
-		panel.setSpacing(true);
-		Label title = new Label("Select Field Type:");
-		title.addStyleName("panel-header");
-		panel.addComponent(title);
+		MVerticalLayout panel = new MVerticalLayout().withSpacing(false).withMargin(false);
+		Label title = new Label("Select Field Type");
+		MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).with
+				(title).expand(title).withStyleName("panel-header");
+		header.setWidthUndefined();
 
 		Table fieldSelectionTable = new Table();
 		fieldSelectionTable.setWidth("100%");
@@ -184,7 +184,7 @@ public class CreateCustomFieldWindow extends Window {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							contructFieldPanel((String) rowItems[1]);
+							constructFieldPanel((String) rowItems[1]);
 
 						}
 					});
@@ -194,25 +194,23 @@ public class CreateCustomFieldWindow extends Window {
 					rowItems[1]);
 		}
 
-		panel.addComponent(fieldSelectionTable);
+		panel.with(header, fieldSelectionTable);
 		return panel;
 	}
 
 	private VerticalLayout constructRightBodyPanel() {
-		VerticalLayout panel = new VerticalLayout();
-		panel.setWidth("300px");
-		panel.setSpacing(true);
-		Label title = new Label("Provide Field Detail:");
-		title.addStyleName("panel-header");
-		panel.addComponent(title);
+		MVerticalLayout panel = new MVerticalLayout().withMargin(false).withWidth("300px");
+		Label title = new Label("Provide Field Detail");
+		MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withSpacing(false).with(title).expand(title).withStyleName
+				("panel-header");
 
 		fieldLayoutWrapper = new CssLayout();
 		fieldLayoutWrapper.setWidth("100%");
-		panel.addComponent(fieldLayoutWrapper);
+		panel.with(header, fieldLayoutWrapper);
 		return panel;
 	}
 
-	private void contructFieldPanel(String type) {
+	private void constructFieldPanel(String type) {
 		fieldLayoutWrapper.removeAllComponents();
 		String candidateFieldName = null;
 

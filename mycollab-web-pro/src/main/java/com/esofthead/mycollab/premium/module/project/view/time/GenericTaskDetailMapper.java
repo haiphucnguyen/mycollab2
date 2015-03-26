@@ -99,7 +99,7 @@ public class GenericTaskDetailMapper {
 				name = Jsoup.parse(
 						DateTimeUtils.converToStringWithUserTimeZone(
 								standup.getCreatedtime(),
-								AppContext.getUserDateTimeFormat(), timeZone))
+								AppContext.getUserDateFormat().getDateTimeFormat(), timeZone))
 						.html();
 			}
 		}

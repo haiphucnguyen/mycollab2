@@ -134,7 +134,7 @@ public class DateComboboxSelectionField extends CustomField<Date> {
 		calendar.setTime(new Date());
 		int currentYear = calendar.get(Calendar.YEAR);
 		for (int i = (currentYear - 10); i >= 1900; i--) {
-			cboYear.addItem(i);
+			cboYear.addItem(i + "");
 		}
 	}
 

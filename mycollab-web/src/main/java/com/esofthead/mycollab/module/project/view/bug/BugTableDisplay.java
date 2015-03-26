@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -309,9 +310,8 @@ public class BugTableDisplay extends
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleBug bug = BugTableDisplay.this
-						.getBeanByIndex(itemId);
-				return new Label(AppContext.formatDate(bug.getDuedate()));
+				final SimpleBug bug = getBeanByIndex(itemId);
+				return new ELabel().prettyDate(bug.getDuedate());
 
 			}
 		});
@@ -322,10 +322,8 @@ public class BugTableDisplay extends
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final SimpleBug bug = BugTableDisplay.this
-						.getBeanByIndex(itemId);
-				return new Label(
-						AppContext.formatDateTime(bug.getCreatedtime()));
+				final SimpleBug bug = getBeanByIndex(itemId);
+				return new ELabel().prettyDateTime(bug.getCreatedtime());
 
 			}
 		});
@@ -336,8 +334,7 @@ public class BugTableDisplay extends
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				final SimpleBug bug = BugTableDisplay.this
-						.getBeanByIndex(itemId);
+				final SimpleBug bug = getBeanByIndex(itemId);
 				return new Label(AppContext.getMessage(BugResolution.class,
 						bug.getResolution()));
 			}

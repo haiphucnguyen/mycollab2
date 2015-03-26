@@ -119,7 +119,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             this.dateStart = new DateFieldExt();
             this.dateEnd = new DateFieldExt();
 
-            setDateFormat(AppContext.getUserDateFormat());
+            setDateFormat(AppContext.getUserDateFormat().getDateFormat());
 
             setDateWidth(100);
             setDefaultValue();

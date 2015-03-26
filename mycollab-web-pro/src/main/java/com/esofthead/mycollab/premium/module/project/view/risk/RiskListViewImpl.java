@@ -155,7 +155,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             public com.vaadin.ui.Component generateCell(Table source,
                                                         Object itemId, final Object columnId) {
                 SimpleRisk item = tableItem.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDate(item.getDatedue()));
+                return new ELabel().prettyDate(item.getDatedue());
             }
         });
 

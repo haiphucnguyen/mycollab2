@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,6 @@ import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.*;
@@ -204,8 +203,9 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements
         memberEmailLabel.setWidth("100%");
         memberInfo.addComponent(memberEmailLabel);
 
-        Label memberSinceLabel = new Label("Member since: "
-                + AppContext.formatDate(member.getJoindate()));
+        ELabel memberSinceLabel = new ELabel("Member since: "
+                + AppContext.formatPrettyTime(member.getJoindate())).withDescription(AppContext.formatDate(member
+                .getJoindate()));
         memberSinceLabel.addStyleName("member-email");
         memberSinceLabel.setWidth("100%");
         memberInfo.addComponent(memberSinceLabel);
