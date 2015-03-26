@@ -26,8 +26,13 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.form.view.builder.type.TextDynaField;
 import com.vaadin.ui.HorizontalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
-public class CustomLayoutDDComp extends HorizontalLayout {
+/**
+ * @author MyCollab Ltd
+ * @since 3.0
+ */
+public class CustomLayoutDDComp extends MHorizontalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private ActiveFormSectionArea activeFormArea;
@@ -35,8 +40,6 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 
 	public void displayLayoutCustom(DynaForm dynaForm) {
 		this.removeAllComponents();
-
-		this.setSpacing(true);
 		this.setWidth("100%");
 
 		activeFormArea = new ActiveFormSectionArea();
@@ -46,10 +49,7 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 		deleteFormArea = new DeleteFormSectionArea();
 		deleteFormArea.setWidth("450px");
 
-		this.addComponent(activeFormArea);
-		this.setExpandRatio(activeFormArea, 1.0f);
-
-		this.addComponent(deleteFormArea);
+		with(activeFormArea, deleteFormArea).expand(activeFormArea);
 
 		boolean hasDeletedSection = false;
 
@@ -101,7 +101,7 @@ public class CustomLayoutDDComp extends HorizontalLayout {
 
 	private String getCandidateAvailableSlotField(Class fieldCls,
 			String[] fieldNames) {
-		List<String> fieldNamesList = new ArrayList<String>();
+		List<String> fieldNamesList = new ArrayList<>();
 		for (String fieldname : fieldNames) {
 			fieldNamesList.add(fieldname);
 		}

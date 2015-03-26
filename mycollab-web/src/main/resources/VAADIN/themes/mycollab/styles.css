@@ -6568,6 +6568,17 @@ td.v-inline-datefield-calendarpanel-nextyear {
 	margin-right: 0;
 }
 
+.v-csslayout.border-box2-color {
+	background-color: #d4dfef;
+	border-radius: 5px;
+	padding: 0px;
+	border: 1px solid #CFCFCF;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0px;
+}
+
 .xbreadcrumbs {
 	background-color: transparent !important;
 }
@@ -8680,20 +8691,16 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 	border-color: #78976E;
 }
 
-.v-label-color {
-	color: #6482B3;
-}
-
 .v-horizontallayout-segment-alternate .v-button-down {
 	border-color: #495972;
 }
 
 .v-horizontallayout-segment-alternate .v-button-down:active {
-	background-color: #566c8f;
+	background-color: #566C8F;
 }
 
 .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
-	border-color: #566c8f;
+	border-color: #566C8F;
 }
 
 .v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
@@ -8929,6 +8936,10 @@ ul {
 .v-label.completed {
 	color: black;
 	text-decoration: line-through;
+}
+
+.v-label.font-large {
+	font-size: 14px;
 }
 
 .wordWrap.v-label {
@@ -11264,17 +11275,6 @@ div.v-lazyloadingwrapper-loading {
 
 .v-horizontallayout.border-box2-no-margin {
 	background-color: #F5F5F5;
-	border-radius: 5px;
-	padding: 0px;
-	border: 1px solid #CFCFCF;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 0px;
-}
-
-.v-csslayout.border-box2-color {
-	background-color: #d4dfef;
 	border-radius: 5px;
 	padding: 0px;
 	border: 1px solid #CFCFCF;

@@ -39,13 +39,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -55,12 +54,10 @@ import java.util.List;
 
 /**
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 3.0
  */
 @ViewComponent
-public class CrmCustomViewImpl extends AbstractPageView implements
-        ICrmCustomView {
-
+public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomView {
     private static final long serialVersionUID = 1L;
 
     private Label headerLbl;
@@ -69,29 +66,19 @@ public class CrmCustomViewImpl extends AbstractPageView implements
     private String moduleName;
 
     public CrmCustomViewImpl() {
+        this.withMargin(true);
         MVerticalLayout headerBox = new MVerticalLayout().withWidth("100%");
 
-        headerLbl = new Label("abcd");
-        Image titleIcon = new Image(null,
-                MyCollabResource.newResource(WebResourceIds._22_crm_layout));
+        headerLbl = new Label("", ContentMode.HTML);
 
         MHorizontalLayout headerTitle = new MHorizontalLayout()
                 .withWidth("100%").withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
         headerTitle.addStyleName(UIConstants.HEADER_VIEW);
-        headerTitle.with(titleIcon, headerLbl)
-                .withAlign(titleIcon, Alignment.MIDDLE_LEFT)
+        headerTitle.with(headerLbl)
                 .withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
 
         headerBox.addComponent(headerTitle);
-
-        VerticalLayout headerContent = new VerticalLayout();
-        headerContent.setWidth("100%");
-        headerContent.setMargin(new MarginInfo(false, true, true, true));
-        Label descLbl = new Label(
-                "Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
-        descLbl.setStyleName("instructionLbl");
-        headerContent.addComponent(descLbl);
 
         MHorizontalLayout controlLayout = new MHorizontalLayout();
         controlLayout.addStyleName("control-buttons");
@@ -140,11 +127,18 @@ public class CrmCustomViewImpl extends AbstractPageView implements
         controlLayout.setComponentAlignment(createSectionBtn,
                 Alignment.MIDDLE_LEFT);
         headerTitle.addComponent(controlLayout);
+
+        MVerticalLayout headerContent = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
+                true, true, false)).withWidth("100%");
+        Label descLbl = new Label(
+                "Customize the page layout by changing the order of the columns and fields, marking fields as mandatory, adding or removing the fields and sections. You can drag and drop the originSection header to reorder the sections. You need to drag and drop the fields to move them to the List of Removed Fields");
+        descLbl.setStyleName("instructionLbl");
+        headerContent.addComponent(descLbl);
         headerBox.addComponent(headerContent);
-        this.addComponent(headerBox);
+        addComponent(headerBox);
 
         layoutComp = new CustomLayoutDDComp();
-        this.addComponent(layoutComp);
+        addComponent(layoutComp);
 
         MHorizontalLayout buttonsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
 
@@ -156,7 +150,6 @@ public class CrmCustomViewImpl extends AbstractPageView implements
                     @Override
                     public void buttonClick(ClickEvent event) {
                         DynaForm rebuildForm = layoutComp.rebuildForm();
-
                         MasterFormService formService = ApplicationContextUtil
                                 .getSpringBean(MasterFormService.class);
                         formService.saveCustomForm(AppContext.getAccountId(),
@@ -174,8 +167,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        display(CrmCustomViewImpl.this.moduleName);
-
+                        display(moduleName);
                     }
                 });
         cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -189,11 +181,9 @@ public class CrmCustomViewImpl extends AbstractPageView implements
     @Override
     public void display(String moduleName) {
         this.moduleName = moduleName;
-        headerLbl.setValue(moduleName + ": Edit Page Layout (Beta)");
-
+        headerLbl.setValue(FontAwesome.MAGIC.getHtml() + " " + moduleName + ": Edit Page Layout (Beta)");
         headerLbl.setStyleName(UIConstants.HEADER_TEXT);
         moduleComboBox.select(moduleName);
-
         layoutComp.displayLayoutCustom(getDynaForm(moduleName));
     }
 
@@ -259,7 +249,6 @@ public class CrmCustomViewImpl extends AbstractPageView implements
                     String module = (String) ModuleSelectionComboBox.this
                             .getValue();
                     display(module);
-
                 }
             });
         }
@@ -273,6 +262,5 @@ public class CrmCustomViewImpl extends AbstractPageView implements
     @Override
     public void refreshSectionLayout(DynaSection section) {
         layoutComp.refreshSectionLayout(section);
-
     }
 }

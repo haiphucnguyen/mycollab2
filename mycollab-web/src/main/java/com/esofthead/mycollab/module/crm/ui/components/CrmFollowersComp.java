@@ -151,7 +151,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
 		MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true))
                 .withWidth("100%");
 
-		this.addComponent(layout);
+		addComponent(layout);
 
 		int totalFollowers = getTotalFollowers(bean);
 		followersBtn = new Button(AppContext.getMessage(

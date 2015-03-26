@@ -35,11 +35,14 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 3.0
+ */
 class ActiveFormSectionArea extends DDVerticalLayout {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ActiveFormSectionArea.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ActiveFormSectionArea.class);
 
 	public ActiveFormSectionArea() {
 		this.setComponentVerticalDropRatio(0.3f);
@@ -80,7 +83,7 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 	}
 
 	public List<DynaSection> rebuildSections() {
-		List<DynaSection> sections = new ArrayList<DynaSection>();
+		List<DynaSection> sections = new ArrayList<>();
 
 		int componentCount = this.getComponentCount();
 		for (int i = 0; i < componentCount; i++) {
@@ -117,5 +120,4 @@ class ActiveFormSectionArea extends DDVerticalLayout {
 			}
 		}
 	}
-
 }

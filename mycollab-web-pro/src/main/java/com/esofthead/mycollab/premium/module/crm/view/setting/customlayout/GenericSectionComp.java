@@ -28,6 +28,10 @@ import com.vaadin.ui.VerticalLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.interfaces.DragFilter;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 3.0
+ */
 public class GenericSectionComp extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
@@ -74,7 +78,6 @@ public class GenericSectionComp extends VerticalLayout {
 	}
 
 	protected class CustomFieldDragFilter implements DragFilter {
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -87,6 +90,5 @@ public class GenericSectionComp extends VerticalLayout {
 
 			return false;
 		}
-
 	}
 }

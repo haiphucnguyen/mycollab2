@@ -58,6 +58,7 @@ public class BugRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleBug> 
                 ProjectLinkBuilder.generateBugPreviewFullLink(
                         bug.getBugkey(), bug.getProjectShortName()));
         defectLink.setWidth("100%");
+        defectLink.addStyleName("font-large");
         defectLink.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
         defectLink.setDescription(ProjectTooltipGenerator
                 .generateToolTipBug(AppContext.getUserLocale(), bug,

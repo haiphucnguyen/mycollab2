@@ -27,6 +27,10 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 3.0
+ */
 public class DeleteFormSectionArea extends DDVerticalLayout {
 	private static final long serialVersionUID = 1L;
 

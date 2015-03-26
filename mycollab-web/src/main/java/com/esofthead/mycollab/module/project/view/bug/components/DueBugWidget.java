@@ -79,6 +79,7 @@ public class DueBugWidget extends BugDisplayWidget {
                             bug.getBugkey(), bug.getProjectShortName()));
             defectLink.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
             defectLink.setWidth("100%");
+            defectLink.addStyleName("font-large");
             defectLink.setDescription(ProjectTooltipGenerator
                     .generateToolTipBug(AppContext.getUserLocale(), bug,
                             AppContext.getSiteUrl(), AppContext.getTimezone()));

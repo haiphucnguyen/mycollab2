@@ -39,11 +39,14 @@ import fi.jasoft.dragdroplayouts.events.HorizontalLocationIs;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 3.0
+ */
 class DeleteSectionComp extends GenericSectionComp {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DeleteSectionComp.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DeleteSectionComp.class);
 
 	public DeleteSectionComp(DynaSection section) {
 		super(section);

@@ -88,7 +88,7 @@ public class NoteListItems extends VerticalLayout {
         super();
         Label header = new Label(title);
         header.addStyleName("h2");
-        this.addComponent(header);
+        addComponent(header);
         noteService = ApplicationContextUtil.getSpringBean(NoteService.class);
         this.type = type;
         this.typeId = typeId;
@@ -153,9 +153,9 @@ public class NoteListItems extends VerticalLayout {
         noteWrapper.addComponent(noteListContainer);
     }
 
-    public void showNotes(final String type, final int typeid) {
+    public void showNotes(final String type, final int typeId) {
         this.type = type;
-        this.typeId = typeid;
+        this.typeId = typeId;
         displayNotes();
     }
 

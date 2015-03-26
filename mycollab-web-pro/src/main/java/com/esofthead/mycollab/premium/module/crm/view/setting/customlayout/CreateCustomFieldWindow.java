@@ -26,25 +26,18 @@ import com.esofthead.mycollab.premium.module.crm.view.setting.customlayout.field
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 3.0
  *
  */
 public class CreateCustomFieldWindow extends Window {
@@ -126,24 +119,15 @@ public class CreateCustomFieldWindow extends Window {
 		center();
 		this.setWidth("600px");
 
-		VerticalLayout content = new VerticalLayout();
-		content.setStyleName("createCustomFieldWindow");
+		MVerticalLayout content = new MVerticalLayout().withStyleName("createCustomFieldWindow");
 		this.setContent(content);
-		content.setSpacing(true);
-		content.setMargin(true);
 
-		HorizontalLayout body = new HorizontalLayout();
-		body.setSpacing(true);
-		body.addComponent(constructLeftBodyPanel());
+		MHorizontalLayout body = new MHorizontalLayout();
 		VerticalLayout rightPanel = constructRightBodyPanel();
-		body.addComponent(rightPanel);
-		body.setExpandRatio(rightPanel, 1.0f);
-		body.setComponentAlignment(rightPanel, Alignment.TOP_RIGHT);
-		content.addComponent(body);
-		content.setExpandRatio(body, 1.0f);
+		body.with(constructLeftBodyPanel(), rightPanel).expand(rightPanel).withAlign(rightPanel, Alignment.TOP_RIGHT);
+		content.with(body).expand(body);
 
-		HorizontalLayout buttonControls = new HorizontalLayout();
-		buttonControls.setSpacing(true);
+		MHorizontalLayout buttonControls = new MHorizontalLayout();
 		Button saveBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
 				new Button.ClickListener() {
@@ -158,8 +142,7 @@ public class CreateCustomFieldWindow extends Window {
 				});
 		saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 		saveBtn.setIcon(FontAwesome.SAVE);
-		buttonControls.addComponent(saveBtn);
-		buttonControls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+		buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_CENTER);
 
 		Button cancelBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
@@ -173,12 +156,9 @@ public class CreateCustomFieldWindow extends Window {
 					}
 				});
 		cancelBtn.addStyleName("link");
-		buttonControls.addComponent(cancelBtn);
-		buttonControls
-				.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
+		buttonControls.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-		content.addComponent(buttonControls);
-		content.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
+		content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
 	}
 
 	private VerticalLayout constructLeftBodyPanel() {

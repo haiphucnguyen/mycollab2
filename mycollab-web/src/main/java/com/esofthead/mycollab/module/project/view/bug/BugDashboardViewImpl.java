@@ -21,7 +21,6 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -143,27 +142,23 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         initUI();
 
         rightColumn.setWidth("400px");
-
-        SimpleProject project = CurrentProjectVariables.getProject();
-
         MyBugListWidget myBugListWidget = new MyBugListWidget();
         leftColumn.addComponent(myBugListWidget);
         BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
         myBugsSearchCriteria
-                .setProjectId(new NumberSearchField(project.getId()));
+                .setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         myBugsSearchCriteria.setStatuses(new SetSearchField<>(
                 SearchField.AND, new String[]{BugStatus.InProgress.name(),
                 BugStatus.Open.name(), BugStatus.ReOpened.name(),
                 BugStatus.Resolved.name()}));
         myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
                 .getUsername()));
-
         myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
         DueBugWidget dueBugWidget = new DueBugWidget();
         leftColumn.addComponent(dueBugWidget);
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
-        dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
+        dueDefectsCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         dueDefectsCriteria.setDueDate(new DateSearchField(SearchField.AND,
                 DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
                 .getTime()));
@@ -174,7 +169,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
         BugSearchCriteria waitingApprovalCriteria = new BugSearchCriteria();
-        waitingApprovalCriteria.setProjectId(new NumberSearchField(project.getId()));
+        waitingApprovalCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         waitingApprovalCriteria.setStatuses(new SetSearchField<>(new String[]{BugStatus.Resolved.name()}));
         waitingApprovalCriteria.setResolutions(new SetSearchField<>(new String[]{OptionI18nEnum.BugResolution
                 .Fixed.name()}));
@@ -188,8 +183,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
 
         RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
-        recentDefectsCriteria.setProjectId(new NumberSearchField(project
-                .getId()));
+        recentDefectsCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         updateBugWidget.setSearchCriteria(recentDefectsCriteria);
         leftColumn.addComponent(updateBugWidget);
 
@@ -197,7 +191,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
         BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
         unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
-                project.getId()));
+                CurrentProjectVariables.getProjectId()));
         unresolvedByAssigneeSearchCriteria
                 .setStatuses(new SetSearchField<>(SearchField.AND,
                         new String[]{BugStatus.InProgress.name(),
@@ -211,7 +205,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
         BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
         unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
-                project.getId()));
+                CurrentProjectVariables.getProjectId()));
         unresolvedByPrioritySearchCriteria
                 .setStatuses(new SetSearchField<>(SearchField.AND,
                         new String[]{BugStatus.InProgress.name(),
@@ -222,7 +216,6 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         rightColumn.addComponent(unresolvedByPriorityWidget);
 
         // bug chart
-
         BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
         chartSearchCriteria.setProjectId(new NumberSearchField(
                 CurrentProjectVariables.getProjectId()));

@@ -27,6 +27,10 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 3.0
+ */
 public class CreateSectionWindow extends Window {
 	private static final long serialVersionUID = 1L;
 

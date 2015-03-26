@@ -165,7 +165,7 @@ public class TaskTableDisplay extends
                 final SimpleTask task = getBeanByIndex(itemId);
                 PopupButton taskSettingPopupBtn = new PopupButton();
                 taskSettingPopupBtn.setIcon(FontAwesome.COGS);
-                taskSettingPopupBtn.setStyleName("link");
+                taskSettingPopupBtn.setStyleName("action");
                 taskSettingPopupBtn.addStyleName("noDefaultIcon");
 
                 MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("100px");

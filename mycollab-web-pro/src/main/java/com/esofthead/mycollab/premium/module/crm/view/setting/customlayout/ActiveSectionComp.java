@@ -36,15 +36,17 @@ import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author MyCollab Ltd.
+ * @since 3.0
+ */
 class ActiveSectionComp extends GenericSectionComp {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ActiveSectionComp.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ActiveSectionComp.class);
 
 	public ActiveSectionComp(DynaSection section) {
 		super(section);
-
 		constructLayout();
 	}
 
@@ -66,7 +68,7 @@ class ActiveSectionComp extends GenericSectionComp {
 		Button editTitleBtn = new Button();
 		editTitleBtn.setDescription("Edit Section's Title");
 		editTitleBtn.setIcon(FontAwesome.EDIT);
-		editTitleBtn.setStyleName("link");
+		editTitleBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 		header.addComponent(editTitleBtn);
 
 		Button deleteSectionBtn = new Button();
@@ -171,11 +173,11 @@ class ActiveSectionComp extends GenericSectionComp {
 				fieldBtn.setMandatory(true);
 			if (originSection.getLayoutType() == LayoutType.ONE_COLUMN) {
 				LOG.debug("Add field " + field.getDisplayName()
-						+ " in (colum, row) " + 0 + ", " + j);
+						+ " in (column, row) " + 0 + ", " + j);
 				dragLayout.addComponent(fieldBtn, 0, j);
 			} else if (originSection.getLayoutType() == LayoutType.TWO_COLUMN) {
 				LOG.debug("Add field " + field.getDisplayName()
-						+ " in (colum, row) " + (j % 2) + ", " + (j / 2));
+						+ " in (column, row) " + (j % 2) + ", " + (j / 2));
 				dragLayout.addComponent(fieldBtn, j % 2, j / 2);
 			}
 		}
