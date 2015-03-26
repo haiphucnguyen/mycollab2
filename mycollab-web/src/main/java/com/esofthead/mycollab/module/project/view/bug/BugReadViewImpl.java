@@ -77,7 +77,6 @@ import java.util.List;
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
         implements BugReadView, IBugCallbackStatusComp {
-
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(BugReadViewImpl.class);

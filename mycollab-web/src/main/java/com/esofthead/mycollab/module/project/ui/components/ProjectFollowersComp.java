@@ -63,17 +63,13 @@ import java.util.List;
 public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(ProjectFollowersComp.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProjectFollowersComp.class);
 
     protected MonitorItemService monitorItemService;
 
     private boolean currentUserFollow;
-
     private String type;
-
     private V bean;
-
     private String permissionItem;
 
     private Button followersBtn;
@@ -82,7 +78,6 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
         super();
         monitorItemService = ApplicationContextUtil
                 .getSpringBean(MonitorItemService.class);
-
         this.type = type;
         this.permissionItem = permissionItem;
     }
@@ -90,9 +85,9 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
     public void displayFollowers(final V bean) {
         this.bean = bean;
         this.removeAllComponents();
-        this.withSpacing(true).withMargin(new MarginInfo(false, false, false, true));
+        this.withMargin(new MarginInfo(false, false, false, true));
 
-        MHorizontalLayout header = new MHorizontalLayout().withSpacing(true);
+        MHorizontalLayout header = new MHorizontalLayout();
         Label followerHeader = new Label(FontAwesome.EYE.getHtml() + " " +
                 AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS), ContentMode.HTML);
         followerHeader.setStyleName("info-hdr");
@@ -155,7 +150,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
                     .getMessage(FollowerI18nEnum.BUTTON_FOLLOW));
         }
 
-        MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withSpacing(true).withMargin(new MarginInfo
+        MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo
                 (false, false, false, true));
         this.addComponent(layout);
 
@@ -393,11 +388,8 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 
                 });
             }
-
             tableItem.setWidth("100%");
-
             content.addComponent(tableItem);
-
             loadMonitorItems();
         }
 

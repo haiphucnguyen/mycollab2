@@ -70,7 +70,6 @@ import java.util.UUID;
 @ViewComponent
 public class ProjectMemberReadViewImpl extends AbstractProjectPageView
         implements ProjectMemberReadView {
-
     private static final long serialVersionUID = 1L;
 
     private SimpleProjectMember beanItem;
@@ -106,11 +105,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 
     public void previewItem(final SimpleProjectMember item) {
         this.beanItem = item;
-
         previewForm.setFormLayoutFactory(initFormLayoutFactory());
         previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
         previewForm.setBean(item);
-
         createBottomPanel();
     }
 
@@ -196,7 +193,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 
             memberInfo.addComponent(memberLink);
 
-            String memerRoleLinkPrefix = "<a href=\""
+            String memberRoleLinkPrefix = "<a href=\""
                     + AppContext.getSiteUrl()
                     + GenericLinkUtils.URL_PREFIX_PARAM
                     + ProjectLinkGenerator.generateRolePreviewLink(
@@ -208,11 +205,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             if (beanItem.getIsadmin() != null
                     && beanItem.getIsadmin() == Boolean.TRUE
                     || beanItem.getProjectroleid() == null) {
-                memberRole.setValue(memerRoleLinkPrefix
+                memberRole.setValue(memberRoleLinkPrefix
                         + "style=\"color: #B00000;\">" + "Project Admin"
                         + "</a>");
             } else {
-                memberRole.setValue(memerRoleLinkPrefix
+                memberRole.setValue(memberRoleLinkPrefix
                         + "style=\"color:gray;font-size:12px;\">"
                         + beanItem.getRoleName() + "</a>");
             }
@@ -345,7 +342,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
     }
 
     private class UserAssignmentWidget extends MVerticalLayout {
-
         private static final long serialVersionUID = 1L;
 
         private ProjectGenericTaskSearchCriteria searchCriteria;
@@ -386,7 +382,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
                 }
             });
 
-            MHorizontalLayout header = new MHorizontalLayout().withSpacing(true).withMargin(new MarginInfo(false, true,
+            MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                     false, true)).withHeight("34px").with
                     (titleLbl, overdueSelection, isOpenSelection).withAlign
                     (titleLbl, Alignment.MIDDLE_LEFT).withAlign(overdueSelection, Alignment.MIDDLE_RIGHT).withAlign
@@ -446,7 +442,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             if (dueDate != null) {
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE,
-                        AppContext.formatPrettyTime(dueDate))));
+                        AppContext.formatPrettyTime(dueDate)))).setTitle(AppContext.formatDate(dueDate));
             } else {
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE, "Undefined")));
@@ -479,7 +475,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
                         task.getProjectId(), task.getType(),
                         task.getTypeId() + ""));
             }
-
 
             String arg17 = "'" + uid + "'";
             String arg18 = "'" + task.getType() + "'";

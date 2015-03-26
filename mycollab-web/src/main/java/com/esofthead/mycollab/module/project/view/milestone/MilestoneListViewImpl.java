@@ -309,13 +309,15 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 		final GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
 				5, "100%", "80px");
 		layoutHelper.addComponent(
-				new Label(AppContext.formatDate(milestone.getStartdate(),
-						AppContext.getMessage(GenericI18Enum.FORM_EMPTY))),
+				new ELabel(AppContext.formatDate(milestone.getStartdate(),
+						AppContext.getMessage(GenericI18Enum.FORM_EMPTY))).withDescription(AppContext.formatDate
+						(milestone.getStartdate())),
 				AppContext.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD),
 				0, 0, Alignment.MIDDLE_LEFT);
 		layoutHelper.addComponent(
-				new Label(AppContext.formatDate(milestone.getEnddate(),
-						AppContext.getMessage(GenericI18Enum.FORM_EMPTY))),
+				new ELabel(AppContext.formatDate(milestone.getEnddate(),
+						AppContext.getMessage(GenericI18Enum.FORM_EMPTY))).withDescription(AppContext.formatDate
+						(milestone.getEnddate())),
 				AppContext.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD),
 				0, 1, Alignment.MIDDLE_LEFT);
 
