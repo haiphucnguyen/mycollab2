@@ -47,7 +47,6 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
 import java.util.List;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -204,7 +203,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements
         memberInfo.addComponent(memberEmailLabel);
 
         ELabel memberSinceLabel = new ELabel("Member since: "
-                + AppContext.formatPrettyTime(member.getJoindate())).withDescription(AppContext.formatDate(member
+                + AppContext.formatPrettyTime(member.getJoindate())).withDescription(AppContext.formatDateTime(member
                 .getJoindate()));
         memberSinceLabel.addStyleName("member-email");
         memberSinceLabel.setWidth("100%");
@@ -245,8 +244,9 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements
             waitingNotLayout.addComponent(resendInvitationLink);
             memberInfo.addComponent(waitingNotLayout);
         } else if (RegisterStatusConstants.ACTIVE.equals(member.getStatus())) {
-            Label lastAccessTimeLbl = new Label("Logged in "
-                    + AppContext.formatPrettyTime(member.getLastAccessTime()));
+            ELabel lastAccessTimeLbl = new ELabel("Logged in "
+                    + AppContext.formatPrettyTime(member.getLastAccessTime())).withDescription(AppContext.formatDateTime
+                    (member.getLastAccessTime()));
             lastAccessTimeLbl.addStyleName("member-email");
             memberInfo.addComponent(lastAccessTimeLbl);
         } else if (RegisterStatusConstants.VERIFICATING.equals(member

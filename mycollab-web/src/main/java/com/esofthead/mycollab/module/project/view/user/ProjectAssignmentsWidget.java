@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -58,7 +58,7 @@ import java.util.UUID;
 public class ProjectAssignmentsWidget extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
-    private  ProjectGenericTaskSearchCriteria searchCriteria;
+    private ProjectGenericTaskSearchCriteria searchCriteria;
 
     private Label titleLbl;
     private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
@@ -139,7 +139,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
 
             Label taskLbl = new Label(itemDiv.write(), ContentMode.HTML);
             if (genericTask.isOverdue()) {
-              taskLbl.addStyleName("overdue");
+                taskLbl.addStyleName("overdue");
             }
 
             layout.addComponent(taskLbl);
@@ -150,7 +150,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
             if (dueDate != null) {
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE,
-                        AppContext.formatPrettyTime(dueDate))));
+                        AppContext.formatPrettyTime(dueDate)))).setTitle(AppContext.formatDate(dueDate));
             } else {
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE, "Undefined")));
@@ -158,7 +158,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
 
 
             if (genericTask.getAssignUser() != null) {
-               footerDiv.appendChild(buildAssigneeValue(genericTask));
+                footerDiv.appendChild(buildAssigneeValue(genericTask));
             }
 
             layout.addComponent(new Label(footerDiv.write(), ContentMode.HTML));
@@ -215,7 +215,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
                     task.getProjectId(),
                     task.getAssignUser()));
 
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid,  task.getAssignUser()));
+            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, task.getAssignUser()));
             userLink.appendText(task.getAssignUserFullName());
 
             String assigneeTxt = AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": ";

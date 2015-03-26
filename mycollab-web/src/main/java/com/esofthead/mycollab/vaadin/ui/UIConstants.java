@@ -57,7 +57,6 @@ public class UIConstants {
 	public static final String PHOTO_CROPBOX = "photo-cropbox";
 	public static final String WIDGET_ROW = "widget-row";
 	public static final String BUG_LIST = "bug-list";
-	public static final String WIDGET_ROW_METADATA = "metadata";
 	public static final String MULTI_SELECT_BG = "multiselect";
 	public static final String PROJECT_INFO = "projectinfo";
 	public static final String PROJECT_INFO_HEADER = "projectinfo-header";
@@ -87,6 +86,6 @@ public class UIConstants {
 	public static final int TABLE_X_LABEL_WIDTH = 160;
 	public static final int TABLE_EX_LABEL_WIDTH = 200;
 	public static final int TABLE_EMAIL_WIDTH = 200;
-	public static final int TABLE_DATE_WIDTH = 100;
-	public static final int TABLE_DATE_TIME_WIDTH = 140;
+	public static final int TABLE_DATE_WIDTH = 140;
+	public static final int TABLE_DATE_TIME_WIDTH = 160;
 }

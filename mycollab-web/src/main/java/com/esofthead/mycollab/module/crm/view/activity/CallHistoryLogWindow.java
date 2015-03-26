@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,39 +23,39 @@ import com.esofthead.mycollab.module.user.ui.components.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFormatter;
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 2.0
- * 
+ *
  */
 public class CallHistoryLogWindow extends HistoryLogWindow {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public static final FieldGroupFormatter callFormatter;
+    public static final FieldGroupFormatter callFormatter;
 
-	static {
-		callFormatter = new FieldGroupFormatter();
+    static {
+        callFormatter = new FieldGroupFormatter();
 
-		callFormatter.generateFieldDisplayHandler("subject",
-				CallI18nEnum.FORM_SUBJECT);
-		callFormatter.generateFieldDisplayHandler("startdate",
-				CallI18nEnum.FORM_START_DATE_TIME,
-				FieldGroupFormatter.DATE_FIELD);
-		callFormatter.generateFieldDisplayHandler("assignuser",
-				GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
-		callFormatter.generateFieldDisplayHandler("status",
-				CallI18nEnum.FORM_STATUS);
-		callFormatter.generateFieldDisplayHandler("purpose",
-				CallI18nEnum.FORM_PURPOSE);
-	}
+        callFormatter.generateFieldDisplayHandler("subject",
+                CallI18nEnum.FORM_SUBJECT);
+        callFormatter.generateFieldDisplayHandler("startdate",
+                CallI18nEnum.FORM_START_DATE_TIME,
+                FieldGroupFormatter.PRETTY_DATE_FIELD);
+        callFormatter.generateFieldDisplayHandler("assignuser",
+                GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
+        callFormatter.generateFieldDisplayHandler("status",
+                CallI18nEnum.FORM_STATUS);
+        callFormatter.generateFieldDisplayHandler("purpose",
+                CallI18nEnum.FORM_PURPOSE);
+    }
 
-	public CallHistoryLogWindow(String module, String type) {
-		super(module, type);
-	}
+    public CallHistoryLogWindow(String module, String type) {
+        super(module, type);
+    }
 
-	@Override
-	protected FieldGroupFormatter buildFormatter() {
-		return callFormatter;
-	}
+    @Override
+    protected FieldGroupFormatter buildFormatter() {
+        return callFormatter;
+    }
 
 }

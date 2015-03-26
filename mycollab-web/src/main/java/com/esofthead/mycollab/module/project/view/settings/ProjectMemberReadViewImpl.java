@@ -227,7 +227,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             memberInfo.addComponent(memberEmailLabel);
 
             ELabel memberSinceLabel = new ELabel("Member since: "
-                    + AppContext.formatPrettyTime(beanItem.getJoindate())).withDescription(AppContext.formatDate
+                    + AppContext.formatPrettyTime(beanItem.getJoindate())).withDescription(AppContext.formatDateTime
                     (beanItem.getJoindate()));
             memberSinceLabel.addStyleName("member-email");
             memberSinceLabel.setWidth("100%");
@@ -267,8 +267,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
                 memberInfo.addComponent(waitingNotLayout);
             } else if (RegisterStatusConstants.ACTIVE.equals(beanItem
                     .getStatus())) {
-                Label lastAccessTimeLbl = new Label("Logged in "
-                        + AppContext.formatPrettyTime(beanItem.getLastAccessTime()));
+                Label lastAccessTimeLbl = new ELabel("Logged in "
+                        + AppContext.formatPrettyTime(beanItem.getLastAccessTime())).withDescription(AppContext
+                        .formatDateTime(beanItem.getLastAccessTime()));
                 lastAccessTimeLbl.addStyleName("member-email");
                 memberInfo.addComponent(lastAccessTimeLbl);
             } else if (RegisterStatusConstants.VERIFICATING.equals(beanItem

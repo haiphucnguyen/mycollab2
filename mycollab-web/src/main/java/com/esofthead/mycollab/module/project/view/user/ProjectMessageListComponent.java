@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,6 +33,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
@@ -104,11 +105,12 @@ public class ProjectMessageListComponent extends MVerticalLayout {
 
             layout.addComponent(header);
 
-            final CssLayout body = new CssLayout();
+            CssLayout body = new CssLayout();
             body.setStyleName("activity-date");
-            final Label dateLbl = new Label(AppContext.getMessage(
+            Label dateLbl = new ELabel(AppContext.getMessage(
                     MessageI18nEnum.OPT_FROM_TIME_ENTRY, AppContext
-                            .formatPrettyTime(message.getPosteddate())));
+                            .formatPrettyTime(message.getPosteddate()))).withDescription(AppContext.formatDateTime
+                    (message.getPosteddate()));
             body.addComponent(dateLbl);
 
             layout.addComponent(body);
