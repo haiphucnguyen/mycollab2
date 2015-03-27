@@ -307,42 +307,11 @@
     color: #006dac;
   }
 
-  .v-horizontallayout-segment-alternate .v-button-down {
-    border-color: #2E5A84;
-  }
-
-  .v-horizontallayout-segment-alternate .v-button-down:active {
-    background-color: rgb(45, 107, 165);
-  }
-
-  .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
+  .v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover {
     border-color: rgb(45, 107, 165);
   }
 
-  .v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
-    background-color: #287ECE;
-    color: #F7F8F9;
-    text-shadow: 0 -1px 0 #2E5A84;
-  }
-
-  .v-contextmenu .gwt-MenuItem-selected {
-    background-color: #287ECE;
-    color: #F7F8F9;
-    text-shadow: 0 -1px 0 #2E5A84;
-    div {
-      background-color: #287ECE;
-      color: #F7F8F9;
-      text-shadow: 0 -1px 0 #2E5A84;
-    }
-  }
-
-  .v-filterselect-suggestpopup .gwt-MenuItem-selected, .v-progressindicator-indicator, .v-tree-node-selected span {
-    background-color: #287ECE;
-    color: #F7F8F9;
-    text-shadow: 0 -1px 0 #2E5A84;
-  }
-
-  .v-horizontallayout-segment-alternate .v-button-down, .v-menubar .v-menubar-menuitem-selected, .v-menubar-submenu .v-menubar-menuitem-selected {
+  .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
     background-color: #287ECE;
     color: #F7F8F9;
     text-shadow: 0 -1px 0 #2E5A84;
@@ -654,18 +623,6 @@
   .v-table-caption-container, .v-table-header-drag {
     padding-top: 0px;
     line-height: 18px;
-  }
-
-  .clear {
-    clear: both;
-  }
-
-  .action-label {
-    padding-top: 2px;
-  }
-
-  .message .user-name.v-button-link.v-button-wordWrap .v-button-wrap {
-    display: inline-block;
   }
 
   .v-table-cell-wrapper .v-button-link.v-button-wordWrap {
@@ -1003,77 +960,6 @@
   /* End Basic Search Template */
 
   /* CRM Service */
-
-  .crm-module {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 100%;
-    .crmContainer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-height: 100%;
-    }
-  }
-
-  .crmContainer {
-    width: 100%;
-    .main-view {
-      background-color: #FFF;
-      min-height: 100%;
-    }
-    .crm-toolbar {
-      z-index: 1;
-      position: relative;
-      &.v-margin-right {
-        padding-right: 30px;
-      }
-    }
-    .main-view.v-margin-right {
-      padding-right: 30px;
-    }
-    .crm-toolbar.v-margin-left, .main-view.v-margin-left {
-      padding-left: 30px;
-    }
-    .crm-toolbar .v-popupbutton .v-popup-indicator {
-      width: 0px;
-      background: none no-repeat left top transparent;
-    }
-    .v-table-body-noselection {
-      height: 100% !important;
-    }
-    .page-view {
-      &.v-margin-left {
-        padding-left: 30px;
-      }
-      &.v-margin-right {
-        padding-right: 30px;
-      }
-      display:inline-block;
-    }
-    .navigator-wrap .basic-info {
-      color: white;
-      &:after {
-        content: "";
-        border-bottom: 1px solid $border-color;
-        width: 221px;
-        position: relative;
-        height: 15px;
-        display: block;
-      }
-      .info-hdr {
-        font-size: $font-normal;
-        font-weight: bold;
-      }
-      .v-button-wrap .v-button-caption {
-        color: white;
-      }
-    }
-    &.preview-comp {
-      min-height: 100%;
-    }
-  }
 
   input.v-textfield-errorField {
     border-color: red;
@@ -1481,10 +1367,6 @@
     }
   }
 
-  .addViewHeaderIcon, .addViewHeaderTitle {
-    float: left;
-  }
-
   .addViewLayout {
     .addViewHeader .headerName {
       font-size: $font-x-large;
@@ -1583,18 +1465,6 @@
     }
   }
 
-  .account-dashboard .addViewLayout {
-    .depot-title .v-label-h2 {
-      padding: 0px 0px 0px 18px;
-      font-weight: bold;
-    }
-    .depotComp .depotHeader {
-      border-width: 0px 0px 1px 0px;
-      border-style: solid;
-      border-color: $border-color;
-    }
-  }
-
   .accountViewContainer {
     .userInfoContainer .editInfoControl {
       margin-top: 10px;
@@ -1609,19 +1479,6 @@
         background: none no-repeat 0 0 #287ECE;
       }
     }
-    .v-nativebutton .v-nativebutton-caption {
-      padding: 3px 0px 2px 15px !important;
-      border-radius: 0px;
-      display: block;
-      text-align: left;
-      padding-left: 10px;
-      font-size: $font-normal;
-    }
-    .v-nativebutton-tab-selected .v-nativebutton-caption, .tab-selected .v-nativebutton-caption {
-      background: #287ECE;
-      font-weight: bold;
-      font-size: $font-larger;
-    }
     .addViewLayout {
       background: none;
       box-shadow: none;
@@ -1635,10 +1492,6 @@
     border-width: 1px 0px 0px 1px;
     background-color: #FFF;
     padding: 6px;
-  }
-
-  .account-dashboard .addViewLayout .v-label-h2 {
-    padding: 0.67em 0.67em 0.33em;
   }
 
   /* End Account Settings */
@@ -2137,21 +1990,6 @@
 
   /* End Activity Stream Channel */
 
-  /* Start Email Form */
-
-  .v-panel-content-noneBorder-panel {
-    border-width: 0px 0px 0px 0px;
-    border-color: #ffffff;
-    border-style: none;
-    background-color: transparent;
-    border-width: 0px 0px 0px 0px;
-    border-style: none;
-  }
-
-  .v-panel-deco-noneBorder-panel, .v-panel-nocaption-noneBorder-panel {
-    border: none;
-  }
-
   /* End Email Form*/
 
   /* New Table */
@@ -2257,10 +2095,6 @@
     }
   }
 
-  .usergroup-view .colored-gridlayout .gridform-field .v-csslayout {
-    padding: 3px 2px 2px;
-  }
-
   .v-widget.tokenfield {
     div.v-button-link {
       padding: 0px;
@@ -2308,14 +2142,6 @@
     }
   }
 
-  .v-horizontallayout-message-search .v-horizontallayout-margin {
-    padding: 0px;
-  }
-
-  .message-search input {
-    border-radius: 3px 0px 0px 3px;
-  }
-
   .message-list {
     .beanlist-content {
       padding: 5px 15px;
@@ -2330,23 +2156,6 @@
       *display: inline;
       position: relative;
     }
-  }
-
-  .message {
-    margin: 8px 0px;
-  }
-
-  .standup-block .user-name.v-button-link.v-button-wordWrap .v-button-wrap {
-    display: inline-block;
-  }
-
-  .message .user-name .v-button-caption, .standup-block .user-name .v-button-caption {
-    text-align: center;
-    display: inline-block;
-  }
-
-  .comment-list-wrapper.v-margin-left {
-    padding-left: 58px;
   }
 
   .message .message-container {
@@ -2541,51 +2350,6 @@
 
   /* End Task List Component */
 
-  /* Widget */
-
-  .widget-row .metadata {
-    font-size: $font-normal;
-    color: gray;
-  }
-
-  /* End Widget */
-
-  /* Bug Widget */
-
-  .widget-title {
-    border-bottom: 1px solid #B7B7B7;
-    padding-bottom: 0.2em;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-
-  .widget-row {
-    background-color: $background-color;
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    &.v-margin-top {
-      padding-top: 10px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 10px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
-    &.odd {
-      background-color: #FFF;
-    }
-    &:hover {
-      background-color: $hover-background-color;
-    }
-  }
-
-  /* End Bug Widget */
-
   /* Popup Window */
 
   .v-window, .v-Notification {
@@ -2673,52 +2437,6 @@
 
   .addViewLayout .standup-edit-layout .h2 {
     border-bottom: none;
-  }
-
-  .standupreport-list-header {
-    border: 1px solid $border-color;
-    border-radius: 3px 3px 0px 0px;
-    background: url("icons/grad-light-top2.png") repeat-x left top rgb(228, 228, 228);
-    padding: 3px 10px 3px 18px;
-    .v-popupbutton {
-      background: none;
-      border: none;
-      > .v-button-wrap {
-        background: none;
-      }
-      &:active > .v-button-wrap {
-        border: none;
-      }
-      > .v-button-wrap > .v-button-caption {
-        font-weight: bold;
-        font-size: $font-large;
-      }
-    }
-  }
-
-  .standupreport-list-content {
-    padding-right: 15px;
-    .standup-block {
-      margin-bottom: 15px;
-    }
-    .depotComp {
-      margin: 0px;
-      .depotHeader {
-        background-color: #F5F5F5;
-        border-width: 1px 0px 1px 0px;
-      }
-      &.first-report .depotHeader {
-        border-width: 0px 0px 1px 0px;
-      }
-      .depotContent {
-        &.v-margin-top {
-          padding-top: 10px;
-        }
-        &.v-margin-left {
-          padding-left: 10px;
-        }
-      }
-    }
   }
 
   .standup-block {

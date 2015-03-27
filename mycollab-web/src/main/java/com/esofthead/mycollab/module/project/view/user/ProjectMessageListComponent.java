@@ -59,7 +59,7 @@ public class ProjectMessageListComponent extends MVerticalLayout {
     private final DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> messageList;
 
     public ProjectMessageListComponent() {
-        withSpacing(false).withMargin(false);
+        withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
 
         titleLbl = new Label(AppContext.getMessage(MessageI18nEnum.WIDGET_LASTEST_NEWS));
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true,

@@ -345,7 +345,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 		layoutHelper.addComponent(progressBug,
 				AppContext.getMessage(MilestoneI18nEnum.FORM_BUG_FIELD), 0, 4,
 				Alignment.MIDDLE_LEFT);
-		final GridLayout milestoneInfoLayout = layoutHelper.getLayout();
+		GridLayout milestoneInfoLayout = layoutHelper.getLayout();
 		milestoneInfoLayout.setWidth("100%");
 		milestoneInfoLayout.setMargin(false);
 		milestoneInfoLayout.setSpacing(true);

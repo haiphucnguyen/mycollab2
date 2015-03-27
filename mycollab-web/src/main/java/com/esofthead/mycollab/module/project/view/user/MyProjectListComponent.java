@@ -50,7 +50,7 @@ public class MyProjectListComponent extends MVerticalLayout {
     private ProjectSearchCriteria searchCriteria;
 
     public MyProjectListComponent() {
-        withSpacing(false).withMargin(false);
+        withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         this.addStyleName("myprojectlist");
 
         MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).withMargin(new MarginInfo(false, true,

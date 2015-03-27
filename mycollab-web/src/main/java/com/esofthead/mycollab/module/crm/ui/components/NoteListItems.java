@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -67,8 +67,8 @@ import java.util.List;
  * @since 1.0
  */
 public class NoteListItems extends VerticalLayout {
-
     private static final long serialVersionUID = 1L;
+
     private String type;
     private Integer typeId;
     private VerticalLayout noteListContainer;
@@ -109,9 +109,6 @@ public class NoteListItems extends VerticalLayout {
     }
 
     private void displayNotes() {
-        noteListContainer.removeAllComponents();
-        noteListContainer.addComponent(noteList);
-
         final NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
         searchCriteria.setType(new StringSearchField(SearchField.AND, type));
         searchCriteria.setTypeid(new NumberSearchField(typeId));
@@ -151,6 +148,7 @@ public class NoteListItems extends VerticalLayout {
 
         noteListContainer = new VerticalLayout();
         noteWrapper.addComponent(noteListContainer);
+        noteListContainer.addComponent(noteList);
     }
 
     public void showNotes(final String type, final int typeId) {
@@ -219,10 +217,10 @@ public class NoteListItems extends VerticalLayout {
                     true)).withWidth("100%");
             messageHeader.setStyleName("message-header");
 
-            Label timePostLbl = new Label(AppContext.getMessage(
+            ELabel timePostLbl = new ELabel(AppContext.getMessage(
                     CrmCommonI18nEnum.EXT_ADDED_NOTED, note
                             .getCreateUserFullName(), AppContext.formatPrettyTime(note.getCreatedtime())),
-                    ContentMode.HTML);
+                    ContentMode.HTML).withDescription(AppContext.formatDateTime(note.getCreatedtime()));
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
             messageHeader.with(timePostLbl).expand(timePostLbl);
@@ -362,7 +360,6 @@ public class NoteListItems extends VerticalLayout {
     }
 
     private class NoteEditor extends VerticalLayout {
-
         private static final long serialVersionUID = 1L;
         private final RichTextArea noteArea;
 

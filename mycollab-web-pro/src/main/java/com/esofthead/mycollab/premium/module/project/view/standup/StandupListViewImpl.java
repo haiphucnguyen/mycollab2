@@ -64,16 +64,13 @@ public class StandupListViewImpl extends AbstractPageView implements
         this.addCalendarEvent();
         this.getListReport();
 
-        this.reportInDay = new BeanList<>(
+        reportInDay = new BeanList<>(
                 ApplicationContextUtil
                         .getSpringBean(StandupReportService.class),
                 StandupReportRowDisplay.class);
-        this.reportInDay.addStyleName("standupreport-list-content");
-        HorizontalLayout contentWrap = new HorizontalLayout();
-        contentWrap.setWidth("100%");
-        contentWrap.setSpacing(true);
-        contentWrap.addComponent(reportInDay);
-        contentWrap.setExpandRatio(reportInDay, 1.0f);
+        reportInDay.addStyleName("standupreport-list-content");
+        MHorizontalLayout contentWrap = new MHorizontalLayout().withWidth("100%");
+        contentWrap.with(reportInDay).expand(reportInDay);
 
         standupCalendar.addStyleName("standup-calendar");
 
@@ -175,25 +172,25 @@ public class StandupListViewImpl extends AbstractPageView implements
     }
 
     private void getListReport() {
-        final StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+        StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
                 .getProjectId()));
         criteria.setReportDateRange(this
                 .getRangeDateSearchField(this.standupCalendar
                         .getStyleCalendar().getShowingDate()));
-        final StandupReportService reportService = ApplicationContextUtil
+        StandupReportService reportService = ApplicationContextUtil
                 .getSpringBean(StandupReportService.class);
-        final List<GroupItem> reportsCount = reportService
+        List<GroupItem> reportsCount = reportService
                 .getReportsCount(criteria);
 
-        for (final GroupItem groupItem : reportsCount) {
-            final Date date = DateTimeUtils.convertDateByString(
+        for (GroupItem groupItem : reportsCount) {
+            Date date = DateTimeUtils.convertDateByString(
                     groupItem.getGroupname(), AppContext.getUserDateFormat().getDateFormat());
-            this.standupCalendar.addSelectedDate(date);
+            standupCalendar.addSelectedDate(date);
         }
     }
 
-    private void displayReport(final Date date) {
+    private void displayReport( Date date) {
         final StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(
                 CurrentProjectVariables.getProjectId()));
@@ -220,11 +217,11 @@ public class StandupListViewImpl extends AbstractPageView implements
     }
 
     private void constructHeader() {
-        final MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false)
+         MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false)
         )).withWidth("100%").withStyleName("hdr-view");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        final MHorizontalLayout headerLeft = new MHorizontalLayout();
+         MHorizontalLayout headerLeft = new MHorizontalLayout();
         headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         Label titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,

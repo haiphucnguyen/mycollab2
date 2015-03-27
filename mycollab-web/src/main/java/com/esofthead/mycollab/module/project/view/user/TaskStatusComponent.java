@@ -67,7 +67,7 @@ public class TaskStatusComponent extends MVerticalLayout {
     private ProjectGenericTaskSearchCriteria searchCriteria;
 
     public TaskStatusComponent() {
-        withSpacing(false).withMargin(false);
+        withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         this.addStyleName("myprojectlist");
 
         MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).withMargin(new MarginInfo(false, true,

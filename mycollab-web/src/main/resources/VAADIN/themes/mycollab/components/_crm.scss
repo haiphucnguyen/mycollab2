@@ -1,4 +1,75 @@
 @mixin mycollab-crm {
+  .crm-module {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    .crmContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-height: 100%;
+    }
+  }
+
+  .crmContainer {
+    width: 100%;
+    .main-view {
+      background-color: #FFF;
+      min-height: 100%;
+    }
+    .crm-toolbar {
+      z-index: 1;
+      position: relative;
+      &.v-margin-right {
+        padding-right: 30px;
+      }
+    }
+    .main-view.v-margin-right {
+      padding-right: 30px;
+    }
+    .crm-toolbar.v-margin-left, .main-view.v-margin-left {
+      padding-left: 30px;
+    }
+    .crm-toolbar .v-popupbutton .v-popup-indicator {
+      width: 0px;
+      background: none no-repeat left top transparent;
+    }
+    .v-table-body-noselection {
+      height: 100% !important;
+    }
+    .page-view {
+      &.v-margin-left {
+        padding-left: 30px;
+      }
+      &.v-margin-right {
+        padding-right: 30px;
+      }
+      display:inline-block;
+    }
+    .navigator-wrap .basic-info {
+      color: white;
+      &:after {
+        content: "";
+        border-bottom: 1px solid $border-color;
+        width: 221px;
+        position: relative;
+        height: 15px;
+        display: block;
+      }
+      .info-hdr {
+        font-size: $font-normal;
+        font-weight: bold;
+      }
+      .v-button-wrap .v-button-caption {
+        color: white;
+      }
+    }
+    &.preview-comp {
+      min-height: 100%;
+    }
+  }
+
   .h-sidebar-menu {
     height: 50px;
     position: relative;
@@ -129,5 +200,9 @@
         color: #535353;
       }
     }
+  }
+
+  .comment-list-wrapper.v-margin-left {
+    padding-left: 58px;
   }
 }

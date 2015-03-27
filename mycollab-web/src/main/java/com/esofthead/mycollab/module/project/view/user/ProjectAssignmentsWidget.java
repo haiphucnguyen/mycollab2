@@ -64,7 +64,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
     private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
     public ProjectAssignmentsWidget() {
-        withSpacing(false).withMargin(false);
+        withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         titleLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, 0));
 
         final CheckBox overdueSelection = new CheckBox("Overdue");

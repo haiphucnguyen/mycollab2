@@ -110,7 +110,6 @@ a.pending {
 .panel-header {
 	border: 1px solid #CFCFCF;
 	background-color: beige;
-	margin-top: 10px;
 }
 
 .panel-header .v-label {
@@ -7491,7 +7490,6 @@ a.pending {
 .panel-header {
 	border: 1px solid #CFCFCF;
 	background-color: beige;
-	margin-top: 10px;
 }
 
 .panel-header .v-label {
@@ -7718,6 +7716,93 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	color: #525252;
 }
 
+.crm-module {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100%;
+}
+
+.crm-module .crmContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100%;
+}
+
+.crmContainer {
+	width: 100%;
+}
+
+.crmContainer .main-view {
+	background-color: #FFF;
+	min-height: 100%;
+}
+
+.crmContainer .crm-toolbar {
+	z-index: 1;
+	position: relative;
+}
+
+.crmContainer .crm-toolbar.v-margin-right {
+	padding-right: 30px;
+}
+
+.crmContainer .main-view.v-margin-right {
+	padding-right: 30px;
+}
+
+.crmContainer .crm-toolbar.v-margin-left, .crmContainer .main-view.v-margin-left {
+	padding-left: 30px;
+}
+
+.crmContainer .crm-toolbar .v-popupbutton .v-popup-indicator {
+	width: 0px;
+	background: none no-repeat left top transparent;
+}
+
+.crmContainer .v-table-body-noselection {
+	height: 100% !important;
+}
+
+.crmContainer .page-view {
+	display: inline-block;
+}
+
+.crmContainer .page-view.v-margin-left {
+	padding-left: 30px;
+}
+
+.crmContainer .page-view.v-margin-right {
+	padding-right: 30px;
+}
+
+.crmContainer .navigator-wrap .basic-info {
+	color: white;
+}
+
+.crmContainer .navigator-wrap .basic-info:after {
+	content: "";
+	border-bottom: 1px solid #CFCFCF;
+	width: 221px;
+	position: relative;
+	height: 15px;
+	display: block;
+}
+
+.crmContainer .navigator-wrap .basic-info .info-hdr {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.crmContainer .navigator-wrap .basic-info .v-button-wrap .v-button-caption {
+	color: white;
+}
+
+.crmContainer.preview-comp {
+	min-height: 100%;
+}
+
 .h-sidebar-menu {
 	height: 50px;
 	position: relative;
@@ -7851,6 +7936,10 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption:hover {
 	color: #535353;
+}
+
+.comment-list-wrapper.v-margin-left {
+	padding-left: 58px;
 }
 
 .date-wrapper {
@@ -8580,6 +8669,37 @@ div.v-csslayout.followers-container .v-checkbox {
 	background-color: transparent;
 }
 
+.widget-row {
+	background-color: whitesmoke;
+	border-width: 0px 1px 1px 1px;
+	border-style: solid;
+	border-color: #CFCFCF;
+}
+
+.widget-row.v-margin-top {
+	padding-top: 10px;
+}
+
+.widget-row.v-margin-right {
+	padding-right: 10px;
+}
+
+.widget-row.v-margin-bottom {
+	padding-bottom: 10px;
+}
+
+.widget-row.v-margin-left {
+	padding-left: 10px;
+}
+
+.widget-row.odd {
+	background-color: #FFF;
+}
+
+.widget-row:hover {
+	background-color: ghostwhite;
+}
+
 html {
 	overflow: hidden;
 }
@@ -8820,43 +8940,11 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 	color: #006dac;
 }
 
-.v-horizontallayout-segment-alternate .v-button-down {
-	border-color: #2E5A84;
-}
-
-.v-horizontallayout-segment-alternate .v-button-down:active {
-	background-color: #2d6ba5;
-}
-
-.v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover, .v-horizontallayout-segment-alternate .v-button-down .v-button-wrap {
+.v-progressindicator-indicator, .v-datefield-calendarpanel-day-focused, .v-datefield-calendarpanel-day:hover {
 	border-color: #2d6ba5;
 }
 
-.v-panel-bubble .v-panel-caption, .v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
-	background-color: #287ECE;
-	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
-}
-
-.v-contextmenu .gwt-MenuItem-selected {
-	background-color: #287ECE;
-	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
-}
-
-.v-contextmenu .gwt-MenuItem-selected div {
-	background-color: #287ECE;
-	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
-}
-
-.v-filterselect-suggestpopup .gwt-MenuItem-selected, .v-progressindicator-indicator, .v-tree-node-selected span {
-	background-color: #287ECE;
-	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
-}
-
-.v-horizontallayout-segment-alternate .v-button-down, .v-menubar .v-menubar-menuitem-selected, .v-menubar-submenu .v-menubar-menuitem-selected {
+.v-datefield-calendarpanel-day-selected, .v-table tr.v-selected {
 	background-color: #287ECE;
 	color: #F7F8F9;
 	text-shadow: 0 -1px 0 #2E5A84;
@@ -9164,18 +9252,6 @@ input.v-textfield.v-datefield-textfield {
 .v-table-caption-container, .v-table-header-drag {
 	padding-top: 0px;
 	line-height: 18px;
-}
-
-.clear {
-	clear: both;
-}
-
-.action-label {
-	padding-top: 2px;
-}
-
-.message .user-name.v-button-link.v-button-wordWrap .v-button-wrap {
-	display: inline-block;
 }
 
 .v-table-cell-wrapper .v-button-link.v-button-wordWrap .v-button-wrap {
@@ -9511,93 +9587,6 @@ input.v-textfield-pagedtable-pagefield {
 	color: #454545;
 	padding: 0px;
 	text-align: center;
-}
-
-.crm-module {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100%;
-}
-
-.crm-module .crmContainer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100%;
-}
-
-.crmContainer {
-	width: 100%;
-}
-
-.crmContainer .main-view {
-	background-color: #FFF;
-	min-height: 100%;
-}
-
-.crmContainer .crm-toolbar {
-	z-index: 1;
-	position: relative;
-}
-
-.crmContainer .crm-toolbar.v-margin-right {
-	padding-right: 30px;
-}
-
-.crmContainer .main-view.v-margin-right {
-	padding-right: 30px;
-}
-
-.crmContainer .crm-toolbar.v-margin-left, .crmContainer .main-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.crmContainer .crm-toolbar .v-popupbutton .v-popup-indicator {
-	width: 0px;
-	background: none no-repeat left top transparent;
-}
-
-.crmContainer .v-table-body-noselection {
-	height: 100% !important;
-}
-
-.crmContainer .page-view {
-	display: inline-block;
-}
-
-.crmContainer .page-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.crmContainer .page-view.v-margin-right {
-	padding-right: 30px;
-}
-
-.crmContainer .navigator-wrap .basic-info {
-	color: white;
-}
-
-.crmContainer .navigator-wrap .basic-info:after {
-	content: "";
-	border-bottom: 1px solid #CFCFCF;
-	width: 221px;
-	position: relative;
-	height: 15px;
-	display: block;
-}
-
-.crmContainer .navigator-wrap .basic-info .info-hdr {
-	font-size: 13px;
-	font-weight: bold;
-}
-
-.crmContainer .navigator-wrap .basic-info .v-button-wrap .v-button-caption {
-	color: white;
-}
-
-.crmContainer.preview-comp {
-	min-height: 100%;
 }
 
 input.v-textfield-errorField {
@@ -10020,10 +10009,6 @@ input.v-textfield-errorField {
 	min-height: 24px;
 }
 
-.addViewHeaderIcon, .addViewHeaderTitle {
-	float: left;
-}
-
 .addViewLayout .addViewHeader .headerName {
 	font-size: 18px;
 	font-weight: bold;
@@ -10124,17 +10109,6 @@ input.v-textfield-errorField {
 	vertical-align: middle;
 }
 
-.account-dashboard .addViewLayout .depot-title .v-label-h2 {
-	padding: 0px 0px 0px 18px;
-	font-weight: bold;
-}
-
-.account-dashboard .addViewLayout .depotComp .depotHeader {
-	border-width: 0px 0px 1px 0px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
 .accountViewContainer .userInfoContainer .editInfoControl {
 	margin-top: 10px;
 }
@@ -10149,21 +10123,6 @@ input.v-textfield-errorField {
 	background: none no-repeat 0 0 #287ECE;
 }
 
-.accountViewContainer .v-nativebutton .v-nativebutton-caption {
-	padding: 3px 0px 2px 15px !important;
-	border-radius: 0px;
-	display: block;
-	text-align: left;
-	padding-left: 10px;
-	font-size: 13px;
-}
-
-.accountViewContainer .v-nativebutton-tab-selected .v-nativebutton-caption, .accountViewContainer .tab-selected .v-nativebutton-caption {
-	background: #287ECE;
-	font-weight: bold;
-	font-size: 16px;
-}
-
 .accountViewContainer .addViewLayout {
 	background: none;
 	box-shadow: none;
@@ -10176,10 +10135,6 @@ input.v-textfield-errorField {
 	border-width: 1px 0px 0px 1px;
 	background-color: #FFF;
 	padding: 6px;
-}
-
-.account-dashboard .addViewLayout .v-label-h2 {
-	padding: 0.67em 0.67em 0.33em;
 }
 
 .crmContainer .container-wrap .tab-content, .accountViewContainer .container-wrap .tab-content {
@@ -10676,19 +10631,6 @@ td.v-tabsheet-spacertd div {
 	height: 100%;
 }
 
-.v-panel-content-noneBorder-panel {
-	border-width: 0px 0px 0px 0px;
-	border-color: #ffffff;
-	border-style: none;
-	background-color: transparent;
-	border-width: 0px 0px 0px 0px;
-	border-style: none;
-}
-
-.v-panel-deco-noneBorder-panel, .v-panel-nocaption-noneBorder-panel {
-	border: none;
-}
-
 .v-table-header-wrap {
 	background: none no-repeat 0 0 #EEEEEE;
 	border-radius: 0px;
@@ -10793,10 +10735,6 @@ td.v-tabsheet-spacertd div {
 	background: none no-repeat 0 0 transparent;
 }
 
-.usergroup-view .colored-gridlayout .gridform-field .v-csslayout {
-	padding: 3px 2px 2px;
-}
-
 .v-widget.tokenfield div.v-button-link {
 	padding: 0px;
 	background-image: url('icons/grad-dark-bottom.png');
@@ -10839,14 +10777,6 @@ td.v-tabsheet-spacertd div {
 	padding-left: 18px;
 }
 
-.v-horizontallayout-message-search .v-horizontallayout-margin {
-	padding: 0px;
-}
-
-.message-search input {
-	border-radius: 3px 0px 0px 3px;
-}
-
 .message-list .beanlist-content {
 	padding: 5px 15px;
 	background: none no-repeat left top #FFF;
@@ -10860,23 +10790,6 @@ td.v-tabsheet-spacertd div {
 	zoom: 1;
 	*display: inline;
 	position: relative;
-}
-
-.message {
-	margin: 8px 0px;
-}
-
-.standup-block .user-name.v-button-link.v-button-wordWrap .v-button-wrap {
-	display: inline-block;
-}
-
-.message .user-name .v-button-caption, .standup-block .user-name .v-button-caption {
-	text-align: center;
-	display: inline-block;
-}
-
-.comment-list-wrapper.v-margin-left {
-	padding-left: 58px;
 }
 
 .message .message-container {
@@ -11060,49 +10973,6 @@ td.v-tabsheet-spacertd div {
 	font-size: 12px;
 }
 
-.widget-row .metadata {
-	font-size: 13px;
-	color: gray;
-}
-
-.widget-title {
-	border-bottom: 1px solid #B7B7B7;
-	padding-bottom: 0.2em;
-	margin-bottom: 5px;
-	font-weight: bold;
-}
-
-.widget-row {
-	background-color: whitesmoke;
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
-.widget-row.v-margin-top {
-	padding-top: 10px;
-}
-
-.widget-row.v-margin-right {
-	padding-right: 10px;
-}
-
-.widget-row.v-margin-bottom {
-	padding-bottom: 10px;
-}
-
-.widget-row.v-margin-left {
-	padding-left: 10px;
-}
-
-.widget-row.odd {
-	background-color: #FFF;
-}
-
-.widget-row:hover {
-	background-color: ghostwhite;
-}
-
 .v-window, .v-Notification {
 	background-color: white;
 	border-radius: 2px;
@@ -11168,60 +11038,6 @@ div.v-lazyloadingwrapper-loading {
 
 .addViewLayout .standup-edit-layout .h2 {
 	border-bottom: none;
-}
-
-.standupreport-list-header {
-	border: 1px solid #CFCFCF;
-	border-radius: 3px 3px 0px 0px;
-	background: url("icons/grad-light-top2.png") repeat-x left top #e4e4e4;
-	padding: 3px 10px 3px 18px;
-}
-
-.standupreport-list-header .v-popupbutton {
-	background: none;
-	border: none;
-}
-
-.standupreport-list-header .v-popupbutton  > .v-button-wrap {
-	background: none;
-}
-
-.standupreport-list-header .v-popupbutton:active > .v-button-wrap {
-	border: none;
-}
-
-.standupreport-list-header .v-popupbutton  > .v-button-wrap > .v-button-caption {
-	font-weight: bold;
-	font-size: 14px;
-}
-
-.standupreport-list-content {
-	padding-right: 15px;
-}
-
-.standupreport-list-content .standup-block {
-	margin-bottom: 15px;
-}
-
-.standupreport-list-content .depotComp {
-	margin: 0px;
-}
-
-.standupreport-list-content .depotComp .depotHeader {
-	background-color: #F5F5F5;
-	border-width: 1px 0px 1px 0px;
-}
-
-.standupreport-list-content .depotComp.first-report .depotHeader {
-	border-width: 0px 0px 1px 0px;
-}
-
-.standupreport-list-content .depotComp .depotContent.v-margin-top {
-	padding-top: 10px;
-}
-
-.standupreport-list-content .depotComp .depotContent.v-margin-left {
-	padding-left: 10px;
 }
 
 .standup-block {
