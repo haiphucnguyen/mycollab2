@@ -77,11 +77,9 @@ import java.util.UUID;
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         implements TaskReadView {
-
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(TaskReadViewImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TaskReadViewImpl.class);
 
     private TagViewComponent tagViewComponent;
 
@@ -299,22 +297,22 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
 
         @Override
         public void clearTitleStyleName() {
-            this.titleLbl.setStyleName("headerName");
+            titleLbl.setStyleName("headerName");
         }
 
         @Override
-        public void addTitleStyleName(final String styleName) {
-            this.titleLbl.addStyleName(styleName);
+        public void addTitleStyleName(String styleName) {
+            titleLbl.addStyleName(styleName);
         }
 
         @Override
-        public void setTitleStyleName(final String styleName) {
-            this.titleLbl.setStyleName(styleName);
+        public void setTitleStyleName(String styleName) {
+            titleLbl.setStyleName(styleName);
         }
 
         @Override
-        public void removeTitleStyleName(final String styleName) {
-            this.titleLbl.removeStyleName(styleName);
+        public void removeTitleStyleName(String styleName) {
+            titleLbl.removeStyleName(styleName);
         }
 
         @Override

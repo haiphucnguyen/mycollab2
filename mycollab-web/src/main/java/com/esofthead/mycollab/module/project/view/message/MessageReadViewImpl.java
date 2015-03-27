@@ -77,17 +77,16 @@ public class MessageReadViewImpl extends AbstractPageView implements
     public MessageReadViewImpl() {
         super();
 
-        this.header = new MHorizontalLayout().withMargin(true).withStyleName("hdr-view").withWidth("100%");
+        header = new MHorizontalLayout().withMargin(true).withStyleName("hdr-view").withWidth("100%");
 
-        this.addComponent(header);
+        addComponent(header);
         previewForm = new AdvancedPreviewBeanForm<>();
 
         contentWrapper = new CssLayout();
         contentWrapper.setStyleName("content-wrapper");
         contentWrapper.addComponent(previewForm);
         contentWrapper.setWidth("900px");
-        this.addComponent(contentWrapper);
-        this.setMargin(false);
+        addComponent(contentWrapper);
     }
 
     @Override
@@ -242,7 +241,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
             final MHorizontalLayout messageHeader = new MHorizontalLayout()
                     .withStyleName("message-header")
-                    .withMargin(new MarginInfo(true, true, false, true))
+                    .withMargin(new MarginInfo(true, false, false, true))
                     .withWidth("100%");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
@@ -257,7 +256,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
             rowLayout.addComponent(messageHeader);
 
-            final SafeHtmlLabel messageContent = new SafeHtmlLabel(message.getMessage());
+             SafeHtmlLabel messageContent = new SafeHtmlLabel(message.getMessage());
             messageContent.setStyleName("message-body");
             rowLayout.addComponent(messageContent);
 
@@ -293,7 +292,6 @@ public class MessageReadViewImpl extends AbstractPageView implements
             }
 
             messageLayout.with(rowLayout).expand(rowLayout);
-
             messageAddLayout.addComponent(messageLayout);
 
             if (commentDisplay != null

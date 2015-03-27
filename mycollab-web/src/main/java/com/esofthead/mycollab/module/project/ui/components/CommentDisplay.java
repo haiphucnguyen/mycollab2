@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.TabSheetLazyLoadComponent;
+import com.vaadin.shared.ui.MarginInfo;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import com.esofthead.mycollab.common.CommentType;
@@ -53,7 +54,7 @@ public class CommentDisplay extends MVerticalLayout implements
 			final boolean isDisplayCommentInput,
 			final boolean isSendingRelayEmail,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-		withStyleName("comment-display");
+		withMargin(new MarginInfo(true, false, true, false)).withStyleName("comment-display");
 		this.type = type;
 		if (isDisplayCommentInput) {
 			commentBox = new ProjectCommentInput(this, type, extraTypeId,

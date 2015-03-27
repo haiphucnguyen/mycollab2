@@ -98,6 +98,7 @@ public class MessageListViewImpl extends AbstractPageView implements
                 ApplicationContextUtil.getSpringBean(MessageService.class),
                 new MessageRowDisplayHandler());
         tableItem.setStyleName("message-list");
+        tableItem.setControlStyle("borderlessControl");
     }
 
     @Override
