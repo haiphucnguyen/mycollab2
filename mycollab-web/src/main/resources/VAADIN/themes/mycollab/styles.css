@@ -11123,25 +11123,26 @@ div.v-lazyloadingwrapper-loading {
 .footer {
 	width: 100%;
 	border-top: 1px solid #CFCFCF;
-	padding: 6px 0px;
+	padding: 5px 5px;
 	background-color: #FFF;
+	display: block;
 }
 
-.footer-wrapper {
-	min-width: 910px;
-	margin: 0 auto;
-	padding: 0px 30px;
+.footer .v-link a span {
+	text-decoration: none;
 }
 
 .footer-left {
 	float: left;
-	padding-left: 5px;
+	padding-left: 30px;
 	color: #313131;
+	background-color: #FFF;
 }
 
 .footer-right {
 	float: right;
-	padding-right: 5px;
+	padding-right: 30px;
+	background-color: #FFF;
 }
 
 .footer-right .v-link {
@@ -11150,20 +11151,6 @@ div.v-lazyloadingwrapper-loading {
 
 .footer-right .v-link a {
 	vertical-align: top;
-}
-
-.footer .v-link a span {
-	text-decoration: none;
-}
-
-.footer-right .v-spacing {
-	height: 18px;
-	border-right: 1px solid #CFCFCF;
-	margin-right: 5px;
-}
-
-.footer-right .v-spacing:before {
-	content: "\a0";
 }
 
 .v-label.bold {

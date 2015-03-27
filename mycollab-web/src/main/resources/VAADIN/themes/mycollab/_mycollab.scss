@@ -1988,7 +1988,7 @@
     }
   }
 
-  /* End Activity Stream Channel */
+  /* End Activity Stream Channel  }
 
   /* End Email Form*/
 
@@ -2526,7 +2526,6 @@
 
   .main-body {
     overflow-y: auto;
-    /*CSS fix for Vaadin 7 */
     background-color: #FFF;
     position: relative;
   }
@@ -2536,44 +2535,31 @@
   .footer {
     width: 100%;
     border-top: 1px solid $border-color;
-    padding: 6px 0px;
+    padding: 5px 5px;
     background-color: #FFF;
-  }
-
-  .footer-wrapper {
-    min-width: 910px;
-    margin: 0 auto;
-    padding: 0px 30px;
+    display: block;
+    .v-link a span {
+      text-decoration: none;
+    }
   }
 
   .footer-left {
     float: left;
-    padding-left: 5px;
+    padding-left: 30px;
     color: #313131;
+    background-color: #FFF;
   }
 
   .footer-right {
     float: right;
-    padding-right: 5px;
+    padding-right: 30px;
     .v-link {
       line-height: 16px;
       a {
         vertical-align: top;
       }
     }
-  }
-
-  .footer .v-link a span {
-    text-decoration: none;
-  }
-
-  .footer-right .v-spacing {
-    height: 18px;
-    border-right: 1px solid $border-color;
-    margin-right: 5px;
-    &:before {
-      content: "\a0";
-    }
+    background-color: #FFF;
   }
 
   /* End Footer */

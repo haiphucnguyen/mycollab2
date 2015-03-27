@@ -103,15 +103,15 @@ public class MessageListViewImpl extends AbstractPageView implements
 
     @Override
     public void addFormHandler(final EditFormHandler<Message> handler) {
-        if (this.editFormHandlers == null) {
-            this.editFormHandlers = new HashSet<>();
+        if (editFormHandlers == null) {
+            editFormHandlers = new HashSet<>();
         }
-        this.editFormHandlers.add(handler);
+        editFormHandlers.add(handler);
     }
 
     private void fireSaveItem(final Message message) {
-        if (this.editFormHandlers != null) {
-            for (final EditFormHandler<Message> handler : this.editFormHandlers) {
+        if (editFormHandlers != null) {
+            for (EditFormHandler<Message> handler : editFormHandlers) {
                 handler.onSave(message);
             }
         }
@@ -210,7 +210,7 @@ public class MessageListViewImpl extends AbstractPageView implements
             title.addStyleName("message-title");
             leftHeader.addComponent(title);
 
-            final ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
+            ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
 
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
@@ -397,7 +397,7 @@ public class MessageListViewImpl extends AbstractPageView implements
             final AttachmentPanel attachments = new AttachmentPanel();
             final TextField titleField = new TextField();
 
-            final MHorizontalLayout titleLayout = new MHorizontalLayout().withWidth("100%");
+            MHorizontalLayout titleLayout = new MHorizontalLayout().withWidth("100%");
             final Label titleLbl = new Label(AppContext.getMessage(MessageI18nEnum.FORM_TITLE));
             titleLbl.setWidthUndefined();
 

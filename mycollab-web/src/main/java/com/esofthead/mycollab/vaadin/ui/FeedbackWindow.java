@@ -90,7 +90,7 @@ public class FeedbackWindow extends Window {
 
 		emailNameTextField = new TextField();
 		emailNameTextField.setWidth("500px");
-		Label emailName = new Label("Your name: ");
+		Label emailName = new Label("Name: ");
 
 		mainLayout.addComponent(emailName, 0, 0);
 		mainLayout.addComponent(emailNameTextField, 1, 0);
@@ -98,7 +98,7 @@ public class FeedbackWindow extends Window {
 		emailTextField = new TextField();
 		emailTextField.setWidth("500px");
 		emailTextField.setRequired(true);
-		Label emailLbl = new Label("Your email: ");
+		Label emailLbl = new Label("Email: ");
 
 		mainLayout.addComponent(emailLbl, 0, 1);
 		mainLayout.addComponent(emailTextField, 1, 1);
@@ -115,7 +115,7 @@ public class FeedbackWindow extends Window {
 		contentArea.setImmediate(true);
 		contentArea.setWidth(500, Sizeable.Unit.PIXELS);
 		contentArea.setHeight(200, Sizeable.Unit.PIXELS);
-		Label contentLbl = new Label("Your feedback: ");
+		Label contentLbl = new Label("Message: ");
 
 		mainLayout.addComponent(contentLbl, 0, 3);
 		mainLayout.addComponent(contentArea, 1, 3);

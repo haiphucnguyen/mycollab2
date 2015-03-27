@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -118,6 +118,9 @@ public final class MainView extends AbstractPageView {
 
     private CustomLayout createFooter() {
         final CustomLayout footer = CustomLayoutExt.createLayout("footer");
+        footer.setStyleName("footer");
+        footer.setWidth("100%");
+        footer.setHeightUndefined();
 
         Link companyLink = new Link("eSoftHead", new ExternalResource(
                 "http://www.esofthead.com"));
@@ -132,11 +135,11 @@ public final class MainView extends AbstractPageView {
         currentYear.setSizeUndefined();
         footer.addComponent(currentYear, "current-year");
 
-        HorizontalLayout footerRight = new HorizontalLayout();
-        footerRight.setSpacing(true);
+        MHorizontalLayout footerRight = new MHorizontalLayout();
 
-        final Button sendFeedback = new Button("Feedback");
+        Button sendFeedback = new Button("Feedback");
         sendFeedback.setStyleName("link");
+        sendFeedback.setIcon(FontAwesome.REPLY_ALL);
         sendFeedback.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -147,28 +150,26 @@ public final class MainView extends AbstractPageView {
         });
         Link blogLink = new Link("Blog", new ExternalResource(
                 "https://www.mycollab.com/blog"));
+        blogLink.setIcon(FontAwesome.RSS);
         blogLink.setTargetName("_blank");
 
-        Link forumLink = new Link("Forum", new ExternalResource(
-                "http://forum.mycollab.com"));
+        Link forumLink = new Link("Q&A", new ExternalResource(
+                "https://www.mycollab.com/qa/"));
         forumLink.setTargetName("_blank");
+        forumLink.setIcon(FontAwesome.QUESTION);
 
         Link wikiLink = new Link("Knowledge Base", new ExternalResource(
                 "https://www.mycollab.com/help/"));
         wikiLink.setTargetName("_blank");
+        wikiLink.setIcon(FontAwesome.UNIVERSITY);
 
-        footerRight.addComponent(blogLink);
-        footerRight.addComponent(forumLink);
-        footerRight.addComponent(wikiLink);
-        footerRight.addComponent(sendFeedback);
-
+        footerRight.with(blogLink, forumLink, wikiLink, sendFeedback);
         footer.addComponent(footerRight, "footer-right");
         return footer;
     }
 
     private CustomLayout createTopMenu() {
-        final CustomLayout layout = CustomLayoutExt
-                .createLayout("topNavigation");
+        CustomLayout layout = CustomLayoutExt.createLayout("topNavigation");
         layout.setStyleName("topNavigation");
         layout.setHeight("40px");
         layout.setWidth("100%");
