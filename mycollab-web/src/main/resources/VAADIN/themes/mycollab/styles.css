@@ -82,6 +82,19 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-filterselect-suggestpopup .gwt-MenuItem {
+	padding: 5px;
+}
+
+.v-filterselect-suggestpopup .gwt-MenuItem-selected {
+	background-color: cornflowerblue;
+	width: 100%;
+}
+
+.v-filterselect-suggestmenu table {
+	width: 100%;
+}
+
 .list-row {
 	background-color: #FFF;
 	border-color: #CFCFCF;
@@ -7462,6 +7475,19 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-filterselect-suggestpopup .gwt-MenuItem {
+	padding: 5px;
+}
+
+.v-filterselect-suggestpopup .gwt-MenuItem-selected {
+	background-color: cornflowerblue;
+	width: 100%;
+}
+
+.v-filterselect-suggestmenu table {
+	width: 100%;
+}
+
 .list-row {
 	background-color: #FFF;
 	border-color: #CFCFCF;
@@ -8700,6 +8726,42 @@ div.v-csslayout.followers-container .v-checkbox {
 	background-color: ghostwhite;
 }
 
+div.v-csslayout.member-token {
+	cursor: text;
+}
+
+div.v-csslayout.member-token .v-textfield {
+	border: 0px solid white;
+}
+
+div.v-csslayout.member-token .v-textfield:focus {
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+div.v-csslayout.member-token .v-button:focus:after {
+	border-color: inherit;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+
+div.v-csslayout.member-token .v-button-small {
+	margin-top: 2px;
+}
+
+div.v-button.token-field {
+	background-color: antiquewhite;
+	height: 32px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+div.v-button.token-field:hover {
+	background-color: antiquewhite;
+}
+
 html {
 	overflow: hidden;
 }
@@ -9650,6 +9712,7 @@ input.v-textfield-errorField {
 	box-shadow: 0px 4px 4px #c8c8c8;
 	border: 1px solid #c8c8c8;
 	padding: 0px 0px 30px;
+	display: table;
 }
 
 .forgotPwdForm #loginFormContainer {

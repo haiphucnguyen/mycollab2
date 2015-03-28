@@ -16,6 +16,19 @@
     }
   }
 
+  .v-filterselect-suggestpopup .gwt-MenuItem {
+    padding: 5px;
+  }
+
+  .v-filterselect-suggestpopup .gwt-MenuItem-selected {
+    background-color: cornflowerblue;
+    width:100%;
+  }
+
+  .v-filterselect-suggestmenu table {
+    width:100%;
+  }
+
   .list-row {
     background-color: #FFF;
     border-color: $border-color;

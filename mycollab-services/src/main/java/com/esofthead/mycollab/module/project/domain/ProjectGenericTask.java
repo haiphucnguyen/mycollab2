@@ -33,6 +33,8 @@ public class ProjectGenericTask implements Serializable {
 
     private String name;
 
+    private String description;
+
     private String assignUser;
 
     private String assignUserFullName;
@@ -175,5 +177,13 @@ public class ProjectGenericTask implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

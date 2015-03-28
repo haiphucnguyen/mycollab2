@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -37,6 +38,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -138,11 +140,20 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
             Div itemDiv = buildItemValue(genericTask);
 
             Label taskLbl = new Label(itemDiv.write(), ContentMode.HTML);
+            taskLbl.addStyleName("h2");
             if (genericTask.isOverdue()) {
                 taskLbl.addStyleName("overdue");
             }
 
             layout.addComponent(taskLbl);
+
+            Label descLbl;
+            if (org.apache.commons.lang3.StringUtils.isBlank(genericTask.getDescription())) {
+                descLbl = new Label("<<No Description>>");
+            } else {
+                descLbl = new SafeHtmlLabel(StringUtils.trim(genericTask.getDescription(), 250, true));
+            }
+            layout.addComponent(descLbl);
 
             Div footerDiv = new Div().setCSSClass("activity-date");
 
