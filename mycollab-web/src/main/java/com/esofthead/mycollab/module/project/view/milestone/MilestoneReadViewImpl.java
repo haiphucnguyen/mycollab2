@@ -390,7 +390,8 @@ public class MilestoneReadViewImpl extends
 
         private Div buildLastUpdateTime(ProjectGenericTask task) {
             Div div = new Div();
-            div.appendChild(new Text(AppContext.formatPrettyTime(task.getLastUpdatedTime())));
+            div.appendChild(new Text(AppContext.formatPrettyTime(task.getLastUpdatedTime()))).setTitle(AppContext
+                    .formatDateTime(task.getLastUpdatedTime()));
             return div.setCSSClass("column100");
         }
     }

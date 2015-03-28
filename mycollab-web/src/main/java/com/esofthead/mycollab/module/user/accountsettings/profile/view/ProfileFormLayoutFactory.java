@@ -24,7 +24,6 @@ import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -36,11 +35,6 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
     public ProfileFormLayoutFactory(String title) {
         this.title = title;
-    }
-
-    public void setAvatarLink(String avatarId) {
-        userAvatarIcon = UserAvatarControlFactory.createAvatarResource(
-                avatarId, 16);
     }
 
     @Override
@@ -77,51 +71,30 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public ComponentContainer getLayout() {
-            final VerticalLayout layout = new VerticalLayout();
-            final Label organizationHeader = new Label(
-                    AppContext
-                            .getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
+            VerticalLayout layout = new VerticalLayout();
+            Label organizationHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            this.basicInformationLayout = new GridFormLayoutHelper(2, 7,
-                    "100%", "167px", Alignment.TOP_LEFT);
-            this.basicInformationLayout.getLayout().setWidth("100%");
-            this.basicInformationLayout.getLayout().setMargin(false);
-            this.basicInformationLayout.getLayout().addStyleName(
-                    UIConstants.COLORED_GRIDLAYOUT);
+            basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 7);
 
-            layout.addComponent(this.basicInformationLayout.getLayout());
+            layout.addComponent(basicInformationLayout.getLayout());
 
-            final Label contactHeader = new Label(
-                    AppContext
-                            .getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
+            Label contactHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
             contactHeader.setStyleName("h2");
             layout.addComponent(contactHeader);
 
-            this.contactInformationLayout = new GridFormLayoutHelper(2, 3,
-                    "100%", "167px", Alignment.TOP_LEFT);
-            this.contactInformationLayout.getLayout().setWidth("100%");
-            this.contactInformationLayout.getLayout().setMargin(false);
-            this.contactInformationLayout.getLayout().addStyleName(
-                    UIConstants.COLORED_GRIDLAYOUT);
+            contactInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
 
-            layout.addComponent(this.contactInformationLayout.getLayout());
+            layout.addComponent(contactInformationLayout.getLayout());
 
-            final Label advancedHeader = new Label(
-                    AppContext
-                            .getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION));
+            Label advancedHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION));
             advancedHeader.setStyleName("h2");
             layout.addComponent(advancedHeader);
 
-            this.advancedInformationLayout = new GridFormLayoutHelper(2, 2,
-                    "100%", "167px", Alignment.TOP_LEFT);
-            this.advancedInformationLayout.getLayout().setWidth("100%");
-            this.advancedInformationLayout.getLayout().setMargin(false);
-            this.advancedInformationLayout.getLayout().addStyleName(
-                    UIConstants.COLORED_GRIDLAYOUT);
+            advancedInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
 
-            layout.addComponent(this.advancedInformationLayout.getLayout());
+            layout.addComponent(advancedInformationLayout.getLayout());
             return layout;
         }
 

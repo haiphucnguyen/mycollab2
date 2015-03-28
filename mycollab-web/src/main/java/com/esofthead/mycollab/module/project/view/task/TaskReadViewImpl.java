@@ -82,19 +82,12 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
     private static final Logger LOG = LoggerFactory.getLogger(TaskReadViewImpl.class);
 
     private TagViewComponent tagViewComponent;
-
     private CommentDisplay commentList;
-
     private TaskHistoryList historyList;
-
     private ProjectFollowersComp<SimpleTask> followerSheet;
-
     private DateInfoComp dateInfoComp;
-
     private TaskTimeLogSheet timesheetComp;
-
     private PeopleInfoComp peopleInfoComp;
-
     private Button quickActionStatusBtn;
 
     public TaskReadViewImpl() {
