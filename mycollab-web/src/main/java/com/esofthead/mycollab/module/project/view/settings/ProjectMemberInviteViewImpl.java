@@ -281,7 +281,10 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements
                     String address = (String) token;
                     addToken(generateToken(address));
                 } else if (token instanceof SimpleUser) {
-                    addToken(generateToken((SimpleUser) token));
+                    SimpleUser user = (SimpleUser)token;
+                    if (!inviteEmails.contains(user.getEmail())) {
+                        addToken(generateToken(user));
+                    }
                 } else {
                     throw new MyCollabException("Do not support token type " + token);
                 }

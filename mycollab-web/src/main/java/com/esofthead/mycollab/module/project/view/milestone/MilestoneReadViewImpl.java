@@ -81,18 +81,13 @@ import java.util.UUID;
 @ViewComponent(scope = ViewScope.PROTOTYPE)
 public class MilestoneReadViewImpl extends
         AbstractPreviewItemComp<SimpleMilestone> implements MilestoneReadView {
-
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(MilestoneReadViewImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MilestoneReadViewImpl.class);
 
     private CommentDisplay commentListComp;
-
     private MilestoneHistoryLogList historyListComp;
-
     private DateInfoComp dateInfoComp;
-
     private PeopleInfoComp peopleInfoComp;
 
     public MilestoneReadViewImpl() {
@@ -116,16 +111,16 @@ public class MilestoneReadViewImpl extends
     @Override
     protected ComponentContainer createBottomPanel() {
         final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(this.commentListComp, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
+        tabContainer.addTab(commentListComp, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
         tabContainer.addTab(historyListComp, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
         return tabContainer;
     }
 
     @Override
     protected void initRelatedComponents() {
-        this.historyListComp = new MilestoneHistoryLogList(
+        historyListComp = new MilestoneHistoryLogList(
                 ModuleNameConstants.PRJ, ProjectTypeConstants.MILESTONE);
-        this.commentListComp = new CommentDisplay(CommentType.PRJ_MILESTONE,
+        commentListComp = new CommentDisplay(CommentType.PRJ_MILESTONE,
                 CurrentProjectVariables.getProjectId(), true, true,
                 ProjectMilestoneRelayEmailNotificationAction.class);
         dateInfoComp = new DateInfoComp();
@@ -146,7 +141,7 @@ public class MilestoneReadViewImpl extends
 
     @Override
     protected void onPreviewItem() {
-        this.commentListComp.loadComments("" + beanItem.getId());
+        commentListComp.loadComments("" + beanItem.getId());
 
         historyListComp.loadHistory(beanItem.getId());
 
