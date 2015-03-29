@@ -267,7 +267,8 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
 
             Div div = new Div().setStyle("width:100%").setCSSClass("footer");
             Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(obj.getLastUpdatedTime
-                    ()))).setTitle(AppContext.formatDateTime(obj.getLastUpdatedTime())).setStyle("float:right");
+                    ()))).setTitle(AppContext.formatDateTime(obj.getLastUpdatedTime())).setStyle("float:right;" +
+                    "margin-right:5px");
             Text createdByTxt = new Text("Created by: ");
             if (StringUtils.isBlank(obj.getCreatedUser())) {
                 div.appendChild(createdByTxt, new Text("None"), lastUpdatedOn);
