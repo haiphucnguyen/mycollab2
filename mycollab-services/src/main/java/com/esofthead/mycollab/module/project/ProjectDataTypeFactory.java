@@ -25,9 +25,6 @@ package com.esofthead.mycollab.module.project;
  */
 public class ProjectDataTypeFactory {
 
-	public static final String PROJECT_STATUS_OPEN = "Open";
-	public static final String PROJECT_STATUS_CLOSED = "Closed";
-
 	private static final String[] PROJECT_STATUSES_LIST = new String[] {
 			"Open", "Closed" };
 

@@ -84,13 +84,10 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
             .getLogger(PageReadViewImpl.class);
 
     private CommentDisplay commentListComp;
-
     private PageInfoComp pageInfoComp;
-
     private PageVersionSelectionBox pageVersionsSelection;
 
     private PageVersion selectedVersion;
-
     private PageService pageService;
 
     public PageReadViewImpl() {
@@ -291,6 +288,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
             Label createdLbl = new Label(AppContext.getMessage(
                     Page18InEnum.OPT_CREATED_USER, getMemberLink(createdUser)),
                     ContentMode.HTML);
+            createdLbl.addStyleName(UIConstants.WORD_WRAP);
             createdLbl.setSizeUndefined();
             layout.addComponent(createdLbl);
 
