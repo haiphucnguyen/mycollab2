@@ -40,6 +40,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import java.util.List;
 
@@ -81,9 +82,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 		layout.addStyleName("billing-setting");
 		layout.setWidth("100%");
 
-		HorizontalLayout topLayout = new HorizontalLayout();
-		topLayout.setWidth("100%");
-		topLayout.setMargin(true);
+		MHorizontalLayout topLayout = new MHorizontalLayout().withWidth("100%");
 
 		currentPlan = new VerticalLayout();
 		currentPlan.setWidth("100%");
@@ -234,7 +233,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 		layout.addComponent(plansList);
 
-		String billingFAQText = "<div class='prig-bottom'><div class='prig-bottom-cnt'><div class='pri-bott-coll pri-coll-1'><div class='pri-bott-block'><h2>How does the 30-day trial work?</h2><p>When you sign up, you are automatically enrolled in a free30-day trial that gives you unrestricted access to all the greatfeatures MyCollab has to offer. During your free trial, you havethe option to cancel at any time. When your trial ends, you canchoose to remain on your current package, upgrade to another onewith more users and storages, downgrade, or cancel.</p></div><div class='pri-bott-block'><h2>Can I upgrade my plan at any time?</h2><p>Yes, you may upgrade your plan at any time. Choose a planthat suits your needs today, and upgrade as the numbers of usersand spaces grow. After you upgrade the changes will be updatedon your next billing cycle.</p></div><div class='pri-bott-block'><h2>What if I want to downgrade my plan?</h2><p>You can downgrade your package at any time as long as theone you select is consistent with your current usage. Forexample, if you currently have 30 users, you must delete 10 ofthem before you can downgrade to a Compact package that allowsfor up to 20 users.</p></div></div><div class='pri-bott-coll'><div class='pri-bott-block prig-block-1'><h2>Do I have to provide payment information up front?</h2><p>No, you can choose the \"manual payment\" option in thebilling information panel. At the end of the trial, we will sendyou an email to remind you to submit payment information. Youcan then choose if and how you want to pay.</p></div><div class='pri-bott-block prig-block-2'><h2>What payment options are available?</h2><p>We accept Visa, Mastercard, and American Express forautomatic payments. We also accept PayPal, checks, and bankwires for manual payments.</p></div><div class='pri-bott-block'><h2>Do I have to sign a long-term contract?</h2><p>No, there are no contracts. You can choose to pay monthly,or you can pay in advance for a year and get 2 months free (12months for the price of 10). By paying in advance, you cansubmit one expense report or purchase order for the year.</p></div></div></div><div class='clear'></div></div>";
+		String billingFAQText = "<div class='prig-bottom'><div class='prig-bottom-cnt'><div class='pri-bott-coll pri-coll-1'><div class='pri-bott-block'><h2>How does the 30-day trial work?</h2><p>When you sign up, you are automatically enrolled in a free30-day trial that gives you unrestricted access to all the great features MyCollab has to offer. During your free trial, you have the option to cancel at any time. When your trial ends, you can choose to remain on your current package, upgrade to another one with more users and storages, downgrade, or cancel.</p></div><div class='pri-bott-block'><h2>Can I upgrade my plan at any time?</h2><p>Yes, you may upgrade your plan at any time. Choose a plan that suits your needs today, and upgrade as the numbers of users and spaces grow. After you upgrade the changes will be updated on your next billing cycle.</p></div><div class='pri-bott-block'><h2>What if I want to downgrade my plan?</h2><p>You can downgrade your package at any time as long as the one you select is consistent with your current usage. For example, if you currently have 30 users, you must delete 10 of them before you can downgrade to a Compact package that allows for up to 20 users.</p></div></div><div class='pri-bott-coll'><div class='pri-bott-block prig-block-1'><h2>Do I have to provide payment information up front?</h2><p>No, you can choose the \"manual payment\" option in the billing information panel. At the end of the trial, we will send you an email to remind you to submit payment information. You can then choose if and how you want to pay.</p></div><div class='pri-bott-block prig-block-2'><h2>What payment options are available?</h2><p>We accept Visa, Mastercard, and American Express for automatic payments. We also accept PayPal, checks, and bankwires for manual payments.</p></div><div class='pri-bott-block'><h2>Do I have to sign a long-term contract?</h2><p>No, there are no contracts. You can choose to pay monthly,or you can pay in advance for a year and get 2 months free (12 months for the price of 10). By paying in advance, you can submit one expense report or purchase order for the year.</p></div></div></div><div class='clear'></div></div>";
 		Label billingFAQ = new Label(billingFAQText, ContentMode.HTML);
 
 		this.addComponent(layout);

@@ -25,9 +25,6 @@ package com.esofthead.mycollab.module.project;
  */
 public class ProjectDataTypeFactory {
 
-	private static final String[] PROJECT_STATUSES_LIST = new String[] {
-			"Open", "Closed" };
-
 	private static String[] PROJECT_TYPE_LIST = new String[] { "Unknown",
 			"Administrative", "Operative" };
 
@@ -36,10 +33,6 @@ public class ProjectDataTypeFactory {
 
 	public static String[] getProjectTypeList() {
 		return PROJECT_TYPE_LIST;
-	}
-
-	public static String[] getProjectStatusList() {
-		return PROJECT_STATUSES_LIST;
 	}
 
 	public static String[] getBugSeverityList() {

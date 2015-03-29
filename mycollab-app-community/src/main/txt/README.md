@@ -66,6 +66,7 @@ Version 5.0.3
 * Can not change the project information
 * Correct year format of contact birthday
 * Prevent the issue of can not view task or bug because the project short name is invalid
+* Do not display year in birthday combo box
 
 Version 5.0.2
 -----------------------------

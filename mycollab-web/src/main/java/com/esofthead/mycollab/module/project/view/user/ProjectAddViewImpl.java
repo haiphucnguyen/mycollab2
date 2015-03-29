@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,7 +18,6 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
-import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -63,7 +62,7 @@ public class ProjectAddViewImpl extends AbstractPageView implements
 
         public FormLayoutFactory() {
             super((project.getId() == null) ? AppContext
-                            .getMessage(ProjectI18nEnum.VIEW_NEW_TITLE) : project.getName());
+                    .getMessage(ProjectI18nEnum.VIEW_NEW_TITLE) : project.getName());
         }
 
         private Layout createButtonControls() {
@@ -139,10 +138,9 @@ public class ProjectAddViewImpl extends AbstractPageView implements
         }
     }
 
-    private static class ProjectStatusComboBox extends ValueComboBox {
-
+    private static class ProjectStatusComboBox extends I18nValueComboBox {
         public ProjectStatusComboBox() {
-            super(false, ProjectDataTypeFactory.getProjectStatusList());
+            super(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
         }
     }
 

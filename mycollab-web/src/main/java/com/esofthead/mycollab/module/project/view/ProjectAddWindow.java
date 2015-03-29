@@ -211,11 +211,11 @@ public class ProjectAddWindow extends Window {
         }
     }
 
-    private static class ProjectStatusComboBox extends ValueComboBox {
+    private static class ProjectStatusComboBox extends I18nValueComboBox {
         private static final long serialVersionUID = 1L;
 
         public ProjectStatusComboBox() {
-            super(false, ProjectDataTypeFactory.getProjectStatusList());
+            super(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
         }
     }
 }

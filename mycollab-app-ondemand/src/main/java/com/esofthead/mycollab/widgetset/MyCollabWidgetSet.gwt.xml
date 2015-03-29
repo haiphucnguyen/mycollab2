@@ -21,8 +21,6 @@
 
     <inherits name="com.vaadin.addon.charts.Widgetset" />
 
-    <inherits name="org.vaadin.tokenfield.TokenfieldWidgetset" />
-
     <inherits
             name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
 

@@ -60,7 +60,7 @@ public class DateComboboxSelectionField extends CustomField<Date> {
 	private ComboBox cboMonth;
 	private ComboBox cboDate;
 
-	private Map<String, Integer> mapNumberMonth = new HashMap<String, Integer>();
+	private Map<String, Integer> mapNumberMonth = new HashMap<>();
 
 	public DateComboboxSelectionField() {
 		cboMonth = new ComboBox();
@@ -151,7 +151,7 @@ public class DateComboboxSelectionField extends CustomField<Date> {
 			}
 
 			cboMonth.select(formatMonth(calendar.get(Calendar.MONTH) + 1 + ""));
-			cboYear.select(calendar.get(Calendar.YEAR));
+			cboYear.select(calendar.get(Calendar.YEAR) + "");
 		} else {
 			cboDate.select("");
 			cboMonth.select("");
