@@ -120,6 +120,9 @@
 
   .v-button.v-button-action {
     background-color:transparent;
+    .v-button-wrap {
+      margin-left: 0px;
+    }
     &:focus, &:hover {
       background-color:transparent;
     }

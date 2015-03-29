@@ -242,7 +242,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
             controlsBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 
-            MVerticalLayout popupButtonsControl = new MVerticalLayout().withWidth("150px");
+            MVerticalLayout popupButtonsControl = new MVerticalLayout().withMargin(false).withWidth("150px");
 
             Button createPhaseBtn = new Button(
                     AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE),
@@ -258,7 +258,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             createPhaseBtn.setEnabled(CurrentProjectVariables
                     .canWrite(ProjectRolePermissionCollections.MILESTONES));
             createPhaseBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
-            createPhaseBtn.setStyleName("link");
+            createPhaseBtn.setStyleName("action");
             popupButtonsControl.addComponent(createPhaseBtn);
 
             Button createTaskBtn = new Button(
@@ -274,7 +274,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
                     });
             createTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             createTaskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-            createTaskBtn.setStyleName("link");
+            createTaskBtn.setStyleName("action");
             popupButtonsControl.addComponent(createTaskBtn);
 
             Button createBugBtn = new Button(

@@ -189,7 +189,6 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
             final Button clearBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
             clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-            clearBtn.addStyleName("cancel-button");
             clearBtn.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(final Button.ClickEvent event) {

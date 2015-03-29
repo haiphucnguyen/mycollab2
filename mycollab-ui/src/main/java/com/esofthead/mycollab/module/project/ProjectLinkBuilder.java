@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-ui.
- *
+ * <p/>
  * mycollab-ui is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-ui is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -124,13 +124,12 @@ public class ProjectLinkBuilder {
                 prjShortName);
     }
 
-    public static String generateMessagePreviewFullLink(Integer projectId,
-                                                        Integer messageId, String prefixParam) {
+    public static String generateMessagePreviewFullLink(Integer projectId, Integer messageId) {
         if (projectId == null || messageId == null) {
             return "";
         }
         return AppContext.getSiteUrl()
-                + prefixParam
+                + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generateMessagePreviewLink(projectId,
                 messageId);
     }

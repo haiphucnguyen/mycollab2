@@ -646,6 +646,66 @@
     }
   }
 
+  /* Stand Up List View */
+
+  .v-label.standup-row-content {
+    padding: 10px 0px 10px 0px;
+    font-size: $font-normal;
+    width: 100%;
+    white-space: normal;
+    ul {
+      padding-left: 14px;
+      margin: 0px;
+    }
+  }
+
+  /* End Stand Up List View */
+
+  /* Toggle Button Group */
+
+  .v-buttongroup.toggle-btn-group .v-button {
+    &.selected {
+      background-image: url("icons/grad-dark-top2.png");
+      background-repeat: no-repeat;
+      background-position: left bottom;
+      background-color: #287ECE;
+      &:active, &:focus {
+        background-image: url("icons/grad-dark-top2.png");
+        background-repeat: no-repeat;
+        background-position: left bottom;
+        background-color: #287ECE;
+      }
+    }
+    &.v-button-left, &.v-button-middle, &.v-button-right {
+      border: none;
+    }
+    .v-button-wrap {
+      background: none;
+    }
+    &.v-button-right .v-button-wrap {
+      border-left: 1px solid #8F8F8F;
+    }
+    &.selected .v-button-wrap {
+      background: none;
+    }
+    .v-button-wrap img {
+      margin: 0px;
+    }
+    &:active .v-button-wrap .v-button-caption, &:focus .v-button-wrap .v-button-caption, &.selected .v-button-wrap .v-button-caption {
+      color: white;
+    }
+    &.v-button-left:active, &.v-button-middle:active, &.v-button-right:active, &.v-button-left:focus, &.v-button-middle:focus, &.v-button-right:focus, &.active {
+      background-image: url("icons/grad-dark-top2.png");
+      background-repeat: no-repeat;
+      background-position: left bottom;
+    }
+    background-image: url("icons/grad-dark-bottom2.png");
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    background-color: rgb(123, 123, 123);
+    color: white;
+  }
+
   .widget-row {
     background-color: $background-color;
     border-width: 0px 1px 1px 1px;

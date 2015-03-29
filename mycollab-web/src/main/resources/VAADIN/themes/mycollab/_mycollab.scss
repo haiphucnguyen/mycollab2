@@ -734,7 +734,6 @@
     .v-button-wrap {
       border: none;
       background: none;
-      /* padding: 0px; */
     }
     .v-button {
       &:active .v-button-wrap, span.v-button-wrap, &:active span.v-button-wrap, &:hover span.v-button-wrap {
@@ -949,12 +948,6 @@
   .v-textfield.no-border-radius-left {
     border-left: medium none;
     border-radius: 0px 3px 3px 0px;
-  }
-
-  .basicSearch .basicSearchBody .v-button-link.cancel-button {
-    color: rgb(69, 69, 69);
-    padding: 0px;
-    text-align: center;
   }
 
   /* End Basic Search Template */
@@ -1432,13 +1425,6 @@
     }
     .v-horizontallayout-menuContent > div > div:first-child + div {
       background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFF;
-    }
-    .v-splitpanel-hsplitter-locked {
-      width: 0px;
-      border-style: solid;
-      border-color: #CCC;
-      border-width: 0px 1px 0px 0px;
-      background: none;
     }
   }
 
@@ -2046,80 +2032,6 @@
 
   /* End New Table */
 
-  /* Token Field */
-
-  .tokenfield {
-    border: 1px solid $border-color;
-    background: url("icons/input-bg.png") repeat-x scroll 0% 0% #FFF;
-    padding: 3px 2px 2px;
-    border-radius: 3px;
-    .v-filterselect {
-      border: none;
-      background: none;
-      height: 18px;
-      padding: 0px;
-      .v-filterselect-input:focus {
-        box-shadow: none;
-      }
-      .v-filterselect-button {
-        background: none;
-      }
-    }
-  }
-
-  .v-customcomponent-tokenfield.tokenfield .v-csslayout .v-button-link {
-    margin: 0px 4px 1px 0px;
-  }
-
-  .tokenfield .v-csslayout .v-button-link {
-    padding: 1px 7px;
-    &:focus {
-      padding: 1px 7px;
-    }
-    .v-button-wrap {
-      padding: 0px;
-      .v-button-caption {
-        padding: 0px;
-        display: inline-block;
-      }
-    }
-  }
-
-  .v-customcomponent-tokenfield.tokenfield {
-    .v-csslayout .v-button-link {
-      height: 18px;
-      background: url("icons/grad-dark-bottom.png") repeat-x left bottom #394754;
-      border-radius: 10px;
-    }
-    .v-filterselect {
-      background: none no-repeat 0 0 transparent;
-    }
-  }
-
-  .v-widget.tokenfield {
-    div.v-button-link {
-      padding: 0px;
-      background-image: url('icons/grad-dark-bottom.png');
-      background-repeat: repeat-x;
-      background-position: left bottom;
-      background-color: #1C7DCE;
-      height: auto;
-      &:focus, &:active {
-        padding: 0px;
-        background-image: url('icons/grad-dark-bottom.png');
-        background-repeat: repeat-x;
-        background-position: left bottom;
-        background-color: #1C7DCE;
-        height: auto;
-      }
-    }
-    .v-button-link {
-      .v-button-wrap, &:focus .v-button-wrap, &:active .v-button-wrap {
-        padding: 0px 7px 1px;
-      }
-    }
-  }
-
   /* End Token Field */
 
   /* Messages */
@@ -2238,17 +2150,6 @@
   }
 
   .message-header {
-    .v-button-link.message-title {
-      margin: 0;
-      .v-button-caption {
-        text-decoration: none;
-        font-size: $font-large;
-        color: black;
-      }
-      .v-button-wrap {
-        padding: 1px 0px;
-      }
-    }
     .time-post {
       color: gray;
       font-size: $font-smaller;
@@ -2582,68 +2483,6 @@
 
   /* End Photo Cropbox */
 
-  /* Stand Up List View */
-
-  .v-label.standup-row-content {
-    padding: 10px 0px 10px 0px;
-    font-size: $font-normal;
-    width: 100%;
-    white-space: normal;
-    ul {
-      padding-left: 14px;
-      margin: 0px;
-    }
-  }
-
-  /* End Stand Up List View */
-
-  /* Toggle Button Group */
-
-  .v-buttongroup.toggle-btn-group .v-button {
-    &.selected {
-      background-image: url("icons/grad-dark-top2.png");
-      background-repeat: no-repeat;
-      background-position: left bottom;
-      background-color: #287ECE;
-      &:active, &:focus {
-        background-image: url("icons/grad-dark-top2.png");
-        background-repeat: no-repeat;
-        background-position: left bottom;
-        background-color: #287ECE;
-      }
-    }
-    &.v-button-left, &.v-button-middle, &.v-button-right {
-      border: none;
-    }
-    .v-button-wrap {
-      background: none;
-    }
-    &.v-button-right .v-button-wrap {
-      border-left: 1px solid #8F8F8F;
-    }
-    &.selected .v-button-wrap {
-      background: none;
-    }
-    .v-button-wrap img {
-      margin: 0px;
-    }
-    &:active .v-button-wrap .v-button-caption, &:focus .v-button-wrap .v-button-caption, &.selected .v-button-wrap .v-button-caption {
-      color: white;
-    }
-    &.v-button-left:active, &.v-button-middle:active, &.v-button-right:active, &.v-button-left:focus, &.v-button-middle:focus, &.v-button-right:focus, &.active {
-      background-image: url("icons/grad-dark-top2.png");
-      background-repeat: no-repeat;
-      background-position: left bottom;
-    }
-    background-image: url("icons/grad-dark-bottom2.png");
-    background-repeat: repeat-x;
-    background-position: left bottom;
-    background-color: rgb(123, 123, 123);
-    color: white;
-  }
-
-  /* End Toggle Button Group */
-
   /* Pie Chart Legend Box */
 
   .legendBoxContent .v-button .v-button-caption {
@@ -2753,15 +2592,6 @@
   /* End Label complete */
 
   /* Milestone View */
-
-  .milestonelist-header {
-    border-width: 1px 1px 0px;
-    border-style: solid;
-    border-color: $border-color;
-    border-radius: 3px 3px 0px 0px;
-    padding: 3px 10px 3px 18px;
-    background: url('icons/grad-light-top2.png') repeat-x left top rgb(228, 228, 228);
-  }
 
   .milestone-view {
     padding: 0px 0px 30px;
@@ -3178,55 +3008,12 @@
     }
   }
 
-  .colored-gridlayout {
-    .gridform-caption.v-margin-top, .gridform-field.v-margin-top {
-      padding-top: 8px;
-    }
-    .gridform-caption.v-margin-right, .gridform-field.v-margin-right {
-      padding-right: 18px;
-    }
-    .gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
-      padding-bottom: 8px;
-    }
-    .gridform-caption.v-margin-left {
-      padding-left: 18px;
-    }
-    .gridform-field {
-      &.v-margin-left {
-        padding-left: 18px;
-      }
-      .v-horizontallayout .v-horizontallayout-margin {
-        padding: 0px;
-      }
-    }
-    .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
-      padding: 0px;
-    }
-    .gridform-caption {
-      background-color: #F9F9F9;
-      border-left: 1px solid $border-color;
-      border-right: 1px solid #c8c8c8;
-      &.first-col {
-        border-left: none;
-      }
-    }
-    > div > div {
-      border-top: 1px solid #c8c8c8;
-      &.first-row {
-        border-top: none;
-      }
-    }
-  }
-
-  /* End The New GridLayout */
-
   /* Task Group */
 
   .taskgroup-header {
     padding: 7px 10px 7px 18px;
     border: 1px solid $border-color;
-    border-radius: 3px;
-    background: url("icons/grad-light-top2.png") repeat-x left top rgb(228, 228, 228);
+    background-color: rgb(228, 228, 228);
   }
 
   .taskadd-popup {
@@ -3372,17 +3159,6 @@
       box-sizing: border-box;
       margin-right: 3px;
       height: 0px;
-    }
-  }
-
-  /* Project Member ReadView */
-
-  .project-member-readview .depotComp {
-    margin-top: 0px;
-    .depotHeader {
-      background: none no-repeat left top #F5F5F5;
-      border-width: 0px 0px 1px 0px;
-      border-radius: 0px;
     }
   }
 

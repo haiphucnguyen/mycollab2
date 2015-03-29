@@ -16,6 +16,46 @@
     }
   }
 
+  .colored-gridlayout {
+    .gridform-caption.v-margin-top, .gridform-field.v-margin-top {
+      padding-top: 8px;
+    }
+    .gridform-caption.v-margin-right, .gridform-field.v-margin-right {
+      padding-right: 18px;
+    }
+    .gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
+      padding-bottom: 8px;
+    }
+    .gridform-caption.v-margin-left {
+      padding-left: 18px;
+    }
+    .gridform-field {
+      &.v-margin-left {
+        padding-left: 18px;
+      }
+      .v-horizontallayout .v-horizontallayout-margin {
+        padding: 0px;
+      }
+    }
+    .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
+      padding: 0px;
+    }
+    .gridform-caption {
+      background-color: #F9F9F9;
+      border-left: 1px solid $border-color;
+      border-right: 1px solid #c8c8c8;
+      &.first-col {
+        border-left: none;
+      }
+    }
+    > div > div {
+      border-top: 1px solid #c8c8c8;
+      &.first-row {
+        border-top: none;
+      }
+    }
+  }
+
   .v-filterselect-suggestpopup .gwt-MenuItem {
     padding: 5px;
   }

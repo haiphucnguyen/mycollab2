@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
+import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -27,6 +28,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Message;
@@ -49,10 +51,14 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Text;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -183,35 +189,18 @@ public class MessageListViewImpl extends AbstractPageView implements
             userBlock.addComponent(userName);
             messageLayout.addComponent(userBlock);
 
-            final CssLayout rowLayout = new CssLayout();
+            CssLayout rowLayout = new CssLayout();
             rowLayout.setStyleName("message-container");
             rowLayout.setWidth("100%");
-            final Button title = new Button(message.getTitle(),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            EventBusFactory.getInstance().post(
-                                    new MessageEvent.GotoRead(
-                                            MessageListViewImpl.this, message
-                                            .getId()));
-                        }
-                    });
+            A labelLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(message.getProjectid(), message
+                    .getId()), new Text(message.getTitle()));
 
-            title.setWidth("550px");
-            title.setStyleName("link");
-            title.addStyleName(UIConstants.WORD_WRAP);
-
-            final MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(true, true,
+            MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(true, true,
                     false, true)).withStyleName("message-header");
-            final VerticalLayout leftHeader = new VerticalLayout();
-
-            title.addStyleName("message-title");
-            leftHeader.addComponent(title);
-
+            VerticalLayout leftHeader = new VerticalLayout();
+            leftHeader.addComponent(new ELabel(labelLink.write(), ContentMode.HTML).withStyleName("h2"));
             ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
-
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
 

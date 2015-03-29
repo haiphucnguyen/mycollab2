@@ -28,6 +28,11 @@ public class ELabel extends Label {
         return this;
     }
 
+    public ELabel withStyleName(String styleName) {
+        this.setStyleName(styleName);
+        return this;
+    }
+
     public ELabel prettyDate(Date date) {
         this.setValue(AppContext.formatPrettyTime(date));
         this.setDescription(AppContext.formatDate(date));

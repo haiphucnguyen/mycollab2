@@ -140,8 +140,7 @@ public class ProjectMessageListComponent extends MVerticalLayout {
             A msgLink = new A();
             msgLink.setId("tag" + uid);
             msgLink.setHref(ProjectLinkBuilder.generateMessagePreviewFullLink(
-                    message.getProjectid(), message.getId(),
-                    GenericLinkUtils.URL_PREFIX_PARAM));
+                    message.getProjectid(), message.getId()));
             String arg17 = "'" + uid + "'";
             String arg18 = "'" + ProjectTypeConstants.MESSAGE + "'";
             String arg19 = "'" + message.getId() + "'";

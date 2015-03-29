@@ -31,7 +31,6 @@ public class UIConstants {
 	public static final String H2_STYLE2 = "h2-style2";
 	public static final String HEADER_VIEW = "hdr-view";
 	public static final String HEADER_TEXT = "hdr-text";
-	public static final String COLORED_GRIDLAYOUT = "colored-gridlayout";
 	public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
 	public static final String CUSTOM_FIELD_SECTION = "customFieldSection";
 	public static final String FORM_CONTAINER_VIEW = "form-container";

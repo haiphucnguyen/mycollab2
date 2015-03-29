@@ -82,6 +82,52 @@ a.pending {
 	color: #108e2a;
 }
 
+.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
+	padding-right: 18px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-left {
+	padding-left: 18px;
+}
+
+.colored-gridlayout .gridform-field.v-margin-left {
+	padding-left: 18px;
+}
+
+.colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
+	padding: 0px;
+}
+
+.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
+	padding: 0px;
+}
+
+.colored-gridlayout .gridform-caption {
+	background-color: #F9F9F9;
+	border-left: 1px solid #CFCFCF;
+	border-right: 1px solid #c8c8c8;
+}
+
+.colored-gridlayout .gridform-caption.first-col {
+	border-left: none;
+}
+
+.colored-gridlayout  > div > div {
+	border-top: 1px solid #c8c8c8;
+}
+
+.colored-gridlayout  > div > div.first-row {
+	border-top: none;
+}
+
 .v-filterselect-suggestpopup .gwt-MenuItem {
 	padding: 5px;
 }
@@ -6750,6 +6796,10 @@ div.v-button-down:active {
 	background-color: transparent;
 }
 
+.v-button.v-button-action .v-button-wrap {
+	margin-left: 0px;
+}
+
 .v-button.v-button-action:focus, .v-button.v-button-action:hover {
 	background-color: transparent;
 }
@@ -7473,6 +7523,52 @@ a.overdue {
 
 a.pending {
 	color: #108e2a;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
+	padding-right: 18px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-left {
+	padding-left: 18px;
+}
+
+.colored-gridlayout .gridform-field.v-margin-left {
+	padding-left: 18px;
+}
+
+.colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
+	padding: 0px;
+}
+
+.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
+	padding: 0px;
+}
+
+.colored-gridlayout .gridform-caption {
+	background-color: #F9F9F9;
+	border-left: 1px solid #CFCFCF;
+	border-right: 1px solid #c8c8c8;
+}
+
+.colored-gridlayout .gridform-caption.first-col {
+	border-left: none;
+}
+
+.colored-gridlayout  > div > div {
+	border-top: 1px solid #c8c8c8;
+}
+
+.colored-gridlayout  > div > div.first-row {
+	border-top: none;
 }
 
 .v-filterselect-suggestpopup .gwt-MenuItem {
@@ -8695,6 +8791,70 @@ div.v-csslayout.followers-container .v-checkbox {
 	background-color: transparent;
 }
 
+.v-label.standup-row-content {
+	padding: 10px 0px 10px 0px;
+	font-size: 13px;
+	width: 100%;
+	white-space: normal;
+}
+
+.v-label.standup-row-content ul {
+	padding-left: 14px;
+	margin: 0px;
+}
+
+.v-buttongroup.toggle-btn-group .v-button {
+	background-image: url(components/icons/grad-dark-bottom2.png);
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	background-color: #7b7b7b;
+	color: white;
+}
+
+.v-buttongroup.toggle-btn-group .v-button.selected {
+	background-image: url(components/icons/grad-dark-top2.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-color: #287ECE;
+}
+
+.v-buttongroup.toggle-btn-group .v-button.selected:active, .v-buttongroup.toggle-btn-group .v-button.selected:focus {
+	background-image: url(components/icons/grad-dark-top2.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-color: #287ECE;
+}
+
+.v-buttongroup.toggle-btn-group .v-button.v-button-left, .v-buttongroup.toggle-btn-group .v-button.v-button-middle, .v-buttongroup.toggle-btn-group .v-button.v-button-right {
+	border: none;
+}
+
+.v-buttongroup.toggle-btn-group .v-button .v-button-wrap {
+	background: none;
+}
+
+.v-buttongroup.toggle-btn-group .v-button.v-button-right .v-button-wrap {
+	border-left: 1px solid #8F8F8F;
+}
+
+.v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap {
+	background: none;
+}
+
+.v-buttongroup.toggle-btn-group .v-button .v-button-wrap img {
+	margin: 0px;
+}
+
+.v-buttongroup.toggle-btn-group .v-button:active .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button:focus .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
+	color: white;
+}
+
+.v-buttongroup.toggle-btn-group .v-button.v-button-left:active, .v-buttongroup.toggle-btn-group .v-button.v-button-middle:active, .v-buttongroup.toggle-btn-group .v-button.v-button-right:active, .v-buttongroup.toggle-btn-group .v-button.v-button-left:focus, .v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus, .v-buttongroup.toggle-btn-group .v-button.v-button-right:focus, .v-buttongroup.toggle-btn-group .v-button.active {
+	background-image: url(components/icons/grad-dark-top2.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+}
+
 .widget-row {
 	background-color: whitesmoke;
 	border-width: 0px 1px 1px 1px;
@@ -9645,12 +9805,6 @@ input.v-textfield-pagedtable-pagefield {
 	border-radius: 0px 3px 3px 0px;
 }
 
-.basicSearch .basicSearchBody .v-button-link.cancel-button {
-	color: #454545;
-	padding: 0px;
-	text-align: center;
-}
-
 input.v-textfield-errorField {
 	border-color: red;
 }
@@ -10137,14 +10291,6 @@ input.v-textfield-errorField {
 
 .accountViewContainer .v-horizontallayout-menuContent > div > div:first-child + div {
 	background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFF;
-}
-
-.accountViewContainer .v-splitpanel-hsplitter-locked {
-	width: 0px;
-	border-style: solid;
-	border-color: #CCC;
-	border-width: 0px 1px 0px 0px;
-	background: none;
 }
 
 .accountViewContainer .addview-layout-body {
@@ -10745,81 +10891,6 @@ td.v-tabsheet-spacertd div {
 	background: none no-repeat 0 0 #FFF;
 }
 
-.tokenfield {
-	border: 1px solid #CFCFCF;
-	background: url("icons/input-bg.png") repeat-x scroll 0% 0% #FFF;
-	padding: 3px 2px 2px;
-	border-radius: 3px;
-}
-
-.tokenfield .v-filterselect {
-	border: none;
-	background: none;
-	height: 18px;
-	padding: 0px;
-}
-
-.tokenfield .v-filterselect .v-filterselect-input:focus {
-	box-shadow: none;
-}
-
-.tokenfield .v-filterselect .v-filterselect-button {
-	background: none;
-}
-
-.v-customcomponent-tokenfield.tokenfield .v-csslayout .v-button-link {
-	margin: 0px 4px 1px 0px;
-}
-
-.tokenfield .v-csslayout .v-button-link {
-	padding: 1px 7px;
-}
-
-.tokenfield .v-csslayout .v-button-link:focus {
-	padding: 1px 7px;
-}
-
-.tokenfield .v-csslayout .v-button-link .v-button-wrap {
-	padding: 0px;
-}
-
-.tokenfield .v-csslayout .v-button-link .v-button-wrap .v-button-caption {
-	padding: 0px;
-	display: inline-block;
-}
-
-.v-customcomponent-tokenfield.tokenfield .v-csslayout .v-button-link {
-	height: 18px;
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom #394754;
-	border-radius: 10px;
-}
-
-.v-customcomponent-tokenfield.tokenfield .v-filterselect {
-	background: none no-repeat 0 0 transparent;
-}
-
-.v-widget.tokenfield div.v-button-link {
-	padding: 0px;
-	background-image: url('icons/grad-dark-bottom.png');
-	background-repeat: repeat-x;
-	background-position: left bottom;
-	background-color: #1C7DCE;
-	height: auto;
-}
-
-.v-widget.tokenfield div.v-button-link:focus, .v-widget.tokenfield div.v-button-link:active {
-	padding: 0px;
-	background-image: url('icons/grad-dark-bottom.png');
-	background-repeat: repeat-x;
-	background-position: left bottom;
-	background-color: #1C7DCE;
-	height: auto;
-}
-
-.v-widget.tokenfield .v-button-link .v-button-wrap, .v-widget.tokenfield .v-button-link:focus .v-button-wrap, .v-widget.tokenfield .v-button-link:active .v-button-wrap {
-	padding: 0px 7px 1px;
-}
-
 .message-toppanel {
 	border-radius: 3px 3px 0px 0px;
 }
@@ -10930,20 +11001,6 @@ td.v-tabsheet-spacertd div {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-.message-header .v-button-link.message-title {
-	margin: 0;
-}
-
-.message-header .v-button-link.message-title .v-button-caption {
-	text-decoration: none;
-	font-size: 14px;
-	color: black;
-}
-
-.message-header .v-button-link.message-title .v-button-wrap {
-	padding: 1px 0px;
 }
 
 .message-header .time-post {
@@ -11225,70 +11282,6 @@ div.v-lazyloadingwrapper-loading {
 	border-top: 1px solid #8f8f8f;
 }
 
-.v-label.standup-row-content {
-	padding: 10px 0px 10px 0px;
-	font-size: 13px;
-	width: 100%;
-	white-space: normal;
-}
-
-.v-label.standup-row-content ul {
-	padding-left: 14px;
-	margin: 0px;
-}
-
-.v-buttongroup.toggle-btn-group .v-button {
-	background-image: url("icons/grad-dark-bottom2.png");
-	background-repeat: repeat-x;
-	background-position: left bottom;
-	background-color: #7b7b7b;
-	color: white;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.selected {
-	background-image: url("icons/grad-dark-top2.png");
-	background-repeat: no-repeat;
-	background-position: left bottom;
-	background-color: #287ECE;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.selected:active, .v-buttongroup.toggle-btn-group .v-button.selected:focus {
-	background-image: url("icons/grad-dark-top2.png");
-	background-repeat: no-repeat;
-	background-position: left bottom;
-	background-color: #287ECE;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.v-button-left, .v-buttongroup.toggle-btn-group .v-button.v-button-middle, .v-buttongroup.toggle-btn-group .v-button.v-button-right {
-	border: none;
-}
-
-.v-buttongroup.toggle-btn-group .v-button .v-button-wrap {
-	background: none;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.v-button-right .v-button-wrap {
-	border-left: 1px solid #8F8F8F;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap {
-	background: none;
-}
-
-.v-buttongroup.toggle-btn-group .v-button .v-button-wrap img {
-	margin: 0px;
-}
-
-.v-buttongroup.toggle-btn-group .v-button:active .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button:focus .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
-	color: white;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.v-button-left:active, .v-buttongroup.toggle-btn-group .v-button.v-button-middle:active, .v-buttongroup.toggle-btn-group .v-button.v-button-right:active, .v-buttongroup.toggle-btn-group .v-button.v-button-left:focus, .v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus, .v-buttongroup.toggle-btn-group .v-button.v-button-right:focus, .v-buttongroup.toggle-btn-group .v-button.active {
-	background-image: url("icons/grad-dark-top2.png");
-	background-repeat: no-repeat;
-	background-position: left bottom;
-}
-
 .legendBoxContent .v-button .v-button-caption {
 	line-height: 25px;
 }
@@ -11386,15 +11379,6 @@ div.v-csslayout.member-block {
 .v-label.completed a {
 	color: black;
 	text-decoration: line-through;
-}
-
-.milestonelist-header {
-	border-width: 1px 1px 0px;
-	border-style: solid;
-	border-color: #CFCFCF;
-	border-radius: 3px 3px 0px 0px;
-	padding: 3px 10px 3px 18px;
-	background: url('icons/grad-light-top2.png') repeat-x left top #e4e4e4;
 }
 
 .milestone-view {
@@ -11814,57 +11798,10 @@ div.v-stylecalendar .weekdays TD {
 	padding-left: 15px;
 }
 
-.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 18px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-left {
-	padding-left: 18px;
-}
-
-.colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 18px;
-}
-
-.colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
-	padding: 0px;
-}
-
-.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
-	padding: 0px;
-}
-
-.colored-gridlayout .gridform-caption {
-	background-color: #F9F9F9;
-	border-left: 1px solid #CFCFCF;
-	border-right: 1px solid #c8c8c8;
-}
-
-.colored-gridlayout .gridform-caption.first-col {
-	border-left: none;
-}
-
-.colored-gridlayout  > div > div {
-	border-top: 1px solid #c8c8c8;
-}
-
-.colored-gridlayout  > div > div.first-row {
-	border-top: none;
-}
-
 .taskgroup-header {
 	padding: 7px 10px 7px 18px;
 	border: 1px solid #CFCFCF;
-	border-radius: 3px;
-	background: url("icons/grad-light-top2.png") repeat-x left top #e4e4e4;
+	background-color: #e4e4e4;
 }
 
 .taskadd-popup {
@@ -12010,16 +11947,6 @@ div.v-ratingstars-bar {
 	box-sizing: border-box;
 	margin-right: 3px;
 	height: 0px;
-}
-
-.project-member-readview .depotComp {
-	margin-top: 0px;
-}
-
-.project-member-readview .depotComp .depotHeader {
-	background: none no-repeat left top #F5F5F5;
-	border-width: 0px 0px 1px 0px;
-	border-radius: 0px;
 }
 
 .v-listbuilder-buttons .v-button {

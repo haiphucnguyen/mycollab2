@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -203,24 +203,21 @@ public class TaskGroupDisplayWidget extends
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TaskListDepot.this.taskListActionControl
+                            taskListActionControl
                                     .setPopupVisible(false);
                             if (taskList.isArchieved()) {
-                                TaskListDepot.this.taskList
+                                taskList
                                         .setStatus(StatusI18nEnum.Open.name());
                             } else {
-                                TaskListDepot.this.taskList
+                                taskList
                                         .setStatus(StatusI18nEnum.Archived.name());
                             }
 
-                            final ProjectTaskListService taskListService = ApplicationContextUtil
+                            ProjectTaskListService taskListService = ApplicationContextUtil
                                     .getSpringBean(ProjectTaskListService.class);
                             taskListService.updateWithSession(
-                                    TaskListDepot.this.taskList,
-                                    AppContext.getUsername());
-
+                                    taskList, AppContext.getUsername());
                             updateToogleButtonStatus();
-
                         }
                     });
             toogleBtn.setIcon(FontAwesome.TOGGLE_UP);
@@ -236,8 +233,7 @@ public class TaskGroupDisplayWidget extends
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TaskListDepot.this.taskListActionControl
-                                    .setPopupVisible(false);
+                            taskListActionControl.setPopupVisible(false);
                             ConfirmDialogExt.show(
                                     UI.getCurrent(),
                                     AppContext.getMessage(
@@ -260,22 +256,15 @@ public class TaskGroupDisplayWidget extends
                                                         .getSpringBean(ProjectTaskListService.class);
                                                 taskListService
                                                         .removeWithSession(
-                                                                TaskListDepot.this.taskList
-                                                                        .getId(),
-                                                                AppContext
-                                                                        .getUsername(),
-                                                                AppContext
-                                                                        .getAccountId());
-                                                final Component parentComp = TaskListDepot.this
-                                                        .getParent();
+                                                                taskList.getId(),
+                                                                AppContext.getUsername(),
+                                                                AppContext.getAccountId());
+                                                final Component parentComp = TaskListDepot.this.getParent();
                                                 if (parentComp instanceof CssLayout) {
-                                                    ((CssLayout) parentComp)
-                                                            .removeComponent(TaskListDepot.this);
+                                                    ((CssLayout) parentComp).removeComponent(TaskListDepot.this);
                                                 } else {
-                                                    ((TaskGroupDisplayWidget) parentComp)
-                                                            .removeRow(TaskListDepot.this);
+                                                    ((TaskGroupDisplayWidget) parentComp).removeRow(TaskListDepot.this);
                                                 }
-
                                             }
                                         }
                                     });
