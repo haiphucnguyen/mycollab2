@@ -69,7 +69,7 @@ public class ProjectCommentInput extends MHorizontalLayout {
 			final boolean isSendingEmailRelay,
 			final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
 		super();
-		this.withMargin(new MarginInfo(false, true, false, true)).withWidth("100%").withStyleName("message");
+		this.withMargin(new MarginInfo(false, true, false, false)).withWidth("100%").withStyleName("message");
 
 		final SimpleUser currentUser = AppContext.getSession();
 		MVerticalLayout userBlock = new MVerticalLayout().withMargin(false).withWidth("80px");
@@ -118,8 +118,7 @@ public class ProjectCommentInput extends MHorizontalLayout {
 		controlsLayout.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
 		final Label emptySpace = new Label();
-		controlsLayout.addComponent(emptySpace);
-		controlsLayout.setExpandRatio(emptySpace, 1.0f);
+		controlsLayout.with(emptySpace).expand(emptySpace);
 
 		if (cancelButtonEnable) {
 			final Button cancelBtn = new Button(
