@@ -665,14 +665,8 @@
 
   .v-buttongroup.toggle-btn-group .v-button {
     &.selected {
-      background-image: url("icons/grad-dark-top2.png");
-      background-repeat: no-repeat;
-      background-position: left bottom;
       background-color: #287ECE;
       &:active, &:focus {
-        background-image: url("icons/grad-dark-top2.png");
-        background-repeat: no-repeat;
-        background-position: left bottom;
         background-color: #287ECE;
       }
     }
@@ -699,9 +693,6 @@
       background-repeat: no-repeat;
       background-position: left bottom;
     }
-    background-image: url("icons/grad-dark-bottom2.png");
-    background-repeat: repeat-x;
-    background-position: left bottom;
     background-color: rgb(123, 123, 123);
     color: white;
   }

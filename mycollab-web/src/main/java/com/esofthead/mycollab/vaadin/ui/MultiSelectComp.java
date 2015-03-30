@@ -41,11 +41,10 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
 
     protected TextField componentsDisplay;
     protected PopupButtonExt componentPopupSelection;
+    private VerticalLayout popupContent;
 
     private String propertyDisplayField;
     private String widthVal;
-
-    private VerticalLayout popupContent;
 
     protected List<T> selectedItems = new ArrayList<>();
 

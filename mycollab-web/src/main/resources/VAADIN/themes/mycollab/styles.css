@@ -6681,7 +6681,7 @@ div.v-button-down:active {
 }
 
 .v-button:focus {
-	background-color: #52684b;
+	background-color: #52684B;
 }
 
 .v-button:active .v-button-wrap {
@@ -6692,20 +6692,8 @@ div.v-button-down:active {
 	border-color: #43533E;
 }
 
-.v-button .v-button-wrap {
-	background-position: left top;
-}
-
 .v-disabled.v-button:focus .v-button-wrap, .v-disabled.v-button:active .v-button-wrap {
 	background-position: left top;
-}
-
-.v-button {
-	text-shadow: 0 -1px 0 #43533E;
-}
-
-.v-disabled.v-button:focus, .v-disabled.v-button:active {
-	text-shadow: 0 -1px 0 #43533E;
 }
 
 .v-disabled.v-button-link {
@@ -6735,26 +6723,22 @@ div.v-button-down:active {
 .v-button-default {
 	border-color: #495972;
 	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
+	color: #F4F4F5;
 }
 
 .v-disabled.v-button-default {
 	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
+	color: #F4F4F5;
 }
 
 .v-disabled.v-button-default:focus {
 	background-color: #6482B3;
 	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
 }
 
 .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
 	background-color: #6482B3;
-	color: #f4f4f5;
-	text-shadow: 0 -1px 0 #495972;
+	color: #F4F4F5;
 }
 
 div.v-button-down:active {
@@ -6767,22 +6751,6 @@ div.v-button-down:active {
 
 .v-button-down .v-button-wrap {
 	border-color: #CFCFCF;
-}
-
-.v-button.v-button-action {
-	background-color: transparent;
-}
-
-.v-button.v-button-action .v-button-wrap {
-	margin-left: 0px;
-}
-
-.v-button.v-button-action:focus, .v-button.v-button-action:hover {
-	background-color: transparent;
-}
-
-.v-button.v-button-action .v-icon {
-	color: brown;
 }
 
 .v-disabled.v-button-link {
@@ -6810,35 +6778,31 @@ div.v-button-down:active {
 }
 
 .v-button-default:focus {
-	background-color: #2d6ba5;
+	background-color: #2D6BA5;
 }
 
 .v-button-default:active .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap {
-	border-color: #2d6ba5;
+	border-color: #2D6BA5;
 }
 
 .v-button-default {
 	background-color: #287ECE;
 	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
 }
 
 .v-disabled.v-button-default {
 	background-color: #287ECE;
 	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
 }
 
 .v-disabled.v-button-default:focus {
 	background-color: #287ECE;
 	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
 }
 
 .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
 	background-color: #287ECE;
 	color: #F7F8F9;
-	text-shadow: 0 -1px 0 #2E5A84;
 }
 
 .v-button, .v-button-caption {
@@ -6860,24 +6824,6 @@ div.v-disabled.v-button-link {
 	margin: 0px;
 }
 
-.v-button-link.pending .v-button-caption {
-	color: #108e2a;
-}
-
-.v-button-link.overdue .v-button-caption {
-	color: red;
-}
-
-.v-button-link.completed .v-button-caption {
-	color: black;
-	text-decoration: line-through;
-}
-
-.v-button-link .v-button-wrap {
-	display: inline-block;
-	vertical-align: top;
-}
-
 .v-button-link {
 	color: #006dac;
 }
@@ -6896,6 +6842,43 @@ div.v-disabled.v-button-link {
 	box-sizing: border-box;
 }
 
+.v-button-link.pending .v-button-caption {
+	color: #108e2a;
+}
+
+.v-button-link.overdue .v-button-caption {
+	color: red;
+}
+
+.v-button-link.completed .v-button-caption {
+	color: black;
+	text-decoration: line-through;
+}
+
+.v-button-link .v-button-wrap {
+	display: inline-block;
+	vertical-align: top;
+	border: 0;
+}
+
+.v-button-link.v-button-wordWrap {
+	width: 100%;
+}
+
+.v-button-link.v-button-wordWrap .v-button-caption {
+	display: table-cell;
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: normal;
+	width: 100%;
+	height: 100%;
+}
+
+.v-button-link.v-button-wordWrap .v-button-wrap {
+	width: 100%;
+	display: table-row;
+}
+
 .v-button {
 	vertical-align: top;
 }
@@ -6912,22 +6895,6 @@ div.v-disabled.v-button-link {
 
 .v-button-caption {
 	vertical-align: top;
-}
-
-div.v-button-link {
-	margin: 0px;
-}
-
-div.v-button-link.v-button-no-margin:focus {
-	margin: 0px;
-}
-
-div.v-button-link:focus {
-	margin: 0px;
-}
-
-.v-button-link:active {
-	margin: 0px;
 }
 
 div.v-disabled.v-button-link {
@@ -6980,10 +6947,6 @@ body.v-ie .v-pressed.v-button-borderless {
 	border-top: 1px solid transparent;
 }
 
-.v-button-link .v-button-wrap {
-	border: 0;
-}
-
 .v-button {
 	background-color: #F9F9F9;
 	border-width: 0px;
@@ -6992,10 +6955,6 @@ body.v-ie .v-pressed.v-button-borderless {
 	border-radius: 2px;
 	background-image: none;
 	padding: 0;
-}
-
-.v-button.hasborder {
-	border-width: 1px;
 }
 
 .v-ie .v-button {
@@ -7091,32 +7050,6 @@ body.v-ie .v-pressed.v-button-borderless {
 	margin: 0px;
 }
 
-.v-button-link.v-button-wordWrap {
-	width: 100%;
-}
-
-.v-button-link.v-button-wordWrap .v-button-caption {
-	display: table-cell;
-	white-space: normal;
-	word-wrap: break-word;
-	word-break: normal;
-	width: 100%;
-	height: 100%;
-}
-
-.v-button-link.no-margin {
-	margin: 0px;
-}
-
-.v-button-link.no-margin .v-button-wrap {
-	padding: 0px;
-}
-
-.v-button-link.v-button-wordWrap .v-button-wrap {
-	width: 100%;
-	display: table-row;
-}
-
 .v-button.select-bg {
 	height: 25px;
 	width: 22px;
@@ -7136,7 +7069,7 @@ body.v-ie .v-pressed.v-button-borderless {
 	background-color: transparent;
 }
 
-.v-button-link .v-icon, .v-button-borderless .v-icon {
+.v-button-link .v-icon {
 	margin-left: 0;
 }
 
@@ -7317,6 +7250,26 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .v-button.button-icon-only.icon-18px .v-button-wrap {
 	font-size: 18px;
+}
+
+.v-button.v-button-action {
+	background-color: transparent;
+}
+
+.v-button.v-button-action .v-button-wrap {
+	align: left;
+}
+
+.v-button.v-button-action .v-button-wrap .v-icon {
+	color: brown;
+}
+
+.popupContent .v-button-action {
+	width: 100%;
+}
+
+.popupContent .v-button-action:hover {
+	background-color: antiquewhite;
 }
 
 .v-icon .black {
@@ -8644,24 +8597,15 @@ div.v-csslayout.followers-container .v-checkbox {
 }
 
 .v-buttongroup.toggle-btn-group .v-button {
-	background-image: url(components/icons/grad-dark-bottom2.png);
-	background-repeat: repeat-x;
-	background-position: left bottom;
 	background-color: #7b7b7b;
 	color: white;
 }
 
 .v-buttongroup.toggle-btn-group .v-button.selected {
-	background-image: url(components/icons/grad-dark-top2.png);
-	background-repeat: no-repeat;
-	background-position: left bottom;
 	background-color: #287ECE;
 }
 
 .v-buttongroup.toggle-btn-group .v-button.selected:active, .v-buttongroup.toggle-btn-group .v-button.selected:focus {
-	background-image: url(components/icons/grad-dark-top2.png);
-	background-repeat: no-repeat;
-	background-position: left bottom;
 	background-color: #287ECE;
 }
 
@@ -11332,7 +11276,6 @@ div.v-stylecalendar .weekdays TD {
 
 .v-stylecalendar .red {
 	background-color: #0C7AD3;
-	background-image: url('icons/grad-dark-top2.png');
 	background-repeat: repeat-x;
 	color: white;
 }

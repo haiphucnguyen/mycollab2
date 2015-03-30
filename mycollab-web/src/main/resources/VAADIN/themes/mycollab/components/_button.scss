@@ -5,7 +5,7 @@
 
   .v-button {
     &:focus {
-      background-color: rgb(82, 104, 75);
+      background-color: #52684B;
     }
     &:active .v-button-wrap {
       border-color: #43533E;
@@ -16,23 +16,9 @@
     border-color: #43533E;
   }
 
-  .v-button .v-button-wrap {
-    background-position: left top;
-  }
-
   .v-disabled.v-button {
     &:focus .v-button-wrap, &:active .v-button-wrap {
       background-position: left top;
-    }
-  }
-
-  .v-button {
-    text-shadow: 0 -1px 0 #43533E;
-  }
-
-  .v-disabled.v-button {
-    &:focus, &:active {
-      text-shadow: 0 -1px 0 #43533E;
     }
   }
 
@@ -61,29 +47,25 @@
   .v-button-default {
     border-color: #495972;
     background-color: #6482B3;
-    color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 #495972;
+    color: #F4F4F5;
   }
 
   .v-disabled.v-button-default {
     background-color: #6482B3;
-    color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 #495972;
+    color: #F4F4F5;
     &:focus {
       background-color: #6482B3;
       color: rgb(244, 244, 245);
-      text-shadow: 0 -1px 0 #495972;
     }
   }
 
   .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
     background-color: #6482B3;
-    color: rgb(244, 244, 245);
-    text-shadow: 0 -1px 0 #495972;
+    color: #F4F4F5;
   }
 
   div.v-button-down:active {
-    background-color: rgb(129, 129, 129);
+    background-color: #818181;
   }
 
   .v-button:focus {
@@ -92,19 +74,6 @@
 
   .v-button-down .v-button-wrap {
     border-color: $border-color;
-  }
-
-  .v-button.v-button-action {
-    background-color:transparent;
-    .v-button-wrap {
-      margin-left: 0px;
-    }
-    &:focus, &:hover {
-      background-color:transparent;
-    }
-    .v-icon {
-      color: brown;
-    }
   }
 
   .v-disabled.v-button-link {
@@ -130,34 +99,30 @@
   }
 
   .v-button-default:focus {
-    background-color: rgb(45, 107, 165);
+    background-color: #2D6BA5;
   }
 
   .v-button-default:active .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap {
-    border-color: rgb(45, 107, 165);
+    border-color: #2D6BA5;
   }
 
   .v-button-default {
     background-color: #287ECE;
     color: #F7F8F9;
-    text-shadow: 0 -1px 0 #2E5A84;
   }
 
   .v-disabled.v-button-default {
     background-color: #287ECE;
     color: #F7F8F9;
-    text-shadow: 0 -1px 0 #2E5A84;
     &:focus {
       background-color: #287ECE;
       color: #F7F8F9;
-      text-shadow: 0 -1px 0 #2E5A84;
     }
   }
 
   .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
     background-color: #287ECE;
     color: #F7F8F9;
-    text-shadow: 0 -1px 0 #2E5A84;
   }
 
   .v-button, .v-button-caption {
@@ -180,6 +145,19 @@
   }
 
   .v-button-link {
+    color: #006dac;
+    &:focus, &:active {
+      color: #006dac;
+      background-color: transparent;
+      border-radius: 0px;
+      margin: 0px;
+    }
+    .v-button-caption {
+      text-decoration: none;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
     &.pending .v-button-caption {
       color: #108e2a;
     }
@@ -193,22 +171,22 @@
     .v-button-wrap {
       display: inline-block;
       vertical-align: top;
+      border: 0;
     }
-  }
-
-  .v-button-link {
-    color: #006dac;
-    &:focus, &:active {
-      color: #006dac;
-      background-color: transparent;
-      border-radius: 0px;
-      margin: 0px;
+    &.v-button-wordWrap {
+      width: 100%;
+      .v-button-caption {
+        display: table-cell;
+        white-space: normal;
+        word-wrap: break-word;
+        word-break: normal;
+        width: 100%;
+        height: 100%;
+      }
     }
-    .v-button-caption {
-      text-decoration: none;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
+    &.v-button-wordWrap .v-button-wrap {
+      width: 100%;
+      display: table-row;
     }
   }
 
@@ -228,20 +206,6 @@
 
   .v-button-caption {
     vertical-align: top;
-  }
-
-  div.v-button-link {
-    &.v-button-no-margin:focus {
-      margin: 0px;
-    }
-    margin: 0px;
-    &:focus {
-      margin: 0px;
-    }
-  }
-
-  .v-button-link:active {
-    margin: 0px;
   }
 
   div.v-disabled.v-button-link {
@@ -293,10 +257,6 @@
     border-top: 1px solid transparent;
   }
 
-  .v-button-link .v-button-wrap {
-    border: 0;
-  }
-
   .v-button {
     background-color: #F9F9F9;
     border-width: 0px;
@@ -305,9 +265,6 @@
     border-radius: 2px;
     background-image: none;
     padding: 0;
-    &.hasborder {
-      border-width: 1px;
-    }
   }
 
   .v-ie .v-button {
@@ -405,30 +362,6 @@
     margin: 0px;
   }
 
-  .v-button-link {
-    &.v-button-wordWrap {
-      width: 100%;
-      .v-button-caption {
-        display: table-cell;
-        white-space: normal;
-        word-wrap: break-word;
-        word-break: normal;
-        width: 100%;
-        height: 100%;
-      }
-    }
-    &.no-margin {
-      margin: 0px;
-      .v-button-wrap {
-        padding: 0px;
-      }
-    }
-    &.v-button-wordWrap .v-button-wrap {
-      width: 100%;
-      display: table-row;
-    }
-  }
-
   /* End round border button */
 
   /* Background has SELECT icon */
@@ -453,7 +386,7 @@
 
   /* End Background has SELECT icon */
 
-  .v-button-link .v-icon, .v-button-borderless .v-icon {
+  .v-button-link .v-icon {
     margin-left: 0;
   }
 
@@ -647,6 +580,23 @@
       &.icon-18px .v-button-wrap {
         font-size:$font-x-large;
       }
+    }
+  }
+
+  .v-button.v-button-action {
+    background-color:transparent;
+    .v-button-wrap {
+      align: left;
+      .v-icon {
+        color: brown;
+      }
+    }
+  }
+
+  .popupContent .v-button-action {
+    width:100%;
+    &:hover {
+      background-color: antiquewhite;
     }
   }
 }
