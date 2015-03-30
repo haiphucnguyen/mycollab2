@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -88,7 +89,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
             @Override
             public void itemClick(final TableClickEvent event) {
-                final SimpleBug bug = (SimpleBug) event.getData();
+                SimpleBug bug = (SimpleBug) event.getData();
                 if ("summary".equals(event.getFieldName())) {
                     EventBusFactory.getInstance().post(
                             new BugEvent.GotoRead(BugListViewImpl.this, bug
@@ -128,7 +129,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 .getMessage(FileI18nEnum.EXPORT_FILE));
         bugSearchPanel.addHeaderRight(exportButtonControl);
 
-        final VerticalLayout popupButtonsControl = new VerticalLayout();
+        final OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("120px");
         exportButtonControl.setContent(popupButtonsControl);
 
         Button exportPdfBtn = new Button(
@@ -163,8 +164,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 });
         fileDownloader.extend(exportPdfBtn);
         exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
-        exportPdfBtn.setStyleName("link");
-        popupButtonsControl.addComponent(exportPdfBtn);
+        popupButtonsControl.addOption(exportPdfBtn);
 
         Button exportExcelBtn = new Button(
                 AppContext.getMessage(FileI18nEnum.EXCEL));
@@ -196,8 +196,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 });
         excelDownloader.extend(exportExcelBtn);
         exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
-        exportExcelBtn.setStyleName("link");
-        popupButtonsControl.addComponent(exportExcelBtn);
+        popupButtonsControl.addOption(exportExcelBtn);
 
         Button exportCsvBtn = new Button(
                 AppContext.getMessage(FileI18nEnum.CSV));
@@ -232,12 +231,11 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         exportCsvBtn.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-               exportButtonControl.setPopupVisible(false);
+                exportButtonControl.setPopupVisible(false);
             }
         });
         exportCsvBtn.setIcon(FontAwesome.FILE_TEXT_O);
-        exportCsvBtn.setStyleName("link");
-        popupButtonsControl.addComponent(exportCsvBtn);
+        popupButtonsControl.addOption(exportCsvBtn);
     }
 
     @Override

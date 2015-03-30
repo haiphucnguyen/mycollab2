@@ -427,20 +427,6 @@
     padding-left: 8px;
   }
 
-  .popuplistindicator {
-    &.v-popupbutton {
-      background-color:transparent;
-      .v-popup-indicator:before {
-        font-size: 1em;
-        font-family: FontAwesome;
-        content:'\f150';
-      }
-      .v-button-wrap {
-        background-color:transparent;
-      }
-    }
-  }
-
   .noDefaultIcon.v-popupbutton .v-popup-indicator:before {
     content: '';
   }
@@ -568,23 +554,6 @@
       &.icon-18px .v-button-wrap {
         font-size:$font-x-large;
       }
-    }
-  }
-
-  .v-button.v-button-action {
-    background-color:transparent;
-    .v-button-wrap {
-      align: left;
-      .v-icon {
-        color: brown;
-      }
-    }
-  }
-
-  .popupContent .v-button-action {
-    width:100%;
-    &:hover {
-      background-color: antiquewhite;
     }
   }
 }

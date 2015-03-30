@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,6 +27,8 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.bug.components.*;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -43,7 +45,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -57,7 +58,6 @@ import java.util.GregorianCalendar;
 @ViewComponent
 public class BugDashboardViewImpl extends AbstractLazyPageView implements
         BugDashboardView {
-
     private MVerticalLayout leftColumn, rightColumn;
     private MHorizontalLayout header;
 
@@ -69,7 +69,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         addComponent(header);
 
-        MHorizontalLayout body = new MHorizontalLayout().withMargin(false).withWidth("100%");
+        MHorizontalLayout body = new MHorizontalLayout().withWidth("100%");
 
         leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
         rightColumn = new MVerticalLayout().withMargin(false);
@@ -102,8 +102,8 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
         controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         controlsBtn.setWidthUndefined();
 
-        final VerticalLayout btnControlsLayout = new VerticalLayout();
-        final Button createComponentBtn = new Button(
+        OptionPopupContent btnControlsLayout = new OptionPopupContent().withWidth("180px");
+        Button createComponentBtn = new Button(
                 AppContext.getMessage(BugI18nEnum.BUTTON_NEW_COMPONENT),
                 new Button.ClickListener() {
                     @Override
@@ -113,12 +113,12 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
                                 new BugComponentEvent.GotoAdd(this, null));
                     }
                 });
-        createComponentBtn.setStyleName("link");
         createComponentBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.COMPONENTS));
-        btnControlsLayout.addComponent(createComponentBtn);
+        createComponentBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
+        btnControlsLayout.addOption(createComponentBtn);
 
-        final Button createVersionBtn = new Button(
+        Button createVersionBtn = new Button(
                 AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION),
                 new Button.ClickListener() {
                     @Override
@@ -128,10 +128,10 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements
                                 new BugVersionEvent.GotoAdd(this, null));
                     }
                 });
-        createVersionBtn.setStyleName("link");
         createVersionBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.VERSIONS));
-        btnControlsLayout.addComponent(createVersionBtn);
+        createVersionBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
+        btnControlsLayout.addOption(createVersionBtn);
 
         controlsBtn.setContent(btnControlsLayout);
         header.addComponent(controlsBtn);

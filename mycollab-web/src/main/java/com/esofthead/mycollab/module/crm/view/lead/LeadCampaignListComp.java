@@ -114,10 +114,8 @@ public class LeadCampaignListComp
                     }
                 });
         selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
-        selectBtn.setStyleName("link");
-
-        VerticalLayout buttonControlsLayout = new VerticalLayout();
-        buttonControlsLayout.addComponent(selectBtn);
+        OptionPopupContent buttonControlsLayout = new OptionPopupContent();
+        buttonControlsLayout.addOption(selectBtn);
         controlsBtn.setContent(buttonControlsLayout);
 
         controlBtnWrap.addComponent(controlsBtn);

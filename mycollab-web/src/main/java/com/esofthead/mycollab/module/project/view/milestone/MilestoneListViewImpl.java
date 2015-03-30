@@ -51,7 +51,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         int totalClosedMilestones = 0, totalInprogressMilestones = 0, totalFutureMilestones = 0;
 
-        for (final SimpleMilestone milestone : milestones) {
+        for ( SimpleMilestone milestone : milestones) {
             ComponentContainer componentContainer = constructMilestoneBox(milestone);
             if (MilestoneStatus.InProgress.name().equals(milestone.getStatus())) {
                 inProgressContainer.addComponent(componentContainer);
@@ -155,7 +154,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         bodyContent.setWidth("100%");
         bodyContent.setStyleName("milestone-view");
 
-        final MHorizontalLayout closedHeaderLayout = new MHorizontalLayout();
+         MHorizontalLayout closedHeaderLayout = new MHorizontalLayout();
 
         closedHeader = new Label("", ContentMode.HTML);
         closedHeader.setSizeUndefined();
@@ -167,7 +166,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         closeContainer.setWidth("100%");
         bodyContent.addComponent(closeContainer, "closed-milestones");
 
-        final MHorizontalLayout inProgressHeaderLayout = new MHorizontalLayout();
+         MHorizontalLayout inProgressHeaderLayout = new MHorizontalLayout();
         inProgressHeader = new Label("", ContentMode.HTML);
         inProgressHeader.setSizeUndefined();
         inProgressHeaderLayout.addComponent(inProgressHeader);
@@ -180,7 +179,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         inProgressContainer.setWidth("100%");
         bodyContent.addComponent(this.inProgressContainer, "in-progress-milestones");
 
-        final MHorizontalLayout futureHeaderLayout = new MHorizontalLayout();
+         MHorizontalLayout futureHeaderLayout = new MHorizontalLayout();
         futureHeader = new Label("", ContentMode.HTML);
         futureHeader.setSizeUndefined();
         futureHeaderLayout.addComponent(futureHeader);
@@ -234,7 +233,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         PopupButton taskSettingPopupBtn = new PopupButton();
         taskSettingPopupBtn.setWidth("20px");
-        MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("100px");
+        OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
 
         Button editButton = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
@@ -251,8 +250,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         editButton.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.MILESTONES));
         editButton.setIcon(FontAwesome.EDIT);
-        editButton.setStyleName("link");
-        filterBtnLayout.addComponent(editButton);
+        filterBtnLayout.addOption(editButton);
 
         Button deleteBtn = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
@@ -291,10 +289,9 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
                     }
                 });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
-        deleteBtn.setStyleName("link");
         deleteBtn.setEnabled(CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.MILESTONES));
-        filterBtnLayout.addComponent(deleteBtn);
+        filterBtnLayout.addOption(deleteBtn);
 
         taskSettingPopupBtn.setIcon(FontAwesome.COG);
         taskSettingPopupBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
@@ -303,12 +300,10 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         milestoneHeader.addComponent(taskSettingPopupBtn);
         layout.addComponent(milestoneHeader);
 
-        MHorizontalLayout spacing = new MHorizontalLayout().withHeight("8px")
-                .withWidth("100%");
+        MHorizontalLayout spacing = new MHorizontalLayout().withHeight("8px").withWidth("100%");
         layout.addComponent(spacing);
 
-        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1,
-                5, "100%", "80px");
+        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 5, "100%", "80px");
         layoutHelper.addComponent(
                 new ELabel(AppContext.formatPrettyTime(milestone.getStartdate())).withDescription(AppContext.formatDate
                         (milestone.getStartdate())),

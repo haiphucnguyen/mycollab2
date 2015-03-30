@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -67,8 +67,8 @@ class TaskDisplayComponent extends CssLayout {
     private SimpleTaskList taskList;
     private boolean isDisplayTaskListInfo;
 
-    public TaskDisplayComponent(final SimpleTaskList taskList,
-                                final boolean isDisplayTaskListInfo) {
+    public TaskDisplayComponent(SimpleTaskList taskList,
+                                boolean isDisplayTaskListInfo) {
         this.taskList = taskList;
         this.isDisplayTaskListInfo = isDisplayTaskListInfo;
         this.setStyleName("taskdisplay-component");
@@ -140,7 +140,6 @@ class TaskDisplayComponent extends CssLayout {
 
                     });
             this.addComponent(previewForm);
-
             previewForm.setBean(this.taskList);
         }
 
@@ -149,14 +148,14 @@ class TaskDisplayComponent extends CssLayout {
                         TaskTableFieldDef.startdate, TaskTableFieldDef.duedate,
                         TaskTableFieldDef.assignee,
                         TaskTableFieldDef.percentagecomplete));
-        this.addComponent(this.taskDisplay);
+        addComponent(taskDisplay);
 
-        this.taskDisplay.addTableListener(new TableClickListener() {
+        taskDisplay.addTableListener(new TableClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void itemClick(final TableClickEvent event) {
-                final SimpleTask task = (SimpleTask) event.getData();
+                SimpleTask task = (SimpleTask) event.getData();
                 if ("taskname".equals(event.getFieldName())) {
                     EventBusFactory.getInstance().post(
                             new TaskEvent.GotoRead(TaskDisplayComponent.this,
@@ -166,13 +165,11 @@ class TaskDisplayComponent extends CssLayout {
                         || "pendingTask".equals(event.getFieldName())
                         || "deleteTask".equals(event.getFieldName())) {
                     TaskDisplayComponent.this.removeAllComponents();
-                    final ProjectTaskListService taskListService = ApplicationContextUtil
+                    ProjectTaskListService taskListService = ApplicationContextUtil
                             .getSpringBean(ProjectTaskListService.class);
-                    TaskDisplayComponent.this.taskList = taskListService
-                            .findById(
-                                    TaskDisplayComponent.this.taskList.getId(),
-                                    AppContext.getAccountId());
-                    TaskDisplayComponent.this.showTaskGroupInfo();
+                    taskList = taskListService
+                            .findById(taskList.getId(), AppContext.getAccountId());
+                    showTaskGroupInfo();
                 }
             }
         });
@@ -187,10 +184,8 @@ class TaskDisplayComponent extends CssLayout {
                         TaskDisplayComponent.this
                                 .removeComponent(TaskDisplayComponent.this.createTaskBtn
                                         .getParent());
-
                         TaskAddPopup taskAddView = new TaskAddPopup(
-                                TaskDisplayComponent.this,
-                                TaskDisplayComponent.this.taskList);
+                                TaskDisplayComponent.this, taskList);
                         TaskDisplayComponent.this.addComponent(taskAddView);
                     }
                 });
@@ -198,12 +193,12 @@ class TaskDisplayComponent extends CssLayout {
                 .canWrite(ProjectRolePermissionCollections.TASKS));
         this.createTaskBtn.setIcon(FontAwesome.PLUS);
         this.createTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+
         final VerticalLayout taskGroupFooter = new VerticalLayout();
         taskGroupFooter.setMargin(true);
         taskGroupFooter.addStyleName("task-list-footer");
         taskGroupFooter.addComponent(this.createTaskBtn);
-        taskGroupFooter.setComponentAlignment(this.createTaskBtn,
-                Alignment.MIDDLE_RIGHT);
+        taskGroupFooter.setComponentAlignment(this.createTaskBtn, Alignment.MIDDLE_RIGHT);
         this.addComponent(taskGroupFooter);
 
         if (CollectionUtils.isNotEmpty(taskList.getSubTasks())) {
@@ -220,18 +215,17 @@ class TaskDisplayComponent extends CssLayout {
     }
 
     private void displayTasks() {
-        if (this.criteria == null) {
-            final TaskSearchCriteria criteria = new TaskSearchCriteria();
+        if (criteria == null) {
+            criteria = new TaskSearchCriteria();
             criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
                     .getProjectId()));
-            criteria.setTaskListId(new NumberSearchField(this.taskList.getId()));
+            criteria.setTaskListId(new NumberSearchField(taskList.getId()));
             criteria.setStatuses(new SetSearchField<>(SearchField.AND,
                     new String[]{StatusI18nEnum.Open.name(),
                             StatusI18nEnum.Pending.name()}));
-            this.criteria = criteria;
         }
 
-        this.taskDisplay.setSearchCriteria(this.criteria);
+        taskDisplay.setSearchCriteria(criteria);
     }
 
     public void saveTaskSuccess(final SimpleTask task) {

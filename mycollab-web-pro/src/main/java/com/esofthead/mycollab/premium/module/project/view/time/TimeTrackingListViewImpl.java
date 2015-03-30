@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
@@ -68,8 +69,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
     public TimeTrackingListViewImpl() {
         this.setMargin(new MarginInfo(false, true, false, true));
 
-        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withSpacing(false).withMargin(false)
-                .withWidth("100%");
+        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
         headerWrapper.addStyleName(UIConstants.LAYOUT_LOG);
 
         this.itemTimeLoggingService = ApplicationContextUtil
@@ -99,7 +99,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         });
 
 
-        final MHorizontalLayout headerLayout = new MHorizontalLayout().withSpacing(true).withMargin(false).withWidth("100%");
+        final MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%");
         headerWrapper.addComponent(headerLayout);
 
         this.lbTimeRange = new Label("", ContentMode.HTML);
@@ -121,7 +121,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
         exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
 
-        VerticalLayout popupButtonsControl = new VerticalLayout();
+        OptionPopupContent popupButtonsControl = new OptionPopupContent();
         exportButtonControl.setContent(popupButtonsControl);
 
         Button exportPdfBtn = new Button("Pdf");
@@ -129,16 +129,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
                 constructStreamResource(ReportExportType.PDF));
         exportPdfDownloader.extend(exportPdfBtn);
         exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
-        exportPdfBtn.setStyleName("link");
-        popupButtonsControl.addComponent(exportPdfBtn);
+        popupButtonsControl.addOption(exportPdfBtn);
 
         Button exportExcelBtn = new Button("Excel");
         FileDownloader excelDownloader = new FileDownloader(
                 constructStreamResource(ReportExportType.EXCEL));
         excelDownloader.extend(exportExcelBtn);
         exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
-        exportExcelBtn.setStyleName("link");
-        popupButtonsControl.addComponent(exportExcelBtn);
+        popupButtonsControl.addOption(exportExcelBtn);
 
         headerLayout.addComponent(exportButtonControl);
         headerLayout.setComponentAlignment(this.exportButtonControl,
@@ -158,8 +156,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
                 title, exportType,
                 ApplicationContextUtil
-                        .getSpringBean(ItemTimeLoggingService.class),
-                TimeTrackingListViewImpl.this.itemTimeLogginSearchCriteria);
+                        .getSpringBean(ItemTimeLoggingService.class), itemTimeLogginSearchCriteria);
         return new StreamResource(exportStream,
                 ExportTimeLoggingStreamResource
                         .getDefaultExportFileName(exportType));

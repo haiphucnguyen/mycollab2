@@ -688,11 +688,6 @@
     &:active .v-button-wrap .v-button-caption, &:focus .v-button-wrap .v-button-caption, &.selected .v-button-wrap .v-button-caption {
       color: white;
     }
-    &.v-button-left:active, &.v-button-middle:active, &.v-button-right:active, &.v-button-left:focus, &.v-button-middle:focus, &.v-button-right:focus, &.active {
-      background-image: url("icons/grad-dark-top2.png");
-      background-repeat: no-repeat;
-      background-position: left bottom;
-    }
     background-color: rgb(123, 123, 123);
     color: white;
   }

@@ -320,4 +320,33 @@
       }
     }
   }
+
+  .optionPopupContent {
+    background-color:antiquewhite;
+    margin:-5px;
+    .action-wrap {
+      &:hover {
+        background-color: aquamarine;
+      }
+      .v-button-action {
+        background-color:transparent;
+        text-align:left;
+        .v-button-wrap {
+          margin: 0px;
+          &:hover {
+            background-color: transparent;
+          }
+          .v-button-caption {
+            color: gray;
+          }
+          .v-icon {
+            color: brown;
+          }
+        }
+      }
+      .v-disabled.v-button-action {
+        border:none;
+      }
+    }
+  }
 }

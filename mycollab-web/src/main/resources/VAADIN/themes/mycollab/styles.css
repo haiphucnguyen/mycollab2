@@ -395,6 +395,40 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	color: #525252;
 }
 
+.optionPopupContent {
+	background-color: antiquewhite;
+	margin: -5px;
+}
+
+.optionPopupContent .action-wrap:hover {
+	background-color: aquamarine;
+}
+
+.optionPopupContent .action-wrap .v-button-action {
+	background-color: transparent;
+	text-align: left;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap {
+	margin: 0px;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap:hover {
+	background-color: transparent;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap .v-button-caption {
+	color: gray;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap .v-icon {
+	color: brown;
+}
+
+.optionPopupContent .action-wrap .v-disabled.v-button-action {
+	border: none;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -7105,20 +7139,6 @@ div.v-button.bold  > .v-button-wrap, div.v-button.bold:active > .v-button-wrap, 
 	padding-left: 8px;
 }
 
-.popuplistindicator.v-popupbutton {
-	background-color: transparent;
-}
-
-.popuplistindicator.v-popupbutton .v-popup-indicator:before {
-	font-size: 1em;
-	font-family: FontAwesome;
-	content: "\f150";
-}
-
-.popuplistindicator.v-popupbutton .v-button-wrap {
-	background-color: transparent;
-}
-
 .noDefaultIcon.v-popupbutton .v-popup-indicator:before {
 	content: "";
 }
@@ -7239,26 +7259,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .v-button.button-icon-only.icon-18px .v-button-wrap {
 	font-size: 18px;
-}
-
-.v-button.v-button-action {
-	background-color: transparent;
-}
-
-.v-button.v-button-action .v-button-wrap {
-	align: left;
-}
-
-.v-button.v-button-action .v-button-wrap .v-icon {
-	color: brown;
-}
-
-.popupContent .v-button-action {
-	width: 100%;
-}
-
-.popupContent .v-button-action:hover {
-	background-color: antiquewhite;
 }
 
 .v-icon .black {
@@ -7618,6 +7618,40 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .v-label.icon-18px .v-icon {
 	font-size: 18px;
 	color: #525252;
+}
+
+.optionPopupContent {
+	background-color: antiquewhite;
+	margin: -5px;
+}
+
+.optionPopupContent .action-wrap:hover {
+	background-color: aquamarine;
+}
+
+.optionPopupContent .action-wrap .v-button-action {
+	background-color: transparent;
+	text-align: left;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap {
+	margin: 0px;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap:hover {
+	background-color: transparent;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap .v-button-caption {
+	color: gray;
+}
+
+.optionPopupContent .action-wrap .v-button-action .v-button-wrap .v-icon {
+	color: brown;
+}
+
+.optionPopupContent .action-wrap .v-disabled.v-button-action {
+	border: none;
 }
 
 .crm-module {
@@ -8620,12 +8654,6 @@ div.v-csslayout.followers-container .v-checkbox {
 
 .v-buttongroup.toggle-btn-group .v-button:active .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button:focus .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
 	color: white;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.v-button-left:active, .v-buttongroup.toggle-btn-group .v-button.v-button-middle:active, .v-buttongroup.toggle-btn-group .v-button.v-button-right:active, .v-buttongroup.toggle-btn-group .v-button.v-button-left:focus, .v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus, .v-buttongroup.toggle-btn-group .v-button.v-button-right:focus, .v-buttongroup.toggle-btn-group .v-button.active {
-	background-image: url(components/icons/grad-dark-top2.png);
-	background-repeat: no-repeat;
-	background-position: left bottom;
 }
 
 .widget-row {

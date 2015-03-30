@@ -47,7 +47,6 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
     private String widthVal;
 
     protected List<T> selectedItems = new ArrayList<>();
-
     protected List<T> items = new ArrayList<>();
 
     public MultiSelectComp(final String displayName) {

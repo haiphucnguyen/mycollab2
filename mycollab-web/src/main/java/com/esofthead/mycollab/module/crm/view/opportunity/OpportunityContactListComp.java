@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -80,12 +80,9 @@ public class OpportunityContactListComp
 
     @Override
     protected Component generateTopControls() {
-        HorizontalLayout controlsBtnWrap = new HorizontalLayout();
-        controlsBtnWrap.setWidth("100%");
+        MHorizontalLayout controlsBtnWrap = new MHorizontalLayout().withSpacing(false).withWidth("100%");
 
-        HorizontalLayout notesWrap = new HorizontalLayout();
-        notesWrap.setWidth("100%");
-        notesWrap.setSpacing(true);
+        MHorizontalLayout notesWrap = new MHorizontalLayout().withWidth("100%");
         Label noteLbl = new Label("Note: ");
         noteLbl.setSizeUndefined();
         noteLbl.setStyleName("list-note-lbl");
@@ -104,8 +101,7 @@ public class OpportunityContactListComp
 
             noteBlock.addComponent(note);
         }
-        notesWrap.addComponent(noteBlock);
-        notesWrap.setExpandRatio(noteBlock, 1.0f);
+        notesWrap.with(noteBlock).expand(noteBlock);
 
         controlsBtnWrap.addComponent(notesWrap);
 
@@ -134,9 +130,9 @@ public class OpportunityContactListComp
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        final OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(
+                        OpportunityContactSelectionWindow contactsWindow = new OpportunityContactSelectionWindow(
                                 OpportunityContactListComp.this);
-                        final ContactSearchCriteria criteria = new ContactSearchCriteria();
+                        ContactSearchCriteria criteria = new ContactSearchCriteria();
                         criteria.setSaccountid(new NumberSearchField(AppContext
                                 .getAccountId()));
                         UI.getCurrent().addWindow(contactsWindow);
@@ -145,18 +141,15 @@ public class OpportunityContactListComp
                     }
                 });
         selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
-        selectBtn.setStyleName("link");
-        VerticalLayout buttonControlLayout = new VerticalLayout();
-        buttonControlLayout.addComponent(selectBtn);
+        OptionPopupContent buttonControlLayout = new OptionPopupContent();
+        buttonControlLayout.addOption(selectBtn);
         controlsBtn.setContent(buttonControlLayout);
 
-        controlsBtnWrap.addComponent(controlsBtn);
-        controlsBtnWrap.setComponentAlignment(controlsBtn,
-                Alignment.MIDDLE_RIGHT);
+        controlsBtnWrap.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
         return controlsBtnWrap;
     }
 
-    public void displayContacts(final Opportunity opportunity) {
+    public void displayContacts(Opportunity opportunity) {
         this.opportunity = opportunity;
         loadContacts();
     }
@@ -285,7 +278,5 @@ public class OpportunityContactListComp
             beanBlock.addComponent(blockContent);
             return beanBlock;
         }
-
     }
-
 }

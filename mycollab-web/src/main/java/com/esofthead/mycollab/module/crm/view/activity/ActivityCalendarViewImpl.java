@@ -67,7 +67,6 @@ import java.util.Locale;
 @ViewComponent
 public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         ActivityCalendarView {
-
     private static final long serialVersionUID = 1L;
     private final PopupButton calendarActionBtn;
     private CalendarDisplay calendarComponent;
@@ -83,11 +82,8 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         super();
 
         this.addStyleName("activityCalendar");
-
-        calendarActionBtn = new PopupButton(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CREATE));
+        calendarActionBtn = new PopupButton(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE));
         calendarActionBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-
         initContent();
     }
 
@@ -190,10 +186,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         actionPanel.setComponentAlignment(calendarActionBtn,
                 Alignment.MIDDLE_RIGHT);
 
-        VerticalLayout actionBtnLayout = new VerticalLayout();
-        actionBtnLayout.setMargin(true);
-        actionBtnLayout.setSpacing(true);
-        actionBtnLayout.setWidth("150px");
+        OptionPopupContent actionBtnLayout = new OptionPopupContent().withWidth("150px");
 
         Button.ClickListener listener = new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -208,7 +201,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 } else if (caption.equals("New Call")) {
                     EventBusFactory.getInstance().post(
                             new ActivityEvent.CallAdd(this, null));
-                } else if (caption.equals("New Event")) {
+                } else if (caption.equals("New Meeting")) {
                     EventBusFactory.getInstance().post(
                             new ActivityEvent.MeetingAdd(this, null));
                 }
@@ -216,19 +209,19 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         };
 
         ButtonLink todoBtn = new ButtonLink("New Task", listener);
-        actionBtnLayout.addComponent(todoBtn);
+        actionBtnLayout.addOption(todoBtn);
         todoBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
         todoBtn.setEnabled(AppContext
                 .canWrite(RolePermissionCollections.CRM_TASK));
 
         Button callBtn = new ButtonLink("New Call", listener);
-        actionBtnLayout.addComponent(callBtn);
+        actionBtnLayout.addOption(callBtn);
         callBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CALL));
         callBtn.setEnabled(AppContext
                 .canWrite(RolePermissionCollections.CRM_CALL));
 
         ButtonLink meetingBtn = new ButtonLink("New Meeting", listener);
-        actionBtnLayout.addComponent(meetingBtn);
+        actionBtnLayout.addOption(meetingBtn);
         meetingBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
         meetingBtn.setEnabled(AppContext
                 .canWrite(RolePermissionCollections.CRM_MEETING));
@@ -761,7 +754,6 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         }
 
         private class EditForm extends AdvancedEditBeanForm<MeetingWithBLOBs> {
-
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -773,7 +765,6 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
             }
 
             private class FormLayoutFactory extends MeetingFormLayoutFactory {
-
                 private static final long serialVersionUID = 1L;
 
                 public FormLayoutFactory() {
@@ -782,12 +773,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 }
 
                 private Layout createButtonControls() {
-                    final HorizontalLayout controlPanel = new HorizontalLayout();
-
-                    final HorizontalLayout layout = new HorizontalLayout();
-
-                    layout.setSpacing(true);
-                    layout.setStyleName("addNewControl");
+                    final MHorizontalLayout layout = new MHorizontalLayout().withStyleName("addNewControl");
                     Button saveBtn = new Button(
                             AppContext
                                     .getMessage(GenericI18Enum.BUTTON_SAVE),
@@ -829,10 +815,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                     layout.addComponent(cancelBtn);
                     layout.setComponentAlignment(cancelBtn,
                             Alignment.MIDDLE_CENTER);
-                    controlPanel.addComponent(layout);
-                    controlPanel.setComponentAlignment(layout,
-                            Alignment.MIDDLE_RIGHT);
-                    return controlPanel;
+                    return layout;
                 }
 
                 @Override
@@ -893,7 +876,6 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
             }
 
             private class MeetingStatusComboBox extends ValueComboBox {
-
                 private static final long serialVersionUID = 1L;
 
                 public MeetingStatusComboBox() {

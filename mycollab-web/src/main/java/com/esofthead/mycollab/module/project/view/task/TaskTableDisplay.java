@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -42,7 +43,6 @@ import com.vaadin.ui.UI;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -164,10 +164,11 @@ public class TaskTableDisplay extends
                 final SimpleTask task = getBeanByIndex(itemId);
                 PopupButton taskSettingPopupBtn = new PopupButton();
                 taskSettingPopupBtn.setIcon(FontAwesome.COGS);
-                taskSettingPopupBtn.setStyleName("link");
-                taskSettingPopupBtn.addStyleName("noDefaultIcon");
 
-                MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("100px");
+                taskSettingPopupBtn.addStyleName("noDefaultIcon");
+                taskSettingPopupBtn.addStyleName("button-icon-only");
+
+                OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
 
                 Button editButton = new Button(AppContext
                         .getMessage(GenericI18Enum.BUTTON_EDIT),
@@ -184,8 +185,7 @@ public class TaskTableDisplay extends
                 editButton.setEnabled(CurrentProjectVariables
                         .canWrite(ProjectRolePermissionCollections.TASKS));
                 editButton.setIcon(FontAwesome.EDIT);
-                editButton.setStyleName("link");
-                filterBtnLayout.addComponent(editButton);
+                filterBtnLayout.addOption(editButton);
 
                 if ((task.getPercentagecomplete() != null && task
                         .getPercentagecomplete() != 100)
@@ -212,10 +212,9 @@ public class TaskTableDisplay extends
                                 }
                             });
                     closeBtn.setIcon(FontAwesome.CHECK_CIRCLE_O);
-                    closeBtn.setStyleName("link");
                     closeBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
-                    filterBtnLayout.addComponent(closeBtn);
+                    filterBtnLayout.addOption(closeBtn);
                 } else {
                     Button reOpenBtn = new Button("ReOpen",
                             new Button.ClickListener() {
@@ -237,10 +236,9 @@ public class TaskTableDisplay extends
                                 }
                             });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
-                    reOpenBtn.setStyleName("link");
                     reOpenBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
-                    filterBtnLayout.addComponent(reOpenBtn);
+                    filterBtnLayout.addOption(reOpenBtn);
                 }
 
                 if (!"Pending".equals(task.getStatus())) {
@@ -266,10 +264,9 @@ public class TaskTableDisplay extends
                                     }
                                 });
                         pendingBtn.setIcon(FontAwesome.HDD_O);
-                        pendingBtn.setStyleName("link");
                         pendingBtn.setEnabled(CurrentProjectVariables
                                 .canWrite(ProjectRolePermissionCollections.TASKS));
-                        filterBtnLayout.addComponent(pendingBtn);
+                        filterBtnLayout.addOption(pendingBtn);
                     }
                 } else {
                     Button reOpenBtn = new Button("ReOpen",
@@ -293,10 +290,9 @@ public class TaskTableDisplay extends
                                 }
                             });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
-                    reOpenBtn.setStyleName("link");
                     reOpenBtn.setEnabled(CurrentProjectVariables
                             .canWrite(ProjectRolePermissionCollections.TASKS));
-                    filterBtnLayout.addComponent(reOpenBtn);
+                    filterBtnLayout.addOption(reOpenBtn);
                 }
 
                 Button deleteBtn = new Button(AppContext
@@ -341,9 +337,8 @@ public class TaskTableDisplay extends
                             }
                         });
                 deleteBtn.setIcon(FontAwesome.TRASH_O);
-                deleteBtn.setStyleName("link");
                 deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
-                filterBtnLayout.addComponent(deleteBtn);
+                filterBtnLayout.addOption(deleteBtn);
 
                 taskSettingPopupBtn.setContent(filterBtnLayout);
                 return taskSettingPopupBtn;

@@ -72,6 +72,7 @@ public class UIConstants {
 	public static final String FULL_BORDER_TABLE = "full-border-table";
 	public static final String LAYOUT_LOG = "layout-log";
 	public static final String CONTENT_WRAPPER = "content-wrapper";
+	public static final String OPTION_POPUP_CONTENT = "optionPopupContent";
 
     public static final String BUTTON_SMALL_PADDING = "small-padding";
     public static final String BUTTON_ICON_ONLY = "button-icon-only";

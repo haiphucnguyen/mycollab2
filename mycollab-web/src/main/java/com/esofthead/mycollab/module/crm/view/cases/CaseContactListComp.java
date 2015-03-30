@@ -33,10 +33,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.FontIconLabel;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -117,10 +114,8 @@ public class CaseContactListComp extends
 					}
 				});
 		selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
-		selectBtn.setStyleName("link");
-
-		VerticalLayout buttonControlsLayout = new VerticalLayout();
-		buttonControlsLayout.addComponent(selectBtn);
+		OptionPopupContent buttonControlsLayout = new OptionPopupContent();
+		buttonControlsLayout.addOption(selectBtn);
 		controlsBtn.setContent(buttonControlsLayout);
 
 		controlsBtn.setEnabled(AppContext

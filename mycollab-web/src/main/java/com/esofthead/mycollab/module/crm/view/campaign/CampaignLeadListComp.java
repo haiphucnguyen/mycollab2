@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,10 +34,7 @@ import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp2;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.FontIconLabel;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -65,6 +62,7 @@ public class CampaignLeadListComp extends
     protected Component generateTopControls() {
         VerticalLayout controlsBtnWrap = new VerticalLayout();
         controlsBtnWrap.setWidth("100%");
+
         final SplitButton controlsBtn = new SplitButton();
         controlsBtn.setSizeUndefined();
         controlsBtn.setEnabled(AppContext
@@ -89,9 +87,9 @@ public class CampaignLeadListComp extends
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        final CampaignLeadSelectionWindow leadsWindow = new CampaignLeadSelectionWindow(
+                        CampaignLeadSelectionWindow leadsWindow = new CampaignLeadSelectionWindow(
                                 CampaignLeadListComp.this);
-                        final LeadSearchCriteria criteria = new LeadSearchCriteria();
+                        LeadSearchCriteria criteria = new LeadSearchCriteria();
                         criteria.setSaccountid(new NumberSearchField(AppContext
                                 .getAccountId()));
                         UI.getCurrent().addWindow(leadsWindow);
@@ -100,9 +98,8 @@ public class CampaignLeadListComp extends
                     }
                 });
         selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
-        selectBtn.setStyleName("link");
-        VerticalLayout buttonControlLayout = new VerticalLayout();
-        buttonControlLayout.addComponent(selectBtn);
+        OptionPopupContent buttonControlLayout = new OptionPopupContent();
+        buttonControlLayout.addOption(selectBtn);
         controlsBtn.setContent(buttonControlLayout);
 
         controlsBtnWrap.addComponent(controlsBtn);

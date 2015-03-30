@@ -27,10 +27,7 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.CrmViewHeader;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.esofthead.mycollab.vaadin.ui.SplitButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -76,7 +73,7 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
                     }
                 });
 
-        final VerticalLayout btnControlsLayout = new VerticalLayout();
+        final OptionPopupContent btnControlsLayout = new OptionPopupContent();
         controlsBtn.setContent(btnControlsLayout);
 
         final Button createMeetingBtn = new Button("New Meeting",
@@ -90,8 +87,7 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
                                 new ActivityEvent.MeetingAdd(this, null));
                     }
                 });
-        createMeetingBtn.setStyleName("link");
-        btnControlsLayout.addComponent(createMeetingBtn);
+        btnControlsLayout.addOption(createMeetingBtn);
         createMeetingBtn.setEnabled(AppContext
                 .canWrite(RolePermissionCollections.CRM_MEETING));
         final Button createCallBtn = new Button("New Call",
@@ -105,10 +101,9 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
                                 new ActivityEvent.CallAdd(this, null));
                     }
                 });
-        createCallBtn.setStyleName("link");
         createCallBtn.setEnabled(AppContext
                 .canWrite(RolePermissionCollections.CRM_CALL));
-        btnControlsLayout.addComponent(createCallBtn);
+        btnControlsLayout.addOption(createCallBtn);
 
         addHeaderRight(controlsBtn);
 

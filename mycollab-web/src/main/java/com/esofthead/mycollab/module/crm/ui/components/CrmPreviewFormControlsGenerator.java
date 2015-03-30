@@ -19,15 +19,14 @@ package com.esofthead.mycollab.module.crm.ui.components;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 /**
@@ -83,7 +82,7 @@ public class CrmPreviewFormControlsGenerator<T> {
     }
 
     public HorizontalLayout createButtonControls(int buttonEnableFlags,
-                                                 final String permissionItem) {
+                                                 String permissionItem) {
         layout.setSizeUndefined();
 
         boolean canRead = true;
@@ -95,8 +94,7 @@ public class CrmPreviewFormControlsGenerator<T> {
             canAccess = AppContext.canAccess(permissionItem);
         }
 
-        MVerticalLayout popupButtonsControl = new MVerticalLayout().withMargin(new MarginInfo(false, true, false,
-                true));
+        OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
         if ((buttonEnableFlags & ADD_BTN_PRESENTED) == ADD_BTN_PRESENTED) {
             Button addBtn = new Button(
@@ -168,8 +166,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                         }
                     });
             cloneBtn.setIcon(FontAwesome.ROAD);
-            cloneBtn.setStyleName("link");
-            popupButtonsControl.addComponent(cloneBtn);
+            popupButtonsControl.addOption(cloneBtn);
         }
 
         if ((buttonEnableFlags & HISTORY_BTN_PRESENTED) == HISTORY_BTN_PRESENTED) {
@@ -185,8 +182,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                         }
                     });
             historyBtn.setIcon(FontAwesome.HISTORY);
-            historyBtn.setStyleName("link");
-            popupButtonsControl.addComponent(historyBtn);
+            popupButtonsControl.addOption(historyBtn);
         }
 
         optionBtn.setContent(popupButtonsControl);
@@ -206,7 +202,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    final T item = previewForm.getBean();
+                     T item = previewForm.getBean();
                     previewForm.fireGotoPrevious(item);
                 }
             });
@@ -224,7 +220,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    final T item = previewForm.getBean();
+                     T item = previewForm.getBean();
                     previewForm.fireGotoNextItem(item);
                 }
             });

@@ -96,18 +96,15 @@ public class ContactOpportunityListComp
                     }
                 });
         selectBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
-        selectBtn.setStyleName("link");
-
-        VerticalLayout buttonControlsLayout = new VerticalLayout();
-        buttonControlsLayout.addComponent(selectBtn);
+        OptionPopupContent buttonControlsLayout = new OptionPopupContent();
+        buttonControlsLayout.addOption(selectBtn);
         controlsBtn.setContent(buttonControlsLayout);
 
         controlsBtn.setEnabled(AppContext
                 .canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 
         controlsBtnWrap.addComponent(controlsBtn);
-        controlsBtnWrap.setComponentAlignment(controlsBtn,
-                Alignment.MIDDLE_RIGHT);
+        controlsBtnWrap.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
         return controlsBtnWrap;
     }
 
