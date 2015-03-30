@@ -11439,10 +11439,6 @@ div.v-stylecalendar .weekdays TD {
 	border-bottom: 1px solid #CFCFCF;
 }
 
-.no-border .addview-layout-body .v-gridlayout {
-	border: none;
-}
-
 .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
 	padding-top: 5px;
 }
@@ -11460,7 +11456,6 @@ div.v-stylecalendar .weekdays TD {
 }
 
 .addview-layout-body .gridform-caption {
-	background-color: #E0E0E0;
 	border-left: 1px solid #CFCFCF;
 	border-right: 1px solid #c8c8c8;
 }
