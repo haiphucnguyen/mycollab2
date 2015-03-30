@@ -94,16 +94,6 @@
     border-color: $border-color;
   }
 
-  .v-button {
-    text-shadow: 0 1px 0 #DFDFDF;
-  }
-
-  .v-disabled.v-button {
-    &:focus, &:active {
-      text-shadow: 0 1px 0 #DFDFDF;
-    }
-  }
-
   .v-button.v-button-action {
     background-color:transparent;
     .v-button-wrap {
@@ -206,11 +196,6 @@
     }
   }
 
-  .v-button-borderless .v-button-wrap {
-    display: inline-block;
-    vertical-align: top;
-  }
-
   .v-button-link {
     color: #006dac;
     &:focus, &:active {
@@ -271,17 +256,6 @@
   }
 
   div.v-button-borderless {
-    margin: 0px;
-    &:focus {
-      margin: 0px;
-    }
-  }
-
-  .v-button-borderless:active {
-    margin: 0px;
-  }
-
-  div.v-disabled.v-button-borderless {
     margin: 0px;
     &:focus {
       margin: 0px;
@@ -426,7 +400,7 @@
     font-weight: normal;
   }
 
-  .v-button-link:focus .v-button-caption, .v-button-borderless:focus .v-button-caption {
+  .v-button-link:focus .v-button-caption {
     border: none;
     margin: 0px;
   }

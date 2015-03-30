@@ -153,7 +153,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         headerContentTop.with(headerLabel).withAlign(headerLabel, Alignment.TOP_LEFT);
 
         if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
-            final Button createProjectBtn = new Button(
+             Button createProjectBtn = new Button(
                     AppContext
                             .getMessage(ProjectCommonI18nEnum.BUTTON_NEW_PROJECT),
                     new Button.ClickListener() {
