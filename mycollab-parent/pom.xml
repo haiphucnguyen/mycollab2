@@ -7,6 +7,9 @@
     <artifactId>parent</artifactId>
     <version>5.0.2</version>
     <packaging>pom</packaging>
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
     <properties>
         <springVersion>4.1.6.RELEASE</springVersion>
         <aspectjVersion>1.8.5</aspectjVersion>
@@ -283,7 +286,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.3</version>
                 <configuration>
                     <source>${javaVersion}</source>
                     <target>${javaVersion}</target>
@@ -344,7 +347,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.17</version>
+                <version>2.18.1</version>
                 <configuration>
                     <argLine>${argLine}</argLine>
                 </configuration>
@@ -353,7 +356,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.2.201409121644</version>
+                <version>0.7.4.201502262128</version>
                 <executions>
                     <execution>
                         <goals>
@@ -380,7 +383,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>2.1</version>
+                    <version>2.5</version>
                 </plugin>
             </plugins>
         </pluginManagement>

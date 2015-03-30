@@ -82,7 +82,6 @@ public final class MainView extends AbstractPageView {
     private static Logger LOG = LoggerFactory.getLogger(MainView.class);
 
     private CssLayout bodyLayout;
-
     private ServiceMenu serviceMenu;
 
     public MainView() {
@@ -137,17 +136,6 @@ public final class MainView extends AbstractPageView {
 
         MHorizontalLayout footerRight = new MHorizontalLayout();
 
-        Button sendFeedback = new Button("Feedback");
-        sendFeedback.setStyleName("link");
-        sendFeedback.setIcon(FontAwesome.REPLY_ALL);
-        sendFeedback.addClickListener(new ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                UI.getCurrent().addWindow(new FeedbackWindow());
-            }
-        });
         Link blogLink = new Link("Blog", new ExternalResource(
                 "https://www.mycollab.com/blog"));
         blogLink.setIcon(FontAwesome.RSS);
@@ -163,6 +151,25 @@ public final class MainView extends AbstractPageView {
         wikiLink.setTargetName("_blank");
         wikiLink.setIcon(FontAwesome.UNIVERSITY);
 
+        Button sendFeedback = new Button("Feedback");
+        sendFeedback.setStyleName("link");
+        sendFeedback.setIcon(FontAwesome.REPLY_ALL);
+        sendFeedback.addClickListener(new ClickListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                UI.getCurrent().addWindow(new FeedbackWindow());
+            }
+        });
+
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
+            Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge" +
+                    ".net/projects/mycollab/reviews/new"));
+            rateUsLink.setTargetName("_blank");
+            rateUsLink.setIcon(FontAwesome.THUMBS_O_UP);
+            footerRight.with(rateUsLink);
+        }
         footerRight.with(blogLink, forumLink, wikiLink, sendFeedback);
         footer.addComponent(footerRight, "footer-right");
         return footer;
@@ -370,8 +377,7 @@ public final class MainView extends AbstractPageView {
 
         final PopupButton accountMenu = new PopupButton(AppContext.getSession()
                 .getDisplayName());
-        final VerticalLayout accLayout = new VerticalLayout();
-        accLayout.setWidth("140px");
+        final OptionPopupContent accLayout = new OptionPopupContent().withWidth("140px");
 
         final Button myProfileBtn = new Button(
                 AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE),
@@ -387,8 +393,7 @@ public final class MainView extends AbstractPageView {
                     }
                 });
         myProfileBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
-        myProfileBtn.setStyleName("link");
-        accLayout.addComponent(myProfileBtn);
+        accLayout.addOption(myProfileBtn);
 
         final Button myAccountBtn = new Button(
                 AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
@@ -403,9 +408,8 @@ public final class MainView extends AbstractPageView {
                                         new String[]{"billing"}));
                     }
                 });
-        myAccountBtn.setStyleName("link");
         myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
-        accLayout.addComponent(myAccountBtn);
+        accLayout.addOption(myAccountBtn);
 
         final Button userMgtBtn = new Button(
                 AppContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES),
@@ -420,9 +424,8 @@ public final class MainView extends AbstractPageView {
                                         new String[]{"user", "list"}));
                     }
                 });
-        userMgtBtn.setStyleName("link");
         userMgtBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
-        accLayout.addComponent(userMgtBtn);
+        accLayout.addOption(userMgtBtn);
 
         final Button signoutBtn = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT),
@@ -436,9 +439,8 @@ public final class MainView extends AbstractPageView {
                                 new ShellEvent.LogOut(this, null));
                     }
                 });
-        signoutBtn.setStyleName("link");
         signoutBtn.setIcon(FontAwesome.SIGN_OUT);
-        accLayout.addComponent(signoutBtn);
+        accLayout.addOption(signoutBtn);
 
         accountMenu.setContent(accLayout);
         accountMenu.setStyleName("accountMenu");
