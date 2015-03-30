@@ -22,13 +22,6 @@
     }
   }
 
-  .v-disabled.v-button-link {
-    color: #6482B3;
-    &:focus {
-      color: #6482B3;
-    }
-  }
-
   .v-disabled.v-button-default {
     border-color: #495972;
     &:focus, &:active {
@@ -74,13 +67,6 @@
 
   .v-button-down .v-button-wrap {
     border-color: $border-color;
-  }
-
-  .v-disabled.v-button-link {
-    color: #006dac;
-    &:focus {
-      color: #006dac;
-    }
   }
 
   .v-button-default {
@@ -134,23 +120,29 @@
     margin-left: 0px;
   }
 
+  .v-disabled.v-button-link {
+    color: #6482B3;
+    margin: 0px;
+    &:focus {
+      color: #6482B3;
+      margin: 0px;
+    }
+  }
+
   .v-button.v-button-link {
     margin: 0px;
     padding: 0px;
     text-align: left;
-  }
-
-  div.v-disabled.v-button-link {
-    margin: 0px;
-  }
-
-  .v-button-link {
     color: #006dac;
     &:focus, &:active {
       color: #006dac;
       background-color: transparent;
       border-radius: 0px;
       margin: 0px;
+      .v-button-caption {
+        border: none;
+        margin: 0px;
+      }
     }
     .v-button-caption {
       text-decoration: none;
@@ -188,6 +180,9 @@
       width: 100%;
       display: table-row;
     }
+    .v-icon {
+      margin-left: 0;
+    }
   }
 
   .v-button {
@@ -208,9 +203,11 @@
     vertical-align: top;
   }
 
-  div.v-disabled.v-button-link {
+  .v-disabled.v-button-link {
+    color: #006dac;
     margin: 0px;
     &:focus {
+      color: #006dac;
       margin: 0px;
     }
   }
@@ -357,11 +354,6 @@
     font-weight: normal;
   }
 
-  .v-button-link:focus .v-button-caption {
-    border: none;
-    margin: 0px;
-  }
-
   /* End round border button */
 
   /* Background has SELECT icon */
@@ -385,10 +377,6 @@
   }
 
   /* End Background has SELECT icon */
-
-  .v-button-link .v-icon {
-    margin-left: 0;
-  }
 
   div.v-button.bold {
     > .v-button-wrap, &:active > .v-button-wrap, &:focus > .v-button-wrap {
