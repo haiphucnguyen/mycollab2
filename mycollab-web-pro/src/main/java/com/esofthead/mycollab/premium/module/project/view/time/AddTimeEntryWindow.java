@@ -33,313 +33,308 @@ import java.util.*;
 import java.util.Calendar;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0
- * 
  */
-public class AddTimeEntryWindow extends Window implements
-		AssignmentSelectableComp {
-	private static final long serialVersionUID = 1L;
+public class AddTimeEntryWindow extends Window implements AssignmentSelectableComp {
+    private static final long serialVersionUID = 1L;
 
-	private Date selectedDate;
-	private StyleCalendarFieldExp weekSelectionCalendar;
-	private CheckBox isBillableCheckBox;
-	private Table timeInputTable;
-	private ProjectMemberSelectionBox projectMemberSelectionBox;
-	private RichTextArea descArea;
-	private TimeTrackingListView parentView;
-	private ProjectGenericTask selectionTask;
-	private HorizontalLayout taskLayout;
+    private Date selectedDate;
+    private StyleCalendarFieldExp weekSelectionCalendar;
+    private CheckBox isBillableCheckBox;
+    private Table timeInputTable;
+    private ProjectMemberSelectionBox projectMemberSelectionBox;
+    private RichTextArea descArea;
+    private TimeTrackingListView parentView;
+    private ProjectGenericTask selectionTask;
+    private HorizontalLayout taskLayout;
 
     private ItemTimeLoggingService itemTimeLoggingService;
 
-	public AddTimeEntryWindow(TimeTrackingListView view) {
+    public AddTimeEntryWindow(TimeTrackingListView view) {
         itemTimeLoggingService = ApplicationContextUtil
                 .getSpringBean(ItemTimeLoggingService.class);
-		this.setModal(true);
-		this.setResizable(false);
-		this.parentView = view;
-		this.setCaption(AppContext
-				.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        this.setModal(true);
+        this.setResizable(false);
+        this.parentView = view;
+        this.setCaption(AppContext
+                .getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
-		selectedDate = new GregorianCalendar().getTime();
+        selectedDate = new GregorianCalendar().getTime();
 
-		MVerticalLayout content = new MVerticalLayout().withSpacing(true).withMargin(true);
+        MVerticalLayout content = new MVerticalLayout().withSpacing(true).withMargin(true);
 
-		GridLayout grid = new GridLayout(3, 2);
-		grid.setMargin(new MarginInfo(false, false, true, false));
-		grid.setSpacing(true);
-		content.addComponent(grid);
+        GridLayout grid = new GridLayout(3, 2);
+        grid.setMargin(new MarginInfo(false, false, true, false));
+        grid.setSpacing(true);
+        content.addComponent(grid);
 
-		grid.addComponent(
-				new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)),
-				0, 0);
-		grid.addComponent(
-				new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)),
-				1, 0);
-		HorizontalLayout isBillable = new HorizontalLayout();
-		isBillable.setSpacing(true);
-		isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-		Label billableTitle = new Label(
-				AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
-		isBillable.addComponent(billableTitle);
+        grid.addComponent(
+                new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)),
+                0, 0);
+        grid.addComponent(
+                new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)),
+                1, 0);
+        HorizontalLayout isBillable = new HorizontalLayout();
+        isBillable.setSpacing(true);
+        isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
+        Label billableTitle = new Label(
+                AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
+        isBillable.addComponent(billableTitle);
 
-		projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
-		grid.addComponent(projectMemberSelectionBox, 0, 1);
+        projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
+        grid.addComponent(projectMemberSelectionBox, 0, 1);
 
-		weekSelectionCalendar = new StyleCalendarFieldExp();
-		weekSelectionCalendar.setWidth("150px");
-		weekSelectionCalendar.setValue(selectedDate);
-		weekSelectionCalendar.addValueChangeListener(new ValueChangeListener() {
-			private static final long serialVersionUID = 1L;
+        weekSelectionCalendar = new StyleCalendarFieldExp();
+        weekSelectionCalendar.setWidth("150px");
+        weekSelectionCalendar.setValue(selectedDate);
+        weekSelectionCalendar.addValueChangeListener(new ValueChangeListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				selectedDate = weekSelectionCalendar.getValue();
-				weekSelectionCalendar.setPopupClose();
-				updateTimeTableHeader();
-			}
-		});
-		grid.addComponent(weekSelectionCalendar, 1, 1);
+            @Override
+            public void valueChange(ValueChangeEvent event) {
+                selectedDate = weekSelectionCalendar.getValue();
+                weekSelectionCalendar.setPopupClose();
+                updateTimeTableHeader();
+            }
+        });
+        grid.addComponent(weekSelectionCalendar, 1, 1);
 
-		isBillableCheckBox = new CheckBox();
-		isBillable.addComponent(isBillableCheckBox);
-		grid.addComponent(isBillable, 2, 1);
+        isBillableCheckBox = new CheckBox();
+        isBillable.addComponent(isBillableCheckBox);
+        grid.addComponent(isBillable, 2, 1);
 
-		timeInputTable = new Table();
-		timeInputTable.setImmediate(true);
-		timeInputTable.addContainerProperty("Monday", Double.class, 0);
-		timeInputTable.addContainerProperty("Tuesday", Double.class, 0);
-		timeInputTable.addContainerProperty("Wednesday", Double.class, 0);
-		timeInputTable.addContainerProperty("Thursday", Double.class, 0);
-		timeInputTable.addContainerProperty("Friday", Double.class, 0);
-		timeInputTable.addContainerProperty("Saturday", Double.class, 0);
-		timeInputTable.addContainerProperty("Sunday", Double.class, 0);
+        timeInputTable = new Table();
+        timeInputTable.setImmediate(true);
+        timeInputTable.addContainerProperty("Monday", Double.class, 0);
+        timeInputTable.addContainerProperty("Tuesday", Double.class, 0);
+        timeInputTable.addContainerProperty("Wednesday", Double.class, 0);
+        timeInputTable.addContainerProperty("Thursday", Double.class, 0);
+        timeInputTable.addContainerProperty("Friday", Double.class, 0);
+        timeInputTable.addContainerProperty("Saturday", Double.class, 0);
+        timeInputTable.addContainerProperty("Sunday", Double.class, 0);
 
-		timeInputTable.addItem(new Double[] { 0d, 0d, 0d, 0d, 0d, 0d, 0d },
-				"timeEntry");
-		timeInputTable.setEditable(true);
-		updateTimeTableHeader();
-		content.addComponent(timeInputTable);
+        timeInputTable.addItem(new Double[]{0d, 0d, 0d, 0d, 0d, 0d, 0d},
+                "timeEntry");
+        timeInputTable.setEditable(true);
+        updateTimeTableHeader();
+        content.addComponent(timeInputTable);
 
-		Label descriptionLbl = new Label(
-				AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
-		content.addComponent(descriptionLbl);
+        Label descriptionLbl = new Label(
+                AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+        content.addComponent(descriptionLbl);
 
-		descArea = new RichTextArea();
-		descArea.setWidth("100%");
-		content.addComponent(descArea);
-		HorizontalLayout footer = new HorizontalLayout();
-		taskLayout = new HorizontalLayout();
-		taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-		taskLayout.setSpacing(true);
-		createLinkTaskButton();
+        descArea = new RichTextArea();
+        descArea.setWidth("100%");
+        content.addComponent(descArea);
+        HorizontalLayout footer = new HorizontalLayout();
+        taskLayout = new HorizontalLayout();
+        taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        taskLayout.setSpacing(true);
+        createLinkTaskButton();
 
-		footer.addComponent(taskLayout);
+        footer.addComponent(taskLayout);
 
-		HorizontalLayout controlsLayout = new HorizontalLayout();
-		controlsLayout.setSpacing(true);
+        HorizontalLayout controlsLayout = new HorizontalLayout();
+        controlsLayout.setSpacing(true);
 
-		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button(
+                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						AddTimeEntryWindow.this.close();
-					}
-				});
-		cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-		controlsLayout.addComponent(cancelBtn);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        AddTimeEntryWindow.this.close();
+                    }
+                });
+        cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        controlsLayout.addComponent(cancelBtn);
 
-		Button saveBtn = new Button(
-				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(
+                AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						saveTimeLoggingItems();
-						AddTimeEntryWindow.this.close();
-					}
-				});
-		saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        saveTimeLoggingItems();
+                        AddTimeEntryWindow.this.close();
+                    }
+                });
+        saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-		controlsLayout.addComponent(saveBtn);
+        controlsLayout.addComponent(saveBtn);
 
-		footer.addComponent(controlsLayout);
-		footer.setSizeFull();
-		footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
-		content.addComponent(footer);
-		this.setContent(content);
-		this.center();
-	}
+        footer.addComponent(controlsLayout);
+        footer.setSizeFull();
+        footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
+        content.addComponent(footer);
+        this.setContent(content);
+        this.center();
+    }
 
-	@Override
-	public void updateLinkTask(ProjectGenericTask task) {
-		this.selectionTask = task;
-		if (this.selectionTask != null) {
-			final String taskName = this.selectionTask.getName();
-			taskLayout.removeAllComponents();
+    @Override
+    public void updateLinkTask(ProjectGenericTask task) {
+        selectionTask = task;
+        if (selectionTask != null) {
+            String taskName = this.selectionTask.getName();
+            taskLayout.removeAllComponents();
 
-			Button detachTaskBtn = new Button(
-					AppContext
-							.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK),
-					new Button.ClickListener() {
+            Button detachTaskBtn = new Button(
+                    AppContext
+                            .getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK),
+                    new Button.ClickListener() {
 
-						private static final long serialVersionUID = 1L;
+                        private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							createLinkTaskButton();
-							updateLinkTask(null);
-						}
-					});
-			detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
-			taskLayout.addComponent(detachTaskBtn);
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            createLinkTaskButton();
+                            updateLinkTask(null);
+                        }
+                    });
+            detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            taskLayout.addComponent(detachTaskBtn);
 
-			Label attachTaskBtn = new Label(
-					StringUtils.trim(taskName, 60, true));
+            Label attachTaskBtn = new Label(StringUtils.trim(taskName, 60, true));
+            attachTaskBtn.addStyleName("task-attached");
+            attachTaskBtn.setWidth("500px");
 
-			attachTaskBtn.addStyleName("task-attached");
-			attachTaskBtn.setWidth("500px");
+            attachTaskBtn
+                    .setDescription(new ProjectGenericTaskTooltipGenerator(
+                            this.selectionTask.getType(), this.selectionTask
+                            .getTypeId()).getContent());
+            taskLayout.addComponent(attachTaskBtn);
+            this.selectionTask.getTypeId();
+        }
 
-			attachTaskBtn
-					.setDescription(new ProjectGenericTaskTooltipGenerator(
-							this.selectionTask.getType(), this.selectionTask
-									.getTypeId()).getContent());
-			taskLayout.addComponent(attachTaskBtn);
-			this.selectionTask.getTypeId();
-		}
+    }
 
-	}
+    private void createLinkTaskButton() {
+        taskLayout.removeAllComponents();
+        Button attachTaskBtn = new Button(
+                AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-	private void createLinkTaskButton() {
-		taskLayout.removeAllComponents();
-		Button attachTaskBtn = new Button(
-				AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+                                AddTimeEntryWindow.this);
+                        AddTimeEntryWindow.this.getUI().addWindow(
+                                selectionTaskWindow);
+                    }
+                });
+        attachTaskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
-								AddTimeEntryWindow.this);
-						AddTimeEntryWindow.this.getUI().addWindow(
-								selectionTaskWindow);
-					}
-				});
-		attachTaskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        taskLayout.addComponent(attachTaskBtn);
+    }
 
-		taskLayout.addComponent(attachTaskBtn);
-	}
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+            AppContext.getUserDateFormat().getDayMonthFormat());
 
-	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			AppContext.getUserDateFormat().getDayMonthFormat());
+    private void updateTimeTableHeader() {
+        Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(monday);
 
-	private void updateTimeTableHeader() {
-		Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
-		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(monday);
+        timeInputTable.setColumnHeader("Monday", AppContext.getMessage(
+                TimeTrackingI18nEnum.MONDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		timeInputTable.setColumnHeader("Monday", AppContext.getMessage(
-				TimeTrackingI18nEnum.MONDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(
+                TimeTrackingI18nEnum.TUESDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(
-				TimeTrackingI18nEnum.TUESDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeInputTable.setColumnHeader("Wednesday", AppContext.getMessage(
+                TimeTrackingI18nEnum.WEDNESDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Wednesday", AppContext.getMessage(
-				TimeTrackingI18nEnum.WEDNESDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeInputTable.setColumnHeader("Thursday", AppContext.getMessage(
+                TimeTrackingI18nEnum.THURSDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Thursday", AppContext.getMessage(
-				TimeTrackingI18nEnum.THURSDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeInputTable.setColumnHeader("Friday", AppContext.getMessage(
+                TimeTrackingI18nEnum.FRIDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Friday", AppContext.getMessage(
-				TimeTrackingI18nEnum.FRIDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeInputTable.setColumnHeader("Saturday", AppContext.getMessage(
+                TimeTrackingI18nEnum.SATURDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Saturday", AppContext.getMessage(
-				TimeTrackingI18nEnum.SATURDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeInputTable.setColumnHeader("Sunday", AppContext.getMessage(
+                TimeTrackingI18nEnum.SUNDAY_FIELD,
+                simpleDateFormat.format(calendar.getTime())));
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeInputTable.setColumnHeader("Sunday", AppContext.getMessage(
-				TimeTrackingI18nEnum.SUNDAY_FIELD,
-				simpleDateFormat.format(calendar.getTime())));
+    }
 
-	}
+    private void saveTimeLoggingItems() {
+        SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox
+                .getValue();
+        if (user == null) {
+            throw new UserInvalidInputException("You must select a member");
+        }
 
-	private void saveTimeLoggingItems() {
-		SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox
-				.getValue();
-		if (user == null) {
-			throw new UserInvalidInputException("You must select a member");
-		}
+        Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(monday);
 
-		Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
-		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(monday);
+        List<ItemTimeLogging> timeLoggings = new ArrayList<>();
 
-		List<ItemTimeLogging> timeLoggings = new ArrayList<>();
+        ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(buildItemTimeLogging("Monday", calendar, user));
+        }
 
-		ItemTimeLogging timeLogging = buildItemTimeLogging("Monday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(buildItemTimeLogging("Monday", calendar, user));
-		}
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging("Tuesday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Tuesday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(timeLogging);
-		}
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging("Wednesday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Wednesday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(timeLogging);
-		}
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging("Thursday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Thursday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(timeLogging);
-		}
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging("Friday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Friday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(timeLogging);
-		}
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging("Saturday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Saturday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(timeLogging);
-		}
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        timeLogging = buildItemTimeLogging("Sunday", calendar, user);
+        if (timeLogging != null) {
+            timeLoggings.add(timeLogging);
+        }
 
-		calendar.add(Calendar.DAY_OF_YEAR, 1);
-		timeLogging = buildItemTimeLogging("Sunday", calendar, user);
-		if (timeLogging != null) {
-			timeLoggings.add(timeLogging);
-		}
-
-		itemTimeLoggingService.batchSaveTimeLogging(timeLoggings,
-				AppContext.getAccountId());
+        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings,
+                AppContext.getAccountId());
 
         updateProjectTimeLogging();
-		parentView.refresh();
-	}
+        parentView.refresh();
+    }
 
     private void updateProjectTimeLogging() {
         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
@@ -353,32 +348,32 @@ public class AddTimeEntryWindow extends Window implements
         CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);
     }
 
-	private ItemTimeLogging buildItemTimeLogging(String headerId,
-			Calendar calendar, SimpleProjectMember logForMember) {
-		Item timeEntries = timeInputTable.getItem("timeEntry");
-		Property<?> itemProperty = timeEntries.getItemProperty(headerId);
-		Double timeVal = (Double) itemProperty.getValue();
-		if (timeVal == null || timeVal == 0) {
-			return null;
-		} else {
-			ItemTimeLogging timeLogging = new ItemTimeLogging();
-			timeLogging.setIsbillable(isBillableCheckBox.getValue());
-			timeLogging.setLoguser(logForMember.getUsername());
-			timeLogging.setCreateduser(AppContext.getUsername());
-			timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar
-					.getTime()));
-			timeLogging.setLogvalue(timeVal);
-			timeLogging.setNote(descArea.getValue());
-			timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-			timeLogging.setSaccountid(AppContext.getAccountId());
-			timeLogging.setCreatedtime(new GregorianCalendar().getTime());
-			timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
-			
-			if (selectionTask != null) {
-				timeLogging.setType(selectionTask.getType());
-				timeLogging.setTypeid(selectionTask.getTypeId());
-			}
-			return timeLogging;
-		}
-	}
+    private ItemTimeLogging buildItemTimeLogging(String headerId,
+                                                 Calendar calendar, SimpleProjectMember logForMember) {
+        Item timeEntries = timeInputTable.getItem("timeEntry");
+        Property<?> itemProperty = timeEntries.getItemProperty(headerId);
+        Double timeVal = (Double) itemProperty.getValue();
+        if (timeVal == null || timeVal == 0) {
+            return null;
+        } else {
+            ItemTimeLogging timeLogging = new ItemTimeLogging();
+            timeLogging.setIsbillable(isBillableCheckBox.getValue());
+            timeLogging.setLoguser(logForMember.getUsername());
+            timeLogging.setCreateduser(AppContext.getUsername());
+            timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar
+                    .getTime()));
+            timeLogging.setLogvalue(timeVal);
+            timeLogging.setNote(descArea.getValue());
+            timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
+            timeLogging.setSaccountid(AppContext.getAccountId());
+            timeLogging.setCreatedtime(new GregorianCalendar().getTime());
+            timeLogging.setLastupdatedtime(new GregorianCalendar().getTime());
+
+            if (selectionTask != null) {
+                timeLogging.setType(selectionTask.getType());
+                timeLogging.setTypeid(selectionTask.getTypeId());
+            }
+            return timeLogging;
+        }
+    }
 }

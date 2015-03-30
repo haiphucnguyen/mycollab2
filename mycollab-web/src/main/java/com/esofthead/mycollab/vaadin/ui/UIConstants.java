@@ -33,7 +33,6 @@ public class UIConstants {
 	public static final String HEADER_TEXT = "hdr-text";
 	public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
 	public static final String CUSTOM_FIELD_SECTION = "customFieldSection";
-	public static final String FORM_CONTAINER_VIEW = "form-container";
 	public static final String POPUP_WITHOUT_INDICATOR = "nonPopupIndicator";
 	public static final String TABLE_ACTION_CONTROLS = "table-actionctls";
 	public static final String THEME_GREEN_LINK = "greenbtn";
@@ -42,7 +41,6 @@ public class UIConstants {
 	public static final String THEME_RED_LINK = "redbtn";
 	public static final String THEME_BLUE_LINK = "bluebtn";
 	public static final String THEME_ORANGE_LINK = "orangebtn";
-	public static final String THEME_TRANSPARENT_LINK = "transparentbtn";
 	public static final String THEME_BROWN_LINK = "brownbtn";
 	public static final String THEME_LINK = "link";
 	public static final String THEME_NO_BORDER = "no-border";

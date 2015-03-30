@@ -130,7 +130,6 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 		folderNameLayout.setSpacing(false);
 
 		Button dropboxIconBtn = new Button();
-		dropboxIconBtn.setStyleName("dropbox-icon-button");
 		dropboxIconBtn.setIcon(FontAwesome.DROPBOX);
 		folderNameLayout.addComponent(dropboxIconBtn);
 

@@ -6708,14 +6708,6 @@ div.v-button-down:active {
 	text-shadow: 0 -1px 0 #43533E;
 }
 
-.v-button-link {
-	color: #6482B3;
-}
-
-.v-button-link:focus, .v-button-link:active {
-	color: #6482B3;
-}
-
 .v-disabled.v-button-link {
 	color: #6482B3;
 }
@@ -6724,31 +6716,24 @@ div.v-button-down:active {
 	color: #6482B3;
 }
 
-.v-button-default {
-	border-color: #495972;
-}
-
 .v-disabled.v-button-default {
 	border-color: #495972;
 }
 
-.v-disabled.v-button-default:focus {
-	border-color: #495972;
-}
-
-.v-button-default:active, .v-ie8 .v-button-default.v-pressed {
+.v-disabled.v-button-default:focus, .v-disabled.v-button-default:active {
 	border-color: #495972;
 }
 
 .v-button-default:focus {
-	background-color: #566c8f;
+	background-color: #566C8F;
 }
 
-.v-button-default:active .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap {
-	border-color: #566c8f;
+.v-button-default:active .v-button-wrap {
+	border-color: #566C8F;
 }
 
 .v-button-default {
+	border-color: #495972;
 	background-color: #6482B3;
 	color: #f4f4f5;
 	text-shadow: 0 -1px 0 #495972;
@@ -6806,14 +6791,6 @@ div.v-button-down:active {
 
 .v-button.v-button-action .v-icon {
 	color: brown;
-}
-
-.v-button-link {
-	color: #006dac;
-}
-
-.v-button-link:focus, .v-button-link:active {
-	color: #006dac;
 }
 
 .v-disabled.v-button-link {
@@ -6914,7 +6891,12 @@ div.v-disabled.v-button-link {
 	vertical-align: top;
 }
 
-.v-button-link:active {
+.v-button-link {
+	color: #006dac;
+}
+
+.v-button-link:focus, .v-button-link:active {
+	color: #006dac;
 	background-color: transparent;
 	border-radius: 0px;
 	margin: 0px;
@@ -7129,36 +7111,6 @@ body.v-ie .v-pressed.v-button-borderless {
 	font-weight: normal;
 }
 
-.v-ie .v-button.v-button-transparentbtn .v-button-wrap, .v-ie .v-button.v-button-transparentbtn:focus .v-button-wrap, .v-ie .v-button.v-button-transparentbtn:active .v-button-wrap {
-	padding: 0;
-}
-
-.v-button.v-button-transparentbtn, .v-button-transparentbtn:focus {
-	background-color: transparent;
-	color: black;
-	font-weight: normal;
-	border: none;
-	padding: 0;
-}
-
-.v-button.v-button-transparentbtn.v-disabled.v-button:focus, .v-button.v-button-transparentbtn.v-disabled.v-button:active {
-	background: none;
-	border: 0;
-	background-color: transparent;
-	-webkit-box-shadow: 0 0 0;
-	-moz-box-shadow: 0 0 0;
-}
-
-.v-button.v-button-transparentbtn:active .v-button-wrap {
-	border-top-color: transparent;
-	background-image: none;
-	padding: 0;
-}
-
-.v-button.v-button-transparentbtn .v-button-wrap {
-	padding: 0;
-}
-
 .v-button-link:focus .v-button-caption, .v-button-borderless:focus .v-button-caption {
 	border: none;
 	margin: 0px;
@@ -7166,6 +7118,15 @@ body.v-ie .v-pressed.v-button-borderless {
 
 .v-button-link.v-button-wordWrap {
 	width: 100%;
+}
+
+.v-button-link.v-button-wordWrap .v-button-caption {
+	display: table-cell;
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: normal;
+	width: 100%;
+	height: 100%;
 }
 
 .v-button-link.no-margin {
@@ -7179,46 +7140,6 @@ body.v-ie .v-pressed.v-button-borderless {
 .v-button-link.v-button-wordWrap .v-button-wrap {
 	width: 100%;
 	display: table-row;
-}
-
-.v-button-link.v-button-wordWrap .v-button-caption {
-	display: table-cell;
-	white-space: normal;
-	word-wrap: break-word;
-	word-break: normal;
-	width: 100%;
-	height: 100%;
-}
-
-.v-button.search-icon-button {
-	background: none repeat-x scroll left bottom #DCDCDC;
-	border-radius: 0px 3px 3px 0px;
-	border-left: none;
-	border-color: #B5B5B5;
-	padding-right: 3px;
-}
-
-.v-button.search-icon-button .v-button-wrap {
-	padding: 3px 0px 3px 6px;
-}
-
-.v-button.dropbox-icon-button {
-	background: none;
-	border-radius: 3px 0px 0px 3px;
-	border-right: medium none;
-	border-color: #CFCFCF;
-	border-width: 1px;
-	padding: 1px 0px 0px;
-}
-
-.v-button.dropbox-icon-button .v-button-wrap, .v-button.dropbox-icon-button:active .v-button-wrap {
-	padding: 5px 0px 5px 6px;
-	background: none;
-	border: none;
-}
-
-.v-button.dropbox-icon-button  > .v-button-wrap > .v-icon {
-	float: left;
 }
 
 .v-button.select-bg {
@@ -7384,62 +7305,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	border: 1px solid #A8A8A8;
 	border-radius: 3px;
 	padding: 0px;
-}
-
-.splitbutton .v-popupbutton.action-button {
-	padding: 0px 0px 0px 0px !important;
-	border: 0 !important;
-}
-
-.splitbutton .parent-button.action-button {
-	border-color: #CFCFCF;
-	border-radius: 2px;
-	background-color: #F9F9F9;
-}
-
-.splitbutton .parent-button.action-button:focus {
-	border-color: #CFCFCF;
-	border-radius: 2px;
-	background-color: #F9F9F9;
-}
-
-.splitbutton .v-button.action-button {
-	border-radius: 2px;
-	border-width: 1px 1px 1px 1px !important;
-	height: 100%;
-	border-width: 0;
-}
-
-.splitbutton .v-button.action-button:active {
-	border-color: #CFCFCF;
-}
-
-.splitbutton .v-button.action-button .v-button-wrap {
-	padding: 6px 12px 6px 12px !important;
-	border: none;
-	border-top: 1px solid transparent;
-}
-
-.splitbutton .v-button.action-button .v-button-wrap:active, .splitbutton .v-button.action-button .v-button-wrap:hover {
-	background-color: #F0F0F0;
-	background-image: -webkit-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: -moz-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: -ms-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: -o-linear-gradient(top, #F0F0F0, #E0E0E0);
-	background-image: linear-gradient(top, #F0F0F0, #E0E0E0);
-}
-
-.splitbutton .v-button.action-button .v-button-wrap:active {
-	border-top-color: #C7C7C7;
-}
-
-.splitbutton .parent-button.action-button .v-button-wrap {
-	padding-left: 11px;
-	padding-right: 11px;
-}
-
-.splitbutton .v-button.action-button .v-icon {
-	margin-right: 0;
 }
 
 .small-padding .v-button-wrap, .small-padding:active .v-button-wrap {
@@ -8490,21 +8355,21 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	padding-left: 0px;
 }
 
-.form-container .v-button-link.block {
+.v-button-link.block {
 	line-height: 22px;
 	background-color: blueviolet;
 	padding: 0px 7px 0px 7px;
 	margin-right: 2px;
 }
 
-.form-container .v-button-link.block:active, .form-container .v-button-link.block:focus {
+.v-button-link.block:active, .v-button-link.block:focus {
 	line-height: 22px;
 	background-color: blueviolet;
 	padding: 0px 7px 0px 7px;
 	margin-right: 2px;
 }
 
-.form-container .v-button-link.block .v-button-caption {
+.v-button-link.block .v-button-caption {
 	color: white;
 	vertical-align: sub;
 }
@@ -8920,6 +8785,90 @@ div.v-button.token-field {
 
 div.v-button.token-field:hover {
 	background-color: antiquewhite;
+}
+
+.standup-calendar .selected-ext {
+	border: 1px solid #EE7C08;
+}
+
+.addViewLayout .standup-edit-layout .h2 {
+	border-bottom: none;
+}
+
+.standup-block {
+	background-color: whitesmoke;
+	border: 1px solid #CFCFCF;
+}
+
+.standup-block .report-content {
+	border-left: 1px solid #CFCFCF;
+	background-color: #FFF;
+}
+
+.standup-block .report-content.v-margin-top {
+	padding-top: 20px;
+}
+
+.standup-block .report-content.v-margin-right {
+	padding-right: 20px;
+}
+
+.standup-block .report-content.v-margin-bottom {
+	padding-bottom: 20px;
+}
+
+.standup-block .report-content.v-margin-left {
+	padding-left: 20px;
+}
+
+.standup-block .report-content .v-label.h2 {
+	color: #a56116;
+	font-size: 14px;
+}
+
+.milestone-view {
+	padding: 0px 0px 30px;
+}
+
+.milestone-view-table {
+	width: 100%;
+	height: 100%;
+	border-width: 1px 0px 0px;
+	border-style: solid;
+	border-color: #CFCFCF;
+}
+
+.milestone-view-header {
+	text-align: center;
+	background: none repeat-x left top bisque;
+	height: 30px;
+	color: #5e5e5e;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.milestone-view-header .v-label {
+	font-size: 13px;
+	text-shadow: 0px 1px 0px #f0f0f0;
+	font-weight: bold;
+}
+
+.milestone-view-body {
+	width: 33%;
+	background-color: #FFF;
+	padding: 0px;
+}
+
+.milestone-view-body .milestone-col {
+	padding: 0px 25px 25px;
+}
+
+.milestone-view-body  > div > div > div > div:first-child > div > div > .milestone-box {
+	border-top: none;
+	margin-top: 0px;
+}
+
+.in-progress-milestones, .future-milestones {
+	border-left: 1px solid #d7d7d7;
 }
 
 html {
@@ -11152,45 +11101,6 @@ div.v-lazyloadingwrapper-loading {
 	overflow-y: auto;
 }
 
-.standup-calendar .selected-ext {
-	border: 1px solid #EE7C08;
-}
-
-.addViewLayout .standup-edit-layout .h2 {
-	border-bottom: none;
-}
-
-.standup-block {
-	background-color: whitesmoke;
-	border: 1px solid #CFCFCF;
-}
-
-.standup-block .report-content {
-	border-left: 1px solid #CFCFCF;
-	background-color: #FFF;
-}
-
-.standup-block .report-content.v-margin-top {
-	padding-top: 20px;
-}
-
-.standup-block .report-content.v-margin-right {
-	padding-right: 20px;
-}
-
-.standup-block .report-content.v-margin-bottom {
-	padding-bottom: 20px;
-}
-
-.standup-block .report-content.v-margin-left {
-	padding-left: 20px;
-}
-
-.standup-block .report-content .v-label.h2 {
-	color: #a56116;
-	font-size: 14px;
-}
-
 .clickable-label {
 	cursor: pointer;
 }
@@ -11379,51 +11289,6 @@ div.v-csslayout.member-block {
 .v-label.completed a {
 	color: black;
 	text-decoration: line-through;
-}
-
-.milestone-view {
-	padding: 0px 0px 30px;
-}
-
-.milestone-view-table {
-	width: 100%;
-	height: 100%;
-	border-width: 1px 0px 0px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
-.milestone-view-header {
-	text-align: center;
-	background: none repeat-x left top bisque;
-	height: 30px;
-	color: #5e5e5e;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.milestone-view-header .v-label {
-	font-size: 13px;
-	text-shadow: 0px 1px 0px #f0f0f0;
-	font-weight: bold;
-}
-
-.milestone-view-body {
-	width: 33%;
-	background-color: #FFF;
-	padding: 0px;
-}
-
-.milestone-view-body .milestone-col {
-	padding: 0px 25px 25px;
-}
-
-.milestone-view-body  > div > div > div > div:first-child > div > div > .milestone-box {
-	border-top: none;
-	margin-top: 0px;
-}
-
-.in-progress-milestones, .future-milestones {
-	border-left: 1px solid #d7d7d7;
 }
 
 .v-horizontallayout.calendarHeader {

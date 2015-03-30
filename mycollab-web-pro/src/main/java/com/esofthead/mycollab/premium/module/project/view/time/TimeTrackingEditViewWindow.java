@@ -170,10 +170,8 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 			attachTaskBtn.addStyleName("task-attached");
 			attachTaskBtn.setWidth("300px");
-			attachTaskBtn
-					.setDescription(new ProjectGenericTaskTooltipGenerator(
-							this.selectionTask.getType(), this.selectionTask
-									.getTypeId()).getContent());
+			attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(
+							this.selectionTask.getType(), this.selectionTask.getTypeId()).getContent());
 			taskLayout.addComponent(attachTaskBtn);
 			this.selectionTask.getTypeId();
 		}
@@ -188,7 +186,6 @@ public class TimeTrackingEditViewWindow extends Window implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
 						ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
 								TimeTrackingEditViewWindow.this);
 						TimeTrackingEditViewWindow.this.getUI().addWindow(
@@ -201,8 +198,7 @@ public class TimeTrackingEditViewWindow extends Window implements
 	}
 
 	private void saveTimeLoggingItems() {
-		SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox
-				.getValue();
+		SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox.getValue();
 		item.setCreateduser(AppContext.getUsername());
 		item.setLoguser(user.getUsername());
 		item.setLogUserFullName(user.getMemberFullName());

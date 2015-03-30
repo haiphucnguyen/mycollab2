@@ -289,7 +289,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             createBugBtn.setEnabled(CurrentProjectVariables
                     .canWrite(ProjectRolePermissionCollections.BUGS));
             createBugBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-            createBugBtn.setStyleName("link");
+            createBugBtn.setStyleName("action");
             popupButtonsControl.addComponent(createBugBtn);
 
             Button createRiskBtn = new Button(
@@ -303,7 +303,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
                     });
             createRiskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
             createRiskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
-            createRiskBtn.setStyleName("link");
+            createRiskBtn.setStyleName("action");
             popupButtonsControl.addComponent(createRiskBtn);
 
             Button createProblemBtn = new Button(
@@ -319,7 +319,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             createProblemBtn.setEnabled(CurrentProjectVariables
                     .canWrite(ProjectRolePermissionCollections.PROBLEMS));
             createProblemBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM));
-            createProblemBtn.setStyleName("link");
+            createProblemBtn.setStyleName("action");
             popupButtonsControl.addComponent(createProblemBtn);
 
             Button editProjectBtn = new Button(
@@ -336,7 +336,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             editProjectBtn.setEnabled(CurrentProjectVariables
                     .canWrite(ProjectRolePermissionCollections.PROJECT));
             editProjectBtn.setIcon(FontAwesome.EDIT);
-            editProjectBtn.setStyleName("link");
+            editProjectBtn.setStyleName("action");
             popupButtonsControl.addComponent(editProjectBtn);
 
             Button archiveProjectBtn = new Button(
@@ -391,7 +391,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             archiveProjectBtn.setEnabled(CurrentProjectVariables
                     .canAccess(ProjectRolePermissionCollections.PROJECT));
             archiveProjectBtn.setIcon(FontAwesome.ARCHIVE);
-            archiveProjectBtn.setStyleName("link");
+            archiveProjectBtn.setStyleName("action");
             popupButtonsControl.addComponent(archiveProjectBtn);
 
             if (CurrentProjectVariables
@@ -444,7 +444,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
                 deleteProjectBtn.setEnabled(CurrentProjectVariables
                         .canAccess(ProjectRolePermissionCollections.PROJECT));
                 deleteProjectBtn.setIcon(FontAwesome.TRASH_O);
-                deleteProjectBtn.setStyleName("link");
+                deleteProjectBtn.setStyleName("action");
                 popupButtonsControl.addComponent(deleteProjectBtn);
             }
 

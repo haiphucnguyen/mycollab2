@@ -605,7 +605,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
                     return new DefaultViewField("");
                 }
             } else if (SimpleBug.Field.fixedVersions.equalTo(propertyId)) {
-                final List<Version> fixedVersions = beanItem.getFixedVersions();
+                 List<Version> fixedVersions = beanItem.getFixedVersions();
                 if (CollectionUtils.isNotEmpty(fixedVersions)) {
                     final ContainerViewField componentContainer = new ContainerViewField();
                     for (final Version version : beanItem.getFixedVersions()) {
