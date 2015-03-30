@@ -163,7 +163,8 @@ public final class MainView extends AbstractPageView {
             }
         });
 
-        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone
+                || SiteConfiguration.getDeploymentMode() == DeploymentMode.development) {
             Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge" +
                     ".net/projects/mycollab/reviews/new"));
             rateUsLink.setTargetName("_blank");
@@ -375,11 +376,11 @@ public final class MainView extends AbstractPageView {
         accountLayout.addComponent(userAvatar);
         accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
 
-        final PopupButton accountMenu = new PopupButton(AppContext.getSession()
-                .getDisplayName());
-        final OptionPopupContent accLayout = new OptionPopupContent().withWidth("140px");
+        final PopupButton accountMenu = new PopupButton(com.esofthead.mycollab.core.utils.StringUtils.trim(AppContext.getSession()
+                .getDisplayName(), 20, true));
+        OptionPopupContent accLayout = new OptionPopupContent().withWidth("160px");
 
-        final Button myProfileBtn = new Button(
+        Button myProfileBtn = new Button(
                 AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -395,7 +396,7 @@ public final class MainView extends AbstractPageView {
         myProfileBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
         accLayout.addOption(myProfileBtn);
 
-        final Button myAccountBtn = new Button(
+        Button myAccountBtn = new Button(
                 AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -411,7 +412,7 @@ public final class MainView extends AbstractPageView {
         myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         accLayout.addOption(myAccountBtn);
 
-        final Button userMgtBtn = new Button(
+        Button userMgtBtn = new Button(
                 AppContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -427,7 +428,7 @@ public final class MainView extends AbstractPageView {
         userMgtBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
         accLayout.addOption(userMgtBtn);
 
-        final Button signoutBtn = new Button(
+        Button signoutBtn = new Button(
                 AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;

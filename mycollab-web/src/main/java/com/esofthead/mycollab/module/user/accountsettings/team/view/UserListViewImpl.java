@@ -46,7 +46,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -180,8 +179,8 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         memberEmailLabel.setWidth("100%");
         memberInfo.addComponent(memberEmailLabel);
 
-        Label memberSinceLabel = new ELabel("Member since: "
-                + AppContext.formatPrettyTime(member.getRegisteredtime())).withDescription(AppContext.formatDate
+        ELabel memberSinceLabel = new ELabel("Member since: "
+                + AppContext.formatPrettyTime(member.getRegisteredtime())).withDescription(AppContext.formatDateTime
                 (member.getRegisteredtime()));
         memberSinceLabel.addStyleName("member-email");
         memberSinceLabel.setWidth("100%");
@@ -218,8 +217,9 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             memberInfo.addComponent(waitingNotLayout);
         } else if (RegisterStatusConstants.ACTIVE.equals(member
                 .getRegisterstatus())) {
-            Label lastAccessTimeLbl = new Label("Logged in "
-                    + AppContext.formatPrettyTime(member.getLastaccessedtime()));
+            ELabel lastAccessTimeLbl = new ELabel("Logged in "
+                    + AppContext.formatPrettyTime(member.getLastaccessedtime())).withDescription(AppContext
+                    .formatDateTime(member.getLastaccessedtime()));
             lastAccessTimeLbl.addStyleName("member-email");
             memberInfo.addComponent(lastAccessTimeLbl);
         } else if (RegisterStatusConstants.VERIFICATING.equals(member

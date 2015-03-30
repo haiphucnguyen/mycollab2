@@ -9563,43 +9563,6 @@ input.v-textfield-pagedtable-pagefield {
 	color: #c31616;
 }
 
-.v-popupbutton-popup.v-popupbutton-popup-topNavPopup {
-	border: solid 1px #999;
-	border-top: 0px;
-	border-radius: 0px 0px 4px 4px;
-	-webkit-border-radius: 0px 0px 4px 4px;
-	-moz-border-radius: 0px 0px 4px 4px;
-	-o-border-radius: 0px 0px 4px 4px;
-	padding: 0px 15px;
-}
-
-.v-ie .v-popupbutton.topNavPopup:active .v-button-wrap, .v-ie .v-popupbutton.topNavPopup:focus .v-button-wrap {
-	padding: 2px 5px;
-}
-
-.v-popupbutton-popup-topNavPopup .link {
-	padding: 10px 0px;
-}
-
-.v-popupbutton-popup-topNavPopup div.v-button-link {
-	padding: 10px 0px;
-}
-
-.v-popupbutton-popup-topNavPopup div.v-button-link:focus {
-	padding: 10px 0px;
-}
-
-.v-popupbutton-popup-topNavPopup .link .v-button-caption {
-	text-decoration: none;
-	font-size: 14px;
-	color: black;
-	font-weight: normal;
-}
-
-.v-popupbutton-popup-topNavPopup .link .v-button-caption:hover {
-	color: #004B91;
-}
-
 .v-popupbutton-popup-serviceMenu .link .v-button-caption:hover {
 	font-weight: bold;
 }
