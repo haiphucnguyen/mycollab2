@@ -79,10 +79,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         this.itemTimeLoggingPanel
                 .addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
                     @Override
-                    public void onSearch(
-                            final ItemTimeLoggingSearchCriteria criteria) {
-                        TimeTrackingListViewImpl.this
-                                .setSearchCriteria(criteria);
+                    public void onSearch(ItemTimeLoggingSearchCriteria criteria) {
+                        setSearchCriteria(criteria);
                     }
                 });
 
@@ -104,10 +102,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
         this.lbTimeRange = new Label("", ContentMode.HTML);
         this.lbTimeRange.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
-        headerLayout.addComponent(this.lbTimeRange);
-        headerLayout.setComponentAlignment(this.lbTimeRange,
-                Alignment.MIDDLE_LEFT);
-        headerLayout.setExpandRatio(this.lbTimeRange, 1.0f);
+        headerLayout.with(lbTimeRange).withAlign(lbTimeRange, Alignment.MIDDLE_LEFT).expand(lbTimeRange);
 
         Button exportBtn = new Button("Export", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -138,9 +133,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
         popupButtonsControl.addOption(exportExcelBtn);
 
-        headerLayout.addComponent(exportButtonControl);
-        headerLayout.setComponentAlignment(this.exportButtonControl,
-                Alignment.MIDDLE_RIGHT);
+        headerLayout.with(exportButtonControl).withAlign(exportButtonControl, Alignment.MIDDLE_RIGHT);
         this.addComponent(headerWrapper);
 
         timeTrackingWrapper = new VerticalLayout();
@@ -169,16 +162,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         final String fromDate = AppContext.formatDate(rangeField.getFrom());
         final String toDate = AppContext.formatDate(rangeField.getTo());
 
-        this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(
-                true));
+        this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(true));
         Double billableHour = this.itemTimeLoggingService
                 .getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
         if (billableHour == null || billableHour < 0) {
             billableHour = 0d;
         }
 
-        this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(
-                false));
+        this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(false));
         Double nonBillableHour = this.itemTimeLoggingService
                 .getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
         if (nonBillableHour == null || nonBillableHour < 0) {
@@ -203,8 +194,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
     }
 
     @Override
-    public void setSearchCriteria(
-            final ItemTimeLoggingSearchCriteria searchCriteria) {
+    public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
         this.itemTimeLogginSearchCriteria = searchCriteria;
         refresh();
     }

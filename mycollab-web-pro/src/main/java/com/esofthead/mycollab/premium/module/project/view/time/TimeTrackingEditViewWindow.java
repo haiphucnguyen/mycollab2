@@ -90,10 +90,10 @@ public class TimeTrackingEditViewWindow extends Window implements
 		taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 		createLinkTaskButton();
 
-		if (this.item.getType() != null && this.item.getTypeid() != null) {
+		if (item.getType() != null && item.getTypeid() != null) {
 			ProjectGenericTask tempSelectionTask = new ProjectGenericTask();
-			tempSelectionTask.setType(this.item.getType());
-			tempSelectionTask.setTypeId(this.item.getTypeid());
+			tempSelectionTask.setType(item.getType());
+			tempSelectionTask.setTypeId(item.getTypeid());
 			String name = new GenericTaskDetailMapper(tempSelectionTask.getType(),
 					tempSelectionTask.getTypeId()).getName();
 

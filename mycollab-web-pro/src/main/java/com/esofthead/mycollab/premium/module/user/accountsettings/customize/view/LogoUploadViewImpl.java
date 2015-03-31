@@ -16,16 +16,6 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -48,14 +38,18 @@ import com.vaadin.data.Property;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * 
@@ -93,10 +87,8 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		}
 		originalImage = ImageUtil.scaleImage(originalImage, 650, 650);
 
-		HorizontalLayout previewBox = new HorizontalLayout();
-		previewBox.setSpacing(true);
-		previewBox.setMargin(new MarginInfo(false, true, true, false));
-		previewBox.setWidth("100%");
+		MHorizontalLayout previewBox = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
+				.withWidth("100%");
 
 		final String logoId = ThemeManager.loadLogoPath(AppContext
 				.getAccountId());
@@ -107,16 +99,16 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		previewBox.addComponent(previewImage);
 		previewBox.setComponentAlignment(previewImage, Alignment.TOP_LEFT);
 
-		VerticalLayout previewBoxRight = new VerticalLayout();
-		previewBoxRight.setMargin(new MarginInfo(false, true, false, true));
+		MVerticalLayout previewBoxRight = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
+
 		Label lbPreview = new Label(
 				"<p style='margin: 0px;'><strong>To the left is what your logo will look like.</strong></p><p style='margin-top: 0px;'>To make adjustment, you can drag around and resize the selection square below. When you are happy with your photo, click the &ldquo;Accept&ldquo; button.</p>",
 				ContentMode.HTML);
 		previewBoxRight.addComponent(lbPreview);
 
-		HorizontalLayout controlBtns = new HorizontalLayout();
-		controlBtns.setSpacing(true);
+		MHorizontalLayout controlBtns = new MHorizontalLayout();
 		controlBtns.setSizeUndefined();
+		controlBtns.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		Button cancelBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
@@ -130,8 +122,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 					}
 				});
 		cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-		controlBtns.addComponent(cancelBtn);
-		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
+		controlBtns.with(cancelBtn);
 
 		Button acceptBtn = new Button(
 				AppContext.getMessage(GenericI18Enum.BUTTON_ACCEPT),
@@ -167,15 +158,10 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 					}
 				});
 		acceptBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-		controlBtns.addComponent(acceptBtn);
-		controlBtns.setComponentAlignment(acceptBtn, Alignment.TOP_LEFT);
+		controlBtns.with(acceptBtn);
 
-		previewBoxRight.addComponent(controlBtns);
-		previewBoxRight.setComponentAlignment(controlBtns, Alignment.TOP_LEFT);
-
-		previewBox.addComponent(previewBoxRight);
-		previewBox.setExpandRatio(previewBoxRight, 1.0f);
-
+		previewBoxRight.with(controlBtns).withAlign(controlBtns, Alignment.TOP_LEFT);
+		previewBox.with(previewBoxRight).expand(previewBoxRight);
 		this.addComponent(previewBox);
 
 		CssLayout cropBox = new CssLayout();
@@ -220,9 +206,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 
 		cropBox.addComponent(currentPhotoBox);
 
-		this.addComponent(previewBox);
-		this.addComponent(cropBox);
-		this.setExpandRatio(cropBox, 1.0f);
+		this.with(previewBox, cropBox).expand(cropBox);
 	}
 
 	private void displayPreviewImage() {
@@ -232,5 +216,4 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 			previewImage.setSource(previewResource);
 		}
 	}
-
 }
