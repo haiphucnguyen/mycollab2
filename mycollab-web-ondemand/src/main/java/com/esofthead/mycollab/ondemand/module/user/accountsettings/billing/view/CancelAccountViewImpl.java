@@ -41,6 +41,8 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * 
@@ -54,9 +56,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 	private static final long serialVersionUID = 1L;
 
 	public CancelAccountViewImpl() {
-		this.setWidth("100%");
-		this.setMargin(true);
-		this.setSpacing(true);
+		this.withSpacing(true).withMargin(true).withWidth("100%");
 		HorizontalLayout header = createHeader();
 		this.addComponent(header);
 		this.setComponentAlignment(header, Alignment.TOP_CENTER);
@@ -64,9 +64,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 	}
 
 	protected HorizontalLayout createHeader() {
-		HorizontalLayout layout = new HorizontalLayout();
+		MHorizontalLayout layout = new MHorizontalLayout();
 		layout.setSizeUndefined();
-		layout.setSpacing(true);
 		layout.addComponent(new Embedded(null, MyCollabResource
 				.newResource("icons/sad_face.png")));
 		VerticalLayout header = new VerticalLayout();
@@ -101,9 +100,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		layout.setWidth("100%");
 		layout.addStyleName("cancelAccountBody");
 
-		VerticalLayout innerLayout = new VerticalLayout();
-		innerLayout.setSpacing(true);
-		innerLayout.setMargin(true);
+		MVerticalLayout innerLayout = new MVerticalLayout();
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4,
 				"100%", "200px");
@@ -120,13 +117,13 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		optionGroupField.addItem("Too expensive");
 		optionGroupField.addItem("None of the above");
 
-		layoutHelper.addComponentNoWrapper(optionGroupField,
+		final OptionGroup optionGroup = (OptionGroup)layoutHelper.addComponentNoWrapper(optionGroupField,
 				"Do any of these apply?", 0, 1);
 
-		layoutHelper.addComponentNoWrapper(new TextField(),
+		final TextField alternativeTool = (TextField)layoutHelper.addComponentNoWrapper(new TextField(),
 				"Are you considering any other alternative tools?", 0, 2);
 
-		layoutHelper.addComponentNoWrapper(new TextArea(),
+		final TextArea reasonToBack = (TextArea)layoutHelper.addComponentNoWrapper(new TextArea(),
 				"What would it take to have you back?", 0, 3);
 
 		layoutHelper.getLayout().setWidth("800px");
@@ -143,13 +140,15 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 					public void buttonClick(ClickEvent event) {
 						// Save cancel account reason
 						CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
+						feedback.setOthertool(alternativeTool.getValue());
+						feedback.setReasontoback(reasonToBack.getValue());
+						feedback.setReasontoleave(optionGroup.getValue().toString());
 
 						BillingService billingService = ApplicationContextUtil
 								.getSpringBean(BillingService.class);
-						billingService.cancelAccount(AppContext.getAccountId(),
-								feedback);
+						billingService.cancelAccount(AppContext.getAccountId(), feedback);
 						UI.getCurrent().getPage()
-								.setLocation("http://www.mycollab.com");
+								.setLocation("https://www.mycollab.com");
 					}
 				});
 		submitBtn.addStyleName(UIConstants.THEME_RED_LINK);
@@ -167,12 +166,9 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 				});
 		cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
-		HorizontalLayout formControls = new HorizontalLayout();
-		formControls.setSpacing(true);
-		formControls.setMargin(true);
+		MHorizontalLayout formControls = new MHorizontalLayout().withMargin(true);
 		formControls.setSizeUndefined();
-		formControls.addComponent(submitBtn);
-		formControls.addComponent(cancelBtn);
+		formControls.with(submitBtn, cancelBtn);
 
 		innerLayout.addComponent(formControls);
 		innerLayout

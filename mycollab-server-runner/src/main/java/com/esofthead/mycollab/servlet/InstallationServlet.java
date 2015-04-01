@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-server-runner.
- *
+ * <p>
  * mycollab-server-runner is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-server-runner is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-server-runner.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -111,41 +111,35 @@ public class InstallationServlet extends HttpServlet {
                     "src/main/conf");
         }
 
-        if (!confFolder.exists()) {
-            throw new MyCollabException("Can not detect webapp base folder");
-        } else {
-            try {
-                File templateFile = new File(confFolder,
-                        "mycollab.properties.template");
-                FileReader templateReader = new FileReader(templateFile);
+        try {
+            File templateFile = new File(confFolder, "mycollab.properties.template");
+            FileReader templateReader = new FileReader(templateFile);
 
-                StringWriter writer = new StringWriter();
+            StringWriter writer = new StringWriter();
 
-                VelocityEngine engine = new VelocityEngine();
-                engine.evaluate(templateContext, writer, "log task",
-                        templateReader);
+            VelocityEngine engine = new VelocityEngine();
+            engine.evaluate(templateContext, writer, "log task",
+                    templateReader);
 
-                FileOutputStream outStream = new FileOutputStream(new File(
-                        confFolder, "mycollab.properties"));
-                outStream.write(writer.toString().getBytes());
-                outStream.flush();
-                outStream.close();
+            FileOutputStream outStream = new FileOutputStream(new File(
+                    confFolder, "mycollab.properties"));
+            outStream.write(writer.toString().getBytes());
+            outStream.flush();
+            outStream.close();
 
-                while (waitFlag == true) {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        throw new MyCollabException(e);
-                    }
+            while (waitFlag == true) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new MyCollabException(e);
                 }
-
-            } catch (Exception e) {
-                LOG.error("Error while set up MyCollab", e);
-                PrintWriter out = response.getWriter();
-                out.write("Can not write setting to config file. You should contact mycollab support support@mycollab.com to solve this issue.");
-                return;
             }
-        }
 
+        } catch (Exception e) {
+            LOG.error("Error while set up MyCollab", e);
+            PrintWriter out = response.getWriter();
+            out.write("Can not write the settings to the file system. You should check our knowledge base system or contact us at support@mycollab.com to solve this issue.");
+            return;
+        }
     }
 }

@@ -225,24 +225,23 @@ public class BillingServiceImpl implements BillingService {
 		role.setDescription("");
 		role.setSaccountid(accountId);
 		role.setIssystemrole(true);
-		final int roleId = this.roleService.saveWithSession(role, "");
-
+		int roleId = this.roleService.saveWithSession(role, "");
 		this.roleService.savePermission(roleId,
 				PermissionMap.buildEmployeePermissionCollection(), accountId);
 		return roleId;
 	}
 
-	private int saveAdminRole(int accountid) {
+	private int saveAdminRole(int accountId) {
 		// Register default role for account
 		final Role role = new Role();
 		role.setRolename(SimpleRole.ADMIN);
 		role.setDescription("");
-		role.setSaccountid(accountid);
+		role.setSaccountid(accountId);
 		role.setIssystemrole(true);
 		final int roleId = this.roleService.saveWithSession(role, "");
 
 		this.roleService.savePermission(roleId,
-				PermissionMap.buildAdminPermissionCollection(), accountid);
+				PermissionMap.buildAdminPermissionCollection(), accountId);
 		return roleId;
 	}
 
@@ -280,13 +279,13 @@ public class BillingServiceImpl implements BillingService {
 	}
 
 	@Override
-	public void cancelAccount(Integer accountid,
-			CustomerFeedbackWithBLOBs feedback) {
+	public void cancelAccount(Integer accountId,
+							  CustomerFeedbackWithBLOBs feedback) {
 		AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
 				.build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
 						AccountDeletedCommand.class);
-		billingAccountMapper.deleteByPrimaryKey(accountid);
-		accountDeletedCommand.accountDeleted(accountid, feedback);
+		billingAccountMapper.deleteByPrimaryKey(accountId);
+		accountDeletedCommand.accountDeleted(accountId, feedback);
 	}
 
 	@Override
@@ -306,8 +305,8 @@ public class BillingServiceImpl implements BillingService {
 		BillingAccount billingAccount = billingAccountMapper
 				.selectByPrimaryKey(sAccountId);
 		if (billingAccount != null) {
-			Integer billingplanid = billingAccount.getBillingplanid();
-			return billingPlanMapper.selectByPrimaryKey(billingplanid);
+			Integer billingId = billingAccount.getBillingplanid();
+			return billingPlanMapper.selectByPrimaryKey(billingId);
 		} else {
 			LOG.error("Can not find billing plan with account {}", sAccountId);
 			return getFreeBillingPlan();

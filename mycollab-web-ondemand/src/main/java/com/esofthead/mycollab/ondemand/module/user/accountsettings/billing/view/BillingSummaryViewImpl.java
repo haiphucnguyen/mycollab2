@@ -41,6 +41,7 @@ import com.vaadin.ui.Button.ClickListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -57,9 +58,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 	private static final Logger LOG = LoggerFactory
 			.getLogger(BillingSummaryViewImpl.class);
 
-	private final BillingService billingService;
+	private BillingService billingService;
 
-	private VerticalLayout currentPlan = null;
+	private MVerticalLayout currentPlan;
 
 	private Integer numOfActiveProjects = 0;
 
@@ -69,12 +70,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 	public BillingSummaryViewImpl() {
 		super();
-
 		this.setMargin(true);
-		this.billingService = ApplicationContextUtil
-				.getSpringBean(BillingService.class);
+		this.billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
 		initUI();
-		this.setImmediate(true);
 	}
 
 	private void initUI() {
@@ -84,35 +82,25 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 		MHorizontalLayout topLayout = new MHorizontalLayout().withWidth("100%");
 
-		currentPlan = new VerticalLayout();
-		currentPlan.setWidth("100%");
-		currentPlan.setSpacing(true);
+		currentPlan = new MVerticalLayout().withMargin(false).withWidth("100%");
 		currentPlan.addStyleName("current-plan-information");
 		currentPlan.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
-		topLayout.addComponent(currentPlan);
-		topLayout.setComponentAlignment(currentPlan, Alignment.MIDDLE_CENTER);
-		topLayout.setExpandRatio(currentPlan, 1.0f);
+		topLayout.with(currentPlan).withAlign(currentPlan, Alignment.MIDDLE_CENTER).expand(currentPlan);
 
-		VerticalLayout faqLayout = new VerticalLayout();
-		faqLayout.setMargin(new MarginInfo(false, true, false, true));
-		faqLayout.setSpacing(true);
+		MVerticalLayout faqLayout = new MVerticalLayout();
 
 		if (AppContext.isAdmin()) {
 			Button cancelBtn = new Button(
-					AppContext
-							.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
+					AppContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT),
 					new Button.ClickListener() {
-
 						@Override
 						public void buttonClick(ClickEvent event) {
 							EventBusFactory.getInstance().post(
-									new AccountBillingEvent.CancelAccount(
-											BillingSummaryViewImpl.this, null));
+									new AccountBillingEvent.CancelAccount(BillingSummaryViewImpl.this, null));
 						}
 					});
 			cancelBtn.setStyleName(UIConstants.THEME_RED_LINK);
-
 			faqLayout.addComponent(cancelBtn);
 		}
 
@@ -185,8 +173,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 
 			Label billingBugTracking;
 			if (plan.getHasbugenable()) {
-				billingBugTracking = new Label("Issues Tracker",
-						ContentMode.HTML);
+				billingBugTracking = new Label("Issues Tracker", ContentMode.HTML);
 			} else {
 				billingBugTracking = new Label("&nbsp;", ContentMode.HTML);
 			}
@@ -244,11 +231,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 	public void loadCurrentPlan() {
 		currentPlan.removeAllComponents();
 
-		BillingPlan currentBillingPlan = AppContext.getBillingAccount()
-				.getBillingPlan();
+		BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
 
-		Label introText = new Label("Your current plan: "
-				+ currentBillingPlan.getBillingtype());
+		Label introText = new Label("Your current plan: " + currentBillingPlan.getBillingtype());
 		introText.addStyleName("intro-text");
 		currentPlan.addComponent(introText);
 
@@ -263,26 +248,18 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 		String planInfo = "<div id='currentPlanInfo'><div class='infoBlock'><span class='infoTitle'>Projects:</span> %d of %d</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Storage:</span> %s of %s</div><div class='blockSeparator'>&nbsp;</div><div class='infoBlock'><span class='infoTitle'>Users:</span> %d of %d</div></div>";
 		LOG.debug("Get number of active users in account {}",
 				AppContext.getAccountId());
-		UserService userService = ApplicationContextUtil
-				.getSpringBean(UserService.class);
-		numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext
-				.getAccountId());
+		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+		numOfActiveUsers = userService.getTotalActiveUsersInAccount(AppContext.getAccountId());
 
-		LOG.debug("Get number of active projects in account {}",
-				AppContext.getAccountId());
-		ProjectService projectService = ApplicationContextUtil
-				.getSpringBean(ProjectService.class);
-		numOfActiveProjects = projectService
-				.getTotalActiveProjectsInAccount(AppContext.getAccountId());
+		LOG.debug("Get number of active projects in account {}", AppContext.getAccountId());
+		ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+		numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(AppContext.getAccountId());
 
 		LOG.debug("Get used storage volume");
-		DriveInfoService driveInfoService = ApplicationContextUtil
-				.getSpringBean(DriveInfoService.class);
-		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext
-				.getAccountId());
+		DriveInfoService driveInfoService = ApplicationContextUtil.getSpringBean(DriveInfoService.class);
+		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext.getAccountId());
 
-		String usedStorageTxt = ResourceUtils
-				.getVolumeDisplay(usedStorageVolume);
+		String usedStorageTxt = ResourceUtils.getVolumeDisplay(usedStorageVolume);
 
 		planInfo = String.format(planInfo, numOfActiveProjects,
 				currentBillingPlan.getNumprojects(), usedStorageTxt,
@@ -296,9 +273,9 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 	}
 
 	private class UpdateBillingPlanWindow extends Window {
-		private final BillingPlan chosenPlan;
+		private BillingPlan chosenPlan;
 
-		private VerticalLayout contentLayout;
+		private MVerticalLayout contentLayout;
 
 		public UpdateBillingPlanWindow(BillingPlan billingPlan) {
 			this.chosenPlan = billingPlan;
@@ -307,37 +284,31 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			this.setResizable(false);
 			this.setModal(true);
 
-			contentLayout = new VerticalLayout();
-			contentLayout.setSpacing(true);
-			contentLayout.setMargin(new MarginInfo(false, false, true, false));
+			contentLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
 			this.setContent(contentLayout);
 			initUI();
-
 			this.center();
 			this.setCaption(AppContext
 					.getMessage(BillingI18nEnum.VIEW_CHANGE_BILLING_PLAN_TITLE));
 		}
 
 		private void initUI() {
-			Label header = new Label(
-					AppContext.getMessage(BillingI18nEnum.QUESTION_CHANGE_PLAN));
+			Label header = new Label(AppContext.getMessage(BillingI18nEnum.QUESTION_CHANGE_PLAN));
 			header.addStyleName("updateplan-hdr");
 			header.setWidth("300px");
 
-			contentLayout.addComponent(header);
-			contentLayout
-					.setComponentAlignment(header, Alignment.MIDDLE_CENTER);
+			contentLayout.with(header).withAlign(header, Alignment.MIDDLE_CENTER);
 
 			VerticalLayout chosenPlanInfo = new VerticalLayout();
 			chosenPlanInfo.setWidth("300px");
 
-			Label chosenPlanType = new Label(this.chosenPlan.getBillingtype());
+			Label chosenPlanType = new Label(chosenPlan.getBillingtype());
 			chosenPlanType.addStyleName("billing-type");
 			chosenPlanInfo.addComponent(chosenPlanType);
 
 			Label chosenPlanPrice = new Label(AppContext.getMessage(
 					BillingI18nEnum.FORM_BILLING_PRICE,
-					this.chosenPlan.getPricing()), ContentMode.HTML);
+					chosenPlan.getPricing()), ContentMode.HTML);
 			chosenPlanPrice.addStyleName("billing-price-lbl");
 			chosenPlanInfo.addComponent(chosenPlanPrice);
 
@@ -345,9 +316,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			contentLayout.setComponentAlignment(chosenPlanInfo,
 					Alignment.MIDDLE_CENTER);
 
-			HorizontalLayout controlBtns = new HorizontalLayout();
-			controlBtns.setSpacing(true);
-			controlBtns.setMargin(true);
+			MHorizontalLayout controlBtns = new MHorizontalLayout().withMargin(true);
 			final Button cancelBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 					new Button.ClickListener() {
@@ -360,9 +329,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 					});
 
 			cancelBtn.setStyleName(UIConstants.THEME_RED_LINK);
-			controlBtns.addComponent(cancelBtn);
-			controlBtns.setComponentAlignment(cancelBtn,
-					Alignment.MIDDLE_CENTER);
+			controlBtns.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
 			final Button saveBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_OK),
@@ -382,8 +349,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 							}
 
 							if (chosenPlan.getBillingtype().equals(
-									AppContext.getBillingAccount()
-											.getBillingPlan().getBillingtype())) {
+									AppContext.getBillingAccount().getBillingPlan().getBillingtype())) {
 								NotificationUtil
 										.showErrorNotification("Selected plan is the same with the current plan");
 								return;
@@ -402,17 +368,14 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 					});
 			saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 			saveBtn.setIcon(FontAwesome.SAVE);
-			controlBtns.addComponent(saveBtn);
-			controlBtns.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+			controlBtns.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_CENTER);
 
-			contentLayout.addComponent(controlBtns);
-			contentLayout.setComponentAlignment(controlBtns,
-					Alignment.MIDDLE_RIGHT);
+			contentLayout.with(controlBtns).withAlign(controlBtns, Alignment.MIDDLE_RIGHT);
 		}
 
 		private void updateBillingPlan() {
 			AppContext.getBillingAccount().setBillingPlan(chosenPlan);
-			BillingSummaryViewImpl.this.loadCurrentPlan();
+			loadCurrentPlan();
 		}
 	}
 }

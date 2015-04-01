@@ -16,17 +16,11 @@
  */
 package com.esofthead.mycollab.jetty;
 
-import java.io.File;
-import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
+import com.esofthead.mycollab.configuration.DatabaseConfiguration;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.servlet.*;
+import com.zaxxer.hikari.HikariDataSource;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
@@ -37,26 +31,18 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.resource.FileResource;
-import org.eclipse.jetty.util.resource.JarResource;
 import org.eclipse.jetty.util.resource.PathResource;
-import org.eclipse.jetty.webapp.Configuration;
-import org.eclipse.jetty.webapp.FragmentConfiguration;
-import org.eclipse.jetty.webapp.MetaInfConfiguration;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
-import org.eclipse.jetty.webapp.WebXmlConfiguration;
+import org.eclipse.jetty.webapp.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.configuration.DatabaseConfiguration;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.servlet.AssetHttpServletRequestHandler;
-import com.esofthead.mycollab.servlet.DatabaseValidate;
-import com.esofthead.mycollab.servlet.EmailValidationServlet;
-import com.esofthead.mycollab.servlet.InstallationServlet;
-import com.esofthead.mycollab.servlet.SetupServlet;
-import com.zaxxer.hikari.HikariDataSource;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.io.File;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.Properties;
 
 /**
  * Generic MyCollab embedded server
@@ -229,8 +215,7 @@ public abstract class GenericServerRunner {
 	private DataSource buildDataSource() {
 		SiteConfiguration.loadInstance(port);
 
-		DatabaseConfiguration dbConf = SiteConfiguration
-				.getDatabaseConfiguration();
+		DatabaseConfiguration dbConf = SiteConfiguration.getDatabaseConfiguration();
 		HikariDataSource dataSource = new HikariDataSource();
 		dataSource.setDriverClassName(dbConf.getDriverClass());
 		dataSource.setJdbcUrl(dbConf.getDbUrl());
@@ -254,12 +239,8 @@ public abstract class GenericServerRunner {
 					"src/main/conf");
 		}
 
-		if (!confFolder.exists()) {
-			throw new MyCollabException("Can not detect webapp base folder");
-		} else {
-			File confFile = new File(confFolder, "mycollab.properties");
-			return confFile.exists();
-		}
+		File confFile = new File(confFolder, "mycollab.properties");
+		return confFile.exists();
 	}
 
 	private WebAppContext initWebAppContext() {

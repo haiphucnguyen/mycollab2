@@ -61,5 +61,4 @@ public class UserResourceImpl implements UserResource {
 		response.getHeaders().add("Access-Control-Allow-Origin", "*");
 		return response;
 	}
-
 }
