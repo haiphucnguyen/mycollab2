@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -96,10 +97,10 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	@Transactional
-	public void registerAccount(final String subDomain,
-			final int billingPlanId, final String username,
-			final String password, final String email, final String timezoneId,
-			boolean isEmailVerified) {
+	public void registerAccount( String subDomain,
+								 int billingPlanId,  String username,
+								 String password,  String email,  String timezoneId,
+								 boolean isEmailVerified) {
 
 		// check subdomain is ascii string
 		if (!StringUtils.isAsciiString(subDomain)) {
@@ -116,7 +117,7 @@ public class BillingServiceImpl implements BillingService {
 		}
 
 		LOG.debug("Check whether subdomain {} is existed", subDomain);
-		final BillingAccountExample billingEx = new BillingAccountExample();
+		BillingAccountExample billingEx = new BillingAccountExample();
 		billingEx.createCriteria().andSubdomainEqualTo(subDomain);
 		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
 			throw new SubdomainExistedException(LocalizationHelper.getMessage(
@@ -125,12 +126,12 @@ public class BillingServiceImpl implements BillingService {
 					subDomain));
 		}
 
-		final BillingPlan billingPlan = this.billingPlanMapper
+		BillingPlan billingPlan = this.billingPlanMapper
 				.selectByPrimaryKey(billingPlanId);
 		// Save billing account
 		LOG.debug("Saving billing account for user {} with subdomain {}",
 				username, subDomain);
-		final BillingAccount billingAccount = new BillingAccount();
+		BillingAccount billingAccount = new BillingAccount();
 		billingAccount.setBillingplanid(billingPlan.getId());
 		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
 		billingAccount
@@ -159,6 +160,8 @@ public class BillingServiceImpl implements BillingService {
 		ex.createCriteria().andUsernameEqualTo(username);
 		List<User> users = userMapper.selectByExample(ex);
 
+		Date now = new GregorianCalendar().getTime();
+
 		if (CollectionUtils.isNotEmpty(users)) {
 			for (User tmpUser : users) {
 				if (!encryptedPassword.equals(tmpUser.getPassword())) {
@@ -171,12 +174,13 @@ public class BillingServiceImpl implements BillingService {
 		} else {
 			// Register the new user to this account
 			LOG.debug("Create new user {} in database", username);
-			final User user = new User();
+			User user = new User();
 			user.setEmail(email);
 			user.setPassword(encryptedPassword);
 			user.setTimezone(timezoneId);
 			user.setUsername(username);
-			user.setLastaccessedtime(new GregorianCalendar().getTime());
+			user.setRegisteredtime(now);
+			user.setLastaccessedtime(now);
 
 			if (isEmailVerified) {
 				user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
@@ -188,7 +192,7 @@ public class BillingServiceImpl implements BillingService {
 				user.setFirstname("");
 			}
 
-			if (user.getLastname() == null) {
+			if (org.apache.commons.lang3.StringUtils.isBlank(user.getLastname())) {
 				user.setLastname(StringUtils.extractNameFromEmail(email));
 			}
 			this.userMapper.insert(user);
@@ -205,7 +209,7 @@ public class BillingServiceImpl implements BillingService {
 		UserAccount userAccount = new UserAccount();
 		userAccount.setAccountid(accountid);
 		userAccount.setIsaccountowner(true);
-		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
+		userAccount.setRegisteredtime(now);
 		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
 		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
 		userAccount.setRoleid(adminRoleId);
@@ -214,17 +218,17 @@ public class BillingServiceImpl implements BillingService {
 		userAccountMapper.insert(userAccount);
 	}
 
-	private int saveEmployeeRole(int accountid) {
+	private int saveEmployeeRole(int accountId) {
 		// Register default role for account
 		final Role role = new Role();
 		role.setRolename(SimpleRole.EMPLOYEE);
 		role.setDescription("");
-		role.setSaccountid(accountid);
+		role.setSaccountid(accountId);
 		role.setIssystemrole(true);
 		final int roleId = this.roleService.saveWithSession(role, "");
 
 		this.roleService.savePermission(roleId,
-				PermissionMap.buildEmployeePermissionCollection(), accountid);
+				PermissionMap.buildEmployeePermissionCollection(), accountId);
 		return roleId;
 	}
 

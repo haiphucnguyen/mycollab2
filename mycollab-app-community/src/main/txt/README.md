@@ -41,6 +41,16 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.4
+-----------------------------
+
+**Library Upgrades**
+
+**Bug Fixes**
+
+* The default created time of user should match with the default timezone
+
+
 Version 5.0.3
 -----------------------------
 

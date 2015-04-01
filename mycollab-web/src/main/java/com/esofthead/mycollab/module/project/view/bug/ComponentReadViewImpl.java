@@ -184,7 +184,7 @@ public class ComponentReadViewImpl extends
         ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm = new
                 ProjectPreviewFormControlsGenerator<>(
                 previewForm);
-        final HorizontalLayout topPanel = componentPreviewForm
+        HorizontalLayout topPanel = componentPreviewForm
                 .createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
         quickActionStatusBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -200,7 +200,6 @@ public class ComponentReadViewImpl extends
                     quickActionStatusBtn.setIcon(FontAwesome.ARCHIVE);
                 } else {
                     beanItem.setStatus(StatusI18nEnum.Closed.name());
-
                     ComponentReadViewImpl.this
                             .addLayoutStyleName(UIConstants.LINK_COMPLETED);
                     quickActionStatusBtn.setCaption(AppContext
@@ -254,9 +253,7 @@ public class ComponentReadViewImpl extends
             CheckBox resolvedSelection = new BugStatusCheckbox(OptionI18nEnum.BugStatus.Resolved, true);
 
             Label spacingLbl1 = new Label("");
-
             Button chartBtn = new Button("");
-
             chartBtn.setIcon(FontAwesome.TH_LARGE);
             chartBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
@@ -404,8 +401,7 @@ public class ComponentReadViewImpl extends
             this.withMargin(new MarginInfo(false, false, false, true));
 
             Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
-                    AppContext
-                            .getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
+                    AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 
@@ -415,8 +411,7 @@ public class ComponentReadViewImpl extends
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
                 Label createdLbl = new Label(
-                        AppContext
-                                .getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
+                        AppContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
@@ -448,8 +443,7 @@ public class ComponentReadViewImpl extends
                         assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {
-                LOG.error("Can not build user link {} ",
-                        BeanUtility.printBeanObj(bean));
+                LOG.error("Can not build user link {} ", BeanUtility.printBeanObj(bean));
             }
 
             this.addComponent(layout);

@@ -42,19 +42,18 @@ public class AccountResourceImpl implements AccountResource {
     public Response signup(@Form SignupForm entity) {
         try {
             LOG.debug("Start handling form request");
-            String subdomain = entity.getSubdomain();
+            String subDomain = entity.getSubdomain();
             int planId = entity.getPlanId();
             String password = entity.getPassword();
             String email = entity.getEmail();
             String timezoneId = entity.getTimezoneId();
             boolean isEmailVerified = entity.isEmailVerified();
 
-            LOG.debug("Register account with subdomain {}, username {}",
-                    subdomain, email);
-            this.billingService.registerAccount(subdomain, planId, email,
+            LOG.debug("Register account with subDomain {}, username {}", subDomain, email);
+            billingService.registerAccount(subDomain, planId, email,
                     password, email, timezoneId, isEmailVerified);
 
-            String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
+            String siteUrl = SiteConfiguration.getSiteUrl(subDomain);
             LOG.debug("Return site url {} to sign up user {}", siteUrl, email);
 
             Response response = Response.status(200).entity(siteUrl)
