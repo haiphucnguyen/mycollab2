@@ -21,7 +21,7 @@
         <vaadinVersion>7.4.2</vaadinVersion>
         <jettyVersion>9.2.6.v20141205</jettyVersion>
         <mysqlVersion>5.1.35</mysqlVersion>
-        <camelVersion>2.15.0</camelVersion>
+        <camelVersion>2.15.1</camelVersion>
         <junitVersion>4.12</junitVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.inceptionYear>2011</project.inceptionYear>
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.4</version>
+            <version>4.4.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>

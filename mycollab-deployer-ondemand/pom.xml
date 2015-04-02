@@ -7,6 +7,9 @@
     <artifactId>mycollab-deployer-ondemand</artifactId>
     <version>5.0.3</version>
     <packaging>pom</packaging>
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
     <modules>
         <module>../mycollab-parent</module>
         <module>../mycollab-parent-community</module>
