@@ -148,7 +148,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
         }
 
         private void displayInfo(SimpleUser user) {
-            Div infoDiv = new Div().appendText("You has not setup SMTP account properly. So we can not send the invitation by email automatically. Please copy/paste below paragraph and inform to the user by yourself").setStyle("font-weight:bold;color:red");
+            Div infoDiv = new Div().appendText("You have not setup SMTP account properly. So we can not send the invitation by email automatically. Please copy/paste below paragraph and inform to the user by yourself").setStyle("font-weight:bold;color:red");
             Label infoLbl = new Label(infoDiv.write(), ContentMode.HTML);
 
             Div userInfoDiv = new Div().appendText("Your username is ").appendChild(new B().appendText(user.getEmail()));
