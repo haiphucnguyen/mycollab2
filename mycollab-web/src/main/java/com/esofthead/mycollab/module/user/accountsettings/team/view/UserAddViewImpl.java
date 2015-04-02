@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,9 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory.UserInformationLayout;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -29,6 +31,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -54,7 +57,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
     }
 
     @Override
-    public void editItem(final SimpleUser item) {
+    public void editItem(SimpleUser item) {
         editItem(item, true);
     }
 
@@ -79,14 +82,14 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
     private class EditUserForm extends AdvancedEditBeanForm<SimpleUser> {
         private static final long serialVersionUID = 1L;
 
-        public void displayBasicForm(final SimpleUser newDataSource) {
+        public void displayBasicForm(SimpleUser newDataSource) {
             this.setFormLayoutFactory(new BasicFormLayoutFactory());
             this.setBeanFormFieldFactory(new BasicEditFormFieldFactory(
                     editUserForm));
             super.setBean(newDataSource);
         }
 
-        public void displayAdvancedForm(final SimpleUser newDataSource) {
+        public void displayAdvancedForm(SimpleUser newDataSource) {
             this.setFormLayoutFactory(new AdvancedFormLayoutFactory());
             this.setBeanFormFieldFactory(new AdvancedEditFormFieldFactory(
                     editUserForm));
@@ -104,14 +107,13 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             String title = (user.getUsername() == null) ? AppContext
                     .getMessage(UserI18nEnum.VIEW_NEW_USER) : user
                     .getDisplayName();
-            final AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
+            AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
 
             VerticalLayout layout = new VerticalLayout();
-            Label organizationHeader = new Label(
-                    AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
+            Label organizationHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
-            basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 1);
+            basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
             layout.addComponent(basicInformationLayout.getLayout());
 
             formAddLayout.addHeaderRight(createButtonControls());
@@ -121,12 +123,11 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         }
 
         private Layout createButtonControls() {
-            return new EditFormControlsGenerator<>(
-                    editUserForm).createButtonControls();
+            return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
         }
 
         private Layout createBottomPanel() {
-            MHorizontalLayout controlPanel = new MHorizontalLayout().withStyleName("more-info").withHeight
+            MHorizontalLayout controlPanel = new MHorizontalLayout().withMargin(true).withStyleName("more-info").withHeight
                     ("40px").withWidth("100%");
             Button moreInfoBtn = new Button("More information...",
                     new Button.ClickListener() {
@@ -144,12 +145,18 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
         @Override
         public void attachField(Object propertyId, Field<?> field) {
-            if (propertyId.equals("email")) {
+            if (User.Field.email.equalTo(propertyId)) {
                 basicInformationLayout.addComponent(field,
-                        AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 0);
-            } else if (propertyId.equals("roleid")) {
+                        AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 1, 0);
+            } else if (SimpleUser.Field.roleid.equalTo(propertyId)) {
                 basicInformationLayout.addComponent(field,
-                        AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 0);
+                        AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 1);
+            } else if (User.Field.firstname.equalTo(propertyId)) {
+                basicInformationLayout.addComponent(field,
+                        AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
+            } else if (User.Field.lastname.equalTo(propertyId)) {
+                basicInformationLayout.addComponent(field,
+                        AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
             }
         }
 
@@ -164,9 +171,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
         @Override
         protected Field<?> onCreateField(Object propertyId) {
-            if (propertyId.equals("roleid")) {
+            if (SimpleUser.Field.roleid.equalTo(propertyId)) {
                 return new AdminRoleSelectionField();
-            } else if (propertyId.equals("email")) {
+            } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) || User.Field.lastname.equalTo(propertyId)) {
                 TextField tf = new TextField();
                 tf.setNullRepresentation("");
                 tf.setRequired(true);
@@ -215,12 +222,10 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         }
 
         @Override
-        protected Field<?> onCreateField(final Object propertyId) {
-            if (propertyId.equals("roleid")) {
+        protected Field<?> onCreateField(Object propertyId) {
+            if (SimpleUser.Field.roleid.equalTo(propertyId)) {
                 return new AdminRoleSelectionField();
-            } else if (propertyId.equals("firstname")
-                    || propertyId.equals("lastname")
-                    || propertyId.equals("email")) {
+            } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) || User.Field.lastname.equalTo(propertyId)) {
                 final TextField tf = new TextField();
                 tf.setNullRepresentation("");
                 tf.setRequired(true);
@@ -275,7 +280,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 public void valueChange(
                         final Property.ValueChangeEvent event) {
                     getValue();
-
                 }
             });
         }
@@ -297,8 +301,13 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             Integer roleId = (Integer) roleBox.getValue();
             if (roleId == -1) {
                 user.setIsAccountOwner(Boolean.TRUE);
+                user.setRoleName("Account Owner");
             } else {
                 user.setIsAccountOwner(Boolean.FALSE);
+                BeanItem<SimpleRole> role = (BeanItem<SimpleRole>) roleBox.getItem(roleId);
+                if (role != null) {
+                    user.setRoleName(role.getBean().getRolename());
+                }
             }
             setInternalValue(roleId);
             super.commit();

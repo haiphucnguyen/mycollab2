@@ -44,7 +44,7 @@ public class ExtMailServiceImpl extends AbstractMailService implements
     protected IMailer getMailer() {
         EmailConfiguration emailConfiguration = SiteConfiguration
                 .getRelayEmailConfiguration();
-        if (emailConfiguration.getHost().equals("")) {
+        if (!isMailSetupValid()) {
             return new NullMailer();
         }
 

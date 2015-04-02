@@ -124,9 +124,6 @@ public class DefaultMailer implements IMailer {
 			HtmlEmail email = getBasicEmail(fromEmail, fromName, toEmail,
 					ccEmail, bccEmail, subject, html);
 
-			// if (log.isDebugEnabled()) {
-			// email.setDebug(true);
-			// }
 			email.send();
 		} catch (EmailException e) {
 			throw new MyCollabException(e);
@@ -149,10 +146,6 @@ public class DefaultMailer implements IMailer {
 				for (EmailAttachementSource attachment : attachments) {
 					email.attach(attachment.getAttachmentObj());
 				}
-
-				// if (log.isDebugEnabled()) {
-				// email.setDebug(true);
-				// }
 
 				email.send();
 			}
