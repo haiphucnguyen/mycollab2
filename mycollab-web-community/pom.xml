@@ -17,5 +17,10 @@
             <artifactId>mycollab-web</artifactId>
             <version>5.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>vaadin-sliderpanel</artifactId>
+            <version>1.0.4</version>
+        </dependency>
     </dependencies>
 </project>
