@@ -94,7 +94,7 @@ public abstract class MyCollabUI extends UI {
 	@Override
 	public void close() {
 		LOG.debug("Application is closed. Clean all resources");
-		currentContext.clearSession();
+		currentContext.clearSessionVariables();
 		currentContext = null;
 		super.close();
 	}

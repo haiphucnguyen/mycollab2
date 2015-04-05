@@ -79,12 +79,12 @@ public class NoteListItems extends VerticalLayout {
 
     private Button createBtn;
 
-    public NoteListItems(final String title) {
+    public NoteListItems( String title) {
         this(title, "", 0);
     }
 
-    public NoteListItems(final String title, final String type,
-                         final Integer typeId) {
+    public NoteListItems( String title,  String type,
+                          Integer typeId) {
         super();
         Label header = new Label(title);
         header.addStyleName("h2");
@@ -373,7 +373,7 @@ public class NoteListItems extends VerticalLayout {
             MHorizontalLayout commentWrap = new MHorizontalLayout().withWidth("100%");
             commentWrap.addStyleName("message");
 
-            SimpleUser currentUser = AppContext.getSession();
+            SimpleUser currentUser = AppContext.getUser();
             VerticalLayout userBlock = new VerticalLayout();
             userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
             userBlock.setWidth("80px");
@@ -402,9 +402,9 @@ public class NoteListItems extends VerticalLayout {
 
             editBox.addComponent(noteArea);
 
-            final MHorizontalLayout controls = new MHorizontalLayout().withWidth("100%");
+             MHorizontalLayout controls = new MHorizontalLayout().withWidth("100%");
 
-            final MultiFileUploadExt uploadExt = new MultiFileUploadExt(
+             MultiFileUploadExt uploadExt = new MultiFileUploadExt(
                     attachments);
             uploadExt.addComponent(attachments);
             controls.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
@@ -491,7 +491,7 @@ public class NoteListItems extends VerticalLayout {
                     });
             saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             saveBtn.setIcon(FontAwesome.SEND);
-            controls.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
+
 
             final Button cancelBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
@@ -504,7 +504,9 @@ public class NoteListItems extends VerticalLayout {
                         }
                     });
             cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+
             controls.with(cancelBtn).withAlign(cancelBtn, Alignment.TOP_RIGHT);
+            controls.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
 
             editBox.addComponent(controls);
             this.addComponent(commentWrap);

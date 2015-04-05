@@ -19,16 +19,12 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.common.SessionIdGenerator;
 import com.esofthead.mycollab.core.SessionExpireException;
 import com.vaadin.server.VaadinSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author MyCollab Ltd.
  * @since 3.0
  */
 public class MyCollabSession {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MyCollabSession.class);
 
     public static final String EVENT_BUS_VAL = "eventBusVal";
 

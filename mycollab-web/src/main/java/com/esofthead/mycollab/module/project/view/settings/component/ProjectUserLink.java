@@ -43,7 +43,7 @@ public class ProjectUserLink extends Label {
         DivLessFormatter div = new DivLessFormatter();
         String uid = UUID.randomUUID().toString();
         Img avatarLink = new Img("", StorageManager.getAvatarLink(userAvatarId, 16));
-        A memberLink = new A().setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+        A memberLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 CurrentProjectVariables.getProjectId(), username)).appendText(displayName);
         memberLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, username));
         div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE(), memberLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));

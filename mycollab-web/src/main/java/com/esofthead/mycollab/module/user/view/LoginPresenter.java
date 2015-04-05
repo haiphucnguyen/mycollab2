@@ -100,7 +100,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		LOG.debug("Login to system successfully. Save user and preference "
 				+ pref + " to session");
 
-		AppContext.getInstance().setSession(user, pref, billingAccount);
+		AppContext.getInstance().setSessionVariables(user, pref, billingAccount);
 		pref.setLastaccessedtime(new Date());
 		preferenceService.updateWithSession(pref, AppContext.getUsername());
 		EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));

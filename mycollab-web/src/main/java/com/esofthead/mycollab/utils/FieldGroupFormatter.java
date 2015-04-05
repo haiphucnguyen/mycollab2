@@ -94,7 +94,6 @@ public class FieldGroupFormatter {
 
     @SuppressWarnings("rawtypes")
     public static class FieldDisplayHandler {
-
         private Enum displayName;
         private HistoryFieldFormat format;
 

@@ -522,7 +522,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             // current user is created user
             if (StringUtils.isEmpty(res.getCreatedUser())) {
                 UserLink usernameLbl = new UserLink(AppContext.getUsername(), AppContext.getUserAvatarId(),
-                        AppContext.getSession().getDisplayName());
+                        AppContext.getUser().getDisplayName());
                 usernameLbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {

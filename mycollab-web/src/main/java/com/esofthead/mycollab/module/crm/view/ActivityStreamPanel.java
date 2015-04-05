@@ -345,7 +345,7 @@ public class ActivityStreamPanel extends CssLayout {
 			String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
 			String arg21 = "'" + activityStream.getSaccountid() + "'";
 			String arg22 = "'" + AppContext.getSiteUrl() + "'";
-			String arg23 = AppContext.getSession().getTimezone();
+			String arg23 = AppContext.getUser().getTimezone();
 			String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
 			String onMouseOverFunc = String.format(
 					"return crmActivityOverIt(%s,%s,%s,%s,%s,%s,%s,%s);",

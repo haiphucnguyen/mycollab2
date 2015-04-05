@@ -69,12 +69,12 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 
 	protected abstract FieldGroupFormatter buildFormatter();
 
-	public void loadHistory(int typeid) {
+	public void loadHistory(int typeId) {
 		AuditLogSearchCriteria criteria = new AuditLogSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setModule(new StringSearchField(module));
 		criteria.setType(new StringSearchField(type));
-		criteria.setTypeid(new NumberSearchField(typeid));
+		criteria.setTypeid(new NumberSearchField(typeId));
 		int numHistories = logTable.setSearchCriteria(criteria);
 
 		Object parentComp = this.getParent();
@@ -133,7 +133,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 				if (visibleRows == 0) {
 					return null;
 				} else {
-					MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
+					MHorizontalLayout header = new MHorizontalLayout();
 					UserLink userLink = new UserLink(log.getPosteduser(),
 							log.getPostedUserAvatarId(), log.getPostedUserFullName());
 
@@ -142,7 +142,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 					Date changeDate = DateTimeUtils.convertDateByFormatW3C(strDate);
 					Label lbDate = new Label("changed " + AppContext.formatPrettyTime(changeDate));
 					lbDate.setDescription(AppContext.formatDateTime(changeDate));
-					header.with(lbDate).withAlign(lbDate, Alignment.MIDDLE_LEFT).expand(lbDate);
+					header.with(lbDate).withAlign(lbDate, Alignment.MIDDLE_LEFT);
 					gridLayout.addComponent(header, 0, 0, 2, 0);
 
 					gridLayout

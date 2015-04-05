@@ -316,7 +316,7 @@ public class GanttChartViewImpl extends AbstractPageView implements
         String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
         String arg21 = "'" + AppContext.getAccountId() + "'";
         String arg22 = "'" + AppContext.getSiteUrl() + "'";
-        String arg23 = AppContext.getSession().getTimezone();
+        String arg23 = AppContext.getUser().getTimezone();
         String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
 
         String mouseOverFunc = String.format(

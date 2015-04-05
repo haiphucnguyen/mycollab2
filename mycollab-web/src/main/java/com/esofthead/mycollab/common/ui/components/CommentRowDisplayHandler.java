@@ -50,8 +50,7 @@ public class CommentRowDisplayHandler extends
     @Override
     public Component generateRow(final SimpleComment comment, int rowIndex) {
         final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                .withWidth("100%").withStyleName
-                ("message");
+                .withWidth("100%").withStyleName("message");
 
         MVerticalLayout userBlock = new MVerticalLayout().withMargin(false).withWidth("80px");
         userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);

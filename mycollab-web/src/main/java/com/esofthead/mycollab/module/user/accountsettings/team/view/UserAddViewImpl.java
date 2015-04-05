@@ -238,10 +238,10 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     cboTimezone.setTimeZone(TimezoneMapper
                             .getTimezoneExt(user.getTimezone()));
                 } else {
-                    if (AppContext.getSession().getTimezone() != null) {
+                    if (AppContext.getUser().getTimezone() != null) {
                         cboTimezone
                                 .setTimeZone(TimezoneMapper
-                                        .getTimezoneExt(AppContext.getSession()
+                                        .getTimezoneExt(AppContext.getUser()
                                                 .getTimezone()));
                     }
                 }

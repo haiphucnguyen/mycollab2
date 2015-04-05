@@ -71,7 +71,7 @@ public class ProjectCommentInput extends MHorizontalLayout {
 		super();
 		this.withMargin(new MarginInfo(false, true, false, false)).withWidth("100%").withStyleName("message");
 
-		final SimpleUser currentUser = AppContext.getSession();
+		final SimpleUser currentUser = AppContext.getUser();
 		MVerticalLayout userBlock = new MVerticalLayout().withMargin(false).withWidth("80px");
 		userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 

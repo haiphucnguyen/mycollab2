@@ -48,7 +48,7 @@ public class TooltipHelper {
         String arg4 = "'" + user + "'";
         String arg5 = "'" + AppContext.getSiteUrl() + "tooltip/'";
         String arg6 = "'" + AppContext.getSiteUrl() + "'";
-        String arg7 = AppContext.getSession().getTimezone();
+        String arg7 = AppContext.getUser().getTimezone();
         String arg8 = "'" + AppContext.getAccountId() + "'";
         String arg9 = "'" + AppContext.getUserLocale().toString() + "'";
 

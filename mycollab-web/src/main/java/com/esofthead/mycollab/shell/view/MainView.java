@@ -344,13 +344,13 @@ public final class MainView extends AbstractPageView {
 
         NotificationButton notificationButton = new NotificationButton();
         accountLayout.addComponent(notificationButton);
-        if (AppContext.getSession().getTimezone() == null) {
+        if (AppContext.getUser().getTimezone() == null) {
             EventBusFactory.getInstance().post(
                     new ShellEvent.NewNotification(this,
                             new TimezoneNotification()));
         }
 
-        if (StringUtils.isBlank(AppContext.getSession().getAvatarid())) {
+        if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {
             EventBusFactory.getInstance().post(
                     new ShellEvent.NewNotification(this,
                             new RequestUploadAvatarNotification()));
@@ -379,7 +379,7 @@ public final class MainView extends AbstractPageView {
         accountLayout.addComponent(userAvatar);
         accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
 
-        final PopupButton accountMenu = new PopupButton(com.esofthead.mycollab.core.utils.StringUtils.trim(AppContext.getSession()
+        final PopupButton accountMenu = new PopupButton(com.esofthead.mycollab.core.utils.StringUtils.trim(AppContext.getUser()
                 .getDisplayName(), 20, true));
         OptionPopupContent accLayout = new OptionPopupContent().withWidth("160px");
 
@@ -438,7 +438,7 @@ public final class MainView extends AbstractPageView {
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        AppContext.getInstance().clearSession();
+                        AppContext.getInstance().clearSessionVariables();
                         EventBusFactory.getInstance().post(
                                 new ShellEvent.LogOut(this, null));
                     }
