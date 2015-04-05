@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.4.2";
+	content: "7.4.3";
 }
 
 .v-generated-body {
@@ -11047,6 +11047,41 @@ div.v-lazyloadingwrapper-loading {
 	overflow-y: auto;
 	background-color: #FFF;
 	position: relative;
+}
+
+div.v-csslayout.main-body {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+.v-sliderpanel-wrapper .v-sliderpanel-content {
+	background: powderblue;
+	color: gray;
+}
+
+.v-sliderpanel-wrapper .v-sliderpanel-tab {
+	background: powderblue;
+	color: gray;
+}
+
+.v-sliderpanel-wrapper .v-sliderpanel-tab .v-sliderpanel-caption {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.right-tool {
+	z-index: 9999;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+}
+
+.v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
+	bottom: 0px;
+	height: 200px;
 }
 
 .footer {

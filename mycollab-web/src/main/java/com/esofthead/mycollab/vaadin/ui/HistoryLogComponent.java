@@ -135,8 +135,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 				} else {
 					MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
 					UserLink userLink = new UserLink(log.getPosteduser(),
-							log.getPostedUserAvatarId(),
-							log.getPostedUserFullName(), false);
+							log.getPostedUserAvatarId(), log.getPostedUserFullName());
 
 					header.with(userLink).withAlign(userLink, Alignment.MIDDLE_LEFT);
 

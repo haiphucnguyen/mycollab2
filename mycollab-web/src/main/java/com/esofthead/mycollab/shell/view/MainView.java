@@ -87,11 +87,10 @@ public final class MainView extends AbstractPageView {
     public MainView() {
         this.setSizeFull();
         ControllerRegistry.addController(new MainViewController(this));
-        this.bodyLayout = new CssLayout();
-        this.bodyLayout.addStyleName("main-body");
-        this.bodyLayout.setId("main-body");
-        this.bodyLayout.setWidth("100%");
-        this.bodyLayout.setHeight("100%");
+        bodyLayout = new CssLayout();
+        bodyLayout.addStyleName("main-body");
+        bodyLayout.setId("main-body");
+        bodyLayout.setSizeFull();
         this.with(createTopMenu(), bodyLayout, createFooter()).expand(bodyLayout);
     }
 
@@ -99,10 +98,15 @@ public final class MainView extends AbstractPageView {
         ThemeManager.loadUserTheme(AppContext.getAccountId());
     }
 
-    public void addModule(final IModule module) {
+    public void addModule( IModule module) {
         ModuleHelper.setCurrentModule(module);
         this.bodyLayout.removeAllComponents();
         this.bodyLayout.addComponent(module.getWidget());
+
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
+            NewsSlider slider = new NewsSlider();
+            this.bodyLayout.addComponent(slider);
+        }
 
         if (ModuleHelper.isCurrentCrmModule()) {
             serviceMenu.selectService(0);
@@ -163,8 +167,7 @@ public final class MainView extends AbstractPageView {
             }
         });
 
-        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone
-                || SiteConfiguration.getDeploymentMode() == DeploymentMode.development) {
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
             Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge" +
                     ".net/projects/mycollab/reviews/new"));
             rateUsLink.setTargetName("_blank");

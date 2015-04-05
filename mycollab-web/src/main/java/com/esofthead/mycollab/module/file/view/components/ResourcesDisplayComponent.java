@@ -522,15 +522,14 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             // current user is created user
             if (StringUtils.isEmpty(res.getCreatedUser())) {
                 UserLink usernameLbl = new UserLink(AppContext.getUsername(), AppContext.getUserAvatarId(),
-                        AppContext.getSession().getDisplayName(), false);
+                        AppContext.getSession().getDisplayName());
                 usernameLbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {
                 UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
                 SimpleUser user = userService.findUserByUserNameInAccount(res.getCreatedUser(), AppContext.getAccountId());
                 if (user != null) {
-                    UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName(),
-                            false);
+                    UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName());
                     userLink.addStyleName("grayLabel");
                     moreInfoAboutResLayout.addComponent(userLink);
                 } else {
