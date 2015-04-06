@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.user.view;
 
 import java.util.Date;
 
+import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +80,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 				AppContext.getSubDomain(), false);
 
 		if (isRememberPassword) {
-			((DesktopApplication) MyCollabUI.getInstance()).rememberPassword(
+			((DesktopApplication) UI.getCurrent()).rememberPassword(
 					username, password);
 		}
 
