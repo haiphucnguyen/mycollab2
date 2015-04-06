@@ -25,6 +25,7 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
 
@@ -39,6 +40,9 @@ public class ProjectUserLink extends Label {
 
     public ProjectUserLink(String username, String userAvatarId,
                            String displayName) {
+        if (StringUtils.isBlank(username)) {
+            return;
+        }
         this.setContentMode(ContentMode.HTML);
         DivLessFormatter div = new DivLessFormatter();
         String uid = UUID.randomUUID().toString();

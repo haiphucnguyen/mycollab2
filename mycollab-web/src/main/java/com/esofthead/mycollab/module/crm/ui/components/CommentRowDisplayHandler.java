@@ -1,28 +1,11 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.common.ui.components;
+package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.user.ui.components.UserBlock;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -30,8 +13,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -41,7 +22,7 @@ import java.util.List;
 
 /**
  * @author MyCollab Ltd.
- * @since 1.0
+ * @since 5.0.4
  */
 public class CommentRowDisplayHandler extends
         BeanList.RowDisplayHandler<SimpleComment> {
@@ -52,31 +33,8 @@ public class CommentRowDisplayHandler extends
         final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%").withStyleName("message");
 
-        MVerticalLayout userBlock = new MVerticalLayout().withMargin(false).withWidth("80px");
-        userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        ClickListener gotoUser = new ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(
-                        new ProjectMemberEvent.GotoRead(this, comment
-                                .getCreateduser()));
-            }
-        };
-        Button userAvatarBtn = UserAvatarControlFactory
-                .createUserAvatarButtonLink(comment.getOwnerAvatarId(),
-                        comment.getOwnerFullName());
-        userAvatarBtn.addClickListener(gotoUser);
-        userBlock.addComponent(userAvatarBtn);
-
-        Button userName = new Button(comment.getOwnerFullName());
-        userName.setStyleName("user-name");
-        userName.addStyleName("link");
-        userName.addStyleName(UIConstants.WORD_WRAP);
-        userName.addClickListener(gotoUser);
-        userBlock.addComponent(userName);
-        layout.addComponent(userBlock);
+        UserBlock memberBlock = new UserBlock(comment.getCreateduser(), comment.getOwnerAvatarId(), comment.getOwnerFullName());
+        layout.addComponent(memberBlock);
 
         CssLayout rowLayout = new CssLayout();
         rowLayout.setStyleName("message-container");
@@ -107,7 +65,7 @@ public class CommentRowDisplayHandler extends
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public void buttonClick(ClickEvent event) {
+                public void buttonClick(Button.ClickEvent event) {
                     ConfirmDialogExt.show(
                             UI.getCurrent(),
                             AppContext.getMessage(

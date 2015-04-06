@@ -1,14 +1,10 @@
-package com.esofthead.mycollab.module.project.ui.components;
+package com.esofthead.mycollab.module.user.ui.components;
 
 import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.user.AccountLinkGenerator;
+import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.utils.TooltipHelper;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import org.vaadin.maddon.button.MButton;
@@ -20,14 +16,14 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 5.0.4
  */
-public class ProjectMemberBlock extends MVerticalLayout{
-    public ProjectMemberBlock(String username, String userAvatarId, String displayName) {
+public class UserBlock extends MVerticalLayout {
+    public UserBlock(String username, String userAvatarId, String displayName) {
         withMargin(false).withWidth("80px");
         MButton button = new MButton(UserAvatarControlFactory.createAvatarResource(userAvatarId, 48)).withStyleName("link");
 
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
-        A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(), username))
+        A userLink = new A().setId("tag" + uid).setHref(AccountLinkBuilder.generatePreviewFullUserLink(username))
                 .appendText(displayName);
         userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, username));
         div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));

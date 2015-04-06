@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.common.ui.components.CommentRowDisplayHandler;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;

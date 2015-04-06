@@ -40,12 +40,9 @@ public class VaadinFileResource implements VaadinResource {
 	}
 
 	@Override
-	public Resource getImagePreviewResource(String documentPath,
-			Resource failOverSource) {
-		StorageConfiguration storageConfiguration = StorageManager
-				.getConfiguration();
-		File docFile = new File(
-				storageConfiguration.getResourcePath(documentPath));
+	public Resource getImagePreviewResource(String documentPath, Resource failOverSource) {
+		StorageConfiguration storageConfiguration = StorageManager.getConfiguration();
+		File docFile = new File(storageConfiguration.getResourcePath(documentPath));
 		return (docFile.exists()) ? new FileResource(docFile) : failOverSource;
 	}
 
@@ -62,8 +59,7 @@ public class VaadinFileResource implements VaadinResource {
 	public Resource getAvatarResource(String avatarId, int size) {
 		FileStorageConfiguration fileStorageConfiguration = (FileStorageConfiguration) StorageManager
 				.getConfiguration();
-		File avatarFile = fileStorageConfiguration
-				.getAvatarFile(avatarId, size);
+		File avatarFile = fileStorageConfiguration.getAvatarFile(avatarId, size);
 		return (avatarFile != null) ? new FileResource(avatarFile)
 				: MyCollabResource.newResource("icons/default_user_avatar_"
 						+ size + ".png");

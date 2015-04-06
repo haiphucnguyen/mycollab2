@@ -6660,17 +6660,6 @@ td.v-inline-datefield-calendarpanel-nextyear {
 	margin-right: 0;
 }
 
-.v-csslayout.border-box2-color {
-	background-color: #d4dfef;
-	border-radius: 5px;
-	padding: 0px;
-	border: 1px solid #CFCFCF;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 0px;
-}
-
 .xbreadcrumbs {
 	background-color: transparent !important;
 }
@@ -10821,11 +10810,6 @@ td.v-tabsheet-spacertd div {
 
 .message.important-message .message-container:before {
 	border-color: transparent #ff9339;
-}
-
-.message .user-name {
-	text-align: center !important;
-	color: #0061ac;
 }
 
 .message-header .post-owner {
