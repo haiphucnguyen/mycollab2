@@ -37,6 +37,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
 import com.hp.gagawa.java.elements.A;
@@ -127,8 +128,8 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
             DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
 
         @Override
-        public Component generateRow(final ProjectGenericTask genericTask,
-                                     final int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask,
+                                     int rowIndex) {
             final CssLayout layout = new CssLayout();
             layout.setWidth("100%");
             layout.setStyleName("list-row");
@@ -180,8 +181,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
-            A itemLink = new A();
-            itemLink.setId("tag" + uid);
+            A itemLink = new A().setId("tag" + uid);
             if (ProjectTypeConstants.TASK.equals(task.getType())
                     || ProjectTypeConstants.BUG.equals(task.getType())) {
                 itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
@@ -195,20 +195,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
                         task.getTypeId() + ""));
             }
 
-
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + task.getType() + "'";
-            String arg19 = "'" + task.getTypeId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            itemLink.setAttribute("onmouseover", mouseOverFunc);
+            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, task.getType(), task.getTypeId()+""));
             itemLink.appendText(task.getName());
 
             div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),

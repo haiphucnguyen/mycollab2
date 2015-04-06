@@ -138,7 +138,7 @@ public class TaskStatusComponent extends MVerticalLayout {
 
     private static class GenericTaskRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
         @Override
-        public Component generateRow(ProjectGenericTask genericTask, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask, int rowIndex) {
             final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).withMargin(false).withWidth
                     ("100%").withStyleName("prj-list-row");
 

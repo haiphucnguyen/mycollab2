@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -414,8 +414,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
 
         @Override
-        public Component generateRow(final ProjectGenericTask genericTask,
-                                     final int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask,
+                                     int rowIndex) {
             final CssLayout layout = new CssLayout();
             layout.setWidth("100%");
             layout.setStyleName("list-row");
@@ -460,8 +460,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
-            A itemLink = new A();
-            itemLink.setId("tag" + uid);
+            A itemLink = new A().setId("tag" + uid);
             if (ProjectTypeConstants.TASK.equals(task.getType())
                     || ProjectTypeConstants.BUG.equals(task.getType())) {
                 itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
@@ -475,19 +474,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
                         task.getTypeId() + ""));
             }
 
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + task.getType() + "'";
-            String arg19 = "'" + task.getTypeId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            itemLink.setAttribute("onmouseover", mouseOverFunc);
+            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, task.getType(), task.getTypeId() + ""));
             itemLink.appendText(task.getName());
 
             div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
@@ -499,8 +486,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
             Img userAvatar = new Img("", StorageManager.getAvatarLink(task.getAssignUserAvatarId(), 16));
-            A userLink = new A();
-            userLink.setId("tag" + uid);
+            A userLink = new A().setId("tag" + uid);
             userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     task.getProjectId(),
                     task.getAssignUser()));

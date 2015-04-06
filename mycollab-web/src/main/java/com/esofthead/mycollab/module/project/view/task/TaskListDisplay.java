@@ -18,20 +18,17 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -49,15 +46,22 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
     }
 
     public static class TaskRowDisplayHandler implements RowDisplayHandler<SimpleTask> {
-        private Label taskLinkLbl;
 
         @Override
-        public Component generateRow(SimpleTask task, int rowIndex) {
-            MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).withMargin(true).withWidth("100%").withStyleName("taskrow");
-            layout.with(createTaskActionControl(task));
+        public Component generateRow(AbstractBeanPagedList host, SimpleTask task, int rowIndex) {
+            return new TaskRowComp(task);
+        }
+    }
+
+    private static class TaskRowComp extends MHorizontalLayout {
+        private Label taskLinkLbl;
+
+        TaskRowComp(SimpleTask task) {
+            withSpacing(false).withMargin(true).withWidth("100%").withStyleName("taskrow");
+            this.with(createTaskActionControl(task));
 
             taskLinkLbl = new Label(buildTaskLink(task), ContentMode.HTML);
-            layout.with(taskLinkLbl).expand(taskLinkLbl);
+            this.with(taskLinkLbl).expand(taskLinkLbl);
             if (task.isCompleted()) {
                 taskLinkLbl.addStyleName("completed");
             } else if (task.isOverdue()) {
@@ -66,16 +70,15 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                 taskLinkLbl.addStyleName("pending");
             }
             taskLinkLbl.addStyleName("wordWrap");
-            return layout;
         }
 
         private String buildTaskLink(SimpleTask task) {
+            String uid = UUID.randomUUID().toString();
             String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), task.getTaskkey(), task
                     .getTaskname());
-            A taskLink = new A().setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
+            A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
 
-            String uid = UUID.randomUUID().toString();
             taskLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.TASK, task.getId() + ""));
 
             String avatarLink = StorageManager.getAvatarLink(task.getAssignUserAvatarId(), 16);
@@ -87,29 +90,32 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                         .setStyle("color:gray; display:inline").setTitle(AppContext.formatDate(task.getDeadline()));
 
                 return new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, deadline,
-                        DivLessFormatter.EMPTY_SPACE(),
-                        TooltipHelper.buildDivTooltipEnable(uid)).write();
+                        DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid)).write();
             } else {
-                return new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter
-                                .EMPTY_SPACE(),
+                return new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
                         TooltipHelper.buildDivTooltipEnable(uid)).write();
             }
         }
 
         private void closeTask() {
-
+            taskLinkLbl.removeStyleName("overdue pending");
+            taskLinkLbl.addStyleName("completed");
         }
 
         private void reOpenTask() {
-
+            taskLinkLbl.removeStyleName("overdue pending completed");
         }
 
         private void pendingTask() {
-
+            taskLinkLbl.removeStyleName("overdue completed");
+            taskLinkLbl.addStyleName("pending");
         }
 
         private void deleteTask() {
-
+            ComponentContainer parent = (ComponentContainer) this.getParent();
+            if (parent != null) {
+                parent.removeComponent(this);
+            }
         }
 
         private PopupButton createTaskActionControl(final SimpleTask task) {
@@ -130,7 +136,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                         public void buttonClick(Button.ClickEvent event) {
                             EventBusFactory.getInstance().post(
                                     new TaskEvent.GotoEdit(
-                                            TaskRowDisplayHandler.this, task));
+                                            TaskRowComp.this, task));
                         }
                     });
             editButton.setEnabled(CurrentProjectVariables

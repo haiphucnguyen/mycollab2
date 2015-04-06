@@ -84,7 +84,7 @@ public class ProjectSearchItemsViewImpl extends AbstractPageView implements Proj
 
     private static class ItemRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
         @Override
-        public Component generateRow(ProjectGenericItem item, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem item, int rowIndex) {
             MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, false))
                     .withWidth("100%");
             Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(item.getProjectShortName(), item

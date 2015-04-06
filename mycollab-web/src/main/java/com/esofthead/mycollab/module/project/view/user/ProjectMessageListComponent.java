@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.hp.gagawa.java.elements.A;
@@ -84,7 +85,7 @@ public class ProjectMessageListComponent extends MVerticalLayout {
     public static class MessageRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<SimpleMessage> {
 
         @Override
-        public Component generateRow(final SimpleMessage message, final int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, SimpleMessage message, int rowIndex) {
             final CssLayout layout = new CssLayout();
             layout.setWidth("100%");
             layout.setStyleName("list-row");
@@ -136,24 +137,9 @@ public class ProjectMessageListComponent extends MVerticalLayout {
             String uid = UUID.randomUUID().toString();
             DivLessFormatter div = new DivLessFormatter();
             Text messageIcon = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE).getHtml());
-            A msgLink = new A();
-            msgLink.setId("tag" + uid);
-            msgLink.setHref(ProjectLinkBuilder.generateMessagePreviewFullLink(
-                    message.getProjectid(), message.getId()));
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + ProjectTypeConstants.MESSAGE + "'";
-            String arg19 = "'" + message.getId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            msgLink.setAttribute("onmouseover", mouseOverFunc);
-            msgLink.appendText(message.getTitle());
+            A msgLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateMessagePreviewFullLink(
+                    message.getProjectid(), message.getId())).appendText(message.getTitle());
+            msgLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.MESSAGE, message.getId() + ""));
             div.appendChild(messageIcon, DivLessFormatter.EMPTY_SPACE(), msgLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper
                     .buildDivTooltipEnable(uid));
             return div.write();

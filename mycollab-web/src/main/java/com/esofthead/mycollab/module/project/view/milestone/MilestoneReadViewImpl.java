@@ -308,7 +308,7 @@ public class MilestoneReadViewImpl extends
 
     private static class AssignmentRowDisplay implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
         @Override
-        public Component generateRow(ProjectGenericTask task, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask task, int rowIndex) {
             Label lbl = new Label(buildDivLine(task).write(), ContentMode.HTML);
             if (task.isClosed()) {
                 lbl.addStyleName("completed");

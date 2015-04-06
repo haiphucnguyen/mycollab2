@@ -254,7 +254,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
 
     private static class ItemRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
         @Override
-        public Component generateRow(ProjectGenericItem obj, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem obj, int rowIndex) {
             MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, true))
                     .withWidth("100%");
             Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(obj.getProjectShortName(), obj

@@ -304,7 +304,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
 
     private static class AssignmentRowDisplay implements AbstractBeanPagedList.RowDisplayHandler<SimpleBug> {
         @Override
-        public com.vaadin.ui.Component generateRow(SimpleBug bug, int rowIndex) {
+        public com.vaadin.ui.Component generateRow(AbstractBeanPagedList host, SimpleBug bug, int rowIndex) {
             Label lbl = new Label(buildDivLine(bug).write(), ContentMode.HTML);
             if (bug.isOverdue()) {
                 lbl.addStyleName("overdue");

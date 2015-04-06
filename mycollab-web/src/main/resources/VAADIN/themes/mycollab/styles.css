@@ -8802,6 +8802,20 @@ div.v-button.token-field:hover {
 	border-width: 0px 1px 1px 1px;
 }
 
+.tasklist .taskrow {
+	border-style: solid;
+	border-color: #CFCFCF;
+	border-width: 0px 0px 1px 0px;
+}
+
+.tasklist .taskrow:last-child {
+	border-style: none;
+}
+
+.tasklist .taskrow:hover {
+	background-color: ghostwhite;
+}
+
 html {
 	overflow: hidden;
 }

@@ -831,5 +831,16 @@
     border-style: solid;
     border-color: $border-color;
     border-width: 0px 1px 1px 1px;
+    .taskrow {
+      border-style: solid;
+      border-color: $border-color;
+      border-width: 0px 0px 1px 0px;
+      &:last-child {
+        border-style: none;
+      }
+      &:hover {
+        background-color: $hover-background-color;
+      }
+    }
   }
 }

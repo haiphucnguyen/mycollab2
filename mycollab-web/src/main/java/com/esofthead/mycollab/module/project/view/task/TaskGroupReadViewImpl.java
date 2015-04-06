@@ -254,7 +254,7 @@ public class TaskGroupReadViewImpl extends
 
     private static class AssignmentRowDisplay implements AbstractBeanPagedList.RowDisplayHandler<SimpleTask> {
         @Override
-        public Component generateRow(SimpleTask task, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, SimpleTask task, int rowIndex) {
             Label lbl = new Label(buildDivLine(task).write(), ContentMode.HTML);
             if (task.isOverdue()) {
                 lbl.addStyleName("overdue");
@@ -275,7 +275,8 @@ public class TaskGroupReadViewImpl extends
             String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), task.getTaskkey(), task
                     .getTaskname());
             Text image = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml());
-            A taskLink = new A().setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
+            String uid = UUID.randomUUID().toString();
+            A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName);
             if (task.isCompleted()) {
                 taskLink.setCSSClass("completed");
@@ -285,21 +286,7 @@ public class TaskGroupReadViewImpl extends
                 taskLink.setCSSClass("pending");
             }
 
-            String uid = UUID.randomUUID().toString();
-            taskLink.setId("tag" + uid);
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + ProjectTypeConstants.TASK + "'";
-            String arg19 = "'" + task.getId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            taskLink.setAttribute("onmouseover", mouseOverFunc);
+            taskLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.TASK, task.getId() + ""));
             div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
                     TooltipHelper.buildDivTooltipEnable(uid));
             return div;

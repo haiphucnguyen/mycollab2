@@ -24,7 +24,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -206,7 +205,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 
         int i = 0;
         for (T item : currentListData) {
-            Component row = rowDisplayHandler.generateRow(item, i);
+            Component row = rowDisplayHandler.generateRow(this, item, i);
             listContainer.addComponent(row);
             i++;
         }
@@ -243,7 +242,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
 
         int i = 0;
         for (T item : currentListData) {
-            Component row = rowDisplayHandler.generateRow(item, i);
+            Component row = rowDisplayHandler.generateRow(this, item, i);
             listContainer.addComponent(row);
             i++;
         }
@@ -273,6 +272,6 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
     }
 
     public interface RowDisplayHandler<T> {
-        Component generateRow(T obj, int rowIndex);
+        Component generateRow(AbstractBeanPagedList host, T item, int rowIndex);
     }
 }
