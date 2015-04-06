@@ -210,19 +210,7 @@ public class ProjectActivityStreamPagedList extends
                     activityStream.getTypeid()));
         }
 
-        String arg17 = "'" + uid + "'";
-        String arg18 = "'" + activityStream.getType() + "'";
-        String arg19 = "'" + activityStream.getTypeid() + "'";
-        String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-        String arg21 = "'" + activityStream.getSaccountid() + "'";
-        String arg22 = "'" + AppContext.getSiteUrl() + "'";
-        String arg23 = AppContext.getUser().getTimezone();
-        String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-        String mouseOverFunc = String.format(
-                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                arg20, arg21, arg22, arg23, arg24);
-        itemLink.setAttribute("onmouseover", mouseOverFunc);
+        itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, activityStream.getType(), activityStream.getTypeid()));
         itemLink.appendText(activityStream.getNamefield());
 
         div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),

@@ -35,10 +35,8 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
+import com.esofthead.mycollab.module.project.ui.components.*;
+import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -49,7 +47,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.LinkViewField;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -173,13 +170,7 @@ public class TaskGroupReadViewImpl extends
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (TaskList.Field.milestoneid.equalTo(propertyId)) {
-                    return new LinkViewField(
-                            beanItem.getMilestoneName(),
-                            ProjectLinkBuilder
-                                    .generateMilestonePreviewFullLink(
-                                            beanItem.getProjectid(),
-                                            beanItem.getMilestoneid()),
-                            ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+                    return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "", beanItem.getMilestoneName());
                 } else if (TaskList.Field.owner.equalTo(propertyId)) {
                     return new ProjectUserFormLinkField(beanItem.getOwner(),
                             beanItem.getOwnerAvatarId(),

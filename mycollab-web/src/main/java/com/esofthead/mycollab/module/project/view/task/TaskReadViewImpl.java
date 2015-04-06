@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
+import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -45,7 +46,10 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.esofthead.mycollab.vaadin.ui.form.field.*;
+import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -342,11 +346,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
             } else if (Task.Field.deadline.equalTo(propertyId)) {
                 return new PrettyDateViewField(beanItem.getDeadline());
             } else if (Task.Field.tasklistid.equalTo(propertyId)) {
-                return new LinkViewField(beanItem.getTaskListName(),
-                        ProjectLinkBuilder.generateTaskGroupPreviewFullLink(
-                                beanItem.getProjectid(),
-                                beanItem.getTasklistid()),
-                        ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK_LIST));
+                return new ProjectItemViewField(ProjectTypeConstants.TASK_LIST, beanItem.getTasklistid() + "",
+                        beanItem.getTaskListName());
             } else if (Task.Field.id.equalTo(propertyId)) {
                 return new ProjectFormAttachmentDisplayField(
                         beanItem.getProjectid(),

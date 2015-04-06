@@ -219,21 +219,7 @@ public class ProjectLinkBuilder {
         Text image = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A link = new A().setId("tag" + uid);
         link.setHref(AppContext.getSiteUrl() + generateProjectItemLink(prjShortName, projectId, type, typeId)).appendChild(new Text(summary));
-
-        String arg17 = "'" + uid + "'";
-        String arg18 = "'" + type + "'";
-        String arg19 = "'" + typeId + "'";
-        String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-        String arg21 = "'" + AppContext.getAccountId() + "'";
-        String arg22 = "'" + AppContext.getSiteUrl() + "'";
-        String arg23 = AppContext.getUser().getTimezone();
-        String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-        String mouseOverFunc = String.format(
-                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                arg20, arg21, arg22, arg23, arg24);
-        link.setAttribute("onmouseover", mouseOverFunc);
-
+        link.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, type, typeId));
         Div div = new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), link, DivLessFormatter
                 .EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         return div.write();

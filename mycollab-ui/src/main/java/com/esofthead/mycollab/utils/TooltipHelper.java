@@ -56,4 +56,19 @@ public class TooltipHelper {
                 "return showUserTooltip(%s,%s,%s,%s,%s,%s,%s);", arg3, arg4, arg5,
                 arg6, arg7, arg8, arg9);
     }
+
+    public static String buildItemHtmlTooltip(String uid, String type, String typeId) {
+        String arg17 = "'" + uid + "'";
+        String arg18 = "'" + type + "'";
+        String arg19 = "'" + typeId + "'";
+        String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
+        String arg21 = "'" + AppContext.getAccountId() + "'";
+        String arg22 = "'" + AppContext.getSiteUrl() + "'";
+        String arg23 = AppContext.getUser().getTimezone();
+        String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
+
+        return String.format(
+                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
+                arg20, arg21, arg22, arg23, arg24);
+    }
 }
