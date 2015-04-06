@@ -8290,7 +8290,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .project-tableless .column200 {
 	display: table-cell;
-	width: 200px;
+	width: 160px;
 	padding: 5px;
 	padding-left: 0px;
 }
@@ -8794,6 +8794,12 @@ div.v-button.token-field:hover {
 
 .in-progress-milestones, .future-milestones {
 	border-left: 1px solid #d7d7d7;
+}
+
+.tasklist {
+	border-style: solid;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px 1px;
 }
 
 html {

@@ -370,7 +370,7 @@
     }
     .column200 {
       display: table-cell;
-      width: 200px;
+      width: 160px;
       padding: 5px;
       padding-left:0px;
     }
@@ -826,4 +826,10 @@
   }
 
   /* End Milestone View */
+
+  .tasklist {
+    border-style: solid;
+    border-color: $border-color;
+    border-width: 0px 1px 1px 1px;
+  }
 }

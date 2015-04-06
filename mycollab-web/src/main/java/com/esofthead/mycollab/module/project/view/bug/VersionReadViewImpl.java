@@ -331,20 +331,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
                     bug.getProjectShortName(),
                     bug.getProjectid(), ProjectTypeConstants.BUG,
                     bug.getBugkey() + ""));
-
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + ProjectTypeConstants.BUG + "'";
-            String arg19 = "'" + bug.getId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            itemLink.setAttribute("onmouseover", mouseOverFunc);
+            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.BUG, bug.getId() + ""));
             itemLink.appendText(String.format("[%s-%d] %s", bug.getProjectShortName(), bug.getBugkey(), bug
                     .getSummary()));
 

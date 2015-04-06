@@ -58,7 +58,7 @@ class TaskDisplayComponent extends CssLayout {
     private static final long serialVersionUID = 1L;
 
     private TaskSearchCriteria criteria;
-    private TaskTableDisplay taskDisplay;
+    private TaskListDisplay taskDisplay;
     private Button createTaskBtn;
 
     private SimpleTaskList taskList;
@@ -99,11 +99,8 @@ class TaskDisplayComponent extends CssLayout {
                         layoutHelper.addComponent(field, AppContext
                                 .getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                     } else if ("milestoneid".equals(propertyId)) {
-                        layoutHelper.addComponent(
-                                field,
-                                AppContext
-                                        .getMessage(TaskGroupI18nEnum.FORM_PHASE_FIELD),
-                                1, 1);
+                        layoutHelper.addComponent(field,
+                                AppContext.getMessage(TaskGroupI18nEnum.FORM_PHASE_FIELD), 1, 1);
                     }
                 }
             });
@@ -134,36 +131,8 @@ class TaskDisplayComponent extends CssLayout {
             previewForm.setBean(this.taskList);
         }
 
-        this.taskDisplay = new TaskTableDisplay(TaskTableFieldDef.id,
-                Arrays.asList(TaskTableFieldDef.taskname,
-                        TaskTableFieldDef.startdate, TaskTableFieldDef.duedate,
-                        TaskTableFieldDef.assignee,
-                        TaskTableFieldDef.percentagecomplete));
+        this.taskDisplay = new TaskListDisplay();
         addComponent(taskDisplay);
-
-        taskDisplay.addTableListener(new TableClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void itemClick(final TableClickEvent event) {
-                SimpleTask task = (SimpleTask) event.getData();
-                if ("taskname".equals(event.getFieldName())) {
-                    EventBusFactory.getInstance().post(
-                            new TaskEvent.GotoRead(TaskDisplayComponent.this,
-                                    task.getId()));
-                } else if ("closeTask".equals(event.getFieldName())
-                        || "reopenTask".equals(event.getFieldName())
-                        || "pendingTask".equals(event.getFieldName())
-                        || "deleteTask".equals(event.getFieldName())) {
-                    TaskDisplayComponent.this.removeAllComponents();
-                    ProjectTaskListService taskListService = ApplicationContextUtil
-                            .getSpringBean(ProjectTaskListService.class);
-                    taskList = taskListService
-                            .findById(taskList.getId(), AppContext.getAccountId());
-                    showTaskGroupInfo();
-                }
-            }
-        });
 
         this.createTaskBtn = new Button(
                 AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),

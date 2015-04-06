@@ -38,6 +38,7 @@ import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
+import com.esofthead.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -158,32 +159,9 @@ public class MessageListViewImpl extends AbstractPageView implements
             if (message.getIsstick() != null && message.getIsstick()) {
                 messageLayout.addStyleName("important-message");
             }
-            MVerticalLayout userBlock = new MVerticalLayout().withMargin(false).withWidth("80px");
-            userBlock.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-            ClickListener gotoUser = new ClickListener() {
-                private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    EventBusFactory.getInstance().post(
-                            new ProjectMemberEvent.GotoRead(
-                                    MessageListViewImpl.this, message
-                                    .getPosteduser()));
-                }
-            };
-            Button userAvatarBtn = UserAvatarControlFactory
-                    .createUserAvatarButtonLink(
-                            message.getPostedUserAvatarId(),
-                            message.getFullPostedUserName());
-            userAvatarBtn.addClickListener(gotoUser);
-            userBlock.addComponent(userAvatarBtn);
-            Button userName = new Button(message.getFullPostedUserName());
-            userName.setStyleName("user-name");
-            userName.addStyleName("link");
-            userName.addStyleName(UIConstants.WORD_WRAP);
-            userName.addClickListener(gotoUser);
-
-            userBlock.addComponent(userName);
+            ProjectMemberBlock userBlock = new ProjectMemberBlock(message.getPosteduser(), message.getPostedUserAvatarId(),
+                    message.getFullPostedUserName());
             messageLayout.addComponent(userBlock);
 
             CssLayout rowLayout = new CssLayout();

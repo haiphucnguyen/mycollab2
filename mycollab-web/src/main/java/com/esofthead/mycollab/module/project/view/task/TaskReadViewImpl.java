@@ -484,20 +484,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
 
             String uid = UUID.randomUUID().toString();
-            taskLink.setId("tag" + uid);
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + ProjectTypeConstants.TASK + "'";
-            String arg19 = "'" + subTask.getId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            taskLink.setAttribute("onmouseover", mouseOverFunc);
+            taskLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.TASK, subTask.getId() + ""));
 
             String avatarLink = StorageManager.getAvatarLink(subTask.getAssignUserAvatarId(), 16);
             Img avatarImg = new Img(subTask.getAssignUserFullName(), avatarLink).setTitle(subTask.getAssignUserFullName());

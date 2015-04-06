@@ -103,11 +103,6 @@ public final class MainView extends AbstractPageView {
         this.bodyLayout.removeAllComponents();
         this.bodyLayout.addComponent(module.getWidget());
 
-        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
-            NewsSlider slider = new NewsSlider();
-            this.bodyLayout.addComponent(slider);
-        }
-
         if (ModuleHelper.isCurrentCrmModule()) {
             serviceMenu.selectService(0);
         } else if (ModuleHelper.isCurrentProjectModule()) {

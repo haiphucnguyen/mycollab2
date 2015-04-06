@@ -294,12 +294,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>vaadin-sliderpanel</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.squareup</groupId>
             <artifactId>javawriter</artifactId>
             <version>2.5.1</version>

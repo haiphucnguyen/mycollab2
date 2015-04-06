@@ -141,9 +141,7 @@ public class MilestoneReadViewImpl extends
     @Override
     protected void onPreviewItem() {
         commentListComp.loadComments("" + beanItem.getId());
-
         historyListComp.loadHistory(beanItem.getId());
-
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
 
@@ -343,19 +341,7 @@ public class MilestoneReadViewImpl extends
                 throw new MyCollabException("Only support bug and task only");
             }
 
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + task.getType() + "'";
-            String arg19 = "'" + task.getTypeId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                    arg20, arg21, arg22, arg23, arg24);
-            itemLink.setAttribute("onmouseover", mouseOverFunc);
+            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, task.getType(), task.getTypeId() + ""));
             itemLink.appendText(String.format("[%s-%d] %s", task.getProjectShortName(), task.getExtraTypeId(), task
                     .getName()));
 

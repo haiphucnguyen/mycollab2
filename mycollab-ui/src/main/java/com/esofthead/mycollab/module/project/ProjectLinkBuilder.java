@@ -146,7 +146,6 @@ public class ProjectLinkBuilder {
 
     public static String generateTaskPreviewFullLink(Integer taskKey,
                                                      String prjShortName) {
-
         return AppContext.getSiteUrl()
                 + GenericLinkUtils.URL_PREFIX_PARAM
                 + ProjectLinkGenerator.generateTaskPreviewLink(taskKey,

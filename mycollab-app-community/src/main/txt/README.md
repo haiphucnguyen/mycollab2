@@ -46,6 +46,11 @@ Version 5.0.4
 
 **Library Upgrades**
 
+**Improvements**
+
+* Revise the application variable scopes
+* Support quick review with instant tooltip
+
 **Bug Fixes**
 
 * The default created time of user should match with the default timezone
