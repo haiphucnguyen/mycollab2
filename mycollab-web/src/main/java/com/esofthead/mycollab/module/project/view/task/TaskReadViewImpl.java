@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -354,16 +354,16 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                         AttachmentType.PROJECT_TASK_TYPE, beanItem.getId());
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    final Resource iconPriority = new ExternalResource(
+                    Resource iconPriority = new ExternalResource(
                             ProjectResources
                                     .getIconResourceLink12ByTaskPriority(beanItem
                                             .getPriority()));
-                    final Embedded iconEmbedded = new Embedded(null,
+                    Embedded iconEmbedded = new Embedded(null,
                             iconPriority);
-                    final Label lbPriority = new Label(AppContext.getMessage(
+                    Label lbPriority = new Label(AppContext.getMessage(
                             TaskPriority.class, beanItem.getPriority()));
 
-                    final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
+                    ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
                     containerField.addComponentField(iconEmbedded);
                     containerField.getLayout().setComponentAlignment(
                             iconEmbedded, Alignment.MIDDLE_LEFT);
@@ -480,10 +480,9 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         private String buildTaskLink(SimpleTask subTask) {
             String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), subTask.getTaskkey(), subTask
                     .getTaskname());
-            A taskLink = new A().setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(subTask.getTaskkey(),
-                    CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-
             String uid = UUID.randomUUID().toString();
+            A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(subTask.getTaskkey(),
+                    CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
             taskLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.TASK, subTask.getId() + ""));
 
             String avatarLink = StorageManager.getAvatarLink(subTask.getAssignUserAvatarId(), 16);
@@ -503,7 +502,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                         TooltipHelper.buildDivTooltipEnable(uid)).write();
             }
         }
-
     }
 
     private class PeopleInfoComp extends MVerticalLayout {

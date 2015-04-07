@@ -325,12 +325,8 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
             Div div = new Div();
             Text image = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml());
 
-            A itemLink = new A();
-            itemLink.setId("tag" + uid);
-            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
-                    bug.getProjectShortName(),
-                    bug.getProjectid(), ProjectTypeConstants.BUG,
-                    bug.getBugkey() + ""));
+            A itemLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectItemLink(
+                    bug.getProjectShortName(), bug.getProjectid(), ProjectTypeConstants.BUG, bug.getBugkey() + ""));
             itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.BUG, bug.getId() + ""));
             itemLink.appendText(String.format("[%s-%d] %s", bug.getProjectShortName(), bug.getBugkey(), bug
                     .getSummary()));

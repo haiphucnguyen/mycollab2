@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.project.ui.form;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.utils.TooltipHelper;
@@ -40,9 +39,9 @@ public class ProjectItemViewField extends CustomField {
         SimpleProject project = CurrentProjectVariables.getProject();
         DivLessFormatter div = new DivLessFormatter();
         String uid = UUID.randomUUID().toString();
-        Text avatarLink = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+        Text avatarLink = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A milestoneLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectItemLink(project.getShortname(), project.getId(), type, typeId)).appendText(typeDisplayName);
-        milestoneLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.MILESTONE, typeId + ""));
+        milestoneLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, type, typeId + ""));
         div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE(), milestoneLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         return new Label(div.write(), ContentMode.HTML);
     }

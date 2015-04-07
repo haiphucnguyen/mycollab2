@@ -329,8 +329,7 @@ public class MilestoneReadViewImpl extends
             Div div = new Div();
             Text image = new Text(ProjectAssetsManager.getAsset(task.getType()).getHtml());
 
-            A itemLink = new A();
-            itemLink.setId("tag" + uid);
+            A itemLink = new A().setId("tag" + uid);
             if (ProjectTypeConstants.TASK.equals(task.getType())
                     || ProjectTypeConstants.BUG.equals(task.getType())) {
                 itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(

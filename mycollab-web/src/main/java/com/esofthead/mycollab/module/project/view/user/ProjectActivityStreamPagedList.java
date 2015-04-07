@@ -195,8 +195,7 @@ public class ProjectActivityStreamPagedList extends
         DivLessFormatter div = new DivLessFormatter();
         Text image = new Text(ProjectAssetsManager.getAsset(activityStream
                 .getType()).getHtml());
-        A itemLink = new A();
-        itemLink.setId("tag" + uid);
+        A itemLink = new A().setId("tag" + uid);
         if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                 || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
             itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
