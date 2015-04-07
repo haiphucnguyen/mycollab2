@@ -55,12 +55,16 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
     private static class TaskRowComp extends MHorizontalLayout {
         private Label taskLinkLbl;
+        private SimpleTask task;
+
+        private PopupButton taskSettingPopupBtn;
 
         TaskRowComp(SimpleTask task) {
+            this.task = task;
             withSpacing(false).withMargin(true).withWidth("100%").withStyleName("taskrow");
-            this.with(createTaskActionControl(task));
+            this.with(createTaskActionControl());
 
-            taskLinkLbl = new Label(buildTaskLink(task), ContentMode.HTML);
+            taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
             this.with(taskLinkLbl).expand(taskLinkLbl);
             if (task.isCompleted()) {
                 taskLinkLbl.addStyleName("completed");
@@ -72,7 +76,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             taskLinkLbl.addStyleName("wordWrap");
         }
 
-        private String buildTaskLink(SimpleTask task) {
+        private String buildTaskLink() {
             String uid = UUID.randomUUID().toString();
             String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), task.getTaskkey(), task
                     .getTaskname());
@@ -100,15 +104,21 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
         private void closeTask() {
             taskLinkLbl.removeStyleName("overdue pending");
             taskLinkLbl.addStyleName("completed");
+            OptionPopupContent filterBtnLayout = createPopupContent();
+            taskSettingPopupBtn.setContent(filterBtnLayout);
         }
 
         private void reOpenTask() {
             taskLinkLbl.removeStyleName("overdue pending completed");
+            OptionPopupContent filterBtnLayout = createPopupContent();
+            taskSettingPopupBtn.setContent(filterBtnLayout);
         }
 
         private void pendingTask() {
             taskLinkLbl.removeStyleName("overdue completed");
             taskLinkLbl.addStyleName("pending");
+            OptionPopupContent filterBtnLayout = createPopupContent();
+            taskSettingPopupBtn.setContent(filterBtnLayout);
         }
 
         private void deleteTask() {
@@ -118,13 +128,19 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             }
         }
 
-        private PopupButton createTaskActionControl(final SimpleTask task) {
-            PopupButton taskSettingPopupBtn = new PopupButton();
+        private PopupButton createTaskActionControl() {
+            taskSettingPopupBtn = new PopupButton();
             taskSettingPopupBtn.setIcon(FontAwesome.COGS);
 
             taskSettingPopupBtn.addStyleName("noDefaultIcon");
             taskSettingPopupBtn.addStyleName("button-icon-only");
 
+            OptionPopupContent filterBtnLayout = createPopupContent();
+            taskSettingPopupBtn.setContent(filterBtnLayout);
+            return taskSettingPopupBtn;
+        }
+
+        private OptionPopupContent createPopupContent() {
             OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
 
             Button editButton = new Button(AppContext
@@ -134,6 +150,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
+                            taskSettingPopupBtn.setPopupVisible(false);
                             EventBusFactory.getInstance().post(
                                     new TaskEvent.GotoEdit(
                                             TaskRowComp.this, task));
@@ -162,7 +179,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                                 projectTaskService
                                         .updateSelectiveWithSession(task,
                                                 AppContext.getUsername());
-
+                                taskSettingPopupBtn.setPopupVisible(false);
                                 closeTask();
                             }
                         });
@@ -177,6 +194,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
+                                taskSettingPopupBtn.setPopupVisible(false);
                                 task.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
                                 task.setPercentagecomplete(0d);
 
@@ -202,6 +220,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
                                 @Override
                                 public void buttonClick(Button.ClickEvent event) {
+                                    taskSettingPopupBtn.setPopupVisible(false);
                                     task.setStatus("Pending");
                                     task.setPercentagecomplete(0d);
 
@@ -226,6 +245,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
+                                taskSettingPopupBtn.setPopupVisible(false);
                                 task.setStatus("Open");
                                 task.setPercentagecomplete(0d);
 
@@ -251,19 +271,15 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
+                            taskSettingPopupBtn.setPopupVisible(false);
                             ConfirmDialogExt.show(
                                     UI.getCurrent(),
-                                    AppContext
-                                            .getMessage(
-                                                    GenericI18Enum.DIALOG_DELETE_TITLE,
-                                                    SiteConfiguration
-                                                            .getSiteName()),
-                                    AppContext
-                                            .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                    AppContext
-                                            .getMessage(GenericI18Enum.BUTTON_YES),
-                                    AppContext
-                                            .getMessage(GenericI18Enum.BUTTON_NO),
+                                    AppContext.getMessage(
+                                            GenericI18Enum.DIALOG_DELETE_TITLE,
+                                            SiteConfiguration.getSiteName()),
+                                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                                     new ConfirmDialog.Listener() {
                                         private static final long serialVersionUID = 1L;
 
@@ -286,9 +302,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             deleteBtn.setIcon(FontAwesome.TRASH_O);
             deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
             filterBtnLayout.addOption(deleteBtn);
-
-            taskSettingPopupBtn.setContent(filterBtnLayout);
-            return taskSettingPopupBtn;
+            return filterBtnLayout;
         }
     }
 }
