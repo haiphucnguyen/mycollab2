@@ -40,7 +40,6 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -94,7 +93,7 @@ public class GenericTaskTableDisplay extends
             public Object generateCell(Table source, Object itemId,
                                        Object columnId) {
                 ProjectGenericTask task = getBeanByIndex(itemId);
-                return new UserLink(task.getAssignUser(), task
+                return new ProjectMemberLink(task.getAssignUser(), task
                         .getAssignUserAvatarId(), task.getAssignUserFullName());
             }
 

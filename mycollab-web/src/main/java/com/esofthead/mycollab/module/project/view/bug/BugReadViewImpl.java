@@ -723,7 +723,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
                 String createdUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "loguserFullName");
 
-                UserLink createdUserLink = new UserLink(createdUserName,
+                ProjectMemberLink createdUserLink = new ProjectMemberLink(createdUserName,
                         createdUserAvatarId, createdUserDisplayName);
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
@@ -740,7 +740,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
                 String assignUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "assignuserFullName");
 
-                UserLink assignUserLink = new UserLink(assignUserName,
+                ProjectMemberLink assignUserLink = new ProjectMemberLink(assignUserName,
                         assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {

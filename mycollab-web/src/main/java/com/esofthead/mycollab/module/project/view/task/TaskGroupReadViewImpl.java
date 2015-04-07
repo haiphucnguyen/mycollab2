@@ -354,7 +354,7 @@ public class TaskGroupReadViewImpl extends
                 String createdUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "createdUserFullName");
 
-                UserLink createdUserLink = new UserLink(createdUserName,
+                ProjectMemberLink createdUserLink = new ProjectMemberLink(createdUserName,
                         createdUserAvatarId, createdUserDisplayName);
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
@@ -371,7 +371,7 @@ public class TaskGroupReadViewImpl extends
                 String assignUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "ownerFullName");
 
-                UserLink assignUserLink = new UserLink(assignUserName,
+                ProjectMemberLink assignUserLink = new ProjectMemberLink(assignUserName,
                         assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {

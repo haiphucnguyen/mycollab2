@@ -55,6 +55,7 @@ Version 5.0.4
 * Revise the application variable scopes
 * Support quick review with instant tooltip
 * Revise the task list display
+* Minor improve on page view
 
 **Bug Fixes**
 

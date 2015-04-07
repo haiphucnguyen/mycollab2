@@ -34,10 +34,7 @@ import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
-import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
+import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -405,7 +402,7 @@ public class ComponentReadViewImpl extends
                 String createdUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "createdUserFullName");
 
-                UserLink createdUserLink = new UserLink(createdUserName,
+                ProjectMemberLink createdUserLink = new ProjectMemberLink(createdUserName,
                         createdUserAvatarId, createdUserDisplayName);
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
@@ -422,7 +419,7 @@ public class ComponentReadViewImpl extends
                 String assignUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "userLeadFullName");
 
-                UserLink assignUserLink = new UserLink(assignUserName,
+                ProjectMemberLink assignUserLink = new ProjectMemberLink(assignUserName,
                         assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {

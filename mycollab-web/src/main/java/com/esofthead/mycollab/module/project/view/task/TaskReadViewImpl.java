@@ -535,7 +535,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                 String createdUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "logByFullName");
 
-                UserLink createdUserLink = new UserLink(createdUserName,
+                ProjectMemberLink createdUserLink = new ProjectMemberLink(createdUserName,
                         createdUserAvatarId, createdUserDisplayName);
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
@@ -552,7 +552,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                 String assignUserDisplayName = (String) PropertyUtils
                         .getProperty(bean, "assignUserFullName");
 
-                UserLink assignUserLink = new UserLink(assignUserName,
+                ProjectMemberLink assignUserLink = new ProjectMemberLink(assignUserName,
                         assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {
