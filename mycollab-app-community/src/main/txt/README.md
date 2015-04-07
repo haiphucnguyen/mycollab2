@@ -46,10 +46,15 @@ Version 5.0.4
 
 **Library Upgrades**
 
+* Upgrade Vaadin to 7.4.3
+* Upgrade other libraries
+
 **Improvements**
 
+* Auto update the new MyCollab version
 * Revise the application variable scopes
 * Support quick review with instant tooltip
+* Revise the task list display
 
 **Bug Fixes**
 

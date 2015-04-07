@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -98,7 +98,7 @@ public final class MainView extends AbstractPageView {
         ThemeManager.loadUserTheme(AppContext.getAccountId());
     }
 
-    public void addModule( IModule module) {
+    public void addModule(IModule module) {
         ModuleHelper.setCurrentModule(module);
         this.bodyLayout.removeAllComponents();
         this.bodyLayout.addComponent(module.getWidget());
@@ -115,7 +115,7 @@ public final class MainView extends AbstractPageView {
     }
 
     private CustomLayout createFooter() {
-        final CustomLayout footer = CustomLayoutExt.createLayout("footer");
+        CustomLayout footer = CustomLayoutExt.createLayout("footer");
         footer.setStyleName("footer");
         footer.setWidth("100%");
         footer.setHeightUndefined();
@@ -127,7 +127,6 @@ public final class MainView extends AbstractPageView {
         footer.addComponent(companyLink, "company-url");
 
         Calendar currentCal = Calendar.getInstance();
-
         Label currentYear = new Label(String.valueOf(currentCal
                 .get(Calendar.YEAR)));
         currentYear.setSizeUndefined();
@@ -298,10 +297,7 @@ public final class MainView extends AbstractPageView {
                                             new String[]{"billing"}));
                         }
                     });
-            accountLayout.addComponent(informBox);
-            accountLayout.setSpacing(true);
-            accountLayout.setComponentAlignment(informBox,
-                    Alignment.MIDDLE_LEFT);
+            accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
 
             Date createdTime = billingAccount.getCreatedtime();
             long timeDeviation = System.currentTimeMillis()
@@ -351,7 +347,7 @@ public final class MainView extends AbstractPageView {
                             new RequestUploadAvatarNotification()));
         }
 
-        if (SiteConfiguration.getDeploymentMode() != DeploymentMode.site && AppContext.isAdmin()) {
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
             try {
                 Client client = ClientBuilder.newBuilder().build();
                 WebTarget target = client.target("https://api.mycollab.com/api/checkupdate");
@@ -360,11 +356,16 @@ public final class MainView extends AbstractPageView {
                 Gson gson = new Gson();
                 Properties props = gson.fromJson(values, Properties.class);
                 String version = props.getProperty("version");
-                if (!MyCollabVersion.getVersion().equals(version)) {
+//                if (!MyCollabVersion.getVersion().equals(version)) {
+                if (AppContext.isAdmin()) {
+                    UI.getCurrent().addWindow(new UpdateVersionConfirmWindow(props));
+                } else {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.NewNotification(this,
                                     new NewUpdateNotification(props)));
                 }
+
+//                }
             } catch (Exception e) {
                 LOG.error("Error when call remote api", e);
             }

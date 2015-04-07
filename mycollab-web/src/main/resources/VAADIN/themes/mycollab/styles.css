@@ -8801,6 +8801,7 @@ div.v-button.token-field:hover {
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px 1px;
 	background-color: honeydew;
+	min-height: 33px;
 }
 
 .tasklist .taskrow {
