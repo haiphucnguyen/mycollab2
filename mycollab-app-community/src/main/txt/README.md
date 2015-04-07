@@ -47,6 +47,7 @@ Version 5.0.4
 **Library Upgrades**
 
 * Upgrade Vaadin to 7.4.3
+* Upgrade Jetty Server version
 * Upgrade other libraries
 
 **Improvements**

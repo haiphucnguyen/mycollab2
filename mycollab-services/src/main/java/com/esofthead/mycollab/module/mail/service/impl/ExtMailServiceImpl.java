@@ -49,7 +49,6 @@ public class ExtMailServiceImpl extends AbstractMailService implements
         }
 
         return new DefaultMailer(emailConfiguration);
-
     }
 
 }

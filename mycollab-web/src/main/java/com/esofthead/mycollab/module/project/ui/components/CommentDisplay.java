@@ -51,7 +51,7 @@ public class CommentDisplay extends MVerticalLayout implements ReloadableCompone
             boolean isDisplayCommentInput,
             boolean isSendingRelayEmail,
             Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-        withMargin(new MarginInfo(true, false, true, false)).withStyleName("comment-display");
+        withMargin(new MarginInfo(true, false, true, true)).withStyleName("comment-display");
         this.type = type;
         if (isDisplayCommentInput) {
             commentBox = new ProjectCommentInput(this, type, extraTypeId,
