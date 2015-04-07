@@ -6,6 +6,7 @@ import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow
 import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
@@ -205,11 +206,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 .getBillingPlan();
         DriveInfoService driveInfoService = ApplicationContextUtil
                 .getSpringBean(DriveInfoService.class);
-        String usedStorageTxt = ResourceUtils.getVolumeDisplay(driveInfoService
+        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService
                 .getUsedStorageVolume(AppContext.getAccountId()))
-                + " of "
-                + ResourceUtils
-                .getVolumeDisplay(currentBillingPlan.getVolume());
+                + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());
         usedVolumeInfo
                 .setValue("<div id='left-side'>&nbsp;</div><div id='info-content'>"
                         + usedStorageTxt

@@ -1,13 +1,13 @@
 package com.esofthead.mycollab.shell.view;
 
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.DesktopApplication;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.apache.commons.io.FileUtils;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
+import java.util.concurrent.locks.Lock;
 
 /**
  * @author MyCollab Ltd.
@@ -73,9 +74,16 @@ public class UpdateVersionConfirmWindow extends Window {
     }
 
     class AutoUpgradeProcess implements Runnable {
+        private boolean isKill = false;
+
         @Override
         public void run() {
             try {
+                Lock lock = UI.getCurrent().getSession().getLockInstance();
+                lock.lock();
+                DownloadProgressWindow progressWindow = new DownloadProgressWindow();
+                UI.getCurrent().addWindow(progressWindow);
+                lock.unlock();
                 File tmpFile = File.createTempFile("mycollab", "zip");
                 URL url = new URL("http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.3/MyCollab-MacOS-5.0.3.zip/download");
                 HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -83,31 +91,35 @@ public class UpdateVersionConfirmWindow extends Window {
 
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
-                    String disposition = httpConn.getHeaderField("Content-Disposition");
-                    String contentType = httpConn.getContentType();
                     int contentLength = httpConn.getContentLength();
 
-                    System.out.println("Content-Type = " + contentType);
-                    System.out.println("Content-Disposition = " + disposition);
-                    System.out.println("Content-Length = " + contentLength);
+                    progressWindow.setContentLength(contentLength);
 
                     // opens input stream from the HTTP connection
                     InputStream inputStream = httpConn.getInputStream();
 
                     // opens an output stream to save into file
                     FileOutputStream outputStream = new FileOutputStream(tmpFile);
-
+                    int currentBytesRead = 0;
                     int bytesRead;
-                    byte[] buffer = new byte[1024];
-                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    byte[] buffer = new byte[4096];
+                    while (((bytesRead = inputStream.read(buffer)) != -1) && !isKill) {
                         outputStream.write(buffer, 0, bytesRead);
-                        System.out.println("Bytes read: " + bytesRead);
+                        currentBytesRead += bytesRead;
+                        progressWindow.setProgressValue(currentBytesRead);
+                    }
+
+                    if (isKill) {
+                        progressWindow.close();
                     }
 
                     outputStream.close();
                     inputStream.close();
+                } else {
+                    NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
                 }
                 httpConn.disconnect();
+                progressWindow.close();
             } catch (IOException e) {
                 NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
             } finally {
@@ -115,27 +127,48 @@ public class UpdateVersionConfirmWindow extends Window {
             }
 
         }
-    }
 
-    class DownloadProgressWindow extends Window {
-        private long contentLength;
-        
+        class DownloadProgressWindow extends Window {
+            private int contentLength;
+            private MVerticalLayout content;
+            private ProgressBarIndicator progressBar;
+            private Label currentVolumeLabel;
 
-        DownloadProgressWindow(long contentLength) {
-            super("Downloading ...");
-            this.contentLength = contentLength;
-            this.setResizable(false);
-            this.setModal(false);
-            this.setWidth("600px");
+            DownloadProgressWindow() {
+                super("Upgrading MyCollab");
+                this.setResizable(false);
+                this.setModal(false);
+                this.setWidth("600px");
 
-            MVerticalLayout content = new MVerticalLayout();
-            this.setContent(content);
+                content = new MVerticalLayout();
+                content.with(new Label("Connecting to the server. Please wait for a moment"));
+                this.setContent(content);
+            }
+
+            void setContentLength(int contentLength) {
+                this.contentLength = contentLength;
+                content.removeAllComponents();
+                MHorizontalLayout progressLayout = new MHorizontalLayout();
+                Label totalVolumeLabel = new Label(FileUtils.getVolumeDisplay2(contentLength));
+                currentVolumeLabel = new Label();
+                progressBar = new ProgressBarIndicator();
+                progressBar.setWidth("400px");
+                progressLayout.with(progressBar, currentVolumeLabel, new Label("/"), totalVolumeLabel);
+                content.with(new Label("Downloading the latest MyCollab distribution. Please be patient"), progressLayout);
+                Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        isKill = true;
+                    }
+                });
+                cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+                content.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT);
+            }
+
+            void setProgressValue(int value) {
+                progressBar.setProgressValue((float) value / contentLength);
+                currentVolumeLabel.setValue(FileUtils.getVolumeDisplay2(value));
+            }
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        File tmpFile = File.createTempFile("mycollab", "zip");
-        FileUtils.copyURLToFile(new URL("http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.3/README.md/download"), tmpFile);
-        System.out.println("File: " + tmpFile.getAbsolutePath());
     }
 }

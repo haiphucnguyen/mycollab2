@@ -19,8 +19,8 @@ package com.esofthead.mycollab.module.file.view.components;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEvent;
-import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.*;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
@@ -557,7 +557,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             if (res instanceof Content) {
                 moreInfoAboutResLayout.addComponent(new Separator());
-                Label lbl = new Label(ResourceUtils.getVolumeDisplay(res.getSize()));
+                Label lbl = new Label(FileUtils.getVolumeDisplay(res.getSize()));
                 lbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(lbl);
             }

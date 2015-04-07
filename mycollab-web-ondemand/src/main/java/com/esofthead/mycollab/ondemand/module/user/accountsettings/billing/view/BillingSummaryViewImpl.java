@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.ondemand.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.module.ecm.ResourceUtils;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.BillingI18nEnum;
@@ -157,8 +157,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 			billingUser.setWidthUndefined();
 			singlePlan.addComponent(billingUser);
 
-			String planVolume = ResourceUtils
-					.getVolumeDisplay(plan.getVolume());
+			String planVolume = FileUtils.getVolumeDisplay(plan.getVolume());
 
 			Label billingStorage = new Label("<span class='billing-storage'>"
 					+ planVolume + "</span>&nbsp;Storage", ContentMode.HTML);
@@ -259,11 +258,11 @@ public class BillingSummaryViewImpl extends AbstractPageView implements
 		DriveInfoService driveInfoService = ApplicationContextUtil.getSpringBean(DriveInfoService.class);
 		usedStorageVolume = driveInfoService.getUsedStorageVolume(AppContext.getAccountId());
 
-		String usedStorageTxt = ResourceUtils.getVolumeDisplay(usedStorageVolume);
+		String usedStorageTxt = FileUtils.getVolumeDisplay(usedStorageVolume);
 
 		planInfo = String.format(planInfo, numOfActiveProjects,
 				currentBillingPlan.getNumprojects(), usedStorageTxt,
-				ResourceUtils.getVolumeDisplay(currentBillingPlan.getVolume()),
+				FileUtils.getVolumeDisplay(currentBillingPlan.getVolume()),
 				numOfActiveUsers, currentBillingPlan.getNumusers());
 
 		Label currentUsage = new Label(planInfo, ContentMode.HTML);
