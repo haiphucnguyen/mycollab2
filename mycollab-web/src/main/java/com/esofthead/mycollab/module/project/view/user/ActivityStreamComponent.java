@@ -271,10 +271,7 @@ public class ActivityStreamComponent extends CssLayout {
             String uid = UUID.randomUUID().toString();
             DivLessFormatter div = new DivLessFormatter();
             Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
-            A prjLink = new A(
-                    ProjectLinkBuilder.generateProjectFullLink(activityStream
-                            .getProjectId()));
-            prjLink.setId("tag" + uid);
+            A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + uid);
 
             String arg17 = "'" + uid + "'";
             String arg18 = "'" + ProjectTypeConstants.PROJECT + "'";
