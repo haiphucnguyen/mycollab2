@@ -1,11 +1,15 @@
 package com.esofthead.mycollab.shell.view;
 
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.jetty.ServerInstance;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -23,15 +27,15 @@ import java.util.zip.ZipInputStream;
  * @author MyCollab Ltd.
  * @since 5.0.4
  */
-public class UpdateVersionConfirmWindow extends Window {
+public class UpgradeConfirmWindow extends Window {
     private static String headerTemplate = "There is the new MyCollab version %s . For the " +
             "enhancements and security purpose, you should upgrade to the latest version";
 
-    public UpdateVersionConfirmWindow(Properties props) {
+    public UpgradeConfirmWindow(Properties props) {
         super("There is the new MyCollab update");
         this.setModal(true);
         this.setResizable(false);
-        center();
+        this.center();
         this.setWidth("600px");
 
         MVerticalLayout content = new MVerticalLayout();
@@ -54,7 +58,7 @@ public class UpdateVersionConfirmWindow extends Window {
         Button skipBtn = new Button("Skip", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UpdateVersionConfirmWindow.this.close();
+                UpgradeConfirmWindow.this.close();
             }
         });
         skipBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -64,7 +68,7 @@ public class UpdateVersionConfirmWindow extends Window {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 UI.getCurrent().setPollInterval(1000);
                 new Thread(new AutoUpgradeProcess()).start();
-                UpdateVersionConfirmWindow.this.close();
+                UpgradeConfirmWindow.this.close();
             }
         });
         autoUpgradeBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
@@ -91,14 +95,14 @@ public class UpdateVersionConfirmWindow extends Window {
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     int contentLength = httpConn.getContentLength();
-                    progressWindow.setContentLength(contentLength);
+                    progressWindow.setContentLength(new Long(contentLength));
 
                     // opens input stream from the HTTP connection
                     InputStream inputStream = httpConn.getInputStream();
 
                     // opens an output stream to save into file
                     FileOutputStream outputStream = new FileOutputStream(tmpFile);
-                    int currentBytesRead = 0;
+                    long currentBytesRead = 0;
                     int bytesRead;
                     byte[] buffer = new byte[4096];
                     while (((bytesRead = inputStream.read(buffer)) != -1) && !isKill) {
@@ -113,8 +117,10 @@ public class UpdateVersionConfirmWindow extends Window {
                     outputStream.close();
                     inputStream.close();
                     httpConn.disconnect();
-                    unpackFile(tmpFile);
                     progressWindow.close();
+
+                    Page.getCurrent().setLocation(SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "upgrade");
+                    ServerInstance.getInstance().upgrade(tmpFile);
                 } else {
                     NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
                     httpConn.disconnect();
@@ -128,16 +134,8 @@ public class UpdateVersionConfirmWindow extends Window {
 
         }
 
-        void unpackFile(File downloadedFile) throws IOException {
-            ZipInputStream zipStream = new ZipInputStream(new FileInputStream(downloadedFile));
-            ZipEntry entry;
-            while ((entry = zipStream.getNextEntry()) != null) {
-
-            }
-        }
-
         class DownloadProgressWindow extends Window {
-            private int contentLength;
+            private Long contentLength;
             private MVerticalLayout content;
             private ProgressBarIndicator progressBar;
             private Label currentVolumeLabel;
@@ -153,11 +151,11 @@ public class UpdateVersionConfirmWindow extends Window {
                 this.setContent(content);
             }
 
-            void setContentLength(int contentLength) {
+            void setContentLength(Long contentLength) {
                 this.contentLength = contentLength;
                 content.removeAllComponents();
                 MHorizontalLayout progressLayout = new MHorizontalLayout();
-                Label totalVolumeLabel = new Label(FileUtils.getVolumeDisplay2(contentLength));
+                Label totalVolumeLabel = new Label(FileUtils.getVolumeDisplay(contentLength));
                 currentVolumeLabel = new Label();
                 progressBar = new ProgressBarIndicator();
                 progressBar.setWidth("400px");
@@ -173,9 +171,9 @@ public class UpdateVersionConfirmWindow extends Window {
                 content.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT);
             }
 
-            void setProgressValue(int value) {
+            void setProgressValue(Long value) {
                 progressBar.setProgressValue((float) value / contentLength);
-                currentVolumeLabel.setValue(FileUtils.getVolumeDisplay2(value));
+                currentVolumeLabel.setValue(FileUtils.getVolumeDisplay(value));
             }
         }
     }

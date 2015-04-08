@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.servlet;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.FileUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
@@ -106,11 +107,9 @@ public class InstallationServlet extends HttpServlet {
         templateContext.put("smtpPassword", smtpPassword);
         templateContext.put("smtpTLSEnable", tls);
 
-        File confFolder = new File(System.getProperty("user.dir"), "conf");
-
-        if (!confFolder.exists()) {
-            confFolder = new File(System.getProperty("user.dir"),
-                    "src/main/conf");
+        File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
+        if (confFolder == null) {
+            throw new MyCollabException("The conf folder is not existed");
         }
 
         try {
@@ -129,7 +128,7 @@ public class InstallationServlet extends HttpServlet {
             outStream.flush();
             outStream.close();
 
-            while (waitFlag == true) {
+            while (waitFlag) {
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {

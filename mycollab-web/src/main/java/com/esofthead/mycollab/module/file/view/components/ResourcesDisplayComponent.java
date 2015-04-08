@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -479,7 +479,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             layout.with(checkbox).withAlign(checkbox, Alignment.MIDDLE_LEFT);
 
             CssLayout resIconWrapper = new CssLayout();
-             FontIconLabel resourceIcon;
+            FontIconLabel resourceIcon;
             if (res instanceof Folder)
                 resourceIcon = (res instanceof ExternalFolder) ? new FontIconLabel(FontAwesome.DROPBOX) : new
                         FontIconLabel(FontAwesome.FOLDER);
@@ -875,9 +875,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                                 return;
                                             }
                                         }
-                                        final Content content = new Content(
-                                                baseFolder.getPath() + "/"
-                                                        + attachment.getName());
+                                        Content content = new Content(baseFolder.getPath() + "/" + attachment.getName());
                                         content.setSize(attachment.length());
                                         FileInputStream fileInputStream = new FileInputStream(
                                                 attachment);
@@ -886,15 +884,11 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                             externalResourceService
                                                     .saveContent(
                                                             ((ExternalFolder) baseFolder)
-                                                                    .getExternalDrive(),
-                                                            content,
-                                                            fileInputStream);
+                                                                    .getExternalDrive(), content, fileInputStream);
                                         } else
                                             resourceService.saveContent(
-                                                    content,
-                                                    AppContext.getUsername(),
-                                                    fileInputStream,
-                                                    AppContext.getAccountId());
+                                                    content, AppContext.getUsername(),
+                                                    fileInputStream, AppContext.getAccountId());
                                     } catch (IOException e) {
                                         throw new MyCollabException(e);
                                     }
@@ -937,7 +931,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     private class ResourcePagingNavigator extends CssLayout {
         private static final long serialVersionUID = 1L;
         private int totalItem;
-        public  int pageItemNum = 15;
+        public int pageItemNum = 15;
         private int currentPage;
         private CssLayout controlBarWrapper;
         private MHorizontalLayout navigator;

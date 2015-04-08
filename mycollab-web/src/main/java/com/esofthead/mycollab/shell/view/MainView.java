@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.ui.components.notification.RequestUploadAva
 import com.esofthead.mycollab.common.ui.components.notification.TimezoneNotification;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
-import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.events.SessionEvent;
@@ -358,7 +357,7 @@ public final class MainView extends AbstractPageView {
                 String version = props.getProperty("version");
 //                if (!MyCollabVersion.getVersion().equals(version)) {
                 if (AppContext.isAdmin()) {
-                    UI.getCurrent().addWindow(new UpdateVersionConfirmWindow(props));
+                    UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                 } else {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.NewNotification(this,
