@@ -21,8 +21,7 @@ var mousePosition = {
 mousePosition.getMousePosition();
 
 var stickytooltip = {
-  tooltipoffsets: [20, -30], // additional x and y offset from mouse cursor
-                // for tooltips
+  tooltipoffsets: [20, -30], // additional x and y offset from mouse cursor for tooltips
   fadeinspeed: 200, // duration of fade effect in milliseconds
 
   // ***** NO NEED TO EDIT BEYOND HERE

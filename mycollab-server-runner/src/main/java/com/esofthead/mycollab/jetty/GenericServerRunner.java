@@ -39,10 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Properties;
@@ -200,13 +197,18 @@ public abstract class GenericServerRunner {
             upgradeContextHandler.start();
         } catch (Exception e) {
             LOG.error("Error while starting server", e);
+            throw new MyCollabException(e);
         }
         contexts.removeHandler(appContext);
         upgradeProcess(upgradeFile);
     }
 
     private void upgradeProcess(File upgradeFile) {
-        unpackFile(upgradeFile);
+        try {
+            unpackFile(upgradeFile);
+        } catch (IOException e) {
+            throw new MyCollabException("Exception when upgrade MyCollab", e);
+        }
 
         appContext = initWebAppContext();
         appContext.setClassLoader(GenericServerRunner.class.getClassLoader());
@@ -216,29 +218,39 @@ public abstract class GenericServerRunner {
             appContext.start();
         } catch (Exception e) {
             LOG.error("Error while starting server", e);
+            throw new MyCollabException(e);
         }
-        ServerInstance.getInstance().setIsUpgrading(false);
         contexts.removeHandler(upgradeContextHandler);
         ServerInstance.getInstance().setIsUpgrading(false);
     }
 
-    private static void unpackFile(File upgradeFile) {
+    private static void unpackFile(File upgradeFile) throws IOException {
+        File libFolder = new File(System.getProperty("user.dir"), "lib");
+        File webappFolder = new File(System.getProperty("user.dir"), "webapp");
+        org.apache.commons.io.FileUtils.deleteDirectory(libFolder);
+        org.apache.commons.io.FileUtils.deleteDirectory(webappFolder);
+
+        byte[] buffer = new byte[2048];
+
         try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
             ZipEntry entry;
             while ((entry = inputStream.getNextEntry()) != null) {
-                if (!entry.isDirectory()) {
-                    System.out.println("A: " + entry.getName());
+                if (!entry.isDirectory() && (entry.getName().startsWith("lib/")
+                        || entry.getName().startsWith("webapp"))) {
+                    File candidateFile = new File(System.getProperty("user.dir"), entry.getName());
+                    candidateFile.getParentFile().mkdirs();
+                    try (FileOutputStream output = new FileOutputStream(candidateFile)) {
+                        int len;
+                        while ((len = inputStream.read(buffer)) > 0) {
+                            output.write(buffer, 0, len);
+                        }
+                    }
                 }
             }
         } catch (IOException e) {
             throw new MyCollabException(e);
         }
     }
-
-//    public static void main(String[] args) {
-//        File file = new File("/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/upgrade.zip");
-//        unpackFile(file);
-//    }
 
     private void usage(String error) {
         if (error != null)

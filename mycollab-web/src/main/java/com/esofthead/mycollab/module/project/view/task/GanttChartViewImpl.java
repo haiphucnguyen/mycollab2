@@ -301,18 +301,8 @@ public class GanttChartViewImpl extends AbstractPageView implements
     }
 
     private String tooltipGenerate(SimpleTask task) {
-        String uid = UUID.randomUUID().toString();
-        DivLessFormatter div = new DivLessFormatter();
-        A itemLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectItemLink(
-                task.getProjectShortname(),
-                task.getProjectid(), ProjectTypeConstants.TASK,
-                task.getTaskkey() + ""));
-        itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.TASK, task.getId() + ""));
-        itemLink.appendText(task.getTaskname());
-
-        div.appendChild(itemLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable(uid));
-        return div.write();
+        return ProjectLinkBuilder.generateProjectItemLinkWithTooltip(task.getProjectShortname(),
+                task.getProjectid(), task.getTaskname(), ProjectTypeConstants.TASK, task.getId() + "", task.getTaskkey() + "");
     }
 
     private Panel createControls() {

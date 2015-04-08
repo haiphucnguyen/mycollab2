@@ -115,8 +115,10 @@ public class FieldGroupFormatter {
         }
 
         public String generateLogItem(AuditChangeItem item) {
-            Li li = new Li().appendText(AppContext.getMessage(displayName) + ": ").appendText(format.toString(item
-                    .getOldvalue())).appendText("&nbsp; &rarr; &nbsp; ").appendText(format.toString(item.getNewvalue()));
+            Li li = new Li().appendText(AppContext.getMessage(displayName) + ": ")
+                    .appendText(format.toString(item.getOldvalue()))
+                    .appendText("&nbsp; &rarr; &nbsp; ")
+                    .appendText(format.toString(item.getNewvalue()));
             return li.write();
         }
     }
@@ -133,8 +135,7 @@ public class FieldGroupFormatter {
         public String toString(String value) {
             String content;
             if (StringUtils.isNoneBlank(value)) {
-                content =  (value.length() > 200) ? (value.substring(0, 150) + "...")
-                        : value;
+                content =  (value.length() > 200) ? (value.substring(0, 150) + "...") : value;
             } else {
                 content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }

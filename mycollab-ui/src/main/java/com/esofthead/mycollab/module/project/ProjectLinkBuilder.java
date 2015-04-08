@@ -224,6 +224,20 @@ public class ProjectLinkBuilder {
         return div.write();
     }
 
+    public static String generateProjectItemLinkWithTooltip(String prjShortName,
+                                                 Integer projectId, String itemName, String type, String typeId, String extraTypeId) {
+        String uid = UUID.randomUUID().toString();
+        DivLessFormatter div = new DivLessFormatter();
+        Text img = new Text(ProjectAssetsManager.getAsset(type).getHtml());
+        A itemLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectItemLink(
+                prjShortName, projectId, type, extraTypeId));
+        itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, type, typeId));
+        itemLink.appendText(itemName);
+
+        div.appendChild(img, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+        return div.write();
+    }
+
     public static String generateProjectItemLink(String prjShortName,
                                                  Integer projectId, String type, String typeId) {
         String result = "";
