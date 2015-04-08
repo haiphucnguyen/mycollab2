@@ -58,17 +58,17 @@ public class TooltipHelper {
     }
 
     public static String buildItemHtmlTooltip(String uid, String type, String typeId) {
-        String arg17 = "'" + uid + "'";
-        String arg18 = "'" + type + "'";
-        String arg19 = "'" + typeId + "'";
-        String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-        String arg21 = "'" + AppContext.getAccountId() + "'";
-        String arg22 = "'" + AppContext.getSiteUrl() + "'";
-        String arg23 = AppContext.getUser().getTimezone();
-        String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
+        String uidVal = "'" + uid + "'";
+        String typeVal = "'" + type + "'";
+        String typeIdVal = "'" + typeId + "'";
+        String urlVal = "'" + AppContext.getSiteUrl() + "tooltip/'";
+        String accountIdVal = "'" + AppContext.getAccountId() + "'";
+        String siteUrlVal = "'" + AppContext.getSiteUrl() + "'";
+        String timezoneVal = AppContext.getUser().getTimezone();
+        String localeVal = "'" + AppContext.getUserLocale().toString() + "'";
 
         return String.format(
-                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", arg17, arg18, arg19,
-                arg20, arg21, arg22, arg23, arg24);
+                "return overIt(%s,%s,%s,%s,%s,%s,%s,%s);", uidVal, typeVal, typeIdVal,
+                urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal);
     }
 }

@@ -247,19 +247,7 @@ public class ActivityStreamComponent extends CssLayout {
                         activityStream.getType(), activityStream.getTypeid()));
             }
 
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + activityStream.getType() + "'";
-            String arg19 = "'" + activityStream.getTypeid() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + activityStream.getSaccountid() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return projectOverViewOverIt(%s,%s,%s,%s,%s,%s,%s,%s);",
-                    arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24);
-            itemLink.setAttribute("onmouseover", mouseOverFunc);
+            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, activityStream.getType(), activityStream.getTypeid()));
             itemLink.appendText(activityStream.getNamefield());
 
             div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
@@ -272,20 +260,7 @@ public class ActivityStreamComponent extends CssLayout {
             DivLessFormatter div = new DivLessFormatter();
             Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
             A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + uid);
-
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + ProjectTypeConstants.PROJECT + "'";
-            String arg19 = "'" + activityStream.getProjectId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + activityStream.getSaccountid() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return projectOverViewOverIt(%s,%s,%s,%s,%s,%s,%s,%s);",
-                    arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24);
-            prjLink.setAttribute("onmouseover", mouseOverFunc);
+            prjLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.PROJECT, activityStream.getProjectId() + ""));
             prjLink.appendText(activityStream.getProjectName());
 
             div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink, DivLessFormatter.EMPTY_SPACE(),

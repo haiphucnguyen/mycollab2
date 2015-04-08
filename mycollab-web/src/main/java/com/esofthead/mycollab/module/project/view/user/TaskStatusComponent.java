@@ -251,19 +251,7 @@ public class TaskStatusComponent extends MVerticalLayout {
                             .getProjectId()));
             prjLink.setId("tag" + uid);
 
-            String arg17 = "'" + uid + "'";
-            String arg18 = "'" + ProjectTypeConstants.PROJECT + "'";
-            String arg19 = "'" + task.getProjectId() + "'";
-            String arg20 = "'" + AppContext.getSiteUrl() + "tooltip/'";
-            String arg21 = "'" + AppContext.getAccountId() + "'";
-            String arg22 = "'" + AppContext.getSiteUrl() + "'";
-            String arg23 = AppContext.getUser().getTimezone();
-            String arg24 = "'" + AppContext.getUserLocale().toString() + "'";
-
-            String mouseOverFunc = String.format(
-                    "return projectOverViewOverIt(%s,%s,%s,%s,%s,%s,%s,%s);",
-                    arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24);
-            prjLink.setAttribute("onmouseover", mouseOverFunc);
+            prjLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.PROJECT, task.getProjectId() + ""));
             prjLink.appendText(task.getProjectShortName());
 
             div.appendChild(prjLink, DivLessFormatter.EMPTY_SPACE(),

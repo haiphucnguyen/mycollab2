@@ -97,32 +97,6 @@ function overIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) {
   }
 }
 
-function projectOverViewOverIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) {
-  var idDIVserverdata = "div14" + uid;
-  var idStickyToolTipDiv = "div1" + uid;
-  var idTagA = "tag" + uid;
-  $('#' + idStickyToolTipDiv).stop(false, true).hide();
-  $('.stickytooltip').bind('mouseleave',function(e) { 
-      $('.stickytooltip').stop(false, true).hide();
-  });
-  if($("#" + idDIVserverdata).html()== "") {
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL, timeZone: timeZone, locale:locale},
-          success: function(data) { 
-            if(data.trim()!= "null") { 
-              $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-              $("#" + idDIVserverdata).html(data);
-              stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-        }
-      }
-      });
-  } else {
-      stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-  }
-}
-
 function crmActivityOverIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) { 
   var idDIVserverdata = "div14" + uid;
   var idStickyToolTipDiv = "div1" + uid;
@@ -174,9 +148,4 @@ function showUserTooltip(uid, username, url, siteURL, timeZone, sAccountId, loca
   } else {
     stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
   }
-}
-
-function hideTooltip(uid) {
-
-  $('.stickytooltip').stop(false, true).hide();
 }
