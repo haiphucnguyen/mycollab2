@@ -16,13 +16,16 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resources.file.FileAssetsUtil;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
@@ -67,7 +70,7 @@ public class AttachmentPanel extends VerticalLayout implements
         multiFileUpload = fileUpload;
     }
 
-    private void displayFileName(final String fileName) {
+    private void displayFileName(File file, final String fileName) {
         final MHorizontalLayout fileAttachmentLayout = new MHorizontalLayout().withWidth("100%");
         Button removeBtn = new Button(null, new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -88,11 +91,10 @@ public class AttachmentPanel extends VerticalLayout implements
         removeBtn.setIcon(FontAwesome.TRASH_O);
         removeBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
 
-        FontIconLabel fileIcon = new FontIconLabel(FileAssetsUtil.getFileIconResource(fileName));
-        CssLayout wrapper = new CssLayout();
-        wrapper.addComponent(fileIcon);
-        Label fileLbl = new Label(fileName);
-        fileAttachmentLayout.with(wrapper, fileLbl, removeBtn).expand(fileLbl);
+        Div fileDiv = new Div().setStyle("display:flex").appendText(FileAssetsUtil.getFileIconResource(fileName).getHtml()).appendText(fileName).appendText("&nbsp;-&nbsp;")
+                .appendChild(new Div().appendText(FileUtils.getVolumeDisplay(file.length())).setCSSClass("footer2"));
+        Label fileLbl = new Label(fileDiv.write(), ContentMode.HTML);
+        fileAttachmentLayout.with(fileLbl, removeBtn).expand(fileLbl);
         this.addComponent(fileAttachmentLayout);
     }
 
@@ -218,7 +220,7 @@ public class AttachmentPanel extends VerticalLayout implements
             LOG.debug("Store file " + fileName + " in path "
                     + file.getAbsolutePath() + " is exist: " + file.exists());
             fileStores.put(fileName, file);
-            displayFileName(fileName);
+            displayFileName(file, fileName);
         }
     }
 }

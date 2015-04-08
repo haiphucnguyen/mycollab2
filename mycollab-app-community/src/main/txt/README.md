@@ -57,6 +57,8 @@ Version 5.0.4
 * Support quick review with instant tooltip
 * Revise the task list display
 * Minor improve on page view
+* Display uploaded file size
+* Add detail information for uploaded file in tooltip
 
 **Bug Fixes**
 
