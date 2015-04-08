@@ -11,14 +11,13 @@ import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.locks.Lock;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * @author MyCollab Ltd.
@@ -92,7 +91,6 @@ public class UpdateVersionConfirmWindow extends Window {
                 // always check HTTP response code first
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     int contentLength = httpConn.getContentLength();
-
                     progressWindow.setContentLength(contentLength);
 
                     // opens input stream from the HTTP connection
@@ -112,20 +110,30 @@ public class UpdateVersionConfirmWindow extends Window {
                     if (isKill) {
                         progressWindow.close();
                     }
-
                     outputStream.close();
                     inputStream.close();
+                    httpConn.disconnect();
+                    unpackFile(tmpFile);
+                    progressWindow.close();
                 } else {
                     NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
+                    httpConn.disconnect();
+                    progressWindow.close();
                 }
-                httpConn.disconnect();
-                progressWindow.close();
             } catch (IOException e) {
                 NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
             } finally {
                 UI.getCurrent().setPollInterval(-1);
             }
 
+        }
+
+        void unpackFile(File downloadedFile) throws IOException {
+            ZipInputStream zipStream = new ZipInputStream(new FileInputStream(downloadedFile));
+            ZipEntry entry;
+            while ((entry = zipStream.getNextEntry()) != null) {
+
+            }
         }
 
         class DownloadProgressWindow extends Window {
@@ -169,6 +177,14 @@ public class UpdateVersionConfirmWindow extends Window {
                 progressBar.setProgressValue((float) value / contentLength);
                 currentVolumeLabel.setValue(FileUtils.getVolumeDisplay2(value));
             }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ZipInputStream zipStream = new ZipInputStream(new FileInputStream("/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/upgrade.zip"));
+        ZipEntry entry;
+        while ((entry = zipStream.getNextEntry()) != null) {
+            System.out.println("Entry: " + entry.getName());
         }
     }
 }

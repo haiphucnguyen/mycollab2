@@ -138,7 +138,6 @@ public abstract class GenericServerRunner {
 				monitor.setExitVm(true);
 				break;
 			}
-
 		}
 
 		execute();
@@ -311,9 +310,7 @@ public abstract class GenericServerRunner {
 
 		@Override
 		public void lifeCycleStarted(LifeCycle event) {
-
 			Runnable thread = new Runnable() {
-
 				@Override
 				public void run() {
 					LOG.debug("Detect root folder webapp");
