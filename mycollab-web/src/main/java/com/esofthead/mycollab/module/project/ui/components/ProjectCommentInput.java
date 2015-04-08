@@ -94,9 +94,6 @@ public class ProjectCommentInput extends MHorizontalLayout {
         uploadExt.addComponent(attachments);
         controlsLayout.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
-        final Label emptySpace = new Label();
-        controlsLayout.with(emptySpace).expand(emptySpace);
-
         if (cancelButtonEnable) {
             final Button cancelBtn = new Button(
                     AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
@@ -158,7 +155,6 @@ public class ProjectCommentInput extends MHorizontalLayout {
         newCommentBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         newCommentBtn.setIcon(FontAwesome.SEND);
         controlsLayout.with(newCommentBtn).withAlign(newCommentBtn, Alignment.TOP_RIGHT);
-
         textAreaWrap.with(commentArea, controlsLayout);
     }
 

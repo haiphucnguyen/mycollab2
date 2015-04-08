@@ -98,16 +98,6 @@ public class AttachmentDisplayComponent extends CssLayout {
 
 		Div contentTooltip = new Div().appendChild(new Span().appendText(docName).setStyle("font-weight:bold"));
 		Ul ul = new Ul().appendChild(new Li().appendText("Size: " + FileUtils.getVolumeDisplay(attachment.getSize()))).setStyle("line-height:1.5em");
-		UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-		SimpleUser attachmentAuthor = userService.findUserByUserNameInAccount(attachment.getCreatedUser(), AppContext.getAccountId());
-		if (attachmentAuthor != null) {
-			Img userAvatar = new Img("", StorageManager.getAvatarLink(attachmentAuthor.getAvatarid(), 16));
-			A userLink = new A().setHref(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), attachmentAuthor.getUsername()))
-					.appendText(attachmentAuthor.getDisplayName());
-			ul.appendChild(new Li().appendText("Author: ").appendChild(userAvatar, userLink));
-		} else {
-			ul.appendChild(new Li().appendText("Author: None"));
-		}
 		ul.appendChild(new Li().appendText("Last modified: " + AppContext.formatPrettyTime(attachment.getLastModified().getTime())));
 		contentTooltip.appendChild(ul);
 		thumbnail.setDescription(contentTooltip.write());

@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.core.utils.ImageUtil;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -91,7 +92,8 @@ public class AttachmentPanel extends VerticalLayout implements
         removeBtn.setIcon(FontAwesome.TRASH_O);
         removeBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
 
-        Div fileDiv = new Div().setStyle("display:flex").appendText(FileAssetsUtil.getFileIconResource(fileName).getHtml()).appendText(fileName).appendText("&nbsp;-&nbsp;")
+        Div fileDiv = new Div().setStyle("display:flex").appendText(FileAssetsUtil.getFileIconResource(fileName).getHtml())
+                .appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(fileName).appendText("&nbsp;-&nbsp;")
                 .appendChild(new Div().appendText(FileUtils.getVolumeDisplay(file.length())).setCSSClass("footer2"));
         Label fileLbl = new Label(fileDiv.write(), ContentMode.HTML);
         fileAttachmentLayout.with(fileLbl, removeBtn).expand(fileLbl);
@@ -108,7 +110,7 @@ public class AttachmentPanel extends VerticalLayout implements
     public void getAttachments(String attachmentPath) {
         List<Content> attachments = resourceService.getContents(attachmentPath);
         if (CollectionUtils.isNotEmpty(attachments)) {
-            for (final Content attachment : attachments) {
+            for (Content attachment : attachments) {
                 this.addComponent(AttachmentDisplayComponent
                         .constructAttachmentRow(attachment));
             }

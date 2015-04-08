@@ -40,10 +40,14 @@ import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Generic MyCollab embedded server
@@ -218,8 +222,22 @@ public abstract class GenericServerRunner {
         ServerInstance.getInstance().setIsUpgrading(false);
     }
 
-    private void unpackFile(File upgradeFile) {
+    private static void unpackFile(File upgradeFile) {
+        try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
+            ZipEntry entry;
+            while ((entry = inputStream.getNextEntry()) != null) {
+                if (!entry.isDirectory()) {
+                    System.out.println("A: " + entry.getName());
+                }
+            }
+        } catch (IOException e) {
+            throw new MyCollabException(e);
+        }
+    }
 
+    public static void main(String[] args) {
+        File file = new File("/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/upgrade.zip");
+        unpackFile(file);
     }
 
     private void usage(String error) {

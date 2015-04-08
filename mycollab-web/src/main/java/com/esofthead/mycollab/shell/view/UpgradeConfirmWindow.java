@@ -15,13 +15,14 @@ import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.locks.Lock;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
  * @author MyCollab Ltd.
@@ -110,15 +111,16 @@ public class UpgradeConfirmWindow extends Window {
                         currentBytesRead += bytesRead;
                         progressWindow.setProgressValue(currentBytesRead);
                     }
-
-                    if (isKill) {
-                        progressWindow.close();
-                    }
                     outputStream.close();
                     inputStream.close();
                     httpConn.disconnect();
-                    progressWindow.close();
 
+                    if (isKill) {
+                        progressWindow.close();
+                        return;
+                    }
+
+                    progressWindow.close();
                     Page.getCurrent().setLocation(SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "upgrade");
                     ServerInstance.getInstance().upgrade(tmpFile);
                 } else {
@@ -141,7 +143,7 @@ public class UpgradeConfirmWindow extends Window {
             private Label currentVolumeLabel;
 
             DownloadProgressWindow() {
-                super("Upgrading MyCollab");
+                super("Upgrading MyCollab (Beta)");
                 this.setResizable(false);
                 this.setModal(false);
                 this.setWidth("600px");
@@ -175,14 +177,6 @@ public class UpgradeConfirmWindow extends Window {
                 progressBar.setProgressValue((float) value / contentLength);
                 currentVolumeLabel.setValue(FileUtils.getVolumeDisplay(value));
             }
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-        ZipInputStream zipStream = new ZipInputStream(new FileInputStream("/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/upgrade.zip"));
-        ZipEntry entry;
-        while ((entry = zipStream.getNextEntry()) != null) {
-            System.out.println("Entry: " + entry.getName());
         }
     }
 }
