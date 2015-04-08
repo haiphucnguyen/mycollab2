@@ -235,10 +235,10 @@ public abstract class GenericServerRunner {
         }
     }
 
-    public static void main(String[] args) {
-        File file = new File("/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/upgrade.zip");
-        unpackFile(file);
-    }
+//    public static void main(String[] args) {
+//        File file = new File("/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/upgrade.zip");
+//        unpackFile(file);
+//    }
 
     private void usage(String error) {
         if (error != null)

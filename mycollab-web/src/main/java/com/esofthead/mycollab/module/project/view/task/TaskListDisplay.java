@@ -91,7 +91,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             if (task.getDeadline() != null) {
                 Div deadline = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage
                         (TaskI18nEnum.FORM_DEADLINE), AppContext.formatPrettyTime(task.getDeadline()))))
-                        .setStyle("color:gray; display:inline").setTitle(AppContext.formatDate(task.getDeadline()));
+                        .setStyle("display:inline").setCSSClass("footer2").setTitle(AppContext.formatDate(task.getDeadline()));
 
                 return new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, deadline,
                         DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid)).write();
