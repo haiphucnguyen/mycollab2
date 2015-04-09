@@ -17,7 +17,7 @@ public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResourc
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "http://community.mycollab.com/download/");
         props.put("releaseNotes", "http://community.mycollab.com/release-notes/");
-        props.put("autoDownload", "http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.3/MyCollab-MacOS-5.0.3.zip/download");
+        props.put("autoDownload", String.format("http://sourceforge.net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download", MyCollabVersion.getVersion()));
         Gson gson = new Gson();
         Response response = Response.status(200).entity(gson.toJson(props))
                 .type(MediaType.APPLICATION_JSON_TYPE).build();

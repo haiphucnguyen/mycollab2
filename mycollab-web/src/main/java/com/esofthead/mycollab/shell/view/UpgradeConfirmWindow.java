@@ -32,8 +32,11 @@ public class UpgradeConfirmWindow extends Window {
     private static String headerTemplate = "There is the new MyCollab version %s . For the " +
             "enhancements and security purpose, you should upgrade to the latest version";
 
+    private Properties props;
+
     public UpgradeConfirmWindow(Properties props) {
         super("There is the new MyCollab update");
+        this.props = props;
         this.setModal(true);
         this.setResizable(false);
         this.center();
@@ -89,7 +92,7 @@ public class UpgradeConfirmWindow extends Window {
                 UI.getCurrent().addWindow(progressWindow);
                 lock.unlock();
                 File tmpFile = File.createTempFile("mycollab", "zip");
-                URL url = new URL("http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.3/MyCollab-MacOS-5.0.3.zip/download");
+                URL url = new URL(props.getProperty("autoDownload"));
                 HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
                 int responseCode = httpConn.getResponseCode();
 
