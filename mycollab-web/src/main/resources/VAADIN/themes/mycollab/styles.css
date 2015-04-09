@@ -317,7 +317,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 .v-vertical.case-noitem {
-	border-radius: 0 0px 4px 4px;
 	box-sizing: content-box;
 }
 
@@ -7531,7 +7530,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 .v-vertical.case-noitem {
-	border-radius: 0 0px 4px 4px;
 	box-sizing: content-box;
 }
 

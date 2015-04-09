@@ -356,7 +356,7 @@ public final class MainView extends AbstractPageView {
                 Gson gson = new Gson();
                 Properties props = gson.fromJson(values, Properties.class);
                 String version = props.getProperty("version");
-                if (!MyCollabVersion.getVersion().equals(version)) {
+//                if (!MyCollabVersion.getVersion().equals(version)) {
                     if (AppContext.isAdmin()) {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                     } else {
@@ -364,7 +364,7 @@ public final class MainView extends AbstractPageView {
                                 new ShellEvent.NewNotification(this,
                                         new NewUpdateNotification(props)));
                     }
-                }
+//                }
             } catch (Exception e) {
                 LOG.error("Error when call remote api", e);
             }
