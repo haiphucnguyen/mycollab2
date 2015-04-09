@@ -50,9 +50,10 @@ Version 5.0.4
 * Upgrade Jetty Server version
 * Upgrade other libraries
 
-**Improvements**
+**Improvements & New Features**
 
 * Auto update the new MyCollab version
+* The new project file module
 * Revise the application variable scopes
 * Support quick review with instant tooltip
 * Revise the task list display

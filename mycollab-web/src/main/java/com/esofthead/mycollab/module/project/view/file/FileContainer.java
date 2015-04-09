@@ -16,14 +16,11 @@
  */
 package com.esofthead.mycollab.module.project.view.file;
 
-import com.esofthead.mycollab.vaadin.mvp.IPresenter;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
-/**
- * 
- * @author MyCollab Ltd.
- * @since 1.0
- *
- */
-public interface IFilePresenter extends IPresenter<IFileContainer> {
+@ViewComponent
+public class FileContainer extends AbstractPageView  {
+	private static final long serialVersionUID = 1L;
 
 }
