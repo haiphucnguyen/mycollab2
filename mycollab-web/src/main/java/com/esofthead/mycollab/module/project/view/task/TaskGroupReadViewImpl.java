@@ -286,7 +286,8 @@ public class TaskGroupReadViewImpl extends
                 taskLink.setCSSClass("pending");
             }
 
-            taskLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.TASK, task.getId() + ""));
+            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
+            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
                     TooltipHelper.buildDivTooltipEnable(uid));
             return div;
@@ -300,13 +301,11 @@ public class TaskGroupReadViewImpl extends
             Div div = new Div();
             Img userAvatar = new Img("", StorageManager.getAvatarLink(
                     task.getAssignUserAvatarId(), 16));
-            A userLink = new A();
-            userLink.setId("tag" + uid);
-            userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                    task.getProjectid(),
-                    task.getAssignuser()));
+            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+                    task.getProjectid(), task.getAssignuser()));
 
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, task.getAssignuser()));
+            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, task.getAssignuser()));
+            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             userLink.appendText(task.getAssignUserFullName());
 
             div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),

@@ -3,12 +3,9 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.utils.TooltipHelper;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import org.vaadin.maddon.button.MButton;
@@ -29,7 +26,8 @@ public class ProjectMemberBlock extends MVerticalLayout{
         DivLessFormatter div = new DivLessFormatter();
         A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(), username))
                 .appendText(displayName);
-        userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, username));
+        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, username));
+        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         Label userLbl = new Label(div.write(), ContentMode.HTML);
         with(button, userLbl);

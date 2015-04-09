@@ -122,12 +122,11 @@ public class ProjectMessageListComponent extends MVerticalLayout {
             DivLessFormatter div = new DivLessFormatter();
             Img avatar = new Img("", StorageManager.getAvatarLink(
                     message.getPostedUserAvatarId(), 16));
-            A assigneeLink = new A();
-            assigneeLink.setId("tag" + uid);
-            assigneeLink.setHref(ProjectLinkBuilder
+            A assigneeLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder
                     .generateProjectMemberFullLink(message.getProjectid(),
                             message.getPosteduser()));
-            assigneeLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, message.getPosteduser()));
+            assigneeLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, message.getPosteduser()));
+            assigneeLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             assigneeLink.appendText(message.getFullPostedUserName());
             div.appendChild(avatar, DivLessFormatter.EMPTY_SPACE(), assigneeLink, TooltipHelper.buildDivTooltipEnable(uid));
             return div.write();
@@ -139,7 +138,8 @@ public class ProjectMessageListComponent extends MVerticalLayout {
             Text messageIcon = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE).getHtml());
             A msgLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateMessagePreviewFullLink(
                     message.getProjectid(), message.getId())).appendText(message.getTitle());
-            msgLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.MESSAGE, message.getId() + ""));
+            msgLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.MESSAGE, message.getId() + ""));
+            msgLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             div.appendChild(messageIcon, DivLessFormatter.EMPTY_SPACE(), msgLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper
                     .buildDivTooltipEnable(uid));
             return div.write();

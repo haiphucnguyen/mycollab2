@@ -21,19 +21,14 @@ var mousePosition = {
 mousePosition.getMousePosition();
 
 var stickytooltip = {
-  tooltipoffsets: [20, -30], // additional x and y offset from mouse cursor for tooltips
+  tooltipoffsets: [20, -30], // additional x and y offset from mouse cursor
+                // for tooltips
   fadeinspeed: 200, // duration of fade effect in milliseconds
 
   // ***** NO NEED TO EDIT BEYOND HERE
 
-  isdocked: false,
-
   hidebox:function($, $tooltip) {
     $tooltip.stop(false, true).hide()
-  },
-
-  docktooltip:function($, $tooltip, e) {
-    this.isdocked=true
   },
 
   displayTooltip:function($, $tooltip, position) {
@@ -46,7 +41,7 @@ var stickytooltip = {
   },
 
   init:function(targetselector, tipid) { 
-    $('.stickytooltip').stop(false, true).hide();
+    $('#' + tipid).stop(false, true).hide();
     var $targets=$(targetselector)
     var $tooltip=$('#' + tipid).appendTo(document.body)
     if ($targets.length == 0)
@@ -62,9 +57,8 @@ var stickytooltip = {
       e.stopPropagation()
     })
 
-    $(this).bind("click", function(e) { 
-      if (e.button==0) { 
-        stickytooltip.isdocked=false
+    $(this).bind("click", function(e) {
+      if (e.button==0) {
         stickytooltip.hidebox($, $tooltip)
       }
     })
@@ -75,10 +69,6 @@ function overIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) {
   var idDIVserverdata = "div14" + uid;
   var idStickyToolTipDiv = "div1" + uid;
   var idTagA = "tag" + uid;
-  $('#'+idStickyToolTipDiv).stop(false, true).hide();
-  $('.stickytooltip').bind('mouseleave',function(e) { 
-    $('.stickytooltip').stop(false, true).hide();
-  });
   if($("#" + idDIVserverdata).html()== "") { 
     $.ajax({
       type: 'POST',
@@ -101,10 +91,6 @@ function crmActivityOverIt(uid, type, typeId, url, sAccountId, siteURL, timeZone
   var idDIVserverdata = "div14" + uid;
   var idStickyToolTipDiv = "div1" + uid;
   var idTagA = "tag" + uid;
-  $('#' + idStickyToolTipDiv).stop(false, true).hide();
-  $('.stickytooltip').bind('mouseleave',function(e) { 
-      $('.stickytooltip').stop(false, true).hide();
-  });
   if(type=="Task") type="CRMTask";
   if($("#" + idDIVserverdata).html()== "") { 
     $.ajax({
@@ -128,10 +114,7 @@ function showUserTooltip(uid, username, url, siteURL, timeZone, sAccountId, loca
   var idDIVserverdata = "div14" + uid;
   var idStickyToolTipDiv = "div1"+uid;
   var idTagA = "tag"+ uid;
-  $('#' + idStickyToolTipDiv).stop(false, true).hide();
-  $('.stickytooltip').bind('mouseleave',function(e) { 
-      $('.stickytooltip').stop(false, true).hide();
-  });
+
   if($("#" + idDIVserverdata).html()== "") { 
     $.ajax({
       type: 'POST',
@@ -148,4 +131,9 @@ function showUserTooltip(uid, username, url, siteURL, timeZone, sAccountId, loca
   } else {
     stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
   }
+}
+
+function hideTooltip(uid) {
+  var $tooltip=$('#div1' + uid);
+  stickytooltip.hidebox($, $tooltip)
 }

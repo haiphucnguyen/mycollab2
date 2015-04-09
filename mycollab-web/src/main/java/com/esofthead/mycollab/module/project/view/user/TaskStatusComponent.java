@@ -210,7 +210,8 @@ public class TaskStatusComponent extends MVerticalLayout {
                         task.getProjectId(), task.getType(),
                         task.getTypeId() + ""));
             }
-            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, task.getType(), task.getTypeId() + ""));
+            itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, task.getType(), task.getTypeId() + ""));
+            itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             itemLink.appendText(task.getName());
 
             div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
@@ -222,13 +223,11 @@ public class TaskStatusComponent extends MVerticalLayout {
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
             Img userAvatar = new Img("", StorageManager.getAvatarLink(task.getAssignUserAvatarId(), 16));
-            A userLink = new A();
-            userLink.setId("tag" + uid);
-            userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                    task.getProjectId(),
-                    task.getAssignUser()));
+            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+                    task.getProjectId(), task.getAssignUser()));
 
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, task.getAssignUser()));
+            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, task.getAssignUser()));
+            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             userLink.appendText(task.getAssignUserFullName());
 
             String assigneeTxt = AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": ";
@@ -251,7 +250,8 @@ public class TaskStatusComponent extends MVerticalLayout {
                             .getProjectId()));
             prjLink.setId("tag" + uid);
 
-            prjLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, ProjectTypeConstants.PROJECT, task.getProjectId() + ""));
+            prjLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.PROJECT, task.getProjectId() + ""));
+            prjLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             prjLink.appendText(task.getProjectShortName());
 
             div.appendChild(prjLink, DivLessFormatter.EMPTY_SPACE(),

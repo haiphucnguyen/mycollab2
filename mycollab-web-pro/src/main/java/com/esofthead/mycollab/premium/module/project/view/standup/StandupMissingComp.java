@@ -78,16 +78,12 @@ public class StandupMissingComp extends MVerticalLayout {
 		DivLessFormatter div = new DivLessFormatter();
 		Img userAvatar = new Img("", StorageManager.getAvatarLink(
 				user.getAvatarid(), 16));
-		A userLink = new A();
-		userLink.setId("tag" + uid);
-		userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-				CurrentProjectVariables.getProjectId(),
-				user.getUsername()));
+		A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+				CurrentProjectVariables.getProjectId(), user.getUsername()));
 
-		userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, user.getUsername()));
-
-		String arg10 = user.getDisplayName();
-		userLink.appendText(arg10);
+		userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, user.getUsername()));
+		userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+		userLink.appendText(user.getDisplayName());
 
 		div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
 				TooltipHelper.buildDivTooltipEnable(uid));

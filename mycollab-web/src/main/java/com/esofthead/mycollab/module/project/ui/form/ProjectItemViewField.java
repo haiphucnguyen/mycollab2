@@ -41,7 +41,8 @@ public class ProjectItemViewField extends CustomField {
         String uid = UUID.randomUUID().toString();
         Text avatarLink = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A milestoneLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectItemLink(project.getShortname(), project.getId(), type, typeId)).appendText(typeDisplayName);
-        milestoneLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, type, typeId + ""));
+        milestoneLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, type, typeId + ""));
+        milestoneLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE(), milestoneLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         return new Label(div.write(), ContentMode.HTML);
     }

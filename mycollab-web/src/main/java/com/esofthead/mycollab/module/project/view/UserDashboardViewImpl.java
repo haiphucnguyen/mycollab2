@@ -277,7 +277,8 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
                 Img userAvatar = new Img("", StorageManager.getAvatarLink(obj.getCreatedUserAvatarId(), 16));
                 A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(obj.getProjectId(), obj
                         .getCreatedUser())).appendText(obj.getCreatedUserDisplayName());
-                userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, obj.getCreatedUser()));
+                userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, obj.getCreatedUser()));
+                userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
                 Text belongPrjTxt = new Text(" - Project: ");
                 A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(obj.getProjectId()))
                         .appendText(obj.getProjectName() + " (" + obj.getProjectShortName() + ")");

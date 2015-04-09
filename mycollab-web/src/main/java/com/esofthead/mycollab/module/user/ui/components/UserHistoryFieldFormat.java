@@ -17,13 +17,11 @@
 package com.esofthead.mycollab.module.user.ui.components;
 
 import com.esofthead.mycollab.configuration.StorageManager;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.html.FormatUtils;
 import com.esofthead.mycollab.module.mail.MailUtils;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
@@ -63,7 +61,8 @@ public class UserHistoryFieldFormat implements HistoryFieldFormat {
 			Img userAvatar = new Img("", StorageManager.getAvatarLink(user.getAvatarid(), 16));
 			A userLink = new A().setId("tag" + uid).setHref(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(), user.getUsername()))
 					.appendText(user.getDisplayName());
-			userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, user.getUsername()));
+			userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, user.getUsername()));
+			userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
 			div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
 			return new Label(div.write(), ContentMode.HTML);
 		} else {

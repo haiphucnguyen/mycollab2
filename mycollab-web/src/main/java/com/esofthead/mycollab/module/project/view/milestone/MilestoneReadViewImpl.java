@@ -337,7 +337,8 @@ public class MilestoneReadViewImpl extends
                 throw new MyCollabException("Only support bug and task only");
             }
 
-            itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, task.getType(), task.getTypeId() + ""));
+            itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, task.getType(), task.getTypeId() + ""));
+            itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             itemLink.appendText(String.format("[%s-%d] %s", task.getProjectShortName(), task.getExtraTypeId(), task
                     .getName()));
 
@@ -354,13 +355,11 @@ public class MilestoneReadViewImpl extends
             Div div = new Div();
             Img userAvatar = new Img("", StorageManager.getAvatarLink(
                     task.getAssignUserAvatarId(), 16));
-            A userLink = new A();
-            userLink.setId("tag" + uid);
-            userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                    task.getProjectId(),
-                    task.getAssignUser()));
+            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+                    task.getProjectId(), task.getAssignUser()));
 
-            userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, task.getAssignUser()));
+            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, task.getAssignUser()));
+            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             userLink.appendText(task.getAssignUserFullName());
 
             div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),

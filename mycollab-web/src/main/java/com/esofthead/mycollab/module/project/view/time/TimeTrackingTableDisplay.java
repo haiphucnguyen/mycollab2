@@ -295,7 +295,8 @@ public class TimeTrackingTableDisplay
                     itemLogging.getTypeid() + ""));
         }
 
-        itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, itemLogging.getType(), itemLogging.getTypeid()+""));
+        itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, itemLogging.getType(), itemLogging.getTypeid() + ""));
+        itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         itemLink.appendText(itemLogging.getSummary());
 
         div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),

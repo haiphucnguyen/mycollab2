@@ -175,13 +175,11 @@ public class ProjectActivityStreamPagedList extends
         DivLessFormatter div = new DivLessFormatter();
         Img userAvatar = new Img("", StorageManager.getAvatarLink(
                 activityStream.getCreatedUserAvatarId(), 16));
-        A userLink = new A();
-        userLink.setId("tag" + uid);
-        userLink.setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-                activityStream.getExtratypeid(),
-                activityStream.getCreateduser()));
+        A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+                activityStream.getExtratypeid(), activityStream.getCreateduser()));
 
-        userLink.setAttribute("onmouseover", TooltipHelper.buildUserHtmlTooltip(uid, activityStream.getCreateduser()));
+        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, activityStream.getCreateduser()));
+        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         userLink.appendText(activityStream.getCreatedUserFullName());
 
         div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
@@ -209,7 +207,8 @@ public class ProjectActivityStreamPagedList extends
                     activityStream.getTypeid()));
         }
 
-        itemLink.setAttribute("onmouseover", TooltipHelper.buildItemHtmlTooltip(uid, activityStream.getType(), activityStream.getTypeid()));
+        itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, activityStream.getType(), activityStream.getTypeid()));
+        itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         itemLink.appendText(activityStream.getNamefield());
 
         div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
