@@ -14,10 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-server-runner.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * This file is part of mycollab-server-runner.
+ * <p>
+ * mycollab-server-runner is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * mycollab-server-runner is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-server-runner.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.servlet;
 
 import com.esofthead.mycollab.configuration.SharingOptions;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.jetty.ServerInstance;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
@@ -44,8 +61,10 @@ public class UpgradeServlet extends HttpServlet {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
 
+        Reader reader = ServerInstance.getInstance().isUpgrading() ? FileUtils.getReader("templates/page/WaitingUpgrade.mt")
+                : FileUtils.getReader("templates/page/NoUpgrade.mt");
+
         VelocityContext context = new VelocityContext();
-        Reader reader = FileUtils.getReader("templates/page/WaitingUpgrade.mt");
 
         SharingOptions sharingOptions = SharingOptions
                 .getDefaultSharingOptions();
@@ -61,9 +80,7 @@ public class UpgradeServlet extends HttpServlet {
 
         StringWriter writer = new StringWriter();
         VelocityEngine voEngine = new VelocityEngine();
-
         voEngine.evaluate(context, writer, "log task", reader);
-
         PrintWriter out = response.getWriter();
         out.print(writer.toString());
     }

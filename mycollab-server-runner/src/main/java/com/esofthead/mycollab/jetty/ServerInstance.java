@@ -40,8 +40,11 @@ public class ServerInstance {
         this.server = serverProcess;
     }
 
-    public void upgrade(File upgradeFile) {
+    public void preUpgrade() {
         isUpgrading = true;
+    }
+
+    public void upgrade(File upgradeFile) {
         server.upgrade(upgradeFile);
     }
 

@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.servlet.*;
 import com.zaxxer.hikari.HikariDataSource;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.jndi.NamingContext;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Handler;
@@ -62,7 +63,6 @@ public abstract class GenericServerRunner {
     private ContextHandlerCollection contexts;
     private WebAppContext appContext;
     private ServletContextHandler installationContextHandler;
-    private ServletContextHandler upgradeContextHandler;
 
     public abstract WebAppContext buildContext(String baseDir);
 
@@ -167,7 +167,13 @@ public abstract class GenericServerRunner {
             contexts.setHandlers(new Handler[]{installationContextHandler});
         } else {
             WebAppContext appContext = initWebAppContext();
-            contexts.addHandler(appContext);
+            ServletContextHandler upgradeContextHandler = new ServletContextHandler(
+                    ServletContextHandler.SESSIONS);
+            upgradeContextHandler.setServer(server);
+            upgradeContextHandler.setContextPath("/it");
+            upgradeContextHandler.addServlet(new ServletHolder(new UpgradeServlet()), "/upgrade");
+            upgradeContextHandler.addServlet(new ServletHolder(new UpgradeStatusServlet()), "/upgrade_status");
+            contexts.setHandlers(new Handler[]{upgradeContextHandler, appContext});
         }
 
         server.setHandler(contexts);
@@ -186,15 +192,8 @@ public abstract class GenericServerRunner {
     }
 
     void upgrade(File upgradeFile) {
-        upgradeContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        upgradeContextHandler.setContextPath("/");
-        upgradeContextHandler.addServlet(new ServletHolder(
-                new AssetHttpServletRequestHandler()), "/assets/*");
-        upgradeContextHandler.addServlet(new ServletHolder(new UpgradeServlet()), "/upgrade");
-        upgradeContextHandler.addServlet(new ServletHolder(new UpgradeStatusServlet()), "/upgrade_status");
-        contexts.addHandler(upgradeContextHandler);
         try {
-            upgradeContextHandler.start();
+            appContext.stop();
         } catch (Exception e) {
             LOG.error("Error while starting server", e);
             throw new MyCollabException(e);
@@ -220,7 +219,6 @@ public abstract class GenericServerRunner {
             LOG.error("Error while starting server", e);
             throw new MyCollabException(e);
         }
-        contexts.removeHandler(upgradeContextHandler);
         ServerInstance.getInstance().setIsUpgrading(false);
     }
 
@@ -344,6 +342,7 @@ public abstract class GenericServerRunner {
         // At runtime the webapp accesses this as
         // java:comp/env/jdbc/mydatasource
         try {
+            NamingContext a;
             LOG.debug("Init the datasource");
             org.eclipse.jetty.plus.jndi.Resource mydatasource = new org.eclipse.jetty.plus.jndi.Resource(
                     appContext, "jdbc/mycollabdatasource", buildDataSource());

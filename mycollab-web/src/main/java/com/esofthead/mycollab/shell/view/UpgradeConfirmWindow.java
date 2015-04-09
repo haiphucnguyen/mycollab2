@@ -14,6 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * This file is part of mycollab-web.
+ * <p>
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -139,9 +155,16 @@ public class UpgradeConfirmWindow extends Window {
                         return;
                     }
 
-                    progressWindow.close();
-                    Page.getCurrent().setLocation(SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "upgrade");
+                    ServerInstance.getInstance().preUpgrade();
+                    String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
+                    Page.getCurrent().setLocation(locUrl);
                     UI.getCurrent().setPollInterval(-1);
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    progressWindow.close();
                     ServerInstance.getInstance().upgrade(tmpFile);
                 } else {
                     NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");

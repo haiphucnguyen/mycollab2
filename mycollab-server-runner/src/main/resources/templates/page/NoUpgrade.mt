@@ -65,12 +65,11 @@ h3 {
 			<div id="spacing""></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1 style="font-size:40px; margin-bottom:15px;">MyCollab is upgrading ...<h1>
+					<h1 style="font-size:40px; margin-bottom:15px;">Congrats!<h1>
 				</div>
 				<hr size="1" style="margin: 1px 0 20px 0; ">
 				<div id="title" style="display:flex">
-					<h3>The upgrade process may take several minutes. Please be patient ... <h3>
-					<img src="${defaultUrls.app_url}assets/images/ajax-loader.gif" alt="Pulpit rock" style="height:18px;">
+					<h3>You are using the latest MyCollab version<h3>
 				</div>
 				<div id="bottom">
 				    <p>
@@ -89,26 +88,4 @@ h3 {
 	</div>
 	<input type="hidden" id="postUrl" value=$!postUrl>
 </body>
-<script src="/assets/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        checkUpgradeReady();
-    });
-    function checkUpgradeReady(){
-      var urlPost = "/it/upgrade_status";
-      $.ajax({type: 'GET', url: urlPost,
-        success: function(data) {
-          if(data!=null){
-            if(data.length > 0) {
-              setTimeout(checkUpgradeReady, 5000);
-            } else {
-              alert("MyCollab is upgraded successfully. Redirect to the app?");
-              window.location.assign("/");
-            }
-          }
-        }
-      });
-
-    }
-</script>
 </html>

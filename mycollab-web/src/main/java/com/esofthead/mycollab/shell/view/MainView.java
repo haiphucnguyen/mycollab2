@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,6 +23,7 @@ import com.esofthead.mycollab.common.ui.components.notification.RequestUploadAva
 import com.esofthead.mycollab.common.ui.components.notification.TimezoneNotification;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
+import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.events.SessionEvent;
@@ -355,16 +356,15 @@ public final class MainView extends AbstractPageView {
                 Gson gson = new Gson();
                 Properties props = gson.fromJson(values, Properties.class);
                 String version = props.getProperty("version");
-//                if (!MyCollabVersion.getVersion().equals(version)) {
-                if (AppContext.isAdmin()) {
-                    UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
-                } else {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.NewNotification(this,
-                                    new NewUpdateNotification(props)));
+                if (!MyCollabVersion.getVersion().equals(version)) {
+                    if (AppContext.isAdmin()) {
+                        UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
+                    } else {
+                        EventBusFactory.getInstance().post(
+                                new ShellEvent.NewNotification(this,
+                                        new NewUpdateNotification(props)));
+                    }
                 }
-
-//                }
             } catch (Exception e) {
                 LOG.error("Error when call remote api", e);
             }

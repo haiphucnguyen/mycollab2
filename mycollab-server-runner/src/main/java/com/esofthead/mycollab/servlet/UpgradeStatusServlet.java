@@ -37,7 +37,6 @@ public class UpgradeStatusServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         if (ServerInstance.getInstance().isUpgrading()) {
             out.write("Still upgrading");
-            System.out.println("STILL UPGRADING");
         }
     }
 }
