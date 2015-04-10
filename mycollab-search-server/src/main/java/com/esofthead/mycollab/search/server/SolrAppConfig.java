@@ -44,15 +44,15 @@ public class SolrAppConfig {
 	@Resource
 	private Environment environment;
 
-	@Bean
-	public SolrServer solrServer() throws ParserConfigurationException,
-			IOException, SAXException {
-		return new HttpSolrServer("http://localhost:8983/solr");
-	}
-
-	@Bean
-	public SolrOperations solrTemplate() throws ParserConfigurationException,
-			IOException, SAXException {
-		return new SolrTemplate(solrServer());
-	}
+//	@Bean
+//	public SolrServer solrServer() throws ParserConfigurationException,
+//			IOException, SAXException {
+//		return new HttpSolrServer("http://localhost:8983/solr");
+//	}
+//
+//	@Bean
+//	public SolrOperations solrTemplate() throws ParserConfigurationException,
+//			IOException, SAXException {
+//		return new SolrTemplate(solrServer());
+//	}
 }
