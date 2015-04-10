@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import com.esofthead.mycollab.core.utils.FileUtils;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
@@ -79,23 +80,20 @@ public class ApplicationProperties {
 
 		properties = new EncryptableProperties(encryptor);
 		try {
-			File myCollabResourceFile = new File(
-					System.getProperty("user.dir"), "conf/mycollab.properties");
+			File myCollabResourceFile = getAppConfigFile();
 
-			if (!myCollabResourceFile.exists()) {
-				myCollabResourceFile = new File(System.getProperty("user.dir"),
-						"src/main/conf/mycollab.properties");
-			}
-
-			if (myCollabResourceFile.exists()) {
+			if (myCollabResourceFile != null) {
 				properties.load(new FileInputStream(myCollabResourceFile));
 			} else {
-				properties.load(Thread.currentThread().getContextClassLoader()
-						.getResourceAsStream(RESOURCE_PROPERTIES));
+				throw new IllegalArgumentException("Can not file the application properties");
 			}
 		} catch (Exception e) {
 			throw new MyCollabException(e);
 		}
+	}
+
+	public static File getAppConfigFile() {
+		return FileUtils.getDesireFile(System.getProperty("user.dir"),"conf/mycollab.properties", "src/main/conf/mycollab.properties");
 	}
 
 	public static Properties getAppProperties() {

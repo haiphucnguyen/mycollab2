@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent.InvitePro
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.shell.view.SystemUIChecker;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.*;
@@ -111,6 +112,7 @@ public class ProjectMemberInvitePresenter extends
             ProjectBreadcrumb breadcrumb = ViewManager
                     .getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoUserAdd();
+            SystemUIChecker.hasValidSmtpAccount();
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

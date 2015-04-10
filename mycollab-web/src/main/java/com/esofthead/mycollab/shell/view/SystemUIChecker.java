@@ -17,7 +17,11 @@ import org.vaadin.dialogs.ConfirmDialog;
  * @since 5.0.4
  */
 public class SystemUIChecker {
-    public static void checkHavingValidSmtpAccount() {
+    /**
+     *
+     * @return true if the system has the valid smtp account, false if otherwise
+     */
+    public static boolean hasValidSmtpAccount() {
         if (SiteConfiguration.getDeploymentMode() != DeploymentMode.site) {
             ExtMailService extMailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
             if (!extMailService.isMailSetupValid()) {
@@ -47,7 +51,11 @@ public class SystemUIChecker {
                     NotificationUtil.showErrorNotification(AppContext
                             .getMessage(ShellI18nEnum.WINDOW_SMTP_CONFIRM_SETUP_FOR_USER));
                 }
+                return false;
+            } else {
+                return true;
             }
         }
+        return true;
     }
 }

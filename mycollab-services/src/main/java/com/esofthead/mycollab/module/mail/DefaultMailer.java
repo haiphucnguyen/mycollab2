@@ -49,7 +49,7 @@ public class DefaultMailer implements IMailer {
 		this.host = emailConf.getHost();
 		this.username = emailConf.getUser();
 		this.password = emailConf.getPassword();
-		this.isTLS = emailConf.isTls();
+		this.isTLS = emailConf.getIsTls();
 	}
 
 	private HtmlEmail getBasicEmail(String fromEmail, String fromName,
