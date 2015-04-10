@@ -449,7 +449,7 @@ public final class MainView extends AbstractPageView {
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        AppContext.getInstance().clearSessionVariables();
+                        accountMenu.setPopupVisible(false);
                         EventBusFactory.getInstance().post(
                                 new ShellEvent.LogOut(this, null));
                     }

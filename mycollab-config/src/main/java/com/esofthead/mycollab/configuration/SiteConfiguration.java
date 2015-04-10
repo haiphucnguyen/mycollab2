@@ -34,11 +34,6 @@ import static com.esofthead.mycollab.configuration.ApplicationProperties.MAIL_PA
 import static com.esofthead.mycollab.configuration.ApplicationProperties.MAIL_PORT;
 import static com.esofthead.mycollab.configuration.ApplicationProperties.MAIL_SMTPHOST;
 import static com.esofthead.mycollab.configuration.ApplicationProperties.MAIL_USERNAME;
-import static com.esofthead.mycollab.configuration.ApplicationProperties.RELAYMAIL_IS_TLS;
-import static com.esofthead.mycollab.configuration.ApplicationProperties.RELAYMAIL_PASSWORD;
-import static com.esofthead.mycollab.configuration.ApplicationProperties.RELAYMAIL_PORT;
-import static com.esofthead.mycollab.configuration.ApplicationProperties.RELAYMAIL_SMTPHOST;
-import static com.esofthead.mycollab.configuration.ApplicationProperties.RELAYMAIL_USERNAME;
 import static com.esofthead.mycollab.configuration.ApplicationProperties.RUNNING_MODE;
 import static com.esofthead.mycollab.configuration.ApplicationProperties.SERVER_ADDRESS;
 import static com.esofthead.mycollab.configuration.ApplicationProperties.SITE_NAME;
@@ -61,8 +56,7 @@ import com.esofthead.mycollab.core.DeploymentMode;
  * 
  */
 public class SiteConfiguration {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(SiteConfiguration.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SiteConfiguration.class);
 
 	private static SiteConfiguration instance;
 
@@ -73,7 +67,6 @@ public class SiteConfiguration {
 	private int serverPort;
 	private String noreplyEmail;
 	private EmailConfiguration emailConfiguration;
-	private EmailConfiguration relayEmailConfiguration;
 	private DatabaseConfiguration databaseConfiguration;
 	private String cdnUrl;
 	private String endecryptPassword;
@@ -140,19 +133,6 @@ public class SiteConfiguration {
 		instance.noreplyEmail = ApplicationProperties.getString(MAIL_NOREPLY,
 				"noreply@mycollab.com");
 
-		// load relay email
-		String relayHost = ApplicationProperties.getString(RELAYMAIL_SMTPHOST,
-				host);
-		int relayPort = Integer.parseInt(ApplicationProperties.getString(
-				RELAYMAIL_PORT, port + ""));
-		String relayUser = ApplicationProperties.getString(RELAYMAIL_USERNAME,
-				user);
-		String relayPassword = ApplicationProperties.getString(
-				RELAYMAIL_PASSWORD, password);
-		boolean relayIsTls = Boolean.parseBoolean(ApplicationProperties
-				.getString(RELAYMAIL_IS_TLS, Boolean.toString(isTls)));
-		instance.relayEmailConfiguration = new EmailConfiguration(relayHost,
-				relayUser, relayPassword, relayPort, relayIsTls);
 
 		// load database configuration
 		String driverClass = ApplicationProperties.getString(DB_DRIVER_CLASS);
@@ -186,10 +166,6 @@ public class SiteConfiguration {
 
 	public static DatabaseConfiguration getDatabaseConfiguration() {
 		return getInstance().databaseConfiguration;
-	}
-
-	public static EmailConfiguration getRelayEmailConfiguration() {
-		return getInstance().relayEmailConfiguration;
 	}
 
 	public static EmailConfiguration getEmailConfiguration() {

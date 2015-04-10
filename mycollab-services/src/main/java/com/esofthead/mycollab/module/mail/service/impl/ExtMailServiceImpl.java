@@ -36,14 +36,14 @@ public class ExtMailServiceImpl extends AbstractMailService implements
     @Override
     public boolean isMailSetupValid() {
         EmailConfiguration emailConfiguration = SiteConfiguration
-                .getRelayEmailConfiguration();
+                .getEmailConfiguration();
         return !(emailConfiguration.getHost().equals(""));
     }
 
     @Override
     protected IMailer getMailer() {
         EmailConfiguration emailConfiguration = SiteConfiguration
-                .getRelayEmailConfiguration();
+                .getEmailConfiguration();
         if (!isMailSetupValid()) {
             return new NullMailer();
         }

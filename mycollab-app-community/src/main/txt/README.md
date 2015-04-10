@@ -53,6 +53,7 @@ Version 5.0.4
 **Improvements & New Features**
 
 * Auto update the new MyCollab version
+* Ask system admin or warn users need to set up smtp setting for features which need to send email
 * The new project file module
 * Revise the application variable scopes
 * Support quick review with instant tooltip
@@ -60,6 +61,7 @@ Version 5.0.4
 * Minor improve on page view
 * Display uploaded file size
 * Add detail information for uploaded file in tooltip
+* Display the friendly timezone name in tooltip
 
 **Bug Fixes**
 

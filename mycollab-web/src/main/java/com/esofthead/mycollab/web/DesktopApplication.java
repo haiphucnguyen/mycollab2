@@ -221,7 +221,6 @@ public class DesktopApplication extends MyCollabUI {
         if (currentContext != null) {
             currentContext.clearSessionVariables();
             initialUrl = "";
-            VaadinSession.getCurrent().close();
         }
     }
 

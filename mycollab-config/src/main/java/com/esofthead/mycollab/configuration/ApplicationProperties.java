@@ -59,12 +59,6 @@ public class ApplicationProperties {
 	public static final String MAIL_IS_TLS = "mail.isTLS";
 	public static final String MAIL_NOREPLY = "mail.noreply";
 
-	public static final String RELAYMAIL_SMTPHOST = "relaymail.smtphost";
-	public static final String RELAYMAIL_PORT = "relaymail.port";
-	public static final String RELAYMAIL_USERNAME = "relaymail.username";
-	public static final String RELAYMAIL_PASSWORD = "relaymail.password";
-	public static final String RELAYMAIL_IS_TLS = "relaymail.isTLS";
-
 	public static final String ERROR_SENDTO = "error.sendTo";
 	public static final String STORAGE_SYSTEM = "storageSystem";
 
