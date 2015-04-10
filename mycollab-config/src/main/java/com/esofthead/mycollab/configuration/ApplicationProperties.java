@@ -16,15 +16,14 @@
  */
 package com.esofthead.mycollab.configuration;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Properties;
-
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
-import com.esofthead.mycollab.core.MyCollabException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 /**
  * This file contains all constants define in system properties file

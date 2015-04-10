@@ -1,26 +1,25 @@
 package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.ShellI18nEnum;
 import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.EmailConfiguration;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.servlet.InstallUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
 
 /**
  * @author MyCollab Ltd.
@@ -61,7 +60,7 @@ public class SmtpConfigurationWindow extends Window {
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("isTls")) {
-                return new CheckBox();
+                return new CheckBox("", false);
             }
             return null;
         }
@@ -103,17 +102,29 @@ public class SmtpConfigurationWindow extends Window {
                         @Override
                         public void buttonClick(final Button.ClickEvent event) {
                             if (editForm.validateForm()) {
-                                SiteConfiguration.setEmailConfiguration(emailConfiguration);
-                                File configFile = ApplicationProperties.getAppConfigFile();
-                                if (configFile != null) {
-                                    Properties props = ApplicationProperties.getAppProperties();
-                                    try {
-                                        props.store(new FileOutputStream(configFile), null);
-                                        NotificationUtil.showNotification("Set up SMTP account successfully");
-                                    } catch (IOException e) {
-                                        LOG.error("Can not save email props", e);
-                                        throw new UserInvalidInputException("Can not save properties file successfully");
-                                    }
+                                String isTLS = (emailConfiguration.getIsTls()) ? "TLS" : "";
+                                boolean isSetupValid = InstallUtils.checkSMTPConfig(emailConfiguration.getHost(), emailConfiguration.getPort(), emailConfiguration.getUser(), emailConfiguration.getPassword(), true, isTLS);
+                                if (!isSetupValid) {
+                                    ConfirmDialogExt.show(
+                                            UI.getCurrent(),
+                                            "Invalid SMTP account?",
+                                            "We can not connect to the SMTP server. Save the configuration anyway?",
+                                            AppContext
+                                                    .getMessage(GenericI18Enum.BUTTON_YES),
+                                            AppContext
+                                                    .getMessage(GenericI18Enum.BUTTON_NO),
+                                            new ConfirmDialog.Listener() {
+                                                private static final long serialVersionUID = 1L;
+
+                                                @Override
+                                                public void onClose(ConfirmDialog dialog) {
+                                                    if (dialog.isConfirmed()) {
+                                                        saveEmailConfiguration();
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    saveEmailConfiguration();
                                 }
                                 SmtpConfigurationWindow.this.close();
                             }
@@ -128,6 +139,26 @@ public class SmtpConfigurationWindow extends Window {
             projectAddLayout.setComponentAlignment(buttonControls,
                     Alignment.MIDDLE_RIGHT);
             return projectAddLayout;
+        }
+
+        private void saveEmailConfiguration() {
+            SiteConfiguration.setEmailConfiguration(emailConfiguration);
+            File configFile = ApplicationProperties.getAppConfigFile();
+            if (configFile != null) {
+                try {
+                    PropertiesConfiguration p = new PropertiesConfiguration(ApplicationProperties.getAppConfigFile());
+                    p.setProperty(ApplicationProperties.MAIL_SMTPHOST, emailConfiguration.getHost());
+                    p.setProperty(ApplicationProperties.MAIL_USERNAME, emailConfiguration.getUser());
+                    p.setProperty(ApplicationProperties.MAIL_PASSWORD, emailConfiguration.getPassword());
+                    p.setProperty(ApplicationProperties.MAIL_PORT, emailConfiguration.getPort());
+                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConfiguration.getIsTls());
+                    p.save();
+                    NotificationUtil.showNotification("Set up SMTP account successfully");
+                } catch (Exception e) {
+                    LOG.error("Can not save email props", e);
+                    throw new UserInvalidInputException("Can not save properties file successfully");
+                }
+            }
         }
 
         @Override
