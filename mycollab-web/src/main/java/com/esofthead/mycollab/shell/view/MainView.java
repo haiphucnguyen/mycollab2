@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.notification.NewUpdateNotification;
 import com.esofthead.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
+import com.esofthead.mycollab.common.ui.components.notification.SmtpSetupNotification;
 import com.esofthead.mycollab.common.ui.components.notification.TimezoneNotification;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
@@ -30,6 +31,7 @@ import com.esofthead.mycollab.events.SessionEvent;
 import com.esofthead.mycollab.events.SessionEvent.UserProfileChangeEvent;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -367,6 +369,13 @@ public final class MainView extends AbstractPageView {
                 }
             } catch (Exception e) {
                 LOG.error("Error when call remote api", e);
+            }
+
+            ExtMailService mailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
+            if (!mailService.isMailSetupValid()) {
+                EventBusFactory.getInstance().post(
+                        new ShellEvent.NewNotification(this,
+                                new SmtpSetupNotification()));
             }
         }
 
