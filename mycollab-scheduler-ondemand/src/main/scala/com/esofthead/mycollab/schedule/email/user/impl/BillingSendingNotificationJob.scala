@@ -43,50 +43,50 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
 
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext) {
-    import scala.collection.JavaConverters._
-    val trialAccountsWithOwners: List[BillingAccountWithOwners] = billingService.getTrialAccountsWithOwners.asScala
-      .toList
-    var cal: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-    cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST)
-    val dateRemind1st: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
-    cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-    cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_2ND)
-    val dateRemind2nd: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
-    cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-    cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE)
-    val dateExpire: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
-    if (trialAccountsWithOwners != null) {
-      for (account <- trialAccountsWithOwners) {
-        LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
-        val accCreatedDate: Date = DateTimeUtils.trimHMSOfDate(account.getCreatedtime)
-        if (accCreatedDate.before(dateRemind1st) && (account.getReminderstatus == null)) {
-          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_FREEPLAN_1ST)
-          val billingAccount: BillingAccount = new BillingAccount
-          billingAccount.setId(account.getId)
-          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
-          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        }
-        else if (accCreatedDate.before(dateRemind2nd) && ((account.getReminderstatus eq AccountReminderStatusContants
-          .REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME) || account.getReminderstatus == null)) {
-          LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
-          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_FREEPLAN_2ND)
-          val billingAccount: BillingAccount = new BillingAccount
-          billingAccount.setId(account.getId)
-          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
-          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        }
-        else if (accCreatedDate.before(dateExpire)) {
-          LOG.debug("Check whether account exceed 32 days to convert to basic plan")
-          sendingEmailInformConvertToFreePlan(account)
-          val billingAccount: BillingAccount = new BillingAccount
-          billingAccount.setId(account.getId)
-          val freeBillingPlan: BillingPlan = billingService.getFreeBillingPlan
-          billingAccount.setBillingplanid(freeBillingPlan.getId)
-          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_CONVERTED_TO_FREE_PLAN)
-          billingAccountService.updateSelectiveWithSession(billingAccount, "")
-        }
-      }
-    }
+//    import scala.collection.JavaConverters._
+//    val trialAccountsWithOwners: List[BillingAccountWithOwners] = billingService.getTrialAccountsWithOwners.asScala
+//      .toList
+//    var cal: Calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//    cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_1ST)
+//    val dateRemind1st: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
+//    cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//    cal.add(Calendar.DATE, (-1) * DATE_REMIND_FOR_FREEPLAN_2ND)
+//    val dateRemind2nd: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
+//    cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+//    cal.add(Calendar.DATE, (-1) * DATE_NOTIFY_EXPIRE)
+//    val dateExpire: Date = DateTimeUtils.trimHMSOfDate(cal.getTime)
+//    if (trialAccountsWithOwners != null) {
+//      for (account <- trialAccountsWithOwners) {
+//        LOG.debug("Check whether account exceed 25 days to remind user upgrade account")
+//        val accCreatedDate: Date = DateTimeUtils.trimHMSOfDate(account.getCreatedtime)
+//        if (accCreatedDate.before(dateRemind1st) && (account.getReminderstatus == null)) {
+//          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_FREEPLAN_1ST)
+//          val billingAccount: BillingAccount = new BillingAccount
+//          billingAccount.setId(account.getId)
+//          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME)
+//          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+//        }
+//        else if (accCreatedDate.before(dateRemind2nd) && ((account.getReminderstatus eq AccountReminderStatusContants
+//          .REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME) || account.getReminderstatus == null)) {
+//          LOG.debug("Check whether account exceed 30 days to inform him it is the end of day to upgrade account")
+//          sendRemindEmailAskUpdateBillingAccount(account, DATE_REMIND_FOR_FREEPLAN_2ND)
+//          val billingAccount: BillingAccount = new BillingAccount
+//          billingAccount.setId(account.getId)
+//          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME)
+//          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+//        }
+//        else if (accCreatedDate.before(dateExpire)) {
+//          LOG.debug("Check whether account exceed 32 days to convert to basic plan")
+//          sendingEmailInformConvertToFreePlan(account)
+//          val billingAccount: BillingAccount = new BillingAccount
+//          billingAccount.setId(account.getId)
+//          val freeBillingPlan: BillingPlan = billingService.getFreeBillingPlan
+//          billingAccount.setBillingplanid(freeBillingPlan.getId)
+//          billingAccount.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_CONVERTED_TO_FREE_PLAN)
+//          billingAccountService.updateSelectiveWithSession(billingAccount, "")
+//        }
+//      }
+//    }
   }
 
   private def sendingEmailInformConvertToFreePlan(account: BillingAccountWithOwners) {

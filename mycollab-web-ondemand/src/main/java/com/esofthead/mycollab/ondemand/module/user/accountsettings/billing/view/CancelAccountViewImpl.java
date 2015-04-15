@@ -142,7 +142,11 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 						CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
 						feedback.setOthertool(alternativeTool.getValue());
 						feedback.setReasontoback(reasonToBack.getValue());
-						feedback.setReasontoleave(optionGroup.getValue().toString());
+						if (optionGroup.getValue() != null) {
+							feedback.setReasontoleave(optionGroup.getValue().toString());
+						} else {
+							feedback.setReasontoleave("");
+						}
 
 						BillingService billingService = ApplicationContextUtil
 								.getSpringBean(BillingService.class);
