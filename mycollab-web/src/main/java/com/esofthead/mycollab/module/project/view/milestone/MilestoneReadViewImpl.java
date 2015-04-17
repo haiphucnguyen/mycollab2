@@ -16,8 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -107,8 +107,8 @@ public class MilestoneReadViewImpl extends
     @Override
     protected ComponentContainer createBottomPanel() {
         final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(commentListComp, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
-        tabContainer.addTab(historyListComp, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
+        tabContainer.addTab(commentListComp, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
+        tabContainer.addTab(historyListComp, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
         return tabContainer;
     }
 
@@ -116,8 +116,8 @@ public class MilestoneReadViewImpl extends
     protected void initRelatedComponents() {
         historyListComp = new MilestoneHistoryLogList(
                 ModuleNameConstants.PRJ, ProjectTypeConstants.MILESTONE);
-        commentListComp = new CommentDisplay(CommentType.PRJ_MILESTONE,
-                CurrentProjectVariables.getProjectId(), true, true,
+        commentListComp = new CommentDisplay(ProjectTypeConstants.MILESTONE,
+                CurrentProjectVariables.getProjectId(),
                 ProjectMilestoneRelayEmailNotificationAction.class);
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();

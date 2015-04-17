@@ -31,15 +31,14 @@ public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 		ProblemAddView, IFormAddView<Problem> {
 	private static final long serialVersionUID = 1L;
 
-	private static Map<Integer, String> valueCaptions = new HashMap<>(
-			5);
+	private static Map<Integer, String> valueCaptions = new HashMap<>(5);
 
 	static {
-		ProblemAddViewImpl.getValueCaptions().put(1, "Epic Fail");
-		ProblemAddViewImpl.getValueCaptions().put(2, "Poor");
-		ProblemAddViewImpl.getValueCaptions().put(3, "OK");
-		ProblemAddViewImpl.getValueCaptions().put(4, "Good");
-		ProblemAddViewImpl.getValueCaptions().put(5, "Excellent");
+		valueCaptions.put(1, "Epic Fail");
+		valueCaptions.put(2, "Poor");
+		valueCaptions.put(3, "OK");
+		valueCaptions.put(4, "Good");
+		valueCaptions.put(5, "Excellent");
 	}
 
 	public static Map<Integer, String> getValueCaptions() {

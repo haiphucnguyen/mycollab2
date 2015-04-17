@@ -116,11 +116,6 @@ public class CaseListPresenter extends CrmGenericListPresenter<CaseListView, Cas
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_CASE)) {
-			CrmToolbar crmToolbar = ViewManager
-					.getCacheComponent(CrmToolbar.class);
-			crmToolbar.gotoItem(AppContext
-					.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
-
 			searchCriteria = (CaseSearchCriteria) data.getParams();
 			int totalCount = caseService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {

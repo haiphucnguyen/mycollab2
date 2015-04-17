@@ -20,20 +20,17 @@ import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
-import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
-import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -87,12 +84,6 @@ public class ActivityListPresenter
         if (AppContext.canRead(RolePermissionCollections.CRM_MEETING)
                 || AppContext.canRead(RolePermissionCollections.CRM_TASK)
                 || AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
-
-            CrmToolbar crmToolbar = ViewManager
-                    .getCacheComponent(CrmToolbar.class);
-            crmToolbar.gotoItem(AppContext
-                    .getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER));
-
             searchCriteria = (ActivitySearchCriteria) data.getParams();
             this.displayListView(container, data);
             doSearch(searchCriteria);

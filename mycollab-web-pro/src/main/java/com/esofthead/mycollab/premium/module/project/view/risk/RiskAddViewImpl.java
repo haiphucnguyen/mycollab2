@@ -34,11 +34,11 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 	private static Map<Integer, String> valueCaptions = new HashMap<>(5);
 
 	static {
-		RiskAddViewImpl.getValueCaptions().put(1, "Epic Fail");
-		RiskAddViewImpl.getValueCaptions().put(2, "Poor");
-		RiskAddViewImpl.getValueCaptions().put(3, "OK");
-		RiskAddViewImpl.getValueCaptions().put(4, "Good");
-		RiskAddViewImpl.getValueCaptions().put(5, "Excellent");
+		valueCaptions.put(1, "Epic Fail");
+		valueCaptions.put(2, "Poor");
+		valueCaptions.put(3, "OK");
+		valueCaptions.put(4, "Good");
+		valueCaptions.put(5, "Excellent");
 	}
 
 	public static Map<Integer, String> getValueCaptions() {

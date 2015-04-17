@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.4.3";
+	content: "7.4.4";
 }
 
 .v-generated-body {
@@ -139,6 +139,10 @@ a.pending {
 
 .v-filterselect-suggestmenu table {
 	width: 100%;
+}
+
+.historylog-component .bean-list {
+	border-top: 1px solid #CFCFCF;
 }
 
 .list-row {
@@ -761,6 +765,10 @@ table {
 .v-colorpicker-area {
 	border: 1px solid silver;
 	margin: 1px auto;
+}
+
+.v-colorpicker.v-default-caption-width {
+	width: 100px;
 }
 
 .v-colorpicker-history {
@@ -7354,6 +7362,10 @@ a.pending {
 	width: 100%;
 }
 
+.historylog-component .bean-list {
+	border-top: 1px solid #CFCFCF;
+}
+
 .list-row {
 	background-color: #FFF;
 	border-color: #CFCFCF;
@@ -7766,12 +7778,16 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	background: none no-repeat 0 0 transparent;
 }
 
+.h-sidebar-menu .v-button.v-button-link:focus a, .h-sidebar-menu .v-button.v-button-link:active a {
+	color: #FFF;
+}
+
 .h-sidebar-menu .v-button.v-button-link.isSelected {
 	background-color: #FFF;
 }
 
-.h-sidebar-menu .v-button.v-button-link:focus .v-button-caption, .h-sidebar-menu .v-button.v-button-link:active .v-button-caption {
-	color: #FFF;
+.h-sidebar-menu .v-button.v-button-link.isSelected a {
+	color: #535353;
 }
 
 .h-sidebar-menu .v-button .v-button-wrap {
@@ -7865,6 +7881,175 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .comment-list-wrapper.v-margin-left {
 	padding-left: 58px;
+}
+
+.readViewLayout {
+	background-color: #FFF;
+	border-radius: 0px;
+	border: 1px solid #CFCFCF;
+}
+
+.readViewLayout .readViewHeader .headerName {
+	font-size: 18px;
+	color: #303030;
+}
+
+.readViewLayout .readViewHeader .headerNameOverdue {
+	font-size: 18px;
+	color: red;
+}
+
+.readViewLayout .h2 {
+	text-shadow: #F0F0F0 0 1px 0;
+	padding: 8px 0px 8px 18px;
+	font-size: 13px;
+	border-bottom: 1px solid #CFCFCF;
+	color: #454545;
+}
+
+.readViewLayout .v-label-h2.no-border {
+	border: none;
+}
+
+.readViewLayout .v-label-h2-no-padding {
+	text-shadow: #F0F0F0 0 1px 0;
+	padding: 0px 0px 0px 0px;
+	font-size: 13px;
+	color: #454545;
+	font-weight: bold;
+}
+
+.readViewHeader {
+	padding: 10px 5px 10px 18px;
+	background: none repeat-x left top #EEEEEE;
+	border-radius: 0px;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.readViewBottomControls .v-verticallayout {
+	display: block;
+}
+
+.readview-layout {
+	background-color: #FFF;
+	padding: 0px;
+}
+
+.readview-layout.v-margin-left {
+	padding-left: 30px;
+}
+
+.readview-layout.v-margin-right {
+	padding-right: 30px;
+}
+
+.readview-layout .colored-gridlayout .gridform-field.v-margin-top, .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 8px;
+}
+
+.readview-layout .colored-gridlayout .gridform-field.v-margin-bottom, .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 8px;
+}
+
+.readview-layout .preview-form-wrap {
+	border: solid 1px #CFCFCF;
+}
+
+.addview-layout {
+	background-color: #f5f5f5;
+	padding: 0px;
+	border-radius: 0;
+}
+
+.control-buttons.v-margin-top {
+	padding-top: 5px;
+}
+
+.control-buttons.v-margin-right {
+	padding-right: 0;
+}
+
+.control-buttons.v-margin-bottom {
+	padding-bottom: 5px;
+}
+
+.control-buttons.v-margin-left {
+	padding-left: 5px;
+}
+
+.addview-layout-body {
+	border: none;
+}
+
+.addview-layout-body .v-label.h2 {
+	padding: 8px 0px 8px 18px;
+	font-size: 13px;
+	border-bottom: 1px solid #CFCFCF;
+	color: #454545;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: #EEEEEE;
+}
+
+.addview-layout-body .control-buttons {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.addview-layout-body .colored-gridlayout {
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
+	padding-top: 5px;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-right {
+	padding-right: 5px;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-bottom {
+	padding-bottom: 5px;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-left {
+	padding-left: 18px;
+}
+
+.addview-layout-body .gridform-caption {
+	border-left: 1px solid #CFCFCF;
+	border-right: 1px solid #CFCFCF;
+}
+
+.addview-layout-body .gridform-caption.first-col {
+	border-left: none;
+}
+
+.addview-layout-body .colored-gridlayout .v-gridlayout-slot > div {
+	border-top: 1px solid #CFCFCF;
+}
+
+.addview-layout-body .colored-gridlayout .v-gridlayout-slot > div.first-row {
+	border-top: none;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-field.v-margin-top {
+	padding-top: 5px;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-field.v-margin-right {
+	padding-right: 8px;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-field.v-margin-bottom {
+	padding-bottom: 5px;
+}
+
+.addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
+	padding-left: 10px;
 }
 
 .date-wrapper {
@@ -11317,210 +11502,6 @@ div.v-stylecalendar .weekdays TD {
 	box-sizing: border-box;
 }
 
-.readViewLayout {
-	background-color: #FFF;
-	border-radius: 0px;
-	border: 1px solid #CFCFCF;
-}
-
-.readViewLayout .readViewHeader .headerName {
-	font-size: 18px;
-	color: #303030;
-}
-
-.readViewLayout .readViewHeader .headerNameOverdue {
-	font-size: 18px;
-	color: red;
-}
-
-.readViewLayout .h2 {
-	text-shadow: #F0F0F0 0 1px 0;
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
-	color: #454545;
-}
-
-.readViewLayout .v-label-h2.no-border {
-	border: none;
-}
-
-.readViewLayout .v-label-h2-no-padding {
-	text-shadow: #F0F0F0 0 1px 0;
-	padding: 0px 0px 0px 0px;
-	font-size: 13px;
-	color: #454545;
-	font-weight: bold;
-}
-
-.readViewHeader {
-	padding: 10px 5px 10px 18px;
-	background: none repeat-x left top #EEEEEE;
-	border-radius: 0px;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.readViewBottomControls .v-verticallayout {
-	display: block;
-}
-
-.readview-layout {
-	background-color: #FFF;
-	padding: 0px;
-}
-
-.readview-layout.v-margin-left {
-	padding-left: 30px;
-}
-
-.readview-layout.v-margin-right {
-	padding-right: 30px;
-}
-
-.readview-layout .colored-gridlayout .gridform-field.v-margin-top, .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
-}
-
-.readview-layout .colored-gridlayout .gridform-field.v-margin-bottom, .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.addview-layout {
-	background-color: #f5f5f5;
-	padding: 0px;
-	border-radius: 0;
-}
-
-.control-buttons.v-margin-top {
-	padding-top: 5px;
-}
-
-.control-buttons.v-margin-right {
-	padding-right: 0;
-}
-
-.control-buttons.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.control-buttons.v-margin-left {
-	padding-left: 5px;
-}
-
-.crm-edit-form .addview-layout-body {
-	border-width: 1px 1px 0px;
-	border-color: #CFCFCF;
-	border-style: solid;
-}
-
-.addview-layout-body .preview-form {
-	border-color: #CFCFCF;
-	border-width: 1px 1px 0px;
-	border-style: solid;
-}
-
-.addview-layout-body .h2 {
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
-	color: #454545;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	background-color: #EEEEEE;
-}
-
-.addview-layout-body .control-buttons {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.addview-layout-body .v-gridlayout {
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
-	padding-top: 5px;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-right {
-	padding-right: 5px;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-caption.v-margin-left {
-	padding-left: 18px;
-}
-
-.addview-layout-body .gridform-caption {
-	border-left: 1px solid #CFCFCF;
-	border-right: 1px solid #c8c8c8;
-}
-
-.addview-layout-body .gridform-caption.first-col {
-	border-left: none;
-}
-
-.addview-layout-body .v-gridlayout-slot > div {
-	border-top: 1px solid #c8c8c8;
-}
-
-.addview-layout-body .v-gridlayout-slot > div.first-row {
-	border-top: none;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-field.v-margin-top {
-	padding-top: 5px;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-field.v-margin-right {
-	padding-right: 8px;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-field.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
-	padding-left: 10px;
-}
-
-.addview-layout-body .depotComp {
-	margin-top: 0px;
-}
-
-.addview-layout-body .depotComp .depotHeader, .addview-layout-body .depotComp.collapsed .depotHeader {
-	border: none;
-	padding-bottom: 0px;
-	background: none;
-}
-
-.addview-layout-body .depotComp .depotHeader .h2 {
-	color: #454545;
-	font-weight: bold;
-}
-
-.addview-layout-body .depotComp.collapsed .depotHeader .h2 {
-	border-bottom: none;
-}
-
-.addview-layout-body .depotComp .depot-title {
-	background-position: left center;
-}
-
-.addview-layout-body .depotComp .depot-title .v-csslayout-margin {
-	margin-left: 0px;
-}
-
-.note-list .depotContent, .comment-list .depotContent {
-	background-color: #e5eff0;
-}
-
 .v-richtextarea .gwt-RichTextToolbar {
 	background: none no-repeat left top whitesmoke;
 	border-bottom: 1px solid #CFCFCF;
@@ -12560,10 +12541,6 @@ div.v-ratingstars-bar {
 .v-ie .v-tabsheet-content > .v-tabsheet-tabsheetpanel > div > .v-verticallayout:after {
 	content: "";
 	display: inline-block;
-}
-
-.historylog-component .bean-list {
-	border-top: 1px solid #CFCFCF;
 }
 
 .accountsettings-role .addViewBottomControls .depotComp .depotHeader {

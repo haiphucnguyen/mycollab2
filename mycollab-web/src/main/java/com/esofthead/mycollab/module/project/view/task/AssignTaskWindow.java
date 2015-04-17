@@ -17,12 +17,12 @@
 
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -134,8 +134,7 @@ public class AssignTaskWindow extends Window {
                                                 .getUsername());
                                         comment.setSaccountid(AppContext
                                                 .getAccountId());
-                                        comment.setType(CommentType.PRJ_TASK
-                                                .toString());
+                                        comment.setType(ProjectTypeConstants.TASK);
                                         comment.setTypeid("" + task.getId());
                                         comment.setExtratypeid(CurrentProjectVariables
                                                 .getProjectId());

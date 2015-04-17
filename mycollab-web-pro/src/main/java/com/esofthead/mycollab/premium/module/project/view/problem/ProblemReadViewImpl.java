@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
@@ -73,8 +73,8 @@ public class ProblemReadViewImpl extends
 
 	@Override
 	protected void initRelatedComponents() {
-		commentList = new CommentDisplay(CommentType.PRJ_PROBLEM,
-				CurrentProjectVariables.getProjectId(), true, true,
+		commentList = new CommentDisplay(ProjectTypeConstants.PROBLEM,
+				CurrentProjectVariables.getProjectId(),
 				ProjectRiskRelayEmailNotificationAction.class);
 		commentList.setWidth("100%");
 		historyList = new ProblemHistoryList(ModuleNameConstants.PRJ, ProjectTypeConstants.PROBLEM);
@@ -121,8 +121,8 @@ public class ProblemReadViewImpl extends
 	@Override
 	protected ComponentContainer createBottomPanel() {
 		final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-		tabContainer.addTab(commentList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
-		tabContainer.addTab(historyList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
+		tabContainer.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
+		tabContainer.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
 		return tabContainer;
 	}
 

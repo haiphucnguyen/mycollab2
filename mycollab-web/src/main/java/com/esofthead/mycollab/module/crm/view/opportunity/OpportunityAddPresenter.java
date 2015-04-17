@@ -22,15 +22,16 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
-import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
+import com.esofthead.mycollab.vaadin.mvp.NullViewState;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
@@ -80,11 +81,6 @@ public class OpportunityAddPresenter extends
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (AppContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
-            CrmToolbar crmToolbar = ViewManager
-                    .getCacheComponent(CrmToolbar.class);
-            crmToolbar.gotoItem(AppContext
-                    .getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER));
-
             SimpleOpportunity opportunity = null;
             if (data.getParams() instanceof SimpleOpportunity) {
                 opportunity = (SimpleOpportunity) data.getParams();

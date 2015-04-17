@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
@@ -82,8 +82,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 
     @Override
     protected void initRelatedComponents() {
-        commentDisplay = new CommentDisplay(CommentType.PRJ_RISK,
-                CurrentProjectVariables.getProjectId(), true, true,
+        commentDisplay = new CommentDisplay(ProjectTypeConstants.RISK,
+                CurrentProjectVariables.getProjectId(),
                 ProjectRiskRelayEmailNotificationAction.class);
         commentDisplay.setWidth("100%");
         historyList = new RiskHistoryList(ModuleNameConstants.PRJ, ProjectTypeConstants.RISK);
@@ -126,8 +126,8 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
     @Override
     protected ComponentContainer createBottomPanel() {
         final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(commentDisplay, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
-        tabContainer.addTab(historyList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
+        tabContainer.addTab(commentDisplay, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
+        tabContainer.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
         return tabContainer;
     }
 

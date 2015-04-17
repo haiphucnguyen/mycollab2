@@ -4,11 +4,12 @@ mycollab-core/.settings
 mycollab-services/.settings/org.eclipse.jdt.core.prefs
 mycollab-test/.settings/org.eclipse.jdt.core.prefs
 .idea/
+**/rebel.xml
 pom.xml.versionsBackup
 *.iml
 mycollab-test/src/main/resources/mycollab-test.properties
 mycollab-services/velocity.log
-mycollab-scheduler-ondemand/pom.xml.versionsBackup
+pom.xml.versionsBackup
 mycollab-mobile/src/main/resources/VAADIN/themes/mycollab-mobile/common.css
 mycollab-mobile/src/main/resources/VAADIN/themes/mycollab-mobile/mycollab-mobile.css
 target/

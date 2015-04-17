@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.common.CommentType;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.arguments.*;
@@ -96,8 +96,8 @@ public class TaskGroupReadViewImpl extends
 
     @Override
     protected void initRelatedComponents() {
-        commentList = new CommentDisplay(CommentType.PRJ_TASK_LIST,
-                CurrentProjectVariables.getProjectId(), true, true,
+        commentList = new CommentDisplay(ProjectTypeConstants.TASK_LIST,
+                CurrentProjectVariables.getProjectId(),
                 ProjectTaskGroupRelayEmailNotificationAction.class);
         commentList.setWidth("100%");
         historyList = new TaskGroupHistoryLogList();
@@ -151,8 +151,8 @@ public class TaskGroupReadViewImpl extends
     @Override
     protected ComponentContainer createBottomPanel() {
         final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(commentList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_COMMENT), FontAwesome.COMMENTS);
-        tabContainer.addTab(historyList, AppContext.getMessage(ProjectCommonI18nEnum.TAB_HISTORY), FontAwesome.HISTORY);
+        tabContainer.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
+        tabContainer.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
         return tabContainer;
     }
 

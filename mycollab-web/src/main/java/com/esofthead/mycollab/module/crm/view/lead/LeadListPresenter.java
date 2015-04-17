@@ -121,11 +121,6 @@ public class LeadListPresenter extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
-			CrmToolbar crmToolbar = ViewManager
-					.getCacheComponent(CrmToolbar.class);
-			crmToolbar.gotoItem(AppContext
-					.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER));
-
 			searchCriteria = (LeadSearchCriteria) data.getParams();
 			int totalCount = leadService.getTotalCount(searchCriteria);
 			if (totalCount > 0) {

@@ -16,12 +16,10 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
-import com.esofthead.mycollab.common.CommentType;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -237,10 +235,8 @@ public class MessageReadViewImpl extends AbstractPageView implements
             List<Content> attachments = attachmentService
                     .getContents(AttachmentUtils
                             .getProjectEntityAttachmentPath(
-                                    AppContext.getAccountId(),
-                                    message.getProjectid(),
-                                    AttachmentType.PROJECT_MESSAGE,
-                                    message.getId()));
+                                    AppContext.getAccountId(), message.getProjectid(),
+                                    ProjectTypeConstants.MESSAGE, "" + message.getId()));
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentField = new HorizontalLayout();
                 Button attachmentIcon = new Button(null, FontAwesome.PAPERCLIP);
@@ -254,7 +250,7 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
                 Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
                         .getAttachmentDisplayComponent(message.getProjectid(),
-                                AttachmentType.PROJECT_MESSAGE, message.getId());
+                                ProjectTypeConstants.MESSAGE, message.getId());
 
                 MVerticalLayout messageFooter = new MVerticalLayout()
                         .withWidth("100%").withStyleName("message-footer")
@@ -278,8 +274,8 @@ public class MessageReadViewImpl extends AbstractPageView implements
 
         protected CommentDisplay createCommentPanel() {
             CommentDisplay commentDisplay = new CommentDisplay(
-                    CommentType.PRJ_MESSAGE,
-                    CurrentProjectVariables.getProjectId(), true, true,
+                    ProjectTypeConstants.MESSAGE,
+                    CurrentProjectVariables.getProjectId(),
                     MessageRelayEmailNotificationAction.class);
             commentDisplay.loadComments("" + message.getId());
             return commentDisplay;

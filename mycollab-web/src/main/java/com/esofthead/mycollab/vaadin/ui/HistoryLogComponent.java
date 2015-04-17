@@ -25,7 +25,6 @@ import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.esofthead.mycollab.utils.FieldGroupFormatter.FieldDisplayHandler;
@@ -79,8 +78,9 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 
 		Object parentComp = this.getParent();
 		if (parentComp instanceof TabSheetLazyLoadComponent) {
-			((TabSheetLazyLoadComponent)parentComp).getTab(this).setCaption(AppContext.getMessage(ProjectCommonI18nEnum
-					.TAB_HISTORY, numHistories));
+			((TabSheetLazyLoadComponent)parentComp).getTab(this)
+					.setCaption(AppContext.getMessage(GenericI18Enum
+							.TAB_HISTORY, numHistories));
 		}
 	}
 
@@ -90,7 +90,6 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 
 		@Override
 		public Component generateRow(SimpleAuditLog log, int rowIndex) {
-
 			List<AuditChangeItem> changeItems = log.getChangeItems();
 			if (CollectionUtils.isNotEmpty(changeItems)) {
 				CssLayout layout = new CssLayout();
@@ -99,9 +98,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 
 				GridLayout gridLayout = new GridLayout(3, changeItems.size() + 2);
 				gridLayout.setWidth("100%");
-
 				int visibleRows = 0;
-
 				String strDate = "";
 
 				for (int i = 0; i < changeItems.size(); i++) {

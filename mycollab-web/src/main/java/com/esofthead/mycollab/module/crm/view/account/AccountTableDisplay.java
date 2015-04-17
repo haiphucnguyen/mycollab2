@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -38,23 +38,18 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class AccountTableDisplay
-        extends
-        DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
+public class AccountTableDisplay extends DefaultPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> {
     private static final long serialVersionUID = 1L;
 
     public AccountTableDisplay(List<TableViewField> displayColumns) {
         this(null, displayColumns);
     }
 
-    public AccountTableDisplay(TableViewField requiredColumn,
-                               List<TableViewField> displayColumns) {
+    public AccountTableDisplay(TableViewField requiredColumn, List<TableViewField> displayColumns) {
         this(null, requiredColumn, displayColumns);
-
     }
 
-    public AccountTableDisplay(String viewId, TableViewField requiredColumn,
-                               List<TableViewField> displayColumns) {
+    public AccountTableDisplay(String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
         super(ApplicationContextUtil.getSpringBean(AccountService.class),
                 SimpleAccount.class, viewId, requiredColumn, displayColumns);
 
@@ -64,8 +59,7 @@ public class AccountTableDisplay
             @Override
             public Object generateCell(final Table source, final Object itemId,
                                        final Object columnId) {
-                final SimpleAccount account = AccountTableDisplay.this
-                        .getBeanByIndex(itemId);
+                final SimpleAccount account = getBeanByIndex(itemId);
                 final CheckBoxDecor cb = new CheckBoxDecor("", account
                         .isSelected());
                 cb.addValueChangeListener(new ValueChangeListener() {
@@ -73,7 +67,6 @@ public class AccountTableDisplay
 
                     @Override
                     public void valueChange(ValueChangeEvent event) {
-
                         AccountTableDisplay.this.fireSelectItemEvent(account);
                         fireTableEvent(new TableClickEvent(
                                 AccountTableDisplay.this, account, "selected"));
@@ -91,8 +84,7 @@ public class AccountTableDisplay
             @Override
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
-                final SimpleAccount account = AccountTableDisplay.this
-                        .getBeanByIndex(itemId);
+                SimpleAccount account = getBeanByIndex(itemId);
                 return new EmailLink(account.getEmail());
             }
         });
@@ -103,8 +95,7 @@ public class AccountTableDisplay
             @Override
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
-                final SimpleAccount account = AccountTableDisplay.this
-                        .getBeanByIndex(itemId);
+                SimpleAccount account = getBeanByIndex(itemId);
 
                 LabelLink b = new LabelLink(account.getAccountname(),
                         CrmLinkBuilder.generateAccountPreviewLinkFull(account
@@ -122,8 +113,7 @@ public class AccountTableDisplay
             @Override
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
-                final SimpleAccount account = AccountTableDisplay.this
-                        .getBeanByIndex(itemId);
+                final SimpleAccount account = getBeanByIndex(itemId);
                 return new UserLink(account.getAssignuser(),
                         account.getAssignUserAvatarId(), account
                         .getAssignUserFullName());
@@ -137,8 +127,7 @@ public class AccountTableDisplay
             @Override
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
-                final SimpleAccount account = AccountTableDisplay.this
-                        .getBeanByIndex(itemId);
+                final SimpleAccount account = getBeanByIndex(itemId);
                 if (account.getWebsite() != null) {
                     return new UrlLink(account.getWebsite());
                 } else {

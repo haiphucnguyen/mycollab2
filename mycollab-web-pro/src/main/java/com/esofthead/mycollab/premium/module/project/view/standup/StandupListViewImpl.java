@@ -293,7 +293,7 @@ public class StandupListViewImpl extends AbstractPageView implements
             userInfo.addComponent(UserAvatarControlFactory
                     .createUserAvatarEmbeddedComponent(
                             report.getLogByAvatarId(), 100));
-            ButtonLink userBtn = new ButtonLink(report.getLogByFullName(),
+            ButtonLinkLegacy userBtn = new ButtonLinkLegacy(report.getLogByFullName(),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 

@@ -87,6 +87,9 @@
           margin: 0px;
           padding: 0px;
           background: none no-repeat 0 0 transparent;
+          a {
+            color: #FFF;
+          }
         }
         height: 50px;
         margin: 0px;
@@ -94,9 +97,9 @@
         background: none no-repeat 0 0 transparent;
         &.isSelected {
           background-color: #FFF;
-        }
-        &:focus .v-button-caption, &:active .v-button-caption {
-          color: #FFF;
+          a {
+            color: #535353;
+          }
         }
       }
       border-radius: 0px;
@@ -204,5 +207,160 @@
 
   .comment-list-wrapper.v-margin-left {
     padding-left: 58px;
+  }
+
+/* New ReadViewLayout */
+
+  .readViewLayout {
+    background-color: #FFF;
+    border-radius: 0px;
+    border: 1px solid $border-color;
+    .readViewHeader {
+      .headerName {
+        font-size: $font-x-large;
+        color: #303030;
+      }
+      .headerNameOverdue {
+        font-size: $font-x-large;
+        color: red;
+      }
+    }
+    .h2 {
+      text-shadow: #F0F0F0 0 1px 0;
+      padding: 8px 0px 8px 18px;
+      font-size: $font-normal;
+      border-bottom: 1px solid $border-color;
+      color: rgb(69, 69, 69);
+    }
+    .v-label-h2.no-border {
+      border: none;
+    }
+    .v-label-h2-no-padding {
+      text-shadow: #F0F0F0 0 1px 0;
+      padding: 0px 0px 0px 0px;
+      font-size: $font-normal;
+      color: rgb(69, 69, 69);
+      font-weight: bold;
+    }
+  }
+
+  .readViewHeader {
+    padding: 10px 5px 10px 18px;
+    background: none repeat-x left top #EEEEEE;
+    border-radius: 0px;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .readViewBottomControls .v-verticallayout {
+    display: block;
+  }
+
+  .readview-layout {
+    background-color: #FFF;
+    padding: 0px;
+    &.v-margin-left {
+      padding-left: 30px;
+    }
+    &.v-margin-right {
+      padding-right: 30px;
+    }
+    .colored-gridlayout .gridform-field, .readViewLayout .colored-gridlayout .gridform-field {
+      &.v-margin-top {
+        padding-top: 8px;
+      }
+      &.v-margin-bottom {
+        padding-bottom: 8px;
+      }
+    }
+    .preview-form-wrap {
+      border: solid 1px $border-color;
+    }
+  }
+
+  /* AddViewLayout2 */
+
+  .addview-layout {
+    background-color: #f5f5f5;
+    padding: 0px;
+    border-radius: 0;
+  }
+
+  .control-buttons {
+    &.v-margin-top {
+      padding-top: 5px;
+    }
+    &.v-margin-right {
+      padding-right: 0;
+    }
+    &.v-margin-bottom {
+      padding-bottom: 5px;
+    }
+    &.v-margin-left {
+      padding-left: 5px;
+    }
+  }
+
+  .addview-layout-body {
+    border: none;
+    .v-label.h2 {
+      padding: 8px 0px 8px 18px;
+      font-size: $font-normal;
+      border-bottom: 1px solid $border-color;
+      color: rgb(69, 69, 69);
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      background-color: #EEEEEE;
+    }
+    .control-buttons {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      border-bottom: 1px solid $border-color;
+    }
+    .colored-gridlayout {
+      border-bottom: 1px solid $border-color;
+    }
+    .v-horizontallayout-gridform-caption {
+      &.v-margin-top {
+        padding-top: 5px;
+      }
+      &.v-margin-right {
+        padding-right: 5px;
+      }
+      &.v-margin-bottom {
+        padding-bottom: 5px;
+      }
+      &.v-margin-left {
+        padding-left: 18px;
+      }
+    }
+    .gridform-caption {
+      border-left: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      &.first-col {
+        border-left: none;
+      }
+    }
+    .colored-gridlayout .v-gridlayout-slot > div {
+      border-top: 1px solid $border-color;
+      &.first-row {
+        border-top: none;
+      }
+    }
+    .v-horizontallayout-gridform-field {
+      &.v-margin-top {
+        padding-top: 5px;
+      }
+      &.v-margin-right {
+        padding-right: 8px;
+      }
+      &.v-margin-bottom {
+        padding-bottom: 5px;
+      }
+      &.v-margin-left {
+        padding-left: 10px;
+      }
+    }
   }
 }

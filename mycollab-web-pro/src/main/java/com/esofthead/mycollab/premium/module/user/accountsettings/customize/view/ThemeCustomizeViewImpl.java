@@ -653,13 +653,13 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
             }
         };
 
-        hTopMenuDemo.addComponent(new ButtonLink("Dashboard", clickListener,
+        hTopMenuDemo.addComponent(new ButtonLinkLegacy("Dashboard", clickListener,
                 false));
-        ButtonLink accountLink = new ButtonLink("Accounts", clickListener,
+        ButtonLinkLegacy accountLink = new ButtonLinkLegacy("Accounts", clickListener,
                 false);
         accountLink.addStyleName("isSelected");
         hTopMenuDemo.addComponent(accountLink);
-        hTopMenuDemo.addComponent(new ButtonLink("Contacts", clickListener,
+        hTopMenuDemo.addComponent(new ButtonLinkLegacy("Contacts", clickListener,
                 false));
         Label spaceFix = new Label();
         hTopMenuDemo.addComponent(spaceFix);

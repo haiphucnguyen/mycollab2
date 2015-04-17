@@ -25,7 +25,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -143,7 +143,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		addBtnLayout.setWidth("370px");
 		addBtnLayout.setSpacing(true);
 
-		final ButtonLink newAccountBtn = new ButtonLink(
+		final ButtonLinkLegacy newAccountBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(AccountI18nEnum.BUTTON_NEW_ACCOUNT),
 				listener, false);
 		newAccountBtn.setEnabled(AppContext
@@ -151,7 +151,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newAccountBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
 		addBtnLayout.addComponent(newAccountBtn);
 
-		final ButtonLink newContactBtn = new ButtonLink(
+		final ButtonLinkLegacy newContactBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(ContactI18nEnum.BUTTON_NEW_CONTACT),
 				listener, false);
 		newContactBtn.setEnabled(AppContext
@@ -159,7 +159,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newContactBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CONTACT));
 		addBtnLayout.addComponent(newContactBtn);
 
-		final ButtonLink newCampaignBtn = new ButtonLink(
+		final ButtonLinkLegacy newCampaignBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN),
 				listener, false);
 		newCampaignBtn.setEnabled(AppContext
@@ -167,7 +167,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newCampaignBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CAMPAIGN));
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		final ButtonLink newOpportunityBtn = new ButtonLink(
+		final ButtonLinkLegacy newOpportunityBtn = new ButtonLinkLegacy(
 				AppContext
 						.getMessage(OpportunityI18nEnum.BUTTON_NEW_OPPORTUNITY),
 				listener, false);
@@ -176,7 +176,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newOpportunityBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.OPPORTUNITY));
 		addBtnLayout.addComponent(newOpportunityBtn);
 
-		final ButtonLink newLeadBtn = new ButtonLink(
+		final ButtonLinkLegacy newLeadBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD), listener,
 				false);
 		newLeadBtn.setEnabled(AppContext
@@ -184,7 +184,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newLeadBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.LEAD));
 		addBtnLayout.addComponent(newLeadBtn);
 
-		final ButtonLink newCaseBtn = new ButtonLink(
+		final ButtonLinkLegacy newCaseBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE), listener,
 				false);
 		newCaseBtn.setEnabled(AppContext
@@ -192,7 +192,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newCaseBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CASE));
 		addBtnLayout.addComponent(newCaseBtn);
 
-		final ButtonLink newTaskBtn = new ButtonLink(
+		final ButtonLinkLegacy newTaskBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), listener,
 				false);
 		newTaskBtn.setEnabled(AppContext
@@ -200,7 +200,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newTaskBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
 		addBtnLayout.addComponent(newTaskBtn);
 
-		final ButtonLink newCallBtn = new ButtonLink(
+		final ButtonLinkLegacy newCallBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(CallI18nEnum.BUTTON_NEW_CALL), listener,
 				false);
 		newCallBtn.setEnabled(AppContext
@@ -208,7 +208,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		newCallBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CALL));
 		addBtnLayout.addComponent(newCallBtn);
 
-		final ButtonLink newMeetingBtn = new ButtonLink(
+		final ButtonLinkLegacy newMeetingBtn = new ButtonLinkLegacy(
 				AppContext.getMessage(MeetingI18nEnum.BUTTON_NEW_MEETING),
 				listener, false);
 		newMeetingBtn.setEnabled(AppContext

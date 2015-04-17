@@ -39,7 +39,6 @@ import com.vaadin.ui.ComponentContainer;
  * @since 2.0
  */
 public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
-
     private static final long serialVersionUID = 1L;
 
     public CaseAddPresenter() {
@@ -79,11 +78,6 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (AppContext.canWrite(RolePermissionCollections.CRM_CASE)) {
-            CrmToolbar crmToolbar = ViewManager
-                    .getCacheComponent(CrmToolbar.class);
-            crmToolbar.gotoItem(AppContext
-                    .getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER));
-
             SimpleCase cases = null;
             if (data.getParams() instanceof SimpleCase) {
                 cases = (SimpleCase) data.getParams();

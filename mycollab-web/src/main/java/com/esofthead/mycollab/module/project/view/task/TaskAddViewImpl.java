@@ -18,7 +18,6 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
-import com.esofthead.mycollab.module.file.AttachmentType;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -136,11 +135,9 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements
                 TaskAddViewImpl.this.attachmentUploadField = new AttachmentUploadField();
                 if (beanItem.getId() != null) {
                     String attachmentPath = AttachmentUtils
-                            .getProjectEntityAttachmentPath(
-                                    AppContext.getAccountId(),
+                            .getProjectEntityAttachmentPath(AppContext.getAccountId(),
                                     CurrentProjectVariables.getProjectId(),
-                                    AttachmentType.PROJECT_TASK_TYPE,
-                                    beanItem.getId());
+                                    ProjectTypeConstants.TASK, "" + beanItem.getId());
                     TaskAddViewImpl.this.attachmentUploadField
                             .getAttachments(attachmentPath);
                 }

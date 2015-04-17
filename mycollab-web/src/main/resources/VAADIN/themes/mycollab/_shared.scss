@@ -69,6 +69,10 @@
     width:100%;
   }
 
+  .historylog-component .bean-list {
+    border-top: 1px solid $border-color;
+  }
+
   .list-row {
     background-color: #FFF;
     border-color: $border-color;
