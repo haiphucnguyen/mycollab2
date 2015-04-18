@@ -49,7 +49,7 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
 
 	private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
 	private String type;
-	private String typeid;
+	private String typeId;
 	private Integer numComments;
 	private ProjectCommentInput commentBox;
 
@@ -77,19 +77,14 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
 		displayCommentList();
 	}
 
-	@Override
-	public void cancel() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
 	private void displayCommentList() {
-		if (type == null || typeid == null) {
+		if (type == null || typeId == null) {
 			return;
 		}
 
 		final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
 		searchCriteria.setType(new StringSearchField(type.toString()));
-		searchCriteria.setTypeid(new StringSearchField(typeid));
+		searchCriteria.setTypeid(new StringSearchField(typeId));
 		numComments = commentList.setSearchCriteria(searchCriteria);
 	}
 
@@ -98,7 +93,7 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
 	}
 
 	public void loadComments(final String typeid) {
-		this.typeid = typeid;
+		this.typeId = typeid;
 		if (commentBox != null) {
 			commentBox.setTypeAndId(typeid);
 		}

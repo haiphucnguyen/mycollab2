@@ -90,6 +90,7 @@ public class AssignTaskGroupWindow extends Window {
 				layout.addComponent(informationLayout.getLayout());
 
 				MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
+				controlsBtn.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
 				layout.addComponent(controlsBtn);
 
 				Button cancelBtn = new Button(
@@ -104,9 +105,6 @@ public class AssignTaskGroupWindow extends Window {
 							}
 						});
 				cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-				controlsBtn.addComponent(cancelBtn);
-				controlsBtn.setComponentAlignment(cancelBtn,
-						Alignment.MIDDLE_LEFT);
 
 				Button approveBtn = new Button(
 						AppContext
@@ -158,11 +156,9 @@ public class AssignTaskGroupWindow extends Window {
 						});
 				approveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 approveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-				controlsBtn.with(approveBtn).withAlign(approveBtn, Alignment.MIDDLE_RIGHT);
+				controlsBtn.with(cancelBtn, approveBtn);
 
-				layout.setComponentAlignment(controlsBtn,
-						Alignment.MIDDLE_RIGHT);
-
+				layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 				return layout;
 			}
 

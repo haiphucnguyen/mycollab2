@@ -41,18 +41,13 @@ public class CrmCommentDisplay  extends MVerticalLayout implements ReloadableCom
         displayCommentList();
     }
 
-    @Override
-    public void cancel() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     private void displayCommentList() {
         if (type == null || typeId == null) {
             return;
         }
 
         CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-        searchCriteria.setType(new StringSearchField(type.toString()));
+        searchCriteria.setType(new StringSearchField(type));
         searchCriteria.setTypeid(new StringSearchField(typeId));
         int numComments = commentList.setSearchCriteria(searchCriteria);
 

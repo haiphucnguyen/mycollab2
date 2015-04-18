@@ -83,13 +83,13 @@ public class CrmCommentInput extends MHorizontalLayout {
         controlsLayout.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
         final Button cancelBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public void buttonClick(final ClickEvent event) {
-                        component.cancel();
+                    public void buttonClick(ClickEvent event) {
+                        commentArea.setValue("");
                     }
                 });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);

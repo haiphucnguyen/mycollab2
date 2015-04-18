@@ -75,30 +75,21 @@ public class MessageCommentListDisplay extends VerticalLayout implements
 		displayCommentList();
 	}
 
-	@Override
-	public void cancel() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
 	private void displayCommentList() {
 		if (type == null || typeid == null) {
 			return;
 		}
 
 		final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-		searchCriteria.setType(new StringSearchField(type.toString()));
+		searchCriteria.setType(new StringSearchField(type));
 		searchCriteria.setTypeid(new StringSearchField(typeid));
 		numComments = commentList.setSearchCriteria(searchCriteria);
 	}
 
-	public int getNumComments() {
-		return numComments;
-	}
-
-	public void loadComments(final String typeid) {
-		this.typeid = typeid;
+	public void loadComments(final String typeId) {
+		this.typeid = typeId;
 		if (commentBox != null) {
-			commentBox.setTypeAndId(typeid);
+			commentBox.setTypeAndId(typeId);
 		}
 		displayCommentList();
 	}

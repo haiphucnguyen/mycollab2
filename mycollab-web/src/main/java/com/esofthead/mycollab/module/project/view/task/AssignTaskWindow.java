@@ -156,7 +156,7 @@ public class AssignTaskWindow extends Window {
                 approveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 approveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
-                controlsBtn.with(approveBtn, cancelBtn).alignAll(Alignment.MIDDLE_RIGHT);
+                controlsBtn.with(cancelBtn, approveBtn).alignAll(Alignment.MIDDLE_RIGHT);
 
                 layout.setComponentAlignment(controlsBtn,
                         Alignment.MIDDLE_RIGHT);
