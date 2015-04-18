@@ -91,7 +91,6 @@ public class CommentServiceImpl extends
                     .cleanCaches(record.getSaccountid(), MessageService.class);
         }
 
-
         relayEmailNotificationService.saveWithSession(
                 getRelayEmailNotification(record, username,
                         emailHandler), username);

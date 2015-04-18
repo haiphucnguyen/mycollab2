@@ -41,6 +41,19 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.5
+-----------------------------
+**Library Upgrades**
+
+* Upgrade Vaadin to 7.4.4
+* Upgrade other libraries
+
+**Improvements & New Features**
+
+* Revise CRM comments and history features to make it similar than project module
+* Revise the layout of CRM module
+
+
 Version 5.0.4
 -----------------------------
 

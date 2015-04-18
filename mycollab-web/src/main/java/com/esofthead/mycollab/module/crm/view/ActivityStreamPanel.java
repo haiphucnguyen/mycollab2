@@ -33,6 +33,7 @@ import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -238,7 +239,16 @@ public class ActivityStreamPanel extends CssLayout {
 						assigneeValue, itemType, itemValue));
 			} else if (ActivityStreamConstants.ACTION_COMMENT
 					.equals(activityStream.getAction())) {
-
+				content.append(AppContext
+						.getMessage(
+								CrmCommonI18nEnum.WIDGET_ACTIVITY_COMMENT_ACTION,
+								assigneeValue, itemType, itemValue));
+				if (activityStream.getAssoAuditLog() != null) {
+					content.append("<p><ul><li>\"")
+							.append(activityStream.getAssoAuditLog()
+									.getChangeset())
+							.append("\"</li></ul></p>");
+				}
 			}
 
 			if (activityStream.getAssoAuditLog() != null) {
