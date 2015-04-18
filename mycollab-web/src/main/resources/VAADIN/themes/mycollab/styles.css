@@ -7961,6 +7961,10 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border-radius: 0;
 }
 
+.addview-layout .addview-layout-body {
+	border: solid 1px #CFCFCF;
+}
+
 .control-buttons.v-margin-top {
 	padding-top: 5px;
 }

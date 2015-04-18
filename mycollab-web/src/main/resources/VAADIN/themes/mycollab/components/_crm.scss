@@ -283,6 +283,9 @@
     background-color: #f5f5f5;
     padding: 0px;
     border-radius: 0;
+    .addview-layout-body {
+      border: solid 1px $border-color;
+    }
   }
 
   .control-buttons {
