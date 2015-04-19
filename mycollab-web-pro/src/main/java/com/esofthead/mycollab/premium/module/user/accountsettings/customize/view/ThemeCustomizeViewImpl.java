@@ -212,15 +212,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
-        propertyLayout.addComponent(
-                new Label(AppContext
-                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)),
-                0, 1);
+        propertyLayout.addComponent(new Label(AppContext
+                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 1);
         propertyLayout.addComponent(topMenuBg, 1, 1);
 
         CustomColorPickerArea topMenuText = new CustomColorPickerArea(
-                AppContext
-                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
+                AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
                 accountTheme.getTopmenutext());
         topMenuText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -1370026552930193996L;
@@ -232,10 +229,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
-        propertyLayout
-                .addComponent(
-                        new Label(
-                                AppContext
+        propertyLayout.addComponent(new Label(AppContext
                                         .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)),
                         0, 2);
         propertyLayout.addComponent(topMenuText, 1, 2);

@@ -26,5 +26,5 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * 
  */
 public interface ThemeCustomizeView extends PageView {
-	public void customizeTheme(AccountTheme accountTheme);
+	void customizeTheme(AccountTheme accountTheme);
 }

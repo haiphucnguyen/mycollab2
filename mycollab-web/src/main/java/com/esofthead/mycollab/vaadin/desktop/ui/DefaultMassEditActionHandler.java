@@ -52,15 +52,11 @@ public abstract class DefaultMassEditActionHandler implements
 		if (MassItemActionHandler.DELETE_ACTION.equals(id)) {
 			ConfirmDialogExt
 					.show(UI.getCurrent(),
-							AppContext.getMessage(
-									GenericI18Enum.DIALOG_DELETE_TITLE,
+							AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
 									SiteConfiguration.getSiteName()),
-							AppContext
-									.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
-							AppContext
-									.getMessage(GenericI18Enum.BUTTON_YES),
-							AppContext
-									.getMessage(GenericI18Enum.BUTTON_NO),
+							AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
+							AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+							AppContext.getMessage(GenericI18Enum.BUTTON_NO),
 							new ConfirmDialog.Listener() {
 								private static final long serialVersionUID = 1L;
 

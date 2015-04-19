@@ -46,17 +46,12 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.*;
  */
 public abstract class ExportItemsStreamResource implements StreamResource.StreamSource {
 	private static final long serialVersionUID = 1L;
-
 	private static final Logger LOG = LoggerFactory.getLogger(ExportItemsStreamResource.class);
 
 	protected AbstractReportTemplate reportTemplate;
-
 	private String reportTitle;
-
 	private ReportExportType outputForm;
-
 	protected JasperReportBuilder reportBuilder;
-
 	private Locale language;
 
 	public ExportItemsStreamResource(Locale languageSupport,
