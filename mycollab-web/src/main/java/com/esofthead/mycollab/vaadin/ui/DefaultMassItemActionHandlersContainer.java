@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.esofthead.mycollab.reporting.ReportExportType;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
@@ -33,7 +34,6 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
 
 /**
  * 
@@ -43,11 +43,9 @@ import com.vaadin.ui.HorizontalLayout;
  */
 public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 		implements HasMassItemActionHandlers {
-
 	private static final long serialVersionUID = 1L;
 
 	private Set<MassItemActionHandler> handlers;
-
 	private Map<String, ButtonGroup> groupMap = new HashMap<>();
 
 	public void addActionItem(final String id, Resource resource,
@@ -81,7 +79,7 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 		group.addButton(optionBtn);
 	}
 
-	public void addDownloadActionItem(final String id, Resource resource,
+	public void addDownloadActionItem(ReportExportType exportType, Resource resource,
 			String groupId, String downloadFileName, String description) {
 		ButtonGroup group = groupMap.get(groupId);
 
@@ -92,9 +90,9 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 		}
 
 		Button optionBtn = new Button("");
-		FileDownloader fileDownler = new FileDownloader(new StreamResource(
-				new LazyStreamSource(id), downloadFileName));
-		fileDownler.extend(optionBtn);
+		FileDownloader fileDownloader = new FileDownloader(new StreamResource(
+				new DownloadStreamSource(exportType), downloadFileName));
+		fileDownloader.extend(optionBtn);
 		optionBtn.setIcon(resource);
 		optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
         optionBtn.addStyleName("small-padding");
@@ -110,21 +108,21 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 		}
 	}
 
-	private class LazyStreamSource implements StreamSource {
+	private class DownloadStreamSource implements StreamSource {
 		private static final long serialVersionUID = 1L;
-		private String id;
+		private ReportExportType exportType;
 
-		public LazyStreamSource(String id) {
-			this.id = id;
+		public DownloadStreamSource(ReportExportType exportType) {
+			this.exportType = exportType;
 		}
 
 		@Override
 		public InputStream getStream() {
-			return buildStreamResource(id).getStreamSource().getStream();
+			return buildStreamResource(exportType).getStreamSource().getStream();
 		}
 	}
 
-	protected StreamResource buildStreamResource(String id) {
+	protected StreamResource buildStreamResource(ReportExportType id) {
 		if (handlers != null) {
 			for (MassItemActionHandler handler : handlers) {
 				StreamResource streamResource = handler.buildStreamResource(id);
@@ -143,6 +141,5 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 			handlers = new HashSet<>();
 		}
 		handlers.add(handler);
-
 	}
 }

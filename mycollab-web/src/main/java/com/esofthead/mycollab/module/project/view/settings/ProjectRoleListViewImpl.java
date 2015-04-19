@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.*;
@@ -164,19 +165,19 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 		}
 
 		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_PDF_ACTION,
+				ReportExportType.PDF,
                 FontAwesome.FILE_PDF_O,
 				"export", "export.pdf",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
 		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				ReportExportType.EXCEL,
                 FontAwesome.FILE_EXCEL_O,
 				"export", "export.xlsx",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_CSV_ACTION,
+				ReportExportType.CSV,
 				FontAwesome.FILE_TEXT_O,
 				"export", "export.csv",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));

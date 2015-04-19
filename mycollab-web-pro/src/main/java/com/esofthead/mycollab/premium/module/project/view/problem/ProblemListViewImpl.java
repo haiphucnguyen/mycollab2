@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.*;
@@ -219,19 +220,19 @@ public class ProblemListViewImpl extends AbstractPageView implements
                 "mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
 
         tableActionControls.addDownloadActionItem(
-                MassItemActionHandler.EXPORT_PDF_ACTION,
+                ReportExportType.PDF,
                 FontAwesome.FILE_PDF_O,
                 "export", "export.pdf",
                 AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
         tableActionControls.addDownloadActionItem(
-                MassItemActionHandler.EXPORT_EXCEL_ACTION,
+                ReportExportType.EXCEL,
                 FontAwesome.FILE_EXCEL_O,
                 "export", "export.xlsx",
                 AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
         tableActionControls.addDownloadActionItem(
-                MassItemActionHandler.EXPORT_CSV_ACTION,
+                ReportExportType.CSV,
                 FontAwesome.FILE_TEXT_O,
                 "export", "export.csv",
                 AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));

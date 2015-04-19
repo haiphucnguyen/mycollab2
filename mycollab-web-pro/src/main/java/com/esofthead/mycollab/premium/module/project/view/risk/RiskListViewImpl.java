@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.*;
@@ -214,15 +215,15 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                 FontAwesome.ENVELOPE_O,
                 "mail", "Mail");
         tableActionControls.addDownloadActionItem(
-                MassItemActionHandler.EXPORT_PDF_ACTION,
+                ReportExportType.PDF,
                 FontAwesome.FILE_PDF_O,
                 "export", "export.pdf", "Export pdf");
         tableActionControls.addDownloadActionItem(
-                MassItemActionHandler.EXPORT_EXCEL_ACTION,
+                ReportExportType.EXCEL,
                 FontAwesome.FILE_EXCEL_O,
                 "export", "export.xlsx", "Export excel");
         tableActionControls.addDownloadActionItem(
-                MassItemActionHandler.EXPORT_CSV_ACTION,
+                ReportExportType.CSV,
                 FontAwesome.FILE_TEXT_O,
                 "export", "export.csv", "Export csv");
 

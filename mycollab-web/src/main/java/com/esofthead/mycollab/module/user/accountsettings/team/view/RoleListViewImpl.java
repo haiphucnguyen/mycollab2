@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
+import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.*;
@@ -47,17 +48,16 @@ import java.util.Arrays;
  */
 @ViewComponent
 public class RoleListViewImpl extends AbstractPageView implements RoleListView {
-
 	private static final long serialVersionUID = 1L;
-	private final RoleSearchPanel searchPanel;
+
+	private RoleSearchPanel searchPanel;
 	private SelectionOptionButton selectOptionButton;
 	private RoleTableDisplay tableItem;
-	private final VerticalLayout listLayout;
+	private VerticalLayout listLayout;
 	private DefaultMassItemActionHandlersContainer tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
+	private Label selectedItemsNumberLabel = new Label();
 
 	public RoleListViewImpl() {
-
 		this.setMargin(new MarginInfo(false, true, false, true));
 
 		this.searchPanel = new RoleSearchPanel();
@@ -124,19 +124,19 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 							.getMessage(GenericI18Enum.BUTTON_DELETE));
 		}
 		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_PDF_ACTION,
+				ReportExportType.PDF,
                 FontAwesome.FILE_PDF_O,
 				"export", "export.pdf",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
 
 		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_EXCEL_ACTION,
+				ReportExportType.EXCEL,
                 FontAwesome.FILE_EXCEL_O,
 				"export", "export.xlsx",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
 
 		tableActionControls.addDownloadActionItem(
-				MassItemActionHandler.EXPORT_CSV_ACTION,
+				ReportExportType.CSV,
 				FontAwesome.FILE_TEXT_O,
 				"export", "export.csv",
 				AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));

@@ -42,7 +42,6 @@ public class DeleteProjectTaskListCommandImpl implements
 
 		removeRelatedFiles(accountId, projectId, taskListId);
 		removeRelatedComments(taskListId);
-
 	}
 
 	private void removeRelatedFiles(int accountId, int projectId, int taskListId) {
@@ -66,5 +65,4 @@ public class DeleteProjectTaskListCommandImpl implements
 				.andExtratypeidEqualTo(taskListId);
 		commentMapper.deleteByExample(ex);
 	}
-
 }
