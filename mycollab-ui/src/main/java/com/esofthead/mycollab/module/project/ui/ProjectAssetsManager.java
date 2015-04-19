@@ -56,9 +56,4 @@ public class ProjectAssetsManager {
     public static String toHexString(String resId) {
         return "&#x" + Integer.toHexString(resources.get(resId).getCodepoint());
     }
-
-    public static void main(String[] args) {
-        System.out.println(getAsset(ProjectTypeConstants.BUG).getHtml());
-        System.out.println(toHexString(ProjectTypeConstants.BUG));
-    }
 }

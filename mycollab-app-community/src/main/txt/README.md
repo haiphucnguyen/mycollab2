@@ -52,6 +52,7 @@ Version 5.0.5
 
 * Revise CRM comments and history features to make it similar than project module
 * Revise the layout of CRM module
+* Support font awesome in emails
 
 
 Version 5.0.4

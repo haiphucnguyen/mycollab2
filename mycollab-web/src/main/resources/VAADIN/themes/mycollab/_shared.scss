@@ -352,4 +352,12 @@
       }
     }
   }
+
+  .v-checkbox > input[type="checkbox"] {
+  background-color: green;
+  border-color:green;
+    &:focus {
+      background-color: red;
+    }
+  }
 }
