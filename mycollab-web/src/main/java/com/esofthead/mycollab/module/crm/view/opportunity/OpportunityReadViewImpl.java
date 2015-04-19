@@ -21,7 +21,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleActivity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContactOpportunityRel;
@@ -130,7 +129,7 @@ public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOppor
 		if (lead != null) {
 			return String.format("<h2>%s%s</h2>", beanItem.getOpportunityname(), AppContext
 					.getMessage(LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-							CrmResources.getResourceLink(CrmTypeConstants.LEAD),
+							CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
 							CrmLinkGenerator.generateCrmItemLink(
 									CrmTypeConstants.LEAD, lead.getId()),
 							lead.getLeadName()));

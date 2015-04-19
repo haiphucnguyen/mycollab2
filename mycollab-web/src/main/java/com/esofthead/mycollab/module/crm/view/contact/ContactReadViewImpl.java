@@ -140,8 +140,7 @@ public class ContactReadViewImpl extends AbstractPreviewItemComp<SimpleContact>
 					+ AppContext
 							.getMessage(
 									LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-									CrmResources
-											.getResourceLink(CrmTypeConstants.LEAD),
+									CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
 									CrmLinkGenerator.generateCrmItemLink(
 											CrmTypeConstants.LEAD, lead.getId()),
 									lead.getLeadName());

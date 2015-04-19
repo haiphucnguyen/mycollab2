@@ -21,7 +21,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmLinkGenerator;
-import com.esofthead.mycollab.module.crm.CrmResources;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.*;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
@@ -124,7 +123,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
             return new StringBuilder().append(beanItem.getAccountname())
                     .append(AppContext.getMessage(
                             LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-                            CrmResources.getResourceLink(CrmTypeConstants.LEAD),
+                            CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
                             CrmLinkGenerator.generateCrmItemLink(
                                     CrmTypeConstants.LEAD, lead.getId()),
                             lead.getLeadName())).toString();
