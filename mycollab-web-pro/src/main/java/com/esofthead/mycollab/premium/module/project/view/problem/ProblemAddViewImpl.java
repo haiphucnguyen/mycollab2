@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -26,7 +25,7 @@ import java.util.Map;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class ProblemAddViewImpl extends AbstractEditItemComp<Problem> implements
 		ProblemAddView, IFormAddView<Problem> {
 	private static final long serialVersionUID = 1L;

@@ -42,10 +42,8 @@ import java.util.TimeZone;
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 2.0
- *
  */
 public abstract class ExportItemsStreamResource implements StreamResource.StreamSource {
     private static final long serialVersionUID = 1L;
@@ -110,7 +108,7 @@ public abstract class ExportItemsStreamResource implements StreamResource.Stream
                         throw new IllegalArgumentException(
                                 "Do not support output type " + outputForm);
                     }
-
+                    outStream.flush();
                 } catch (Exception e) {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.NotifyErrorEvent(

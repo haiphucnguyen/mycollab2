@@ -368,18 +368,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 			}
 		};
 
-		DRIExpression<String> avatarLink = new AbstractSimpleExpression<String>() {
-			@Override
-			public String evaluate(ReportParameters reportParameters) {
-				String userAvatarId =  reportParameters.getFieldValue("assignUserAvatarId");
-				if (userAvatarId != null) {
-					return StorageManager.getAvatarLink(userAvatarId, 16);
-				} else {
-					return "";
-				}
-			}
-		};
-		map.put("assignUserFullName", new HyperlinkValue(avatarLink, assigneeTitleExpr,
+		map.put("assignUserFullName", new HyperlinkValue(assigneeTitleExpr,
 				assigneeHrefExpr));
 
 		DRIExpression<String> caseTitleExpr = new StringExpression("subject");

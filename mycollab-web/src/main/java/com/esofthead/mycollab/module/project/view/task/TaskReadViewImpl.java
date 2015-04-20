@@ -42,7 +42,6 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
@@ -75,7 +74,7 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         implements TaskReadView {
     private static final long serialVersionUID = 1L;

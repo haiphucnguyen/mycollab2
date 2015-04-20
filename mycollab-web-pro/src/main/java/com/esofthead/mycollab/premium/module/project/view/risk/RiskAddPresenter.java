@@ -20,8 +20,8 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
-
     private static final long serialVersionUID = 1L;
 
     public RiskAddPresenter() {

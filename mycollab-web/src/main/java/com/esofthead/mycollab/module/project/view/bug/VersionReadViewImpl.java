@@ -68,7 +68,7 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
         implements VersionReadView {
     private static final long serialVersionUID = 1L;

@@ -17,10 +17,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.ListCommand;
-import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -30,8 +27,8 @@ import com.vaadin.ui.UI;
  * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class RiskListPresenter extends
 		ProjectGenericListPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
@@ -108,7 +105,7 @@ public class RiskListPresenter extends
 		if (!isSelectAll) {
 			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
+			List<Integer> keyList = new ArrayList<>();
 			for (SimpleRisk item : currentDataList) {
 				if (item.isSelected()) {
 					keyList.add(item.getId());
@@ -140,7 +137,7 @@ public class RiskListPresenter extends
 		if (!isSelectAll) {
 			Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
 					.getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
+			List<Integer> keyList = new ArrayList<>();
 			for (SimpleRisk item : currentDataList) {
 				if (item.isSelected()) {
 					keyList.add(item.getId());

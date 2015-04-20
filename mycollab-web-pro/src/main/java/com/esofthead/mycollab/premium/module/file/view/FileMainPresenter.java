@@ -4,8 +4,10 @@ import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -15,6 +17,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  * 
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 @ViewPermission(permissionId = RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS, impliedPermissionVal = AccessPermissionFlag.READ_ONLY)
 public class FileMainPresenter extends AbstractPresenter<FileMainView> {
 	private static final long serialVersionUID = 1L;

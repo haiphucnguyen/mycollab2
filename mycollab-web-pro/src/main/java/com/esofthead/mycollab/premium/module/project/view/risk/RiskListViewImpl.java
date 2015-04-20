@@ -15,7 +15,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.*;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -35,7 +34,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     private static final long serialVersionUID = 1L;
 

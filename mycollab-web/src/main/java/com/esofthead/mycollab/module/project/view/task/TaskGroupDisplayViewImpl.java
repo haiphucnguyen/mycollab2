@@ -67,7 +67,7 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements TaskGroupDisplayView {
     private static final long serialVersionUID = 1L;
 

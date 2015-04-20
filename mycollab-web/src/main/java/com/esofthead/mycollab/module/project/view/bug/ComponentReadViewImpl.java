@@ -47,7 +47,6 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerViewField;
 import com.hp.gagawa.java.elements.A;
@@ -73,7 +72,7 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class ComponentReadViewImpl extends
         AbstractPreviewItemComp<SimpleComponent> implements ComponentReadView {
     private static final long serialVersionUID = 1L;

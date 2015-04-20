@@ -39,7 +39,6 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
 import com.vaadin.data.Property;
@@ -54,10 +53,9 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements
         BugAddView {
-
     private static final long serialVersionUID = 1L;
 
     private ProjectFormAttachmentUploadField attachmentUploadField;

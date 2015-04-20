@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -33,7 +32,7 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * 
  */
 @SuppressWarnings("serial")
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class ProjectSummaryViewImpl extends AbstractLazyPageView implements ProjectSummaryView {
 
 	@Override

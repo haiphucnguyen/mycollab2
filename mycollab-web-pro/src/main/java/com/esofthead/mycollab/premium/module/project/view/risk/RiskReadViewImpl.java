@@ -19,7 +19,6 @@ import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotifi
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
@@ -41,7 +40,7 @@ import org.vaadin.teemu.ratingstars.RatingStars;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
         implements RiskReadView {
 

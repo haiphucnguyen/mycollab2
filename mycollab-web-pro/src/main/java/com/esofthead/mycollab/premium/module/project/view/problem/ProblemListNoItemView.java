@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,7 +37,7 @@ import com.vaadin.ui.Button.ClickEvent;
  * 
  */
 
-@ViewComponent(scope=ViewScope.PROTOTYPE)
+@ViewComponent
 public class ProblemListNoItemView extends ProjectListNoItemView {
 	private static final long serialVersionUID = -5309904764815118311L;
 

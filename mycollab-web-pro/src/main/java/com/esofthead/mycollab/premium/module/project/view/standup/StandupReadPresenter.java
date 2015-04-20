@@ -4,7 +4,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -15,6 +17,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  * 
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class StandupReadPresenter extends AbstractPresenter<StandupReadView> {
 	private static final long serialVersionUID = 1L;
 

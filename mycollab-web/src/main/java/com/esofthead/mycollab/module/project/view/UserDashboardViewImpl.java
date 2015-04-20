@@ -68,7 +68,7 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class UserDashboardViewImpl extends AbstractLazyPageView implements
         UserDashboardView {
     private static final long serialVersionUID = 1L;

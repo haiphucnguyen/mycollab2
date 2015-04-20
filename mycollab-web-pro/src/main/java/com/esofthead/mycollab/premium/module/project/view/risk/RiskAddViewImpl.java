@@ -8,7 +8,6 @@ import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -25,10 +24,9 @@ import java.util.Map;
  * @since 1.0
  * 
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 		RiskAddView {
-
 	private static final long serialVersionUID = 1L;
 
 	private static Map<Integer, String> valueCaptions = new HashMap<>(5);

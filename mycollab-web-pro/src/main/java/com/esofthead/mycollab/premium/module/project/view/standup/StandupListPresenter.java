@@ -4,9 +4,7 @@ import java.util.Date;
 
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.vaadin.mvp.ListCommand;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -16,6 +14,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  * 
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class StandupListPresenter extends AbstractPresenter<StandupListView>
 		implements ListCommand<StandupReportSearchCriteria> {
 	private static final long serialVersionUID = 1L;

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -59,12 +59,13 @@ import java.util.Arrays;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class BugListViewImpl extends AbstractPageView implements BugListView {
     private static final long serialVersionUID = 1L;
-    private final BugSearchPanel bugSearchPanel;
+
+    private BugSearchPanel bugSearchPanel;
     private BugTableDisplay tableItem;
-    private final VerticalLayout bugListLayout;
+    private VerticalLayout bugListLayout;
 
     public BugListViewImpl() {
         this.setMargin(new MarginInfo(false, true, false, true));
@@ -132,8 +133,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         final OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("120px");
         exportButtonControl.setContent(popupButtonsControl);
 
-        Button exportPdfBtn = new Button(
-                AppContext.getMessage(FileI18nEnum.PDF));
+        Button exportPdfBtn = new Button(AppContext.getMessage(FileI18nEnum.PDF));
 
         StreamWrapperFileDownloader fileDownloader = new StreamWrapperFileDownloader(
                 new StreamResourceFactory() {
@@ -152,11 +152,9 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                         return new StreamResource(
                                 new SimpleGridExportItemsStreamResource.AllItems<>(
                                         title,
-                                        new RpParameterBuilder(tableItem
-                                                .getDisplayColumns()),
+                                        new RpParameterBuilder(tableItem.getDisplayColumns()),
                                         ReportExportType.PDF,
-                                        ApplicationContextUtil
-                                                .getSpringBean(BugService.class),
+                                        ApplicationContextUtil.getSpringBean(BugService.class),
                                         searchCriteria, SimpleBug.class),
                                 "export.pdf");
                     }
@@ -166,8 +164,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
         popupButtonsControl.addOption(exportPdfBtn);
 
-        Button exportExcelBtn = new Button(
-                AppContext.getMessage(FileI18nEnum.EXCEL));
+        Button exportExcelBtn = new Button(AppContext.getMessage(FileI18nEnum.EXCEL));
         StreamWrapperFileDownloader excelDownloader = new StreamWrapperFileDownloader(
                 new StreamResourceFactory() {
 
@@ -184,12 +181,9 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
                         return new StreamResource(
                                 new SimpleGridExportItemsStreamResource.AllItems<>(
-                                        title,
-                                        new RpParameterBuilder(tableItem
-                                                .getDisplayColumns()),
+                                        title, new RpParameterBuilder(tableItem.getDisplayColumns()),
                                         ReportExportType.EXCEL,
-                                        ApplicationContextUtil
-                                                .getSpringBean(BugService.class),
+                                        ApplicationContextUtil.getSpringBean(BugService.class),
                                         searchCriteria, SimpleBug.class),
                                 "export.xlsx");
                     }

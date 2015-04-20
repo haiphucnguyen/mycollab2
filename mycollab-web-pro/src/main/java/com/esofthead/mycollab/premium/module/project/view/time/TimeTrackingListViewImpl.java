@@ -27,7 +27,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
@@ -50,7 +49,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd
  * @since 2.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class TimeTrackingListViewImpl extends AbstractPageView implements
         TimeTrackingListView {
     private static final long serialVersionUID = 3742030333599796165L;

@@ -70,7 +70,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
         PageReadView {
     private static final long serialVersionUID = 1L;

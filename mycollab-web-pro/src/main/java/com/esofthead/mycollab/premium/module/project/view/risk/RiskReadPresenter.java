@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
@@ -35,6 +37,7 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 	private static final long serialVersionUID = 1L;

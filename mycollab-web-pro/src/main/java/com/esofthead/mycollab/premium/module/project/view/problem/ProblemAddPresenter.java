@@ -20,6 +20,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
     private static final long serialVersionUID = 1L;
 

@@ -6,7 +6,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -23,12 +22,11 @@ import java.util.GregorianCalendar;
  * @since 1.0
  * 
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
-public class StandupAddViewImpl extends AbstractPageView implements
-		StandupAddView {
-
+@ViewComponent
+public class StandupAddViewImpl extends AbstractPageView implements StandupAddView {
 	private static final long serialVersionUID = 1L;
-	private final AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
+
+	private AdvancedEditBeanForm<StandupReportWithBLOBs> editForm;
 
 	public StandupAddViewImpl() {
 		super();

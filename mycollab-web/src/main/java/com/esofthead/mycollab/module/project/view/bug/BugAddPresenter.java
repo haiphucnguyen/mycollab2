@@ -48,8 +48,8 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class BugAddPresenter extends AbstractPresenter<BugAddView> {
-
     private static final long serialVersionUID = 1L;
 
     public BugAddPresenter() {

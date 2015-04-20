@@ -71,7 +71,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@ViewComponent(scope = ViewScope.PROTOTYPE)
+@ViewComponent
 public class MessageListViewImpl extends AbstractPageView implements
         MessageListView, HasEditFormHandlers<Message> {
     private static final long serialVersionUID = 8433776359091397422L;

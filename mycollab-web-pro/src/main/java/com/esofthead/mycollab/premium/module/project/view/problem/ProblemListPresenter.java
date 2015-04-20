@@ -17,9 +17,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
-import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -31,13 +29,13 @@ import com.vaadin.ui.UI;
  * @since 1.0
  * 
  */
-public class ProblemListPresenter
-		extends
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
+public class ProblemListPresenter extends
 		ProjectGenericListPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
 		implements MassUpdateCommand<Problem> {
-
 	private static final long serialVersionUID = 1L;
-	private final ProblemService problemService;
+
+	private ProblemService problemService;
 
 	public ProblemListPresenter() {
 		super(ProblemListView.class, ProblemListNoItemView.class);
