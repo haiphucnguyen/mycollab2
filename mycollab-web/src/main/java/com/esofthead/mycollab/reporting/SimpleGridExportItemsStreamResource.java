@@ -45,15 +45,13 @@ import com.esofthead.mycollab.vaadin.AppContext;
 public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItemsStreamResource {
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
-            .getLogger(SimpleGridExportItemsStreamResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SimpleGridExportItemsStreamResource.class);
 
     private Class<T> classType;
     private RpParameterBuilder parameters;
 
-    SimpleGridExportItemsStreamResource(String reportTitle,
-                                        RpParameterBuilder parameters, ReportExportType outputForm,
-                                        Class<T> classType) {
+    SimpleGridExportItemsStreamResource(String reportTitle, RpParameterBuilder parameters,
+                                        ReportExportType outputForm, Class<T> classType) {
         super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, outputForm);
         this.parameters = parameters;
         this.classType = classType;
@@ -103,8 +101,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
         LOG.debug("Accomplish init report");
     }
 
-    public static class AllItems<S extends SearchCriteria, T> extends
-            SimpleGridExportItemsStreamResource<T> {
+    public static class AllItems<S extends SearchCriteria, T> extends SimpleGridExportItemsStreamResource<T> {
         private static final long serialVersionUID = 1L;
         private ISearchableService<S> searchService;
         private S searchCriteria;
@@ -125,8 +122,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
 
     }
 
-    public static class ListData<T> extends
-            SimpleGridExportItemsStreamResource<T> {
+    public static class ListData<T> extends SimpleGridExportItemsStreamResource<T> {
         private static final long serialVersionUID = 1L;
         private List<T> data;
 

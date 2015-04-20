@@ -155,7 +155,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 		};
 		map.put("contactName", new HyperlinkValue(contactTitleExpr,
 				contactHrefExpr));
-
+//
 		DRIExpression<String> assigneeTitleExpr = new StringExpression(
 				"assignUserFullName");
 		DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {

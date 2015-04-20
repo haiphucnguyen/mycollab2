@@ -51,6 +51,7 @@ import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
+import org.tltv.gantt.client.shared.AbstractStep;
 import org.tltv.gantt.client.shared.Step;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
@@ -195,7 +196,7 @@ public class GanttChartViewImpl extends AbstractPageView implements
         return mainLayout;
     }
 
-    private void updateTasksInfo(Step step, long startDate, long endDate) {
+    private void updateTasksInfo(AbstractStep step, long startDate, long endDate) {
         SimpleTask task = stepMap.get(step);
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.setTimeInMillis(startDate);
