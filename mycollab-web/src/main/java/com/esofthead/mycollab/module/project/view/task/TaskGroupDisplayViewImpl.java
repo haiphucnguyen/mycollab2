@@ -37,7 +37,6 @@ import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.reporting.ExportTaskListStreamResource;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -46,6 +45,7 @@ import com.esofthead.mycollab.vaadin.events.*;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.ShortcutExtension;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -381,36 +381,26 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
                 .getProject().getName() != null) ? CurrentProjectVariables
                 .getProject().getName() : "");
 
-        final TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
+        TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
         tasklistSearchCriteria.setProjectId(new NumberSearchField(
                 SearchField.AND, CurrentProjectVariables.getProject().getId()));
 
-        StreamResource res;
-        if (exportType.equals(ReportExportType.PDF)) {
-            res = new StreamResource(new ExportTaskListStreamResource(title,
-                    exportType,
-                    ApplicationContextUtil
-                            .getSpringBean(ProjectTaskListService.class),
-                    tasklistSearchCriteria), "task_list.pdf");
-        } else if (exportType.equals(ReportExportType.CSV)) {
-            res = new StreamResource(new ExportTaskListStreamResource(title,
-                    exportType,
-                    ApplicationContextUtil
-                            .getSpringBean(ProjectTaskListService.class),
-                    tasklistSearchCriteria), "task_list.csv");
-        } else {
-            res = new StreamResource(new ExportTaskListStreamResource(title,
-                    exportType,
-                    ApplicationContextUtil
-                            .getSpringBean(ProjectTaskListService.class),
-                    tasklistSearchCriteria), "task_list.xls");
-        }
+        String exportFileName;
 
-        return res;
+        if (exportType.equals(ReportExportType.PDF)) {
+            exportFileName = "task_list.pdf";
+        } else if (exportType.equals(ReportExportType.CSV)) {
+            exportFileName =  "task_list.csv";
+        } else {
+            exportFileName =  "task_list.xls";
+        }
+        return new StreamResource(new ExportTaskListStreamResource(title, exportType,
+                ApplicationContextUtil.getSpringBean(ProjectTaskListService.class),
+                tasklistSearchCriteria), exportFileName);
     }
 
     private TaskListSearchCriteria createBaseSearchCriteria() {
-        final TaskListSearchCriteria criteria = new TaskListSearchCriteria();
+        TaskListSearchCriteria criteria = new TaskListSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
                 .getProjectId()));
         return criteria;

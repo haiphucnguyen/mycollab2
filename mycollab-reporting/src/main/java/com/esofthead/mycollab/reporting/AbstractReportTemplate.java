@@ -55,8 +55,6 @@ public abstract class AbstractReportTemplate {
 	protected StyleBuilder subtotalStyle;
 	protected ReportTemplateBuilder reportTemplateBuilder;
 
-	public abstract ComponentBuilder<?, ?> createTitleComponent(String label);
-
 	public StyleBuilder getRootStyle() {
 		return rootStyle;
 	}
@@ -140,9 +138,15 @@ public abstract class AbstractReportTemplate {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private ComponentBuilder buildHyperLink(HyperlinkValue hyperlink) {
-		ComponentBuilder compBuilder = cmp.text(hyperlink.getTitle())
-				.setHyperLink(hyperLink(hyperlink.getHref()))
-				.setStyle(underlineStyle);
+		ComponentBuilder compBuilder;
+		if (hyperlink.getIcon() == null) {
+			compBuilder = cmp.text(hyperlink.getTitle())
+					.setHyperLink(hyperLink(hyperlink.getHref()))
+					.setStyle(underlineStyle);
+		} else {
+			compBuilder = cmp.horizontalList().add(cmp.image(hyperlink.getIcon()));
+		}
+
 		if (hyperlink.getStyle() != null) {
 			compBuilder.setStyle(hyperlink.getStyle());
 		}

@@ -27,12 +27,18 @@ import net.sf.dynamicreports.report.definition.expression.DRIExpression;
  */
 @SuppressWarnings("rawtypes")
 public class HyperlinkValue implements MValue {
+	private DRIExpression icon;
 	private DRIExpression title;
 	private DRIExpression href;
 
 	private StyleBuilder style;
 
 	public HyperlinkValue(DRIExpression title, DRIExpression href) {
+		this(null, title, href);
+	}
+
+	public HyperlinkValue(DRIExpression icon, DRIExpression title, DRIExpression href) {
+		this.icon = icon;
 		this.title = title;
 		this.href = href;
 	}
@@ -47,6 +53,14 @@ public class HyperlinkValue implements MValue {
 
 	public StyleBuilder getStyle() {
 		return style;
+	}
+
+	public DRIExpression getIcon() {
+		return icon;
+	}
+
+	public void setIcon(DRIExpression icon) {
+		this.icon = icon;
 	}
 
 	public HyperlinkValue setStyle(StyleBuilder style) {

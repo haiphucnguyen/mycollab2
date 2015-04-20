@@ -17,14 +17,17 @@
 package com.esofthead.mycollab.module.project.reporting;
 
 import com.esofthead.mycollab.common.TableViewField;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
+import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.task.TaskTableFieldDef;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.reporting.*;
@@ -72,7 +75,7 @@ public class ExportTaskListStreamResource<S extends SearchCriteria> extends Expo
 	public ExportTaskListStreamResource(String reportTitle,
 			ReportExportType outputForm, ISearchableService<S> searchService,
 			S searchCriteria) {
-		super(AppContext.getUserLocale(), reportTitle, outputForm);
+		super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, outputForm);
 		this.searchCriteria = searchCriteria;
 		this.searchService = searchService;
 		List<TableViewField> fields = Arrays.asList(TaskTableFieldDef.taskname,
@@ -118,7 +121,7 @@ public class ExportTaskListStreamResource<S extends SearchCriteria> extends Expo
 
 			// label
 			LOG.debug("Label value : " + taskList.getDescription());
-			TextFieldBuilder<String> desLabel = cmp.text("Description :")
+			TextFieldBuilder<String> desLabel = cmp.text(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_DESCRIPTION))
 					.setStyle(style).setFixedWidth(150);
 			TextFieldBuilder<String> description = cmp
 					.text(taskList.getDescription()).setFixedWidth(1020)
@@ -128,7 +131,7 @@ public class ExportTaskListStreamResource<S extends SearchCriteria> extends Expo
 
 			// Assignee
 			LOG.debug("Assignee value : " + taskList.getOwnerFullName());
-			TextFieldBuilder<String> assigneeLbl = cmp.text("Assignee :")
+			TextFieldBuilder<String> assigneeLbl = cmp.text(LocalizationHelper.getMessage(locale, GenericI18Enum.FORM_ASSIGNEE))
 					.setStyle(style).setFixedWidth(150);
 			String assigneeHyperlink = AccountLinkBuilder
 					.generatePreviewFullUserLink(taskList.getOwner());
@@ -138,7 +141,7 @@ public class ExportTaskListStreamResource<S extends SearchCriteria> extends Expo
 					.setStyle(reportTemplate.getUnderlineStyle())
 					.setStyle(styleHyperLink).setFixedWidth(435);
 
-			TextFieldBuilder<String> phaseLbl = cmp.text("Phase :")
+			TextFieldBuilder<String> phaseLbl = cmp.text(LocalizationHelper.getMessage(locale, TaskI18nEnum.FORM_PHASE))
 					.setStyle(style).setFixedWidth(150);
 
 			String phaseHyperLink = ProjectLinkBuilder

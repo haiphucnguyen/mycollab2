@@ -54,7 +54,7 @@ Version 5.0.5
 * Revise the layout of CRM module
 * Support font awesome in emails
 * Minor bug fixes in reporting
-
+* Cache reflection fields hence upgrade the app performance up to 5%
 
 Version 5.0.4
 -----------------------------

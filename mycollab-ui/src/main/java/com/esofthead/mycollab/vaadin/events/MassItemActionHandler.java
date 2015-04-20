@@ -28,15 +28,7 @@ import com.vaadin.server.StreamResource;
  */
 public interface MassItemActionHandler {
 	String MAIL_ACTION = "mail";
-
-	String EXPORT_CSV_ACTION = "exportCsv";
-
-	String EXPORT_PDF_ACTION = "exportPdf";
-
-	String EXPORT_EXCEL_ACTION = "exportExcel";
-
 	String DELETE_ACTION = "delete";
-
 	String MASS_UPDATE_ACTION = "massUpdate";
 
 	/**
@@ -47,8 +39,8 @@ public interface MassItemActionHandler {
 
 	/**
 	 * 
-	 * @param id
+	 * @param exportType
 	 * @return
 	 */
-	StreamResource buildStreamResource(ReportExportType id);
+	StreamResource buildStreamResource(ReportExportType exportType);
 }
