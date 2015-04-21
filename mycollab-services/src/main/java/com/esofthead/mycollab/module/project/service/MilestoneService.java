@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 
@@ -33,4 +34,10 @@ public interface MilestoneService extends
 
 	@Cacheable
 	SimpleMilestone findById(int milestoneId, @CacheKey int sAccountId);
+
+	Double getTotalBillableHours(int taskListId);
+
+	Double getTotalNonBillableHours(int taskListId);
+
+	Double getRemainHours(int taskListId);
 }

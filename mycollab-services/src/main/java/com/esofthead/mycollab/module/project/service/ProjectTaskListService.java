@@ -38,9 +38,12 @@ public interface ProjectTaskListService extends
 	@CacheEvict
 	void updateTaskListIndex(TaskList[] taskLists, @CacheKey int sAccountId);
 
-	Double getTotalBillableHours(int taskListId);
+	@Cacheable
+	Double getTotalBillableHours(int taskListId, @CacheKey int sAccountId);
 
-	Double getTotalNonBillableHours(int taskListId);
+	@Cacheable
+	Double getTotalNonBillableHours(int taskListId, @CacheKey int sAccountId);
 
-	Double getRemainHours(int taskListId);
+	@Cacheable
+	Double getRemainHours(int taskListId, @CacheKey int sAccountId);
 }

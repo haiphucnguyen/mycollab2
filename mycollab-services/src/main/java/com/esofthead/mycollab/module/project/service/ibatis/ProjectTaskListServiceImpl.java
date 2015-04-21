@@ -107,17 +107,17 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
 	}
 
 	@Override
-	public Double getTotalBillableHours(int taskListId) {
+	public Double getTotalBillableHours(int taskListId, int sAccountId) {
 		return projectTaskListMapperExt.getTotalBillableHours(taskListId);
 	}
 
 	@Override
-	public Double getTotalNonBillableHours(int taskListId) {
+	public Double getTotalNonBillableHours(int taskListId, int sAccountId) {
 		return projectTaskListMapperExt.getTotalNonBillableHours(taskListId);
 	}
 
 	@Override
-	public Double getRemainHours(int taskListId) {
+	public Double getRemainHours(int taskListId, int sAccountId) {
 		return projectTaskListMapperExt.getRemainHours(taskListId);
 	}
 }

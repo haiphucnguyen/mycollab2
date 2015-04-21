@@ -87,4 +87,19 @@ public class MilestoneServiceImpl extends
         CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class);
 		return super.updateWithSession(record, username);
 	}
+
+	@Override
+	public Double getTotalBillableHours(int milestoneId) {
+		return milestoneMapperExt.getTotalBillableHours(milestoneId);
+	}
+
+	@Override
+	public Double getTotalNonBillableHours(int milestoneId) {
+		return milestoneMapperExt.getTotalNonBillableHours(milestoneId);
+	}
+
+	@Override
+	public Double getRemainHours(int milestoneId) {
+		return milestoneMapperExt.getRemainHours(milestoneId);
+	}
 }

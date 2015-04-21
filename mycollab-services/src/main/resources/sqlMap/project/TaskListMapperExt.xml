@@ -125,7 +125,7 @@
 
     <select id="getTotalBillableHours" parameterType="int"
             resultType="double" lang="velocity">
-        SELECT SUM(m_prj_time_logging.logValue)
+        SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0)
             FROM m_prj_task, m_prj_time_logging
             WHERE m_prj_task.tasklistid = @{tasklistid} AND m_prj_time_logging.typeid = m_prj_task.id
                AND m_prj_time_logging.type = 'Project-Task' AND m_prj_time_logging.isBillable = '1'
@@ -133,7 +133,7 @@
 
     <select id="getTotalNonBillableHours" parameterType="int"
             resultType="double" lang="velocity">
-        SELECT SUM(m_prj_time_logging.logValue)
+        SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0)
         FROM m_prj_task, m_prj_time_logging
         WHERE m_prj_task.tasklistid = @{tasklistid} AND m_prj_time_logging.typeid = m_prj_task.id
         AND m_prj_time_logging.type = 'Project-Task' AND m_prj_time_logging.isBillable = '0'
@@ -141,7 +141,7 @@
 
     <select id="getRemainHours" parameterType="int"
             resultType="double" lang="velocity">
-        SELECT SUM(m_prj_task.remainEstimate)
+        SELECT COALESCE(SUM(m_prj_task.remainEstimate), 0)
         FROM m_prj_task
         WHERE m_prj_task.tasklistid = @{tasklistid}
     </select>

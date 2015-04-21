@@ -164,4 +164,29 @@
         #end
     </select>
 
+    <select id="getTotalBillableHours" parameterType="int"
+            resultType="double" lang="velocity">
+        SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0)
+        FROM m_prj_milestone, m_prj_task_list, m_prj_task, m_prj_time_logging
+        WHERE m_prj_milestone.id = @{milestoneid} AND m_prj_task_list.milestoneId = m_prj_milestone.id
+            AND m_prj_task_list.id = m_prj_task.tasklistid AND m_prj_task.id = m_prj_time_logging.typeid
+            AND m_prj_time_logging.type = 'Project-Task' AND m_prj_time_logging.isBillable = '1'
+    </select>
+
+    <select id="getTotalNonBillableHours" parameterType="int"
+            resultType="double" lang="velocity">
+        SELECT COALESCE(SUM(m_prj_time_logging.logValue), 0)
+        FROM m_prj_milestone, m_prj_task_list, m_prj_task, m_prj_time_logging
+        WHERE m_prj_milestone.id = @{milestoneid} AND m_prj_task_list.milestoneId = m_prj_milestone.id
+            AND m_prj_task_list.id = m_prj_task.tasklistid AND m_prj_task.id = m_prj_time_logging.typeid
+            AND m_prj_time_logging.type = 'Project-Task' AND m_prj_time_logging.isBillable = '0'
+    </select>
+
+    <select id="getRemainHours" parameterType="int"
+            resultType="double" lang="velocity">
+        SELECT COALESCE(SUM(m_prj_task.remainEstimate), 0)
+        FROM m_prj_milestone, m_prj_task_list, m_prj_task
+        WHERE m_prj_milestone.id = @{milestoneid} AND m_prj_task_list.milestoneId = m_prj_milestone.id
+            AND m_prj_task_list.id = m_prj_task.tasklistid
+    </select>
 </mapper>    

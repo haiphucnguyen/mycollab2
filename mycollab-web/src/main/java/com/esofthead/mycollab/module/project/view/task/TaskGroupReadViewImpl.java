@@ -76,12 +76,10 @@ public class TaskGroupReadViewImpl extends
     private static final Logger LOG = LoggerFactory.getLogger(TaskGroupReadViewImpl.class);
 
     private CommentDisplay commentList;
-
     private TaskGroupHistoryLogList historyList;
-
     private DateInfoComp dateInfoComp;
-
     private PeopleInfoComp peopleInfoComp;
+    private TaskGroupTimeLogSheet timeLogSheet;
 
     public TaskGroupReadViewImpl() {
         super(AppContext
@@ -103,7 +101,8 @@ public class TaskGroupReadViewImpl extends
         historyList = new TaskGroupHistoryLogList();
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        addToSideBar(dateInfoComp, peopleInfoComp);
+        timeLogSheet = new TaskGroupTimeLogSheet();
+        addToSideBar(dateInfoComp, peopleInfoComp, timeLogSheet);
     }
 
     @Override
@@ -113,6 +112,7 @@ public class TaskGroupReadViewImpl extends
 
         peopleInfoComp.displayEntryPeople(beanItem);
         dateInfoComp.displayEntryDateTime(beanItem);
+        timeLogSheet.displayTime(beanItem);
     }
 
     @Override

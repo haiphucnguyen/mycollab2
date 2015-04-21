@@ -84,6 +84,7 @@ public class MilestoneReadViewImpl extends
     private MilestoneHistoryLogList historyListComp;
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
+    private MilestoneTimeLogComp milestoneTimeLogComp;
 
     public MilestoneReadViewImpl() {
         super(AppContext.getMessage(MilestoneI18nEnum.VIEW_DETAIL_TITLE),
@@ -120,8 +121,8 @@ public class MilestoneReadViewImpl extends
                 ProjectMilestoneRelayEmailNotificationAction.class);
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-
-        addToSideBar(dateInfoComp, peopleInfoComp);
+        milestoneTimeLogComp = new MilestoneTimeLogComp();
+        addToSideBar(dateInfoComp, peopleInfoComp, milestoneTimeLogComp);
     }
 
     @Override
@@ -140,7 +141,7 @@ public class MilestoneReadViewImpl extends
         historyListComp.loadHistory(beanItem.getId());
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
-
+        milestoneTimeLogComp.displayTime(beanItem);
         if (OptionI18nEnum.StatusI18nEnum.Closed.name().equals(beanItem.getStatus())) {
             addLayoutStyleName(UIConstants.LINK_COMPLETED);
         }
@@ -411,8 +412,7 @@ public class MilestoneReadViewImpl extends
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
 
-                Label assigneeLbl = new Label(
-                        AppContext
+                Label assigneeLbl = new Label(AppContext
                                 .getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);

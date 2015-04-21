@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.ui.components.TimeLogComp;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * @author MyCollab Ltd.
@@ -15,17 +16,17 @@ public class TaskGroupTimeLogSheet extends TimeLogComp<SimpleTaskList> {
 
     @Override
     protected Double getTotalBillableHours(SimpleTaskList bean) {
-        return projectTaskListService.getTotalBillableHours(bean.getId());
+        return projectTaskListService.getTotalBillableHours(bean.getId(), AppContext.getAccountId());
     }
 
     @Override
     protected Double getTotalNonBillableHours(SimpleTaskList bean) {
-        return projectTaskListService.getTotalNonBillableHours(bean.getId());
+        return projectTaskListService.getTotalNonBillableHours(bean.getId(), AppContext.getAccountId());
     }
 
     @Override
     protected Double getRemainedHours(SimpleTaskList bean) {
-        return projectTaskListService.getRemainHours(bean.getId());
+        return projectTaskListService.getRemainHours(bean.getId(), AppContext.getAccountId());
     }
 
     @Override
