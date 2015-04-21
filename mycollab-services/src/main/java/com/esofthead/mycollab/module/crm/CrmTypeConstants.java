@@ -27,6 +27,8 @@ public class CrmTypeConstants {
 
 	public static final String FILE = "Crm-File";
 
+	public static final String SETTING = "Crm-Setting";
+
 	public static final String ACCOUNT = "Crm-Account";
 
 	public static final String CAMPAIGN = "Crm-Campaign";

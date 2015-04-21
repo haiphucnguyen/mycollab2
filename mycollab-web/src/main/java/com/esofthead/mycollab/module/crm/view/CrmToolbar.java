@@ -103,10 +103,9 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		fileBtn.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_DOCUMENT));
 		addComponent(fileBtn);
 
-		final Button notificationBtn = new Button(AppContext
+		final MenuItem notificationBtn = new MenuItem(CrmTypeConstants.SETTING, AppContext
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER),
 				listener);
-		notificationBtn.setStyleName("link");
 		addComponent(notificationBtn);
 
 		addBtn = new PopupButton(

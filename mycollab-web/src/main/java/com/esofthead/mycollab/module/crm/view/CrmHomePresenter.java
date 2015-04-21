@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -30,7 +31,6 @@ import com.vaadin.ui.ComponentContainer;
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
-
 	private static final long serialVersionUID = 1L;
 
 	public CrmHomePresenter() {
@@ -40,9 +40,8 @@ public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-
+		CrmToolbar.navigateItem(CrmTypeConstants.DASHBOARD);
 		view.lazyLoadView();
 		AppContext.addFragment("crm/dashboard", "Customer Dashboard");
 	}
-
 }

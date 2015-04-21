@@ -66,8 +66,6 @@ public class ActivityListViewImpl extends AbstractListItemComp<ActivitySearchCri
 								"subject", UIConstants.TABLE_EX_LABEL_WIDTH),
 						new TableViewField(ActivityI18nEnum.FORM_STATUS,
 								"status", UIConstants.TABLE_S_LABEL_WIDTH),
-						new TableViewField(TaskI18nEnum.TABLE_TYPE_HEADER,
-								"eventType", UIConstants.TABLE_S_LABEL_WIDTH),
 						new TableViewField(TaskI18nEnum.FORM_START_DATE,
 								"startDate", UIConstants.TABLE_DATE_TIME_WIDTH),
 						new TableViewField(TaskI18nEnum.TABLE_END_DATE_HEADER,
