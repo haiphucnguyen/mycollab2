@@ -272,7 +272,7 @@ public class TaskGroupReadViewImpl extends
 
         private Div buildItemValue(SimpleTask task) {
             Div div = new Div();
-            String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), task.getTaskkey(), task
+            String linkName = String.format("[#%d] - %s", task.getTaskkey(), task
                     .getTaskname());
             Text image = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml());
             String uid = UUID.randomUUID().toString();

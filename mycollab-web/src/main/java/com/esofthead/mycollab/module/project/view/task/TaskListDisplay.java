@@ -94,8 +94,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
         private String buildTaskLink() {
             String uid = UUID.randomUUID().toString();
-            String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), task.getTaskkey(), task
-                    .getTaskname());
+            String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
             A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
 

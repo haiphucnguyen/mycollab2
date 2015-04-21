@@ -393,11 +393,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	color: #525252;
 }
 
-.v-label.icon-18px .v-icon {
-	font-size: 18px;
-	color: #525252;
-}
-
 .optionPopupContent {
 	background-color: antiquewhite;
 	margin: -5px;
@@ -430,15 +425,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-disabled.v-button-action {
 	border: none;
-}
-
-.v-checkbox > input[type="checkbox"] {
-	background-color: green;
-	border-color: green;
-}
-
-.v-checkbox > input[type="checkbox"]:focus {
-	background-color: red;
 }
 
 .stickytooltip {
@@ -7262,10 +7248,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	content: "";
 }
 
-.v-button.button-icon-only.icon-18px .v-button-wrap {
-	font-size: 18px;
-}
-
 .v-icon .black {
 	color: black;
 }
@@ -7623,11 +7605,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	color: #525252;
 }
 
-.v-label.icon-18px .v-icon {
-	font-size: 18px;
-	color: #525252;
-}
-
 .optionPopupContent {
 	background-color: antiquewhite;
 	margin: -5px;
@@ -7660,15 +7637,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-disabled.v-button-action {
 	border: none;
-}
-
-.v-checkbox > input[type="checkbox"] {
-	background-color: green;
-	border-color: green;
-}
-
-.v-checkbox > input[type="checkbox"]:focus {
-	background-color: red;
 }
 
 .crm-module {

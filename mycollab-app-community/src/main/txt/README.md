@@ -1,9 +1,9 @@
 
 About MyCollab
 ==============
-MyCollab is a Collaboration Platform of Project Management System, Customer Management and Document Management.
+MyCollab is an open source Collaboration Platform of Project Management, CRM and Document.
 
-MyCollab is licensed under the Affero GPL 3 license.
+MyCollab is licensed under the Affero GPL 3 terms.
 
 You can checkout our latest development source codes at [https://github.com/esofthead/mycollab](https://github.com/esofthead/mycollab)
 
@@ -55,6 +55,7 @@ Version 5.0.5
 * Support font awesome in emails
 * Minor bug fixes in reporting
 * Cache reflection fields hence upgrade the app performance up to 5%
+* Add time summary for task group view
 
 Version 5.0.4
 -----------------------------

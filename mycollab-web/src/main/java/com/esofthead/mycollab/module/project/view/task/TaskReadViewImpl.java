@@ -281,7 +281,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         }
 
         private String buildParentTaskLink(SimpleTask task) {
-            String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), task.getParentTaskKey(),
+            String linkName = String.format("[#%d] - %s", task.getParentTaskKey(),
                     task.getParentTaskName());
             A taskLink = new A().setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getParentTaskKey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
@@ -475,7 +475,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         }
 
         private String buildTaskLink(SimpleTask subTask) {
-            String linkName = String.format("[%s-%d] %s", CurrentProjectVariables.getShortName(), subTask.getTaskkey(), subTask
+            String linkName = String.format("[#%d] - %s", subTask.getTaskkey(), subTask
                     .getTaskname());
             String uid = UUID.randomUUID().toString();
             A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(subTask.getTaskkey(),

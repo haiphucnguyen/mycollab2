@@ -43,7 +43,6 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -229,7 +228,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
 
             DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
                     searchItemsTable = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new
-                    ItemRowDisplayHandler());
+                    AssignmentRowDisplayHandler());
             searchItemsTable.setControlStyle("borderlessControl");
             int foundNum = searchItemsTable.setSearchCriteria(searchCriteria);
             headerLbl.setValue(String.format(headerTitle, value, foundNum));
@@ -252,36 +251,36 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
                         FollowerI18nEnum.OPT_MY_FOLLOWING_TICKETS, followingItemsCount));
     }
 
-    private static class ItemRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
+    private static class AssignmentRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
         @Override
-        public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem obj, int rowIndex) {
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem projectItem, int rowIndex) {
             MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, true))
                     .withWidth("100%");
-            Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(obj.getProjectShortName(), obj
-                    .getProjectId(), obj.getSummary(), obj.getType(), obj.getTypeId()), ContentMode.HTML);
+            Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(projectItem.getProjectShortName(), projectItem
+                    .getProjectId(), projectItem.getSummary(), projectItem.getType(), projectItem.getTypeId()), ContentMode.HTML);
             link.setStyleName("h2");
 
-            String desc = (StringUtils.isBlank(obj.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : obj
+            String desc = (StringUtils.isBlank(projectItem.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : projectItem
                     .getDescription();
             SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);
 
             Div div = new Div().setStyle("width:100%").setCSSClass("footer");
-            Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(obj.getLastUpdatedTime
-                    ()))).setTitle(AppContext.formatDateTime(obj.getLastUpdatedTime())).setStyle("float:right;" +
+            Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(projectItem.getLastUpdatedTime
+                    ()))).setTitle(AppContext.formatDateTime(projectItem.getLastUpdatedTime())).setStyle("float:right;" +
                     "margin-right:5px");
             Text createdByTxt = new Text("Created by: ");
-            if (StringUtils.isBlank(obj.getCreatedUser())) {
+            if (StringUtils.isBlank(projectItem.getCreatedUser())) {
                 div.appendChild(createdByTxt, new Text("None"), lastUpdatedOn);
             } else {
                 String uid = UUID.randomUUID().toString();
-                Img userAvatar = new Img("", StorageManager.getAvatarLink(obj.getCreatedUserAvatarId(), 16));
-                A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(obj.getProjectId(), obj
-                        .getCreatedUser())).appendText(obj.getCreatedUserDisplayName());
-                userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, obj.getCreatedUser()));
+                Img userAvatar = new Img("", StorageManager.getAvatarLink(projectItem.getCreatedUserAvatarId(), 16));
+                A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(projectItem.getProjectId(), projectItem
+                        .getCreatedUser())).appendText(projectItem.getCreatedUserDisplayName());
+                userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, projectItem.getCreatedUser()));
                 userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
                 Text belongPrjTxt = new Text(" - Project: ");
-                A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(obj.getProjectId()))
-                        .appendText(obj.getProjectName() + " (" + obj.getProjectShortName() + ")");
+                A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(projectItem.getProjectId()))
+                        .appendText(projectItem.getProjectName() + " (" + projectItem.getProjectShortName() + ")");
 
                 div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
                         userLink, TooltipHelper.buildDivTooltipEnable(uid), DivLessFormatter.EMPTY_SPACE(), belongPrjTxt,

@@ -49,9 +49,8 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailN
 @Traceable(nameField = "name", extraFieldName = "projectid")
 @Watchable(userFieldName = "owner", extraTypeId = "projectid")
 @NotifyAgent(ProjectTaskGroupRelayEmailNotificationAction.class)
-public class ProjectTaskListServiceImpl extends
-		DefaultService<Integer, TaskList, TaskListSearchCriteria> implements
-		ProjectTaskListService {
+public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList, TaskListSearchCriteria>
+		implements ProjectTaskListService {
 
     static {
         ClassInfoMap.put(ProjectTaskListServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK_LIST));
@@ -105,5 +104,20 @@ public class ProjectTaskListServiceImpl extends
 		for (TaskList taskList : taskLists) {
 			projectTaskListMapper.updateByPrimaryKeySelective(taskList);
 		}
+	}
+
+	@Override
+	public Double getTotalBillableHours(int taskListId) {
+		return projectTaskListMapperExt.getTotalBillableHours(taskListId);
+	}
+
+	@Override
+	public Double getTotalNonBillableHours(int taskListId) {
+		return projectTaskListMapperExt.getTotalNonBillableHours(taskListId);
+	}
+
+	@Override
+	public Double getRemainHours(int taskListId) {
+		return projectTaskListMapperExt.getRemainHours(taskListId);
 	}
 }
