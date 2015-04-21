@@ -100,7 +100,7 @@ public class ActivityTableDisplay extends
                                                         Object itemId, Object columnId) {
                 SimpleActivity event = getBeanByIndex(itemId);
                 return new ELabel(AppContext.formatPrettyTime(event.getStartDate()))
-                        .withDescription(AppContext.formatDate(event.getStartDate()));
+                        .withDescription(AppContext.formatDateTime(event.getStartDate()));
             }
         });
 
@@ -112,7 +112,7 @@ public class ActivityTableDisplay extends
                                                         Object itemId, Object columnId) {
                 SimpleActivity event = getBeanByIndex(itemId);
                 return new ELabel(AppContext.formatPrettyTime(event.getEndDate()))
-                        .withDescription(AppContext.formatDate(event.getEndDate()));
+                        .withDescription(AppContext.formatDateTime(event.getEndDate()));
             }
         });
 

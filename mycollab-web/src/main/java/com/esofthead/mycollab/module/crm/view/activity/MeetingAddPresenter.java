@@ -41,7 +41,6 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
-
 	private static final long serialVersionUID = 1L;
 
 	public MeetingAddPresenter() {

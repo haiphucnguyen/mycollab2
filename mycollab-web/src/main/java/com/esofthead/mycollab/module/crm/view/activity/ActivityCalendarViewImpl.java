@@ -857,13 +857,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                     } else if (propertyId.equals("description")) {
                         return new RichTextEditField();
                     } else if (propertyId.equals("type")) {
-                        RelatedEditItemField field = new RelatedEditItemField(
-                                new String[]{CrmTypeConstants.ACCOUNT,
-                                        CrmTypeConstants.CAMPAIGN,
-                                        CrmTypeConstants.CONTACT,
-                                        CrmTypeConstants.LEAD,
-                                        CrmTypeConstants.OPPORTUNITY,
-                                        CrmTypeConstants.CASE}, meeting);
+                        RelatedEditItemField field = new RelatedEditItemField(meeting);
                         field.setType(meeting.getType());
                         return field;
                     } else if (propertyId.equals("isrecurrence")) {
