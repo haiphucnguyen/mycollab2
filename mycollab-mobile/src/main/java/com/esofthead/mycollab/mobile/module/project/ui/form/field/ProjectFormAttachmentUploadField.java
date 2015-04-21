@@ -76,13 +76,10 @@ public class ProjectFormAttachmentUploadField extends CustomField {
                 final String fileName;
                 int index = tempName.lastIndexOf(".");
                 if (index > 0) {
-                    String fileExt = tempName.substring(index + 1,
-                            tempName.length());
-                    fileName = MobileAttachmentUtils.ATTACHMENT_NAME_PREFIX
-                            + System.currentTimeMillis() + "." + fileExt;
+                    String fileExt = tempName.substring(index + 1, tempName.length());
+                    fileName = String.format("%s%d.%s", MobileAttachmentUtils.ATTACHMENT_NAME_PREFIX, System.currentTimeMillis(), fileExt);
                 } else {
-                    fileName = MobileAttachmentUtils.ATTACHMENT_NAME_PREFIX
-                            + System.currentTimeMillis();
+                    fileName = String.format("%s%d", MobileAttachmentUtils.ATTACHMENT_NAME_PREFIX, System.currentTimeMillis());
                 }
                 if (!indicators.isEmpty()) {
                     rowWrap.replaceComponent(indicators.remove(0),

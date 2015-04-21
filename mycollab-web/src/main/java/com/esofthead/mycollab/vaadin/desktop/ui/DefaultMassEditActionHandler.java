@@ -38,10 +38,9 @@ import com.vaadin.ui.UI;
  * 
  */
 @SuppressWarnings("rawtypes")
-public abstract class DefaultMassEditActionHandler implements
-		MassItemActionHandler {
-
+public abstract class DefaultMassEditActionHandler implements MassItemActionHandler {
 	private ListSelectionPresenter presenter;
+
 	public DefaultMassEditActionHandler(ListSelectionPresenter presenter) {
 		this.presenter = presenter;
 	}

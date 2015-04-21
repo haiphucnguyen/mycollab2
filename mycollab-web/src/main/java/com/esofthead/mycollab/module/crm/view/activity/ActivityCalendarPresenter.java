@@ -16,7 +16,9 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -37,6 +39,7 @@ public class ActivityCalendarPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.ACTIVITY);
 		super.onGo(container, data);
 
 		AppContext.addFragment("crm/activity/calendar", "Calendar");

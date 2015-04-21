@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -48,11 +50,9 @@ import java.util.List;
  * @since 2.0
  * 
  */
-public class AccountListPresenter
-		extends
+public class AccountListPresenter extends
 		CrmGenericListPresenter<AccountListView, AccountSearchCriteria, SimpleAccount>
 		implements MassUpdateCommand<Account> {
-
 	private static final long serialVersionUID = 1L;
 
 	private AccountService accountService;
@@ -66,7 +66,7 @@ public class AccountListPresenter
 		super.postInitView();
 		accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().setMassActionHandler(
 				new DefaultMassEditActionHandler(this) {
 					@Override
 					protected Class<SimpleAccount> getReportModelClassType() {
@@ -141,6 +141,7 @@ public class AccountListPresenter
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.ACCOUNT);
 		if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
 			searchCriteria = (AccountSearchCriteria) data.getParams();
 			int totalCount = accountService.getTotalCount(searchCriteria);

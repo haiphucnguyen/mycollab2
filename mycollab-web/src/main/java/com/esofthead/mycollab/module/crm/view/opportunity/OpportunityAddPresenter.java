@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -39,9 +41,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class OpportunityAddPresenter extends
-        CrmGenericPresenter<OpportunityAddView> {
-
+public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddView> {
     private static final long serialVersionUID = 1L;
 
     public OpportunityAddPresenter() {
@@ -80,6 +80,7 @@ public class OpportunityAddPresenter extends
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        CrmToolbar.navigateItem(CrmTypeConstants.OPPORTUNITY);
         if (AppContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
             SimpleOpportunity opportunity = null;
             if (data.getParams() instanceof SimpleOpportunity) {

@@ -61,7 +61,7 @@ public class ComponentListViewImpl extends AbstractPageView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<ComponentService, ComponentSearchCriteria, SimpleComponent> tableItem;
 	private VerticalLayout componentListLayout;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
+	private DefaultMassItemActionHandlerContainer tableActionControls;
 	private Label selectedItemsNumberLabel = new Label();
 
 	public ComponentListViewImpl() {
@@ -191,7 +191,7 @@ public class ComponentListViewImpl extends AbstractPageView implements
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		this.tableActionControls = new DefaultMassItemActionHandlerContainer();
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
 			tableActionControls.addActionItem(
@@ -249,7 +249,7 @@ public class ComponentListViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandler getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

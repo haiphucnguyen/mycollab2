@@ -123,7 +123,7 @@ public class AccountReadViewImpl extends AbstractPreviewItemComp<SimpleAccount>
             return new StringBuilder().append(beanItem.getAccountname())
                     .append(AppContext.getMessage(
                             LeadI18nEnum.CONVERT_FROM_LEAD_TITLE,
-                            CrmAssetsManager.getAsset(CrmTypeConstants.LEAD),
+                            CrmAssetsManager.getAsset(CrmTypeConstants.LEAD).getHtml(),
                             CrmLinkGenerator.generateCrmItemLink(
                                     CrmTypeConstants.LEAD, lead.getId()),
                             lead.getLeadName())).toString();

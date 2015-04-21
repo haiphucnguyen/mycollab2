@@ -25,6 +25,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -50,87 +51,59 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		this.setStyleName("crm-toolbar");
 		this.setWidth("100%");
 		this.setMargin(new MarginInfo(false, true, false, true));
-		final NavigatorItemListener listener = new NavigatorItemListener();
-		final Button homeBtn = new Button(
-				AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_DASHBOARD_HEADER), listener);
-		homeBtn.setStyleName("link");
+		NavigatorItemListener listener = new NavigatorItemListener();
+		MenuItem homeBtn = new MenuItem(CrmTypeConstants.DASHBOARD, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_DASHBOARD_HEADER), listener);
 		addComponent(homeBtn);
 
-		final Button accountList = new Button(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER),
-				listener);
-		accountList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_ACCOUNT));
-		accountList.setStyleName("link");
+		MenuItem accountList = new MenuItem(CrmTypeConstants.ACCOUNT,
+				AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER), listener);
+		accountList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT));
 		addComponent(accountList);
 
-		final Button contactList = new Button(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER),
-				listener);
-		contactList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_CONTACT));
-		contactList.setStyleName("link");
+		MenuItem contactList = new MenuItem(CrmTypeConstants.CONTACT, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER), listener);
+		contactList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_CONTACT));
 		addComponent(contactList);
 
-		final Button campaignList = new Button(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER),
-				listener);
-		campaignList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_CAMPAIGN));
-		campaignList.setStyleName("link");
+		MenuItem campaignList = new MenuItem(CrmTypeConstants.CAMPAIGN, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER), listener);
+		campaignList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN));
 		addComponent(campaignList);
 
-		final Button leadList = new Button(
-				AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER),
-				listener);
-		leadList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_LEAD));
-		leadList.setStyleName("link");
+		MenuItem leadList = new MenuItem(CrmTypeConstants.LEAD, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER), listener);
+		leadList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_LEAD));
 		addComponent(leadList);
 
-		final Button opportunityList = new Button(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER),
-				listener);
+		MenuItem opportunityList = new MenuItem(CrmTypeConstants.OPPORTUNITY, AppContext
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER), listener);
 		opportunityList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_OPPORTUNITY));
-		opportunityList.setStyleName("link");
 		addComponent(opportunityList);
 
-		final Button caseList = new Button(
-				AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER),
-				listener);
-		caseList.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_CASE));
-		caseList.setStyleName("link");
+		MenuItem caseList = new MenuItem(CrmTypeConstants.CASE, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER), listener);
+		caseList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_CASE));
 		addComponent(caseList);
 
-		final Button activitiesList = new Button(
-				AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER), listener);
+		MenuItem activitiesList = new MenuItem(CrmTypeConstants.ACTIVITY, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER), listener);
 		final boolean isActivityEnable = AppContext
 				.canRead(RolePermissionCollections.CRM_MEETING)
 				|| AppContext.canRead(RolePermissionCollections.CRM_TASK)
 				|| AppContext.canRead(RolePermissionCollections.CRM_CALL);
 		activitiesList.setEnabled(isActivityEnable);
-		activitiesList.setStyleName("link");
 		addComponent(activitiesList);
 
 		addStyleName("h-sidebar-menu");
 
-		final Button fileBtn = new Button(
-				AppContext
-						.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER),
-				listener);
-		fileBtn.setEnabled(AppContext
-				.canRead(RolePermissionCollections.CRM_DOCUMENT));
-		fileBtn.setStyleName("link");
+		MenuItem fileBtn = new MenuItem(CrmTypeConstants.FILE, AppContext
+				.getMessage(CrmCommonI18nEnum.TOOLBAR_DOCUMENT_HEADER), listener);
+		fileBtn.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_DOCUMENT));
 		addComponent(fileBtn);
 
-		final Button notificationBtn = new Button(
-				AppContext
+		final Button notificationBtn = new Button(AppContext
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CRMNOTIFICATION_HEADER),
 				listener);
 		notificationBtn.setStyleName("link");
@@ -168,8 +141,7 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		addBtnLayout.addComponent(newCampaignBtn);
 
 		final ButtonLinkLegacy newOpportunityBtn = new ButtonLinkLegacy(
-				AppContext
-						.getMessage(OpportunityI18nEnum.BUTTON_NEW_OPPORTUNITY),
+				AppContext.getMessage(OpportunityI18nEnum.BUTTON_NEW_OPPORTUNITY),
 				listener, false);
 		newOpportunityBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
@@ -226,7 +198,6 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 	}
 
 	private class NavigatorItemListener implements Button.ClickListener {
-
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -364,14 +335,31 @@ public class CrmToolbar extends HorizontalLayout implements PageView {
 		return this;
 	}
 
-	public void gotoItem(final String crmItem) {
+	private static class MenuItem extends Button {
+		String key;
+		MenuItem(String key, String caption, ClickListener listener) {
+			this.setStyleName("link");
+			this.key = key;
+			this.setCaption(caption);
+			this.addClickListener(listener);
+		}
+	}
+
+	public static void navigateItem(String itemType) {
+		CrmToolbar toolbar = ViewManager.getCacheComponent(CrmToolbar.class);
+		toolbar.gotoItem(itemType);
+	}
+
+	private void gotoItem(final String crmItem) {
 		for (final Iterator<com.vaadin.ui.Component> it = this.iterator(); it
 				.hasNext();) {
-			final Button btn = (Button) it.next();
-			if (crmItem.equals(btn.getCaption())) {
-				btn.addStyleName("isSelected");
-			} else {
-				btn.removeStyleName("isSelected");
+			final Component comp = it.next();
+			if (comp instanceof  MenuItem) {
+				if (crmItem.equals(((MenuItem)comp).key)) {
+					comp.addStyleName("isSelected");
+				} else {
+					comp.removeStyleName("isSelected");
+				}
 			}
 		}
 	}

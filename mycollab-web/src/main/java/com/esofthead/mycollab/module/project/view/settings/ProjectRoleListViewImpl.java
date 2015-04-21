@@ -59,7 +59,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<ProjectRoleService, ProjectRoleSearchCriteria, SimpleProjectRole> tableItem;
 	private final VerticalLayout listLayout;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
+	private DefaultMassItemActionHandlerContainer tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
 	public ProjectRoleListViewImpl() {
@@ -155,7 +155,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 		deleteBtn.setEnabled(CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.ROLES));
 
-		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		this.tableActionControls = new DefaultMassItemActionHandlerContainer();
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.ROLES)) {
 			tableActionControls.addActionItem(
@@ -209,7 +209,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandler getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

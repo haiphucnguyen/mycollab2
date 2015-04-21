@@ -42,7 +42,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     private SelectionOptionButton selectOptionButton;
     private DefaultPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
     private VerticalLayout riskListLayout;
-    private DefaultMassItemActionHandlersContainer tableActionControls;
+    private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
 
     public RiskListViewImpl() {
@@ -201,7 +201,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         deleteBtn.setEnabled(CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.RISKS));
 
-        tableActionControls = new DefaultMassItemActionHandlersContainer();
+        tableActionControls = new DefaultMassItemActionHandlerContainer();
 
         if (CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.RISKS)) {
@@ -279,7 +279,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     }
 
     @Override
-    public HasMassItemActionHandlers getPopupActionHandlers() {
+    public HasMassItemActionHandler getPopupActionHandlers() {
         return tableActionControls;
     }
 

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -65,7 +67,7 @@ public class ContactListPresenter
 		contactService = ApplicationContextUtil
 				.getSpringBean(ContactService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().setMassActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -118,6 +120,7 @@ public class ContactListPresenter
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.CONTACT);
 		if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
 			searchCriteria = (ContactSearchCriteria) data.getParams();
 			int totalCount = contactService.getTotalCount(searchCriteria);

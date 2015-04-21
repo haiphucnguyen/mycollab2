@@ -45,7 +45,7 @@ public class RiskListPresenter extends
 	protected void postInitView() {
 		super.postInitView();
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().setMassActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override

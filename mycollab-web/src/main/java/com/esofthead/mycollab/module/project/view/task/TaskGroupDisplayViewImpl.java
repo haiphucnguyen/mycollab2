@@ -44,7 +44,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.*;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.ShortcutExtension;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
@@ -597,7 +596,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
     }
 
     @Override
-    public HasMassItemActionHandlers getPopupActionHandlers() {
+    public HasMassItemActionHandler getPopupActionHandlers() {
         throw new UnsupportedOperationException(
                 "This view doesn't support this operation");
     }

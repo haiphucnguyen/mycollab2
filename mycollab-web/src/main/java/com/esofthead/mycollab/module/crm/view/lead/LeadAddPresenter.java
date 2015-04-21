@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -78,6 +80,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        CrmToolbar.navigateItem(CrmTypeConstants.LEAD);
         if (AppContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
             SimpleLead lead = null;
 

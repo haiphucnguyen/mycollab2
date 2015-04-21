@@ -32,7 +32,6 @@ import net.sf.dynamicreports.report.constant.HorizontalAlignment;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -111,11 +110,6 @@ public abstract class ExportItemsStreamResource implements StreamResource.Stream
                     }
                     outStream.flush();
                 } catch (Exception e) {
-                    try {
-                        inStream.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
                     EventBusFactory.getInstance().post(
                             new ShellEvent.NotifyErrorEvent(
                                     ExportItemsStreamResource.this, e));

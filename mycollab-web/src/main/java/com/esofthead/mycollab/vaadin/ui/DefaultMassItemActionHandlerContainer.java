@@ -16,17 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import com.esofthead.mycollab.reporting.ReportExportType;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.peter.buttongroup.ButtonGroup;
-
-import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.Resource;
@@ -34,6 +25,12 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -41,11 +38,11 @@ import com.vaadin.ui.Button.ClickEvent;
  * @since 3.0
  * 
  */
-public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
-		implements HasMassItemActionHandlers {
+public class DefaultMassItemActionHandlerContainer extends MHorizontalLayout
+		implements HasMassItemActionHandler {
 	private static final long serialVersionUID = 1L;
 
-	private Set<MassItemActionHandler> handlers;
+	private MassItemActionHandler actionHandler;
 	private Map<String, ButtonGroup> groupMap = new HashMap<>();
 
 	public void addActionItem(final String id, Resource resource,
@@ -101,10 +98,8 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 	}
 
 	private void changeOption(String id) {
-		if (handlers != null) {
-			for (MassItemActionHandler handler : handlers) {
-				handler.onSelect(id);
-			}
+		if (actionHandler != null) {
+			actionHandler.onSelect(id);
 		}
 	}
 
@@ -123,12 +118,10 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 	}
 
 	protected StreamResource buildStreamResource(ReportExportType id) {
-		if (handlers != null) {
-			for (MassItemActionHandler handler : handlers) {
-				StreamResource streamResource = handler.buildStreamResource(id);
-				if (streamResource != null) {
-					return streamResource;
-				}
+		if (actionHandler != null) {
+			StreamResource streamResource = actionHandler.buildStreamResource(id);
+			if (streamResource != null) {
+				return streamResource;
 			}
 		}
 
@@ -136,10 +129,7 @@ public class DefaultMassItemActionHandlersContainer extends MHorizontalLayout
 	}
 
 	@Override
-	public void addMassItemActionHandler(MassItemActionHandler handler) {
-		if (handlers == null) {
-			handlers = new HashSet<>();
-		}
-		handlers.add(handler);
+	public void setMassActionHandler(MassItemActionHandler handler) {
+		actionHandler = handler;
 	}
 }

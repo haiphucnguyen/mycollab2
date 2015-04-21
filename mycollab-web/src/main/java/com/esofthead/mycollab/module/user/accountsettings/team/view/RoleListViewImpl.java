@@ -54,7 +54,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 	private SelectionOptionButton selectOptionButton;
 	private RoleTableDisplay tableItem;
 	private VerticalLayout listLayout;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
+	private DefaultMassItemActionHandlerContainer tableActionControls;
 	private Label selectedItemsNumberLabel = new Label();
 
 	public RoleListViewImpl() {
@@ -116,7 +116,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.ACCOUNT_ROLE));
 
-		this.tableActionControls = new DefaultMassItemActionHandlersContainer();
+		this.tableActionControls = new DefaultMassItemActionHandlerContainer();
 		if (AppContext.canAccess(RolePermissionCollections.ACCOUNT_ROLE)) {
 			tableActionControls.addActionItem(
 					MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
@@ -168,7 +168,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
 	}
 
 	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandler getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

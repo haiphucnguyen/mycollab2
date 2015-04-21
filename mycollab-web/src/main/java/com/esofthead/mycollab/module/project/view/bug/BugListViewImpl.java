@@ -31,13 +31,12 @@ import com.esofthead.mycollab.reporting.RpParameterBuilder;
 import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.resources.StreamResourceFactory;
 import com.esofthead.mycollab.vaadin.resources.StreamWrapperFileDownloader;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -256,7 +255,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     @Override
-    public HasMassItemActionHandlers getPopupActionHandlers() {
+    public HasMassItemActionHandler getPopupActionHandlers() {
         throw new UnsupportedOperationException(
                 "This view doesn't support this operation");
     }

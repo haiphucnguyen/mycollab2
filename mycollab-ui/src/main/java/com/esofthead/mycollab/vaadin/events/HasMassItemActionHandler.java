@@ -22,10 +22,10 @@ package com.esofthead.mycollab.vaadin.events;
  * @since 2.0
  * 
  */
-public interface HasMassItemActionHandlers {
+public interface HasMassItemActionHandler {
 	/**
 	 * 
 	 * @param handler
 	 */
-	void addMassItemActionHandler(MassItemActionHandler handler);
+	void setMassActionHandler(MassItemActionHandler handler);
 }

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.view.cases;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
@@ -77,6 +78,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        CrmToolbar.navigateItem(CrmTypeConstants.CASE);
         if (AppContext.canWrite(RolePermissionCollections.CRM_CASE)) {
             SimpleCase cases = null;
             if (data.getParams() instanceof SimpleCase) {

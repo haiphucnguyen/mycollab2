@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -54,9 +55,7 @@ import java.util.Set;
  * @since 1.0
  * 
  */
-public class OpportunityReadPresenter extends
-		CrmGenericPresenter<OpportunityReadView> {
-
+public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public OpportunityReadPresenter() {
@@ -115,8 +114,7 @@ public class OpportunityReadPresenter extends
 
 					@Override
 					public void onClone(SimpleOpportunity data) {
-						SimpleOpportunity cloneData = (SimpleOpportunity) data
-								.copy();
+						SimpleOpportunity cloneData = (SimpleOpportunity) data.copy();
 						cloneData.setId(null);
 						EventBusFactory.getInstance().post(
 								new OpportunityEvent.GotoEdit(this, cloneData));
@@ -275,6 +273,7 @@ public class OpportunityReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.OPPORTUNITY);
 		if (AppContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
 			if (data.getParams() instanceof Integer) {
 				OpportunityService opportunityService = ApplicationContextUtil

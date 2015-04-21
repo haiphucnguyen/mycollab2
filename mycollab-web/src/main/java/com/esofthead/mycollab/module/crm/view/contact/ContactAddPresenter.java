@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -40,7 +42,6 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  */
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
-
     private static final long serialVersionUID = 1L;
 
     public ContactAddPresenter() {
@@ -80,6 +81,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        CrmToolbar.navigateItem(CrmTypeConstants.CONTACT);
         if (AppContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
             SimpleContact contact = null;
             if (data.getParams() instanceof SimpleContact) {

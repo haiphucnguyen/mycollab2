@@ -33,7 +33,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
@@ -370,7 +370,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     @Override
-    public HasMassItemActionHandlers getPopupActionHandlers() {
+    public HasMassItemActionHandler getPopupActionHandlers() {
         throw new UnsupportedOperationException(
                 "This view doesn't support this operation");
     }

@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlersContainer;
+import com.esofthead.mycollab.vaadin.ui.DefaultMassItemActionHandlerContainer;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
@@ -111,8 +111,8 @@ public class LeadListViewImpl extends
 	}
 
 	@Override
-	protected DefaultMassItemActionHandlersContainer createActionControls() {
-		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
+	protected DefaultMassItemActionHandlerContainer createActionControls() {
+		DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 
 		if (AppContext.canAccess(RolePermissionCollections.CRM_LEAD)) {
 			container.addActionItem(MassItemActionHandler.DELETE_ACTION,

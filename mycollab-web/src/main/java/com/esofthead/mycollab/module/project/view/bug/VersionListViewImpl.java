@@ -63,7 +63,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 	private SelectionOptionButton selectOptionButton;
 	private DefaultPagedBeanTable<VersionService, VersionSearchCriteria, SimpleVersion> tableItem;
 	private VerticalLayout versionListLayout;
-	private DefaultMassItemActionHandlersContainer tableActionControls;
+	private DefaultMassItemActionHandlerContainer tableActionControls;
 	private Label selectedItemsNumberLabel = new Label();
 
 	public VersionListViewImpl() {
@@ -183,7 +183,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 		this.selectOptionButton = new SelectionOptionButton(this.tableItem);
 		layout.addComponent(this.selectOptionButton);
 
-		tableActionControls = new DefaultMassItemActionHandlersContainer();
+		tableActionControls = new DefaultMassItemActionHandlerContainer();
 
 		if (CurrentProjectVariables
 				.canAccess(ProjectRolePermissionCollections.VERSIONS)) {
@@ -242,7 +242,7 @@ public class VersionListViewImpl extends AbstractPageView implements
 	}
 
 	@Override
-	public HasMassItemActionHandlers getPopupActionHandlers() {
+	public HasMassItemActionHandler getPopupActionHandlers() {
 		return this.tableActionControls;
 	}
 

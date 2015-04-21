@@ -77,8 +77,8 @@ public class ActivityListViewImpl extends AbstractListItemComp<ActivitySearchCri
 	}
 
 	@Override
-	protected DefaultMassItemActionHandlersContainer createActionControls() {
-		DefaultMassItemActionHandlersContainer container = new DefaultMassItemActionHandlersContainer();
+	protected DefaultMassItemActionHandlerContainer createActionControls() {
+		DefaultMassItemActionHandlerContainer container = new DefaultMassItemActionHandlerContainer();
 		if (AppContext.canAccess(RolePermissionCollections.CRM_CALL)
 				|| AppContext.canAccess(RolePermissionCollections.CRM_MEETING)
 				|| AppContext.canAccess(RolePermissionCollections.CRM_TASK)) {

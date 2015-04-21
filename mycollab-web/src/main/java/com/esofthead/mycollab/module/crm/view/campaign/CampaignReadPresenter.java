@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.*;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -50,9 +51,7 @@ import java.util.Set;
  * @since 1.0
  * 
  */
-public class CampaignReadPresenter extends
-		CrmGenericPresenter<CampaignReadView> {
-
+public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public CampaignReadPresenter() {
@@ -82,12 +81,9 @@ public class CampaignReadPresenter extends
 								AppContext.getMessage(
 										GenericI18Enum.DIALOG_DELETE_TITLE,
 										SiteConfiguration.getSiteName()),
-								AppContext
-										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_NO),
+								AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+								AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+								AppContext.getMessage(GenericI18Enum.BUTTON_NO),
 								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
@@ -177,8 +173,7 @@ public class CampaignReadPresenter extends
 							SimpleMeeting meeting = new SimpleMeeting();
 							meeting.setType(CrmTypeConstants.CAMPAIGN);
 							meeting.setTypeid(view.getItem().getId());
-							EventBusFactory
-									.getInstance()
+							EventBusFactory.getInstance()
 									.post(new ActivityEvent.MeetingEdit(
 											CampaignReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
@@ -308,6 +303,7 @@ public class CampaignReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.CAMPAIGN);
 		if (AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
 			if (data.getParams() instanceof Integer) {
 				CampaignService campaignService = ApplicationContextUtil

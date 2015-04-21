@@ -30,6 +30,7 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -54,7 +55,6 @@ import java.util.Set;
  * 
  */
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
-
 	private static final long serialVersionUID = 1L;
 
 	public LeadReadPresenter() {
@@ -84,12 +84,9 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 								AppContext.getMessage(
 										GenericI18Enum.DIALOG_DELETE_TITLE,
 										SiteConfiguration.getSiteName()),
-								AppContext
-										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_NO),
+								AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+								AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+								AppContext.getMessage(GenericI18Enum.BUTTON_NO),
 								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
@@ -165,8 +162,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 					@Override
 					public void onExtraAction(String action, SimpleLead data) {
-						final LeadConvertInfoWindow convertWindow = new LeadConvertInfoWindow(
-								data);
+						final LeadConvertInfoWindow convertWindow = new LeadConvertInfoWindow(data);
 						UI.getCurrent().addWindow(convertWindow);
 					}
 				});
@@ -240,6 +236,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.LEAD);
 		if (AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
 			if (data.getParams() instanceof SimpleLead) {
 				SimpleLead lead = (SimpleLead) data.getParams();

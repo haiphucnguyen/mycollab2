@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -236,6 +237,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.CONTACT);
 		if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
 			if (data.getParams() instanceof Integer) {
 				ContactService contactService = ApplicationContextUtil

@@ -43,7 +43,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
     private SelectionOptionButton selectOptionButton;
     private DefaultPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
     private VerticalLayout problemListLayout;
-    private DefaultMassItemActionHandlersContainer tableActionControls;
+    private DefaultMassItemActionHandlerContainer tableActionControls;
     private Label selectedItemsNumberLabel = new Label();
 
     public ProblemListViewImpl() {
@@ -204,7 +204,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
         deleteBtn.setEnabled(CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.PROBLEMS));
 
-        tableActionControls = new DefaultMassItemActionHandlersContainer();
+        tableActionControls = new DefaultMassItemActionHandlerContainer();
 
         if (CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.PROBLEMS)) {
@@ -290,7 +290,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
     }
 
     @Override
-    public HasMassItemActionHandlers getPopupActionHandlers() {
+    public HasMassItemActionHandler getPopupActionHandlers() {
         return tableActionControls;
     }
 

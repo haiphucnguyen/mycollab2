@@ -18,12 +18,14 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericListPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -45,8 +47,7 @@ import java.util.List;
  * @since 1.0
  * 
  */
-public class CampaignListPresenter
-		extends
+public class CampaignListPresenter extends
 		CrmGenericListPresenter<CampaignListView, CampaignSearchCriteria, SimpleCampaign>
 		implements MassUpdateCommand<CampaignWithBLOBs> {
 
@@ -63,7 +64,7 @@ public class CampaignListPresenter
 		campaignService = ApplicationContextUtil
 				.getSpringBean(CampaignService.class);
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().setMassActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
@@ -72,20 +73,15 @@ public class CampaignListPresenter
 							UI.getCurrent().addWindow(new MailFormWindow());
 						} else if ("massUpdate".equals(id)) {
 							MassUpdateCampaignWindow massUpdateWindow = new MassUpdateCampaignWindow(
-									AppContext
-											.getMessage(
-													GenericI18Enum.WINDOW_MASS_UPDATE_TITLE,
-													"Campaign"),
-									CampaignListPresenter.this);
+									AppContext.getMessage(GenericI18Enum.WINDOW_MASS_UPDATE_TITLE,
+											"Campaign"), CampaignListPresenter.this);
 							UI.getCurrent().addWindow(massUpdateWindow);
 						}
-
 					}
 
 					@Override
 					protected String getReportTitle() {
-						return AppContext
-								.getMessage(CampaignI18nEnum.VIEW_LIST_TITLE);
+						return AppContext.getMessage(CampaignI18nEnum.VIEW_LIST_TITLE);
 					}
 
 					@Override
@@ -97,6 +93,7 @@ public class CampaignListPresenter
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		CrmToolbar.navigateItem(CrmTypeConstants.CAMPAIGN);
 		if (AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
 			searchCriteria = (CampaignSearchCriteria) data.getParams();
 			int totalCount = campaignService.getTotalCount(searchCriteria);

@@ -19,11 +19,13 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmToolbar;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -40,7 +42,6 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  */
 public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
-
     private static final long serialVersionUID = 1L;
 
     public AccountAddPresenter() {
@@ -79,6 +80,7 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        CrmToolbar.navigateItem(CrmTypeConstants.ACCOUNT);
         if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
             SimpleAccount account = null;
             if (data.getParams() instanceof SimpleAccount) {

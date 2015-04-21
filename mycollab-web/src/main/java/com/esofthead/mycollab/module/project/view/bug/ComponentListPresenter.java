@@ -66,7 +66,7 @@ public class ComponentListPresenter
 	protected void postInitView() {
 		super.postInitView();
 
-		view.getPopupActionHandlers().addMassItemActionHandler(
+		view.getPopupActionHandlers().setMassActionHandler(
 				new DefaultMassEditActionHandler(this) {
 
 					@Override
