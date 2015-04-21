@@ -232,9 +232,8 @@ public class BugTableDisplay extends
             public Component generateCell(Table source,
                                           Object itemId, Object columnId) {
                 SimpleBug bug = getBeanByIndex(itemId);
-                String bugname = "[%s-%s] %s";
-                bugname = String.format(bugname, CurrentProjectVariables
-                        .getProject().getShortname(), bug.getBugkey(), bug
+                String bugname = "[#%d] - %s";
+                bugname = String.format(bugname, bug.getBugkey(), bug
                         .getSummary());
                 LabelLink b = new LabelLink(bugname, ProjectLinkBuilder
                         .generateBugPreviewFullLink(bug.getBugkey(),
