@@ -417,7 +417,7 @@
     .v-button-wrap {
       border-right: 1px solid #F9F9F9;
       padding-right: 6px;
-      padding-left: 8px;
+      padding-left: 6px;
     }
   }
 
@@ -522,9 +522,12 @@
     padding: 0px;
   }
 
-  .small-padding {
-    .v-button-wrap, &:active .v-button-wrap {
+  .v-button.small-padding {
+    &.v-pressed .v-button-wrap, .v-button-wrap {
       padding: 4px 6px;
+      .v-icon {
+        width: 13px;
+      }
     }
     &.v-popupbutton .v-button-wrap {
       padding: 4px 6px;

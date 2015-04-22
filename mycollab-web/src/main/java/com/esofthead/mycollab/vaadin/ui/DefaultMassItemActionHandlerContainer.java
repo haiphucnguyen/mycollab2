@@ -52,7 +52,6 @@ public class DefaultMassItemActionHandlerContainer extends MHorizontalLayout
 		if (group == null) {
 			group = new ButtonGroup();
 			groupMap.put(groupId, group);
-
 			this.addComponent(group);
 		}
 
@@ -70,7 +69,7 @@ public class DefaultMassItemActionHandlerContainer extends MHorizontalLayout
 		} else {
 			optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		}
-        optionBtn.addStyleName("small-padding");
+        optionBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
 		optionBtn.setDescription(description);
 
 		group.addButton(optionBtn);
@@ -92,7 +91,7 @@ public class DefaultMassItemActionHandlerContainer extends MHorizontalLayout
 		fileDownloader.extend(optionBtn);
 		optionBtn.setIcon(resource);
 		optionBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-        optionBtn.addStyleName("small-padding");
+        optionBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
 		optionBtn.setDescription(description);
 		group.addButton(optionBtn);
 	}

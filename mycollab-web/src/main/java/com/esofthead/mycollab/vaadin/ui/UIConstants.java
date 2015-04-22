@@ -59,7 +59,6 @@ public class UIConstants {
 	public static final String PROJECT_INFO_HEADER = "projectinfo-header";
 	public static final String PROJECT_INFO_FOOTER = "projectinfo-footer";
 	public static final String PROJECT_NAME = "project-name";
-	public static final String PROJECT_SHORT_NAME = "project-shortname";
 	public static final String WORD_WRAP = "wordWrap";
 	public static final String TEXT_ELLIPSIS = "text-ellipsis";
 	public static final String TEXT_BLUE = "bluetxt";

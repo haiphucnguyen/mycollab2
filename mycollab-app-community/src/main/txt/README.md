@@ -58,6 +58,10 @@ Version 5.0.5
 * Cache reflection fields hence upgrade the app performance up to 5%
 * Add time summary for task group, milestone, component, version views
 
+**Bug Fixes**
+* Checkbox in Chrome, IE has the unintended border
+* Other minor CSS issues on IE, Firefox
+
 Version 5.0.4
 -----------------------------
 
