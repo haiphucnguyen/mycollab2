@@ -65,7 +65,11 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
         @Override
         public Component generateRow(AbstractBeanPagedList host, SimpleTask task, int rowIndex) {
-            return new TaskRowComp(task);
+            TaskRowComp rowContent = new TaskRowComp(task);
+            if (rowIndex % 2 != 0) {
+                rowContent.addStyleName("odd");
+            }
+            return rowContent;
         }
     }
 

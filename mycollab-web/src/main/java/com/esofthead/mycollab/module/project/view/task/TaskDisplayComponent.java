@@ -58,8 +58,7 @@ class TaskDisplayComponent extends CssLayout {
     private SimpleTaskList taskList;
     private boolean isDisplayTaskListInfo;
 
-    public TaskDisplayComponent(SimpleTaskList taskList,
-                                boolean isDisplayTaskListInfo) {
+    public TaskDisplayComponent(SimpleTaskList taskList, boolean isDisplayTaskListInfo) {
         this.taskList = taskList;
         this.isDisplayTaskListInfo = isDisplayTaskListInfo;
         this.setStyleName("taskdisplay-component");
@@ -68,8 +67,7 @@ class TaskDisplayComponent extends CssLayout {
 
         //Set default search criteria
         criteria = new TaskSearchCriteria();
-        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
-                .getProjectId()));
+        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setTaskListId(new NumberSearchField(taskList.getId()));
         criteria.setStatuses(new SetSearchField<>(SearchField.AND,
                 new String[]{StatusI18nEnum.Open.name(),
@@ -106,8 +104,7 @@ class TaskDisplayComponent extends CssLayout {
                     }
                 }
             });
-            previewForm
-                    .setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<SimpleTaskList>(
+            previewForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<SimpleTaskList>(
                             previewForm) {
                         private static final long serialVersionUID = 1L;
 

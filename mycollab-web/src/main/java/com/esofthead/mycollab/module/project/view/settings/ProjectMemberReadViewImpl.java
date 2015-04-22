@@ -420,7 +420,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             layout.setWidth("100%");
             layout.setStyleName("list-row");
 
-            if ((rowIndex + 1) % 2 != 0) {
+            if (rowIndex % 2 != 0) {
                 layout.addStyleName("odd");
             }
 

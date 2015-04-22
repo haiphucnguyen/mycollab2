@@ -226,15 +226,11 @@ public class TaskGroupDisplayWidget extends
                             taskListActionControl.setPopupVisible(false);
                             ConfirmDialogExt.show(
                                     UI.getCurrent(),
-                                    AppContext.getMessage(
-                                            GenericI18Enum.DIALOG_DELETE_TITLE,
+                                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
                                             SiteConfiguration.getSiteName()),
-                                    AppContext
-                                            .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                    AppContext
-                                            .getMessage(GenericI18Enum.BUTTON_YES),
-                                    AppContext
-                                            .getMessage(GenericI18Enum.BUTTON_NO),
+                                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                                     new ConfirmDialog.Listener() {
                                         private static final long serialVersionUID = 1L;
 
@@ -244,8 +240,7 @@ public class TaskGroupDisplayWidget extends
                                             if (dialog.isConfirmed()) {
                                                 ProjectTaskListService taskListService = ApplicationContextUtil
                                                         .getSpringBean(ProjectTaskListService.class);
-                                                taskListService
-                                                        .removeWithSession(
+                                                taskListService.removeWithSession(
                                                                 taskList.getId(),
                                                                 AppContext.getUsername(),
                                                                 AppContext.getAccountId());

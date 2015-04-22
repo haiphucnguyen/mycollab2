@@ -68,8 +68,7 @@ import java.util.UUID;
  * @since 1.0
  */
 @ViewComponent
-public class UserDashboardViewImpl extends AbstractLazyPageView implements
-        UserDashboardView {
+public class UserDashboardViewImpl extends AbstractLazyPageView implements UserDashboardView {
     private static final long serialVersionUID = 1L;
 
     private LabelLink followingTicketsLink;
@@ -125,15 +124,13 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
         header.addStyleName("projectfeed-hdr");
 
-        Button avatar = UserAvatarControlFactory
-                .createUserAvatarEmbeddedButton(AppContext.getUserAvatarId(), 64);
+        Button avatar = UserAvatarControlFactory.createUserAvatarEmbeddedButton(AppContext.getUserAvatarId(), 64);
         avatar.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                String userFullLinkStr = AccountLinkGenerator
-                        .generatePreviewFullUserLink(AppContext.getSiteUrl(),
+                String userFullLinkStr = AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(),
                                 AppContext.getUsername());
                 getUI().getPage().open(userFullLinkStr, null);
             }
@@ -147,8 +144,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
         Label headerLabel = new Label(AppContext.getUser().getDisplayName());
         headerLabel.setStyleName(Reindeer.LABEL_H1);
 
-        MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false,
-                true, false));
+        MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false));
         headerContentTop.with(headerLabel).withAlign(headerLabel, Alignment.TOP_LEFT);
 
         if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
@@ -239,15 +235,11 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
     private void displayFollowingTicketsCount() {
         // show following ticket numbers
         MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-        searchCriteria.setUser(new StringSearchField(SearchField.AND,
-                AppContext.getUsername()));
-        searchCriteria.setExtraTypeIds(new SetSearchField<>(prjKeys
-                .toArray(new Integer[prjKeys.size()])));
-        MonitorItemService monitorService = ApplicationContextUtil
-                .getSpringBean(MonitorItemService.class);
+        searchCriteria.setUser(new StringSearchField(SearchField.AND, AppContext.getUsername()));
+        searchCriteria.setExtraTypeIds(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
+        MonitorItemService monitorService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
         int followingItemsCount = monitorService.getTotalCount(searchCriteria);
-        followingTicketsLink
-                .setTitle(AppContext.getMessage(
+        followingTicketsLink.setTitle(AppContext.getMessage(
                         FollowerI18nEnum.OPT_MY_FOLLOWING_TICKETS, followingItemsCount));
     }
 
@@ -280,7 +272,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements
                 userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
                 Text belongPrjTxt = new Text(" - Project: ");
                 A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(projectItem.getProjectId()))
-                        .appendText(projectItem.getProjectName() + " (" + projectItem.getProjectShortName() + ")");
+                        .appendText(String.format("%s (%s)", projectItem.getProjectName(), projectItem.getProjectShortName()));
 
                 div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
                         userLink, TooltipHelper.buildDivTooltipEnable(uid), DivLessFormatter.EMPTY_SPACE(), belongPrjTxt,
