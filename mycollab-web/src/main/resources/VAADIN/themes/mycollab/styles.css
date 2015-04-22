@@ -427,6 +427,11 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border: none;
 }
 
+.v-checkbox input[type="checkbox"]:focus {
+	border: none;
+	box-shadow: none;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -7637,6 +7642,11 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-disabled.v-button-action {
 	border: none;
+}
+
+.v-checkbox input[type="checkbox"]:focus {
+	border: none;
+	box-shadow: none;
 }
 
 .crm-module {

@@ -346,4 +346,11 @@
       }
     }
   }
+
+  .v-checkbox input[type="checkbox"] {
+    &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
 }
