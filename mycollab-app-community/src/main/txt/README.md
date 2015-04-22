@@ -52,10 +52,11 @@ Version 5.0.5
 
 * Revise CRM comments and history features to make it similar than project module
 * Revise the layout of CRM module
+* Display comment in CRM activity stream
 * Support font awesome in emails
 * Minor bug fixes in reporting
 * Cache reflection fields hence upgrade the app performance up to 5%
-* Add time summary for task group view
+* Add time summary for task group, milestone, component, version views
 
 Version 5.0.4
 -----------------------------
