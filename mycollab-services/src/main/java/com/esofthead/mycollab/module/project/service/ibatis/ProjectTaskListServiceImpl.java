@@ -17,13 +17,9 @@
 
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import com.esofthead.mycollab.common.interceptor.aspect.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.interceptor.aspect.*;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -37,6 +33,9 @@ import com.esofthead.mycollab.module.project.service.ProjectActivityStreamServic
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -104,20 +103,5 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
 		for (TaskList taskList : taskLists) {
 			projectTaskListMapper.updateByPrimaryKeySelective(taskList);
 		}
-	}
-
-	@Override
-	public Double getTotalBillableHours(int taskListId, int sAccountId) {
-		return projectTaskListMapperExt.getTotalBillableHours(taskListId);
-	}
-
-	@Override
-	public Double getTotalNonBillableHours(int taskListId, int sAccountId) {
-		return projectTaskListMapperExt.getTotalNonBillableHours(taskListId);
-	}
-
-	@Override
-	public Double getRemainHours(int taskListId, int sAccountId) {
-		return projectTaskListMapperExt.getRemainHours(taskListId);
 	}
 }

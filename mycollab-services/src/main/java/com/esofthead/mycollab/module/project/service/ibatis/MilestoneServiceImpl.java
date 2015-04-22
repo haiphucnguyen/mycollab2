@@ -46,9 +46,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Traceable(nameField = "name", extraFieldName = "projectid")
 @Auditable()
 @NotifyAgent(ProjectMilestoneRelayEmailNotificationAction.class)
-public class MilestoneServiceImpl extends
-		DefaultService<Integer, Milestone, MilestoneSearchCriteria> implements
-		MilestoneService {
+public class MilestoneServiceImpl extends DefaultService<Integer, Milestone, MilestoneSearchCriteria>
+		implements MilestoneService {
 
     static {
         ClassInfoMap.put(MilestoneServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.MILESTONE));
@@ -86,20 +85,5 @@ public class MilestoneServiceImpl extends
 	public int updateWithSession(Milestone record, String username) {
         CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class);
 		return super.updateWithSession(record, username);
-	}
-
-	@Override
-	public Double getTotalBillableHours(int milestoneId) {
-		return milestoneMapperExt.getTotalBillableHours(milestoneId);
-	}
-
-	@Override
-	public Double getTotalNonBillableHours(int milestoneId) {
-		return milestoneMapperExt.getTotalNonBillableHours(milestoneId);
-	}
-
-	@Override
-	public Double getRemainHours(int milestoneId) {
-		return milestoneMapperExt.getRemainHours(milestoneId);
 	}
 }

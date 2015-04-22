@@ -45,7 +45,6 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
@@ -73,12 +72,12 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
         implements VersionReadView {
     private static final long serialVersionUID = 1L;
 
-    private CommentDisplay commentDisplay;
-    private VersionHistoryLogList historyLogList;
-
     private Button quickActionStatusBtn;
+    private CommentDisplay commentDisplay;
 
+    private VersionHistoryLogList historyLogList;
     private DateInfoComp dateInfoComp;
+    private VersionTimeLogComp versionTimeLogComp;
 
     public VersionReadViewImpl() {
         super(AppContext.getMessage(VersionI18nEnum.VIEW_READ_TITLE),
@@ -101,7 +100,8 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
                 ProjectTypeConstants.BUG_VERSION);
 
         dateInfoComp = new DateInfoComp();
-        addToSideBar(dateInfoComp);
+        versionTimeLogComp = new VersionTimeLogComp();
+        addToSideBar(dateInfoComp, versionTimeLogComp);
     }
 
     @Override
@@ -109,6 +109,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
         commentDisplay.loadComments("" + beanItem.getId());
         historyLogList.loadHistory(beanItem.getId());
         dateInfoComp.displayEntryDateTime(beanItem);
+        versionTimeLogComp.displayTime(beanItem);
 
         if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
             removeLayoutStyleName(UIConstants.LINK_COMPLETED);

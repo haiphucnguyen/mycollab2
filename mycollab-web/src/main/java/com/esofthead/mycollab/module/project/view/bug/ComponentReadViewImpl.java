@@ -85,6 +85,7 @@ public class ComponentReadViewImpl extends
 
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
+    private ComponentTimeLogComp componentTimeLogComp;
 
     public ComponentReadViewImpl() {
         super(AppContext.getMessage(ComponentI18nEnum.VIEW_READ_TITLE),
@@ -122,7 +123,8 @@ public class ComponentReadViewImpl extends
         historyLogList = new ComponentHistoryLogList(ModuleNameConstants.PRJ, ProjectTypeConstants.BUG_COMPONENT);
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
-        addToSideBar(dateInfoComp, peopleInfoComp);
+        componentTimeLogComp = new ComponentTimeLogComp();
+        addToSideBar(dateInfoComp, peopleInfoComp, componentTimeLogComp);
     }
 
     @Override
@@ -132,6 +134,7 @@ public class ComponentReadViewImpl extends
 
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
+        componentTimeLogComp.displayTime(beanItem);
 
         if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
             removeLayoutStyleName(UIConstants.LINK_COMPLETED);
