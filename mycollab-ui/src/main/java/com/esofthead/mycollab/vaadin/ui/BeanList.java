@@ -63,6 +63,11 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		this(parentComponent, searchService, rowDisplayHandler, null);
 	}
 
+    public BeanList(SearchService searchService,
+                    Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
+        this(null, searchService, rowDisplayHandler);
+    }
+
 	public BeanList(Object parentComponent, SearchService searchService,
 			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
 			Layout contentLayout) {
@@ -85,11 +90,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	public Layout getContentLayout() {
 		return this.contentLayout;
-	}
-
-	public BeanList(SearchService searchService,
-			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
-		this(null, searchService, rowDisplayHandler);
 	}
 
 	public void setDisplayEmptyListText(boolean isDisplayEmptyListText) {
@@ -116,7 +116,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 			if (rowDisplayHandler.getEnclosingClass() != null
 					&& !Modifier.isStatic(rowDisplayHandler.getModifiers())) {
 				Constructor constructor = rowDisplayHandler.getDeclaredConstructor(rowDisplayHandler
-								.getEnclosingClass());
+                        .getEnclosingClass());
 				rowHandler = (RowDisplayHandler<T>) constructor.newInstance(parentComponent);
 			} else {
 				rowHandler = rowDisplayHandler.newInstance();

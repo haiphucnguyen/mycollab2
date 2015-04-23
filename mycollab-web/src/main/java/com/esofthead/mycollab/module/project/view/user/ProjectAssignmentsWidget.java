@@ -128,9 +128,8 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
     public static class TaskRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
 
         @Override
-        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask,
-                                     int rowIndex) {
-            final CssLayout layout = new CssLayout();
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask, int rowIndex) {
+            CssLayout layout = new CssLayout();
             layout.setWidth("100%");
             layout.setStyleName("list-row");
 

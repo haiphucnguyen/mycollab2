@@ -8987,10 +8987,6 @@ div.v-button.token-field:hover {
 	background-color: #FFF;
 }
 
-.tasklist:hover {
-	background-color: ghostwhite;
-}
-
 .tasklist .taskrow {
 	border-style: solid;
 	border-color: #CFCFCF;
@@ -8999,6 +8995,37 @@ div.v-button.token-field:hover {
 
 .tasklist .taskrow:last-child {
 	border-style: none;
+}
+
+.tasklist .taskrow:nth-child(even) {
+	background-color: whitesmoke;
+}
+
+.tasklist .taskrow:nth-child(odd) {
+	background-color: #FFF;
+}
+
+.tasklist .taskrow:hover {
+	background-color: ghostwhite;
+}
+
+.task-component {
+	margin-bottom: 5px;
+	background-color: whitesmoke;
+}
+
+.task-component  > .v-csslayout-margin {
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	padding-left: 5px;
+}
+
+.task-component .task-name {
+	font-weight: bold;
+}
+
+.task-component .created-time {
+	color: gray;
+	font-size: 12px;
 }
 
 html {
@@ -11101,25 +11128,6 @@ td.v-tabsheet-spacertd div {
 .v-form-errormessage .gwt-HTML {
 	text-align: center;
 	color: red;
-}
-
-.task-component {
-	margin-bottom: 5px;
-	background-color: whitesmoke;
-}
-
-.task-component  > .v-csslayout-margin {
-	border: 1px solid rgba(0, 0, 0, 0.25);
-	padding-left: 5px;
-}
-
-.task-component .task-name {
-	font-weight: bold;
-}
-
-.task-component .created-time {
-	color: gray;
-	font-size: 12px;
 }
 
 .v-window, .v-Notification {

@@ -45,9 +45,10 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
     protected List<T> currentListData;
     protected CssLayout controlBarWrapper;
     protected HorizontalLayout pageManagement;
-    protected SearchRequest<S> searchRequest;
 
     private Set<PagableHandler> pagableHandlers;
+
+    protected SearchRequest<S> searchRequest;
 
     private String listControlStyle = "listControl";
 
