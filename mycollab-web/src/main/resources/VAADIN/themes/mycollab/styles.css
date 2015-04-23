@@ -146,7 +146,6 @@ a.pending {
 }
 
 .list-row {
-	background-color: #FFF;
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
@@ -7367,7 +7366,6 @@ a.pending {
 }
 
 .list-row {
-	background-color: #FFF;
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
@@ -8826,37 +8824,6 @@ div.v-csslayout.followers-container .v-checkbox {
 
 .v-buttongroup.toggle-btn-group .v-button:active .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button:focus .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
 	color: white;
-}
-
-.widget-row {
-	background-color: #FFF;
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
-.widget-row.v-margin-top {
-	padding-top: 10px;
-}
-
-.widget-row.v-margin-right {
-	padding-right: 10px;
-}
-
-.widget-row.v-margin-bottom {
-	padding-bottom: 10px;
-}
-
-.widget-row.v-margin-left {
-	padding-left: 10px;
-}
-
-.widget-row.odd {
-	background-color: whitesmoke;
-}
-
-.widget-row:hover {
-	background-color: ghostwhite;
 }
 
 div.v-csslayout.member-token {

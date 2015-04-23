@@ -689,31 +689,6 @@
     color: white;
   }
 
-  .widget-row {
-    background-color: #FFF;
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    &.v-margin-top {
-      padding-top: 10px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 10px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
-    &.odd {
-      background-color: $background-color;
-    }
-    &:hover {
-      background-color: $hover-background-color;
-    }
-  }
-
   div.v-csslayout.member-token{
     cursor: text;
     .v-textfield {

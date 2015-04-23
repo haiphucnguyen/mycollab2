@@ -48,7 +48,7 @@ import java.util.UUID;
 public class BugRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleBug> {
     @Override
     public Component generateRow(SimpleBug bug, int rowIndex) {
-        MVerticalLayout rowContent = new MVerticalLayout().withWidth("100%");
+        MVerticalLayout rowContent = new MVerticalLayout().withWidth("100%").withStyleName("list-row");
         final LabelLink defectLink = new LabelLink(String.format("[#%d] - %s", bug.getBugkey(), bug.getSummary()),
                 ProjectLinkBuilder.generateBugPreviewFullLink(
                         bug.getBugkey(), bug.getProjectShortName()));
@@ -92,7 +92,6 @@ public class BugRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleBug> 
         }
 
         rowContent.addComponent(new Label(footer.write(), ContentMode.HTML));
-        rowContent.setStyleName(UIConstants.WIDGET_ROW);
         return rowContent;
     }
 }
