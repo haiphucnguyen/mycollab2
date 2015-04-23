@@ -8987,14 +8987,6 @@ div.v-button.token-field:hover {
 	background-color: #FFF;
 }
 
-.tasklist:nth-child(even) {
-	background-color: whitesmoke;
-}
-
-.tasklist:nth-child(odd) {
-	background-color: #FFF;
-}
-
 .tasklist:hover {
 	background-color: ghostwhite;
 }

@@ -77,7 +77,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
 
         TaskRowComp(SimpleTask task) {
             this.task = task;
-            withSpacing(false).withMargin(true).withWidth("100%").withStyleName("taskrow");
+            withSpacing(false).withMargin(true).withWidth("100%").addStyleName("taskrow");
             this.with(createTaskActionControl());
 
             taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
