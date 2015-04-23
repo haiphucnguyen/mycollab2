@@ -75,7 +75,7 @@ public class TaskGroupDisplayWidget extends
         private Button toogleBtn;
 
         private TaskListDepot(SimpleTaskList taskListParam) {
-            super(taskListParam.getName(), null, new TaskDisplayComponent(taskListParam, true));
+            super(taskListParam.getName(), null, new TaskDisplayComponent(taskListParam));
 
             if (taskListParam.isArchieved()) {
                 this.headerLbl.addStyleName(UIConstants.LINK_COMPLETED);
@@ -143,7 +143,6 @@ public class TaskGroupDisplayWidget extends
             taskListActionControl.setWidthUndefined();
 
             headerElement.with(taskListActionControl);
-
             this.addHeaderElement(headerElement);
 
             OptionPopupContent actionBtnLayout = new OptionPopupContent().withWidth("150px");
@@ -157,17 +156,13 @@ public class TaskGroupDisplayWidget extends
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TaskListDepot.this.taskListActionControl
-                                    .setPopupVisible(false);
-                            EventBusFactory
-                                    .getInstance()
-                                    .post(new TaskListEvent.GotoRead(event,
-                                            TaskListDepot.this.taskList.getId()));
+                            taskListActionControl.setPopupVisible(false);
+                            EventBusFactory.getInstance()
+                                    .post(new TaskListEvent.GotoRead(event, taskList.getId()));
                         }
                     });
             readBtn.setIcon(FontAwesome.HACKER_NEWS);
-            readBtn.setEnabled(CurrentProjectVariables
-                    .canRead(ProjectRolePermissionCollections.TASKS));
+            readBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
             actionBtnLayout.addOption(readBtn);
 
             final Button editBtn = new Button(
@@ -177,11 +172,9 @@ public class TaskGroupDisplayWidget extends
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TaskListDepot.this.taskListActionControl
-                                    .setPopupVisible(false);
+                            taskListActionControl.setPopupVisible(false);
                             EventBusFactory.getInstance().post(
-                                    new TaskListEvent.GotoEdit(event,
-                                            TaskListDepot.this.taskList));
+                                    new TaskListEvent.GotoEdit(event, taskList));
                         }
                     });
             editBtn.setEnabled(CurrentProjectVariables

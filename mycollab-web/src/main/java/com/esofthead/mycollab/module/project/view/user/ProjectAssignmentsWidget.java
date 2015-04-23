@@ -134,10 +134,6 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
             layout.setWidth("100%");
             layout.setStyleName("list-row");
 
-            if (rowIndex % 2 != 0) {
-                layout.addStyleName("odd");
-            }
-
             Div itemDiv = buildItemValue(genericTask);
 
             Label taskLbl = new Label(itemDiv.write(), ContentMode.HTML);

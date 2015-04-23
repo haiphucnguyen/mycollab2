@@ -40,8 +40,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class CommentRowDisplayHandler extends
-        BeanList.RowDisplayHandler<SimpleComment> {
+public class CommentRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleComment> {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -76,13 +75,10 @@ public class CommentRowDisplayHandler extends
 
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    ConfirmDialogExt.show(
-                            UI.getCurrent(),
-                            AppContext.getMessage(
-                                    GenericI18Enum.DIALOG_DELETE_TITLE,
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
                                     SiteConfiguration.getSiteName()),
-                            AppContext
-                                    .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                             AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                             new ConfirmDialog.Listener() {
@@ -93,12 +89,9 @@ public class CommentRowDisplayHandler extends
                                     if (dialog.isConfirmed()) {
                                         CommentService commentService = ApplicationContextUtil
                                                 .getSpringBean(CommentService.class);
-                                        commentService.removeWithSession(
-                                                comment.getId(),
-                                                AppContext.getUsername(),
-                                                AppContext.getAccountId());
-                                        CommentRowDisplayHandler.this.owner
-                                                .removeRow(layout);
+                                        commentService.removeWithSession(comment.getId(),
+                                                AppContext.getUsername(), AppContext.getAccountId());
+                                        CommentRowDisplayHandler.this.owner.removeRow(layout);
                                     }
                                 }
                             });

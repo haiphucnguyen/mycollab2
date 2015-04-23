@@ -1539,9 +1539,6 @@
       .v-table-header-wrap {
         border-top: none;
       }
-      .taskdisplay-component {
-        padding-left: 30px;
-      }
     }
   }
 
@@ -2189,9 +2186,7 @@
 
   /* Task List Component */
 
-  .taskdisplay-component > .v-csslayout-margin > .v-csslayout-container > div.v-button {
-    margin-top: 10px;
-  }
+
 
   .task-component {
     margin-bottom: 5px;
@@ -2755,10 +2750,6 @@
 
   .task-list .taskadd-popup .colored-gridlayout {
     border: none;
-  }
-
-  .taskdisplay-component {
-    background-color: #FFF;
   }
 
   .v-tabsheet-content {

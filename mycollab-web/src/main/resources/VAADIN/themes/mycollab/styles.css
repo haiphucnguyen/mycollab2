@@ -8984,6 +8984,19 @@ div.v-button.token-field:hover {
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px 1px;
 	min-height: 33px;
+	background-color: #FFF;
+}
+
+.tasklist:nth-child(even) {
+	background-color: whitesmoke;
+}
+
+.tasklist:nth-child(odd) {
+	background-color: #FFF;
+}
+
+.tasklist:hover {
+	background-color: ghostwhite;
 }
 
 .tasklist .taskrow {
@@ -8994,10 +9007,6 @@ div.v-button.token-field:hover {
 
 .tasklist .taskrow:last-child {
 	border-style: none;
-}
-
-.tasklist .taskrow:hover {
-	background-color: ghostwhite;
 }
 
 html {
@@ -10481,10 +10490,6 @@ input.v-textfield-errorField {
 	border-top: none;
 }
 
-.depotComp .depotContent .taskdisplay-component {
-	padding-left: 30px;
-}
-
 .filter-task-table {
 	border-color: #CFCFCF;
 	border-style: solid;
@@ -11106,10 +11111,6 @@ td.v-tabsheet-spacertd div {
 	color: red;
 }
 
-.taskdisplay-component > .v-csslayout-margin > .v-csslayout-container > div.v-button {
-	margin-top: 10px;
-}
-
 .task-component {
 	margin-bottom: 5px;
 	background-color: whitesmoke;
@@ -11621,10 +11622,6 @@ div.v-stylecalendar .weekdays TD {
 
 .task-list .taskadd-popup .colored-gridlayout {
 	border: none;
-}
-
-.taskdisplay-component {
-	background-color: #FFF;
 }
 
 .v-tabsheet-content .task-list .task-list-footer {

@@ -92,11 +92,7 @@ public class BugRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleBug> 
         }
 
         rowContent.addComponent(new Label(footer.write(), ContentMode.HTML));
-
         rowContent.setStyleName(UIConstants.WIDGET_ROW);
-        if (rowIndex % 2 != 0) {
-            rowContent.addStyleName("odd");
-        }
         return rowContent;
     }
 }
