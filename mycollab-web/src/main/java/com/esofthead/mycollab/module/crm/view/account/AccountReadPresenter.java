@@ -72,17 +72,12 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 					@Override
 					public void onDelete(final SimpleAccount data) {
-						ConfirmDialogExt.show(
-								UI.getCurrent(),
-								AppContext.getMessage(
-										GenericI18Enum.DIALOG_DELETE_TITLE,
+						ConfirmDialogExt.show(UI.getCurrent(),
+								AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
 										SiteConfiguration.getSiteName()),
-								AppContext
-										.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_NO),
+								AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+								AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+								AppContext.getMessage(GenericI18Enum.BUTTON_NO),
 								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
@@ -91,13 +86,10 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 										if (dialog.isConfirmed()) {
 											AccountService accountService = ApplicationContextUtil
 													.getSpringBean(AccountService.class);
-											accountService.removeWithSession(
-													data.getId(),
-													AppContext.getUsername(),
-													AppContext.getAccountId());
+											accountService.removeWithSession(data.getId(),
+													AppContext.getUsername(), AppContext.getAccountId());
 											EventBusFactory.getInstance().post(
-													new AccountEvent.GotoList(
-															this, null));
+													new AccountEvent.GotoList(this, null));
 										}
 									}
 								});

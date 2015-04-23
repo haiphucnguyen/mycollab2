@@ -14,6 +14,8 @@ object ShellEvent {
 
   class LogOut(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
+  class GotoSetupPage(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
   class GotoProjectModule(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
   class GotoCrmModule(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
