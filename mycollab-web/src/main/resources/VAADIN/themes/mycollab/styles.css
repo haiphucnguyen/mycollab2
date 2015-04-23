@@ -153,11 +153,11 @@ a.pending {
 	padding: 10px;
 }
 
-.list-row:nth-child(odd) {
+.list-row:nth-child(even) {
 	background-color: whitesmoke;
 }
 
-.list-row:nth-child(even) {
+.list-row:nth-child(odd) {
 	background-color: #FFF;
 }
 
@@ -7374,11 +7374,11 @@ a.pending {
 	padding: 10px;
 }
 
-.list-row:nth-child(odd) {
+.list-row:nth-child(even) {
 	background-color: whitesmoke;
 }
 
-.list-row:nth-child(even) {
+.list-row:nth-child(odd) {
 	background-color: #FFF;
 }
 
@@ -8262,11 +8262,11 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	padding: 0px;
 }
 
-.prj-list-row:nth-child(odd) {
+.prj-list-row:nth-child(even) {
 	background-color: whitesmoke;
 }
 
-.prj-list-row:nth-child(even) {
+.prj-list-row:nth-child(odd) {
 	background-color: #FFF;
 }
 
@@ -8829,7 +8829,7 @@ div.v-csslayout.followers-container .v-checkbox {
 }
 
 .widget-row {
-	background-color: whitesmoke;
+	background-color: #FFF;
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
 	border-color: #CFCFCF;
@@ -8852,7 +8852,7 @@ div.v-csslayout.followers-container .v-checkbox {
 }
 
 .widget-row.odd {
-	background-color: #FFF;
+	background-color: whitesmoke;
 }
 
 .widget-row:hover {

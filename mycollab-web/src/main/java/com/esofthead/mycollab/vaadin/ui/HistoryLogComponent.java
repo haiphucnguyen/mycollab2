@@ -109,9 +109,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 							.getFieldDisplayHandler(fieldName);
 					if (fieldDisplayHandler != null) {
 						gridLayout.addComponent(
-								new Label(AppContext
-										.getMessage(fieldDisplayHandler
-												.getDisplayName())), 0,
+								new Label(AppContext.getMessage(fieldDisplayHandler.getDisplayName())), 0,
 								visibleRows + 2);
 						gridLayout.addComponent(fieldDisplayHandler.getFormat()
 								.toVaadinComponent(item.getOldvalue()), 1,
@@ -137,35 +135,22 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 					header.with(userLink).withAlign(userLink, Alignment.MIDDLE_LEFT);
 
 					Date changeDate = DateTimeUtils.convertDateByFormatW3C(strDate);
-					Label lbDate = new Label("changed " + AppContext.formatPrettyTime(changeDate));
+					Label lbDate = new Label(String.format("changed %s", AppContext.formatPrettyTime(changeDate)));
 					lbDate.setDescription(AppContext.formatDateTime(changeDate));
 					header.with(lbDate).withAlign(lbDate, Alignment.MIDDLE_LEFT);
 					gridLayout.addComponent(header, 0, 0, 2, 0);
 
-					gridLayout
-							.addComponent(
-									new Label(
-											String.format(
-													"<div style=\"font-weight: bold;\">%s</div>",
-													AppContext
-															.getMessage(GenericI18Enum.HISTORY_FIELD)),
-											ContentMode.HTML), 0, 1);
-					gridLayout
-							.addComponent(
-									new Label(
-											String.format(
-													"<div style=\"font-weight: bold;\">%s</div>",
-													AppContext
-															.getMessage(GenericI18Enum.HISTORY_OLD_VALUE)),
-											ContentMode.HTML), 1, 1);
-					gridLayout
-							.addComponent(
-									new Label(
-											String.format(
-													"<div style=\"font-weight: bold;\">%s</div>",
-													AppContext
-															.getMessage(GenericI18Enum.HISTORY_NEW_VALUE)),
-											ContentMode.HTML), 2, 1);
+					gridLayout.addComponent(new Label(String.format(
+                            "<div style=\"font-weight: bold;\">%s</div>",
+                            AppContext.getMessage(GenericI18Enum.HISTORY_FIELD)),
+                            ContentMode.HTML), 0, 1);
+					gridLayout.addComponent(new Label(String.format(
+                            "<div style=\"font-weight: bold;\">%s</div>",
+                            AppContext.getMessage(GenericI18Enum.HISTORY_OLD_VALUE)),
+                            ContentMode.HTML), 1, 1);
+					gridLayout.addComponent(new Label(String.format("<div style=\"font-weight: bold;\">%s</div>",
+                            AppContext.getMessage(GenericI18Enum.HISTORY_NEW_VALUE)),
+                            ContentMode.HTML), 2, 1);
 
 					gridLayout.setRows(visibleRows + 2);
 					layout.addComponent(gridLayout);

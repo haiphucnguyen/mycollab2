@@ -420,10 +420,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             layout.setWidth("100%");
             layout.setStyleName("list-row");
 
-            if (rowIndex % 2 != 0) {
-                layout.addStyleName("odd");
-            }
-
             Div itemDiv = buildItemValue(genericTask);
 
             Label taskLbl = new Label(itemDiv.write(), ContentMode.HTML);
@@ -446,7 +442,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
                 footerDiv.appendChild(new Text(AppContext.getMessage(
                         TaskI18nEnum.OPT_DUE_DATE, "Undefined")));
             }
-
 
             if (genericTask.getAssignUser() != null) {
                 footerDiv.appendChild(buildAssigneeValue(genericTask));

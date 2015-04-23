@@ -79,10 +79,10 @@
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 10px;
-    &:nth-child(odd) {
+    &:nth-child(even) {
       background-color: $background-color;
     }
-    &:nth-child(even) {
+    &:nth-child(odd) {
       background-color: #FFF;
     }
     &:hover {

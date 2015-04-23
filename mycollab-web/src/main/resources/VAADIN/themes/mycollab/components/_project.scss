@@ -168,10 +168,10 @@
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 0px;
-    &:nth-child(odd) {
+    &:nth-child(even) {
       background-color: $background-color;
     }
-    &:nth-child(even) {
+    &:nth-child(odd) {
       background-color: #FFF;
     }
     &:hover {
@@ -690,7 +690,7 @@
   }
 
   .widget-row {
-    background-color: $background-color;
+    background-color: #FFF;
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: $border-color;
@@ -707,7 +707,7 @@
       padding-left: 10px;
     }
     &.odd {
-      background-color: #FFF;
+      background-color: $background-color;
     }
     &:hover {
       background-color: $hover-background-color;

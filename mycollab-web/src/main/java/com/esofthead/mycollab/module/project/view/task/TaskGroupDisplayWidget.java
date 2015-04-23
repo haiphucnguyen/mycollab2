@@ -256,8 +256,7 @@ public class TaskGroupDisplayWidget extends
                         }
                     });
             deleteBtn.setIcon(FontAwesome.TRASH_O);
-            deleteBtn.setEnabled(CurrentProjectVariables
-                    .canAccess(ProjectRolePermissionCollections.TASKS));
+            deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
             actionBtnLayout.addOption(deleteBtn);
         }
 

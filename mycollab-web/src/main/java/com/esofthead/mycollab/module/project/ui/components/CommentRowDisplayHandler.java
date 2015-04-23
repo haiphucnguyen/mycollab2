@@ -46,7 +46,7 @@ public class CommentRowDisplayHandler extends
 
     @Override
     public Component generateRow(final SimpleComment comment, int rowIndex) {
-        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
+        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false))
                 .withWidth("100%").withStyleName("message");
 
         ProjectMemberBlock memberBlock = new ProjectMemberBlock(comment.getCreateduser(), comment.getOwnerAvatarId(), comment.getOwnerFullName());
@@ -64,18 +64,12 @@ public class CommentRowDisplayHandler extends
                 GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 AppContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML).withDescription(AppContext.formatDateTime(comment
                 .getCreatedtime()));
-
-        timePostLbl.setSizeUndefined();
         timePostLbl.setStyleName("time-post");
-        messageHeader.with(timePostLbl).expand(timePostLbl);
-
-        // Message delete button
-        Button msgDeleteBtn = new Button();
-        msgDeleteBtn.setIcon(FontAwesome.TRASH_O);
-        msgDeleteBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
-        messageHeader.addComponent(msgDeleteBtn);
 
         if (hasDeletePermission(comment)) {
+            Button msgDeleteBtn = new Button();
+            msgDeleteBtn.setIcon(FontAwesome.TRASH_O);
+            msgDeleteBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
             msgDeleteBtn.setVisible(true);
             msgDeleteBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -110,8 +104,9 @@ public class CommentRowDisplayHandler extends
                             });
                 }
             });
+            messageHeader.with(timePostLbl, msgDeleteBtn).expand(timePostLbl);
         } else {
-            msgDeleteBtn.setVisible(false);
+            messageHeader.with(timePostLbl).expand(timePostLbl);
         }
 
         rowLayout.addComponent(messageHeader);

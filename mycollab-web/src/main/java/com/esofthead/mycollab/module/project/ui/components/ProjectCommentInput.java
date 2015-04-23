@@ -49,7 +49,8 @@ import java.util.GregorianCalendar;
  */
 public class ProjectCommentInput extends MHorizontalLayout {
     private static final long serialVersionUID = 1L;
-    private final RichTextArea commentArea;
+
+    private RichTextArea commentArea;
 
     private String type;
     private String typeId;
