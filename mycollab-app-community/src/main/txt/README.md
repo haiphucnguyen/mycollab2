@@ -57,6 +57,7 @@ Version 5.0.5
 * Minor bug fixes in reporting
 * Cache reflection fields hence upgrade the app performance up to 5%
 * Add time summary for task group, milestone, component, version views
+* Allow system admin can change the SMTP setting on the fly
 
 **Bug Fixes**
 * Checkbox in Chrome, IE has the unintended border
