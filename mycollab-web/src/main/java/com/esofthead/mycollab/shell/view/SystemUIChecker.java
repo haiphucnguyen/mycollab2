@@ -44,8 +44,7 @@ public class SystemUIChecker {
             ExtMailService extMailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
             if (!extMailService.isMailSetupValid()) {
                 if (AppContext.isAdmin()) {
-                    ConfirmDialogExt.show(
-                            UI.getCurrent(),
+                    ConfirmDialogExt.show(UI.getCurrent(),
                             AppContext.getMessage(ShellI18nEnum.WINDOW_STMP_NOT_SETUP),
                             AppContext.getMessage(ShellI18nEnum.WINDOW_SMTP_CONFIRM_SETUP_FOR_ADMIN),
                             AppContext.getMessage(GenericI18Enum.BUTTON_YES),
