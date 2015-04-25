@@ -62,6 +62,7 @@ Version 5.0.5
 * Replace the old log4j library by logback
 
 **Bug Fixes**
+
 * Checkbox in Chrome, IE has the unintended border
 * Other minor CSS issues on IE, Firefox
 
