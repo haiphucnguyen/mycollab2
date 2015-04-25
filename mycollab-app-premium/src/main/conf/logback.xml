@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>                                -->
+<configuration>
+    <!-- Errors were reported during translation. -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{ABSOLUTE} %5p %c{1}:%L - %m%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="email" class="com.esofthead.mycollab.configuration.MailAppender">
+        <subject>Error: %logger{20} - %m</subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date %-5level %logger{35} - %message%n</pattern>
+        </layout>
+    </appender>
+    <logger name="org.springframework" level="INFO"></logger>
+    <logger name="com.esofthead" level="INFO"/>
+    <root level="INFO">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="email"/>
+    </root>
+</configuration>
