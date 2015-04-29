@@ -359,14 +359,12 @@
     &:focus {
       background-color: #FFF;
       border-color: #1185DE;
-      box-shadow: 0 0 1px #0a58cd inset;
     }
   }
 
   textarea:focus {
     background-color: #FFF;
     border-color: #1185DE;
-    box-shadow: 0 0 1px #0a58cd inset;
   }
 
   ul {
@@ -974,7 +972,6 @@
     width: 676px;
     margin: 0px auto;
     background-color: white;
-    box-shadow: 0px 4px 4px #c8c8c8;
     border: 1px solid #c8c8c8;
     padding: 0px 0px 30px;
     display:table;
@@ -1103,7 +1100,6 @@
       line-height: 35px !important;
       color: #4a4a4a;
       &.v-textfield-focus {
-        box-shadow: inset 0px 0px 2px #a9c4df;
         border-color: #7ba0cc;
       }
     }
@@ -4557,12 +4553,6 @@
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
-    }
-  }
-
-  .v-ie8 .gantt {
-    .month.even, .day.even {
-      background-color: #ddd;
     }
   }
 

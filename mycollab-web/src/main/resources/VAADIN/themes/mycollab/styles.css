@@ -9288,13 +9288,11 @@ input.noBorderRight {
 input:focus {
 	background-color: #FFF;
 	border-color: #1185DE;
-	box-shadow: 0 0 1px #0a58cd inset;
 }
 
 textarea:focus {
 	background-color: #FFF;
 	border-color: #1185DE;
-	box-shadow: 0 0 1px #0a58cd inset;
 }
 
 ul {
@@ -9899,7 +9897,6 @@ input.v-textfield-errorField {
 	width: 676px;
 	margin: 0px auto;
 	background-color: white;
-	box-shadow: 0px 4px 4px #c8c8c8;
 	border: 1px solid #c8c8c8;
 	padding: 0px 0px 30px;
 	display: table;
@@ -10028,7 +10025,6 @@ input.v-textfield-errorField {
 }
 
 #loginForm input.v-textfield.v-textfield-focus {
-	box-shadow: inset 0px 0px 2px #a9c4df;
 	border-color: #7ba0cc;
 }
 
@@ -13373,10 +13369,6 @@ div.v-csslayout.rightsidebar-layout {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-}
-
-.v-ie8 .gantt .month.even, .v-ie8 .gantt .day.even {
-	background-color: #ddd;
 }
 
 .gantt .month:nth-of-type(even), .gantt .day:nth-of-type(even) {
