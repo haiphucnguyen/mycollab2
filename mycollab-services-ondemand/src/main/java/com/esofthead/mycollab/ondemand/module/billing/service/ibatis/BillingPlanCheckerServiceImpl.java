@@ -38,7 +38,7 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 				.getTotalActiveProjectsInAccount(sAccountId);
 
 		if (numOfActiveProjects >= billingPlan.getNumprojects()) {
-			throw new UsageExceedBillingPlanException();
+			throw new UsageExceedBillingPlanException("Limit project is " + billingPlan.getNumprojects());
 		}
 	}
 
