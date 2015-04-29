@@ -41,6 +41,22 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.5.1
+-----------------------------
+**Library Upgrades**
+
+* Upgrade Vaadin to 7.4.5
+
+**Improvements & New Features**
+
+* Revise the notification window to makes it looks nicer
+
+**Bug Fixes**
+
+* Can not send email in port different 25 in several cases
+* Fix log location
+
+
 Version 5.0.5
 -----------------------------
 **Library Upgrades**

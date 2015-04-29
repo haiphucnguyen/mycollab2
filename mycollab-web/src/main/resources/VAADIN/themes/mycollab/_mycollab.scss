@@ -47,7 +47,7 @@
 
   /* Application background */
 
-  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu {
+  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
     background-color: #92BD84
   }
 
@@ -79,16 +79,9 @@
     }
   }
 
-  .v-filterselect-suggestpopup, .v-datefield-popup, .v-datefield-calendarpanel-header button, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-filterselect-select-button .v-filterselect-input, .v-drag-element {
-    font-size: $font-normal;
-    color: #0D0D0D
-  }
-
   .v-app select, .v-window select, .v-popupview-popup select, .v-datefield-popup select {
     font-size: $font-normal;
   }
-
-
 
   /* Base border color */
 
@@ -150,7 +143,7 @@
 
   /* Background border color */
 
-  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
+  .v-window, .v-filterselect-suggestpopup, .v-contextmenu, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
     border-color: #78976E;
   }
 
@@ -202,7 +195,7 @@
 
   /* Application background */
 
-  .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu {
+  .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
     background-color: white;
     border-radius: 3px;
   }
@@ -218,7 +211,7 @@
     }
   }
 
-  .v-filterselect-suggestpopup, .v-datefield-popup, .v-datefield-calendarpanel-header button, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-filterselect-select-button .v-filterselect-input, .v-drag-element {
+  .v-filterselect-suggestpopup, .v-datefield-popup, .v-datefield-calendarpanel-header button, .v-contextmenu, .v-menubar-submenu, .v-table-header-drag, .v-filterselect-select-button .v-filterselect-input, .v-drag-element {
     font-size: $font-normal;
     color: #525252;
   }
@@ -458,7 +451,7 @@
     }
   }
 
-  .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-menubar-submenu, .v-drag-element {
+  .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-table-header-drag, .v-menubar-submenu, .v-drag-element {
     font: $font-small $font-family !important;
     line-height: normal;
   }
@@ -2184,7 +2177,7 @@
 
   /* Popup Window */
 
-  .v-window, .v-Notification {
+  .v-window {
     background-color: white;
     border-radius: 2px;
   }
@@ -3126,27 +3119,7 @@
   /* Vaadin Notification */
 
   .v-Notification {
-    padding: 0px;
-  }
-
-  .v-Notification-system, .v-Notification-error, .v-Notification-warning, .v-Notification-tray {
-    padding: 1em;
-  }
-
-  .v-Notification {
-    h1 {
-      display: block;
-      width: 100%;
-      background: url('icons/grad-light-top.png') repeat-x left top rgb(228, 228, 228);
-      border-bottom: 1px solid $border-color;
-      font-size: $font-normal;
-      color: rgb(68, 68, 68);
-      padding: 3px 10px;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    &.v-Notification-error h1, &.v-Notification-warning h1, &.v-Notification-tray h1 {
+    &.v-Notification-humanized h1, &.v-Notification-error h1, &.v-Notification-warning h1, &.v-Notification-tray h1 {
       display: inline;
       background: none;
       border: none;
@@ -3160,25 +3133,21 @@
       }
     }
     p {
-      padding: 5px 3px;
+      padding: 5px 10px;
       display: block;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       width: 100%;
     }
-    table {
-      margin: 0px 10px 0px 3px;
-    }
-    #notificationmsg-icon {
-      height: 48px;
-      width: 48px;
-      background: url('icons/48/info.png') no-repeat left top transparent;
-    }
-    #warningmsg-icon {
-      height: 48px;
-      width: 48px;
-      background: url('icons/48/warn.png') no-repeat left top transparent;
+  }
+
+  .v-Notification.humanized {
+    background:none;
+    background-color: darkslategray;
+    box-shadow: none;
+    h1, p {
+      color:white;
     }
   }
 
