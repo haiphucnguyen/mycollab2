@@ -52,7 +52,7 @@ public class NotificationUtil {
 	public static void showNotification(String caption, String description, Type type) {
 		Notification notification = new Notification(caption, description, type);
 		notification.setHtmlContentAllowed(true);
-		notification.setDelayMsec(300000);
+		notification.setDelayMsec(3000);
 
 		if (Page.getCurrent() != null) {
 			notification.show(Page.getCurrent());
