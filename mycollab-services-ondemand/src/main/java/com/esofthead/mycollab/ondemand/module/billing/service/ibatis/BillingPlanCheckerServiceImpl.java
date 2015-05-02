@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.billing.service.BillingService;
@@ -13,6 +9,9 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -38,7 +37,7 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 				.getTotalActiveProjectsInAccount(sAccountId);
 
 		if (numOfActiveProjects >= billingPlan.getNumprojects()) {
-			throw new UsageExceedBillingPlanException("Limit project is " + billingPlan.getNumprojects());
+			throw new UsageExceedBillingPlanException();
 		}
 	}
 
@@ -76,6 +75,5 @@ public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService 
 		if (driveInfo.getUsedvolume() + extraBytes >= billingPlan.getVolume()) {
 			throw new UsageExceedBillingPlanException();
 		}
-
 	}
 }

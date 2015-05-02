@@ -41,6 +41,16 @@ If you need to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.6
+-----------------------------
+**Library Upgrades**
+
+**Improvements & New Features**
+
+**Bug Fixes**
+
+
+
 Version 5.0.5.1
 -----------------------------
 **Library Upgrades**
@@ -55,6 +65,7 @@ Version 5.0.5.1
 
 * Can not send email in port different 25 in several cases
 * Fix log location
+* Exception when get the default user avatar
 
 
 Version 5.0.5

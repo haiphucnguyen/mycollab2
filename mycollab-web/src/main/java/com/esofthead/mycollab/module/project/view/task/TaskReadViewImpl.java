@@ -486,19 +486,24 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
             String avatarLink = StorageManager.getAvatarLink(subTask.getAssignUserAvatarId(), 16);
             Img avatarImg = new Img(subTask.getAssignUserFullName(), avatarLink).setTitle(subTask.getAssignUserFullName());
 
+            Div resultDiv = new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
+                    TooltipHelper.buildDivTooltipEnable(uid));
+
+            if (subTask.getPercentagecomplete() != null && subTask.getPercentagecomplete() > 0) {
+                Div completeTxt = new Div().appendChild(new Text(String.format(" %s%%", subTask.getPercentagecomplete())))
+                        .setStyle("display:inline").setCSSClass("footer2");
+                resultDiv.appendChild(completeTxt);
+                resultDiv.appendChild(completeTxt);
+            }
+
             if (subTask.getDeadline() != null) {
                 Div deadline = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage
                         (TaskI18nEnum.FORM_DEADLINE), AppContext.formatPrettyTime(subTask.getDeadline()))))
                         .setStyle("display:inline").setCSSClass("footer2").setTitle(AppContext.formatDate(subTask.getDeadline()));
 
-                return new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, deadline,
-                        DivLessFormatter.EMPTY_SPACE(),
-                        TooltipHelper.buildDivTooltipEnable(uid)).write();
-            } else {
-                return new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter
-                                .EMPTY_SPACE(),
-                        TooltipHelper.buildDivTooltipEnable(uid)).write();
+                resultDiv.appendChild(deadline);
             }
+            return resultDiv.write();
         }
     }
 

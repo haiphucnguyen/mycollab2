@@ -36,9 +36,7 @@ import java.io.*;
  * 
  */
 @WebServlet(urlPatterns = "/avatar/*", name = "userAvatarFSServlet")
-public class UserAvatarHttpServletRequestHandler extends
-		GenericHttpServlet {
-
+public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
 	private static final Logger LOG = LoggerFactory
 			.getLogger(UserAvatarHttpServletRequestHandler.class);
 
@@ -70,37 +68,35 @@ public class UserAvatarHttpServletRequestHandler extends
 						"Invalid request for avatar " + path));
 				return;
 			}
-		}
 
-		FileStorageConfiguration fileConfiguration = (FileStorageConfiguration) StorageManager
-				.getConfiguration();
-		File avatarFile = fileConfiguration.getAvatarFile(username, size);
-		InputStream avatarInputStream;
-		if (avatarFile != null) {
-			avatarInputStream = new FileInputStream(avatarFile);
-		} else {
-			String userAvatarPath = "assets/icon/default_user_avatar_" + size
-					+ ".png";
-			avatarInputStream = UserAvatarHttpServletRequestHandler.class
-					.getClassLoader().getResourceAsStream(userAvatarPath);
-			if (avatarInputStream == null) {
-				LOG.error("Error to get avatar", new MyCollabException(
-						"Invalid request for avatar " + path));
-				return;
-			}
-		}
+            FileStorageConfiguration fileConfiguration = (FileStorageConfiguration) StorageManager
+                    .getConfiguration();
+            File avatarFile = fileConfiguration.getAvatarFile(username, size);
+            InputStream avatarInputStream;
+            if (avatarFile != null) {
+                avatarInputStream = new FileInputStream(avatarFile);
+            } else {
+                String userAvatarPath = String.format("assets/icons/default_user_avatar_%d.png", size);
+                avatarInputStream = UserAvatarHttpServletRequestHandler.class
+                        .getClassLoader().getResourceAsStream(userAvatarPath);
+                if (avatarInputStream == null) {
+                    LOG.error("Error to get avatar", new MyCollabException(
+                            "Invalid request for avatar " + path));
+                    return;
+                }
+            }
 
-		response.setHeader("Content-Type", "image/png");
-		response.setHeader("Content-Length",
-				String.valueOf(avatarInputStream.available()));
+            response.setHeader("Content-Type", "image/png");
+            response.setHeader("Content-Length", String.valueOf(avatarInputStream.available()));
 
-		try (BufferedInputStream input = new BufferedInputStream(avatarInputStream);
-			 BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream())) {
-			byte[] buffer = new byte[8192];
-			int length;
-			while ((length = input.read(buffer)) > 0) {
-				output.write(buffer, 0, length);
-			}
+            try (BufferedInputStream input = new BufferedInputStream(avatarInputStream);
+                 BufferedOutputStream output = new BufferedOutputStream(response.getOutputStream())) {
+                byte[] buffer = new byte[8192];
+                int length;
+                while ((length = input.read(buffer)) > 0) {
+                    output.write(buffer, 0, length);
+                }
+            }
 		}
 	}
 }
