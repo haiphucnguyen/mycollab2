@@ -1,21 +1,5 @@
 /**
  * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
-/**
- * This file is part of mycollab-web.
  * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,6 +66,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
+import org.vaadin.sliderpanel.SliderPanel;
+import org.vaadin.sliderpanel.client.SliderMode;
+import org.vaadin.sliderpanel.client.SliderTabPosition;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -120,8 +108,20 @@ public final class MainView extends AbstractPageView {
 
     public void addModule(IModule module) {
         ModuleHelper.setCurrentModule(module);
-        this.bodyLayout.removeAllComponents();
-        this.bodyLayout.addComponent(module.getWidget());
+        bodyLayout.removeAllComponents();
+
+        ComponentContainer widget = module.getWidget();
+        bodyLayout.addComponent(widget);
+
+        MVerticalLayout helpContent = new MVerticalLayout();
+        SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
+        Link helpLink = new Link("Help", new ExternalResource("https://www.mycollab.com/help/"));
+        Link supportLink = new Link("Support", new ExternalResource("https://www.mycollab.com/qa/"));
+        Link contactLink = new Link("Contact Us", new ExternalResource("https://www.mycollab.com/contact/"));
+        helpContent.with(helpLink, supportLink, contactLink);
+        topSlider.setCaption("Get Help");
+        topSlider.setTabPosition(SliderTabPosition.MIDDLE);
+        bodyLayout.addComponent(topSlider);
 
         if (ModuleHelper.isCurrentCrmModule()) {
             serviceMenu.selectService(0);

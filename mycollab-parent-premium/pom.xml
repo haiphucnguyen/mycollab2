@@ -11,6 +11,7 @@
         <version>5.0.5</version>
         <relativePath>../mycollab-parent/pom.xml</relativePath>
     </parent>
+    <!--
     <build>
         <plugins>
             <plugin>
@@ -50,4 +51,5 @@
             </plugin>
         </plugins>
     </build>
+    -->
 </project>
