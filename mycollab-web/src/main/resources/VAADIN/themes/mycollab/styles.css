@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.4.4";
+	content: "7.4.5";
 }
 
 .v-generated-body {
@@ -429,6 +429,34 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .v-checkbox input[type="checkbox"]:focus {
 	border: none;
 	box-shadow: none;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical {
+	float: right;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
+	background-color: cadetblue;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab .v-sliderpanel-caption {
+	color: white;
+	text-align: center;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
+	height: 400px;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content .v-icon, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content a {
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content .v-label {
+	color: white;
+	font-size: 11px;
 }
 
 .stickytooltip {
@@ -2596,6 +2624,8 @@ div.v-csslayout {
 	left: 0;
 	right: 0;
 	border: 1px solid #ddd;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	margin-top: -1px;
 	-webkit-box-shadow: 0 0 9px rgba(0, 0, 0, 0.2);
 	-moz-box-shadow: 0 0 9px rgba(0, 0, 0, 0.2);
@@ -7649,6 +7679,34 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .v-checkbox input[type="checkbox"]:focus {
 	border: none;
 	box-shadow: none;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical {
+	float: right;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
+	background-color: cadetblue;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab .v-sliderpanel-caption {
+	color: white;
+	text-align: center;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
+	height: 400px;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content .v-icon, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content a {
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content .v-label {
+	color: white;
+	font-size: 11px;
 }
 
 .crm-module {

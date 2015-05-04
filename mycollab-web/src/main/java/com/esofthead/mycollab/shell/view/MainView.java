@@ -55,7 +55,10 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
-import com.hp.gagawa.java.elements.*;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Text;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.server.ExternalResource;
@@ -63,11 +66,8 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,7 +111,7 @@ public final class MainView extends AbstractPageView {
     }
 
     public void initialize() {
-        ThemeManager.loadUserTheme(AppContext.getAccountId());
+//        ThemeManager.loadUserTheme(AppContext.getAccountId());
     }
 
     public void addModule(IModule module) {
@@ -123,10 +123,15 @@ public final class MainView extends AbstractPageView {
 
         MVerticalLayout helpContent = new MVerticalLayout();
         SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
-        Link helpLink = new Link("Help", new ExternalResource("https://www.mycollab.com/help/"));
-        Link supportLink = new Link("Support", new ExternalResource("https://www.mycollab.com/qa/"));
-        Link contactLink = new Link("Contact Us", new ExternalResource("https://www.mycollab.com/contact/"));
-        helpContent.with(helpLink, supportLink, contactLink);
+        topSlider.addStyleName("helpPanel");
+        Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
+                new A("https://www.mycollab.com/help/", "_blank").appendText("Help")).write(), ContentMode.HTML);
+        Label helpDesc = new Label("AAFEFEWFEWFEWFEWFEWFewffewfewfew");
+        Label supportLink = new Label(new Div().appendChild(new Text(FontAwesome.CHILD.getHtml()), DivLessFormatter.EMPTY_SPACE(),
+                new A("https://www.mycollab.com/qa/", "_blank").appendText("Support")).write(), ContentMode.HTML);
+        Label contactLink = new Label(new Div().appendChild(new Text(FontAwesome.FAX.getHtml()), DivLessFormatter.EMPTY_SPACE(),
+                new A("https://www.mycollab.com/contact/", "_blank").appendText("Contact Us")).write(), ContentMode.HTML);
+        helpContent.with(helpLink, helpDesc, supportLink, contactLink);
         topSlider.setCaption("Get Help");
         topSlider.setTabPosition(SliderTabPosition.MIDDLE);
         bodyLayout.addComponent(topSlider);
@@ -164,15 +169,6 @@ public final class MainView extends AbstractPageView {
         blogLink.setIcon(FontAwesome.RSS);
         blogLink.setTargetName("_blank");
 
-        Link forumLink = new Link("Q&A", new ExternalResource("https://www.mycollab.com/qa/"));
-        forumLink.setTargetName("_blank");
-        forumLink.setIcon(FontAwesome.QUESTION);
-
-        Link wikiLink = new Link("Knowledge Base", new ExternalResource(
-                "https://www.mycollab.com/help/"));
-        wikiLink.setTargetName("_blank");
-        wikiLink.setIcon(FontAwesome.UNIVERSITY);
-
         Button sendFeedback = new Button("Feedback");
         sendFeedback.setStyleName("link");
         sendFeedback.setIcon(FontAwesome.REPLY_ALL);
@@ -195,7 +191,7 @@ public final class MainView extends AbstractPageView {
         Link tweetUs = new Link("Tweet", new ExternalResource("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom &source=webclient"));
         tweetUs.setTargetName("_blank");
         tweetUs.setIcon(FontAwesome.TWITTER);
-        footerRight.with(tweetUs, blogLink, forumLink, wikiLink, sendFeedback);
+        footerRight.with(tweetUs, blogLink, sendFeedback);
         footer.addComponent(footerRight, "footer-right");
         return footer;
     }
@@ -589,7 +585,7 @@ public final class MainView extends AbstractPageView {
             this.setWidth("600px");
 
             MVerticalLayout content = new MVerticalLayout();
-            
+
             this.setContent(content);
         }
     }

@@ -352,4 +352,29 @@
       box-shadow: none;
     }
   }
+
+  .helpPanel .v-sliderpanel-wrapper.layout-vertical {
+    float:right;
+    .v-sliderpanel-tab, .v-sliderpanel-content {
+      background-color: cadetblue;
+    }
+
+    .v-sliderpanel-tab .v-sliderpanel-caption {
+      color:white;
+      text-align:center;
+    }
+
+    .v-sliderpanel-content {
+      height: 400px;
+      .v-icon, a {
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .v-label {
+        color: white;
+        font-size: 11px;
+      }
+    }
+  }
 }
