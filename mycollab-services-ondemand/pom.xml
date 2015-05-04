@@ -84,4 +84,33 @@
             </exclusions>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.2</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysqlVersion}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.esofthead.mycollab</groupId>
+                        <artifactId>mycollab-tool</artifactId>
+                        <version>1.0.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <!--
+                    <execution> <id>Demand Artifacts Generator</id> <phase>validate</phase>
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/DemandGeneratorConfig.xml</configurationFile>
+                        <overwrite>true</overwrite> </configuration> </execution>
+                        -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -29,13 +29,16 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.events.SessionEvent;
 import com.esofthead.mycollab.events.SessionEvent.UserProfileChangeEvent;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserPreference;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -52,6 +55,7 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
+import com.hp.gagawa.java.elements.*;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.server.ExternalResource;
@@ -59,8 +63,11 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,6 +84,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Properties;
 
 /**
@@ -140,27 +148,23 @@ public final class MainView extends AbstractPageView {
         footer.setWidth("100%");
         footer.setHeightUndefined();
 
-        Link companyLink = new Link("eSoftHead", new ExternalResource(
-                "http://www.esofthead.com"));
+        Link companyLink = new Link("eSoftHead", new ExternalResource("http://www.esofthead.com"));
         companyLink.setTargetName("_blank");
 
         footer.addComponent(companyLink, "company-url");
 
         Calendar currentCal = Calendar.getInstance();
-        Label currentYear = new Label(String.valueOf(currentCal
-                .get(Calendar.YEAR)));
+        Label currentYear = new Label(String.valueOf(currentCal.get(Calendar.YEAR)));
         currentYear.setSizeUndefined();
         footer.addComponent(currentYear, "current-year");
 
         MHorizontalLayout footerRight = new MHorizontalLayout();
 
-        Link blogLink = new Link("Blog", new ExternalResource(
-                "https://www.mycollab.com/blog"));
+        Link blogLink = new Link("Blog", new ExternalResource("https://www.mycollab.com/blog"));
         blogLink.setIcon(FontAwesome.RSS);
         blogLink.setTargetName("_blank");
 
-        Link forumLink = new Link("Q&A", new ExternalResource(
-                "https://www.mycollab.com/qa/"));
+        Link forumLink = new Link("Q&A", new ExternalResource("https://www.mycollab.com/qa/"));
         forumLink.setTargetName("_blank");
         forumLink.setIcon(FontAwesome.QUESTION);
 
@@ -182,13 +186,16 @@ public final class MainView extends AbstractPageView {
         });
 
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
-            Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge" +
-                    ".net/projects/mycollab/reviews/new"));
+            Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge.net/projects/mycollab/reviews/new"));
             rateUsLink.setTargetName("_blank");
             rateUsLink.setIcon(FontAwesome.THUMBS_O_UP);
             footerRight.with(rateUsLink);
         }
-        footerRight.with(blogLink, forumLink, wikiLink, sendFeedback);
+
+        Link tweetUs = new Link("Tweet", new ExternalResource("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom &source=webclient"));
+        tweetUs.setTargetName("_blank");
+        tweetUs.setIcon(FontAwesome.TWITTER);
+        footerRight.with(tweetUs, blogLink, forumLink, wikiLink, sendFeedback);
         footer.addComponent(footerRight, "footer-right");
         return footer;
     }
@@ -324,26 +331,18 @@ public final class MainView extends AbstractPageView {
             int daysLeft = (int) Math.floor(timeDeviation
                     / (1000 * 60 * 60 * 24));
             if (daysLeft > 30) {
-                BillingService billingService = ApplicationContextUtil
-                        .getSpringBean(BillingService.class);
-                BillingPlan freeBillingPlan = billingService
-                        .getFreeBillingPlan();
+                BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
+                BillingPlan freeBillingPlan = billingService.getFreeBillingPlan();
                 billingAccount.setBillingPlan(freeBillingPlan);
-
-                informLbl
-                        .setValue("<div class='informBlock'>TRIAL ENDING<br>"
-                                + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
+                informLbl.setValue("<div class='informBlock'>TRIAL ENDING<br>"
+                        + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
             } else {
                 if (AppContext.isAdmin()) {
                     informLbl
-                            .setValue("<div class='informBlock'>TRIAL ENDING<br>"
-                                    + (30 - daysLeft)
-                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
+                            .setValue(String.format("<div class='informBlock'>TRIAL ENDING<br>%d DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
                 } else {
                     informLbl
-                            .setValue("<div class='informBlock'>TRIAL ENDING<br>"
-                                    + (30 - daysLeft)
-                                    + " DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
+                            .setValue(String.format("<div class='informBlock'>TRIAL ENDING<br>%d DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>", 30 - daysLeft));
                 }
             }
         }
@@ -393,6 +392,13 @@ public final class MainView extends AbstractPageView {
                 EventBusFactory.getInstance().post(
                         new ShellEvent.NewNotification(this,
                                 new SmtpSetupNotification()));
+            }
+
+            SimpleUser user = AppContext.getUser();
+            GregorianCalendar tenDaysAgo = new GregorianCalendar();
+            tenDaysAgo.add(Calendar.DATE, -10);
+            if (user.getRequestad() != null && user.getRequestad() == Boolean.TRUE && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
+                UI.getCurrent().addWindow(new AdRequestWindow(user));
             }
         }
 
@@ -497,8 +503,95 @@ public final class MainView extends AbstractPageView {
         accountLayout.addComponent(accountMenu);
 
         layout.addComponent(accountLayout, "accountMenu");
-
         return layout;
+    }
+
+    private static class AdRequestWindow extends Window {
+        AdRequestWindow(final SimpleUser user) {
+            super("Need help!");
+            this.setModal(true);
+            this.setResizable(false);
+            this.setWidth("600px");
+
+            MVerticalLayout content = new MVerticalLayout();
+
+            Label message = new Label("Our development team has spent more than <b>80 man years effort of development</b> (the real number) to give this product free to you. " +
+                    "If you like our app, please be sure to spread it to the world. It just takes you few minutes for this kindness action. <b>Your help will encourage us to continue develop MyCollab" +
+                    " for free </b> and others have a chance to use an useful app as well", ContentMode.HTML);
+
+            Div prjStatusLink = new Div().appendChild(new A("https://www.openhub.net/p/mycollab", "_blank")
+                    .appendChild(new Img("", "https://www.openhub.net/p/mycollab/widgets/project_thin_badge.gif")));
+            Label prjStatus = new Label(prjStatusLink.write(), ContentMode.HTML);
+
+            MVerticalLayout shareControls = new MVerticalLayout();
+            Label rateSourceforge = new Label(new Div().appendChild(new Text(FontAwesome.THUMBS_O_UP.getHtml()), DivLessFormatter.EMPTY_SPACE(), new A("http://sourceforge.net/projects/mycollab/reviews/new", "_blank")
+                    .appendText("Rate us on Sourceforge")).setStyle("color:#006dac").write(), ContentMode.HTML);
+
+            Label tweetUs = new Label(new Div().appendChild(new Text(FontAwesome.TWITTER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
+            new A("https://twitter.com/intent/tweet?text=Im using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom&source=webclient", "_blank")
+                    .appendText("Share on Twitter")).setStyle("color:#006dac").write(), ContentMode.HTML);
+
+            Label linkedIn = new Label(new Div().appendChild(new Text(FontAwesome.LINKEDIN_SQUARE.getHtml()), DivLessFormatter.EMPTY_SPACE(),
+                    new A("https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.mycollab.com&original_referer=https%3A%2F%2Fwww.mycollab.com&token=&isFramed=false&lang=en_US", "_blank")
+            .appendText("Share on LinkedIn")).setStyle("color:#006dac").write(), ContentMode.HTML);
+
+            Button testimonialBtn = new Button("Write a testimonial (We will bring it on our website)", new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    AdRequestWindow.this.close();
+                    turnOffAdd(user);
+                    UI.getCurrent().addWindow(new TestimonialWindow());
+                }
+            });
+            testimonialBtn.setStyleName(UIConstants.THEME_LINK);
+            testimonialBtn.setIcon(FontAwesome.KEYBOARD_O);
+
+            shareControls.with(rateSourceforge, tweetUs, linkedIn, testimonialBtn);
+
+            MHorizontalLayout btnControls = new MHorizontalLayout();
+            Button ignoreBtn = new Button("Ignore", new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    AdRequestWindow.this.close();
+                    turnOffAdd(user);
+                }
+            });
+            ignoreBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+
+            Button loveBtn = new Button("I did", new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    AdRequestWindow.this.close();
+                    turnOffAdd(user);
+                }
+            });
+            loveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            loveBtn.setIcon(FontAwesome.HEART);
+
+            btnControls.with(loveBtn, ignoreBtn);
+
+            content.with(message, prjStatus, shareControls, btnControls).withAlign(btnControls, Alignment.MIDDLE_RIGHT);
+            this.setContent(content);
+        }
+
+        private void turnOffAdd(SimpleUser user) {
+            user.setRequestad(false);
+            UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+            userService.updateSelectiveWithSession(user, AppContext.getUsername());
+        }
+    }
+
+    private static class TestimonialWindow extends Window {
+        TestimonialWindow() {
+            super("Thank you! We appreciate your help !");
+            this.setModal(true);
+            this.setResizable(false);
+            this.setWidth("600px");
+
+            MVerticalLayout content = new MVerticalLayout();
+            
+            this.setContent(content);
+        }
     }
 
     private static class UserAvatarComp extends CssLayout {

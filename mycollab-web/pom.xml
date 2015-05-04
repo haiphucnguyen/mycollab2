@@ -318,6 +318,12 @@
             <artifactId>resteasy-client</artifactId>
             <version>3.0.9.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>jaxrs-api</artifactId>
+            <version>3.0.9.Final</version>
+        </dependency>
     </dependencies>
 
     <profiles>
