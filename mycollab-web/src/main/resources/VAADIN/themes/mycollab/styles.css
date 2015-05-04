@@ -431,6 +431,18 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
+.helpPanel {
+	right: 0;
+	z-index: 10;
+	margin: 100px auto;
+	position: absolute;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical {
+	height: 300px;
+	margin: 100px auto;
+}
+
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
 	background-color: cadetblue;
 }
@@ -7673,6 +7685,18 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
+.helpPanel {
+	right: 0;
+	z-index: 10;
+	margin: 100px auto;
+	position: absolute;
+}
+
+.helpPanel .v-sliderpanel-wrapper.layout-vertical {
+	height: 300px;
+	margin: 100px auto;
+}
+
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
 	background-color: cadetblue;
 }
@@ -8117,8 +8141,18 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 .project-module {
-	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
 	min-height: 100%;
+}
+
+.project-module .page-view.v-margin-left, .accountViewContainer .page-view.v-margin-left {
+	padding-left: 30px;
+}
+
+.project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
+	padding-right: 30px;
 }
 
 .projectDashboardView {
@@ -11232,10 +11266,18 @@ div.v-lazyloadingwrapper-loading {
 	margin-top: 0px !important;
 }
 
-.main-body {
+.main-view {
 	overflow-y: auto;
 	background-color: #FFF;
 	position: relative;
+}
+
+div.v-csslayout.main-body {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
 }
 
 .v-sliderpanel-wrapper .v-sliderpanel-content {
@@ -12757,14 +12799,6 @@ img.icon-btn {
 .v-buttongroup.navigation-btns .v-button-caption {
 	font-size: 16px;
 	font-weight: bold;
-}
-
-.project-module .page-view.v-margin-left, .accountViewContainer .page-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
-	padding-right: 30px;
 }
 
 div.v-csslayout.bean-block {

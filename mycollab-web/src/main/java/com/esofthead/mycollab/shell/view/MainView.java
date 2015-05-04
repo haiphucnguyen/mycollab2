@@ -104,7 +104,7 @@ public final class MainView extends AbstractPageView {
         this.setSizeFull();
         ControllerRegistry.addController(new MainViewController(this));
         bodyLayout = new CssLayout();
-        bodyLayout.addStyleName("main-body");
+        bodyLayout.addStyleName("main-view");
         bodyLayout.setSizeFull();
         this.with(createTopMenu(), bodyLayout, createFooter()).expand(bodyLayout);
     }
@@ -124,15 +124,15 @@ public final class MainView extends AbstractPageView {
         SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
         topSlider.addStyleName("helpPanel");
         Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("https://www.mycollab.com/help/", "_blank").appendText("Help")).write(), ContentMode.HTML);
+                new A("https://www.mycollab.com/help/", "_blank").appendText("Knowledge Base >>")).write(), ContentMode.HTML);
         Label helpDesc = new Label("Our detail guidance on how to use MyCollab features. All common questions are " +
                 "raised and clarified");
         Label supportLink = new Label(new Div().appendChild(new Text(FontAwesome.CHILD.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("https://www.mycollab.com/qa/", "_blank").appendText("Support")).write(), ContentMode.HTML);
+                new A("https://www.mycollab.com/qa/", "_blank").appendText("Support >>")).write(), ContentMode.HTML);
         Label supportDesc = new Label("If you have any issue that could not be found the answer. Please send your " +
                 "question to us. All questions will be answered without 1 business day");
         Label contactLink = new Label(new Div().appendChild(new Text(FontAwesome.FAX.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("https://www.mycollab.com/contact/", "_blank").appendText("Contact Us")).write(), ContentMode.HTML);
+                new A("https://www.mycollab.com/contact/", "_blank").appendText("Contact Us >>")).write(), ContentMode.HTML);
         Label contactDesc = new Label("All other questions such as white branding, partnership or custom development " +
                 "should be sent to our sales team. They will get back to you very soon");
         helpContent.with(helpLink, helpDesc, supportLink, supportDesc, contactLink, contactDesc);

@@ -2314,7 +2314,7 @@
 
   /* Main body */
 
-  .main-body {
+  .main-view {
     overflow-y: auto;
     background-color: #FFF;
     position: relative;
@@ -3907,16 +3907,6 @@
   .v-buttongroup.navigation-btns .v-button-caption {
     font-size: $font-larger;
     font-weight: bold;
-  }
-
-  /* Project Page View */
-
-  .project-module .page-view.v-margin-left, .accountViewContainer .page-view.v-margin-left {
-    padding-left: 30px;
-  }
-
-  .project-module .page-view.v-margin-right, .accountViewContainer .page-view.v-margin-right {
-    padding-right: 30px;
   }
 
   /* Bean Block List */

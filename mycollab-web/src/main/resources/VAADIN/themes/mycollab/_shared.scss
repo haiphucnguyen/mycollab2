@@ -353,7 +353,16 @@
     }
   }
 
+  .helpPanel {
+    right: 0;
+    z-index:10;
+    margin: 100px auto;
+    position: absolute;
+  }
+
   .helpPanel .v-sliderpanel-wrapper.layout-vertical {
+    height: 300px;
+    margin: 100px auto;
     .v-sliderpanel-tab, .v-sliderpanel-content {
       background-color: cadetblue;
     }
