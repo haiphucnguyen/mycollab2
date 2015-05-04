@@ -431,10 +431,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
-.helpPanel .v-sliderpanel-wrapper.layout-vertical {
-	float: right;
-}
-
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
 	background-color: cadetblue;
 }
@@ -442,10 +438,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab .v-sliderpanel-caption {
 	color: white;
 	text-align: center;
-}
-
-.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
-	height: 400px;
 }
 
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content .v-icon, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content a {
@@ -7681,10 +7673,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
-.helpPanel .v-sliderpanel-wrapper.layout-vertical {
-	float: right;
-}
-
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
 	background-color: cadetblue;
 }
@@ -7692,10 +7680,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab .v-sliderpanel-caption {
 	color: white;
 	text-align: center;
-}
-
-.helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
-	height: 400px;
 }
 
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content .v-icon, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content a {
@@ -11252,14 +11236,6 @@ div.v-lazyloadingwrapper-loading {
 	overflow-y: auto;
 	background-color: #FFF;
 	position: relative;
-}
-
-div.v-csslayout.main-body {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
 }
 
 .v-sliderpanel-wrapper .v-sliderpanel-content {

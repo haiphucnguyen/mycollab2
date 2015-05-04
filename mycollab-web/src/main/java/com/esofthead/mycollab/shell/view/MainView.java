@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- * <p>
+ *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p>
+ *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * <p>
+ *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -105,7 +105,6 @@ public final class MainView extends AbstractPageView {
         ControllerRegistry.addController(new MainViewController(this));
         bodyLayout = new CssLayout();
         bodyLayout.addStyleName("main-body");
-        bodyLayout.setId("main-body");
         bodyLayout.setSizeFull();
         this.with(createTopMenu(), bodyLayout, createFooter()).expand(bodyLayout);
     }
@@ -121,17 +120,22 @@ public final class MainView extends AbstractPageView {
         ComponentContainer widget = module.getWidget();
         bodyLayout.addComponent(widget);
 
-        MVerticalLayout helpContent = new MVerticalLayout();
+        MVerticalLayout helpContent = new MVerticalLayout().withWidth("250px");
         SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
         topSlider.addStyleName("helpPanel");
         Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/help/", "_blank").appendText("Help")).write(), ContentMode.HTML);
-        Label helpDesc = new Label("AAFEFEWFEWFEWFEWFEWFewffewfewfew");
+        Label helpDesc = new Label("Our detail guidance on how to use MyCollab features. All common questions are " +
+                "raised and clarified");
         Label supportLink = new Label(new Div().appendChild(new Text(FontAwesome.CHILD.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/qa/", "_blank").appendText("Support")).write(), ContentMode.HTML);
+        Label supportDesc = new Label("If you have any issue that could not be found the answer. Please send your " +
+                "question to us. All questions will be answered without 1 business day");
         Label contactLink = new Label(new Div().appendChild(new Text(FontAwesome.FAX.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/contact/", "_blank").appendText("Contact Us")).write(), ContentMode.HTML);
-        helpContent.with(helpLink, helpDesc, supportLink, contactLink);
+        Label contactDesc = new Label("All other questions such as white branding, partnership or custom development " +
+                "should be sent to our sales team. They will get back to you very soon");
+        helpContent.with(helpLink, helpDesc, supportLink, supportDesc, contactLink, contactDesc);
         topSlider.setCaption("Get Help");
         topSlider.setTabPosition(SliderTabPosition.MIDDLE);
         bodyLayout.addComponent(topSlider);

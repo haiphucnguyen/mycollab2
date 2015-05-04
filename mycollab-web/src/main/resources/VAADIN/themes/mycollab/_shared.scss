@@ -354,7 +354,6 @@
   }
 
   .helpPanel .v-sliderpanel-wrapper.layout-vertical {
-    float:right;
     .v-sliderpanel-tab, .v-sliderpanel-content {
       background-color: cadetblue;
     }
@@ -365,7 +364,6 @@
     }
 
     .v-sliderpanel-content {
-      height: 400px;
       .v-icon, a {
         color: white;
         font-size: 14px;
