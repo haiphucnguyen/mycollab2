@@ -431,10 +431,10 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
-.helpPanel {
+.v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
-	margin: 100px auto;
+	margin: 80px auto;
 	position: absolute;
 }
 
@@ -7685,10 +7685,10 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
-.helpPanel {
+.v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
-	margin: 100px auto;
+	margin: 80px auto;
 	position: absolute;
 }
 

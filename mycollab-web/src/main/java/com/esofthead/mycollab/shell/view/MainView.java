@@ -118,6 +118,7 @@ public final class MainView extends AbstractPageView {
 
         MVerticalLayout helpContent = new MVerticalLayout().withWidth("250px");
         SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
+        topSlider.setHeight("300px");
         topSlider.addStyleName("helpPanel");
         Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/help/", "_blank").appendText("Knowledge Base >>")).write(), ContentMode.HTML);
@@ -125,7 +126,7 @@ public final class MainView extends AbstractPageView {
                 "raised and answered");
         Label supportLink = new Label(new Div().appendChild(new Text(FontAwesome.CHILD.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/qa/", "_blank").appendText("Support >>")).write(), ContentMode.HTML);
-        Label supportDesc = new Label("If you have any issue that could not be found the answer. Please send your " +
+        Label supportDesc = new Label("If you have any issue that could not be found the answer, please send your " +
                 "question to us. All questions will be answered without 1 business day");
         Label contactLink = new Label(new Div().appendChild(new Text(FontAwesome.FAX.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/contact/", "_blank").appendText("Contact Us >>")).write(), ContentMode.HTML);

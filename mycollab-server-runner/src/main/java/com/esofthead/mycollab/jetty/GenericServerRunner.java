@@ -236,6 +236,9 @@ public abstract class GenericServerRunner {
     private static void unpackFile(File upgradeFile) throws IOException {
         File libFolder = new File(System.getProperty("user.dir"), "lib");
         File webappFolder = new File(System.getProperty("user.dir"), "webapp");
+        assertFolderWritePermission(libFolder);
+        assertFolderWritePermission(webappFolder);
+
         org.apache.commons.io.FileUtils.deleteDirectory(libFolder);
         org.apache.commons.io.FileUtils.deleteDirectory(webappFolder);
 
@@ -256,6 +259,13 @@ public abstract class GenericServerRunner {
                     }
                 }
             }
+        }
+    }
+
+    private static void assertFolderWritePermission(File folder) throws IOException {
+        if (!folder.canWrite()) {
+            throw new IOException(System.getProperty("user.name") + " does not have write permission on folder " + folder.getAbsolutePath()
+            + ". The upgrade could not be proceeded. Please correct permission before you upgrade MyCollab again");
         }
     }
 
