@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author MyCollab Ltd.
- * @since 5.6.0
+ * @since 5.0.6
  */
 @Service
 public class TestimonialServiceImpl extends DefaultCrudService<Integer, Testimonial> implements TestimonialService {

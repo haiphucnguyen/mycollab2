@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.support.domain.Testimonial;
 
 /**
  * @author MyCollab Ltd.
- * @since 5.6.0
+ * @since 5.0.6
  */
 public interface TestimonialService extends ICrudService<Integer, Testimonial> {
 }

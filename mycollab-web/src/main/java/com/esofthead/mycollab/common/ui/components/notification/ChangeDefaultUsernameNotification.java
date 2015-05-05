@@ -12,7 +12,7 @@ import com.vaadin.ui.Label;
 
 /**
  * @author MyCollab Ltd.
- * @since 5.6.0
+ * @since 5.0.6
  */
 public class ChangeDefaultUsernameNotification  extends AbstractNotification {
 
@@ -25,8 +25,7 @@ public class ChangeDefaultUsernameNotification  extends AbstractNotification {
         Span spanEl = new Span();
         spanEl.appendText("You use the default username is admin@mycollab.com. You should change it at ");
 
-        A link = new A(AccountLinkGenerator.generateFullProfileLink(AppContext
-                .getSiteUrl()));
+        A link = new A(AccountLinkGenerator.generateFullProfileLink(AppContext.getSiteUrl()));
         link.appendText("here");
         spanEl.appendChild(link);
         return new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);

@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 /**
  * @author MyCollab Ltd.
- * @since 5.6.0
+ * @since 5.0.6
  */
 @Path("/testimonial")
 public interface TestimonialResource {

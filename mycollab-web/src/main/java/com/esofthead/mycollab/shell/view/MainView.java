@@ -210,20 +210,16 @@ public final class MainView extends AbstractPageView {
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                final UserPreference pref = AppContext.getUserPreference();
+                UserPreference pref = AppContext.getUserPreference();
                 if (pref.getLastmodulevisit() == null
                         || ModuleNameConstants.PRJ.equals(pref.getLastmodulevisit())) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoProjectModule(this, null));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                 } else if (ModuleNameConstants.CRM.equals(pref.getLastmodulevisit())) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoCrmModule(this, null));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
                 } else if (ModuleNameConstants.ACCOUNT.equals(pref.getLastmodulevisit())) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoUserAccountModule(this, null));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, null));
                 } else if (ModuleNameConstants.FILE.equals(pref.getLastmodulevisit())) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoFileModule(this, null));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
                 }
             }
         });

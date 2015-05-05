@@ -5,7 +5,7 @@ import javax.ws.rs.client.ClientBuilder;
 
 /**
  * @author MyCollab Ltd
- * @since 5.6.0
+ * @since 5.0.6
  */
 public class TestimonialForm {
     ClientBuilder a;
