@@ -25,7 +25,7 @@
 #                   used
 # -----------------------------------------------------------------------------
 
-export MYCOLLAB_OPTS="-Xms3000m -Xmx6000m -XX:NewSize=1024m -XX:MaxPermSize=512m -XX:+DisableExplicitGC -XX:-UseConcMarkSweepGC -javaagent:newrelic/newrelic.jar"
+export MYCOLLAB_OPTS="-Xms3000m -Xmx6000m -XX:NewSize=1024m -XX:MaxPermSize=512m -XX:+DisableExplicitGC -XX:-UseConcMarkSweepGC -javaagent:dripstat/dripstat.jar"
 export MYCOLLAB_PORT=8080
 
 # OS specific support.  $var _must_ be set to either true or false.

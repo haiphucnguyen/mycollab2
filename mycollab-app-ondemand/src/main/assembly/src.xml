@@ -59,8 +59,8 @@
         </fileSet>
         
         <fileSet>
-            <directory>src/main/newrelic</directory>
-            <outputDirectory>newrelic</outputDirectory>
+            <directory>src/main/dripstat</directory>
+            <outputDirectory>dripstat</outputDirectory>
             <includes>
                 <include>**/*</include>
             </includes>
