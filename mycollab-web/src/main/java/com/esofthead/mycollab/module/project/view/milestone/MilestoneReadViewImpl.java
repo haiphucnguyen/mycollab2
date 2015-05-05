@@ -272,7 +272,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
             navButton.addButton(chartBtn);
 
-            header.with(openSelection, overdueSelection, spacingLbl1, taskSelection, bugSelection, spacingLbl2, navButton)
+            header.with(openSelection, overdueSelection, spacingLbl1, taskSelection, bugSelection, spacingLbl2)
                     .withAlign(openSelection, Alignment.MIDDLE_LEFT).withAlign(overdueSelection, Alignment.MIDDLE_LEFT)
                     .withAlign(taskSelection, Alignment.MIDDLE_LEFT).withAlign(bugSelection, Alignment.MIDDLE_LEFT)
                     .withAlign(navButton, Alignment.MIDDLE_RIGHT).expand(spacingLbl1, spacingLbl2);
