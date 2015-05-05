@@ -57,7 +57,6 @@ import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
@@ -110,7 +109,7 @@ public final class MainView extends AbstractPageView {
     }
 
     public void initialize() {
-//        ThemeManager.loadUserTheme(AppContext.getAccountId());
+        ThemeManager.loadUserTheme(AppContext.getAccountId());
     }
 
     public void addModule(IModule module) {
@@ -515,13 +514,9 @@ public final class MainView extends AbstractPageView {
 
             MVerticalLayout content = new MVerticalLayout();
 
-            Label message = new Label("Our development team has spent more than <b>80 man years effort of development</b> (the real number) to give this product free to you. " +
+            Label message = new Label("Our development team has spent more than <b>65 man years effort of development</b> (the real number) to give this product free to you. " +
                     "If you like our app, please be sure to spread it to the world. It just takes you few minutes for this kindness action. <b>Your help will encourage us to continue develop MyCollab" +
                     " for free </b> and others have a chance to use an useful app as well", ContentMode.HTML);
-
-            Div prjStatusLink = new Div().appendChild(new A("https://www.openhub.net/p/mycollab", "_blank")
-                    .appendChild(new Img("", "https://www.openhub.net/p/mycollab/widgets/project_thin_badge.gif")));
-            Label prjStatus = new Label(prjStatusLink.write(), ContentMode.HTML);
 
             MVerticalLayout shareControls = new MVerticalLayout();
             Label rateSourceforge = new Label(new Div().appendChild(new Text(FontAwesome.THUMBS_O_UP.getHtml()), DivLessFormatter.EMPTY_SPACE(), new A("http://sourceforge.net/projects/mycollab/reviews/new", "_blank")
@@ -562,6 +557,7 @@ public final class MainView extends AbstractPageView {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     AdRequestWindow.this.close();
+                    NotificationUtil.showNotification("We appreciate your action", "Thank you for your time");
                     turnOffAdd(user);
                 }
             });
@@ -570,7 +566,7 @@ public final class MainView extends AbstractPageView {
 
             btnControls.with(loveBtn, ignoreBtn);
 
-            content.with(message, prjStatus, shareControls, btnControls).withAlign(btnControls, Alignment.MIDDLE_RIGHT);
+            content.with(message, shareControls, btnControls).withAlign(btnControls, Alignment.MIDDLE_RIGHT);
             this.setContent(content);
         }
 

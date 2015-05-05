@@ -69,7 +69,7 @@ h3 {
 				</div>
 				<hr size="1" style="margin: 1px 0 20px 0; ">
 				<div id="title">
-					<h3>Welcome to MyCollab setup wizard. This is the first time you run your software. Just fill in the information below to complete the installation process.<span style="font-style:italic; font-size:20px;"></span><h3>
+					<h3>Welcome to MyCollab setup wizard. Just fill in the information below to complete the installation process.<span style="font-style:italic; font-size:20px;"></span><h3>
 				</div>
 				<hr size="1" style="margin: 20px 0 1px 0; ">
 				<div id="mainContent">
@@ -403,22 +403,14 @@ h3 {
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
 		      	 	    $('#post').html('<span>Update & Go</span>');
-                        alert(data);
-		      	 		/*if (data == "smtpError")
-		      	 		{
-		      	 			alert("Something was wrong with SMTP parameters. You should check them again or You can change your config later in mycollab.properties.");
-		      	 			$('#post').html('<span>Update & Go</span>');
-		      	 			window.location.assign("/");
-		      	 		}
-		      	 		else {
-		      	 		    $('#post').html('<span>Update & Go</span>');
-		      	 			alert(data);
-		      	 		}*/
 		      	 		
 		      	 	}else{
 		      	 		alert("Setup is completed successfully. Redirect to the app?");
 		      	 		$('#post').html('<span>Update & Go</span>');
-		      	 		window.location.assign("/");
+		      	 		if (location.port != "") {
+		      	 		  alert(location.protocol + " " + location.port + "  " + serverAddress.value);
+		      	 		}
+		      	 		window.location.assign(location.protocol + ":/" + serverAddress.value + (location.port != "")? (":" + localtion.port) : "");
 		      	 	}
 		      	 }
 		      }
