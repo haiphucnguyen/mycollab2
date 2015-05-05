@@ -493,7 +493,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                 Div completeTxt = new Div().appendChild(new Text(String.format(" %s%%", subTask.getPercentagecomplete())))
                         .setStyle("display:inline").setCSSClass("footer2");
                 resultDiv.appendChild(completeTxt);
-                resultDiv.appendChild(completeTxt);
             }
 
             if (subTask.getDeadline() != null) {
