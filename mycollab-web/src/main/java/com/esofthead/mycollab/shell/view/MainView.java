@@ -353,7 +353,7 @@ public final class MainView extends AbstractPageView {
                 Gson gson = new Gson();
                 Properties props = gson.fromJson(values, Properties.class);
                 String version = props.getProperty("version");
-                if (!MyCollabVersion.getVersion().equals(version)) {
+                if (!MyCollabVersion.isEditionNewer(version)) {
                     if (AppContext.isAdmin()) {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                     } else {

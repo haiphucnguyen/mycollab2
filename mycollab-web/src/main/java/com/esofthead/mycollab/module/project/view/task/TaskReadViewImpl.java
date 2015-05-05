@@ -514,8 +514,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
             this.withMargin(new MarginInfo(false, false, false, true));
 
             Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
-                    AppContext
-                            .getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
+                    AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 
@@ -524,26 +523,21 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
-                Label createdLbl = new Label(
-                        AppContext
+                Label createdLbl = new Label(AppContext
                                 .getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
-                String createdUserName = (String) PropertyUtils.getProperty(
-                        bean, "logby");
-                String createdUserAvatarId = (String) PropertyUtils
-                        .getProperty(bean, "logByAvatarId");
-                String createdUserDisplayName = (String) PropertyUtils
-                        .getProperty(bean, "logByFullName");
+                String createdUserName = (String) PropertyUtils.getProperty(bean, "logby");
+                String createdUserAvatarId = (String) PropertyUtils.getProperty(bean, "logByAvatarId");
+                String createdUserDisplayName = (String) PropertyUtils.getProperty(bean, "logByFullName");
 
                 ProjectMemberLink createdUserLink = new ProjectMemberLink(createdUserName,
                         createdUserAvatarId, createdUserDisplayName);
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
 
-                Label assigneeLbl = new Label(
-                        AppContext
+                Label assigneeLbl = new Label(AppContext
                                 .getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);
