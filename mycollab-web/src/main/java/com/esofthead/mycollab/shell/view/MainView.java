@@ -42,6 +42,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.view.components.AboutWindow;
 import com.esofthead.mycollab.shell.view.components.UpgradeConfirmWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.support.domain.TestimonialForm;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -376,8 +377,10 @@ public final class MainView extends AbstractPageView {
             tenDaysAgo.add(Calendar.DATE, -10);
             if (user.getRequestad() != null && user.getRequestad() == Boolean.TRUE &&
                     user.getRegisteredtime().before(tenDaysAgo.getTime())) {
-                UI.getCurrent().addWindow(new AdRequestWindow(user));
+//                UI.getCurrent().addWindow(new AdRequestWindow(user));
             }
+
+            UI.getCurrent().addWindow(new AdRequestWindow(user));
         }
 
         UserAvatarComp userAvatar = new UserAvatarComp();
@@ -484,7 +487,8 @@ public final class MainView extends AbstractPageView {
 
             MVerticalLayout content = new MVerticalLayout();
 
-            Label message = new Label("Our development team has spent more than <b>65 man years effort of development</b> (the real number) to give this product free to you. " +
+            Label message = new Label("Our development team has spent more than <b>65 man years development " +
+                    "effort</b> (the real number) to give this product free to you. " +
                     "If you like our app, please be sure to spread it to the world. It just takes you few minutes for this kindness action. <b>Your help will encourage us to continue develop MyCollab" +
                     " for free </b> and others have a chance to use an useful app as well", ContentMode.HTML);
 
@@ -527,7 +531,7 @@ public final class MainView extends AbstractPageView {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     AdRequestWindow.this.close();
-                    NotificationUtil.showNotification("We appreciate your action", "Thank you for your time");
+                    NotificationUtil.showNotification("We appreciate your kindness action", "Thank you for your time");
                     turnOffAdd(user);
                 }
             });
@@ -556,6 +560,30 @@ public final class MainView extends AbstractPageView {
 
             MVerticalLayout content = new MVerticalLayout();
 
+            TestimonialForm entity =  new TestimonialForm();
+            AdvancedEditBeanForm<TestimonialForm> editForm = new AdvancedEditBeanForm<>();
+            editForm.setFormLayoutFactory(new IFormLayoutFactory() {
+                @Override
+                public ComponentContainer getLayout() {
+                    return null;
+                }
+
+                @Override
+                public void attachField(Object propertyId, Field<?> field) {
+
+                }
+            });
+            editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<TestimonialForm>(editForm) {
+                @Override
+                protected Field<?> onCreateField(Object propertyId) {
+                    return null;
+                }
+            });
+            editForm.setBean(entity);
+            content.addComponent(editForm);
+
+            MHorizontalLayout buttonControls =  new MHorizontalLayout();
+            content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             this.setContent(content);
         }
     }
