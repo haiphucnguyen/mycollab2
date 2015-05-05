@@ -440,7 +440,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .helpPanel .v-sliderpanel-wrapper.layout-vertical {
 	height: 300px;
-	margin: 100px auto;
+	margin: 80px auto;
 }
 
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
@@ -7694,7 +7694,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .helpPanel .v-sliderpanel-wrapper.layout-vertical {
 	height: 300px;
-	margin: 100px auto;
+	margin: 80px auto;
 }
 
 .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, .helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
@@ -11266,7 +11266,7 @@ div.v-lazyloadingwrapper-loading {
 	margin-top: 0px !important;
 }
 
-.main-view {
+.v-csslayout.main-view {
 	overflow-y: auto;
 	background-color: #FFF;
 	position: relative;

@@ -18,10 +18,7 @@ package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.ui.components.notification.NewUpdateNotification;
-import com.esofthead.mycollab.common.ui.components.notification.RequestUploadAvatarNotification;
-import com.esofthead.mycollab.common.ui.components.notification.SmtpSetupNotification;
-import com.esofthead.mycollab.common.ui.components.notification.TimezoneNotification;
+import com.esofthead.mycollab.common.ui.components.notification.*;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabVersion;
@@ -125,7 +122,7 @@ public final class MainView extends AbstractPageView {
         Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/help/", "_blank").appendText("Knowledge Base >>")).write(), ContentMode.HTML);
         Label helpDesc = new Label("Our detail guidance on how to use MyCollab features. All common questions are " +
-                "raised and clarified");
+                "raised and answered");
         Label supportLink = new Label(new Div().appendChild(new Text(FontAwesome.CHILD.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("https://www.mycollab.com/qa/", "_blank").appendText("Support >>")).write(), ContentMode.HTML);
         Label supportDesc = new Label("If you have any issue that could not be found the answer. Please send your " +
@@ -139,9 +136,9 @@ public final class MainView extends AbstractPageView {
         topSlider.setTabPosition(SliderTabPosition.MIDDLE);
         bodyLayout.addComponent(topSlider);
 
-        if (ModuleHelper.isCurrentCrmModule()) {
+        if (ModuleHelper.isCurrentProjectModule()) {
             serviceMenu.selectService(0);
-        } else if (ModuleHelper.isCurrentProjectModule()) {
+        } else if (ModuleHelper.isCurrentCrmModule()) {
             serviceMenu.selectService(1);
         } else if (ModuleHelper.isCurrentFileModule()) {
             serviceMenu.selectService(2);
@@ -215,20 +212,16 @@ public final class MainView extends AbstractPageView {
             public void buttonClick(final ClickEvent event) {
                 final UserPreference pref = AppContext.getUserPreference();
                 if (pref.getLastmodulevisit() == null
-                        || ModuleNameConstants.PRJ.equals(pref
-                        .getLastmodulevisit())) {
+                        || ModuleNameConstants.PRJ.equals(pref.getLastmodulevisit())) {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.GotoProjectModule(this, null));
-                } else if (ModuleNameConstants.CRM.equals(pref
-                        .getLastmodulevisit())) {
+                } else if (ModuleNameConstants.CRM.equals(pref.getLastmodulevisit())) {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.GotoCrmModule(this, null));
-                } else if (ModuleNameConstants.ACCOUNT.equals(pref
-                        .getLastmodulevisit())) {
+                } else if (ModuleNameConstants.ACCOUNT.equals(pref.getLastmodulevisit())) {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.GotoUserAccountModule(this, null));
-                } else if (ModuleNameConstants.FILE.equals(pref
-                        .getLastmodulevisit())) {
+                } else if (ModuleNameConstants.FILE.equals(pref.getLastmodulevisit())) {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.GotoFileModule(this, null));
                 }
@@ -239,21 +232,7 @@ public final class MainView extends AbstractPageView {
         serviceMenu = new ServiceMenu();
         serviceMenu.addStyleName("topNavPopup");
 
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                MyCollabResource.newResource(WebResourceIds._16_customer),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoCrmModule(this, null));
-                    }
-                });
-
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
                 MyCollabResource.newResource(WebResourceIds._16_project),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -261,28 +240,34 @@ public final class MainView extends AbstractPageView {
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         if (!event.isCtrlKey() && !event.isMetaKey()) {
-                            EventBusFactory.getInstance()
-                                    .post(new ShellEvent.GotoProjectModule(
-                                            this, null));
+                            EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
                         }
                     }
                 });
 
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
+                MyCollabResource.newResource(WebResourceIds._16_customer),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
+                    }
+                });
+
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
                 MyCollabResource.newResource(WebResourceIds._16_document),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoFileModule(this, null));
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
                     }
                 });
 
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
                 MyCollabResource.newResource(WebResourceIds._16_account),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -290,15 +275,13 @@ public final class MainView extends AbstractPageView {
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoUserAccountModule(this,
-                                        new String[]{"user", "list"}));
+                                new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
                     }
                 });
 
         layout.addComponent(serviceMenu, "serviceMenu");
 
-        MHorizontalLayout accountLayout = new MHorizontalLayout()
-                .withMargin(new MarginInfo(false, true, false, false));
+        MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         // display trial box if user in trial mode
@@ -317,18 +300,15 @@ public final class MainView extends AbstractPageView {
 
                 @Override
                 public void layoutClick(LayoutClickEvent event) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoUserAccountModule(this,
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
                                     new String[]{"billing"}));
                 }
             });
             accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
 
             Date createdTime = billingAccount.getCreatedtime();
-            long timeDeviation = System.currentTimeMillis()
-                    - createdTime.getTime();
-            int daysLeft = (int) Math.floor(timeDeviation
-                    / (1000 * 60 * 60 * 24));
+            long timeDeviation = System.currentTimeMillis() - createdTime.getTime();
+            int daysLeft = (int) Math.floor(timeDeviation / (1000 * 60 * 60 * 24));
             if (daysLeft > 30) {
                 BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
                 BillingPlan freeBillingPlan = billingService.getFreeBillingPlan();
@@ -353,15 +333,18 @@ public final class MainView extends AbstractPageView {
         NotificationButton notificationButton = new NotificationButton();
         accountLayout.addComponent(notificationButton);
         if (AppContext.getUser().getTimezone() == null) {
-            EventBusFactory.getInstance().post(
-                    new ShellEvent.NewNotification(this,
+            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
                             new TimezoneNotification()));
         }
 
         if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {
-            EventBusFactory.getInstance().post(
-                    new ShellEvent.NewNotification(this,
+            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
                             new RequestUploadAvatarNotification()));
+        }
+
+        if ("admin@mycollab.com".equals(AppContext.getUsername())) {
+            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
+                    new ChangeDefaultUsernameNotification()));
         }
 
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
@@ -377,8 +360,7 @@ public final class MainView extends AbstractPageView {
                     if (AppContext.isAdmin()) {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                     } else {
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.NewNotification(this,
+                        EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
                                         new NewUpdateNotification(props)));
                     }
                 }
@@ -388,15 +370,15 @@ public final class MainView extends AbstractPageView {
 
             ExtMailService mailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
             if (!mailService.isMailSetupValid()) {
-                EventBusFactory.getInstance().post(
-                        new ShellEvent.NewNotification(this,
+                EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
                                 new SmtpSetupNotification()));
             }
 
             SimpleUser user = AppContext.getUser();
             GregorianCalendar tenDaysAgo = new GregorianCalendar();
             tenDaysAgo.add(Calendar.DATE, -10);
-            if (user.getRequestad() != null && user.getRequestad() == Boolean.TRUE && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
+            if (user.getRequestad() != null && user.getRequestad() == Boolean.TRUE &&
+                    user.getRegisteredtime().before(tenDaysAgo.getTime())) {
                 UI.getCurrent().addWindow(new AdRequestWindow(user));
             }
         }
@@ -409,48 +391,42 @@ public final class MainView extends AbstractPageView {
                 .getDisplayName(), 20, true));
         OptionPopupContent accLayout = new OptionPopupContent().withWidth("160px");
 
-        Button myProfileBtn = new Button(
-                AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE),
+        Button myProfileBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoUserAccountModule(this,
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
                                         new String[]{"preview"}));
                     }
                 });
         myProfileBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
         accLayout.addOption(myProfileBtn);
 
-        Button myAccountBtn = new Button(
-                AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
+        Button myAccountBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoUserAccountModule(this,
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
                                         new String[]{"billing"}));
                     }
                 });
         myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         accLayout.addOption(myAccountBtn);
 
-        Button userMgtBtn = new Button(
-                AppContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES),
+        Button userMgtBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoUserAccountModule(this,
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
                                         new String[]{"user", "list"}));
                     }
                 });
@@ -462,8 +438,7 @@ public final class MainView extends AbstractPageView {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     accountMenu.setPopupVisible(false);
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoUserAccountModule(this,
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
                                     new String[]{"setup"}));
                 }
             });
@@ -481,16 +456,14 @@ public final class MainView extends AbstractPageView {
             accLayout.addOption(aboutBtn);
         }
 
-        Button signoutBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT),
+        Button signoutBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.LogOut(this, null));
+                        EventBusFactory.getInstance().post(new ShellEvent.LogOut(this, null));
                     }
                 });
         signoutBtn.setIcon(FontAwesome.SIGN_OUT);
@@ -573,7 +546,7 @@ public final class MainView extends AbstractPageView {
         private void turnOffAdd(SimpleUser user) {
             user.setRequestad(false);
             UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-            userService.updateSelectiveWithSession(user, AppContext.getUsername());
+//            userService.updateSelectiveWithSession(user, AppContext.getUsername());
         }
     }
 

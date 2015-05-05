@@ -1,5 +1,5 @@
 
-About MyCollab
+Release Notes
 ==============
 MyCollab is an open source Collaboration Platform of Project Management, CRM and Document.
 
@@ -45,11 +45,19 @@ Version 5.0.6
 -----------------------------
 **Library Upgrades**
 
+* Upgrade other libraries
+
 **Improvements & New Features**
+
+* Redirect to the server host instead localhost after installing successfully
+* Minor change in task display
+* Add help menu in view
+* More comprehensive message to instruct user understand field value better
+* Request user change username for the first time login after installation
 
 **Bug Fixes**
 
-
+* Display the error message when user upgrade MyCollab failed
 
 Version 5.0.5.1
 -----------------------------

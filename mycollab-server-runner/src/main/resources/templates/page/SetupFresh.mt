@@ -95,7 +95,7 @@ h3 {
 											<tr>
 												<td><input id="serverAddress"/></td>
 											</tr>
-											<tr><td><h4>You can get this info from your web host</h4></td></tr>
+											<tr><td><h4>You can get this info from your web host. It could be an IP address or server name</h4></td></tr>
 											
 										</tbody>
 									</table>
@@ -116,7 +116,7 @@ h3 {
 												<td><label for="databaseName">Database name: </label></td>
 											</tr>
 											<tr>
-												<td><input id="databaseName" /></td>
+												<td><input id="databaseName" value="mycollab"/></td>
 											</tr>
 											<tr><td><h4>Name of MyCollab database. Database must be created before.</h4></td></tr>
 											
@@ -405,12 +405,9 @@ h3 {
 		      	 	    $('#post').html('<span>Update & Go</span>');
 		      	 		
 		      	 	}else{
-		      	 		alert("Setup is completed successfully. Redirect to the app?");
+		      	 		alert("Setup is completed successfully. Default username/password is \n    User name: admin@mycollab.com\n    password: admin123\nRedirect to the app?");
 		      	 		$('#post').html('<span>Update & Go</span>');
-		      	 		if (location.port != "") {
-		      	 		  alert(location.protocol + " " + location.port + "  " + serverAddress.value);
-		      	 		}
-		      	 		window.location.assign(location.protocol + ":/" + serverAddress.value + (location.port != "")? (":" + localtion.port) : "");
+		      	 		window.location.assign(location.protocol + "//" + serverAddress.value + ((location.port != "")? (":" + location.port) : ""));
 		      	 	}
 		      	 }
 		      }

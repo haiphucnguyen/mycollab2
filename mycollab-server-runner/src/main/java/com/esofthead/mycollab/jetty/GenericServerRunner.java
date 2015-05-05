@@ -23,6 +23,7 @@ import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.LogConfig;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.servlet.*;
 import com.zaxxer.hikari.HikariDataSource;
@@ -216,7 +217,7 @@ public abstract class GenericServerRunner {
         try {
             unpackFile(upgradeFile);
         } catch (IOException e) {
-            throw new MyCollabException("Exception when upgrade MyCollab", e);
+            throw new UserInvalidInputException("Exception when upgrade MyCollab", e);
         }
 
         appContext = initWebAppContext();
@@ -255,8 +256,6 @@ public abstract class GenericServerRunner {
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new MyCollabException(e);
         }
     }
 

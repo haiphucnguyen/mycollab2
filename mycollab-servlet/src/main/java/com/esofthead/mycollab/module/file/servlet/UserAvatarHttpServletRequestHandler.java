@@ -49,8 +49,8 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
 		}
 
 		String path = request.getPathInfo();
-		String username = "";
-		int size = 0;
+		String username;
+		int size;
 
 		if (path != null) {
 			String[] params = path.split("/");
@@ -60,12 +60,12 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
 
 				if (size <= 0) {
 					LOG.error("Error to get avatar", new MyCollabException(
-							"Invalid request for avatar " + path));
+                            String.format("Invalid request for avatar %s", path)));
 					return;
 				}
 			} else {
 				LOG.error("Error to get avatar", new MyCollabException(
-						"Invalid request for avatar " + path));
+                        String.format("Invalid request for avatar %s", path)));
 				return;
 			}
 
