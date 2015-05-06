@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -299,7 +299,7 @@ public final class MainView extends AbstractPageView {
                 @Override
                 public void layoutClick(LayoutClickEvent event) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
-                                    new String[]{"billing"}));
+                            new String[]{"billing"}));
                 }
             });
             accountLayout.with(informBox).withAlign(informBox, Alignment.MIDDLE_LEFT);
@@ -332,12 +332,12 @@ public final class MainView extends AbstractPageView {
         accountLayout.addComponent(notificationButton);
         if (AppContext.getUser().getTimezone() == null) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                            new TimezoneNotification()));
+                    new TimezoneNotification()));
         }
 
         if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                            new RequestUploadAvatarNotification()));
+                    new RequestUploadAvatarNotification()));
         }
 
         if ("admin@mycollab.com".equals(AppContext.getUsername())) {
@@ -359,7 +359,7 @@ public final class MainView extends AbstractPageView {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                     } else {
                         EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                                        new NewUpdateNotification(props)));
+                                new NewUpdateNotification(props)));
                     }
                 }
             } catch (Exception e) {
@@ -369,7 +369,7 @@ public final class MainView extends AbstractPageView {
             ExtMailService mailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
             if (!mailService.isMailSetupValid()) {
                 EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                                new SmtpSetupNotification()));
+                        new SmtpSetupNotification()));
             }
 
             SimpleUser user = AppContext.getUser();
@@ -399,7 +399,7 @@ public final class MainView extends AbstractPageView {
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
                         EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
-                                        new String[]{"preview"}));
+                                new String[]{"preview"}));
                     }
                 });
         myProfileBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
@@ -413,7 +413,7 @@ public final class MainView extends AbstractPageView {
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
                         EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
-                                        new String[]{"billing"}));
+                                new String[]{"billing"}));
                     }
                 });
         myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
@@ -427,7 +427,7 @@ public final class MainView extends AbstractPageView {
                     public void buttonClick(final ClickEvent event) {
                         accountMenu.setPopupVisible(false);
                         EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
-                                        new String[]{"user", "list"}));
+                                new String[]{"user", "list"}));
                     }
                 });
         userMgtBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
@@ -439,7 +439,7 @@ public final class MainView extends AbstractPageView {
                 public void buttonClick(ClickEvent clickEvent) {
                     accountMenu.setPopupVisible(false);
                     EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
-                                    new String[]{"setup"}));
+                            new String[]{"setup"}));
                 }
             });
             setupBtn.setIcon(FontAwesome.WRENCH);
@@ -497,12 +497,12 @@ public final class MainView extends AbstractPageView {
                     .appendText("Rate us on Sourceforge")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
             Label tweetUs = new Label(new Div().appendChild(new Text(FontAwesome.TWITTER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-            new A("https://twitter.com/intent/tweet?text=Im using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom&source=webclient", "_blank")
-                    .appendText("Share on Twitter")).setStyle("color:#006dac").write(), ContentMode.HTML);
+                    new A("https://twitter.com/intent/tweet?text=Im using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom&source=webclient", "_blank")
+                            .appendText("Share on Twitter")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
             Label linkedIn = new Label(new Div().appendChild(new Text(FontAwesome.LINKEDIN_SQUARE.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                     new A("https://www.linkedin.com/cws/share?url=https%3A%2F%2Fwww.mycollab.com&original_referer=https%3A%2F%2Fwww.mycollab.com&token=&isFramed=false&lang=en_US", "_blank")
-            .appendText("Share on LinkedIn")).setStyle("color:#006dac").write(), ContentMode.HTML);
+                            .appendText("Share on LinkedIn")).setStyle("color:#006dac").write(), ContentMode.HTML);
 
             Button testimonialBtn = new Button("Write a testimonial (We will bring it on our website)", new ClickListener() {
                 @Override
@@ -556,33 +556,51 @@ public final class MainView extends AbstractPageView {
             super("Thank you! We appreciate your help !");
             this.setModal(true);
             this.setResizable(false);
-            this.setWidth("600px");
+            this.setWidth("900px");
 
-            MVerticalLayout content = new MVerticalLayout();
+            MVerticalLayout content = new MVerticalLayout().withMargin(false);
 
-            TestimonialForm entity =  new TestimonialForm();
+            TestimonialForm entity = new TestimonialForm();
             AdvancedEditBeanForm<TestimonialForm> editForm = new AdvancedEditBeanForm<>();
             editForm.setFormLayoutFactory(new IFormLayoutFactory() {
+                GridFormLayoutHelper gridFormLayoutHelper;
+
                 @Override
                 public ComponentContainer getLayout() {
-                    return null;
+                    gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
+                    return gridFormLayoutHelper.getLayout();
                 }
 
                 @Override
                 public void attachField(Object propertyId, Field<?> field) {
-
+                    if ("displayname".equals(propertyId)) {
+                        gridFormLayoutHelper.addComponent(field, "Name", 0, 0, 2, "100%");
+                    } else if ("company".equals(propertyId)) {
+                        gridFormLayoutHelper.addComponent(field, "Company", 0, 1);
+                    } else if ("jobrole".equals(propertyId)) {
+                        gridFormLayoutHelper.addComponent(field, "Job Role", 1, 1);
+                    } else if ("website".equals(propertyId)) {
+                        gridFormLayoutHelper.addComponent(field, "Website", 0, 2);
+                    } else if ("email".equals(propertyId)) {
+                        gridFormLayoutHelper.addComponent(field, "Email", 1, 2);
+                    } else if ("testimonial".equals(propertyId)) {
+                        gridFormLayoutHelper.addComponent(field, "Testimonial", 0, 3, 2, "100%");
+                    }
                 }
             });
             editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<TestimonialForm>(editForm) {
                 @Override
                 protected Field<?> onCreateField(Object propertyId) {
+                    if ("testimonial".equals(propertyId)) {
+                        return new TextArea();
+                    }
                     return null;
                 }
             });
             editForm.setBean(entity);
             content.addComponent(editForm);
 
-            MHorizontalLayout buttonControls =  new MHorizontalLayout();
+            MHorizontalLayout buttonControls = new MHorizontalLayout();
             content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             this.setContent(content);
         }
