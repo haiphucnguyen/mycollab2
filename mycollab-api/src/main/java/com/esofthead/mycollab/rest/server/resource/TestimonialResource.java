@@ -19,6 +19,5 @@ public interface TestimonialResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/submit")
     Response submit(@Form TestimonialForm entity);
 }

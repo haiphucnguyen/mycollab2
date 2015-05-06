@@ -50,13 +50,17 @@ public class MyCollabVersion {
     }
 
     static boolean isEditionNewer(String testFW, String baseFW) {
-        int[] testVer = getVersionNumbers(testFW);
-        int[] baseVer = getVersionNumbers(baseFW);
+        try {
+            int[] testVer = getVersionNumbers(testFW);
+            int[] baseVer = getVersionNumbers(baseFW);
 
-        for (int i = 0; i < testVer.length; i++)
-            if (testVer[i] != baseVer[i])
-                return testVer[i] > baseVer[i];
+            for (int i = 0; i < testVer.length; i++)
+                if (testVer[i] != baseVer[i])
+                    return testVer[i] > baseVer[i];
 
-        return false;
+            return false;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 }

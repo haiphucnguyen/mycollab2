@@ -27,7 +27,7 @@ import javax.ws.rs.FormParam;
  */
 public class TestimonialForm {
     @FormParam("displayname")
-    @NotNull
+    @NotNull(message = "Name must be not null")
     @Length(max=100, message="Field value is too long")
     private String displayname;
 
@@ -44,11 +44,11 @@ public class TestimonialForm {
     private String website;
 
     @FormParam("testimonial")
-    @NotNull
+    @NotNull(message = "Testimonial must be not null")
     private String testimonial;
 
     @FormParam("email")
-    @NotNull
+    @NotNull(message = "Email must be not null")
     private String email;
 
     public String getDisplayname() {

@@ -30,17 +30,14 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 @Component
 @Configurable
 public class L2CacheEvictAspect {
-
 	private static final Logger LOG = LoggerFactory.getLogger(L2CacheEvictAspect.class);
 
 	@AfterReturning("execution(public * com.esofthead.mycollab..service..*.*(..))")
 	public void cacheEvict(JoinPoint pjp) throws Throwable {
-
 		Advised advised = (Advised) pjp.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 
-		if (CacheUtils.isInBlackList(CacheUtils
-				.getEnclosingServiceInterface(cls))) {
+		if (CacheUtils.isInBlackList(CacheUtils.getEnclosingServiceInterface(cls))) {
 			return;
 		}
 
@@ -53,54 +50,43 @@ public class L2CacheEvictAspect {
 
 		Object[] args = pjp.getArgs();
 		if (args != null && args.length > 0) {
-			Annotation[][] parameterAnnotations = method
-					.getParameterAnnotations();
+			Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 			for (int i = 0; i < parameterAnnotations.length; i++) {
 				Annotation[] annos = parameterAnnotations[i];
 				for (Annotation paramAnno : annos) {
 					if (paramAnno instanceof CacheKey) {
 						Object arg = args[i];
-						Integer groupId = null;
+						Integer groupId;
 
 						if (arg instanceof Integer) {
 							groupId = (Integer) arg;
 						} else {
 							try {
-								groupId = (Integer) PropertyUtils.getProperty(
-										arg, "saccountid");
+								groupId = (Integer) PropertyUtils.getProperty(arg, "saccountid");
 							} catch (Exception e) {
 								LOG.error(
 										"Can not define cache key of class {}, method {} with argument {}",
-										cls.getName(),
-										method.getName(),
-										BeanUtility.printBeanObj(arg));
+										cls.getName(), method.getName(), BeanUtility.printBeanObj(arg));
 								return;
 							}
 						}
 
-						String prefixKey = CacheUtils
-								.getEnclosingServiceInterfaceName(cls);
+						String prefixKey = CacheUtils.getEnclosingServiceInterfaceName(cls);
 
 						if (groupId != null) {
 							CacheUtils.cleanCache(groupId, prefixKey);
 
 							try {
-								method = cls.getDeclaredMethod(
-										method.getName(),
-										method.getParameterTypes());
+								method = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
 							} catch (Exception e) {
 
 							}
 
-							CacheArgs cacheable = method
-									.getAnnotation(CacheArgs.class);
-							LOG.debug("Method: " + method + "---" + cacheable);
+							CacheArgs cacheable = method.getAnnotation(CacheArgs.class);
 							if (cacheable != null) {
-								if (cacheable.values() != null
-										&& cacheable.values().length > 0) {
+								if (cacheable.values() != null && cacheable.values().length > 0) {
 									for (Class prefKey : cacheable.values()) {
-										CacheUtils.cleanCache(groupId,
-												prefKey.getName());
+										CacheUtils.cleanCache(groupId, prefKey.getName());
 									}
 								}
 							}
@@ -110,8 +96,7 @@ public class L2CacheEvictAspect {
 				}
 			}
 		} else {
-			LOG.error("Can not define the cache key of class {}, method {}",
-					cls.getName(), method.getName());
+			LOG.error("Can not define the cache key of class {}, method {}", cls.getName(), method.getName());
 		}
 	}
 }

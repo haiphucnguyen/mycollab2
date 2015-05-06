@@ -1,1 +1,0 @@
-UPDATE m_tracker_bug SET status='Reopened' WHERE status='Reopenned';

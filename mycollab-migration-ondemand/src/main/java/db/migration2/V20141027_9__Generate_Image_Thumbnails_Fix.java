@@ -1,4 +1,4 @@
-package db.migration;
+package db.migration2;
 
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.MimeTypesUtil;

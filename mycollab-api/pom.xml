@@ -12,9 +12,6 @@
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
-    <properties>
-        <restVersion>3.0.9.Final</restVersion>
-    </properties>
 
     <dependencies>
         <dependency>

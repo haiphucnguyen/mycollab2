@@ -65,6 +65,8 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Form;
+import com.vaadin.ui.Link;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,8 +79,9 @@ import org.vaadin.sliderpanel.client.SliderTabPosition;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -377,10 +380,8 @@ public final class MainView extends AbstractPageView {
             tenDaysAgo.add(Calendar.DATE, -10);
             if (user.getRequestad() != null && user.getRequestad() == Boolean.TRUE &&
                     user.getRegisteredtime().before(tenDaysAgo.getTime())) {
-//                UI.getCurrent().addWindow(new AdRequestWindow(user));
+                UI.getCurrent().addWindow(new AdRequestWindow(user));
             }
-
-            UI.getCurrent().addWindow(new AdRequestWindow(user));
         }
 
         UserAvatarComp userAvatar = new UserAvatarComp();
@@ -547,7 +548,7 @@ public final class MainView extends AbstractPageView {
         private void turnOffAdd(SimpleUser user) {
             user.setRequestad(false);
             UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-//            userService.updateSelectiveWithSession(user, AppContext.getUsername());
+            userService.updateSelectiveWithSession(user, AppContext.getUsername());
         }
     }
 
@@ -560,8 +561,8 @@ public final class MainView extends AbstractPageView {
 
             MVerticalLayout content = new MVerticalLayout().withMargin(false);
 
-            TestimonialForm entity = new TestimonialForm();
-            AdvancedEditBeanForm<TestimonialForm> editForm = new AdvancedEditBeanForm<>();
+            final TestimonialForm entity = new TestimonialForm();
+            final AdvancedEditBeanForm<TestimonialForm> editForm = new AdvancedEditBeanForm<>();
             editForm.setFormLayoutFactory(new IFormLayoutFactory() {
                 GridFormLayoutHelper gridFormLayoutHelper;
 
@@ -600,7 +601,44 @@ public final class MainView extends AbstractPageView {
             editForm.setBean(entity);
             content.addComponent(editForm);
 
-            MHorizontalLayout buttonControls = new MHorizontalLayout();
+            MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(true);
+
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    TestimonialWindow.this.close();
+                }
+            });
+            cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+
+            Button submitBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT), new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    if (editForm.validateForm()) {
+                        TestimonialWindow.this.close();
+                        NotificationUtil.showNotification("We appreciate your kindness action", "Thank you for your time");
+                        try {
+                            Client client = ClientBuilder.newBuilder().build();
+                            WebTarget target = client.target("https://api.mycollab.com/api/testimonial");
+                            javax.ws.rs.core.Form form = new javax.ws.rs.core.Form();
+                            form.param("company", entity.getCompany());
+                            form.param("displayname", entity.getDisplayname());
+                            form.param("email", entity.getEmail());
+                            form.param("jobrole", entity.getJobrole());
+                            form.param("testimonial", entity.getTestimonial());
+                            form.param("website", entity.getWebsite());
+                            target.request().post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+            });
+            submitBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            submitBtn.setIcon(FontAwesome.MAIL_FORWARD);
+
+            buttonControls.with(cancelBtn, submitBtn);
+
             content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
             this.setContent(content);
         }
