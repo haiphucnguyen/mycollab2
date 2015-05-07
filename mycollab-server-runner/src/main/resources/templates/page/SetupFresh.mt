@@ -215,12 +215,12 @@ h3 {
 				<div id="bottom">
 				    <p>
 						<a javascrip="void(0);" href="https://www.mycollab.com" style="text-decoration : none;
-						float:left"><span>Copyright 2015 MyCollab. All rights reserved.</span></a>
+						float:left"><span>&copy; 2015 MyCollab. All rights reserved.</span></a>
 				    	
 						<div style="text-align:right;">
 						<a javascrip="void(0);" href="https://www.mycollab.com/terms" style="text-decoration : none;"><span>Terms of Service</span></a> &nbsp;&nbsp;&nbsp;
 						<span>|</span>
-						&nbsp;&nbsp;&nbsp;<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span >Privacy Policy</span></a>
+						&nbsp;&nbsp;&nbsp;<a javascrip="void(0);" href="https://www.mycollab.com/privacy" style="text-decoration : none;"><span>Privacy Policy</span></a>
 						</div>
 					</p>
 				</div>
@@ -231,9 +231,6 @@ h3 {
 </body>
 <script src="/assets/js/jquery-1.10.2.min.js"></script>
 <script>
-	
-	$(document).ready(function(){
-	});
 	
 	function databaseValidate(){
 		if ($('#databaseName').val() == ""){
@@ -339,6 +336,7 @@ h3 {
 	}
 	
 	function updateInfoAction(){
+	alert("Update site info");
 		$('#requireMsg').html("").hide();
 		if ($('#sitename').val() == ""){
 			alert("Please enter site name");
@@ -382,6 +380,7 @@ h3 {
 			tlsStatus = "false";
 		}
 
+        alert("Call ajax");
 		 $.ajax({
 		      type: 'GET',
 		      url: urlPost,
@@ -398,12 +397,12 @@ h3 {
 		      			smtpPort : $('#smtpPort').val().trim(), 
 		      			tls : tlsStatus
 		      		},
-		      success: function(data){
-		      	 if(data!=null){
-		      	 	if(data.length > 0){
+		      success: function(res){
+		      	 if(res!=null){
+		      	 	if(res.length > 0){
 		      	 	    $('#post').html('<span>Update & Go</span>');
-		      	 		
-		      	 	}else{
+		      	 		alert(res);
+		      	 	} else {
 		      	 		alert("Setup is completed successfully. Default username/password is \n    User name: admin@mycollab.com\n    password: admin123\nRedirect to the app?");
 		      	 		$('#post').html('<span>Update & Go</span>');
 		      	 		window.location.assign(location.protocol + "//" + document.getElementById("serverAddress").value + ((location.port != "")? (":" + location.port) : ""));
