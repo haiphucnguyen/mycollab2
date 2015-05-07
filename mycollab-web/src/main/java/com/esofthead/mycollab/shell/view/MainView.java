@@ -65,8 +65,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Form;
-import com.vaadin.ui.Link;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +79,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -357,7 +356,7 @@ public final class MainView extends AbstractPageView {
                 Gson gson = new Gson();
                 Properties props = gson.fromJson(values, Properties.class);
                 String version = props.getProperty("version");
-                if (!MyCollabVersion.isEditionNewer(version)) {
+                if (MyCollabVersion.isEditionNewer(version)) {
                     if (AppContext.isAdmin()) {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                     } else {

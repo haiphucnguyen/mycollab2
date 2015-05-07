@@ -49,6 +49,9 @@ public class InstallationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         LOG.info("Try to install MyCollab");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Expires", "-1");
+        PrintWriter out = response.getWriter();
         String sitename = request.getParameter("sitename");
         String serverAddress = request.getParameter("serverAddress");
         String databaseName = request.getParameter("databaseName");
@@ -71,8 +74,8 @@ public class InstallationServlet extends HttpServlet {
             Connection connection = DriverManager.getConnection(dbUrl, dbUserName, dbPassword);
             connection.getMetaData();
         } catch (Exception e) {
-            PrintWriter out = response.getWriter();
-            out.write("Cannot establish connection to database. Make sure your inputs are correct.");
+            String rootCause = (e.getCause() == null) ? e.getMessage() : e.getCause().getMessage();
+            out.write("Cannot establish connection to database. Make sure your inputs are correct. Root cause is " + rootCause);
             LOG.error("Can not connect database", e);
             return;
         }
@@ -136,7 +139,6 @@ public class InstallationServlet extends HttpServlet {
 
         } catch (Exception e) {
             LOG.error("Error while set up MyCollab", e);
-            PrintWriter out = response.getWriter();
             out.write("Can not write the settings to the file system. You should check our knowledge base system or contact us at support@mycollab.com to solve this issue.");
             return;
         }

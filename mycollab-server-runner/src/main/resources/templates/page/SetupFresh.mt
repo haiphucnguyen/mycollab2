@@ -92,7 +92,7 @@ h3 {
 												<td ><label for="serverAddress">Server address:</label></td>
 											</tr>
 											<tr>
-												<td><input id="serverAddress"/></td>
+												<td><input id="serverAddress" value="127.0.0.1"/></td>
 											</tr>
 											<tr><td><h4>You can get this info from your web host. It could be an IP address or server name</h4></td></tr>
 											
@@ -105,7 +105,7 @@ h3 {
 					<table style="width:100%;margin-top: 20px;">
 						<tr>
 							<td style="vertical-align: top; width: 400px;"><div style="margin-top:10px;">DATABASE SETUP</div>
-								<h3 sytle="margin-top">Configure your pre-created database to use with MyCollab</h3>
+								<h3 sytle="margin-top">Configure your pre-created MyCollab database schema</h3>
 							</td>
 							<td style="display: inline-block; vertical-align: top; width:100%">
 								<form>
@@ -123,7 +123,7 @@ h3 {
 												<td><label for="dbUserName">User name:</label></td>
 											</tr>
 											<tr>
-												<td><input id="dbUserName" /></td>
+												<td><input id="dbUserName" value="root"/></td>
 											</tr>
 											<tr><td><h4>Your database user name</h4></td></tr>
 											
@@ -131,7 +131,7 @@ h3 {
 												<td><label for="dbPassword">User password:</label></td>
 											</tr>
 											<tr>
-												<td><input id="dbPassword" type="password" /></td>
+												<td><input id="dbPassword" type="password" value="esofthead321"/></td>
 											</tr>
 											<tr><td><h4>Your database password</h4></td></tr>
 											
@@ -139,7 +139,7 @@ h3 {
 												<td><label for="databaseServer">Database server address:</label></td>
 											</tr>
 											<tr>
-												<td><input id="databaseServer"/></td>
+												<td><input id="databaseServer" value="localhost"/></td>
 											</tr>
 											<tr><td><h4>You can get this info from your web host. If you use local Mysql, the address usually is <i>localhost:3306</i>.<h4></td></tr>
 										</tbody>
@@ -336,7 +336,6 @@ h3 {
 	}
 	
 	function updateInfoAction(){
-	alert("Update site info");
 		$('#requireMsg').html("").hide();
 		if ($('#sitename').val() == ""){
 			alert("Please enter site name");
@@ -380,7 +379,6 @@ h3 {
 			tlsStatus = "false";
 		}
 
-        alert("Call ajax");
 		 $.ajax({
 		      type: 'GET',
 		      url: urlPost,
