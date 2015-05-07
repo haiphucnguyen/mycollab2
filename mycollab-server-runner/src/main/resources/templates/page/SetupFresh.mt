@@ -11,13 +11,12 @@
     background-image: url('${defaultUrls.cdn_url}footer-clouds.png');  background-repeat: no-repeat;  background-position: bottom right;
 }
 #mainContent {
-padding: 10px 0 8px 0px;
+    padding: 10px 0 8px 0px;
 }
 input {
-	font-size:20px;
-	line-height:35px;
+	font-size:18px;
+	height: 35px;
 	width:100%;
-	border: 1px solid rgb(169, 169, 169);
 }
 label {
 	display:block;
@@ -69,7 +68,7 @@ h3 {
 				</div>
 				<hr size="1" style="margin: 1px 0 20px 0; ">
 				<div id="title">
-					<h3>Welcome to MyCollab setup wizard. Just fill in the information below to complete the installation process.<span style="font-style:italic; font-size:20px;"></span><h3>
+					<h3>Welcome to the MyCollab setup wizard. Please fill in the information below to complete the installation process.<span style="font-style:italic; font-size:20px;"></span><h3>
 				</div>
 				<hr size="1" style="margin: 20px 0 1px 0; ">
 				<div id="mainContent">
@@ -407,7 +406,7 @@ h3 {
 		      	 	}else{
 		      	 		alert("Setup is completed successfully. Default username/password is \n    User name: admin@mycollab.com\n    password: admin123\nRedirect to the app?");
 		      	 		$('#post').html('<span>Update & Go</span>');
-		      	 		window.location.assign(location.protocol + "//" + serverAddress.value + ((location.port != "")? (":" + location.port) : ""));
+		      	 		window.location.assign(location.protocol + "//" + document.getElementById("serverAddress").value + ((location.port != "")? (":" + location.port) : ""));
 		      	 	}
 		      	 }
 		      }
