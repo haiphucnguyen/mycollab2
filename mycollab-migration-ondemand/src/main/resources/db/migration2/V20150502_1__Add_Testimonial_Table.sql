@@ -1,3 +1,5 @@
+UPDATE m_tracker_bug SET status='Reopened' WHERE status='Reopenned';
+UPDATE m_prj_milestone SET status='InProgress' WHERE status='In Progress';
 CREATE TABLE `s_testimonial` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `displayName` varchar(100) NOT NULL,
