@@ -92,7 +92,7 @@ h3 {
 												<td ><label for="serverAddress">Server address:</label></td>
 											</tr>
 											<tr>
-												<td><input id="serverAddress" value="127.0.0.1"/></td>
+												<td><input id="serverAddress"/></td>
 											</tr>
 											<tr><td><h4>You can get this info from your web host. It could be an IP address or server name</h4></td></tr>
 											
@@ -115,7 +115,7 @@ h3 {
 												<td><label for="databaseName">Database name: </label></td>
 											</tr>
 											<tr>
-												<td><input id="databaseName" value="mycollab"/></td>
+												<td><input id="databaseName"/></td>
 											</tr>
 											<tr><td><h4>Name of MyCollab database. Database must be created before.</h4></td></tr>
 											
@@ -123,7 +123,7 @@ h3 {
 												<td><label for="dbUserName">User name:</label></td>
 											</tr>
 											<tr>
-												<td><input id="dbUserName" value="root"/></td>
+												<td><input id="dbUserName"/></td>
 											</tr>
 											<tr><td><h4>Your database user name</h4></td></tr>
 											
@@ -131,7 +131,7 @@ h3 {
 												<td><label for="dbPassword">User password:</label></td>
 											</tr>
 											<tr>
-												<td><input id="dbPassword" type="password" value="esofthead321"/></td>
+												<td><input id="dbPassword" type="password"/></td>
 											</tr>
 											<tr><td><h4>Your database password</h4></td></tr>
 											
@@ -139,7 +139,7 @@ h3 {
 												<td><label for="databaseServer">Database server address:</label></td>
 											</tr>
 											<tr>
-												<td><input id="databaseServer" value="localhost"/></td>
+												<td><input id="databaseServer"/></td>
 											</tr>
 											<tr><td><h4>You can get this info from your web host. If you use local Mysql, the address usually is <i>localhost:3306</i>.<h4></td></tr>
 										</tbody>
