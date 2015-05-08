@@ -13,6 +13,9 @@ import java.util.Properties;
 public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResource {
     @Override
     public Response getLatestVersion(String version) {
+        if (version == null) {
+
+        }
         Properties props = new Properties();
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "http://community.mycollab.com/download/");
