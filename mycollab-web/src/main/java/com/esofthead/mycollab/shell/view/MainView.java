@@ -350,14 +350,14 @@ public final class MainView extends AbstractPageView {
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
             try {
                 Client client = ClientBuilder.newBuilder().build();
-                WebTarget target = client.target("https://api.mycollab.com/api/checkupdate");
+                WebTarget target = client.target("https://api.mycollab.com/api/checkupdate?version=" + MyCollabVersion.getVersion());
                 Response response = target.request().get();
                 String values = response.readEntity(String.class);
                 Gson gson = new Gson();
                 Properties props = gson.fromJson(values, Properties.class);
                 String version = props.getProperty("version");
                 if (MyCollabVersion.isEditionNewer(version)) {
-                    if (AppContext.isAdmin()) {
+                    if (AppContext.isAdmin() && StringUtils.isNotBlank(props.getProperty("autoDownload"))) {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
                     } else {
                         EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,

@@ -12,5 +12,5 @@ import javax.ws.rs.core.Response;
 public interface CheckUpdateVersionResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    Response getLatestVersion();
+    Response getLatestVersion(@QueryParam("version") String version);
 }

@@ -32,8 +32,7 @@ import javax.ws.rs.core.Response;
 
 @Service
 public class AccountResourceImpl implements AccountResource {
-    private static final Logger LOG = LoggerFactory
-            .getLogger(AccountResourceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccountResourceImpl.class);
 
     @Autowired
     private BillingService billingService;

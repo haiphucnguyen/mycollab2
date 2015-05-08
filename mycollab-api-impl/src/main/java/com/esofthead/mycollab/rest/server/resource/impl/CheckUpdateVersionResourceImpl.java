@@ -12,7 +12,7 @@ import java.util.Properties;
 @Service
 public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResource {
     @Override
-    public Response getLatestVersion() {
+    public Response getLatestVersion(String version) {
         Properties props = new Properties();
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "http://community.mycollab.com/download/");
