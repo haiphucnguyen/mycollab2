@@ -47,9 +47,7 @@ public class MyCollabServlet extends TouchKitServlet {
 
             @Override
             public void sessionInit(SessionInitEvent event) {
-                event.getSession().addBootstrapListener(
-                        new MyCollabBootstrapListener());
-
+                event.getSession().addBootstrapListener(new MyCollabBootstrapListener());
                 event.getSession().addUIProvider(uiProvider);
             }
         });
