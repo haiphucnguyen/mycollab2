@@ -44,11 +44,10 @@ public abstract class MyCollabAssets {
 	}
 
 	public static class S3 extends MyCollabAssets {
-		private static String S3_ASSETS = "https://d3caz7swos7s47.cloudfront.net/%s";
 
 		@Override
 		protected String generateResourceLink(String resourceId) {
-			return String.format(S3_ASSETS, resourceId);
+			return String.format(SiteConfiguration.getCdnUrl(), resourceId);
 		}
 	}
 
