@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
@@ -25,8 +26,7 @@ import com.vaadin.ui.Window;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-public abstract class AbstractLazyPageView extends AbstractPageView implements
-        LazyPageView {
+public abstract class AbstractLazyPageView extends AbstractPageView implements LazyPageView {
     private static final long serialVersionUID = 1L;
 
     private boolean isRunning = false;
@@ -79,7 +79,7 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements
             this.setModal(true);
 
             Image loadingIcon = new Image(null,
-                    MyCollabResource.newResource("icons/lazy-load-icon.gif"));
+                    MyCollabResource.newResource(WebResourceIds._lazy_load_icon));
             this.setContent(loadingIcon);
         }
     }

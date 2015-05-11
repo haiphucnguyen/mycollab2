@@ -43,23 +43,21 @@ public abstract class MyCollabAssets {
 	}
 
 	public static class S3 extends MyCollabAssets {
-		private static String S3_ASSETS = "https://s3.amazonaws.com/mycollab_assets/%s";
+		private static String S3_ASSETS = "https://d3caz7swos7s47.cloudfront.net/%s";
 
 		@Override
 		protected String generateResourceLink(String resourceId) {
 			return String.format(S3_ASSETS, resourceId);
 		}
-
 	}
 
 	public static class Local extends MyCollabAssets {
-
 		@Override
 		protected String generateResourceLink(String resourceId) {
-			return String.format(ApplicationProperties
-					.getString(ApplicationProperties.APP_URL),
-					SiteConfiguration.getServerAddress(), SiteConfiguration
-							.getServerPort()) + "assets/" + resourceId;
+			return String.format("%sassets/%s", String.format(ApplicationProperties
+                            .getString(ApplicationProperties.APP_URL),
+                    SiteConfiguration.getServerAddress(), SiteConfiguration
+                            .getServerPort()), resourceId);
 		}
 
 	}

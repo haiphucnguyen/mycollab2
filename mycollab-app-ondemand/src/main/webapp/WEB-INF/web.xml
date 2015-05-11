@@ -31,6 +31,7 @@
     <filter-mapping>
         <filter-name>ExpiresFilter</filter-name>
         <url-pattern>/assets/*</url-pattern>
+        <url-pattern>/VAADIN/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 

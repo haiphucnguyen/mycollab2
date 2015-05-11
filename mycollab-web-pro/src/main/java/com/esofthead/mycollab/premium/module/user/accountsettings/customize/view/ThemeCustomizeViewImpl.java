@@ -297,19 +297,19 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
         serviceMenu.addService(
                 AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                MyCollabResource.newResource("icons/16/customer.png"),
+                MyCollabResource.newResource(WebResourceIds._16_customer),
                 clickListener);
 
         serviceMenu.selectService(0);
 
         serviceMenu.addService(
                 AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                MyCollabResource.newResource("icons/16/project.png"),
+                MyCollabResource.newResource(WebResourceIds._16_project),
                 clickListener);
 
         serviceMenu.addService(
                 AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                MyCollabResource.newResource("icons/16/document.png"),
+                MyCollabResource.newResource(WebResourceIds._16_document),
                 clickListener);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");

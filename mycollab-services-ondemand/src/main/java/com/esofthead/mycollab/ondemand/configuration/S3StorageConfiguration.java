@@ -25,6 +25,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.MyCollabAssets;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Amazon S3 Configuration
@@ -34,7 +35,6 @@ import com.esofthead.mycollab.configuration.StorageConfiguration;
  * 
  */
 public class S3StorageConfiguration implements StorageConfiguration {
-
 	private static final String AWS_KEY = "s3.key";
 	private static final String AWS_SECRET_KEY = "s3.secretKey";
 	private static final String BUCKET = "s3.bucket";
@@ -72,13 +72,11 @@ public class S3StorageConfiguration implements StorageConfiguration {
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
-			if (userAvatarId == null || "".equals(userAvatarId.trim())) {
+			if (StringUtils.isBlank(userAvatarId)) {
 				return MyCollabAssets
-						.newResourceLink("icons/default_user_avatar_" + size
-								+ ".png");
+						.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
 			} else {
-				return s3UrlPath + "avatar/" + userAvatarId + "_" + size
-						+ ".png";
+				return String.format("%savatar/%s_%d.png", s3UrlPath, userAvatarId, size);
 			}
 		}
 	}
@@ -89,11 +87,10 @@ public class S3StorageConfiguration implements StorageConfiguration {
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
-			if (accountLogoId == null || "".equals(accountLogoId.trim())) {
+			if (StringUtils.isBlank(accountLogoId)) {
 				return MyCollabAssets.newResourceLink("icons/logo.png");
 			} else {
-				return s3UrlPath + "avatar/" + accountLogoId + "_" + size
-						+ ".png";
+				return String.format("%savatar/%s_%d.png", s3UrlPath, accountLogoId, size);
 			}
 		}
 	}

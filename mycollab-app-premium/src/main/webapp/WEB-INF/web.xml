@@ -12,7 +12,7 @@
     <listener>
         <listener-class>com.esofthead.mycollab.servlet.MyCollabHttpSessionListener</listener-class>
     </listener>
-<!--
+
     <filter>
         <filter-name>ExpiresFilter</filter-name>
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
@@ -28,9 +28,10 @@
     <filter-mapping>
         <filter-name>ExpiresFilter</filter-name>
         <url-pattern>/assets/*</url-pattern>
+        <url-pattern>/VAADIN/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
--->
+
 
     <context-param>
         <param-name>contextClass</param-name>

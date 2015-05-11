@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -67,7 +68,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 		MHorizontalLayout layout = new MHorizontalLayout();
 		layout.setSizeUndefined();
 		layout.addComponent(new Embedded(null, MyCollabResource
-				.newResource("icons/sad_face.png")));
+				.newResource(WebResourceIds._sad_face)));
 		VerticalLayout header = new VerticalLayout();
 		header.setSpacing(true);
 		header.addStyleName("cancelAccountHeader");
