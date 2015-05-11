@@ -47,7 +47,7 @@ public abstract class MyCollabAssets {
 
 		@Override
 		protected String generateResourceLink(String resourceId) {
-			return String.format(SiteConfiguration.getCdnUrl(), resourceId);
+			return SiteConfiguration.getCdnUrl() + resourceId;
 		}
 	}
 
