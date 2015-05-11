@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.MyCollabVersion;
 import com.vaadin.server.BootstrapFragmentResponse;
 import com.vaadin.server.BootstrapListener;
 import com.vaadin.server.BootstrapPageResponse;
@@ -41,6 +42,6 @@ public class MyCollabBootstrapListener implements BootstrapListener {
         response.getDocument().head()
                 .append(String.format("<script type=\"text/javascript\" src=\"%sjs/jquery-1.10.2.min.js\"></script>", SiteConfiguration.getCdnUrl()));
         response.getDocument().head()
-                .append(String.format("<script type=\"text/javascript\" src=\"%sjs/stickytooltip.js\"></script>", SiteConfiguration.getCdnUrl()));
+                .append(String.format("<script type=\"text/javascript\" src=\"%sjs/stickytooltip.js?v=%s\"></script>", SiteConfiguration.getCdnUrl(), MyCollabVersion.getVersion()));
 	}
 }

@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.configuration;
 
 import com.esofthead.mycollab.core.DeploymentMode;
+import com.esofthead.mycollab.core.MyCollabVersion;
 
 /**
  * 
@@ -54,10 +55,10 @@ public abstract class MyCollabAssets {
 	public static class Local extends MyCollabAssets {
 		@Override
 		protected String generateResourceLink(String resourceId) {
-			return String.format("%sassets/%s", String.format(ApplicationProperties
+			return String.format("%sassets/%s?v=%s", String.format(ApplicationProperties
                             .getString(ApplicationProperties.APP_URL),
                     SiteConfiguration.getServerAddress(), SiteConfiguration
-                            .getServerPort()), resourceId);
+                            .getServerPort()), resourceId, MyCollabVersion.getVersion());
 		}
 
 	}

@@ -126,20 +126,16 @@ public class BillingServiceImpl implements BillingService {
 					subDomain));
 		}
 
-		BillingPlan billingPlan = this.billingPlanMapper
-				.selectByPrimaryKey(billingPlanId);
+		BillingPlan billingPlan = this.billingPlanMapper.selectByPrimaryKey(billingPlanId);
 		// Save billing account
-		LOG.debug("Saving billing account for user {} with subdomain {}",
-				username, subDomain);
+		LOG.debug("Saving billing account for user {} with subdomain {}", username, subDomain);
 		BillingAccount billingAccount = new BillingAccount();
 		billingAccount.setBillingplanid(billingPlan.getId());
 		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
-		billingAccount
-				.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
+		billingAccount.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
 		billingAccount.setPricing(billingPlan.getPricing());
 		billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
-		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31)
-				.getTime());
+		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31).getTime());
 		billingAccount.setStatus(AccountStatusConstants.TRIAL);
 		billingAccount.setSubdomain(subDomain);
 
