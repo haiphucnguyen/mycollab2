@@ -146,7 +146,7 @@ public abstract class GenericServerRunner {
 
         if (!checkConfigFileExist()) {
             System.err
-                    .println("It seems this is the first time you run MyCollab. For complete installation, you must open the brower and type address http://localhost:"
+                    .println("It seems this is the first time you run MyCollab. For complete installation, you must open the browser and type address http://localhost:"
                             + port
                             + " and complete the steps to install MyCollab.");
             installationContextHandler = new ServletContextHandler(
