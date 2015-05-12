@@ -27,5 +27,10 @@
             <artifactId>mycollab-web-pro</artifactId>
             <version>5.0.6</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
     </dependencies>
 </project>
