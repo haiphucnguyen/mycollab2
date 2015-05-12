@@ -17,5 +17,11 @@
             <artifactId>mycollab-migration</artifactId>
             <version>5.0.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services-ondemand</artifactId>
+            <version>5.0.6</version>
+        </dependency>
     </dependencies>
 </project>

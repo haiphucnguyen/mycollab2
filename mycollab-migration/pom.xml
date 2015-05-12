@@ -37,12 +37,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-services-ondemand</artifactId>
-            <version>5.0.6</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>3.2.1</version>
