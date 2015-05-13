@@ -111,6 +111,12 @@ public abstract class GenericServerRunner {
             }
         }
 
+        //Run mycollab via wrapped parameters
+        String appPort = System.getProperty("wrapper.appPort");
+        if (appPort != null) {
+            port = Integer.parseInt(appPort);
+        }
+
         switch ((stopPort > 0 ? 1 : 0) + (stopKey != null ? 2 : 0)) {
             case 1:
                 usage("Must specify --stop-key when --stop-port is specified");
@@ -163,10 +169,8 @@ public abstract class GenericServerRunner {
 
             installationContextHandler.addServlet(new ServletHolder(
                     new AssetHttpServletRequestHandler()), "/assets/*");
-            installationContextHandler.addServlet(new ServletHolder(
-                    new SetupServlet()), "/*");
-            installationContextHandler
-                    .addLifeCycleListener(new ServerLifeCycleListener());
+            installationContextHandler.addServlet(new ServletHolder(new SetupServlet()), "/*");
+            installationContextHandler.addLifeCycleListener(new ServerLifeCycleListener());
 
             server.setStopAtShutdown(true);
             contexts.setHandlers(new Handler[]{installationContextHandler});
