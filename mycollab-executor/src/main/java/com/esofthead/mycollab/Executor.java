@@ -17,7 +17,7 @@ public class Executor {
         System.setProperty("wrapper.appPort", "8080");
         System.setProperty("wrapper.debug", "true");
         System.setProperty("wrapper.debug.level", "3");
-        System.setProperty("wrapper.java.classpath.1", "/home/hainguyen/Documents/mycollab2/mycollab-app-community/target/staging/runner.jar");
+        System.setProperty("wrapper.java.classpath.1", "D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging\\runner.jar");
         Map configuration = new HashMap();
         WrappedProcess w = WrappedProcessFactory.createProcess(configuration, true);
         //process specific configuration

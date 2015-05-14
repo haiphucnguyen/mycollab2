@@ -53,6 +53,8 @@ Version 5.0.7
 
 **Bug Fixes**
 
+* Minor bug fixes on IE browsers when user press button
+
 Version 5.0.6
 -----------------------------
 **Library Upgrades**

@@ -52,7 +52,7 @@
     }
   }
 
-  .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
+  .v-button-default:active {
     background-color: #6482B3;
     color: #F4F4F5;
   }
@@ -80,7 +80,7 @@
     }
   }
 
-  .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
+  .v-button-default:active {
     border-color: #2E5A84;
   }
 
@@ -88,7 +88,7 @@
     background-color: #2D6BA5;
   }
 
-  .v-button-default:active .v-button-wrap, .v-ie8 .v-button-default.v-pressed .v-button-wrap {
+  .v-button-default:active .v-button-wrap {
     border-color: #2D6BA5;
   }
 
@@ -106,7 +106,7 @@
     }
   }
 
-  .v-button-default:active, .v-ie8 .v-button-default.v-pressed {
+  .v-button-default:active {
     background-color: #287ECE;
     color: #F7F8F9;
   }
@@ -271,7 +271,7 @@
     }
   }
 
-  .v-button:active, .v-ie8 .v-pressed.v-button, div.v-button-down {
+  .v-button:active, div.v-button-down {
     background-image: none;
   }
 
