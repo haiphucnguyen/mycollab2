@@ -43,10 +43,12 @@ Version 5.0.7
 -----------------------------
 **Library Upgrades**
 
+* Upgrade Vaadin to 7.4.6
 * Upgrade other libraries
 
 **Improvements & New Features**
 
+* Revise the runner process. Important for auto upgrade feature
 * Remove redundant images assets
 * Change the default cdn url
 * Change the default browser cache of vaadin
