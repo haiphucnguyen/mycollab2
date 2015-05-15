@@ -100,21 +100,21 @@ public abstract class GenericServerRunner {
         boolean isStop = false;
 
         for (int i = 0; i < args.length; i++) {
-            if ("--stop-port".equals(args[i])) {
-                stopPort = Integer.parseInt(args[++i]);
-            } else if ("--stop-key".equals(args[i])) {
-                stopKey = args[++i];
-            } else if ("--stop".equals(args[i])) {
-                isStop = true;
-            } else if ("--port".equals(args[i])) {
+            if ("--port".equals(args[i])) {
                 port = Integer.parseInt(args[++i]);
+            } else if ("--cport".equals(args[i])) {
+                final int listenPort = Integer.parseInt(args[++i]);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Socket clientSocket = new Socket("localhost", listenPort);
+                        } catch (Exception e) {
+                            LOG.error("Can not establish the client socket to port " + listenPort);
+                        }
+                    }
+                }).start();
             }
-        }
-
-        //Run mycollab via wrapped parameters
-        String appPort = System.getProperty("wrapper.appPort");
-        if (appPort != null) {
-            port = Integer.parseInt(appPort);
         }
 
         switch ((stopPort > 0 ? 1 : 0) + (stopKey != null ? 2 : 0)) {
