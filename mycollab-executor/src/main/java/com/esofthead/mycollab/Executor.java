@@ -1,55 +1,87 @@
 package com.esofthead.mycollab;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zeroturnaround.exec.ProcessExecutor;
 import org.zeroturnaround.exec.ProcessResult;
 import org.zeroturnaround.exec.StartedProcess;
 import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
 import org.zeroturnaround.process.JavaProcess;
+import org.zeroturnaround.process.ProcessUtil;
 import org.zeroturnaround.process.Processes;
 
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @author MyCollab Ltd
  * @since 5.0.7
  */
 public class Executor {
+    private static Logger LOG = LoggerFactory.getLogger(Executor.class);
+
+    static class MyCollabWrapProcess {
+        StartedProcess javaProcess;
+        JavaProcess wrappedJavaProccess;
+        int cPort;
+
+        MyCollabWrapProcess(int cPort) {
+            this.cPort = cPort;
+        }
+
+        void start() throws IOException {
+            javaProcess = new ProcessExecutor().command("java", "-jar", "D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging\\runner.jar", "--cport", cPort + "")
+                    .directory(new File("D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging"))
+                    .redirectOutput(Slf4jStream.of(Executor.class).asDebug()).readOutput(true).start();
+            wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
+        }
+
+        void restart() throws InterruptedException, TimeoutException, IOException {
+            if (wrappedJavaProccess != null) {
+                ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProccess, 30, TimeUnit.SECONDS, 10, TimeUnit.SECONDS);
+                start();
+            }
+        }
+
+        Future<ProcessResult> getFuture() {
+            return javaProcess.getFuture();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
-        ServerSocket serverSocket = new ServerSocket(0);
+        final ServerSocket serverSocket = new ServerSocket(0);
         final int listenPort = serverSocket.getLocalPort();
-
-        StartedProcess javaProcess = new ProcessExecutor().command("java", "-jar", "D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging\\runner.jar", "-cport", listenPort+"")
-                .directory(new File("D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging"))
-                .redirectOutput(Slf4jStream.of(Executor.class).asDebug()).readOutput(true).start();
-
-        final JavaProcess wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
+        final MyCollabWrapProcess myCollabWrapProcess = new MyCollabWrapProcess(listenPort);
+        myCollabWrapProcess.start();
         final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
         Runnable serverTask = new Runnable() {
             @Override
             public void run() {
                 try {
-                    ServerSocket serverSocket = new ServerSocket(listenPort);
                     while (true) {
                         Socket socket = serverSocket.accept();
-
+                        InputStream inputStream = socket.getInputStream();
+                        DataInputStream dataInputStream = new DataInputStream(inputStream);
+                        String request = dataInputStream.readUTF();
+                        LOG.info("Receive request " + request);
+                        if ("RELOAD".equals(request)) {
+                            myCollabWrapProcess.restart();
+                        }
                     }
-                } catch (IOException e) {
-                    System.err.println("Accept failed.");
+                } catch (Exception e) {
+                    LOG.warn("Accept failed port " + listenPort, e);
                 }
 
             }
         };
         clientProcessingPool.submit(serverTask);
 
-        Future<ProcessResult> future = javaProcess.getFuture();
+        Future<ProcessResult> future = myCollabWrapProcess.getFuture();
         ProcessResult proResult = future.get();
     }
 }

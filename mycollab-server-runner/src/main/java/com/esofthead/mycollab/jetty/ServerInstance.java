@@ -41,6 +41,7 @@ public class ServerInstance {
     }
 
     public void preUpgrade() {
+        server.requestReloadInstance();
         isUpgrading = true;
     }
 

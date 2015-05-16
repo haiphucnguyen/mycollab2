@@ -43,6 +43,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.events.SessionEvent;
 import com.esofthead.mycollab.events.SessionEvent.UserProfileChangeEvent;
 import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.jetty.ServerInstance;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -488,6 +489,8 @@ public final class MainView extends AbstractPageView {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     accountMenu.setPopupVisible(false);
+                    LOG.debug("Send request RELOAD ");
+                    ServerInstance.getInstance().preUpgrade();
                     UI.getCurrent().addWindow(new AboutWindow());
                 }
             });
