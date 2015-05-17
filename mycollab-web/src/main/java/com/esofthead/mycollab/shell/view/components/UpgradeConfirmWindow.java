@@ -139,15 +139,10 @@ public class UpgradeConfirmWindow extends Window {
                         return;
                     }
 
+                    UI.getCurrent().setPollInterval(-1);
                     ServerInstance.getInstance().preUpgrade();
                     String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
                     Page.getCurrent().setLocation(locUrl);
-                    UI.getCurrent().setPollInterval(-1);
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                     progressWindow.close();
                     ServerInstance.getInstance().upgrade(tmpFile);
                 } else {

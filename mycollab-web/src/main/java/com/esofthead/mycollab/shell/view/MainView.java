@@ -595,7 +595,7 @@ public final class MainView extends AbstractPageView {
 
     private static class TestimonialWindow extends Window {
         TestimonialWindow() {
-            super("Thank you! We appreciate your help !");
+            super("Thank you! We appreciate your help!");
             this.setModal(true);
             this.setResizable(false);
             this.setWidth("900px");
