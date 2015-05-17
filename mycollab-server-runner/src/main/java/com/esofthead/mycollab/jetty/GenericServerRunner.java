@@ -120,13 +120,6 @@ public abstract class GenericServerRunner {
         execute();
     }
 
-    void requestReloadInstance() {
-        LOG.info("Request reload instance");
-        if (clientCommunitor != null) {
-            clientCommunitor.reloadRequest();
-        }
-    }
-
     private void execute() throws Exception {
         server = new Server(port);
         contexts = new ContextHandlerCollection();
@@ -183,11 +176,15 @@ public abstract class GenericServerRunner {
         try {
             appContext.stop();
         } catch (Exception e) {
-            LOG.error("Error while starting server", e);
+            LOG.error("Error while stopping server", e);
             throw new MyCollabException(e);
         }
         contexts.removeHandler(appContext);
-        upgradeProcess(upgradeFile);
+        if (clientCommunitor != null) {
+            clientCommunitor.reloadRequest(upgradeFile);
+        } else {
+            throw new MyCollabException("Can not contact host process. Terminate upgrade, you should download MyCollab manually");
+        }
     }
 
     private void upgradeProcess(File upgradeFile) {

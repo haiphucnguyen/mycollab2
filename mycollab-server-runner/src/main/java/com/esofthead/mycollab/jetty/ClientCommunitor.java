@@ -36,6 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.OutputStream;
 import java.net.Socket;
 
@@ -52,12 +53,12 @@ public class ClientCommunitor {
         this.port = port;
     }
 
-    public void reloadRequest() {
+    public void reloadRequest(File file) {
         LOG.info("Request RELOAD on " + port);
         try (Socket socket = new Socket("localhost", port);
              OutputStream outputStream = socket.getOutputStream();
              DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
-            dataOutputStream.writeUTF("RELOAD");
+            dataOutputStream.writeUTF("RELOAD:" + file.getAbsolutePath());
         } catch (Exception e) {
             LOG.error("Error while send RELOAD request to the host process", e);
         }

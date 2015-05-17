@@ -108,7 +108,8 @@ public class UpgradeConfirmWindow extends Window {
                 UI.getCurrent().addWindow(progressWindow);
                 lock.unlock();
                 File tmpFile = File.createTempFile("mycollab", "zip");
-                URL url = new URL(props.getProperty("autoDownload"));
+//                URL url = new URL(props.getProperty("autoDownload"));
+                URL url = new URL("http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.6/README.md/download");
                 HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
                 int responseCode = httpConn.getResponseCode();
 
