@@ -140,6 +140,6 @@ public class Executor {
         clientProcessingPool.submit(serverTask);
 
         Future<ProcessResult> future = myCollabWrapProcess.getFuture();
-        ProcessResult proResult = future.get();
+        future.get();
     }
 }
