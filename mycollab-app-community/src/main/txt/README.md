@@ -52,6 +52,7 @@ Version 5.0.7
 * Remove redundant images assets
 * Change the default cdn url
 * Change the default browser cache of vaadin
+* Add context support for project
 
 **Bug Fixes**
 
