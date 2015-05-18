@@ -17,8 +17,6 @@
     </properties>
 
     <dependencies>
-        <!-- END ADD DEPENDENCIES FOR RUNNING SERVICES -->
-
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>

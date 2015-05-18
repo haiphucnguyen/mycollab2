@@ -55,7 +55,7 @@ public class Executor {
         void start() throws IOException {
             javaProcess = new ProcessExecutor().command("java", "-jar", "D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging\\runner.jar", "--cport", cPort + "")
                     .directory(new File("D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging"))
-                    .redirectOutput(Slf4jStream.of(Executor.class).asDebug()).readOutput(true).start();
+                    .redirectOutput(System.out).readOutput(true).start();
             wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
         }
 

@@ -223,7 +223,7 @@ public abstract class GenericServerRunner {
 
         for (String classpath : classPaths) {
             if (classpath.matches(osExprClassFolder)) {
-                LOG.info("Load classes in path" + classpath);
+                LOG.info("Load classes in path: " + classpath);
                 appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath)));
             } else if (classpath.matches(osExprJarFile)) {
                 try {

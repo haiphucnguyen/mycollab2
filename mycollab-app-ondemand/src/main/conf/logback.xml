@@ -10,7 +10,7 @@
     <appender name="email" class="com.esofthead.mycollab.configuration.MailAppender">
         <subject>Error: %logger{20} - %m</subject>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%date %-5level %logger{35} - %message%n</pattern>
+            <pattern>%5p %c{1}:%L - %m%n</pattern>
         </layout>
     </appender>
     <appender name="R" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -23,7 +23,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d{ABSOLUTE} %5p %c{1}:%L - %m%n</pattern>
         </encoder>
     </appender>
     <logger name="org.springframework" level="INFO"></logger>
