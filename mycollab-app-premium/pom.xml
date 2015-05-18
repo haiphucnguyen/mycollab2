@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.0.6</version>
+            <version>5.0.7</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.esofthead.mycollab</groupId>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.0.6</version>
+            <version>5.0.7</version>
         </dependency>
 
         <dependency>
@@ -40,9 +40,8 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.0.6</version>
+            <version>5.0.7</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
@@ -53,7 +52,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-search-server</artifactId>
-            <version>5.0.6</version>
+            <version>5.0.7</version>
         </dependency>
 
         <dependency>
