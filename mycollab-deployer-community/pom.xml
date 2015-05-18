@@ -32,6 +32,7 @@
         <module>../mycollab-mobile</module>
         <module>../mycollab-services-community</module>
         <module>../mycollab-web-community</module>
+        <module>../mycollab-executor</module>
         <module>../mycollab-app-community</module>
     </modules>
     <build>

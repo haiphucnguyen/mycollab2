@@ -14,3 +14,4 @@ mycollab-mobile/src/main/resources/VAADIN/themes/mycollab-mobile/common.css
 mycollab-mobile/src/main/resources/VAADIN/themes/mycollab-mobile/mycollab-mobile.css
 target/
 bin/
+mycollab-executor/dependency-reduced-pom.xml

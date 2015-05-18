@@ -61,9 +61,6 @@
             <version>${izpackVersion}</version>
             <scope>provided</scope>
         </dependency>
-
-        <!-- <dependency> <groupId>com.vaadin</groupId> <artifactId>vaadin-client-compiler</artifactId> 
-            <version>${vaadinVersion}</version> <scope>provided</scope> </dependency> -->
     </dependencies>
     <build>
         <plugins>
