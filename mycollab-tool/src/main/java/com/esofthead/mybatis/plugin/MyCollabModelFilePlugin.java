@@ -28,7 +28,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 public class MyCollabModelFilePlugin extends
 		org.mybatis.generator.api.PluginAdapter {
 
-	private static Map<String, InnerEnumEx> enumOfBlobDomains = new HashMap<String, InnerEnumEx>();
+	private static Map<String, InnerEnumEx> enumOfBlobDomains = new HashMap<>();
 
 	@Override
 	public boolean validate(List<String> args) {
