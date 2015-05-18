@@ -5,7 +5,7 @@
     <name>mycollab-deployer-community</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-deployer-community</artifactId>
-    <version>5.0.6</version>
+    <version>5.0.7</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
@@ -17,7 +17,6 @@
         <module>../mycollab-localization</module>
         <module>../mycollab-config</module>
         <module>../mycollab-dao</module>
-        <module>../mycollab-executor</module>
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-caching</module>
         <module>../mycollab-services</module>
