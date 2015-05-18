@@ -53,9 +53,9 @@ public class Executor {
         }
 
         void start() throws IOException {
-            javaProcess = new ProcessExecutor().command("java", "-jar", "D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging\\runner.jar", "--cport", cPort + "")
-                    .directory(new File("D:\\Documents\\mycollab2\\mycollab-app-community\\target\\staging"))
-                    .redirectOutput(System.out).readOutput(true).start();
+            File workingDir = new File(System.getProperty("user.dir"));
+            javaProcess = new ProcessExecutor().command("java", "-jar", "runner.jar", "--cport", cPort + "")
+                    .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
             wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
         }
 

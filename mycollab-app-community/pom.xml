@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-app-community</name>
     <artifactId>mycollab-app-community</artifactId>
@@ -242,44 +242,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-
-                                        <copy todir="${staging.dir}">
-                                            <fileset
-                                                dir="${basedir}/src/izpack" />
-
-                                        </copy>
-                                        <copy todir="${staging.dir}/conf">
-                                            <fileset
-                                                dir="${basedir}/src/main/conf">
-                                                <exclude
-                                                    name="mycollab.properties" />
-                                            </fileset>
-                                        </copy>
-                                        <copy todir="${staging.dir}/logs">
-                                            <fileset
-                                                dir="${basedir}/src/main/logs" />
-                                        </copy>
-                                        <copy todir="${staging.dir}/scripts">
-                                            <fileset
-                                                dir="${basedir}/src/main/scripts" />
-                                        </copy>
-
-                                        <copy todir="${staging.dir}/txt">
-                                            <fileset
-                                                dir="${basedir}/src/main/txt" />
-                                        </copy>
-                                        <copy todir="${staging.dir}/webapp">
-                                            <fileset
-                                                dir="${basedir}/src/main/webapp" />
-                                        </copy>
-                                        <copy todir="${staging.dir}/webapp">
-                                            <fileset
-                                                dir="${basedir}/src/main/webapp" />
-                                        </copy>
-                                        <copy todir="${staging.dir}/lib">
-                                            <fileset
-                                                dir="${basedir}/src/main/lib" />
-                                        </copy>
+                                        <ant antfile="antbuild.xml" target="main"/>
                                     </tasks>
                                 </configuration>
                             </execution>

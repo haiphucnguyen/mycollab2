@@ -75,7 +75,6 @@ goto end
 
 :doStart
 shift
-set ACTION=--stop-port 8079 --stop-key esoftheadsecretkey
 if not "%OS%" == "Windows_NT" goto noTitle
 if "%TITLE%" == "" set TITLE=MyCollab
 set _EXECJAVA=start "%TITLE%" %_RUNJAVA%
@@ -88,7 +87,7 @@ goto execCmd
 
 :doStop
 shift
-set ACTION=--port $MYCOLLAB_PORT --stop-port 8079 --stop-key esoftheadsecretkey --stop
+set ACTION=--port $MYCOLLAB_PORT
 goto execCmd
 
 
