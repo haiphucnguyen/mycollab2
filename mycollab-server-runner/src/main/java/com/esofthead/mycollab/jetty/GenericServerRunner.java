@@ -20,7 +20,6 @@ import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.LogConfig;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.servlet.*;
 import com.zaxxer.hikari.HikariDataSource;
@@ -42,12 +41,7 @@ import org.slf4j.LoggerFactory;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Properties;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
  * Generic MyCollab embedded server
@@ -173,73 +167,10 @@ public abstract class GenericServerRunner {
     }
 
     void upgrade(File upgradeFile) {
-        try {
-            appContext.stop();
-        } catch (Exception e) {
-            LOG.error("Error while stopping server", e);
-            throw new MyCollabException(e);
-        }
-        contexts.removeHandler(appContext);
         if (clientCommunitor != null) {
             clientCommunitor.reloadRequest(upgradeFile);
         } else {
             throw new MyCollabException("Can not contact host process. Terminate upgrade, you should download MyCollab manually");
-        }
-    }
-
-    private void upgradeProcess(File upgradeFile) {
-        try {
-            unpackFile(upgradeFile);
-        } catch (IOException e) {
-            throw new UserInvalidInputException("Exception when upgrade MyCollab", e);
-        }
-
-        appContext = initWebAppContext();
-        appContext.setClassLoader(GenericServerRunner.class.getClassLoader());
-
-        contexts.addHandler(appContext);
-        try {
-            appContext.start();
-        } catch (Exception e) {
-            LOG.error("Error while starting server", e);
-            throw new MyCollabException(e);
-        }
-        ServerInstance.getInstance().setIsUpgrading(false);
-    }
-
-    private static void unpackFile(File upgradeFile) throws IOException {
-        File libFolder = new File(System.getProperty("user.dir"), "lib");
-        File webappFolder = new File(System.getProperty("user.dir"), "webapp");
-        assertFolderWritePermission(libFolder);
-        assertFolderWritePermission(webappFolder);
-
-        org.apache.commons.io.FileUtils.deleteDirectory(libFolder);
-        org.apache.commons.io.FileUtils.deleteDirectory(webappFolder);
-
-        byte[] buffer = new byte[2048];
-
-        try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
-            ZipEntry entry;
-            while ((entry = inputStream.getNextEntry()) != null) {
-                if (!entry.isDirectory() && (entry.getName().startsWith("lib/")
-                        || entry.getName().startsWith("webapp"))) {
-                    File candidateFile = new File(System.getProperty("user.dir"), entry.getName());
-                    candidateFile.getParentFile().mkdirs();
-                    try (FileOutputStream output = new FileOutputStream(candidateFile)) {
-                        int len;
-                        while ((len = inputStream.read(buffer)) > 0) {
-                            output.write(buffer, 0, len);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private static void assertFolderWritePermission(File folder) throws IOException {
-        if (!folder.canWrite()) {
-            throw new IOException(System.getProperty("user.name") + " does not have write permission on folder " + folder.getAbsolutePath()
-            + ". The upgrade could not be proceeded. Please correct permission before you upgrade MyCollab again");
         }
     }
 

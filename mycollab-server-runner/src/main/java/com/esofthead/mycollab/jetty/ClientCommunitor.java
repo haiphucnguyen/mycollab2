@@ -54,7 +54,8 @@ public class ClientCommunitor {
     }
 
     public void reloadRequest(File file) {
-        LOG.info("Request RELOAD on " + port);
+        LOG.info(String.format("Send update request to the main process at port %d with file %s",
+                port, file.getAbsolutePath()));
         try (Socket socket = new Socket("localhost", port);
              OutputStream outputStream = socket.getOutputStream();
              DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {

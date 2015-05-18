@@ -14,6 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-executor.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * This file is part of mycollab-executor.
+ * <p>
+ * mycollab-executor is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * mycollab-executor is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-executor.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab;
 
 import org.slf4j.Logger;
@@ -26,13 +42,15 @@ import org.zeroturnaround.process.JavaProcess;
 import org.zeroturnaround.process.ProcessUtil;
 import org.zeroturnaround.process.Processes;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * @author MyCollab Ltd
@@ -57,15 +75,45 @@ public class Executor {
             wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
         }
 
-        void restart() throws InterruptedException, TimeoutException, IOException {
-            if (wrappedJavaProccess != null) {
-                ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProccess, 30, TimeUnit.SECONDS, 10, TimeUnit.SECONDS);
-                start();
-            }
-        }
-
         Future<ProcessResult> getFuture() {
             return javaProcess.getFuture();
+        }
+    }
+
+    private static void unpackFile(File upgradeFile) throws IOException {
+        File libFolder = new File(System.getProperty("user.dir"), "lib");
+        File webappFolder = new File(System.getProperty("user.dir"), "webapp");
+        assertFolderWritePermission(libFolder);
+        assertFolderWritePermission(webappFolder);
+
+        org.apache.commons.io.FileUtils.deleteDirectory(libFolder);
+        org.apache.commons.io.FileUtils.deleteDirectory(webappFolder);
+
+        byte[] buffer = new byte[2048];
+
+        try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(upgradeFile))) {
+            ZipEntry entry;
+            while ((entry = inputStream.getNextEntry()) != null) {
+                if (!entry.isDirectory() && (entry.getName().startsWith("lib/")
+                        || entry.getName().startsWith("webapp"))) {
+                    File candidateFile = new File(System.getProperty("user.dir"), entry.getName());
+                    candidateFile.getParentFile().mkdirs();
+                    LOG.info("Copy file: " + entry.getName());
+                    try (FileOutputStream output = new FileOutputStream(candidateFile)) {
+                        int len;
+                        while ((len = inputStream.read(buffer)) > 0) {
+                            output.write(buffer, 0, len);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void assertFolderWritePermission(File folder) throws IOException {
+        if (!folder.canWrite()) {
+            throw new IOException(System.getProperty("user.name") + " does not have write permission on folder " + folder.getAbsolutePath()
+                    + ". The upgrade could not be proceeded. Please correct permission before you upgrade MyCollab again");
         }
     }
 
@@ -85,8 +133,18 @@ public class Executor {
                         DataInputStream dataInputStream = new DataInputStream(inputStream);
                         String request = dataInputStream.readUTF();
                         LOG.info("Receive request " + request);
-                        if ("RELOAD".equals(request)) {
-                            myCollabWrapProcess.restart();
+                        if (request.startsWith("RELOAD")) {
+                            String filePath = request.substring("RELOAD:".length());
+                            LOG.info("Update MyCollab with file " + filePath);
+//                            File upgradeFile = new File(filePath);
+                            File upgradeFile = new File("D:\\Documents\\mycollab2\\mycollab-app-community\\target\\upgrade.zip");
+                            if (upgradeFile.exists()) {
+                                ProcessUtil.destroyGracefullyOrForcefullyAndWait(myCollabWrapProcess.wrappedJavaProccess, 6000, TimeUnit.SECONDS, 6000, TimeUnit.SECONDS);
+                                unpackFile(upgradeFile);
+                                myCollabWrapProcess.start();
+                            } else {
+                                LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " + upgradeFile.getAbsolutePath());
+                            }
                         }
                     }
                 } catch (Exception e) {

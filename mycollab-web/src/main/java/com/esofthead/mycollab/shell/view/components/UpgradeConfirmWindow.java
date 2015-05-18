@@ -107,7 +107,7 @@ public class UpgradeConfirmWindow extends Window {
                 DownloadProgressWindow progressWindow = new DownloadProgressWindow();
                 UI.getCurrent().addWindow(progressWindow);
                 lock.unlock();
-                File tmpFile = File.createTempFile("mycollab", "zip");
+                File tmpFile = File.createTempFile("mycollab", ".zip");
 //                URL url = new URL(props.getProperty("autoDownload"));
                 URL url = new URL("http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.6/README.md/download");
                 HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -145,6 +145,12 @@ public class UpgradeConfirmWindow extends Window {
                     String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
                     Page.getCurrent().setLocation(locUrl);
                     progressWindow.close();
+
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     ServerInstance.getInstance().upgrade(tmpFile);
                 } else {
                     NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");

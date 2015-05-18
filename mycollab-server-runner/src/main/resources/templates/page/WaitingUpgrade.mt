@@ -106,6 +106,9 @@ h3 {
               window.location.assign("/");
             }
           }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          setTimeout(checkUpgradeReady, 5000);
         }
       });
 

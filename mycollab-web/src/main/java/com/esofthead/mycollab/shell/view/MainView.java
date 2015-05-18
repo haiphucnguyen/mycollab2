@@ -350,7 +350,7 @@ public final class MainView extends AbstractPageView {
                     if (daysLeft > 30) {
                         BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
                         BillingPlan freeBillingPlan = billingService.getFreeBillingPlan();
-                        billingAccount.setBillingPlan(freeBillingPlan);
+//                        billingAccount.setBillingPlan(freeBillingPlan);
                         informLbl.setValue("<div class='informBlock'>TRIAL ENDING<br>"
                                 + " 0 DAYS LEFT</div><div class='informBlock'>&gt;&gt;</div>");
                     } else {
