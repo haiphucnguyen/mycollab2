@@ -413,7 +413,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 
         prjList.showProjects();
 
-        if (project.getContextask()) {
+        if (project.getContextask() != null && project.getContextask()) {
             ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             searchCriteria.setStatus(new StringSearchField(ProjectMemberStatusConstants.ACTIVE));
