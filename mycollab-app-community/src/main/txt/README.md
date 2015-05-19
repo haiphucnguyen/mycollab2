@@ -53,10 +53,13 @@ Version 5.0.7
 * Change the default cdn url
 * Change the default browser cache of vaadin
 * Add context support for project
+* Improve sending email with various SMTP settings
+* Add warning message if user ask retrieve password without configuring SMTP (#fix per user's feedback)
 
 **Bug Fixes**
 
 * Minor bug fixes on IE browsers when user press button
+* Email subject of task group has project name is null
 
 Version 5.0.6
 -----------------------------
