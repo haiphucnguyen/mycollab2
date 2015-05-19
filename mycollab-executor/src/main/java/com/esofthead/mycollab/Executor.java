@@ -41,8 +41,23 @@ public class Executor {
         assertFolderWritePermission(libFolder);
         assertFolderWritePermission(webappFolder);
 
-        FileUtils.deleteDirectory(libFolder);
-        FileUtils.deleteDirectory(webappFolder);
+        //Hack for windows since the jar files still be keep by process, we will wait until
+        // the process is ended actually
+        int tryTimes = 0;
+        while (tryTimes < 10) {
+            try {
+                FileUtils.deleteDirectory(libFolder);
+                FileUtils.deleteDirectory(webappFolder);
+                break;
+            } catch (Exception e) {
+                tryTimes++;
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
 
         byte[] buffer = new byte[2048];
 
