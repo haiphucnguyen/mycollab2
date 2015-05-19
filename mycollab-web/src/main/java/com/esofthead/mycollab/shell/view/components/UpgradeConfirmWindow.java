@@ -109,7 +109,7 @@ public class UpgradeConfirmWindow extends Window {
                 lock.unlock();
                 File tmpFile = File.createTempFile("mycollab", ".zip");
 //                URL url = new URL(props.getProperty("autoDownload"));
-                URL url = new URL("http://sourceforge.net/projects/mycollab/files/MyCollab_5.0.6/README.md/download");
+                URL url = new URL("http://c1.f28.img.vnecdn.net/2015/05/18/ban-hang-2621-1431954934_1431959111_1431959142_180x108.jpg");
                 HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
                 int responseCode = httpConn.getResponseCode();
 
@@ -143,8 +143,11 @@ public class UpgradeConfirmWindow extends Window {
                     UI.getCurrent().setPollInterval(-1);
                     ServerInstance.getInstance().preUpgrade();
                     String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
+                    lock = UI.getCurrent().getSession().getLockInstance();
+                    lock.lock();
                     Page.getCurrent().setLocation(locUrl);
                     progressWindow.close();
+                    lock.unlock();
 
                     try {
                         Thread.sleep(5000);

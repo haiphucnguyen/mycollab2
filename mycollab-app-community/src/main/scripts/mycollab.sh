@@ -161,7 +161,7 @@ if [ "$1" = "start" ] ; then
   touch "$MYCOLLAB_OUT"
   cd ..
   eval \"$_RUNJAVA\" $MYCOLLAB_OPTS \
-      -jar $MYCOLLAB_HOME/runner.jar --port $MYCOLLAB_PORT
+      -jar $MYCOLLAB_HOME/executor.jar --port $MYCOLLAB_PORT
  ####>> "$MYCOLLAB_OUT" 2>&1 "&"
 
   if [ ! -z "$MYCOLLAB_PID" ]; then

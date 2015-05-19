@@ -33,7 +33,7 @@ h3 {
 
 
 </style>
-<title>MyCollab Setup Page</title>
+<title>MyCollab Setup Assistant Page</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
 	<div id="container">
@@ -68,7 +68,8 @@ h3 {
 				<hr size="1" style="margin: 1px 0 20px 0; ">
 				<div id="title">
 					<h3>Welcome to the MyCollab setup wizard. Please fill in the information below to complete the installation process.<h3>
-					<h4>MyCollab is well tested on various platforms include Windows, Linux and MacOS. We have been spending countless hours to do installation testing on
+					<h4>MyCollab is well tested on various platforms include Windows, Linux and MacOS. We have been
+					spending countless hours to do the installation testing on
 					as many machines as possible. If you can not install MyCollab successfully, please raise your case in our <a href="https://www.mycollab.com/qa/" target="_blank">Q&A page</a></h4>
 				</div>
 				<hr size="1" style="margin: 20px 0 1px 0; ">
@@ -368,7 +369,7 @@ h3 {
 			return;
 		}
 		$('#post').html('<img src="${defaultUrls.app_url}assets/images/ajax-loader.gif" alt="Pulpit rock" style="height:18px;"><span>&nbsp;&nbsp;Setting up...</span>');
-
+        $('#post').after('<p><h3 style=\"color:orange\">Please be patient! It may takes several minutes to set up MyCollab depends on your servers performance.</h3></p>');
 		var urlPost = "/install";
 		var tls = "";
 		if ($('#tls').is(":checked"))

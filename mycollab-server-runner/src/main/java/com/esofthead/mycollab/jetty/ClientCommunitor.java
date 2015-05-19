@@ -48,4 +48,14 @@ public class ClientCommunitor {
             LOG.error("Error while send RELOAD request to the host process", e);
         }
     }
+
+    public static void main(String[] args) {
+        try (Socket socket = new Socket("localhost", 53631);
+             OutputStream outputStream = socket.getOutputStream();
+             DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
+             dataOutputStream.writeUTF("RELOAD:" + "AAA");
+        } catch (Exception e) {
+            LOG.error("Error while send RELOAD request to the host process", e);
+        }
+    }
 }
