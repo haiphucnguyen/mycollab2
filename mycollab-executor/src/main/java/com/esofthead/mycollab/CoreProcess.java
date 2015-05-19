@@ -11,6 +11,9 @@ import org.zeroturnaround.process.Processes;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -47,16 +50,16 @@ class CoreProcess {
                         options = properties.getProperty("MYCOLLAB_OPTS", "");
                     }
 
-                    StartedProcess javaProcess;
-                    if ("".equals(options)) {
-                        javaProcess = new ProcessExecutor().command("java", "-jar", "runner.jar", "--port",
-                                processRunningPort + "", "--cport", clientListenPort + "")
-                                .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
-                    } else {
-                        javaProcess = new ProcessExecutor().command("java", options, "-jar", "runner.jar", "--port",
-                                processRunningPort + "", "--cport", clientListenPort + "")
-                                .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
+                    List<String> javaOptions = new ArrayList<>();
+                    javaOptions.add("java");
+                    if (!"".equals(options)) {
+                        String[] optArr = options.split(" ");
+                        javaOptions.addAll(Arrays.asList(optArr));
                     }
+                    javaOptions.addAll(Arrays.asList("-jar", "runner.jar", "--port", processRunningPort + "", "--cport", clientListenPort + ""));
+
+                    StartedProcess javaProcess = new ProcessExecutor().command(javaOptions.toArray(new String[javaOptions.size()]))
+                            .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
 
                     wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
                     javaProcess.getFuture().get();
