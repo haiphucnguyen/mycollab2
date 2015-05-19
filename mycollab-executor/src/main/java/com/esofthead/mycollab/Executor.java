@@ -91,7 +91,17 @@ public class Executor {
         final ServerSocket serverSocket = new ServerSocket(0);
         final int listenPort = serverSocket.getLocalPort();
 
-        final CoreProcess process = new CoreProcess(listenPort);
+        int processRunningPort = 8080;
+        try {
+            for (int i = 0; i < args.length; i++) {
+                if ("--port".equals(args[i])) {
+                    processRunningPort = Integer.parseInt(args[++i]);
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Error in parsing arguments", e);
+        }
+        final CoreProcess process = new CoreProcess(processRunningPort, listenPort);
 
         final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
         Runnable serverTask = new Runnable() {
@@ -105,7 +115,7 @@ public class Executor {
                             String request = dataInputStream.readUTF();
                             if (request.startsWith("RELOAD")) {
                                 String filePath = request.substring("RELOAD:".length());
-                                LOG.info("Update MyCollab with file " + filePath);
+                                LOG.debug("Update MyCollab with file " + filePath);
 //                              File upgradeFile = new File(filePath);
                                 File upgradeFile = new File("../upgrade.zip");
                                 if (upgradeFile.exists()) {
@@ -113,13 +123,14 @@ public class Executor {
                                     unpackFile(upgradeFile);
                                     process.start();
                                 } else {
-                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " + upgradeFile.getAbsolutePath());
+                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
+                                            upgradeFile.getAbsolutePath());
                                 }
                             }
                         }
                     }
                 } catch (Exception e) {
-                    LOG.warn("Accept failed port " + listenPort, e);
+                    e.printStackTrace();
                 }
 
             }

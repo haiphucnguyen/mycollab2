@@ -24,8 +24,6 @@
 #                   of the catalina startup java process, when start (fork) is
 #                   used
 # -----------------------------------------------------------------------------
-
-export MYCOLLAB_OPTS="-Xms756m -Xmx1024m -XX:NewSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC"
 export MYCOLLAB_PORT=8080
 
 # OS specific support.  $var _must_ be set to either true or false.
@@ -160,8 +158,7 @@ if [ "$1" = "start" ] ; then
   shift
   touch "$MYCOLLAB_OUT"
   cd ..
-  eval \"$_RUNJAVA\" $MYCOLLAB_OPTS \
-      -jar $MYCOLLAB_HOME/executor.jar --port $MYCOLLAB_PORT
+  eval \"$_RUNJAVA\" -jar $MYCOLLAB_HOME/executor.jar --port $MYCOLLAB_PORT
  ####>> "$MYCOLLAB_OUT" 2>&1 "&"
 
   if [ ! -z "$MYCOLLAB_PID" ]; then

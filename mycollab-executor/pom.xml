@@ -68,8 +68,10 @@
                             <artifactSet>
                                 <includes>
                                     <include>org.zeroturnaround:*</include>
+                                    <include>org.slf4j:slf4j-api</include>
                                     <include>com.sun.jna:jna</include>
                                     <include>commons-lang:commons-lang</include>
+                                    <include>commons-io:commons-io</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

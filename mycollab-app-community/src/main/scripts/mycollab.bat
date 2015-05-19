@@ -22,7 +22,6 @@ rem   JAVA_HOME       Must point at your Java Development Kit installation.
 rem                   Required to run the with the "debug" argument.
 rem ---------------------------------------------------------------------------
 
-set MYCOLLAB_OPTS=-Xms756m -Xmx1024m -XX:NewSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC
 set MYCOLLAB_PORT=8080
 set _RUNJAVA=java
 
@@ -103,7 +102,7 @@ goto setArgs
 
 rem Execute Java with the applicable properties
 cd ..
-%_EXECJAVA% %MYCOLLAB_OPTS% -jar runner.jar  %ACTION%
+%_EXECJAVA% -jar runner.jar  %ACTION%
 goto end
 
 :end
