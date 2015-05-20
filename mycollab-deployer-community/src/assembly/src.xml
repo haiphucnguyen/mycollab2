@@ -11,7 +11,7 @@
     <moduleSets>
         <moduleSet>
             <includes>
-                <include>${project.groupId}:parent-community:pom</include>
+                <include>${project.groupId}:mycollab-parent-community:pom</include>
                 <include>${project.groupId}:mycollab-core</include>
                 <include>${project.groupId}:mycollab-dao</include>
                 <include>${project.groupId}:mycollab-config</include>
@@ -37,7 +37,8 @@
                 <fileSets>
                     <fileSet>
                         <excludes>
-                            <exclude>**/.*/**</exclude>
+                            <exclude>**/.idea/**</exclude>
+                            <exclude>**/.settings/**</exclude>
                             <exclude>**/target/**</exclude>
                             <exclude>**/repo/**</exclude>
                             <exclude>**/repo2/**</exclude>
@@ -65,6 +66,7 @@
         <fileSet>
             <outputDirectory>mycollab-deployer-community</outputDirectory>
             <excludes>
+                <exclude>**/.settings/**</exclude>
                 <exclude>**/bin/**</exclude>
                 <exclude>**/target/**</exclude>
                 <exclude>**/.gitignore</exclude>

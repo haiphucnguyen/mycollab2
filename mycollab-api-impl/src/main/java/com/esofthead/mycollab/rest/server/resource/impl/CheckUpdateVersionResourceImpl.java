@@ -13,14 +13,15 @@ import java.util.Properties;
 public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResource {
     @Override
     public Response getLatestVersion(String version) {
-        if (version == null) {
-
-        }
         Properties props = new Properties();
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "http://community.mycollab.com/download/");
         props.put("releaseNotes", "http://community.mycollab.com/release-notes/");
-        props.put("autoDownload", String.format("http://sourceforge.net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download", MyCollabVersion.getVersion()));
+
+        if (version != null && !MyCollabVersion.isEditionNewer("5.0.6", version)) {
+            props.put("autoDownload", String.format("http://sourceforge.net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download", MyCollabVersion.getVersion()));
+        }
+
         Gson gson = new Gson();
         Response response = Response.status(200).entity(gson.toJson(props))
                 .type(MediaType.APPLICATION_JSON_TYPE).build();
