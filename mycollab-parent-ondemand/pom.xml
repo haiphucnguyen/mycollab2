@@ -3,11 +3,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-parent-ondemand</name>
-    <artifactId>parent-ondemand</artifactId>
+    <artifactId>mycollab-parent-ondemand</artifactId>
     <packaging>pom</packaging>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>mycollab-parent</artifactId>
         <version>5.0.7</version>
         <relativePath>../mycollab-parent/pom.xml</relativePath>
     </parent>

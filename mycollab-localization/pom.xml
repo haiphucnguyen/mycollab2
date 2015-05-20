@@ -6,7 +6,7 @@
     <artifactId>mycollab-localization</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent-community</artifactId>
+        <artifactId>mycollab-parent-community</artifactId>
         <version>5.0.7</version>
         <relativePath>../mycollab-parent-community/pom.xml</relativePath>
     </parent>

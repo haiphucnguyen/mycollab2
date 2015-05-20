@@ -37,6 +37,7 @@
                 <fileSets>
                     <fileSet>
                         <excludes>
+                            <exclude>**/.*/**</exclude>
                             <exclude>**/target/**</exclude>
                             <exclude>**/repo/**</exclude>
                             <exclude>**/repo2/**</exclude>

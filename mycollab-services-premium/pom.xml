@@ -6,7 +6,7 @@
     <artifactId>mycollab-services-premium</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent-premium</artifactId>
+        <artifactId>mycollab-parent-premium</artifactId>
         <version>5.0.7</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>

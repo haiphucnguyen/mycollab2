@@ -6,7 +6,7 @@
     <artifactId>mycollab-servlet-ondemand</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>parent-ondemand</artifactId>
+        <artifactId>mycollab-parent-ondemand</artifactId>
         <version>5.0.7</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
