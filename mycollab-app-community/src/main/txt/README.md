@@ -75,6 +75,7 @@ Version 5.0.6
 * More comprehensive message to instruct user understand field value better
 * Request user change username for the first time login after installation
 * Increase the size of database connection pool to 50 for heavy load sites
+* Improve the build process
 
 **Bug Fixes**
 
