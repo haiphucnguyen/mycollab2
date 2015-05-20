@@ -60,7 +60,7 @@
             <file src="conf" targetdir="$INSTALL_PATH" />
             <file src="lib" targetdir="$INSTALL_PATH" />
             <file src="logs" targetdir="$INSTALL_PATH" />
-            <fileset dir="scripts" includes="*.gv" targetdir="$INSTALL_PATH/bin" />
+            <file src="scripts/mycollab.ini" targetdir="$INSTALL_PATH/bin" />
             <fileset dir="scripts" includes="*.sh" targetdir="$INSTALL_PATH/bin">
                 <os family="unix"/>
 		        <os family="mac"/>

@@ -102,7 +102,7 @@ goto setArgs
 
 rem Execute Java with the applicable properties
 cd ..
-%_EXECJAVA% -jar runner.jar  %ACTION%
+%_EXECJAVA% -jar executor.jar  %ACTION%
 goto end
 
 :end

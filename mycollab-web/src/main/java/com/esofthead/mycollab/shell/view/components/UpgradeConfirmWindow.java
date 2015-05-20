@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.shell.view.components;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.jetty.ServerInstance;
@@ -108,8 +109,7 @@ public class UpgradeConfirmWindow extends Window {
                 UI.getCurrent().addWindow(progressWindow);
                 lock.unlock();
                 File tmpFile = File.createTempFile("mycollab", ".zip");
-//                URL url = new URL(props.getProperty("autoDownload"));
-                URL url = new URL("http://c1.f28.img.vnecdn.net/2015/05/18/ban-hang-2621-1431954934_1431959111_1431959142_180x108.jpg");
+                URL url = new URL(props.getProperty("autoDownload"));
                 HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
                 int responseCode = httpConn.getResponseCode();
 
@@ -167,7 +167,6 @@ public class UpgradeConfirmWindow extends Window {
                     UI.getCurrent().setPollInterval(-1);
                 }
             }
-
         }
 
         class DownloadProgressWindow extends Window {
@@ -197,7 +196,7 @@ public class UpgradeConfirmWindow extends Window {
                 progressBar.setWidth("100%");
                 progressLayout.with(progressBar, new MHorizontalLayout().with(currentVolumeLabel, new Label("/"), totalVolumeLabel)).expand(progressBar);
                 content.with(new Label("Downloading the latest MyCollab distribution. Please be patient"), progressLayout);
-                Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         isKill = true;

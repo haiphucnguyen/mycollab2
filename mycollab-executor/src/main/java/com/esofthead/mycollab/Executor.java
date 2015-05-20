@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-executor.
- * <p/>
+ * <p>
  * mycollab-executor is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
+ * <p>
  * mycollab-executor is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * <p/>
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-executor.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -115,9 +115,8 @@ public class Executor {
                             String request = dataInputStream.readUTF();
                             if (request.startsWith("RELOAD")) {
                                 String filePath = request.substring("RELOAD:".length());
-                                LOG.debug("Update MyCollab with file " + filePath);
-//                              File upgradeFile = new File(filePath);
-                                File upgradeFile = new File("../upgrade.zip");
+                                LOG.debug(String.format("Update MyCollab with file %s", filePath));
+                                File upgradeFile = new File(filePath);
                                 if (upgradeFile.exists()) {
                                     process.stop();
                                     unpackFile(upgradeFile);
