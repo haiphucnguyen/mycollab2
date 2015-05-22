@@ -205,14 +205,12 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
         }
 
         protected PermissionMap getPermissionMap() {
-            final PermissionMap permissionMap = new PermissionMap();
+            PermissionMap permissionMap = new PermissionMap();
 
-            for (String permissionItem : permissionControlsMap
-                    .keySet()) {
-                KeyCaptionComboBox permissionBox = permissionControlsMap
-                        .get(permissionItem);
+            for (Map.Entry<String, KeyCaptionComboBox> entry:permissionControlsMap.entrySet()) {
+                KeyCaptionComboBox permissionBox =entry.getValue();
                 Integer perValue = (Integer) permissionBox.getValue();
-                permissionMap.addPath(permissionItem, perValue);
+                permissionMap.addPath(entry.getKey(), perValue);
             }
             return permissionMap;
         }

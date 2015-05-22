@@ -176,10 +176,10 @@ public class ProblemReadViewImpl extends
 		return previewForm;
 	}
 
-	private class PeopleInfoComp extends VerticalLayout {
+	private static class PeopleInfoComp extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
-		public void displayEntryPeople(ValuedBean bean) {
+		void displayEntryPeople(ValuedBean bean) {
 			this.removeAllComponents();
 			this.setSpacing(true);
 			this.setMargin(new MarginInfo(false, false, false, true));
@@ -213,8 +213,7 @@ public class ProblemReadViewImpl extends
 				layout.addComponent(createdUserLink, 1, 0);
 				layout.setColumnExpandRatio(1, 1.0f);
 
-				Label assigneeLbl = new Label(
-						AppContext
+				Label assigneeLbl = new Label(AppContext
 								.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
 				assigneeLbl.setSizeUndefined();
 				layout.addComponent(assigneeLbl, 0, 1);

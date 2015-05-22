@@ -196,8 +196,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
         }, "Document.pdf");
     }
 
-    private File writePdf() throws IOException,
-            DocumentException {
+    private File writePdf() throws IOException, DocumentException {
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(String.format(XHTML_PAGE,
                 beanItem.getSubject(), beanItem.getSubject(), beanItem.getContent()));
@@ -205,9 +204,9 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
 
         File file = File.createTempFile(beanItem.getSubject(), "pdf");
         file.deleteOnExit();
-        OutputStream os = new FileOutputStream(file);
-        renderer.createPDF(os);
-        os.close();
+        try(OutputStream os = new FileOutputStream(file)) {
+            renderer.createPDF(os);
+        }
         return file;
     }
 
@@ -244,7 +243,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
         }
     }
 
-    private class PageReadFormLayout implements IFormLayoutFactory {
+    private static class PageReadFormLayout implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         private MVerticalLayout layout;

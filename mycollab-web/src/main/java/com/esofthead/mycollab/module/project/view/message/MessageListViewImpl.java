@@ -269,7 +269,7 @@ public class MessageListViewImpl extends AbstractPageView implements
     }
 
     @SuppressWarnings({"serial"})
-    private class MessageSearchPanel extends GenericSearchPanel<MessageSearchCriteria> {
+    private static class MessageSearchPanel extends GenericSearchPanel<MessageSearchCriteria> {
         private MessageSearchCriteria messageSearchCriteria;
         private TextField nameField;
 

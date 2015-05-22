@@ -27,7 +27,7 @@ import java.io.File;
  */
 public final class FileStorageConfiguration implements StorageConfiguration {
 
-	public static File baseContentFolder;
+	public static final File baseContentFolder;
 
 	static {
 		String userFolder = System.getProperty("user.home");

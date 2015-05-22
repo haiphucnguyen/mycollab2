@@ -75,7 +75,7 @@ public class ContactReadFormFieldFactory extends
 					contact.getAssignUserAvatarId(), contact.getAssignUserFullName());
 		} else if (propertyId.equals("iscallable")) {
 			if (contact.getIscallable() == null
-					|| Boolean.FALSE == contact.getIscallable()) {
+					|| Boolean.FALSE.equals(contact.getIscallable())) {
 				return new DefaultViewField(
 						AppContext.getMessage(GenericI18Enum.BUTTON_NO));
 			} else {
@@ -116,7 +116,7 @@ public class ContactReadFormFieldFactory extends
 		return null;
 	}
 
-	private class VCardStreamSource extends LazyStreamSource {
+	private static class VCardStreamSource extends LazyStreamSource {
 		private static final long serialVersionUID = 1L;
 		private File vcardTemp;
 

@@ -202,7 +202,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             memberRole.setContentMode(ContentMode.HTML);
             memberRole.setStyleName("member-role");
             if (beanItem.getIsadmin() != null
-                    && beanItem.getIsadmin() == Boolean.TRUE
+                    &&  Boolean.TRUE.equals(beanItem.getIsadmin())
                     || beanItem.getProjectroleid() == null) {
                 memberRole.setValue(memberRoleLinkPrefix
                         + "style=\"color: #B00000;\">" + "Project Admin"
@@ -306,13 +306,12 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
 
     }
 
-    protected class ProjectMemberFormFieldFactory extends
+    private static class ProjectMemberFormFieldFactory extends
             AbstractBeanFieldGroupViewFieldFactory<SimpleProjectMember> {
 
         private static final long serialVersionUID = 1L;
 
-        public ProjectMemberFormFieldFactory(
-                GenericBeanForm<SimpleProjectMember> form) {
+        ProjectMemberFormFieldFactory(GenericBeanForm<SimpleProjectMember> form) {
             super(form);
         }
 
@@ -320,7 +319,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("projectroleid")) {
                 if (attachForm.getBean().getIsadmin() != null
-                        && attachForm.getBean().getIsadmin() == Boolean.FALSE) {
+                        &&  Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
                     return new LinkViewField(attachForm
                             .getBean().getRoleName(),
                             ProjectLinkBuilder.generateRolePreviewFullLink(
@@ -389,8 +388,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             header.addStyleName("panel-header");
 
             taskList = new DefaultBeanPagedList<>(
-                    ApplicationContextUtil
-                            .getSpringBean(ProjectGenericTaskService.class),
+                    ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
                     new TaskRowDisplayHandler(), 10);
             this.with(header, taskList);
         }

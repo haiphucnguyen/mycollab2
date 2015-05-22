@@ -193,12 +193,12 @@ class TaskAddPopup extends CustomComponent {
         }
     }
 
-    private class TaskNoteLayout extends MVerticalLayout {
+    private static class TaskNoteLayout extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
         private final RichTextArea noteArea;
         private final AttachmentPanel attachmentPanel;
 
-        public TaskNoteLayout() {
+        TaskNoteLayout() {
             this.noteArea = new RichTextArea();
             this.noteArea.setWidth("100%");
             this.noteArea.setHeight("200px");
@@ -212,15 +212,15 @@ class TaskAddPopup extends CustomComponent {
             this.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
         }
 
-        public String getNote() {
+        String getNote() {
             return this.noteArea.getValue();
         }
 
-        void saveContentsToRepo(final Integer typeid) {
+        void saveContentsToRepo(final Integer typeId) {
             String attachmentPath = AttachmentUtils
                     .getProjectEntityAttachmentPath(AppContext.getAccountId(),
                             CurrentProjectVariables.getProjectId(),
-                            ProjectTypeConstants.TASK, "" + typeid);
+                            ProjectTypeConstants.TASK, "" + typeId);
             this.attachmentPanel.saveContentsToRepo(attachmentPath);
         }
     }

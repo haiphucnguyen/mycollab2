@@ -472,7 +472,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
     this.register(new ApplicationEventListener[PageEvent.GotoAdd] {
       @Subscribe def handle(event: PageEvent.GotoAdd) {
         var pagePath: String = event.getData.asInstanceOf[String]
-        if (pagePath == null || (pagePath == "")) {
+        if ("".equals(pagePath)) {
           pagePath = CurrentProjectVariables.getCurrentPagePath + "/" + StringUtils.generateSoftUniqueId
         }
         val page: Page = new Page

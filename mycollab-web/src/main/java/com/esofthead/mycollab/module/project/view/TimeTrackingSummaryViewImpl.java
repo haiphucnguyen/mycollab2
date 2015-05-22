@@ -525,12 +525,12 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements
 
 	}
 
-	private class UserInvolvedProjectsMemberListSelect extends ListSelect {
+	private static class UserInvolvedProjectsMemberListSelect extends ListSelect {
 		private static final long serialVersionUID = 1L;
 
 		private List<SimpleUser> users;
 
-		public UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
+		UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
 			users = ApplicationContextUtil.getSpringBean(
 					ProjectMemberService.class).getActiveUsersInProjects(
 					projectIds, AppContext.getAccountId());

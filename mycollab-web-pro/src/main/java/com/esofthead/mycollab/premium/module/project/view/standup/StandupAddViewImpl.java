@@ -42,11 +42,11 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
 		this.editForm.setBean(standupReport);
 	}
 
-	private class EditFormFieldFactory extends
+	private static class EditFormFieldFactory extends
 			AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
 		private static final long serialVersionUID = 1L;
 
-		public EditFormFieldFactory(GenericBeanForm<StandupReportWithBLOBs> form) {
+		EditFormFieldFactory(GenericBeanForm<StandupReportWithBLOBs> form) {
 			super(form);
 		}
 

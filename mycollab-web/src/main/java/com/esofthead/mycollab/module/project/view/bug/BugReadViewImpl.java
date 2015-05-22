@@ -442,7 +442,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
         return tabBugDetail;
     }
 
-    private class FormLayoutFactory implements IFormLayoutFactory {
+    private static class FormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
         private GridFormLayoutHelper informationLayout;
 
@@ -682,7 +682,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug>
         return this.previewForm;
     }
 
-    private class PeopleInfoComp extends MVerticalLayout {
+    private static class PeopleInfoComp extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
         private void displayEntryPeople(ValuedBean bean) {

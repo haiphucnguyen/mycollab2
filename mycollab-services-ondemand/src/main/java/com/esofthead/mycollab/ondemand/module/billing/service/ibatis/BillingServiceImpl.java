@@ -135,7 +135,7 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
 		billingAccount.setPricing(billingPlan.getPricing());
 		billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
-		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31).getTime());
+		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 11, 31).getTime());
 		billingAccount.setStatus(AccountStatusConstants.TRIAL);
 		billingAccount.setSubdomain(subDomain);
 

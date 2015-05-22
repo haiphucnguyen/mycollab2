@@ -506,10 +506,10 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
         }
     }
 
-    private class PeopleInfoComp extends MVerticalLayout {
+    private static class PeopleInfoComp extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
-        public void displayEntryPeople(ValuedBean bean) {
+        void displayEntryPeople(ValuedBean bean) {
             this.removeAllComponents();
             this.withMargin(new MarginInfo(false, false, false, true));
 

@@ -92,8 +92,8 @@ public class RoleListPresenter extends
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (Role item : currentDataList) {
 				if (item.isSelected()
-						&& (item.getIssystemrole() == null || item
-								.getIssystemrole() == Boolean.FALSE)) {
+						&& (item.getIssystemrole() == null ||  Boolean.FALSE.equals(item
+						.getIssystemrole()))) {
 					keyList.add(item.getId());
 				} else {
 					NotificationUtil

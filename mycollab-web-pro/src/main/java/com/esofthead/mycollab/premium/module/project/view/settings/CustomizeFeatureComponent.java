@@ -176,12 +176,12 @@ public class CustomizeFeatureComponent extends BlockWidget {
 		this.addToBody(body);
 	}
 
-	private class SelectionBox extends MHorizontalLayout {
+	private static class SelectionBox extends MHorizontalLayout {
 		private static final long serialVersionUID = 1L;
 
 		private CheckBox checkbox;
 
-		public SelectionBox(FontAwesome iconResource, String caption,
+		SelectionBox(FontAwesome iconResource, String caption,
 				Boolean selected) {
 			this.withMargin(true).withWidth("100%").withStyleName("feature-select-box");
 			Label captionLbl = new Label(iconResource.getHtml() + " " + caption, ContentMode.HTML);

@@ -64,7 +64,7 @@ public class DesktopApplication extends MyCollabUI {
 
     private static final Logger LOG = LoggerFactory.getLogger(DesktopApplication.class);
     public static final String NAME_COOKIE = "mycollab";
-    public static ShellUrlResolver rootUrlResolver = new ShellUrlResolver();
+    public static final ShellUrlResolver rootUrlResolver = new ShellUrlResolver();
 
     private MainWindowContainer mainWindowContainer;
 

@@ -36,7 +36,7 @@ public class DateViewField extends CustomField {
 
 	private Date date;
 
-	public DateViewField(final Date date) {
+	public DateViewField(Date date) {
 		this.date = date;
 	}
 

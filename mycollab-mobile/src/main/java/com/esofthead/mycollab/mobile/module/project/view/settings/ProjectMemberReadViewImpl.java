@@ -104,12 +104,9 @@ public class ProjectMemberReadViewImpl extends
 				return new FormViewField(
 						beanItem.getDisplayName());
 			} else if (propertyId.equals("roleName")) {
-				String memberRole = "";
-				if (beanItem.getIsadmin() != null
-						&& beanItem.getIsadmin() == Boolean.TRUE
-						|| beanItem.getProjectroleid() == null) {
-					memberRole = AppContext
-							.getMessage(ProjectMemberI18nEnum.M_FORM_PROJECT_ADMIN);
+				String memberRole;
+				if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
+					memberRole = AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_PROJECT_ADMIN);
 				} else {
 					memberRole = beanItem.getRoleName();
 				}

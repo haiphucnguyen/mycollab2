@@ -77,7 +77,7 @@ public class GenericSectionComp extends VerticalLayout {
 		return fields;
 	}
 
-	protected class CustomFieldDragFilter implements DragFilter {
+	static class CustomFieldDragFilter implements DragFilter {
 		private static final long serialVersionUID = 1L;
 
 		@Override

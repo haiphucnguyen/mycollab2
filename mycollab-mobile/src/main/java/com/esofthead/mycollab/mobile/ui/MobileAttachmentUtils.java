@@ -203,67 +203,66 @@ public class MobileAttachmentUtils {
 	public static void saveContentsToRepo(String attachmentPath,
 			Map<String, File> fileStores) {
 		if (MapUtils.isNotEmpty(fileStores)) {
-			ResourceService resourceService = ApplicationContextUtil
-					.getSpringBean(ResourceService.class);
-			for (String fileName : fileStores.keySet()) {
-				try {
-					String fileExt = "";
-					int index = fileName.lastIndexOf(".");
-					if (index > 0) {
-						fileExt = fileName.substring(index + 1,
-								fileName.length());
-					}
+            ResourceService resourceService = ApplicationContextUtil
+                    .getSpringBean(ResourceService.class);
+			for (Map.Entry<String, File> entry : fileStores.entrySet()) {
+                try {
+                    String fileExt = "";
+                    String fileName = entry.getKey();
+                    File file = entry.getValue();
+                    int index = fileName.lastIndexOf(".");
+                    if (index > 0) {
+                        fileExt = fileName.substring(index + 1,
+                                fileName.length());
+                    }
 
-					if ("jpg".equalsIgnoreCase(fileExt)
-							|| "png".equalsIgnoreCase(fileExt)) {
-						try {
-							BufferedImage bufferedImage = ImageIO
-									.read(fileStores.get(fileName));
+                    if ("jpg".equalsIgnoreCase(fileExt) || "png".equalsIgnoreCase(fileExt)) {
+                        try {
+                            BufferedImage bufferedImage = ImageIO.read(file);
 
-							int imgHeight = bufferedImage.getHeight();
-							int imgWidth = bufferedImage.getWidth();
+                            int imgHeight = bufferedImage.getHeight();
+                            int imgWidth = bufferedImage.getWidth();
 
-							BufferedImage scaledImage = null;
+                            BufferedImage scaledImage;
 
-							float scale;
-							float destWidth = 974;
-							float destHeight = 718;
+                            float scale;
+                            float destWidth = 974;
+                            float destHeight = 718;
 
-							float scaleX = Math.min(destHeight / imgHeight, 1);
-							float scaleY = Math.min(destWidth / imgWidth, 1);
-							scale = Math.min(scaleX, scaleY);
-							scaledImage = ImageUtil.scaleImage(bufferedImage,
-									scale);
+                            float scaleX = Math.min(destHeight / imgHeight, 1);
+                            float scaleY = Math.min(destWidth / imgWidth, 1);
+                            scale = Math.min(scaleX, scaleY);
+                            scaledImage = ImageUtil.scaleImage(bufferedImage,
+                                    scale);
 
-							ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-							ImageIO.write(scaledImage, fileExt, outStream);
+                            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                            ImageIO.write(scaledImage, fileExt, outStream);
 
-							resourceService.saveContent(
-									constructContent(fileName, attachmentPath),
-									AppContext.getUsername(),
-									new ByteArrayInputStream(outStream
-											.toByteArray()), AppContext
-											.getAccountId());
-						} catch (IOException e) {
-							LOG.error("Error in upload file", e);
-							resourceService.saveContent(
-									constructContent(fileName, attachmentPath),
-									AppContext.getUsername(),
-									new FileInputStream(fileStores
-											.get(fileName)), AppContext
-											.getAccountId());
-						}
-					} else {
-						resourceService.saveContent(
-								constructContent(fileName, attachmentPath),
-								AppContext.getUsername(), new FileInputStream(
-										fileStores.get(fileName)), AppContext
-										.getAccountId());
-					}
+                            resourceService.saveContent(
+                                    constructContent(fileName, attachmentPath),
+                                    AppContext.getUsername(),
+                                    new ByteArrayInputStream(outStream
+                                            .toByteArray()), AppContext
+                                            .getAccountId());
+                        } catch (IOException e) {
+                            LOG.error("Error in upload file", e);
+                            resourceService.saveContent(
+                                    constructContent(fileName, attachmentPath),
+                                    AppContext.getUsername(),
+                                    new FileInputStream(fileStores
+                                            .get(fileName)), AppContext
+                                            .getAccountId());
+                        }
+                    } else {
+                        resourceService.saveContent(
+                                constructContent(fileName, attachmentPath),
+                                AppContext.getUsername(), new FileInputStream(file), AppContext
+                                        .getAccountId());
+                    }
 
-				} catch (FileNotFoundException e) {
-					LOG.error("Error when attach content in UI", e);
-				}
+                } catch (FileNotFoundException e) {
+                    LOG.error("Error when attach content in UI", e);
+                }
 			}
 		}
 	}

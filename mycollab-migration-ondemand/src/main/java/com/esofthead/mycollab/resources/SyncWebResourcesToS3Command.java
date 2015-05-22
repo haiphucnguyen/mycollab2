@@ -52,8 +52,8 @@ public class SyncWebResourcesToS3Command {
             }
         }
     }
-
-    public static void main(String[] args) {
-        syncLocalResourcesToS3("/home/hainguyen/Documents/mycollab2/mycollab-web/src/main/resources/assets", "assets/");
-    }
+//
+//    public static void main(String[] args) {
+//        syncLocalResourcesToS3("/home/hainguyen/Documents/mycollab2/mycollab-web/src/main/resources/assets", "assets/");
+//    }
 }

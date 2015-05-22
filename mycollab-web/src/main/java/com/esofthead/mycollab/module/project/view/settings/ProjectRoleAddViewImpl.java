@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -139,13 +139,11 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole>
 
     @Override
     public PermissionMap getPermissionMap() {
-        final PermissionMap permissionMap = new PermissionMap();
-
-        for (final String permissionItem : this.permissionControlsMap.keySet()) {
-            final AccessPermissionComboBox permissionBox = this.permissionControlsMap
-                    .get(permissionItem);
-            final Integer perValue = (Integer) permissionBox.getValue();
-            permissionMap.addPath(permissionItem, perValue);
+        PermissionMap permissionMap = new PermissionMap();
+        for (Map.Entry<String, AccessPermissionComboBox> entry : permissionControlsMap.entrySet()) {
+            AccessPermissionComboBox permissionBox = entry.getValue();
+            Integer perValue = (Integer) permissionBox.getValue();
+            permissionMap.addPath(entry.getKey(), perValue);
         }
         return permissionMap;
     }

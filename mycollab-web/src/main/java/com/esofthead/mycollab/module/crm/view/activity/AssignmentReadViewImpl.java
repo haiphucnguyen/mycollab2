@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,98 +37,99 @@ import com.vaadin.ui.CssLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 2.0
- * 
+ *
  */
 @ViewComponent
 public class AssignmentReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
-		implements AssignmentReadView {
-	private static final long serialVersionUID = 1L;
+        implements AssignmentReadView {
+    private static final long serialVersionUID = 1L;
 
-	private CrmCommentDisplay commentList;
-private AssignmentHistoryLogList historyLogList;
+    private CrmCommentDisplay commentList;
+    private AssignmentHistoryLogList historyLogList;
 
-	private DateInfoComp dateInfoComp;
-	private CrmFollowersComp<SimpleTask> followersComp;
+    private DateInfoComp dateInfoComp;
+    private CrmFollowersComp<SimpleTask> followersComp;
 
-	public AssignmentReadViewImpl() {
-		super(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
-	}
+    public AssignmentReadViewImpl() {
+        super(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
+    }
 
-	@Override
-	protected AdvancedPreviewBeanForm<SimpleTask> initPreviewForm() {
-		return new AdvancedPreviewBeanForm<>() ;
-	}
+    @Override
+    protected AdvancedPreviewBeanForm<SimpleTask> initPreviewForm() {
+        return new AdvancedPreviewBeanForm<>();
+    }
 
-	@Override
-	protected ComponentContainer createButtonControls() {
-		return new CrmPreviewFormControlsGenerator<>(previewForm)
-				.createButtonControls(RolePermissionCollections.CRM_TASK);
-	}
+    @Override
+    protected ComponentContainer createButtonControls() {
+        return new CrmPreviewFormControlsGenerator<>(previewForm)
+                .createButtonControls(RolePermissionCollections.CRM_TASK);
+    }
 
-	@Override
-	protected ComponentContainer createBottomPanel() {
-		TabSheetLazyLoadComponent tabTaskDetail = new TabSheetLazyLoadComponent();
-		tabTaskDetail.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT, 0), FontAwesome.COMMENTS);
-		tabTaskDetail.addTab(historyLogList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
-		return tabTaskDetail;
-	}
+    @Override
+    protected ComponentContainer createBottomPanel() {
+        TabSheetLazyLoadComponent tabTaskDetail = new TabSheetLazyLoadComponent();
+        tabTaskDetail.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT, 0), FontAwesome.COMMENTS);
+        tabTaskDetail.addTab(historyLogList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
+        return tabTaskDetail;
+    }
 
-	@Override
-	protected void onPreviewItem() {
-		commentList.loadComments("" + beanItem.getId());
-		historyLogList.loadHistory(beanItem.getId());
-		dateInfoComp.displayEntryDateTime(beanItem);
-		followersComp.displayFollowers(beanItem);
-	}
+    @Override
+    protected void onPreviewItem() {
+        commentList.loadComments("" + beanItem.getId());
+        historyLogList.loadHistory(beanItem.getId());
+        dateInfoComp.displayEntryDateTime(beanItem);
+        followersComp.displayFollowers(beanItem);
+    }
 
-	@Override
-	protected String initFormTitle() {
-		return beanItem.getSubject();
-	}
+    @Override
+    protected String initFormTitle() {
+        return beanItem.getSubject();
+    }
 
-	@Override
-	protected void initRelatedComponents() {
-		commentList = new CrmCommentDisplay(CrmTypeConstants.TASK, TaskRelayEmailNotificationAction.class);
+    @Override
+    protected void initRelatedComponents() {
+        commentList = new CrmCommentDisplay(CrmTypeConstants.TASK, TaskRelayEmailNotificationAction.class);
+        historyLogList = new AssignmentHistoryLogList();
 
-		MVerticalLayout basicInfo = new MVerticalLayout().withWidth("100%").withStyleName("basic-info");
+        MVerticalLayout basicInfo = new MVerticalLayout().withWidth("100%").withStyleName("basic-info");
 
-		CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
+        CssLayout navigatorWrapper = previewItemContainer.getNavigatorWrapper();
 
-		dateInfoComp = new DateInfoComp();
-		basicInfo.addComponent(dateInfoComp);
+        dateInfoComp = new DateInfoComp();
+        basicInfo.addComponent(dateInfoComp);
 
-		followersComp = new CrmFollowersComp<>(CrmTypeConstants.TASK,
-				RolePermissionCollections.CRM_TASK);
-		basicInfo.addComponent(followersComp);
+        followersComp = new CrmFollowersComp<>(CrmTypeConstants.TASK,
+                RolePermissionCollections.CRM_TASK);
+        basicInfo.addComponent(followersComp);
 
-		navigatorWrapper.addComponentAsFirst(basicInfo);
+        navigatorWrapper.addComponentAsFirst(basicInfo);
 
-		previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
-				AppContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
-		previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
-	}
+        previewItemContainer.addTab(previewContent, CrmTypeConstants.DETAIL,
+                AppContext.getMessage(CrmCommonI18nEnum.TAB_ABOUT));
+        previewItemContainer.selectTab(CrmTypeConstants.DETAIL);
+    }
 
-	@Override
-	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new DynaFormLayout(CrmTypeConstants.TASK,
-				AssignmentDefaultFormLayoutFactory.getForm());
-	}
+    @Override
+    protected IFormLayoutFactory initFormLayoutFactory() {
+        return new DynaFormLayout(CrmTypeConstants.TASK,
+                AssignmentDefaultFormLayoutFactory.getForm());
+    }
 
-	@Override
-	protected AbstractBeanFieldGroupViewFieldFactory<SimpleTask> initBeanFormFieldFactory() {
-		return new AssignmentReadFormFieldFactory(previewForm);
-	}
+    @Override
+    protected AbstractBeanFieldGroupViewFieldFactory<SimpleTask> initBeanFormFieldFactory() {
+        return new AssignmentReadFormFieldFactory(previewForm);
+    }
 
-	@Override
-	public SimpleTask getItem() {
-		return beanItem;
-	}
+    @Override
+    public SimpleTask getItem() {
+        return beanItem;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<SimpleTask> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public HasPreviewFormHandlers<SimpleTask> getPreviewFormHandlers() {
+        return previewForm;
+    }
 }
