@@ -39,6 +39,13 @@ If you want to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
+Version 5.0.8
+-----------------------------
+
+**Bug Fixes**
+
+* Search project may throw exception in the special case
+
 Version 5.0.7
 -----------------------------
 **Library Upgrades**

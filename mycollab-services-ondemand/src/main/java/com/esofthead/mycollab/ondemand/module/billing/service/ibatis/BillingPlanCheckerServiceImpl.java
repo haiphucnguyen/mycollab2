@@ -21,8 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(BillingPlanCheckerServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(BillingPlanCheckerServiceImpl.class);
 
 	@Override
 	public void validateAccountCanCreateMoreProject(Integer sAccountId)

@@ -3,6 +3,8 @@ package com.esofthead.mycollab.common.interceptor.aspect;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,17 +18,18 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 @Aspect
 @Component
 public class ExceptionTracerAspect {
-	private static Logger LOG = LoggerFactory
-			.getLogger(ExceptionTracerAspect.class);
+	private static Logger LOG = LoggerFactory.getLogger(ExceptionTracerAspect.class);
 
 	@AfterThrowing(pointcut = "execution(public * com.esofthead.mycollab..service..*.*(..))", throwing = "e")
 	public void traceError(JoinPoint joinPoint, Exception e) {
+		if (e instanceof UserInvalidInputException || e instanceof UsageExceedBillingPlanException) {
+			return;
+		}
 		Advised advised = (Advised) joinPoint.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 		String methodName = joinPoint.getSignature().getName();
 		Object[] args = joinPoint.getArgs();
-		StringBuffer errorMsg = new StringBuffer("Class name: ").append(cls
-				.getName());
+		StringBuffer errorMsg = new StringBuffer("Class name: ").append(cls.getName());
 		errorMsg.append(" Method: ").append(methodName).append(". Arguments: ");
 		for (Object arg : args) {
 			errorMsg.append(BeanUtility.printBeanObj(arg));

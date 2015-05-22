@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -140,6 +140,39 @@ public class DesktopApplication extends MyCollabUI {
             return;
         }
 
+        UsageExceedBillingPlanException usageBillingException = (UsageExceedBillingPlanException) getExceptionType(
+                e, UsageExceedBillingPlanException.class);
+        if (usageBillingException != null) {
+            if (AppContext.isAdmin()) {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.WINDOW_ATTENTION_TITLE, SiteConfiguration.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    Collection<Window> windowsList = UI.getCurrent().getWindows();
+                                    for (Window window : windowsList) {
+                                        window.close();
+                                    }
+                                    EventBusFactory.getInstance()
+                                            .post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
+                                }
+                            }
+                        });
+
+            } else {
+                NotificationUtil
+                        .showErrorNotification(AppContext
+                                .getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_USER));
+            }
+            return;
+        }
+
         UserInvalidInputException invalidException = (UserInvalidInputException) getExceptionType(
                 e, UserInvalidInputException.class);
         if (invalidException != null) {
@@ -156,61 +189,17 @@ public class DesktopApplication extends MyCollabUI {
             return;
         }
 
-
         ResourceNotFoundException resourceNotFoundException = (ResourceNotFoundException) getExceptionType(
                 e, ResourceNotFoundException.class);
         if (resourceNotFoundException != null) {
             NotificationUtil.showWarningNotification("Can not found resource.");
             LOG.error("404", resourceNotFoundException);
+            return;
         }
 
-        UsageExceedBillingPlanException usageBillingException = (UsageExceedBillingPlanException) getExceptionType(
-                e, UsageExceedBillingPlanException.class);
-        if (usageBillingException != null) {
-            if (AppContext.isAdmin()) {
-                ConfirmDialogExt
-                        .show(UI.getCurrent(),
-                                AppContext.getMessage(
-                                        GenericI18Enum.WINDOW_ATTENTION_TITLE,
-                                        SiteConfiguration.getSiteName()),
-                                AppContext
-                                        .getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_ADMIN),
-                                AppContext
-                                        .getMessage(GenericI18Enum.BUTTON_YES),
-                                AppContext
-                                        .getMessage(GenericI18Enum.BUTTON_NO),
-                                new ConfirmDialog.Listener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void onClose(ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            Collection<Window> windowsList = UI
-                                                    .getCurrent().getWindows();
-                                            for (Window window : windowsList) {
-                                                window.close();
-                                            }
-                                            EventBusFactory
-                                                    .getInstance()
-                                                    .post(new ShellEvent.GotoUserAccountModule(
-                                                            this,
-                                                            new String[]{"billing"}));
-                                        }
-                                    }
-                                });
-
-            } else {
-                NotificationUtil
-                        .showErrorNotification(AppContext
-                                .getMessage(GenericI18Enum.EXCEED_BILLING_PLAN_MSG_FOR_USER));
-            }
-        } else {
-            LOG.error("Error", e);
-            NotificationUtil
-                    .showErrorNotification(AppContext
-                            .getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
-
-        }
+        LOG.error("Error", e);
+        NotificationUtil.showErrorNotification(AppContext
+                .getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
     }
 
     private void enter(String uriFragement) {
