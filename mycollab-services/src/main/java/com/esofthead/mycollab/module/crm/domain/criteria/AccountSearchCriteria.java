@@ -50,7 +50,7 @@ public class AccountSearchCriteria extends SearchCriteria {
 	public static final Param p_website = new StringParam("account-website",
 			AccountI18nEnum.FORM_WEBSITE, "m_crm_account", "website");
 
-	public static Param p_numemployees = new NumberParam("account-employees",
+	public static final Param p_numemployees = new NumberParam("account-employees",
 			AccountI18nEnum.FORM_EMPLOYEES, "m_crm_account", "numemployees");
 
 	public static final Param p_assignee = new PropertyListParam(

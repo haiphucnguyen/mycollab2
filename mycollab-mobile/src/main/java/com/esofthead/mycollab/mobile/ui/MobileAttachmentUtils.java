@@ -33,6 +33,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -45,21 +46,16 @@ import java.util.Map;
  * @since 4.5.2
  */
 public class MobileAttachmentUtils {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(MobileAttachmentUtils.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(MobileAttachmentUtils.class.getName());
 
-	public static String ATTACHMENT_NAME_PREFIX = "attachment_";
+	public static final String ATTACHMENT_NAME_PREFIX = "attachment_";
 
-	private static final Resource DEFAULT_SOURCE = MyCollabResource
-			.newResource("icons/docs-256.png");
+	private static final Resource DEFAULT_SOURCE = MyCollabResource.newResource("icons/docs-256.png");
 
 	public static Component renderAttachmentRow(final Content attachment) {
 		String docName = attachment.getPath();
 		int lastIndex = docName.lastIndexOf("/");
-		HorizontalLayout attachmentRow = new HorizontalLayout();
-		attachmentRow.setStyleName("attachment-row");
-		attachmentRow.setWidth("100%");
-		attachmentRow.setSpacing(true);
+		MHorizontalLayout attachmentRow = new MHorizontalLayout().withWidth("100%").withStyleName("attachment-row");
 		attachmentRow.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
 		CssLayout thumbnailWrap = new CssLayout();
@@ -94,9 +90,7 @@ public class MobileAttachmentUtils {
 						public void buttonClick(Button.ClickEvent event) {
 							AttachmentPreviewView previewView = new AttachmentPreviewView(
 									VaadinResourceManager.getResourceManager()
-											.getImagePreviewResource(
-													attachment.getPath(),
-													DEFAULT_SOURCE));
+											.getImagePreviewResource(attachment.getPath(), DEFAULT_SOURCE));
 							EventBusFactory.getInstance().post(
 									new ShellEvent.PushView(this, previewView));
 						}
@@ -150,20 +144,16 @@ public class MobileAttachmentUtils {
 		attachmentLayout.setExpandRatio(attachmentLink, 1.0f);
 
 		Button removeAttachment = new Button(
-				"<span aria-hidden=\"true\" data-icon=\""
-						+ IconConstants.DELETE + "\"></span>",
+                String.format("<span aria-hidden=\"true\" data-icon=\"%s\"></span>", IconConstants.DELETE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 
-						ConfirmDialog.show(
-								UI.getCurrent(),
-								AppContext
-										.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
-								AppContext
-										.getMessage(GenericI18Enum.BUTTON_YES),
+						ConfirmDialog.show(UI.getCurrent(),
+								AppContext.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+								AppContext.getMessage(GenericI18Enum.BUTTON_YES),
 								AppContext.getMessage(GenericI18Enum.BUTTON_NO),
 								new ConfirmDialog.CloseListener() {
 									private static final long serialVersionUID = 1L;
@@ -173,12 +163,9 @@ public class MobileAttachmentUtils {
 										if (dialog.isConfirmed()) {
 											ResourceService attachmentService = ApplicationContextUtil
 													.getSpringBean(ResourceService.class);
-											attachmentService.removeResource(
-													attachment.getPath(),
-													AppContext.getUsername(),
-													AppContext.getAccountId());
-											((ComponentContainer) attachmentLayout
-													.getParent())
+											attachmentService.removeResource(attachment.getPath(),
+													AppContext.getUsername(), AppContext.getAccountId());
+											((ComponentContainer) attachmentLayout.getParent())
 													.removeComponent(attachmentLayout);
 										}
 									}
@@ -212,8 +199,7 @@ public class MobileAttachmentUtils {
                     File file = entry.getValue();
                     int index = fileName.lastIndexOf(".");
                     if (index > 0) {
-                        fileExt = fileName.substring(index + 1,
-                                fileName.length());
+                        fileExt = fileName.substring(index + 1, fileName.length());
                     }
 
                     if ("jpg".equalsIgnoreCase(fileExt) || "png".equalsIgnoreCase(fileExt)) {
@@ -254,8 +240,7 @@ public class MobileAttachmentUtils {
                                             .getAccountId());
                         }
                     } else {
-                        resourceService.saveContent(
-                                constructContent(fileName, attachmentPath),
+                        resourceService.saveContent(constructContent(fileName, attachmentPath),
                                 AppContext.getUsername(), new FileInputStream(file), AppContext
                                         .getAccountId());
                     }

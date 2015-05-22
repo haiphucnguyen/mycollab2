@@ -32,21 +32,23 @@ public class SyncWebResourcesToS3Command {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
 
-            for (File subFile : files) {
-                if (subFile.isDirectory()) {
-                    syncFoldersToS3(s3client, subFile, baseFolderPath, s3Path);
-                } else {
-                    try {
-                        ObjectMetadata metaData = new ObjectMetadata();
-                        metaData.setCacheControl("max-age=8640000"); // we set object cache life cycle is 10 days
-                        metaData.setContentType(MimeTypesUtil.detectMimeType(subFile.getAbsolutePath()));
-                        metaData.setContentLength(subFile.length());
+            if (files != null) {
+                for (File subFile : files) {
+                    if (subFile.isDirectory()) {
+                        syncFoldersToS3(s3client, subFile, baseFolderPath, s3Path);
+                    } else {
+                        try {
+                            ObjectMetadata metaData = new ObjectMetadata();
+                            metaData.setCacheControl("max-age=8640000"); // we set object cache life cycle is 10 days
+                            metaData.setContentType(MimeTypesUtil.detectMimeType(subFile.getAbsolutePath()));
+                            metaData.setContentLength(subFile.length());
 
-                        String objectPath = s3Path + subFile.getAbsolutePath().substring(baseFolderPath.length() + 1);
-                        PutObjectRequest request = new PutObjectRequest("mycollab_assets", objectPath, new FileInputStream(subFile), metaData);
-                        s3client.putObject(request.withCannedAcl(CannedAccessControlList.PublicRead)); // We set S3 object has public read permission
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+                            String objectPath = s3Path + subFile.getAbsolutePath().substring(baseFolderPath.length() + 1);
+                            PutObjectRequest request = new PutObjectRequest("mycollab_assets", objectPath, new FileInputStream(subFile), metaData);
+                            s3client.putObject(request.withCannedAcl(CannedAccessControlList.PublicRead)); // We set S3 object has public read permission
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             }
