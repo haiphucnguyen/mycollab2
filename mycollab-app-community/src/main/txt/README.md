@@ -41,10 +41,18 @@ Last changelog
 
 Version 5.0.8
 -----------------------------
+**Library Upgrades**
+
+* Upgrade libraries: MyBatis, HirakiCP, Jackrabbit
+
+**Improvements & New Features**
+
+* Improve code quality overall
 
 **Bug Fixes**
 
 * Search project may throw exception in the special case
+* Export report document is sometimes failed
 
 Version 5.0.7
 -----------------------------
