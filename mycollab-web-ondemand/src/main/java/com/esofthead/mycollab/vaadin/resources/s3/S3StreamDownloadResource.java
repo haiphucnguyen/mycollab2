@@ -35,7 +35,6 @@ import com.vaadin.util.FileTypeResolver;
  * @since 1.0
  */
 public class S3StreamDownloadResource extends StreamResource {
-
 	private static final long serialVersionUID = 1L;
 
 	private String documentPath;
