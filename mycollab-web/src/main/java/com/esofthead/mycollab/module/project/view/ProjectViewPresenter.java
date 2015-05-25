@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -47,7 +48,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
     public void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectModule prjContainer = (ProjectModule) container;
         prjContainer.removeAllComponents();
-        prjContainer.addComponent(view);
+        prjContainer.with(view).withAlign(view, Alignment.TOP_CENTER);
         if (data.getParams() instanceof Integer) {
             ProjectService projectService = ApplicationContextUtil
                     .getSpringBean(ProjectService.class);

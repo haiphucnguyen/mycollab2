@@ -27,7 +27,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -49,8 +48,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class TaskTableDisplay extends
-        DefaultPagedBeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
+public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
     private static final long serialVersionUID = 1L;
 
     TaskTableDisplay(List<TableViewField> displayColumns) {
@@ -73,9 +71,7 @@ public class TaskTableDisplay extends
 
                 CssLayout taskName = new CssLayout();
 
-                String taskname = "[%s-%s] %s";
-                taskname = String.format(taskname, CurrentProjectVariables
-                        .getProject().getShortname(), task.getTaskkey(), task
+                String taskname = String.format("[#%s] %s", task.getTaskkey(), task
                         .getTaskname());
 
                 LabelLink b = new LabelLink(taskname, ProjectLinkBuilder
@@ -115,11 +111,10 @@ public class TaskTableDisplay extends
                     @Override
                     public com.vaadin.ui.Component generateCell(Table source,
                                                                 final Object itemId, Object columnId) {
-                        final SimpleTask task = getBeanByIndex(itemId);
+                        SimpleTask task = getBeanByIndex(itemId);
                         Double percomp = (task.getPercentagecomplete() == null) ? new Double(
                                 0) : task.getPercentagecomplete();
-                        ProgressPercentageIndicator progress = new ProgressPercentageIndicator(
-                                percomp);
+                        ProgressPercentageIndicator progress = new ProgressPercentageIndicator(percomp);
                         progress.setWidth("100px");
                         return progress;
                     }
@@ -249,7 +244,7 @@ public class TaskTableDisplay extends
                                         ProjectTaskService projectTaskService = ApplicationContextUtil
                                                 .getSpringBean(ProjectTaskService.class);
                                         projectTaskService.updateSelectiveWithSession(
-                                                        task, AppContext.getUsername());
+                                                task, AppContext.getUsername());
                                         fireTableEvent(new TableClickEvent(
                                                 TaskTableDisplay.this, task,
                                                 "pendingTask"));

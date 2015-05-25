@@ -10,6 +10,7 @@
 @import "components/crm";
 @import "components/document";
 @import "components/project";
+@import "../../../VAADIN/addons/gantt/gantt.scss";
 
 @mixin mycollab {
   @include fonticons;
@@ -24,6 +25,7 @@
   @include mycollab-crm;
   @include mycollab-document;
   @include mycollab-project;
+  @include gantt;
 
   /**
    * "optional-" prefix means that the style is not necessarily used, it can be left blank

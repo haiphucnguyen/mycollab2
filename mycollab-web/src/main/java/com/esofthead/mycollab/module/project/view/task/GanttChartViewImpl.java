@@ -64,24 +64,25 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private static final long serialVersionUID = 1L;
 
     private Gantt gantt;
-    private LinkedHashMap<Step, SimpleTask> stepMap;
+    private LinkedHashMap<SimpleTask, Step> stepMap;
     private NativeSelect reso;
-
     private TaskTableDisplay taskTable;
 
-    private final ProjectTaskService taskService;
+    private ProjectTaskService taskService;
 
     public GanttChartViewImpl() {
         this.setStyleName("gantt-view");
         this.setSizeFull();
         this.withMargin(new MarginInfo(false, true, true, true));
 
-        MHorizontalLayout header = new MHorizontalLayout()
-                .withMargin(new MarginInfo(true, false, true, false))
+        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        Label headerText = new Label(FontAwesome.BAR_CHART_O.getHtml() + " Gantt chart", ContentMode.HTML);
+        Label headerText = new Label(String.format("%s %s (Gantt chart)", FontAwesome.BAR_CHART_O.getHtml(), CurrentProjectVariables.getProject()
+                .getName()), ContentMode.HTML);
         headerText.setStyleName(UIConstants.HEADER_TEXT);
+        CssLayout headerWrapper = new CssLayout();
+        headerWrapper.addComponent(headerText);
 
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             @Override
@@ -90,17 +91,19 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                         "task", "dashboard", UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId())}));
             }
         });
+        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerText, cancelBtn).withAlign(headerText, Alignment.MIDDLE_LEFT).withAlign(cancelBtn,
-                Alignment.MIDDLE_RIGHT).expand(headerText);
+        header.with(headerWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).withAlign(cancelBtn,
+                Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
 
         HorizontalLayout ganttLayout = constructGanttChart();
 
         MVerticalLayout wrapContent = new MVerticalLayout().withSpacing(false).withMargin(false)
-                .withStyleName("gantt-view").with(createControls(), ganttLayout);
-        this.with(header, wrapContent);
+                .with(createControls(), ganttLayout).expand(ganttLayout);
+        wrapContent.addStyleName("gantt-view");
+        this.with(header, wrapContent).expand(wrapContent);
     }
 
     private MHorizontalLayout constructGanttChart() {
@@ -109,8 +112,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         stepMap = new LinkedHashMap<>();
 
         taskTable = new TaskTableDisplay(Arrays.asList(TaskTableFieldDef.taskname));
-        taskTable.setWidth("200px");
-        taskTable.setHeightUndefined();
+        taskTable.setWidth("300px");
         taskTable.addStyleName("gantt-table");
 
         gantt = new Gantt();
@@ -150,21 +152,21 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             }
         });
 
-        mainLayout.with(taskTable, gantt);
+        mainLayout.with(taskTable, gantt).expand(gantt);
         return mainLayout;
     }
 
     private void updateTasksInfo(AbstractStep step, long startDate, long endDate) {
-        SimpleTask task = stepMap.get(step);
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(startDate);
-        task.setStartdate(calendar.getTime());
-
-        calendar.setTimeInMillis(endDate);
-        task.setEnddate(calendar.getTime());
-
-        taskService.updateWithSession(task, AppContext.getUsername());
-        taskTable.setCurrentDataList(stepMap.values());
+//        SimpleTask task = stepMap.get(step);
+//        GregorianCalendar calendar = new GregorianCalendar();
+//        calendar.setTimeInMillis(startDate);
+//        task.setStartdate(calendar.getTime());
+//
+//        calendar.setTimeInMillis(endDate);
+//        task.setEnddate(calendar.getTime());
+//
+//        taskService.updateWithSession(task, AppContext.getUsername());
+//        taskTable.setCurrentDataList(stepMap.values());
     }
 
     public void displayGanttChart() {
@@ -192,67 +194,53 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                     endDate = task.getDeadline();
                 }
 
-                if (startDate != null) {
-                    if (startDate.after(gantt.getStartDate())) {
-                        endDate = getMinDate(gantt.getEndDate(), endDate);
+                if (startDate == null) {
+                    if (endDate == null) {
+                        startDate = DateTimeUtils.getCurrentDateWithoutMS();
+                        endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
                     } else {
-                        if (endDate == null || endDate.before(gantt.getStartDate())) {
-                            continue;
-                        } else {
-                            startDate = gantt.getStartDate();
-                            endDate = getMinDate(gantt.getEndDate(), endDate);
-                        }
+                        endDate = DateTimeUtils.trimHMSOfDate(endDate);
+                        startDate = DateTimeUtils.subtractOrAddDayDuration(endDate, -1);
                     }
                 } else {
-                    if (endDate != null && endDate.after(gantt.getStartDate())) {
-                        startDate = gantt.getStartDate();
-                        endDate = getMinDate(endDate, gantt.getEndDate());
+                    startDate = DateTimeUtils.trimHMSOfDate(startDate);
+                    if (endDate == null) {
+                        endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
                     } else {
-                        continue;
+                        endDate = DateTimeUtils.trimHMSOfDate(endDate);
+                        endDate = DateTimeUtils.subtractOrAddDayDuration(endDate, 1);
                     }
+                }
+
+                if (endDate.before(gantt.getStartDate()) || startDate.after(gantt.getEndDate())) {
+                    continue;
                 }
 
                 Step step = new Step();
                 step.setCaption(tooltipGenerate(task));
                 step.setCaptionMode(Step.CaptionMode.HTML);
                 step.setStartDate(startDate);
-                step.setEndDate(DateTimeUtils.subtractOrAddDayDuration(endDate, 1));
+                step.setEndDate(endDate);
 
 					/* Add style for row block */
-                if (task.isCompleted()) {
-                    step.setBackgroundColor("53C540");
-                    step.setStyleName("completed");
-                } else if (task.isPending()) {
-                    step.setBackgroundColor("e2f852");
-                } else if (task.isOverdue()) {
-                    step.setBackgroundColor("FC4350");
-                }
-                stepMap.put(step, task);
+//                if (task.isCompleted()) {
+//                    step.setBackgroundColor("53C540");
+//                    step.setStyleName("completed");
+//                } else if (task.isPending()) {
+//                    step.setBackgroundColor("e2f852");
+//                } else if (task.isOverdue()) {
+//                    step.setBackgroundColor("FC4350");
+//                }
+                stepMap.put(task, step);
 
             }
 
-            taskTable.setCurrentDataList(stepMap.values());
+            taskTable.setCurrentDataList(stepMap.keySet());
         }
 
-        for (Step key : stepMap.keySet()) {
+        for (Step key : stepMap.values()) {
             gantt.addStep(key);
         }
-    }
-
-    private Date getMinDate(Date... dates) {
-        Date minDate = null;
-        for (Date date : dates) {
-            if (date != null) {
-                if (minDate != null) {
-                    if (minDate.after(date)) {
-                        minDate = date;
-                    }
-                } else {
-                    minDate = date;
-                }
-            }
-        }
-        return minDate;
     }
 
     private String tooltipGenerate(SimpleTask task) {

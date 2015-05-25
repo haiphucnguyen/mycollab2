@@ -39,20 +39,23 @@ If you want to understand more MyCollab advanced configuration settings, please 
 Last changelog
 ==============
 
-Version 5.0.8
+Version 5.1.0
 -----------------------------
 **Library Upgrades**
 
-* Upgrade libraries: MyBatis, HirakiCP, Jackrabbit
+* Upgrade libraries: HirakiCP, Jackrabbit, Commons-Email
 
 **Improvements & New Features**
 
 * Improve code quality overall
+* Optimize the hash query and improve the site performance a little bit
+* Revise the Gantt chart display
 
 **Bug Fixes**
 
 * Search project may throw exception in the special case
 * Export report document is sometimes failed
+* Several bug fixes relate to Gantt chart views
 
 Version 5.0.7
 -----------------------------

@@ -30,7 +30,7 @@ public class ProjectModule extends AbstractPageView implements IModule {
 
 	public ProjectModule() {
 		setStyleName("project-module");
-        setWidth("100%");
+        setSizeFull();
 		ControllerRegistry.addController(new ProjectModuleController(this));
 	}
 
