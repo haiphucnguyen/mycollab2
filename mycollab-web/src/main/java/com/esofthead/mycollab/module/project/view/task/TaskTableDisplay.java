@@ -58,11 +58,6 @@ public class TaskTableDisplay extends
     }
 
     public TaskTableDisplay(TableViewField requiredColumn,
-                            List<TableViewField> displayColumns) {
-        this(requiredColumn, displayColumns, Integer.MAX_VALUE);
-    }
-
-    public TaskTableDisplay(TableViewField requiredColumn,
                             List<TableViewField> displayColumns, int displayNums) {
         super(ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
                 SimpleTask.class, requiredColumn, displayColumns);
@@ -253,10 +248,8 @@ public class TaskTableDisplay extends
 
                                         ProjectTaskService projectTaskService = ApplicationContextUtil
                                                 .getSpringBean(ProjectTaskService.class);
-                                        projectTaskService
-                                                .updateSelectiveWithSession(
-                                                        task, AppContext
-                                                                .getUsername());
+                                        projectTaskService.updateSelectiveWithSession(
+                                                        task, AppContext.getUsername());
                                         fireTableEvent(new TableClickEvent(
                                                 TaskTableDisplay.this, task,
                                                 "pendingTask"));

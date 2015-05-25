@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.4.5";
+	content: "7.4.6";
 }
 
 .v-generated-body {
@@ -8140,7 +8140,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	-webkit-box-sizing: border-box;
 }
 
-.project-module {
+.v-csslayout.project-module {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -9069,6 +9069,11 @@ div.v-button.token-field:hover {
 .task-component .created-time {
 	color: gray;
 	font-size: 12px;
+}
+
+.gantt-view {
+	top: 0;
+	z-index: 10;
 }
 
 html {

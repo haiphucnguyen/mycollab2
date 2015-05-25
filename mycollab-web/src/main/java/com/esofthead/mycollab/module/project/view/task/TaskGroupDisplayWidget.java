@@ -226,15 +226,12 @@ public class TaskGroupDisplayWidget extends BeanList<ProjectTaskListService, Tas
                                         private static final long serialVersionUID = 1L;
 
                                         @Override
-                                        public void onClose(
-                                                final ConfirmDialog dialog) {
+                                        public void onClose(ConfirmDialog dialog) {
                                             if (dialog.isConfirmed()) {
                                                 ProjectTaskListService taskListService = ApplicationContextUtil
                                                         .getSpringBean(ProjectTaskListService.class);
-                                                taskListService.removeWithSession(
-                                                                taskList.getId(),
-                                                                AppContext.getUsername(),
-                                                                AppContext.getAccountId());
+                                                taskListService.removeWithSession(taskList.getId(),
+                                                                AppContext.getUsername(), AppContext.getAccountId());
                                                 Component parentComp = TaskListDepot.this.getParent();
                                                 if (parentComp instanceof CssLayout) {
                                                     ((CssLayout) parentComp).removeComponent(TaskListDepot.this);

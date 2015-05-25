@@ -1,26 +1,25 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -28,19 +27,15 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.events.TaskListEvent;
-import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
-import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
@@ -65,8 +60,7 @@ import java.util.Calendar;
  * @since 4.0
  */
 @ViewComponent
-public class GanttChartViewImpl extends AbstractPageView implements
-        GanttChartView {
+public class GanttChartViewImpl extends AbstractPageView implements GanttChartView {
     private static final long serialVersionUID = 1L;
 
     private Gantt gantt;
@@ -78,6 +72,8 @@ public class GanttChartViewImpl extends AbstractPageView implements
     private final ProjectTaskService taskService;
 
     public GanttChartViewImpl() {
+        this.setStyleName("gantt-view");
+        this.setSizeFull();
         this.withMargin(new MarginInfo(false, true, true, true));
 
         MHorizontalLayout header = new MHorizontalLayout()
@@ -87,59 +83,23 @@ public class GanttChartViewImpl extends AbstractPageView implements
         Label headerText = new Label(FontAwesome.BAR_CHART_O.getHtml() + " Gantt chart", ContentMode.HTML);
         headerText.setStyleName(UIConstants.HEADER_TEXT);
 
-        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(
-                        new TaskListEvent.GotoTaskListScreen(this, null));
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{
+                        "task", "dashboard", UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId())}));
             }
         });
-        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
-        advanceDisplayBtn.setDescription(AppContext
-                .getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
-        Button simpleDisplayBtn = new Button(null, new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+        header.with(headerText, cancelBtn).withAlign(headerText, Alignment.MIDDLE_LEFT).withAlign(cancelBtn,
+                Alignment.MIDDLE_RIGHT).expand(headerText);
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-                searchCriteria.setProjectid(new NumberSearchField(
-                        CurrentProjectVariables.getProjectId()));
-                searchCriteria.setStatuses(new SetSearchField<>(new String[]{OptionI18nEnum.StatusI18nEnum.Open
-                        .name()}));
-                TaskFilterParameter taskFilter = new TaskFilterParameter(
-                        searchCriteria, "Task Search");
-                taskFilter.setAdvanceSearch(true);
-                EventBusFactory.getInstance().post(
-                        new TaskEvent.Search(this, taskFilter));
-            }
-        });
-        simpleDisplayBtn.setIcon(FontAwesome.LIST_UL);
-        simpleDisplayBtn.setDescription(AppContext
-                .getMessage(TaskGroupI18nEnum.LIST_VIEW_TOOLTIP));
-
-        Button chartDisplayBtn = new Button();
-        chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
-
-        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
-        viewButtons.addButton(simpleDisplayBtn);
-        viewButtons.addButton(advanceDisplayBtn);
-        viewButtons.addButton(chartDisplayBtn);
-        viewButtons.setDefaultButton(chartDisplayBtn);
-
-        header.with(headerText, viewButtons)
-                .withAlign(headerText, Alignment.MIDDLE_LEFT).expand(headerText);
-
-        taskService = ApplicationContextUtil
-                .getSpringBean(ProjectTaskService.class);
+        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
 
         HorizontalLayout ganttLayout = constructGanttChart();
 
-        MVerticalLayout wrapContent = new MVerticalLayout().withSpacing(false).withMargin(false).withStyleName
-                ("gantt-view").with(createControls(), ganttLayout);
+        MVerticalLayout wrapContent = new MVerticalLayout().withSpacing(false).withMargin(false)
+                .withStyleName("gantt-view").with(createControls(), ganttLayout);
         this.with(header, wrapContent);
     }
 
@@ -148,10 +108,8 @@ public class GanttChartViewImpl extends AbstractPageView implements
 
         stepMap = new LinkedHashMap<>();
 
-        taskTable = new TaskTableDisplay(Arrays.asList(
-                TaskTableFieldDef.taskname, TaskTableFieldDef.startdate,
-                TaskTableFieldDef.duedate, TaskTableFieldDef.assignee));
-        taskTable.setWidth("100%");
+        taskTable = new TaskTableDisplay(Arrays.asList(TaskTableFieldDef.taskname));
+        taskTable.setWidth("200px");
         taskTable.setHeightUndefined();
         taskTable.addStyleName("gantt-table");
 
@@ -309,15 +267,13 @@ public class GanttChartViewImpl extends AbstractPageView implements
         MHorizontalLayout controls = new MHorizontalLayout().withMargin(true);
         panel.setContent(controls);
 
-        DateFieldExt start = new DateFieldExt(
-                AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
+        DateFieldExt start = new DateFieldExt(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
         start.setValue(gantt.getStartDate());
         start.setResolution(Resolution.DAY);
         start.setImmediate(true);
         start.addValueChangeListener(startDateValueChangeListener);
 
-        DateField end = new DateFieldExt(
-                AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
+        DateField end = new DateFieldExt(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
         end.setValue(gantt.getEndDate());
         end.setResolution(Resolution.DAY);
         end.setImmediate(true);

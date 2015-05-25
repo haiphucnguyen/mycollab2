@@ -1,7 +1,7 @@
 @mixin mycollab-project {
   /* Project Management */
 
-  .project-module {
+  .v-csslayout.project-module {
     position: absolute;
     top: 0;
     left: 0;
@@ -851,5 +851,10 @@
       color: gray;
       font-size: $font-small;
     }
+  }
+
+  .gantt-view {
+    top: 0;
+    z-index: 10;
   }
 }

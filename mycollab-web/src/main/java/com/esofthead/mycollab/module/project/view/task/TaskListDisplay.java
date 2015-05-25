@@ -61,8 +61,12 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
         this.setStyleName("tasklist");
     }
 
-    public static class TaskRowDisplayHandler implements RowDisplayHandler<SimpleTask> {
+    @Override
+    protected String stringWhenEmptyList() {
+        return "No tasks in this list yet.";
+    }
 
+    public static class TaskRowDisplayHandler implements RowDisplayHandler<SimpleTask> {
         @Override
         public Component generateRow(AbstractBeanPagedList host, SimpleTask task, int rowIndex) {
             return new TaskRowComp(task);

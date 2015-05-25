@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,6 +37,9 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
     private static final long serialVersionUID = 1L;
 
     private int defaultNumberSearchItems = 10;
+    private Set<PagableHandler> pagableHandlers;
+    private String listControlStyle = "listControl";
+
     protected CssLayout listContainer;
     protected RowDisplayHandler<T> rowDisplayHandler;
     protected int currentPage = 1;
@@ -45,12 +48,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
     protected List<T> currentListData;
     protected CssLayout controlBarWrapper;
     protected HorizontalLayout pageManagement;
-
-    private Set<PagableHandler> pagableHandlers;
-
     protected SearchRequest<S> searchRequest;
-
-    private String listControlStyle = "listControl";
 
     public AbstractBeanPagedList(RowDisplayHandler<T> rowDisplayHandler,
                                  int defaultNumberSearchItems) {
@@ -203,12 +201,27 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
         this.currentListData = list;
         listContainer.removeAllComponents();
 
-        int i = 0;
-        for (T item : currentListData) {
-            Component row = rowDisplayHandler.generateRow(this, item, i);
-            listContainer.addComponent(row);
-            i++;
+        if (currentListData.size() != 0) {
+            int i = 0;
+            for (T item : currentListData) {
+                Component row = rowDisplayHandler.generateRow(this, item, i);
+                listContainer.addComponent(row);
+                i++;
+            }
+        } else {
+            listContainer.addComponent(msgWhenEmptyList());
         }
+    }
+
+    protected String stringWhenEmptyList() {
+        return null;
+    }
+
+    private Component msgWhenEmptyList() {
+        HorizontalLayout comp = new HorizontalLayout();
+        comp.setMargin(true);
+        comp.addComponent(new Label(stringWhenEmptyList()));
+        return comp;
     }
 
     abstract protected int queryTotalCount();
@@ -240,11 +253,15 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
         currentListData = queryCurrentData();
         listContainer.removeAllComponents();
 
-        int i = 0;
-        for (T item : currentListData) {
-            Component row = rowDisplayHandler.generateRow(this, item, i);
-            listContainer.addComponent(row);
-            i++;
+        if (currentListData.size() != 0) {
+            int i = 0;
+            for (T item : currentListData) {
+                Component row = rowDisplayHandler.generateRow(this, item, i);
+                listContainer.addComponent(row);
+                i++;
+            }
+        } else {
+            listContainer.addComponent(msgWhenEmptyList());
         }
     }
 
