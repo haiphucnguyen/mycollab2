@@ -22,7 +22,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
-import org.jsoup.parser.Tag;
 import org.jsoup.safety.Whitelist;
 
 import java.util.GregorianCalendar;
@@ -81,7 +80,9 @@ public class StringUtils {
             return "&nbsp;";
         }
 
-        value = Jsoup.clean(value, Whitelist.relaxed());
+        value = Jsoup.clean(value, Whitelist.relaxed().addTags("img")
+                .addAttributes("img", "align", "alt", "height", "src", "title", "width", "style")
+                .addProtocols("img", "src", "http", "https"));
         Document doc = Jsoup.parse(value);
         Element body = doc.body();
         replaceHtml(body);
@@ -99,7 +100,7 @@ public class StringUtils {
                 if (matcher.find()) {
                     value = value.replaceAll(
                             "(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
-                            "<a href=\"$0\">$0</a>");
+                            "<a href=\"$0\" target=\"_blank\">$0</a>");
                     Document newDoc = Jsoup.parse(value);
                     Element body = newDoc.body().child(0);
                     element.replaceWith(body);

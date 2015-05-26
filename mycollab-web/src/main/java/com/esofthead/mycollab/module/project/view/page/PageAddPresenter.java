@@ -53,24 +53,21 @@ public class PageAddPresenter extends AbstractPresenter<PageAddView> {
             @Override
             public void onSave(final Page page) {
                 savePage(page);
-                EventBusFactory.getInstance().post(
-                        new PageEvent.GotoRead(this, page));
+                EventBusFactory.getInstance().post(new PageEvent.GotoRead(this, page));
             }
 
             @Override
             public void onCancel() {
                 ViewState viewState = HistoryViewManager.back();
                 if (viewState.hasPresenters(NullViewState.EmptyPresenter.class, ProjectViewPresenter.class)) {
-                    EventBusFactory.getInstance().post(
-                            new PageEvent.GotoList(this, null));
+                    EventBusFactory.getInstance().post(new PageEvent.GotoList(this, null));
                 }
             }
 
             @Override
             public void onSaveAndNew(final Page page) {
                 savePage(page);
-                EventBusFactory.getInstance().post(
-                        new PageEvent.GotoAdd(this, null));
+                EventBusFactory.getInstance().post(new PageEvent.GotoAdd(this, null));
             }
         });
     }
@@ -99,11 +96,9 @@ public class PageAddPresenter extends AbstractPresenter<PageAddView> {
     }
 
     private void savePage(Page page) {
-        ProjectPageService pageService = ApplicationContextUtil
-                .getSpringBean(ProjectPageService.class);
+        ProjectPageService pageService = ApplicationContextUtil.getSpringBean(ProjectPageService.class);
 
-        pageService.savePage(page, AppContext.getUsername(),
-                CurrentProjectVariables.getProjectId(),
+        pageService.savePage(page, AppContext.getUsername(), CurrentProjectVariables.getProjectId(),
                 AppContext.getAccountId());
     }
 }
