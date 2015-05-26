@@ -28,8 +28,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class RiskSearchPanel extends
-        DefaultGenericSearchPanel<RiskSearchCriteria> {
+public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteria> {
     private static final long serialVersionUID = 1L;
 
     private static Param[] paramFields = new Param[]{
@@ -41,27 +40,23 @@ public class RiskSearchPanel extends
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new ProjectViewHeader(ProjectTypeConstants.RISK,
-                AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
+        return new ProjectViewHeader(ProjectTypeConstants.RISK, AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
     protected void buildExtraControls() {
-        final Button createBtn = new Button(
-                AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
+        Button createBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new RiskEvent.GotoAdd(this, null));
+                        EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
                     }
                 });
         createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.RISKS));
+        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
         this.addHeaderRight(createBtn);
     }
 
@@ -78,41 +73,36 @@ public class RiskSearchPanel extends
 
     @SuppressWarnings("rawtypes")
     private class RiskBasicSearchLayout extends BasicSearchLayout {
+        private static final long serialVersionUID = 1L;
+
+        private TextField nameField;
+        private CheckBox myItemCheckbox;
 
         @SuppressWarnings("unchecked")
         public RiskBasicSearchLayout() {
             super(RiskSearchPanel.this);
         }
 
-        private static final long serialVersionUID = 1L;
-        private TextField nameField;
-        private CheckBox myItemCheckbox;
-
         @Override
         public ComponentContainer constructBody() {
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
+            MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
             nameField = ShortcutExtension.installShortcutAction(new TextField(),
-                    new ShortcutListener("RiskSearchRequest", ShortcutAction.KeyCode.ENTER,
-                            null) {
+                    new ShortcutListener("RiskSearchRequest", ShortcutAction.KeyCode.ENTER, null) {
                         @Override
                         public void handleAction(Object o, Object o1) {
                             callSearchAction();
                         }
                     });
+            nameField.setInputPrompt("Query by risk name");
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            basicSearchBody.with(nameField).withAlign(nameField,
-                    Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-            this.myItemCheckbox = new CheckBox(
-                    AppContext
-                            .getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
+            this.myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
             this.myItemCheckbox.setWidth("75px");
-            basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox,
-                    Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
-            final Button searchBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
+            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setIcon(FontAwesome.SEARCH);
             searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             searchBtn.addClickListener(new Button.ClickListener() {
@@ -123,11 +113,9 @@ public class RiskSearchPanel extends
                     RiskBasicSearchLayout.this.callSearchAction();
                 }
             });
-            basicSearchBody.with(searchBtn).withAlign(searchBtn,
-                    Alignment.MIDDLE_LEFT);
+            basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
-            final Button cancelBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
             cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
             cancelBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -137,12 +125,9 @@ public class RiskSearchPanel extends
                     RiskBasicSearchLayout.this.nameField.setValue("");
                 }
             });
-            basicSearchBody.with(cancelBtn).withAlign(cancelBtn,
-                    Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            final Button advancedSearchBtn = new Button(
-                    AppContext
-                            .getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -152,8 +137,7 @@ public class RiskSearchPanel extends
                         }
                     });
             advancedSearchBtn.setStyleName("link");
-            basicSearchBody.with(advancedSearchBtn).withAlign(
-                    advancedSearchBtn, Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
 
             return basicSearchBody;
         }
@@ -161,13 +145,11 @@ public class RiskSearchPanel extends
         @Override
         protected SearchCriteria fillUpSearchCriteria() {
             RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-                    CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
             searchCriteria.setRiskname(new StringSearchField(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
-                searchCriteria.setAssignToUser(new StringSearchField(
-                        SearchField.AND, AppContext.getUsername()));
+                searchCriteria.setAssignToUser(new StringSearchField(SearchField.AND, AppContext.getUsername()));
             } else {
                 searchCriteria.setAssignToUser(null);
             }
@@ -180,8 +162,7 @@ public class RiskSearchPanel extends
         }
     }
 
-    private class RiskAdvancedSearchLayout extends
-            DynamicQueryParamLayout<RiskSearchCriteria> {
+    private class RiskAdvancedSearchLayout extends DynamicQueryParamLayout<RiskSearchCriteria> {
         private static final long serialVersionUID = 1L;
 
         public RiskAdvancedSearchLayout() {
@@ -216,8 +197,7 @@ public class RiskSearchPanel extends
         @Override
         protected RiskSearchCriteria fillUpSearchCriteria() {
             RiskSearchCriteria searchCriteria = super.fillUpSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-                    CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
 

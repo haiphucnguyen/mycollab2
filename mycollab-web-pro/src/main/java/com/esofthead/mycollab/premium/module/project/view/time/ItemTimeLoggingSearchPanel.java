@@ -28,7 +28,6 @@ import java.util.Date;
  * @since 2.0
  */
 class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggingSearchCriteria> {
-
     private static final long serialVersionUID = 1L;
     private TimeLoggingBasicSearchLayout layout;
     private Button createBtn;
@@ -47,14 +46,12 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
         return new ProjectViewHeader(ProjectTypeConstants.TIME,
-                AppContext
-                        .getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
+                AppContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
     }
 
     @Override
     protected void buildExtraControls() {
-        createBtn = new Button(
-                AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
+        createBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
         createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
@@ -103,14 +100,12 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         public ComponentContainer constructBody() {
             bodyWrap = new VerticalLayout();
 
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1,
-                    "300px", "50px");
-
-            String nameFieldWidth = "300px";
-
+            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1, "300px", "50px");
             gridLayout.getLayout().setWidth("100%");
             gridLayout.getLayout().setSpacing(true);
             gridLayout.getLayout().setMargin(true);
+
+            String nameFieldWidth = "300px";
 
             GridLayout grid = new GridLayout(4, 2);
             grid.setWidth(nameFieldWidth);
@@ -156,39 +151,33 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
             buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
 
-            final Button searchBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH),
+            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH),
                     new Button.ClickListener() {
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TimeLoggingBasicSearchLayout.this
-                                    .callSearchAction();
+                            TimeLoggingBasicSearchLayout.this.callSearchAction();
                         }
                     });
 
             searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
-            final Button clearBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
+            Button clearBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
                     new Button.ClickListener() {
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            TimeLoggingBasicSearchLayout.this.userField
-                                    .setValue(null);
+                            TimeLoggingBasicSearchLayout.this.userField.setValue(null);
                             setDefaultValue();
                         }
                     });
             clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-            buttonControls.with(searchBtn, clearBtn)
-                    .alignAll(Alignment.MIDDLE_LEFT);
+            buttonControls.with(searchBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
 
             Label spaceLbl = new Label();
             buttonControls.with(spaceLbl).expand(spaceLbl);
 
             gridLayout.addComponent(buttonControls, null, 2, 0);
-
             bodyWrap.addComponent(gridLayout.getLayout());
 
             return bodyWrap;
@@ -198,17 +187,14 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         @Override
         protected SearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-            searchCriteria.setProjectIds(new SetSearchField<>(
-                            CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
 
             searchCriteria.setRangeDate(getRangeSearchValue());
 
-            final Collection<String> selectedUsers = (Collection<String>) this.userField
-                    .getValue();
+            Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
 
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
-                searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
-                                selectedUsers));
+                searchCriteria.setLogUsers(new SetSearchField(SearchField.AND, selectedUsers));
             }
             return searchCriteria;
         }

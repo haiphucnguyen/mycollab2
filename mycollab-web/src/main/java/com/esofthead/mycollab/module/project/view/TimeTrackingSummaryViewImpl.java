@@ -194,14 +194,14 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 
             Button backBtn = new Button("Back to Workboard");
 			backBtn.addClickListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(
-									TimeTrackingSummaryViewImpl.this, null));
-				}
-			});
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(
+                            TimeTrackingSummaryViewImpl.this, null));
+                }
+            });
 			backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 			backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
@@ -250,8 +250,8 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 
             GridLayout selectionLayout = new GridLayout(9, 2);
 			selectionLayout.setSpacing(true);
+            selectionLayout.setMargin(true);
 			selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-			selectionLayout.setMargin(true);
 			selectionLayoutWrapper.addComponent(selectionLayout);
 
 			Label fromLb = new Label("From:");
@@ -259,52 +259,52 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 			selectionLayout.addComponent(fromLb, 0, 0);
 
 			this.fromDateField = new PopupDateFieldExt();
-			this.fromDateField.setResolution(Resolution.DAY);
+            this.fromDateField.setResolution(Resolution.DAY);
 			this.fromDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-			this.fromDateField.setWidth("100px");
+            this.fromDateField.setWidth("100px");
 			selectionLayout.addComponent(this.fromDateField, 1, 0);
 
 			Label toLb = new Label("To:");
 			toLb.setWidthUndefined();
-			selectionLayout.addComponent(toLb, 2, 0);
+            selectionLayout.addComponent(toLb, 2, 0);
 
 			this.toDateField = new PopupDateFieldExt();
 			this.toDateField.setResolution(Resolution.DAY);
-			this.toDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-			this.toDateField.setWidth("100px");
-			selectionLayout.addComponent(this.toDateField, 3, 0);
+            this.toDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            this.toDateField.setWidth("100px");
+            selectionLayout.addComponent(this.toDateField, 3, 0);
 
 			Label groupLb = new Label("Group:");
 			groupLb.setWidthUndefined();
-			selectionLayout.addComponent(groupLb, 0, 1);
+            selectionLayout.addComponent(groupLb, 0, 1);
 
 			this.groupField = new ValueComboBox(false, GROUPBY_PROJECT, GROUPBY_DATE, GROUPBY_USER);
-			this.groupField.setWidth("100px");
+            this.groupField.setWidth("100px");
 			selectionLayout.addComponent(this.groupField, 1, 1);
 
 			Label sortLb = new Label("Sort:");
 			sortLb.setWidthUndefined();
-			selectionLayout.addComponent(sortLb, 2, 1);
+            selectionLayout.addComponent(sortLb, 2, 1);
 
 			this.orderField = new ItemOrderComboBox();
-			this.orderField.setWidth("100px");
-			selectionLayout.addComponent(this.orderField, 3, 1);
+            this.orderField.setWidth("100px");
+            selectionLayout.addComponent(this.orderField, 3, 1);
 
 			Label projectLb = new Label("Project:");
 			projectLb.setWidthUndefined();
-			selectionLayout.addComponent(projectLb, 4, 0);
+            selectionLayout.addComponent(projectLb, 4, 0);
 
 			this.projectField = new UserInvolvedProjectsListSelect();
-			initListSelectStyle(this.projectField);
-			selectionLayout.addComponent(this.projectField, 5, 0, 5, 1);
+            initListSelectStyle(this.projectField);
+            selectionLayout.addComponent(this.projectField, 5, 0, 5, 1);
 
 			Label userLb = new Label("User:");
 			userLb.setWidthUndefined();
 			selectionLayout.addComponent(userLb, 6, 0);
 
 			this.userField = new UserInvolvedProjectsMemberListSelect(getProjectIds());
-			initListSelectStyle(this.userField);
-			selectionLayout.addComponent(this.userField, 7, 0, 7, 1);
+            initListSelectStyle(this.userField);
+            selectionLayout.addComponent(this.userField, 7, 0, 7, 1);
 
             Button queryBtn = new Button(
 					AppContext.getMessage(GenericI18Enum.BUTTON_SUBMIT),
@@ -326,10 +326,9 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 			totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs", ContentMode.HTML);
 			totalHoursLoggingLabel.addStyleName(UIConstants.LAYOUT_LOG);
 			totalHoursLoggingLabel.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withWidth("100%").withHeight("80px");
-            loggingPanel.addComponent(totalHoursLoggingLabel);
-            loggingPanel.setExpandRatio(totalHoursLoggingLabel, 1.0f);
-            loggingPanel.setComponentAlignment(totalHoursLoggingLabel, Alignment.MIDDLE_LEFT);
+            MHorizontalLayout loggingPanel = new MHorizontalLayout().withWidth("100%");
+            loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel).withAlign
+					(totalHoursLoggingLabel, Alignment.MIDDLE_LEFT);
             contentWrapper.addComponent(loggingPanel);
 
 			this.timeTrackingWrapper = new VerticalLayout();
@@ -423,7 +422,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 		if (totalHour == null || totalHour < 0) {
 			totalHoursLoggingLabel.setValue("Total hours logging: 0 Hrs");
 		} else {
-			totalHoursLoggingLabel.setValue(AppContext.getMessage(
+            totalHoursLoggingLabel.setValue(AppContext.getMessage(
                     TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
                     fromDate, toDate, totalHour, billableHour, nonBillableHours));
 		}

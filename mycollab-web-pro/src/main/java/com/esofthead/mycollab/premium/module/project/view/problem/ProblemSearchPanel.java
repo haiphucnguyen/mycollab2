@@ -42,21 +42,18 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
 
     @Override
     protected void buildExtraControls() {
-        final Button createBtn = new Button(
-                AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
+        Button createBtn = new Button(AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new ProblemEvent.GotoAdd(this, null));
+                        EventBusFactory.getInstance().post(new ProblemEvent.GotoAdd(this, null));
                     }
                 });
         createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.PROBLEMS));
+        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROBLEMS));
         this.addHeaderRight(createBtn);
     }
 
@@ -71,42 +68,36 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
     }
 
 
-    private class ProblemBasicSearchLayout extends
-            BasicSearchLayout<ProblemSearchCriteria> {
+    private class ProblemBasicSearchLayout extends BasicSearchLayout<ProblemSearchCriteria> {
+        private static final long serialVersionUID = 1L;
+        private TextField nameField;
+        private CheckBox myItemCheckbox;
 
         public ProblemBasicSearchLayout() {
             super(ProblemSearchPanel.this);
         }
 
-        private static final long serialVersionUID = 1L;
-        private TextField nameField;
-        private CheckBox myItemCheckbox;
-
         @Override
         public ComponentContainer constructBody() {
-            final MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
+            MHorizontalLayout basicSearchBody = new MHorizontalLayout().withMargin(true);
 
             nameField = ShortcutExtension.installShortcutAction(new TextField(),
-                    new ShortcutListener("ProblemSearchRequest", ShortcutAction.KeyCode.ENTER,
-                            null) {
+                    new ShortcutListener("ProblemSearchRequest", ShortcutAction.KeyCode.ENTER, null) {
                         @Override
                         public void handleAction(Object o, Object o1) {
                             callSearchAction();
                         }
                     });
+            nameField.setInputPrompt("Query by problem name");
             nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            basicSearchBody.with(nameField).withAlign(nameField,
-                    Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-            myItemCheckbox = new CheckBox(
-                    AppContext
-                            .getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
+            myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
             myItemCheckbox.setWidth("75px");
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox,
                     Alignment.MIDDLE_CENTER);
 
-            final Button searchBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
+            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
@@ -118,11 +109,9 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
                     ProblemBasicSearchLayout.this.callSearchAction();
                 }
             });
-            basicSearchBody.with(searchBtn).withAlign(searchBtn,
-                    Alignment.MIDDLE_LEFT);
+            basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
-            final Button cancelBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
             cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
             cancelBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -132,32 +121,27 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
                     ProblemBasicSearchLayout.this.nameField.setValue("");
                 }
             });
-            basicSearchBody.with(cancelBtn).withAlign(cancelBtn,
-                    Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            final Button advancedSearchBtn = new Button(
-                    AppContext
-                            .getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+            Button advancedSearchBtn = new Button(AppContext
+                    .getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            ProblemSearchPanel.this
-                                    .moveToAdvancedSearchLayout();
+                            ProblemSearchPanel.this.moveToAdvancedSearchLayout();
                         }
                     });
             advancedSearchBtn.setStyleName("link");
-            basicSearchBody.with(advancedSearchBtn).withAlign(
-                    advancedSearchBtn, Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
             return basicSearchBody;
         }
 
         @Override
         protected ProblemSearchCriteria fillUpSearchCriteria() {
             ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-                    CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
             searchCriteria.setProblemname(new StringSearchField(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
@@ -175,8 +159,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
         }
     }
 
-    private class ProblemAdvancedSearchLayout extends
-            DynamicQueryParamLayout<ProblemSearchCriteria> {
+    private class ProblemAdvancedSearchLayout extends DynamicQueryParamLayout<ProblemSearchCriteria> {
         private static final long serialVersionUID = 1L;
 
         public ProblemAdvancedSearchLayout() {
@@ -211,8 +194,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
         @Override
         protected ProblemSearchCriteria fillUpSearchCriteria() {
             ProblemSearchCriteria searchCriteria = super.fillUpSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-                    CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
     }

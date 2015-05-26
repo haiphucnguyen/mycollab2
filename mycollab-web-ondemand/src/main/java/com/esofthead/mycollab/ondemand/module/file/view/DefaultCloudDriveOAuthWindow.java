@@ -136,7 +136,6 @@ public abstract class DefaultCloudDriveOAuthWindow extends
 		folderName = new TextField();
 		folderName.setValue("Dropbox Directory");
 		folderName.setWidth("340px");
-		folderName.addStyleName("no-border-radius-left");
 		folderNameLayout.addComponent(folderName);
 		mainLayout.addComponent(folderNameLayout);
 
