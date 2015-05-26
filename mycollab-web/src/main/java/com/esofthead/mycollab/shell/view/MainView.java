@@ -119,7 +119,20 @@ public final class MainView extends AbstractPageView {
 
         ComponentContainer widget = module.getWidget();
         bodyLayout.addComponent(widget);
+        bodyLayout.addComponent(buildHelpSlider());
 
+        if (ModuleHelper.isCurrentProjectModule()) {
+            serviceMenu.selectService(0);
+        } else if (ModuleHelper.isCurrentCrmModule()) {
+            serviceMenu.selectService(1);
+        } else if (ModuleHelper.isCurrentFileModule()) {
+            serviceMenu.selectService(2);
+        } else if (ModuleHelper.isCurrentAccountModule()) {
+            serviceMenu.selectService(3);
+        }
+    }
+
+    private SliderPanel buildHelpSlider() {
         MVerticalLayout helpContent = new MVerticalLayout().withWidth("250px");
         SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
         topSlider.setHeight("300px");
@@ -139,17 +152,7 @@ public final class MainView extends AbstractPageView {
         helpContent.with(helpLink, helpDesc, supportLink, supportDesc, contactLink, contactDesc);
         topSlider.setCaption("Get Help");
         topSlider.setTabPosition(SliderTabPosition.MIDDLE);
-        bodyLayout.addComponent(topSlider);
-
-        if (ModuleHelper.isCurrentProjectModule()) {
-            serviceMenu.selectService(0);
-        } else if (ModuleHelper.isCurrentCrmModule()) {
-            serviceMenu.selectService(1);
-        } else if (ModuleHelper.isCurrentFileModule()) {
-            serviceMenu.selectService(2);
-        } else if (ModuleHelper.isCurrentAccountModule()) {
-            serviceMenu.selectService(3);
-        }
+        return topSlider;
     }
 
     private CustomLayout createFooter() {
