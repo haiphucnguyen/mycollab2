@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.vaadin.data.Item;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TreeTable;
 
 /**
@@ -11,11 +16,11 @@ import com.vaadin.ui.TreeTable;
 public class TaskHierarchyComp extends TreeTable {
     public TaskHierarchyComp() {
         super();
-        this.addContainerProperty("Name", String.class, "");
+        this.addContainerProperty("name", String.class, "");
     }
 
     public void addTaskList(SimpleTaskList taskList) {
-        Item item = this.addItem(new Object[]{taskList.getName()});
+        Item item = this.addItem(new Object[]{""});
         System.out.println(item);
     }
 }

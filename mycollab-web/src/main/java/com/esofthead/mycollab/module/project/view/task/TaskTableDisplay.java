@@ -249,18 +249,14 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
 
                                     ProjectTaskService projectTaskService = ApplicationContextUtil
                                             .getSpringBean(ProjectTaskService.class);
-                                    projectTaskService
-                                            .updateSelectiveWithSession(task,
+                                    projectTaskService.updateSelectiveWithSession(task,
                                                     AppContext.getUsername());
 
-                                    fireTableEvent(new TableClickEvent(
-                                            TaskTableDisplay.this, task,
-                                            "reopenTask"));
+                                    fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "reopenTask"));
                                 }
                             });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
-                    reOpenBtn.setEnabled(CurrentProjectVariables
-                            .canWrite(ProjectRolePermissionCollections.TASKS));
+                    reOpenBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addOption(reOpenBtn);
                 }
 
@@ -273,17 +269,11 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                             public void buttonClick(ClickEvent event) {
                                 ConfirmDialogExt.show(
                                         UI.getCurrent(),
-                                        AppContext
-                                                .getMessage(
-                                                        GenericI18Enum.DIALOG_DELETE_TITLE,
-                                                        SiteConfiguration
-                                                                .getSiteName()),
-                                        AppContext
-                                                .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                        AppContext
-                                                .getMessage(GenericI18Enum.BUTTON_YES),
-                                        AppContext
-                                                .getMessage(GenericI18Enum.BUTTON_NO),
+                                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                                        SiteConfiguration.getSiteName()),
+                                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                                         new ConfirmDialog.Listener() {
                                             private static final long serialVersionUID = 1L;
 
@@ -294,12 +284,8 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                                                     ProjectTaskService projectTaskService = ApplicationContextUtil
                                                             .getSpringBean(ProjectTaskService.class);
                                                     projectTaskService.removeWithSession(
-                                                            task.getId(),
-                                                            AppContext.getUsername(),
-                                                            AppContext.getAccountId());
-                                                    fireTableEvent(new TableClickEvent(
-                                                            TaskTableDisplay.this,
-                                                            task, "deleteTask"));
+                                                            task.getId(), AppContext.getUsername(), AppContext.getAccountId());
+                                                    fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "deleteTask"));
                                                 }
                                             }
                                         });
@@ -322,9 +308,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                     public com.vaadin.ui.Component generateCell(Table source,
                                                                 final Object itemId, Object columnId) {
                         SimpleTask task = getBeanByIndex(itemId);
-                        return new ProjectUserLink(task.getAssignuser(), task
-                                .getAssignUserAvatarId(), task
-                                .getAssignUserFullName());
+                        return new ProjectUserLink(task.getAssignuser(), task.getAssignUserAvatarId(), task.getAssignUserFullName());
 
                     }
                 });

@@ -53,11 +53,11 @@ Version 5.1.0
 
 **Bug Fixes**
 
-* Search project may throw exception in the special case
+* Search project may throw exception in some special case
 * Export report document is sometimes failed
 * Several bug fixes relate to Gantt chart views
 * Upload file in page editor throws exception
-* Add a new project pahe throws exception
+* Add a new project page throws exception
 
 Version 5.0.7
 -----------------------------
