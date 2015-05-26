@@ -97,9 +97,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 
 	private VerticalLayout timeTrackingWrapper;
 
-	public TimeTrackingSummaryViewImpl() {
-		this.setSizeFull();
-	}
+	public TimeTrackingSummaryViewImpl() {}
 
 	private void initListSelectStyle(ListSelect listSelect) {
 		listSelect.setWidth("300px");
@@ -109,8 +107,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 		listSelect.setRows(4);
 	}
 
-	private StreamResource constructStreamResource(
-			final ReportExportType exportType) {
+	private StreamResource constructStreamResource(final ReportExportType exportType) {
 		LazyStreamSource streamSource = new LazyStreamSource() {
 			private static final long serialVersionUID = 1L;
 
@@ -347,7 +344,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 
 			searchCriteria = new ItemTimeLoggingSearchCriteria();
 			searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
-            this.with(contentWrapper);
+            this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
         } else {
             Button backBtn = new Button("Back to Workboard");
 			backBtn.addClickListener(new Button.ClickListener() {
@@ -375,15 +372,13 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 
 			contentWrapper.addComponent(backBtn);
 			contentWrapper.setComponentAlignment(backBtn, Alignment.MIDDLE_CENTER);
-			this.addComponent(contentWrapper);
-			this.setComponentAlignment(contentWrapper, Alignment.MIDDLE_CENTER);
+			this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
 		}
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void searchTimeReporting() {
-		final Collection<String> selectedUsers = (Collection<String>) this.userField
-				.getValue();
+        Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
 		if (CollectionUtils.isNotEmpty(selectedUsers)) {
 			searchCriteria.setLogUsers(new SetSearchField(SearchField.AND,
 					selectedUsers));
@@ -392,26 +387,21 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 					this.userField.getUsernames()));
 		}
 
-        Collection<Integer> selectedProjects = (Collection<Integer>) this.projectField
-				.getValue();
+        Collection<Integer> selectedProjects = (Collection<Integer>) this.projectField.getValue();
 		if (CollectionUtils.isNotEmpty(selectedProjects)) {
-			searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
-					selectedProjects));
+			searchCriteria.setProjectIds(new SetSearchField(SearchField.AND, selectedProjects));
 		} else {
-			searchCriteria.setProjectIds(new SetSearchField(SearchField.AND,
-					getProjectIds()));
+			searchCriteria.setProjectIds(new SetSearchField(SearchField.AND, getProjectIds()));
 		}
 
 		searchCriteria.setIsBillable(new BooleanSearchField(true));
-		Double billableHour = this.itemTimeLoggingService
-				.getTotalHoursByCriteria(searchCriteria);
+        Double billableHour = this.itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 		if (billableHour == null || billableHour < 0) {
 			billableHour = 0d;
 		}
 
 		searchCriteria.setIsBillable(new BooleanSearchField(false));
-		Double nonBillableHours = this.itemTimeLoggingService
-				.getTotalHoursByCriteria(searchCriteria);
+		Double nonBillableHours = this.itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 		if (nonBillableHours == null || nonBillableHours < 0) {
 			nonBillableHours = 0d;
 		}
@@ -459,7 +449,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 							new ProjectEvent.GotoMyProject(this, chain));
 				}
 			} else if ("projectName".equals(event.getFieldName())) {
-				final PageActionChain chain = new PageActionChain(
+                PageActionChain chain = new PageActionChain(
 						new ProjectScreenData.Goto(itemLogging.getProjectid()));
 				EventBusFactory.getInstance().post(
 						new ProjectEvent.GotoMyProject(this, chain));

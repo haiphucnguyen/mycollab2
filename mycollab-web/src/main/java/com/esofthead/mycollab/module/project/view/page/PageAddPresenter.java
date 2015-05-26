@@ -77,8 +77,7 @@ public class PageAddPresenter extends AbstractPresenter<PageAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.PAGES)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES)) {
             PageContainer pageContainer = (PageContainer) container;
             pageContainer.navigateToContainer(ProjectTypeConstants.PAGE);
             pageContainer.removeAllComponents();
@@ -87,8 +86,7 @@ public class PageAddPresenter extends AbstractPresenter<PageAddView> {
             Page page = (Page) data.getParams();
             view.editItem(page);
 
-            ProjectBreadcrumb breadcrumb = ViewManager
-                    .getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (page.getPath().equals("")) {
                 breadcrumb.gotoPageAdd();
             } else {

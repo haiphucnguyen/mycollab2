@@ -82,8 +82,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
 
                 if (StringUtils.isNotBlank(task.getPriority())) {
                     b.setIconLink(ProjectResources
-                            .getIconResourceLink12ByTaskPriority(task
-                                    .getPriority()));
+                            .getIconResourceLink12ByTaskPriority(task.getPriority()));
 
                 }
 
@@ -111,8 +110,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                     public com.vaadin.ui.Component generateCell(Table source,
                                                                 final Object itemId, Object columnId) {
                         SimpleTask task = getBeanByIndex(itemId);
-                        Double percomp = (task.getPercentagecomplete() == null) ? new Double(
-                                0) : task.getPercentagecomplete();
+                        Double percomp = (task.getPercentagecomplete() == null) ? new Double(0) : task.getPercentagecomplete();
                         ProgressPercentageIndicator progress = new ProgressPercentageIndicator(percomp);
                         progress.setWidth("100px");
                         return progress;
@@ -125,7 +123,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
             @Override
             public com.vaadin.ui.Component generateCell(Table source,
                                                         final Object itemId, Object columnId) {
-                final SimpleTask task = getBeanByIndex(itemId);
+                SimpleTask task = getBeanByIndex(itemId);
                 return new ELabel().prettyDate(task.getStartdate());
 
             }
@@ -137,7 +135,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
             @Override
             public com.vaadin.ui.Component generateCell(Table source,
                                                         final Object itemId, Object columnId) {
-                final SimpleTask task = getBeanByIndex(itemId);
+                SimpleTask task = getBeanByIndex(itemId);
                 return new ELabel().prettyDate(task.getDeadline());
 
             }
@@ -166,20 +164,15 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                             @Override
                             public void buttonClick(ClickEvent event) {
                                 EventBusFactory.getInstance().post(
-                                        new TaskEvent.GotoEdit(
-                                                TaskTableDisplay.this, task));
+                                        new TaskEvent.GotoEdit(TaskTableDisplay.this, task));
                             }
                         });
-                editButton.setEnabled(CurrentProjectVariables
-                        .canWrite(ProjectRolePermissionCollections.TASKS));
+                editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                 editButton.setIcon(FontAwesome.EDIT);
                 filterBtnLayout.addOption(editButton);
 
-                if ((task.getPercentagecomplete() != null && task
-                        .getPercentagecomplete() != 100)
-                        || task.getPercentagecomplete() == null) {
-                    Button closeBtn = new Button(AppContext
-                            .getMessage(GenericI18Enum.BUTTON_CLOSE),
+                if (!task.isCompleted()) {
+                    Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE),
                             new Button.ClickListener() {
                                 private static final long serialVersionUID = 1L;
 
@@ -190,18 +183,12 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
 
                                     ProjectTaskService projectTaskService = ApplicationContextUtil
                                             .getSpringBean(ProjectTaskService.class);
-                                    projectTaskService
-                                            .updateSelectiveWithSession(task,
-                                                    AppContext.getUsername());
-
-                                    fireTableEvent(new TableClickEvent(
-                                            TaskTableDisplay.this, task,
-                                            "closeTask"));
+                                    projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                                    fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "closeTask"));
                                 }
                             });
                     closeBtn.setIcon(FontAwesome.CHECK_CIRCLE_O);
-                    closeBtn.setEnabled(CurrentProjectVariables
-                            .canWrite(ProjectRolePermissionCollections.TASKS));
+                    closeBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addOption(closeBtn);
                 } else {
                     Button reOpenBtn = new Button("ReOpen",
@@ -216,16 +203,13 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                                     ProjectTaskService projectTaskService = ApplicationContextUtil
                                             .getSpringBean(ProjectTaskService.class);
                                     projectTaskService
-                                            .updateSelectiveWithSession(task,
-                                                    AppContext.getUsername());
+                                            .updateSelectiveWithSession(task, AppContext.getUsername());
                                     fireTableEvent(new TableClickEvent(
-                                            TaskTableDisplay.this, task,
-                                            "reopenTask"));
+                                            TaskTableDisplay.this, task, "reopenTask"));
                                 }
                             });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
-                    reOpenBtn.setEnabled(CurrentProjectVariables
-                            .canWrite(ProjectRolePermissionCollections.TASKS));
+                    reOpenBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addOption(reOpenBtn);
                 }
 
@@ -250,8 +234,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                                     }
                                 });
                         pendingBtn.setIcon(FontAwesome.HDD_O);
-                        pendingBtn.setEnabled(CurrentProjectVariables
-                                .canWrite(ProjectRolePermissionCollections.TASKS));
+                        pendingBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                         filterBtnLayout.addOption(pendingBtn);
                     }
                 } else {

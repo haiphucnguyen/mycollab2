@@ -177,8 +177,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         sortGroup.addButton(sortNameBtn);
 
-        SortButton sortKindBtn = new SortButton(
-                AppContext.getMessage(Page18InEnum.OPT_SORT_BY_KIND),
+        SortButton sortKindBtn = new SortButton(AppContext.getMessage(Page18InEnum.OPT_SORT_BY_KIND),
                 new Button.ClickListener() {
 
                     private static final long serialVersionUID = 2230933690084074590L;
@@ -187,11 +186,9 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                     public void buttonClick(Button.ClickEvent event) {
                         kindSortAscend = !kindSortAscend;
                         if (kindSortAscend) {
-                            Collections
-                                    .sort(resources, Ordering.from(kindSort));
+                            Collections.sort(resources, Ordering.from(kindSort));
                         } else {
-                            Collections.sort(resources, Ordering.from(kindSort)
-                                    .reverse());
+                            Collections.sort(resources, Ordering.from(kindSort).reverse());
                         }
                         displayPages(resources);
 
@@ -200,8 +197,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
         sortGroup.addButton(sortKindBtn);
         sortGroup.setDefaultButton(sortDateBtn);
 
-        final Button newGroupBtn = new Button(
-                AppContext.getMessage(Page18InEnum.BUTTON_NEW_GROUP),
+        Button newGroupBtn = new Button(AppContext.getMessage(Page18InEnum.BUTTON_NEW_GROUP),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -212,20 +208,16 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         newGroupBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         newGroupBtn.setIcon(FontAwesome.PLUS);
-        newGroupBtn.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.PAGES));
-        headerLayout.with(newGroupBtn).withAlign(newGroupBtn,
-                Alignment.MIDDLE_RIGHT);
+        newGroupBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
+        headerLayout.with(newGroupBtn).withAlign(newGroupBtn, Alignment.MIDDLE_RIGHT);
 
-        final Button newPageBtn = new Button(
-                AppContext.getMessage(Page18InEnum.BUTTON_NEW_PAGE),
+        Button newPageBtn = new Button(AppContext.getMessage(Page18InEnum.BUTTON_NEW_PAGE),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final Button.ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new PageEvent.GotoAdd(this, null));
+                        EventBusFactory.getInstance().post(new PageEvent.GotoAdd(this, null));
                     }
                 });
         newPageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

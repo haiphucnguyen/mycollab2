@@ -57,6 +57,7 @@ Version 5.1.0
 * Export report document is sometimes failed
 * Several bug fixes relate to Gantt chart views
 * Upload file in page editor throws exception
+* Add a new project pahe throws exception
 
 Version 5.0.7
 -----------------------------
