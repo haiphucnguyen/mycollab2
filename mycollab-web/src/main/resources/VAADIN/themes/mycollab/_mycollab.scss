@@ -2325,32 +2325,6 @@
     @include flex-compatible;
   }
 
-  .v-sliderpanel-wrapper .v-sliderpanel-content {
-    background: powderblue;
-    color: gray;
-  }
-
-  .v-sliderpanel-wrapper .v-sliderpanel-tab {
-    background: powderblue;
-    color: gray;
-    .v-sliderpanel-caption {
-      font-size: $font-large;
-      font-weight: bold;
-    }
-  }
-
-  .right-tool {
-    z-index: 9999;
-    position:absolute;
-    right: 0px;
-    bottom: 0px;
-  }
-
-  .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content {
-    bottom: 0px;
-    height: 200px;
-  }
-
   /* Footer */
 
   .footer {

@@ -97,8 +97,6 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 
 	private VerticalLayout timeTrackingWrapper;
 
-	public TimeTrackingSummaryViewImpl() {}
-
 	private void initListSelectStyle(ListSelect listSelect) {
 		listSelect.setWidth("300px");
 		listSelect.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
@@ -324,8 +322,7 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
 			totalHoursLoggingLabel.addStyleName(UIConstants.LAYOUT_LOG);
 			totalHoursLoggingLabel.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
             MHorizontalLayout loggingPanel = new MHorizontalLayout().withWidth("100%");
-            loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel).withAlign
-					(totalHoursLoggingLabel, Alignment.MIDDLE_LEFT);
+            loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
 
 			this.timeTrackingWrapper = new VerticalLayout();

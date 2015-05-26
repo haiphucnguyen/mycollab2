@@ -346,8 +346,7 @@
     }
   }
 
-  .v-checkbox input[type="checkbox"] {
-    &:focus {
+  .v-checkbox input[type="checkbox"]:focus {
       border: none;
       box-shadow: none;
     }
@@ -370,6 +369,8 @@
     .v-sliderpanel-tab .v-sliderpanel-caption {
       color:white;
       text-align:center;
+      font-size: $font-large;
+      font-weight: bold;
     }
 
     .v-sliderpanel-content {

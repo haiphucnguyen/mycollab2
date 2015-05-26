@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- * <p/>
+ *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
+ *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -49,19 +49,14 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canRead(ProjectRolePermissionCollections.TASKS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             TaskContainer taskContainer = (TaskContainer) container;
             ProjectModule prjView = getRoot(container, ProjectModule.class);
-//            removeChildComponent(prjView, GanttChartView.class);
             prjView.removeAllComponents();
             prjView.addComponent(view.getWidget());
-//			taskContainer.removeAllComponents();
-//			taskContainer.addComponent(view.getWidget());
             view.displayGanttChart();
 
-            ProjectBreadcrumb breadCrumb = ViewManager
-                    .getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoGanttView();
         } else {
             NotificationUtil.showMessagePermissionAlert();

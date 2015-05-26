@@ -534,8 +534,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
         }
 
         if (CurrentProjectVariables.hasTimeFeature()) {
-            myProjectTab.addTab(
-                    constructTimeTrackingComponent(),
+            myProjectTab.addTab(constructTimeTrackingComponent(),
                     ProjectTypeConstants.TIME, 10,
                     AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
                     GenericLinkUtils.URL_PREFIX_PARAM
@@ -546,8 +545,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
         }
 
         if (CurrentProjectVariables.hasStandupFeature()) {
-            myProjectTab.addTab(
-                    constructProjectStandupMeeting(),
+            myProjectTab.addTab(constructProjectStandupMeeting(),
                     ProjectTypeConstants.STANDUP, 11,
                     AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
                     GenericLinkUtils.URL_PREFIX_PARAM
@@ -556,8 +554,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
             myProjectTab.removeTab(ProjectTypeConstants.STANDUP);
         }
 
-        myProjectTab.addTab(
-                constructProjectUsers(),
+        myProjectTab.addTab(constructProjectUsers(),
                 ProjectTypeConstants.MEMBER, 12,
                 AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
                 GenericLinkUtils.URL_PREFIX_PARAM
