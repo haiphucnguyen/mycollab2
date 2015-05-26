@@ -47,6 +47,7 @@ Version 5.1.0
 
 **Improvements & New Features**
 
+* Parse html better, display rich html text smoothly
 * Improve code quality overall
 * Optimize the hash query and improve the site performance a little bit
 * Revise the Gantt chart display

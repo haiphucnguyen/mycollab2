@@ -18,10 +18,18 @@ package com.esofthead.mycollab.core.utils;
 
 import org.apache.commons.validator.EmailValidator;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
+import org.jsoup.parser.Tag;
 import org.jsoup.safety.Whitelist;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility class to process string
@@ -74,11 +82,31 @@ public class StringUtils {
         }
 
         value = Jsoup.clean(value, Whitelist.relaxed());
-        value = value
-                .replaceAll(
-                        "(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
-                        "<a href=\"$0\">$0</a>");
-        return value;
+        Document doc = Jsoup.parse(value);
+        Element body = doc.body();
+        replaceHtml(body);
+        return body.html();
+    }
+
+    private static void replaceHtml(Node element) {
+        List<Node> elements = element.childNodes();
+        Pattern compile = Pattern.compile("(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*");
+        for (int i=0; i<elements.size(); i++) {
+            Node node = elements.get(i);
+            if (node instanceof TextNode) {
+                String value = ((TextNode)node).text();
+                Matcher matcher = compile.matcher(value);
+                if (matcher.find()) {
+                    value = value.replaceAll(
+                            "(?:https?|ftps?)://[\\w/%.-][/\\??\\w=?\\w?/%.-]?[/\\?&\\w=?\\w?/%.-]*",
+                            "<a href=\"$0\">$0</a>");
+                    Document newDoc = Jsoup.parse(value);
+                    Element body = newDoc.body().child(0);
+                    element.replaceWith(body);
+                }
+            }
+            replaceHtml(node);
+        }
     }
 
     public static String trimHtmlTags(String value) {
@@ -94,8 +122,7 @@ public class StringUtils {
     }
 
     public static String generateSoftUniqueId() {
-        return "" + (new GregorianCalendar().getTimeInMillis())
-                + new Random().nextInt(10);
+        return "" + (new GregorianCalendar().getTimeInMillis()) + new Random().nextInt(10);
     }
 
     public static String getStrOptionalNullValue(String value) {

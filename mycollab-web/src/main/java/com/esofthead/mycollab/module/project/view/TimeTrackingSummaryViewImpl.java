@@ -166,14 +166,11 @@ public class TimeTrackingSummaryViewImpl extends AbstractPageView implements Tim
                     " Time Tracking", ContentMode.HTML);
 			layoutHeader.addStyleName("h2");
 
-            MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
-//			header.with(layoutHeader).withAlign(layoutHeader, Alignment.MIDDLE_LEFT);
             CssLayout headerWrapper = new CssLayout();
             headerWrapper.addComponent(layoutHeader);
             headerWrapper.setWidth("100%");
             headerWrapper.setStyleName("projectfeed-hdr-wrapper");
             headerWrapper.setHeightUndefined();
-//			headerWrapper.addComponent(header);
 			this.addComponent(headerWrapper);
 
             CssLayout contentWrapper = new CssLayout();

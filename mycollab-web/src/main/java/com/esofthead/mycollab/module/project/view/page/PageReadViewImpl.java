@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -71,8 +71,7 @@ import java.util.List;
  * @since 4.4.0
  */
 @ViewComponent
-public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
-        PageReadView {
+public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements PageReadView {
     private static final long serialVersionUID = 1L;
     private static final String XHTML_PAGE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
             + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
@@ -116,8 +115,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
     @Override
     protected void initRelatedComponents() {
         commentListComp = new CommentDisplay(ProjectTypeConstants.PAGE,
-                CurrentProjectVariables.getProjectId(),
-                ProjectPageRelayEmailNotificationAction.class);
+                CurrentProjectVariables.getProjectId(), ProjectPageRelayEmailNotificationAction.class);
         commentListComp.setWidth("100%");
         commentListComp.setMargin(true);
 
@@ -161,15 +159,13 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<Page> pagesPreviewForm = new ProjectPreviewFormControlsGenerator<>(
                 previewForm);
-        final HorizontalLayout topPanel = pagesPreviewForm
-                .createButtonControls(
-                        ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
-                        ProjectRolePermissionCollections.PAGES);
+        HorizontalLayout topPanel = pagesPreviewForm.createButtonControls(
+                ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED,
+                ProjectRolePermissionCollections.PAGES);
 
-        Button exportPdfBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF),
+        Button exportPdfBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF),
                 FontAwesome.EXTERNAL_LINK);
         exportPdfBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
@@ -204,7 +200,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
 
         File file = File.createTempFile(beanItem.getSubject(), "pdf");
         file.deleteOnExit();
-        try(OutputStream os = new FileOutputStream(file)) {
+        try (OutputStream os = new FileOutputStream(file)) {
             renderer.createPDF(os);
         }
         return file;
@@ -222,8 +218,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
         return ProjectTypeConstants.PAGE;
     }
 
-    private static class PageReadFormFieldFactory extends
-            AbstractBeanFieldGroupViewFieldFactory<Page> {
+    private static class PageReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Page> {
         private static final long serialVersionUID = 1L;
 
         public PageReadFormFieldFactory(GenericBeanForm<Page> form) {
@@ -232,7 +227,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements
 
         @Override
         protected Field<?> onCreateField(Object propertyId) {
-
             if (propertyId.equals("status")) {
                 return new I18nFormViewField(attachForm.getBean().getStatus(),
                         WikiI18nEnum.class);
