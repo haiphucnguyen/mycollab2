@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -40,7 +41,7 @@ public class TimeTrackingSummaryPresenter extends AbstractPresenter<TimeTracking
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectModule prjContainer = (ProjectModule) container;
 		prjContainer.removeAllComponents();
-		prjContainer.addComponent(view);
+		prjContainer.with(view).withAlign(view, Alignment.TOP_CENTER);
 		view.display();
 	}
 }
