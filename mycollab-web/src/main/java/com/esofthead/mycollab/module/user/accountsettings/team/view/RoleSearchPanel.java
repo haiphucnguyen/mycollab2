@@ -118,7 +118,7 @@ public class RoleSearchPanel extends DefaultGenericSearchPanel<RoleSearchCriteri
             });
             basicSearchBody.addComponent(searchBtn);
 
-            final Button clearBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
+            Button clearBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 

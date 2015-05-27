@@ -398,7 +398,7 @@ public final class MainView extends AbstractPageView {
             SimpleUser user = AppContext.getUser();
             GregorianCalendar tenDaysAgo = new GregorianCalendar();
             tenDaysAgo.add(Calendar.DATE, -10);
-            if (user.getRequestad() != null &&  Boolean.TRUE.equals(user.getRequestad()) &&
+            if (Boolean.TRUE.equals(user.getRequestad()) &&
                     user.getRegisteredtime().before(tenDaysAgo.getTime())) {
                 UI.getCurrent().addWindow(new AdRequestWindow(user));
             }

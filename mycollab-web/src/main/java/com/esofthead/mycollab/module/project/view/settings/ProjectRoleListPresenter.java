@@ -92,8 +92,7 @@ public class ProjectRoleListPresenter
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<>();
 			for (ProjectRole item : currentDataList) {
-				if (item.isSelected() && (item.getIssystemrole() == null
-						||  Boolean.FALSE.equals(item.getIssystemrole()))) {
+				if (item.isSelected() && Boolean.FALSE.equals(item.getIssystemrole())) {
 					keyList.add(item.getId());
 				} else {
 					NotificationUtil.showErrorNotification(AppContext

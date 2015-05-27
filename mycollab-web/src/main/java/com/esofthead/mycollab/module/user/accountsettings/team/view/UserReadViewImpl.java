@@ -99,7 +99,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         basicLayout.setComponentAlignment(userWrapper, Alignment.MIDDLE_LEFT);
 
         Component role;
-        if (user.getIsAccountOwner() != null && Boolean.TRUE.equals(user.getIsAccountOwner())) {
+        if (Boolean.TRUE.equals(user.getIsAccountOwner())) {
             role = new DefaultViewField("Account Owner");
         } else {
             role = new LinkViewField(user.getRoleName(),
@@ -174,7 +174,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
                     if (propertyId.equals("email")) {
                         return new EmailViewField(user.getEmail());
                     } else if (propertyId.equals("roleid")) {
-                        if (user.getIsAccountOwner() != null &&  Boolean.TRUE.equals(user.getIsAccountOwner())) {
+                        if (Boolean.TRUE.equals(user.getIsAccountOwner())) {
                             return new DefaultViewField("Account Owner");
                         } else {
                             return new LinkViewField(user.getRoleName(), AccountLinkBuilder

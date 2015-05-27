@@ -201,8 +201,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
             Label memberRole = new Label();
             memberRole.setContentMode(ContentMode.HTML);
             memberRole.setStyleName("member-role");
-            if (beanItem.getIsadmin() != null
-                    &&  Boolean.TRUE.equals(beanItem.getIsadmin())
+            if (Boolean.TRUE.equals(beanItem.getIsadmin())
                     || beanItem.getProjectroleid() == null) {
                 memberRole.setValue(memberRoleLinkPrefix
                         + "style=\"color: #B00000;\">" + "Project Admin"
@@ -318,22 +317,18 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("projectroleid")) {
-                if (attachForm.getBean().getIsadmin() != null
-                        &&  Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
-                    return new LinkViewField(attachForm
-                            .getBean().getRoleName(),
+                if (Boolean.FALSE.equals(attachForm.getBean().getIsadmin())) {
+                    return new LinkViewField(attachForm.getBean().getRoleName(),
                             ProjectLinkBuilder.generateRolePreviewFullLink(
                                     attachForm.getBean().getProjectid(),
-                                    attachForm.getBean().getProjectroleid()),
-                            null);
+                                    attachForm.getBean().getProjectroleid()), null);
                 } else {
                     return new DefaultViewField("Project Admin");
                 }
             } else if (propertyId.equals("username")) {
-                return new UserLinkViewField(
-                        attachForm.getBean().getUsername(), attachForm
-                        .getBean().getMemberAvatarId(), attachForm
-                        .getBean().getMemberFullName());
+                return new UserLinkViewField(attachForm.getBean().getUsername(),
+                        attachForm.getBean().getMemberAvatarId(),
+                        attachForm.getBean().getMemberFullName());
             }
             return null;
         }
