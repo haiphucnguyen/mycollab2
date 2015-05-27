@@ -94,7 +94,7 @@ class ReportTemplate_ja_JP extends AbstractReportTemplate {
 	 * component
 	 */
 	public ComponentBuilder<?, ?> createTitleComponent(String label) {
-		HyperLinkBuilder link = hyperLink("http://www.mycollab.com");
+		HyperLinkBuilder link = hyperLink("https://www.mycollab.com");
 		ComponentBuilder<?, ?> dynamicReportsComponent = cmp.horizontalList(
 				cmp.image(
 						ReportTemplateFactory.class.getClassLoader()
@@ -104,7 +104,7 @@ class ReportTemplate_ja_JP extends AbstractReportTemplate {
 								.setStyle(bold22CenteredStyle)
 								.setHorizontalAlignment(
 										HorizontalAlignment.LEFT),
-						cmp.text("http://www.mycollab.com")
+						cmp.text("https://www.mycollab.com")
 								.setStyle(italicStyle).setHyperLink(link)));
 
 		return cmp.horizontalList().add(dynamicReportsComponent).newRow()
