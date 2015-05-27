@@ -43,6 +43,7 @@ Version 5.1.0
 -----------------------------
 **Library Upgrades**
 
+* Upgrade Vaadin to 7.4.7
 * Upgrade libraries: HirakiCP, Jackrabbit, Commons-Email
 
 **Improvements & New Features**

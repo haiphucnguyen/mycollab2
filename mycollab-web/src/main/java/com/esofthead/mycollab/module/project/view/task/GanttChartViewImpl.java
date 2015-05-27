@@ -236,10 +236,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 //                stepMap.put(taskList, step);
             }
         }
-
-        for (Step key : stepMap.values()) {
-            gantt.addStep(key);
-        }
     }
 
     private Step generateStepOfTaskList(SimpleTaskList taskList) {
