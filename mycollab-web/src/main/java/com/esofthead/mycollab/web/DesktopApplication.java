@@ -74,8 +74,6 @@ public class DesktopApplication extends MyCollabUI {
                 (GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
 
-        LOG.debug("Init mycollab application {} associate with session {}",
-                this.toString(), VaadinSession.getCurrent());
         LOG.debug("Register default error handler");
 
         VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {

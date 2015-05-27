@@ -56,7 +56,6 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -68,7 +67,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private static final long serialVersionUID = 1L;
 
     private Gantt gantt;
-    private LinkedHashMap<SimpleTask, Step> stepMap;
     private NativeSelect reso;
     private TaskHierarchyComp taskTable;
 
@@ -112,8 +110,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     private MHorizontalLayout constructGanttChart() {
         MHorizontalLayout mainLayout = new MHorizontalLayout().withSpacing(false).withWidth("100%");
-
-        stepMap = new LinkedHashMap<>();
 
         taskTable = new TaskHierarchyComp();
         taskTable.setWidth("300px");
@@ -184,7 +180,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         List<SimpleTaskList> taskList = taskListService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer.MAX_VALUE));
 
         gantt.removeSteps();
-        stepMap = new LinkedHashMap<>();
 
 		/* Add steps */
         if (!taskList.isEmpty()) {

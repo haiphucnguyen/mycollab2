@@ -60,6 +60,7 @@ Version 5.1.0
 * Several bug fixes relate to Gantt chart views
 * Upload file in page editor throws exception
 * Add a new project page throws exception
+* Display the new user information when user re-login by another account 
 
 Version 5.0.7
 -----------------------------

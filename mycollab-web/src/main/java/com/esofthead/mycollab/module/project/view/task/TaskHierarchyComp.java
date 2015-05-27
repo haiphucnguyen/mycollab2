@@ -56,7 +56,6 @@ class TaskHierarchyComp extends TreeTable {
                         TaskHierarchyComp.this.setParent(subTask, item);
                     }
                 }
-                System.out.println("Item: " + item);
             }
         });
     }
