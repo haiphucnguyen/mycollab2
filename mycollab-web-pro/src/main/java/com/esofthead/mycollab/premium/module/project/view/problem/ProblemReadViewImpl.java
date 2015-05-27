@@ -20,8 +20,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -153,7 +153,7 @@ public class ProblemReadViewImpl extends
 				return new I18nFormViewField(problem.getStatus(),
 						StatusI18nEnum.class);
 			} else if (propertyId.equals("datedue")) {
-				return new PrettyDateViewField(problem.getDatedue());
+				return new DateViewField(problem.getDatedue());
 			} else if (propertyId.equals("assigntouser")) {
 				return new ProjectUserFormLinkField(problem.getAssigntouser(),
 						problem.getAssignUserAvatarId(),

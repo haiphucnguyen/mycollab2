@@ -44,8 +44,8 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -75,10 +75,8 @@ import java.util.UUID;
  * @since 2.0
  */
 @ViewComponent
-public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
-        implements TaskReadView {
+public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implements TaskReadView {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(TaskReadViewImpl.class);
 
     private TagViewComponent tagViewComponent;
@@ -208,8 +206,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
                     quickActionStatusBtn.setIcon(FontAwesome.CIRCLE_O_NOTCH);
                 }
 
-                ProjectTaskService service = ApplicationContextUtil
-                        .getSpringBean(ProjectTaskService.class);
+                ProjectTaskService service = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                 service.updateWithSession(beanItem, AppContext.getUsername());
 
             }
@@ -323,18 +320,15 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask>
             } else if (SimpleTask.Field.taskListName.equalTo(propertyId)) {
                 return new DefaultViewField(beanItem.getTaskListName());
             } else if (Task.Field.startdate.equalTo(propertyId)) {
-                return new PrettyDateViewField(beanItem.getStartdate());
+                return new DateViewField(beanItem.getStartdate());
             } else if (Task.Field.enddate.equalTo(propertyId)) {
-                return new PrettyDateViewField(beanItem
-                        .getEnddate());
+                return new DateViewField(beanItem.getEnddate());
             } else if (Task.Field.actualstartdate.equalTo(propertyId)) {
-                return new PrettyDateViewField(beanItem
-                        .getActualstartdate());
+                return new DateViewField(beanItem.getActualstartdate());
             } else if (Task.Field.actualenddate.equalTo(propertyId)) {
-                return new PrettyDateViewField(beanItem
-                        .getActualenddate());
+                return new DateViewField(beanItem.getActualenddate());
             } else if (Task.Field.deadline.equalTo(propertyId)) {
-                return new PrettyDateViewField(beanItem.getDeadline());
+                return new DateViewField(beanItem.getDeadline());
             } else if (Task.Field.tasklistid.equalTo(propertyId)) {
                 return new ProjectItemViewField(ProjectTypeConstants.TASK_LIST, beanItem.getTasklistid() + "",
                         beanItem.getTaskListName());

@@ -161,7 +161,7 @@ public final class MainView extends AbstractPageView {
         footer.setWidth("100%");
         footer.setHeightUndefined();
 
-        Link companyLink = new Link("eSoftHead", new ExternalResource("http://www.esofthead.com"));
+        Link companyLink = new Link("MyCollab", new ExternalResource("https://www.mycollab.com"));
         companyLink.setTargetName("_blank");
 
         footer.addComponent(companyLink, "company-url");

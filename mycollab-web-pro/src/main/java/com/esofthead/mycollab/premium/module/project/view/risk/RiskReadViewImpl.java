@@ -20,8 +20,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.PrettyDateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -41,21 +41,14 @@ import org.vaadin.teemu.ratingstars.RatingStars;
  * @since 1.0
  */
 @ViewComponent
-public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
-        implements RiskReadView {
-
+public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implements RiskReadView {
     private static final long serialVersionUID = 1L;
-
-    private static final Logger LOG = LoggerFactory
-            .getLogger(RiskReadViewImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RiskReadViewImpl.class);
 
     private CommentDisplay commentDisplay;
     private RiskHistoryList historyList;
-
     private DateInfoComp dateInfoComp;
-
     private PeopleInfoComp peopleInfoComp;
-
     private ProjectFollowersComp<SimpleRisk> followerSheet;
 
     public RiskReadViewImpl() {
@@ -113,8 +106,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
         return new DynaFormLayout(ProjectTypeConstants.RISK,
-                RiskDefaultFormLayoutFactory.getForm(),
-                Risk.Field.riskname.name());
+                RiskDefaultFormLayoutFactory.getForm(), Risk.Field.riskname.name());
     }
 
     @Override
@@ -124,7 +116,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
+        TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
         tabContainer.addTab(commentDisplay, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
         tabContainer.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
         return tabContainer;
@@ -135,8 +127,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
         return ProjectTypeConstants.RISK;
     }
 
-    private static class RiskReadFormFieldFactory extends
-            AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> {
+    private static class RiskReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> {
         private static final long serialVersionUID = 1L;
 
         public RiskReadFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
@@ -149,7 +140,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
             if (Risk.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getDescription());
             } else if (Risk.Field.level.equalTo(propertyId)) {
-                final RatingStars tinyRs = new RatingStars();
+                RatingStars tinyRs = new RatingStars();
                 tinyRs.setValue(risk.getLevel());
                 tinyRs.setReadOnly(true);
                 return tinyRs;
@@ -157,7 +148,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
                 return new I18nFormViewField(risk.getStatus(),
                         StatusI18nEnum.class);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {
-                return new PrettyDateViewField(risk.getDatedue());
+                return new DateViewField(risk.getDatedue());
             } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(risk.getRaisedbyuser(),
                         risk.getRaisedByUserAvatarId(),
@@ -192,8 +183,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
             this.withMargin(new MarginInfo(false, false, false, true));
 
             Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
-                    AppContext
-                            .getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
+                    AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
             peopleInfoHeader.setStyleName("info-hdr");
             this.addComponent(peopleInfoHeader);
 
@@ -202,42 +192,30 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk>
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
-                Label createdLbl = new Label(
-                        AppContext
+                Label createdLbl = new Label(AppContext
                                 .getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 
-                String createdUserName = (String) PropertyUtils.getProperty(
-                        bean, "raisedbyuser");
-                String createdUserAvatarId = (String) PropertyUtils
-                        .getProperty(bean, "raisedByUserAvatarId");
-                String createdUserDisplayName = (String) PropertyUtils
-                        .getProperty(bean, "raisedByUserFullName");
+                String createdUserName = (String) PropertyUtils.getProperty(bean, "raisedbyuser");
+                String createdUserAvatarId = (String) PropertyUtils.getProperty(bean, "raisedByUserAvatarId");
+                String createdUserDisplayName = (String) PropertyUtils.getProperty(bean, "raisedByUserFullName");
 
-                UserLink createdUserLink = new UserLink(createdUserName,
-                        createdUserAvatarId, createdUserDisplayName);
+                UserLink createdUserLink = new UserLink(createdUserName, createdUserAvatarId, createdUserDisplayName);
                 layout.addComponent(createdUserLink, 1, 0);
                 layout.setColumnExpandRatio(1, 1.0f);
 
-                Label assigneeLbl = new Label(
-                        AppContext
-                                .getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
+                Label assigneeLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);
-                String assignUserName = (String) PropertyUtils.getProperty(
-                        bean, "assigntouser");
-                String assignUserAvatarId = (String) PropertyUtils.getProperty(
-                        bean, "assignToUserAvatarId");
-                String assignUserDisplayName = (String) PropertyUtils
-                        .getProperty(bean, "assignedToUserFullName");
+                String assignUserName = (String) PropertyUtils.getProperty(bean, "assigntouser");
+                String assignUserAvatarId = (String) PropertyUtils.getProperty(bean, "assignToUserAvatarId");
+                String assignUserDisplayName = (String) PropertyUtils.getProperty(bean, "assignedToUserFullName");
 
-                UserLink assignUserLink = new UserLink(assignUserName,
-                        assignUserAvatarId, assignUserDisplayName);
+                UserLink assignUserLink = new UserLink(assignUserName, assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {
-                LOG.error("Can not build user link {} ",
-                        BeanUtility.printBeanObj(bean));
+                LOG.error("Can not build user link {} ", BeanUtility.printBeanObj(bean));
             }
 
             this.addComponent(layout);

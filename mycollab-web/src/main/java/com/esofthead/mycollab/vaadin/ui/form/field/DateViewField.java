@@ -47,14 +47,15 @@ public class DateViewField extends CustomField {
 
 	@Override
 	protected Component initContent() {
-		final Label l = new Label();
-		l.setWidth("100%");
+		Label dateLbl = new Label();
+		dateLbl.setWidth("100%");
 		if (date == null) {
-			l.setValue("&nbsp;");
-			l.setContentMode(ContentMode.HTML);
+			dateLbl.setValue("&nbsp;");
+			dateLbl.setContentMode(ContentMode.HTML);
 		} else {
-			l.setValue(AppContext.formatDate(date));
+			dateLbl.setValue(AppContext.formatDate(date));
+			dateLbl.setDescription(AppContext.formatPrettyTime(date));
 		}
-		return l;
+		return dateLbl;
 	}
 }
