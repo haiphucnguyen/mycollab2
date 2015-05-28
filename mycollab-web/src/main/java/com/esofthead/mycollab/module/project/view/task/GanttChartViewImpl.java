@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,15 +22,16 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -54,6 +55,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +68,7 @@ import java.util.List;
 public class GanttChartViewImpl extends AbstractPageView implements GanttChartView {
     private static final long serialVersionUID = 1L;
 
-    private Gantt gantt;
+    private GanttExt gantt;
     private NativeSelect reso;
     private TaskHierarchyComp taskTable;
 
@@ -114,7 +116,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskTable = new TaskHierarchyComp();
         taskTable.setWidth("300px");
 
-        gantt = new Gantt();
+        gantt = new GanttExt();
         gantt.setWidth(100, Unit.PERCENTAGE);
         gantt.setResizableSteps(true);
         gantt.setMovableSteps(true);
@@ -174,50 +176,17 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     @SuppressWarnings("unchecked")
     private void updateStepList() {
+        gantt.removeSteps();
         TaskListSearchCriteria criteria = new TaskListSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setStatus(new StringSearchField(OptionI18nEnum.StatusI18nEnum.Open.name()));
         List<SimpleTaskList> taskList = taskListService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer.MAX_VALUE));
 
-        gantt.removeSteps();
-
-		/* Add steps */
         if (!taskList.isEmpty()) {
             for (SimpleTaskList task : taskList) {
-//                Date startDate = task.getStartdate();
-//                Date endDate = task.getEnddate();
-//
-//                if (endDate == null) {
-//                    endDate = task.getDeadline();
-//                }
-//
-//                if (startDate == null) {
-//                    if (endDate == null) {
-//                        startDate = DateTimeUtils.getCurrentDateWithoutMS();
-//                        endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
-//                    } else {
-//                        endDate = DateTimeUtils.trimHMSOfDate(endDate);
-//                        startDate = DateTimeUtils.subtractOrAddDayDuration(endDate, -1);
-//                    }
-//                } else {
-//                    startDate = DateTimeUtils.trimHMSOfDate(startDate);
-//                    if (endDate == null) {
-//                        endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
-//                    } else {
-//                        endDate = DateTimeUtils.trimHMSOfDate(endDate);
-//                        endDate = DateTimeUtils.subtractOrAddDayDuration(endDate, 1);
-//                    }
-//                }
-//
-//                if (endDate.before(gantt.getStartDate()) || startDate.after(gantt.getEndDate())) {
-//                    continue;
-//                }
-
-                Step step = generateStepOfTaskList(task);
-                if (step != null) {
-                    gantt.addStep(step);
-                    taskTable.addTaskList(task);
-                }
+                GanttItemWrapper itemWrapper = new TaskListGanttItemWrapper(task);
+                taskTable.addTaskList(itemWrapper);
+                gantt.addStep(itemWrapper.getStep());
 
 					/* Add style for row block */
 //                if (task.isCompleted()) {
@@ -231,30 +200,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 //                stepMap.put(taskList, step);
             }
         }
-    }
 
-    private Step generateStepOfTaskList(SimpleTaskList taskList) {
-        Date startDate = taskList.getStartDate();
-        Date endDate = taskList.getEndDate();
-        if (endDate.before(gantt.getStartDate()) || startDate.after(gantt.getEndDate())) {
-            return null;
-        } else {
-            Step step = new Step();
-            step.setCaption(tooltipGenerateForTaskList(taskList));
-            step.setCaptionMode(Step.CaptionMode.HTML);
-            step.setStartDate(startDate);
-            step.setEndDate(endDate);
-            return step;
-        }
-    }
 
-    private String tooltipGenerateForTaskList(SimpleTaskList task) {
-        return "";
-    }
-
-    private String tooltipGenerateForTask(SimpleTask task) {
-        return ProjectLinkBuilder.generateProjectItemLinkWithTooltip(task.getProjectShortname(),
-                task.getProjectid(), task.getTaskname(), ProjectTypeConstants.TASK, task.getId() + "", task.getTaskkey() + "");
     }
 
     private Panel createControls() {
@@ -361,6 +308,222 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             reso.setValue(resolution);
         } finally {
             reso.addValueChangeListener(resolutionValueChangeListener);
+        }
+    }
+
+    void insertSteps(GanttItemWrapper parent, List<GanttItemWrapper> childs) {
+        int stepIndex = gantt.getStepIndex(parent.getStep());
+        if (stepIndex != -1) {
+            int order = 1;
+            for (GanttItemWrapper child : childs) {
+                taskTable.addItem(child);
+                taskTable.setParent(child, parent);
+                gantt.addStep(stepIndex + order, child.getStep());
+                order++;
+            }
+        }
+    }
+
+    class TaskHierarchyComp extends TreeTable {
+        TaskHierarchyComp() {
+            super();
+            this.addContainerProperty("name", String.class, "");
+            this.setColumnHeader("name", "Name");
+            this.addGeneratedColumn("name", new ColumnGenerator() {
+                @Override
+                public Object generateCell(Table table, Object itemId, Object columnId) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
+                    return new Label(item.getName());
+                }
+            });
+
+            this.addExpandListener(new Tree.ExpandListener() {
+                @Override
+                public void nodeExpand(Tree.ExpandEvent expandEvent) {
+                    GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
+                    List<GanttItemWrapper> subTasks = item.subTasks();
+                    GanttChartViewImpl.this.insertSteps(item, subTasks);
+                }
+            });
+
+            this.addCollapseListener(new Tree.CollapseListener() {
+                @Override
+                public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
+                    GanttItemWrapper item = (GanttItemWrapper) collapseEvent.getItemId();
+                    List<GanttItemWrapper> subTasks = item.subTasks();
+                    if (subTasks.size() > 0) {
+                        for (GanttItemWrapper subTask : subTasks) {
+
+                        }
+                    }
+                }
+            });
+        }
+
+        void addTaskList(GanttItemWrapper itemWrapper) {
+            this.addItem(itemWrapper);
+        }
+    }
+
+    abstract static class GanttItemWrapper {
+        GanttItemWrapper parent;
+        Step ownStep;
+        List<GanttItemWrapper> subItems;
+
+        abstract String getName();
+
+        abstract List<GanttItemWrapper> subTasks();
+
+        abstract Date getStartDate();
+
+        abstract Date getEndDate();
+
+        abstract String buildCaption();
+
+        Step getStep() {
+            return ownStep;
+        }
+
+        void setStep(Step step) {
+            ownStep = step;
+        }
+
+        Step generateStep() {
+            Date startDate = this.getStartDate();
+            Date endDate = this.getEndDate();
+            Step step = new Step();
+            step.setCaption(buildCaption());
+            step.setCaptionMode(Step.CaptionMode.HTML);
+            step.setStartDate(startDate);
+            step.setEndDate(endDate);
+            return step;
+        }
+
+        public GanttItemWrapper getParent() {
+            return parent;
+        }
+
+        public void setParent(GanttItemWrapper parent) {
+            this.parent = parent;
+        }
+    }
+
+    static class TaskGanttItemWrapper extends GanttItemWrapper {
+        private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        private SimpleTask task;
+        private Date startDate, endDate;
+
+        TaskGanttItemWrapper(SimpleTask task) {
+            this.task = task;
+            calculateDates();
+            this.ownStep = generateStep();
+        }
+
+        @Override
+        public String getName() {
+            return task.getTaskname();
+        }
+
+        @Override
+        public List<GanttItemWrapper> subTasks() {
+            List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId());
+            if (subItems == null) {
+                subItems = new ArrayList<>();
+                for (SimpleTask subTask : subTasks) {
+                    TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask);
+                    subItem.setParent(this);
+                    subItems.add(subItem);
+                }
+            }
+
+            return subItems;
+        }
+
+        private void calculateDates() {
+            startDate = task.getStartdate();
+            endDate = task.getEnddate();
+
+            if (endDate == null) {
+                endDate = task.getDeadline();
+            }
+
+            if (startDate == null) {
+                if (endDate == null) {
+                    startDate = DateTimeUtils.getCurrentDateWithoutMS();
+                    endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
+                } else {
+                    endDate = DateTimeUtils.trimHMSOfDate(endDate);
+                    startDate = DateTimeUtils.subtractOrAddDayDuration(endDate, -1);
+                }
+            } else {
+                startDate = DateTimeUtils.trimHMSOfDate(startDate);
+                if (endDate == null) {
+                    endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
+                } else {
+                    endDate = DateTimeUtils.trimHMSOfDate(endDate);
+                    endDate = DateTimeUtils.subtractOrAddDayDuration(endDate, 1);
+                }
+            }
+        }
+
+        @Override
+        Date getStartDate() {
+            return startDate;
+        }
+
+        @Override
+        Date getEndDate() {
+            return endDate;
+        }
+
+        @Override
+        String buildCaption() {
+            return task.getTaskname();
+        }
+    }
+
+    static class TaskListGanttItemWrapper extends GanttItemWrapper {
+        private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        private SimpleTaskList taskList;
+
+        TaskListGanttItemWrapper(SimpleTaskList taskList) {
+            this.taskList = taskList;
+            this.ownStep = generateStep();
+        }
+
+        @Override
+        public String getName() {
+            return taskList.getName();
+        }
+
+        @Override
+        public List<GanttItemWrapper> subTasks() {
+            List<SimpleTask> subTasks = projectTaskService.findSubTasksOfGroup(taskList.getId(), AppContext.getAccountId());
+            if (subItems == null) {
+                subItems = new ArrayList<>();
+                for (SimpleTask subTask : subTasks) {
+                    TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask);
+                    subItem.setParent(this);
+                    subItems.add(subItem);
+                }
+            }
+
+            return subItems;
+        }
+
+        @Override
+        Date getStartDate() {
+            return taskList.getStartDate();
+        }
+
+        @Override
+        Date getEndDate() {
+            return taskList.getEndDate();
+        }
+
+        @Override
+        String buildCaption() {
+            return taskList.getName();
         }
     }
 }
