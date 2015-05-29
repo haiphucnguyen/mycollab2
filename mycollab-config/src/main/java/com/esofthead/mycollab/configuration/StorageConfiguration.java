@@ -31,13 +31,13 @@ package com.esofthead.mycollab.configuration;
  * 
  */
 public interface StorageConfiguration {
-	public static final String FILE_STORAGE_SYSTEM = "file";
+	String FILE_STORAGE_SYSTEM = "file";
 
-	public static final String S3_STORAGE_SYSTEM = "s3";
+	String S3_STORAGE_SYSTEM = "s3";
 
-	public String getAvatarPath(String userAvatarId, int size);
+	String getAvatarPath(String userAvatarId, int size);
 
-	public String getLogoPath(String accountLogoId, int size);
+	String getLogoPath(String accountLogoId, int size);
 
-	public String getResourcePath(String documentPath);
+	String getResourcePath(String documentPath);
 }
