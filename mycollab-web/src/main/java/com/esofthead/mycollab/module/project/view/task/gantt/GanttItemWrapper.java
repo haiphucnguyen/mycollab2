@@ -30,15 +30,13 @@ public abstract class GanttItemWrapper {
 
     abstract String buildCaption();
 
+    abstract String buildTooltip();
+
     public Step getStep() {
         return ownStep;
     }
 
-    void setStep(Step step) {
-        ownStep = step;
-    }
-
-    Step generateStep() {
+    StepExt generateStep() {
         Date startDate = this.getStartDate();
         if (startDate.before(minDate)) {
             startDate = minDate;
@@ -47,12 +45,13 @@ public abstract class GanttItemWrapper {
         if (endDate.after(maxDate)) {
             endDate = maxDate;
         }
-        Step step = new Step();
+        StepExt step = new StepExt();
         step.setCaption(buildCaption());
         step.setCaptionMode(Step.CaptionMode.HTML);
-        step.setDescription(buildCaption());
+        step.setDescription(buildTooltip());
         step.setStartDate(startDate);
         step.setEndDate(endDate);
+        step.setGanttItemWrapper(this);
         return step;
     }
 

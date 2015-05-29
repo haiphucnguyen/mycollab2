@@ -24,13 +24,13 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
-import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
-import com.esofthead.mycollab.module.project.view.task.gantt.TaskListGanttItemWrapper;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.task.gantt.*;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -48,15 +48,12 @@ import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
-import org.tltv.gantt.client.shared.AbstractStep;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -71,6 +68,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private TaskHierarchyComp taskTable;
 
     private ProjectTaskListService taskListService;
+    private ProjectTaskService taskService;
 
     public GanttChartViewImpl() {
         this.setStyleName("gantt-view");
@@ -99,6 +97,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         taskListService = ApplicationContextUtil.getSpringBean(ProjectTaskListService.class);
+        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
 
         HorizontalLayout ganttLayout = constructGanttChart();
 
@@ -115,7 +114,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskTable.setWidth("300px");
 
         gantt = new GanttExt();
-        gantt.setMonthsVisible(true);
         gantt.setSizeFull();
         gantt.setResizableSteps(true);
         gantt.setMovableSteps(true);
@@ -139,7 +137,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
             @Override
             public void onGanttMove(MoveEvent event) {
-                updateTasksInfo(event.getStep(), event.getStartDate(), event.getEndDate());
+                updateTasksInfo((StepExt)event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -148,7 +146,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
             @Override
             public void onGanttResize(ResizeEvent event) {
-                updateTasksInfo(event.getStep(), event.getStartDate(), event.getEndDate());
+                updateTasksInfo((StepExt)event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -156,17 +154,18 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         return mainLayout;
     }
 
-    private void updateTasksInfo(AbstractStep step, long startDate, long endDate) {
-//        SimpleTask task = stepMap.get(step);
-//        GregorianCalendar calendar = new GregorianCalendar();
-//        calendar.setTimeInMillis(startDate);
-//        task.setStartdate(calendar.getTime());
-//
-//        calendar.setTimeInMillis(endDate);
-//        task.setEnddate(calendar.getTime());
-//
-//        taskListService.updateWithSession(task, AppContext.getUsername());
-//        taskTable.setCurrentDataList(stepMap.values());
+    private void updateTasksInfo(StepExt step, long startDate, long endDate) {
+        GanttItemWrapper ganttItemWrapper =  step.getGanttItemWrapper();
+        if (ganttItemWrapper instanceof TaskGanttItemWrapper) {
+            SimpleTask task = ((TaskGanttItemWrapper)ganttItemWrapper).getTask();
+            GregorianCalendar calendar = new GregorianCalendar();
+            calendar.setTimeInMillis(startDate);
+            task.setStartdate(calendar.getTime());
+
+            calendar.setTimeInMillis(endDate);
+            task.setEnddate(calendar.getTime());
+            taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+        }
     }
 
     public void displayGanttChart() {
@@ -199,8 +198,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 //                stepMap.put(taskList, step);
             }
         }
-
-
     }
 
     private Panel createControls() {

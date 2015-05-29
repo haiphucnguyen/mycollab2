@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -24,6 +26,10 @@ public class TaskGanttItemWrapper extends GanttItemWrapper {
         this.task = task;
         calculateDates();
         this.ownStep = generateStep();
+    }
+
+    public SimpleTask getTask() {
+        return task;
     }
 
     @Override
@@ -86,5 +92,11 @@ public class TaskGanttItemWrapper extends GanttItemWrapper {
     @Override
     String buildCaption() {
         return task.getTaskname();
+    }
+
+    @Override
+    String buildTooltip() {
+        return ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, AppContext.getSiteUrl(),
+                AppContext.getTimezone());
     }
 }
