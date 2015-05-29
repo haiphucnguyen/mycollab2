@@ -63,6 +63,7 @@ Version 5.1.0
 * Export report document is sometimes failed
 * Upload file in page editor throws exception
 * Add a new project page throws exception
+* Fix several bugs relate to Gantt chart
 * Display the new user information when user re-login by another account 
 
 Version 5.0.7
