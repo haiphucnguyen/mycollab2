@@ -413,6 +413,9 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         final PopupButton accountMenu = new PopupButton(com.esofthead.mycollab.core.utils.StringUtils.trim(AppContext.getUser()
                 .getDisplayName(), 20, true));
+        accountMenu.setStyleName("accountMenu");
+        accountMenu.addStyleName("topNavPopup");
+
         OptionPopupContent accLayout = new OptionPopupContent().withWidth("160px");
 
         Button myProfileBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE),
@@ -473,7 +476,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     accountMenu.setPopupVisible(false);
-                    LOG.debug("Send request RELOAD ");
                     ServerInstance.getInstance().preUpgrade();
                     UI.getCurrent().addWindow(new AboutWindow());
                 }
@@ -496,8 +498,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accLayout.addOption(signoutBtn);
 
         accountMenu.setContent(accLayout);
-        accountMenu.setStyleName("accountMenu");
-        accountMenu.addStyleName("topNavPopup");
         accountLayout.addComponent(accountMenu);
 
         layout.addComponent(accountLayout, "accountMenu");

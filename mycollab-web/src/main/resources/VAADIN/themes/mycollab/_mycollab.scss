@@ -780,14 +780,14 @@
   .topNavigation .v-button {
     &.accountMenu,  &.accountMenu.v-pressed {
       height: 40px;
-      padding: 12px 0px 11px;
+      padding: 12px 0px;
       background: none;
       border: none;
       .v-button-caption {
         font-weight: bold;
       }
       .v-button-wrap {
-        padding: 4px 6px;
+        padding: 0px 6px;
       }
       .v-popup-indicator::before {
         content:'\f0d7';

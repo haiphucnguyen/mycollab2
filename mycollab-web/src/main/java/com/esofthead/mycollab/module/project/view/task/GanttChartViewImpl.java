@@ -22,16 +22,15 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
+import com.esofthead.mycollab.module.project.view.task.gantt.TaskListGanttItemWrapper;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -50,13 +49,12 @@ import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.AbstractStep;
-import org.tltv.gantt.client.shared.Step;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +67,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private static final long serialVersionUID = 1L;
 
     private GanttExt gantt;
-    private NativeSelect reso;
+    private NativeSelect chartResolution;
     private TaskHierarchyComp taskTable;
 
     private ProjectTaskListService taskListService;
@@ -117,7 +115,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskTable.setWidth("300px");
 
         gantt = new GanttExt();
-        gantt.setWidth(100, Unit.PERCENTAGE);
+        gantt.setMonthsVisible(true);
+        gantt.setSizeFull();
         gantt.setResizableSteps(true);
         gantt.setMovableSteps(true);
         gantt.setVerticalScrollDelegateTarget(taskTable);
@@ -177,6 +176,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     @SuppressWarnings("unchecked")
     private void updateStepList() {
         gantt.removeSteps();
+        taskTable.removeAllItems();
         TaskListSearchCriteria criteria = new TaskListSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setStatus(new StringSearchField(OptionI18nEnum.StatusI18nEnum.Open.name()));
@@ -184,10 +184,9 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         if (!taskList.isEmpty()) {
             for (SimpleTaskList task : taskList) {
-                GanttItemWrapper itemWrapper = new TaskListGanttItemWrapper(task);
+                GanttItemWrapper itemWrapper = new TaskListGanttItemWrapper(task, gantt.getStartDate(), gantt.getEndDate());
                 taskTable.addTaskList(itemWrapper);
                 gantt.addStep(itemWrapper.getStep());
-
 					/* Add style for row block */
 //                if (task.isCompleted()) {
 //                    step.setBackgroundColor("53C540");
@@ -223,16 +222,15 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         end.setImmediate(true);
         end.addValueChangeListener(endDateValueChangeListener);
 
-        reso = new NativeSelect("Resolution");
-        reso.setNullSelectionAllowed(false);
-        reso.addItem(org.tltv.gantt.client.shared.Resolution.Hour);
-        reso.addItem(org.tltv.gantt.client.shared.Resolution.Day);
-        reso.addItem(org.tltv.gantt.client.shared.Resolution.Week);
-        reso.setValue(gantt.getResolution());
-        reso.setImmediate(true);
-        reso.addValueChangeListener(resolutionValueChangeListener);
+        chartResolution = new NativeSelect("Resolution");
+        chartResolution.setNullSelectionAllowed(false);
+        chartResolution.addItem(org.tltv.gantt.client.shared.Resolution.Day);
+        chartResolution.addItem(org.tltv.gantt.client.shared.Resolution.Week);
+        chartResolution.setValue(gantt.getResolution());
+        chartResolution.setImmediate(true);
+        chartResolution.addValueChangeListener(resolutionValueChangeListener);
 
-        controls.with(start, end, reso);
+        controls.with(start, end, chartResolution);
         panel.setStyleName(UIConstants.THEME_NO_BORDER);
 
         return panel;
@@ -303,24 +301,31 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     }
 
     private void setResolution(org.tltv.gantt.client.shared.Resolution resolution) {
-        reso.removeValueChangeListener(resolutionValueChangeListener);
+        chartResolution.removeValueChangeListener(resolutionValueChangeListener);
         try {
-            reso.setValue(resolution);
+            chartResolution.setValue(resolution);
         } finally {
-            reso.addValueChangeListener(resolutionValueChangeListener);
+            chartResolution.addValueChangeListener(resolutionValueChangeListener);
         }
     }
 
-    void insertSteps(GanttItemWrapper parent, List<GanttItemWrapper> childs) {
-        int stepIndex = gantt.getStepIndex(parent.getStep());
+    void insertSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
+        final int stepIndex = gantt.getStepIndex(parent.getStep());
         if (stepIndex != -1) {
-            int order = 1;
+            UI.getCurrent().setPollInterval(1000);
             for (GanttItemWrapper child : childs) {
                 taskTable.addItem(child);
                 taskTable.setParent(child, parent);
-                gantt.addStep(stepIndex + order, child.getStep());
-                order++;
             }
+            updateGanttChartBaseOnTreeTableContainer();
+        }
+    }
+
+    void updateGanttChartBaseOnTreeTableContainer() {
+        gantt.removeSteps();
+        Collection<GanttItemWrapper> items = (Collection<GanttItemWrapper>) taskTable.getItemIds();
+        for (GanttItemWrapper item: items) {
+            gantt.addStep(item.getStep());
         }
     }
 
@@ -349,181 +354,13 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             this.addCollapseListener(new Tree.CollapseListener() {
                 @Override
                 public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
-                    GanttItemWrapper item = (GanttItemWrapper) collapseEvent.getItemId();
-                    List<GanttItemWrapper> subTasks = item.subTasks();
-                    if (subTasks.size() > 0) {
-                        for (GanttItemWrapper subTask : subTasks) {
-
-                        }
-                    }
+                    updateGanttChartBaseOnTreeTableContainer();
                 }
             });
         }
 
         void addTaskList(GanttItemWrapper itemWrapper) {
             this.addItem(itemWrapper);
-        }
-    }
-
-    abstract static class GanttItemWrapper {
-        GanttItemWrapper parent;
-        Step ownStep;
-        List<GanttItemWrapper> subItems;
-
-        abstract String getName();
-
-        abstract List<GanttItemWrapper> subTasks();
-
-        abstract Date getStartDate();
-
-        abstract Date getEndDate();
-
-        abstract String buildCaption();
-
-        Step getStep() {
-            return ownStep;
-        }
-
-        void setStep(Step step) {
-            ownStep = step;
-        }
-
-        Step generateStep() {
-            Date startDate = this.getStartDate();
-            Date endDate = this.getEndDate();
-            Step step = new Step();
-            step.setCaption(buildCaption());
-            step.setCaptionMode(Step.CaptionMode.HTML);
-            step.setStartDate(startDate);
-            step.setEndDate(endDate);
-            return step;
-        }
-
-        public GanttItemWrapper getParent() {
-            return parent;
-        }
-
-        public void setParent(GanttItemWrapper parent) {
-            this.parent = parent;
-        }
-    }
-
-    static class TaskGanttItemWrapper extends GanttItemWrapper {
-        private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        private SimpleTask task;
-        private Date startDate, endDate;
-
-        TaskGanttItemWrapper(SimpleTask task) {
-            this.task = task;
-            calculateDates();
-            this.ownStep = generateStep();
-        }
-
-        @Override
-        public String getName() {
-            return task.getTaskname();
-        }
-
-        @Override
-        public List<GanttItemWrapper> subTasks() {
-            List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId());
-            if (subItems == null) {
-                subItems = new ArrayList<>();
-                for (SimpleTask subTask : subTasks) {
-                    TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask);
-                    subItem.setParent(this);
-                    subItems.add(subItem);
-                }
-            }
-
-            return subItems;
-        }
-
-        private void calculateDates() {
-            startDate = task.getStartdate();
-            endDate = task.getEnddate();
-
-            if (endDate == null) {
-                endDate = task.getDeadline();
-            }
-
-            if (startDate == null) {
-                if (endDate == null) {
-                    startDate = DateTimeUtils.getCurrentDateWithoutMS();
-                    endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
-                } else {
-                    endDate = DateTimeUtils.trimHMSOfDate(endDate);
-                    startDate = DateTimeUtils.subtractOrAddDayDuration(endDate, -1);
-                }
-            } else {
-                startDate = DateTimeUtils.trimHMSOfDate(startDate);
-                if (endDate == null) {
-                    endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
-                } else {
-                    endDate = DateTimeUtils.trimHMSOfDate(endDate);
-                    endDate = DateTimeUtils.subtractOrAddDayDuration(endDate, 1);
-                }
-            }
-        }
-
-        @Override
-        Date getStartDate() {
-            return startDate;
-        }
-
-        @Override
-        Date getEndDate() {
-            return endDate;
-        }
-
-        @Override
-        String buildCaption() {
-            return task.getTaskname();
-        }
-    }
-
-    static class TaskListGanttItemWrapper extends GanttItemWrapper {
-        private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        private SimpleTaskList taskList;
-
-        TaskListGanttItemWrapper(SimpleTaskList taskList) {
-            this.taskList = taskList;
-            this.ownStep = generateStep();
-        }
-
-        @Override
-        public String getName() {
-            return taskList.getName();
-        }
-
-        @Override
-        public List<GanttItemWrapper> subTasks() {
-            List<SimpleTask> subTasks = projectTaskService.findSubTasksOfGroup(taskList.getId(), AppContext.getAccountId());
-            if (subItems == null) {
-                subItems = new ArrayList<>();
-                for (SimpleTask subTask : subTasks) {
-                    TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask);
-                    subItem.setParent(this);
-                    subItems.add(subItem);
-                }
-            }
-
-            return subItems;
-        }
-
-        @Override
-        Date getStartDate() {
-            return taskList.getStartDate();
-        }
-
-        @Override
-        Date getEndDate() {
-            return taskList.getEndDate();
-        }
-
-        @Override
-        String buildCaption() {
-            return taskList.getName();
         }
     }
 }
