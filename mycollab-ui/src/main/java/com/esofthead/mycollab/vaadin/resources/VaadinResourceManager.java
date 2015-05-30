@@ -40,12 +40,10 @@ public class VaadinResourceManager {
 				Class<VaadinResource> cls = (Class<VaadinResource>) Class.forName(S3_CLS);
 				return cls.newInstance();
 			} catch (Exception e) {
-				throw new MyCollabException(
-						"Exception when load s3 resource file", e);
+				throw new MyCollabException("Exception when load s3 resource file", e);
 			}
 		} else {
-			throw new MyCollabException(
-					"Do not support storage system setting. Accept file or s3 only");
+			throw new MyCollabException("Do not support storage system setting. Accept file or s3 only");
 		}
 	}
 

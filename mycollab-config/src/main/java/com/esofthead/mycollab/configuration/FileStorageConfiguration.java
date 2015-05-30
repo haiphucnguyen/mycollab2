@@ -26,7 +26,6 @@ import java.io.File;
  * 
  */
 public final class FileStorageConfiguration implements StorageConfiguration {
-
 	public static final File baseContentFolder;
 
 	static {

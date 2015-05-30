@@ -42,21 +42,18 @@ public class S3StreamDownloadResource extends StreamResource {
 	S3StreamDownloadResource(String documentPath) {
 		super(new S3StreamSource(documentPath), getFilename(documentPath));
 		this.documentPath = documentPath;
-		this.setMIMEType(FileTypeResolver
-				.getMIMEType(getFilename(documentPath)));
+		this.setMIMEType(FileTypeResolver.getMIMEType(getFilename(documentPath)));
 	}
 
 	@Override
 	public DownloadStream getStream() {
-		final StreamSource ss = getStreamSource();
+		StreamSource ss = getStreamSource();
 		if (ss == null) {
 			return null;
 		}
-		final DownloadStream ds = new DownloadStream(ss.getStream(),
-				getMIMEType(), getFilename(documentPath));
+		DownloadStream ds = new DownloadStream(ss.getStream(), getMIMEType(), getFilename(documentPath));
 		ds.setBufferSize(getBufferSize());
-		ds.setParameter("Content-Disposition", "attachment; filename="
-				+ getFilename(documentPath));
+		ds.setParameter("Content-Disposition", "attachment; filename=" + getFilename(documentPath));
 		ds.setCacheTime(0);
 		return ds;
 	}
@@ -86,14 +83,10 @@ public class S3StreamDownloadResource extends StreamResource {
 			fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
 			AmazonS3 s3Client = storageConfiguration.newS3Client();
 			try {
-				S3Object obj = s3Client.getObject(new GetObjectRequest(
-						storageConfiguration.getBucket(), documentPath));
-
+				S3Object obj = s3Client.getObject(new GetObjectRequest(storageConfiguration.getBucket(), documentPath));
 				return obj.getObjectContent();
 			} catch (Exception e) {
-				throw new MyCollabException(
-						"Error when get input stream from s3 with path "
-								+ documentPath, e);
+				throw new MyCollabException("Error when get input stream from s3 with path " + documentPath, e);
 			}
 		}
 

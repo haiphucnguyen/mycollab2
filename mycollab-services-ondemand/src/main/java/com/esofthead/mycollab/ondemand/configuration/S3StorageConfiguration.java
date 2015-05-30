@@ -25,6 +25,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.MyCollabAssets;
 import com.esofthead.mycollab.configuration.StorageConfiguration;
+import com.esofthead.mycollab.core.MyCollabException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -57,8 +58,7 @@ public class S3StorageConfiguration implements StorageConfiguration {
 	}
 
 	public final AmazonS3 newS3Client() {
-		AWSCredentials myCredentials = new BasicAWSCredentials(awsKey,
-				awsSecretKey);
+		AWSCredentials myCredentials = new BasicAWSCredentials(awsKey, awsSecretKey);
 		return new AmazonS3Client(myCredentials);
 	}
 
@@ -73,8 +73,7 @@ public class S3StorageConfiguration implements StorageConfiguration {
 			return "";
 		} else {
 			if (StringUtils.isBlank(userAvatarId)) {
-				return MyCollabAssets
-						.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
+				return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
 			} else {
 				return String.format("%savatar/%s_%d.png", s3UrlPath, userAvatarId, size);
 			}
@@ -99,7 +98,7 @@ public class S3StorageConfiguration implements StorageConfiguration {
 	public String getResourcePath(String documentPath) {
 		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL, "");
 		if ("".equals(s3UrlPath)) {
-			return "";
+			throw new MyCollabException("Download path must not be null");
 		} else {
 			return s3UrlPath + documentPath;
 		}
