@@ -5,7 +5,7 @@
 					  	 <tr>
 					   		<td>
 					  			<a href="https://www.mycollab.com">
-					       			<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="Logo MyCollab">
+					       			<img src="${defaultUrls.cdn_url}icons/logo_mycollab_2.png" alt="Logo MyCollab">
 						   		</a>
 					   		</td>
 					   		<td>

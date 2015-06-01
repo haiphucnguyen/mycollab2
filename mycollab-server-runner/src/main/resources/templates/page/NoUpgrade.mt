@@ -3,12 +3,13 @@
 <html style="height: 100%;">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="icon" href="${defaultUrls.app_url}assets/favicon.ico" type="image/x-icon">
-<link rel="shortcut icon" href="${defaultUrls.app_url}assets/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="${defaultUrls.app_url}assets/css/cssVelocityPage.css">
 <style media="screen" type="text/css">
 #container {
-    background-image: url('${defaultUrls.cdn_url}footer-clouds.png');  background-repeat: no-repeat;  background-position: bottom right;
+    background-image: url('${defaultUrls.cdn_url}icons/footer-clouds.png');  background-repeat: no-repeat;
+    background-position: bottom right;
 }
 #mainContent {
 padding: 10px 0 8px 0px;
@@ -46,7 +47,7 @@ h3 {
 					  	 <tr>
 					   		<td>
 					  			<a href="https://www.mycollab.com">
-					       			<img src="${defaultUrls.cdn_url}logo_mycollab_2.png" alt="MyCollab">
+					       			<img src="${defaultUrls.cdn_url}icons/logo_mycollab_2.png" alt="MyCollab">
 						   		</a>
 					   		</td>
 					   		<td>
