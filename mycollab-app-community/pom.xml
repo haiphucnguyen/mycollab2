@@ -65,31 +65,6 @@
             <version>${izpackVersion}</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiler</artifactId>
-            <version>${vaadinVersion}</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-sass-compiler</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.vaadin.external.flute</groupId>
-                    <artifactId>flute</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.vaadin.external.streamhtmlparser</groupId>
-                    <artifactId>streamhtmlparser-jsilver</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.vaadin.external.google</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -140,6 +115,32 @@
                     <value>production</value>
                 </property>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-client-compiler</artifactId>
+                    <version>${vaadinVersion}</version>
+                    <scope>provided</scope>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>com.vaadin</groupId>
+                            <artifactId>vaadin-sass-compiler</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>com.vaadin.external.flute</groupId>
+                            <artifactId>flute</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>com.vaadin.external.streamhtmlparser</groupId>
+                            <artifactId>streamhtmlparser-jsilver</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>com.vaadin.external.google</groupId>
+                            <artifactId>guava</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -351,6 +352,12 @@
                 <dependency>
                     <groupId>com.vaadin</groupId>
                     <artifactId>vaadin-client</artifactId>
+                    <version>${vaadinVersion}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-client-compiler</artifactId>
                     <version>${vaadinVersion}</version>
                     <scope>provided</scope>
                 </dependency>
