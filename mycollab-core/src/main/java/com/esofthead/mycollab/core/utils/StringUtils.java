@@ -103,10 +103,11 @@ public class StringUtils {
                             "<a href=\"$0\" target=\"_blank\">$0</a>");
                     Document newDoc = Jsoup.parse(value);
                     Element body = newDoc.body().child(0);
-                    element.replaceWith(body);
+                    node.replaceWith(body);
                 }
+            } else {
+                replaceHtml(node);
             }
-            replaceHtml(node);
         }
     }
 
