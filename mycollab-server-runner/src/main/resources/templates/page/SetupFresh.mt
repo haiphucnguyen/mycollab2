@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
 <link rel="shortcut icon" href="${defaultUrls.cdn_url}favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="${defaultUrls.app_url}assets/css/cssVelocityPage.css">
+<link rel="stylesheet" type="text/css" href="${defaultUrls.cdn_url}css/cssVelocityPage.css">
 <style media="screen" type="text/css">
 #container {
     background-image: url('${defaultUrls.cdn_url}icons/footer-clouds.png');  background-repeat: no-repeat;
@@ -203,9 +203,9 @@ h3 {
 											<tr><td><h4>If you use Gmail, the port value is 587.<h4></td></tr>
 											
 											<tr>
-												<td style="width:30px;"><label for="tls" >Enable TLS/SSL:</label><input id="tls" type="checkbox"/></td>
+												<td style="width:30px;"><label for="tls" >Enable STARTTLS:</label><input id="tls" type="checkbox"/></td>
 											</tr>
-											<tr><td><h4>Some email services like Gmail require TLS/SSL enables.<h4>
+											<tr><td><h4>Some email services like Gmail require STARTTLS enables.<h4>
 												</td>
 											</tr>
 											
@@ -320,7 +320,7 @@ h3 {
 		}
 		
 		var urlValidate = "/emailValidate";
-		$('#emailValidate').html('<img src="${defaultUrls.app_url}icons/lazy-load-icon.gif" alt="Pulpit rock" style="height:18px;" >');
+		$('#emailValidate').html('<img src="${defaultUrls.cdn_url}icons/lazy-load-icon.gif" alt="Pulpit rock" style="height:18px;" >');
 		$.ajax({
 		      type: 'GET',
 		      url: urlValidate,
