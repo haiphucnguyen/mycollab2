@@ -71,6 +71,24 @@
             <artifactId>vaadin-client-compiler</artifactId>
             <version>${vaadinVersion}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-sass-compiler</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.flute</groupId>
+                    <artifactId>flute</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.streamhtmlparser</groupId>
+                    <artifactId>streamhtmlparser-jsilver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
     <build>
@@ -147,7 +165,7 @@
                                 </goals>
                                 <configuration>
                                     <outputDirectory>${staging.dir}/lib</outputDirectory>
-                                    <excludeScope>system</excludeScope>
+                                    <excludeScope>provided</excludeScope>
                                     <!-- this excludes tools.jar, e.g. -->
                                     <excludeArtifactIds>mycustompanels</excludeArtifactIds>
                                     <!-- IMPORTANT: don't copy custom panels 
@@ -381,8 +399,7 @@
                         <executions>
                             <execution>
                                 <configuration>
-                                    <!-- if you don't specify any modules, 
-                                        the plugin will find them -->
+                                    <!-- if you don't specify any modules, the plugin will find them -->
                                     <modules>
                                         <module>com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet</module>
                                         <module>com.esofthead.mycollab.widgetset.MyCollabWidgetSet</module>
