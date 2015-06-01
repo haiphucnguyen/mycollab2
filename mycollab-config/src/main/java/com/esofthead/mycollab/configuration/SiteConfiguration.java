@@ -97,8 +97,10 @@ public class SiteConfiguration {
                 MAIL_PORT, "-1"));
         Boolean isTls = Boolean.parseBoolean(ApplicationProperties.getString(
                 MAIL_IS_TLS, "false"));
+        Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(
+                MAIL_IS_SSL, "false"));
         instance.emailConfiguration = new EmailConfiguration(host, user,
-                password, port, isTls);
+                password, port, isTls, isSsl);
         instance.noreplyEmail = ApplicationProperties.getString(MAIL_NOREPLY,
                 "noreply@mycollab.com");
 

@@ -203,9 +203,9 @@ h3 {
 											<tr><td><h4>If you use Gmail, the port value is 587.<h4></td></tr>
 											
 											<tr>
-												<td style="width:30px;"><label for="tls" >Enable STARTTLS:</label><input id="tls" type="checkbox"/></td>
+												<td><label for="tls" >STARTTLS:</label><input id="tls" type="checkbox"/> <label for="ssl" >or SSL/TLS: </label><input id="ssl" type="checkbox"/></td>
 											</tr>
-											<tr><td><h4>Some email services like Gmail require STARTTLS enables.<h4>
+											<tr><td><h4>Some email services like Gmail require STARTTLS enables, other services like Yahoo may require TSL/SSL enable<h4>
 												</td>
 											</tr>
 											
@@ -314,10 +314,20 @@ h3 {
 		{
 			tlsStatus = "true";
 		}
-		else 
+		else
 		{
 			tlsStatus = "false";
 		}
+
+		var sslStatus = "";
+        if ($('#ssl').is(":checked"))
+        {
+            sslStatus = "true";
+        }
+        else
+        {
+        	sslStatus = "false";
+        }
 		
 		var urlValidate = "/emailValidate";
 		$('#emailValidate').html('<img src="${defaultUrls.cdn_url}icons/lazy-load-icon.gif" alt="Pulpit rock" style="height:18px;" >');
@@ -329,7 +339,8 @@ h3 {
 		      			smtpPassword : $('#smtpPassword').val().trim(), 
 		      			smtpHost : $('#smtpHost').val().trim(), 
 		      			smtpPort : $('#smtpPort').val().trim(),
-		      			tls : tlsStatus
+		      			tls : tlsStatus,
+		      			ssl : sslStatus
 		      		},
 		      success: function(data){
 		      	 if(data!=null){
@@ -390,6 +401,16 @@ h3 {
 			tlsStatus = "false";
 		}
 
+		var sslStatus = "";
+        if ($('#ssl').is(":checked"))
+        {
+            sslStatus = "true";
+        }
+        else
+        {
+            sslStatus = "false";
+        }
+
 		 $.ajax({
 		      type: 'GET',
 		      url: urlPost,
@@ -404,7 +425,8 @@ h3 {
 		      			smtpPassword : $('#smtpPassword').val().trim(), 
 		      			smtpHost : $('#smtpHost').val().trim(), 
 		      			smtpPort : $('#smtpPort').val().trim(), 
-		      			tls : tlsStatus
+		      			tls : tlsStatus,
+		      			ssl: sslStatus
 		      		},
 		      success: function(res){
 		      	 if(res!=null){

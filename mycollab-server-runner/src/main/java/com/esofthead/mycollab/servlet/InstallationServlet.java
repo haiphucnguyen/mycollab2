@@ -63,6 +63,7 @@ public class InstallationServlet extends HttpServlet {
         String smtpHost = request.getParameter("smtpHost");
         String smtpPort = request.getParameter("smtpPort");
         String tls = request.getParameter("tls");
+        String ssl = request.getParameter("ssl");
 
         String dbUrl = String.format("jdbc:mysql://%s/%s?useUnicode=true&characterEncoding=utf-8&autoReconnect=true",
                 databaseServer, databaseName);
@@ -109,6 +110,7 @@ public class InstallationServlet extends HttpServlet {
         templateContext.put("smtpUserName", smtpUserName);
         templateContext.put("smtpPassword", smtpPassword);
         templateContext.put("smtpTLSEnable", tls);
+        templateContext.put("smtpSSLEnable", ssl);
 
         File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
         if (confFolder == null) {

@@ -119,7 +119,7 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
                         @Override
                         public void buttonClick(final Button.ClickEvent event) {
                             if (editForm.validateForm()) {
-                                String isTLS = (emailConf.getIsTls()) ? "TLS" : "";
+                                String isTLS = (emailConf.getIsStartTls()) ? "TLS" : "";
                                 boolean isSetupValid = InstallUtils.checkSMTPConfig(emailConf.getHost(), emailConf.getPort(), emailConf.getUser(), emailConf.getPassword(), true, isTLS);
                                 if (!isSetupValid) {
                                     ConfirmDialogExt.show(
@@ -163,7 +163,7 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
                     p.setProperty(ApplicationProperties.MAIL_USERNAME, emailConf.getUser());
                     p.setProperty(ApplicationProperties.MAIL_PASSWORD, emailConf.getPassword());
                     p.setProperty(ApplicationProperties.MAIL_PORT, emailConf.getPort());
-                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.getIsTls());
+                    p.setProperty(ApplicationProperties.MAIL_IS_TLS, emailConf.getIsStartTls());
                     p.save();
                     NotificationUtil.showNotification("Congrats", "Set up SMTP account successfully");
                 } catch (Exception e) {
