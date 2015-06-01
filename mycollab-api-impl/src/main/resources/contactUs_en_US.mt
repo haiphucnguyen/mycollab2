@@ -12,11 +12,12 @@
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}icons/email/border_large_center_orange.png') repeat-y
-			0 0 transparent; text-align: center; padding-bottom: 10px;"><div style="width: 440px; display: inline-block; vertical-align: middle; text-align: left;"><span style="font: bold 18px Tahoma, Geneva, sans-serif; color: white;">New Account</span></div><div style="width: 150px; display: inline-block; vertical-align: middle;"><img src="${defaultUrls.cdn_url}logo_new.png" alt="esofthead-logo" width="150" height="45" style="margin: 0px; padding: 0px;"></div>
+			0 0 transparent; text-align: center; padding-bottom: 10px;"><div style="width: 440px; display:
+			inline-block; vertical-align: middle; text-align: left;"><span style="font: bold 18px Tahoma, Geneva, sans-serif; color: white;">New Account</span></div><div style="width: 150px; display: inline-block; vertical-align: middle;"><img src="${defaultUrls.cdn_url}icons/logo-email.png" alt="esofthead-logo" width="130" height="30" style="margin: 0px; padding: 0px;"></div>
 			</td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}images/email/border_large_center.png') repeat-y 0 0
+			<td style="background: url('${defaultUrls.cdn_url}icons/email/border_large_center.png') repeat-y 0 0
 			transparent; color: #4e4e4e; font: 13px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 10px 30px 0px;">
 				<div style="font-weight: bold; display: block; border-bottom: 1px solid rgb(212, 212, 212); padding-bottom: 5px; margin-bottom: 10px;">Hello,</div>
 				<div style="display: block; padding: 8px; background-color: rgb(247, 228, 221);">$!name wanna contact you. Here're details about it:</div>
@@ -57,14 +58,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}icons/images/border_large_center_footer.png') repeat-y
+			<td style="background: url('${defaultUrls.cdn_url}icons/email/border_large_center_footer.png') repeat-y
 			0 0 transparent; border-top: 1px solid rgb(212, 212, 212);">
 				<div style="margin-top: 10px; padding-left: 30px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; display: inline-block; width: 295px;">Copyright by <a href="http://www.esofthead.com" style="color: rgb(216, 121, 55); text-decoration: none;">eSoftHead</a><br>&copy; 2014 MyCollab, LLC. All rights reserved.</div>
 				<div style="text-align: right; font-size: 10px; display: inline-block; width: 295px;">
 					<span style="display: inline-block; vertical-align: top; margin-top: 10px;">Connect with us:&nbsp;</span>
-					<a href="${defaultUrls.facebook_url}"><img src="${defaultUrls.cdn_url}footer-facebook.png" height="25" width="25"></a>
-					<a href="${defaultUrls.google_url}"><img src="${defaultUrls.cdn_url}google_social_icon.png" height="25" width="25"></a>
-					<a href="${defaultUrls.linkedin_url}"><img src="${defaultUrls.cdn_url}linkedin_social_icon.png" height="25" width="25"></a>
+					<a href="${defaultUrls.facebook_url}"><img src="${defaultUrls.cdn_url}icons/email/footer-facebook.png" height="20" width="20"></a>
+					<a href="${defaultUrls.google_url}"><img src="${defaultUrls.cdn_url}icons/email/footer-google.png" height="20" width="20"></a>
 					<a href="${defaultUrls.twitter_url}"><img src="${defaultUrls.cdn_url}twitter_social_icon.png" height="25" width="25"></a>
 				</div>
 			</td>

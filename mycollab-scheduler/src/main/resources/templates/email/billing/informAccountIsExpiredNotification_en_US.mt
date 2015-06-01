@@ -13,7 +13,7 @@
 	<table width="800" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto; background-color: rgb(255, 255, 255);">
        <tr>
        		<td style="text-align: center; padding: 50px 0px 0px;">
-       			<img src="${defaultUrls.cdn_url}logo-email-big.png" alt="esofthead-logo" width="218" height="50" style="margin: 0px; padding: 0px;">
+       			<img src="${defaultUrls.cdn_url}icons/logo-email.png" alt="esofthead-logo" width="130" height="30" style="margin: 0px; padding: 0px;">
        		</td>			
 		</tr>
         <tr>

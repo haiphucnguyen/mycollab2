@@ -50,9 +50,15 @@ h3 {
 					   		</td>
 					   		<td>
 			        			<div style="text-align: right; font-size: 10px; vertical-align: middle;">
-						            <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.facebook_url}" target="_blank"><img src="${defaultUrls.cdn_url}footer-facebook.png" height="20" width="20"></a>
-						            <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.google_url}" target="_blank"><img src="${defaultUrls.cdn_url}footer-google.png" height="20" width="20"></a>
-						            <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.twitter_url}" target="_blank"><img src="${defaultUrls.cdn_url}footer-twitter.png" height="20" width="20"></a>
+						            <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.facebook_url}" target="_blank">
+						                <img src="${defaultUrls.cdn_url}icons/email/footer-facebook.png" height="20" width="20">
+						            </a>
+						            <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.google_url}" target="_blank">
+						                <img src="${defaultUrls.cdn_url}icons/email/footer-google.png" height="20" width="20"/>
+						            </a>
+						            <a style="display: inline-block; vertical-align: middle;" href="${defaultUrls.twitter_url}" target="_blank">
+						                <img src="${defaultUrls.cdn_url}icons/email/footer-twitter.png" height="20" width="20"/>
+						            </a>
 			        			</div>
 			    			</td>
 						</tr>
