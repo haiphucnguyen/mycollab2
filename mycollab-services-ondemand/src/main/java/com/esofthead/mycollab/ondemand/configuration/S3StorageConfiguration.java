@@ -35,11 +35,10 @@ import org.apache.commons.lang3.StringUtils;
  * @since 1.0
  * 
  */
-public class S3StorageConfiguration implements StorageConfiguration {
+public class S3StorageConfiguration extends StorageConfiguration {
 	private static final String AWS_KEY = "s3.key";
 	private static final String AWS_SECRET_KEY = "s3.secretKey";
 	private static final String BUCKET = "s3.bucket";
-	private static final String S3_DOWNLOAD_URL = "s3.downloadurl";
 
 	private String awsKey;
 	private String awsSecretKey;
@@ -65,43 +64,4 @@ public class S3StorageConfiguration implements StorageConfiguration {
 	public String getBucket() {
 		return bucket;
 	}
-
-	@Override
-	public String getAvatarPath(String userAvatarId, int size) {
-		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL, "");
-		if ("".equals(s3UrlPath)) {
-			return "";
-		} else {
-			if (StringUtils.isBlank(userAvatarId)) {
-				return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
-			} else {
-				return String.format("%savatar/%s_%d.png", s3UrlPath, userAvatarId, size);
-			}
-		}
-	}
-
-	@Override
-	public String getLogoPath(String accountLogoId, int size) {
-		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL, "");
-		if ("".equals(s3UrlPath)) {
-			return "";
-		} else {
-			if (StringUtils.isBlank(accountLogoId)) {
-				return MyCollabAssets.newResourceLink("icons/logo.png");
-			} else {
-				return String.format("%savatar/%s_%d.png", s3UrlPath, accountLogoId, size);
-			}
-		}
-	}
-
-	@Override
-	public String getResourcePath(String documentPath) {
-		String s3UrlPath = ApplicationProperties.getString(S3_DOWNLOAD_URL, "");
-		if ("".equals(s3UrlPath)) {
-			throw new MyCollabException("Download path must not be null");
-		} else {
-			return s3UrlPath + documentPath;
-		}
-	}
-
 }

@@ -28,7 +28,6 @@ import com.esofthead.mycollab.vaadin.resources.file.VaadinFileResource;
  *
  */
 public class VaadinResourceManager {
-
 	private static final String S3_CLS = "com.esofthead.mycollab.vaadin.resources.s3.VaadinS3Resource";
 
 	@SuppressWarnings("unchecked")

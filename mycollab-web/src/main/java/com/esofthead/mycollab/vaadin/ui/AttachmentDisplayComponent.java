@@ -74,8 +74,7 @@ public class AttachmentDisplayComponent extends CssLayout {
         thumbnailWrap.setStyleName("thumbnail-wrap");
 
         Image thumbnail = new Image(null);
-        if (org.apache.commons.lang3.StringUtils.isBlank(attachment
-                .getThumbnail())) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(attachment.getThumbnail())) {
             thumbnail.setSource(DEFAULT_SOURCE);
         } else {
             thumbnail.setSource(VaadinResourceManager.getResourceManager()
@@ -101,8 +100,7 @@ public class AttachmentDisplayComponent extends CssLayout {
                     Resource previewResource = VaadinResourceManager
                             .getResourceManager().getImagePreviewResource(
                                     attachment.getPath());
-                    UI.getCurrent().addWindow(
-                            new AttachmentPreviewWindow(previewResource));
+                    UI.getCurrent().addWindow(new AttachmentPreviewWindow(previewResource));
                 }
             });
         }

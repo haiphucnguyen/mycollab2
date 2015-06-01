@@ -28,7 +28,7 @@ import java.util.Set;
  * @since 5.1.0
  */
 public class OptimizedConnectorBundleLoaderFactory  extends ConnectorBundleLoaderFactory {
-    private Set<String> eagerConnectors = new HashSet<String>();
+    private Set<String> eagerConnectors = new HashSet<>();
     {
         eagerConnectors.add(com.vaadin.client.ui.ui.UIConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.customlayout.CustomLayoutConnector.class.getName());

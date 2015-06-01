@@ -218,16 +218,13 @@ public class DesktopApplication extends MyCollabUI {
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 
-        ControllerRegistry.addController(new ShellController(
-                mainWindowContainer));
-        LoginPresenter presenter = PresenterResolver
-                .getPresenter(LoginPresenter.class);
+        ControllerRegistry.addController(new ShellController(mainWindowContainer));
+        LoginPresenter presenter = PresenterResolver.getPresenter(LoginPresenter.class);
         LoginView loginView = presenter.getView();
 
         mainWindowContainer.setStyleName("loginView");
 
-        if (loginView.getParent() == null
-                || loginView.getParent() == mainWindowContainer) {
+        if (loginView.getParent() == null || loginView.getParent() == mainWindowContainer) {
             mainWindowContainer.setAutoLogin(false);
             mainWindowContainer.setContent(loginView);
         } else {
