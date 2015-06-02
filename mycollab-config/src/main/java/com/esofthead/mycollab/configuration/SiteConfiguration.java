@@ -111,7 +111,13 @@ public class SiteConfiguration {
         String dbPassword = ApplicationProperties.getString(DB_PASSWORD);
         instance.databaseConfiguration = new DatabaseConfiguration(driverClass, dbUrl, dbUser, dbPassword);
 
-        instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL, instance.appUrl + "file/");
+        instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL);
+        if (!"".equals(instance.resourceDownloadUrl)) {
+            instance.resourceDownloadUrl = String.format(instance.resourceDownloadUrl,
+                    instance.serverAddress, instance.serverPort);
+        } else {
+            instance.resourceDownloadUrl = instance.appUrl + "file/";
+        }
 
         instance.dropboxCallbackUrl = ApplicationProperties.getString(DROPBOX_AUTH_LINK);
         instance.ggDriveCallbackUrl = ApplicationProperties.getString(GOOGLE_DRIVE_LINK);
