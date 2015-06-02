@@ -57,6 +57,7 @@ Version 5.0.8
 * Optimize the hash query and improve the site performance a little bit
 * Revise the Gantt chart display
 * Remove redundant assets and libraries to reduce the size of downloaded file size
+* Support send email via StartTls or Ssl/Tls protocols
 
 **Bug Fixes**
 

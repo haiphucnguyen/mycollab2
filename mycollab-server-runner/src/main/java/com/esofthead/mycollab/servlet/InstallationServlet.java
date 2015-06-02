@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.servlet;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -94,9 +95,10 @@ public class InstallationServlet extends HttpServlet {
 
         boolean isStartTls = Boolean.parseBoolean(tls);
         boolean isSsl = Boolean.parseBoolean(ssl);
-        boolean validSMTPAccount = InstallUtils.checkSMTPConfig(smtpHost, mailServerPort, smtpUserName,
-                smtpPassword, true, isStartTls, isSsl);
-        if (!validSMTPAccount) {
+        try {
+            InstallUtils.checkSMTPConfig(smtpHost, mailServerPort, smtpUserName,
+                    smtpPassword, true, isStartTls, isSsl);
+        } catch (UserInvalidInputException e) {
             LOG.warn("Cannot authenticate mail server successfully. Make sure your inputs are correct.");
         }
 

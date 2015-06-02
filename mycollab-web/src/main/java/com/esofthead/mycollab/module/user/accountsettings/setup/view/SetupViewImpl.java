@@ -116,12 +116,15 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
                         @Override
                         public void buttonClick(final Button.ClickEvent event) {
                             if (editForm.validateForm()) {
-                                boolean isSetupValid = InstallUtils.checkSMTPConfig(emailConf.getHost(), emailConf.getPort(), emailConf.getUser(),
-                                        emailConf.getPassword(), true, emailConf.getIsStartTls(), emailConf.getIsSsl());
-                                if (!isSetupValid) {
+                                try {
+                                    InstallUtils.checkSMTPConfig(emailConf.getHost(), emailConf.getPort(), emailConf.getUser(),
+                                            emailConf.getPassword(), true, emailConf.getIsStartTls(), emailConf.getIsSsl());
+                                    saveEmailConfiguration();
+                                } catch(UserInvalidInputException e) {
                                     ConfirmDialogExt.show(UI.getCurrent(),
                                             "Invalid SMTP account?",
-                                            "We can not connect to the SMTP server. Save the configuration anyway?",
+                                            "We can not connect to the SMTP server. The root cause is " + e.getMessage() +
+                                                    ". Save the configuration anyway?",
                                             AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                                             AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                                             new ConfirmDialog.Listener() {
@@ -134,8 +137,6 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
                                                     }
                                                 }
                                             });
-                                } else {
-                                    saveEmailConfiguration();
                                 }
                             }
                         }
