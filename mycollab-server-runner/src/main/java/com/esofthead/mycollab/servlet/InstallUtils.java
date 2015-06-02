@@ -32,7 +32,7 @@ public class InstallUtils {
     private static final Logger LOG = LoggerFactory.getLogger(InstallUtils.class);
 
     public static boolean checkSMTPConfig(String host, int port, String username,
-                                          String password, boolean auth, String enctype) {
+                                          String password, boolean auth, boolean isStartTls, boolean isSSL) {
         boolean result = false;
         try {
             Properties props = new Properties();
@@ -41,10 +41,10 @@ public class InstallUtils {
             } else {
                 props.setProperty("mail.smtp.auth", "false");
             }
-            if (enctype.endsWith("TLS")) {
+            if (isStartTls) {
                 props.setProperty("mail.smtp.starttls.enable", "true");
                 props.setProperty("mail.smtp.startssl.enable", "true");
-            } else if (enctype.endsWith("SSL")) {
+            } else if (isSSL) {
                 props.setProperty("mail.smtp.startssl.enable", "true");
             }
             Session session = Session.getInstance(props, null);

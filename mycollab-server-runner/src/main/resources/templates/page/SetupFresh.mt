@@ -213,7 +213,7 @@ h3 {
 									</table>
 								</form>	
 								<div class="right" style="margin-top: 10px;">
-									<button id="emailValidate" class="v-button v-button-greenbtn" type="button" onclick="return emailValidate();" style="width:140px"><span style="font-family: 'Georgia';font-size: 15px;">Check Smtp</span></button>
+									<button id="validateEmailBtn" class="v-button v-button-greenbtn" type="button" onclick="return emailValidate();" style="width:140px"><span style="font-family: 'Georgia';font-size: 15px;">Check Smtp</span></button>
 									<button id="post" class="v-button v-button-orangebtn" type="button" onclick="return updateInfoAction();" style="width:140px"><span style="font-family: 'Georgia';font-size: 15px;">Update & Go</span></button>
 								</div>
 							</td>
@@ -330,7 +330,7 @@ h3 {
         }
 		
 		var urlValidate = "/emailValidate";
-		$('#emailValidate').html('<img src="${defaultUrls.cdn_url}icons/lazy-load-icon.gif" alt="Pulpit rock" style="height:18px;" >');
+		$('#validateEmailBtn').html('<img src="${defaultUrls.cdn_url}icons/lazy-load-icon.gif" alt="Pulpit rock" style="height:18px;" >');
 		$.ajax({
 		      type: 'GET',
 		      url: urlValidate,
@@ -346,10 +346,10 @@ h3 {
 		      	 if(data!=null){
 		      	 	if(data.length > 0){
 		      	 		alert(data);
-		      	 		$('#emailValidate').html('<span>Check Smtp</span>');
+		      	 		$('#validateEmailBtn').html('<span>Check Smtp</span>');
 		      	 	}else{
 		      	 		alert("Your SMTP setting is OK");
-		      	 		$('#emailValidate').html('<span>Check Smtp</span>');
+		      	 		$('#validateEmailBtn').html('<span>Check Smtp</span>');
 		      	 	}
 		      	 }
 		      }
