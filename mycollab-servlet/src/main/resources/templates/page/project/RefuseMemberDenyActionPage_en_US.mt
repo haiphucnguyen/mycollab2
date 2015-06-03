@@ -15,29 +15,29 @@
 <title>Refuse deny action page</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
-	<div id="container" style="height:100%;">
-		#parse("templates/page/pageHeader.mt")
-		<div id="body" >
-			<div id="spacing"></div>
-			<div id="mainBody">
-				<div id="title">
-					<h1>This action is denied!</h1>
-				</div>
-				<hr size="1">
-				<div>
-						You can not leave this project by yourself. Please request your project administrator to remove you out of project if you like so.
-				</div>
-				<div style="text-align:right;">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
-				</div>
-			#parse("templates/page/pageFooter.mt")
-		</div>
-	</div>
+    <div id="container" style="height:100%;">
+        #parse("templates/page/pageHeader.mt")
+        <div id="body" >
+            <div id="spacing"></div>
+            <div id="mainBody">
+                <div id="title">
+                    <h1>This action is denied!</h1>
+                </div>
+                <hr size="1">
+                <div>
+                        You can not leave this project by yourself. Please request your project administrator to remove you out of project if you like so.
+                </div>
+                <div style="text-align:right;">
+                    <button class="v-button v-button-orangebtn" type="button" onclick="return login();">Login</button>
+                </div>
+            #parse("templates/page/pageFooter.mt")
+        </div>
+    </div>
 </body>
 <script src="${defaultUrls.cdn_url}js/jquery-1.10.2.min.js"></script>
 <script>
-	function login(){
-		window.location.assign("$!projectLinkURL");
-	}
+    function login(){
+        window.location.assign("$!projectLinkURL");
+    }
 </script>				
 </html>

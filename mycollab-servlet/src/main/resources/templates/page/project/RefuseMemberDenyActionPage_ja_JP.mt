@@ -10,12 +10,11 @@
     background-image: url('${defaultUrls.cdn_url}icons/footer_clouds.png');  background-repeat: no-repeat;
     background-position: bottom right;
 }
-
 </style>
 <title>Refuse deny action page</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
-	<div id="container" style="height:100%;">
+	<div id="container">
 		#parse("templates/page/pageHeader.mt")
 		<div id="body" >
 			<div id="spacing"></div>
@@ -28,7 +27,7 @@
 						You can not leave this project by yourself. Please request your project administrator to remove you out of project if you like so.
 				</div>
 				<div style="text-align:right;">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();">Login</button>
 				</div>
 			#parse("templates/page/pageFooter_ja_JP.mt")
 		</div>

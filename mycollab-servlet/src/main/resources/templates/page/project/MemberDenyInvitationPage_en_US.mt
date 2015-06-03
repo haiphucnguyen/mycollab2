@@ -24,15 +24,15 @@
 					<h1>Please Feedback To Inviter</h1>
 				</div>
 				<hr size="1">
-				<div >
-					Oops! We are sorry because you do not want to join the ${projectName} project. Could you please drop some lines to tell reason to the inviter?
+				<div>
+					Oops! We are sorry because you do not want to join the project '${projectName}'. Could you please drop some lines to tell reason to the inviter?
 					<div style="display: block; padding: 8px 8px 8px 8px;">
-                    <textarea id="message" rows="8" cols="90" style="width:750px;">
+                    <textarea id="message" rows="8" style="width:750px;">
                     </textarea>
                 	</div>
                     <div style="display: block; text-align: right;">
-                        <button class="v-button v-button-orangebtn" type="button" onclick="return sendEmailFeedBack();"><span style="font-family: 'verdana';font-size: 15px;">Send</span></button>&nbsp&nbsp
-                        <button class="v-button v-button-graybtn" type="button" onclick="return skip();"><span style="font-family: 'verdana';font-size: 15px;">Skip</span></button>
+                        <button class="v-button v-button-orangebtn" type="button" onclick="return sendEmailFeedBack();">Send</button>&nbsp&nbsp
+                        <button class="v-button v-button-graybtn" type="button" onclick="return skip();">Skip</button>
                     </div>
                     <div id="requireMsg" style="display: none; padding: 12px 8px 8px 20px;">
                         <p><span style="color:red; font-style:italic">
