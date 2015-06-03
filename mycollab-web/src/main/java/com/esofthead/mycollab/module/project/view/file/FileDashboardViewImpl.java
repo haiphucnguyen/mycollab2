@@ -28,8 +28,7 @@ import com.vaadin.shared.ui.MarginInfo;
  * @since 1.0
  */
 @ViewComponent
-public class FileDashboardViewImpl extends AbstractPageView implements
-        FileDashboardView {
+public class FileDashboardViewImpl extends AbstractPageView implements FileDashboardView {
     private static final long serialVersionUID = 1L;
 
     @Override

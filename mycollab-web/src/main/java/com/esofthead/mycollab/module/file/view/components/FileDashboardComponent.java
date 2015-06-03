@@ -57,10 +57,10 @@ public class FileDashboardComponent extends MVerticalLayout {
 	}
 
 	public HorizontalLayout constructHeader() {
-		final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
+		MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
                 .withWidth("100%");
 
-		final Label titleLbl = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " Files",
+		Label titleLbl = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " Files",
                 ContentMode.HTML);
         titleLbl.setStyleName("headerName");
 		layout.with(titleLbl).withAlign(titleLbl, Alignment.MIDDLE_LEFT).expand(titleLbl);
