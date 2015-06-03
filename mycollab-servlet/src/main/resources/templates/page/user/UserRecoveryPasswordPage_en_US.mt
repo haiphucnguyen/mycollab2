@@ -54,7 +54,7 @@
                                         </form>
                                     </div>
                                     <div style="padding-top: 15px; text-align: right;">
-                                        <button class="v-button v-button-orangebtn" type="button" onclick="return updateInfoAction();"><span style="font-family: 'verdana';font-size: 15px;">Update</span></button>
+                                        <button class="v-button v-button-orangebtn" type="button" onclick="return updateInfoAction();">Update</button>
                                     </div>
                                 </div>
                             </td>

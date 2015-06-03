@@ -34,8 +34,8 @@ UserDeniedPage.mt<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
                     </textarea>
                 	</div>
                     <div class="right">
-                        <button class="v-button v-button-orangebtn" type="button" onclick="return sendEmailFeedBack();"><span>Send</span></button>&nbsp;&nbsp;
-                        <button class="v-button v-button-graybtn" type="button" onclick="return skip();"><span>Skip</span></button>
+                        <button class="v-button v-button-orangebtn" type="button" onclick="return sendEmailFeedBack();">Send</button>&nbsp;&nbsp;
+                        <button class="v-button v-button-graybtn" type="button" onclick="return skip();">Skip</button>
                     </div>
                     <div id="requireMsg" style="display: none; padding: 12px 8px 8px 20px;">
                         <p><span style="color:red; font-style:italic">

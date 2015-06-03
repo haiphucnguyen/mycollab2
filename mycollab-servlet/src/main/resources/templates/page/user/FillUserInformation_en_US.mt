@@ -20,14 +20,14 @@
 			<div id="spacing"></div>
 			<div id="mainBody">
 				<div id="title">
-					<h1>Welcome <span style="font-style:italic; font-size:20px;">$!username</span>
+					<h1>Hi <span style="font-style:italic; font-size:20px;">$!username</span>, thank you for joining MyCollab
 					</h1>
 				</div>
 				<hr size="1">
 				<div>
 					<table style="width: 100%" cellspacing="0" cellpadding="0" >
 					 	<tr>
-					 		<td style="vertical-align: top; width: 50%; padding-top: 10px;">Thank you for accepting the invitation! While you are new to MyCollab, please enter your password:</td>
+					 		<td style="vertical-align: top; width: 50%; padding-top: 10px;">While you are new to MyCollab, your username is $!username. Please enter your password:</td>
 					 		<td style="vertical-align: top; width: 50%;">
 								<div id="mainContent">
 					  				 <div>
@@ -35,16 +35,16 @@
 										<table border="0" style="width:100%" cellspacing="0" cellpadding="0">
 										<tbody>
 										<tr>
-											<td><label for="password">Password:</label></td>
+											<td><h3>Password:</h3></td>
 										</tr>
 										<tr>
 											<td><input id="password" maxlength="45" name="password" type="password"/></td>
 										</tr>
 										<tr>
-                                            <td style="height:10px;"></td>
+                                            <td style="height:20px;"></td>
                                         </tr>
 										<tr>
-											<td><label for="password">Verify Password:</label></td>
+											<td><h3>Verify Password:</h3></td>
 										</tr>
 										<tr>
 											<td><input id="repassword"  name="password" type="password"/></td>
@@ -53,7 +53,7 @@
 										</form>
 									</div>
 									<div style="padding-top: 15px; text-align: right;">
-										<button class="v-button v-button-orangebtn" type="button" onclick="return updateInfoAction();"><span style="font-family: 'Georgia';font-size: 15px;">Update & Go</span></button>
+										<button class="v-button v-button-orangebtn" type="button" onclick="return updateInfoAction();">Update & Go</button>
 									</div>
 								</div>
 							</td>

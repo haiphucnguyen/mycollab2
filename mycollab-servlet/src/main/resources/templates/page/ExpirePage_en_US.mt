@@ -28,7 +28,7 @@
 						You can only accept this invitation within 7 days. Please ask your Project Admin to resend the invitation.
 				</div>
 				<div class="right">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span>Login</span></button>
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();">Login</button>
 				</div>
 				#parse("templates/page/pageFooter_en_US.mt")
 			</div>

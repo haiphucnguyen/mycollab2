@@ -28,7 +28,7 @@
 						すみません！この招待が7日間以内に承諾できるので、招待を再送信されるようにプロジェクト管理者にてお問い合わせください。
 				</div>
 				<div class="right">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span>ログイン</span></button>
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();">ログイン</button>
 				</div>
 				#parse("templates/page/pageFooter_ja_JP.mt")
 			</div>

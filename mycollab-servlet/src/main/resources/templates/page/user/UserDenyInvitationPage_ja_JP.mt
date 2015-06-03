@@ -15,7 +15,7 @@ UserDeniedPage.mt<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
 <title>User deny invitation feedback page</title>
 </head>
 <body style="height: 100%; margin: 0; padding: 0; width: 100%;">
-	<div id="container" style="height:${defaultUrls.cdn_url}favicon.ico100%;">
+	<div id="container" style="height:100%;">
 		#parse("templates/page/pageHeader.mt")
 		<div id="body">
 			<div id="spacing"></div>
@@ -27,14 +27,15 @@ UserDeniedPage.mt<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
 				<hr size="1" >
 
 				<div>
-					<p>Oops! We are sorry because you do not want to join MyCollab. Could you please drop some lines to tell reason to the inviter?</p>
+					<p>Oops! We are sorry because you do not want to join MyCollab. Could you please drop some lines to tell reason to the inviter?
+					</p>
 					<div>
                     <textarea id="message" style="width:767px; height:130px" >
                     </textarea>
                 	</div>
                     <div class="right">
-                        <button class="v-button v-button-orangebtn" type="button" onclick="return sendEmailFeedBack();"><span>Send</span></button>&nbsp;&nbsp;
-                        <button class="v-button v-button-graybtn" type="button" onclick="return skip();"><span>Skip</span></button>
+                        <button class="v-button v-button-orangebtn" type="button" onclick="return sendEmailFeedBack();">Send</button>&nbsp;&nbsp;
+                        <button class="v-button v-button-graybtn" type="button" onclick="return skip();">Skip</button>
                     </div>
                     <div id="requireMsg" style="display: none; padding: 12px 8px 8px 20px;">
                         <p><span style="color:red; font-style:italic">
@@ -43,7 +44,7 @@ UserDeniedPage.mt<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
                     </div>
 				</div>
 				
-				#parse("templates/page/pageFooter_ja_JP.mt")
+				#parse("templates/page/pageFooter_en_US.mt")
 			</div>
 	</div>
 	<input type="hidden" id="inviterEmail" value="$!inviterEmail">

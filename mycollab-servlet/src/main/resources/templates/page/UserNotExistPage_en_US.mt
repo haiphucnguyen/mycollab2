@@ -28,7 +28,7 @@
 						The user ${username} is not existed in our database system. 
 				</div>
 				<div style="text-align:right;">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();">Login</button>
 				</div>
 				#parse("templates/page/pageFooter_en_US.mt")
 			</div>

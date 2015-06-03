@@ -28,7 +28,7 @@
 						${username}がデータベースシステムに存在していません。
 				</div>
 				<div style="text-align:right;">
-					<button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">ログイン</span></button>
+					<button class="v-button v-button-orangebtn" type="button" onclick="return login();">ログイン</button>
 				</div>
 				#parse("templates/page/pageFooter_ja_JP.mt")
 			</div>
