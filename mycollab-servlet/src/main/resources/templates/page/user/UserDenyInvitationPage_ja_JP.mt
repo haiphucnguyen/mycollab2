@@ -52,7 +52,7 @@ UserDeniedPage.mt<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
     <input type="hidden" id="toName" value="$!toName">
     <input type="hidden" id="inviterName" value="$!inviterName">
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="${defaultUrls.cdn_url}js/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function(){
         $('#message').val("");
@@ -72,12 +72,12 @@ UserDeniedPage.mt<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
                     toName : $('#toName').val().trim() , inviterName: $('#inviterName').val().trim()},
                   complete: function(data){
                      alert('Send email successfully');
-                     window.location.assign("http://www.mycollab.com/");
+                     window.location.assign("https://www.mycollab.com/");
                   }
                 });
     }
     function skip(){
-        window.location.assign("http://www.mycollab.com/");
+        window.location.assign("https://www.mycollab.com/");
     }
     
  </script>               

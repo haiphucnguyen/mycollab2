@@ -53,7 +53,7 @@
     <input type="hidden" id="projectId" value="$!projectId">
     <input type="hidden" id="projectRoleId" value="$!projectRoleId">
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="${defaultUrls.cdn_url}js/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function(){
         $('#message').val("");
@@ -74,12 +74,12 @@
                     projectId : $('#projectId').val().trim() , projectRoleId : $('#projectRoleId').val().trim() },
                   complete: function(data){
                      alert('Send email successfully');
-                     window.location.assign("http://www.mycollab.com/");
+                     window.location.assign("https://www.mycollab.com/");
                   }
                 });
     }
     function skip(){
-        window.location.assign("http://www.mycollab.com/");
+        window.location.assign("https://www.mycollab.com/");
     }
 </script>               
 </html>

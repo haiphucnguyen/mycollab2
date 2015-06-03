@@ -69,7 +69,7 @@
 	<input type="hidden" id="loginURL" value="$!loginURL">
 	<input type="hidden" id="redirectURL" value="$!redirectURL">
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="${defaultUrls.cdn_url}js/jquery-1.10.2.min.js"></script>
 <script>
 	$(document).ready(function(){
 	});
