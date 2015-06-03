@@ -28,7 +28,7 @@
                     <span style="vertical-align:center; padding-top:20px;font: 16px 'verdana', sans-serif;">We can't find the page you asked for. If you think something is wrong, please contact your project administrator for more information.</span>
                 </div>
                 <div style="text-align:right;">
-                    <button class="v-button v-button-orangebtn" type="button" onclick="return login();"><span style="font-family: 'verdana';font-size: 15px;">Login</span></button>
+                    <button class="v-button v-button-orangebtn" type="button" onclick="return login();">Login</button>
                 </div>
                 #parse("templates/page/pageFooter_ja_JP.mt")
         </div>
