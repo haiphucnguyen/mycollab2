@@ -106,11 +106,9 @@ public class AcceptInvitationPage extends VelocityWebServletRequestHandler {
 						} else {
 							// remove account invitation
 							UserAccountInvitationExample userAccountInvitationExample = new UserAccountInvitationExample();
-							userAccountInvitationExample.createCriteria()
-									.andUsernameEqualTo(username)
+							userAccountInvitationExample.createCriteria().andUsernameEqualTo(username)
 									.andAccountidEqualTo(accountId);
-							userAccountInvitationMapper
-									.deleteByExample(userAccountInvitationExample);
+							userAccountInvitationMapper.deleteByExample(userAccountInvitationExample);
 
 							if (StringUtils.isBlank(user.getPassword())) {
 								LOG.debug(
