@@ -142,7 +142,7 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                 final SimpleTask task = getBeanByIndex(itemId);
                 PopupButton taskSettingPopupBtn = new PopupButton();
                 taskSettingPopupBtn.setIcon(FontAwesome.COGS);
-                taskSettingPopupBtn.addStyleName("button-icon-only");
+                taskSettingPopupBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 
                 OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
 

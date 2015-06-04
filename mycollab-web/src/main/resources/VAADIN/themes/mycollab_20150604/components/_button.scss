@@ -533,8 +533,8 @@
     }
   }
 
-  .v-popupbutton.button-icon-only, .v-popupbutton.button-icon-only:active, .v-popupbutton.button-icon-only:focus,
-     .v-popupbutton.button-icon-only.v-pressed {
+  div.v-button.button-icon-only, div.v-button.button-icon-only:active, div.v-button.button-icon-only:focus,
+     div.v-button.button-icon-only.v-pressed {
     background-color:transparent;
     .v-button-wrap {
       padding: 0px;

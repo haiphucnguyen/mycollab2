@@ -7301,23 +7301,23 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	padding: 4px 6px;
 }
 
-.v-popupbutton.button-icon-only, .v-popupbutton.button-icon-only:active, .v-popupbutton.button-icon-only:focus, .v-popupbutton.button-icon-only.v-pressed {
+div.v-button.button-icon-only, div.v-button.button-icon-only:active, div.v-button.button-icon-only:focus, div.v-button.button-icon-only.v-pressed {
 	background-color: transparent;
 }
 
-.v-popupbutton.button-icon-only .v-button-wrap, .v-popupbutton.button-icon-only:active .v-button-wrap, .v-popupbutton.button-icon-only:focus .v-button-wrap, .v-popupbutton.button-icon-only.v-pressed .v-button-wrap {
+div.v-button.button-icon-only .v-button-wrap, div.v-button.button-icon-only:active .v-button-wrap, div.v-button.button-icon-only:focus .v-button-wrap, div.v-button.button-icon-only.v-pressed .v-button-wrap {
 	padding: 0px;
 }
 
-.v-popupbutton.button-icon-only .v-button-wrap:hover, .v-popupbutton.button-icon-only:active .v-button-wrap:hover, .v-popupbutton.button-icon-only:focus .v-button-wrap:hover, .v-popupbutton.button-icon-only.v-pressed .v-button-wrap:hover {
+div.v-button.button-icon-only .v-button-wrap:hover, div.v-button.button-icon-only:active .v-button-wrap:hover, div.v-button.button-icon-only:focus .v-button-wrap:hover, div.v-button.button-icon-only.v-pressed .v-button-wrap:hover {
 	background-color: transparent;
 }
 
-.v-popupbutton.button-icon-only .v-button-wrap .v-icon.FontAwesome, .v-popupbutton.button-icon-only:active .v-button-wrap .v-icon.FontAwesome, .v-popupbutton.button-icon-only:focus .v-button-wrap .v-icon.FontAwesome, .v-popupbutton.button-icon-only.v-pressed .v-button-wrap .v-icon.FontAwesome {
+div.v-button.button-icon-only .v-button-wrap .v-icon.FontAwesome, div.v-button.button-icon-only:active .v-button-wrap .v-icon.FontAwesome, div.v-button.button-icon-only:focus .v-button-wrap .v-icon.FontAwesome, div.v-button.button-icon-only.v-pressed .v-button-wrap .v-icon.FontAwesome {
 	vertical-align: bottom;
 }
 
-.v-popupbutton.button-icon-only .v-button-wrap .v-popup-indicator::before, .v-popupbutton.button-icon-only:active .v-button-wrap .v-popup-indicator::before, .v-popupbutton.button-icon-only:focus .v-button-wrap .v-popup-indicator::before, .v-popupbutton.button-icon-only.v-pressed .v-button-wrap .v-popup-indicator::before {
+div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-button.button-icon-only:active .v-button-wrap .v-popup-indicator::before, div.v-button.button-icon-only:focus .v-button-wrap .v-popup-indicator::before, div.v-button.button-icon-only.v-pressed .v-button-wrap .v-popup-indicator::before {
 	content: "";
 }
 
