@@ -34,12 +34,10 @@ public class FileDashboardViewImpl extends AbstractPageView implements FileDashb
     @Override
     public void displayProjectFiles() {
         this.withMargin(new MarginInfo(false, true, false, true)).withWidth("100%");
-        final int projectId = CurrentProjectVariables.getProjectId();
-        String rootPath = String.format("%d/project/%d",
-                AppContext.getAccountId(), projectId);
+        int projectId = CurrentProjectVariables.getProjectId();
+        String rootPath = String.format("%d/project/%d", AppContext.getAccountId(), projectId);
 
         FileDashboardComponent dashboardComponent = new FileDashboardComponent(rootPath);
-        dashboardComponent.setWidth("100%");
         this.addComponent(dashboardComponent);
         dashboardComponent.displayResources();
     }

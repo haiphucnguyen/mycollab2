@@ -77,12 +77,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private ExternalResourceService externalResourceService;
 
     public FileMainViewImpl() {
-        resourceService = ApplicationContextUtil
-                .getSpringBean(ResourceService.class);
-        externalDriveService = ApplicationContextUtil
-                .getSpringBean(ExternalDriveService.class);
-        externalResourceService = ApplicationContextUtil
-                .getSpringBean(ExternalResourceService.class);
+        resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
+        externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
+        externalResourceService = ApplicationContextUtil.getSpringBean(ExternalResourceService.class);
 
         MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
 
@@ -111,23 +108,22 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         mainView.with(rightColumn).withAlign(rightColumn, Alignment.TOP_LEFT).expand(rightColumn);
 
         this.with(mainView).withAlign(mainView, Alignment.MIDDLE_CENTER);
-
     }
 
     private HorizontalLayout constructHeader() {
-        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MMarginInfo(true, false, false, false))
+        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MMarginInfo(true, false, false, false))
                 .withWidth("100%");
-        final Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() +  " Files", ContentMode.HTML);
+        Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() +  " Files", ContentMode.HTML);
         searchTitle.setStyleName("headerName");
         layout.with(searchTitle).expand(searchTitle);
         return layout;
     }
 
     private HorizontalLayout buildLeftColumn() {
-        final MHorizontalLayout menuBarContainerHorizontalLayout = new MHorizontalLayout()
+        MHorizontalLayout menuBarContainerHorizontalLayout = new MHorizontalLayout()
                 .withMargin(new MarginInfo(false, true, true, true));
 
-        final MVerticalLayout menuLayout = new MVerticalLayout().withWidth("250px");
+        MVerticalLayout menuLayout = new MVerticalLayout().withWidth("250px");
 
         menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
@@ -174,15 +170,13 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         linkBtn.setPopupVisible(false);
                         AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory
                                 .getCloudDriveOAuthWindow("Add Dropbox");
-                        cloudDriveOAuthWindow
-                                .addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
+                        cloudDriveOAuthWindow.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
                                     private static final long serialVersionUID = 1L;
 
                                     @Override
                                     public void connectedSuccess(
                                             ExternalDriveConnectedEvent event) {
-                                        folderNavigator
-                                                .expandItem(rootECMFolder);
+                                        folderNavigator.expandItem(rootECMFolder);
 
                                     }
                                 });

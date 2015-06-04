@@ -48,7 +48,7 @@ Version 5.0.8
 **Library Upgrades**
 
 * Upgrade Vaadin to 7.4.7
-* Upgrade libraries: HirakiCP, Jackrabbit, Commons-Email
+* Upgrade libraries: HirakiCP, Jackrabbit, Commons-Email, Jetty
 
 **Improvements & New Features**
 
@@ -68,6 +68,7 @@ Version 5.0.8
 * Fix several bugs relate to Gantt chart
 * Display the new user information when user re-login by another account 
 * Fix missing assets in email template
+* Some views can not display well on internet explorer browser
 
 Version 5.0.7
 -----------------------------
