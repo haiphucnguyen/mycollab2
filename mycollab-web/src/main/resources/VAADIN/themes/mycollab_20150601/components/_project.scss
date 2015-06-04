@@ -199,34 +199,12 @@
     border-color: #BEBEBE;
     border-style: solid;
     border-width: 1px 1px 1px 6px;
-    padding: 12px 20px 10px;
-    .v-button-link {
-      margin: 0 auto;
-    }
+    padding: 12px 20px;
     .milestone-name {
       font-size: $font-large;
       border-bottom: 1px dashed #BEBEBE !important;
       padding-bottom: 8px;
-      &:focus {
-        font-size: $font-large;
-        border-bottom: 1px dashed #BEBEBE !important;
-        padding-bottom: 8px;
-      }
     }
-    > .v-horizontallayout {
-      display: block;
-    }
-  }
-
-  .milestone-view-body > div > .v-verticallayout > div > div:first-child > div > .milestone-box {
-    border: none;
-    > .v-csslayout-margin {
-      padding-top: 5px;
-    }
-  }
-
-  .milestone-view-header > .v-horizontallayout {
-    margin: 0 auto;
   }
 
   /* End Milestone Box */

@@ -144,7 +144,6 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
     private void constructBody() {
         CustomLayout bodyContent = CustomLayoutExt.createLayout("milestoneView");
-
         bodyContent.setWidth("100%");
         bodyContent.setStyleName("milestone-view");
 
@@ -210,7 +209,6 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         LabelLink milestoneLink = new LabelLink(milestone.getName(),
                 ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
-        milestoneLink.setStyleName("link");
         milestoneLink.addStyleName("bold");
         milestoneLink.addStyleName(UIConstants.WORD_WRAP);
         milestoneLink.addStyleName("milestone-name");

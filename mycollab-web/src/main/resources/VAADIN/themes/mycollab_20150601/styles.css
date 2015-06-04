@@ -8358,39 +8358,13 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border-color: #BEBEBE;
 	border-style: solid;
 	border-width: 1px 1px 1px 6px;
-	padding: 12px 20px 10px;
-}
-
-.milestone-box .v-button-link {
-	margin: 0 auto;
+	padding: 12px 20px;
 }
 
 .milestone-box .milestone-name {
 	font-size: 14px;
 	border-bottom: 1px dashed #BEBEBE !important;
 	padding-bottom: 8px;
-}
-
-.milestone-box .milestone-name:focus {
-	font-size: 14px;
-	border-bottom: 1px dashed #BEBEBE !important;
-	padding-bottom: 8px;
-}
-
-.milestone-box  > .v-horizontallayout {
-	display: block;
-}
-
-.milestone-view-body > div > .v-verticallayout > div > div:first-child > div > .milestone-box {
-	border: none;
-}
-
-.milestone-view-body > div > .v-verticallayout > div > div:first-child > div > .milestone-box  > .v-csslayout-margin {
-	padding-top: 5px;
-}
-
-.milestone-view-header > .v-horizontallayout {
-	margin: 0 auto;
 }
 
 .widget-short-prj-name {
