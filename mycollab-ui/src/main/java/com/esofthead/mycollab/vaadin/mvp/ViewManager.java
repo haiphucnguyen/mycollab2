@@ -76,13 +76,9 @@ public class ViewManager {
 			} else {
 				return value;
 			}
-
-			throw new MyCollabException(
-					"Can not find the implementation class for view "
-							+ viewClass);
+			throw new MyCollabException("Can not find the implementation class for view " + viewClass);
 		} catch (Exception e) {
-			throw new MyCollabException(
-					"Can not create view instance of class: " + viewClass, e);
+			throw new MyCollabException("Can not create view instance of class: " + viewClass, e);
 		}
 	}
 }

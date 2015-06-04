@@ -55,8 +55,7 @@ import java.util.GregorianCalendar;
  */
 @SuppressWarnings("serial")
 @ViewComponent
-public class BugDashboardViewImpl extends AbstractLazyPageView implements
-        BugDashboardView {
+public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDashboardView {
     private MVerticalLayout leftColumn, rightColumn;
     private MHorizontalLayout header;
 

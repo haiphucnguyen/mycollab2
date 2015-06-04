@@ -69,6 +69,7 @@ Version 5.0.8
 * Display the new user information when user re-login by another account 
 * Fix missing assets in email template
 * Some views can not display well on internet explorer browser
+* Crm menu does not refresh if user logout then login with two different accounts
 
 Version 5.0.7
 -----------------------------
