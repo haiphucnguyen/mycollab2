@@ -34,7 +34,7 @@ import static com.esofthead.mycollab.vaadin.ui.MyCollabSession.VIEW_MANAGER_VAL;
  * 
  */
 public class ViewManager {
-	protected static Set<Class<?>> viewClasses;
+	protected static final Set<Class<?>> viewClasses;
 
 	static {
 		Reflections reflections = new Reflections("com.esofthead.mycollab");
