@@ -157,7 +157,6 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             taskSettingPopupBtn = new PopupButton();
             taskSettingPopupBtn.setIcon(FontAwesome.COGS);
 
-            taskSettingPopupBtn.addStyleName("noDefaultIcon");
             taskSettingPopupBtn.addStyleName("button-icon-only");
 
             OptionPopupContent filterBtnLayout = createPopupContent();
@@ -176,8 +175,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                         public void buttonClick(Button.ClickEvent event) {
                             taskSettingPopupBtn.setPopupVisible(false);
                             EventBusFactory.getInstance().post(
-                                    new TaskEvent.GotoEdit(
-                                            TaskRowComp.this, task));
+                                    new TaskEvent.GotoEdit(TaskRowComp.this, task));
                         }
                     });
             editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));

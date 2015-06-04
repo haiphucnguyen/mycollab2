@@ -427,10 +427,6 @@
     padding-left: 8px;
   }
 
-  .noDefaultIcon.v-popupbutton .v-popup-indicator:before {
-    content: '';
-  }
-
   .splitbutton .v-popupbutton {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -537,21 +533,19 @@
     }
   }
 
-  .v-button {
-    &.button-icon-only {
-      background-color:transparent;
-      font-size:$font-normal;
-      .v-button-wrap {
-        padding: 0px;
-        &:hover {
-          background-color:transparent;
-        }
-        .v-icon.FontAwesome {
-          vertical-align: bottom;
-        }
-        .v-popup-indicator::before {
-          content: "";
-        }
+  .v-popupbutton.button-icon-only, .v-popupbutton.button-icon-only:active, .v-popupbutton.button-icon-only:focus,
+     .v-popupbutton.button-icon-only.v-pressed {
+    background-color:transparent;
+    .v-button-wrap {
+      padding: 0px;
+      &:hover {
+        background-color:transparent;
+      }
+      .v-icon.FontAwesome {
+        vertical-align: bottom;
+      }
+      .v-popup-indicator::before {
+        content: "";
       }
     }
   }
