@@ -193,7 +193,6 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                             public void buttonClick(Button.ClickEvent event) {
                                 task.setStatus(OptionI18nEnum.StatusI18nEnum.Closed.name());
                                 task.setPercentagecomplete(100d);
-
                                 ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                                 projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
                                 taskSettingPopupBtn.setPopupVisible(false);
