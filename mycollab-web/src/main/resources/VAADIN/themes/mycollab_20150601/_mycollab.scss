@@ -461,7 +461,7 @@
   }
 
   .v-label-h1 {
-    font-size: 1.85em;
+    font-size: 29px;
   }
 
   .v-window-modalitycurtain {
@@ -927,8 +927,8 @@
   .formView {
     background: white;
     width: 600px;
-    -moz-border-radius: 1em;
-    -webkit-border-radius: 1em;
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
   }
 
   #login-header {
@@ -1090,7 +1090,7 @@
       background: #FFF;
       border-color: #BBB;
       border-radius: 0px;
-      padding: 0em 0.2em;
+      padding: 0px 3px;
       line-height: 35px !important;
       color: #4a4a4a;
       &.v-textfield-focus {
@@ -1595,7 +1595,7 @@
     .v-nativebutton-tab {
       border: 0px;
       background: none;
-      line-height: 1.9em;
+      line-height: 30px;
       border-bottom: 1px solid #AAA;
       color: #666;
       &:hover {
@@ -1842,7 +1842,7 @@
   .v-tabsheet-tabitem {
     .v-caption {
       border-color: #8F8F8F;
-      line-height: 1.6em;
+      line-height: 25px;
       border: none;
       border-radius: 0px;
       padding: 3px 17px 4px;
@@ -2504,7 +2504,7 @@
 
   .v-stylecalendar {
     .weekdays TD {
-      width: 13.2em;
+      width: 211px;
       background-color: #F4F4F4;
     }
     .week {
@@ -2514,7 +2514,7 @@
       background-color: #F5F5F5;
     }
     .weeknumber, .day {
-      width: 13.2em;
+      width: 211px;
       border: 1px solid #CCCCCC;
       background-color: #E1E1E1;
       background-image: url('icons/grad-light-top.png');
@@ -2524,12 +2524,12 @@
   }
 
   div.v-stylecalendar .weekdays TD {
-    width: 8.2em;
+    width: 131px;
   }
 
   .v-stylecalendar {
     .weeknumber, .day {
-      width: 8.2em;
+      width: 131px;
     }
     .weeknumber {
       background-color: #d9d8cb;
@@ -3235,7 +3235,7 @@
   .v-select-optiongroup {
     .v-select-option {
       white-space: pre-wrap;
-      line-height: 1.7em;
+      line-height: 27px;
     }
     spacing: true;
   }
@@ -3247,7 +3247,7 @@
       display: inline-block;
       vertical-align: bottom;
     }
-    line-height: 1.5em;
+    line-height: 24px;
   }
 
   /* fix Image's alignment in v-label with html content */
@@ -3630,7 +3630,7 @@
   /* Label Styles */
   .v-label.has-checkmark:before {
     padding-left: 18px;
-    font-size:1em;
+    font-size:16px;
     font-family: FontAwesome;
     content: '\f00c';
   }

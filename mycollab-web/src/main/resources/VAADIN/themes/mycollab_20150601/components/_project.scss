@@ -141,7 +141,7 @@
       width: 300px;
       position: absolute;
       left: 50px;
-      top: 1.1em;
+      top: 17px;
       z-index: 0;
     }
     .phase-status-lbl {
@@ -248,7 +248,7 @@
   .projectinfo-header, .message-toppanel-header {
     font-size: $font-normal;
     border-bottom: 1px solid $border-color;
-    padding-bottom: 0.2em;
+    padding-bottom: 3px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -395,28 +395,11 @@
      padding: 13px 7px 0px;
      .v-button-wrap {
        text-align: left;
-       font-size: $font-normal;
-       position: relative;
-       padding-right: 20px;
+       white-space: nowrap;
+       overflow: hidden;
        text-overflow: ellipsis;
-       .v-icon, .v-button-caption {
-         vertical-align: middle;
-       }
-     }
-     &.v-margin-top {
-       padding-top: 8px;
-     }
-     &.v-margin-right {
-       padding-right: 13px;
-     }
-     &.v-margin-bottom {
-       padding-bottom: 8px;
-     }
-     &.v-margin-left {
-       padding-left: 13px;
      }
      .v-popup-indicator {
-       position: relative;
        float: right;
        position: absolute;
        right: 7px;
@@ -496,7 +479,7 @@
       .h3 .v-button-caption {
         font-size: $font-large;
         font-weight: bold;
-        line-height: 1.5em;
+        line-height: 24px;
       }
       .control-btns {
         padding-top: 5px;

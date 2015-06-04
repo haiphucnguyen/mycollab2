@@ -110,7 +110,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private void initUI() {
-        Label headerText = new ProjectViewHeader(ProjectTypeConstants.MILESTONE,
+        ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.MILESTONE,
                 AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
 
         MHorizontalLayout header = new MHorizontalLayout()

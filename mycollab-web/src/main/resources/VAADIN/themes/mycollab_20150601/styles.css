@@ -8294,7 +8294,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	width: 300px;
 	position: absolute;
 	left: 50px;
-	top: 1.1em;
+	top: 17px;
 	z-index: 0;
 }
 
@@ -8406,7 +8406,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 .projectinfo-header, .message-toppanel-header {
 	font-size: 13px;
 	border-bottom: 1px solid #CFCFCF;
-	padding-bottom: 0.2em;
+	padding-bottom: 3px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -8563,34 +8563,12 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .project-list-comp .v-button-wrap {
 	text-align: left;
-	font-size: 13px;
-	position: relative;
-	padding-right: 20px;
+	white-space: nowrap;
+	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
-.project-list-comp .v-button-wrap .v-icon, .project-list-comp .v-button-wrap .v-button-caption {
-	vertical-align: middle;
-}
-
-.project-list-comp.v-margin-top {
-	padding-top: 8px;
-}
-
-.project-list-comp.v-margin-right {
-	padding-right: 13px;
-}
-
-.project-list-comp.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.project-list-comp.v-margin-left {
-	padding-left: 13px;
-}
-
 .project-list-comp .v-popup-indicator {
-	position: relative;
 	float: right;
 	position: absolute;
 	right: 7px;
@@ -8690,7 +8668,7 @@ div.v-csslayout.followers-container .v-checkbox {
 .pages-list-layout .page-item-block .h3 .v-button-caption {
 	font-size: 14px;
 	font-weight: bold;
-	line-height: 1.5em;
+	line-height: 24px;
 }
 
 .pages-list-layout .page-item-block .control-btns {
@@ -9400,7 +9378,7 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
 }
 
 .v-label-h1 {
-	font-size: 1.85em;
+	font-size: 29px;
 }
 
 .v-window-modalitycurtain {
@@ -9860,8 +9838,8 @@ input.v-textfield-errorField {
 .formView {
 	background: white;
 	width: 600px;
-	-moz-border-radius: 1em;
-	-webkit-border-radius: 1em;
+	-moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
 }
 
 #login-header {
@@ -10025,7 +10003,7 @@ input.v-textfield-errorField {
 	background: #FFF;
 	border-color: #BBB;
 	border-radius: 0px;
-	padding: 0em 0.2em;
+	padding: 0px 3px;
 	line-height: 35px !important;
 	color: #4a4a4a;
 }
@@ -10545,7 +10523,7 @@ input.v-textfield-errorField {
 .activityTabs .v-nativebutton-tab {
 	border: 0px;
 	background: none;
-	line-height: 1.9em;
+	line-height: 30px;
 	border-bottom: 1px solid #AAA;
 	color: #666;
 }
@@ -10794,7 +10772,7 @@ td.v-tabsheet-spacertd div {
 
 .v-tabsheet-tabitem .v-caption {
 	border-color: #8F8F8F;
-	line-height: 1.6em;
+	line-height: 25px;
 	border: none;
 	border-radius: 0px;
 	padding: 3px 17px 4px;
@@ -11377,7 +11355,7 @@ div.v-stylecalendar {
 }
 
 .v-stylecalendar .weekdays TD {
-	width: 13.2em;
+	width: 211px;
 	background-color: #F4F4F4;
 }
 
@@ -11390,7 +11368,7 @@ div.v-stylecalendar {
 }
 
 .v-stylecalendar .weeknumber, .v-stylecalendar .day {
-	width: 13.2em;
+	width: 211px;
 	border: 1px solid #CCCCCC;
 	background-color: #E1E1E1;
 	background-image: url('icons/grad-light-top.png');
@@ -11399,11 +11377,11 @@ div.v-stylecalendar {
 }
 
 div.v-stylecalendar .weekdays TD {
-	width: 8.2em;
+	width: 131px;
 }
 
 .v-stylecalendar .weeknumber, .v-stylecalendar .day {
-	width: 8.2em;
+	width: 131px;
 }
 
 .v-stylecalendar .weeknumber {
@@ -12096,11 +12074,11 @@ div.v-ratingstars-bar {
 
 .v-select-optiongroup .v-select-option {
 	white-space: pre-wrap;
-	line-height: 1.7em;
+	line-height: 27px;
 }
 
 .stream-wrapper .v-label {
-	line-height: 1.5em;
+	line-height: 24px;
 }
 
 .stream-wrapper .v-label img {
@@ -12465,7 +12443,7 @@ div.v-ratingstars-bar {
 
 .v-label.has-checkmark:before {
 	padding-left: 18px;
-	font-size: 1em;
+	font-size: 16px;
 	font-family: FontAwesome;
 	content: "\f00c";
 }

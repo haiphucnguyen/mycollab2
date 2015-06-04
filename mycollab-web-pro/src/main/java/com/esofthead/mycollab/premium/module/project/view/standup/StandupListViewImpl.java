@@ -223,7 +223,7 @@ public class StandupListViewImpl extends AbstractPageView implements
          MHorizontalLayout headerLeft = new MHorizontalLayout();
         headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        Label titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
+        ProjectViewHeader titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
                 AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
         titleLbl.addStyleName("hdr-text");
 
