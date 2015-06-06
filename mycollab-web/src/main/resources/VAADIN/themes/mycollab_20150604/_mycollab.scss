@@ -4264,31 +4264,6 @@
     padding-top: 15px;
   }
 
-  /* Sort button group */
-
-  .v-buttongroup.toggle-btn-group .v-button.sort-btn {
-    position: relative;
-    &.active {
-      .v-button-wrap, &:active .v-button-wrap, &:focus .v-button-wrap {
-        padding: 6px 20px 6px 10px;
-      }
-      &:after {
-        content: "";
-        position: absolute;
-        width: 22px;
-        height: 30px;
-        background-image: url('icons/sort-icons.png');
-        background-position: left -30px;
-        background-repeat: no-repeat;
-        right: 0px;
-        top: 0px;
-      }
-      &.asc:after {
-        background-position: left top;
-      }
-    }
-  }
-
   /* Feature Select Box */
 
   .feature-select-box {

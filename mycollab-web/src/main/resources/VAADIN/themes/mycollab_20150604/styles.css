@@ -13070,30 +13070,6 @@ div.v-csslayout.bean-block.olive-block {
 	padding-top: 15px;
 }
 
-.v-buttongroup.toggle-btn-group .v-button.sort-btn {
-	position: relative;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.sort-btn.active .v-button-wrap, .v-buttongroup.toggle-btn-group .v-button.sort-btn.active:active .v-button-wrap, .v-buttongroup.toggle-btn-group .v-button.sort-btn.active:focus .v-button-wrap {
-	padding: 6px 20px 6px 10px;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.sort-btn.active:after {
-	content: "";
-	position: absolute;
-	width: 22px;
-	height: 30px;
-	background-image: url('icons/sort-icons.png');
-	background-position: left -30px;
-	background-repeat: no-repeat;
-	right: 0px;
-	top: 0px;
-}
-
-.v-buttongroup.toggle-btn-group .v-button.sort-btn.active.asc:after {
-	background-position: left top;
-}
-
 .feature-select-box {
 	background-color: #EEE;
 }
