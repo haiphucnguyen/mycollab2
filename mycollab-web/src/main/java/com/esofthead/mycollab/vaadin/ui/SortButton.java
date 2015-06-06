@@ -26,7 +26,6 @@ import com.vaadin.ui.Button;
  */
 
 public class SortButton extends Button {
-
 	private static final long serialVersionUID = 6899070243378436412L;
 
 	private boolean isDesc = true;
