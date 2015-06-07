@@ -31,6 +31,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -41,80 +42,76 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class ProjectLoginViewImpl extends AbstractMobileMainView implements ProjectLoginView {
-	private static final long serialVersionUID = 2079094611178305339L;
+    private static final long serialVersionUID = 2079094611178305339L;
 
-	public ProjectLoginViewImpl() {
-		initUI();
-	}
+    public ProjectLoginViewImpl() {
+        initUI();
+    }
 
-	private void initUI() {
-		this.setStyleName("login-view");
-		this.setSizeFull();
+    private void initUI() {
+        this.setStyleName("login-view");
+        this.setSizeFull();
 
-		VerticalLayout contentLayout = new VerticalLayout();
-		contentLayout.setStyleName("content-wrapper");
-		contentLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-		contentLayout.setMargin(true);
-		contentLayout.setSpacing(true);
-		contentLayout.setWidth("320px");
+        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper").withWidth("320px");
+        contentLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-		Image mainLogo = new Image(null, new ThemeResource("icons/logo_m.png"));
-		contentLayout.addComponent(mainLogo);
+        Image mainLogo = new Image(null, new ThemeResource("icons/logo_m.png"));
+        contentLayout.addComponent(mainLogo);
 
-		Label introText = new Label(
-				"MyCollab helps you do all your office jobs on the computers, phones and tablets you use");
-		introText.setStyleName("intro-text");
-		contentLayout.addComponent(introText);
+        Label introText = new Label(
+                "MyCollab helps you do all your office jobs on the computers, phones and tablets you use");
+        introText.setStyleName("intro-text");
+        contentLayout.addComponent(introText);
 
-		CssLayout welcomeTextWrapper = new CssLayout();
-		welcomeTextWrapper.setStyleName("welcometext-wrapper");
-		welcomeTextWrapper.setWidth("100%");
-		Label welcomeText = new Label("Login to Projects");
-		welcomeText.setWidth("150px");
-		welcomeTextWrapper.addComponent(welcomeText);
-		contentLayout.addComponent(welcomeTextWrapper);
+        CssLayout welcomeTextWrapper = new CssLayout();
+        welcomeTextWrapper.setStyleName("welcometext-wrapper");
+        welcomeTextWrapper.setWidth("100%");
+        Label welcomeText = new Label("Login to Projects");
+        welcomeText.setWidth("150px");
+        welcomeTextWrapper.addComponent(welcomeText);
+        contentLayout.addComponent(welcomeTextWrapper);
 
-		final EmailField emailField = new EmailField();
-		emailField.setWidth("100%");
-		emailField.setInputPrompt("E-mail Address");
-		emailField.setStyleName("email-input");
-		contentLayout.addComponent(emailField);
+        final EmailField emailField = new EmailField();
+        emailField.setWidth("100%");
+        emailField.setInputPrompt("E-mail Address");
+        emailField.setStyleName("email-input");
+        contentLayout.addComponent(emailField);
 
-		final PasswordField pwdField = new PasswordField();
-		pwdField.setWidth("100%");
-		pwdField.setInputPrompt("Password");
-		pwdField.setStyleName("password-input");
-		contentLayout.addComponent(pwdField);
+        final PasswordField pwdField = new PasswordField();
+        pwdField.setWidth("100%");
+        pwdField.setInputPrompt("Password");
+        pwdField.setStyleName("password-input");
+        contentLayout.addComponent(pwdField);
 
-		final CheckBox rememberPassword = new CheckBox();
-		rememberPassword.setWidth("100%");
-		rememberPassword.setCaption("Remember password");
-		rememberPassword.setValue(true);
-		contentLayout.addComponent(rememberPassword);
+        final CheckBox rememberPassword = new CheckBox();
+        rememberPassword.setWidth("100%");
+        rememberPassword.setCaption("Remember password");
+        rememberPassword.setValue(true);
+        contentLayout.addComponent(rememberPassword);
 
-		Button signInBtn = new Button("Sign In");
-		signInBtn.setWidth("100%");
-		signInBtn.addStyleName(UIConstants.BUTTON_BIG);
-		signInBtn.addStyleName(UIConstants.COLOR_BLUE);
-		signInBtn.addClickListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Button signInBtn = new Button("Sign In");
+        signInBtn.setWidth("100%");
+        signInBtn.addStyleName(UIConstants.BUTTON_BIG);
+        signInBtn.addStyleName(UIConstants.COLOR_BLUE);
+        signInBtn.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBusFactory.getInstance().post(
-						new ProjectEvent.PlainLogin(this, new String[] {
-								emailField.getValue(), pwdField.getValue(),
-								String.valueOf(rememberPassword.getValue()) }));
-			}
-		});
-		contentLayout.addComponent(signInBtn);
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(
+                        new ProjectEvent.PlainLogin(this, new String[] {
+                                emailField.getValue(), pwdField.getValue(),
+                                String.valueOf(rememberPassword.getValue()) }));
+            }
+        });
+        contentLayout.addComponent(signInBtn);
 
-		Button createAccountBtn = new Button("Create Account");
-		createAccountBtn.setWidth("100%");
-		createAccountBtn.addStyleName(UIConstants.BUTTON_BIG);
-		createAccountBtn.addStyleName(UIConstants.COLOR_GRAY);
-		contentLayout.addComponent(createAccountBtn);
+        Button createAccountBtn = new Button("Create Account");
+        createAccountBtn.setWidth("100%");
+        createAccountBtn.addStyleName(UIConstants.BUTTON_BIG);
+        createAccountBtn.addStyleName(UIConstants.COLOR_GRAY);
+        contentLayout.addComponent(createAccountBtn);
 
-		this.addComponent(contentLayout);
-	}
+        this.addComponent(contentLayout);
+    }
 }

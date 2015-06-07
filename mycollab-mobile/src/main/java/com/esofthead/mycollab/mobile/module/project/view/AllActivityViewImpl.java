@@ -132,8 +132,7 @@ public class AllActivityViewImpl extends
 				CssLayout detailRow2 = new CssLayout();
 				detailRow2.setWidth("100%");
 				detailRow2.setStyleName("activity-detail-row");
-				Label prefixLbl = new Label(
-						AppContext
+				Label prefixLbl = new Label(AppContext
 								.getMessage(ProjectCommonI18nEnum.M_FEED_PROJECT_ACTIVITY_PREFIX));
 				prefixLbl.setWidthUndefined();
 				prefixLbl.setStyleName("activity-detail");
