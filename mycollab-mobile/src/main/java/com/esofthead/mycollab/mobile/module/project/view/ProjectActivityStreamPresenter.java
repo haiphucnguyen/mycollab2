@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-mobile.
- *
+ * <p>
  * mycollab-mobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-mobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -40,46 +40,39 @@ import com.vaadin.ui.UI;
  *
  * @since 4.5.2
  */
-public class ProjectActivityStreamPresenter
-		extends
-		AbstractListPresenter<ProjectActivityView, ActivityStreamSearchCriteria, ProjectActivityStream> {
+public class ProjectActivityStreamPresenter extends
+        AbstractListPresenter<ProjectActivityView, ActivityStreamSearchCriteria, ProjectActivityStream> {
+    private static final long serialVersionUID = -2089284900326846089L;
 
-	private static final long serialVersionUID = -2089284900326846089L;
+    public ProjectActivityStreamPresenter() {
+        super(ProjectActivityView.class);
+    }
 
-	public ProjectActivityStreamPresenter() {
-		super(ProjectActivityView.class);
-	}
+    @Override
+    protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
+        if (CurrentProjectVariables
+                .canRead(ProjectRolePermissionCollections.PROJECT)) {
+            InsideProjectNavigationMenu projectModuleMenu = (InsideProjectNavigationMenu) ((MobileNavigationManager) UI
+                    .getCurrent().getContent()).getNavigationMenu();
+            projectModuleMenu
+                    .selectButton(AppContext
+                            .getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
+            super.onGo(navigator, data);
+            ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+            searchCriteria.setModuleSet(new SetSearchField<>(
+                    SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
+            searchCriteria.setSaccountid(new NumberSearchField(AppContext
+                    .getAccountId()));
 
-	@Override
-	protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.PROJECT)) {
-			InsideProjectNavigationMenu projectModuleMenu = (InsideProjectNavigationMenu) ((MobileNavigationManager) UI
-					.getCurrent().getContent()).getNavigationMenu();
-			projectModuleMenu
-					.selectButton(AppContext
-							.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
-			super.onGo(navigator, data);
-			final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-			searchCriteria.setModuleSet(new SetSearchField<String>(
-					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));
-			searchCriteria.setSaccountid(new NumberSearchField(AppContext
-					.getAccountId()));
-
-			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(
-					CurrentProjectVariables.getProjectId()));
-			doSearch(searchCriteria);
-			AppContext
-					.addFragment(
-							"project/activities/"
-									+ GenericLinkUtils
-											.encodeParam(CurrentProjectVariables
-													.getProjectId()),
-							AppContext
-									.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
-		} else {
-			NotificationUtil.showMessagePermissionAlert();
-		}
-	}
+            searchCriteria.setExtraTypeIds(new SetSearchField<>(
+                    CurrentProjectVariables.getProjectId()));
+            doSearch(searchCriteria);
+            AppContext.addFragment("project/activities/"
+                            + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
+                    AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
+        } else {
+            NotificationUtil.showMessagePermissionAlert();
+        }
+    }
 
 }

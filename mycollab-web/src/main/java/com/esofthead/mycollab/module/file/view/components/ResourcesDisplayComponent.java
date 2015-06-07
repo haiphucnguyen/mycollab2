@@ -109,11 +109,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         mainBodyLayout.setSpacing(true);
 
         // file breadcrum ---------------------
-        HorizontalLayout breadcrumbContainer = new HorizontalLayout();
-        breadcrumbContainer.setMargin(false);
         fileBreadCrumb = new FileBreadcrumb(rootPath);
-        breadcrumbContainer.addComponent(fileBreadCrumb);
-        mainBodyLayout.addComponent(breadcrumbContainer);
+        mainBodyLayout.addComponent(fileBreadCrumb);
 
         // Construct controllGroupBtn
         MHorizontalLayout groupBtns = new MHorizontalLayout();
@@ -141,8 +138,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 }
             }
         });
-        groupBtns.with(selectAllBtn).withAlign(selectAllBtn,
-                Alignment.MIDDLE_LEFT);
+        groupBtns.with(selectAllBtn).withAlign(selectAllBtn, Alignment.MIDDLE_LEFT);
 
         Button goUpBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UP));
         goUpBtn.setIcon(FontAwesome.ARROW_UP);
@@ -257,8 +253,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         moveToBtn.setDescription("Move to");
         navButton.addButton(moveToBtn);
 
-        Button deleteBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
+        Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -386,8 +381,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     for (ExternalDrive drive : externalDrives) {
                         if (StorageNames.DROPBOX.equals(drive.getStoragename())) {
                             try {
-                                Resource res = externalResourceService
-                                        .getCurrentResourceByPath(drive, "/");
+                                Resource res = externalResourceService.getCurrentResourceByPath(drive, "/");
                                 res.setName(drive.getFoldername());
                                 resources.add(0, res);
                             } catch (Exception e) {
@@ -533,8 +527,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             layout.with(informationLayout).withAlign(informationLayout, Alignment.MIDDLE_LEFT).expand(informationLayout);
 
             final PopupButton resourceSettingPopupBtn = new PopupButton();
-            final MVerticalLayout filterBtnLayout = new MVerticalLayout();
-            final Button renameBtn = new Button("Rename",
+            MVerticalLayout filterBtnLayout = new MVerticalLayout();
+            Button renameBtn = new Button("Rename",
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
                         @Override
@@ -584,7 +578,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             moveBtn.setIcon(FontAwesome.ARROWS);
             filterBtnLayout.addComponent(moveBtn);
 
-            final Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
+            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -626,9 +620,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
     private class RenameResourceWindow extends Window {
         private static final long serialVersionUID = 1L;
-        private final Resource renameResource;
+        private Resource renameResource;
 
-        public RenameResourceWindow(final Resource resource) {
+        public RenameResourceWindow(Resource resource) {
             super("Rename folder/file");
             this.center();
             this.setResizable(false);
@@ -653,7 +647,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                         @Override
                         public void buttonClick(final ClickEvent event) {
-                            final String oldPath = renameResource.getPath();
+                            String oldPath = renameResource.getPath();
                             String parentOldPath = oldPath.substring(0,
                                     oldPath.lastIndexOf("/") + 1);
 
@@ -662,12 +656,10 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                             if (renameResource.isExternalResource()) {
                                 externalResourceService.rename(
-                                        ((ExternalFolder) renameResource)
-                                                .getExternalDrive(), oldPath,
+                                        ((ExternalFolder) renameResource).getExternalDrive(), oldPath,
                                         newPath);
                             } else {
-                                resourceService.rename(oldPath, newPath,
-                                        AppContext.getUsername());
+                                resourceService.rename(oldPath, newPath, AppContext.getUsername());
                             }
                             resourcesContainer.constructBody(baseFolder);
 
@@ -857,13 +849,12 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             contentLayout.addComponent(controlsLayout);
             contentLayout.setComponentAlignment(controlsLayout, Alignment.MIDDLE_CENTER);
         }
-
     }
 
     private class ResourcePagingNavigator extends CssLayout {
         private static final long serialVersionUID = 1L;
         private int totalItem;
-        public int pageItemNum = 15;
+        private int pageItemNum = 15;
         private int currentPage;
         private CssLayout controlBarWrapper;
         private MHorizontalLayout navigator;
@@ -1058,11 +1049,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             this.folderTree.removeAllItems();
 
             this.baseFolder = new Folder(rootPath);
-            this.folderTree.addItem(new Object[]{
-                            ResourcesDisplayComponent.this.rootFolderName, ""},
-                    this.baseFolder);
-            this.folderTree.setItemCaption(this.baseFolder,
-                    ResourcesDisplayComponent.this.rootFolderName);
+            this.folderTree.addItem(new Object[]{ResourcesDisplayComponent.this.rootFolderName, ""}, this.baseFolder);
+            this.folderTree.setItemCaption(this.baseFolder, ResourcesDisplayComponent.this.rootFolderName);
 
             this.folderTree.setCollapsed(this.baseFolder, false);
         }
@@ -1074,9 +1062,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 ResourceRemovedListener.viewInitMethod);
     }
 
-    public interface ResourceRemovedListener extends EventListener,
-            Serializable {
-        public final Method viewInitMethod = ReflectTools.findMethod(
+    public interface ResourceRemovedListener extends EventListener, Serializable {
+        Method viewInitMethod = ReflectTools.findMethod(
                 ResourceRemovedListener.class, "removedResource",
                 ResourceRemovedEvent.class);
 

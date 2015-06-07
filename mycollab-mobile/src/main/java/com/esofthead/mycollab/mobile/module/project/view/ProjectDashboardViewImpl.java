@@ -43,8 +43,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @ViewComponent
-public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
-		ProjectDashboardView {
+public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements ProjectDashboardView {
 	private static final long serialVersionUID = 2364544271302929730L;
 
 	private final CssLayout mainLayout;
@@ -96,8 +95,7 @@ public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
 		projectModulesList.addComponent(new ProjectModuleButton(AppContext
 				.getMessage(ProjectCommonI18nEnum.VIEW_BUG), "&#xf188;"));
 
-		projectModulesList.addComponent(
-				new ProjectModuleButton(AppContext
+		projectModulesList.addComponent(new ProjectModuleButton(AppContext
 						.getMessage(ProjectCommonI18nEnum.VIEW_USERS),
 						"&#xe601;"), 0, 2, 1, 2);
 
@@ -122,16 +120,13 @@ public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
 
 				@Override
 				public void buttonClick(Button.ClickEvent evt) {
-					final String buttonId = ((ProjectModuleButton) evt.getButton()).getButtonId();
+					String buttonId = ((ProjectModuleButton) evt.getButton()).getButtonId();
 					if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE).equals(buttonId)) {
-						EventBusFactory.getInstance().post(
-								new MessageEvent.GotoList(this, null));
-					} else if (AppContext.getMessage(
-							ProjectCommonI18nEnum.VIEW_MILESTONE).equals(
+						EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null));
+					} else if (AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE).equals(
 							buttonId)) {
 						EventBusFactory.getInstance().post(
 								new MilestoneEvent.GotoList(this, null));
-
 					} else if (AppContext.getMessage(
 							ProjectCommonI18nEnum.VIEW_TASK).equals(buttonId)) {
 						EventBusFactory.getInstance().post(

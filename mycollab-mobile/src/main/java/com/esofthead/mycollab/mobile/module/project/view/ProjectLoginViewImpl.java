@@ -40,13 +40,10 @@ import com.vaadin.ui.VerticalLayout;
  */
 
 @ViewComponent
-public class ProjectLoginViewImpl extends AbstractMobileMainView implements
-		ProjectLoginView {
-
+public class ProjectLoginViewImpl extends AbstractMobileMainView implements ProjectLoginView {
 	private static final long serialVersionUID = 2079094611178305339L;
 
 	public ProjectLoginViewImpl() {
-
 		initUI();
 	}
 
