@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -153,8 +153,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
                 }
 
                 permissionsPanel.addComponent(constructGridLayout(
-                                AppContext.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
-                                perMap, RolePermissionCollections.PROJECT_PERMISSION_ARR));
+                        AppContext.getMessage(RoleI18nEnum.SECTION_PROJECT_MANAGEMENT_TITLE),
+                        perMap, RolePermissionCollections.PROJECT_PERMISSION_ARR));
                 permissionsPanel.addComponent(constructGridLayout(
                         AppContext.getMessage(RoleI18nEnum.SECTION_CRM_TITLE),
                         perMap, RolePermissionCollections.CRM_PERMISSIONS_ARR));
@@ -162,8 +162,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
                                 .getMessage(RoleI18nEnum.SECTION_DOCUMENT_TITLE),
                         perMap, RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
                 permissionsPanel.addComponent(constructGridLayout(
-                                AppContext.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
-                                perMap, RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
+                        AppContext.getMessage(RoleI18nEnum.SECTION_ACCOUNT_MANAGEMENT_TITLE),
+                        perMap, RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
                 return permissionsPanel;
             }
@@ -191,8 +191,8 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
         protected PermissionMap getPermissionMap() {
             PermissionMap permissionMap = new PermissionMap();
 
-            for (Map.Entry<String, KeyCaptionComboBox> entry:permissionControlsMap.entrySet()) {
-                KeyCaptionComboBox permissionBox =entry.getValue();
+            for (Map.Entry<String, KeyCaptionComboBox> entry : permissionControlsMap.entrySet()) {
+                KeyCaptionComboBox permissionBox = entry.getValue();
                 Integer perValue = (Integer) permissionBox.getValue();
                 permissionMap.addPath(entry.getKey(), perValue);
             }
@@ -211,7 +211,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
                 if (propertyId.equals("description")) {
                     return new RichTextEditField();
                 } else if (propertyId.equals("rolename")) {
-                    final TextField tf = new TextField();
+                    TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
                     tf.setRequiredError("Please enter a role name");
