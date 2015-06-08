@@ -90,9 +90,9 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements
 
     protected ComponentContainer createBottomPanel() {
         VerticalLayout permissionsPanel = new VerticalLayout();
-        final Label organizationHeader = new Label(
+        Label organizationHeader = new Label(
                 AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS));
-        organizationHeader.setStyleName("h2");
+        organizationHeader.addStyleName("h2");
         permissionsPanel.addComponent(organizationHeader);
 
         projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2,
