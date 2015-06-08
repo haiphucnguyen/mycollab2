@@ -58,8 +58,12 @@ public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadV
                 new DefaultPreviewFormHandler<SimpleProjectRole>() {
                     @Override
                     public void onEdit(SimpleProjectRole data) {
-                        EventBusFactory.getInstance().post(
-                                new ProjectRoleEvent.GotoEdit(this, data));
+                        EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoEdit(this, data));
+                    }
+
+                    @Override
+                    public void onAdd(SimpleProjectRole data) {
+                        EventBusFactory.getInstance().post(new ProjectRoleEvent.GotoAdd(this, null));
                     }
 
                     @Override
