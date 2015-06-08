@@ -85,7 +85,7 @@ public class ProjectRoleListViewImpl extends AbstractPageView implements Project
 
                     @Override
                     public Object generateCell(Table source, Object itemId, Object columnId) {
-                        SimpleProjectRole role = tableItem.getBeanByIndex(itemId);
+                        final SimpleProjectRole role = tableItem.getBeanByIndex(itemId);
                         CheckBoxDecor cb = new CheckBoxDecor("", role.isSelected());
                         cb.setImmediate(true);
                         cb.addValueChangeListener(new ValueChangeListener() {
