@@ -91,11 +91,11 @@ public class RoleListPresenter extends ListSelectionPresenter<RoleListView, Role
             List<Integer> keyList = new ArrayList<>();
             for (SimpleRole item : currentDataList) {
                 if (item.isSelected()) {
-                    if (Boolean.FALSE.equals(item.getIssystemrole())) {
-                        keyList.add(item.getId());
-                    } else {
+                    if (Boolean.TRUE.equals(item.getIssystemrole())) {
                         NotificationUtil.showErrorNotification(String.format("Can not delete role %s because it is the system role.",
                                 item.getRolename()));
+                    } else {
+                        keyList.add(item.getId());
                     }
                 }
             }

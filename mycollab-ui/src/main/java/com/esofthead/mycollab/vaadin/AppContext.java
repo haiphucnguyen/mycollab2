@@ -349,7 +349,7 @@ public class AppContext implements Serializable {
      */
     public static boolean isAdmin() {
         Boolean isAdmin = getInstance().session.getIsAccountOwner();
-        return (isAdmin == null) ? Boolean.FALSE : isAdmin;
+        return Boolean.TRUE.equals(isAdmin);
     }
 
     /**

@@ -7958,7 +7958,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	color: red;
 }
 
-.readViewLayout .h2 {
+.readViewLayout .v-label.h2 {
 	text-shadow: #F0F0F0 0 1px 0;
 	padding: 8px 0px 8px 18px;
 	font-size: 13px;
