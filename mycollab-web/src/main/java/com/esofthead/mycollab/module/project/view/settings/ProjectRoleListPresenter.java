@@ -45,8 +45,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectRoleListPresenter
-        extends
+public class ProjectRoleListPresenter extends
         ListSelectionPresenter<ProjectRoleListView, ProjectRoleSearchCriteria, SimpleProjectRole> {
     private static final long serialVersionUID = 1L;
     private ProjectRoleService projectRoleService;
@@ -88,8 +87,7 @@ public class ProjectRoleListPresenter
     @Override
     protected void deleteSelectedItems() {
         if (!isSelectAll) {
-            Collection<SimpleProjectRole> currentDataList = view
-                    .getPagedBeanTable().getCurrentDataList();
+            Collection<SimpleProjectRole> currentDataList = view.getPagedBeanTable().getCurrentDataList();
             List<Integer> keyList = new ArrayList<>();
             for (ProjectRole item : currentDataList) {
                 if (item.isSelected()) {
@@ -97,16 +95,14 @@ public class ProjectRoleListPresenter
                         keyList.add(item.getId());
                     } else {
                         NotificationUtil.showErrorNotification(AppContext
-                                .getMessage(
-                                        ProjectMemberI18nEnum.CAN_NOT_DELETE_ROLE_MESSAGE,
+                                .getMessage(ProjectMemberI18nEnum.CAN_NOT_DELETE_ROLE_MESSAGE,
                                         item.getRolename()));
                     }
                 }
             }
 
             if (keyList.size() > 0) {
-                projectRoleService.massRemoveWithSession(keyList,
-                        AppContext.getUsername(), AppContext.getAccountId());
+                projectRoleService.massRemoveWithSession(keyList, AppContext.getUsername(), AppContext.getAccountId());
                 doSearch(searchCriteria);
                 checkWhetherEnableTableActionControl();
             }
