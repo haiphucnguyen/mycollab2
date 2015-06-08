@@ -70,8 +70,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventListener;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author MyCollab Ltd.
@@ -81,9 +79,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(ResourcesDisplayComponent.class);
-
-    private static final String illegalFileNamePattern = "[<>:&/\\|?*&%()]";
-    private static final String illegalFolderNamePattern = "[.<>:&/\\|?*&%()+-]";
 
     private ResourceService resourceService;
     private ExternalResourceService externalResourceService;
@@ -690,7 +685,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     private class AddNewFolderWindow extends Window {
         private static final long serialVersionUID = 1L;
 
-        private final TextField folderName;
+        private TextField folderName;
+        private TextArea descriptionArea;
 
         public AddNewFolderWindow() {
             this.setModal(true);
@@ -707,8 +703,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             layoutHelper.addComponent(folderName, "Folder Name", 0, 0);
             contentLayout.addComponent(layoutHelper.getLayout());
             MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
-            Button saveBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -717,14 +712,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                             String folderVal = folderName.getValue();
 
                             if (StringUtils.isNotBlank(folderVal)) {
-                                Pattern pattern = Pattern.compile(illegalFolderNamePattern);
-                                Matcher matcher = pattern.matcher(folderVal);
-                                if (matcher.find()) {
-                                    NotificationUtil.showWarningNotification("Please enter valid folder name except any " +
-                                                    "follow characters : " + illegalFolderNamePattern);
-                                    return;
-                                }
-
+                                FileUtils.assertValidFolderName(folderVal);
                                 String baseFolderPath = baseFolder.getPath();
 
                                 if (baseFolder instanceof ExternalFolder) {
@@ -787,7 +775,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             this.layoutHelper.addComponent(multiFileUploadExt, "File", 0, 0);
             contentLayout.addComponent(this.layoutHelper.getLayout());
 
-            final MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
+            MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
 
             final Button uploadBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPLOAD),
                     new Button.ClickListener() {
@@ -799,13 +787,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                             if (CollectionUtils.isNotEmpty(attachments)) {
                                 for (File attachment : attachments) {
                                     try {
-                                        if (StringUtils.isNotBlank(attachment.getName())) {
-                                            Pattern pattern = Pattern.compile(illegalFileNamePattern);
-                                            Matcher matcher = pattern.matcher(attachment.getName());
-                                            if (matcher.find()) {
-                                                NotificationUtil.showWarningNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
-                                                return;
-                                            }
+                                        if (!FileUtils.isValidFileName(attachment.getName())) {
+                                            NotificationUtil.showWarningNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+                                            return;
                                         }
                                         Content content = new Content(String.format("%s/%s", baseFolder.getPath(), attachment.getName()));
                                         content.setSize(attachment.length());
