@@ -1,29 +1,31 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.module.user.ui.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
+import com.esofthead.mycollab.vaadin.ui.SplitButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
@@ -31,17 +33,17 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import java.io.Serializable;
 
 /**
+ * @param <T>
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
+public class PreviewFormControlsGenerator<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final int ADD_BTN_PRESENTED = 2;
     public static final int EDIT_BTN_PRESENTED = 4;
     public static final int DELETE_BTN_PRESENTED = 8;
     public static final int CLONE_BTN_PRESENTED = 16;
-    public static final int ASSIGN_BTN_PRESENTED = 32;
     public static final int NAVIGATOR_BTN_PRESENTED = 64;
 
     private AdvancedPreviewBeanForm<T> previewForm;
@@ -50,14 +52,12 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
     private Button deleteBtn;
     private Button cloneBtn;
 
-    private Button assignBtn;
-
     private SplitButton optionBtn;
     private OptionPopupContent popupButtonsControl;
     private MHorizontalLayout editButtons;
     private MHorizontalLayout layout;
 
-    public ProjectPreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
+    public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
         layout = new MHorizontalLayout().withStyleName("control-buttons");
         layout.setSizeUndefined();
@@ -81,10 +81,11 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
         optionBtn.setWidthUndefined();
         optionBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 
+
         if (permissionItem != null) {
-            boolean canWrite = CurrentProjectVariables.canWrite(permissionItem);
-            boolean canAccess = CurrentProjectVariables.canAccess(permissionItem);
-            boolean canRead = CurrentProjectVariables.canRead(permissionItem);
+            boolean canWrite = AppContext.canWrite(permissionItem);
+            boolean canAccess = AppContext.canAccess(permissionItem);
+            boolean canRead = AppContext.canRead(permissionItem);
 
             if ((buttonEnableFlags & ADD_BTN_PRESENTED) == ADD_BTN_PRESENTED) {
                 addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD),
@@ -146,23 +147,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                         Alignment.MIDDLE_CENTER);
             }
 
-            if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
-                assignBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ASSIGN),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                T item = previewForm.getBean();
-                                previewForm.fireAssignForm(item);
-                            }
-                        });
-                assignBtn.setIcon(FontAwesome.SHARE);
-                assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-                editButtons.addComponent(assignBtn, 0);
-                assignBtn.setEnabled(canWrite);
-            }
-
             if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
                 cloneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLONE),
                         new Button.ClickListener() {
@@ -183,9 +167,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
             if (popupButtonsControl.getComponentCount() > 0) {
                 optionBtn.setContent(popupButtonsControl);
-                editButtons.addComponent(optionBtn);
-                editButtons.setComponentAlignment(optionBtn,
-                        Alignment.MIDDLE_CENTER);
+                editButtons.with(optionBtn).withAlign(optionBtn, Alignment.MIDDLE_CENTER);
             }
 
             layout.with(editButtons).withAlign(editButtons, Alignment.MIDDLE_CENTER).expand(editButtons);
@@ -221,34 +203,11 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 nextItemBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 nextItemBtn.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
                 nextItemBtn.setEnabled(canRead);
-
                 navigationBtns.addButton(nextItemBtn);
-                layout.addComponent(navigationBtns);
-                layout.setComponentAlignment(navigationBtns, Alignment.MIDDLE_RIGHT);
+                layout.with(navigationBtns).withAlign(navigationBtns, Alignment.MIDDLE_RIGHT);
             }
         }
-
         return layout;
-    }
-
-    /**
-     * @param comp
-     */
-    public void insertToControlBlock(Component comp) {
-        editButtons.addComponent(comp, 0);
-    }
-
-    public void addOptionButton(Button button) {
-        button.setStyleName(UIConstants.THEME_LINK);
-        button.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 2710916670115028630L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                optionBtn.setPopupVisible(false);
-            }
-        });
-        popupButtonsControl.addOption(button);
     }
 
     public HorizontalLayout createButtonControls(String permissionItem) {
