@@ -44,7 +44,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
     public static final int EDIT_BTN_PRESENTED = 4;
     public static final int DELETE_BTN_PRESENTED = 8;
     public static final int CLONE_BTN_PRESENTED = 16;
-    public static final int NAVIGATOR_BTN_PRESENTED = 64;
+    public static final int NAVIGATOR_BTN_PRESENTED = 32;
 
     private AdvancedPreviewBeanForm<T> previewForm;
     private Button addBtn;
@@ -64,6 +64,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
         popupButtonsControl = new OptionPopupContent();
         editButtons = new MHorizontalLayout();
         editButtons.addStyleName("edit-btn");
+        editButtons.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
     }
 
     public HorizontalLayout createButtonControls(int buttonEnableFlags, String permissionItem) {
@@ -104,7 +105,6 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                 addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 addBtn.setEnabled(canWrite);
                 editButtons.addComponent(addBtn);
-                editButtons.setComponentAlignment(addBtn, Alignment.MIDDLE_CENTER);
             }
 
             if ((buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
@@ -124,7 +124,6 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                 editBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 editBtn.setEnabled(canWrite);
                 editButtons.addComponent(editBtn);
-                editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
             }
 
             if ((buttonEnableFlags & DELETE_BTN_PRESENTED) == DELETE_BTN_PRESENTED) {
@@ -143,8 +142,6 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                 deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
                 deleteBtn.setEnabled(canAccess);
                 editButtons.addComponent(deleteBtn);
-                editButtons.setComponentAlignment(deleteBtn,
-                        Alignment.MIDDLE_CENTER);
             }
 
             if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
@@ -167,10 +164,10 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
 
             if (popupButtonsControl.getComponentCount() > 0) {
                 optionBtn.setContent(popupButtonsControl);
-                editButtons.with(optionBtn).withAlign(optionBtn, Alignment.MIDDLE_CENTER);
+                editButtons.with(optionBtn);
             }
 
-            layout.with(editButtons).withAlign(editButtons, Alignment.MIDDLE_CENTER).expand(editButtons);
+            layout.with(editButtons);
 
             if ((buttonEnableFlags & NAVIGATOR_BTN_PRESENTED) == NAVIGATOR_BTN_PRESENTED) {
                 ButtonGroup navigationBtns = new ButtonGroup();
@@ -204,7 +201,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                 nextItemBtn.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
                 nextItemBtn.setEnabled(canRead);
                 navigationBtns.addButton(nextItemBtn);
-                layout.with(navigationBtns).withAlign(navigationBtns, Alignment.MIDDLE_RIGHT);
+                layout.with(navigationBtns);
             }
         }
         return layout;

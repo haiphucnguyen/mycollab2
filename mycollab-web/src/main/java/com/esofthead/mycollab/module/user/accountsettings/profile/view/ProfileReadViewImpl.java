@@ -51,16 +51,12 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
     private static final long serialVersionUID = 1L;
 
     private final PreviewForm formItem;
-    private final MVerticalLayout userAvatar;
     private final MHorizontalLayout avatarAndPass;
 
     public ProfileReadViewImpl() {
         super();
         this.setMargin(new MarginInfo(false, true, true, true));
         this.addStyleName("userInfoContainer");
-        this.userAvatar = new MVerticalLayout();
-        this.userAvatar.setWidthUndefined();
-        this.userAvatar.setDefaultComponentAlignment(Alignment.TOP_LEFT);
         this.avatarAndPass = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false)).withWidth("100%");
 
         this.formItem = new PreviewForm();
@@ -69,17 +65,49 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
     }
 
     private void displayUserAvatar() {
-        this.userAvatar.removeAllComponents();
+        avatarAndPass.removeAllComponents();
         Image cropField = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(AppContext.getUserAvatarId(), 100);
-        userAvatar.addComponent(cropField);
+        CssLayout avatarWrapper = new CssLayout();
+        avatarWrapper.addComponent(cropField);
+        MVerticalLayout userAvatar = new MVerticalLayout().withMargin(false).with(avatarWrapper);
+        userAvatar.setSizeUndefined();
 
-        this.avatarAndPass.removeAllComponents();
-        avatarAndPass.addComponent(userAvatar);
+        final UploadField avatarUploadField = new UploadField() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void updateDisplay() {
+                byte[] imageData = (byte[]) this.getValue();
+                String mimeType = this.getLastMimeType();
+                if (mimeType.equals("image/jpeg")) {
+                    imageData = ImageUtil.convertJpgToPngFormat(imageData);
+                    if (imageData == null) {
+                        throw new UserInvalidInputException("Can not convert image to jpg format");
+                    } else {
+                        mimeType = "image/png";
+                    }
+                }
+
+                if (mimeType.equals("image/png")) {
+                    EventBusFactory.getInstance().post(new ProfileEvent.GotoUploadPhoto(
+                            ProfileReadViewImpl.this, imageData));
+                } else {
+                    throw new UserInvalidInputException(
+                            "Upload file does not have valid image format. The supported formats are jpg/png");
+                }
+            }
+        };
+        avatarUploadField.addStyleName("upload-field");
+        avatarUploadField.setButtonCaption(AppContext.getMessage(UserI18nEnum.BUTTON_CHANGE_AVATAR));
+        avatarUploadField.setSizeUndefined();
+        avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
+        userAvatar.addComponent(avatarUploadField);
+
+        avatarAndPass.with(userAvatar);
 
         User user = formItem.getBean();
 
-        VerticalLayout basicLayout = new VerticalLayout();
-        basicLayout.setSpacing(true);
+        MVerticalLayout basicLayout = new MVerticalLayout().withMargin(false);
 
         HorizontalLayout userWrapper = new HorizontalLayout();
 
@@ -116,7 +144,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         basicLayout.addComponent(new Label(String.format("%s: %s", AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE),
                 AppContext.getMessage(LangI18Enum.class, user.getLanguage()))));
 
-        HorizontalLayout passwordWrapper = new HorizontalLayout();
+        MHorizontalLayout passwordWrapper = new MHorizontalLayout();
         passwordWrapper.addComponent(new Label(AppContext
                 .getMessage(ShellI18nEnum.FORM_PASSWORD) + ": ***********"));
 
@@ -130,46 +158,10 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                     }
                 });
         btnChangePassword.setStyleName("link");
-        HorizontalLayout btnChangePasswordWrapper = new HorizontalLayout();
-        btnChangePasswordWrapper.setWidth("50px");
-        btnChangePasswordWrapper.addComponent(btnChangePassword);
-        btnChangePasswordWrapper.setComponentAlignment(btnChangePassword, Alignment.MIDDLE_RIGHT);
-        passwordWrapper.addComponent(btnChangePasswordWrapper);
-        basicLayout.addComponent(passwordWrapper);
-        basicLayout.setComponentAlignment(passwordWrapper, Alignment.MIDDLE_LEFT);
+        passwordWrapper.with(btnChangePassword).withAlign(btnChangePassword, Alignment.MIDDLE_LEFT);
+        basicLayout.with(passwordWrapper).withAlign(passwordWrapper, Alignment.MIDDLE_LEFT);
 
         avatarAndPass.with(basicLayout).expand(basicLayout);
-
-        final UploadField avatarUploadField = new UploadField() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void updateDisplay() {
-                byte[] imageData = (byte[]) this.getValue();
-                String mimeType = this.getLastMimeType();
-                if (mimeType.equals("image/jpeg")) {
-                    imageData = ImageUtil.convertJpgToPngFormat(imageData);
-                    if (imageData == null) {
-                        throw new UserInvalidInputException("Can not convert image to jpg format");
-                    } else {
-                        mimeType = "image/png";
-                    }
-                }
-
-                if (mimeType.equals("image/png")) {
-                    EventBusFactory.getInstance().post(new ProfileEvent.GotoUploadPhoto(
-                                    ProfileReadViewImpl.this, imageData));
-                } else {
-                    throw new UserInvalidInputException(
-                            "Upload file does not have valid image format. The supported formats are jpg/png");
-                }
-            }
-        };
-        avatarUploadField.addStyleName("upload-field");
-        avatarUploadField.setButtonCaption(AppContext.getMessage(UserI18nEnum.BUTTON_CHANGE_AVATAR));
-        avatarUploadField.setSizeUndefined();
-        avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-        userAvatar.addComponent(avatarUploadField);
     }
 
     private class PreviewForm extends AdvancedPreviewBeanForm<User> {

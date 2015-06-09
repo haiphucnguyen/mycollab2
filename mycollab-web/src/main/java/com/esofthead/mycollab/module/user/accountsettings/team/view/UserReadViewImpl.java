@@ -74,11 +74,6 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         userAvatar.addComponent(cropField);
         avatarAndPass.addComponent(userAvatar);
 
-        header.with(avatarAndPass).withAlign(avatarAndPass, Alignment.TOP_LEFT);
-
-        Layout controlButtons = createTopPanel();
-        header.with(controlButtons).withAlign(controlButtons, Alignment.TOP_RIGHT);
-
         MVerticalLayout basicLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         HorizontalLayout userWrapper = new HorizontalLayout();
@@ -117,6 +112,12 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
                         + ": " + AppContext.getMessage(LangI18Enum.class, user.getLanguage())));
 
         avatarAndPass.with(basicLayout).withAlign(basicLayout, Alignment.TOP_LEFT).expand(basicLayout);
+
+        Layout controlButtons = createTopPanel();
+        CssLayout avatarAndPAssWrapper = new CssLayout();
+        avatarAndPass.setWidthUndefined();
+        avatarAndPAssWrapper.addComponent(avatarAndPass);
+        header.with(avatarAndPass, controlButtons).withAlign(avatarAndPass, Alignment.TOP_LEFT).withAlign(controlButtons, Alignment.TOP_RIGHT);
     }
 
     protected Layout createTopPanel() {
@@ -191,7 +192,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
             @Override
             public ComponentContainer getLayout() {
-                MVerticalLayout layout = new MVerticalLayout().withSpacing(false);
+                MVerticalLayout layout = new MVerticalLayout().withSpacing(false).withMargin(false);
 
                 Label contactInformationHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
                 contactInformationHeaderLbl.addStyleName("h1");
