@@ -63,6 +63,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
         layout.setSizeUndefined();
         popupButtonsControl = new OptionPopupContent();
         editButtons = new MHorizontalLayout();
+        editButtons.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         editButtons.addStyleName("edit-btn");
     }
 
@@ -103,7 +104,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 addBtn.setEnabled(canWrite);
                 editButtons.addComponent(addBtn);
-                editButtons.setComponentAlignment(addBtn, Alignment.MIDDLE_CENTER);
             }
 
             if ((buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
@@ -123,7 +123,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 editBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 editBtn.setEnabled(canWrite);
                 editButtons.addComponent(editBtn);
-                editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
             }
 
             if ((buttonEnableFlags & DELETE_BTN_PRESENTED) == DELETE_BTN_PRESENTED) {
@@ -142,8 +141,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
                 deleteBtn.setEnabled(canAccess);
                 editButtons.addComponent(deleteBtn);
-                editButtons.setComponentAlignment(deleteBtn,
-                        Alignment.MIDDLE_CENTER);
             }
 
             if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
@@ -184,11 +181,9 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
             if (popupButtonsControl.getComponentCount() > 0) {
                 optionBtn.setContent(popupButtonsControl);
                 editButtons.addComponent(optionBtn);
-                editButtons.setComponentAlignment(optionBtn,
-                        Alignment.MIDDLE_CENTER);
             }
 
-            layout.with(editButtons).withAlign(editButtons, Alignment.MIDDLE_CENTER).expand(editButtons);
+            layout.with(editButtons).withAlign(editButtons, Alignment.MIDDLE_RIGHT);
 
             if ((buttonEnableFlags & NAVIGATOR_BTN_PRESENTED) == NAVIGATOR_BTN_PRESENTED) {
                 ButtonGroup navigationBtns = new ButtonGroup();

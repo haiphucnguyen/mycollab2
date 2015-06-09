@@ -43,7 +43,7 @@ public class SyncWebResourcesToS3Command {
                             metaData.setContentType(MimeTypesUtil.detectMimeType(subFile.getAbsolutePath()));
                             metaData.setContentLength(subFile.length());
 
-                            String objectPath = s3Path + subFile.getAbsolutePath().substring(baseFolderPath.length() + 1);
+                            String objectPath = s3Path + subFile.getAbsolutePath().substring(baseFolderPath.length() + 1).replace('\\', '/');
                             PutObjectRequest request = new PutObjectRequest("mycollab_assets", objectPath, new FileInputStream(subFile), metaData);
                             s3client.putObject(request.withCannedAcl(CannedAccessControlList.PublicRead)); // We set S3 object has public read permission
                         } catch (Exception e) {
@@ -54,8 +54,8 @@ public class SyncWebResourcesToS3Command {
             }
         }
     }
-//
-//    public static void main(String[] args) {
-//        syncLocalResourcesToS3("/home/hainguyen/Documents/mycollab2/mycollab-web/src/main/resources/assets", "assets/");
-//    }
+
+    public static void main(String[] args) {
+        syncLocalResourcesToS3("D:\\Documents\\mycollab2\\mycollab-web\\src\\main\\resources\\assets", "assets/");
+    }
 }
