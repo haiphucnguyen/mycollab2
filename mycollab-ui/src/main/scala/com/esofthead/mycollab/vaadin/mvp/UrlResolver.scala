@@ -6,7 +6,6 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.annotation.varargs
-import scala.beans.BeanProperty
 import scala.collection.mutable._
 
 /**
