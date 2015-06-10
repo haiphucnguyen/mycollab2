@@ -10,8 +10,7 @@ import com.esofthead.mycollab.vaadin.desktop.ui.ListView;
  * @since 1.0
  * 
  */
-public interface ProblemListView extends
-		ListView<ProblemSearchCriteria, SimpleProblem> {
+public interface ProblemListView extends ListView<ProblemSearchCriteria, SimpleProblem> {
 
-	public static final String VIEW_DEF_ID = "project-problem-list";
+	String VIEW_DEF_ID = "project-problem-list";
 }

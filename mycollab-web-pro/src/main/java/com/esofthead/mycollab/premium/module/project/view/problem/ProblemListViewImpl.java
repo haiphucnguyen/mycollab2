@@ -37,8 +37,7 @@ import java.util.Arrays;
  * @since 1.0
  */
 @ViewComponent
-public class ProblemListViewImpl extends AbstractPageView implements
-        ProblemListView {
+public class ProblemListViewImpl extends AbstractPageView implements ProblemListView {
     private static final long serialVersionUID = 1L;
 
     private ProblemSearchPanel problemSearchPanel;

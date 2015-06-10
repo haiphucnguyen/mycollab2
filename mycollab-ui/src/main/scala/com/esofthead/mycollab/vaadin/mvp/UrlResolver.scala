@@ -6,6 +6,7 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.annotation.varargs
+import scala.beans.BeanProperty
 import scala.collection.mutable._
 
 /**
@@ -14,7 +15,7 @@ import scala.collection.mutable._
  */
 abstract class UrlResolver {
     private var subResolvers: Map[String, UrlResolver] = _
-    private var defaultUrlResolver: UrlResolver = _
+    protected var defaultUrlResolver: UrlResolver = _
 
     def addSubResolver(key: String, subResolver: UrlResolver) {
         if (subResolvers == null) {
@@ -22,6 +23,8 @@ abstract class UrlResolver {
         }
         subResolvers += key -> subResolver
     }
+
+    def getSubResolver(key:String): UrlResolver = subResolvers(key)
 
     @varargs def handle(params: String*): Unit = {
         try {

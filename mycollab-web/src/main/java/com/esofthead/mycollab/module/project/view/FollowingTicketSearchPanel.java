@@ -197,13 +197,14 @@ public class FollowingTicketSearchPanel extends DefaultGenericSearchPanel<Follow
 
 			Collection<Integer> selectedProjects = (Collection<Integer>) projectField.getValue();
 			if (CollectionUtils.isNotEmpty(selectedProjects)) {
-				searchCriteria.setExtraTypeIds(new SetSearchField<>(SearchField.AND, selectedProjects));
+				searchCriteria.setExtraTypeIds(new SetSearchField<>(SearchField.AND,
+						selectedProjects.toArray(new Integer[selectedProjects.size()])));
 			} else {
 				List<Integer> keys = new ArrayList<>();
 				for (SimpleProject project : projects) {
 					keys.add(project.getId());
 				}
-				searchCriteria.setExtraTypeIds(new SetSearchField<>(SearchField.AND, keys));
+				searchCriteria.setExtraTypeIds(new SetSearchField<>(SearchField.AND, keys.toArray(new Integer[keys.size()])));
 			}
 
 			return searchCriteria;

@@ -36,11 +36,6 @@ public class SetSearchField<T> extends SearchField {
     public SetSearchField() {
     }
 
-    @SuppressWarnings("unchecked")
-    public SetSearchField(String oper, Collection<T> vals) {
-        this(oper, (T[]) vals.toArray());
-    }
-
     public SetSearchField(T... values) {
         this(SearchField.AND, values);
     }
