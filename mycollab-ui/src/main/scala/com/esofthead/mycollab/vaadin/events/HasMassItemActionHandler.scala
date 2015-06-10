@@ -21,5 +21,5 @@ package com.esofthead.mycollab.vaadin.events
  * @since 5.0.9
  */
 trait HasMassItemActionHandler {
-  def setMassActionHandler (handler: MassItemActionHandler)
+    def setMassActionHandler(handler: MassItemActionHandler)
 }

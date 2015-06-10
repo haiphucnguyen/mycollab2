@@ -46,9 +46,7 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
 
 	@Override
 	protected void postInitView() {
-		EventBusFactory
-				.getInstance()
-				.register(
+		EventBusFactory.getInstance().register(
 						new ApplicationEventListener<AccountCustomizeEvent.GotoUploadLogo>() {
 							private static final long serialVersionUID = 7232775383781008850L;
 
