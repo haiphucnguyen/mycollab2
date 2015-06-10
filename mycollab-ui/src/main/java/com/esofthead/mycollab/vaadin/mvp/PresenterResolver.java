@@ -36,7 +36,7 @@ import static com.esofthead.mycollab.vaadin.ui.MyCollabSession.PRESENTER_VAL;
  */
 public final class PresenterResolver {
     private static final Logger LOG = LoggerFactory.getLogger(PresenterResolver.class);
-    
+
     private static Set<Class<? extends IPresenter>> presenterClasses;
 
     static {
