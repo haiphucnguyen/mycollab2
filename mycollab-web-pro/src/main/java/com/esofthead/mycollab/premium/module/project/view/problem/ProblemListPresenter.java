@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -16,12 +12,16 @@ import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 
@@ -53,10 +53,9 @@ public class ProblemListPresenter extends
 
 					@Override
 					protected void onSelectExtra(String id) {
-						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+						if (ViewItemAction.MAIL_ACTION().equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
-						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
-								.equals(id)) {
+						} else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
 							MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
 									"Mass Update Problems",
 									ProblemListPresenter.this);

@@ -9,10 +9,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.*;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -61,16 +63,15 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         tableItem = new DefaultPagedBeanTable<>(
                 ApplicationContextUtil.getSpringBean(RiskService.class),
                 SimpleRisk.class, RiskListView.VIEW_DEF_ID,
-                RiskTableFieldDef.selected, Arrays.asList(
-                RiskTableFieldDef.name, RiskTableFieldDef.assignUser,
-                RiskTableFieldDef.datedue, RiskTableFieldDef.rating));
+                RiskTableFieldDef.selected(), Arrays.asList(
+                RiskTableFieldDef.name(), RiskTableFieldDef.assignUser(),
+                RiskTableFieldDef.datedue(), RiskTableFieldDef.rating()));
 
         tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Object generateCell(final Table source, final Object itemId,
-                                       final Object columnId) {
+            public Object generateCell(Table source, Object itemId, Object columnId) {
                 final SimpleRisk item = tableItem.getBeanByIndex(itemId);
                 final CheckBoxDecor cb = new CheckBoxDecor("", item.isSelected());
                 cb.setImmediate(true);
@@ -94,8 +95,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             @Override
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
-                final SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                final LabelLink b = new LabelLink(risk.getRiskname(),
+                SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+                LabelLink b = new LabelLink(risk.getRiskname(),
                         ProjectLinkBuilder.generateRiskPreviewFullLink(
                                 risk.getProjectid(), risk.getId()));
 
@@ -114,16 +115,12 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             }
         });
 
-        tableItem.addGeneratedColumn("assignedToUserFullName",
-                new Table.ColumnGenerator() {
+        tableItem.addGeneratedColumn("assignedToUserFullName", new Table.ColumnGenerator() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public com.vaadin.ui.Component generateCell(
-                            final Table source, final Object itemId,
-                            final Object columnId) {
-                        final SimpleRisk risk = RiskListViewImpl.this.tableItem
-                                .getBeanByIndex(itemId);
+                    public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
+                        SimpleRisk risk = tableItem.getBeanByIndex(itemId);
                         return new ProjectUserLink(risk.getAssigntouser(), risk
                                 .getAssignToUserAvatarId(), risk
                                 .getAssignedToUserFullName());
@@ -131,16 +128,12 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                     }
                 });
 
-        tableItem.addGeneratedColumn("raisedByUserFullName",
-                new Table.ColumnGenerator() {
+        tableItem.addGeneratedColumn("raisedByUserFullName", new Table.ColumnGenerator() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public com.vaadin.ui.Component generateCell(
-                            Table source, Object itemId,
-                            Object columnId) {
-                        SimpleRisk risk = tableItem
-                                .getBeanByIndex(itemId);
+                    public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
+                        SimpleRisk risk = tableItem.getBeanByIndex(itemId);
                         return new ProjectUserLink(risk.getRaisedbyuser(), risk
                                 .getRaisedByUserAvatarId(), risk
                                 .getRaisedByUserFullName());
@@ -152,8 +145,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                                                        Object itemId, final Object columnId) {
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
                 SimpleRisk item = tableItem.getBeanByIndex(itemId);
                 return new ELabel().prettyDate(item.getDatedue());
             }
@@ -163,8 +155,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                                                        Object itemId, Object columnId) {
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
                 SimpleRisk item = tableItem.getBeanByIndex(itemId);
                 RatingStars tinyRs = new RatingStars();
                 tinyRs.setValue(item.getLevel());
@@ -196,41 +187,23 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         selectOptionButton.setWidthUndefined();
         layout.addComponent(selectOptionButton);
 
-        Button deleteBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
+        Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
         deleteBtn.setEnabled(CurrentProjectVariables
                 .canAccess(ProjectRolePermissionCollections.RISKS));
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
-        if (CurrentProjectVariables
-                .canAccess(ProjectRolePermissionCollections.RISKS)) {
-            tableActionControls.addActionItem(
-                    MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
-                    "delete", "Delete");
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.RISKS)) {
+            tableActionControls.addDeleteActionItem();
         }
 
-        tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
-                FontAwesome.ENVELOPE_O,
-                "mail", "Mail");
-        tableActionControls.addDownloadActionItem(
-                ReportExportType.PDF,
-                FontAwesome.FILE_PDF_O,
-                "export", "export.pdf", "Export pdf");
-        tableActionControls.addDownloadActionItem(
-                ReportExportType.EXCEL,
-                FontAwesome.FILE_EXCEL_O,
-                "export", "export.xlsx", "Export excel");
-        tableActionControls.addDownloadActionItem(
-                ReportExportType.CSV,
-                FontAwesome.FILE_TEXT_O,
-                "export", "export.csv", "Export csv");
+        tableActionControls.addMailActionItem();
+        tableActionControls.addDownloadPdfActionItem();
+        tableActionControls.addDownloadExcelActionItem();
+        tableActionControls.addDownloadCsvActionItem();
 
-        if (CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.RISKS)) {
-            tableActionControls.addActionItem(
-                    MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
-                    "update", "Update");
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+            tableActionControls.addMassUpdateActionItem();
         }
 
         tableActionControls.setVisible(false);
@@ -246,8 +219,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
             @Override
             public void buttonClick(ClickEvent event) {
                 UI.getCurrent().addWindow(
-                        new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID,
-                                tableItem));
+                        new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID, tableItem));
 
             }
         });

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -31,7 +31,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.mvp.MassUpdateCommand;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
@@ -69,7 +69,7 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
 
                     @Override
                     protected void onSelectExtra(String id) {
-                        if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+                        if (ViewItemAction.MAIL_ACTION().equals(id)) {
                             if (isSelectAll) {
                                 NotificationUtil.showWarningNotification(AppContext
                                         .getMessage(ErrorI18nEnum.NOT_SUPPORT_SENDING_EMAIL_TO_ALL_USERS));
@@ -86,8 +86,7 @@ public class LeadListPresenter extends CrmGenericListPresenter<LeadListView, Lea
                                 UI.getCurrent().addWindow(new MailFormWindow(lstMail));
                             }
 
-                        } else if (MassItemActionHandler.MASS_UPDATE_ACTION
-                                .equals(id)) {
+                        } else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
                             MassUpdateLeadWindow massUpdateWindow = new MassUpdateLeadWindow(AppContext.getMessage(
                                     GenericI18Enum.WINDOW_MASS_UPDATE_TITLE, "Lead"),
                                     LeadListPresenter.this);

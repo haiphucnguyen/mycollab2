@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,7 +30,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -45,8 +45,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ActivityListPresenter
-        extends
+public class ActivityListPresenter extends
         CrmGenericListPresenter<ActivityListView, ActivitySearchCriteria, SimpleActivity> {
     private static final long serialVersionUID = 1L;
 
@@ -63,7 +62,7 @@ public class ActivityListPresenter
 
                     @Override
                     protected void onSelectExtra(String id) {
-                        if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+                        if (ViewItemAction.MAIL_ACTION().equals(id)) {
                             UI.getCurrent().addWindow(new MailFormWindow());
                         }
                     }

@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -16,12 +12,16 @@ import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.DefaultMassEditActionHandler;
-import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
+import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 
@@ -29,8 +29,7 @@ import com.vaadin.ui.UI;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class RiskListPresenter extends
-		ProjectGenericListPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
+public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
 		implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
 	private static final long serialVersionUID = 1L;
 
@@ -50,11 +49,10 @@ public class RiskListPresenter extends
 
 					@Override
 					protected void onSelectExtra(String id) {
-						if (MassItemActionHandler.MAIL_ACTION.equals(id)) {
+						if (ViewItemAction.MAIL_ACTION().equals(id)) {
 							UI.getCurrent().addWindow(new MailFormWindow());
 
-						} else if (MassItemActionHandler.MASS_UPDATE_ACTION
-								.equals(id)) {
+						} else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
 							MassUpdateRiskWindow massUpdateWindow = new MassUpdateRiskWindow(
 									"Mass Update Risk", RiskListPresenter.this);
 							UI.getCurrent().addWindow(massUpdateWindow);
@@ -76,8 +74,7 @@ public class RiskListPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.RISKS)) {
+		if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
 			RiskContainer riskContainer = (RiskContainer) container;
 			riskContainer.removeAllComponents();
 			riskContainer.addComponent(view.getWidget());

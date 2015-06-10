@@ -17,18 +17,17 @@ public class ProblemListCustomizeWindow extends CustomizedTableWindow {
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("rawtypes")
-	public ProblemListCustomizeWindow(String viewId,
-			AbstractPagedBeanTable table) {
+	public ProblemListCustomizeWindow(String viewId, AbstractPagedBeanTable table) {
 		super(viewId, table);
 	}
 
 	@Override
 	protected Collection<TableViewField> getAvailableColumns() {
-		return Arrays.asList(ProblemTableFieldDef.assignUser,
-				ProblemTableFieldDef.datedue, ProblemTableFieldDef.description,
-				ProblemTableFieldDef.impact, ProblemTableFieldDef.name,
-				ProblemTableFieldDef.priority, ProblemTableFieldDef.raisedby,
-				ProblemTableFieldDef.rating, ProblemTableFieldDef.status);
+		return Arrays.asList(ProblemTableFieldDef.assignUser(),
+				ProblemTableFieldDef.datedue(), ProblemTableFieldDef.description(),
+				ProblemTableFieldDef.impact(), ProblemTableFieldDef.name(),
+				ProblemTableFieldDef.priority(), ProblemTableFieldDef.raisedby(),
+				ProblemTableFieldDef.rating(), ProblemTableFieldDef.status());
 	}
 
 }

@@ -9,10 +9,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.*;
+import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -62,11 +64,11 @@ public class ProblemListViewImpl extends AbstractPageView implements
         tableItem = new DefaultPagedBeanTable<>(
                 ApplicationContextUtil.getSpringBean(ProblemService.class),
                 SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
-                ProblemTableFieldDef.selected, Arrays.asList(
-                ProblemTableFieldDef.name,
-                ProblemTableFieldDef.assignUser,
-                ProblemTableFieldDef.datedue,
-                ProblemTableFieldDef.rating));
+                ProblemTableFieldDef.selected(), Arrays.asList(
+                ProblemTableFieldDef.name(),
+                ProblemTableFieldDef.assignUser(),
+                ProblemTableFieldDef.datedue(),
+                ProblemTableFieldDef.rating()));
 
         tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -74,10 +76,8 @@ public class ProblemListViewImpl extends AbstractPageView implements
             @Override
             public Object generateCell(final Table source, final Object itemId,
                                        final Object columnId) {
-                final SimpleProblem problem = tableItem
-                        .getBeanByIndex(itemId);
-                CheckBoxDecor cb = new CheckBoxDecor("", problem
-                        .isSelected());
+                final SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                CheckBoxDecor cb = new CheckBoxDecor("", problem.isSelected());
                 cb.setImmediate(true);
                 cb.addValueChangeListener(new ValueChangeListener() {
                     private static final long serialVersionUID = 1L;
@@ -144,8 +144,7 @@ public class ProblemListViewImpl extends AbstractPageView implements
                     public com.vaadin.ui.Component generateCell(
                             Table source, Object itemId,
                             Object columnId) {
-                        SimpleProblem problem = tableItem
-                                .getBeanByIndex(itemId);
+                        SimpleProblem problem = tableItem.getBeanByIndex(itemId);
                         return new ProjectUserLink(problem.getAssigntouser(),
                                 problem.getRaisedByUserAvatarId(), problem
                                 .getRaisedByUserFullName());
@@ -199,57 +198,30 @@ public class ProblemListViewImpl extends AbstractPageView implements
         selectOptionButton.setWidthUndefined();
         layout.addComponent(selectOptionButton);
 
-        Button deleteBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
-        deleteBtn.setEnabled(CurrentProjectVariables
-                .canAccess(ProjectRolePermissionCollections.PROBLEMS));
+        Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
+        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROBLEMS));
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
-        if (CurrentProjectVariables
-                .canAccess(ProjectRolePermissionCollections.PROBLEMS)) {
-            tableActionControls.addActionItem(
-                    MassItemActionHandler.DELETE_ACTION, FontAwesome.TRASH_O,
-                    "delete", AppContext
-                            .getMessage(GenericI18Enum.BUTTON_DELETE));
+        if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROBLEMS)) {
+            tableActionControls.addDeleteActionItem();
         }
 
-        tableActionControls.addActionItem(MassItemActionHandler.MAIL_ACTION,
-                FontAwesome.ENVELOPE_O,
-                "mail", AppContext.getMessage(GenericI18Enum.BUTTON_MAIL));
+        tableActionControls.addMailActionItem();
+        tableActionControls.addDownloadPdfActionItem();
+        tableActionControls.addDownloadExcelActionItem();
+        tableActionControls.addDownloadCsvActionItem();
 
-        tableActionControls.addDownloadActionItem(
-                ReportExportType.PDF,
-                FontAwesome.FILE_PDF_O,
-                "export", "export.pdf",
-                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF));
-
-        tableActionControls.addDownloadActionItem(
-                ReportExportType.EXCEL,
-                FontAwesome.FILE_EXCEL_O,
-                "export", "export.xlsx",
-                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_EXCEL));
-
-        tableActionControls.addDownloadActionItem(
-                ReportExportType.CSV,
-                FontAwesome.FILE_TEXT_O,
-                "export", "export.csv",
-                AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_CSV));
-
-        if (CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
-            tableActionControls.addActionItem(
-                    MassItemActionHandler.MASS_UPDATE_ACTION, FontAwesome.DATABASE,
-                    "update", AppContext
-                            .getMessage(GenericI18Enum.TOOLTIP_MASS_UPDATE));
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
+            tableActionControls.addMassUpdateActionItem();
         }
 
         tableActionControls.setVisible(false);
         tableActionControls.setWidthUndefined();
 
-        layout.addComponent(tableActionControls);
         selectedItemsNumberLabel.setWidth("100%");
-        layout.with(selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER).expand(selectedItemsNumberLabel);
+        layout.with(tableActionControls, selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment
+                .MIDDLE_CENTER);
 
         Button customizeViewBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
