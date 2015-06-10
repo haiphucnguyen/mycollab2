@@ -33,50 +33,48 @@ import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 /**
  * @author MyCollab Ltd.
- *
  * @since 4.4.0
- *
  */
 public class CrmUrlResolver extends UrlResolver {
 
-	public UrlResolver build() {
-		this.addSubResolver("account", new AccountUrlResolver());
-		this.addSubResolver("contact", new ContactUrlResolver());
-		this.addSubResolver("campaign", new CampaignUrlResolver());
-		this.addSubResolver("lead", new LeadUrlResolver());
-		this.addSubResolver("opportunity", new OpportunityUrlResolver());
-		this.addSubResolver("cases", new CaseUrlResolver());
-		this.addSubResolver("activity", new ActivityUrlResolver());
-		return this;
-	}
+    public UrlResolver build() {
+        this.addSubResolver("account", new AccountUrlResolver());
+        this.addSubResolver("contact", new ContactUrlResolver());
+        this.addSubResolver("campaign", new CampaignUrlResolver());
+        this.addSubResolver("lead", new LeadUrlResolver());
+        this.addSubResolver("opportunity", new OpportunityUrlResolver());
+        this.addSubResolver("cases", new CaseUrlResolver());
+        this.addSubResolver("activity", new ActivityUrlResolver());
+        return this;
+    }
 
-	@Override
-	public void handle(String... params) {
-		if (!ModuleHelper.isCurrentCrmModule()) {
-			EventBusFactory.getInstance().post(
-					new ShellEvent.GotoCrmModule(this, params));
-		} else {
-			super.handle(params);
-		}
-	}
+    @Override
+    public void handle(String... params) {
+        if (!ModuleHelper.isCurrentCrmModule()) {
+            EventBusFactory.getInstance().post(
+                    new ShellEvent.GotoCrmModule(this, params));
+        } else {
+            super.handle(params);
+        }
+    }
 
-	@Override
-	protected void handlePage(String... params) {
-		super.handlePage(params);
-		EventBusFactory
-				.getInstance()
-				.post(new CrmEvent.GotoContainer(
-						this,
-						new CrmModuleScreenData.GotoModule(
-								AppContext
-										.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER))));
-	}
+    @Override
+    protected void handlePage(String... params) {
+        super.handlePage(params);
+        EventBusFactory
+                .getInstance()
+                .post(new CrmEvent.GotoContainer(
+                        this,
+                        new CrmModuleScreenData.GotoModule(
+                                AppContext
+                                        .getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER))));
+    }
 
-	@Override
-	protected void defaultPageErrorHandler() {
-		EventBusFactory.getInstance().post(
-				new ShellEvent.GotoCrmModule(this, null));
+    @Override
+    protected void defaultPageErrorHandler() {
+        EventBusFactory.getInstance().post(
+                new ShellEvent.GotoCrmModule(this, null));
 
-	}
+    }
 
 }
