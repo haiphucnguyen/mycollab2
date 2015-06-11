@@ -25,6 +25,13 @@
             <version>5.0.8</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-test</artifactId>
+            <version>5.0.8</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
