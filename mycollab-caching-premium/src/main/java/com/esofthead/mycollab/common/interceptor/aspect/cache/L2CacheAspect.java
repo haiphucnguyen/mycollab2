@@ -3,7 +3,7 @@ package com.esofthead.mycollab.common.interceptor.aspect.cache;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import org.apache.commons.lang3.ArrayUtils;
+import com.esofthead.mycollab.core.utils.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

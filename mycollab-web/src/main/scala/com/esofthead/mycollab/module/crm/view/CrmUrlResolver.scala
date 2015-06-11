@@ -39,7 +39,7 @@ class CrmUrlResolver extends UrlResolver {
             EventBusFactory.getInstance.post(new ShellEvent.GotoCrmModule(this, params))
         }
         else {
-            super.handle(params:_*)
+            super.handle(params: _*)
         }
     }
 

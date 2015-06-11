@@ -20,7 +20,7 @@ class ShellUrlResolver extends UrlResolver {
     def navigateByFragement(fragement: String) {
         if (!StringUtils.isBlank(fragement)) {
             val tokens: Array[String] = fragement.split("/")
-            this.handle(tokens:_*)
+            this.handle(tokens: _*)
         }
     }
 

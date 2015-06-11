@@ -21,7 +21,7 @@ class FileUrlResolver extends UrlResolver {
             EventBusFactory.getInstance.post(new ShellEvent.GotoFileModule(this, params))
         }
         else {
-            super.handle(params:_*)
+            super.handle(params: _*)
         }
     }
 
