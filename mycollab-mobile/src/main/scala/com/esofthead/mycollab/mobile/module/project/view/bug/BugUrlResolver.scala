@@ -31,8 +31,7 @@ class BugUrlResolver extends ProjectUrlResolver {
             val projectId: Int = new UrlTokenizer(params(0)).getInt
             val criteria: BugSearchCriteria = new BugSearchCriteria
             criteria.setProjectId(new NumberSearchField(SearchField.AND, projectId))
-            criteria.setStatuses(new SetSearchField[String](
-                Array[String](BugStatus.InProgress.name, BugStatus.Open.name, BugStatus.ReOpened.name):_*))
+            criteria.setStatuses(new SetSearchField[String](BugStatus.InProgress.name, BugStatus.Open.name, BugStatus.ReOpened.name))
             val parameter: BugFilterParameter = new BugFilterParameter("Open Bugs", criteria)
             val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                 new BugScreenData.Search(parameter))

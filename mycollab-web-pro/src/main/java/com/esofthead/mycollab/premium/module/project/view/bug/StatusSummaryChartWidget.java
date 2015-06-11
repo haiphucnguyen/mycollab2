@@ -18,7 +18,6 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -85,7 +84,7 @@ public class StatusSummaryChartWidget extends CssLayout implements
                 DataSeriesItem dataSeries = series.get(legendItemClickEvent.getSeriesItemIndex());
                 String key = dataSeries.getName();
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
-                searchCriteria.setStatuses(new SetSearchField<>(SearchField.AND, new String[] { key }));
+                searchCriteria.setStatuses(new SetSearchField<>(key));
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 BugFilterParameter param = new BugFilterParameter(key + " Bug List", searchCriteria);
                 EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(param)));

@@ -18,7 +18,6 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -43,23 +42,21 @@ import com.vaadin.ui.CssLayout;
 import java.util.List;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewComponent
 public class PrioritySummaryChartWidget extends CssLayout implements
-		IPrioritySummaryChartWidget {
+        IPrioritySummaryChartWidget {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public PrioritySummaryChartWidget() {
-		this.setSizeFull();
-	}
+    public PrioritySummaryChartWidget() {
+        this.setSizeFull();
+    }
 
-	@Override
-	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
+    @Override
+    public void setSearchCriteria(BugSearchCriteria searchCriteria) {
         this.removeAllComponents();
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
 
@@ -92,7 +89,7 @@ public class PrioritySummaryChartWidget extends CssLayout implements
                 DataSeriesItem dataSeries = series.get(legendItemClickEvent.getSeriesItemIndex());
                 String priority = dataSeries.getName();
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
-                searchCriteria.setPriorities(new SetSearchField<>(SearchField.AND, new String[] { priority }));
+                searchCriteria.setPriorities(new SetSearchField<>(priority));
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 BugFilterParameter param = new BugFilterParameter(priority + " Bug List", searchCriteria);
                 EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(param)));
@@ -119,13 +116,13 @@ public class PrioritySummaryChartWidget extends CssLayout implements
         this.addComponent(chart);
     }
 
-	@Override
-	public ComponentContainer getWidget() {
-		return this;
-	}
+    @Override
+    public ComponentContainer getWidget() {
+        return this;
+    }
 
-	@Override
-	public void addViewListener(ViewListener listener) {
+    @Override
+    public void addViewListener(ViewListener listener) {
 
-	}
+    }
 }

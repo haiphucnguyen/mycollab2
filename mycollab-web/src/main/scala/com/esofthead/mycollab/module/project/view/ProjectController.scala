@@ -263,8 +263,8 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                 if (params == null) {
                     val criteria: BugSearchCriteria = new BugSearchCriteria
                     criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
-                    criteria.setStatuses(new SetSearchField[String](SearchField.AND, Array[String](BugStatus.InProgress.name,
-                        BugStatus.Open.name, BugStatus.ReOpened.name): _*))
+                    criteria.setStatuses(new SetSearchField[String](BugStatus.InProgress.name,
+                        BugStatus.Open.name, BugStatus.ReOpened.name))
                     val parameter: BugFilterParameter = new BugFilterParameter("Open Bugs", criteria)
                     projectView.gotoBugView(new BugScreenData.Search(parameter))
                 }

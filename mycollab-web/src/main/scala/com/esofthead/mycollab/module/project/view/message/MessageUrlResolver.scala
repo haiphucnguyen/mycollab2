@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.project.view.message
 
 import com.esofthead.mycollab.common.UrlTokenizer
-import com.esofthead.mycollab.core.arguments.SetSearchField
+import com.esofthead.mycollab.core.arguments.{SearchField, SetSearchField}
 import com.esofthead.mycollab.eventmanager.EventBusFactory
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria
 import com.esofthead.mycollab.module.project.events.ProjectEvent

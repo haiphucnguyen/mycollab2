@@ -35,16 +35,12 @@ public class SetSearchField<T> extends SearchField {
     public SetSearchField() {
     }
 
-    public SetSearchField(T... values) {
-        this(SearchField.AND, values);
-    }
-
-    public SetSearchField(String oper, T... vals) {
+    public SetSearchField(T... vals) {
         if (ArrayUtils.isNotEmpty(vals)) {
             CollectionUtils.addAll(values, vals);
         }
 
-        this.operation = oper;
+        this.operation = SearchField.AND;
     }
 
     public Set<T> getValues() {
