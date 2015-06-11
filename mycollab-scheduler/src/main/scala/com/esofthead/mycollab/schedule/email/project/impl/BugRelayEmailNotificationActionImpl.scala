@@ -70,7 +70,8 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
 
         val emailNotification: SimpleRelayEmailNotification = context.getEmailNotification
         val relatedProject: SimpleProject = projectService.findById(bean.getProjectid, emailNotification.getSaccountid)
-        val bugCode = new WebItem(("[" + relatedProject.getShortname + "-" + bean.getBugkey + "]"), ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName))
+        val bugCode = new WebItem(("[" + relatedProject.getShortname + "-" + bean.getBugkey + "]"),
+            ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName))
 
         val summary = bean.getSummary
         val summaryLink: String = ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bean.getBugkey, bean.getProjectShortName)
@@ -108,21 +109,11 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
         import scala.collection.JavaConverters._
         val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
         val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
-        val notifyUsers: mutable.Buffer[SimpleUser] = notification.getNotifyUsers.asScala
+        val notifyUsers: List[SimpleUser] = notification.getNotifyUsers.asScala.toList
 
         for (notificationSetting <- notificationSettings) {
             if (NotificationType.None.name == notificationSetting.getLevel) {
-                var i: Int = notifyUsers.size - 1
-                breakable {
-                    while (i >= 0) {
-                        val notifyUser: SimpleUser = notifyUsers(i)
-                        if (notifyUser.getUsername == notificationSetting.getUsername) {
-                            notifyUsers remove i
-                            break()
-                        }
-                        i = i - 1
-                    }
-                }
+                
             }
             else if (NotificationType.Minimal.name == notificationSetting.getLevel) {
                 var isAlreadyInList: Boolean = false

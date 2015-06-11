@@ -106,22 +106,21 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
         import scala.collection.JavaConverters._
         val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
 
-        val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
-
-        val inListUsers: List[SimpleUser] = notification.getNotifyUsers.asScala.toList
-
         if (notificationSettings != null && notificationSettings.size > 0) {
+            val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
+            val notifyUsers: List[SimpleUser] = notification.getNotifyUsers.asScala.toList
+
             import scala.collection.JavaConversions._
             for (notificationSetting <- notificationSettings) {
                 if (NotificationType.None.name == notificationSetting.getLevel) {
                     {
-                        var i: Int = inListUsers.size - 1
+                        var i: Int = notifyUsers.size - 1
                         breakable {
                             while (i >= 0) {
                                 {
-                                    val inUser: SimpleUser = inListUsers.get(i)
+                                    val inUser: SimpleUser = notifyUsers.get(i)
                                     if ((inUser.getUsername != null) && (inUser.getUsername == notificationSetting.getUsername)) {
-                                        inListUsers.remove(i)
+                                        notifyUsers.remove(i)
                                         break()
                                     }
                                 }
@@ -133,7 +132,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
                 else if (NotificationType.Minimal.name == notificationSetting.getLevel) {
                     var isAlreadyInList: Boolean = false
                     breakable {
-                        for (user <- inListUsers) {
+                        for (user <- notifyUsers) {
                             if ((user.getUsername != null) && (user.getUsername == notificationSetting.getUsername)) {
                                 isAlreadyInList = true
                                 break()
@@ -148,7 +147,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
                             breakable {
                                 for (user <- activeUsers) {
                                     if ((user.getUsername != null) && (user.getUsername == notificationSetting.getUsername)) {
-                                        inListUsers.add(user)
+                                        notifyUsers.add(user)
                                         break()
                                     }
                                 }
@@ -159,7 +158,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
                 else if (NotificationType.Full.name == notificationSetting.getLevel) {
                     var isAlreadyInList: Boolean = false
                     breakable {
-                        for (user <- inListUsers) {
+                        for (user <- notifyUsers) {
                             if ((user.getUsername != null) && (user.getUsername == notificationSetting.getUsername)) {
                                 isAlreadyInList = true
                                 break()
@@ -173,7 +172,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
                         breakable {
                             for (user <- activeUsers) {
                                 if ((user.getUsername != null) && (user.getUsername == notificationSetting.getUsername)) {
-                                    inListUsers.add(user)
+                                    notifyUsers.add(user)
                                     break()
                                 }
                             }
