@@ -39,10 +39,10 @@ class ProjectSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[ProjectSendingRelayEmailNotificationJob])
 
     @Autowired
-    private var projectService: ProjectService = _
+    var projectService: ProjectService = _
 
     @Autowired
-    private var relayNotificationService: RelayEmailNotificationService = _
+    var relayNotificationService: RelayEmailNotificationService = _
 
     def executeJob(context: JobExecutionContext) {
         import scala.collection.JavaConverters._

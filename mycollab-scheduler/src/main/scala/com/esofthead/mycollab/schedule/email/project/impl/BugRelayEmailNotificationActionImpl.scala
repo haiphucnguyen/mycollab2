@@ -108,7 +108,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
         import scala.collection.JavaConverters._
         val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
         val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
-        val notifyUsers: mutable.Buffer[SimpleUser] = notification.getNotifyUsers.asScala.toBuffer
+        val notifyUsers: mutable.Buffer[SimpleUser] = notification.getNotifyUsers.asScala
 
         for (notificationSetting <- notificationSettings) {
             if (NotificationType.None.name == notificationSetting.getLevel) {
