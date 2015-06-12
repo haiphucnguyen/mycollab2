@@ -42,7 +42,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     protected var siteUrl: String = _
 
     def sendNotificationForCreateAction(notification: SimpleRelayEmailNotification) {
-        val notifiers: List[SimpleUser] = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
+        val notifiers: Set[SimpleUser] = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
         if (notifiers != null && notifiers.nonEmpty) {
             onInitAction(notification)
             import scala.collection.JavaConversions._
@@ -66,7 +66,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     }
 
     def sendNotificationForUpdateAction(notification: SimpleRelayEmailNotification) {
-        val notifiers: List[SimpleUser] = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
+        val notifiers: Set[SimpleUser] = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
         if (notifiers != null && notifiers.nonEmpty) {
             onInitAction(notification)
             import scala.collection.JavaConversions._
@@ -94,7 +94,7 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
     }
 
     def sendNotificationForCommentAction(notification: SimpleRelayEmailNotification) {
-        val notifiers: List[SimpleUser] = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
+        val notifiers: Set[SimpleUser] = getListNotifyUsersWithFilter(notification.asInstanceOf[ProjectRelayEmailNotification])
         if (notifiers != null && notifiers.nonEmpty) {
             onInitAction(notification)
             import scala.collection.JavaConversions._
@@ -134,5 +134,5 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
 
     protected def getCommentSubject(context: MailContext[B]): String
 
-    protected def getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List[SimpleUser]
+    protected def getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): Set[SimpleUser]
 }

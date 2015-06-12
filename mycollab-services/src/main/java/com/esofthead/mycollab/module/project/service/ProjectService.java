@@ -44,14 +44,14 @@ public interface ProjectService extends
 			@CacheKey Integer sAccountId);
 
 	@Cacheable
-	SimpleProject findById(int projectId, @CacheKey int sAccountId);
+	SimpleProject findById(Integer projectId, @CacheKey Integer sAccountId);
 
-	Integer getTotalActiveProjectsOfInvolvedUsers(String username, @CacheKey int sAccountId);
+	Integer getTotalActiveProjectsOfInvolvedUsers(String username, @CacheKey Integer sAccountId);
 
 	@Cacheable
 	Integer getTotalActiveProjectsInAccount(@CacheKey Integer sAccountId);
 
-	String getSubdomainOfProject(int projectId);
+	String getSubdomainOfProject(Integer projectId);
 
 	List<ProjectRelayEmailNotification> findProjectRelayEmailNotifications();
 }

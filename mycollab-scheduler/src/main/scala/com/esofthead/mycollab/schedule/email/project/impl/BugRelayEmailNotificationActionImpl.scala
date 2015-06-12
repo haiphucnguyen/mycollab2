@@ -105,11 +105,12 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
 
     protected def getItemFieldMapper: ItemFieldMapper = mapper
 
-    protected def getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): List[SimpleUser] = {
+    protected def getListNotifyUsersWithFilter(notification: ProjectRelayEmailNotification): Set[SimpleUser] = {
         import scala.collection.JavaConverters._
-        val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
+        val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.
+            findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
         val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
-        val notifyUsers: List[SimpleUser] = notification.getNotifyUsers.asScala.toList
+        val notifyUsers: Set[SimpleUser] = notification.getNotifyUsers.asScala.toSet
 
         for (notificationSetting <- notificationSettings) {
             if (NotificationType.None.name == notificationSetting.getLevel) {
@@ -132,7 +133,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
                         breakable {
                             for (user <- activeUsers) {
                                 if (user.getUsername == notificationSetting.getUsername) {
-                                    notifyUsers prepend user
+//                                    notifyUsers prepend user
                                     break()
                                 }
                             }
@@ -141,30 +142,11 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
                 }
             }
             else if (NotificationType.Full.name == notificationSetting.getLevel) {
-                var isAlreadyInList: Boolean = false
-                breakable {
-                    for (user <- notifyUsers) {
-                        if ((user.getUsername != null) && (user.getUsername == notificationSetting.getUsername)) {
-                            isAlreadyInList = true
-                            break()
-                        }
-                    }
-                }
-
-                if (!isAlreadyInList) {
-                    breakable {
-                        for (user <- activeUsers) {
-                            if ((user.getUsername != null) && (user.getUsername == notificationSetting.getUsername)) {
-                                notifyUsers prepend user
-                                break()
-                            }
-                        }
-                    }
-                }
+//                notifyUsers += notificationSetting.getUsername
             }
         }
 
-        notifyUsers.toList
+        notifyUsers
     }
 
     class BugFieldNameMapper extends ItemFieldMapper {
