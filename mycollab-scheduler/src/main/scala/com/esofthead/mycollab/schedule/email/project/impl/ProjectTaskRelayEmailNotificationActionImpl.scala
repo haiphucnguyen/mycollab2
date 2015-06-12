@@ -117,15 +117,18 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
                         case None => {
                             val task: SimpleTask = projectTaskService.findById(notification.getTypeid.toInt, notification.getSaccountid)
                             if (notificationSetting.getUsername == task.getAssignuser) {
-
+                                val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
+                                if (prjMember != null) {
+                                    notifyUsers = notifyUsers + prjMember
+                                }
                             }
                         }
                     }
                 }
                 else if (NotificationType.Full.name == notificationSetting.getLevel) {
-                    val prjMember: SimpleProjectMember = projectMemberService.findMemberByUsername(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
+                    val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
                     if (prjMember != null) {
-//                        notifyUsers += prjMember
+                        notifyUsers = notifyUsers + prjMember
                     }
                 }
             }

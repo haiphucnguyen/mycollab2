@@ -110,39 +110,32 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
         val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.
             findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
         val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
-        val notifyUsers: Set[SimpleUser] = notification.getNotifyUsers.asScala.toSet
+        var notifyUsers: Set[SimpleUser] = notification.getNotifyUsers.asScala.toSet
 
         for (notificationSetting <- notificationSettings) {
             if (NotificationType.None.name == notificationSetting.getLevel) {
-                
+                notifyUsers.filter(notifyUser => notifyUser.getUsername == notificationSetting.getUsername)
             }
             else if (NotificationType.Minimal.name == notificationSetting.getLevel) {
-                var isAlreadyInList: Boolean = false
-                breakable {
-                    for (user <- notifyUsers) {
-                        if (user.getUsername == notificationSetting.getUsername) {
-                            isAlreadyInList = true
-                            break()
-                        }
-                    }
-                }
-
-                if (!isAlreadyInList) {
-                    val bug: SimpleBug = bugService.findById(notification.getTypeid.toInt, notification.getSaccountid)
-                    if (bug.getAssignuser != null && (notificationSetting.getUsername == bug.getAssignuser)) {
-                        breakable {
-                            for (user <- activeUsers) {
-                                if (user.getUsername == notificationSetting.getUsername) {
-//                                    notifyUsers prepend user
-                                    break()
-                                }
+                val findResult: Option[SimpleUser] = notifyUsers.find(notifyUser => notifyUser.getUsername == notificationSetting.getUsername);
+                findResult match {
+                    case Some(user) => notifyUsers = notifyUsers + user
+                    case None => {
+                        val bug: SimpleBug = bugService.findById(notification.getTypeid.toInt, notification.getSaccountid)
+                        if (notificationSetting.getUsername == bug.getAssignuser) {
+                            val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
+                            if (prjMember != null) {
+                                notifyUsers = notifyUsers + prjMember
                             }
                         }
                     }
                 }
             }
             else if (NotificationType.Full.name == notificationSetting.getLevel) {
-//                notifyUsers += notificationSetting.getUsername
+                val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
+                if (prjMember != null) {
+                    notifyUsers = notifyUsers + prjMember
+                }
             }
         }
 

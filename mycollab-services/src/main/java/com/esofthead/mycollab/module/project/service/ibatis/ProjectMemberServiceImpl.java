@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -214,9 +215,12 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
     }
 
     @Override
-    public List<SimpleUser> getActiveUsersInProjects(List<Integer> projectIds,
-            Integer sAccountId) {
-        return projectMemberMapperExt.getActiveUsersInProjects(projectIds,
-                sAccountId);
+    public List<SimpleUser> getActiveUsersInProjects(List<Integer> projectIds, Integer sAccountId) {
+        return projectMemberMapperExt.getActiveUsersInProjects(projectIds, sAccountId);
+    }
+
+    @Override
+    public SimpleUser getActiveUserOfProject(String username, Integer projectId, @CacheKey Integer sAccountId) {
+        return projectMemberMapperExt.getActiveUserOfProject(username, projectId);
     }
 }
