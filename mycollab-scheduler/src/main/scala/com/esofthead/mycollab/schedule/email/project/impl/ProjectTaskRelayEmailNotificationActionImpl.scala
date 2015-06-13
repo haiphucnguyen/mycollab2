@@ -113,7 +113,6 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
                 else if (NotificationType.Minimal.name == notificationSetting.getLevel) {
                     val findResult: Option[SimpleUser] = notifyUsers.find(notifyUser => notifyUser.getUsername == notificationSetting.getUsername);
                     findResult match {
-                        case Some(user) => notifyUsers = notifyUsers + user
                         case None => {
                             val task: SimpleTask = projectTaskService.findById(notification.getTypeid.toInt, notification.getSaccountid)
                             if (notificationSetting.getUsername == task.getAssignuser) {
