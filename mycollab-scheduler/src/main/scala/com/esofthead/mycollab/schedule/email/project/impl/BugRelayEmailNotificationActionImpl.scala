@@ -109,7 +109,6 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
         import scala.collection.JavaConverters._
         val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.
             findNotifications(notification.getProjectId, notification.getSaccountid).asScala.toList
-        val activeUsers: List[SimpleUser] = projectMemberService.getActiveUsersInProject(notification.getProjectId, notification.getSaccountid).asScala.toList
         var notifyUsers: Set[SimpleUser] = notification.getNotifyUsers.asScala.toSet
 
         for (notificationSetting <- notificationSettings) {
@@ -123,7 +122,8 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
                     case None => {
                         val bug: SimpleBug = bugService.findById(notification.getTypeid.toInt, notification.getSaccountid)
                         if (notificationSetting.getUsername == bug.getAssignuser) {
-                            val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
+                            val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername,
+                                notificationSetting.getProjectid, notificationSetting.getSaccountid)
                             if (prjMember != null) {
                                 notifyUsers = notifyUsers + prjMember
                             }
@@ -132,7 +132,8 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
                 }
             }
             else if (NotificationType.Full.name == notificationSetting.getLevel) {
-                val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername, bean.getProjectid, bean.getSaccountid)
+                val prjMember: SimpleUser = projectMemberService.getActiveUserOfProject(notificationSetting.getUsername,
+                    notificationSetting.getProjectid, notificationSetting.getSaccountid)
                 if (prjMember != null) {
                     notifyUsers = notifyUsers + prjMember
                 }
@@ -164,8 +165,8 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
                 new Span().write
             } else {
                 val img: Text = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.MILESTONE));
-                val milestoneLink: String = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl, bug.getProjectid,
-                    bug.getMilestoneid)
+                val milestoneLink: String = ProjectLinkGenerator.generateMilestonePreviewFullLink(context.siteUrl,
+                    bug.getProjectid, bug.getMilestoneid)
                 val link: A = newA(milestoneLink, bug.getMilestoneName)
                 newLink(img, link).write
             }

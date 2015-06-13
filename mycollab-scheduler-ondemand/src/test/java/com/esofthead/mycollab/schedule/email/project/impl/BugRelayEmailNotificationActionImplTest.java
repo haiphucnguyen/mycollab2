@@ -5,6 +5,8 @@ import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingService;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.GenericJobTest;
 import org.junit.Assert;
@@ -16,44 +18,74 @@ import scala.collection.immutable.Set;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
-	@Spy
-	@InjectMocks
-	private BugRelayEmailNotificationActionImpl bugEmailNotification;
+    @Spy
+    @InjectMocks
+    private BugRelayEmailNotificationActionImpl bugEmailNotification;
 
-	@Mock
-	private ProjectNotificationSettingService projectNotificationService;
+    @Mock
+    private BugService bugService;
 
-	@Mock
-	private ProjectMemberService projectMemberService;
+    @Mock
+    private ProjectNotificationSettingService projectNotificationService;
 
-	@Test
-	public void testGetListNotifyUsersWithFilterAndNone() {
-		ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
-		SimpleUser notUser1 = new SimpleUser();
-		notUser1.setUsername("hainguyen@esofthead.com");
-		java.util.List<SimpleUser> notifyUsers = new ArrayList<SimpleUser>();
-		prjRelayNotification.setNotifyUsers(notifyUsers);
+    @Mock
+    private ProjectMemberService projectMemberService;
 
-		ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
-		noSetting1.setLevel(NotificationType.None.name());
-		noSetting1.setUsername("hainguyen@esofthead.com");
+    @Test
+    public void testGetListNotifyUsersWithFilterAndNone() {
+        ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
+        SimpleUser notUser1 = new SimpleUser();
+        notUser1.setUsername("hainguyen@esofthead.com");
+        List<SimpleUser> notifyUsers = new ArrayList<>();
+        prjRelayNotification.setNotifyUsers(notifyUsers);
 
-		when(projectNotificationService.findNotifications(anyInt(), anyInt()))
-				.thenReturn(Arrays.asList(noSetting1));
+        ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
+        noSetting1.setLevel(NotificationType.None.name());
+        noSetting1.setUsername("hainguyen@esofthead.com");
 
-		SimpleUser activeUser1 = new SimpleUser();
-		activeUser1.setUsername("hainguyen@esofthead.com");
-		when(projectMemberService.getActiveUsersInProject(anyInt(), anyInt()))
-				.thenReturn(Arrays.asList(activeUser1));
+        when(projectNotificationService.findNotifications(anyInt(), anyInt()))
+                .thenReturn(Arrays.asList(noSetting1));
 
-		Set<SimpleUser> users = bugEmailNotification
-				.getListNotifyUsersWithFilter(prjRelayNotification);
-		Assert.assertEquals(0, users.size());
-	}
+        Set<SimpleUser> users = bugEmailNotification
+                .getListNotifyUsersWithFilter(prjRelayNotification);
+        Assert.assertEquals(0, users.size());
+    }
+
+    @Test
+    public void testGetListNotifyUsersWithFilter2() {
+        ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
+        SimpleUser notUser1 = new SimpleUser();
+        notUser1.setUsername("hainguyen@esofthead.com");
+        List<SimpleUser> notifyUsers = new ArrayList<>();
+        prjRelayNotification.setNotifyUsers(notifyUsers);
+        prjRelayNotification.setTypeid("1");
+        prjRelayNotification.setSaccountid(1);
+
+        ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
+        noSetting1.setLevel(NotificationType.Minimal.name());
+        noSetting1.setProjectid(1);
+        noSetting1.setSaccountid(1);
+        noSetting1.setUsername("hainguyen@esofthead.com");
+
+        when(projectNotificationService.findNotifications(anyInt(), anyInt()))
+                .thenReturn(Arrays.asList(noSetting1));
+
+        SimpleBug bug = new SimpleBug();
+        bug.setAssignuser("hainguyen@esofthead.com");
+        when(bugService.findById(anyInt(), anyInt())).thenReturn(bug);
+
+        when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
+
+        Set<SimpleUser> users = bugEmailNotification
+                .getListNotifyUsersWithFilter(prjRelayNotification);
+        Assert.assertEquals(1, users.size());
+    }
 }
