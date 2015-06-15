@@ -59,7 +59,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
                     val recipients: List[MailRecipientField] = List[MailRecipientField](userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, recipients, null, null,
                         contentGenerator.generateSubjectContent(getCreateSubject(context)),
-                        contentGenerator.generateBodyContent("templates/email/project/itemCreatedNotifier.mt", context.getLocale, SiteConfiguration.getDefaultLocale), null)
+                        contentGenerator.generateBodyContent("templates/email/project/itemCreatedNotifier.mt", context.getLocale,
+                            SiteConfiguration.getDefaultLocale), null)
                 }
             }
         }
@@ -87,7 +88,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
                     val recipients: List[MailRecipientField] = List[MailRecipientField](userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, recipients, null, null,
                         contentGenerator.generateSubjectContent(getUpdateSubject(context)),
-                        contentGenerator.generateBodyContent("templates/email/project/itemUpdatedNotifier.mt", context.getLocale, SiteConfiguration.getDefaultLocale), null)
+                        contentGenerator.generateBodyContent("templates/email/project/itemUpdatedNotifier.mt", context.getLocale,
+                            SiteConfiguration.getDefaultLocale), null)
                 }
             }
         }
@@ -110,7 +112,8 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
                     val toRecipients: List[MailRecipientField] = List[MailRecipientField](userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getSiteName, toRecipients,
                         null, null, contentGenerator.generateSubjectContent(getCommentSubject(context)),
-                        contentGenerator.generateBodyContent("templates/email/project/itemCommentNotifier.mt", context.getLocale, SiteConfiguration.getDefaultLocale), null)
+                        contentGenerator.generateBodyContent("templates/email/project/itemCommentNotifier.mt", context.getLocale,
+                            SiteConfiguration.getDefaultLocale), null)
                 }
             }
         }

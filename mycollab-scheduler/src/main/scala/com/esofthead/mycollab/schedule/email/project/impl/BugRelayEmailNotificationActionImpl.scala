@@ -113,7 +113,7 @@ class BugRelayEmailNotificationActionImpl extends SendMailToFollowersAction[Simp
 
         for (notificationSetting <- notificationSettings) {
             if (NotificationType.None.name == notificationSetting.getLevel) {
-                notifyUsers.filter(notifyUser => notifyUser.getUsername == notificationSetting.getUsername)
+                notifyUsers = notifyUsers.filter(notifyUser => !(notifyUser.getUsername == notificationSetting.getUsername))
             }
             else if (NotificationType.Minimal.name == notificationSetting.getLevel) {
                 val findResult: Option[SimpleUser] = notifyUsers.find(notifyUser => notifyUser.getUsername == notificationSetting.getUsername);

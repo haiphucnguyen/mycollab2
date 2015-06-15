@@ -17,27 +17,16 @@
 
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import com.esofthead.mycollab.core.cache.CacheKey;
-import com.esofthead.mycollab.core.utils.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Service;
-
 import com.esofthead.mycollab.cache.CacheUtils;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.esb.CamelProxyBuilderUtil;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
@@ -59,9 +48,17 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -153,7 +150,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
 
     @Override
     public void acceptProjectInvitationByNewUser(String email, String password,
-            Integer projectId, Integer projectRoleId, Integer sAccountId) {
+                                                 Integer projectId, Integer projectRoleId, Integer sAccountId) {
 
         Date now = new GregorianCalendar().getTime();
         try {

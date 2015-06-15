@@ -16,10 +16,10 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import scala.collection.immutable.Set;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -44,7 +44,11 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
         notUser1.setUsername("hainguyen@esofthead.com");
-        List<SimpleUser> notifyUsers = new ArrayList<>();
+
+        SimpleUser notUser2 = new SimpleUser();
+        notUser2.setUsername("linhduong@esofthead.com");
+
+        List<SimpleUser> notifyUsers = Arrays.asList(notUser1, notUser2);
         prjRelayNotification.setNotifyUsers(notifyUsers);
 
         ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
@@ -56,7 +60,8 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
 
         Set<SimpleUser> users = bugEmailNotification
                 .getListNotifyUsersWithFilter(prjRelayNotification);
-        Assert.assertEquals(0, users.size());
+        Assert.assertEquals(1, users.size());
+        assertThat(users.head().getUsername()).isEqualTo("linhduong@esofthead.com");
     }
 
     @Test
@@ -64,7 +69,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
         notUser1.setUsername("hainguyen@esofthead.com");
-        List<SimpleUser> notifyUsers = new ArrayList<>();
+        List<SimpleUser> notifyUsers = Arrays.asList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
         prjRelayNotification.setSaccountid(1);
@@ -94,7 +99,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
         notUser1.setUsername("hainguyen@esofthead.com");
-        List<SimpleUser> notifyUsers = new ArrayList<>();
+        List<SimpleUser> notifyUsers = Arrays.asList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
         prjRelayNotification.setSaccountid(1);
@@ -113,6 +118,30 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         when(bugService.findById(anyInt(), anyInt())).thenReturn(bug);
 
         when(projectMemberService.getActiveUserOfProject(anyString(), anyInt(), anyInt())).thenReturn(notUser1);
+
+        Set<SimpleUser> users = bugEmailNotification
+                .getListNotifyUsersWithFilter(prjRelayNotification);
+        Assert.assertEquals(1, users.size());
+    }
+
+    @Test
+    public void testGetListNotifyUsersWithFull() {
+        ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
+        SimpleUser notUser1 = new SimpleUser();
+        notUser1.setUsername("linhduong@esofthead.com");
+        List<SimpleUser> notifyUsers = Arrays.asList(notUser1);
+        prjRelayNotification.setNotifyUsers(notifyUsers);
+        prjRelayNotification.setTypeid("1");
+        prjRelayNotification.setSaccountid(1);
+
+        ProjectNotificationSetting noSetting1 = new ProjectNotificationSetting();
+        noSetting1.setLevel(NotificationType.Full.name());
+        noSetting1.setProjectid(1);
+        noSetting1.setSaccountid(1);
+        noSetting1.setUsername("hainguyen@esofthead.com");
+
+        when(projectNotificationService.findNotifications(anyInt(), anyInt()))
+                .thenReturn(Arrays.asList(noSetting1));
 
         Set<SimpleUser> users = bugEmailNotification
                 .getListNotifyUsersWithFilter(prjRelayNotification);
