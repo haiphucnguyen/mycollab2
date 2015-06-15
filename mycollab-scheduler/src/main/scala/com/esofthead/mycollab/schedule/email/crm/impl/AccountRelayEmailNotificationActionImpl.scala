@@ -49,7 +49,8 @@ class AccountRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmai
     @Autowired var accountService: AccountService = _
     private val mapper = new AccountFieldNameMapper
 
-    override protected def getBeanInContext(context: MailContext[SimpleAccount]): SimpleAccount = accountService.findById(context.getTypeid.toInt, context.getSaccountid)
+    override protected def getBeanInContext(context: MailContext[SimpleAccount]): SimpleAccount = accountService.findById(
+        context.getTypeid.toInt, context.getSaccountid)
 
     override protected def getCreateSubjectKey: Enum[_] = AccountI18nEnum.MAIL_CREATE_ITEM_SUBJECT
 
