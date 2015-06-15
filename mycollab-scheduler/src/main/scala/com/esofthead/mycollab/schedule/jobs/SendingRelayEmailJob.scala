@@ -63,16 +63,14 @@ class SendingRelayEmailJob extends GenericQuartzJobBean {
 
                     extMailService.sendHTMLMail(relayEmail.getFromemail, relayEmail.getFromname, toMailList.toList, null, null, relayEmail
                         .getSubject, relayEmail.getBodycontent, null)
-                }
-                catch {
+                } catch {
                     case e: Exception => LOG.error("Error when send relay email", e)
                 }
             } else {
                 try {
                     val emailNotificationAction: SendingRelayEmailsAction = ApplicationContextUtil.getSpringBean(Class.forName(relayEmail.getEmailhandlerbean)).asInstanceOf[SendingRelayEmailsAction]
                     emailNotificationAction.sendEmail(relayEmail)
-                }
-                catch {
+                } catch {
                     case e: ClassNotFoundException => throw new MyCollabException(e)
                 }
             }
