@@ -54,6 +54,7 @@ Version 5.0.9
 * User can not upload non english file name document
 * Proper handling system roles
 * The resource paths still throw error in several cases
+* Email notification could be sent multiple times to the recipients
 
 
 Version 5.0.8
