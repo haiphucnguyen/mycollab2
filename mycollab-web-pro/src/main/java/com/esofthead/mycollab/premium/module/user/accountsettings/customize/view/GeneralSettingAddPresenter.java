@@ -8,16 +8,13 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 5.1.0
  */
-public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingView> {
-    public GeneralSettingPresenter() {
-        super(GeneralSettingView.class);
+public class GeneralSettingAddPresenter extends AbstractPresenter<GeneralSettingAddView> {
+    public GeneralSettingAddPresenter() {
+        super(GeneralSettingAddView.class);
     }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        CustomizeContainer customizeContainer = (CustomizeContainer) container;
-        customizeContainer.gotoSubView("General");
-
 
     }
 }

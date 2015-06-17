@@ -37,7 +37,7 @@ import com.vaadin.ui.TabSheet;
 public class CustomizeContainer extends AbstractPageView implements ICustomizeContainer {
     private static final long serialVersionUID = -1923841035522809056L;
 
-    private GeneralSettingPresenter generalSettingPresenter;
+    private GeneralSettingReadPresenter generalSettingReadPresenter;
     private LogoChangePresenter logoChangePresenter;
     private ColorThemePresenter colorThemePresenter;
 
@@ -56,11 +56,11 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
     }
 
     private void buildComponents() {
-        generalSettingPresenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
+        generalSettingReadPresenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
         logoChangePresenter = PresenterResolver.getPresenter(LogoChangePresenter.class);
         colorThemePresenter = PresenterResolver.getPresenter(ColorThemePresenter.class);
 
-        this.tabSheetDecorator.addTab(generalSettingPresenter.getView(), "General");
+        this.tabSheetDecorator.addTab(generalSettingReadPresenter.getView(), "General");
         this.tabSheetDecorator.addTab(logoChangePresenter.getView(), "Logo");
         this.tabSheetDecorator.addTab(colorThemePresenter.getView(), "Theme");
 
@@ -73,7 +73,7 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
                         .getSelectedTabInfo();
                 String caption = tab.getCaption();
                 if ("General".equals(caption)) {
-                    generalSettingPresenter.go(CustomizeContainer.this, null);
+                    generalSettingReadPresenter.go(CustomizeContainer.this, null);
                 } else if ("Logo".equals(caption)) {
                     logoChangePresenter.go(CustomizeContainer.this, null);
                 } else if ("Theme".equals(caption)) {
