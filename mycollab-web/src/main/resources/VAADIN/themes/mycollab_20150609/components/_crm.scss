@@ -212,6 +212,10 @@
     border-radius: 0px;
     border: 1px solid $border-color;
     .readViewHeader {
+      padding: 10px 5px 10px 18px;
+      background: none repeat-x left top #EEEEEE;
+      border-radius: 0px;
+      border-bottom: 1px solid $border-color;
       .headerName {
         font-size: $font-x-large;
         color: #303030;
@@ -231,13 +235,6 @@
     .v-label-h2.no-border {
       border: none;
     }
-  }
-
-  .readViewHeader {
-    padding: 10px 5px 10px 18px;
-    background: none repeat-x left top #EEEEEE;
-    border-radius: 0px;
-    border-bottom: 1px solid $border-color;
   }
 
   .readViewBottomControls .v-verticallayout {
@@ -269,7 +266,7 @@
   /* AddViewLayout2 */
 
   .addview-layout {
-    background-color: #f5f5f5;
+    background-color: #FFFFFF;
     padding: 0px;
     border-radius: 0;
     .addview-layout-body {

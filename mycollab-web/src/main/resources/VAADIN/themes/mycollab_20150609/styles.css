@@ -7948,6 +7948,13 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	border: 1px solid #CFCFCF;
 }
 
+.readViewLayout .readViewHeader {
+	padding: 10px 5px 10px 18px;
+	background: none repeat-x left top #EEEEEE;
+	border-radius: 0px;
+	border-bottom: 1px solid #CFCFCF;
+}
+
 .readViewLayout .readViewHeader .headerName {
 	font-size: 18px;
 	color: #303030;
@@ -7968,13 +7975,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .readViewLayout .v-label-h2.no-border {
 	border: none;
-}
-
-.readViewHeader {
-	padding: 10px 5px 10px 18px;
-	background: none repeat-x left top #EEEEEE;
-	border-radius: 0px;
-	border-bottom: 1px solid #CFCFCF;
 }
 
 .readViewBottomControls .v-verticallayout {
@@ -8007,7 +8007,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 }
 
 .addview-layout {
-	background-color: #f5f5f5;
+	background-color: #FFFFFF;
 	padding: 0px;
 	border-radius: 0;
 }
@@ -10384,27 +10384,6 @@ input.v-textfield-errorField {
 	border: 1px solid #CFCFCF;
 }
 
-.accountViewContainer .userInfoContainer .addview-layout-body .info-block-header {
-	border-color: #CFCFCF;
-	border-width: 0px 0px 1px 0px;
-	border-style: solid;
-	padding: 8px 0px 8px 18px;
-}
-
-.accountViewContainer .userInfoContainer .addview-layout-body .info-block-header .h2 {
-	border: none;
-	padding: 0px;
-	background-color: transparent;
-	vertical-align: middle;
-	display: inline-block;
-	*display: inline;
-	margin-right: 3px;
-}
-
-.accountViewContainer .userInfoContainer .addview-layout-body .info-block-header .v-button {
-	vertical-align: middle;
-}
-
 .accountViewContainer .sidebar-menu .v-nativebutton {
 	font-size: 14px;
 	padding: 0px;
@@ -10421,23 +10400,15 @@ input.v-textfield-errorField {
 	box-shadow: none;
 }
 
-.v-csslayout-account-dashboard {
-	border-color: #8f8f8f;
-	border-style: solid;
-	border-width: 1px 0px 0px 1px;
+.accountViewContainer .container-wrap.main-content .top-panel {
 	background-color: #FFF;
-	padding: 6px;
+	border-bottom: 1px solid #CFCFCF;
+	padding: 10px 30px;
 }
 
 .crmContainer .container-wrap .tab-content, .accountViewContainer .container-wrap .tab-content {
 	border-width: 1px 0px 0px 1px;
 	padding: 0px;
-}
-
-.accountViewContainer .container-wrap.main-content .top-panel {
-	background-color: #FFF;
-	border-bottom: 1px solid #CFCFCF;
-	padding: 10px 30px;
 }
 
 .depotComp.v-margin-top {
