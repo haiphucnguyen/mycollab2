@@ -114,7 +114,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBusFactory.getInstance().post(
-								new AccountCustomizeEvent.GotoCustomize(
+								new AccountCustomizeEvent.GotoMainPage(
 										LogoUploadViewImpl.this, null));
 					}
 				});
@@ -141,7 +141,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 								accountTheme.setLogopath(newlogoId);
 								EventBusFactory
 										.getInstance()
-										.post(new AccountCustomizeEvent.GotoCustomize(
+										.post(new AccountCustomizeEvent.GotoMainPage(
 												LogoUploadViewImpl.this,
 												accountTheme));
 							} catch (IOException e) {

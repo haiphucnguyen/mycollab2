@@ -17,8 +17,17 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
+import com.esofthead.mycollab.module.user.accountsettings.view.UserAccountExtController;
+import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.TabSheetDecorator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.TabSheet;
 
 /**
  * @author MyCollab Ltd.
@@ -28,5 +37,55 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 public class CustomizeContainer extends AbstractPageView implements ICustomizeContainer {
     private static final long serialVersionUID = -1923841035522809056L;
 
+    private GeneralSettingPresenter generalSettingPresenter;
+    private LogoChangePresenter logoChangePresenter;
+    private ColorThemePresenter colorThemePresenter;
 
+    private TabSheetDecorator tabSheetDecorator;
+
+    private String selectedTabId = "";
+
+    public CustomizeContainer() {
+        AccountModule accountModule = (AccountModule) ModuleHelper.getCurrentModule();
+        ControllerRegistry.addController(new UserAccountExtController(accountModule));
+        this.tabSheetDecorator = new TabSheetDecorator();
+        this.tabSheetDecorator.setStyleName(UIConstants.THEME_TAB_STYLE3);
+        this.addComponent(tabSheetDecorator);
+        this.setWidth("100%");
+        this.buildComponents();
+    }
+
+    private void buildComponents() {
+        generalSettingPresenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
+        logoChangePresenter = PresenterResolver.getPresenter(LogoChangePresenter.class);
+        colorThemePresenter = PresenterResolver.getPresenter(ColorThemePresenter.class);
+
+        this.tabSheetDecorator.addTab(generalSettingPresenter.getView(), "General");
+        this.tabSheetDecorator.addTab(logoChangePresenter.getView(), "Logo");
+        this.tabSheetDecorator.addTab(colorThemePresenter.getView(), "Theme");
+
+        tabSheetDecorator.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
+                TabSheet.Tab tab = ((TabSheetDecorator) event.getTabSheet())
+                        .getSelectedTabInfo();
+                String caption = tab.getCaption();
+                if ("General".equals(caption)) {
+                    generalSettingPresenter.go(CustomizeContainer.this, null);
+                } else if ("Logo".equals(caption)) {
+                    logoChangePresenter.go(CustomizeContainer.this, null);
+                } else if ("Theme".equals(caption)) {
+                    colorThemePresenter.go(CustomizeContainer.this, null);
+                }
+            }
+        });
+
+    }
+
+    public Component gotoSubView(String name) {
+        selectedTabId = name;
+        return tabSheetDecorator.selectTab(name).getComponent();
+    }
 }
