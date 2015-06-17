@@ -27,8 +27,9 @@
         <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-reporting-premium</module>
-        <module>../mycollab-scheduler</module>
+        <module>../mycollab-servlet</module>
         <module>../mycollab-server-runner</module>
+        <module>../mycollab-scheduler</module>
         <module>../mycollab-search</module>
         <module>../mycollab-search-server</module>
         <module>../mycollab-ui</module>
