@@ -63,8 +63,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		LogoUploadView {
 	private static final long serialVersionUID = -5294741083557671011L;
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(LogoUploadViewImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(LogoUploadViewImpl.class);
 
 	private BufferedImage originalImage;
 	private Image previewImage;
@@ -76,8 +75,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 
 	@SuppressWarnings("serial")
 	@Override
-	public void editPhoto(final byte[] imageData,
-			final AccountTheme accountTheme) {
+	public void editPhoto(byte[] imageData, final AccountTheme accountTheme) {
 		this.removeAllComponents();
 		LOG.debug("Receive logo upload with size: " + imageData.length);
 		try {
@@ -110,8 +108,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		controlBtns.setSizeUndefined();
 		controlBtns.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-		Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+		Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
 				new Button.ClickListener() {
 
 					@Override
@@ -124,8 +121,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements
 		cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 		controlBtns.with(cancelBtn);
 
-		Button acceptBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_ACCEPT),
+		Button acceptBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ACCEPT),
 				new Button.ClickListener() {
 
 					@Override

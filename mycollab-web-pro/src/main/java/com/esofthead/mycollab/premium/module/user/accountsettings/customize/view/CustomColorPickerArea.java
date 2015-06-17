@@ -35,8 +35,7 @@ public class CustomColorPickerArea extends ColorPickerArea {
 
 		this.setWidth("55px");
 		this.setHeight("25px");
-		this.setPosition(
-				Page.getCurrent().getBrowserWindowWidth() / 2 - 248 / 2, Page
+		this.setPosition(Page.getCurrent().getBrowserWindowWidth() / 2 - 248 / 2, Page
 						.getCurrent().getBrowserWindowHeight() / 2 - 508 / 2);
 	}
 }

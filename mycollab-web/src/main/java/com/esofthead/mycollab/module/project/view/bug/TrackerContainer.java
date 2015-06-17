@@ -43,7 +43,6 @@ import com.vaadin.ui.TabSheet.Tab;
  */
 @ViewComponent
 public class TrackerContainer extends AbstractPageView {
-
 	private static final long serialVersionUID = 1L;
 
 	private BugDashboardPresenter dashboardPresenter;

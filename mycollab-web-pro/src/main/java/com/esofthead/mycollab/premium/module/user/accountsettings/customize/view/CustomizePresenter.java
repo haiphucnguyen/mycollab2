@@ -31,56 +31,48 @@ import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1
- * 
  */
 public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
-		implements ICustomizePresenter {
-	private static final long serialVersionUID = 1L;
+        implements ICustomizePresenter {
+    private static final long serialVersionUID = 1L;
 
-	public CustomizePresenter() {
-		super(ICustomizeContainer.class);
-	}
+    public CustomizePresenter() {
+        super(ICustomizeContainer.class);
+    }
 
-	@Override
-	protected void postInitView() {
-		EventBusFactory.getInstance().register(
-						new ApplicationEventListener<AccountCustomizeEvent.GotoUploadLogo>() {
-							private static final long serialVersionUID = 7232775383781008850L;
+    @Override
+    protected void postInitView() {
+        EventBusFactory.getInstance().register(new ApplicationEventListener<AccountCustomizeEvent.GotoUploadLogo>() {
+            private static final long serialVersionUID = 7232775383781008850L;
 
-							@Subscribe
-							@Override
-							public void handle(
-									AccountCustomizeEvent.GotoUploadLogo event) {
-								LogoUploadPresenter presenter = PresenterResolver
-										.getPresenter(LogoUploadPresenter.class);
-								if (event.getData() != null) {
-									presenter.go(
-											view.getWidget(),
-											(CustomizeScreenData.LogoUpload) event
-													.getData());
-								}
+            @Subscribe
+            @Override
+            public void handle(AccountCustomizeEvent.GotoUploadLogo event) {
+                LogoUploadPresenter presenter = PresenterResolver.getPresenter(LogoUploadPresenter.class);
+                if (event.getData() != null) {
+                    presenter.go(view.getWidget(),
+                            (CustomizeScreenData.LogoUpload) event.getData());
+                }
 
-							}
-						});
-	}
+            }
+        });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		AccountModule accountContainer = (AccountModule) container;
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        AccountModule accountContainer = (AccountModule) container;
 
-		accountContainer.gotoSubView(SettingUIConstants.CUSTOMIZATION);
+        accountContainer.gotoSubView(SettingUIConstants.CUSTOMIZATION);
 
-		AbstractPresenter<?> presenter = null;
-		if (data instanceof CustomizeScreenData.ThemeCustomize) {
-			presenter = PresenterResolver
-					.getPresenter(ThemeCustomizePresenter.class);
-		}
-		if (presenter != null) {
-			presenter.go(view.getWidget(), data);
-		}
-	}
+        AbstractPresenter<?> presenter = null;
+        if (data instanceof CustomizeScreenData.ThemeCustomize) {
+            presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
+        }
+        if (presenter != null) {
+            presenter.go(view.getWidget(), data);
+        }
+    }
 
 }

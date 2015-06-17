@@ -96,16 +96,14 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
         MHorizontalLayout controlButton = new MHorizontalLayout().withWidth("100%");
 
-        Button saveBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = -6901103392231786935L;
 
                     @Override
                     public void buttonClick(ClickEvent event) {
                         EventBusFactory.getInstance().post(
-                                new AccountCustomizeEvent.SaveTheme(this,
-                                        accountTheme));
+                                new AccountCustomizeEvent.SaveTheme(this, accountTheme));
                     }
                 });
         saveBtn.setIcon(FontAwesome.SAVE);
@@ -114,9 +112,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 .canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         controlButton.addComponent(saveBtn);
 
-        Button resetToDefaultBtn = new Button(
-                AppContext
-                        .getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
+        Button resetToDefaultBtn = new Button(AppContext
+                .getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 5182152510759528123L;
 
@@ -213,7 +210,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
             }
         });
         propertyLayout.addComponent(new Label(AppContext
-                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 1);
+                .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 1);
         propertyLayout.addComponent(topMenuBg, 1, 1);
 
         CustomColorPickerArea topMenuText = new CustomColorPickerArea(
@@ -230,8 +227,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
             }
         });
         propertyLayout.addComponent(new Label(AppContext
-                                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)),
-                        0, 2);
+                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)),
+                0, 2);
         propertyLayout.addComponent(topMenuText, 1, 2);
 
         CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(

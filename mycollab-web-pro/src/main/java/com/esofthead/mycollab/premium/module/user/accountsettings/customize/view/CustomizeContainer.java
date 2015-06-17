@@ -21,14 +21,12 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1
- * 
  */
 @ViewComponent
-public class CustomizeContainer extends AbstractPageView implements
-		ICustomizeContainer {
-	private static final long serialVersionUID = -1923841035522809056L;
+public class CustomizeContainer extends AbstractPageView implements ICustomizeContainer {
+    private static final long serialVersionUID = -1923841035522809056L;
+
 
 }
