@@ -109,18 +109,7 @@
 
   .project-status {
     .v-verticallayout {
-      &.v-margin-top {
-        padding-top: 8px;
-      }
-      &.v-margin-right {
-        padding-right: 15px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 5px;
-      }
-      &.v-margin-left {
-        padding-left: 15px;
-      }
+    @include margin-container(8px, 15px, 5px, 15px);
     }
     .member-count-lbl .v-button-wrap {
       padding: 0px;
@@ -272,18 +261,7 @@
   }
 
   .message-toppanel-header {
-    &.v-margin-top {
-      padding-top: 3px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 2px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
+    @include margin-container(3px, 10px, 2px, 18px);
   }
 
   .projectinfo-header {
@@ -295,18 +273,7 @@
   }
 
   .projectinfo-footer {
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
+    @include margin-container(5px, 5px, 5px, 18px);
   }
 
   .projectfeed-hdr-wrapper {

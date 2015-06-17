@@ -881,18 +881,7 @@
       .v-horizontallayout-margin {
         padding: 10px 15px;
       }
-      &.v-margin-top {
-        padding-top: 10px;
-      }
-      &.v-margin-right {
-        padding-right: 15px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 10px;
-      }
-      &.v-margin-left {
-        padding-left: 15px;
-      }
+      @include margin-container(10px, 15px, 10px, 15px);
     }
     .v-horizontallayout-search-comp .v-horizontallayout-margin {
       padding: 0px;
@@ -1495,21 +1484,7 @@
       color: black;
     }
     .header-elements {
-      &.colored-header {
-        /* background-color: rgb(113, 113, 113); */
-      }
-      &.v-margin-top {
-        padding-top: 3px;
-      }
-      &.v-margin-right {
-        padding-right: 8px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 3px;
-      }
-      &.v-margin-left {
-        padding-left: 8px;
-      }
+      @include margin-container(3px, 8px, 3px, 8px);
     }
     &.collapsed .depotContent {
       padding: 0px;
@@ -1569,18 +1544,7 @@
     border-color: $border-color;
     border-style: solid;
     border-width: 0px 1px 1px 1px;
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 5px;
-    }
+    @include margin-container(5px, 5px, 5px, 5px);
   }
 
   /* End Depot */
@@ -2606,18 +2570,7 @@
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: $border-color;
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 5px;
-    }
+    @include margin-container(5px, 5px, 5px, 5px);
   }
 
   /* Rating Stars */
