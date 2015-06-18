@@ -106,15 +106,12 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                         ProblemService problemService = ApplicationContextUtil
                                 .getSpringBean(ProblemService.class);
                         ProblemSearchCriteria criteria = new ProblemSearchCriteria();
-                        criteria.setProjectId(new NumberSearchField(
-                                SearchField.AND, CurrentProjectVariables.getProjectId()));
-                        criteria.setId(new NumberSearchField(data.getId(),
-                                NumberSearchField.GREATER));
+                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
                         Integer nextId = problemService
                                 .getNextItemKey(criteria);
                         if (nextId != null) {
-                            EventBusFactory.getInstance().post(
-                                    new ProblemEvent.GotoRead(this, nextId));
+                            EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
                         } else {
                             NotificationUtil.showGotoLastRecordNotification();
                         }
@@ -126,15 +123,11 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                         ProblemService problemService = ApplicationContextUtil
                                 .getSpringBean(ProblemService.class);
                         ProblemSearchCriteria criteria = new ProblemSearchCriteria();
-                        criteria.setProjectId(new NumberSearchField(
-                                SearchField.AND, CurrentProjectVariables.getProjectId()));
-                        criteria.setId(new NumberSearchField(data.getId(),
-                                NumberSearchField.LESSTHAN));
-                        Integer nextId = problemService
-                                .getPreviousItemKey(criteria);
+                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
+                        Integer nextId = problemService.getPreviousItemKey(criteria);
                         if (nextId != null) {
-                            EventBusFactory.getInstance().post(
-                                    new ProblemEvent.GotoRead(this, nextId));
+                            EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
                         } else {
                             NotificationUtil.showGotoFirstRecordNotification();
                         }
@@ -144,8 +137,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canRead(ProjectRolePermissionCollections.PROBLEMS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
             if (data.getParams() instanceof Integer) {
                 ProblemService problemService = ApplicationContextUtil
                         .getSpringBean(ProblemService.class);
@@ -157,8 +149,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                     problemContainer.addComponent(view.getWidget());
                     view.previewItem(problem);
 
-                    ProjectBreadcrumb breadcrumb = ViewManager
-                            .getCacheComponent(ProjectBreadcrumb.class);
+                    ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                     breadcrumb.gotoProblemRead(problem);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();

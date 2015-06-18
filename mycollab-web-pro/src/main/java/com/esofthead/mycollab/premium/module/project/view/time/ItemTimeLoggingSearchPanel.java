@@ -195,7 +195,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
 
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
-                searchCriteria.setLogUsers(new SetSearchField(SearchField.AND, selectedUsers));
+                searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
             }
             return searchCriteria;
         }

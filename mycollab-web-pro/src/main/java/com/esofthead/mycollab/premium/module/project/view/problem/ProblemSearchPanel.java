@@ -141,7 +141,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
         @Override
         protected ProblemSearchCriteria fillUpSearchCriteria() {
             ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             searchCriteria.setProblemname(new StringSearchField(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
@@ -194,7 +194,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
         @Override
         protected ProblemSearchCriteria fillUpSearchCriteria() {
             ProblemSearchCriteria searchCriteria = super.fillUpSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
     }

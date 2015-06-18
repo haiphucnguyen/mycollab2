@@ -145,11 +145,11 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
         @Override
         protected SearchCriteria fillUpSearchCriteria() {
             RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             searchCriteria.setRiskname(new StringSearchField(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
-                searchCriteria.setAssignToUser(new StringSearchField(SearchField.AND, AppContext.getUsername()));
+                searchCriteria.setAssignToUser(new StringSearchField(AppContext.getUsername()));
             } else {
                 searchCriteria.setAssignToUser(null);
             }
@@ -197,7 +197,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
         @Override
         protected RiskSearchCriteria fillUpSearchCriteria() {
             RiskSearchCriteria searchCriteria = super.fillUpSearchCriteria();
-            searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
+            searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             return searchCriteria;
         }
 

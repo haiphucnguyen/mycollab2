@@ -193,8 +193,7 @@ public class StandupListViewImpl extends AbstractPageView implements
         final StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(
                 CurrentProjectVariables.getProjectId()));
-        searchCriteria.setOnDate(new DateSearchField(SearchField.AND,
-                DateSearchField.EQUAL, date));
+        searchCriteria.setOnDate(new DateSearchField(SearchField.AND, DateSearchField.EQUAL, date));
         this.setSearchCriteria(searchCriteria);
     }
 
