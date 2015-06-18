@@ -38,11 +38,11 @@ public class DateSearchField extends SearchField {
     private String comparison;
 
     public DateSearchField(Date value) {
-        this(SearchField.AND, value);
+        this(SearchField.AND, value, LESSTHAN);
     }
 
-    public DateSearchField(String oper, Date value) {
-        this(oper, value, DateTimeSearchField.LESSTHAN);
+    public DateSearchField(Date value, String comparison) {
+        this(AND, value, comparison);
     }
 
     public DateSearchField(String oper, Date dateVal, String comparision) {
