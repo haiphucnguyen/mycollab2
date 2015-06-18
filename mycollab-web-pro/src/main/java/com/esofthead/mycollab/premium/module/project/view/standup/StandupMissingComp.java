@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageManager;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -27,67 +28,57 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0
- * 
  */
 public class StandupMissingComp extends MVerticalLayout {
-	private static final long serialVersionUID = 5332956503787026253L;
+    private static final long serialVersionUID = 5332956503787026253L;
 
-	private VerticalLayout bodyWrap;
-	private Label headerLbl;
+    private VerticalLayout bodyWrap;
+    private Label headerLbl;
 
-	public StandupMissingComp() {
-		this.withSpacing(false).withMargin(false);
-		headerLbl = new Label(
-				AppContext
-						.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
-		headerLbl.setSizeUndefined();
-		MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
-				false, true)).withHeight("34px").withWidth("100%").with(headerLbl).withAlign(headerLbl, Alignment
-				.MIDDLE_LEFT).withStyleName("panel-header");
+    public StandupMissingComp() {
+        this.withSpacing(false).withMargin(false);
+        headerLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
+        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).
+                withHeight("34px").withWidth("100%").with(headerLbl).
+                withAlign(headerLbl, Alignment.MIDDLE_LEFT).withStyleName("panel-header");
 
-		bodyWrap = new MVerticalLayout().withStyleName
-				("panel-body");
-		this.with(header, bodyWrap).withWidth("100%");
-	}
+        bodyWrap = new MVerticalLayout().withStyleName("panel-body");
+        this.with(header, bodyWrap).withWidth("100%");
+    }
 
-	public void search(Date date) {
-		bodyWrap.removeAllComponents();
-		StandupReportService searchService = ApplicationContextUtil
-				.getSpringBean(StandupReportService.class);
-		List<SimpleUser> someGuys = searchService.findUsersNotDoReportYet(
-				CurrentProjectVariables.getProjectId(), date,
-				AppContext.getAccountId());
-		if (someGuys.size() == 0) {
-			bodyWrap.addComponent(new Label(AppContext
-					.getMessage(GenericI18Enum.EXT_NO_ITEM)));
-		} else {
-			Iterator<SimpleUser> iterator = someGuys.iterator();
-			while (iterator.hasNext()) {
-				final SimpleUser user = iterator.next();
-				Label rowUser = new Label(buildMemberLink(user), ContentMode.HTML);
-				bodyWrap.addComponent(rowUser);
-			}
-		}
-	}
+    public void search(Date date) {
+        bodyWrap.removeAllComponents();
+        StandupReportService searchService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+        List<SimpleUser> someGuys = searchService.findUsersNotDoReportYet(
+                CurrentProjectVariables.getProjectId(), date, AppContext.getAccountId());
+        if (someGuys.size() == 0) {
+            bodyWrap.addComponent(new Label(AppContext.getMessage(GenericI18Enum.EXT_NO_ITEM)));
+        } else {
+            Iterator<SimpleUser> iterator = someGuys.iterator();
+            while (iterator.hasNext()) {
+                SimpleUser user = iterator.next();
+                Label rowUser = new Label(buildMemberLink(user), ContentMode.HTML);
+                bodyWrap.addComponent(rowUser);
+            }
+        }
+    }
 
-	private String buildMemberLink(SimpleUser user) {
-		String uid = UUID.randomUUID().toString();
-		DivLessFormatter div = new DivLessFormatter();
-		Img userAvatar = new Img("", StorageManager.getAvatarLink(
-				user.getAvatarid(), 16));
-		A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
-				CurrentProjectVariables.getProjectId(), user.getUsername()));
+    private String buildMemberLink(SimpleUser user) {
+        String uid = UUID.randomUUID().toString();
+        DivLessFormatter div = new DivLessFormatter();
+        Img userAvatar = new Img("", StorageManager.getAvatarLink(user.getAvatarid(), 16));
+        A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+                CurrentProjectVariables.getProjectId(), user.getUsername()));
 
-		userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, user.getUsername()));
-		userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-		userLink.appendText(user.getDisplayName());
+        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, user.getUsername()));
+        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+        userLink.appendText(StringUtils.trim(user.getDisplayName(), 30, true));
 
-		div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
-				TooltipHelper.buildDivTooltipEnable(uid));
-		return div.write();
-	}
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
+                TooltipHelper.buildDivTooltipEnable(uid));
+        return div.write();
+    }
 
 }

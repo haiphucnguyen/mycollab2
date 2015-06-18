@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * 
@@ -16,8 +17,7 @@ import com.vaadin.ui.*;
  * @since 1.0
  * 
  */
-public abstract class StandupReportFormLayoutFactory implements
-		IFormLayoutFactory {
+public abstract class StandupReportFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
 	private StandupCustomField whatTodayField;
@@ -40,10 +40,7 @@ public abstract class StandupReportFormLayoutFactory implements
 
 		reportAddLayout.addHeaderRight(this.createTopPanel());
 
-		final HorizontalLayout mainLayout = new HorizontalLayout();
-		mainLayout.setStyleName("report-addview-layout");
-		mainLayout.setSpacing(true);
-		mainLayout.setWidth("100%");
+		MHorizontalLayout mainLayout = new MHorizontalLayout().withStyleName("report-addview-layout").withWidth("100%");
 
 		final VerticalLayout layoutField = new VerticalLayout();
 		layoutField.addStyleName("standup-edit-layout");

@@ -43,8 +43,7 @@ import java.util.List;
  * @since 1.0
  */
 @ViewComponent
-public class StandupListViewImpl extends AbstractPageView implements
-        StandupListView {
+public class StandupListViewImpl extends AbstractPageView implements StandupListView {
     private static final long serialVersionUID = 1L;
 
     private PopupButton dateChooser;
@@ -62,9 +61,7 @@ public class StandupListViewImpl extends AbstractPageView implements
         this.addCalendarEvent();
         this.getListReport();
 
-        reportInDay = new BeanList<>(
-                ApplicationContextUtil
-                        .getSpringBean(StandupReportService.class),
+        reportInDay = new BeanList<>(ApplicationContextUtil.getSpringBean(StandupReportService.class),
                 StandupReportRowDisplay.class);
         reportInDay.addStyleName("standupreport-list-content");
         MHorizontalLayout contentWrap = new MHorizontalLayout().withWidth("100%");
@@ -86,17 +83,14 @@ public class StandupListViewImpl extends AbstractPageView implements
 
         GregorianCalendar cal2 = new GregorianCalendar();
         cal2.setTime(date);
-        cal2.set(Calendar.DAY_OF_MONTH,
-                cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal2.set(Calendar.DAY_OF_MONTH, cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
         return new RangeDateSearchField(cal1.getTime(), cal2.getTime());
     }
 
     @SuppressWarnings("serial")
     private void addCalendarEvent() {
-
         this.standupCalendar.getStyleCalendar().addValueChangeListener(
                 new ValueChangeListener() {
-
                     @Override
                     public void valueChange(final ValueChangeEvent event) {
                         Date selectedDate = (Date) event.getProperty().getValue();
@@ -165,27 +159,21 @@ public class StandupListViewImpl extends AbstractPageView implements
 
     private void getListReport() {
         StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-                .getProjectId()));
-        criteria.setReportDateRange(this
-                .getRangeDateSearchField(this.standupCalendar
-                        .getStyleCalendar().getShowingDate()));
-        StandupReportService reportService = ApplicationContextUtil
-                .getSpringBean(StandupReportService.class);
-        List<GroupItem> reportsCount = reportService
-                .getReportsCount(criteria);
+        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        criteria.setReportDateRange(this.getRangeDateSearchField(this.standupCalendar.getStyleCalendar().getShowingDate()));
+        StandupReportService reportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
+        List<GroupItem> reportsCount = reportService.getReportsCount(criteria);
 
         for (GroupItem groupItem : reportsCount) {
-            Date date = DateTimeUtils.convertDateByString(
-                    groupItem.getGroupname(), AppContext.getUserDateFormat().getDateFormat());
+            Date date = DateTimeUtils.convertDateByString(groupItem.getGroupname(),
+                    AppContext.getUserDateFormat().getDateFormat());
             standupCalendar.addSelectedDate(date);
         }
     }
 
     private void displayReport(Date date) {
-        final StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
-        searchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
+        StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
+        searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         searchCriteria.setOnDate(new DateSearchField(date, DateSearchField.EQUAL));
         this.setSearchCriteria(searchCriteria);
     }
@@ -207,8 +195,8 @@ public class StandupListViewImpl extends AbstractPageView implements
     }
 
     private void constructHeader() {
-        MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false)
-        )).withWidth("100%").withStyleName("hdr-view");
+        MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false))).
+                withWidth("100%").withStyleName("hdr-view");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         MHorizontalLayout headerLeft = new MHorizontalLayout();
@@ -220,20 +208,18 @@ public class StandupListViewImpl extends AbstractPageView implements
 
         headerLeft.addComponent(titleLbl);
 
-        this.dateChooser = new PopupButton(
-                AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
+        this.dateChooser = new PopupButton(AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
         this.dateChooser.setContent(this.standupCalendar);
         this.dateChooser.setStyleName(UIConstants.THEME_BLANK_LINK);
 
         headerLeft.addComponent(this.dateChooser);
-        headerLeft.setComponentAlignment(this.dateChooser,
-                Alignment.BOTTOM_RIGHT);
+        headerLeft.setComponentAlignment(this.dateChooser, Alignment.BOTTOM_RIGHT);
 
         header.addComponent(headerLeft);
         header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
         header.setExpandRatio(headerLeft, 1.0f);
 
-        final Button addNewReport = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL),
+        Button addNewReport = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -278,8 +264,7 @@ public class StandupListViewImpl extends AbstractPageView implements
             userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
             userInfo.addComponent(UserAvatarControlFactory
-                    .createUserAvatarEmbeddedComponent(
-                            report.getLogByAvatarId(), 100));
+                    .createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
             ButtonLinkLegacy userBtn = new ButtonLinkLegacy(report.getLogByFullName(),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
@@ -287,8 +272,7 @@ public class StandupListViewImpl extends AbstractPageView implements
                         @Override
                         public void buttonClick(ClickEvent event) {
                             EventBusFactory.getInstance().post(
-                                    new ProjectMemberEvent.GotoRead(this,
-                                            report.getLogby()));
+                                    new ProjectMemberEvent.GotoRead(this, report.getLogby()));
                         }
                     });
             userBtn.addStyleName("user-name");
@@ -297,32 +281,26 @@ public class StandupListViewImpl extends AbstractPageView implements
 
             MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content");
 
-            final Label whatYesterdayLbl = new Label(
-                    AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
+            Label whatYesterdayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
             whatYesterdayLbl.setStyleName("h2");
             reportContent.addComponent(whatYesterdayLbl);
-            final Label whatYesterdayField = new SafeHtmlLabel(
-                    report.getWhatlastday());
+            Label whatYesterdayField = new SafeHtmlLabel(report.getWhatlastday());
             whatYesterdayField.setSizeUndefined();
             whatYesterdayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatYesterdayField);
 
-            final Label whatTodayLbl = new Label(
-                    AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
+            Label whatTodayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
             whatTodayLbl.setStyleName("h2");
             reportContent.addComponent(whatTodayLbl);
-            final Label whatTodayField = new SafeHtmlLabel(
-                    report.getWhattoday());
+            Label whatTodayField = new SafeHtmlLabel(report.getWhattoday());
             whatTodayField.setSizeUndefined();
             whatTodayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatTodayField);
 
-            final Label roadblockLbl = new Label(
-                    AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
+            Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
             roadblockLbl.setStyleName("h2");
             reportContent.addComponent(roadblockLbl);
-            final Label whatProblemField = new SafeHtmlLabel(
-                    report.getWhatproblem());
+            Label whatProblemField = new SafeHtmlLabel(report.getWhatproblem());
             whatProblemField.setSizeUndefined();
             whatProblemField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatProblemField);
