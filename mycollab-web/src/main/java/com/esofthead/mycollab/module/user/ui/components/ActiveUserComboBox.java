@@ -20,6 +20,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -44,8 +45,7 @@ public class ActiveUserComboBox extends ComboBox {
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         UserSearchCriteria criteria = new UserSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                AppContext.getAccountId()));
+        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setRegisterStatuses(new SetSearchField<>(RegisterStatusConstants.ACTIVE));
 
         UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
@@ -64,7 +64,7 @@ public class ActiveUserComboBox extends ComboBox {
     private void loadUserList(List<SimpleUser> userList) {
         for (SimpleUser user : userList) {
             this.addItem(user.getUsername());
-            this.setItemCaption(user.getUsername(), user.getDisplayName());
+            this.setItemCaption(user.getUsername(), StringUtils.trim(user.getDisplayName(), 30, true));
             this.setItemIcon(user.getUsername(),
                     UserAvatarControlFactory.createAvatarResource(user.getAvatarid(), 16));
         }
