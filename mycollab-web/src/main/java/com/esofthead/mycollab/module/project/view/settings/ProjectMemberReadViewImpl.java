@@ -141,12 +141,9 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<>(ModuleNameConstants.PRJ));
-        searchCriteria.setCreatedUser(new StringSearchField(
-                SearchField.AND, previewForm.getBean().getUsername()));
-        searchCriteria.setExtraTypeIds(new SetSearchField<>(
-                CurrentProjectVariables.getProjectId()));
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext
-                .getAccountId()));
+        searchCriteria.setCreatedUser(new StringSearchField(previewForm.getBean().getUsername()));
+        searchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         activityStreamList.setSearchCriteria(searchCriteria);
     }
 
@@ -162,8 +159,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         return new ProjectMemberFormFieldFactory(previewForm);
     }
 
-    protected class ProjectMemberReadLayoutFactory implements
-            IFormLayoutFactory {
+    protected class ProjectMemberReadLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 8833593761607165873L;
 
         @Override

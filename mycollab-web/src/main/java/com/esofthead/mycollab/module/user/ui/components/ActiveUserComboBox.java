@@ -41,7 +41,6 @@ public class ActiveUserComboBox extends ComboBox {
 
     @SuppressWarnings("unchecked")
     public ActiveUserComboBox() {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
         UserSearchCriteria criteria = new UserSearchCriteria();
@@ -56,7 +55,6 @@ public class ActiveUserComboBox extends ComboBox {
     }
 
     public ActiveUserComboBox(List<SimpleUser> userList) {
-        super();
         this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
         loadUserList(userList);
     }

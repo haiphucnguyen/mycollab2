@@ -217,10 +217,10 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         })
         this.register(new ApplicationEventListener[ProblemEvent.GotoList] {
             @Subscribe def handle(event: ProblemEvent.GotoList) {
-                val criteria: ProblemSearchCriteria = new ProblemSearchCriteria
-                criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
-                val data: ProblemScreenData.Search = new ProblemScreenData.Search(criteria)
-                val presenter: IProblemPresenter = PresenterResolver.getPresenter(classOf[IProblemPresenter])
+                val criteria = new ProblemSearchCriteria
+                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
+                val data = new ProblemScreenData.Search(criteria)
+                val presenter = PresenterResolver.getPresenter(classOf[IProblemPresenter])
                 presenter.go(projectView, data)
             }
         })
