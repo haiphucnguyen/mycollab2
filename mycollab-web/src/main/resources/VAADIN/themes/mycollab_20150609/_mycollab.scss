@@ -1842,20 +1842,6 @@
     }
   }
 
-  .stream-wrapper {
-    background-color: #F5F5F5;
-    padding: 5px;
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    > .v-csslayout-margin {
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      height: 100%;
-    }
-  }
-
   /* End Activity Stream Channel  }
 
   /* End Email Form*/
@@ -3062,13 +3048,25 @@
   }
 
   /* Activity Stream Image's alignment fix */
-
-  .stream-wrapper .v-label {
-    img {
-      display: inline-block;
-      vertical-align: bottom;
+  .stream-wrapper {
+    background-color: #F5F5F5;
+    padding: 5px;
+    border-width: 0px 1px 1px;
+    border-style: solid;
+    border-color: $border-color;
+    > .v-csslayout-margin {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      height: 100%;
     }
-    line-height: 24px;
+    .v-label {
+      img {
+        display: inline-block;
+        vertical-align: top;
+      }
+      line-height: 24px;
+    }
   }
 
   /* fix Image's alignment in v-label with html content */

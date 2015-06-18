@@ -104,8 +104,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
                 .withAlign(myItemsSelection, Alignment.MIDDLE_RIGHT).expand(titleLbl);
         header.addStyleName("panel-header");
 
-        taskList = new DefaultBeanPagedList<>(
-                ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
+        taskList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
                 new TaskRowDisplayHandler(), 10);
         this.with(header, taskList);
     }
@@ -155,8 +154,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
                 footerDiv.appendChild(new Text(AppContext.getMessage(TaskI18nEnum.OPT_DUE_DATE,
                         AppContext.formatPrettyTime(dueDate)))).setTitle(AppContext.formatDate(dueDate));
             } else {
-                footerDiv.appendChild(new Text(AppContext.getMessage(
-                        TaskI18nEnum.OPT_DUE_DATE, "Undefined")));
+                footerDiv.appendChild(new Text(AppContext.getMessage(TaskI18nEnum.OPT_DUE_DATE, "Undefined")));
             }
 
 
