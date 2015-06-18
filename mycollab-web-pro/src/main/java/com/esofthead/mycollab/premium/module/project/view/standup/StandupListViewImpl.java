@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -100,19 +99,13 @@ public class StandupListViewImpl extends AbstractPageView implements
 
                     @Override
                     public void valueChange(final ValueChangeEvent event) {
-                        final Date selectedDate = (Date) event.getProperty()
-                                .getValue();
+                        Date selectedDate = (Date) event.getProperty().getValue();
                         StandupListViewImpl.this.displayReport(selectedDate);
-                        StandupListViewImpl.this.standupCalendar
-                                .setLabelTime(AppContext
-                                        .formatDate(selectedDate));
-                        StandupListViewImpl.this.dateChooser
-                                .setCaption(AppContext.formatDate(selectedDate));
-                        StandupListViewImpl.this.dateChooser
-                                .setPopupVisible(false);
+                        StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext.formatDate(selectedDate));
+                        StandupListViewImpl.this.dateChooser.setCaption(AppContext.formatDate(selectedDate));
+                        StandupListViewImpl.this.dateChooser.setPopupVisible(false);
 
-                        ProjectBreadcrumb breadCrumb = ViewManager
-                                .getCacheComponent(ProjectBreadcrumb.class);
+                        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
                         breadCrumb.gotoStandupList(selectedDate);
                     }
                 });
@@ -189,17 +182,16 @@ public class StandupListViewImpl extends AbstractPageView implements
         }
     }
 
-    private void displayReport( Date date) {
+    private void displayReport(Date date) {
         final StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
         searchCriteria.setProjectId(new NumberSearchField(
                 CurrentProjectVariables.getProjectId()));
-        searchCriteria.setOnDate(new DateSearchField(SearchField.AND, DateSearchField.EQUAL, date));
+        searchCriteria.setOnDate(new DateSearchField(date, DateSearchField.EQUAL));
         this.setSearchCriteria(searchCriteria);
     }
 
     @Override
-    public void setSearchCriteria(
-            final StandupReportSearchCriteria searchCriteria) {
+    public void setSearchCriteria(StandupReportSearchCriteria searchCriteria) {
         this.reportInDay.setSearchCriteria(searchCriteria);
 
         if (searchCriteria.getOnDate() != null) {
@@ -215,11 +207,11 @@ public class StandupListViewImpl extends AbstractPageView implements
     }
 
     private void constructHeader() {
-         MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false)
+        MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false)
         )).withWidth("100%").withStyleName("hdr-view");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-         MHorizontalLayout headerLeft = new MHorizontalLayout();
+        MHorizontalLayout headerLeft = new MHorizontalLayout();
         headerLeft.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         ProjectViewHeader titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
@@ -241,16 +233,14 @@ public class StandupListViewImpl extends AbstractPageView implements
         header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
         header.setExpandRatio(headerLeft, 1.0f);
 
-        final Button addNewReport = new Button(
-                AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL),
+        final Button addNewReport = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         EventBusFactory.getInstance().post(
-                                new StandUpEvent.GotoAdd(
-                                        StandupListViewImpl.class, null));
+                                new StandUpEvent.GotoAdd(StandupListViewImpl.class, null));
 
                     }
                 });
@@ -267,8 +257,7 @@ public class StandupListViewImpl extends AbstractPageView implements
         private static final long serialVersionUID = 1L;
 
         @Override
-        public Component generateRow(final SimpleStandupReport obj,
-                                     final int rowIndex) {
+        public Component generateRow(SimpleStandupReport obj, int rowIndex) {
             final StandupReportBlock singleReport = new StandupReportBlock(obj);
             if (rowIndex == 0) {
                 singleReport.addStyleName("first-report");

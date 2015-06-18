@@ -234,7 +234,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
     private void displayFollowingTicketsCount() {
         // show following ticket numbers
         MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-        searchCriteria.setUser(new StringSearchField(SearchField.AND, AppContext.getUsername()));
+        searchCriteria.setUser(new StringSearchField(AppContext.getUsername()));
         searchCriteria.setExtraTypeIds(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
         MonitorItemService monitorService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
         int followingItemsCount = monitorService.getTotalCount(searchCriteria);

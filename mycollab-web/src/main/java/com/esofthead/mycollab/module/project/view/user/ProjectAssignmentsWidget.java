@@ -201,7 +201,7 @@ public class ProjectAssignmentsWidget extends MVerticalLayout {
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsDunction(uid, task.getAssignUser()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-            userLink.appendText(task.getAssignUserFullName());
+            userLink.appendText(StringUtils.trim(task.getAssignUserFullName(), 30, true));
 
             String assigneeTxt = AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": ";
 
