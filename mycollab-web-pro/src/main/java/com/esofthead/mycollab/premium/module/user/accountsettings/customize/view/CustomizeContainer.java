@@ -46,8 +46,8 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
     private String selectedTabId = "";
 
     public CustomizeContainer() {
-        AccountModule accountModule = (AccountModule) ModuleHelper.getCurrentModule();
-        ControllerRegistry.addController(new UserAccountExtController(accountModule));
+//        AccountModule accountModule = (AccountModule) ModuleHelper.getCurrentModule();
+//        ControllerRegistry.addController(new UserAccountExtController(accountModule));
         this.tabSheetDecorator = new TabSheetDecorator();
         this.tabSheetDecorator.setStyleName(UIConstants.THEME_TAB_STYLE3);
         this.addComponent(tabSheetDecorator);
