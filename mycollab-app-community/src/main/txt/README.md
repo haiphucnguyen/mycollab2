@@ -43,6 +43,15 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.0.10
+-----------------------------
+**Library Upgrades**
+
+**Bug Fixes**
+
+* System error when user accept the project invitation with project owner role
+
+
 Version 5.0.9
 -----------------------------
 **Library Upgrades**
