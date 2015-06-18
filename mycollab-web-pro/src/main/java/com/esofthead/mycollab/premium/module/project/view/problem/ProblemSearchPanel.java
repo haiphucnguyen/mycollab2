@@ -145,8 +145,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
             searchCriteria.setProblemname(new StringSearchField(this.nameField.getValue().trim()));
 
             if (this.myItemCheckbox.getValue()) {
-                searchCriteria.setAssignToUser(new StringSearchField(
-                        SearchField.AND, AppContext.getUsername()));
+                searchCriteria.setAssignToUser(new StringSearchField(AppContext.getUsername()));
             } else {
                 searchCriteria.setAssignToUser(null);
             }

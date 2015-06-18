@@ -108,12 +108,9 @@ public class TaskGroupReadPresenter extends
                         ProjectTaskListService tasklistService = ApplicationContextUtil
                                 .getSpringBean(ProjectTaskListService.class);
                         TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-                        criteria.setProjectId(new NumberSearchField(
-                                SearchField.AND, CurrentProjectVariables.getProjectId()));
-                        criteria.setId(new NumberSearchField(data.getId(),
-                                NumberSearchField.GREATER));
-                        Integer nextId = tasklistService
-                                .getNextItemKey(criteria);
+                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
+                        Integer nextId = tasklistService.getNextItemKey(criteria);
                         if (nextId != null) {
                             EventBusFactory.getInstance().post(
                                     new TaskListEvent.GotoRead(this, nextId));
