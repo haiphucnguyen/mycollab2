@@ -32,7 +32,6 @@ public class GenericJobTest {
 
 	@Before
 	public void setUp() {
-		SiteConfiguration.loadInstance(8080);
 		MockitoAnnotations.initMocks(this);
 	}
 }

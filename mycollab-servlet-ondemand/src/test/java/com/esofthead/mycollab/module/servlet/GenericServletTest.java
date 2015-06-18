@@ -43,7 +43,6 @@ public class GenericServletTest {
 
 	@Before
 	public void setUp() {
-		SiteConfiguration.loadInstance(8080);
 		MockitoAnnotations.initMocks(this);
 
 		when(response.getLocale()).thenReturn(Locale.US);
