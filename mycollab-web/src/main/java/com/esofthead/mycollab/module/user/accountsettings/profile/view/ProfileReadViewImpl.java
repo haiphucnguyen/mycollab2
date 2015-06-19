@@ -178,19 +178,19 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         private class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
-            private GridFormLayoutHelper contactLayout = new GridFormLayoutHelper(1, 5, "100%", "150px");
-            private GridFormLayoutHelper advancedInfoLayout = new GridFormLayoutHelper(1, 3, "100%", "150px");
+            private GridFormLayoutHelper contactLayout = new GridFormLayoutHelper(1, 5, "100%", "120px");
+            private GridFormLayoutHelper advancedInfoLayout = new GridFormLayoutHelper(1, 3, "100%", "120px");
 
             @Override
             public ComponentContainer getLayout() {
                 MVerticalLayout layout = new MVerticalLayout().withSpacing(true).withMargin(false);
                 layout.addComponent(avatarAndPass);
 
-                String separatorStyle = "width: 100%; height: 1px; background-color: #CFCFCF; margin-top: 0px; margin-bottom: 0px";
+                String separatorStyle = "width: 100%; height: 1px; background-color: #CFCFCF; margin-top: 0px; margin-bottom: 10px";
                 MHorizontalLayout contactInformationHeader = new MHorizontalLayout();
+                contactInformationHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                 Label contactInformationHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
                 contactInformationHeaderLbl.addStyleName("h1");
-                contactInformationHeader.with(contactInformationHeaderLbl).withAlign(contactInformationHeaderLbl, Alignment.MIDDLE_LEFT);
 
                 Button btnChangeContactInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
                         new Button.ClickListener() {
@@ -202,14 +202,14 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                             }
                         });
                 btnChangeContactInfo.addStyleName("link");
-                contactInformationHeader.with(btnChangeContactInfo).withAlign(btnChangeContactInfo, Alignment.MIDDLE_LEFT);
+                contactInformationHeader.with(contactInformationHeaderLbl, btnChangeContactInfo);
 
                 layout.addComponent(contactInformationHeader);
                 Div contactSeparator = new Div();
                 contactSeparator.setAttribute("style", separatorStyle);
                 layout.addComponent(new Label(contactSeparator.write(), ContentMode.HTML));
 
-                layout.addComponent(contactLayout.getLayout());
+                layout.with(contactLayout.getLayout(), new Label());
 
                 MHorizontalLayout advanceInfoHeader = new MHorizontalLayout();
                 Label advanceInfoHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION));
