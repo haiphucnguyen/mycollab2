@@ -23,8 +23,9 @@ import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustom
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
+import com.esofthead.mycollab.premium.module.user.accountsettings.view.parameters.SettingExtScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
@@ -54,7 +55,7 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
                 LogoUploadPresenter presenter = PresenterResolver.getPresenter(LogoUploadPresenter.class);
                 if (event.getData() != null) {
                     presenter.go(view.getWidget(),
-                            (CustomizeScreenData.LogoUpload) event.getData());
+                            (SettingScreenDaa.LogoUpload) event.getData());
                 }
 
             }
@@ -68,8 +69,8 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
         accountContainer.gotoSubView(SettingUIConstants.CUSTOMIZATION);
 
         AbstractPresenter<?> presenter;
-        if (data instanceof CustomizeScreenData.GotoMainPage) {
-            presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
+        if (data instanceof SettingExtScreenData.GeneralSettingRead || data == null) {
+            presenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }

@@ -23,7 +23,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.CustomizeScreenData;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
@@ -169,7 +169,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                     EventBusFactory.getInstance().post(
                             new AccountCustomizeEvent.GotoUploadLogo(
                                     ThemeCustomizeViewImpl.this,
-                                    new CustomizeScreenData.LogoUpload(
+                                    new SettingScreenDaa.LogoUpload(
                                             imageData, accountTheme)));
                 } else {
                     throw new UserInvalidInputException(

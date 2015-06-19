@@ -24,10 +24,7 @@ import scala.beans.BeanProperty
  * @author MyCollab Ltd.
  * @since 5.1.0
  */
-object CustomizeScreenData {
-
-    class GotoMainPage() extends ScreenData[Object](null) {}
+object SettingScreenDaa {
 
     class LogoUpload(params: Object, @BeanProperty var extraParam: Object) extends ScreenData[Object](params) {}
-
 }

@@ -18,7 +18,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.customize.vie
 
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
-import com.esofthead.mycollab.module.user.accountsettings.view.UserAccountExtController;
+import com.esofthead.mycollab.premium.module.user.accountsettings.view.UserAccountExtController;
 import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
@@ -46,8 +46,8 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
     private String selectedTabId = "";
 
     public CustomizeContainer() {
-//        AccountModule accountModule = (AccountModule) ModuleHelper.getCurrentModule();
-//        ControllerRegistry.addController(new UserAccountExtController(accountModule));
+        AccountModule accountModule = (AccountModule) ModuleHelper.getCurrentModule();
+        ControllerRegistry.addController(new UserAccountExtController(accountModule));
         this.tabSheetDecorator = new TabSheetDecorator();
         this.tabSheetDecorator.setStyleName(UIConstants.THEME_TAB_STYLE3);
         this.addComponent(tabSheetDecorator);

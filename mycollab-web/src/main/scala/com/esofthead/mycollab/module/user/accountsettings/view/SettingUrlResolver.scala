@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user.accountsettings.view
+package com.esofthead.mycollab.premium.module.user.accountsettings.view
 
 /**
  * @author MyCollab Ltd
