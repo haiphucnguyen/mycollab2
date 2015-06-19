@@ -34,7 +34,7 @@ class AccountUrlResolver extends UrlResolver {
         this.addSubResolver("billing", new BillingUrlResolver)
         this.addSubResolver("user", new UserUrlResolver)
         this.addSubResolver("role", new RoleUrlResolver)
-        this.addSubResolver("customization", new CustomizeUrlResolver)
+        this.addSubResolver("setting", new CustomizeUrlResolver)
         if (SiteConfiguration.getDeploymentMode eq DeploymentMode.standalone) {
             this.addSubResolver("setup", new SetupUrlResolver)
         }

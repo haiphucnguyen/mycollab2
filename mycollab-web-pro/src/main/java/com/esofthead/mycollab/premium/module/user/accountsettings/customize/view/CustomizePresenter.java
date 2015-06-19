@@ -69,7 +69,7 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
 
         AbstractPresenter<?> presenter;
         if (data instanceof CustomizeScreenData.GotoMainPage) {
-            presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
+            presenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }
