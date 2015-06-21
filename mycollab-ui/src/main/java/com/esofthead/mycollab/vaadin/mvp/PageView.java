@@ -41,19 +41,4 @@ public interface PageView extends ComponentContainer, CacheableComponent {
 
         void receiveEvent(ViewEvent<E> event);
     }
-
-    class ViewEvent<E> extends ApplicationEvent {
-        private static final long serialVersionUID = 1L;
-
-        public static final String VIEW_IDENTIFIER = "viewevent";
-
-        public ViewEvent(Object source, E data) {
-            super(source, data);
-        }
-
-        @Override
-        public Object data() {
-            return getData();
-        }
-    }
 }

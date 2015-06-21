@@ -29,10 +29,8 @@ public class GeneralSettingReadViewImpl extends AbstractPageView implements Gene
 
     private AdvancedPreviewBeanForm<SimpleBillingAccount> previewForm;
     private MHorizontalLayout header;
-    private SimpleBillingAccount account;
 
     public GeneralSettingReadViewImpl() {
-        super();
         this.setMargin(new MarginInfo(false, true, true, true));
         this.addStyleName("userInfoContainer");
     }

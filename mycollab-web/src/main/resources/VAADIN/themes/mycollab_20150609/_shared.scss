@@ -17,17 +17,9 @@
   }
 
   .colored-gridlayout {
-    .gridform-caption.v-margin-top, .gridform-field.v-margin-top {
-      padding-top: 8px;
-    }
-    .gridform-caption.v-margin-right, .gridform-field.v-margin-right {
-      padding-right: 18px;
-    }
-    .gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
-      padding-bottom: 8px;
-    }
-    .gridform-caption.v-margin-left {
-      padding-left: 18px;
+    border-bottom: 1px solid $border-color;
+    .gridform-caption, .gridform-field {
+      @include margin-container(8px, 18px, 8px, 18px);
     }
     .gridform-field {
       &.v-margin-left {
@@ -54,6 +46,10 @@
         border-top: none;
       }
     }
+  }
+
+  .colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg > .v-csslayout-margin {
+    padding: 0px;
   }
 
   .v-filterselect-suggestpopup .gwt-MenuItem {

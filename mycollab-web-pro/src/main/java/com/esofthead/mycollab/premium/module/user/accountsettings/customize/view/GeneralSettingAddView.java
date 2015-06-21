@@ -7,4 +7,5 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 5.1.0
  */
 public interface GeneralSettingAddView extends PageView {
+    void displayView();
 }

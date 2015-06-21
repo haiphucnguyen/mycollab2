@@ -263,6 +263,18 @@
     }
   }
 
+  /* Lead Convert Window */
+
+  .lead-convert-window {
+    padding-bottom: 5px;
+    .colored-gridlayout > div > div.first-row {
+      border-top: 1px solid #C8C8C8;
+    }
+    .v-checkbox input[type="checkbox"] {
+      margin-left: 0px;
+    }
+  }
+
   /* AddViewLayout2 */
 
   .addview-layout {

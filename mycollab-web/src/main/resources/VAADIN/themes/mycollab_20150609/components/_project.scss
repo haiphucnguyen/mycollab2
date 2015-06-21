@@ -772,6 +772,19 @@
     border: none;
   }
 
+  .task-list .colored-gridlayout {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: $border-color;
+  }
+
+  .task-list-footer {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: $border-color;
+    @include margin-container(5px, 5px, 5px, 5px);
+  }
+
   .v-tabsheet-content {
     .task-list .task-list-footer {
       border-width: 1px 0px 0px;

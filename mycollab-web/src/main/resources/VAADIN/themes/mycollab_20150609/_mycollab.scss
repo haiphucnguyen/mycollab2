@@ -2510,25 +2510,6 @@
 
   /* End Richtext Editor */
 
-  /* The New GridLayout */
-
-  .colored-gridlayout {
-    border-bottom: 1px solid $border-color;
-  }
-
-  .task-list .colored-gridlayout {
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-  }
-
-  .task-list-footer {
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    @include margin-container(5px, 5px, 5px, 5px);
-  }
-
   /* Rating Stars */
 
   div {
@@ -2887,11 +2868,6 @@
     margin: 0px;
   }
 
-  /* Multiple Select Comp */
-
-  .colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg > .v-csslayout-margin {
-    padding: 0px;
-  }
 
   /* Task Group Reorder */
 
@@ -3452,18 +3428,6 @@
     font-size:16px;
     font-family: FontAwesome;
     content: '\f00c';
-  }
-
-  /* Lead Convert Window */
-
-  .lead-convert-window {
-    padding-bottom: 5px;
-    .colored-gridlayout > div > div.first-row {
-      border-top: 1px solid #C8C8C8;
-    }
-    .v-checkbox input[type="checkbox"] {
-      margin-left: 0px;
-    }
   }
 
   /* ComboBox Fix*/

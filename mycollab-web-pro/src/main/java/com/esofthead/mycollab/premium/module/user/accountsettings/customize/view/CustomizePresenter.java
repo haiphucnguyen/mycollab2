@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
@@ -69,8 +70,9 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
         accountContainer.gotoSubView(SettingUIConstants.CUSTOMIZATION);
 
         AbstractPresenter<?> presenter;
-        if (data instanceof SettingExtScreenData.GeneralSettingRead || data == null) {
-            presenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
+        if (ClassUtils.instanceOf(data, SettingExtScreenData.GeneralSettingRead.class, SettingExtScreenData
+                .GeneralSettingEdit.class) || data == null) {
+            presenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }
