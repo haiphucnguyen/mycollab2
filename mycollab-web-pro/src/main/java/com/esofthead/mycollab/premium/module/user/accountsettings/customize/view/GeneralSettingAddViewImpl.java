@@ -8,7 +8,10 @@ import com.esofthead.mycollab.premium.module.user.accountsettings.view.events.Se
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.DesktopApplication;
@@ -80,17 +83,25 @@ public class GeneralSettingAddViewImpl extends AbstractPageView implements Gener
                 Label headerLbl = new Label("General Settings for your site");
                 headerLbl.setStyleName("h1");
 
-                Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+
+                    }
+                });
+                updateBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+
+                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         EventBusFactory.getInstance().post(new SettingExtEvent.GeneralSettingRead(
                                 GeneralSettingAddViewImpl.this, null));
                     }
                 });
-                editBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-                header.with(headerLbl, editBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(editBtn,
-                        Alignment.MIDDLE_RIGHT);
+                header.with(headerLbl, updateBtn, cancelBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign
+                        (updateBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerLbl);
 
                 layout.with(header, gridLayout.getLayout());
                 return layout;
