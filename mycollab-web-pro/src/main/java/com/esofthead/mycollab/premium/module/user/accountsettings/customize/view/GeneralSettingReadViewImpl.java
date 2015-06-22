@@ -28,20 +28,15 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public class GeneralSettingReadViewImpl extends AbstractPageView implements GeneralSettingReadView {
 
     private AdvancedPreviewBeanForm<SimpleBillingAccount> previewForm;
-    private MHorizontalLayout header;
 
     public GeneralSettingReadViewImpl() {
-        this.setMargin(new MarginInfo(false, true, true, true));
+        this.setMargin(true);
         this.addStyleName("userInfoContainer");
     }
 
     @Override
     public void displayView() {
         removeAllComponents();
-        header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                .withWidth("100%").withStyleName(UIConstants.HEADER_VIEW);
-
-        addComponent(header);
 
         previewForm = new PreviewForm();
         previewForm.setBean(AppContext.getBillingAccount());

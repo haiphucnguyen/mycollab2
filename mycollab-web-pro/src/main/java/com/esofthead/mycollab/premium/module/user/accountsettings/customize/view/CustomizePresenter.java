@@ -55,8 +55,7 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
             public void handle(AccountCustomizeEvent.GotoUploadLogo event) {
                 LogoUploadPresenter presenter = PresenterResolver.getPresenter(LogoUploadPresenter.class);
                 if (event.getData() != null) {
-                    presenter.go(view.getWidget(),
-                            (SettingScreenDaa.LogoUpload) event.getData());
+                    presenter.go(view.getWidget(), (SettingScreenDaa.LogoUpload) event.getData());
                 }
 
             }
@@ -73,6 +72,8 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
         if (ClassUtils.instanceOf(data, SettingExtScreenData.GeneralSettingRead.class, SettingExtScreenData
                 .GeneralSettingEdit.class) || data == null) {
             presenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
+        } else if (data instanceof SettingExtScreenData.LogoUpload) {
+            presenter = PresenterResolver.getPresenter(LogoChangePresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }

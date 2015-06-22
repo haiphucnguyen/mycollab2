@@ -17,5 +17,6 @@ public class LogoChangePresenter extends AbstractPresenter<LogoChangeView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         CustomizeContainer customizeContainer = (CustomizeContainer) container;
         customizeContainer.gotoSubView("Logo");
+        view.displayView();
     }
 }
