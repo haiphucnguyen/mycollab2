@@ -97,9 +97,8 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ICustomizeContainer customizeContainer = (ICustomizeContainer) container;
-        customizeContainer.removeAllComponents();
-        customizeContainer.addComponent(view.getWidget());
+        CustomizeContainer customizeContainer = (CustomizeContainer) container;
+        customizeContainer.gotoSubView("Theme");
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {

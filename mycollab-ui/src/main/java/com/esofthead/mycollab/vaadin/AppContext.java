@@ -211,8 +211,7 @@ public class AppContext implements Serializable {
             Enum key = Enum.valueOf(enumCls, option);
             return getMessage(key, objects);
         } catch (Exception e) {
-            LOG.error("Can not find resource key " + option
-                    + " and enum class " + enumCls.getName(), e);
+            LOG.debug("Can not find resource key " + option + " and enum class " + enumCls.getName(), e);
             return option;
         }
     }
@@ -233,8 +232,7 @@ public class AppContext implements Serializable {
      */
     public void initDomain(String domain) {
         this.subDomain = domain;
-        BillingAccountService billingService = ApplicationContextUtil
-                .getSpringBean(BillingAccountService.class);
+        BillingAccountService billingService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
 
         BillingAccount account = billingService.getAccountByDomain(domain);
 
@@ -242,23 +240,21 @@ public class AppContext implements Serializable {
             throw new SubDomainNotExistException(AppContext.getMessage(
                     ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
         } else {
-            LOG.debug("Get billing account {} of subDomain {}",
-                    BeanUtility.printBeanObj(account), domain);
+            LOG.debug("Get billing account {} of subDomain {}", BeanUtility.printBeanObj(account), domain);
             accountId = account.getId();
         }
 
-        EventBusFactory.getInstance()
-                .register(new ApplicationEventListener<SessionEvent.UserProfileChangeEvent>() {
-                            private static final long serialVersionUID = 1L;
+        EventBusFactory.getInstance().register(new ApplicationEventListener<SessionEvent.UserProfileChangeEvent>() {
+            private static final long serialVersionUID = 1L;
 
-                            @Subscribe
-                            @Override
-                            public void handle(UserProfileChangeEvent event) {
-                                if ("avatarid".equals(event.getFieldChange())) {
-                                    session.setAvatarid((String) event.getData());
-                                }
-                            }
-                        });
+            @Subscribe
+            @Override
+            public void handle(UserProfileChangeEvent event) {
+                if ("avatarid".equals(event.getFieldChange())) {
+                    session.setAvatarid((String) event.getData());
+                }
+            }
+        });
     }
 
     /**

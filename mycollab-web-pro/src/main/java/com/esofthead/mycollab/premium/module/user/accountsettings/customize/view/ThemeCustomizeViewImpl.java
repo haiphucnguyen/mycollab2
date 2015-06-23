@@ -68,8 +68,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
     protected AddViewLayout2 initUI() {
         this.setMargin(new MarginInfo(false, true, true, true));
 
-        AddViewLayout2 mainLayout = new AddViewLayout2(
-                AppContext.getMessage(AdminI18nEnum.VIEW_CUSTOMIZE),
+        AddViewLayout2 mainLayout = new AddViewLayout2(AppContext.getMessage(AdminI18nEnum.VIEW_SETTING),
                 SettingAssetsManager.getAsset(SettingUIConstants.CUSTOMIZATION));
         mainLayout.setWidth("100%");
         mainLayout.addStyleName("theme-customize-view");
@@ -107,8 +106,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 });
         saveBtn.setIcon(FontAwesome.SAVE);
         saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        saveBtn.setEnabled(AppContext
-                .canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        saveBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         controlButton.addComponent(saveBtn);
 
         Button resetToDefaultBtn = new Button(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
@@ -118,8 +116,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                     @Override
                     public void buttonClick(ClickEvent event) {
                         EventBusFactory.getInstance().post(
-                                new AccountCustomizeEvent.ResetTheme(
-                                        ThemeCustomizeViewImpl.this, null));
+                                new AccountCustomizeEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
                     }
                 });
         resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);
@@ -162,11 +159,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 }
 
                 if (mimeType.equals("image/png")) {
-                    EventBusFactory.getInstance().post(
-                            new AccountCustomizeEvent.GotoUploadLogo(
-                                    ThemeCustomizeViewImpl.this,
-                                    new SettingScreenDaa.LogoUpload(
-                                            imageData, accountTheme)));
+                    EventBusFactory.getInstance().post(new AccountCustomizeEvent.GotoUploadLogo(
+                            ThemeCustomizeViewImpl.this, new SettingScreenDaa.LogoUpload(imageData, accountTheme)));
                 } else {
                     throw new UserInvalidInputException(
                             "Upload file does not have valid image format. The supported formats are jpg/png");
