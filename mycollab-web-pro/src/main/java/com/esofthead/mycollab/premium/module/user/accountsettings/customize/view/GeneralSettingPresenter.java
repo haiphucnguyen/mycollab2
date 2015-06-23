@@ -8,9 +8,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 5.1.0
  */
-public class GeneralSettingReadPresenter extends AbstractPresenter<GeneralSettingReadView> {
-    public GeneralSettingReadPresenter() {
-        super(GeneralSettingReadView.class);
+public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingView> {
+    public GeneralSettingPresenter() {
+        super(GeneralSettingView.class);
     }
 
     @Override

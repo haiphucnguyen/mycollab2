@@ -33,7 +33,7 @@ import com.vaadin.ui.TabSheet;
 public class CustomizeContainer extends AbstractPageView implements ICustomizeContainer {
     private static final long serialVersionUID = -1923841035522809056L;
 
-    private GeneralSettingReadPresenter generalSettingReadPresenter;
+    private GeneralSettingPresenter generalSettingPresenter;
     private ThemeCustomizePresenter themeCustomizePresenter;
 
     private final TabSheetDecorator settingTab;
@@ -49,9 +49,9 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
     }
 
     private void buildComponents() {
-        generalSettingReadPresenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
+        generalSettingPresenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
 
-        this.settingTab.addTab(this.generalSettingReadPresenter.getView(), "General Settings");
+        this.settingTab.addTab(this.generalSettingPresenter.getView(), "General Settings");
 
         themeCustomizePresenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
         this.settingTab.addTab(this.themeCustomizePresenter.getView(), "Theme");
@@ -64,7 +64,7 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
                 TabSheet.Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
                 if ("General Settings".equals(caption) && !"General Settings".equals(selectedTabId)) {
-                    generalSettingReadPresenter.go(CustomizeContainer.this, null);
+                    generalSettingPresenter.go(CustomizeContainer.this, null);
                 } else if ("Theme".equals(caption) && !"Theme".equals(selectedTabId)) {
                     themeCustomizePresenter.go(CustomizeContainer.this, null);
                 }

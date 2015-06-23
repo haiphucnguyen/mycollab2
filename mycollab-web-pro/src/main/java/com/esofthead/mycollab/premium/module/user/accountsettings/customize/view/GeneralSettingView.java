@@ -6,6 +6,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @author MyCollab Ltd
  * @since 5.1.0
  */
-public interface GeneralSettingReadView extends PageView {
+public interface GeneralSettingView extends PageView {
     void displayView();
 }

@@ -68,7 +68,7 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer> i
 
         AbstractPresenter<?> presenter;
         if (data instanceof SettingExtScreenData.GeneralSetting || data == null) {
-          presenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
+            presenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
         } else if (data instanceof SettingExtScreenData.Customize) {
             presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
         } else if (data instanceof SettingExtScreenData.LogoUpload) {
@@ -76,9 +76,8 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer> i
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }
-        if (presenter != null) {
-            presenter.go(view.getWidget(), data);
-        }
+
+        presenter.go(view.getWidget(), data);
     }
 
 }
