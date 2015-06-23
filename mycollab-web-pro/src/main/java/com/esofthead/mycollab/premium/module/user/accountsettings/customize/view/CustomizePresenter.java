@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
@@ -37,8 +36,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
-        implements ICustomizePresenter {
+public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer> implements ICustomizePresenter {
     private static final long serialVersionUID = 1L;
 
     public CustomizePresenter() {
@@ -69,9 +67,10 @@ public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer>
         accountContainer.gotoSubView(SettingUIConstants.CUSTOMIZATION);
 
         AbstractPresenter<?> presenter;
-        if (ClassUtils.instanceOf(data, SettingExtScreenData.GeneralSettingRead.class, SettingExtScreenData
-                .GeneralSettingEdit.class) || data == null) {
-            presenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
+        if (data instanceof SettingExtScreenData.GeneralSetting || data == null) {
+          presenter = PresenterResolver.getPresenter(GeneralSettingReadPresenter.class);
+        } else if (data instanceof SettingExtScreenData.Customize) {
+            presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
         } else if (data instanceof SettingExtScreenData.LogoUpload) {
             presenter = PresenterResolver.getPresenter(LogoChangePresenter.class);
         } else {

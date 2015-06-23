@@ -7,13 +7,11 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
  * @since 5.1.0
  */
 object SettingExtEvent {
-    
-    class GeneralSettingRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-    
-    class GeneralSettingEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
+    class GotoGeneralSetting(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
+    class GotoCustomizePage(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
     
     class GotoLogoUpload(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-    
-    class GotoTheme(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
     
 }

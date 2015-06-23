@@ -1,10 +1,8 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
-import com.esofthead.mycollab.premium.module.user.accountsettings.view.events.SettingExtEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -82,8 +80,7 @@ public class GeneralSettingReadViewImpl extends AbstractPageView implements Gene
                 Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new SettingExtEvent.GeneralSettingEdit(
-                                GeneralSettingReadViewImpl.this, null));
+
                     }
                 });
                 editBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

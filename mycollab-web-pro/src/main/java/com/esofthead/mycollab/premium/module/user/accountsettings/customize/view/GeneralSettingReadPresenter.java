@@ -15,7 +15,7 @@ public class GeneralSettingReadPresenter extends AbstractPresenter<GeneralSettin
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        GeneralSettingContainer customizeContainer = (GeneralSettingContainer) container;
+        CustomizeContainer customizeContainer = (CustomizeContainer) container;
         customizeContainer.removeAllComponents();
         customizeContainer.addComponent(view);
         view.displayView();

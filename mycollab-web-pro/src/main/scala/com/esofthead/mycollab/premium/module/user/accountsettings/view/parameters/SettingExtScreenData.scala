@@ -8,12 +8,10 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData
  */
 object SettingExtScreenData {
 
-    class GeneralSettingRead() extends ScreenData[Object](null) {}
-
-    class GeneralSettingEdit() extends ScreenData[Object](null) {}
-
     class LogoUpload() extends ScreenData[Object](null) {}
 
-    class ColorTheme() extends ScreenData[Object](null) {}
+    class GeneralSetting() extends ScreenData[Object](null) {}
+
+    class Customize() extends ScreenData[Object](null) {}
 
 }

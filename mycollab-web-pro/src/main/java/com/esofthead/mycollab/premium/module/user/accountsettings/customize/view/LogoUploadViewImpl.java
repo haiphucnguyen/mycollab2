@@ -59,8 +59,7 @@ import java.io.IOException;
  */
 
 @ViewComponent
-public class LogoUploadViewImpl extends AbstractPageView implements
-		LogoUploadView {
+public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadView {
 	private static final long serialVersionUID = -5294741083557671011L;
 
 	private static final Logger LOG = LoggerFactory.getLogger(LogoUploadViewImpl.class);

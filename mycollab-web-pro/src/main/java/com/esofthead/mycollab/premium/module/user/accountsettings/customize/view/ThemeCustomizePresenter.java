@@ -42,67 +42,57 @@ import org.vaadin.dialogs.ConfirmDialog;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class ThemeCustomizePresenter extends
-        AbstractPresenter<ThemeCustomizeView> {
+public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeView> {
     private static final long serialVersionUID = 5330315328389778202L;
 
     private AccountThemeService themeService;
 
     public ThemeCustomizePresenter() {
         super(ThemeCustomizeView.class);
-        themeService = ApplicationContextUtil
-                .getSpringBean(AccountThemeService.class);
+        themeService = ApplicationContextUtil.getSpringBean(AccountThemeService.class);
     }
 
     @Override
     protected void postInitView() {
-        EventBusFactory.getInstance().register(
-                new ApplicationEventListener<AccountCustomizeEvent.SaveTheme>() {
-                    private static final long serialVersionUID = -1060182248184670399L;
+        EventBusFactory.getInstance().register(new ApplicationEventListener<AccountCustomizeEvent.SaveTheme>() {
+            private static final long serialVersionUID = -1060182248184670399L;
 
-                    @Subscribe
-                    @Override
-                    public void handle(SaveTheme event) {
-                        if (event.getData() instanceof AccountTheme) {
-                            saveTheme((AccountTheme) event.getData());
-                            Page.getCurrent().getJavaScript()
-                                    .execute("window.location.reload();");
-                        }
-                    }
-                });
-        EventBusFactory.getInstance().register(
-                new ApplicationEventListener<AccountCustomizeEvent.ResetTheme>() {
-                    private static final long serialVersionUID = 1594676526731151824L;
+            @Subscribe
+            @Override
+            public void handle(SaveTheme event) {
+                if (event.getData() instanceof AccountTheme) {
+                    saveTheme((AccountTheme) event.getData());
+                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                }
+            }
+        });
+        EventBusFactory.getInstance().register(new ApplicationEventListener<AccountCustomizeEvent.ResetTheme>() {
+            private static final long serialVersionUID = 1594676526731151824L;
 
-                    @Subscribe
-                    @Override
-                    public void handle(ResetTheme event) {
-                        ConfirmDialogExt.show(UI.getCurrent(),
-                                "Reset to Default Theme",
-                                "This action will reset all your customizations to default. Are you really want to do this?",
-                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                                new ConfirmDialog.Listener() {
-                                    private static final long serialVersionUID = 2086515060473457749L;
+            @Subscribe
+            @Override
+            public void handle(ResetTheme event) {
+                ConfirmDialogExt.show(UI.getCurrent(), "Reset to the default theme",
+                        "This action will reset all your customizations to default. Are you really want to do this?",
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 2086515060473457749L;
 
-                                    @Override
-                                    public void onClose(
-                                            ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            AccountTheme defaultTheme = themeService
-                                                    .getDefaultTheme();
-                                            defaultTheme.setId(null);
-                                            themeService.saveAccountTheme(
-                                                    defaultTheme,
-                                                    AppContext.getAccountId());
-                                            view.customizeTheme(defaultTheme);
-                                            Page.getCurrent().getJavaScript()
-                                                    .execute("window.location.reload();");
-                                        }
-                                    }
-                                });
-                    }
-                });
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    AccountTheme defaultTheme = themeService.getDefaultTheme();
+                                    defaultTheme.setId(null);
+                                    themeService.saveAccountTheme(defaultTheme,
+                                            AppContext.getAccountId());
+                                    view.customizeTheme(defaultTheme);
+                                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -111,18 +101,16 @@ public class ThemeCustomizePresenter extends
         customizeContainer.removeAllComponents();
         customizeContainer.addComponent(view.getWidget());
 
-        AccountTheme accountTheme = null;
-        if (data.getParams() == null) {
-            accountTheme = themeService.getAccountTheme(AppContext
-                    .getAccountId());
+        AccountTheme accountTheme;
+        if (data == null || data.getParams() == null) {
+            accountTheme = themeService.getAccountTheme(AppContext.getAccountId());
         } else {
             accountTheme = (AccountTheme) data.getParams();
         }
 
         view.customizeTheme(accountTheme);
 
-        AccountSettingBreadcrumb breadcrumb = ViewManager
-                .getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoCustomizationPage();
     }
 

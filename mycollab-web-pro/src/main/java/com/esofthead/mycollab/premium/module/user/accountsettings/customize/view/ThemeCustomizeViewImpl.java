@@ -72,7 +72,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 AppContext.getMessage(AdminI18nEnum.VIEW_CUSTOMIZE),
                 SettingAssetsManager.getAsset(SettingUIConstants.CUSTOMIZATION));
         mainLayout.setWidth("100%");
-        mainLayout.setStyleName("readview-layout");
         mainLayout.addStyleName("theme-customize-view");
 
         return mainLayout;
@@ -112,8 +111,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 .canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         controlButton.addComponent(saveBtn);
 
-        Button resetToDefaultBtn = new Button(AppContext
-                .getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
+        Button resetToDefaultBtn = new Button(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 5182152510759528123L;
 
@@ -125,8 +123,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                     }
                 });
         resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);
-        resetToDefaultBtn.setEnabled(AppContext
-                .canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetToDefaultBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         controlButton.addComponent(resetToDefaultBtn);
         controlButton.setExpandRatio(resetToDefaultBtn, 1.0f);
 
@@ -137,8 +134,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
     private Component constructTopMenuCustomizeBlock() {
         VerticalLayout blockLayout = new VerticalLayout();
-        Label blockHeader = new Label(
-                AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU));
+        Label blockHeader = new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU));
         blockHeader.setStyleName("block-hdr");
         blockHeader.addStyleName("h2");
         blockLayout.addComponent(blockHeader);
