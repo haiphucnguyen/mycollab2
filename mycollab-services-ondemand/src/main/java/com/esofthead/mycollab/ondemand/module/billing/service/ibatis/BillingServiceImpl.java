@@ -16,18 +16,6 @@
  */
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
 import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
@@ -43,275 +31,258 @@ import com.esofthead.mycollab.module.billing.UserStatusConstants;
 import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
 import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
 import com.esofthead.mycollab.module.billing.service.BillingService;
-import com.esofthead.mycollab.module.user.dao.AccountSettingsMapper;
-import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
-import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
-import com.esofthead.mycollab.module.user.dao.BillingPlanMapper;
-import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
-import com.esofthead.mycollab.module.user.dao.UserMapper;
-import com.esofthead.mycollab.module.user.domain.AccountSettings;
-import com.esofthead.mycollab.module.user.domain.BillingAccount;
-import com.esofthead.mycollab.module.user.domain.BillingAccountExample;
-import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
-import com.esofthead.mycollab.module.user.domain.BillingPlan;
-import com.esofthead.mycollab.module.user.domain.BillingPlanExample;
-import com.esofthead.mycollab.module.user.domain.Role;
-import com.esofthead.mycollab.module.user.domain.SimpleRole;
-import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.module.user.domain.UserAccount;
-import com.esofthead.mycollab.module.user.domain.UserExample;
+import com.esofthead.mycollab.module.user.dao.*;
+import com.esofthead.mycollab.module.user.domain.*;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.ondemand.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.ondemand.module.billing.SubdomainExistedException;
 import com.esofthead.mycollab.security.PermissionMap;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 @Service(value = "billingService")
 public class BillingServiceImpl implements BillingService {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(BillingServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BillingServiceImpl.class);
 
-	private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api",
-			"esofthead", "blog", "forum", "wiki", "support", "community");
+    private static List<String> ACCOUNT_BLACK_LIST = Arrays.asList("api", "esofthead", "blog", "forum", "wiki", "support", "community");
 
-	@Autowired
-	private BillingPlanMapper billingPlanMapper;
+    @Autowired
+    private BillingPlanMapper billingPlanMapper;
 
-	@Autowired
-	private BillingAccountMapper billingAccountMapper;
+    @Autowired
+    private BillingAccountMapper billingAccountMapper;
 
-	@Autowired
-	private BillingAccountMapperExt billingAccountMapperExt;
+    @Autowired
+    private BillingAccountMapperExt billingAccountMapperExt;
 
-	@Autowired
-	private AccountSettingsMapper accountSettingMapper;
+    @Autowired
+    private UserAccountMapper userAccountMapper;
 
-	@Autowired
-	private UserAccountMapper userAccountMapper;
+    @Autowired
+    private UserMapper userMapper;
 
-	@Autowired
-	private UserMapper userMapper;
+    @Autowired
+    private RoleService roleService;
 
-	@Autowired
-	private RoleService roleService;
+    @Override
+    @Transactional
+    public void registerAccount(String subDomain,
+                                int billingPlanId, String username,
+                                String password, String email, String timezoneId,
+                                boolean isEmailVerified) {
 
-	@Override
-	@Transactional
-	public void registerAccount( String subDomain,
-								 int billingPlanId,  String username,
-								 String password,  String email,  String timezoneId,
-								 boolean isEmailVerified) {
+        // check subdomain is ascii string
+        if (!StringUtils.isAsciiString(subDomain)) {
+            throw new UserInvalidInputException(
+                    "Subdomain must be an ascii string");
+        }
 
-		// check subdomain is ascii string
-		if (!StringUtils.isAsciiString(subDomain)) {
-			throw new UserInvalidInputException(
-					"Subdomain must be an ascii string");
-		}
+        // check subdomain belong to keyword list
+        if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
+            throw new SubdomainExistedException(LocalizationHelper.getMessage(
+                    LocalizationHelper.defaultLocale,
+                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+                    subDomain));
+        }
 
-		// check subdomain belong to keyword list
-		if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
-			throw new SubdomainExistedException(LocalizationHelper.getMessage(
-					LocalizationHelper.defaultLocale,
-					ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-					subDomain));
-		}
+        LOG.debug("Check whether subdomain {} is existed", subDomain);
+        BillingAccountExample billingEx = new BillingAccountExample();
+        billingEx.createCriteria().andSubdomainEqualTo(subDomain);
+        if (this.billingAccountMapper.countByExample(billingEx) > 0) {
+            throw new SubdomainExistedException(LocalizationHelper.getMessage(
+                    LocalizationHelper.defaultLocale,
+                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
+                    subDomain));
+        }
 
-		LOG.debug("Check whether subdomain {} is existed", subDomain);
-		BillingAccountExample billingEx = new BillingAccountExample();
-		billingEx.createCriteria().andSubdomainEqualTo(subDomain);
-		if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-			throw new SubdomainExistedException(LocalizationHelper.getMessage(
-					LocalizationHelper.defaultLocale,
-					ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-					subDomain));
-		}
+        BillingPlan billingPlan = this.billingPlanMapper.selectByPrimaryKey(billingPlanId);
+        // Save billing account
+        LOG.debug("Saving billing account for user {} with subdomain {}", username, subDomain);
+        BillingAccount billingAccount = new BillingAccount();
+        billingAccount.setBillingplanid(billingPlan.getId());
+        billingAccount.setCreatedtime(new GregorianCalendar().getTime());
+        billingAccount.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
+        billingAccount.setPricing(billingPlan.getPricing());
+        billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
+        billingAccount.setPricingeffectto(new GregorianCalendar(2099, 11, 31).getTime());
+        billingAccount.setStatus(AccountStatusConstants.TRIAL);
+        billingAccount.setSubdomain(subDomain);
+        billingAccount.setDefaulttimezone(timezoneId);
 
-		BillingPlan billingPlan = this.billingPlanMapper.selectByPrimaryKey(billingPlanId);
-		// Save billing account
-		LOG.debug("Saving billing account for user {} with subdomain {}", username, subDomain);
-		BillingAccount billingAccount = new BillingAccount();
-		billingAccount.setBillingplanid(billingPlan.getId());
-		billingAccount.setCreatedtime(new GregorianCalendar().getTime());
-		billingAccount.setPaymentmethod(AccountPaymentTypeConstants.CREDIT_CARD);
-		billingAccount.setPricing(billingPlan.getPricing());
-		billingAccount.setPricingeffectfrom(new GregorianCalendar().getTime());
-		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 11, 31).getTime());
-		billingAccount.setStatus(AccountStatusConstants.TRIAL);
-		billingAccount.setSubdomain(subDomain);
+        this.billingAccountMapper.insertAndReturnKey(billingAccount);
+        int accountid = billingAccount.getId();
 
-		this.billingAccountMapper.insertAndReturnKey(billingAccount);
-		int accountid = billingAccount.getId();
+        // Check whether user has registered to the system before
+        String encryptedPassword = PasswordEncryptHelper.encryptSaltPassword(password);
+        UserExample ex = new UserExample();
+        ex.createCriteria().andUsernameEqualTo(username);
+        List<User> users = userMapper.selectByExample(ex);
 
-		// Save to account setting
-		LOG.debug("Save account setting for subdomain domain {}", subDomain);
-		final AccountSettings accountSettings = new AccountSettings();
-		accountSettings.setSaccountid(accountid);
-		accountSettings.setDefaulttimezone(timezoneId);
-		this.accountSettingMapper.insert(accountSettings);
+        Date now = new GregorianCalendar().getTime();
 
-		// Check whether user has registered to the system before
-		String encryptedPassword = PasswordEncryptHelper
-				.encryptSaltPassword(password);
-		UserExample ex = new UserExample();
-		ex.createCriteria().andUsernameEqualTo(username);
-		List<User> users = userMapper.selectByExample(ex);
+        if (CollectionUtils.isNotEmpty(users)) {
+            for (User tmpUser : users) {
+                if (!encryptedPassword.equals(tmpUser.getPassword())) {
+                    throw new UserInvalidInputException("There is already user " + email
+                            + " in the MyCollab database. If it is yours, you must enter the same password you registered to MyCollab. Otherwise " +
+                            "you must use the different email.");
+                }
+            }
+        } else {
+            // Register the new user to this account
+            LOG.debug("Create new user {} in database", username);
+            User user = new User();
+            user.setEmail(email);
+            user.setPassword(encryptedPassword);
+            user.setTimezone(timezoneId);
+            user.setUsername(username);
+            user.setRegisteredtime(now);
+            user.setLastaccessedtime(now);
 
-		Date now = new GregorianCalendar().getTime();
+            if (isEmailVerified) {
+                user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
+            } else {
+                user.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
+            }
 
-		if (CollectionUtils.isNotEmpty(users)) {
-			for (User tmpUser : users) {
-				if (!encryptedPassword.equals(tmpUser.getPassword())) {
-					throw new UserInvalidInputException(
-							"There is already user "
-									+ email
-									+ " in the MyCollab database. If it is yours, you must enter the same password you registered to MyCollab. Otherwise you must use the different email.");
-				}
-			}
-		} else {
-			// Register the new user to this account
-			LOG.debug("Create new user {} in database", username);
-			User user = new User();
-			user.setEmail(email);
-			user.setPassword(encryptedPassword);
-			user.setTimezone(timezoneId);
-			user.setUsername(username);
-			user.setRegisteredtime(now);
-			user.setLastaccessedtime(now);
+            if (user.getFirstname() == null) {
+                user.setFirstname("");
+            }
 
-			if (isEmailVerified) {
-				user.setStatus(UserStatusConstants.EMAIL_VERIFIED);
-			} else {
-				user.setStatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
-			}
+            if (org.apache.commons.lang3.StringUtils.isBlank(user.getLastname())) {
+                user.setLastname(StringUtils.extractNameFromEmail(email));
+            }
+            this.userMapper.insert(user);
+        }
 
-			if (user.getFirstname() == null) {
-				user.setFirstname("");
-			}
+        // save default roles
+        LOG.debug("Save default roles for account of subdomain {}", subDomain);
+        saveEmployeeRole(accountid);
+        int adminRoleId = saveAdminRole(accountid);
+        saveGuestRole(accountid);
 
-			if (org.apache.commons.lang3.StringUtils.isBlank(user.getLastname())) {
-				user.setLastname(StringUtils.extractNameFromEmail(email));
-			}
-			this.userMapper.insert(user);
-		}
+        // save user account
+        LOG.debug("Register user {} to subdomain {}", username, subDomain);
+        UserAccount userAccount = new UserAccount();
+        userAccount.setAccountid(accountid);
+        userAccount.setIsaccountowner(true);
+        userAccount.setRegisteredtime(now);
+        userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+        userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
+        userAccount.setRoleid(adminRoleId);
+        userAccount.setUsername(username);
 
-		// save default roles
-		LOG.debug("Save default roles for account of subdomain {}", subDomain);
-		saveEmployeeRole(accountid);
-		int adminRoleId = saveAdminRole(accountid);
-		saveGuestRole(accountid);
+        userAccountMapper.insert(userAccount);
+    }
 
-		// save user account
-		LOG.debug("Register user {} to subdomain {}", username, subDomain);
-		UserAccount userAccount = new UserAccount();
-		userAccount.setAccountid(accountid);
-		userAccount.setIsaccountowner(true);
-		userAccount.setRegisteredtime(now);
-		userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-		userAccount.setRegistrationsource(RegisterSourceConstants.WEB);
-		userAccount.setRoleid(adminRoleId);
-		userAccount.setUsername(username);
+    private int saveEmployeeRole(int accountId) {
+        // Register default role for account
+        final Role role = new Role();
+        role.setRolename(SimpleRole.EMPLOYEE);
+        role.setDescription("");
+        role.setSaccountid(accountId);
+        role.setIssystemrole(true);
+        int roleId = this.roleService.saveWithSession(role, "");
+        this.roleService.savePermission(roleId,
+                PermissionMap.buildEmployeePermissionCollection(), accountId);
+        return roleId;
+    }
 
-		userAccountMapper.insert(userAccount);
-	}
+    private int saveAdminRole(int accountId) {
+        // Register default role for account
+        final Role role = new Role();
+        role.setRolename(SimpleRole.ADMIN);
+        role.setDescription("");
+        role.setSaccountid(accountId);
+        role.setIssystemrole(true);
+        final int roleId = this.roleService.saveWithSession(role, "");
 
-	private int saveEmployeeRole(int accountId) {
-		// Register default role for account
-		final Role role = new Role();
-		role.setRolename(SimpleRole.EMPLOYEE);
-		role.setDescription("");
-		role.setSaccountid(accountId);
-		role.setIssystemrole(true);
-		int roleId = this.roleService.saveWithSession(role, "");
-		this.roleService.savePermission(roleId,
-				PermissionMap.buildEmployeePermissionCollection(), accountId);
-		return roleId;
-	}
+        this.roleService.savePermission(roleId,
+                PermissionMap.buildAdminPermissionCollection(), accountId);
+        return roleId;
+    }
 
-	private int saveAdminRole(int accountId) {
-		// Register default role for account
-		final Role role = new Role();
-		role.setRolename(SimpleRole.ADMIN);
-		role.setDescription("");
-		role.setSaccountid(accountId);
-		role.setIssystemrole(true);
-		final int roleId = this.roleService.saveWithSession(role, "");
+    private int saveGuestRole(int accountid) {
+        // Register default role for account
+        final Role role = new Role();
+        role.setRolename(SimpleRole.GUEST);
+        role.setDescription("");
+        role.setSaccountid(accountid);
+        role.setIssystemrole(true);
+        final int roleId = this.roleService.saveWithSession(role, "");
 
-		this.roleService.savePermission(roleId,
-				PermissionMap.buildAdminPermissionCollection(), accountId);
-		return roleId;
-	}
+        this.roleService.savePermission(roleId,
+                PermissionMap.buildGuestPermissionCollection(), accountid);
+        return roleId;
+    }
 
-	private int saveGuestRole(int accountid) {
-		// Register default role for account
-		final Role role = new Role();
-		role.setRolename(SimpleRole.GUEST);
-		role.setDescription("");
-		role.setSaccountid(accountid);
-		role.setIssystemrole(true);
-		final int roleId = this.roleService.saveWithSession(role, "");
+    @Override
+    public List<String> getSubDomainsOfUser(final String username) {
+        LOG.debug("Get subdomain of user {}", username);
+        return this.billingAccountMapperExt.getSubdomainsOfUser(username);
+    }
 
-		this.roleService.savePermission(roleId,
-				PermissionMap.buildGuestPermissionCollection(), accountid);
-		return roleId;
-	}
+    @Override
+    public List<BillingPlan> getAvailablePlans() {
+        return billingPlanMapper.selectByExample(new BillingPlanExample());
+    }
 
-	@Override
-	public List<String> getSubDomainsOfUser(final String username) {
-		LOG.debug("Get subdomain of user {}", username);
-		return this.billingAccountMapperExt.getSubdomainsOfUser(username);
-	}
+    @Override
+    public void updateBillingPlan(Integer accountId, int newBillingPlanId) {
+        BillingAccount record = new BillingAccount();
+        record.setId(accountId);
+        record.setBillingplanid(newBillingPlanId);
+        billingAccountMapper.updateByPrimaryKeySelective(record);
+    }
 
-	@Override
-	public List<BillingPlan> getAvailablePlans() {
-		return billingPlanMapper.selectByExample(new BillingPlanExample());
-	}
+    @Override
+    public void cancelAccount(Integer accountId,
+                              CustomerFeedbackWithBLOBs feedback) {
+        AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
+                .build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
+                        AccountDeletedCommand.class);
+        billingAccountMapper.deleteByPrimaryKey(accountId);
+        accountDeletedCommand.accountDeleted(accountId, feedback);
+    }
 
-	@Override
-	public void updateBillingPlan(Integer accountId, int newBillingPlanId) {
-		BillingAccount record = new BillingAccount();
-		record.setId(accountId);
-		record.setBillingplanid(newBillingPlanId);
-		billingAccountMapper.updateByPrimaryKeySelective(record);
-	}
+    @Override
+    public BillingPlan getFreeBillingPlan() {
+        BillingPlanExample ex = new BillingPlanExample();
+        ex.createCriteria().andBillingtypeEqualTo("Free");
+        List<BillingPlan> billingPlans = billingPlanMapper.selectByExample(ex);
+        if (billingPlans != null && billingPlans.size() == 1) {
+            return billingPlans.get(0);
+        } else {
+            throw new MyCollabException("Can not query free billing plan");
+        }
+    }
 
-	@Override
-	public void cancelAccount(Integer accountId,
-							  CustomerFeedbackWithBLOBs feedback) {
-		AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
-				.build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
-						AccountDeletedCommand.class);
-		billingAccountMapper.deleteByPrimaryKey(accountId);
-		accountDeletedCommand.accountDeleted(accountId, feedback);
-	}
+    @Override
+    public BillingPlan findBillingPlan(@CacheKey Integer sAccountId) {
+        BillingAccount billingAccount = billingAccountMapper
+                .selectByPrimaryKey(sAccountId);
+        if (billingAccount != null) {
+            Integer billingId = billingAccount.getBillingplanid();
+            return billingPlanMapper.selectByPrimaryKey(billingId);
+        } else {
+            LOG.error("Can not find billing plan with account {}", sAccountId);
+            return getFreeBillingPlan();
+        }
+    }
 
-	@Override
-	public BillingPlan getFreeBillingPlan() {
-		BillingPlanExample ex = new BillingPlanExample();
-		ex.createCriteria().andBillingtypeEqualTo("Free");
-		List<BillingPlan> billingPlans = billingPlanMapper.selectByExample(ex);
-		if (billingPlans != null && billingPlans.size() == 1) {
-			return billingPlans.get(0);
-		} else {
-			throw new MyCollabException("Can not query free billing plan");
-		}
-	}
-
-	@Override
-	public BillingPlan findBillingPlan(@CacheKey Integer sAccountId) {
-		BillingAccount billingAccount = billingAccountMapper
-				.selectByPrimaryKey(sAccountId);
-		if (billingAccount != null) {
-			Integer billingId = billingAccount.getBillingplanid();
-			return billingPlanMapper.selectByPrimaryKey(billingId);
-		} else {
-			LOG.error("Can not find billing plan with account {}", sAccountId);
-			return getFreeBillingPlan();
-		}
-	}
-
-	@Override
-	public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
-		return billingAccountMapperExt.getTrialAccountsWithOwners();
-	}
+    @Override
+    public List<BillingAccountWithOwners> getTrialAccountsWithOwners() {
+        return billingAccountMapperExt.getTrialAccountsWithOwners();
+    }
 
 }

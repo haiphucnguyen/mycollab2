@@ -260,7 +260,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         previewLayout.setWidth("520px");
 
         Button currentLogo = AccountLogoFactory.createAccountLogoImageComponent(
-                accountTheme.getLogopath(), 150);
+                null, 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();
         serviceMenu.addStyleName("topNavPopup");

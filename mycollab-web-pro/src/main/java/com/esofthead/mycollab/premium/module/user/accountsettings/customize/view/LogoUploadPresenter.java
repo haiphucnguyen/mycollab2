@@ -17,8 +17,6 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
-import com.esofthead.mycollab.module.user.domain.AccountTheme;
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
@@ -39,10 +37,7 @@ public class LogoUploadPresenter extends AbstractPresenter<LogoUploadView> {
         ICustomizeContainer customizeContainer = (ICustomizeContainer) container;
         customizeContainer.removeAllComponents();
         customizeContainer.addComponent(view.getWidget());
-
-        AccountTheme accountTheme = (AccountTheme) ((SettingScreenDaa.LogoUpload) data)
-                .getExtraParam();
-        view.editPhoto((byte[]) data.getParams(), accountTheme);
+        view.editPhoto((byte[]) data.getParams());
 
     }
 
