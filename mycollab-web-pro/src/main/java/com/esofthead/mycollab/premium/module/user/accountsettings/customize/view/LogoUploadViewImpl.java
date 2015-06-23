@@ -62,7 +62,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
     private static final Logger LOG = LoggerFactory.getLogger(LogoUploadViewImpl.class);
 
     private BufferedImage originalImage;
-    private Image previewImage;
+    private Embedded previewImage;
     private byte[] scaleImageData;
 
     public LogoUploadViewImpl() {
@@ -84,20 +84,18 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
         MHorizontalLayout previewBox = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                 .withWidth("100%");
 
-        final String logoId = ThemeManager.loadLogoPath(AppContext
-                .getAccountId());
-        Resource defaultPhoto = AccountLogoFactory.createLogoResource(logoId,
-                150);
-        previewImage = new Image(null, defaultPhoto);
+        final String logoId = ThemeManager.loadLogoPath(AppContext.getAccountId());
+        Resource defaultPhoto = AccountLogoFactory.createLogoResource(logoId, 150);
+        previewImage = new Embedded(null, defaultPhoto);
         previewImage.setWidth("100px");
         previewBox.addComponent(previewImage);
         previewBox.setComponentAlignment(previewImage, Alignment.TOP_LEFT);
 
         MVerticalLayout previewBoxRight = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true));
 
-        Label lbPreview = new Label(
-                "<p style='margin: 0px;'><strong>To the left is what your logo will look like.</strong></p><p style='margin-top: 0px;'>To make adjustment, you can drag around and resize the selection square below. When you are happy with your photo, click the &ldquo;Accept&ldquo; button.</p>",
-                ContentMode.HTML);
+        Label lbPreview = new Label("<p style='margin: 0px;'><strong>To the below is what your logo will look like.</strong></p><p " +
+                "style='margin-top: 0px;'>To make adjustment, you can drag around and resize the selection square below. " +
+                "When you are happy with your photo, click the &ldquo;Accept&ldquo; button.</p>", ContentMode.HTML);
         previewBoxRight.addComponent(lbPreview);
 
         MHorizontalLayout controlBtns = new MHorizontalLayout();
@@ -108,8 +106,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBusFactory.getInstance().post(
-                        new AccountCustomizeEvent.GotoMainPage(
-                                LogoUploadViewImpl.this, null));
+                        new AccountCustomizeEvent.GotoMainPage(LogoUploadViewImpl.this, null));
             }
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
@@ -124,12 +121,10 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
                         AccountLogoService accountLogoService = ApplicationContextUtil.getSpringBean(AccountLogoService.class);
                         String newlogoId = accountLogoService.uploadLogo(AppContext.getUsername(),
                                 image, logoId, AppContext.getAccountId());
-                        EventBusFactory.getInstance()
-                                .post(new AccountCustomizeEvent.GotoMainPage(
-                                        LogoUploadViewImpl.this, newlogoId));
+                        EventBusFactory.getInstance().post(new AccountCustomizeEvent.GotoMainPage(
+                                LogoUploadViewImpl.this, newlogoId));
                     } catch (IOException e) {
-                        throw new MyCollabException(
-                                "Error when saving account logo", e);
+                        throw new MyCollabException("Error when saving account logo", e);
                     }
 
                 }
@@ -163,8 +158,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
                 int x2 = newSelection.getXBottomRight();
                 int y2 = newSelection.getYBottomRight();
                 if (x2 > x1 && y2 > y1) {
-                    BufferedImage subImage = originalImage.getSubimage(x1, y1,
-                            (x2 - x1), (y2 - y1));
+                    BufferedImage subImage = originalImage.getSubimage(x1, y1, (x2 - x1), (y2 - y1));
                     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                     try {
                         ImageIO.write(subImage, "png", outStream);
