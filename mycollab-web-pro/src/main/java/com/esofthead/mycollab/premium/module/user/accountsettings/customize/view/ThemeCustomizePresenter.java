@@ -102,6 +102,10 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
             accountTheme = (AccountTheme) data.getParams();
         }
 
+        if (accountTheme == null) {
+            accountTheme = new AccountTheme();
+        }
+
         view.customizeTheme(accountTheme);
 
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
@@ -109,6 +113,10 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
     }
 
     private void saveTheme(AccountTheme accountTheme) {
-        themeService.saveWithSession(accountTheme, AppContext.getUsername());
+        if (accountTheme.getId() == null) {
+            themeService.saveWithSession(accountTheme, AppContext.getUsername());
+        } else {
+            themeService.updateWithSession(accountTheme, AppContext.getUsername());
+        }
     }
 }

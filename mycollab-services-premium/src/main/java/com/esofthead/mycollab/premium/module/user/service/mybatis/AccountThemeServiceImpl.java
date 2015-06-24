@@ -34,7 +34,7 @@ public class AccountThemeServiceImpl extends DefaultCrudService<Integer, Account
         AccountThemeExample ex = new AccountThemeExample();
         ex.createCriteria().andSaccountidEqualTo(sAccountId);
         List<AccountTheme> accountThemes = userThemeMapper.selectByExample(ex);
-        if (accountThemes != null && accountThemes.size() > 1) {
+        if (accountThemes != null && accountThemes.size() > 0) {
             return accountThemes.get(0);
         }
 

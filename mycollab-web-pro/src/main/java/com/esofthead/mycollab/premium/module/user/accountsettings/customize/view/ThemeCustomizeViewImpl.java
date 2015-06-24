@@ -89,7 +89,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         mainBody.addComponent(constructTopMenuCustomizeBlock());
         mainBody.addComponent(constructTabsheetCustomizeBlock());
         mainBody.addComponent(constructVTabsheetCustomizeBlock());
-        mainBody.addComponent(constructTopNavigationBlock());
         mainBody.addComponent(constructButtonCustomizeBlock());
 
         MHorizontalLayout controlButton = new MHorizontalLayout().withWidth("100%");
@@ -521,139 +520,9 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         return blockLayout;
     }
 
-    private Component constructTopNavigationBlock() {
-        VerticalLayout blockLayout = new VerticalLayout();
-        Label blockHeader = new Label("Top Navigation");
-        blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName("h2");
-        blockLayout.addComponent(blockHeader);
-        blockLayout.setSpacing(true);
-
-        HorizontalLayout blockBody = new HorizontalLayout();
-        blockBody.setMargin(new MarginInfo(false, true, false, true));
-        blockBody.setWidth("100%");
-        blockBody.setSpacing(true);
-        blockLayout.addComponent(blockBody);
-
-        GridLayout propertyLayout = new GridLayout(2, 4);
-        propertyLayout.setSpacing(true);
-        propertyLayout.setStyleName("no-border");
-        propertyLayout.setColumnExpandRatio(0, 1.0f);
-        propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-        propertyLayout.setWidth("250px");
-
-        CustomColorPickerArea hTopMenuBg = new CustomColorPickerArea(
-                "Normal Menu", accountTheme.getHtopmenubg());
-        hTopMenuBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -675674373089622451L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setHtopmenubg(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        propertyLayout.addComponent(new Label("Normal Menu"), 0, 0);
-        propertyLayout.addComponent(hTopMenuBg, 1, 0);
-
-        CustomColorPickerArea hTopMenuText = new CustomColorPickerArea(
-                "Normal Menu Text", accountTheme.getHtopmenutext());
-        hTopMenuText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 3487570137637191332L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setHtopmenutext(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        propertyLayout.addComponent(new Label("Normal Menu Text"), 0, 1);
-        propertyLayout.addComponent(hTopMenuText, 1, 1);
-
-        CustomColorPickerArea hTopMenuBgSelected = new CustomColorPickerArea(
-                "Selected Menu", accountTheme.getHtopmenubgselected());
-        hTopMenuBgSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -2435453092194064504L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setHtopmenubgselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
-        propertyLayout.addComponent(hTopMenuBgSelected, 1, 2);
-
-        CustomColorPickerArea hTopMenuTextSelected = new CustomColorPickerArea(
-                "Selected Menu Text", accountTheme.getHtopmenutextselected());
-        hTopMenuTextSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 3190273972739835060L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setHtopmenutextselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 3);
-        propertyLayout.addComponent(hTopMenuTextSelected, 1, 3);
-
-        blockBody.addComponent(propertyLayout);
-
-        CssLayout previewLayout = new CssLayout();
-        previewLayout.setStyleName("example-block");
-        previewLayout.setWidth("520px");
-        blockBody.addComponent(previewLayout);
-        blockBody.setComponentAlignment(previewLayout, Alignment.MIDDLE_CENTER);
-        blockBody.setExpandRatio(previewLayout, 1.0f);
-
-        final HorizontalLayout hTopMenuDemo = new HorizontalLayout();
-        hTopMenuDemo.setWidth("100%");
-        hTopMenuDemo.setStyleName("crm-toolbar");
-        hTopMenuDemo.setStyleName("h-sidebar-menu");
-        hTopMenuDemo.setMargin(new MarginInfo(false, true, false, true));
-
-        Button.ClickListener clickListener = new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                Iterator<Component> iterator = hTopMenuDemo.iterator();
-
-                while (iterator.hasNext()) {
-                    Component comp = iterator.next();
-                    if (comp != event.getButton())
-                        comp.removeStyleName("isSelected");
-                }
-
-                event.getButton().addStyleName("isSelected");
-            }
-        };
-
-        hTopMenuDemo.addComponent(new ButtonLinkLegacy("Dashboard", clickListener,
-                false));
-        ButtonLinkLegacy accountLink = new ButtonLinkLegacy("Accounts", clickListener,
-                false);
-        accountLink.addStyleName("isSelected");
-        hTopMenuDemo.addComponent(accountLink);
-        hTopMenuDemo.addComponent(new ButtonLinkLegacy("Contacts", clickListener,
-                false));
-        Label spaceFix = new Label();
-        hTopMenuDemo.addComponent(spaceFix);
-        hTopMenuDemo.setExpandRatio(spaceFix, 1.0f);
-
-        previewLayout.addComponent(hTopMenuDemo);
-
-        return blockLayout;
-    }
-
     private Component constructButtonCustomizeBlock() {
         VerticalLayout blockLayout = new VerticalLayout();
-        Label blockHeader = new Label("Buttons Customize");
+        Label blockHeader = new Label("Buttons");
         blockHeader.setStyleName("block-hdr");
         blockHeader.addStyleName("h2");
         blockLayout.addComponent(blockHeader);
