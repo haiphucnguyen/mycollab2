@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow;
 import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent;
 import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -113,7 +112,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private HorizontalLayout constructHeader() {
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MMarginInfo(true, false, false, false))
                 .withWidth("100%");
-        Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() +  " Files", ContentMode.HTML);
+        Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() + " Files", ContentMode.HTML);
         searchTitle.setStyleName("headerName");
         layout.with(searchTitle).expand(searchTitle);
         return layout;
@@ -171,15 +170,15 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory
                                 .getCloudDriveOAuthWindow("Add Dropbox");
                         cloudDriveOAuthWindow.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
-                                    private static final long serialVersionUID = 1L;
+                            private static final long serialVersionUID = 1L;
 
-                                    @Override
-                                    public void connectedSuccess(
-                                            ExternalDriveConnectedEvent event) {
-                                        folderNavigator.expandItem(rootECMFolder);
+                            @Override
+                            public void connectedSuccess(
+                                    ExternalDriveConnectedEvent event) {
+                                folderNavigator.expandItem(rootECMFolder);
 
-                                    }
-                                });
+                            }
+                        });
                         UI.getCurrent().addWindow(cloudDriveOAuthWindow);
                     }
                 });
@@ -439,53 +438,35 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     editBtn.addStyleName("link");
                     popupOptionActionLayout.addComponent(editBtn);
 
-                    Button deleteBtn = new Button(
-                            AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
+                    Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
                             new Button.ClickListener() {
                                 private static final long serialVersionUID = 1L;
 
                                 @Override
                                 public void buttonClick(ClickEvent event) {
                                     try {
-                                        ConfirmDialogExt.show(
-                                                UI.getCurrent(),
-                                                AppContext
-                                                        .getMessage(
-                                                                GenericI18Enum.DIALOG_DELETE_TITLE,
-                                                                SiteConfiguration
-                                                                        .getSiteName()),
-                                                AppContext
-                                                        .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                                AppContext
-                                                        .getMessage(GenericI18Enum.BUTTON_YES),
-                                                AppContext
-                                                        .getMessage(GenericI18Enum.BUTTON_NO),
+                                        ConfirmDialogExt.show(UI.getCurrent(),
+                                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                                        AppContext.getSiteName()),
+                                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                                                 new ConfirmDialog.Listener() {
                                                     private static final long serialVersionUID = 1L;
 
                                                     @Override
                                                     public void onClose(
                                                             final ConfirmDialog dialog) {
-                                                        if (dialog
-                                                                .isConfirmed()) {
-                                                            externalDriveService
-                                                                    .removeWithSession(
-                                                                            drive.getId(),
-                                                                            AppContext
-                                                                                    .getUsername(),
-                                                                            AppContext
-                                                                                    .getAccountId());
-                                                            int index = bodyLayout
-                                                                    .getComponentIndex(OneDriveConnectionBodyLayout.this);
-                                                            bodyLayout
-                                                                    .removeComponent(bodyLayout
-                                                                            .getComponent(index + 1));
-                                                            bodyLayout
-                                                                    .removeComponent(OneDriveConnectionBodyLayout.this);
+                                                        if (dialog.isConfirmed()) {
+                                                            externalDriveService.removeWithSession(
+                                                                    drive.getId(),
+                                                                    AppContext.getUsername(),
+                                                                    AppContext.getAccountId());
+                                                            int index = bodyLayout.getComponentIndex(OneDriveConnectionBodyLayout.this);
+                                                            bodyLayout.removeComponent(bodyLayout.getComponent(index + 1));
+                                                            bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
                                                             ExternalFolder res = (ExternalFolder) externalResourceService
-                                                                    .getCurrentResourceByPath(
-                                                                            drive,
-                                                                            "/");
+                                                                    .getCurrentResourceByPath(drive, "/");
                                                             if (res != null) {
                                                                 Container dataSource = FileMainViewImpl.this.folderNavigator
                                                                         .getContainerDataSource();
@@ -582,8 +563,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                                             }
                                         }
                                         drive.setFoldername(folderName);
-                                        externalDriveService.updateWithSession(
-                                                drive,
+                                        externalDriveService.updateWithSession(drive,
                                                 AppContext.getUsername());
 
                                         foldernameLbl = new Label(folderName);

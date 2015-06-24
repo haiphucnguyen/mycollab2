@@ -78,6 +78,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         this.with(logoHeader, divLabel2);
 
         buildLogoPanel();
+        buildShortcutIconPanel();
     }
 
     private void buildLogoPanel() {
@@ -162,6 +163,19 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         logoUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
         logoUploadField.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         rightPanel.with(previewLayout, logoUploadField);
+        layout.with(leftPanel, rightPanel);
+        this.with(layout);
+    }
+
+    private void buildShortcutIconPanel() {
+        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
+        MVerticalLayout leftPanel = new MVerticalLayout().withMargin(false);
+        Label logoHeaderLbl = new Label("Favicon");
+        logoHeaderLbl.addStyleName("h2");
+        Label logoDesc = new Label("Favicon appears in web browsers bar, bookmarks. The icon should be format png, " +
+                "jpg and must be sizeable to 32x32 pixels");
+        leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
+        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
         layout.with(leftPanel, rightPanel);
         this.with(layout);
     }

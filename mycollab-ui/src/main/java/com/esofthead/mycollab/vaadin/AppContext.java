@@ -94,6 +94,8 @@ public class AppContext implements Serializable {
      */
     private String subDomain;
 
+    private String siteName;
+
     /**
      * id of account of current user. This value is valid only for on-demand
      * edition. Though other editions also use this id in all of queries but if
@@ -183,6 +185,10 @@ public class AppContext implements Serializable {
         billingAccount = null;
     }
 
+    public static String getSiteName() {
+        return getInstance().siteName;
+    }
+
     public static Locale getUserLocale() {
         return getInstance().userLocale;
     }
@@ -240,6 +246,12 @@ public class AppContext implements Serializable {
             throw new SubDomainNotExistException(AppContext.getMessage(
                     ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
         } else {
+            if (org.apache.commons.lang3.StringUtils.isBlank(account.getSitename())) {
+                siteName = SiteConfiguration.getDefaultSiteName();
+            } else {
+                siteName = account.getSitename();
+            }
+
             LOG.debug("Get billing account {} of subDomain {}", BeanUtility.printBeanObj(account), domain);
             accountId = account.getId();
         }
@@ -508,7 +520,7 @@ public class AppContext implements Serializable {
     public static void addFragment(String fragment, String windowTitle) {
         Page.getCurrent().setUriFragment(fragment, false);
         Page.getCurrent().setTitle(
-                String.format("%s [%s]", StringUtils.trim(windowTitle, 150), SiteConfiguration.getSiteName()));
+                String.format("%s [%s]", StringUtils.trim(windowTitle, 150), AppContext.getSiteName()));
         googleAnalyticsService.trackPageView(fragment);
     }
 }

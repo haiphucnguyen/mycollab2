@@ -1,9 +1,7 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -56,17 +54,12 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
                     @Override
                     public void onDelete(final SimpleProblem data) {
-                        ConfirmDialogExt.show(
-                                UI.getCurrent(),
-                                AppContext.getMessage(
-                                        GenericI18Enum.DIALOG_DELETE_TITLE,
-                                        SiteConfiguration.getSiteName()),
-                                AppContext
-                                        .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                AppContext
-                                        .getMessage(GenericI18Enum.BUTTON_YES),
-                                AppContext
-                                        .getMessage(GenericI18Enum.BUTTON_NO),
+                        ConfirmDialogExt.show(UI.getCurrent(),
+                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                        AppContext.getSiteName()),
+                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
                                 new ConfirmDialog.Listener() {
                                     private static final long serialVersionUID = 1L;
 
@@ -75,13 +68,9 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                                         if (dialog.isConfirmed()) {
                                             ProblemService problemService = ApplicationContextUtil
                                                     .getSpringBean(ProblemService.class);
-                                            problemService.removeWithSession(
-                                                    data.getId(),
-                                                    AppContext.getUsername(),
-                                                    AppContext.getAccountId());
-                                            EventBusFactory.getInstance().post(
-                                                    new ProblemEvent.GotoList(
-                                                            this, null));
+                                            problemService.removeWithSession(data.getId(),
+                                                    AppContext.getUsername(), AppContext.getAccountId());
+                                            EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
                                         }
                                     }
                                 });
@@ -91,14 +80,12 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                     public void onClone(SimpleProblem data) {
                         SimpleProblem cloneData = (SimpleProblem) data.copy();
                         cloneData.setId(null);
-                        EventBusFactory.getInstance().post(
-                                new ProblemEvent.GotoEdit(this, cloneData));
+                        EventBusFactory.getInstance().post(new ProblemEvent.GotoEdit(this, cloneData));
                     }
 
                     @Override
                     public void onCancel() {
-                        EventBusFactory.getInstance().post(
-                                new ProblemEvent.GotoList(this, null));
+                        EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
                     }
 
                     @Override
@@ -108,8 +95,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
                         ProblemSearchCriteria criteria = new ProblemSearchCriteria();
                         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                         criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
-                        Integer nextId = problemService
-                                .getNextItemKey(criteria);
+                        Integer nextId = problemService.getNextItemKey(criteria);
                         if (nextId != null) {
                             EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
                         } else {

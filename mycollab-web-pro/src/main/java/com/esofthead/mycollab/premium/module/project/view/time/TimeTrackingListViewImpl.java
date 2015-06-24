@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -256,34 +255,29 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
                                     .getTypeid()));
                 }
             } else if ("delete".equals(event.getFieldName())) {
-                ConfirmDialogExt
-                        .show(UI.getCurrent(),
-                                AppContext.getMessage(
-                                        GenericI18Enum.DIALOG_DELETE_TITLE,
-                                        SiteConfiguration.getSiteName()),
-                                AppContext
-                                        .getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                AppContext
-                                        .getMessage(GenericI18Enum.BUTTON_YES),
-                                AppContext
-                                        .getMessage(GenericI18Enum.BUTTON_NO),
-                                new ConfirmDialog.Listener() {
-                                    private static final long serialVersionUID = 1L;
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
 
-                                    @Override
-                                    public void onClose(ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
-                                                    .getSpringBean(ItemTimeLoggingService.class);
-                                            itemTimeLoggingService.removeWithSession(
-                                                    itemLogging.getId(),
-                                                    AppContext.getUsername(),
-                                                    AppContext.getAccountId());
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
+                                            .getSpringBean(ItemTimeLoggingService.class);
+                                    itemTimeLoggingService.removeWithSession(
+                                            itemLogging.getId(),
+                                            AppContext.getUsername(),
+                                            AppContext.getAccountId());
 
-                                            refresh();
-                                        }
-                                    }
-                                });
+                                    refresh();
+                                }
+                            }
+                        });
 
             } else if ("edit".equals(event.getFieldName())) {
                 TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(

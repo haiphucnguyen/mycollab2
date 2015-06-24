@@ -1,10 +1,9 @@
 package com.esofthead.mycollab.ondemand.module.user.service.mybatis;
 
-import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.AccountThemeMapper;
-import com.esofthead.mycollab.module.user.dao.AccountThemeMapperExt;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.domain.AccountThemeExample;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
@@ -19,15 +18,11 @@ import java.util.List;
  */
 @Service
 @SuppressWarnings("unchecked")
-public class AccountThemeServiceImpl extends
-        DefaultCrudService<Integer, AccountTheme> implements
+public class AccountThemeServiceImpl extends DefaultCrudService<Integer, AccountTheme> implements
         AccountThemeService {
 
     @Autowired
     private AccountThemeMapper userThemeMapper;
-
-    @Autowired
-    private AccountThemeMapperExt accountThemeMapperExt;
 
     @Override
     public ICrudGenericDAO<Integer, AccountTheme> getCrudMapper() {
@@ -35,31 +30,21 @@ public class AccountThemeServiceImpl extends
     }
 
     @Override
-    public AccountTheme getAccountTheme(int saccountid) {
+    public AccountTheme findTheme(@CacheKey Integer sAccountId) {
+        AccountThemeExample ex = new AccountThemeExample();
+        ex.createCriteria().andSaccountidEqualTo(sAccountId);
+        List<AccountTheme> accountThemes = userThemeMapper.selectByExample(ex);
+        if (accountThemes != null && accountThemes.size() > 1) {
+            return accountThemes.get(0);
+        }
 
         return null;
     }
 
     @Override
-    public AccountTheme getDefaultTheme() {
+    public void removeTheme(@CacheKey Integer sAccountId) {
         AccountThemeExample ex = new AccountThemeExample();
-        ex.createCriteria().andIsdefaultEqualTo(true);
-        List<AccountTheme> defaultThemes = userThemeMapper.selectByExample(ex);
-        if (defaultThemes == null || defaultThemes.size() == 0) {
-            throw new MyCollabException("Can not find default theme");
-        }
-
-        return defaultThemes.get(0);
+        ex.createCriteria().andSaccountidEqualTo(sAccountId);
+        userThemeMapper.deleteByExample(ex);
     }
-
-    @Override
-    public void saveAccountTheme(AccountTheme theme, int saccountid) {
-        if (theme.getId() == null) {
-            int result = accountThemeMapperExt.saveAccountTheme(theme);
-
-        } else {
-            userThemeMapper.updateByPrimaryKey(theme);
-        }
-    }
-
 }

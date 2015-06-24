@@ -84,7 +84,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
         MHorizontalLayout previewBox = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                 .withWidth("100%");
 
-        final String logoId = ThemeManager.loadLogoPath(AppContext.getAccountId());
+        final String logoId = AppContext.getBillingAccount().getLogopath();
         Resource defaultPhoto = AccountLogoFactory.createLogoResource(logoId, 150);
         previewImage = new Embedded(null, defaultPhoto);
         previewImage.setWidth("100px");

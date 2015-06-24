@@ -19,7 +19,6 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.customize.vie
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent.ResetTheme;
@@ -82,11 +81,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    AccountTheme defaultTheme = themeService.getDefaultTheme();
-                                    defaultTheme.setId(null);
-                                    themeService.saveAccountTheme(defaultTheme,
-                                            AppContext.getAccountId());
-                                    view.customizeTheme(defaultTheme);
+                                    themeService.removeTheme(AppContext.getAccountId());
                                     Page.getCurrent().getJavaScript().execute("window.location.reload();");
                                 }
                             }
@@ -102,7 +97,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
 
         AccountTheme accountTheme;
         if (data == null || data.getParams() == null) {
-            accountTheme = themeService.getAccountTheme(AppContext.getAccountId());
+            accountTheme = themeService.findTheme(AppContext.getAccountId());
         } else {
             accountTheme = (AccountTheme) data.getParams();
         }
@@ -114,6 +109,6 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
     }
 
     private void saveTheme(AccountTheme accountTheme) {
-        themeService.saveAccountTheme(accountTheme, AppContext.getAccountId());
+        themeService.saveWithSession(accountTheme, AppContext.getUsername());
     }
 }

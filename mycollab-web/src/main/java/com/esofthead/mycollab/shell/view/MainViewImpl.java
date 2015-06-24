@@ -215,7 +215,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         layout.setWidth("100%");
 
         Button accountLogo = AccountLogoFactory.createAccountLogoImageComponent(
-                ThemeManager.loadLogoPath(AppContext.getAccountId()), 150);
+                AppContext.getBillingAccount().getLogopath(), 150);
 
         accountLogo.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
