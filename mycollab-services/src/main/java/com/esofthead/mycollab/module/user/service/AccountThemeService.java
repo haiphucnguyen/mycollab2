@@ -30,6 +30,9 @@ public interface AccountThemeService extends ICrudService<Integer, AccountTheme>
     @Cacheable
     AccountTheme findTheme(@CacheKey Integer sAccountId);
 
+    @Cacheable
+    AccountTheme findDefaultTheme(@CacheKey Integer sAccountId);
+
     @CacheEvict
     void removeTheme(@CacheKey Integer sAccountId);
 }

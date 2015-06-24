@@ -82,25 +82,8 @@
     }
     .v-button {
       &.v-button-link {
-        &:focus, &:active {
-          height: 50px;
-          margin: 0px;
-          padding: 0px;
-          background: none no-repeat 0 0 transparent;
-          a {
-            color: #FFF;
-          }
-        }
         height: 50px;
-        margin: 0px;
-        padding: 0px;
         background: none no-repeat 0 0 transparent;
-        &.isSelected {
-          background-color: #FFF;
-          a {
-            color: #535353;
-          }
-        }
       }
       border-radius: 0px;
       box-shadow: initial;
@@ -110,16 +93,6 @@
       *display: inline;
       zoom: 1;
       position: relative;
-      .v-button-wrap {
-        border-radius: 0px;
-        box-shadow: initial;
-        -webkit-box-shadow: initial;
-        -moz-box-shadow: initial;
-        display: inline-block;
-        *display: inline;
-        zoom: 1;
-        position: relative;
-      }
     }
   }
 
@@ -146,31 +119,12 @@
         padding: 17px 18px;
       }
     }
-    .v-button-link .v-button-wrap:active {
-      display: inline-block;
-      *display: inline;
-      zoom: 1;
-      position: relative;
-      padding: 17px 18px;
-    }
-    .v-popupbutton {
-      .v-button-wrap, &:active .v-button-wrap {
-        display: inline-block;
-        *display: inline;
-        zoom: 1;
-        position: relative;
-        padding: 17px 18px;
-      }
-    }
     div.v-disabled.v-button-link .v-button-wrap {
       display: inline-block;
       *display: inline;
       zoom: 1;
       position: relative;
       padding: 17px 18px;
-    }
-    .v-button-link:first-child .v-button-wrap {
-      border: none;
     }
   }
 
@@ -185,9 +139,6 @@
       }
     }
     .v-button-link {
-      &:first-child .v-button-wrap:active {
-        border: none;
-      }
       .v-button-caption {
         text-decoration: none;
         color: #FFF;

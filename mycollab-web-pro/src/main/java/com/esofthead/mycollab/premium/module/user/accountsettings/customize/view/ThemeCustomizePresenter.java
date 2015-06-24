@@ -103,6 +103,10 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
         }
 
         if (accountTheme == null) {
+            accountTheme = themeService.findDefaultTheme(AppContext.getAccountId());
+        }
+
+        if (accountTheme == null) {
             accountTheme = new AccountTheme();
         }
 
@@ -113,9 +117,13 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
     }
 
     private void saveTheme(AccountTheme accountTheme) {
-        if (accountTheme.getId() == null) {
+        if (accountTheme.getSaccountid() == null) {
+            accountTheme.setSaccountid(AppContext.getAccountId());
+            accountTheme.setId(null);
+            accountTheme.setIsdefault(Boolean.FALSE);
             themeService.saveWithSession(accountTheme, AppContext.getUsername());
         } else {
+            accountTheme.setIsdefault(Boolean.FALSE);
             themeService.updateWithSession(accountTheme, AppContext.getUsername());
         }
     }

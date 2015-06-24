@@ -19,6 +19,7 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.server.Page;
 
 /**
@@ -33,8 +34,12 @@ public class ThemeManager {
 
         AccountTheme accountTheme = themeService.findTheme(sAccountId);
 
-        if (accountTheme == null || accountTheme.getId() == null)
-            return;
+        if (accountTheme == null) {
+            accountTheme = themeService.findDefaultTheme(AppContext.getAccountId());
+            if (accountTheme == null) {
+                return;
+            }
+        }
 
 		/* Top Menu */
 

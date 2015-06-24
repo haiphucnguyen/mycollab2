@@ -311,7 +311,6 @@
   }
 
   .sidebar-menu {
-    background-color:#6C6C6C;
     .tab-selected, .selected {
       border-color: #2E5A84;
       text-shadow: 0 1px 0 #2E5A84;
@@ -3239,7 +3238,7 @@
     }
     .navigator-wrap {
       display: inline-block;
-      background-color:#6C6C6C;
+      background: none no-repeat 0 0 transparent;
     }
     .container-wrap {
       -webkit-box-flex: 1;

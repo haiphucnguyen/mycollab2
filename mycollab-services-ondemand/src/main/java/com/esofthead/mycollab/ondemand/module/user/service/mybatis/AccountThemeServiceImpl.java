@@ -22,19 +22,31 @@ public class AccountThemeServiceImpl extends DefaultCrudService<Integer, Account
         AccountThemeService {
 
     @Autowired
-    private AccountThemeMapper userThemeMapper;
+    private AccountThemeMapper accountThemeMapper;
 
     @Override
     public ICrudGenericDAO<Integer, AccountTheme> getCrudMapper() {
-        return userThemeMapper;
+        return accountThemeMapper;
     }
 
     @Override
     public AccountTheme findTheme(@CacheKey Integer sAccountId) {
         AccountThemeExample ex = new AccountThemeExample();
         ex.createCriteria().andSaccountidEqualTo(sAccountId);
-        List<AccountTheme> accountThemes = userThemeMapper.selectByExample(ex);
+        List<AccountTheme> accountThemes = accountThemeMapper.selectByExample(ex);
         if (accountThemes != null && accountThemes.size() > 1) {
+            return accountThemes.get(0);
+        }
+
+        return null;
+    }
+
+    @Override
+    public AccountTheme findDefaultTheme(@CacheKey Integer sAccountId) {
+        AccountThemeExample ex = new AccountThemeExample();
+        ex.createCriteria().andIsdefaultEqualTo(Boolean.TRUE);
+        List<AccountTheme> accountThemes = accountThemeMapper.selectByExample(ex);
+        if (accountThemes != null && accountThemes.size() > 0) {
             return accountThemes.get(0);
         }
 
@@ -45,6 +57,6 @@ public class AccountThemeServiceImpl extends DefaultCrudService<Integer, Account
     public void removeTheme(@CacheKey Integer sAccountId) {
         AccountThemeExample ex = new AccountThemeExample();
         ex.createCriteria().andSaccountidEqualTo(sAccountId);
-        userThemeMapper.deleteByExample(ex);
+        accountThemeMapper.deleteByExample(ex);
     }
 }
