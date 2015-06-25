@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.localization.AdminI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
@@ -68,8 +67,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
     protected AddViewLayout2 initUI() {
         this.setMargin(new MarginInfo(false, true, true, true));
 
-        AddViewLayout2 mainLayout = new AddViewLayout2(AppContext.getMessage(AdminI18nEnum.VIEW_SETTING),
-                SettingAssetsManager.getAsset(SettingUIConstants.CUSTOMIZATION));
+        AddViewLayout2 mainLayout = new AddViewLayout2("Theme Customization",
+                SettingAssetsManager.getAsset(SettingUIConstants.SETTING));
         mainLayout.setWidth("100%");
         mainLayout.addStyleName("theme-customize-view");
 
@@ -91,7 +90,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         mainBody.addComponent(constructVTabsheetCustomizeBlock());
         mainBody.addComponent(constructButtonCustomizeBlock());
 
-        MHorizontalLayout controlButton = new MHorizontalLayout().withWidth("100%");
+        MHorizontalLayout controlButton = new MHorizontalLayout().withMargin(true);
 
         Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 new Button.ClickListener() {
@@ -140,50 +139,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 .withWidth("100%");
         blockLayout.addComponent(blockBody);
 
-        final UploadField logoUploadField = new UploadField() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void updateDisplay() {
-                byte[] imageData = (byte[]) this.getValue();
-                String mimeType = this.getLastMimeType();
-                if (mimeType.equals("image/jpeg")) {
-                    imageData = ImageUtil.convertJpgToPngFormat(imageData);
-                    if (imageData == null) {
-                        throw new UserInvalidInputException(
-                                "Do not support image format for logo");
-                    } else {
-                        mimeType = "image/png";
-                    }
-                }
-
-                if (mimeType.equals("image/png")) {
-                    EventBusFactory.getInstance().post(new AccountCustomizeEvent.GotoUploadLogo(
-                            ThemeCustomizeViewImpl.this, new SettingScreenDaa.LogoUpload(imageData, accountTheme)));
-                } else {
-                    throw new UserInvalidInputException(
-                            "Upload file does not have valid image format. The supported formats are jpg/png");
-                }
-            }
-        };
-        logoUploadField.setButtonCaption(AppContext
-                .getMessage(SettingCommonI18nEnum.BUTTON_CHANGE_LOGO));
-        logoUploadField.addStyleName("upload-field");
-        logoUploadField.setSizeUndefined();
-        logoUploadField.setFieldType(FieldType.BYTE_ARRAY);
-        logoUploadField.setEnabled(AppContext
-                .canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-
-        GridLayout propertyLayout = new GridLayout(2, 5);
+        GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
         propertyLayout.setStyleName("no-border");
         propertyLayout.setColumnExpandRatio(0, 1.0f);
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
-
-        propertyLayout.addComponent(logoUploadField, 0, 0, 1, 0);
-        propertyLayout.setComponentAlignment(logoUploadField,
-                Alignment.TOP_LEFT);
 
         CustomColorPickerArea topMenuBg = new CustomColorPickerArea(
                 AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB),
@@ -199,8 +160,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
             }
         });
         propertyLayout.addComponent(new Label(AppContext
-                .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 1);
-        propertyLayout.addComponent(topMenuBg, 1, 1);
+                .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
+        propertyLayout.addComponent(topMenuBg, 1, 0);
 
         CustomColorPickerArea topMenuText = new CustomColorPickerArea(
                 AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
@@ -217,8 +178,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         });
         propertyLayout.addComponent(new Label(AppContext
                         .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)),
-                0, 2);
-        propertyLayout.addComponent(topMenuText, 1, 2);
+                0, 1);
+        propertyLayout.addComponent(topMenuText, 1, 1);
 
         CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(
                 "Selected Tab", accountTheme.getTopmenubgselected());
@@ -232,8 +193,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
-        propertyLayout.addComponent(new Label("Selected Menu"), 0, 3);
-        propertyLayout.addComponent(topMenuBgSelected, 1, 3);
+        propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
+        propertyLayout.addComponent(topMenuBgSelected, 1, 2);
 
         CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(
                 "Selected Tab Text", accountTheme.getTopmenutextselected());
@@ -247,8 +208,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
-        propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 4);
-        propertyLayout.addComponent(topMenuTextSelected, 1, 4);
+        propertyLayout.addComponent(new Label("Selected Menu Text"), 0, 3);
+        propertyLayout.addComponent(topMenuTextSelected, 1, 3);
 
         blockBody.addComponent(propertyLayout);
 

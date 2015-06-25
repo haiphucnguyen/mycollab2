@@ -19,7 +19,6 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.customize.vie
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent.ResetTheme;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent.SaveTheme;
@@ -28,7 +27,6 @@ import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.google.common.eventbus.Subscribe;
@@ -111,9 +109,6 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
         }
 
         view.customizeTheme(accountTheme);
-
-        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
-        breadcrumb.gotoSettingPage();
     }
 
     private void saveTheme(AccountTheme accountTheme) {
