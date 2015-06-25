@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.resources;
 
 import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resources.file.VaadinFileResource;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
@@ -57,7 +58,7 @@ public abstract class VaadinResource {
     }
 
     public Resource getLogoResource(String logoId, int size) {
-        return new ExternalResource(Storage.getLogoPath(logoId, size));
+        return new ExternalResource(Storage.getLogoPath(AppContext.getAccountId(), logoId, size));
     }
 
     public Resource getAvatarResource(String avatarId, int size) {

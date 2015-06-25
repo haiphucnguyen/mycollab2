@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.file.service.impl;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.PathUtils;
@@ -33,12 +34,17 @@ public class AccountFavIconServiceImpl implements AccountFavIconService {
 
     @Override
     public String upload(String uploadedUser, BufferedImage logo, Integer sAccountId) {
+        if (logo.getWidth() != logo.getHeight()) {
+            int min = Math.min(logo.getWidth(), logo.getHeight());
+            logo = logo.getSubimage(0, 0, min, min);
+        }
         BillingAccount account = billingAccountService.getAccountById(sAccountId);
         if (account == null) {
             throw new MyCollabException(
                     "There's no account associated with provided id " + sAccountId);
         }
 
+        logo = ImageUtil.scaleImage(logo, 32, 32);
         // Construct new logoid
         String newLogoId = UUID.randomUUID().toString();
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -51,6 +57,14 @@ public class AccountFavIconServiceImpl implements AccountFavIconService {
         logoContent.setPath(PathUtils.buildFavIconPath(sAccountId, newLogoId));
         logoContent.setName(newLogoId);
         resourceService.saveContent(logoContent, uploadedUser, new ByteArrayInputStream(outStream.toByteArray()), null);
+
+        //remove the old favicon
+        resourceService.removeResource(PathUtils.buildFavIconPath(sAccountId, account.getFaviconpath()),
+                uploadedUser, sAccountId);
+
+        account.setFaviconpath(newLogoId);
+        billingAccountService.updateSelectiveWithSession(account, uploadedUser);
+
         return newLogoId;
     }
 }

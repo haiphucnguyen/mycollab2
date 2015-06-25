@@ -1,14 +1,14 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
-import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
+import com.esofthead.mycollab.module.file.service.AccountFavIconService;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.security.RolePermissionCollections;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -19,6 +19,8 @@ import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.hp.gagawa.java.elements.Div;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -26,6 +28,10 @@ import org.vaadin.easyuploads.UploadField;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Iterator;
 
 /**
@@ -149,15 +155,14 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 }
 
                 if (mimeType.equals("image/png")) {
-                    EventBusFactory.getInstance().post(new AccountCustomizeEvent.GotoUploadLogo(
-                            GeneralSettingViewImpl.this, new SettingScreenDaa.LogoUpload(imageData, null)));
+                    UI.getCurrent().addWindow(new LogoEditWindow(imageData));
                 } else {
                     throw new UserInvalidInputException(
                             "Upload file does not have valid image format. The supported formats are jpg/png");
                 }
             }
         };
-        logoUploadField.setButtonCaption(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_CHANGE_LOGO));
+        logoUploadField.setButtonCaption("Change");
         logoUploadField.addStyleName("upload-field");
         logoUploadField.setSizeUndefined();
         logoUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
@@ -176,6 +181,49 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 "jpg and must be sizeable to 32x32 pixels");
         leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
+        final Image favIconRes = new Image("", new ExternalResource(Storage.getFavIconPath(billingAccount.getId(),
+                billingAccount.getFaviconpath())));
+        final UploadField favIconUploadField = new UploadField() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void updateDisplay() {
+                byte[] imageData = (byte[]) this.getValue();
+                String mimeType = this.getLastMimeType();
+                if (mimeType.equals("image/jpeg")) {
+                    imageData = ImageUtil.convertJpgToPngFormat(imageData);
+                    if (imageData == null) {
+                        throw new UserInvalidInputException(
+                                "Do not support image format for logo");
+                    } else {
+                        mimeType = "image/png";
+                    }
+                }
+
+                if (mimeType.equals("image/png")) {
+                    try {
+                        AccountFavIconService favIconService = ApplicationContextUtil.getSpringBean(AccountFavIconService.class);
+                        BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
+                        String newFavIconPath = favIconService.upload(AppContext.getUsername(), image, AppContext
+                                .getAccountId());
+                        favIconRes.setSource(new ExternalResource(Storage.getFavIconPath(billingAccount.getId(),
+                                newFavIconPath)));
+                        Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                    } catch (IOException e) {
+                        throw new MyCollabException(e);
+                    }
+                } else {
+                    throw new UserInvalidInputException(
+                            "Upload file does not have valid image format. The supported formats are jpg/png");
+                }
+            }
+        };
+        favIconUploadField.setButtonCaption("Change");
+        favIconUploadField.addStyleName("upload-field");
+        favIconUploadField.setSizeUndefined();
+        favIconUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
+        favIconUploadField.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        rightPanel.with(favIconRes, favIconUploadField);
         layout.with(leftPanel, rightPanel);
         this.with(layout);
     }

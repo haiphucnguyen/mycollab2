@@ -25,7 +25,6 @@ import com.esofthead.mycollab.module.file.service.AccountLogoService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
@@ -33,6 +32,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.vaadin.cropField.CropField;
 import com.esofthead.vaadin.cropField.client.VCropSelection;
 import com.vaadin.data.Property;
+import com.vaadin.server.Page;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -55,24 +55,30 @@ import java.io.IOException;
  */
 
 @ViewComponent
-public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadView {
+public class LogoEditWindow extends Window {
     private static final long serialVersionUID = -5294741083557671011L;
 
-    private static final Logger LOG = LoggerFactory.getLogger(LogoUploadViewImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LogoEditWindow.class);
+
+    private MVerticalLayout content;
 
     private BufferedImage originalImage;
     private Embedded previewImage;
     private byte[] scaleImageData;
 
-    public LogoUploadViewImpl() {
-        this.setMargin(true);
+    public LogoEditWindow(byte[] imageData) {
+        super("Edit logo");
+        this.setModal(true);
+        this.setResizable(false);
+        this.setWidth("800px");
+        this.setHeight("800px");
+        content = new MVerticalLayout();
+        this.setContent(content);
+        editPhoto(imageData);
     }
 
     @SuppressWarnings("serial")
-    @Override
-    public void editPhoto(byte[] imageData) {
-        this.removeAllComponents();
-        LOG.debug("Receive logo upload with size: " + imageData.length);
+    private void editPhoto(byte[] imageData) {
         try {
             originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
         } catch (IOException e) {
@@ -105,7 +111,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBusFactory.getInstance().post(
-                        new AccountCustomizeEvent.GotoMainPage(LogoUploadViewImpl.this, null));
+                        new AccountCustomizeEvent.GotoMainPage(LogoEditWindow.this, null));
             }
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
@@ -118,10 +124,9 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
                     try {
                         BufferedImage image = ImageIO.read(new ByteArrayInputStream(scaleImageData));
                         AccountLogoService accountLogoService = ApplicationContextUtil.getSpringBean(AccountLogoService.class);
-                        String newlogoId = accountLogoService.upload(AppContext.getUsername(),
+                        accountLogoService.upload(AppContext.getUsername(),
                                 image, AppContext.getAccountId());
-                        EventBusFactory.getInstance().post(new AccountCustomizeEvent.GotoMainPage(
-                                LogoUploadViewImpl.this, newlogoId));
+                        Page.getCurrent().getJavaScript().execute("window.location.reload();");
                     } catch (IOException e) {
                         throw new MyCollabException("Error when saving account logo", e);
                     }
@@ -135,7 +140,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
 
         previewBoxRight.with(controlBtns).withAlign(controlBtns, Alignment.TOP_LEFT);
         previewBox.with(previewBoxRight).expand(previewBoxRight);
-        this.addComponent(previewBox);
+        content.addComponent(previewBox);
 
         CssLayout cropBox = new CssLayout();
         cropBox.addStyleName(UIConstants.PHOTO_CROPBOX);
@@ -177,7 +182,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
 
         cropBox.addComponent(currentPhotoBox);
 
-        this.with(previewBox, cropBox).expand(cropBox);
+        content.with(previewBox, cropBox);
     }
 
     private void displayPreviewImage() {

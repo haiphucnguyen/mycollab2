@@ -71,18 +71,19 @@ public abstract class Storage {
         return SiteConfiguration.getResourceDownloadUrl() + documentPath;
     }
 
-    public static String getLogoPath(String accountLogoId, int size) {
-        if (accountLogoId == null || "".equals(accountLogoId)) {
+    public static String getLogoPath(Integer accountId, String logoName, int size) {
+        if (logoName == null || "".equals(logoName)) {
             return MyCollabAssets.newAssetLink("icons/logo.png");
         }
-        return String.format("%s.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountLogoId, size);
+        return String.format("%s%d/.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountId,
+                logoName, size);
     }
 
-    public static String getFavIconPath(String favIconName) {
+    public static String getFavIconPath(Integer sAccountId, String favIconName) {
         if (favIconName == null || "".equals(favIconName)) {
             return MyCollabAssets.newAssetLink("favicon.ico");
         }
-        return String.format("%s.assets/%s.ico", SiteConfiguration.getResourceDownloadUrl(), favIconName);
+        return String.format("%s%d/.assets/%s.ico", SiteConfiguration.getResourceDownloadUrl(), sAccountId, favIconName);
     }
 
     public static String getAvatarPath(String userAvatarId, int size) {

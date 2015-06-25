@@ -69,10 +69,6 @@ public class AccountLogoServiceImpl implements AccountLogoService {
             uploadLogoToStorage(uploadedUser, image, newLogoId, SUPPORT_SIZES[i], sAccountId);
         }
 
-        // save logo id
-        account.setLogopath(newLogoId);
-        billingAccountService.updateSelectiveWithSession(account, uploadedUser);
-
         // account old logo
         if (account.getLogopath() != null) {
             for (int i = 0; i < SUPPORT_SIZES.length; i++) {
@@ -84,6 +80,10 @@ public class AccountLogoServiceImpl implements AccountLogoService {
                 }
             }
         }
+
+        // save logo id
+        account.setLogopath(newLogoId);
+        billingAccountService.updateSelectiveWithSession(account, uploadedUser);
 
         return newLogoId;
     }

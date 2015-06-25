@@ -17,21 +17,16 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
-import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.premium.module.user.accountsettings.view.parameters.SettingExtScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -45,22 +40,6 @@ public class SettingPresenter extends AbstractPresenter<ISettingContainer> imple
         super(ISettingContainer.class);
     }
 
-    @Override
-    protected void postInitView() {
-        EventBusFactory.getInstance().register(new ApplicationEventListener<AccountCustomizeEvent.GotoUploadLogo>() {
-            private static final long serialVersionUID = 7232775383781008850L;
-
-            @Subscribe
-            @Override
-            public void handle(AccountCustomizeEvent.GotoUploadLogo event) {
-                LogoUploadPresenter presenter = PresenterResolver.getPresenter(LogoUploadPresenter.class);
-                if (event.getData() != null) {
-                    presenter.go(view.getWidget(), (SettingScreenDaa.LogoUpload) event.getData());
-                }
-
-            }
-        });
-    }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
@@ -73,8 +52,6 @@ public class SettingPresenter extends AbstractPresenter<ISettingContainer> imple
             presenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
         } else if (data instanceof SettingExtScreenData.Customize) {
             presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
-        } else if (data instanceof SettingExtScreenData.LogoUpload) {
-            presenter = PresenterResolver.getPresenter(LogoChangePresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }
