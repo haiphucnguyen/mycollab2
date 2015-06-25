@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resources.VaadinResource;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.AssetResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -49,7 +49,7 @@ public class MobileAttachmentUtils {
 
     public static final String ATTACHMENT_NAME_PREFIX = "attachment_";
 
-    private static final Resource DEFAULT_SOURCE = MyCollabResource.newResource("icons/docs-256.png");
+    private static final Resource DEFAULT_SOURCE = new AssetResource("icons/docs-256.png");
 
     public static Component renderAttachmentRow(final Content attachment) {
         String docName = attachment.getPath();

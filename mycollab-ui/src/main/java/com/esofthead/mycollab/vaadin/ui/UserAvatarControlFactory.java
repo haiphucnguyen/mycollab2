@@ -28,8 +28,7 @@ import com.vaadin.ui.themes.BaseTheme;
  */
 public class UserAvatarControlFactory {
     public static Image createUserAvatarEmbeddedComponent(String avatarId, int size) {
-        Image embedded = new Image(null, createAvatarResource(avatarId, size));
-        return embedded;
+        return new Image(null, createAvatarResource(avatarId, size));
     }
 
     public static Image createUserAvatarEmbeddedComponent(String avatarId, int size, String tooltip) {
@@ -48,10 +47,9 @@ public class UserAvatarControlFactory {
 
     public static Resource createAvatarResource(String avatarId, int size) {
         if (avatarId == null) {
-            return MyCollabResource.newResource(String.format("icons/default_user_avatar_%d.png", size));
+            return new AssetResource(String.format("icons/default_user_avatar_%d.png", size));
         }
-        return VaadinResource.getInstance().getAvatarResource(
-                avatarId, size);
+        return VaadinResource.getInstance().getAvatarResource(avatarId, size);
     }
 
     public static Button createUserAvatarButtonLink(String userAvatarId, String fullName) {

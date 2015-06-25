@@ -380,8 +380,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 iconWapper.setWidth("60px");
                 final Embedded embed = new Embedded();
                 if (drive.getStoragename().equals(StorageNames.DROPBOX))
-                    embed.setIcon(MyCollabResource
-                            .newResource("icons/48/ecm/dropbox.png"));
+                    embed.setIcon(new AssetResource("icons/48/ecm/dropbox.png"));
                 iconWapper.addComponent(embed);
                 title.addComponent(iconWapper);
                 title.setComponentAlignment(iconWapper, Alignment.MIDDLE_LEFT);
@@ -402,8 +401,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     title.setExpandRatio(foldernameLbl, 1.0f);
 
                     final PopupButton popupBtn = new PopupButton();
-                    popupBtn.setIcon(MyCollabResource
-                            .newResource("icons/16/item_settings_big.png"));
+                    popupBtn.setIcon(new AssetResource("icons/16/item_settings_big.png"));
                     popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 
                     final MVerticalLayout popupOptionActionLayout = new MVerticalLayout().withWidth("100px");

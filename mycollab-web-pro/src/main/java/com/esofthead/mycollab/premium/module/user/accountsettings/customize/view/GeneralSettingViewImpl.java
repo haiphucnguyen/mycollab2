@@ -13,7 +13,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
-import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
+import com.esofthead.mycollab.vaadin.ui.AssetResource;
 import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
@@ -119,15 +119,15 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         };
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                MyCollabResource.newResource(WebResourceIds._16_customer), clickListener);
+                new AssetResource(WebResourceIds._16_customer), clickListener);
 
         serviceMenu.selectService(0);
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                MyCollabResource.newResource(WebResourceIds._16_project), clickListener);
+                new AssetResource(WebResourceIds._16_project), clickListener);
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                MyCollabResource.newResource(WebResourceIds._16_document), clickListener);
+                new AssetResource(WebResourceIds._16_document), clickListener);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
 

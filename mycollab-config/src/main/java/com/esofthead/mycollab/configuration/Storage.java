@@ -38,7 +38,7 @@ public abstract class Storage {
 
     public String getAvatarPath(String userAvatarId, int size) {
         if (StringUtils.isBlank(userAvatarId)) {
-            return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
+            return MyCollabAssets.newAssetLink(String.format("icons/default_user_avatar_%d.png", size));
         } else {
             return String.format("%savatar/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), userAvatarId, size);
         }
@@ -50,7 +50,7 @@ public abstract class Storage {
 
     public String getLogoPath(String accountLogoId, int size) {
         if (accountLogoId == null || "".equals(accountLogoId)) {
-            return MyCollabAssets.newResourceLink("icons/logo.png");
+            return MyCollabAssets.newAssetLink("icons/logo.png");
         }
         return String.format("%slogo/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountLogoId, size);
     }

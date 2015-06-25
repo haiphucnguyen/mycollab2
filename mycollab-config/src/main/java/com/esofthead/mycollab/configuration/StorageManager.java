@@ -59,7 +59,7 @@ public class StorageManager {
 
     public static String getAvatarLink(String userAvatarId, int size) {
         if (StringUtils.isBlank(userAvatarId)) {
-            return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
+            return MyCollabAssets.newAssetLink(String.format("icons/default_user_avatar_%d.png", size));
         } else {
             return instance.storage.getAvatarPath(userAvatarId, size);
         }

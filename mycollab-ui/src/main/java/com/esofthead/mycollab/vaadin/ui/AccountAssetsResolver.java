@@ -36,10 +36,9 @@ public class AccountAssetsResolver {
 
     public static Resource createLogoResource(String logoId, int size) {
         if (logoId == null) {
-            return MyCollabResource.newResource("icons/logo.png");
+            return new AssetResource("icons/logo.png");
         }
 
-        return VaadinResource.getInstance().getLogoResource(
-                logoId, size);
+        return VaadinResource.getInstance().getLogoResource(logoId, size);
     }
 }
