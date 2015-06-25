@@ -83,8 +83,8 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
         MHorizontalLayout previewBox = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                 .withWidth("100%");
 
-        final String logoId = AppContext.getBillingAccount().getLogopath();
-        Resource defaultPhoto = AccountAssetsResolver.createLogoResource(logoId, 150);
+        final String logoPath = AppContext.getBillingAccount().getLogopath();
+        Resource defaultPhoto = AccountAssetsResolver.createLogoResource(logoPath, 150);
         previewImage = new Embedded(null, defaultPhoto);
         previewImage.setWidth("100px");
         previewBox.addComponent(previewImage);
@@ -118,8 +118,8 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
                     try {
                         BufferedImage image = ImageIO.read(new ByteArrayInputStream(scaleImageData));
                         AccountLogoService accountLogoService = ApplicationContextUtil.getSpringBean(AccountLogoService.class);
-                        String newlogoId = accountLogoService.uploadLogo(AppContext.getUsername(),
-                                image, logoId, AppContext.getAccountId());
+                        String newlogoId = accountLogoService.upload(AppContext.getUsername(),
+                                image, AppContext.getAccountId());
                         EventBusFactory.getInstance().post(new AccountCustomizeEvent.GotoMainPage(
                                 LogoUploadViewImpl.this, newlogoId));
                     } catch (IOException e) {

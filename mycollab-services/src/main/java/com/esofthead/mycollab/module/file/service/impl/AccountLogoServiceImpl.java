@@ -20,11 +20,10 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.PathUtils;
 import com.esofthead.mycollab.module.file.service.AccountLogoService;
-import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
-import com.esofthead.mycollab.module.user.domain.UserAccount;
-import com.esofthead.mycollab.module.user.domain.UserAccountExample;
-import com.esofthead.mycollab.module.user.service.AccountThemeService;
+import com.esofthead.mycollab.module.user.domain.BillingAccount;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -51,47 +49,36 @@ public class AccountLogoServiceImpl implements AccountLogoService {
     private ResourceService resourceService;
 
     @Autowired
-    private UserAccountMapper userAccountMapper;
+    private BillingAccountService billingAccountService;
 
-    @Autowired
-    private AccountThemeService themeService;
 
-    private static final int PIXELS_150 = 150;
-    private static final int PIXELS_100 = 100;
-    private static final int PIXELS_64 = 64;
-
-    private static final int[] SUPPORT_SIZES = {PIXELS_150, PIXELS_100, PIXELS_64};
+    private static final int[] SUPPORT_SIZES = {150, 100, 64};
 
     @Override
-    public String uploadLogo(String uploadedUser, BufferedImage logo, String logoId, Integer saccountid) {
-        UserAccountExample ex = new UserAccountExample();
-        ex.createCriteria().andAccountidEqualTo(saccountid).andIsaccountownerEqualTo(true);
-        List<UserAccount> userAccounts = userAccountMapper.selectByExample(ex);
-        if (userAccounts == null || userAccounts.size() == 0) {
+    public String upload(String uploadedUser, BufferedImage image, Integer sAccountId) {
+        BillingAccount account = billingAccountService.getAccountById(sAccountId);
+        if (account == null) {
             throw new MyCollabException(
-                    "There's no account associated with provided id");
+                    "There's no account associated with provided id " + sAccountId);
         }
-        String username = userAccounts.get(0).getUsername();
 
         // Construct new logoid
-        String randomString = UUID.randomUUID().toString();
-        String newLogoId = username + "_" + randomString;
+        String newLogoId = UUID.randomUUID().toString();
 
         for (int i = 0; i < SUPPORT_SIZES.length; i++) {
-            uploadLogoToStorage(uploadedUser, logo, newLogoId, SUPPORT_SIZES[i]);
+            uploadLogoToStorage(uploadedUser, image, newLogoId, SUPPORT_SIZES[i], sAccountId);
         }
 
         // save logo id
-        // AccountTheme accountTheme = themeService.getAccountTheme(saccountid);
-        // accountTheme.setLogopath(newLogoId);
-        // themeService.saveAccountTheme(accountTheme, saccountid);
+        account.setLogopath(newLogoId);
+        billingAccountService.updateSelectiveWithSession(account, uploadedUser);
 
-        // Delete old logo
-        if (logoId != null) {
+        // account old logo
+        if (account.getLogopath() != null) {
             for (int i = 0; i < SUPPORT_SIZES.length; i++) {
                 try {
-                    resourceService.removeResource(String.format("logo/%s_%d.png", logoId, SUPPORT_SIZES[i]),
-                            uploadedUser, saccountid);
+                    resourceService.removeResource(PathUtils.buildLogoPath(sAccountId, account.getLogopath(),
+                            SUPPORT_SIZES[i]), uploadedUser, sAccountId);
                 } catch (Exception e) {
                     LOG.error("Error while delete old logo", e);
                 }
@@ -101,7 +88,7 @@ public class AccountLogoServiceImpl implements AccountLogoService {
         return newLogoId;
     }
 
-    private void uploadLogoToStorage(String uploadedUser, BufferedImage image, String logoId, int width) {
+    private void uploadLogoToStorage(String uploadedUser, BufferedImage image, String logoId, int width, Integer sAccountId) {
         BufferedImage scaleImage = ImageUtil.scaleImage(image, (float) width / image.getWidth());
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         try {
@@ -109,8 +96,9 @@ public class AccountLogoServiceImpl implements AccountLogoService {
         } catch (IOException e) {
             throw new MyCollabException("Error while write image to stream", e);
         }
-        resourceService.saveContent(
-                Content.buildContentInstance(null, String.format("logo/%s_%d.png", logoId, width)),
-                uploadedUser, new ByteArrayInputStream(outStream.toByteArray()), null);
+        Content logoContent = new Content();
+        logoContent.setPath(PathUtils.buildLogoPath(sAccountId, logoId, width));
+        logoContent.setName(logoId + "_" + width);
+        resourceService.saveContent(logoContent, uploadedUser, new ByteArrayInputStream(outStream.toByteArray()), null);
     }
 }

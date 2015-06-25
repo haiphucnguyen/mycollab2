@@ -26,5 +26,5 @@ import com.esofthead.mycollab.core.persistence.service.IService;
  * 
  */
 public interface AccountLogoService extends IService {
-	String uploadLogo(String uploadedUser, BufferedImage logo, String logoId, Integer saccountid);
+	String upload(String uploadedUser, BufferedImage logo, Integer sAccountId);
 }
