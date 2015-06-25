@@ -66,7 +66,7 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
             }
 
             FileStorage fileConfiguration = (FileStorage) StorageManager
-                    .getConfiguration();
+                    .getStorage();
             File avatarFile = fileConfiguration.getAvatarFile(username, size);
             InputStream avatarInputStream;
             if (avatarFile != null) {

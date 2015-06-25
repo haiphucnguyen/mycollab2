@@ -16,32 +16,30 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.vaadin.resources.VaadinResourceManager;
+import com.esofthead.mycollab.vaadin.resources.VaadinResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.themes.BaseTheme;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1
- * 
  */
 public class AccountAssetsResolver {
-	public static Button createAccountLogoImageComponent(String logoId, int size) {
-		Button logo = new Button();
-		logo.setStyleName(BaseTheme.BUTTON_LINK);
-		logo.setIcon(createLogoResource(logoId, size));
-		return logo;
+    public static Button createAccountLogoImageComponent(String logoId, int size) {
+        Button logo = new Button();
+        logo.setStyleName(BaseTheme.BUTTON_LINK);
+        logo.setIcon(createLogoResource(logoId, size));
+        return logo;
 
-	}
+    }
 
-	public static Resource createLogoResource(String logoId, int size) {
-		if (logoId == null) {
-			return MyCollabResource.newResource("icons/logo.png");
-		}
+    public static Resource createLogoResource(String logoId, int size) {
+        if (logoId == null) {
+            return MyCollabResource.newResource("icons/logo.png");
+        }
 
-		return VaadinResourceManager.getResourceManager().getLogoResource(
-				logoId, size);
-	}
+        return VaadinResource.getInstance().getLogoResource(
+                logoId, size);
+    }
 }

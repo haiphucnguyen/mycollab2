@@ -36,8 +36,7 @@ public class StorageManager {
     private StorageManager() {
     }
 
-    @SuppressWarnings("unchecked")
-    static void loadStorageConfig() {
+    static {
         // Load storage configuration
         String storageSystem = ApplicationProperties.getString(ApplicationProperties.STORAGE_SYSTEM,
                 Storage.FILE_STORAGE_SYSTEM);
@@ -66,7 +65,7 @@ public class StorageManager {
         }
     }
 
-    public static Storage getConfiguration() {
+    public static Storage getStorage() {
         return instance.storage;
     }
 

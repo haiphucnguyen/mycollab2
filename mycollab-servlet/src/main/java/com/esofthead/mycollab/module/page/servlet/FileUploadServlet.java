@@ -72,7 +72,7 @@ public class FileUploadServlet extends GenericHttpServlet {
 			resourceService.saveContent(content, "", fileContent, 1);
 
 			String filePath = "";
-			Storage storage = StorageManager.getConfiguration();
+			Storage storage = StorageManager.getStorage();
 			storage.getResourcePath(content.getPath());
 
 			String responseHtml = "<html><body><script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction('%s','%s','%s');</script></body></html>";

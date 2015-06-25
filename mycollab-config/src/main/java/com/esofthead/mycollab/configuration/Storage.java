@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.configuration;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -28,33 +27,31 @@ import org.apache.commons.lang3.StringUtils;
  * <li>File system: Files are stored in OS file storage. This is used for
  * installation mode of MyCollab</li>
  * </ul>
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public abstract class Storage {
-	public static final String FILE_STORAGE_SYSTEM = "file";
+    public static final String FILE_STORAGE_SYSTEM = "file";
 
     public static final String S3_STORAGE_SYSTEM = "s3";
 
     public String getAvatarPath(String userAvatarId, int size) {
-        String resourceDownloadPath = SiteConfiguration.getResourceDownloadUrl();
         if (StringUtils.isBlank(userAvatarId)) {
             return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
         } else {
-            return String.format("%savatar/%s_%d.png", resourceDownloadPath, userAvatarId, size);
+            return String.format("%savatar/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), userAvatarId, size);
         }
     }
 
-	public String getResourcePath(String documentPath) {
+    public String getResourcePath(String documentPath) {
         return SiteConfiguration.getResourceDownloadUrl() + documentPath;
-	}
+    }
 
-	public String getLogoPath(String accountLogoId, int size) {
-		if (accountLogoId == null || "".equals(accountLogoId)) {
-			return MyCollabAssets.newResourceLink("icons/logo.png");
-		}
+    public String getLogoPath(String accountLogoId, int size) {
+        if (accountLogoId == null || "".equals(accountLogoId)) {
+            return MyCollabAssets.newResourceLink("icons/logo.png");
+        }
         return String.format("%slogo/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountLogoId, size);
-	}
+    }
 }

@@ -79,7 +79,7 @@ public class S3StreamDownloadResource extends StreamResource {
 		public InputStream getStream() {
 			String fileName = getFilename(documentPath);
 			S3Storage storageConfiguration = (S3Storage) StorageManager
-					.getConfiguration();
+					.getStorage();
 			fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
 			AmazonS3 s3Client = storageConfiguration.newS3Client();
 			try {

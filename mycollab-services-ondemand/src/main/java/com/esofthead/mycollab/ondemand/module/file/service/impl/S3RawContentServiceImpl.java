@@ -45,7 +45,7 @@ public class S3RawContentServiceImpl implements RawContentService {
 
 	public S3RawContentServiceImpl() {
 		storageConfiguration = (S3Storage) StorageManager
-				.getConfiguration();
+				.getStorage();
 	}
 
 	@Override
