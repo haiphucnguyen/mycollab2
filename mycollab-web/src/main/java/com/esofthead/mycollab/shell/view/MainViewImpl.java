@@ -181,6 +181,10 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         blogLink.setIcon(FontAwesome.RSS);
         blogLink.setTargetName("_blank");
 
+        Link sendFeedback = new Link("Feedback", new ExternalResource("http://support.mycollab.com"));
+        sendFeedback.setIcon(FontAwesome.REPLY_ALL);
+        sendFeedback.setTargetName("_blank");
+
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
             Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge.net/projects/mycollab/reviews/new"));
             rateUsLink.setTargetName("_blank");
@@ -191,7 +195,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         Link tweetUs = new Link("Tweet", new ExternalResource("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom &source=webclient"));
         tweetUs.setTargetName("_blank");
         tweetUs.setIcon(FontAwesome.TWITTER);
-        footerRight.with(tweetUs, blogLink);
+        footerRight.with(tweetUs, blogLink, sendFeedback);
         footer.addComponent(footerRight, "footer-right");
         return footer;
     }

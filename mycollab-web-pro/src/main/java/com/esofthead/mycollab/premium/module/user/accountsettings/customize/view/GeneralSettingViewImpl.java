@@ -5,6 +5,7 @@ import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.file.service.AccountFavIconService;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -71,11 +72,13 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         String separatorStyle = "width: 100%; height: 1px; background-color: #CFCFCF; margin-top: 0px; margin-bottom: 10px";
         Label divLabel1 = new Label(new Div().setStyle(separatorStyle).write(), ContentMode.HTML);
 
-        GridFormLayoutHelper gridFormLayoutHelper = new GridFormLayoutHelper(1, 3, "160px", "100%");
+        GridFormLayoutHelper gridFormLayoutHelper = new GridFormLayoutHelper(1, 3, "100%", "160px");
         gridFormLayoutHelper.getLayout().setSpacing(true);
         gridFormLayoutHelper.addComponent(new Label(billingAccount.getSitename()), "Site Name", 0, 0);
-        gridFormLayoutHelper.addComponent(new Label(billingAccount.getSubdomain()), "Site Address", 0, 1);
-        gridFormLayoutHelper.addComponent(new Label(billingAccount.getDefaulttimezone()), "Default Time Zone", 0, 2);
+        gridFormLayoutHelper.addComponent(new Label(String.format("https://%s.mycollab.com", billingAccount
+                .getSubdomain())), "Site Address", 0, 1);
+        gridFormLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(
+                billingAccount.getDefaulttimezone()).getDisplayName()), "Default Time Zone", 0, 2);
         this.with(generalSettingHeader, divLabel1, gridFormLayoutHelper.getLayout());
 
         headerLbl = new Label("Logos");
