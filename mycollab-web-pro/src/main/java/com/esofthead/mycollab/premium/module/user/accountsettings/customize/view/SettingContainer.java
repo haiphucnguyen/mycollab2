@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -30,7 +30,7 @@ import com.vaadin.ui.TabSheet;
  * @since 4.1
  */
 @ViewComponent
-public class CustomizeContainer extends AbstractPageView implements ICustomizeContainer {
+public class SettingContainer extends AbstractPageView implements ISettingContainer {
     private static final long serialVersionUID = -1923841035522809056L;
 
     private GeneralSettingPresenter generalSettingPresenter;
@@ -40,7 +40,7 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
 
     private String selectedTabId = "";
 
-    public CustomizeContainer() {
+    public SettingContainer() {
         this.settingTab = new TabSheetDecorator();
         this.settingTab.setStyleName(UIConstants.THEME_TAB_STYLE3);
         this.addComponent(settingTab);
@@ -64,9 +64,9 @@ public class CustomizeContainer extends AbstractPageView implements ICustomizeCo
                 TabSheet.Tab tab = ((TabSheetDecorator) event.getTabSheet()).getSelectedTabInfo();
                 String caption = tab.getCaption();
                 if ("General Settings".equals(caption) && !"General Settings".equals(selectedTabId)) {
-                    generalSettingPresenter.go(CustomizeContainer.this, null);
+                    generalSettingPresenter.go(SettingContainer.this, null);
                 } else if ("Theme".equals(caption) && !"Theme".equals(selectedTabId)) {
-                    themeCustomizePresenter.go(CustomizeContainer.this, null);
+                    themeCustomizePresenter.go(SettingContainer.this, null);
                 }
                 selectedTabId = "";
             }

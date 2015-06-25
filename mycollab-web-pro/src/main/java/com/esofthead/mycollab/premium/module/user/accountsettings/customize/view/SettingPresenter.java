@@ -19,7 +19,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.customize.vie
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
@@ -36,11 +36,11 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class CustomizePresenter extends AbstractPresenter<ICustomizeContainer> implements ICustomizePresenter {
+public class SettingPresenter extends AbstractPresenter<ISettingContainer> implements ICustomizePresenter {
     private static final long serialVersionUID = 1L;
 
-    public CustomizePresenter() {
-        super(ICustomizeContainer.class);
+    public SettingPresenter() {
+        super(ISettingContainer.class);
     }
 
     @Override

@@ -92,7 +92,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        CustomizeContainer customizeContainer = (CustomizeContainer) container;
+        SettingContainer customizeContainer = (SettingContainer) container;
         customizeContainer.gotoSubView("Theme");
 
         AccountTheme accountTheme;
@@ -113,7 +113,7 @@ public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeVie
         view.customizeTheme(accountTheme);
 
         AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
-        breadcrumb.gotoCustomizationPage();
+        breadcrumb.gotoSettingPage();
     }
 
     private void saveTheme(AccountTheme accountTheme) {

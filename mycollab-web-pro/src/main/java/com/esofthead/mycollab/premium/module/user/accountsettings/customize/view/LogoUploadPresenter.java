@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizeContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
@@ -34,7 +34,7 @@ public class LogoUploadPresenter extends AbstractPresenter<LogoUploadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ICustomizeContainer customizeContainer = (ICustomizeContainer) container;
+        ISettingContainer customizeContainer = (ISettingContainer) container;
         customizeContainer.removeAllComponents();
         customizeContainer.addComponent(view.getWidget());
         view.editPhoto((byte[]) data.getParams());

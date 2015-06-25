@@ -9,7 +9,8 @@
   position: absolute;
   display: none;
   background-color: #FDFDEE;
-  z-index: 3000;
+  //Keep tooltip overlay vaadin windows dialog
+  z-index: 10001;
   font: $font-smaller $font-family !important;
   line-height: normal;
   tr {
