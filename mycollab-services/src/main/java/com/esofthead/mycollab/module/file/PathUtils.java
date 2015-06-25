@@ -14,6 +14,6 @@ public class PathUtils {
     }
 
     public static String buildFavIconPath(Integer sAccountId, String favIconFileName) {
-        return String.format("%s/.assets/%s", sAccountId, favIconFileName);
+        return String.format("%s/.assets/%s.ico", sAccountId, favIconFileName);
     }
 }

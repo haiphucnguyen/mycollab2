@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
@@ -42,13 +43,13 @@ public class MyCollabBootstrapListener implements BootstrapListener {
         BillingAccountService billingService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
 
         BillingAccount account = billingService.getAccountByDomain(domain);
-        if (account != null && account.getFaviconpath() != null) {
-            response.getDocument().head().getElementsByAttributeValue("rel", "shortcut icon").attr("href", "");
-            response.getDocument().head().getElementsByAttributeValue("rel", "icon").attr("href", "");
+        if (account != null) {
+            String favIconPath = Storage.getFavIconPath(account.getFaviconpath());
+            response.getDocument().head().getElementsByAttributeValue("rel", "shortcut icon").attr("href", favIconPath);
+            response.getDocument().head().getElementsByAttributeValue("rel", "icon").attr("href", favIconPath);
         }
 
-        response.getDocument().head()
-                .append("<meta name=\"robots\" content=\"nofollow\" />");
+        response.getDocument().head().append("<meta name=\"robots\" content=\"nofollow\" />");
 
         response.getDocument().head()
                 .append(String.format("<script type=\"text/javascript\" src=\"%sjs/jquery-1.10.2.min.js\"></script>", SiteConfiguration.getCdnUrl()));

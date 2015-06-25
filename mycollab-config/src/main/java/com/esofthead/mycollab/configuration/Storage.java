@@ -75,7 +75,14 @@ public abstract class Storage {
         if (accountLogoId == null || "".equals(accountLogoId)) {
             return MyCollabAssets.newAssetLink("icons/logo.png");
         }
-        return String.format("%slogo/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountLogoId, size);
+        return String.format("%s.assets/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountLogoId, size);
+    }
+
+    public static String getFavIconPath(String favIconName) {
+        if (favIconName == null || "".equals(favIconName)) {
+            return MyCollabAssets.newAssetLink("favicon.ico");
+        }
+        return String.format("%s.assets/%s.ico", SiteConfiguration.getResourceDownloadUrl(), favIconName);
     }
 
     public static String getAvatarPath(String userAvatarId, int size) {
