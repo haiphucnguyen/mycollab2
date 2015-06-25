@@ -75,7 +75,7 @@ public class AttachmentDisplayComponent extends CssLayout {
             thumbnail.setSource(DEFAULT_SOURCE);
         } else {
             thumbnail.setSource(VaadinResource.getInstance()
-                    .getImagePreviewResource(attachment.getThumbnail()));
+                    .getResource(attachment.getThumbnail()));
         }
 
         Div contentTooltip = new Div().appendChild(new Span().appendText(docName).setStyle("font-weight:bold"));
@@ -95,7 +95,7 @@ public class AttachmentDisplayComponent extends CssLayout {
                 @Override
                 public void click(MouseEvents.ClickEvent event) {
                     Resource previewResource = VaadinResource
-                            .getInstance().getImagePreviewResource(
+                            .getInstance().getResource(
                                     attachment.getPath());
                     UI.getCurrent().addWindow(new AttachmentPreviewWindow(previewResource));
                 }

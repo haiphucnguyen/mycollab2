@@ -297,7 +297,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements Pro
         private Component generateToken(final SimpleUser user) {
             final Button btn = new Button("", FontAwesome.TIMES);
             btn.setCaptionAsHtml(true);
-            btn.setCaption((new Img("", Storage.getAvatarLink(user.getAvatarid(), 16))).write() + " " + user
+            btn.setCaption((new Img("", Storage.getAvatarPath(user.getAvatarid(), 16))).write() + " " + user
                     .getDisplayName());
             btn.addClickListener(new Button.ClickListener() {
                 @Override

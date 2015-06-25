@@ -352,7 +352,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
             }
             String uid = UUID.randomUUID().toString();
             Div div = new Div();
-            Img userAvatar = new Img("", Storage.getAvatarLink(
+            Img userAvatar = new Img("", Storage.getAvatarPath(
                     task.getAssignUserAvatarId(), 16));
             A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     task.getProjectId(), task.getAssignUser()));

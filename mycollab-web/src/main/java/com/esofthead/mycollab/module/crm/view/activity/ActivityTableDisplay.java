@@ -413,7 +413,7 @@ public class ActivityTableDisplay extends
                                                     .appendChild(
                                                             new Img(
                                                                     "",
-                                                                    Storage.getAvatarLink(
+                                                                    Storage.getAvatarPath(
                                                                             event.getAssignUserAvatarId(),
                                                                             16)))
                                                     .appendText(

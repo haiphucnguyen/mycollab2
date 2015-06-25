@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.page.servlet;
 
-import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
@@ -69,8 +68,6 @@ public class FileUploadServlet extends GenericHttpServlet {
             resourceService.saveContent(content, "", fileContent, 1);
 
             String filePath = "";
-            Storage storage = Storage.getInstance();
-            storage.getResourcePath(content.getPath());
 
             String responseHtml = "<html><body><script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction('%s','%s','%s');</script></body></html>";
             responseHtml = String.format(responseHtml, ckEditorFuncNum, filePath, "");

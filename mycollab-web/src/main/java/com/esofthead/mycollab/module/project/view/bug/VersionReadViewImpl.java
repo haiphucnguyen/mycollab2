@@ -330,7 +330,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version>
             }
             String uid = UUID.randomUUID().toString();
             Div div = new Div();
-            Img userAvatar = new Img("", Storage.getAvatarLink(bug.getAssignUserAvatarId(), 16));
+            Img userAvatar = new Img("", Storage.getAvatarPath(bug.getAssignUserAvatarId(), 16));
             A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     bug.getProjectid(), bug.getAssignuser()));
 

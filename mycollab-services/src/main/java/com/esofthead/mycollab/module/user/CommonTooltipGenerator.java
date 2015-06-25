@@ -74,7 +74,7 @@ public class CommonTooltipGenerator {
             Td trRow1_value = new Td().setStyle(
                     "width:150px;text-align: right; vertical-align: top;")
                     .appendChild(
-                            new Img("", Storage.getAvatarLink(
+                            new Img("", Storage.getAvatarPath(
                                     user.getAvatarid(), 100)));
             trRow1_value.setAttribute("rowspan", "5");
             trRow1.appendChild(new Td().setStyle(

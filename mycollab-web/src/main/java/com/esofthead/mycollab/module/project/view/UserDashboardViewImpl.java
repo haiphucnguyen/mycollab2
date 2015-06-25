@@ -261,7 +261,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
                 div.appendChild(createdByTxt, new Text("None"), lastUpdatedOn);
             } else {
                 String uid = UUID.randomUUID().toString();
-                Img userAvatar = new Img("", Storage.getAvatarLink(projectItem.getCreatedUserAvatarId(), 16));
+                Img userAvatar = new Img("", Storage.getAvatarPath(projectItem.getCreatedUserAvatarId(), 16));
                 A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(projectItem.getProjectId(), projectItem
                         .getCreatedUser())).appendText(projectItem.getCreatedUserDisplayName());
                 userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, projectItem.getCreatedUser()));

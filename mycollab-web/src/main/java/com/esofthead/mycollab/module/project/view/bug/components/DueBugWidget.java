@@ -100,7 +100,7 @@ public class DueBugWidget extends BugDisplayWidget {
                 footer.appendChild(bugInfoTxt, DivLessFormatter.EMPTY_SPACE(), new Text("None"));
             } else {
                 String uid = UUID.randomUUID().toString();
-                Img userAvatar = new Img("", Storage.getAvatarLink(bug.getAssignUserAvatarId(), 16));
+                Img userAvatar = new Img("", Storage.getAvatarPath(bug.getAssignUserAvatarId(), 16));
                 A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(bug
                         .getProjectid(), bug.getAssignuser())).appendText(com.esofthead.mycollab.core.utils
                         .StringUtils.trim(bug.getAssignuserFullName(), 30, true));

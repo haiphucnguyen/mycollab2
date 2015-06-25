@@ -52,16 +52,15 @@ public abstract class VaadinResource {
 
     public abstract Resource getStreamResource(String documentPath);
 
-    public Resource getImagePreviewResource(String documentPath) {
-        Storage storage = Storage.getInstance();
-        return new ExternalResource(storage.getResourcePath(documentPath));
+    public Resource getResource(String documentPath) {
+        return new ExternalResource(Storage.getResourcePath(documentPath));
     }
 
     public Resource getLogoResource(String logoId, int size) {
-        return new ExternalResource(Storage.getInstance().getLogoPath(logoId, size));
+        return new ExternalResource(Storage.getLogoPath(logoId, size));
     }
 
     public Resource getAvatarResource(String avatarId, int size) {
-        return new ExternalResource(Storage.getInstance().getAvatarPath(avatarId, size));
+        return new ExternalResource(Storage.getAvatarPath(avatarId, size));
     }
 }

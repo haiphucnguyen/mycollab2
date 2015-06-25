@@ -68,7 +68,7 @@ public class StandupMissingComp extends MVerticalLayout {
     private String buildMemberLink(SimpleUser user) {
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", Storage.getAvatarLink(user.getAvatarid(), 16));
+        Img userAvatar = new Img("", Storage.getAvatarPath(user.getAvatarid(), 16));
         A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 CurrentProjectVariables.getProjectId(), user.getUsername()));
 

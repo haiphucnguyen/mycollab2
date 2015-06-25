@@ -267,7 +267,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             SimpleProjectMember member = projectMemberService.findMemberByUsername(beanItem.getCreatedUser(),
                     CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
             if (member != null) {
-                Img userAvatar = new Img("", Storage.getAvatarLink(member.getMemberAvatarId(), 16));
+                Img userAvatar = new Img("", Storage.getAvatarPath(member.getMemberAvatarId(), 16));
                 A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(member
                         .getProjectid(), member.getUsername())).appendText(StringUtils.trim(member.getMemberFullName(), 30, true));
                 userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, member.getUsername()));

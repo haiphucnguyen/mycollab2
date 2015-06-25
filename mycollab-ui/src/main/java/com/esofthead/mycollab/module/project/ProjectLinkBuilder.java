@@ -103,7 +103,7 @@ public class ProjectLinkBuilder {
                 username, projectId, AppContext.getAccountId());
         if (member != null) {
             String uid = UUID.randomUUID().toString();
-            Img userAvatar = new Img("", Storage.getAvatarLink(
+            Img userAvatar = new Img("", Storage.getAvatarPath(
                     member.getMemberAvatarId(), 16));
             A link = new A().setId("tag" + uid).setHref(generateProjectMemberFullLink(projectId,
                     member.getUsername())).appendText(StringUtils.trim(member.getDisplayName(), 30, true));

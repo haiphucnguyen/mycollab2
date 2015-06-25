@@ -436,7 +436,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         private Div buildAssigneeValue(ProjectGenericTask task) {
             String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
-            Img userAvatar = new Img("", Storage.getAvatarLink(task.getAssignUserAvatarId(), 16));
+            Img userAvatar = new Img("", Storage.getAvatarPath(task.getAssignUserAvatarId(), 16));
             A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     task.getProjectId(), task.getAssignUser()));
 

@@ -67,7 +67,7 @@ public class MobileAttachmentUtils {
             thumbnail.setSource(DEFAULT_SOURCE);
         } else {
             thumbnail.setSource(VaadinResource.getInstance()
-                    .getImagePreviewResource(attachment.getThumbnail()));
+                    .getResource(attachment.getThumbnail()));
         }
         thumbnail.setWidth("100%");
         thumbnailWrap.addComponent(thumbnail);
@@ -87,7 +87,7 @@ public class MobileAttachmentUtils {
                         public void buttonClick(Button.ClickEvent event) {
                             AttachmentPreviewView previewView = new AttachmentPreviewView(
                                     VaadinResource.getInstance()
-                                            .getImagePreviewResource(attachment.getPath()));
+                                            .getResource(attachment.getPath()));
                             EventBusFactory.getInstance().post(
                                     new ShellEvent.PushView(this, previewView));
                         }
@@ -128,7 +128,7 @@ public class MobileAttachmentUtils {
             thumbnail.setSource(DEFAULT_SOURCE);
         } else {
             thumbnail.setSource(VaadinResource.getInstance()
-                    .getImagePreviewResource(attachment.getThumbnail()));
+                    .getResource(attachment.getThumbnail()));
         }
         thumbnail.setWidth("100%");
         thumbnailWrap.addComponent(thumbnail);

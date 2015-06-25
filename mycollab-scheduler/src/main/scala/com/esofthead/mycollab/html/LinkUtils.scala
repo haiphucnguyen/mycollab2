@@ -26,7 +26,7 @@ import com.hp.gagawa.java.elements.Img
  */
 object LinkUtils {
 
-    def newAvatar(avatarId: String): Img = new Img("", Storage.getAvatarLink(avatarId, 16)).setWidth("16")
+    def newAvatar(avatarId: String): Img = new Img("", Storage.getAvatarPath(avatarId, 16)).setWidth("16")
         .setHeight("16").setStyle("display: inline-block; vertical-align: top;")
 
     def generateUserAcceptLink(subDomain: String, accountId: Integer, username: String): String = SiteConfiguration.getSiteUrl(subDomain) + "user/confirm_invite/" + UrlEncodeDecoder.encode(accountId + "/" + username + "/" + subDomain);

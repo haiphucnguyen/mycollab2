@@ -456,7 +456,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, subTask.getId() + ""));
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
 
-            String avatarLink = Storage.getAvatarLink(subTask.getAssignUserAvatarId(), 16);
+            String avatarLink = Storage.getAvatarPath(subTask.getAssignUserAvatarId(), 16);
             Img avatarImg = new Img(subTask.getAssignUserFullName(), avatarLink).setTitle(subTask.getAssignUserFullName());
 
             Div resultDiv = new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),

@@ -158,7 +158,7 @@ public class ProjectActivityStreamPagedList extends
     private String buildAssigneeValue(SimpleActivityStream activityStream) {
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", Storage.getAvatarLink(
+        Img userAvatar = new Img("", Storage.getAvatarPath(
                 activityStream.getCreatedUserAvatarId(), 16));
         A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
