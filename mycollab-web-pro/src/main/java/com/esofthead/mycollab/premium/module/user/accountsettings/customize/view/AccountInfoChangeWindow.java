@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -94,7 +95,9 @@ class AccountInfoChangeWindow extends Window {
                             (BillingAccountService.class);
                     billingAccountService.updateSelectiveWithSession(billingAccount, AppContext.getUsername());
                     AccountInfoChangeWindow.this.close();
-                    Page.getCurrent().getJavaScript().execute("window.location.reload();");
+                    String siteUrl = SiteConfiguration.getSiteUrl(billingAccount.getSubdomain());
+                    String assignExec = String.format("window.location.assign(\'%s\');", siteUrl);
+                    Page.getCurrent().getJavaScript().execute(assignExec);
                 }
             }
         });
