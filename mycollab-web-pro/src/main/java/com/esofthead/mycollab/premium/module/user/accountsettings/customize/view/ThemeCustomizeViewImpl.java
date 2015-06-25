@@ -36,6 +36,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.Iterator;
 
@@ -211,7 +212,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         previewLayout.setHeight("40px");
         previewLayout.setWidth("520px");
 
-        Button currentLogo = AccountLogoFactory.createAccountLogoImageComponent(
+        Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(
                 null, 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();
@@ -474,12 +475,11 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
     }
 
     private Component constructButtonCustomizeBlock() {
-        VerticalLayout blockLayout = new VerticalLayout();
+        MVerticalLayout blockLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
         Label blockHeader = new Label("Buttons");
         blockHeader.setStyleName("block-hdr");
         blockHeader.addStyleName("h2");
         blockLayout.addComponent(blockHeader);
-        blockLayout.setSpacing(true);
 
         VerticalLayout blockBody = new VerticalLayout();
         blockBody.setMargin(new MarginInfo(false, true, false, true));

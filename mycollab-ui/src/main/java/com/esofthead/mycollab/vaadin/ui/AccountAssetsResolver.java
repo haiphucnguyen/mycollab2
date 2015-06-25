@@ -27,7 +27,7 @@ import com.vaadin.ui.themes.BaseTheme;
  * @since 4.1
  * 
  */
-public class AccountLogoFactory {
+public class AccountAssetsResolver {
 	public static Button createAccountLogoImageComponent(String logoId, int size) {
 		Button logo = new Button();
 		logo.setStyleName(BaseTheme.BUTTON_LINK);

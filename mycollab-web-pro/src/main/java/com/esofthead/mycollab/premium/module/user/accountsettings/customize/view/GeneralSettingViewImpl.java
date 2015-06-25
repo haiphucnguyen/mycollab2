@@ -12,7 +12,7 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AccountLogoFactory;
+import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.esofthead.mycollab.vaadin.ui.MyCollabResource;
 import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
@@ -96,7 +96,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         previewLayout.setHeight("40px");
         previewLayout.setWidth("520px");
 
-        Button currentLogo = AccountLogoFactory.createAccountLogoImageComponent(billingAccount.getLogopath(), 150);
+        Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(billingAccount.getLogopath(), 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();
         serviceMenu.addStyleName("topNavPopup");

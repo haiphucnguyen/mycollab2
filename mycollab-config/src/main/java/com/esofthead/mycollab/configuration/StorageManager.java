@@ -16,70 +16,65 @@
  */
 package com.esofthead.mycollab.configuration;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.core.MyCollabException;
-
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.5.1
- *
  */
 public class StorageManager {
-	private static final Logger LOG = LoggerFactory.getLogger(StorageManager.class);
-	private static final String S3_CONF_CLS = "com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration";
-	private static StorageManager instance = new StorageManager();
+    private static final Logger LOG = LoggerFactory.getLogger(StorageManager.class);
+    private static final String S3_CONF_CLS = "com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration";
+    private static StorageManager instance = new StorageManager();
 
-	private StorageConfiguration storageConf;
-	private String storageSystem;
+    private Storage storage;
+    private String storageSystem;
 
-	private StorageManager() {
-	}
+    private StorageManager() {
+    }
 
-	@SuppressWarnings("unchecked")
-	static void loadStorageConfig() {
-		// Load storage configuration
-		String storageSystem = ApplicationProperties.getString(ApplicationProperties.STORAGE_SYSTEM,
-				StorageConfiguration.FILE_STORAGE_SYSTEM);
-		instance.storageSystem = storageSystem;
-		if (StorageConfiguration.FILE_STORAGE_SYSTEM.equals(storageSystem)) {
-			LOG.debug("MyCollab uses file storage system");
-			instance.storageConf = new FileStorageConfiguration();
-		} else if (StorageConfiguration.S3_STORAGE_SYSTEM.equals(storageSystem)) {
-			LOG.debug("MyCollab uses amazon s3 system");
-			try {
-				Class<StorageConfiguration> s3Conf = (Class<StorageConfiguration>) Class.forName(S3_CONF_CLS);
-				StorageConfiguration newInstance = s3Conf.newInstance();
-				instance.storageConf = newInstance;
-			} catch (Exception e) {
-				LOG.error(String.format("Can not load s3 file system with class %s", S3_CONF_CLS), e);
-				System.exit(-1);
-			}
-		} else {
-			throw new MyCollabException(String.format("Can not load storage  %s", storageSystem));
-		}
-	}
+    @SuppressWarnings("unchecked")
+    static void loadStorageConfig() {
+        // Load storage configuration
+        String storageSystem = ApplicationProperties.getString(ApplicationProperties.STORAGE_SYSTEM,
+                Storage.FILE_STORAGE_SYSTEM);
+        instance.storageSystem = storageSystem;
+        if (Storage.FILE_STORAGE_SYSTEM.equals(storageSystem)) {
+            instance.storage = new FileStorage();
+        } else if (Storage.S3_STORAGE_SYSTEM.equals(storageSystem)) {
+            try {
+                Class<Storage> s3Conf = (Class<Storage>) Class.forName(S3_CONF_CLS);
+                Storage newInstance = s3Conf.newInstance();
+                instance.storage = newInstance;
+            } catch (Exception e) {
+                LOG.error(String.format("Can not load s3 file system with class %s", S3_CONF_CLS), e);
+                System.exit(-1);
+            }
+        } else {
+            throw new MyCollabException(String.format("Can not load storage  %s", storageSystem));
+        }
+    }
 
-	public static String getAvatarLink(String userAvatarId, int size) {
-		if (StringUtils.isBlank(userAvatarId)) {
-			return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
-		} else {
-			return instance.storageConf.getAvatarPath(userAvatarId, size);
-		}
-	}
+    public static String getAvatarLink(String userAvatarId, int size) {
+        if (StringUtils.isBlank(userAvatarId)) {
+            return MyCollabAssets.newResourceLink(String.format("icons/default_user_avatar_%d.png", size));
+        } else {
+            return instance.storage.getAvatarPath(userAvatarId, size);
+        }
+    }
 
-	public static StorageConfiguration getConfiguration() {
-		return instance.storageConf;
-	}
+    public static Storage getConfiguration() {
+        return instance.storage;
+    }
 
-	public static boolean isFileStorage() {
-		return StorageConfiguration.FILE_STORAGE_SYSTEM.equals(instance.storageSystem);
-	}
+    public static boolean isFileStorage() {
+        return Storage.FILE_STORAGE_SYSTEM.equals(instance.storageSystem);
+    }
 
-	public static boolean isS3Storage() {
-		return StorageConfiguration.S3_STORAGE_SYSTEM.equals(instance.storageSystem);
-	}
+    public static boolean isS3Storage() {
+        return Storage.S3_STORAGE_SYSTEM.equals(instance.storageSystem);
+    }
 }

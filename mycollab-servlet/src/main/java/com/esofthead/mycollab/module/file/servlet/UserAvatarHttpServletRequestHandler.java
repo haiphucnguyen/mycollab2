@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.file.servlet;
 
-import com.esofthead.mycollab.configuration.FileStorageConfiguration;
+import com.esofthead.mycollab.configuration.FileStorage;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
@@ -30,45 +30,42 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @WebServlet(urlPatterns = "/avatar/*", name = "userAvatarFSServlet")
 public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
-	private static final Logger LOG = LoggerFactory.getLogger(UserAvatarHttpServletRequestHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserAvatarHttpServletRequestHandler.class);
 
-	@Override
-	protected void onHandleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		if (!StorageManager.isFileStorage()) {
-			throw new MyCollabException(
-					"This servlet support file system setting only");
-		}
+    @Override
+    protected void onHandleRequest(HttpServletRequest request,
+                                   HttpServletResponse response) throws ServletException, IOException {
+        if (!StorageManager.isFileStorage()) {
+            throw new MyCollabException("This servlet support file system setting only");
+        }
 
-		String path = request.getPathInfo();
-		String username;
-		int size;
+        String path = request.getPathInfo();
+        String username;
+        int size;
 
-		if (path != null) {
-			String[] params = path.split("/");
-			if (params.length >= 3) {
-				username = params[1];
-				size = Integer.parseInt(params[2]);
+        if (path != null) {
+            String[] params = path.split("/");
+            if (params.length >= 3) {
+                username = params[1];
+                size = Integer.parseInt(params[2]);
 
-				if (size <= 0) {
-					LOG.error("Error to get avatar", new MyCollabException(
+                if (size <= 0) {
+                    LOG.error("Error to get avatar", new MyCollabException(
                             String.format("Invalid request for avatar %s", path)));
-					return;
-				}
-			} else {
-				LOG.error("Error to get avatar", new MyCollabException(
+                    return;
+                }
+            } else {
+                LOG.error("Error to get avatar", new MyCollabException(
                         String.format("Invalid request for avatar %s", path)));
-				return;
-			}
+                return;
+            }
 
-            FileStorageConfiguration fileConfiguration = (FileStorageConfiguration) StorageManager
+            FileStorage fileConfiguration = (FileStorage) StorageManager
                     .getConfiguration();
             File avatarFile = fileConfiguration.getAvatarFile(username, size);
             InputStream avatarInputStream;
@@ -96,6 +93,6 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
                     output.write(buffer, 0, length);
                 }
             }
-		}
-	}
+        }
+    }
 }

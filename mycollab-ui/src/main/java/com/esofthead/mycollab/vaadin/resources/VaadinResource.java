@@ -16,31 +16,31 @@
  */
 package com.esofthead.mycollab.vaadin.resources;
 
-import com.esofthead.mycollab.configuration.StorageConfiguration;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.5.1
- *
  */
 public abstract class VaadinResource {
 
-	public abstract Resource getStreamResource(String documentPath);
+    public abstract Resource getStreamResource(String documentPath);
 
-	public Resource getImagePreviewResource(String documentPath) {
-		StorageConfiguration storageConfiguration = StorageManager.getConfiguration();
-		return new ExternalResource(storageConfiguration.getResourcePath(documentPath));
-	}
+    public Resource getImagePreviewResource(String documentPath) {
+        Storage storage = StorageManager.getConfiguration();
+        return new ExternalResource(storage.getResourcePath(documentPath));
+    }
 
-	public Resource getLogoResource(String logoId, int size) {
-		return new ExternalResource(StorageManager.getConfiguration().getLogoPath(logoId, size));
-	}
+    public Resource getLogoResource(String logoId, int size) {
+        return new ExternalResource(StorageManager.getConfiguration().getLogoPath(logoId, size));
+    }
 
-	public Resource getAvatarResource(String avatarId, int size) {
-		return new ExternalResource(StorageManager.getConfiguration().getAvatarPath(avatarId, size));
-	}
+    public Resource getAvatarResource(String avatarId, int size) {
+        return new ExternalResource(StorageManager.getConfiguration().getAvatarPath(avatarId, size));
+    }
+
+
 }

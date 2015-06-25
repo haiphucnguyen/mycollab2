@@ -31,7 +31,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.RawContentService;
-import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
+import com.esofthead.mycollab.ondemand.configuration.S3Storage;
 
 /**
  * 
@@ -41,10 +41,10 @@ import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
  */
 public class S3RawContentServiceImpl implements RawContentService {
 
-	private S3StorageConfiguration storageConfiguration;
+	private S3Storage storageConfiguration;
 
 	public S3RawContentServiceImpl() {
-		storageConfiguration = (S3StorageConfiguration) StorageManager
+		storageConfiguration = (S3Storage) StorageManager
 				.getConfiguration();
 	}
 

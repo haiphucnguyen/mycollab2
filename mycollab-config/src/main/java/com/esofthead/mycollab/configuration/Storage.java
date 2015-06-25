@@ -33,7 +33,7 @@ import org.apache.commons.lang3.StringUtils;
  * @since 1.0
  * 
  */
-public abstract class StorageConfiguration {
+public abstract class Storage {
 	public static final String FILE_STORAGE_SYSTEM = "file";
 
     public static final String S3_STORAGE_SYSTEM = "s3";

@@ -61,7 +61,7 @@ public class LogoChangeViewImpl extends AbstractPageView implements LogoChangeVi
         previewLayout.setHeight("40px");
         previewLayout.setWidth("520px");
 
-        Button currentLogo = AccountLogoFactory.createAccountLogoImageComponent(
+        Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(
                 null, 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();

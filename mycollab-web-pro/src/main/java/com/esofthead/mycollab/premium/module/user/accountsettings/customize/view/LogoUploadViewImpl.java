@@ -27,9 +27,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AccountLogoFactory;
+import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
-import com.esofthead.mycollab.vaadin.ui.ThemeManager;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.vaadin.cropField.CropField;
 import com.esofthead.vaadin.cropField.client.VCropSelection;
@@ -85,7 +84,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
                 .withWidth("100%");
 
         final String logoId = AppContext.getBillingAccount().getLogopath();
-        Resource defaultPhoto = AccountLogoFactory.createLogoResource(logoId, 150);
+        Resource defaultPhoto = AccountAssetsResolver.createLogoResource(logoId, 150);
         previewImage = new Embedded(null, defaultPhoto);
         previewImage.setWidth("100px");
         previewBox.addComponent(previewImage);
@@ -151,8 +150,7 @@ public class LogoUploadViewImpl extends AbstractPageView implements LogoUploadVi
 
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                VCropSelection newSelection = (VCropSelection) event
-                        .getProperty().getValue();
+                VCropSelection newSelection = (VCropSelection) event.getProperty().getValue();
                 int x1 = newSelection.getXTopLeft();
                 int y1 = newSelection.getYTopLeft();
                 int x2 = newSelection.getXBottomRight();

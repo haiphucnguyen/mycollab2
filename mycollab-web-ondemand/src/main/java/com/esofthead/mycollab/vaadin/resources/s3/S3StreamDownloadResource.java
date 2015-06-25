@@ -24,7 +24,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.ondemand.configuration.S3StorageConfiguration;
+import com.esofthead.mycollab.ondemand.configuration.S3Storage;
 import com.vaadin.server.DownloadStream;
 import com.vaadin.server.StreamResource;
 import com.vaadin.util.FileTypeResolver;
@@ -78,7 +78,7 @@ public class S3StreamDownloadResource extends StreamResource {
 		@Override
 		public InputStream getStream() {
 			String fileName = getFilename(documentPath);
-			S3StorageConfiguration storageConfiguration = (S3StorageConfiguration) StorageManager
+			S3Storage storageConfiguration = (S3Storage) StorageManager
 					.getConfiguration();
 			fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
 			AmazonS3 s3Client = storageConfiguration.newS3Client();

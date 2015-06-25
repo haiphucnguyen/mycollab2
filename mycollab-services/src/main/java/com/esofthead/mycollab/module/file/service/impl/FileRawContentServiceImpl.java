@@ -27,7 +27,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.esofthead.mycollab.configuration.FileStorageConfiguration;
+import com.esofthead.mycollab.configuration.FileStorage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
@@ -47,7 +47,7 @@ public class FileRawContentServiceImpl implements RawContentService {
     private File baseFolder;
 
     public FileRawContentServiceImpl() {
-        baseFolder = FileStorageConfiguration.baseContentFolder;
+        baseFolder = FileStorage.baseContentFolder;
     }
 
     @Override
