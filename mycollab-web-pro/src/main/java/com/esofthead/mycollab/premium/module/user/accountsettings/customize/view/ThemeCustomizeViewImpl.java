@@ -17,12 +17,9 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
-import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingScreenDaa;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
@@ -38,8 +35,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
-import org.vaadin.easyuploads.UploadField;
-import org.vaadin.easyuploads.UploadField.FieldType;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import java.util.Iterator;
@@ -59,24 +54,22 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
     public ThemeCustomizeViewImpl() {
         super();
-
-        mainLayout = initUI();
-        this.addComponent(mainLayout);
+        this.setMargin(new MarginInfo(false, true, true, true));
     }
 
-    protected AddViewLayout2 initUI() {
-        this.setMargin(new MarginInfo(false, true, true, true));
-
+    private AddViewLayout2 initUI() {
         AddViewLayout2 mainLayout = new AddViewLayout2("Theme Customization",
                 SettingAssetsManager.getAsset(SettingUIConstants.SETTING));
         mainLayout.setWidth("100%");
         mainLayout.addStyleName("theme-customize-view");
-
         return mainLayout;
     }
 
     @Override
     public void customizeTheme(AccountTheme theme) {
+        this.removeAllComponents();
+        mainLayout = initUI();
+        this.addComponent(mainLayout);
         accountTheme = theme;
         ThemeManager.loadDemoTheme(accountTheme);
         mainLayout.getBody().removeAllComponents();
@@ -90,7 +83,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         mainBody.addComponent(constructVTabsheetCustomizeBlock());
         mainBody.addComponent(constructButtonCustomizeBlock());
 
-        MHorizontalLayout controlButton = new MHorizontalLayout().withMargin(true);
+        MHorizontalLayout controlButton = new MHorizontalLayout();
 
         Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                 new Button.ClickListener() {
@@ -122,9 +115,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         controlButton.addComponent(resetToDefaultBtn);
         controlButton.setExpandRatio(resetToDefaultBtn, 1.0f);
 
-        mainBody.addComponent(controlButton);
-
         mainLayout.addBody(mainBody);
+        mainLayout.addControlButtons(controlButton);
     }
 
     private Component constructTopMenuCustomizeBlock() {
