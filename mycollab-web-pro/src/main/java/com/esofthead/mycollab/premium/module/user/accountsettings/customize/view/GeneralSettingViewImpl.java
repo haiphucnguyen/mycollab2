@@ -60,7 +60,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
+                UI.getCurrent().addWindow(new AccountInfoChangeWindow());
             }
         });
         editBtn.setStyleName("link");
@@ -72,6 +72,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Label divLabel1 = new Label(new Div().setStyle(separatorStyle).write(), ContentMode.HTML);
 
         GridFormLayoutHelper gridFormLayoutHelper = new GridFormLayoutHelper(1, 3, "160px", "100%");
+        gridFormLayoutHelper.getLayout().setSpacing(true);
         gridFormLayoutHelper.addComponent(new Label(billingAccount.getSitename()), "Site Name", 0, 0);
         gridFormLayoutHelper.addComponent(new Label(billingAccount.getSubdomain()), "Site Address", 0, 1);
         gridFormLayoutHelper.addComponent(new Label(billingAccount.getDefaulttimezone()), "Default Time Zone", 0, 2);
