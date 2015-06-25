@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin.resources;
 
 import com.esofthead.mycollab.configuration.Storage;
-import com.esofthead.mycollab.configuration.StorageManager;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.vaadin.resources.file.VaadinFileResource;
 import com.vaadin.server.ExternalResource;
@@ -33,9 +32,9 @@ public abstract class VaadinResource {
     private static VaadinResource instance;
 
     static {
-        if (StorageManager.isFileStorage()) {
+        if (Storage.isFileStorage()) {
             instance = new VaadinFileResource();
-        } else if (StorageManager.isS3Storage()) {
+        } else if (Storage.isS3Storage()) {
             try {
                 Class<VaadinResource> cls = (Class<VaadinResource>) Class.forName(S3_CLS);
                 instance = cls.newInstance();
@@ -54,15 +53,15 @@ public abstract class VaadinResource {
     public abstract Resource getStreamResource(String documentPath);
 
     public Resource getImagePreviewResource(String documentPath) {
-        Storage storage = StorageManager.getStorage();
+        Storage storage = Storage.getInstance();
         return new ExternalResource(storage.getResourcePath(documentPath));
     }
 
     public Resource getLogoResource(String logoId, int size) {
-        return new ExternalResource(StorageManager.getStorage().getLogoPath(logoId, size));
+        return new ExternalResource(Storage.getInstance().getLogoPath(logoId, size));
     }
 
     public Resource getAvatarResource(String avatarId, int size) {
-        return new ExternalResource(StorageManager.getStorage().getAvatarPath(avatarId, size));
+        return new ExternalResource(Storage.getInstance().getAvatarPath(avatarId, size));
     }
 }

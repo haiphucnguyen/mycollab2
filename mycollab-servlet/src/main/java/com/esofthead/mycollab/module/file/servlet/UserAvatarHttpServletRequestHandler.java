@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.file.servlet;
 
 import com.esofthead.mycollab.configuration.FileStorage;
-import com.esofthead.mycollab.configuration.StorageManager;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
     @Override
     protected void onHandleRequest(HttpServletRequest request,
                                    HttpServletResponse response) throws ServletException, IOException {
-        if (!StorageManager.isFileStorage()) {
+        if (!Storage.isFileStorage()) {
             throw new MyCollabException("This servlet support file system setting only");
         }
 
@@ -65,9 +65,8 @@ public class UserAvatarHttpServletRequestHandler extends GenericHttpServlet {
                 return;
             }
 
-            FileStorage fileConfiguration = (FileStorage) StorageManager
-                    .getStorage();
-            File avatarFile = fileConfiguration.getAvatarFile(username, size);
+            FileStorage fileStorage = (FileStorage) Storage.getInstance();
+            File avatarFile = fileStorage.getAvatarFile(username, size);
             InputStream avatarInputStream;
             if (avatarFile != null) {
                 avatarInputStream = new FileInputStream(avatarFile);

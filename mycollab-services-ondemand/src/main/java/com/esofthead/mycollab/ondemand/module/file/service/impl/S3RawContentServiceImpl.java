@@ -16,147 +16,136 @@
  */
 package com.esofthead.mycollab.ondemand.module.file.service.impl;
 
-import java.io.InputStream;
-
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.CopyObjectRequest;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.esofthead.mycollab.configuration.StorageManager;
+import com.amazonaws.services.s3.model.*;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.ondemand.configuration.S3Storage;
 
+import java.io.InputStream;
+
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public class S3RawContentServiceImpl implements RawContentService {
 
-	private S3Storage storageConfiguration;
+    private S3Storage storageConfiguration;
 
-	public S3RawContentServiceImpl() {
-		storageConfiguration = (S3Storage) StorageManager
-				.getStorage();
-	}
+    public S3RawContentServiceImpl() {
+        storageConfiguration = (S3Storage) Storage.getInstance();
+    }
 
-	@Override
-	public void saveContent(String objectPath, InputStream stream) {
+    @Override
+    public void saveContent(String objectPath, InputStream stream) {
 
-		AmazonS3 s3client = storageConfiguration.newS3Client();
-		try {
-			ObjectMetadata metaData = new ObjectMetadata();
-			metaData.setCacheControl("max-age=8640000");
-			metaData.setContentLength(stream.available());
-			PutObjectRequest request = new PutObjectRequest(
-					storageConfiguration.getBucket(), objectPath, stream,
-					metaData);
+        AmazonS3 s3client = storageConfiguration.newS3Client();
+        try {
+            ObjectMetadata metaData = new ObjectMetadata();
+            metaData.setCacheControl("max-age=8640000");
+            metaData.setContentLength(stream.available());
+            PutObjectRequest request = new PutObjectRequest(
+                    storageConfiguration.getBucket(), objectPath, stream,
+                    metaData);
 
-			s3client.putObject(request
-					.withCannedAcl(CannedAccessControlList.PublicRead));
-		} catch (Exception e) {
-			throw new RuntimeException("Can not save s3 object path "
-					+ objectPath, e);
-		}
-	}
+            s3client.putObject(request
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        } catch (Exception e) {
+            throw new RuntimeException("Can not save s3 object path "
+                    + objectPath, e);
+        }
+    }
 
-	@Override
-	public InputStream getContentStream(String objectPath) {
-		AmazonS3 s3client = storageConfiguration.newS3Client();
+    @Override
+    public InputStream getContentStream(String objectPath) {
+        AmazonS3 s3client = storageConfiguration.newS3Client();
 
-		try {
-			S3Object obj = s3client.getObject(new GetObjectRequest(
-					storageConfiguration.getBucket(), objectPath));
+        try {
+            S3Object obj = s3client.getObject(new GetObjectRequest(
+                    storageConfiguration.getBucket(), objectPath));
 
-			return obj.getObjectContent();
-		} catch (Exception e) {
-			throw new MyCollabException(
-					"Can not get s3 resource " + objectPath, e);
-		}
-	}
+            return obj.getObjectContent();
+        } catch (Exception e) {
+            throw new MyCollabException(
+                    "Can not get s3 resource " + objectPath, e);
+        }
+    }
 
-	@Override
-	public void removePath(String objectPath) {
-		AmazonS3 s3client = storageConfiguration.newS3Client();
+    @Override
+    public void removePath(String objectPath) {
+        AmazonS3 s3client = storageConfiguration.newS3Client();
 
-		try {
-			ObjectListing listObjects = s3client.listObjects(
-					storageConfiguration.getBucket(), objectPath);
-			for (S3ObjectSummary objectSummary : listObjects
-					.getObjectSummaries()) {
-				s3client.deleteObject(storageConfiguration.getBucket(),
-						objectSummary.getKey());
-			}
+        try {
+            ObjectListing listObjects = s3client.listObjects(
+                    storageConfiguration.getBucket(), objectPath);
+            for (S3ObjectSummary objectSummary : listObjects
+                    .getObjectSummaries()) {
+                s3client.deleteObject(storageConfiguration.getBucket(),
+                        objectSummary.getKey());
+            }
 
-		} catch (Exception e) {
-			throw new MyCollabException("Can not remove object path "
-					+ objectPath, e);
-		}
-	}
+        } catch (Exception e) {
+            throw new MyCollabException("Can not remove object path "
+                    + objectPath, e);
+        }
+    }
 
-	@Override
-	public void renamePath(String oldPath, String newPath) {
-		AmazonS3 s3client = storageConfiguration.newS3Client();
+    @Override
+    public void renamePath(String oldPath, String newPath) {
+        AmazonS3 s3client = storageConfiguration.newS3Client();
 
-		try {
-			ObjectListing listObjects = s3client.listObjects(
-					storageConfiguration.getBucket(), oldPath);
-			for (S3ObjectSummary objectSummary : listObjects
-					.getObjectSummaries()) {
-				String key = objectSummary.getKey();
-				String appendPath = key.substring(oldPath.length());
-				String newAppPath = newPath + appendPath;
+        try {
+            ObjectListing listObjects = s3client.listObjects(
+                    storageConfiguration.getBucket(), oldPath);
+            for (S3ObjectSummary objectSummary : listObjects
+                    .getObjectSummaries()) {
+                String key = objectSummary.getKey();
+                String appendPath = key.substring(oldPath.length());
+                String newAppPath = newPath + appendPath;
 
-				CopyObjectRequest copyRequest = new CopyObjectRequest(
-						storageConfiguration.getBucket(), key,
-						storageConfiguration.getBucket(), newAppPath);
-				copyRequest
-						.withCannedAccessControlList(CannedAccessControlList.PublicRead);
-				s3client.copyObject(copyRequest);
+                CopyObjectRequest copyRequest = new CopyObjectRequest(
+                        storageConfiguration.getBucket(), key,
+                        storageConfiguration.getBucket(), newAppPath);
+                copyRequest
+                        .withCannedAccessControlList(CannedAccessControlList.PublicRead);
+                s3client.copyObject(copyRequest);
 
-				DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
-						storageConfiguration.getBucket(), key);
-				s3client.deleteObject(deleteRequest);
-			}
+                DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
+                        storageConfiguration.getBucket(), key);
+                s3client.deleteObject(deleteRequest);
+            }
 
-		} catch (Exception e) {
-			throw new MyCollabException("Can not remane from path " + oldPath
-					+ " to " + newPath, e);
-		}
+        } catch (Exception e) {
+            throw new MyCollabException("Can not remane from path " + oldPath
+                    + " to " + newPath, e);
+        }
 
-	}
+    }
 
-	@Override
-	public void movePath(String oldPath, String destinationPath) {
-		removePath(destinationPath);
-		renamePath(oldPath, destinationPath);
-	}
+    @Override
+    public void movePath(String oldPath, String destinationPath) {
+        removePath(destinationPath);
+        renamePath(oldPath, destinationPath);
+    }
 
-	@Override
-	public long getSize(String path) {
-		AmazonS3 s3client = storageConfiguration.newS3Client();
+    @Override
+    public long getSize(String path) {
+        AmazonS3 s3client = storageConfiguration.newS3Client();
 
-		try {
-			ObjectListing listObjects = s3client.listObjects(
-					storageConfiguration.getBucket(), path);
-			long size = 0;
-			for (S3ObjectSummary objectSummary : listObjects
-					.getObjectSummaries()) {
-				size += objectSummary.getSize();
-			}
+        try {
+            ObjectListing listObjects = s3client.listObjects(
+                    storageConfiguration.getBucket(), path);
+            long size = 0;
+            for (S3ObjectSummary objectSummary : listObjects
+                    .getObjectSummaries()) {
+                size += objectSummary.getSize();
+            }
 
-			return size;
+            return size;
 
-		} catch (Exception e) {
-			throw new MyCollabException("Can not get size of path " + path, e);
-		}
-	}
+        } catch (Exception e) {
+            throw new MyCollabException("Can not get size of path " + path, e);
+        }
+    }
 }

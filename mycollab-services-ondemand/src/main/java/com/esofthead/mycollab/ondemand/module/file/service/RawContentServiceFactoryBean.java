@@ -20,7 +20,7 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.cache.IgnoreCacheClass;
-import com.esofthead.mycollab.configuration.StorageManager;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl;
@@ -42,7 +42,7 @@ public class RawContentServiceFactoryBean extends
 	@Override
 	protected RawContentService createInstance() throws Exception {
 		try {
-			if (StorageManager.isS3Storage()) {
+			if (Storage.isS3Storage()) {
 				return new S3RawContentServiceImpl();
 			} else {
 				return new FileRawContentServiceImpl();

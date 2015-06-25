@@ -16,7 +16,10 @@
  */
 package com.esofthead.mycollab.configuration;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * File configuration for storage file in MyCollab. We support two kinds of file
@@ -32,9 +35,37 @@ import org.apache.commons.lang3.StringUtils;
  * @since 1.0
  */
 public abstract class Storage {
+    private static Logger LOG = LoggerFactory.getLogger(Storage.class);
+    private static final String S3_CONF_CLS = "com.esofthead.mycollab.ondemand.configuration.S3Storage";
+
     public static final String FILE_STORAGE_SYSTEM = "file";
 
     public static final String S3_STORAGE_SYSTEM = "s3";
+
+    private static Storage instance;
+
+    static {
+        // Load storage configuration
+        String storageSystem = ApplicationProperties.getString(ApplicationProperties.STORAGE_SYSTEM,
+                Storage.FILE_STORAGE_SYSTEM);
+        if (Storage.FILE_STORAGE_SYSTEM.equals(storageSystem)) {
+            instance = new FileStorage();
+        } else if (Storage.S3_STORAGE_SYSTEM.equals(storageSystem)) {
+            try {
+                Class<Storage> s3Conf = (Class<Storage>) Class.forName(S3_CONF_CLS);
+                instance = s3Conf.newInstance();
+            } catch (Exception e) {
+                LOG.error(String.format("Can not load s3 file system with class %s", S3_CONF_CLS), e);
+                System.exit(-1);
+            }
+        } else {
+            throw new MyCollabException(String.format("Can not load storage  %s", storageSystem));
+        }
+    }
+
+    public static Storage getInstance() {
+        return instance;
+    }
 
     public String getAvatarPath(String userAvatarId, int size) {
         if (StringUtils.isBlank(userAvatarId)) {
@@ -53,5 +84,21 @@ public abstract class Storage {
             return MyCollabAssets.newAssetLink("icons/logo.png");
         }
         return String.format("%slogo/%s_%d.png", SiteConfiguration.getResourceDownloadUrl(), accountLogoId, size);
+    }
+
+    public static String getAvatarLink(String userAvatarId, int size) {
+        if (StringUtils.isBlank(userAvatarId)) {
+            return MyCollabAssets.newAssetLink(String.format("icons/default_user_avatar_%d.png", size));
+        } else {
+            return instance.getAvatarPath(userAvatarId, size);
+        }
+    }
+
+    public static boolean isFileStorage() {
+        return (instance instanceof FileStorage);
+    }
+
+    public static boolean isS3Storage() {
+        return !isFileStorage();
     }
 }
