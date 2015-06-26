@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule
 import com.esofthead.mycollab.module.user.domain.criteria.{RoleSearchCriteria, UserSearchCriteria}
 import com.esofthead.mycollab.module.user.domain.{Role, SimpleUser}
 import com.esofthead.mycollab.module.user.events.{RoleEvent, UserEvent}
-import com.esofthead.mycollab.module.user.accountsettings.view.events.{AccountBillingEvent, AccountCustomizeEvent, ProfileEvent, SetupEvent}
+import com.esofthead.mycollab.module.user.accountsettings.view.events.{AccountBillingEvent, SettingEvent, ProfileEvent, SetupEvent}
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.{BillingScreenData, ProfileScreenData, RoleScreenData, UserScreenData}
 import com.esofthead.mycollab.vaadin.AppContext
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PresenterResolver}
@@ -143,8 +143,8 @@ class UserAccountController(container: AccountModule) extends AbstractController
     }
 
     private def bindCustomizeEvents(): Unit = {
-        this.register(new ApplicationEventListener[AccountCustomizeEvent.GotoMainPage]() {
-            @Subscribe def handle(event: AccountCustomizeEvent.GotoMainPage) {
+        this.register(new ApplicationEventListener[SettingEvent.GeneralSetting]() {
+            @Subscribe def handle(event: SettingEvent.GeneralSetting) {
                 val presenter = PresenterResolver.getPresenter(classOf[ICustomizePresenter])
                 presenter.go(container, null)
             }

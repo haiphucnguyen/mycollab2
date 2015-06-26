@@ -22,9 +22,11 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
  * @author MyCollab Ltd.
  * @since 5.0.5
  */
-object AccountCustomizeEvent {
+object SettingEvent {
     
-    class GotoMainPage(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GeneralSetting(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
+    class MakeTheme(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
     
     class SaveTheme(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
     

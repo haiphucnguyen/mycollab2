@@ -20,12 +20,10 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.premium.module.user.accountsettings.view.parameters.SettingExtScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -45,18 +43,17 @@ public class SettingPresenter extends AbstractPresenter<ISettingContainer> imple
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
 
-        accountContainer.gotoSubView(SettingUIConstants.SETTING);
+        accountContainer.gotoSubView(SettingUIConstants.GENERAL_SETTING);
 
         AbstractPresenter<?> presenter;
         if (data instanceof SettingExtScreenData.GeneralSetting || data == null) {
             presenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
-        } else if (data instanceof SettingExtScreenData.Customize) {
+        } else if (data instanceof SettingExtScreenData.ThemeCustomize) {
             presenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data " + data);
         }
-        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
-        breadcrumb.gotoSettingPage();
+
         presenter.go(view.getWidget(), data);
     }
 

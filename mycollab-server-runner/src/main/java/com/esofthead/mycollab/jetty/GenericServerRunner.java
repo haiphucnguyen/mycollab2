@@ -40,8 +40,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
 /**
@@ -109,7 +111,7 @@ public abstract class GenericServerRunner {
         }
 
         System.setProperty(ApplicationProperties.MYCOLLAB_PORT, port + "");
-        LogConfig.initLog();
+        LogConfig.initMyCollabLog();
         execute();
     }
 
@@ -117,9 +119,12 @@ public abstract class GenericServerRunner {
         server = new Server(port);
         contexts = new ContextHandlerCollection();
 
+        boolean alreadySetup = false;
+
         if (!checkConfigFileExist()) {
             System.err
-                    .println("It seems this is the first time you run MyCollab. For complete installation, you must open the browser and type address http://localhost:"
+                    .println("It seems this is the first time you run MyCollab. For complete installation, you must " +
+                            "open the browser and type address http://<your server name>:"
                             + port
                             + " and complete the steps to install MyCollab.");
             installationContextHandler = new ServletContextHandler(
@@ -142,6 +147,7 @@ public abstract class GenericServerRunner {
             server.setStopAtShutdown(true);
             contexts.setHandlers(new Handler[]{installationContextHandler});
         } else {
+            alreadySetup = true;
             WebAppContext appContext = initWebAppContext();
             ServletContextHandler upgradeContextHandler = new ServletContextHandler(
                     ServletContextHandler.SESSIONS);
@@ -155,6 +161,10 @@ public abstract class GenericServerRunner {
         server.setHandler(contexts);
         server.start();
 
+        if (!alreadySetup) {
+            openDefaultWebBrowserForInstallation();
+        }
+
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
@@ -163,6 +173,17 @@ public abstract class GenericServerRunner {
         });
 
         server.join();
+    }
+
+    private void openDefaultWebBrowserForInstallation() {
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(new URI("http://localhost:" + port));
+            } catch (Exception e) {
+                //do nothing, while user can install MyCollab on the remote server
+            }
+        }
     }
 
     void upgrade(File upgradeFile) {
@@ -198,6 +219,7 @@ public abstract class GenericServerRunner {
     }
 
     private WebAppContext initWebAppContext() {
+        SiteConfiguration.loadConfiguration();
         String webAppDirLocation = detectWebApp();
         LOG.debug("Detect web location: {}", webAppDirLocation);
         appContext = buildContext(webAppDirLocation);

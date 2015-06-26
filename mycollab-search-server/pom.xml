@@ -6,16 +6,16 @@
     <artifactId>mycollab-search-server</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>mycollab-parent-community</artifactId>
+        <artifactId>mycollab-parent-premium</artifactId>
         <version>5.0.10</version>
-        <relativePath>../mycollab-parent-community/pom.xml</relativePath>
+        <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-search</artifactId>
-            <version>5.0.9</version>
+            <version>5.0.10</version>
         </dependency>
 
         <dependency>

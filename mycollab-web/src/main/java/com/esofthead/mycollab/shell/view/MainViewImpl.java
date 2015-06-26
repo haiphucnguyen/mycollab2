@@ -453,6 +453,29 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         userMgtBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
         accLayout.addOption(userMgtBtn);
 
+        Button generalSettingBtn = new Button("General", new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                accountMenu.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
+                        new String[]{"setting"}));
+            }
+        });
+        generalSettingBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
+        accLayout.addOption(generalSettingBtn);
+
+        Button themeCustomizeBtn = new Button("Make Theme", new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                accountMenu.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
+                        new String[]{"setting", "theme"}));
+            }
+        });
+        themeCustomizeBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.THEME_CUSTOMIZE));
+        accLayout.addOption(themeCustomizeBtn);
+
+
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
             Button setupBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_SETUP), new ClickListener() {
                 @Override

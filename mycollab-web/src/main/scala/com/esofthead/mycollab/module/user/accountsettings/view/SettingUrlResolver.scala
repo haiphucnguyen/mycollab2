@@ -16,10 +16,28 @@
  */
 package com.esofthead.mycollab.premium.module.user.accountsettings.view
 
+import com.esofthead.mycollab.eventmanager.EventBusFactory
+import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent
+import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent.MakeTheme
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.0
  */
 class SettingUrlResolver extends AccountUrlResolver {
-    
+    this.addSubResolver("general", new GeneralUrlResolver)
+    this.addSubResolver("theme", new ThemeUrlResolver)
+
+    private class GeneralUrlResolver extends AccountUrlResolver {
+        protected override def handlePage(params: String*) {
+            EventBusFactory.getInstance.post(new SettingEvent.GeneralSetting(this, null))
+        }
+    }
+
+    private class ThemeUrlResolver extends AccountUrlResolver {
+        protected override def handlePage(params: String*) {
+            EventBusFactory.getInstance.post(new MakeTheme(SettingUrlResolver.this, null))
+        }
+    }
+
 }

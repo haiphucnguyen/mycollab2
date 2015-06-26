@@ -19,7 +19,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.view
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.DeploymentMode
 import com.esofthead.mycollab.eventmanager.EventBusFactory
-import com.esofthead.mycollab.module.user.accountsettings.view.events.{AccountBillingEvent, AccountCustomizeEvent, ProfileEvent, SetupEvent}
+import com.esofthead.mycollab.module.user.accountsettings.view.events.{AccountBillingEvent, SettingEvent, ProfileEvent, SetupEvent}
 import com.esofthead.mycollab.shell.events.ShellEvent
 import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver
@@ -63,12 +63,6 @@ class AccountUrlResolver extends UrlResolver {
     private class BillingUrlResolver extends AccountUrlResolver {
         protected override def handlePage(params: String*) {
             EventBusFactory.getInstance.post(new AccountBillingEvent.GotoSummary(this, null))
-        }
-    }
-
-    private class SettingUrlResolver extends AccountUrlResolver {
-        protected override def handlePage(params: String*) {
-            EventBusFactory.getInstance.post(new AccountCustomizeEvent.GotoMainPage(this, null))
         }
     }
 

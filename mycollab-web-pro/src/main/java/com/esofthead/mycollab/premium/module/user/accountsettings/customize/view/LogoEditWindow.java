@@ -22,7 +22,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.service.AccountLogoService;
-import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -111,7 +111,7 @@ public class LogoEditWindow extends Window {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBusFactory.getInstance().post(
-                        new AccountCustomizeEvent.GotoMainPage(LogoEditWindow.this, null));
+                        new SettingEvent.GeneralSetting(LogoEditWindow.this, null));
             }
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);

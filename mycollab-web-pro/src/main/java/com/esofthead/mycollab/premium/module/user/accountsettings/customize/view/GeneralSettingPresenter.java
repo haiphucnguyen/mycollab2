@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -18,5 +20,7 @@ public class GeneralSettingPresenter extends AbstractPresenter<GeneralSettingVie
         SettingContainer customizeContainer = (SettingContainer) container;
         customizeContainer.gotoSubView("General Settings");
         view.displayView();
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        breadcrumb.gotoGeneralSetting();
     }
 }

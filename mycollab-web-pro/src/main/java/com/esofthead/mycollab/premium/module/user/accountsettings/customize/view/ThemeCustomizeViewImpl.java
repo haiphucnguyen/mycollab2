@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.customize.vie
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.user.accountsettings.localization.SettingCommonI18nEnum;
-import com.esofthead.mycollab.module.user.accountsettings.view.events.AccountCustomizeEvent;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
@@ -44,7 +44,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
 
     private AddViewLayout2 initUI() {
         AddViewLayout2 mainLayout = new AddViewLayout2("Theme Customization",
-                SettingAssetsManager.getAsset(SettingUIConstants.SETTING));
+                SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
         mainLayout.setWidth("100%");
         mainLayout.addStyleName("theme-customize-view");
         return mainLayout;
@@ -77,7 +77,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                     @Override
                     public void buttonClick(ClickEvent event) {
                         EventBusFactory.getInstance().post(
-                                new AccountCustomizeEvent.SaveTheme(this, accountTheme));
+                                new SettingEvent.SaveTheme(this, accountTheme));
                     }
                 });
         saveBtn.setIcon(FontAwesome.SAVE);
@@ -92,7 +92,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                     @Override
                     public void buttonClick(ClickEvent event) {
                         EventBusFactory.getInstance().post(
-                                new AccountCustomizeEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
+                                new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
                     }
                 });
         resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);

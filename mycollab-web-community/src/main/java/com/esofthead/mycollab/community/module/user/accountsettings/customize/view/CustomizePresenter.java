@@ -42,6 +42,6 @@ public class CustomizePresenter extends AbstractPresenter<ISettingContainer>
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AccountModule accountContainer = (AccountModule) container;
 
-		accountContainer.gotoSubView(SettingUIConstants.SETTING);
+		accountContainer.gotoSubView(SettingUIConstants.GENERAL_SETTING);
 	}
 }
