@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.jetty;
 
+import ch.qos.logback.classic.Level;
 import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.DatabaseConfiguration;
 import com.esofthead.mycollab.configuration.LogConfig;
@@ -89,6 +90,8 @@ public abstract class GenericServerRunner {
      * @throws Exception
      */
     void run(String[] args) throws Exception {
+        ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        root.setLevel(Level.INFO);
         ServerInstance.getInstance().registerInstance(this);
         System.setProperty("org.eclipse.jetty.annotations.maxWait", "180");
 
@@ -111,7 +114,6 @@ public abstract class GenericServerRunner {
         }
 
         System.setProperty(ApplicationProperties.MYCOLLAB_PORT, port + "");
-        LogConfig.initMyCollabLog();
         execute();
     }
 
@@ -207,7 +209,7 @@ public abstract class GenericServerRunner {
         dsProperties.setProperty("prepStmtCacheSize", "250");
         dsProperties.setProperty("prepStmtCacheSqlLimit", "2048");
         dsProperties.setProperty("useServerPrepStmts", "true");
-        dsProperties.setProperty("maximumPoolSize", "50");
+        dsProperties.setProperty("maximumPoolSize", "20");
         dataSource.setDataSourceProperties(dsProperties);
         return dataSource;
     }
@@ -220,6 +222,7 @@ public abstract class GenericServerRunner {
 
     private WebAppContext initWebAppContext() {
         SiteConfiguration.loadConfiguration();
+        LogConfig.initMyCollabLog();
         String webAppDirLocation = detectWebApp();
         LOG.debug("Detect web location: {}", webAppDirLocation);
         appContext = buildContext(webAppDirLocation);
