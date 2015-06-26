@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.premium.module.user.accountsettings.view.parameters
+package com.esofthead.mycollab.module.user.accountsettings.view.parameters
 
 import com.esofthead.mycollab.vaadin.mvp.ScreenData
 

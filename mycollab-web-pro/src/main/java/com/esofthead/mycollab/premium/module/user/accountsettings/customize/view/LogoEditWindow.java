@@ -111,7 +111,7 @@ public class LogoEditWindow extends Window {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBusFactory.getInstance().post(
-                        new SettingEvent.GeneralSetting(LogoEditWindow.this, null));
+                        new SettingEvent.GotoGeneralSetting(LogoEditWindow.this, null));
             }
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);

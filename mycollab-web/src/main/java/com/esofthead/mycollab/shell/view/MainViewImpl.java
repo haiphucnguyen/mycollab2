@@ -458,7 +458,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             public void buttonClick(ClickEvent clickEvent) {
                 accountMenu.setPopupVisible(false);
                 EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this,
-                        new String[]{"setting"}));
+                        new String[]{"setting", "general"}));
             }
         });
         generalSettingBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));

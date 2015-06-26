@@ -24,9 +24,9 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
  */
 object SettingEvent {
     
-    class GeneralSetting(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoGeneralSetting(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-    class MakeTheme(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoTheme(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
     
     class SaveTheme(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
     

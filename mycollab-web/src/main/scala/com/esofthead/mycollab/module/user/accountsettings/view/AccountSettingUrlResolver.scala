@@ -28,7 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.UrlResolver
  * @author MyCollab Ltd
  * @since 5.0.9
  */
-class AccountUrlResolver extends UrlResolver {
+class AccountSettingUrlResolver extends UrlResolver {
     def build: UrlResolver = {
         this.addSubResolver("preview", new ReadUrlResolver)
         this.addSubResolver("billing", new BillingUrlResolver)
@@ -54,19 +54,19 @@ class AccountUrlResolver extends UrlResolver {
         EventBusFactory.getInstance.post(new ProfileEvent.GotoProfileView(this, null))
     }
 
-    private class ReadUrlResolver extends AccountUrlResolver {
+    private class ReadUrlResolver extends AccountSettingUrlResolver {
         protected override def handlePage(params: String*) {
             EventBusFactory.getInstance.post(new ProfileEvent.GotoProfileView(this, null))
         }
     }
 
-    private class BillingUrlResolver extends AccountUrlResolver {
+    private class BillingUrlResolver extends AccountSettingUrlResolver {
         protected override def handlePage(params: String*) {
             EventBusFactory.getInstance.post(new AccountBillingEvent.GotoSummary(this, null))
         }
     }
 
-    private class SetupUrlResolver extends AccountUrlResolver {
+    private class SetupUrlResolver extends AccountSettingUrlResolver {
         protected override def handlePage(params: String*) {
             EventBusFactory.getInstance.post(new SetupEvent.GotoSetupPage(this, null))
         }

@@ -17,11 +17,11 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingExtScreenData;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
-import com.esofthead.mycollab.premium.module.user.accountsettings.view.parameters.SettingExtScreenData;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
@@ -31,7 +31,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class SettingPresenter extends AbstractPresenter<ISettingContainer> implements ICustomizePresenter {
+public class SettingPresenter extends AbstractPresenter<ISettingContainer> implements ISettingPresenter {
     private static final long serialVersionUID = 1L;
 
     public SettingPresenter() {

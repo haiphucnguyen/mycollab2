@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.community.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingContainer;
-import com.esofthead.mycollab.module.user.accountsettings.customize.view.ICustomizePresenter;
+import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -30,11 +30,11 @@ import com.vaadin.ui.ComponentContainer;
  * @since 4.1
  * 
  */
-public class CustomizePresenter extends AbstractPresenter<ISettingContainer>
-		implements ICustomizePresenter {
+public class SettingPresenter extends AbstractPresenter<ISettingContainer>
+		implements ISettingPresenter {
 	private static final long serialVersionUID = -2484673053224403662L;
 
-	public CustomizePresenter() {
+	public SettingPresenter() {
 		super(ISettingContainer.class);
 	}
 
