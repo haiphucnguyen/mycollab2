@@ -8,15 +8,13 @@ import com.esofthead.mycollab.core.utils.ImageUtil;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.file.service.AccountFavIconService;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
-import com.esofthead.mycollab.vaadin.ui.AssetResource;
-import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
-import com.esofthead.mycollab.vaadin.ui.WebResourceIds;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.hp.gagawa.java.elements.Div;
@@ -141,6 +139,8 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
 
+        MHorizontalLayout buttonControls = new MHorizontalLayout();
+        buttonControls.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
         final UploadField logoUploadField = new UploadField() {
             private static final long serialVersionUID = 1L;
 
@@ -171,7 +171,23 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         logoUploadField.setSizeUndefined();
         logoUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
         logoUploadField.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        rightPanel.with(previewLayout, logoUploadField);
+
+        Button resetButton = new Button("Reset", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean
+                        (BillingAccountService.class);
+                billingAccount.setLogopath(null);
+                billingAccountService.updateWithSession(billingAccount, AppContext.getUsername());
+                Page.getCurrent().getJavaScript().execute("window.location.reload();");
+            }
+        });
+        resetButton.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetButton.setStyleName(UIConstants.THEME_GRAY_LINK);
+
+        buttonControls.with(logoUploadField, resetButton);
+
+        rightPanel.with(previewLayout, buttonControls);
         layout.with(leftPanel, rightPanel);
         this.with(layout);
     }
@@ -182,11 +198,14 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Label logoHeaderLbl = new Label("Favicon");
         logoHeaderLbl.addStyleName("h2");
         Label logoDesc = new Label("Favicon appears in web browsers bar, bookmarks. The icon should be format png, " +
-                "jpg and must be sizeable to 32x32 pixels");
+                "jpg and must be sizable to 32x32 pixels");
         leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
         final Image favIconRes = new Image("", new ExternalResource(Storage.getFavIconPath(billingAccount.getId(),
                 billingAccount.getFaviconpath())));
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout();
+        buttonControls.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
         final UploadField favIconUploadField = new UploadField() {
             private static final long serialVersionUID = 1L;
 
@@ -227,7 +246,22 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         favIconUploadField.setSizeUndefined();
         favIconUploadField.setFieldType(UploadField.FieldType.BYTE_ARRAY);
         favIconUploadField.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        rightPanel.with(favIconRes, favIconUploadField);
+
+        Button resetButton = new Button("Reset", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean
+                        (BillingAccountService.class);
+                billingAccount.setFaviconpath(null);
+                billingAccountService.updateWithSession(billingAccount, AppContext.getUsername());
+                Page.getCurrent().getJavaScript().execute("window.location.reload();");
+            }
+        });
+        resetButton.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
+        resetButton.setStyleName(UIConstants.THEME_GRAY_LINK);
+
+        buttonControls.with(favIconUploadField, resetButton);
+        rightPanel.with(favIconRes, buttonControls);
         layout.with(leftPanel, rightPanel);
         this.with(layout);
     }
