@@ -1,16 +1,4 @@
 <!ELEMENT dataset (
-    ecm_journalglobal_revision*,
-    ecm_journaljournal*,
-    ecm_journallocal_revisions*,
-    ecm_p_versionbinval*,
-    ecm_p_versionbundle*,
-    ecm_p_versionnames*,
-    ecm_p_versionrefs*,
-    ecm_p_workspacebinval*,
-    ecm_p_workspacebundle*,
-    ecm_p_workspacenames*,
-    ecm_p_workspacerefs*,
-    ecm_s_fsentry*,
     jgroupsping*,
     m_audit_log*,
     m_comment*,
@@ -103,95 +91,7 @@
     s_user_permission*,
     s_user_preference*,
     s_user_tracking*,
-    schema_version*,
-    wiki_journalglobal_revision*,
-    wiki_journaljournal*,
-    wiki_journallocal_revisions*,
-    wiki_p_versionbinval*,
-    wiki_p_versionbundle*,
-    wiki_p_versionnames*,
-    wiki_p_versionrefs*,
-    wiki_p_workspacebinval*,
-    wiki_p_workspacebundle*,
-    wiki_p_workspacenames*,
-    wiki_p_workspacerefs*,
-    wiki_s_fsentry*)>
-
-<!ELEMENT ecm_journalglobal_revision EMPTY>
-<!ATTLIST ecm_journalglobal_revision
-    REVISION_ID CDATA #REQUIRED
->
-
-<!ELEMENT ecm_journaljournal EMPTY>
-<!ATTLIST ecm_journaljournal
-    REVISION_ID CDATA #REQUIRED
-    JOURNAL_ID CDATA #IMPLIED
-    PRODUCER_ID CDATA #IMPLIED
-    REVISION_DATA CDATA #IMPLIED
->
-
-<!ELEMENT ecm_journallocal_revisions EMPTY>
-<!ATTLIST ecm_journallocal_revisions
-    JOURNAL_ID CDATA #REQUIRED
-    REVISION_ID CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_versionbinval EMPTY>
-<!ATTLIST ecm_p_versionbinval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_versionbundle EMPTY>
-<!ATTLIST ecm_p_versionbundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_versionnames EMPTY>
-<!ATTLIST ecm_p_versionnames
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_versionrefs EMPTY>
-<!ATTLIST ecm_p_versionrefs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacebinval EMPTY>
-<!ATTLIST ecm_p_workspacebinval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacebundle EMPTY>
-<!ATTLIST ecm_p_workspacebundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacenames EMPTY>
-<!ATTLIST ecm_p_workspacenames
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT ecm_p_workspacerefs EMPTY>
-<!ATTLIST ecm_p_workspacerefs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT ecm_s_fsentry EMPTY>
-<!ATTLIST ecm_s_fsentry
-    FSENTRY_PATH CDATA #REQUIRED
-    FSENTRY_NAME CDATA #REQUIRED
-    FSENTRY_DATA CDATA #IMPLIED
-    FSENTRY_LASTMOD CDATA #REQUIRED
-    FSENTRY_LENGTH CDATA #REQUIRED
->
+    schema_version*)>
 
 <!ELEMENT jgroupsping EMPTY>
 <!ATTLIST jgroupsping
@@ -863,7 +763,7 @@
 <!ELEMENT m_monitor_item EMPTY>
 <!ATTLIST m_monitor_item
     id CDATA #REQUIRED
-    user CDATA #IMPLIED
+    user CDATA #REQUIRED
     monitor_date CDATA #REQUIRED
     type CDATA #REQUIRED
     typeid CDATA #REQUIRED
@@ -1656,81 +1556,5 @@
     installed_on CDATA #IMPLIED
     execution_time CDATA #REQUIRED
     success CDATA #REQUIRED
->
-
-<!ELEMENT wiki_journalglobal_revision EMPTY>
-<!ATTLIST wiki_journalglobal_revision
-    REVISION_ID CDATA #REQUIRED
->
-
-<!ELEMENT wiki_journaljournal EMPTY>
-<!ATTLIST wiki_journaljournal
-    REVISION_ID CDATA #REQUIRED
-    JOURNAL_ID CDATA #IMPLIED
-    PRODUCER_ID CDATA #IMPLIED
-    REVISION_DATA CDATA #IMPLIED
->
-
-<!ELEMENT wiki_journallocal_revisions EMPTY>
-<!ATTLIST wiki_journallocal_revisions
-    JOURNAL_ID CDATA #REQUIRED
-    REVISION_ID CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_versionbinval EMPTY>
-<!ATTLIST wiki_p_versionbinval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_versionbundle EMPTY>
-<!ATTLIST wiki_p_versionbundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_versionnames EMPTY>
-<!ATTLIST wiki_p_versionnames
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_versionrefs EMPTY>
-<!ATTLIST wiki_p_versionrefs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_workspacebinval EMPTY>
-<!ATTLIST wiki_p_workspacebinval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_workspacebundle EMPTY>
-<!ATTLIST wiki_p_workspacebundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_workspacenames EMPTY>
-<!ATTLIST wiki_p_workspacenames
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT wiki_p_workspacerefs EMPTY>
-<!ATTLIST wiki_p_workspacerefs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT wiki_s_fsentry EMPTY>
-<!ATTLIST wiki_s_fsentry
-    FSENTRY_PATH CDATA #REQUIRED
-    FSENTRY_NAME CDATA #REQUIRED
-    FSENTRY_DATA CDATA #IMPLIED
-    FSENTRY_LASTMOD CDATA #REQUIRED
-    FSENTRY_LENGTH CDATA #REQUIRED
 >
 
