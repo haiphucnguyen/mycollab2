@@ -14,4 +14,6 @@
 
     <m_prj_project shortname="ABC" projectStatus="Active"
         sAccountId="1" id="1" name="Test Project" />
+
+    <m_prj_role id="1" rolename="A" sAccountId="1" projectid="1"/>
 </dataset>
