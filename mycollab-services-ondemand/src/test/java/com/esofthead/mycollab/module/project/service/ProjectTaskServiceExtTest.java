@@ -13,42 +13,42 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
 
-	private static Logger LOG = LoggerFactory
-			.getLogger(ProjectTaskServiceExtTest.class);
+    private static Logger LOG = LoggerFactory.getLogger(ProjectTaskServiceExtTest.class);
 
-	@Autowired
-	private ProjectTaskService projectTaskService;
+    @Autowired
+    private ProjectTaskService projectTaskService;
 
-	@Test
-	public void testSaveWithoutSaveTheSameKey() {
-		final Task baseRecord = new Task();
-		baseRecord.setProjectid(1);
-		baseRecord.setTaskname("Hello world");
-		baseRecord.setStatus(StatusI18nEnum.Open.name());
-		baseRecord.setSaccountid(1);
-		baseRecord.setPercentagecomplete(10d);
+    @Test
+    public void testSaveWithoutSaveTheSameKey() {
+        final Task baseRecord = new Task();
+        baseRecord.setProjectid(1);
+        baseRecord.setTaskname("Hello world");
+        baseRecord.setStatus(StatusI18nEnum.Open.name());
+        baseRecord.setSaccountid(1);
+        baseRecord.setPercentagecomplete(10d);
 
-		for (int i = 0; i < 100; i++) {
-			Runnable exeService = new Runnable() {
-				@Override
-				public void run() {
-					Task record = (Task) baseRecord.copy();
-					int count = projectTaskService.saveWithSession(record,
-							"hainguyen@esofthead.com");
-					LOG.debug("COUNT: " + count + "---" + record.getTaskkey());
-				}
-			};
+        for (int i = 0; i < 100; i++) {
+            LOG.info("Initialize thread " + i);
+            Runnable exeService = new Runnable() {
+                @Override
+                public void run() {
+                    Task record = (Task) baseRecord.copy();
+                    int count = projectTaskService.saveWithSession(record,
+                            "hainguyen@esofthead.com");
+                    LOG.debug("COUNT: " + count + "---" + record.getTaskkey());
+                }
+            };
 
-			new Thread(exeService).start();
-		}
+            new Thread(exeService).start();
+        }
 
-		while (true) {
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+        while (true) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
 }
