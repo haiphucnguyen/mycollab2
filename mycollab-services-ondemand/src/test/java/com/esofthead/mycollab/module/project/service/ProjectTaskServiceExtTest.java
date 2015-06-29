@@ -10,6 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
 
@@ -19,7 +24,7 @@ public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
     private ProjectTaskService projectTaskService;
 
     @Test
-    public void testSaveWithoutSaveTheSameKey() {
+    public void testSaveWithoutSaveTheSameKey() throws ExecutionException, InterruptedException {
         final Task baseRecord = new Task();
         baseRecord.setProjectid(1);
         baseRecord.setTaskname("Hello world");
@@ -27,28 +32,21 @@ public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
         baseRecord.setSaccountid(1);
         baseRecord.setPercentagecomplete(10d);
 
+        ExecutorService executorService = Executors.newFixedThreadPool(100);
+
         for (int i = 0; i < 100; i++) {
             LOG.info("Initialize thread " + i);
             Runnable exeService = new Runnable() {
                 @Override
                 public void run() {
                     Task record = (Task) baseRecord.copy();
-                    int count = projectTaskService.saveWithSession(record,
+                    projectTaskService.saveWithSession(record,
                             "hainguyen@esofthead.com");
-                    LOG.debug("COUNT: " + count + "---" + record.getTaskkey());
                 }
             };
 
-            new Thread(exeService).start();
-        }
-
-        while (true) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            Future<?> result = executorService.submit(exeService);
+            LOG.info("Result:" + result.get());
         }
     }
 }
