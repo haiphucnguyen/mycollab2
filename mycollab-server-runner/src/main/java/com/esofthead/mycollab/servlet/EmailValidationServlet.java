@@ -84,16 +84,4 @@ public class EmailValidationServlet extends HttpServlet {
             return;
         }
     }
-
-    public static void main(String[] args) throws Exception {
-        Email email = new SimpleEmail();
-        email.setHostName("smtpauth.exchange.iinet.net.au");
-        email.setSmtpPort(25);
-        email.setAuthenticator(new DefaultAuthenticator("info@cposydney.com.au", "Clarence201%"));
-        email.setFrom("info@cposydney.com.au");
-        email.setSubject("MyCollab Test Email");
-        email.setMsg("This is a test mail ... :-)");
-        email.addTo("hainguyen@esofthead.com");
-        email.send();
-    }
 }
