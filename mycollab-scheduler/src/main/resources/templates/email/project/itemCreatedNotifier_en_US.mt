@@ -7,7 +7,7 @@
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px 0px;">
 	#macro( hyperLink $displayName $webLink )
-		<a href="$webLink" style="color: ${styles.link_color}; white-space: normal;">$displayName</a>
+		<a href="$webLink" style="color: ${styles.link_color};">$displayName</a>
 	#end
 	
 	#macro( messageBlock $messageContent )
@@ -21,7 +21,7 @@
 	<table width="800" cellpadding="0" cellspacing="0" border="0" style="font-size:12px; margin: 20px auto;">
        <tr>
        		<td>
-       			<div style="padding: 10px 30px;">
+       			<div style="padding: 0px 25px;">
        				<img src="${defaultUrls.cdn_url}icons/logo.png" alt="The power productivity tool for your organization" width="130" height="30"
        				style="margin: 0px; padding: 0px;">
        			</div>
@@ -32,9 +32,6 @@
 				<p>$actionHeading</p>
 				<p>
 				#foreach( $title in $titles )
-					#if( $foreach.count > 1 )
-						<span style="color: rgb(36, 127, 211);">&#9474;</span>
-					#end
 					#hyperLink( $title.displayName $title.webLink )
 				#end
 				</p>

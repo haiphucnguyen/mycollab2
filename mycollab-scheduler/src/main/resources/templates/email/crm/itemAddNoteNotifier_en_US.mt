@@ -5,7 +5,7 @@
 <title>New item</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
-<body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px 0px;">
+<body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px;">
 	#macro( hyperLink $displayName $webLink )
 		<a href="$webLink" style="color: ${styles.link_color}; white-space: normal;">$displayName</a>
 	#end
