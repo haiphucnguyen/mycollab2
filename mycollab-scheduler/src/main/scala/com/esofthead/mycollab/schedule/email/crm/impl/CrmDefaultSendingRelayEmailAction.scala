@@ -42,11 +42,11 @@ import scala.util.control.Breaks._
 abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends SendingRelayEmailNotificationAction {
     private val LOG = LoggerFactory.getLogger(classOf[CrmDefaultSendingRelayEmailAction[_]])
 
-    @Autowired protected val extMailService: ExtMailService = _
-    @Autowired private val auditLogService: AuditLogService = _
-    @Autowired protected val userService: UserService = _
-    @Autowired protected val notificationService: CrmNotificationSettingService = _
-    @Autowired protected val contentGenerator: IContentGenerator = _
+    @Autowired protected val extMailService: ExtMailService = null
+    @Autowired private val auditLogService: AuditLogService = null
+    @Autowired protected val userService: UserService = null
+    @Autowired protected val notificationService: CrmNotificationSettingService = null
+    @Autowired protected val contentGenerator: IContentGenerator = null
     protected var bean: B = _
     protected var siteUrl: String = null
 

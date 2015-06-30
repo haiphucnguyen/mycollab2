@@ -22,6 +22,7 @@ import java.util.Locale
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.utils.FileUtils
 import com.esofthead.mycollab.i18n.LocalizationHelper
+import com.esofthead.mycollab.schedule.email.MailStyles
 import com.esofthead.mycollab.template.velocity.TemplateContext
 import org.apache.velocity.app.VelocityEngine
 import org.springframework.beans.factory.InitializingBean
@@ -50,6 +51,7 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
             "linkedin_url" -> SiteConfiguration.getLinkedinUrl,
             "twitter_url" -> SiteConfiguration.getTwitterUrl)
         putVariable("defaultUrls", defaultUrls)
+        putVariable("styles", MailStyles.instance);
     }
 
     override def putVariable(key: String, value: Any): Unit = {
@@ -75,6 +77,7 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
         val writer = new StringWriter
         val reader = LocalizationHelper.templateReader(templateFilePath, currentLocale, defaultLocale)
         templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)
+        System.out.println(writer.toString)
         writer.toString
     }
 
