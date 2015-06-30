@@ -52,8 +52,8 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
             try {
                 extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getNoReplyEmail,
                     Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
-                    contentGenerator.generateSubjectContent("Today system-logins count"),
-                    contentGenerator.generateBodyContent(COUNT_USER_LOGIN_TEMPLATE), null)
+                    contentGenerator.parseString("Today system-logins count"),
+                    contentGenerator.parseFile(COUNT_USER_LOGIN_TEMPLATE), null)
             }
             catch {
                 case e: Exception => LOG.error("Error while generate template", e)

@@ -70,9 +70,9 @@ import org.springframework.stereotype.Component
             contentGenerator.putVariable("inviterName", inviterName)
             extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
                 Arrays.asList(new MailRecipientField(invitation.getUsername, invitation.getUsername)), null, null,
-                contentGenerator.generateSubjectContent(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale,
+                contentGenerator.parseString(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale,
                     UserI18nEnum.MAIL_INVITE_USER_SUBJECT, SiteConfiguration.getDefaultSiteName)),
-                contentGenerator.generateBodyContent("templates/email/user/userInvitationNotifier.mt",
+                contentGenerator.parseFile("templates/email/user/userInvitationNotifier.mt",
                     SiteConfiguration.getDefaultLocale), null)
             invitation.setInvitationstatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL)
             userAccountInvitationMapper.updateByPrimaryKeySelective(invitation)

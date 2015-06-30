@@ -22,7 +22,7 @@ import com.esofthead.mycollab.common.service.AuditLogService
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.arguments.ValuedBean
 import com.esofthead.mycollab.core.utils.BeanUtility
-import com.esofthead.mycollab.module.crm.service.{CrmNotificationSettingService, NoteService}
+import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService
 import com.esofthead.mycollab.module.mail.service.ExtMailService
 import com.esofthead.mycollab.module.mail.{IContentGenerator, MailUtils}
 import com.esofthead.mycollab.module.user.domain.SimpleUser
@@ -42,12 +42,11 @@ import scala.util.control.Breaks._
 abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends SendingRelayEmailNotificationAction {
     private val LOG = LoggerFactory.getLogger(classOf[CrmDefaultSendingRelayEmailAction[_]])
 
-    @Autowired protected val extMailService: ExtMailService = null
-    @Autowired private val auditLogService: AuditLogService = null
-    @Autowired protected val noteService: NoteService = null
-    @Autowired protected val userService: UserService = null
-    @Autowired protected val notificationService: CrmNotificationSettingService = null
-    @Autowired protected val contentGenerator: IContentGenerator = null
+    @Autowired protected val extMailService: ExtMailService = _
+    @Autowired private val auditLogService: AuditLogService = _
+    @Autowired protected val userService: UserService = _
+    @Autowired protected val notificationService: CrmNotificationSettingService = _
+    @Autowired protected val contentGenerator: IContentGenerator = _
     protected var bean: B = _
     protected var siteUrl: String = null
 
@@ -75,8 +74,8 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
                     val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)
                     val recipients: List[MailRecipientField] = List(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-                        null, null, contentGenerator.generateSubjectContent(subject),
-                        contentGenerator.generateBodyContent(getCreateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
+                        null, null, contentGenerator.parseString(subject),
+                        contentGenerator.parseFile(getCreateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
                 }
             }
         }
@@ -108,8 +107,8 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
                     val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)
                     val recipients: List[MailRecipientField] = List(userMail)
                     extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, recipients,
-                        null, null, contentGenerator.generateSubjectContent(subject),
-                        contentGenerator.generateBodyContent(getUpdateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
+                        null, null, contentGenerator.parseString(subject),
+                        contentGenerator.parseFile(getUpdateContentPath, context.getLocale, SiteConfiguration.getDefaultLocale), null)
                 }
             }
         }
@@ -145,7 +144,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
                 val recipients: List[MailRecipientField] = List(userMail)
                 extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, seqAsJavaList
                     (recipients), null, null,
-                    contentGenerator.generateSubjectContent(subject), contentGenerator.generateBodyContent(getNoteContentPath,
+                    contentGenerator.parseString(subject), contentGenerator.parseFile(getNoteContentPath,
                         context.getLocale, SiteConfiguration.getDefaultLocale), null)
             }
         }

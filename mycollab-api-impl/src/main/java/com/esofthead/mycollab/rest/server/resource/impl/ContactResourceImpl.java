@@ -52,8 +52,8 @@ public class ContactResourceImpl implements ContactResource {
 
 		mailRelayService.saveRelayEmail(new String[] { "Sir" },
 				new String[] { "hainguyen@esofthead.com" }, contentGenerator
-						.generateSubjectContent("New guy wanna contact you!"),
-				contentGenerator.generateBodyContent(contactUsTemplate,
+						.parseString("New guy wanna contact you!"),
+				contentGenerator.parseFile(contactUsTemplate,
 						SiteConfiguration.getDefaultLocale()));
 		Response response = Response.status(200).entity("OK")
 				.type(MediaType.TEXT_PLAIN_TYPE).build();

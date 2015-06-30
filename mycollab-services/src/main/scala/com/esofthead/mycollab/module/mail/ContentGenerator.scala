@@ -61,24 +61,24 @@ class ContentGenerator extends IContentGenerator with InitializingBean {
         }
     }
 
-    override def generateBodyContent(templateFilePath: String): String = {
+    override def parseFile(templateFilePath: String): String = {
         val writer = new StringWriter
         val reader = FileUtils.getReader(templateFilePath)
         templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)
         writer.toString
     }
 
-    override def generateBodyContent(templateFilePath: String, currentLocale: Locale): String =
-        this.generateBodyContent(templateFilePath, currentLocale, null)
+    override def parseFile(templateFilePath: String, currentLocale: Locale): String =
+        this.parseFile(templateFilePath, currentLocale, null)
 
-    override def generateBodyContent(templateFilePath: String, currentLocale: Locale, defaultLocale: Locale): String = {
+    override def parseFile(templateFilePath: String, currentLocale: Locale, defaultLocale: Locale): String = {
         val writer = new StringWriter
         val reader = LocalizationHelper.templateReader(templateFilePath, currentLocale, defaultLocale)
         templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)
         writer.toString
     }
 
-    override def generateSubjectContent(subject: String): String = {
+    override def parseString(subject: String): String = {
         val writer = new StringWriter
         val reader = new StringReader(subject)
         templateEngine.evaluate(templateContext.getVelocityContext, writer, "log task", reader)

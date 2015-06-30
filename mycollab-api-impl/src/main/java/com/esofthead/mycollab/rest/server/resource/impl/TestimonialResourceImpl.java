@@ -46,10 +46,9 @@ public class TestimonialResourceImpl implements TestimonialResource {
                 new Li().appendText(String.format("Testimonial: %s", entity.getTestimonial()))));
         mailRelayService.saveRelayEmail(new String[]{"Sir"},
                 new String[]{"hainguyen@esofthead.com"}, contentGenerator
-                        .generateSubjectContent("New testimonial for you"), bodyContent.write());
+                        .parseString("New testimonial for you"), bodyContent.write());
 
-        Response response = Response.status(200).entity("OK")
-                .type(MediaType.TEXT_PLAIN_TYPE).build();
+        Response response = Response.status(200).entity("OK").type(MediaType.TEXT_PLAIN_TYPE).build();
         response.getHeaders().add("Access-Control-Allow-Origin", "*");
         return response;
     }

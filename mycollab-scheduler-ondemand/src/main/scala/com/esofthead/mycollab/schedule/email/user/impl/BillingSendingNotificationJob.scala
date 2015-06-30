@@ -97,7 +97,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("userName", user.getUsername)
       val link: String = GenericLinkUtils.generateSiteUrlByAccountId(account.getId) + GenericLinkUtils.URL_PREFIX_PARAM + "account/billing"
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null, contentGenerator.generateSubjectContent("Your trial has been ended"), contentGenerator.generateBodyContent(INFORM_EXPIRE_ACCOUNT_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
+      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null, contentGenerator.parseString("Your trial has been ended"), contentGenerator.parseFile(INFORM_EXPIRE_ACCOUNT_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
     }
   }
 
@@ -114,7 +114,7 @@ class BillingSendingNotificationJob extends GenericQuartzJobBean {
       contentGenerator.putVariable("expireDay", df.format(cal.getTime))
       contentGenerator.putVariable("userName", user.getUsername)
       contentGenerator.putVariable("link", link)
-      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null, contentGenerator.generateSubjectContent("Your trial is about to end"), contentGenerator.generateBodyContent(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
+      extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null, contentGenerator.parseString("Your trial is about to end"), contentGenerator.parseFile(INFORM_FILLING_BILLING_INFORMATION_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
     }
   }
 }

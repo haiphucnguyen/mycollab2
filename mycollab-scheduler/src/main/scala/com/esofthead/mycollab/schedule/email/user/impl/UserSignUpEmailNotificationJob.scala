@@ -77,8 +77,8 @@ class UserSignUpEmailNotificationJob extends GenericQuartzJobBean {
         contentGenerator.putVariable("linkConfirm", confirmLink)
         extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
             Arrays.asList(new MailRecipientField(user.getEmail, user.getDisplayName)), null, null,
-            contentGenerator.generateSubjectContent(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale,
+            contentGenerator.parseString(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale,
                 UserI18nEnum.MAIL_CONFIRM_PASSWORD_SUBJECT)),
-            contentGenerator.generateBodyContent(CONFIRM_EMAIL_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
+            contentGenerator.parseFile(CONFIRM_EMAIL_TEMPLATE, SiteConfiguration.getDefaultLocale), null)
     }
 }
