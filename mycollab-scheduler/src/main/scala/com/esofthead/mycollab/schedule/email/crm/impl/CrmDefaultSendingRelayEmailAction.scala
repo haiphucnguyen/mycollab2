@@ -133,6 +133,7 @@ abstract class CrmDefaultSendingRelayEmailAction[B <: ValuedBean] extends Sendin
                     }
                 }
 
+
                 contentGenerator.putVariable("userName", notifierFullName)
                 val context: MailContext[B] = new MailContext[B](notification, user, siteUrl)
                 bean = getBeanInContext(context)

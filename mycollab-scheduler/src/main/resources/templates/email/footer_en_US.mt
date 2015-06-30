@@ -1,6 +1,6 @@
 <tr>
     <td style="background-color: rgb(58, 58, 58); border-top: 1px solid rgb(212, 212, 212); color: rgb(201, 201, 201); padding: 10px 30px; width: 100%;">
-        <div style="font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; display: block; vertical-align:
+        <div style="font-size: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; display: block; vertical-align:
         middle; float: left;">Copyright by <a href="https://www.mycollab.com" style="color: rgb(201, 201, 201);
         text-decoration: none;">MyCollab LLC</a>. All rights reserved.</div>
         <div style="text-align: right; font-size: 10px; display: block; float: right; vertical-align: middle; width: 295px;">
