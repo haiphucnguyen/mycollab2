@@ -63,7 +63,7 @@ import org.springframework.stereotype.Component
             contentGenerator.putVariable("invitation", invitedUser)
             contentGenerator.putVariable("urlAccept", LinkUtils.generateUserAcceptLink(invitedUser.getSubdomain,
                 invitedUser.getAccountId, invitedUser.getUsername))
-            val inviterName: String = invitedUser.getDisplayName
+            val inviterName: String = invitedUser.getInviteUserFullName
             val inviterMail: String = invitedUser.getInviteUser
             contentGenerator.putVariable("urlDeny", LinkUtils.generateUserDenyLink(invitedUser.getSubdomain,
                 invitedUser.getAccountId, invitedUser.getUsername, inviterName, inviterMail))
