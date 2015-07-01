@@ -88,7 +88,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
         userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
         UserAccountExample ex = new UserAccountExample();
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
-        userAccountMapper.updateByExample(userAccount, ex);
+        userAccountMapper.updateByExampleSelective(userAccount, ex);
         EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
     }
 
