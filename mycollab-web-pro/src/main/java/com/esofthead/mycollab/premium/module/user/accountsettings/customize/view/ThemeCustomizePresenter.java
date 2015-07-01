@@ -25,10 +25,13 @@ import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEve
 import com.esofthead.mycollab.module.user.accountsettings.view.events.SettingEvent.SaveTheme;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.google.common.eventbus.Subscribe;
@@ -41,6 +44,7 @@ import org.vaadin.dialogs.ConfirmDialog;
  * @author MyCollab Ltd.
  * @since 4.1
  */
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class ThemeCustomizePresenter extends AbstractPresenter<ThemeCustomizeView> {
     private static final long serialVersionUID = 5330315328389778202L;
 

@@ -44,8 +44,8 @@ import java.util.List;
 @ViewComponent
 public class FileBreadcrumb extends Breadcrumb implements CacheableComponent,
         HasSearchHandlers<FileSearchCriteria> {
-
     private static final long serialVersionUID = 1L;
+
     private List<SearchHandler<FileSearchCriteria>> handers;
 
     private String rootFolderPath;

@@ -22,8 +22,11 @@ import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettin
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.SettingExtScreenData;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
+import com.esofthead.mycollab.security.BooleanPermissionFlag;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewPermission;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -31,6 +34,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.1
  */
+@ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_THEME, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class SettingPresenter extends AbstractPresenter<ISettingContainer> implements ISettingPresenter {
     private static final long serialVersionUID = 1L;
 
