@@ -53,6 +53,7 @@ import org.springframework.stereotype.Component
     def executeJob(context: JobExecutionContext) {
         val searchCriteria = new UserSearchCriteria()
         searchCriteria.setRegisterStatuses(new SetSearchField[String](RegisterStatusConstants.VERIFICATING))
+        searchCriteria.setSaccountid(null)
         import scala.collection.JavaConverters._
         val inviteUsers: List[Any] = userService.findPagableListByCriteria(new
                 SearchRequest[UserSearchCriteria](searchCriteria, 0, Integer.MAX_VALUE)).asScala.toList
