@@ -151,10 +151,10 @@
             (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.assignUser=m_prj_member.username AND m_prj_task.projectid=m_prj_member.projectId AND m_prj_task.status='Open') AS numOpenTasks,
             s_user_account.lastAccessedTime AS lastAccessTime
         FROM m_prj_member
-        	LEFT OUTER JOIN m_prj_project ON (m_prj_member.projectId = m_prj_project.id)
-	        LEFT OUTER JOIN m_prj_role ON (m_prj_role.id=m_prj_member.projectRoleId)
+        	INNER JOIN m_prj_project ON (m_prj_member.projectId = m_prj_project.id)
+	        INNER JOIN m_prj_role ON (m_prj_role.id=m_prj_member.projectRoleId)
 	        INNER JOIN s_user ON (m_prj_member.username=s_user.username AND s_user.username=@{username})
-	        INNER JOIN JOIN s_user_account ON (s_user_account.accountId=m_prj_project.sAccountId AND s_user_account.username=s_user.username)
+	        INNER JOIN s_user_account ON (s_user_account.accountId=m_prj_project.sAccountId AND s_user_account.username=s_user.username)
         WHERE m_prj_member.projectId=@{projectId, jdbcType=NUMERIC}
         ]]>
     </select>
