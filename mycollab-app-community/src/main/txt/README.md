@@ -43,6 +43,18 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.1.0
+-----------------------------
+**Library Upgrades**
+
+**Improvements & New Features**
+
+* Redesign the email template
+* Can resend the invitation
+
+**Bug Fixes**
+
+
 Version 5.0.10
 -----------------------------
 **Library Upgrades**

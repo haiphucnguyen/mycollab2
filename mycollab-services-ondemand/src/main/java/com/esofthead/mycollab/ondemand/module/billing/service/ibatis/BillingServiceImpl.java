@@ -76,36 +76,29 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     @Transactional
-    public void registerAccount(String subDomain,
-                                int billingPlanId, String username,
-                                String password, String email, String timezoneId,
-                                boolean isEmailVerified) {
+    public void registerAccount(String subDomain, int billingPlanId, String username,
+                                String password, String email, String timezoneId, boolean isEmailVerified) {
 
         // check subdomain is ascii string
         if (!StringUtils.isAsciiString(subDomain)) {
-            throw new UserInvalidInputException(
-                    "Subdomain must be an ascii string");
+            throw new UserInvalidInputException("Subdomain must be an ascii string");
         }
 
         // check subdomain belong to keyword list
         if (ACCOUNT_BLACK_LIST.contains(subDomain)) {
-            throw new SubdomainExistedException(LocalizationHelper.getMessage(
-                    LocalizationHelper.defaultLocale,
-                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-                    subDomain));
+            throw new SubdomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
         LOG.debug("Check whether subdomain {} is existed", subDomain);
         BillingAccountExample billingEx = new BillingAccountExample();
         billingEx.createCriteria().andSubdomainEqualTo(subDomain);
         if (this.billingAccountMapper.countByExample(billingEx) > 0) {
-            throw new SubdomainExistedException(LocalizationHelper.getMessage(
-                    LocalizationHelper.defaultLocale,
-                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR,
-                    subDomain));
+            throw new SubdomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
         }
 
-        BillingPlan billingPlan = this.billingPlanMapper.selectByPrimaryKey(billingPlanId);
+        BillingPlan billingPlan = billingPlanMapper.selectByPrimaryKey(billingPlanId);
         // Save billing account
         LOG.debug("Saving billing account for user {} with subdomain {}", username, subDomain);
         BillingAccount billingAccount = new BillingAccount();
@@ -119,8 +112,8 @@ public class BillingServiceImpl implements BillingService {
         billingAccount.setSubdomain(subDomain);
         billingAccount.setDefaulttimezone(timezoneId);
 
-        this.billingAccountMapper.insertAndReturnKey(billingAccount);
-        int accountid = billingAccount.getId();
+        billingAccountMapper.insertAndReturnKey(billingAccount);
+        int accountId = billingAccount.getId();
 
         // Check whether user has registered to the system before
         String encryptedPassword = PasswordEncryptHelper.encryptSaltPassword(password);
@@ -167,14 +160,14 @@ public class BillingServiceImpl implements BillingService {
 
         // save default roles
         LOG.debug("Save default roles for account of subdomain {}", subDomain);
-        saveEmployeeRole(accountid);
-        int adminRoleId = saveAdminRole(accountid);
-        saveGuestRole(accountid);
+        saveEmployeeRole(accountId);
+        int adminRoleId = saveAdminRole(accountId);
+        saveGuestRole(accountId);
 
         // save user account
         LOG.debug("Register user {} to subdomain {}", username, subDomain);
         UserAccount userAccount = new UserAccount();
-        userAccount.setAccountid(accountid);
+        userAccount.setAccountid(accountId);
         userAccount.setIsaccountowner(true);
         userAccount.setRegisteredtime(now);
         userAccount.setRegisterstatus(RegisterStatusConstants.ACTIVE);
@@ -187,28 +180,25 @@ public class BillingServiceImpl implements BillingService {
 
     private int saveEmployeeRole(int accountId) {
         // Register default role for account
-        final Role role = new Role();
+        Role role = new Role();
         role.setRolename(SimpleRole.EMPLOYEE);
         role.setDescription("");
         role.setSaccountid(accountId);
         role.setIssystemrole(true);
-        int roleId = this.roleService.saveWithSession(role, "");
-        this.roleService.savePermission(roleId,
-                PermissionMap.buildEmployeePermissionCollection(), accountId);
+        Integer roleId = this.roleService.saveWithSession(role, "");
+        roleService.savePermission(roleId, PermissionMap.buildEmployeePermissionCollection(), accountId);
         return roleId;
     }
 
     private int saveAdminRole(int accountId) {
         // Register default role for account
-        final Role role = new Role();
+        Role role = new Role();
         role.setRolename(SimpleRole.ADMIN);
         role.setDescription("");
         role.setSaccountid(accountId);
         role.setIssystemrole(true);
-        final int roleId = this.roleService.saveWithSession(role, "");
-
-        this.roleService.savePermission(roleId,
-                PermissionMap.buildAdminPermissionCollection(), accountId);
+        Integer roleId = roleService.saveWithSession(role, "");
+        roleService.savePermission(roleId, PermissionMap.buildAdminPermissionCollection(), accountId);
         return roleId;
     }
 
@@ -246,8 +236,7 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public void cancelAccount(Integer accountId,
-                              CustomerFeedbackWithBLOBs feedback) {
+    public void cancelAccount(Integer accountId, CustomerFeedbackWithBLOBs feedback) {
         AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
                 .build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
                         AccountDeletedCommand.class);
