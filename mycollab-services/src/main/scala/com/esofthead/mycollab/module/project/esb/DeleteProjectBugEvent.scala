@@ -17,18 +17,9 @@
 package com.esofthead.mycollab.module.project.esb
 
 /**
- *
- * @author MyCollab Ltd.
- * @since 1.0
- *
+ * @author MyCollab Ltd
+ * @since 5.1.0
  */
-trait DeleteProjectMilestoneCommand {
-    /**
-     *
-     * @param username
-     * @param accountId
-     * @param projectId
-     * @param bugId
-     */
-    def milestoneRemoved(username: String, accountId: Integer, projectId: Integer, bugId: Integer)
+class DeleteProjectBugEvent(val username: String, val accountId: Integer, val projectId: Integer, val bugId: Integer) {
+    
 }

@@ -16,24 +16,10 @@
  */
 package com.esofthead.mycollab.module.user.esb
 
-import org.apache.camel.ExchangePattern
-import org.apache.camel.spring.SpringRouteBuilder
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Profile
-import org.springframework.stereotype.Component
-
 /**
- *
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.1.0
  */
-@Component
-@Profile(Array("!test")) class UserRouteBuilder extends SpringRouteBuilder {
-    @Autowired private val userRemovedCommand: UserRemovedCommand = null
-
-    @throws(classOf[Exception])
-    def configure {
-        from(UserEndpoints.USER_REMOVE_ENDPOINT).setExchangePattern(ExchangePattern.InOnly).to("seda:userDelete.queue")
-        from("seda:userDelete.queue").threads.bean(userRemovedCommand, "userRemoved(String, int)")
-    }
+class DeleteUserEvent(val username: String, val accountid: Integer) {
+    
 }

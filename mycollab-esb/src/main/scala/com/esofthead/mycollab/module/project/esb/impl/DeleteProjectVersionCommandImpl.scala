@@ -16,8 +16,10 @@
  */
 package com.esofthead.mycollab.module.project.esb.impl
 
+import com.esofthead.mycollab.module.GenericCommandHandler
+import com.esofthead.mycollab.module.project.esb.DeleteProjectVersionEvent
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.springframework.stereotype.Component
-import com.esofthead.mycollab.module.project.esb.DeleteProjectVersionCommand
 
 /**
  *
@@ -25,7 +27,10 @@ import com.esofthead.mycollab.module.project.esb.DeleteProjectVersionCommand
  * @since 1.0
  *
  */
-@Component class DeleteProjectVersionCommandImpl extends DeleteProjectVersionCommand {
-    def versionRemoved(username: String, accountId: Integer, projectId: Integer, bugId: Integer) {
+@Component class DeleteProjectVersionCommandImpl extends GenericCommandHandler {
+    @AllowConcurrentEvents
+    @Subscribe
+    def removedVersion(event: DeleteProjectVersionEvent): Unit = {
+
     }
 }

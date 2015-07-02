@@ -18,10 +18,12 @@ package com.esofthead.mycollab.module.project.esb.impl
 
 import com.esofthead.mycollab.common.dao.CommentMapper
 import com.esofthead.mycollab.common.domain.CommentExample
+import com.esofthead.mycollab.module.GenericCommandHandler
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
-import com.esofthead.mycollab.module.project.esb.DeleteProjectTaskListCommand
+import com.esofthead.mycollab.module.project.esb.DeleteProjectTaskListEvent
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -30,16 +32,18 @@ object DeleteProjectTaskListCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectTaskListCommandImpl])
 }
 
-@Component class DeleteProjectTaskListCommandImpl extends DeleteProjectTaskListCommand {
+@Component class DeleteProjectTaskListCommandImpl extends GenericCommandHandler {
     @Autowired private val resourceService: ResourceService = null
 
     @Autowired private val commentMapper: CommentMapper = null
 
-    def taskListRemoved(username: String, accountId: Integer, projectId: Integer, taskListId: Integer) {
+    @AllowConcurrentEvents
+    @Subscribe
+    def removedTaskGroup(event: DeleteProjectTaskListEvent): Unit = {
         DeleteProjectTaskListCommandImpl.LOG.debug("Remove task list id {} of project {} by user {}",
-            Array(taskListId, projectId, username))
-        removeRelatedFiles(accountId, projectId, taskListId)
-        removeRelatedComments(taskListId)
+            Array(event.taskListId, event.projectId, event.username))
+        removeRelatedFiles(event.accountId, event.projectId, event.taskListId)
+        removeRelatedComments(event.taskListId)
     }
 
     private def removeRelatedFiles(accountId: Integer, projectId: Integer, taskListId: Integer) {

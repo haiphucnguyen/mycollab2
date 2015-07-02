@@ -23,13 +23,11 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.esb.CamelProxyBuilderUtil;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.UserStatusConstants;
-import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand;
-import com.esofthead.mycollab.module.billing.esb.BillingEndpoints;
+import com.esofthead.mycollab.module.billing.esb.DeleteAccountEvent;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.dao.*;
 import com.esofthead.mycollab.module.user.domain.*;
@@ -38,6 +36,7 @@ import com.esofthead.mycollab.ondemand.module.billing.AccountPaymentTypeConstant
 import com.esofthead.mycollab.ondemand.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.ondemand.module.billing.SubdomainExistedException;
 import com.esofthead.mycollab.security.PermissionMap;
+import com.google.common.eventbus.AsyncEventBus;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +72,10 @@ public class BillingServiceImpl implements BillingService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private AsyncEventBus asyncEventBus;
+
 
     @Override
     @Transactional
@@ -237,10 +240,9 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public void cancelAccount(Integer accountId, CustomerFeedbackWithBLOBs feedback) {
-        AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
-                .build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT(), AccountDeletedCommand.class);
         billingAccountMapper.deleteByPrimaryKey(accountId);
-        accountDeletedCommand.accountDeleted(accountId, feedback);
+        DeleteAccountEvent event = new DeleteAccountEvent(accountId, feedback);
+        asyncEventBus.post(event);
     }
 
     @Override

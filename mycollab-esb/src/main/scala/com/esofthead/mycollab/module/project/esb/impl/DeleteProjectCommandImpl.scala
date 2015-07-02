@@ -19,9 +19,11 @@ package com.esofthead.mycollab.module.project.esb.impl
 import com.esofthead.mycollab.common.ModuleNameConstants
 import com.esofthead.mycollab.common.dao.{ActivityStreamMapper, CommentMapper}
 import com.esofthead.mycollab.common.domain.{ActivityStreamExample, CommentExample}
+import com.esofthead.mycollab.module.GenericCommandHandler
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.page.service.PageService
-import com.esofthead.mycollab.module.project.esb.DeleteProjectCommand
+import com.esofthead.mycollab.module.project.esb.DeleteProjectEvent
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -30,7 +32,7 @@ object DeleteProjectCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectCommandImpl])
 }
 
-@Component class DeleteProjectCommandImpl extends DeleteProjectCommand {
+@Component class DeleteProjectCommandImpl extends GenericCommandHandler {
     @Autowired private val activityStreamMapper: ActivityStreamMapper = null
 
     @Autowired private val commentMapper: CommentMapper = null
@@ -39,12 +41,14 @@ object DeleteProjectCommandImpl {
 
     @Autowired private val pageService: PageService = null
 
-    def projectRemoved(accountId: Integer, projectId: Integer) {
-        DeleteProjectCommandImpl.LOG.debug("Remove project {}", projectId)
-        deleteProjectActivityStream(projectId)
-        deleteRelatedComments(projectId)
-        deleteProjectFiles(accountId, projectId)
-        deleteProjectPages(accountId, projectId)
+    @AllowConcurrentEvents
+    @Subscribe
+    def removedProject(event: DeleteProjectEvent): Unit = {
+        DeleteProjectCommandImpl.LOG.debug("Remove project {}", event.projectId)
+        deleteProjectActivityStream(event.projectId)
+        deleteRelatedComments(event.projectId)
+        deleteProjectFiles(event.accountId, event.projectId)
+        deleteProjectPages(event.accountId, event.projectId)
     }
 
     private def deleteProjectActivityStream(projectId: Integer) {

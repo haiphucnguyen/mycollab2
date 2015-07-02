@@ -14,20 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm.esb
+package com.esofthead.mycollab.module.project.esb
 
 /**
- *
- * @author MyCollab Ltd.
- * @since 1.0
- *
+ * @author MyCollab Ltd
+ * @since 5.1.0
  */
-trait DeleteResourcesCommand {
-    /**
-     *
-     * @param path
-     * @param userDelete
-     * @param sAccountId
-     */
-    def removeResource(path: Array[String], userDelete: String, sAccountId: Integer)
+class InviteProjectMembersEvent(val emails: Array[String], val projectId: Integer, val projectRoleId: Integer,
+                                val inviteUser: String, val inviteMessage: String, val sAccountId: Integer) {
+    
 }

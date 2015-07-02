@@ -16,7 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.esb.impl
 
-import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand
+import com.esofthead.mycollab.module.GenericCommandHandler
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.stereotype.Component
 
@@ -24,8 +25,10 @@ object DeleteProjectMemberCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMemberCommandImpl])
 }
 
-@Component class DeleteProjectMemberCommandImpl extends DeleteProjectMemberCommand {
+@Component class DeleteProjectMemberCommandImpl extends GenericCommandHandler {
 
+    @AllowConcurrentEvents
+    @Subscribe
     def projectMemberRemoved(username: String, projectMemberId: Integer, projectId: Integer, accountId: Integer) {
         DeleteProjectMemberCommandImpl.LOG.debug("Remove project member has username {}, project member id {} and project id {}", username, projectMemberId, projectId)
     }

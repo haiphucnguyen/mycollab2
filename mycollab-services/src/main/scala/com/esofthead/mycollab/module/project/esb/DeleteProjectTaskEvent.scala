@@ -20,13 +20,6 @@ package com.esofthead.mycollab.module.project.esb
  * @author MyCollab Ltd
  * @since 5.1.0
  */
-trait DeleteProjectBugCommand {
-    /**
-     *
-     * @param username
-     * @param accountId
-     * @param projectId
-     * @param bugId
-     */
-    def bugRemoved(username: String, accountId: Integer, projectId: Integer, bugId: Integer): Unit;
+class DeleteProjectTaskEvent(val username: String, val accountId: Integer, val projectId: Integer, val taskId: Integer) {
+    
 }

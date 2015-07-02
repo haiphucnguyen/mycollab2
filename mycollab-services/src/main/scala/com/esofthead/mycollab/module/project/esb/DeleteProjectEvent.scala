@@ -14,16 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.billing.esb
-
-import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs
+package com.esofthead.mycollab.module.project.esb
 
 /**
- *
- * @author MyCollab Ltd.
- * @since 1.0
- *
+ * @author MyCollab Ltd
+ * @since 5.1.0
  */
-trait AccountDeletedCommand {
-    def accountDeleted(accountId: Int, feedback: CustomerFeedbackWithBLOBs)
+class DeleteProjectEvent(val accountId: Integer, val projectId: Integer) {
+    
 }

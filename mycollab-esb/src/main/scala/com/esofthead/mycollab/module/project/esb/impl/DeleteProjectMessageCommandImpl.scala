@@ -18,10 +18,12 @@ package com.esofthead.mycollab.module.project.esb.impl
 
 import com.esofthead.mycollab.common.dao.CommentMapper
 import com.esofthead.mycollab.common.domain.CommentExample
+import com.esofthead.mycollab.module.GenericCommandHandler
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
-import com.esofthead.mycollab.module.project.esb.DeleteProjectMessageCommand
+import com.esofthead.mycollab.module.project.esb.DeleteProjectMessageEvent
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -30,16 +32,18 @@ object DeleteProjectMessageCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMessageCommandImpl])
 }
 
-@Component class DeleteProjectMessageCommandImpl extends DeleteProjectMessageCommand {
+@Component class DeleteProjectMessageCommandImpl extends GenericCommandHandler {
     @Autowired private val resourceService: ResourceService = null
 
     @Autowired private val commentMapper: CommentMapper = null
 
-    def messageRemoved(username: String, accountId: Integer, projectId: Integer, messageId: Integer) {
-        DeleteProjectMessageCommandImpl.LOG.debug("Remove message id {} of project {} by user {}", Array(messageId,
-            projectId, username))
-        removeRelatedFiles(accountId, projectId, messageId)
-        removeRelatedComments(messageId)
+    @AllowConcurrentEvents
+    @Subscribe
+    def removedMessage(event: DeleteProjectMessageEvent): Unit = {
+        DeleteProjectMessageCommandImpl.LOG.debug("Remove message id {} of project {} by user {}",
+            Array(event.messageId, event.projectId, event.username))
+        removeRelatedFiles(event.accountId, event.projectId, event.messageId)
+        removeRelatedComments(event.messageId)
     }
 
     private def removeRelatedFiles(accountId: Integer, projectId: Integer, messageId: Integer) {

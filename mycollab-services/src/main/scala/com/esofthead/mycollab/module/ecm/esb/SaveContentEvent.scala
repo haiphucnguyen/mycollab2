@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.esb
+package com.esofthead.mycollab.module.ecm.esb
+
+import com.esofthead.mycollab.module.ecm.domain.Content
 
 /**
- *
- * @author MyCollab Ltd.
- * @since 1.0
+ * @author MyCollab Ltd
+ * @since 5.1.0
  */
-trait UserRemovedCommand {
-    def userRemoved(username: String, accountid: Integer)
+class SaveContentEvent(val content: Content, val createdUser: String, val sAccountId: Integer) {
+    
 }

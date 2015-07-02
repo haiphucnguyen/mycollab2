@@ -18,10 +18,12 @@ package com.esofthead.mycollab.module.project.esb.impl
 
 import com.esofthead.mycollab.common.dao.CommentMapper
 import com.esofthead.mycollab.common.domain.CommentExample
+import com.esofthead.mycollab.module.GenericCommandHandler
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
-import com.esofthead.mycollab.module.project.esb.DeleteProjectTaskCommand
+import com.esofthead.mycollab.module.project.esb.DeleteProjectTaskEvent
+import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -30,15 +32,18 @@ object DeleteProjectTaskCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectTaskCommandImpl])
 }
 
-@Component class DeleteProjectTaskCommandImpl extends DeleteProjectTaskCommand {
+@Component class DeleteProjectTaskCommandImpl extends GenericCommandHandler {
     @Autowired private val resourceService: ResourceService = null
 
     @Autowired private val commentMapper: CommentMapper = null
 
-    def taskRemoved(username: String, accountId: Integer, projectId: Integer, taskId: Integer) {
-        DeleteProjectTaskCommandImpl.LOG.debug("Remove task id {} of project {} by user {}", Array(taskId, projectId, username))
-        removeRelatedFiles(accountId, projectId, taskId)
-        removeRelatedComments(taskId)
+    @AllowConcurrentEvents
+    @Subscribe
+    def removedTask(event: DeleteProjectTaskEvent): Unit = {
+        DeleteProjectTaskCommandImpl.LOG.debug("Remove task id {} of project {} by user {}",
+            Array(event.taskId, event.projectId, event.username))
+        removeRelatedFiles(event.accountId, event.projectId, event.taskId)
+        removeRelatedComments(event.taskId)
     }
 
     private def removeRelatedFiles(accountId: Integer, projectId: Integer, taskId: Integer) {
