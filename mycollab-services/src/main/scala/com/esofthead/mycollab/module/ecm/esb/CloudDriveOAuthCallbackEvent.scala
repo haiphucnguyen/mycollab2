@@ -14,16 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm.esb;
+package com.esofthead.mycollab.module.ecm.esb
 
-import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.eventmanager.ApplicationEvent
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
- * 
+ *
  */
-public interface SaveContentCommand {
-	void saveContent(Content content, String createdUser, Integer sAccountId);
+object CloudDriveOAuthCallbackEvent {
+
+    @SerialVersionUID(1L)
+    class ReceiveCloudDriveInfo(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
 }

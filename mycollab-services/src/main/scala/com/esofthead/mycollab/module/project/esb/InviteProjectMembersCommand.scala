@@ -23,5 +23,6 @@ package com.esofthead.mycollab.module.project.esb
  *
  */
 trait InviteProjectMembersCommand {
-    def inviteUsers(email: Array[String], projectId: Int, projectRoleId: Int, inviteUser: String, inviteMessage: String, sAccountId: Int)
+    def inviteUsers(email: Array[String], projectId: Integer, projectRoleId: Integer, inviteUser: String,
+                    inviteMessage: String, sAccountId: Integer)
 }

@@ -26,6 +26,6 @@ import com.esofthead.mycollab.module.project.esb.DeleteProjectVersionCommand
  *
  */
 @Component class DeleteProjectVersionCommandImpl extends DeleteProjectVersionCommand {
-    def versionRemoved(username: String, accountId: Int, projectId: Int, bugId: Int) {
+    def versionRemoved(username: String, accountId: Integer, projectId: Integer, bugId: Integer) {
     }
 }

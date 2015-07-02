@@ -26,20 +26,20 @@ import com.esofthead.mycollab.module.project.ProjectLinkGenerator
 import com.esofthead.mycollab.module.project.domain.{SimpleProject, SimpleProjectMember}
 import com.esofthead.mycollab.module.project.esb.InviteProjectMembersCommand
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum
-import com.esofthead.mycollab.module.project.service.{ProjectMemberService, ProjectService}
+import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component class InviteProjectMembersCommandImpl extends InviteProjectMembersCommand {
-    @Autowired private var userService: UserService = null
-    @Autowired private var mailRelayService: MailRelayService = null
-    @Autowired private var projectService: ProjectService = null
-    @Autowired private var projectMemberService: ProjectMemberService = null
-    @Autowired private var contentGenerator: IContentGenerator = null
-
-    def inviteUsers(emails: Array[String], projectId: Int, projectRoleId: Int, inviterUserName: String, inviteMessage: String, sAccountId: Int) {
+    @Autowired private val userService: UserService = null
+    @Autowired private val mailRelayService: MailRelayService = null
+    @Autowired private val projectService: ProjectService = null
+    @Autowired private val contentGenerator: IContentGenerator = null
+    
+    def inviteUsers(emails: Array[String], projectId: Integer, projectRoleId: Integer, inviterUserName: String, inviteMessage: String,
+                    sAccountId: Integer) {
         val project: SimpleProject = projectService.findById(projectId, sAccountId)
         val user: SimpleUser = userService.findUserByUserNameInAccount(inviterUserName, sAccountId)
         val member: SimpleProjectMember = new SimpleProjectMember
@@ -47,13 +47,13 @@ import org.springframework.stereotype.Component
         contentGenerator.putVariable("member", member)
         contentGenerator.putVariable("inviteUser", user.getDisplayName)
         contentGenerator.putVariable("inviteMessage", inviteMessage)
-        val subdomain: String = projectService.getSubdomainOfProject(projectId)
+        val subDomain: String = projectService.getSubdomainOfProject(projectId)
         val date: Date = new Date
         for (inviteeEmail <- emails) {
-            contentGenerator.putVariable("urlAccept", SiteConfiguration.getSiteUrl(subdomain) + "project/member/invitation/confirm_invite/" +
+            contentGenerator.putVariable("urlAccept", SiteConfiguration.getSiteUrl(subDomain) + "project/member/invitation/confirm_invite/" +
                 ProjectLinkGenerator.generateAcceptInvitationParams(inviteeEmail, sAccountId, projectId, projectRoleId, user.getEmail,
                     inviterUserName, date))
-            contentGenerator.putVariable("urlDeny", SiteConfiguration.getSiteUrl(subdomain) + "project/member/invitation/deny_invite/" +
+            contentGenerator.putVariable("urlDeny", SiteConfiguration.getSiteUrl(subDomain) + "project/member/invitation/deny_invite/" +
                 ProjectLinkGenerator.generateDenyInvitationParams(inviteeEmail, sAccountId, projectId, user.getEmail, inviterUserName))
             mailRelayService.saveRelayEmail(Array[String](inviteeEmail), Array[String](inviteeEmail),
                 contentGenerator.parseString(LocalizationHelper.getMessage(SiteConfiguration.getDefaultLocale,

@@ -14,16 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.billing.esb;
-
-import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
+package com.esofthead.mycollab.module.ecm.esb
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
- * 
+ *
  */
-public interface AccountDeletedCommand {
-	void accountDeleted(int accountId, CustomerFeedbackWithBLOBs feedback);
+object EcmEndPoints {
+    val SAVE_CONTENT_ENDPOINT: String = "direct:saveContent"
+    val DELETE_RESOURCES_ENDPOINT: String = "direct:deleteResources"
 }

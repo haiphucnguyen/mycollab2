@@ -344,7 +344,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
 
         // notify users are "deleted"
         UserRemovedCommand userRemovedCommand = CamelProxyBuilderUtil.build(
-                UserEndpoints.USER_REMOVE_ENDPOINT, UserRemovedCommand.class);
+                UserEndpoints.USER_REMOVE_ENDPOINT(), UserRemovedCommand.class);
         userRemovedCommand.userRemoved(username, accountId);
     }
 

@@ -16,14 +16,13 @@
  */
 package com.esofthead.mycollab.module.billing.esb.impl
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs
 import com.esofthead.mycollab.module.billing.esb.AccountDeletedCommand
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.page.service.PageService
+import org.slf4j.{Logger, LoggerFactory}
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
 /**
  *
@@ -31,7 +30,7 @@ import com.esofthead.mycollab.module.page.service.PageService
  * @since 1.0
  *
  */
-@Component object AccountDeletedCommandImpl {
+object AccountDeletedCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[AccountDeletedCommandImpl])
 }
 

@@ -17,18 +17,16 @@
 package com.esofthead.mycollab.module.user.esb.impl
 
 import java.util.Arrays
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+
 import com.esofthead.mycollab.cache.CacheUtils
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper
-import com.esofthead.mycollab.module.project.domain.ProjectMember
-import com.esofthead.mycollab.module.project.domain.ProjectMemberExample
+import com.esofthead.mycollab.module.project.domain.{ProjectMember, ProjectMemberExample}
 import com.esofthead.mycollab.module.project.service.ProjectMemberService
 import com.esofthead.mycollab.module.user.esb.UserRemovedCommand
-import com.esofthead.mycollab.module.user.service.UserService
+import org.slf4j.{Logger, LoggerFactory}
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
 /**
  *
@@ -36,14 +34,12 @@ import com.esofthead.mycollab.module.user.service.UserService
  * @since 1.0
  *
  */
-@Component object UserRemovedCommandImpl {
+object UserRemovedCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[UserRemovedCommandImpl])
 }
 
 @Component class UserRemovedCommandImpl extends UserRemovedCommand {
-    @Autowired private val userService: UserService = null
     @Autowired private val projectMemberMapper: ProjectMemberMapper = null
-    @Autowired private val projectMemberService: ProjectMemberService = null
 
     def userRemoved(username: String, accountid: Integer) {
         UserRemovedCommandImpl.LOG.debug("Remove user {} with account id {}", Array(username, accountid))

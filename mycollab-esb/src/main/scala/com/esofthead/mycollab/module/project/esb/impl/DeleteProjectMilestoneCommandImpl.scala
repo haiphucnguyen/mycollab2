@@ -22,16 +22,19 @@ import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMilestoneCommand
-import com.esofthead.mycollab.spring.ApplicationContextUtil
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.{Logger, LoggerFactory}
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-@Component object DeleteProjectMilestoneCommandImpl {
+object DeleteProjectMilestoneCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMilestoneCommandImpl])
 }
 
 @Component class DeleteProjectMilestoneCommandImpl extends DeleteProjectMilestoneCommand {
+    @Autowired private val resourceService: ResourceService = null
+
+    @Autowired private val commentMapper: CommentMapper = null
+
     def milestoneRemoved(username: String, accountId: Integer, projectId: Integer, milestoneId: Integer) {
         DeleteProjectMilestoneCommandImpl.LOG.debug("Remove milestone id {} of project {} by user {}",
             Array(milestoneId, projectId, username))
@@ -39,17 +42,16 @@ import org.springframework.stereotype.Component
         removeRelatedComments(milestoneId)
     }
 
-    private def removeRelatedFiles(accountId: Int, projectId: Int, milestoneId: Int) {
-        DeleteProjectMilestoneCommandImpl.LOG.debug("Delete files of bug {} in project {}", milestoneId, projectId)
-        val resourceService: ResourceService = ApplicationContextUtil.getSpringBean(classOf[ResourceService])
-        val attachmentPath: String = AttachmentUtils.getProjectEntityAttachmentPath(accountId, projectId, ProjectTypeConstants.MILESTONE,
-            "" + milestoneId)
+    private def removeRelatedFiles(accountId: Integer, projectId: Integer, milestoneId: Integer) {
+        DeleteProjectMilestoneCommandImpl.LOG.debug("Delete files of bug {} in project {}",
+            Array(milestoneId, projectId))
+        val attachmentPath: String = AttachmentUtils.getProjectEntityAttachmentPath(accountId, projectId,
+            ProjectTypeConstants.MILESTONE, "" + milestoneId)
         resourceService.removeResource(attachmentPath, "", accountId)
     }
 
-    private def removeRelatedComments(milestoneId: Int) {
+    private def removeRelatedComments(milestoneId: Integer) {
         DeleteProjectMilestoneCommandImpl.LOG.debug("Delete related comments of milestone id {}", milestoneId)
-        val commentMapper: CommentMapper = ApplicationContextUtil.getSpringBean(classOf[CommentMapper])
         val ex: CommentExample = new CommentExample
         ex.createCriteria.andTypeEqualTo(ProjectTypeConstants.MILESTONE).andExtratypeidEqualTo(milestoneId)
         commentMapper.deleteByExample(ex)

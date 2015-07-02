@@ -16,21 +16,15 @@
  */
 package com.esofthead.mycollab.module.project.esb.impl
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
-import com.esofthead.mycollab.common.dao.ActivityStreamMapper
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberCommand
-import com.esofthead.mycollab.module.user.service.UserService
+import org.slf4j.{Logger, LoggerFactory}
+import org.springframework.stereotype.Component
 
-@Component object DeleteProjectMemberCommandImpl {
+object DeleteProjectMemberCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMemberCommandImpl])
 }
 
 @Component class DeleteProjectMemberCommandImpl extends DeleteProjectMemberCommand {
-    @Autowired private var activityStreamMapper: ActivityStreamMapper = null
-    @Autowired private var userService: UserService = null
 
     def projectMemberRemoved(username: String, projectMemberId: Integer, projectId: Integer, accountId: Integer) {
         DeleteProjectMemberCommandImpl.LOG.debug("Remove project member has username {}, project member id {} and project id {}", username, projectMemberId, projectId)

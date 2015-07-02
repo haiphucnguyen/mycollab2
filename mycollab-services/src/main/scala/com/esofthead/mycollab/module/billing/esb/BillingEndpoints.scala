@@ -14,23 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm.esb;
-
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
+package com.esofthead.mycollab.module.billing.esb
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
  *
  */
-public class CloudDriveOAuthCallbackEvent {
-
-	public static class ReceiveCloudDriveInfo extends ApplicationEvent {
-		private static final long serialVersionUID = 1L;
-
-		public ReceiveCloudDriveInfo(Object source, Object data) {
-			super(source, data);
-		}
-	}
+object BillingEndpoints {
+    val ACCOUNT_DELETED_ENDPOINT: String = "direct:AccountDelete"
 }

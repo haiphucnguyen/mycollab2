@@ -134,7 +134,7 @@ public class ResourceServiceImpl implements ResourceService {
 		contentJcrDao.saveContent(content, createdUser);
 
 		SaveContentCommand saveContentCommand = CamelProxyBuilderUtil.build(
-				EcmEndPoints.SAVE_CONTENT_ENDPOINT, SaveContentCommand.class);
+				EcmEndPoints.SAVE_CONTENT_ENDPOINT(), SaveContentCommand.class);
 		saveContentCommand.saveContent(content, createdUser, sAccountId);
 	}
 
@@ -145,7 +145,7 @@ public class ResourceServiceImpl implements ResourceService {
 			return;
 		}
 		DeleteResourcesCommand deleteResourcesCommand = CamelProxyBuilderUtil
-				.build(EcmEndPoints.DELETE_RESOURCES_ENDPOINT,
+				.build(EcmEndPoints.DELETE_RESOURCES_ENDPOINT(),
 						DeleteResourcesCommand.class);
 
 		if (res instanceof Folder) {

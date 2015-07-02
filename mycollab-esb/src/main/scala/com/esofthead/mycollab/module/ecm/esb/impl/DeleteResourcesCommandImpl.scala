@@ -16,19 +16,18 @@
  */
 package com.esofthead.mycollab.module.ecm.esb.impl
 
-import java.util.Arrays
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.Lock
-import org.apache.commons.lang3.StringUtils
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+
 import com.esofthead.mycollab.lock.DistributionLockUtil
 import com.esofthead.mycollab.module.ecm.domain.DriveInfo
 import com.esofthead.mycollab.module.ecm.esb.DeleteResourcesCommand
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService
 import com.esofthead.mycollab.module.file.service.RawContentService
+import org.apache.commons.lang3.StringUtils
+import org.slf4j.{Logger, LoggerFactory}
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
 /**
  *
@@ -36,7 +35,7 @@ import com.esofthead.mycollab.module.file.service.RawContentService
  * @since 1.0
  *
  */
-@Component object DeleteResourcesCommandImpl {
+object DeleteResourcesCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteResourcesCommandImpl])
 }
 

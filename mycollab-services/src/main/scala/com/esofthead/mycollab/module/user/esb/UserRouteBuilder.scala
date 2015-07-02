@@ -14,13 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.esb;
+package com.esofthead.mycollab.module.user.esb
+
+import org.apache.camel.ExchangePattern
+import org.apache.camel.spring.SpringRouteBuilder
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Profile
+import org.springframework.stereotype.Component
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface UserRemovedCommand {
-	void userRemoved(String username, Integer accountid);
+@Component
+@Profile(Array("!test")) class UserRouteBuilder extends SpringRouteBuilder {
+    @Autowired private val userRemovedCommand: UserRemovedCommand = null
+
+    @throws(classOf[Exception])
+    def configure {
+        from(UserEndpoints.USER_REMOVE_ENDPOINT).setExchangePattern(ExchangePattern.InOnly).to("seda:userDelete.queue")
+        from("seda:userDelete.queue").threads.bean(userRemovedCommand, "userRemoved(String, int)")
+    }
 }

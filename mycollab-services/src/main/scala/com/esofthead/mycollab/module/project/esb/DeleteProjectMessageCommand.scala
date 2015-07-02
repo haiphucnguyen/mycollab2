@@ -30,5 +30,5 @@ trait DeleteProjectMessageCommand {
      * @param projectId
      * @param messageId
      */
-    def messageRemoved(username: String, accountId: Int, projectId: Int, messageId: Int)
+    def messageRemoved(username: String, accountId: Integer, projectId: Integer, messageId: Integer)
 }

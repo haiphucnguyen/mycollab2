@@ -30,5 +30,5 @@ trait DeleteProjectVersionCommand {
      * @param projectId
      * @param bugId
      */
-    def versionRemoved(username: String, accountId: Int, projectId: Int, bugId: Int)
+    def versionRemoved(username: String, accountId: Integer, projectId: Integer, bugId: Integer)
 }

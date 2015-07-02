@@ -37,7 +37,7 @@ import com.esofthead.mycollab.module.file.service.RawContentService
  * @since 1.0
  *
  */
-@Component("saveContentCommand") object SaveContentCommandImpl {
+object SaveContentCommandImpl {
     private val LOG: Logger = LoggerFactory.getLogger(classOf[SaveContentCommandImpl])
 }
 

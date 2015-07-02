@@ -238,8 +238,7 @@ public class BillingServiceImpl implements BillingService {
     @Override
     public void cancelAccount(Integer accountId, CustomerFeedbackWithBLOBs feedback) {
         AccountDeletedCommand accountDeletedCommand = CamelProxyBuilderUtil
-                .build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT,
-                        AccountDeletedCommand.class);
+                .build(BillingEndpoints.ACCOUNT_DELETED_ENDPOINT(), AccountDeletedCommand.class);
         billingAccountMapper.deleteByPrimaryKey(accountId);
         accountDeletedCommand.accountDeleted(accountId, feedback);
     }
@@ -258,8 +257,7 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public BillingPlan findBillingPlan(@CacheKey Integer sAccountId) {
-        BillingAccount billingAccount = billingAccountMapper
-                .selectByPrimaryKey(sAccountId);
+        BillingAccount billingAccount = billingAccountMapper.selectByPrimaryKey(sAccountId);
         if (billingAccount != null) {
             Integer billingId = billingAccount.getBillingplanid();
             return billingPlanMapper.selectByPrimaryKey(billingId);

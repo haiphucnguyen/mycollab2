@@ -14,16 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm.esb;
+package com.esofthead.mycollab.module.user.esb
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
-public class EcmEndPoints {
-	public static final String SAVE_CONTENT_ENDPOINT = "direct:saveContent";
-
-	public static final String DELETE_RESOURCES_ENDPOINT = "direct:deleteResources";
+trait UserRemovedCommand {
+    def userRemoved(username: String, accountid: Integer)
 }

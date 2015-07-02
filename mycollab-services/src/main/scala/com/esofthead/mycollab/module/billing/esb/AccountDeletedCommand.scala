@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.user.esb;
+package com.esofthead.mycollab.module.billing.esb
+
+import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
+ *
  */
-public class UserEndpoints {
-	public static final String USER_REMOVE_ENDPOINT = "direct:userDelete";
+trait AccountDeletedCommand {
+    def accountDeleted(accountId: Int, feedback: CustomerFeedbackWithBLOBs)
 }

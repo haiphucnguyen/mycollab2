@@ -14,20 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.ecm.esb;
+package com.esofthead.mycollab.module.user.esb
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
-public interface DeleteResourcesCommand {
-	/**
-	 * 
-	 * @param path
-	 * @param userDelete
-	 * @param sAccountId
-	 */
-	void removeResource(String[] path, String userDelete, Integer sAccountId);
+object UserEndpoints {
+    val USER_REMOVE_ENDPOINT: String = "direct:userDelete"
 }

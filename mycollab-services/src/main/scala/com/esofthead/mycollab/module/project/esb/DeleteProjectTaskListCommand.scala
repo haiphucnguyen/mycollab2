@@ -30,5 +30,5 @@ trait DeleteProjectTaskListCommand {
      * @param projectId
      * @param taskListId
      */
-    def taskListRemoved(username: String, accountId: Int, projectId: Int, taskListId: Int)
+    def taskListRemoved(username: String, accountId: Integer, projectId: Integer, taskListId: Integer)
 }

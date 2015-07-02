@@ -14,14 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.billing.esb;
+package com.esofthead.mycollab.module.ecm.esb
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 1.0
- * 
+ *
  */
-public class BillingEndpoints {
-	public static final String ACCOUNT_DELETED_ENDPOINT = "direct:AccountDelete";
+trait DeleteResourcesCommand {
+    /**
+     *
+     * @param path
+     * @param userDelete
+     * @param sAccountId
+     */
+    def removeResource(path: Array[String], userDelete: String, sAccountId: Integer)
 }
