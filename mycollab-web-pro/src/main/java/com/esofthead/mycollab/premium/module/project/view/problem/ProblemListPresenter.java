@@ -24,141 +24,131 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class ProblemListPresenter extends
-		ProjectGenericListPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
-		implements MassUpdateCommand<Problem> {
-	private static final long serialVersionUID = 1L;
+public class ProblemListPresenter extends ProjectGenericListPresenter<ProblemListView, ProblemSearchCriteria, SimpleProblem>
+        implements MassUpdateCommand<Problem> {
+    private static final long serialVersionUID = 1L;
 
-	private ProblemService problemService;
+    private ProblemService problemService;
 
-	public ProblemListPresenter() {
-		super(ProblemListView.class, ProblemListNoItemView.class);
+    public ProblemListPresenter() {
+        super(ProblemListView.class, ProblemListNoItemView.class);
 
-		problemService = ApplicationContextUtil
-				.getSpringBean(ProblemService.class);
-	}
+        problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
+    }
 
-	@Override
-	protected void postInitView() {
-		super.postInitView();
+    @Override
+    protected void postInitView() {
+        super.postInitView();
 
-		view.getPopupActionHandlers().setMassActionHandler(
-				new DefaultMassEditActionHandler(this) {
+        view.getPopupActionHandlers().setMassActionHandler(new DefaultMassEditActionHandler(this) {
 
-					@Override
-					protected void onSelectExtra(String id) {
-						if (ViewItemAction.MAIL_ACTION().equals(id)) {
-							UI.getCurrent().addWindow(new MailFormWindow());
-						} else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
-							MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
-									"Mass Update Problems",
-									ProblemListPresenter.this);
-							UI.getCurrent().addWindow(massUpdateWindow);
-						}
+            @Override
+            protected void onSelectExtra(String id) {
+                if (ViewItemAction.MAIL_ACTION().equals(id)) {
+                    UI.getCurrent().addWindow(new MailFormWindow());
+                } else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
+                    MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
+                            "Mass Update Problems",
+                            ProblemListPresenter.this);
+                    UI.getCurrent().addWindow(massUpdateWindow);
+                }
 
-					}
+            }
 
-					@Override
-					protected String getReportTitle() {
-						return "Problem List";
-					}
+            @Override
+            protected String getReportTitle() {
+                return "Problem List";
+            }
 
-					@Override
-					protected Class<?> getReportModelClassType() {
-						return SimpleProblem.class;
-					}
-				});
-	}
+            @Override
+            protected Class<?> getReportModelClassType() {
+                return SimpleProblem.class;
+            }
+        });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables
-				.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
-			ProblemContainer problemContainer = (ProblemContainer) container;
-			problemContainer.removeAllComponents();
-			problemContainer.addComponent(view.getWidget());
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
+            ProblemContainer problemContainer = (ProblemContainer) container;
+            problemContainer.removeAllComponents();
+            problemContainer.addComponent(view.getWidget());
 
-			searchCriteria = (ProblemSearchCriteria) data.getParams();
-			int totalCount = problemService.getTotalCount(searchCriteria);
+            searchCriteria = (ProblemSearchCriteria) data.getParams();
+            int totalCount = problemService.getTotalCount(searchCriteria);
 
-			if (totalCount > 0) {
-				doSearch(searchCriteria);
-				displayListView(container, data);
-			} else {
-				displayNoExistItems(container, data);
-			}
+            if (totalCount > 0) {
+                doSearch(searchCriteria);
+                displayListView(container, data);
+            } else {
+                displayNoExistItems(container, data);
+            }
 
-			ProjectBreadcrumb breadcrumb = ViewManager
-					.getCacheComponent(ProjectBreadcrumb.class);
-			breadcrumb.gotoProblemList();
-		} else {
-			NotificationUtil.showMessagePermissionAlert();
-		}
-	}
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            breadcrumb.gotoProblemList();
+        } else {
+            NotificationUtil.showMessagePermissionAlert();
+        }
+    }
 
-	@Override
-	protected void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<>();
-			for (SimpleProblem item : currentDataList) {
-				if (item.isSelected()) {
-					keyList.add(item.getId());
-				}
-			}
+    @Override
+    protected void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleProblem> currentDataList = view.getPagedBeanTable().getCurrentDataList();
+            List<Problem> keyList = new ArrayList<>();
+            for (SimpleProblem item : currentDataList) {
+                if (item.isSelected()) {
+                    keyList.add(item);
+                }
+            }
 
-			if (keyList.size() > 0) {
-				problemService.massRemoveWithSession(keyList,
-						AppContext.getUsername(), AppContext.getAccountId());
-			}
-		} else {
-			problemService.removeByCriteria(searchCriteria,
-					AppContext.getAccountId());
-		}
+            if (keyList.size() > 0) {
+                problemService.massRemoveWithSession(keyList, AppContext.getUsername(), AppContext.getAccountId());
+            }
+        } else {
+            problemService.removeByCriteria(searchCriteria, AppContext.getAccountId());
+        }
 
-		int totalCount = problemService.getTotalCount(searchCriteria);
+        int totalCount = problemService.getTotalCount(searchCriteria);
 
-		if (totalCount > 0) {
-			doSearch(searchCriteria);
-			displayListView((ComponentContainer) view.getParent(), null);
-		} else {
-			displayNoExistItems((ComponentContainer) view.getParent(), null);
-		}
+        if (totalCount > 0) {
+            doSearch(searchCriteria);
+            displayListView((ComponentContainer) view.getParent(), null);
+        } else {
+            displayNoExistItems((ComponentContainer) view.getParent(), null);
+        }
 
-	}
+    }
 
-	@Override
-	public void massUpdate(Problem value) {
-		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<>();
-			for (SimpleProblem item : currentDataList) {
-				if (item.isSelected()) {
-					keyList.add(item.getId());
-				}
-			}
+    @Override
+    public void massUpdate(Problem value) {
+        if (!isSelectAll) {
+            Collection<SimpleProblem> currentDataList = view
+                    .getPagedBeanTable().getCurrentDataList();
+            List<Integer> keyList = new ArrayList<>();
+            for (SimpleProblem item : currentDataList) {
+                if (item.isSelected()) {
+                    keyList.add(item.getId());
+                }
+            }
 
-			if (keyList.size() > 0) {
-				problemService.massUpdateWithSession(value, keyList,
-						AppContext.getAccountId());
-				doSearch(searchCriteria);
-			}
-		} else {
-			problemService.updateBySearchCriteria(value, searchCriteria);
-			doSearch(searchCriteria);
-		}
-	}
+            if (keyList.size() > 0) {
+                problemService.massUpdateWithSession(value, keyList,
+                        AppContext.getAccountId());
+                doSearch(searchCriteria);
+            }
+        } else {
+            problemService.updateBySearchCriteria(value, searchCriteria);
+            doSearch(searchCriteria);
+        }
+    }
 
-	@Override
-	public ISearchableService<ProblemSearchCriteria> getSearchService() {
-		return problemService;
-	}
+    @Override
+    public ISearchableService<ProblemSearchCriteria> getSearchService() {
+        return problemService;
+    }
 }

@@ -22,10 +22,10 @@ import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfoMap;
 import com.esofthead.mycollab.common.interceptor.aspect.NotifyAgent;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.MessageMapper;
 import com.esofthead.mycollab.module.project.dao.MessageMapperExt;
@@ -41,6 +41,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -49,18 +51,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Traceable(nameField = "title", extraFieldName = "projectid")
 @NotifyAgent(MessageRelayEmailNotificationAction.class)
-public class MessageServiceImpl extends DefaultService<Integer, Message, MessageSearchCriteria>
-        implements MessageService {
+public class MessageServiceImpl extends DefaultService<Integer, Message, MessageSearchCriteria> implements MessageService {
 
     static {
         ClassInfoMap.put(MessageServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.MESSAGE));
     }
 
-    @Autowired private MessageMapper messageMapper;
+    @Autowired
+    private MessageMapper messageMapper;
 
-    @Autowired private MessageMapperExt messageMapperExt;
+    @Autowired
+    private MessageMapperExt messageMapperExt;
 
-    @Autowired private AsyncEventBus asyncEventBus;
+    @Autowired
+    private AsyncEventBus asyncEventBus;
 
     @Override
     public ICrudGenericDAO<Integer, Message> getCrudMapper() {
@@ -70,26 +74,22 @@ public class MessageServiceImpl extends DefaultService<Integer, Message, Message
     @Override
     public Integer saveWithSession(Message record, String username) {
         Integer recordId = super.saveWithSession(record, username);
-        CacheUtils.cleanCaches(record.getSaccountid(),
-                ProjectActivityStreamService.class);
+        CacheUtils.cleanCaches(record.getSaccountid(), ProjectActivityStreamService.class);
         return recordId;
     }
 
     @Override
     public Integer updateWithSession(Message record, String username) {
-        CacheUtils.cleanCaches(record.getSaccountid(),
-                ProjectActivityStreamService.class);
+        CacheUtils.cleanCaches(record.getSaccountid(), ProjectActivityStreamService.class);
         return super.updateWithSession(record, username);
     }
 
     @Override
-    public Integer removeWithSession(Integer primaryKey, String username,
-                                     Integer accountId) {
+    public void massRemoveWithSession(List<Message> items, String username, Integer accountId) {
+        super.massRemoveWithSession(items, username, accountId);
         CacheUtils.cleanCaches(accountId, ProjectActivityStreamService.class);
-        SimpleMessage message = findById(primaryKey, accountId);
-        DeleteProjectMessageEvent event = new DeleteProjectMessageEvent(username, accountId, message.getProjectid(), message.getId());
+        DeleteProjectMessageEvent event = new DeleteProjectMessageEvent(ArrayUtils.convertListToArray(items), username, accountId);
         asyncEventBus.post(event);
-        return super.removeWithSession(primaryKey, username, accountId);
     }
 
     @Override

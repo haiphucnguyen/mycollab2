@@ -231,28 +231,16 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
 
         @Override
         public void itemClick(final TableClickEvent event) {
-            final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event
-                    .getData();
+            final SimpleItemTimeLogging itemLogging = (SimpleItemTimeLogging) event.getData();
             if ("summary".equals(event.getFieldName())) {
                 if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
-                    EventBusFactory.getInstance()
-                            .post(new BugEvent.GotoRead(this, itemLogging
-                                    .getTypeid()));
-                } else if (ProjectTypeConstants.TASK.equals(itemLogging
-                        .getType())) {
-                    EventBusFactory.getInstance().post(
-                            new TaskEvent.GotoRead(this, itemLogging
-                                    .getTypeid()));
-                } else if (ProjectTypeConstants.RISK.equals(itemLogging
-                        .getType())) {
-                    EventBusFactory.getInstance().post(
-                            new RiskEvent.GotoRead(this, itemLogging
-                                    .getTypeid()));
-                } else if (ProjectTypeConstants.PROBLEM.equals(itemLogging
-                        .getType())) {
-                    EventBusFactory.getInstance().post(
-                            new ProblemEvent.GotoRead(this, itemLogging
-                                    .getTypeid()));
+                    EventBusFactory.getInstance().post(new BugEvent.GotoRead(this, itemLogging.getTypeid()));
+                } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoRead(this, itemLogging.getTypeid()));
+                } else if (ProjectTypeConstants.RISK.equals(itemLogging.getType())) {
+                    EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, itemLogging.getTypeid()));
+                } else if (ProjectTypeConstants.PROBLEM.equals(itemLogging.getType())) {
+                    EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, itemLogging.getTypeid()));
                 }
             } else if ("delete".equals(event.getFieldName())) {
                 ConfirmDialogExt.show(UI.getCurrent(),
@@ -269,10 +257,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
                                 if (dialog.isConfirmed()) {
                                     ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil
                                             .getSpringBean(ItemTimeLoggingService.class);
-                                    itemTimeLoggingService.removeWithSession(
-                                            itemLogging.getId(),
-                                            AppContext.getUsername(),
-                                            AppContext.getAccountId());
+                                    itemTimeLoggingService.removeWithSession(itemLogging,
+                                            AppContext.getUsername(), AppContext.getAccountId());
 
                                     refresh();
                                 }

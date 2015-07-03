@@ -23,19 +23,24 @@ import com.esofthead.mycollab.common.interceptor.aspect.*;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.TaskListMapper;
 import com.esofthead.mycollab.module.project.dao.TaskListMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.esb.DeleteProjectTaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectActivityStreamService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskGroupRelayEmailNotificationAction;
+import com.google.common.eventbus.AsyncEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -54,10 +59,9 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
         ClassInfoMap.put(ProjectTaskListServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK_LIST));
     }
 
-    @Autowired
-    protected TaskListMapper projectTaskListMapper;
-    @Autowired
-    protected TaskListMapperExt projectTaskListMapperExt;
+    @Autowired private TaskListMapper projectTaskListMapper;
+    @Autowired private TaskListMapperExt projectTaskListMapperExt;
+    @Autowired private AsyncEventBus asyncEventBus;
 
     @Override
     public ICrudGenericDAO<Integer, TaskList> getCrudMapper() {
@@ -75,25 +79,23 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
     }
 
     @Override
-    public Integer removeWithSession(Integer primaryKey, String username,
-                                     Integer accountId) {
+    public void massRemoveWithSession(List<TaskList> taskLists, String username, Integer accountId) {
+        super.massRemoveWithSession(taskLists, username, accountId);
         CacheUtils.cleanCaches(accountId, ProjectGenericTaskService.class);
-        return super.removeWithSession(primaryKey, username, accountId);
+        DeleteProjectTaskListEvent event = new DeleteProjectTaskListEvent(ArrayUtils.convertListToArray(taskLists), username, accountId);
+        asyncEventBus.post(event);
     }
 
     @Override
     public Integer saveWithSession(TaskList record, String username) {
         CacheUtils.cleanCaches(record.getSaccountid(),
-                ProjectGenericTaskService.class,
-                ProjectActivityStreamService.class);
+                ProjectGenericTaskService.class, ProjectActivityStreamService.class);
         return super.saveWithSession(record, username);
     }
 
     @Override
     public Integer updateWithSession(TaskList record, String username) {
-        CacheUtils.cleanCaches(record.getSaccountid(),
-                ProjectGenericTaskService.class,
-                ProjectActivityStreamService.class);
+        CacheUtils.cleanCaches(record.getSaccountid(), ProjectGenericTaskService.class, ProjectActivityStreamService.class);
         return super.updateWithSession(record, username);
     }
 

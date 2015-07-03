@@ -38,97 +38,88 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
     @Override
     protected void postInitView() {
-        view.getPreviewFormHandlers().addFormHandler(
-                new DefaultPreviewFormHandler<SimpleProblem>() {
-                    @Override
-                    public void onEdit(SimpleProblem data) {
-                        EventBusFactory.getInstance().post(
-                                new ProblemEvent.GotoEdit(this, data));
-                    }
+        view.getPreviewFormHandlers().addFormHandler(new DefaultPreviewFormHandler<SimpleProblem>() {
+            @Override
+            public void onEdit(SimpleProblem data) {
+                EventBusFactory.getInstance().post(new ProblemEvent.GotoEdit(this, data));
+            }
 
-                    @Override
-                    public void onAdd(SimpleProblem data) {
-                        EventBusFactory.getInstance().post(
-                                new ProblemEvent.GotoAdd(this, null));
-                    }
+            @Override
+            public void onAdd(SimpleProblem data) {
+                EventBusFactory.getInstance().post(new ProblemEvent.GotoAdd(this, null));
+            }
 
-                    @Override
-                    public void onDelete(final SimpleProblem data) {
-                        ConfirmDialogExt.show(UI.getCurrent(),
-                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                        AppContext.getSiteName()),
-                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                new ConfirmDialog.Listener() {
-                                    private static final long serialVersionUID = 1L;
+            @Override
+            public void onDelete(final SimpleProblem data) {
+                ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
 
-                                    @Override
-                                    public void onClose(ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            ProblemService problemService = ApplicationContextUtil
-                                                    .getSpringBean(ProblemService.class);
-                                            problemService.removeWithSession(data.getId(),
-                                                    AppContext.getUsername(), AppContext.getAccountId());
-                                            EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
-                                        }
-                                    }
-                                });
-                    }
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    ProblemService problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
+                                    problemService.removeWithSession(data,
+                                            AppContext.getUsername(), AppContext.getAccountId());
+                                    EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
+                                }
+                            }
+                        });
+            }
 
-                    @Override
-                    public void onClone(SimpleProblem data) {
-                        SimpleProblem cloneData = (SimpleProblem) data.copy();
-                        cloneData.setId(null);
-                        EventBusFactory.getInstance().post(new ProblemEvent.GotoEdit(this, cloneData));
-                    }
+            @Override
+            public void onClone(SimpleProblem data) {
+                SimpleProblem cloneData = (SimpleProblem) data.copy();
+                cloneData.setId(null);
+                EventBusFactory.getInstance().post(new ProblemEvent.GotoEdit(this, cloneData));
+            }
 
-                    @Override
-                    public void onCancel() {
-                        EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
-                    }
+            @Override
+            public void onCancel() {
+                EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
+            }
 
-                    @Override
-                    public void gotoNext(SimpleProblem data) {
-                        ProblemService problemService = ApplicationContextUtil
-                                .getSpringBean(ProblemService.class);
-                        ProblemSearchCriteria criteria = new ProblemSearchCriteria();
-                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
-                        Integer nextId = problemService.getNextItemKey(criteria);
-                        if (nextId != null) {
-                            EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
-                        } else {
-                            NotificationUtil.showGotoLastRecordNotification();
-                        }
+            @Override
+            public void gotoNext(SimpleProblem data) {
+                ProblemService problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
+                ProblemSearchCriteria criteria = new ProblemSearchCriteria();
+                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATER));
+                Integer nextId = problemService.getNextItemKey(criteria);
+                if (nextId != null) {
+                    EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
+                } else {
+                    NotificationUtil.showGotoLastRecordNotification();
+                }
 
-                    }
+            }
 
-                    @Override
-                    public void gotoPrevious(SimpleProblem data) {
-                        ProblemService problemService = ApplicationContextUtil
-                                .getSpringBean(ProblemService.class);
-                        ProblemSearchCriteria criteria = new ProblemSearchCriteria();
-                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
-                        Integer nextId = problemService.getPreviousItemKey(criteria);
-                        if (nextId != null) {
-                            EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
-                        } else {
-                            NotificationUtil.showGotoFirstRecordNotification();
-                        }
-                    }
-                });
+            @Override
+            public void gotoPrevious(SimpleProblem data) {
+                ProblemService problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
+                ProblemSearchCriteria criteria = new ProblemSearchCriteria();
+                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
+                Integer nextId = problemService.getPreviousItemKey(criteria);
+                if (nextId != null) {
+                    EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, nextId));
+                } else {
+                    NotificationUtil.showGotoFirstRecordNotification();
+                }
+            }
+        });
     }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
             if (data.getParams() instanceof Integer) {
-                ProblemService problemService = ApplicationContextUtil
-                        .getSpringBean(ProblemService.class);
-                SimpleProblem problem = problemService.findById(
-                        (Integer) data.getParams(), AppContext.getAccountId());
+                ProblemService problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
+                SimpleProblem problem = problemService.findById((Integer) data.getParams(), AppContext.getAccountId());
                 if (problem != null) {
                     ProblemContainer problemContainer = (ProblemContainer) container;
                     problemContainer.removeAllComponents();

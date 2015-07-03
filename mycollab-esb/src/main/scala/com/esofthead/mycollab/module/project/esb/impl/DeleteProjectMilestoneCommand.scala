@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.esb.impl
 
 import com.esofthead.mycollab.common.dao.CommentMapper
 import com.esofthead.mycollab.common.domain.CommentExample
-import com.esofthead.mycollab.module.GenericCommandHandler
+import com.esofthead.mycollab.module.GenericCommand
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
@@ -28,26 +28,25 @@ import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-object DeleteProjectMilestoneCommandImpl {
-    private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMilestoneCommandImpl])
+object DeleteProjectMilestoneCommand {
+    private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMilestoneCommand])
 }
 
-@Component class DeleteProjectMilestoneCommandImpl extends GenericCommandHandler {
+@Component class DeleteProjectMilestoneCommand extends GenericCommand {
     @Autowired private val resourceService: ResourceService = null
-
     @Autowired private val commentMapper: CommentMapper = null
 
     @AllowConcurrentEvents
     @Subscribe
     def removedMilestone(event: DeleteProjectMilestoneEvent): Unit = {
-        DeleteProjectMilestoneCommandImpl.LOG.debug("Remove milestone id {} of project {} by user {}",
+        DeleteProjectMilestoneCommand.LOG.debug("Remove milestone id {} of project {} by user {}",
             Array(event.milestoneId, event.projectId, event.username))
         removeRelatedFiles(event.accountId, event.projectId, event.milestoneId)
         removeRelatedComments(event.milestoneId)
     }
 
     private def removeRelatedFiles(accountId: Integer, projectId: Integer, milestoneId: Integer) {
-        DeleteProjectMilestoneCommandImpl.LOG.debug("Delete files of bug {} in project {}",
+        DeleteProjectMilestoneCommand.LOG.debug("Delete files of bug {} in project {}",
             Array(milestoneId, projectId))
         val attachmentPath: String = AttachmentUtils.getProjectEntityAttachmentPath(accountId, projectId,
             ProjectTypeConstants.MILESTONE, "" + milestoneId)
@@ -55,7 +54,7 @@ object DeleteProjectMilestoneCommandImpl {
     }
 
     private def removeRelatedComments(milestoneId: Integer) {
-        DeleteProjectMilestoneCommandImpl.LOG.debug("Delete related comments of milestone id {}", milestoneId)
+        DeleteProjectMilestoneCommand.LOG.debug("Delete related comments of milestone id {}", milestoneId)
         val ex: CommentExample = new CommentExample
         ex.createCriteria.andTypeEqualTo(ProjectTypeConstants.MILESTONE).andExtratypeidEqualTo(milestoneId)
         commentMapper.deleteByExample(ex)
