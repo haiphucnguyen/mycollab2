@@ -121,7 +121,8 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
     public void massRemoveWithSession(List<BugWithBLOBs> items, String username, Integer accountId) {
         super.massRemoveWithSession(items, username, accountId);
         CacheUtils.cleanCaches(accountId, ProjectService.class, ItemTimeLoggingService.class);
-        DeleteProjectBugEvent event = new DeleteProjectBugEvent(ArrayUtils.convertListToArray(items), username, accountId);
+        DeleteProjectBugEvent event = new DeleteProjectBugEvent(items.toArray(new BugWithBLOBs[items.size()]),
+                username, accountId);
         asyncEventBus.post(event);
     }
 

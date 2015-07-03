@@ -151,7 +151,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         super.massRemoveWithSession(items, username, accountId);
         CacheUtils.cleanCaches(accountId, ProjectTaskListService.class, ProjectService.class, ProjectGenericTaskService.class,
                 ProjectActivityStreamService.class, MilestoneService.class, ItemTimeLoggingService.class);
-        DeleteProjectTaskEvent event = new DeleteProjectTaskEvent(ArrayUtils.convertListToArray(items),
+        DeleteProjectTaskEvent event = new DeleteProjectTaskEvent(items.toArray(new Task[items.size()]),
                 username, accountId);
         asyncEventBus.post(event);
     }

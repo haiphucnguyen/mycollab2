@@ -111,7 +111,8 @@ public class ProblemServiceImpl extends DefaultService<Integer, Problem, Problem
         CacheUtils.cleanCaches(accountId, ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class);
         super.massRemoveWithSession(problems, username, accountId);
-        DeleteProjectProblemEvent event = new DeleteProjectProblemEvent(ArrayUtils.convertListToArray(problems), username, accountId);
+        DeleteProjectProblemEvent event = new DeleteProjectProblemEvent(problems.toArray(new Problem[problems.size()]),
+                username, accountId);
         asyncEventBus.post(event);
     }
 

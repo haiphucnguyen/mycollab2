@@ -31,7 +31,6 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.module.billing.service.BillingPlanCheckerService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -252,7 +251,7 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     @Override
     public void massRemoveWithSession(List<Project> projects, String username, Integer accountId) {
         super.massRemoveWithSession(projects, username, accountId);
-        DeleteProjectEvent event = new DeleteProjectEvent(ArrayUtils.convertListToArray(projects), accountId);
+        DeleteProjectEvent event = new DeleteProjectEvent(projects.toArray(new Project[projects.size()]), accountId);
         asyncEventBus.post(event);
     }
 

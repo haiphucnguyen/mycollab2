@@ -116,7 +116,8 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         ex.createCriteria().andSaccountidEqualTo(accountId).andIdIn(ArrayUtils.extractIds(members));
         projectMemberMapper.updateByExampleSelective(updateMember, ex);
 
-        DeleteProjectMemberEvent event = new DeleteProjectMemberEvent(ArrayUtils.convertListToArray(members), username, accountId);
+        DeleteProjectMemberEvent event = new DeleteProjectMemberEvent(members.toArray(new ProjectMember[members.size()]),
+                username, accountId);
         asyncEventBus.post(event);
     }
 

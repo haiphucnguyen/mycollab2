@@ -24,13 +24,8 @@ import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
 import com.esofthead.mycollab.module.project.esb.DeleteProjectBugEvent
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
-import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-
-object DeleteProjectBugCommandImpl {
-    private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectBugCommandImpl])
-}
 
 @Component class DeleteProjectBugCommandImpl extends GenericCommand {
     @Autowired private val resourceService: ResourceService = null
@@ -46,14 +41,12 @@ object DeleteProjectBugCommandImpl {
     }
 
     private def removeRelatedFiles(accountId: Integer, projectId: Integer, bugId: Integer) {
-        DeleteProjectBugCommandImpl.LOG.debug("Delete files of bug {} in project {}", Array(bugId, projectId))
         val attachmentPath: String = AttachmentUtils.getProjectEntityAttachmentPath(accountId, projectId,
             ProjectTypeConstants.BUG, "" + bugId)
         resourceService.removeResource(attachmentPath, "", accountId)
     }
 
     private def removeRelatedComments(bugId: Integer) {
-        DeleteProjectBugCommandImpl.LOG.debug("Delete related comments of bug {}", bugId)
         val ex: CommentExample = new CommentExample
         ex.createCriteria.andTypeEqualTo(ProjectTypeConstants.BUG).andExtratypeidEqualTo(bugId)
         commentMapper.deleteByExample(ex)

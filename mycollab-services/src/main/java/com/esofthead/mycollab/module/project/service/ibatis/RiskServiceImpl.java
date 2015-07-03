@@ -108,7 +108,8 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
         CacheUtils.cleanCaches(accountId, ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class);
         super.massRemoveWithSession(items, username, accountId);
-        DeleteProjectRiskEvent event = new DeleteProjectRiskEvent(ArrayUtils.convertListToArray(items), username, accountId);
+        DeleteProjectRiskEvent event = new DeleteProjectRiskEvent(items.toArray(new Risk[items.size()]),
+                username, accountId);
         asyncEventBus.post(event);
     }
 }

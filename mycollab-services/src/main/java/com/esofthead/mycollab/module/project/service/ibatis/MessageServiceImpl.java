@@ -25,7 +25,6 @@ import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.MessageMapper;
 import com.esofthead.mycollab.module.project.dao.MessageMapperExt;
@@ -88,7 +87,8 @@ public class MessageServiceImpl extends DefaultService<Integer, Message, Message
     public void massRemoveWithSession(List<Message> items, String username, Integer accountId) {
         super.massRemoveWithSession(items, username, accountId);
         CacheUtils.cleanCaches(accountId, ProjectActivityStreamService.class);
-        DeleteProjectMessageEvent event = new DeleteProjectMessageEvent(ArrayUtils.convertListToArray(items), username, accountId);
+        DeleteProjectMessageEvent event = new DeleteProjectMessageEvent(items.toArray(new Message[items.size()]),
+                username, accountId);
         asyncEventBus.post(event);
     }
 

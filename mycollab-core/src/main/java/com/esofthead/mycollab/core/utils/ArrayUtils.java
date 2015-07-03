@@ -31,10 +31,6 @@ public class ArrayUtils {
         return array != null && array.length != 0;
     }
 
-    public static <T> T[] convertListToArray(List<T> list) {
-        return (T[]) list.toArray();
-    }
-
     public static List<Integer> extractIds(List items) {
         try {
             List<Integer> keys = new ArrayList<>(items.size());

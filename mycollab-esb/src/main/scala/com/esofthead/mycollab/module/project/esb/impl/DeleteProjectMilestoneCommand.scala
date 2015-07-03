@@ -24,13 +24,8 @@ import com.esofthead.mycollab.module.file.AttachmentUtils
 import com.esofthead.mycollab.module.project.ProjectTypeConstants
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMilestoneEvent
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
-import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-
-object DeleteProjectMilestoneCommand {
-    private val LOG: Logger = LoggerFactory.getLogger(classOf[DeleteProjectMilestoneCommand])
-}
 
 @Component class DeleteProjectMilestoneCommand extends GenericCommand {
     @Autowired private val resourceService: ResourceService = null
@@ -39,22 +34,18 @@ object DeleteProjectMilestoneCommand {
     @AllowConcurrentEvents
     @Subscribe
     def removedMilestone(event: DeleteProjectMilestoneEvent): Unit = {
-        DeleteProjectMilestoneCommand.LOG.debug("Remove milestone id {} of project {} by user {}",
-            Array(event.milestoneId, event.projectId, event.username))
+        Array(event.milestoneId, event.projectId, event.username)
         removeRelatedFiles(event.accountId, event.projectId, event.milestoneId)
         removeRelatedComments(event.milestoneId)
     }
 
     private def removeRelatedFiles(accountId: Integer, projectId: Integer, milestoneId: Integer) {
-        DeleteProjectMilestoneCommand.LOG.debug("Delete files of bug {} in project {}",
-            Array(milestoneId, projectId))
         val attachmentPath: String = AttachmentUtils.getProjectEntityAttachmentPath(accountId, projectId,
             ProjectTypeConstants.MILESTONE, "" + milestoneId)
         resourceService.removeResource(attachmentPath, "", accountId)
     }
 
     private def removeRelatedComments(milestoneId: Integer) {
-        DeleteProjectMilestoneCommand.LOG.debug("Delete related comments of milestone id {}", milestoneId)
         val ex: CommentExample = new CommentExample
         ex.createCriteria.andTypeEqualTo(ProjectTypeConstants.MILESTONE).andExtratypeidEqualTo(milestoneId)
         commentMapper.deleteByExample(ex)

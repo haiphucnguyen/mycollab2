@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.interceptor.aspect.*;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.TaskListMapper;
 import com.esofthead.mycollab.module.project.dao.TaskListMapperExt;
@@ -59,9 +58,12 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
         ClassInfoMap.put(ProjectTaskListServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK_LIST));
     }
 
-    @Autowired private TaskListMapper projectTaskListMapper;
-    @Autowired private TaskListMapperExt projectTaskListMapperExt;
-    @Autowired private AsyncEventBus asyncEventBus;
+    @Autowired
+    private TaskListMapper projectTaskListMapper;
+    @Autowired
+    private TaskListMapperExt projectTaskListMapperExt;
+    @Autowired
+    private AsyncEventBus asyncEventBus;
 
     @Override
     public ICrudGenericDAO<Integer, TaskList> getCrudMapper() {
@@ -82,7 +84,8 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
     public void massRemoveWithSession(List<TaskList> taskLists, String username, Integer accountId) {
         super.massRemoveWithSession(taskLists, username, accountId);
         CacheUtils.cleanCaches(accountId, ProjectGenericTaskService.class);
-        DeleteProjectTaskListEvent event = new DeleteProjectTaskListEvent(ArrayUtils.convertListToArray(taskLists), username, accountId);
+        DeleteProjectTaskListEvent event = new DeleteProjectTaskListEvent(taskLists.toArray(new TaskList[taskLists.size()]),
+                username, accountId);
         asyncEventBus.post(event);
     }
 
