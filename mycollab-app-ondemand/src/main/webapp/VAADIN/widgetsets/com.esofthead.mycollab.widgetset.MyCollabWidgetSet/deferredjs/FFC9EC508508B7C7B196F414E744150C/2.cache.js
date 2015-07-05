@@ -1,0 +1,1 @@
+$wnd.com_esofthead_mycollab_widgetset_MyCollabWidgetSet.runAsyncCallback2('lAb(1895,1,o0e);_.Le=function $Oc(){kuc((!duc&&(duc=new puc),duc),this.a.d)};zSe(ts)(2);\n//# sourceURL=com.esofthead.mycollab.widgetset.MyCollabWidgetSet-2.js\n')

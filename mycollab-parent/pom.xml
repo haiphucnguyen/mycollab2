@@ -311,7 +311,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.2.2</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -346,7 +346,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.4.201502262128</version>
+                <version>0.7.5.201505241946</version>
                 <executions>
                     <execution>
                         <goals>
@@ -383,7 +383,7 @@
                 <plugin>
                     <groupId>net.alchim31.maven</groupId>
                     <artifactId>scala-maven-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.2.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
