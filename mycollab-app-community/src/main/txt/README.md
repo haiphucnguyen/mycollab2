@@ -54,6 +54,8 @@ Version 5.1.0
 
 **Bug Fixes**
 
+* Fix gzip response because Jetty 9.3 deprecate servlet gzip filter
+
 
 Version 5.0.10
 -----------------------------
