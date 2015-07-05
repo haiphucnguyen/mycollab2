@@ -104,6 +104,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-servlets</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
             <version>${vaadinVersion}</version>
