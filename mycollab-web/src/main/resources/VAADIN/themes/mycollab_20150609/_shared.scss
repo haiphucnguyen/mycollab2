@@ -314,11 +314,12 @@
   }
 
   .optionPopupContent {
-    background-color:antiquewhite;
+    background-color: #ffffff;
     margin:-5px;
     .action-wrap {
       &:hover {
-        background-color: aquamarine;
+        background-color: #82BA4F;
+        color: #ffffff;
       }
       .v-button-action {
         background-color:transparent;
@@ -328,11 +329,8 @@
           &:hover {
             background-color: transparent;
           }
-          .v-button-caption {
-            color: gray;
-          }
           .v-icon {
-            color: brown;
+            color: #006dac;
           }
         }
       }

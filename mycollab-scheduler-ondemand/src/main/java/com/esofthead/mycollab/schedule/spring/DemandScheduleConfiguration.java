@@ -1,12 +1,9 @@
 package com.esofthead.mycollab.schedule.spring;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
 import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
-import com.esofthead.mycollab.spring.DataSourceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -28,20 +25,23 @@ public class DemandScheduleConfiguration {
         return bean;
     }
 
-    @Bean public CronTriggerFactoryBean sendingCountUserLoginByDateTrigger() {
+    @Bean
+    public CronTriggerFactoryBean sendingCountUserLoginByDateTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendCountUserLoginByDateJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
 
-    @Bean public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
+    @Bean
+    public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(BillingSendingNotificationJob.class);
         return bean;
     }
 
-    @Bean public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
+    @Bean
+    public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendAccountBillingRequestEmailJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
@@ -51,7 +51,8 @@ public class DemandScheduleConfiguration {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Bean public SchedulerFactoryBean quartzSchedulerDemand() {
+    @Bean
+    public SchedulerFactoryBean quartzSchedulerDemand() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
 //        if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
 //            bean.setDataSource(new DataSourceConfiguration().dataSource());
