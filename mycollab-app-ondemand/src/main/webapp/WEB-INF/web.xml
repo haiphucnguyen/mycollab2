@@ -40,7 +40,7 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
-
+<!--
     <filter>
         <filter-name>cross-origin</filter-name>
         <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
@@ -49,7 +49,7 @@
         <filter-name>cross-origin</filter-name>
         <url-pattern>/VAADIN/themes/base/fonts/*</url-pattern>
     </filter-mapping>
-
+-->
     <context-param>
         <param-name>contextClass</param-name>
         <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
