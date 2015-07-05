@@ -5,7 +5,7 @@
 <module>
     <!-- WS Compiler: manually edited -->
 
-    <generate-with class="com.esofthead.mycollab.widgetset.OptimizedConnectorBundleLoaderFactory">
+    <generate-with class="CommunityOptimizedConnectorBundleLoaderFactory">
         <when-type-assignable class="com.vaadin.client.metadata.ConnectorBundleLoader" />
     </generate-with>
 

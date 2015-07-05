@@ -14,12 +14,11 @@ public class PremiumServerRunner extends GenericServerRunner {
         WebAppContext webAppContext = new WebAppContext();
         webAppContext.setContextPath("/");
         webAppContext.setWar(baseDir);
-        webAppContext.setClassLoader(Thread.currentThread()
-                .getContextClassLoader());
+        webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
         GzipHandler gzipHandler = new GzipHandler();
         gzipHandler.addExcludedMimeTypes("text/html,text/plain,text/xml,application/xhtml+xml,text/css,application/javascript,image/svg+xml");
+        webAppContext.setGzipHandler(gzipHandler);
         webAppContext.setResourceBase(baseDir);
-
         return webAppContext;
     }
 
