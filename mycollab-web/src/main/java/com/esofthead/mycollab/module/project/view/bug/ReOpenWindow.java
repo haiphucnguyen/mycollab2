@@ -23,6 +23,7 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.components.BugResolutionComboBox;
 import com.esofthead.mycollab.module.project.view.bug.components.VersionMultiSelectField;
@@ -85,7 +86,7 @@ class ReOpenWindow extends Window {
         public void setBean(final BugWithBLOBs newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
-            super.setBean(newDataSource);
+            super.setBean((BugWithBLOBs)newDataSource.copy());
         }
 
         class FormLayoutFactory implements IFormLayoutFactory {
@@ -94,12 +95,12 @@ class ReOpenWindow extends Window {
 
             @Override
             public ComponentContainer getLayout() {
-                final VerticalLayout layout = new VerticalLayout();
-                this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
+                VerticalLayout layout = new VerticalLayout();
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
 
-                layout.addComponent(this.informationLayout.getLayout());
+                layout.addComponent(informationLayout.getLayout());
 
-                final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
+                MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
                 layout.addComponent(controlsBtn);
 
                 Button wonFixBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
@@ -180,7 +181,9 @@ class ReOpenWindow extends Window {
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (propertyId.equals("resolution")) {
-                    return BugResolutionComboBox.getInstanceForValidBugWindow();
+                    BugResolutionComboBox resolutionField = BugResolutionComboBox.getInstanceForValidBugWindow();
+                    bean.setResolution(OptionI18nEnum.BugResolution.ReOpen.name());
+                    return resolutionField;
                 } else if (propertyId.equals("assignuser")) {
                     return new ProjectMemberSelectionField();
                 } else if (propertyId.equals("fixedVersions")) {
