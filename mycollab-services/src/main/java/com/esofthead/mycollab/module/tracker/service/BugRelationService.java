@@ -19,11 +19,11 @@ package com.esofthead.mycollab.module.tracker.service;
 import com.esofthead.mycollab.cache.IgnoreCacheClass;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.module.tracker.domain.RelatedBug;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 
 import java.util.List;
 
 @IgnoreCacheClass
 public interface BugRelationService extends ICrudService<Integer, RelatedBug> {
-    List<SimpleBug> findRelatedBugs(Integer bugId);
+    List<SimpleRelatedBug> findRelatedBugs(Integer bugId);
 }

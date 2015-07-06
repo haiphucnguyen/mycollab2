@@ -316,8 +316,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         protected Field<?> onCreateField(final Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(beanItem.getAssignuser(),
-                        beanItem.getAssignUserAvatarId(),
-                        beanItem.getAssignUserFullName());
+                        beanItem.getAssignUserAvatarId(), beanItem.getAssignUserFullName());
             } else if (SimpleTask.Field.taskListName.equalTo(propertyId)) {
                 return new DefaultViewField(beanItem.getTaskListName());
             } else if (Task.Field.startdate.equalTo(propertyId)) {
@@ -334,8 +333,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 return new ProjectItemViewField(ProjectTypeConstants.TASK_LIST, beanItem.getTasklistid() + "",
                         beanItem.getTaskListName());
             } else if (Task.Field.id.equalTo(propertyId)) {
-                return new ProjectFormAttachmentDisplayField(
-                        beanItem.getProjectid(),
+                return new ProjectFormAttachmentDisplayField(beanItem.getProjectid(),
                         ProjectTypeConstants.TASK, beanItem.getId());
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
@@ -394,8 +392,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             contentLayout.addComponent(addNewTaskBtn);
 
             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-            List<SimpleTask> subTasks = taskService.findSubTasks(
-                    beanItem.getId(), AppContext.getAccountId());
+            List<SimpleTask> subTasks = taskService.findSubTasks(beanItem.getId(), AppContext.getAccountId());
             if (CollectionUtils.isNotEmpty(subTasks)) {
                 for (SimpleTask subTask : subTasks) {
                     tasksLayout.addComponent(generateSubTaskContent(subTask));
@@ -472,9 +469,9 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             }
 
             if (subTask.getDeadline() != null) {
-                Div deadline = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage
-                        (TaskI18nEnum.FORM_DEADLINE), AppContext.formatPrettyTime(subTask.getDeadline()))))
-                        .setStyle("display:inline").setCSSClass("footer2").setTitle(AppContext.formatDate(subTask.getDeadline()));
+                Div deadline = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
+                        AppContext.formatPrettyTime(subTask.getDeadline())))).setStyle("display:inline").
+                        setCSSClass("footer2").setTitle(AppContext.formatDate(subTask.getDeadline()));
 
                 resultDiv.appendChild(deadline);
             }
@@ -522,8 +519,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 ProjectMemberLink assignUserLink = new ProjectMemberLink(assignUserName, assignUserAvatarId, assignUserDisplayName);
                 layout.addComponent(assignUserLink, 1, 1);
             } catch (Exception e) {
-                LOG.error("Can not build user link {} ",
-                        BeanUtility.printBeanObj(bean));
+                LOG.error("Can not build user link {} ", BeanUtility.printBeanObj(bean));
             }
 
             this.addComponent(layout);

@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper;
 import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.RelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class BugRelationServiceImpl extends DefaultCrudService<Integer, RelatedB
     }
 
     @Override
-    public List<SimpleBug> findRelatedBugs(Integer bugId) {
+    public List<SimpleRelatedBug> findRelatedBugs(Integer bugId) {
         return relatedBugMapperExt.findRelatedBugs(bugId);
     }
 }

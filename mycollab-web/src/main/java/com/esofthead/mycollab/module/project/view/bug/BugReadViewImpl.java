@@ -20,14 +20,12 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectResources;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
@@ -39,10 +37,10 @@ import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDispla
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.bug.components.LinkIssueWindow;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
+import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper;
+import com.esofthead.mycollab.module.tracker.domain.*;
 import com.esofthead.mycollab.module.tracker.domain.Component;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -52,6 +50,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
+import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -65,6 +64,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.button.MButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -231,7 +231,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     @Override
-    public void previewItem(final SimpleBug item) {
+    public void previewItem(SimpleBug item) {
         super.previewItem(item);
         displayWorkflowControl();
         ((BugPreviewFormLayout) previewLayout).displayBugHeader(beanItem);
@@ -245,8 +245,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected void initRelatedComponents() {
         commentList = new CommentDisplay(ProjectTypeConstants.BUG,
-                CurrentProjectVariables.getProjectId(),
-                BugRelayEmailNotificationAction.class);
+                CurrentProjectVariables.getProjectId(), BugRelayEmailNotificationAction.class);
 
         historyList = new BugHistoryList();
         dateInfoComp = new DateInfoComp();
@@ -282,8 +281,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     private static class BugPreviewFormLayout extends ReadViewLayout {
         private Label titleLbl;
 
-        void displayBugHeader(SimpleBug bug) {
-            MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
+        void displayBugHeader(final SimpleBug bug) {
+            MVerticalLayout header = new MVerticalLayout().withWidth("100%").withMargin(false);
             titleLbl = new Label(bug.getSummary());
             titleLbl.setStyleName("headerName");
             header.with(titleLbl).expand(titleLbl);
@@ -295,6 +294,46 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             } else if (bug.isOverdue()) {
                 this.setTitleStyleName("headerNameOverdue");
             }
+
+            BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
+            List<SimpleRelatedBug> relatedBugs = bugRelationService.findRelatedBugs(bug.getId());
+            if (relatedBugs != null && relatedBugs.size() > 0) {
+                for (final SimpleRelatedBug relatedBug : relatedBugs) {
+                    Label spacingLbl = new Label("&nbsp;&nbsp;&nbsp;&nbsp;", ContentMode.HTML);
+                    MHorizontalLayout bugContainer = new MHorizontalLayout().with(spacingLbl).withAlign(spacingLbl, Alignment.MIDDLE_LEFT);
+                    bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+                    String bugLinkValue = buildItemValue(relatedBug);
+                    Button statusLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
+                    statusLink.setStyleName("link");
+                    statusLink.addStyleName("block");
+                    Label bugLink = new Label(bugLinkValue, ContentMode.HTML);
+                    bugContainer.with(bugLink);
+                    Button removeBtn = new Button("", new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(ClickEvent clickEvent) {
+                            ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                            AppContext.getSiteName()),
+                                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                    AppContext.getMessage(GenericI18Enum.BUTTON_NO), new ConfirmDialog.Listener() {
+                                        @Override
+                                        public void onClose(ConfirmDialog confirmDialog) {
+                                            RelatedBugExample ex = new RelatedBugExample();
+                                            ex.createCriteria().andBugidEqualTo(bug.getId()).
+                                                    andRelatedidEqualTo(relatedBug.getBugId());
+                                            RelatedBugMapper bugMapper = ApplicationContextUtil.getSpringBean(RelatedBugMapper.class);
+                                            bugMapper.deleteByExample(ex);
+                                           displayBugHeader(bug);
+                                        }
+                                    });
+                        }
+                    });
+                    removeBtn.setIcon(FontAwesome.TRASH_O);
+                    removeBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+                    bugContainer.with(statusLink, bugLink, removeBtn);
+                    header.with(bugContainer);
+                }
+            }
         }
 
         @Override
@@ -303,23 +342,30 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         }
 
         @Override
-        public void addTitleStyleName(final String styleName) {
+        public void addTitleStyleName(String styleName) {
             this.titleLbl.addStyleName(styleName);
         }
 
         @Override
-        public void setTitleStyleName(final String styleName) {
+        public void setTitleStyleName(String styleName) {
             this.titleLbl.setStyleName(styleName);
         }
 
         @Override
-        public void removeTitleStyleName(final String styleName) {
+        public void removeTitleStyleName(String styleName) {
             this.titleLbl.removeStyleName(styleName);
         }
 
         @Override
-        public void setTitle(final String title) {
+        public void setTitle(String title) {
         }
+    }
+
+    private static String buildItemValue(SimpleRelatedBug relatedBug) {
+        String linkName = String.format("[#%d] - %s", relatedBug.getBugKey(), relatedBug.getBugSummary());
+        A bugLink = new A().setHref(ProjectLinkBuilder.generateBugPreviewFullLink(relatedBug.getBugKey(),
+                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
+        return bugLink.write();
     }
 
     @Override
@@ -344,7 +390,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         MButton linkBtn = new MButton("Link", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new LinkIssueWindow(beanItem));
+                UI.getCurrent().addWindow(new LinkIssueWindow(BugReadViewImpl.this, beanItem));
             }
         }).withIcon(FontAwesome.LINK);
         linkBtn.addStyleName("black");
@@ -417,8 +463,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             } else if (BugWithBLOBs.Field.createdtime.equalTo(propertyId)) {
                 this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_CREATED_TIME), 1, 4);
             } else if (SimpleBug.Field.loguserFullName.equalTo(propertyId)) {
-                this.informationLayout.addComponent(field,
-                        AppContext.getMessage(BugI18nEnum.FORM_LOG_BY), 0, 5);
+                this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_LOG_BY), 0, 5);
             } else if (SimpleBug.Field.assignuserFullName.equalTo(propertyId)) {
                 this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 5);
             } else if (SimpleBug.Field.milestoneName.equalTo(propertyId)) {
@@ -476,8 +521,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                             @Override
                             public void buttonClick(ClickEvent event) {
-                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(
-                                        BugReadViewImpl.this, component.getId()));
+                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(BugReadViewImpl.this, component.getId()));
                             }
                         });
                         componentContainer.addComponentField(componentLink);
@@ -498,8 +542,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                             @Override
                             public void buttonClick(ClickEvent event) {
-                                EventBusFactory.getInstance().post(
-                                        new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
+                                EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
                             }
                         });
                         componentContainer.addComponentField(versionLink);
@@ -520,8 +563,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                             @Override
                             public void buttonClick(ClickEvent event) {
-                                EventBusFactory.getInstance().post(
-                                        new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
+                                EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
                             }
                         });
                         componentContainer.addComponentField(versionLink);
@@ -534,8 +576,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 }
 
             } else if (SimpleBug.Field.milestoneName.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "",
-                        beanItem.getMilestoneName());
+                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "", beanItem.getMilestoneName());
             } else if (BugWithBLOBs.Field.environment.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getEnvironment());
             } else if (BugWithBLOBs.Field.description.equalTo(propertyId)) {
@@ -544,8 +585,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    Resource iconPriority = new ExternalResource(ProjectResources.
-                            getIconResourceLink12ByBugPriority(beanItem.getPriority()));
+                    Resource iconPriority = new ExternalResource(ProjectResources.getIconResourceLink12ByBugPriority(beanItem.getPriority()));
                     Image iconEmbedded = new Image(null, iconPriority);
                     Label lbPriority = new Label(AppContext.getMessage(BugPriority.class, beanItem.getPriority()));
 

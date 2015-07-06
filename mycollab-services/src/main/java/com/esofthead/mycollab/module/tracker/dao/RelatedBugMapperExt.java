@@ -16,12 +16,12 @@
  */
 package com.esofthead.mycollab.module.tracker.dao;
 
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface RelatedBugMapperExt {
 
-    List<SimpleBug> findRelatedBugs(@Param("bugId") Integer bugId);
+    List<SimpleRelatedBug> findRelatedBugs(@Param("bugId") Integer bugId);
 }
