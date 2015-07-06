@@ -308,7 +308,7 @@ a.pending {
 
 .v-progressbar-wrapper {
 	height: 18px;
-	background: none no-repeat 0 0 #F5F5F5;
+	background: none no-repeat 0 0 #f9f9f9;
 	border: 1px solid #CDCDCD;
 }
 
@@ -317,7 +317,7 @@ a.pending {
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	background: none no-repeat 0 0 paleturquoise;
+	background: none no-repeat 0 0 #93c6f0;
 	margin: -1px;
 	border: 1px solid #CDCDCD;
 }
@@ -7702,7 +7702,7 @@ a.pending {
 
 .v-progressbar-wrapper {
 	height: 18px;
-	background: none no-repeat 0 0 #F5F5F5;
+	background: none no-repeat 0 0 #f9f9f9;
 	border: 1px solid #CDCDCD;
 }
 
@@ -7711,7 +7711,7 @@ a.pending {
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	background: none no-repeat 0 0 paleturquoise;
+	background: none no-repeat 0 0 #93c6f0;
 	margin: -1px;
 	border: 1px solid #CDCDCD;
 }

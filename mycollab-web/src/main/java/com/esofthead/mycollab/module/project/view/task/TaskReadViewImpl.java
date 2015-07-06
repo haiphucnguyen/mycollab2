@@ -262,10 +262,13 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             }
 
             if (task.isCompleted()) {
+                titleLbl.removeStyleName("pending headerNameOverdue");
                 titleLbl.addStyleName("completed");
             } else if (task.isPending()) {
+                titleLbl.removeStyleName("completed headerNameOverdue");
                 titleLbl.addStyleName("pending");
             } else if (task.isOverdue()) {
+                titleLbl.removeStyleName("completed pending");
                 titleLbl.setStyleName("headerNameOverdue");
             }
         }
