@@ -7432,8 +7432,9 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	float: none;
 }
 
-.v-popupbutton .v-popup-indicator {
+div .v-popupbutton .v-popup-indicator {
 	background-position: -7px -10px !important;
+	width: 18px;
 }
 
 .v-popupbutton .v-button-caption:before {

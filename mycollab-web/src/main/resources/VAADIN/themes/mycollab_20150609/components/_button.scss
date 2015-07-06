@@ -480,9 +480,10 @@
     float: none;
   }
 
-  .v-popupbutton {
+  div .v-popupbutton {
     .v-popup-indicator {
       background-position: -7px -10px !important;
+      width: 18px;
     }
   }
 
