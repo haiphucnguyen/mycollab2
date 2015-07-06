@@ -274,10 +274,14 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }
 
         private String buildParentTaskLink(SimpleTask task) {
+            String uid = UUID.randomUUID().toString();
             String linkName = String.format("[#%d] - %s", task.getParentTaskKey(), task.getParentTaskName());
-            A taskLink = new A().setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getParentTaskKey(),
+            A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getParentTaskKey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-            return taskLink.write();
+            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK,
+                    task.getId() + ""));
+            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+            return new Div().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid)).write();
         }
 
         @Override

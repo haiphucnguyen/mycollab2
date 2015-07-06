@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -44,6 +45,7 @@ import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -51,6 +53,7 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -71,6 +74,7 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -221,8 +225,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
             this.bugWorkflowControl.addComponent(navButton);
         }
-        this.bugWorkflowControl.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.BUGS));
+        this.bugWorkflowControl.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
     }
 
     @Override
@@ -323,7 +326,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                                                     andRelatedidEqualTo(relatedBug.getBugId());
                                             RelatedBugMapper bugMapper = ApplicationContextUtil.getSpringBean(RelatedBugMapper.class);
                                             bugMapper.deleteByExample(ex);
-                                           displayBugHeader(bug);
+                                            displayBugHeader(bug);
                                         }
                                     });
                         }
@@ -362,10 +365,15 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private static String buildItemValue(SimpleRelatedBug relatedBug) {
+        String uid = UUID.randomUUID().toString();
         String linkName = String.format("[#%d] - %s", relatedBug.getBugKey(), relatedBug.getBugSummary());
-        A bugLink = new A().setHref(ProjectLinkBuilder.generateBugPreviewFullLink(relatedBug.getBugKey(),
+        A bugLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(relatedBug.getBugKey(),
                 CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-        return bugLink.write();
+        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG,
+                relatedBug.getBugId() + ""));
+        bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+        return new Div().appendChild(bugLink, DivLessFormatter.EMPTY_SPACE(),
+                TooltipHelper.buildDivTooltipEnable(uid)).write();
     }
 
     @Override
