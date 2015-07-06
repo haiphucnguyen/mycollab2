@@ -34,6 +34,9 @@
     </appender>
     <logger name="org.springframework" level="INFO"/>
     <logger name="com.esofthead.mycollab.**.dao" level="DEBUG"/>
+    <logger name="java.sql" level="DEBUG"/>
+    <logger name="org.apache.ibatis" level="DEBUG">
+    </logger>
     <logger name="com.esofthead" level="INFO"/>
     <logger name="org.eclipse.jetty" level="INFO"/>
     <root level="INFO">

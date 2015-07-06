@@ -29,6 +29,8 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BugRelationServiceImpl extends DefaultCrudService<Integer, RelatedBug> implements BugRelationService {
     @Autowired
@@ -56,5 +58,10 @@ public class BugRelationServiceImpl extends DefaultCrudService<Integer, RelatedB
             }
         }
         return super.saveWithSession(record, username);
+    }
+
+    @Override
+    public List<SimpleBug> findRelatedBugs(Integer bugId) {
+        return relatedBugMapperExt.findRelatedBugs(bugId);
     }
 }
