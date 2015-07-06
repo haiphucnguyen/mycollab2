@@ -102,112 +102,75 @@ class ReOpenWindow extends Window {
                 final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
                 layout.addComponent(controlsBtn);
 
-                final Button wonFixBtn = new Button(
-                        AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(
-                                    final Button.ClickEvent event) {
+                Button wonFixBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(final Button.ClickEvent event) {
+                        if (EditForm.this.validateForm()) {
+                            bug.setStatus(BugStatus.ReOpened.name());
 
-                                if (EditForm.this.validateForm()) {
-                                    ReOpenWindow.this.bug
-                                            .setStatus(BugStatus.ReOpened
-                                                    .name());
+                            BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.
+                                    getSpringBean(BugRelatedItemService.class);
+                            bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), fixedVersionSelect.getSelectedItems());
 
-                                    final BugRelatedItemService bugRelatedItemService = ApplicationContextUtil
-                                            .getSpringBean(BugRelatedItemService.class);
-                                    bugRelatedItemService.updateFixedVersionsOfBug(
-                                            ReOpenWindow.this.bug.getId(),
-                                            ReOpenWindow.this.fixedVersionSelect
-                                                    .getSelectedItems());
+                            // Save bug status and assignee
+                            BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                            bugService.updateSelectiveWithSession(bug, AppContext.getUsername());
 
-                                    // Save bug status and assignee
-                                    final BugService bugService = ApplicationContextUtil
-                                            .getSpringBean(BugService.class);
-                                    bugService.updateSelectiveWithSession(
-                                            ReOpenWindow.this.bug,
-                                            AppContext.getUsername());
+                            // Save comment
+                            String commentValue = commentArea.getValue();
+                            if (StringUtils.isNotBlank(commentValue)) {
+                                CommentWithBLOBs comment = new CommentWithBLOBs();
+                                comment.setComment(Jsoup.clean(commentValue, Whitelist.relaxed()));
+                                comment.setCreatedtime(new GregorianCalendar().getTime());
+                                comment.setCreateduser(AppContext.getUsername());
+                                comment.setSaccountid(AppContext.getAccountId());
+                                comment.setType(ProjectTypeConstants.BUG);
+                                comment.setTypeid("" + bug.getId());
+                                comment.setExtratypeid(CurrentProjectVariables.getProjectId());
 
-                                    // Save comment
-                                    final String commentValue = EditForm.this.commentArea
-                                            .getValue();
-                                    if (StringUtils.isNotBlank(commentValue)) {
-                                        final CommentWithBLOBs comment = new CommentWithBLOBs();
-                                        comment.setComment(Jsoup.clean(
-                                                commentValue,
-                                                Whitelist.relaxed()));
-                                        comment.setCreatedtime(new GregorianCalendar()
-                                                .getTime());
-                                        comment.setCreateduser(AppContext
-                                                .getUsername());
-                                        comment.setSaccountid(AppContext
-                                                .getAccountId());
-                                        comment.setType(ProjectTypeConstants.BUG);
-                                        comment.setTypeid("" + bug.getId());
-                                        comment.setExtratypeid(CurrentProjectVariables
-                                                .getProjectId());
-
-                                        final CommentService commentService = ApplicationContextUtil
-                                                .getSpringBean(CommentService.class);
-                                        commentService.saveWithSession(comment,
-                                                AppContext.getUsername());
-                                    }
-
-                                    ReOpenWindow.this.close();
-                                    ReOpenWindow.this.callbackForm
-                                            .refreshBugItem();
-                                }
-
+                                CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
+                                commentService.saveWithSession(comment, AppContext.getUsername());
                             }
-                        });
+
+                            ReOpenWindow.this.close();
+                            callbackForm.refreshBugItem();
+                        }
+
+                    }
+                });
                 wonFixBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                 wonFixBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
                 controlsBtn.with(wonFixBtn).withAlign(wonFixBtn, Alignment.MIDDLE_RIGHT);
 
-                final Button cancelBtn = new Button(
-                        AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(
-                                    final Button.ClickEvent event) {
-                                ReOpenWindow.this.close();
-                            }
-                        });
+                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        ReOpenWindow.this.close();
+                    }
+                });
                 cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
                 controlsBtn.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT);
 
-                layout.setComponentAlignment(controlsBtn,
-                        Alignment.MIDDLE_RIGHT);
-
+                layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 return layout;
             }
 
             @Override
-            public void attachField(final Object propertyId,
-                                    final Field<?> field) {
+            public void attachField(Object propertyId, Field<?> field) {
                 if (propertyId.equals("resolution")) {
-                    this.informationLayout.addComponent(field,
-                            AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION),
-                            0, 0);
+                    this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_RESOLUTION), 0, 0);
                 } else if (propertyId.equals("assignuser")) {
-                    this.informationLayout
-                            .addComponent(field, AppContext
-                                            .getMessage(GenericI18Enum.FORM_ASSIGNEE),
-                                    0, 1);
+                    this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 1);
                 } else if (propertyId.equals("fixedVersions")) {
-                    this.informationLayout.addComponent(field, AppContext
-                            .getMessage(BugI18nEnum.FORM_FIXED_VERSIONS), 0, 2);
+                    this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_FIXED_VERSIONS), 0, 2);
                 } else if (propertyId.equals("comment")) {
-                    this.informationLayout.addComponent(field,
-                            AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0,
+                    this.informationLayout.addComponent(field, AppContext.getMessage(BugI18nEnum.FORM_COMMENT), 0,
                             3, 2, "100%", Alignment.MIDDLE_LEFT);
                 }
             }
         }
 
-        private class EditFormFieldFactory extends
-                AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
-
+        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<BugWithBLOBs> {
             private static final long serialVersionUID = 1L;
 
             public EditFormFieldFactory(GenericBeanForm<BugWithBLOBs> form) {
@@ -221,9 +184,9 @@ class ReOpenWindow extends Window {
                 } else if (propertyId.equals("assignuser")) {
                     return new ProjectMemberSelectionField();
                 } else if (propertyId.equals("fixedVersions")) {
-                    ReOpenWindow.this.fixedVersionSelect = new VersionMultiSelectField();
+                    fixedVersionSelect = new VersionMultiSelectField();
 
-                    return ReOpenWindow.this.fixedVersionSelect;
+                    return fixedVersionSelect;
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextEditField();
                     return commentArea;
