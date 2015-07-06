@@ -232,30 +232,16 @@
   }
 
   .projectinfo-header {
-    &.v-margin-top {
-      padding-top: 7px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 7px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
-  }
-
-  .message-toppanel-header {
-    @include margin-container(3px, 10px, 2px, 18px);
-  }
-
-  .projectinfo-header {
+    @include margin-container(7px, 10px, 7px, 18px);
     .project-name {
       font-weight: bold;
       font-size: $font-larger;
       color: #313131;
     }
+  }
+
+  .message-toppanel-header {
+    @include margin-container(3px, 10px, 2px, 18px);
   }
 
   .projectinfo-footer {
@@ -647,7 +633,7 @@
 
   .milestone-view-header {
     text-align: center;
-    background: none repeat-x left top #feedd5;
+    background: none repeat-x left top #e8e8e8;
     height: 30px;
     color: #5e5e5e;
     border-bottom: 1px solid $border-color;
@@ -676,7 +662,7 @@
 
   .milestone-box {
     margin-top: 25px;
-    background-color: #fff4e5;
+    background-color: #f0f0f0;
     border-color: #BEBEBE;
     border-style: solid;
     border-width: 1px 1px 1px 6px;

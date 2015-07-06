@@ -8537,6 +8537,12 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	padding-left: 18px;
 }
 
+.projectinfo-header .project-name {
+	font-weight: bold;
+	font-size: 16px;
+	color: #313131;
+}
+
 .message-toppanel-header.v-margin-top {
 	padding-top: 3px;
 }
@@ -8551,12 +8557,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .message-toppanel-header.v-margin-left {
 	padding-left: 18px;
-}
-
-.projectinfo-header .project-name {
-	font-weight: bold;
-	font-size: 16px;
-	color: #313131;
 }
 
 .projectinfo-footer.v-margin-top {
@@ -9009,7 +9009,7 @@ div.v-button.token-field:hover {
 
 .milestone-view-header {
 	text-align: center;
-	background: none repeat-x left top #feedd5;
+	background: none repeat-x left top #e8e8e8;
 	height: 30px;
 	color: #5e5e5e;
 	border-bottom: 1px solid #CFCFCF;
@@ -9041,7 +9041,7 @@ div.v-button.token-field:hover {
 
 .milestone-box {
 	margin-top: 25px;
-	background-color: #fff4e5;
+	background-color: #f0f0f0;
 	border-color: #BEBEBE;
 	border-style: solid;
 	border-width: 1px 1px 1px 6px;
