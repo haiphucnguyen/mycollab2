@@ -18,7 +18,7 @@
         <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>7.5.0</vaadinVersion>
         <jettyVersion>9.3.0.v20150612</jettyVersion>
-        <mysqlVersion>5.1.35</mysqlVersion>
+        <mysqlVersion>5.1.36</mysqlVersion>
         <junitVersion>4.12</junitVersion>
         <restVersion>3.0.9.Final</restVersion>
         <scala.binary.version>2.11</scala.binary.version>
