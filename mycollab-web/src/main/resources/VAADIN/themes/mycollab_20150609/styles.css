@@ -9943,7 +9943,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .v-button.accountMenu .v-popup-indicator::before, .topNavigation .v-button.accountMenu.v-pressed .v-popup-indicator::before {
-	content: "\f0d7";
+	content: "\f078";
 	color: white;
 }
 

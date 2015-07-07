@@ -200,7 +200,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
                 null, 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();
-        serviceMenu.addStyleName("topNavPopup");
 
         Button.ClickListener clickListener = new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

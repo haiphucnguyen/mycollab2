@@ -107,7 +107,6 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(billingAccount.getLogopath(), 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();
-        serviceMenu.addStyleName("topNavPopup");
 
         Button.ClickListener clickListener = new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
