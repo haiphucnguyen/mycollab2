@@ -322,8 +322,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                                         @Override
                                         public void onClose(ConfirmDialog confirmDialog) {
                                             RelatedBugExample ex = new RelatedBugExample();
-                                            ex.createCriteria().andBugidEqualTo(bug.getId()).
-                                                    andRelatedidEqualTo(relatedBug.getBugId());
+                                            ex.createCriteria().andBugidEqualTo(bug.getId()).andRelatedidEqualTo(relatedBug.getBugId());
                                             RelatedBugMapper bugMapper = ApplicationContextUtil.getSpringBean(RelatedBugMapper.class);
                                             bugMapper.deleteByExample(ex);
                                             displayBugHeader(bug);

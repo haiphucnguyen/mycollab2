@@ -633,7 +633,7 @@
 
   .milestone-view-header {
     text-align: center;
-    background: none repeat-x left top #e8e8e8;
+    background: none repeat-x left top $panel-background-color;
     height: 30px;
     color: #5e5e5e;
     border-bottom: 1px solid $border-color;
@@ -662,7 +662,7 @@
 
   .milestone-box {
     margin-top: 25px;
-    background-color: #f0f0f0;
+    background-color: #fbfdfa;
     border-color: #BEBEBE;
     border-style: solid;
     border-width: 1px 1px 1px 6px;

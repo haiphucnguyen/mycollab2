@@ -43,7 +43,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
@@ -52,9 +51,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.data.Property;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -176,14 +173,13 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<SimpleTask> taskPreviewForm = new ProjectPreviewFormControlsGenerator<>(
                 previewForm);
-        final HorizontalLayout topPanel = taskPreviewForm
-                .createButtonControls(
-                        ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.ASSIGN_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED,
-                        ProjectRolePermissionCollections.TASKS);
+        final HorizontalLayout topPanel = taskPreviewForm.createButtonControls(
+                ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.ASSIGN_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED,
+                ProjectRolePermissionCollections.TASKS);
 
         quickActionStatusBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -341,18 +337,10 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                         ProjectTypeConstants.TASK, beanItem.getId());
             } else if (Task.Field.priority.equalTo(propertyId)) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    Resource iconPriority = new ExternalResource(
-                            ProjectResources.getIconResourceLink12ByTaskPriority(beanItem.getPriority()));
-                    Embedded iconEmbedded = new Embedded(null, iconPriority);
-                    Label lbPriority = new Label(AppContext.getMessage(TaskPriority.class, beanItem.getPriority()));
-
-                    ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
-                    containerField.addComponentField(iconEmbedded);
-                    containerField.getLayout().setComponentAlignment(iconEmbedded, Alignment.MIDDLE_LEFT);
-                    lbPriority.setWidth("220px");
-                    containerField.addComponentField(lbPriority);
-                    containerField.getLayout().setExpandRatio(lbPriority, 1.0f);
-                    return containerField;
+                    String priorityLink = ProjectResources.getIconResourceLink12ByTaskPriority(beanItem.getPriority());
+                    String priorityVal = AppContext.getMessage(TaskPriority.class, beanItem.getPriority());
+                    Div div = new Div().appendChild(new Img("", priorityLink), new DivLessFormatter().EMPTY_SPACE(), new Text(priorityVal));
+                    return new DefaultViewField(div.write(), ContentMode.HTML);
                 }
             } else if (Task.Field.notes.equalTo(propertyId)) {
                 return new RichTextViewField(beanItem.getNotes());
@@ -375,20 +363,19 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             tasksLayout = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(false, true, true, false));
             contentLayout.with(tasksLayout).expand(tasksLayout);
 
-            Button addNewTaskBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button addNewTaskBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            SimpleTask task = new SimpleTask();
-                            task.setTasklistid(beanItem.getTasklistid());
-                            task.setParenttaskid(beanItem.getId());
-                            task.setPriority(TaskPriority.Medium.name());
-                            EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TaskReadViewImpl.this, task));
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    SimpleTask task = new SimpleTask();
+                    task.setTasklistid(beanItem.getTasklistid());
+                    task.setParenttaskid(beanItem.getId());
+                    task.setPriority(TaskPriority.Medium.name());
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TaskReadViewImpl.this, task));
 
-                        }
-                    });
+                }
+            });
             addNewTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             addNewTaskBtn.setIcon(FontAwesome.PLUS);
             addNewTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
