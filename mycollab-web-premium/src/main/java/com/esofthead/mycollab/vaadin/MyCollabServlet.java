@@ -13,9 +13,10 @@ import javax.servlet.annotation.WebServlet;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-@WebServlet(name = "MyCollabApplication", urlPatterns = "/*", asyncSupported = false, loadOnStartup = 0, initParams =
+@WebServlet(name = "MyCollabApplication", urlPatterns = "/*", asyncSupported = true, loadOnStartup = 0, initParams =
         {@WebInitParam(name = "closeIdleSessions", value = "true"),
-                @WebInitParam(name = "resourceCacheTime", value = "8640000")})
+                @WebInitParam(name = "resourceCacheTime", value = "8640000"),
+        })
 public class MyCollabServlet extends TouchKitServlet {
     private static final long serialVersionUID = 1L;
 

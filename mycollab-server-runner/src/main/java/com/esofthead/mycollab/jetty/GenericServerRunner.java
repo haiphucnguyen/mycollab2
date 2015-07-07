@@ -36,6 +36,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.resource.PathResource;
 import org.eclipse.jetty.webapp.*;
+import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +91,7 @@ public abstract class GenericServerRunner {
      * @throws Exception
      */
     void run(String[] args) throws Exception {
-        ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
         root.setLevel(Level.INFO);
         ServerInstance.getInstance().registerInstance(this);
         System.setProperty("org.eclipse.jetty.annotations.maxWait", "180");
@@ -129,13 +130,11 @@ public abstract class GenericServerRunner {
                             "open the browser and type address http://<your server name>:"
                             + port
                             + " and complete the steps to install MyCollab.");
-            installationContextHandler = new ServletContextHandler(
-                    ServletContextHandler.SESSIONS);
+            installationContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
             installationContextHandler.setContextPath("/");
 
             installServlet = new InstallationServlet();
-            installationContextHandler.addServlet(new ServletHolder(installServlet),
-                    "/install");
+            installationContextHandler.addServlet(new ServletHolder(installServlet), "/install");
             installationContextHandler.addServlet(new ServletHolder(
                     new DatabaseValidate()), "/validate");
             installationContextHandler.addServlet(new ServletHolder(
@@ -151,8 +150,8 @@ public abstract class GenericServerRunner {
         } else {
             alreadySetup = true;
             WebAppContext appContext = initWebAppContext();
-            ServletContextHandler upgradeContextHandler = new ServletContextHandler(
-                    ServletContextHandler.SESSIONS);
+            WebSocketServerContainerInitializer.configureContext(appContext);
+            ServletContextHandler upgradeContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
             upgradeContextHandler.setServer(server);
             upgradeContextHandler.setContextPath("/it");
             upgradeContextHandler.addServlet(new ServletHolder(new UpgradeServlet()), "/upgrade");

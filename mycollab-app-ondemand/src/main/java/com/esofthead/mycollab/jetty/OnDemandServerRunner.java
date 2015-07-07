@@ -18,8 +18,7 @@ public class OnDemandServerRunner extends GenericServerRunner {
 		WebAppContext webAppContext = new WebAppContext();
 		webAppContext.setContextPath("/");
 		webAppContext.setWar(baseDir);
-		webAppContext.setClassLoader(Thread.currentThread()
-				.getContextClassLoader());
+		webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
 		webAppContext.setResourceBase(baseDir);
 
 		// create a InfinispanSessionManager instance
