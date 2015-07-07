@@ -247,7 +247,7 @@ a.pending {
 
 .panel-header {
 	border: 1px solid #CFCFCF;
-	background-color: #eaf3e1;
+	background-color: #e8e8e8;
 }
 
 .panel-header .v-label {
@@ -7642,7 +7642,7 @@ a.pending {
 
 .panel-header {
 	border: 1px solid #CFCFCF;
-	background-color: #eaf3e1;
+	background-color: #e8e8e8;
 }
 
 .panel-header .v-label {
@@ -8517,7 +8517,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: none no-repeat left top #eaf3e1;
+	background: none no-repeat left top #e8e8e8;
 	border-radius: 0px;
 }
 
@@ -9009,7 +9009,7 @@ div.v-button.token-field:hover {
 
 .milestone-view-header {
 	text-align: center;
-	background: none repeat-x left top #eaf3e1;
+	background: none repeat-x left top #e8e8e8;
 	height: 30px;
 	color: #5e5e5e;
 	border-bottom: 1px solid #CFCFCF;
@@ -9041,7 +9041,7 @@ div.v-button.token-field:hover {
 
 .milestone-box {
 	margin-top: 25px;
-	background-color: #fbfdfa;
+	background-color: #e0e0e0;
 	border-color: #BEBEBE;
 	border-style: solid;
 	border-width: 1px 1px 1px 6px;
@@ -9623,7 +9623,7 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
 }
 
 .popupContent .v-window-outerheader {
-	background-color: #eaf3e1;
+	background-color: #e8e8e8;
 	padding: 0;
 }
 
@@ -10584,7 +10584,7 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: #CFCFCF;
 	border-radius: 0px;
-	background: none no-repeat 0 0 #eaf3e1;
+	background: none no-repeat 0 0 #e8e8e8;
 	height: 40px;
 }
 
