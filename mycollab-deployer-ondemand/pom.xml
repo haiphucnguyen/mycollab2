@@ -27,7 +27,6 @@
         <module>../mycollab-migration-ondemand</module>
         <module>../mycollab-services</module>
         <module>../mycollab-services-ondemand</module>
-        <module>../mycollab-search</module>
         <module>../mycollab-esb</module>
         <module>../mycollab-esb-ondemand</module>
         <module>../mycollab-jetty-session-premium</module>
