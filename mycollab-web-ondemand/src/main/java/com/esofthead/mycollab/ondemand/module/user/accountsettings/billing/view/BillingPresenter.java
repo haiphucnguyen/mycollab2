@@ -33,8 +33,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  * 
  */
-public class BillingPresenter extends AbstractPresenter<IBillingContainer>
-		implements IBillingPresenter {
+public class BillingPresenter extends AbstractPresenter<IBillingContainer> implements IBillingPresenter {
 	private static final long serialVersionUID = 1L;
 
 	public BillingPresenter() {
@@ -55,11 +54,9 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer>
 		AbstractPresenter<?> presenter;
 
 		if (data instanceof BillingScreenData.BillingSummary) {
-			presenter = PresenterResolver
-					.getPresenter(BillingSummaryPresenter.class);
+			presenter = PresenterResolver.getPresenter(BillingSummaryPresenter.class);
 		} else if (data instanceof BillingScreenData.CancelAccount) {
-			presenter = PresenterResolver
-					.getPresenter(CancelAccountPresenter.class);
+			presenter = PresenterResolver.getPresenter(CancelAccountPresenter.class);
 		} else {
 			throw new MyCollabException("Do not support screen data " + data);
 		}

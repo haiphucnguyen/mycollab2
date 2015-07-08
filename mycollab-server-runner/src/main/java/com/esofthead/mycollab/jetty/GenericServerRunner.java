@@ -36,7 +36,6 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.resource.PathResource;
 import org.eclipse.jetty.webapp.*;
-import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -149,8 +148,8 @@ public abstract class GenericServerRunner {
             contexts.setHandlers(new Handler[]{installationContextHandler});
         } else {
             alreadySetup = true;
+
             WebAppContext appContext = initWebAppContext();
-            WebSocketServerContainerInitializer.configureContext(appContext);
             ServletContextHandler upgradeContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
             upgradeContextHandler.setServer(server);
             upgradeContextHandler.setContextPath("/it");

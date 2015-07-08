@@ -40,8 +40,7 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class CancelAccountViewImpl extends AbstractPageView implements
-        CancelAccountView {
+public class CancelAccountViewImpl extends AbstractPageView implements CancelAccountView {
     private static final long serialVersionUID = 1L;
 
     public CancelAccountViewImpl() {
@@ -60,21 +59,17 @@ public class CancelAccountViewImpl extends AbstractPageView implements
         header.setSpacing(true);
         header.addStyleName("cancelAccountHeader");
 
-        Label headerTopLine = new Label(
-                AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
+        Label headerTopLine = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
         headerTopLine.addStyleName("first-line");
         header.addComponent(headerTopLine);
         header.setComponentAlignment(headerTopLine, Alignment.MIDDLE_CENTER);
 
-        Label headerMsg = new Label(
-                AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE),
-                ContentMode.HTML);
+        Label headerMsg = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE), ContentMode.HTML);
         headerMsg.addStyleName("header-content");
         header.addComponent(headerMsg);
         header.setComponentAlignment(headerMsg, Alignment.MIDDLE_CENTER);
 
-        Label headerNote = new Label(
-                AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE));
+        Label headerNote = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE));
         headerNote.addStyleName("header-note");
         header.addComponent(headerNote);
         header.setComponentAlignment(headerNote, Alignment.MIDDLE_CENTER);
@@ -90,18 +85,14 @@ public class CancelAccountViewImpl extends AbstractPageView implements
 
         MVerticalLayout innerLayout = new MVerticalLayout();
 
-        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4,
-                "100%", "200px");
+        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4, "100%", "200px");
 
-        layoutHelper.addComponentNoWrapper(new TextField(),
-                "Why are you leaving us?", 0, 0);
+        layoutHelper.addComponentNoWrapper(new TextField(), "Why are you leaving us?", 0, 0);
 
         OptionGroup optionGroupField = new OptionGroup();
-        optionGroupField
-                .addItem("I'm cancelling this account to join or open a new MyCollab account");
+        optionGroupField.addItem("I'm cancelling this account to join or open a new MyCollab account");
         optionGroupField.addItem("I'm missing an important integration");
-        optionGroupField
-                .addItem("MyCollab doesn't have all the features I'm looking for");
+        optionGroupField.addItem("MyCollab doesn't have all the features I'm looking for");
         optionGroupField.addItem("Too expensive");
         optionGroupField.addItem("None of the above");
 
@@ -117,45 +108,38 @@ public class CancelAccountViewImpl extends AbstractPageView implements
         layoutHelper.getLayout().setWidth("800px");
         layoutHelper.getLayout().setSpacing(true);
         innerLayout.addComponent(layoutHelper.getLayout());
-        innerLayout.setComponentAlignment(layoutHelper.getLayout(),
-                Alignment.MIDDLE_CENTER);
+        innerLayout.setComponentAlignment(layoutHelper.getLayout(), Alignment.MIDDLE_CENTER);
 
-        Button submitBtn = new Button("Submit and delete my account",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button submitBtn = new Button("Submit and delete my account", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        // Save cancel account reason
-                        CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
-                        feedback.setOthertool(alternativeTool.getValue());
-                        feedback.setReasontoback(reasonToBack.getValue());
-                        if (optionGroup.getValue() != null) {
-                            feedback.setReasontoleave(optionGroup.getValue().toString());
-                        } else {
-                            feedback.setReasontoleave("");
-                        }
+            @Override
+            public void buttonClick(ClickEvent event) {
+                // Save cancel account reason
+                CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
+                feedback.setOthertool(alternativeTool.getValue());
+                feedback.setReasontoback(reasonToBack.getValue());
+                if (optionGroup.getValue() != null) {
+                    feedback.setReasontoleave(optionGroup.getValue().toString());
+                } else {
+                    feedback.setReasontoleave("");
+                }
 
-                        BillingService billingService = ApplicationContextUtil
-                                .getSpringBean(BillingService.class);
-                        billingService.cancelAccount(AppContext.getAccountId(), feedback);
-                        UI.getCurrent().getPage()
-                                .setLocation("https://www.mycollab.com");
-                    }
-                });
+                BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
+                billingService.cancelAccount(AppContext.getAccountId(), feedback);
+                UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
+            }
+        });
         submitBtn.addStyleName(UIConstants.THEME_RED_LINK);
 
-        Button cancelBtn = new Button("Never mind, go back",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button("Never mind, go back", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new AccountBillingEvent.GotoSummary(
-                                        CancelAccountViewImpl.this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(CancelAccountViewImpl.this, null));
+            }
+        });
         cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
         MHorizontalLayout formControls = new MHorizontalLayout().withMargin(true);
@@ -163,12 +147,9 @@ public class CancelAccountViewImpl extends AbstractPageView implements
         formControls.with(submitBtn, cancelBtn);
 
         innerLayout.addComponent(formControls);
-        innerLayout
-                .setComponentAlignment(formControls, Alignment.MIDDLE_CENTER);
+        innerLayout.setComponentAlignment(formControls, Alignment.MIDDLE_CENTER);
 
-        Label confirmNote = new Label(
-                AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE),
-                ContentMode.HTML);
+        Label confirmNote = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE), ContentMode.HTML);
         confirmNote.setWidth("600px");
         innerLayout.addComponent(confirmNote);
         innerLayout.setComponentAlignment(confirmNote, Alignment.TOP_CENTER);

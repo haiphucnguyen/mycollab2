@@ -17,11 +17,19 @@
             <artifactId>mycollab-config</artifactId>
             <version>5.0.10</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-servlet</artifactId>
+            <version>5.0.10</version>
+        </dependency>
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services-ondemand</artifactId>
             <version>5.0.10</version>
         </dependency>
+
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-pro</artifactId>

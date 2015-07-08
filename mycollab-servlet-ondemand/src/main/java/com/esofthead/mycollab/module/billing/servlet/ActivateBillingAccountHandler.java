@@ -18,8 +18,7 @@ import java.io.IOException;
 public class ActivateBillingAccountHandler extends GenericHttpServlet {
 
 	@Override
-	protected void onHandleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	}
 }

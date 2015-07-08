@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow;
-import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent;
-import com.esofthead.mycollab.common.ui.components.AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -28,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.data.Container;
+import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -166,20 +164,18 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             @Override
             public void buttonClick(ClickEvent event) {
                 linkBtn.setPopupVisible(false);
-                AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory.getCloudDriveOAuthWindow("Add Dropbox");
-                cloudDriveOAuthWindow.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void connectedSuccess(
-                            ExternalDriveConnectedEvent event) {
-                        folderNavigator.expandItem(rootECMFolder);
-
-                    }
-                });
-                UI.getCurrent().addWindow(cloudDriveOAuthWindow);
             }
         });
+
+        String dropBoxImplCls = "com.esofthead.mycollab.ondemand.module.file.view.DropboxOAuthPopupOpener";
+        try {
+            Class cls = Class.forName(dropBoxImplCls);
+            BrowserWindowOpener opener = (BrowserWindowOpener) cls.newInstance();
+            opener.extend(this);
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        }
+
         uploadDropboxBtn.addStyleName("link");
         uploadDropboxBtn.setIcon(FontAwesome.DROPBOX);
         filterBtnLayout.addComponent(uploadDropboxBtn);
@@ -305,24 +301,24 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory.getCloudDriveOAuthWindow("Add Dropbox");
-                    cloudDriveOAuthWindow.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void connectedSuccess(
-                                ExternalDriveConnectedEvent event) {
-                            folderNavigator.collapseItem(rootECMFolder);
-                            folderNavigator.expandItem(rootECMFolder);
-                            OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
-                                    (ExternalDrive) event.getData());
-                            bodyLayout.addComponent(layout);
-                            bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-                            bodyLayout.addComponent(new Hr());
-
-                        }
-                    });
-                    UI.getCurrent().addWindow(cloudDriveOAuthWindow);
+//                    AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory.getCloudDriveOAuthWindow("Add Dropbox");
+//                    cloudDriveOAuthWindow.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
+//                        private static final long serialVersionUID = 1L;
+//
+//                        @Override
+//                        public void connectedSuccess(
+//                                ExternalDriveConnectedEvent event) {
+//                            folderNavigator.collapseItem(rootECMFolder);
+//                            folderNavigator.expandItem(rootECMFolder);
+//                            OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
+//                                    (ExternalDrive) event.getData());
+//                            bodyLayout.addComponent(layout);
+//                            bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
+//                            bodyLayout.addComponent(new Hr());
+//
+//                        }
+//                    });
+//                    UI.getCurrent().addWindow(cloudDriveOAuthWindow);
                 }
             });
             connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
