@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -45,7 +46,7 @@ import java.util.Locale;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-//@WebServlet(name = "dropboxAuthServlet", urlPatterns = "/drive/dropboxAuth")
+@WebServlet(name = "dropboxAuthServlet", urlPatterns = "/drive/dropboxAuth")
 public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(DropboxAuthServletRequestHandler.class);
 

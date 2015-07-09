@@ -20,7 +20,6 @@ import java.net.URISyntaxException;
  * some services may not accept http://example.com/foo/bar/
  * and some services may not send custom query parameters to the callback.
  * Most services work with both {@link PathInjecter} and {@link QueryInjecter}, however.
- *
  */
 public interface OAuthCallbackInjecter {
 
@@ -40,9 +39,7 @@ public interface OAuthCallbackInjecter {
     public static OAuthCallbackInjecter QUERY_INJECTER = new QueryInjecter();
 
     /**
-     *
      * CALLBACK_URI/oauthcallback/ID
-     *
      */
     public class PathInjecter implements OAuthCallbackInjecter {
 
@@ -51,8 +48,8 @@ public interface OAuthCallbackInjecter {
             try {
                 URI old = new URI(callback);
                 String oldPath = old.getPath();
-                String idPath = CALLBACK_ID_NAME+"/"+id;
-                String newPath = oldPath.endsWith("/") ? oldPath+idPath : oldPath+"/"+idPath;
+                String idPath = CALLBACK_ID_NAME + "/" + id;
+                String newPath = oldPath.endsWith("/") ? oldPath + idPath : oldPath + "/" + idPath;
                 URI newUri = new URI(old.getScheme(), old.getAuthority(), newPath, old.getQuery(), old.getFragment());
                 return newUri.toASCIIString();
             } catch (URISyntaxException e) {
@@ -64,7 +61,7 @@ public interface OAuthCallbackInjecter {
         @Override
         public String extractIdFromCallback(VaadinRequest request) {
             String path = request.getPathInfo();
-            if (path==null) {
+            if (path == null) {
                 return null;
             }
             String[] pathParts = path.split("/");
@@ -72,18 +69,16 @@ public interface OAuthCallbackInjecter {
             if (len < 2) {
                 return null;
             }
-            if (!CALLBACK_ID_NAME.equals(pathParts[len-2])) {
+            if (!CALLBACK_ID_NAME.equals(pathParts[len - 2])) {
                 return null;
             }
-            return pathParts[len-1];
+            return pathParts[len - 1];
         }
 
     }
 
     /**
-     *
      * CALLBACK_URI?oauthcallback=ID
-     *
      */
     public class QueryInjecter implements OAuthCallbackInjecter {
 
@@ -92,8 +87,8 @@ public interface OAuthCallbackInjecter {
             try {
                 URI old = new URI(callback);
                 String oldQuery = old.getQuery();
-                String idQuery = CALLBACK_ID_NAME+"="+id;
-                String newQuery = oldQuery==null ? idQuery : oldQuery+"&"+idQuery;
+                String idQuery = CALLBACK_ID_NAME + "=" + id;
+                String newQuery = oldQuery == null ? idQuery : oldQuery + "&" + idQuery;
                 URI newUri = new URI(old.getScheme(), old.getAuthority(), old.getPath(), newQuery, old.getFragment());
                 return newUri.toASCIIString();
             } catch (URISyntaxException e) {
