@@ -26,22 +26,23 @@ public interface OAuthCallbackInjecter {
     /**
      * "Injects" the id into the callback.
      */
-    public String injectIdToCallback(String callback, String id);
+    String injectIdToCallback(String callback, String id);
 
     /**
      * Extracts the id that was injected into the callback.
      */
-    public String extractIdFromCallback(VaadinRequest request);
+    String extractIdFromCallback(VaadinRequest request);
 
-    public static final String CALLBACK_ID_NAME = "oauthpopupcallback";
+    String CALLBACK_ID_NAME = "oauthpopupcallback";
 
-    public static OAuthCallbackInjecter PATH_INJECTER = new PathInjecter();
-    public static OAuthCallbackInjecter QUERY_INJECTER = new QueryInjecter();
+    OAuthCallbackInjecter PATH_INJECTER = new PathInjecter();
+    OAuthCallbackInjecter QUERY_INJECTER = new QueryInjecter();
+    OAuthCallbackInjecter VARIABLE_INJECTER = new VariableInjecter();
 
     /**
      * CALLBACK_URI/oauthcallback/ID
      */
-    public class PathInjecter implements OAuthCallbackInjecter {
+    class PathInjecter implements OAuthCallbackInjecter {
 
         @Override
         public String injectIdToCallback(String callback, String id) {
@@ -80,8 +81,29 @@ public interface OAuthCallbackInjecter {
     /**
      * CALLBACK_URI?oauthcallback=ID
      */
-    public class QueryInjecter implements OAuthCallbackInjecter {
+    class QueryInjecter implements OAuthCallbackInjecter {
 
+        @Override
+        public String injectIdToCallback(String callback, String id) {
+            try {
+                URI old = new URI(callback);
+                String oldQuery = old.getQuery();
+                String idQuery = CALLBACK_ID_NAME + "=" + id;
+                String newQuery = oldQuery == null ? idQuery : oldQuery + "&" + idQuery;
+                URI newUri = new URI(old.getScheme(), old.getAuthority(), old.getPath(), newQuery, old.getFragment());
+                return newUri.toASCIIString();
+            } catch (URISyntaxException e) {
+                throw new OAuthException("Invalid callback URI syntax: " + callback, e);
+            }
+        }
+
+        @Override
+        public String extractIdFromCallback(VaadinRequest request) {
+            return request.getParameter(CALLBACK_ID_NAME);
+        }
+    }
+
+    class VariableInjecter implements OAuthCallbackInjecter {
         @Override
         public String injectIdToCallback(String callback, String id) {
             try {

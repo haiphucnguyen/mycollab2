@@ -46,7 +46,7 @@ import java.util.Locale;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-@WebServlet(name = "dropboxAuthServlet", urlPatterns = "/drive/dropboxAuth")
+//@WebServlet(name = "dropboxAuthServlet", urlPatterns = "/drive/dropboxAuth")
 public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(DropboxAuthServletRequestHandler.class);
 

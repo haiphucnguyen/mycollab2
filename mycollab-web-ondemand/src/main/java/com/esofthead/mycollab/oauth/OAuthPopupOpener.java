@@ -80,7 +80,7 @@ public class OAuthPopupOpener extends BrowserWindowOpener {
     private static String getDefaultCallback() {
 //        URI u = Page.getCurrent().getLocation();
 //        return u.getScheme() + "://" + u.getAuthority() + u.getPath();
-        return SiteConfiguration.getDropboxCallbackUrl();
+        return SiteConfiguration.getDropboxCallbackUrl() + "&state=active";
     }
 
     private void fireAuthSuccessful(final String accessToken, final String accessTokenSecret) {
