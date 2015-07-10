@@ -100,8 +100,9 @@ h3 {
                                         <tr>
                                             <td><input id="serverAddress"/></td>
                                         </tr>
-                                        <tr><td><h4>You can get this info from your web host. It could be an IP address or server name</h4></td></tr>
-
+                                        <tr>
+                                            <td><h4>You can get this info from your web host. It could be an IP address or server name</h4></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </form>
@@ -152,7 +153,7 @@ h3 {
                                 </table>
                             </form>
                             <div class="right" style="margin-top: 10px;">
-                                <button id="validate" class="v-button v-button-greenbtn" type="button" onclick="return databaseValidate();" style="width:160px" ><span style="font-family: 'Georgia';font-size: 15px;">Check Connection</span></button>
+                                <button id="validate" class="v-button v-button-greenbtn" type="button" onclick="return databaseValidate();" style="width:160px" ><span style="font-size: 15px;">Check Connection</span></button>
                             </div>
                         </td>
                     </tr>
@@ -172,8 +173,10 @@ h3 {
                                         <tr>
                                             <td><input id="smtpUserName"/></td>
                                         </tr>
-                                        <tr><td><h4>Username or account of your email service. If you use Gmail,
-                                        username is &lt;username&gt;@gmail.com.<h4></td></tr>
+                                        <tr>
+                                            <td><h4>Username or account of your email service. If you use Gmail,
+                                        username is &lt;username&gt;@gmail.com.<h4></td>
+                                        </tr>
 
                                         <tr>
                                             <td ><label for="smtpPassword">Password:</label></td>
