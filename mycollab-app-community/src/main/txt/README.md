@@ -48,7 +48,6 @@ Version 5.1.0
 **Library Upgrades**
 
 * Spring framework upgrade to 4.1.7.RELEASE, Infinispan, MySQL Connector
-* Upgrade Vaadin to 7.5.1
 
 **Improvements & New Features**
 
