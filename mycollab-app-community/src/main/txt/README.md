@@ -61,6 +61,8 @@ Version 5.1.0
 
 * Fix gzip response because Jetty 9.3 deprecate servlet gzip filter
 * Can not change the default port 8080 on Windows
+* MyCollab can not run with Java 7
+* Can not run MyCollab in some rare cases due to the order of service bean is not controlled
 
 
 Version 5.0.10
