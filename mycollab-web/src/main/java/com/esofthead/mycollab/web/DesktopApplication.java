@@ -53,6 +53,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.jonatan.contexthelp.ContextHelp;
+import org.vaadin.viritin.util.BrowserCookie;
 
 import javax.servlet.http.Cookie;
 import java.util.Collection;
@@ -233,43 +234,12 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     public void rememberPassword(String username, String password) {
-        Cookie cookie = getCookieByName(DesktopApplication.NAME_COOKIE);
         String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
-        if (cookie == null) {
-            cookie = new Cookie(DesktopApplication.NAME_COOKIE, storeVal);
-        } else {
-            cookie.setValue(storeVal);
-        }
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24 * 7);
-
-        VaadinService.getCurrentResponse().addCookie(cookie);
+        BrowserCookie.setCookie(DesktopApplication.NAME_COOKIE, storeVal);
     }
 
     public void unsetRememberPassword() {
-        Cookie cookie = getCookieByName(DesktopApplication.NAME_COOKIE);
-
-        if (cookie != null) {
-            cookie.setValue("");
-            cookie.setPath("/");
-            cookie.setMaxAge(0);
-            VaadinService.getCurrentResponse().addCookie(cookie);
-        }
-    }
-
-    public Cookie getCookieByName(String name) {
-        Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
-
-        if (cookies != null) {
-            // Iterate to find cookie by its name
-            for (Cookie cookie : cookies) {
-                if (name.equals(cookie.getName())) {
-                    return cookie;
-                }
-            }
-        }
-
-        return null;
+        BrowserCookie.setCookie(DesktopApplication.NAME_COOKIE, "");
     }
 
     public static void addContextHelp(Component comp, String message) {

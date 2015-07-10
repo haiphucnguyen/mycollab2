@@ -222,7 +222,9 @@ h3 {
                             </form>
                             <div class="right" style="margin-top: 10px;">
                                 <button id="validateEmailBtn" class="v-button v-button-greenbtn" type="button" onclick="return emailValidate();" style="width:140px"><span style="font-family: 'Georgia';font-size: 15px;">Check Smtp</span></button>
-                                <button id="post" class="v-button v-button-orangebtn" type="button" onclick="return updateInfoAction();" style="width:140px"><span style="font-family: 'Georgia';font-size: 15px;">Update & Go</span></button>
+                                <button id="post" class="v-button v-button-orangebtn" type="button" onclick="return
+                                updateInfoAction();" style="width:140px"><span style="font-family: 'Georgia';
+                                font-size: 15px;">Setup</span></button>
                             </div>
                         </td>
                     </tr>
@@ -428,11 +430,11 @@ function updateInfoAction(){
           success: function(res){
              if(res!=null){
                 if(res.length > 0){
-                    $('#post').html('<span>Update & Go</span>');
+                    $('#post').html('<span>Setup</span>');
                     alert(res);
                 } else {
                     alert("Setup is completed successfully. Default username/password is \n    User name: admin@mycollab.com\n    password: admin123\nRedirect to the app?");
-                    $('#post').html('<span>Update & Go</span>');
+                    $('#post').html('<span>Setup</span>');
                     window.location.assign(location.protocol + "//" + document.getElementById("serverAddress").value + ((location.port != "")? (":" + location.port) : ""));
                 }
              }
