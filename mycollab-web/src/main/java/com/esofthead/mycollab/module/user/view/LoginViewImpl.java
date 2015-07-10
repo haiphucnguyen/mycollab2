@@ -77,13 +77,10 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
                         try {
                             custom.removeComponent("customErrorMsg");
                             LoginViewImpl.this.fireEvent(new ViewEvent<>(
-                                    LoginViewImpl.this, new PlainLogin(
-                                    usernameField.getValue(),
-                                    passwordField.getValue(),
-                                    rememberMe.getValue())));
+                                    LoginViewImpl.this, new PlainLogin(usernameField.getValue(),
+                                    passwordField.getValue(), rememberMe.getValue())));
                         } catch (MyCollabException e) {
-                            custom.addComponent(new Label(e.getMessage()),
-                                    "customErrorMsg");
+                            custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
 
                         } catch (Exception e) {
                             throw new MyCollabException(e);
@@ -94,12 +91,10 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 
             custom.addComponent(passwordField, "passwordField");
 
-            rememberMe = new CheckBox(AppContext.getMessage(
-                    ShellI18nEnum.OPT_REMEMBER_PASSWORD), false);
+            rememberMe = new CheckBox(AppContext.getMessage(ShellI18nEnum.OPT_REMEMBER_PASSWORD), false);
             custom.addComponent(rememberMe, "rememberMe");
 
-            Button loginBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_LOG_IN),
-                    new Button.ClickListener() {
+            Button loginBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_LOG_IN), new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -113,8 +108,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
                                         passwordField.getValue(),
                                         rememberMe.getValue())));
                             } catch (MyCollabException e) {
-                                custom.addComponent(new Label(e.getMessage()),
-                                        "customErrorMsg");
+                                custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
                             } catch (Exception e) {
                                 throw new MyCollabException(e);
                             }
