@@ -319,17 +319,6 @@
     }
   }
 
-  @media only screen and (max-width: 1024px), only screen and (max-device-width: 1024px) {
-    .projectDashboardView {
-      margin: 0px 15px 20px 0px;
-    }
-    .member-block {
-      width: 345px;
-      margin-right: 5px;
-      margin-left: 7px;
-    }
-  }
-
   @media screen and (min-width: 1024px) {
     .projectDashboardView {
       margin: 0px auto;
@@ -923,7 +912,7 @@
     text-align: center;
     font-size: 27px;
     height: 60px;
-    background-color: rgb(66, 175, 231);
+    background-color: #1a8fcb;
     #logo-here {
       background: url('icons/login-logo.png') no-repeat 0 0 transparent;
       margin: 5px 0px 5px 100px;
@@ -2315,7 +2304,7 @@
 
   div.v-csslayout.member-block {
     display: inline-block;
-    background-color: #e9f2f7;
+    background-color: #d9effa;
     margin-bottom: 15px;
     font-size: $font-normal;
     vertical-align: top;
@@ -3587,6 +3576,9 @@
       color: #FFF;
       cursor: pointer;
     }
+    .date-lbl:hover {
+      background-image: url("icons/date-lbl-hover.png");
+    }
   }
 
   .year-lbl {
@@ -3594,10 +3586,6 @@
     padding-right: 10px;
     line-height: 49px;
     background: url("icons/year-circle.png") no-repeat right top transparent;
-  }
-
-  .feed-block-wrap .date-lbl:hover {
-    background-image: url("icons/date-lbl-hover.png");
   }
 
   .feed-block {

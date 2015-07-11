@@ -198,8 +198,7 @@ public class ProjectActivityStreamPagedList extends
         return div.write();
     }
 
-    protected void feedBlocksPut(Date currentDate, Date nextDate,
-                                 CssLayout currentBlock) {
+    protected void feedBlocksPut(Date currentDate, Date nextDate, CssLayout currentBlock) {
         MHorizontalLayout blockWrapper = new MHorizontalLayout().withWidth("100%").withStyleName("feed-block-wrap");
 
         blockWrapper.setDefaultComponentAlignment(Alignment.TOP_LEFT);

@@ -5,7 +5,7 @@
     <name>mycollab-parent</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-parent</artifactId>
-    <version>5.0.10</version>
+    <version>5.1.0</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
@@ -16,7 +16,7 @@
         <javaVersion>1.7</javaVersion>
         <slf4jVersion>1.7.12</slf4jVersion>
         <servletVersion>3.1.0</servletVersion>
-        <vaadinVersion>7.5.1</vaadinVersion>
+        <vaadinVersion>7.5.0</vaadinVersion>
         <jettyVersion>9.2.9.v20150224</jettyVersion>
         <mysqlVersion>5.1.36</mysqlVersion>
         <junitVersion>4.12</junitVersion>
