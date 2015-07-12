@@ -116,30 +116,28 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         });
 
         tableItem.addGeneratedColumn("assignedToUserFullName", new Table.ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                        SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                        return new ProjectUserLink(risk.getAssigntouser(), risk
-                                .getAssignToUserAvatarId(), risk
-                                .getAssignedToUserFullName());
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
+                SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+                return new ProjectUserLink(risk.getAssigntouser(), risk.getAssignToUserAvatarId(),
+                        risk.getAssignedToUserFullName());
 
-                    }
-                });
+            }
+        });
 
         tableItem.addGeneratedColumn("raisedByUserFullName", new Table.ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                        SimpleRisk risk = tableItem.getBeanByIndex(itemId);
-                        return new ProjectUserLink(risk.getRaisedbyuser(), risk
-                                .getRaisedByUserAvatarId(), risk
-                                .getRaisedByUserFullName());
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
+                SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+                return new ProjectUserLink(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(),
+                        risk.getRaisedByUserFullName());
 
-                    }
-                });
+            }
+        });
 
         tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -188,8 +186,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         layout.addComponent(selectOptionButton);
 
         Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE));
-        deleteBtn.setEnabled(CurrentProjectVariables
-                .canAccess(ProjectRolePermissionCollections.RISKS));
+        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.RISKS));
 
         tableActionControls = new DefaultMassItemActionHandlerContainer();
 
@@ -218,8 +215,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                UI.getCurrent().addWindow(
-                        new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID, tableItem));
+                UI.getCurrent().addWindow(new RiskListCustomizeWindow(RiskListView.VIEW_DEF_ID, tableItem));
 
             }
         });
@@ -234,8 +230,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     @Override
     public void enableActionControls(final int numOfSelectedItems) {
         tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue(AppContext.getMessage(
-                GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
+        selectedItemsNumberLabel.setValue(AppContext.getMessage(GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
     }
 
     @Override

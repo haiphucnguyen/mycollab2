@@ -514,41 +514,6 @@
     font-weight: normal;
   }
 
-  .v-buttongroup {
-    .v-button-left {
-      border-radius: 2px 0px 0px 2px;
-    }
-    .v-button {
-      &.v-button-left .v-button-wrap, &.v-button-middle .v-button-wrap, &.v-button-left.v-disabled .v-button-wrap, &.v-button-middle.v-disabled .v-button-wrap, &.v-button-left.v-disabled:active .v-button-wrap, &.v-button-middle.v-disabled:active .v-button-wrap, &.v-button-left.v-disabled:focus .v-button-wrap {
-        background-position: left top;
-        background-image: none;
-      }
-      &.v-button-middle {
-        &.v-disabled:focus .v-button-wrap {
-          background-position: left top;
-          background-image: none;
-        }
-        /*  border-width: 1px 0px 1px 0px; */
-        border-radius: 0px;
-        width: 100%;
-        .v-button-wrap {
-          border-left: 1px solid #8F8F8F;
-        }
-      }
-      &.v-button-right {
-        border-radius: 0px 2px 2px 0px;
-        border-left: none;
-        .v-button-wrap {
-          border-left: 1px solid #8F8F8F;
-          border-radius: 0px;
-        }
-      }
-      &:focus .v-button-wrap {
-        background: none;
-      }
-    }
-  }
-
   .list-view {
     .v-table-header td, .v-table-header-wrap {
       height: 23px;
@@ -1241,7 +1206,7 @@
       }
     }
     .addViewTopControls {
-      .edit-btn .v-horizontallayout-margin, .workflow-controls .v-horizontallayout-margin {
+      .edit-btn .v-horizontallayout-margin {
         padding: 0px;
       }
     }

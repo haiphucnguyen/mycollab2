@@ -30,8 +30,7 @@ import java.util.Iterator;
  */
 
 @ViewComponent
-public class ThemeCustomizeViewImpl extends AbstractPageView implements
-        ThemeCustomizeView {
+public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCustomizeView {
     private static final long serialVersionUID = 1181278209875228643L;
 
     private AddViewLayout2 mainLayout;

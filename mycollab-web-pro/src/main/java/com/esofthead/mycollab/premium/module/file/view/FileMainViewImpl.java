@@ -346,8 +346,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             public OneDriveConnectionBodyLayout(final ExternalDrive drive) {
                 final MVerticalLayout externalDriveEditLayout = new MVerticalLayout();
 
-                final MHorizontalLayout title = new MHorizontalLayout().withWidth("100%");
-                externalDriveEditLayout.addComponent(title);
+                final MHorizontalLayout titleLayout = new MHorizontalLayout().withWidth("100%");
+                titleLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+                externalDriveEditLayout.addComponent(titleLayout);
 
                 CssLayout iconWapper = new CssLayout();
                 iconWapper.setWidth("60px");
@@ -355,22 +356,18 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 if (drive.getStoragename().equals(StorageNames.DROPBOX))
                     embed.setIcon(new AssetResource("icons/48/ecm/dropbox.png"));
                 iconWapper.addComponent(embed);
-                title.addComponent(iconWapper);
-                title.setComponentAlignment(iconWapper, Alignment.MIDDLE_LEFT);
+                titleLayout.with(iconWapper);
 
                 if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
                     Label lbl = new Label("Dropbox");
                     lbl.addStyleName("h2");
                     lbl.setWidth("100px");
-                    title.addComponent(lbl);
-                    title.setComponentAlignment(lbl, Alignment.MIDDLE_LEFT);
+                    titleLayout.addComponent(lbl);
 
                     // ----construct title --------------
                     foldernameLbl = new Label(drive.getFoldername());
                     foldernameLbl.addStyleName("h3-dropbox");
-                    title.addComponent(foldernameLbl);
-                    title.setComponentAlignment(foldernameLbl, Alignment.MIDDLE_LEFT);
-                    title.setExpandRatio(foldernameLbl, 1.0f);
+                    titleLayout.with(foldernameLbl).expand(foldernameLbl);
 
                     final PopupButton popupBtn = new PopupButton();
                     popupBtn.setIcon(new AssetResource("icons/16/item_settings_big.png"));
@@ -378,28 +375,26 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
                     final MVerticalLayout popupOptionActionLayout = new MVerticalLayout().withWidth("100px");
 
-                    Button editBtn = new Button(
-                            AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                            new Button.ClickListener() {
-                                private static final long serialVersionUID = 1L;
+                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-                                @Override
-                                public void buttonClick(ClickEvent event) {
-                                    popupBtn.setPopupVisible(false);
-                                    if (!isEdit) {
-                                        isEdit = true;
-                                        externalDriveEditLayout.addStyleName("driveEditting");
-                                        title.removeComponent(popupBtn);
-                                        HorizontalLayout layout = editActionHorizontalLayout(drive, title, foldernameLbl,
-                                                externalDriveEditLayout);
-                                        title.replaceComponent(foldernameLbl, layout);
-                                        title.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-                                        title.setExpandRatio(layout, 1.0f);
-                                        title.addComponent(popupBtn);
-                                        title.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
-                                    }
-                                }
-                            });
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            popupBtn.setPopupVisible(false);
+                            if (!isEdit) {
+                                isEdit = true;
+                                externalDriveEditLayout.addStyleName("driveEditting");
+                                titleLayout.removeComponent(popupBtn);
+                                HorizontalLayout layout = editActionHorizontalLayout(drive, titleLayout, foldernameLbl,
+                                        externalDriveEditLayout);
+                                titleLayout.replaceComponent(foldernameLbl, layout);
+                                titleLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
+                                titleLayout.setExpandRatio(layout, 1.0f);
+                                titleLayout.addComponent(popupBtn);
+                                titleLayout.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
+                            }
+                        }
+                    });
                     editBtn.addStyleName("link");
                     popupOptionActionLayout.addComponent(editBtn);
 
@@ -430,8 +425,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                                                     ExternalFolder res = (ExternalFolder) externalResourceService
                                                             .getCurrentResourceByPath(drive, "/");
                                                     if (res != null) {
-                                                        Container dataSource = FileMainViewImpl.this.folderNavigator
-                                                                .getContainerDataSource();
+                                                        Container dataSource = folderNavigator.getContainerDataSource();
                                                         final Object[] dataCollectionArray = dataSource.getItemIds().toArray();
                                                         for (Object id : dataCollectionArray) {
                                                             Folder folder = (Folder) id;
@@ -453,8 +447,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     deleteBtn.addStyleName("link");
                     popupOptionActionLayout.addComponent(deleteBtn);
                     popupBtn.setContent(popupOptionActionLayout);
-                    title.addComponent(popupBtn);
-                    title.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
+                    titleLayout.addComponent(popupBtn);
+                    titleLayout.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
 
                 }
                 this.addComponent(externalDriveEditLayout);
@@ -486,8 +480,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                                     NotificationUtil.showErrorNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
                                     return;
                                 }
-                                ExternalFolder res = (ExternalFolder) externalResourceService
-                                        .getCurrentResourceByPath(drive, "/");
+                                ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
 
                                 Container dataSource = FileMainViewImpl.this.folderNavigator.getContainerDataSource();
                                 final Object[] dataCollectionArray = dataSource.getItemIds().toArray();

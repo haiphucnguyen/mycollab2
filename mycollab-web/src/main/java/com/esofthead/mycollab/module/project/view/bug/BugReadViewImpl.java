@@ -87,7 +87,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     private static final Logger LOG = LoggerFactory.getLogger(BugReadViewImpl.class);
 
     private TagViewComponent tagViewComponent;
-    private HorizontalLayout bugWorkflowControl;
+    private CssLayout bugWorkflowControl;
     private BugHistoryList historyList;
     private ProjectFollowersComp<SimpleBug> bugFollowersList;
     private BugTimeLogSheet bugTimeLogList;
@@ -423,9 +423,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
-        this.bugWorkflowControl = new HorizontalLayout();
-        this.bugWorkflowControl.setMargin(false);
-        this.bugWorkflowControl.addStyleName("workflow-controls");
+        this.bugWorkflowControl = new CssLayout();
 
         bugPreviewFormControls.insertToControlBlock(bugWorkflowControl);
         bugPreviewFormControls.insertToControlBlock(assignBtn);

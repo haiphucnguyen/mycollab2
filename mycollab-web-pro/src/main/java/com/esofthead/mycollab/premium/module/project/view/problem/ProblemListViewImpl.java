@@ -219,17 +219,14 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
         tableActionControls.setWidthUndefined();
 
         selectedItemsNumberLabel.setWidth("100%");
-        layout.with(tableActionControls, selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment
-                .MIDDLE_CENTER);
+        layout.with(tableActionControls, selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER);
 
         Button customizeViewBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
-                UI.getCurrent().addWindow(
-                        new ProblemListCustomizeWindow(
-                                ProblemListView.VIEW_DEF_ID, tableItem));
+                UI.getCurrent().addWindow(new ProblemListCustomizeWindow(ProblemListView.VIEW_DEF_ID, tableItem));
 
             }
         });
@@ -244,8 +241,7 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
     @Override
     public void enableActionControls(int numOfSelectedItems) {
         tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue(AppContext.getMessage(
-                GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
+        selectedItemsNumberLabel.setValue(AppContext.getMessage(GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
     }
 
     @Override

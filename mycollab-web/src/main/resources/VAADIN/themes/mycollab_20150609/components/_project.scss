@@ -518,37 +518,6 @@
 
   /* End Stand Up List View */
 
-  /* Toggle Button Group */
-
-  .v-buttongroup.toggle-btn-group .v-button {
-    &.selected {
-      background-color: #287ECE;
-      &:active, &:focus {
-        background-color: #287ECE;
-      }
-    }
-    &.v-button-left, &.v-button-middle, &.v-button-right {
-      border: none;
-    }
-    .v-button-wrap {
-      background: none;
-    }
-    &.v-button-right .v-button-wrap {
-      border-left: 1px solid #8F8F8F;
-    }
-    &.selected .v-button-wrap {
-      background: none;
-    }
-    .v-button-wrap img {
-      margin: 0px;
-    }
-    &:active .v-button-wrap .v-button-caption, &:focus .v-button-wrap .v-button-caption, &.selected .v-button-wrap .v-button-caption {
-      color: white;
-    }
-    background-color: rgb(123, 123, 123);
-    color: white;
-  }
-
   div.v-csslayout.member-token{
     cursor: text;
     .v-textfield {
