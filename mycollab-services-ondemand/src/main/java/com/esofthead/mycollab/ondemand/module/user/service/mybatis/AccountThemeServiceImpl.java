@@ -30,11 +30,11 @@ public class AccountThemeServiceImpl extends DefaultCrudService<Integer, Account
     }
 
     @Override
-    public AccountTheme findTheme(@CacheKey Integer sAccountId) {
+    public AccountTheme findTheme(Integer sAccountId) {
         AccountThemeExample ex = new AccountThemeExample();
         ex.createCriteria().andSaccountidEqualTo(sAccountId);
         List<AccountTheme> accountThemes = accountThemeMapper.selectByExample(ex);
-        if (accountThemes != null && accountThemes.size() > 1) {
+        if (accountThemes != null && accountThemes.size() > 0) {
             return accountThemes.get(0);
         }
 
@@ -42,7 +42,7 @@ public class AccountThemeServiceImpl extends DefaultCrudService<Integer, Account
     }
 
     @Override
-    public AccountTheme findDefaultTheme(@CacheKey Integer sAccountId) {
+    public AccountTheme findDefaultTheme(Integer sAccountId) {
         AccountThemeExample ex = new AccountThemeExample();
         ex.createCriteria().andIsdefaultEqualTo(Boolean.TRUE);
         List<AccountTheme> accountThemes = accountThemeMapper.selectByExample(ex);

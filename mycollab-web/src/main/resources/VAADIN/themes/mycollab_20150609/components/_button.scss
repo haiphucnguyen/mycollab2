@@ -313,11 +313,6 @@
     &.v-button-redbtn:active .v-button-wrap {
       border-top-color: #BD0C09;
     }
-    &.v-button-brownbtn {
-      background-color: #C06B11;
-      color: white;
-      font-weight: normal;
-    }
   }
 
   .v-button-brownbtn:focus {
@@ -346,12 +341,6 @@
     &:hover, &:active {
       background: none no-repeat left top rgb(232, 82, 23);
     }
-  }
-
-  .v-button.v-button-bluebtn, .v-button-bluebtn:focus {
-    background-color: #1C7DCE;
-    color: white;
-    font-weight: normal;
   }
 
   /* End round border button */

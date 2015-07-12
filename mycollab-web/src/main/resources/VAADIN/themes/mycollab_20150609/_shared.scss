@@ -226,10 +226,6 @@
         padding: 0px;
       }
     }
-    &.buttonPagingcurrent, &.buttonPaging:hover {
-      background-color: #548BCE;
-      color: white;
-    }
   }
 
   .v-label h2 {
@@ -317,15 +313,12 @@
     background-color: #ffffff;
     margin:-5px;
     .action-wrap {
-      &:hover {
-        background-color: #82BA4F;
-        color: #ffffff;
-      }
       .v-button-action {
         background-color:transparent;
         text-align:left;
         .v-button-wrap {
           margin: 0px;
+          text-align: left;
           &:hover {
             background-color: transparent;
           }

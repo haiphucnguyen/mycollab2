@@ -175,11 +175,8 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
     }
 
     private ComponentContainer constructTableActionControls() {
-        final CssLayout layoutWrapper = new CssLayout();
-        layoutWrapper.setWidth("100%");
         MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
-        layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-        layoutWrapper.addComponent(layout);
+        layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
         selectOptionButton = new SelectionOptionButton(tableItem);
         selectOptionButton.setWidthUndefined();
@@ -224,7 +221,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         customizeViewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
-        return layoutWrapper;
+        return layout;
     }
 
     @Override

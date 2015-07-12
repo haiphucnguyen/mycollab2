@@ -36,6 +36,7 @@ public class OptionPopupContent extends MVerticalLayout {
 
     public void addOption(Component btn) {
         CssLayout wrap = new CssLayout();
+        btn.setWidth("100%");
         btn.setStyleName("action");
         wrap.addStyleName("action-wrap");
         wrap.addComponent(btn);

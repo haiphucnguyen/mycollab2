@@ -522,11 +522,6 @@ div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
 	padding: 0px;
 }
 
-div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
-	background-color: #548BCE;
-	color: white;
-}
-
 .v-label h2 {
 	font-size: 14px;
 	font-weight: bold;
@@ -611,11 +606,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	margin: -5px;
 }
 
-.optionPopupContent .action-wrap:hover {
-	background-color: #82BA4F;
-	color: #ffffff;
-}
-
 .optionPopupContent .action-wrap .v-button-action {
 	background-color: transparent;
 	text-align: left;
@@ -623,6 +613,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-button-action .v-button-wrap {
 	margin: 0px;
+	text-align: left;
 }
 
 .optionPopupContent .action-wrap .v-button-action .v-button-wrap:hover {
@@ -7415,12 +7406,6 @@ body.v-ie .v-pressed.v-button-borderless {
 	border-top-color: #BD0C09;
 }
 
-.v-button.v-button-brownbtn {
-	background-color: #C06B11;
-	color: white;
-	font-weight: normal;
-}
-
 .v-button-brownbtn:focus {
 	background-color: #C06B11;
 	color: white;
@@ -7445,12 +7430,6 @@ body.v-ie .v-pressed.v-button-borderless {
 
 .v-button-orangebtn:hover, .v-button-orangebtn:active {
 	background: none no-repeat left top #e85217;
-}
-
-.v-button.v-button-bluebtn, .v-button-bluebtn:focus {
-	background-color: #1C7DCE;
-	color: white;
-	font-weight: normal;
 }
 
 .v-button.select-bg {
@@ -7913,11 +7892,6 @@ div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
 	padding: 0px;
 }
 
-div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
-	background-color: #548BCE;
-	color: white;
-}
-
 .v-label h2 {
 	font-size: 14px;
 	font-weight: bold;
@@ -8002,11 +7976,6 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 	margin: -5px;
 }
 
-.optionPopupContent .action-wrap:hover {
-	background-color: #82BA4F;
-	color: #ffffff;
-}
-
 .optionPopupContent .action-wrap .v-button-action {
 	background-color: transparent;
 	text-align: left;
@@ -8014,6 +7983,7 @@ div.v-button-link.buttonPagingcurrent, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-button-action .v-button-wrap {
 	margin: 0px;
+	text-align: left;
 }
 
 .optionPopupContent .action-wrap .v-button-action .v-button-wrap:hover {
@@ -12678,27 +12648,14 @@ img.icon-btn {
 }
 
 .feed-block-wrap .date-lbl {
-	padding: 5px 25px 5px 7px;
-	position: relative;
-	background: #167aad;
-	color: #fff;
-	width: 88px;
+	padding: 12px 41px 3px 11px;
+	background: url("icons/date-lbl.png") no-repeat left bottom transparent;
+	color: #FFF;
 	cursor: pointer;
 }
 
-.feed-block-wrap .date-lbl:after {
-	left: 100%;
-	top: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(22, 122, 173, 0);
-	border-left-color: #167aad;
-	border-width: 15px;
-	margin-top: -15px;
+.feed-block-wrap .date-lbl:hover {
+	background-image: url("icons/date-lbl-hover.png");
 }
 
 .year-lbl {

@@ -908,7 +908,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                         }
                     }, false);
             currentBtn.addStyleName("buttonPaging");
-            currentBtn.addStyleName("buttonPagingcurrent");
+            currentBtn.addStyleName("current");
 
             this.navigator.addComponent(currentBtn);
             final int range = this.totalPage - this.currentPage;
