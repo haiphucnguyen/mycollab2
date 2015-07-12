@@ -111,7 +111,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         MHorizontalLayout groupBtns = new MHorizontalLayout();
 
         final Button selectAllBtn = new Button();
-        selectAllBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
+        selectAllBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         selectAllBtn.setIcon(FontAwesome.SQUARE_O);
         selectAllBtn.setData(false);
         selectAllBtn.setImmediate(true);
@@ -163,13 +163,13 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
         });
         goUpBtn.setDescription("Back to parent folder");
-        goUpBtn.setStyleName(UIConstants.THEME_BROWN_LINK);
+        goUpBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         goUpBtn.setDescription("Go up");
 
         groupBtns.with(goUpBtn).withAlign(goUpBtn, Alignment.MIDDLE_LEFT);
 
         ButtonGroup navButton = new ButtonGroup();
-        navButton.addStyleName(UIConstants.THEME_BROWN_LINK);
+        navButton.addStyleName(UIConstants.THEME_GREEN_LINK);
         Button createBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE),
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -181,7 +181,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     }
                 });
         createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
+        createBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         createBtn.setDescription("Create new folder");
         createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
         navButton.addButton(createBtn);
@@ -196,7 +196,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
         });
         uploadBtn.setIcon(FontAwesome.UPLOAD);
-        uploadBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
+        uploadBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         uploadBtn.setDescription("Upload");
 
         uploadBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
@@ -223,7 +223,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         downloaderExt.extend(downloadBtn);
 
         downloadBtn.setIcon(FontAwesome.DOWNLOAD);
-        downloadBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
+        downloadBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         downloadBtn.setEnabled(AppContext
                 .canRead(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
         navButton.addButton(downloadBtn);
@@ -243,7 +243,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
         });
         moveToBtn.setIcon(FontAwesome.ARROWS);
-        moveToBtn.addStyleName(UIConstants.THEME_BROWN_LINK);
+        moveToBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         moveToBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
         moveToBtn.setDescription("Move to");
         navButton.addButton(moveToBtn);

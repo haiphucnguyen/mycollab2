@@ -109,11 +109,7 @@
 
   .project-status {
     .v-verticallayout {
-    @include margin-container(8px, 15px, 5px, 15px);
-    }
-    .member-count-lbl .v-button-wrap {
-      padding: 0px;
-      border: none;
+      @include margin-container(8px, 15px, 5px, 15px);
     }
     .createdtime-lbl {
       color: #808080;

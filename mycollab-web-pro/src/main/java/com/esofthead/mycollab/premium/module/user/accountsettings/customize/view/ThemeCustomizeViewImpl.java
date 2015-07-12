@@ -468,14 +468,13 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         blockBody.setMargin(new MarginInfo(false, true, false, true));
         blockLayout.addComponent(blockBody);
 
-        GridLayout propertyLayout = new GridLayout(3, 2);
+        GridLayout propertyLayout = new GridLayout(3, 1);
         propertyLayout.setStyleName("example-block");
         propertyLayout.addStyleName("no-border");
         propertyLayout.setSpacing(true);
         blockBody.addComponent(propertyLayout);
 
         // Action Button
-
         VerticalLayout actionBtnPanel = new VerticalLayout();
         actionBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         actionBtnPanel.setSizeUndefined();
@@ -528,7 +527,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         optionBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         optionBtnPanel.setSizeUndefined();
         optionBtnPanel.setSpacing(true);
-        optionBtnPanel.setMargin(new MarginInfo(false, false, false, true));
+        optionBtnPanel.setMargin(false);
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
         Button exampleOptionBtn = new Button("Button");
@@ -536,8 +535,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         optionBtnPanel.addComponent(exampleOptionBtn);
 
         HorizontalLayout optionBtnColorPane = new HorizontalLayout();
-        optionBtnColorPane
-                .setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        optionBtnColorPane.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         optionBtnColorPane.setSpacing(true);
         optionBtnPanel.addComponent(optionBtnColorPane);
 
@@ -571,63 +569,13 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
         });
         optionBtnColorPane.addComponent(optionBtnText);
 
-        // Control Button
-
-        VerticalLayout controlBtnPanel = new VerticalLayout();
-        controlBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        controlBtnPanel.setSizeUndefined();
-        controlBtnPanel.setSpacing(true);
-        controlBtnPanel.setMargin(new MarginInfo(false, false, false, true));
-        propertyLayout.addComponent(controlBtnPanel, 2, 0);
-
-        Button exampleControlBtn = new Button("Button");
-        exampleControlBtn.setStyleName(UIConstants.THEME_BROWN_LINK);
-        controlBtnPanel.addComponent(exampleControlBtn);
-
-        HorizontalLayout controlBtnColorPane = new HorizontalLayout();
-        controlBtnColorPane
-                .setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        controlBtnColorPane.setSpacing(true);
-        controlBtnPanel.addComponent(controlBtnColorPane);
-
-        CustomColorPickerArea controlBtnBg = new CustomColorPickerArea(
-                "Button Background", accountTheme.getControlbtn());
-        controlBtnBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setControlbtn(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        controlBtnColorPane.addComponent(controlBtnBg);
-
-        CustomColorPickerArea controlBtnText = new CustomColorPickerArea(
-                "Button Text", accountTheme.getControlbtntext());
-        controlBtnText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setControlbtntext(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        controlBtnColorPane.addComponent(controlBtnText);
-
         // Danger Button
-
         VerticalLayout dangerBtnPanel = new VerticalLayout();
         dangerBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         dangerBtnPanel.setSizeUndefined();
         dangerBtnPanel.setSpacing(true);
-        dangerBtnPanel.setMargin(new MarginInfo(true, false, false, false));
-        propertyLayout.addComponent(dangerBtnPanel, 0, 1);
+        dangerBtnPanel.setMargin(false);
+        propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
         Button exampleDangerBtn = new Button("Button");
         exampleDangerBtn.setStyleName(UIConstants.THEME_RED_LINK);
@@ -668,139 +616,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements
             }
         });
         dangerBtnColorPane.addComponent(dangerBtnText);
-
-        // Clear Button
-
-        VerticalLayout clearBtnPanel = new VerticalLayout();
-        clearBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        clearBtnPanel.setSizeUndefined();
-        clearBtnPanel.setSpacing(true);
-        clearBtnPanel.setMargin(new MarginInfo(true, false, false, true));
-        propertyLayout.addComponent(clearBtnPanel, 1, 1);
-
-        Button exampleClearBtn = new Button("Button");
-        exampleClearBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
-        clearBtnPanel.addComponent(exampleClearBtn);
-
-        HorizontalLayout clearBtnColorPane = new HorizontalLayout();
-        clearBtnColorPane.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        clearBtnColorPane.setSpacing(true);
-        clearBtnPanel.addComponent(clearBtnColorPane);
-
-        CustomColorPickerArea clearBtnBg = new CustomColorPickerArea(
-                "Button Background", accountTheme.getClearbtn());
-        clearBtnBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setClearbtn(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        clearBtnColorPane.addComponent(clearBtnBg);
-
-        CustomColorPickerArea clearBtnText = new CustomColorPickerArea(
-                "Button Text", accountTheme.getClearbtntext());
-        clearBtnText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setClearbtntext(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        clearBtnColorPane.addComponent(clearBtnText);
-
-        // Toggle Button
-
-        VerticalLayout toggleBtnPanel = new VerticalLayout();
-        toggleBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        toggleBtnPanel.setSizeUndefined();
-        toggleBtnPanel.setSpacing(true);
-        toggleBtnPanel.setMargin(new MarginInfo(true, false, false, true));
-        propertyLayout.addComponent(toggleBtnPanel, 2, 1);
-
-        final ToggleButtonGroup exampleToggleBtn = new ToggleButtonGroup();
-        toggleBtnPanel.addComponent(exampleToggleBtn);
-
-        Button firstBtn = new Button("Button 1");
-        firstBtn.addStyleName(UIConstants.BTN_ACTIVE);
-        exampleToggleBtn.addButton(firstBtn);
-        exampleToggleBtn.addButton(new Button("Button 2"));
-
-        GridLayout toggleBtnColorPane = new GridLayout(2, 2);
-        toggleBtnColorPane
-                .setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        toggleBtnColorPane.setSpacing(true);
-        toggleBtnColorPane.addStyleName("no-border");
-        toggleBtnPanel.addComponent(toggleBtnColorPane);
-
-        CustomColorPickerArea toggleBtnBgSelected = new CustomColorPickerArea(
-                "Selected Button Background",
-                accountTheme.getTogglebtnselected());
-        toggleBtnBgSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setTogglebtnselected(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        toggleBtnColorPane.addComponent(toggleBtnBgSelected, 0, 0);
-
-        CustomColorPickerArea toggleBtnBg = new CustomColorPickerArea(
-                "Button Background", accountTheme.getTogglebtn());
-        toggleBtnBg.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = -3852566371241071966L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setTogglebtn(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        toggleBtnColorPane.addComponent(toggleBtnBg, 1, 0);
-
-        CustomColorPickerArea toggleBtnText = new CustomColorPickerArea(
-                "Button Text", accountTheme.getTogglebtntext());
-        toggleBtnText.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setTogglebtntext(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        toggleBtnColorPane.addComponent(toggleBtnText, 0, 1);
-
-        CustomColorPickerArea toggleBtnTextSelected = new CustomColorPickerArea(
-                "Selected Button Text", accountTheme.getTogglebtntextselected());
-        toggleBtnTextSelected.addColorChangeListener(new ColorChangeListener() {
-            private static final long serialVersionUID = 7947045019055649130L;
-
-            @Override
-            public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
-                accountTheme.setTogglebtntextselected(colorHexString);
-                ThemeManager.loadDemoTheme(accountTheme);
-            }
-        });
-        toggleBtnColorPane.addComponent(toggleBtnTextSelected, 1, 1);
 
         return blockLayout;
     }

@@ -45,8 +45,6 @@ public class ThemeManager {
         if (accountTheme.getTopmenubg() != null) {
             Page.getCurrent().getStyles().add(".topNavigation { background-color: #"
                     + accountTheme.getTopmenubg() + "; }");
-
-            Page.getCurrent().getStyles().add(".v-app a { color: #" + accountTheme.getTopmenubg() + "; }");
         }
 
         if (accountTheme.getTopmenubgselected() != null) {
@@ -96,8 +94,7 @@ public class ThemeManager {
 		/* Tabsheet */
 
         if (accountTheme.getTabsheetbg() != null) {
-            Page.getCurrent()
-                    .getStyles()
+            Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem { background-color: #"
                             + accountTheme.getTabsheetbg() + "; }");
         }
@@ -126,6 +123,14 @@ public class ThemeManager {
             Page.getCurrent().getStyles()
                     .add(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
                             + accountTheme.getTabsheetbgselected() + "; }");
+
+            //Set link style
+            Page.getCurrent().getStyles().add(".v-app a { color: #" + accountTheme.getTabsheetbgselected() + "; }");
+
+            //Set style of popup content
+            Page.getCurrent().getStyles().add(".optionPopupContent .action-wrap .v-button-action { color: #" + accountTheme
+                    .getTabsheetbgselected
+                            () + "; }");
         }
 
         if (accountTheme.getHtopmenubgselected() != null) {
@@ -217,8 +222,7 @@ public class ThemeManager {
         }
 
         if (accountTheme.getDangerbtntext() != null) {
-            Page.getCurrent()
-                    .getStyles()
+            Page.getCurrent().getStyles()
                     .add(".v-button.v-button-redbtn, .v-button-redbtn:focus { color: #"
                             + accountTheme.getDangerbtntext() + "; }");
         }
@@ -226,15 +230,13 @@ public class ThemeManager {
 		/* Clear Buttons */
 
         if (accountTheme.getClearbtn() != null) {
-            Page.getCurrent().getStyles()
-                    .add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { background-color: #"
-                            + accountTheme.getClearbtn() + "; border-color: #"
-                            + getBorderColor(accountTheme.getClearbtn()) + "; }");
+            Page.getCurrent().getStyles().add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { background-color: #"
+                    + accountTheme.getClearbtn() + "; border-color: #"
+                    + getBorderColor(accountTheme.getClearbtn()) + "; }");
         }
 
         if (accountTheme.getClearbtntext() != null) {
-            Page.getCurrent()
-                    .getStyles()
+            Page.getCurrent().getStyles()
                     .add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { color: #"
                             + accountTheme.getClearbtntext() + "; }");
         }
@@ -242,13 +244,10 @@ public class ThemeManager {
 		/* Toggle Buttons */
 
         if (accountTheme.getTogglebtn() != null) {
-            Page.getCurrent()
-                    .getStyles()
+            Page.getCurrent().getStyles()
                     .add(".v-buttongroup.toggle-btn-group .v-button { background-color: #"
-                            + accountTheme.getTogglebtn()
-                            + "; border-color: #"
-                            + getBorderColor(accountTheme.getTogglebtn())
-                            + "; }");
+                            + accountTheme.getTogglebtn() + "; border-color: #"
+                            + getBorderColor(accountTheme.getTogglebtn()) + "; }");
         }
 
         if (accountTheme.getTogglebtntext() != null) {

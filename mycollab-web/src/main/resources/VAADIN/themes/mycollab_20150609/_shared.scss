@@ -163,7 +163,7 @@
     border-radius: 2px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    background: none no-repeat 0 0 #93c6f0;
+    background: none no-repeat 0 0 #9cd5f2;
     margin: -1px;
     border: 1px solid #CDCDCD;
   }
@@ -181,7 +181,7 @@
     .v-progressbar-indicator {
       height: 7px;
       border: none;
-      background-color: rgb(0, 136, 204);
+      background-color: #9cd5f2;
     }
   }
 
@@ -328,9 +328,6 @@
           margin: 0px;
           &:hover {
             background-color: transparent;
-          }
-          .v-icon {
-            color: #006dac;
           }
         }
       }
