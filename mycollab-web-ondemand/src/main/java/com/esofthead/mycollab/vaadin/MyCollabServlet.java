@@ -4,6 +4,8 @@ import com.vaadin.addon.touchkit.server.TouchKitServlet;
 import com.vaadin.addon.touchkit.settings.TouchKitSettings;
 import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -20,11 +22,14 @@ import javax.servlet.annotation.WebServlet;
 public class MyCollabServlet extends TouchKitServlet {
     private static final long serialVersionUID = 1L;
 
+    private static Logger LOG = LoggerFactory.getLogger(MyCollabServlet.class);
+
     private MyCollabUIProvider uiProvider = new MyCollabUIProvider();
 
     @Override
     protected void servletInitialized() throws ServletException {
         super.servletInitialized();
+        LOG.info("INIT SEWRVLERT");
         TouchKitSettings s = getTouchKitSettings();
         s.getApplicationCacheSettings().setCacheManifestEnabled(false);
 

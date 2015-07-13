@@ -236,7 +236,7 @@ public abstract class GenericServerRunner {
         String osExprClassFolder, osExprJarFile;
         if ("/".equals(fileSeparator)) {
             osExprClassFolder = ".+/mycollab-\\S+/target/classes$";
-            osExprJarFile = ".+/\\S+.jar$";
+            osExprJarFile = ".+/mycollab-\\S+.jar$";
         } else {
             osExprClassFolder = ".+\\\\mycollab-\\S+\\\\target\\\\classes$";
             osExprJarFile = ".+\\\\mycollab-\\S+.jar$";
