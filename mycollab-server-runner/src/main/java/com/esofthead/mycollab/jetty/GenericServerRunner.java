@@ -262,9 +262,9 @@ public abstract class GenericServerRunner {
             if (files != null) {
                 for (File file : files) {
                     if (file.getName().matches("mycollab-\\S+.jar$")) {
-                        LOG.info("Load jar file " + file.getName());
+                        LOG.info("Load jar file " + file.getAbsolutePath());
                         try {
-                            appContext.getMetaData().getWebInfClassesDirs().add(new PathResource(file.toURI()));
+                            appContext.getMetaData().getWebInfJars().add(new PathResource(file.toURI()));
                         } catch (IOException e) {
                             LOG.error("Can not load resource " + file.toURI(), e);
                         }
