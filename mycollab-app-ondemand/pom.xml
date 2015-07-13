@@ -130,7 +130,6 @@
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <classpathPrefix>lib/</classpathPrefix>
-                                    <useUniqueVersions>false</useUniqueVersions>
                                     <mainClass>com.esofthead.mycollab.jetty.OnDemandServerRunner</mainClass>
                                 </manifest>
                             </archive>
