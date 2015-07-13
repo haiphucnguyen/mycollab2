@@ -1,5 +1,5 @@
 @mixin mycollab-tooltip {
-  .v-tooltip {
+  .v-tooltip, .v-sa .v-tooltip  {
     font: $font-small $font-family !important;
     line-height: normal;
     border: 1px solid $border-color;

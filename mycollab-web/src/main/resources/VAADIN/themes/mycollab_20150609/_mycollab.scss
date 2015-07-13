@@ -1,6 +1,7 @@
 @import "../chameleon/chameleon";
 @import "variables";
 @import "global";
+@import "shared";
 
 @import "components/account";
 @import "components/breadcrumb";
@@ -55,12 +56,6 @@
     background-color: #F5F5F5;
   }
 
-  .v-panel-bubble {
-    .v-panel-captionwrap, .v-panel-deco-bubble {
-      background-color: #F5F5F5;
-    }
-  }
-
   .v-tabsheet-content, .v-tabsheet-tabitem-selected, .v-slider-base, .v-window-modalitycurtain, .v-window-opaque, .v-progressindicator-wrapper, .v-table-scrollposition, .v-table-body {
     background-color: #F5F5F5;
   }
@@ -106,7 +101,7 @@
     }
   }
 
-  .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
+  .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button {
     background-color: #64825A;
     border-color: #43533E;
   }
@@ -116,11 +111,11 @@
     border-color: #43533E;
   }
 
-  .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-panel-bubble .v-panel-caption-bubble, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
+  .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
     background-position: left top;
   }
 
-  .v-datefield-calendarpanel-weekdays strong, .v-splitpanel-hsplitter-small, .v-splitpanel-vsplitter-small, .v-splitpanel-hsplitter-small-locked, .v-splitpanel-vsplitter-small-locked {
+  .v-datefield-calendarpanel-weekdays strong {
     background-color: rgb(82, 104, 75);
   }
 
@@ -136,12 +131,6 @@
 
   .v-window, .v-filterselect-suggestpopup, .v-contextmenu, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
     border-color: #78976E;
-  }
-
-  .v-panel-bubble {
-    .v-panel-captionwrap, .v-panel-content-bubble, .v-panel-deco-bubble {
-      border-color: #78976E;
-    }
   }
 
   .v-tabsheet-tabitem-selected, .v-tabsheet-tabitem, .v-tabsheet-spacertd div, .v-tabsheet-content, .v-tabsheet-deco, .v-slider, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked, .v-menubar-separator span {
@@ -186,7 +175,8 @@
 
   /* Application background */
 
-  .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
+  .v-window, div.v-popupbutton-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu,
+  .v-menubar-submenu {
     background-color: white;
     border-radius: 3px;
   }
@@ -260,12 +250,6 @@
 
   .v-window, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-panel-caption, .v-panel-nocaption, .v-panel-content, .v-panel-deco, .v-panel-light .v-panel-caption-light {
     border-color: #A9A9A9;
-  }
-
-  .v-panel-bubble {
-    .v-panel-captionwrap, .v-panel-content-bubble, .v-panel-deco-bubble {
-      border-color: #A9A9A9;
-    }
   }
 
   .v-tabsheet-tabitem-selected, .v-tabsheet-tabitem, .v-tabsheet-spacertd div, .v-tabsheet-content, .v-tabsheet-deco, .v-slider, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked, .v-table-scrollposition, .v-menubar-separator span {
@@ -3510,71 +3494,6 @@
 
   .crm-activity-list, .project-activity-list {
     padding-top: 20px;
-  }
-
-  .feed-block-wrap {
-    &.v-margin-bottom {
-      padding-bottom: 18px;
-    }
-    background: url("icons/timeline-line.jpg") repeat-y left top transparent;
-    .date-lbl {
-      padding: 12px 41px 3px 11px;
-      background: url("icons/date-lbl.png") no-repeat left bottom transparent;
-      color: #FFF;
-      cursor: pointer;
-    }
-    .date-lbl:hover {
-      background-image: url("icons/date-lbl-hover.png");
-    }
-  }
-
-  .year-lbl {
-    padding-left: 52px;
-    padding-right: 10px;
-    line-height: 49px;
-    background: url("icons/year-circle.png") no-repeat right top transparent;
-  }
-
-  .feed-block {
-    background-color: $background-color;
-    padding: 3px 10px;
-    border: 1px solid $border-color;
-    border-radius: 3px;
-    position: relative;
-    overflow: visible;
-    &:before {
-      content: "";
-      position: absolute;
-      border-style: solid;
-      /* reduce the damage in FF3.0 */
-      display: block;
-      width: 0;
-      top: 9px;
-      left: -12px;
-      border-width: 11px 11px 11px 0;
-      border-color: transparent $border-color;
-      border-radius: 0px;
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      border-style: solid;
-      display: block;
-      width: 0;
-      top: 10px;
-      left: -10px;
-      border-width: 10px 10px 10px 0;
-      border-color: transparent $background-color;
-      border-radius: 0px;
-    }
-    .stream-wrapper {
-      border-width: 1px 0px 0px;
-      padding-bottom: 8px;
-      background-color: $background-color;
-      &:first-child {
-        border-width: 0px;
-      }
-    }
   }
 
   .page-controls {

@@ -187,11 +187,8 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
     }
 
     private ComponentContainer constructTableActionControls() {
-        CssLayout layoutWrapper = new CssLayout();
-        layoutWrapper.setWidth("100%");
         MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
-        layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
-        layoutWrapper.addComponent(layout);
+        layout.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
 
         selectOptionButton = new SelectionOptionButton(tableItem);
         selectOptionButton.setWidthUndefined();
@@ -219,7 +216,8 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
         tableActionControls.setWidthUndefined();
 
         selectedItemsNumberLabel.setWidth("100%");
-        layout.with(tableActionControls, selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER);
+        layout.with(tableActionControls, selectedItemsNumberLabel).withAlign(selectedItemsNumberLabel,
+                Alignment.MIDDLE_LEFT).expand(selectedItemsNumberLabel);
 
         Button customizeViewBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -235,7 +233,7 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
         customizeViewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
-        return layoutWrapper;
+        return layout;
     }
 
     @Override

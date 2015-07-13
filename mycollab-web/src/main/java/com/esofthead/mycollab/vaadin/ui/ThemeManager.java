@@ -129,8 +129,11 @@ public class ThemeManager {
 
             //Set style of popup content
             Page.getCurrent().getStyles().add(".optionPopupContent .action-wrap .v-button-action { color: #" + accountTheme
-                    .getTabsheetbgselected
-                            () + "; }");
+                    .getTabsheetbgselected() + "; }");
+
+            // Set button link
+            Page.getCurrent().getStyles().add(".v-button.v-button-link { color: #" + accountTheme
+                    .getTabsheetbgselected() + "; }");
         }
 
         if (accountTheme.getHtopmenubgselected() != null) {
@@ -182,8 +185,8 @@ public class ThemeManager {
                             + "; border-color: #" + getBorderColor(accountTheme.getActionbtn()) + "; }");
 
             //Button paging
-            Page.getCurrent().getStyles().add("div.v-button-link.current, div.v-button-link" +
-                    ".buttonPaging:hover { background-color:" + accountTheme.getActionbtn() + "; }");
+            Page.getCurrent().getStyles().add("div.v-button-link.buttonPaging.current, div.v-button-link" +
+                    ".buttonPaging:hover { background-color:#" + accountTheme.getActionbtn() + "; }");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -195,7 +198,7 @@ public class ThemeManager {
 
             //Button paging
             Page.getCurrent().getStyles().add("div.v-button-link.buttonPaging.current, div.v-button-link" +
-                    ".buttonPaging:hover { color:" + accountTheme.getActionbtntext() + "; }");
+                    ".buttonPaging:hover { color:#" + accountTheme.getActionbtntext() + "; }");
         }
 
 		/* Option Buttons */
@@ -233,35 +236,6 @@ public class ThemeManager {
                     .add(".v-button.v-button-redbtn, .v-button-redbtn:focus { color: #"
                             + accountTheme.getDangerbtntext() + "; }");
         }
-
-		/* Clear Buttons */
-
-//        if (accountTheme.getClearbtn() != null) {
-//            Page.getCurrent().getStyles().add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { background-color: #"
-//                    + accountTheme.getClearbtn() + "; border-color: #"
-//                    + getBorderColor(accountTheme.getClearbtn()) + "; }");
-//        }
-//
-//        if (accountTheme.getClearbtntext() != null) {
-//            Page.getCurrent().getStyles()
-//                    .add(".v-button.v-button-blankbtn, .v-button-blankbtn:focus { color: #"
-//                            + accountTheme.getClearbtntext() + "; }");
-//        }
-
-		/* Toggle Buttons */
-
-//        if (accountTheme.getTogglebtn() != null) {
-//            Page.getCurrent().getStyles()
-//                    .add(".v-buttongroup.toggle-btn-group .v-button { background-color: #"
-//                            + accountTheme.getTogglebtn() + "; border-color: #"
-//                            + getBorderColor(accountTheme.getTogglebtn()) + "; }");
-//        }
-//
-//        if (accountTheme.getTogglebtntext() != null) {
-//        }
-
-//        if (accountTheme.getTogglebtnselected() != null) {
-//        }
 
     }
 
@@ -421,48 +395,6 @@ public class ThemeManager {
                     .add(".example-block .v-button.v-button-redbtn, .example-block .v-button-redbtn:focus { color: #"
                             + accountTheme.getDangerbtntext() + "; }");
         }
-
-		/* Clear Buttons */
-
-//        if (accountTheme.getClearbtn() != null) {
-//            Page.getCurrent().getStyles()
-//                    .add(".example-block .v-button.v-button-blankbtn, .example-block .v-button-blankbtn:focus { background-color: #"
-//                            + accountTheme.getClearbtn()
-//                            + "; border-color: #"
-//                            + getBorderColor(accountTheme.getClearbtn())
-//                            + "; }");
-//        }
-//
-//        if (accountTheme.getClearbtntext() != null) {
-//            Page.getCurrent().getStyles()
-//                    .add(".example-block .v-button.v-button-blankbtn, .example-block .v-button-blankbtn:focus { color: #"
-//                            + accountTheme.getClearbtntext() + "; }");
-//        }
-
-		/* Toggle Buttons */
-
-//        if (accountTheme.getTogglebtn() != null) {
-//            Page.getCurrent().getStyles()
-//                    .add(".example-block .v-buttongroup.toggle-btn-group .v-button { background-color: #"
-//                            + accountTheme.getTogglebtn()
-//                            + "; border-color: #"
-//                            + getBorderColor(accountTheme.getTogglebtn())
-//                            + "; }");
-//        }
-//
-//        if (accountTheme.getTogglebtntext() != null) {
-//            Page.getCurrent().getStyles()
-//                    .add(".example-block .v-buttongroup.toggle-btn-group .v-button { color: #"
-//                            + accountTheme.getTogglebtntext() + "; }");
-//        }
-//
-//        if (accountTheme.getTogglebtnselected() != null) {
-//
-//        }
-//
-//        if (accountTheme.getTogglebtntextselected() != null) {
-//
-//        }
 
     }
 

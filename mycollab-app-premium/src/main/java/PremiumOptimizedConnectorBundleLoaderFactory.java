@@ -18,7 +18,6 @@ public class PremiumOptimizedConnectorBundleLoaderFactory extends
         eagerConnectors.add(com.vaadin.client.ui.customlayout.CustomLayoutConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.passwordfield.PasswordFieldConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.textfield.TextFieldConnector.class.getName());
-        eagerConnectors.add(org.vaadin.jonatan.contexthelp.widgetset.client.ui.ContextHelpConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.checkbox.CheckBoxConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.customcomponent.CustomComponentConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.csslayout.CssLayoutConnector.class.getName());

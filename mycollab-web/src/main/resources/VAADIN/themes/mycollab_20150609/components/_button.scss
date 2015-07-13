@@ -133,7 +133,6 @@
     margin: 0px;
     padding: 0px;
     text-align: left;
-    color: #006dac;
     &:focus, &:active {
       color: #006dac;
       background-color: transparent;
@@ -538,5 +537,9 @@
         content: "";
       }
     }
+  }
+
+  .v-popupbutton .v-popup-indicator:before {
+    margin: 0px !important;
   }
 }

@@ -28,7 +28,7 @@ public class V20150712_1__Default_Theme_Table implements SpringJdbcMigration {
                 "optionBtnText, dangerBtn, dangerBtnText, " +
                 "isDefault, sAccountId) VALUES " +
                 "('0E4F71', 'FFFFFF', 'FFFFFF', '575757', 'FFFFFF', '12658F', '525252', 'FFFFFF', '167AAD', 'FFFFFF'," +
-                " 'FFFFFF', '000000', '47749D', 'FFFFFF', 'FFFFFF', '535353', '65A0FA', 'FFFFFF', '8B8B8B', 'FFFFFF'," +
+                " 'FFFFFF', '000000', '47749D', 'FFFFFF', 'FFFFFF', '535353', '3A97FF', 'FFFFFF', '8B8B8B', 'FFFFFF'," +
                 " 'F64A46', 'FFFFFF'," +
                 " 1, NULL)");
     }

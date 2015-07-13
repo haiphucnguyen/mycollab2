@@ -226,6 +226,10 @@
         padding: 0px;
       }
     }
+    &.current, &.buttonPaging:hover {
+      background-color: #548BCE;
+      color: white;
+    }
   }
 
   .v-label h2 {
@@ -428,5 +432,86 @@
       color: white;
     }
     color: white;
+  }
+
+  /* Activity Stream */
+  .feed-block-wrap {
+    &.v-margin-bottom {
+      padding-bottom: 18px;
+    }
+    background: url("icons/timeline-line.jpg") repeat-y left top transparent;
+    .date-lbl {
+      padding: 12px 41px 3px 11px;
+      background: url("icons/date-lbl.png") no-repeat left bottom transparent;
+      color: #FFF;
+      cursor: pointer;
+    }
+    .date-lbl:hover {
+      background-image: url("icons/date-lbl-hover.png");
+    }
+
+    .feed-block {
+      background-color: $background-color;
+      padding: 3px 10px;
+      border: 1px solid $border-color;
+      border-radius: 3px;
+      position: relative;
+      overflow: visible;
+      &:before {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        /* reduce the damage in FF3.0 */
+        display: block;
+        width: 0;
+        top: 9px;
+        left: -12px;
+        border-width: 11px 11px 11px 0;
+        border-color: transparent $border-color;
+        border-radius: 0px;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        display: block;
+        width: 0;
+        top: 10px;
+        left: -10px;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent $background-color;
+        border-radius: 0px;
+      }
+      .stream-wrapper {
+        border-width: 1px 0px 0px;
+        padding-bottom: 8px;
+        background-color: $background-color;
+        &:first-child {
+          border-width: 0px;
+        }
+      }
+    }
+  }
+
+  .v-label.year-lbl {
+    padding-left: 52px;
+    padding-right: 10px;
+    line-height: 49px;
+    background: url("icons/year-circle.png") no-repeat right top transparent;
+  }
+
+
+  /* Selection */
+  .v-filterselect-button {
+    background: none !important;
+    opacity: 1 !important;
+  }
+  .v-filterselect-button:before {
+	font-size: 0.7em;
+	font-family: FontAwesome;
+	content: '\f078';
+	vertical-align: 0.15em;
+	margin: 0 -0.2em 0 0.5em;
+	opacity: 0.5;
   }
 }

@@ -73,19 +73,17 @@ public class ProjectActivityStreamPagedList extends
 
     @Override
     public void doSearch() {
-        this.totalCount = this.projectActivityStreamService
-                .getTotalActivityStream(this.searchRequest.getSearchCriteria());
-        this.totalPage = (this.totalCount - 1)
-                / this.searchRequest.getNumberOfItems() + 1;
-        if (this.searchRequest.getCurrentPage() > this.totalPage) {
-            this.searchRequest.setCurrentPage(this.totalPage);
+        totalCount = projectActivityStreamService.getTotalActivityStream(searchRequest.getSearchCriteria());
+        totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+        if (searchRequest.getCurrentPage() > totalPage) {
+            searchRequest.setCurrentPage(totalPage);
         }
 
         if (totalPage > 1) {
-            if (this.controlBarWrapper != null) {
-                this.removeComponent(this.controlBarWrapper);
+            if (controlBarWrapper != null) {
+                removeComponent(controlBarWrapper);
             }
-            this.addComponent(this.createPageControls());
+            this.addComponent(createPageControls());
         } else {
             if (getComponentCount() == 2) {
                 removeComponent(getComponent(1));
@@ -155,8 +153,7 @@ public class ProjectActivityStreamPagedList extends
     private String buildAssigneeValue(SimpleActivityStream activityStream) {
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
-        Img userAvatar = new Img("", Storage.getAvatarPath(
-                activityStream.getCreatedUserAvatarId(), 16));
+        Img userAvatar = new Img("", Storage.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16));
         A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 activityStream.getExtratypeid(), activityStream.getCreateduser()));
 
@@ -173,8 +170,7 @@ public class ProjectActivityStreamPagedList extends
     private String buildItemValue(ProjectActivityStream activityStream) {
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
-        Text image = new Text(ProjectAssetsManager.getAsset(activityStream
-                .getType()).getHtml());
+        Text image = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A().setId("tag" + uid);
         if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                 || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
@@ -189,7 +185,8 @@ public class ProjectActivityStreamPagedList extends
                     activityStream.getTypeid()));
         }
 
-        itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, activityStream.getType(), activityStream.getTypeid()));
+        itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, activityStream.getType(),
+                activityStream.getTypeid()));
         itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         itemLink.appendText(activityStream.getNamefield());
 
@@ -219,8 +216,8 @@ public class ProjectActivityStreamPagedList extends
             blockWrapper.setMargin(new MarginInfo(true, false, false, false));
         }
         Label dateLbl = new Label(AppContext.formatDayMonth(nextDate));
-        dateLbl.setSizeUndefined();
         dateLbl.setStyleName("date-lbl");
+        dateLbl.setWidthUndefined();
         blockWrapper.with(dateLbl, currentBlock).expand(currentBlock);
 
         this.listContainer.addComponent(blockWrapper);
@@ -233,34 +230,29 @@ public class ProjectActivityStreamPagedList extends
         this.controlBarWrapper.setStyleName("page-controls");
         ButtonGroup controlBtns = new ButtonGroup();
         controlBtns.setStyleName(UIConstants.THEME_GREEN_LINK);
-        Button prevBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = -94021599166105307L;
+        Button prevBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_NAV_NEWER), new Button.ClickListener() {
+            private static final long serialVersionUID = -94021599166105307L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        ProjectActivityStreamPagedList.this
-                                .pageChange(ProjectActivityStreamPagedList.this.currentPage - 1);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                ProjectActivityStreamPagedList.this.pageChange(ProjectActivityStreamPagedList.this.currentPage - 1);
+            }
+        });
         if (currentPage == 1) {
             prevBtn.setEnabled(false);
         }
         prevBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         prevBtn.setWidth("64px");
 
-        Button nextBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 3095522916508256018L;
+        Button nextBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_NAV_OLDER), new Button.ClickListener() {
+            private static final long serialVersionUID = 3095522916508256018L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        ProjectActivityStreamPagedList.this
-                                .pageChange(ProjectActivityStreamPagedList.this.currentPage + 1);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                ProjectActivityStreamPagedList.this
+                        .pageChange(ProjectActivityStreamPagedList.this.currentPage + 1);
+            }
+        });
         if (currentPage == totalPage) {
             nextBtn.setEnabled(false);
         }
@@ -271,7 +263,6 @@ public class ProjectActivityStreamPagedList extends
         controlBtns.addButton(nextBtn);
 
         controlBarWrapper.addComponent(controlBtns);
-
         return controlBarWrapper;
     }
 

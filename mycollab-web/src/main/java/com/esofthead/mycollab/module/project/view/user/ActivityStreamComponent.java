@@ -160,8 +160,7 @@ public class ActivityStreamComponent extends CssLayout {
                     } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
                         content.append(AppContext.getMessage(
                                 ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_COMMENT_ACTION_TITLE,
-                                assigneeValue, type, itemLink,
-                                projectLink));
+                                assigneeValue, type, itemLink, projectLink));
 
                         if (activityStream.getAssoAuditLog() != null) {
                             content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog()
@@ -184,8 +183,7 @@ public class ActivityStreamComponent extends CssLayout {
         private String buildAssigneeValue(ProjectActivityStream activityStream) {
             String uid = UUID.randomUUID().toString();
             DivLessFormatter div = new DivLessFormatter();
-            Img userAvatar = new Img("", Storage.getAvatarPath(
-                    activityStream.getCreatedUserAvatarId(), 16));
+            Img userAvatar = new Img("", Storage.getAvatarPath(activityStream.getCreatedUserAvatarId(), 16));
             A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     activityStream.getExtratypeid(), activityStream.getCreateduser()));
 
@@ -207,16 +205,11 @@ public class ActivityStreamComponent extends CssLayout {
 
             if (ProjectTypeConstants.TASK.equals(activityStream.getType())
                     || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
-                itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
-                        activityStream.getProjectShortName(),
-                        activityStream.getExtratypeid(),
-                        activityStream.getType(), activityStream.getItemKey()
-                                + ""));
+                itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(activityStream.getProjectShortName(),
+                        activityStream.getExtratypeid(), activityStream.getType(), activityStream.getItemKey() + ""));
             } else {
-                itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
-                        activityStream.getProjectShortName(),
-                        activityStream.getExtratypeid(),
-                        activityStream.getType(), activityStream.getTypeid()));
+                itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(activityStream.getProjectShortName(),
+                        activityStream.getExtratypeid(), activityStream.getType(), activityStream.getTypeid()));
             }
 
             itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, activityStream.getType(), activityStream.getTypeid()));
@@ -233,7 +226,8 @@ public class ActivityStreamComponent extends CssLayout {
             DivLessFormatter div = new DivLessFormatter();
             Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
             A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).setId("tag" + uid);
-            prjLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.PROJECT, activityStream.getProjectId() + ""));
+            prjLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.PROJECT,
+                    activityStream.getProjectId() + ""));
             prjLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             prjLink.appendText(activityStream.getProjectName());
 
