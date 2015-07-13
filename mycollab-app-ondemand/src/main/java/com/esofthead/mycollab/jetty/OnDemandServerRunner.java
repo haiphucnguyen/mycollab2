@@ -12,6 +12,7 @@ import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
  * 
  */
 public class OnDemandServerRunner extends GenericServerRunner {
+	private javax.validation.ValidatorFactory a;
 
 	@Override
 	public WebAppContext buildContext(String baseDir) {
