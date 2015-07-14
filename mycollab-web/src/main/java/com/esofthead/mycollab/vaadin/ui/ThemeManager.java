@@ -205,6 +205,13 @@ public class ThemeManager {
             //Selection background of selected item
             Page.getCurrent().getStyles().add(".v-filterselect-suggestpopup .gwt-MenuItem-selected { background-color:#" +
                     accountTheme.getActionbtn() + "; }");
+
+            //Date label of activity stream
+            Page.getCurrent().getStyles().add(".feed-block-wrap .date-lbl { background-color:#" + accountTheme
+                    .getActionbtn() + ";}");
+
+            Page.getCurrent().getStyles().add(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme
+                    .getActionbtn() + ";}");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -221,6 +228,10 @@ public class ThemeManager {
             //Selection text color of selected item
             Page.getCurrent().getStyles().add(".v-filterselect-suggestpopup .gwt-MenuItem-selected { color:#" +
                     accountTheme.getActionbtntext() + "; }");
+
+            //Date label of activity stream
+            Page.getCurrent().getStyles().add(".feed-block-wrap .date-lbl { color:#" + accountTheme
+                    .getActionbtntext() + ";}");
         }
 
 		/* Option Buttons */

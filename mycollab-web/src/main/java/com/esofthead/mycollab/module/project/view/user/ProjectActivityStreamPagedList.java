@@ -44,16 +44,14 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
 import org.apache.commons.lang3.time.DateUtils;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import java.util.*;
+import java.util.Calendar;
 
 /**
  * @author MyCollab Ltd.
@@ -194,7 +192,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Activi
         return div.write();
     }
 
-    protected void feedBlocksPut(Date currentDate, Date nextDate, CssLayout currentBlock) {
+    protected void feedBlocksPut(Date currentDate, Date nextDate, ComponentContainer currentBlock) {
         MHorizontalLayout blockWrapper = new MHorizontalLayout().withWidth("100%").withStyleName("feed-block-wrap");
 
         blockWrapper.setDefaultComponentAlignment(Alignment.TOP_LEFT);

@@ -439,14 +439,24 @@
       padding-bottom: 18px;
     }
     background: url("icons/timeline-line.jpg") repeat-y left top transparent;
-    .date-lbl {
-      padding: 12px 41px 3px 11px;
-      background: url("icons/date-lbl.png") no-repeat left bottom transparent;
-      color: #FFF;
-      cursor: pointer;
+    .date-lbl  {
+        padding: 6px;
+    	position: static;
+    	width: 55px;
+    	text-align:center;
+    	border-radius: 3px;
     }
-    .date-lbl:hover {
-      background-image: url("icons/date-lbl-hover.png");
+    .date-lbl::after {
+    	left: 100%;
+    	top: 50%;
+    	border: solid transparent;
+    	content: " ";
+    	height: 0;
+    	width: 0;
+    	position: absolute;
+    	pointer-events: none;
+    	border-width: 8px;
+    	margin-top: -8px;
     }
 
     .feed-block {
@@ -463,7 +473,7 @@
         /* reduce the damage in FF3.0 */
         display: block;
         width: 0;
-        top: 9px;
+        top: 4px;
         left: -12px;
         border-width: 11px 11px 11px 0;
         border-color: transparent $border-color;
@@ -475,9 +485,9 @@
         border-style: solid;
         display: block;
         width: 0;
-        top: 10px;
+        top: 4px;
         left: -10px;
-        border-width: 10px 10px 10px 0;
+        border-width: 11px 11px 11px 0;
         border-color: transparent $background-color;
         border-radius: 0px;
       }
@@ -490,6 +500,10 @@
         }
       }
     }
+  }
+
+  .v-horizontal.feed-block-wrap > .v-expand > .v-spacing {
+    width: 25px;
   }
 
   .v-label.year-lbl {
