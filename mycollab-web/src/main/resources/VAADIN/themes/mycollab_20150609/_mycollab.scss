@@ -2235,7 +2235,7 @@
 
   div.v-csslayout.member-block {
     display: inline-block;
-    background-color: #d9effa;
+    background-color: $block-background-color;
     margin-bottom: 15px;
     font-size: $font-normal;
     vertical-align: top;

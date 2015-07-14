@@ -29,7 +29,6 @@ public class MyCollabServlet extends TouchKitServlet {
     @Override
     protected void servletInitialized() throws ServletException {
         super.servletInitialized();
-        LOG.info("INIT SEWRVLERT");
         TouchKitSettings s = getTouchKitSettings();
         s.getApplicationCacheSettings().setCacheManifestEnabled(false);
 

@@ -53,6 +53,8 @@ public class VelocityDriverDeclare implements LanguageDriver {
 
     @Override
     public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterTypeClass) {
+        System.out.println("VM: " + parameterTypeClass + "---" + script.getNode().getAttributes().getNamedItem("id")
+                .getNodeValue());
         if (parameterTypeClass == null) {
             parameterTypeClass = Object.class;
         }
