@@ -167,16 +167,15 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
         private OptionPopupContent createPopupContent() {
             OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
 
-            Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            taskSettingPopupBtn.setPopupVisible(false);
-                            EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowComp.this, task));
-                        }
-                    });
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    taskSettingPopupBtn.setPopupVisible(false);
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskRowComp.this, task));
+                }
+            });
             editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             editButton.setIcon(FontAwesome.EDIT);
             filterBtnLayout.addOption(editButton);
@@ -218,15 +217,15 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                 filterBtnLayout.addOption(reOpenBtn);
             }
 
-            if (!"Pending".equals(task.getStatus())) {
-                if (!"Closed".equals(task.getStatus())) {
+            if (!OptionI18nEnum.StatusI18nEnum.Pending.name().equals(task.getStatus())) {
+                if (!OptionI18nEnum.StatusI18nEnum.Closed.name().equals(task.getStatus())) {
                     Button pendingBtn = new Button(AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.Pending), new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
                             taskSettingPopupBtn.setPopupVisible(false);
-                            task.setStatus("Pending");
+                            task.setStatus(OptionI18nEnum.StatusI18nEnum.Pending.name());
                             task.setPercentagecomplete(0d);
 
                             ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
@@ -245,7 +244,7 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         taskSettingPopupBtn.setPopupVisible(false);
-                        task.setStatus("Open");
+                        task.setStatus(OptionI18nEnum.StatusI18nEnum.Open.name());
                         task.setPercentagecomplete(0d);
 
                         ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
@@ -274,13 +273,11 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
                                 private static final long serialVersionUID = 1L;
 
                                 @Override
-                                public void onClose(
-                                        ConfirmDialog dialog) {
+                                public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
                                         ProjectTaskService projectTaskService = ApplicationContextUtil.
                                                 getSpringBean(ProjectTaskService.class);
-                                        projectTaskService.removeWithSession(task, AppContext.getUsername(),
-                                                AppContext.getAccountId());
+                                        projectTaskService.removeWithSession(task, AppContext.getUsername(), AppContext.getAccountId());
                                         deleteTask();
                                     }
                                 }
