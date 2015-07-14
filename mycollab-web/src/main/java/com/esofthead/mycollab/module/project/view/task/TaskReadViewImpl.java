@@ -461,7 +461,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
             if (subTask.getDeadline() != null) {
                 Div deadline = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
-                        AppContext.formatPrettyTime(subTask.getDeadline())))).setStyle("display:inline").
+                        AppContext.formatPrettyTime(subTask.getDeadlineRoundPlusOne())))).setStyle("display:inline").
                         setCSSClass("footer2").setTitle(AppContext.formatDate(subTask.getDeadline()));
 
                 resultDiv.appendChild(deadline);

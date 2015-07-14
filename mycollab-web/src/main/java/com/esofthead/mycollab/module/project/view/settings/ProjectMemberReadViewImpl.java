@@ -60,7 +60,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -385,10 +384,10 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
             Div footerDiv = new Div().setCSSClass("activity-date");
 
-            Date dueDate = genericTask.getDueDate();
-            if (dueDate != null) {
+            if (genericTask.getDueDate() != null) {
                 footerDiv.appendChild(new Text(AppContext.getMessage(TaskI18nEnum.OPT_DUE_DATE,
-                        AppContext.formatPrettyTime(dueDate)))).setTitle(AppContext.formatDate(dueDate));
+                        AppContext.formatPrettyTime(genericTask.getDueDatePlusOne())))).
+                        setTitle(AppContext.formatDate(genericTask.getDueDate()));
             } else {
                 footerDiv.appendChild(new Text(AppContext.getMessage(TaskI18nEnum.OPT_DUE_DATE, "Undefined")));
             }
