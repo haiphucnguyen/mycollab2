@@ -175,7 +175,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             Label memberLink = new Label(beanItem.getMemberFullName());
             memberLink.setWidth("100%");
             memberLink.addStyleName("member-name");
-            memberLink.addStyleName(UIConstants.H2_STYLE2);
+            memberLink.addStyleName("h2");
 
             memberInfo.addComponent(memberLink);
 
