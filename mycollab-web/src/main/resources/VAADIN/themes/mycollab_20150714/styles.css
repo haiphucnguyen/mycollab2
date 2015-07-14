@@ -10248,17 +10248,8 @@ input.v-textfield-pagedtable-pagefield {
 	background: none;
 }
 
-.topNavigation .service-menu.v-buttongroup .v-button.selected {
-	background: none no-repeat 0 0 #E4E4E4;
+.topNavigation .service-menu.v-buttongroup .v-button.selected, .topNavigation .service-menu.v-buttongroup .v-button:hover {
 	border-radius: 2px;
-}
-
-.topNavigation .service-menu.v-buttongroup .v-button.selected .v-button-caption {
-	color: #575757;
-}
-
-.service-menu.v-buttongroup .v-button.v-button-right {
-	border-left: none;
 }
 
 .topNavigation .service-menu .v-button-caption {

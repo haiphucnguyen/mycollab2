@@ -51,6 +51,10 @@ public class ThemeManager {
             Page.getCurrent().getStyles()
                     .add(".topNavigation .service-menu.v-buttongroup .v-button.selected { background-color: #"
                             + accountTheme.getTopmenubgselected() + "; }");
+
+            Page.getCurrent().getStyles()
+                    .add(".topNavigation .service-menu.v-buttongroup .v-button:hover { background-color: #"
+                            + accountTheme.getTopmenubgselected() + "; }");
         }
 
         if (accountTheme.getTopmenutext() != null) {
@@ -62,6 +66,10 @@ public class ThemeManager {
         if (accountTheme.getTopmenutextselected() != null) {
             Page.getCurrent().getStyles()
                     .add(".topNavigation .service-menu.v-buttongroup .v-button.selected .v-button-caption { color: #"
+                            + accountTheme.getTopmenutextselected() + "; }");
+
+            Page.getCurrent().getStyles()
+                    .add(".topNavigation .service-menu.v-buttongroup .v-button .v-button-caption:hover { color: #"
                             + accountTheme.getTopmenutextselected() + "; }");
         }
 

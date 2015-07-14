@@ -605,17 +605,9 @@
     &:focus {
       background: none;
     }
-    &.selected {
-      background: none no-repeat 0 0 #E4E4E4;
+    &.selected, &:hover {
       border-radius: 2px;
-      .v-button-caption {
-        color: #575757;
-      }
     }
-  }
-
-  .service-menu.v-buttongroup .v-button.v-button-right {
-    border-left: none;
   }
 
   .topNavigation {
