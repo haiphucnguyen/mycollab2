@@ -1154,9 +1154,6 @@
       border-style: solid;
       border-width: 1px 1px 0px;
     }
-    .report-addview-layout {
-      border-bottom: 1px solid #cfcfcf;
-    }
     .addViewTopControls {
       -moz-box-sizing: border-box;
       box-sizing: border-box;
@@ -1167,18 +1164,7 @@
       }
     }
     .addNewControl {
-      &.v-margin-top {
-        padding-top: 5px;
-      }
-      &.v-margin-right {
-        padding-right: 0px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 5px;
-      }
-      &.v-margin-left {
-        padding-left: 0px;
-      }
+      @margin-container(5px, 0px, 5px, 0px);
     }
     .addViewTopControls {
       .edit-btn .v-horizontallayout-margin {

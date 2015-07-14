@@ -37,13 +37,11 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
 	@Override
 	public void editItem(final StandupReportWithBLOBs standupReport) {
 		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm
-				.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+		this.editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
 		this.editForm.setBean(standupReport);
 	}
 
-	private static class EditFormFieldFactory extends
-			AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
+	private static class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
 		private static final long serialVersionUID = 1L;
 
 		EditFormFieldFactory(GenericBeanForm<StandupReportWithBLOBs> form) {
@@ -52,9 +50,7 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
 
 		@Override
 		protected Field<?> onCreateField(final Object propertyId) {
-			if (propertyId.equals("whatlastday")
-					|| propertyId.equals("whattoday")
-					|| propertyId.equals("whatproblem")) {
+			if (propertyId.equals("whatlastday") || propertyId.equals("whattoday") || propertyId.equals("whatproblem")) {
 				final RichTextEditField richText = new RichTextEditField();
 				richText.setWidth("100%");
 				return richText;

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -45,6 +46,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -113,11 +115,13 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             }
 
             if (task.getDeadline() != null) {
-                Div deadline = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage
-                        (TaskI18nEnum.FORM_DEADLINE), AppContext.formatPrettyTime(task.getDeadline()))))
+                Date deadline = task.getDeadline();
+                deadline = DateTimeUtils.subtractOrAddDayDuration(deadline, 1);
+                Div deadlineDiv = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage
+                        (TaskI18nEnum.FORM_DEADLINE), AppContext.formatPrettyTime(deadline))))
                         .setStyle("display:inline").setCSSClass("footer2").setTitle(AppContext.formatDate(task.getDeadline()));
 
-                resultDiv.appendChild(deadline);
+                resultDiv.appendChild(deadlineDiv);
             }
             return resultDiv.write();
         }

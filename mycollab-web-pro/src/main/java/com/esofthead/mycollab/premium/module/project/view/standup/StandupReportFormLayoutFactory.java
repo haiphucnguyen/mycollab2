@@ -35,33 +35,29 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 
 	@Override
 	public ComponentContainer getLayout() {
-		final AddViewLayout reportAddLayout = new AddViewLayout(this.title,
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
+		AddViewLayout reportAddLayout = new AddViewLayout(this.title, ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
 
 		reportAddLayout.addHeaderRight(this.createTopPanel());
 
-		MHorizontalLayout mainLayout = new MHorizontalLayout().withStyleName("report-addview-layout").withWidth("100%");
+		MHorizontalLayout mainLayout = new MHorizontalLayout().withWidth("100%");
 
 		final VerticalLayout layoutField = new VerticalLayout();
 		layoutField.addStyleName("standup-edit-layout");
 		layoutField.setMargin(new MarginInfo(false, false, true, true));
 		layoutField.setWidth("100%");
-		final Label whatYesterdayLbl = new Label(
-				AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
+		final Label whatYesterdayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
 		whatYesterdayLbl.setStyleName("h2");
 		layoutField.addComponent(whatYesterdayLbl);
 		this.whatYesterdayField = new StandupCustomField();
 		layoutField.addComponent(this.whatYesterdayField);
 
-		final Label whatTodayLbl = new Label(
-				AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
+		final Label whatTodayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
 		whatTodayLbl.setStyleName("h2");
 		layoutField.addComponent(whatTodayLbl);
 		this.whatTodayField = new StandupCustomField();
 		layoutField.addComponent(this.whatTodayField);
 
-		final Label roadblockLbl = new Label(
-				AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
+		final Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
 		roadblockLbl.addStyleName("h2");
 		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
@@ -75,14 +71,12 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 		instructionLayout.setStyleName("instruction-box");
 		instructionLayout.setSpacing(true);
 
-		final Label instruct1Lbl = new Label(
-				AppContext.getMessage(StandupI18nEnum.HINT1_MSG));
+		final Label instruct1Lbl = new Label(AppContext.getMessage(StandupI18nEnum.HINT1_MSG));
 
 		instruct1Lbl.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl);
 
-		final Label instruct1Lbl2 = new Label(
-				AppContext.getMessage(StandupI18nEnum.HINT2_MG));
+		final Label instruct1Lbl2 = new Label(AppContext.getMessage(StandupI18nEnum.HINT2_MG));
 		instruct1Lbl2.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl2);
 
@@ -94,11 +88,9 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 
 		mainLayout.addComponent(instructionLayout);
 		mainLayout.setExpandRatio(instructionLayout, 1.0f);
-		mainLayout.setComponentAlignment(instructionLayout,
-				Alignment.TOP_CENTER);
+		mainLayout.setComponentAlignment(instructionLayout, Alignment.TOP_CENTER);
 
 		reportAddLayout.addBody(mainLayout);
-
 		return reportAddLayout;
 	}
 

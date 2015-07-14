@@ -16,8 +16,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class StandupPresenter extends AbstractPresenter<IStandupContainer>
-        implements IStandupPresenter {
+public class StandupPresenter extends AbstractPresenter<IStandupContainer> implements IStandupPresenter {
     private static final long serialVersionUID = 1L;
 
     public StandupPresenter() {
@@ -39,15 +38,11 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer>
         AbstractPresenter presenter;
 
         if (data instanceof StandupScreenData.Search) {
-            presenter = PresenterResolver
-                    .getPresenter(StandupListPresenter.class);
-        } else if (data instanceof StandupScreenData.Add
-                || data instanceof StandupScreenData.Edit) {
-            presenter = PresenterResolver
-                    .getPresenter(StandupAddPresenter.class);
+            presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
+        } else if (data instanceof StandupScreenData.Add || data instanceof StandupScreenData.Edit) {
+            presenter = PresenterResolver.getPresenter(StandupAddPresenter.class);
         } else if (data instanceof StandupScreenData.Read) {
-            presenter = PresenterResolver
-                    .getPresenter(StandupReadPresenter.class);
+            presenter = PresenterResolver.getPresenter(StandupReadPresenter.class);
         } else {
             throw new MyCollabException(String.format("Do not support screen data: %s", data));
         }
@@ -56,8 +51,7 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer>
     }
 
     @Override
-    public void handleChain(ComponentContainer container,
-                            PageActionChain pageActionChain) {
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
         ScreenData pageAction = pageActionChain.pop();
         onGo(container, pageAction);
     }

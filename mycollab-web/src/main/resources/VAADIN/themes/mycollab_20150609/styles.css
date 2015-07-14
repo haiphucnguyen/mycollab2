@@ -249,10 +249,6 @@
 	opacity: 0.5;
 }
 
-.sidebar-menu .v-button:hover {
-	background-color: red;
-}
-
 .v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
@@ -441,10 +437,6 @@
 	opacity: 0.5;
 }
 
-.sidebar-menu .v-button:hover {
-	background-color: red;
-}
-
 .v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
@@ -631,10 +623,6 @@
 	vertical-align: 0.15em;
 	margin: 0 -0.2em 0 0.5em;
 	opacity: 0.5;
-}
-
-.sidebar-menu .v-button:hover {
-	background-color: red;
 }
 
 a {
@@ -9000,7 +8988,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .instruction-box {
-	background-color: bisque;
+	background-color: #d9effa;
 	padding: 10px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -10786,10 +10774,6 @@ input.v-textfield-errorField {
 	border-width: 1px 1px 0px;
 }
 
-.addViewLayout .report-addview-layout {
-	border-bottom: 1px solid #cfcfcf;
-}
-
 .addViewLayout .addViewTopControls {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -10801,20 +10785,8 @@ input.v-textfield-errorField {
 	border-bottom: none;
 }
 
-.addViewLayout .addNewControl.v-margin-top {
-	padding-top: 5px;
-}
-
-.addViewLayout .addNewControl.v-margin-right {
-	padding-right: 0px;
-}
-
-.addViewLayout .addNewControl.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.addViewLayout .addNewControl.v-margin-left {
-	padding-left: 0px;
+.addViewLayout .addNewControl {
+	@margin-container(5px, 0px, 5px, 0px);
 }
 
 .addViewLayout .addViewTopControls .edit-btn .v-horizontallayout-margin {
