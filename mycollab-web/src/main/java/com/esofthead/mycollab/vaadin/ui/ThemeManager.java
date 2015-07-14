@@ -78,17 +78,24 @@ public class ThemeManager {
         if (accountTheme.getVtabsheetbgselected() != null) {
             Page.getCurrent().getStyles().add(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
+
+            Page.getCurrent().getStyles().add(".sidebar-menu .v-button:hover {background-color: #" + accountTheme
+                    .getVtabsheetbgselected() + ";}");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
-            Page.getCurrent().getStyles().add(".vertical-tabsheet .v-button-tab > .v-button-wrap > .v-button-caption { color: #"
+            Page.getCurrent().getStyles().add(".vertical-tabsheet .v-button-tab > .v-button-wrap { color: #"
                     + accountTheme.getVtabsheettext() + "; }");
         }
 
         if (accountTheme.getVtabsheettextselected() != null) {
             Page.getCurrent().getStyles()
-                    .add(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap > .v-button-caption { color: #"
+                    .add(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { color: #"
                             + accountTheme.getVtabsheettextselected() + "; }");
+
+            //Color while hover on sidebar menu
+            Page.getCurrent().getStyles().add(".vertical-tabsheet .v-button-tab .v-button-wrap:hover {color: #" + accountTheme
+                    .getVtabsheettextselected() + "!important;}");
         }
 
 		/* Tabsheet */
@@ -126,7 +133,6 @@ public class ThemeManager {
         }
 
 		/* Horizontal Top Menu */
-
         if (accountTheme.getHtopmenubg() != null) {
             Page.getCurrent().getStyles()
                     .add(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
@@ -195,6 +201,10 @@ public class ThemeManager {
             //Button paging
             Page.getCurrent().getStyles().add("div.v-button-link.buttonPaging.current, div.v-button-link" +
                     ".buttonPaging:hover { background-color:#" + accountTheme.getActionbtn() + "; }");
+
+            //Selection background of selected item
+            Page.getCurrent().getStyles().add(".v-filterselect-suggestpopup .gwt-MenuItem-selected { background-color:#" +
+                    accountTheme.getActionbtn() + "; }");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -207,6 +217,10 @@ public class ThemeManager {
             //Button paging
             Page.getCurrent().getStyles().add("div.v-button-link.buttonPaging.current, div.v-button-link" +
                     ".buttonPaging:hover { color:#" + accountTheme.getActionbtntext() + "; }");
+
+            //Selection text color of selected item
+            Page.getCurrent().getStyles().add(".v-filterselect-suggestpopup .gwt-MenuItem-selected { color:#" +
+                    accountTheme.getActionbtntext() + "; }");
         }
 
 		/* Option Buttons */

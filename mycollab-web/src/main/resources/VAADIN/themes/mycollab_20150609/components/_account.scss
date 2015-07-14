@@ -1,3 +1,34 @@
 @mixin mycollab-account {
+  .accountViewContainer {
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    .v-label-h1, .v-label h1 {
+      padding: 0px;
+      font-weight: normal;
+      font-size: $font-x-large;
+      line-height: 24px;
+    }
+    .sidebar-menu {
+      padding-top: 20px;
+    }
+  }
 
+  .accountViewContainer {
+    .addview-layout-body {
+      border: 1px solid $border-color;
+    }
+    .addViewLayout {
+      background: none;
+      box-shadow: none;
+      box-shadow: none;
+    }
+    .container-wrap.main-content .top-panel {
+      background-color: #FFF;
+      border-bottom: 1px solid $border-color;
+      padding: 10px 30px;
+    }
+  }
 }

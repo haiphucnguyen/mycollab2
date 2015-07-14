@@ -59,8 +59,7 @@ import java.util.*;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectActivityStreamPagedList extends
-        AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
     private static final long serialVersionUID = 1L;
 
     protected final ProjectActivityStreamService projectActivityStreamService;
@@ -249,8 +248,7 @@ public class ProjectActivityStreamPagedList extends
 
             @Override
             public void buttonClick(ClickEvent event) {
-                ProjectActivityStreamPagedList.this
-                        .pageChange(ProjectActivityStreamPagedList.this.currentPage + 1);
+                ProjectActivityStreamPagedList.this.pageChange(ProjectActivityStreamPagedList.this.currentPage + 1);
             }
         });
         if (currentPage == totalPage) {

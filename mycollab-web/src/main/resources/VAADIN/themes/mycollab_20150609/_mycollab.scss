@@ -262,7 +262,7 @@
     color: #006dac;
   }
 
-  .v-app a, .v-popupview-popup a, .v-popupview, .sidebar-menu .v-label {
+  .v-app a, .v-popupview-popup a, .v-popupview .v-label {
     color: #006dac;
   }
 
@@ -274,15 +274,6 @@
     background-color: #287ECE;
     color: #F7F8F9;
     text-shadow: 0 -1px 0 #2E5A84;
-  }
-
-  .sidebar-menu {
-    .tab-selected, .selected {
-      border-color: #2E5A84;
-      text-shadow: 0 1px 0 #2E5A84;
-      color: #F7F8F9;
-      background-color: #287ECE;
-    }
   }
 
   @media screen and (min-width: 1024px) {
@@ -415,7 +406,7 @@
   }
 
   .v-label-h1 {
-    font-size: 29px;
+    font-size: $font-x-large;
   }
 
   .v-window-modalitycurtain {
@@ -1263,55 +1254,6 @@
   }
 
   /* End Add View Styles */
-
-  /* Account Settings */
-
-  .accountViewContainer {
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    .v-label-h1, .v-label h1 {
-      padding: 0px;
-      font-weight: normal;
-      font-size: 20px;
-      line-height: 24px;
-    }
-    .sidebar-menu {
-      background: none;
-      padding-top: 20px;
-    }
-    .v-horizontallayout-menuContent > div > div:first-child + div {
-      background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFF;
-    }
-  }
-
-  .accountViewContainer {
-    .addview-layout-body {
-      border: 1px solid $border-color;
-    }
-    .sidebar-menu {
-      .v-nativebutton {
-        font-size: $font-large;
-        padding: 0px;
-        margin: 3px 0px;
-      }
-      .tab-selected, .selected {
-        background: none no-repeat 0 0 #287ECE;
-      }
-    }
-    .addViewLayout {
-      background: none;
-      box-shadow: none;
-      box-shadow: none;
-    }
-    .container-wrap.main-content .top-panel {
-      background-color: #FFF;
-      border-bottom: 1px solid $border-color;
-      padding: 10px 30px;
-    }
-  }
 
   /* End Account Settings */
 
@@ -2799,7 +2741,7 @@
       display: inline;
       background: none;
       border: none;
-      font-size: $font-large;
+      font-size: $font-x-large;
       padding: 7px 10px;
       color: white;
     }

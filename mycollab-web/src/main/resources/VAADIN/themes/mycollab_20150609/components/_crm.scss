@@ -48,7 +48,7 @@
       display:inline-block;
     }
     .navigator-wrap .basic-info {
-      color: white;
+      color: #fff;
       &:after {
         content: "";
         border-bottom: 1px solid $border-color;
@@ -73,7 +73,6 @@
   .h-sidebar-menu {
     height: 50px;
     position: relative;
-    background-color:cadetblue;
     > div {
       display: inline-block;
       zoom: 1;
