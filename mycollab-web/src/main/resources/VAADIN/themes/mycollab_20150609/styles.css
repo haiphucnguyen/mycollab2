@@ -9407,22 +9407,7 @@ div.v-button.token-field:hover {
 .standup-block .report-content {
 	border-left: 1px solid #CFCFCF;
 	background-color: #FFF;
-}
-
-.standup-block .report-content.v-margin-top {
-	padding-top: 20px;
-}
-
-.standup-block .report-content.v-margin-right {
-	padding-right: 20px;
-}
-
-.standup-block .report-content.v-margin-bottom {
-	padding-bottom: 20px;
-}
-
-.standup-block .report-content.v-margin-left {
-	padding-left: 20px;
+	@margin-container(20px, 20px, 20px, 20px);
 }
 
 .standup-block .report-content .v-label.h2 {

@@ -561,18 +561,7 @@
     .report-content {
       border-left: 1px solid $border-color;
       background-color: #FFF;
-      &.v-margin-top {
-        padding-top: 20px;
-      }
-      &.v-margin-right {
-        padding-right: 20px;
-      }
-      &.v-margin-bottom {
-        padding-bottom: 20px;
-      }
-      &.v-margin-left {
-        padding-left: 20px;
-      }
+      @margin-container(20px, 20px, 20px, 20px);
       .v-label.h2 {
         color: #a56116;
         font-size: $font-large;
@@ -600,7 +589,6 @@
     text-align: center;
     background: none repeat-x left top $panel-background-color;
     height: 30px;
-    color: #5e5e5e;
     border-bottom: 1px solid $border-color;
     .v-label {
       font-size: $font-normal;

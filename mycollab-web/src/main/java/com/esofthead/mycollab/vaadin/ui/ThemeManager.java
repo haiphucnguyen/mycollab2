@@ -103,6 +103,10 @@ public class ThemeManager {
             Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem { background-color: #"
                             + accountTheme.getTabsheetbgselected() + "; }");
+
+            //Set milestone header background
+            Page.getCurrent().getStyles().add(".milestone-view-header {background-color: #" + accountTheme
+                    .getTabsheetbgselected() + ";}");
         }
 
         if (accountTheme.getTabsheettext() != null) {
@@ -115,6 +119,10 @@ public class ThemeManager {
             Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext { color: #"
                             + accountTheme.getTabsheettextselected() + "; }");
+
+            //Set milestone header text color
+            Page.getCurrent().getStyles().add(".milestone-view-header {color: #" + accountTheme
+                    .getTabsheettextselected() + ";}");
         }
 
 		/* Horizontal Top Menu */
