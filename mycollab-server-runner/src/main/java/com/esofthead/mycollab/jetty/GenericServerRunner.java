@@ -244,19 +244,19 @@ public abstract class GenericServerRunner {
             osExprJarFile = ".+\\\\mycollab-\\S+.jar$";
         }
 
-//        for (String classpath : classPaths) {
-//            if (classpath.matches(osExprClassFolder)) {
-//                LOG.info("Load folder to classpath " + classpath);
-//                appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath)));
-//            } else if (classpath.matches(osExprJarFile)) {
-//                try {
-//                    LOG.info("Load jar file in path " + classpath);
-//                    appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath).toURI().toURL()));
-//                } catch (Exception e) {
-//                    LOG.error("Exception to resolve classpath: " + classpath, e);
-//                }
-//            }
-//        }
+        for (String classpath : classPaths) {
+            if (classpath.matches(osExprClassFolder)) {
+                LOG.info("Load folder to classpath " + classpath);
+                appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath)));
+            } else if (classpath.matches(osExprJarFile)) {
+                try {
+                    LOG.info("Load jar file in path " + classpath);
+                    appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath).toURI().toURL()));
+                } catch (Exception e) {
+                    LOG.error("Exception to resolve classpath: " + classpath, e);
+                }
+            }
+        }
 
         File libFolder = new File(System.getProperty("user.dir"), "lib");
         LOG.info("User dir: " + System.getProperty("user.dir"));
@@ -267,7 +267,7 @@ public abstract class GenericServerRunner {
                     if (file.getName().matches("mycollab-\\S+.jar$")) {
                         LOG.info("Load jar file to classpath " + file.getAbsolutePath());
                         try {
-                            appContext.getMetaData().addWebInfJar(JarResource.newJarResource(new FileResource(file.toURI())));
+                            appContext.getMetaData().addWebInfJar(JarResource.newJarResource(new PathResource(file.toURI())));
                         } catch (IOException e) {
                             LOG.error("Exception when add resource to classpath", e);
                         }
