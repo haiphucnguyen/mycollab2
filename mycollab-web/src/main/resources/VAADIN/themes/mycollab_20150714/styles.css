@@ -273,6 +273,11 @@ div.v-popupbutton-popup .popupContent {
 	padding: 1px 0px 2px 0px;
 }
 
+div.v-window {
+	box-shadow: none;
+	border: 1px solid #CFCFCF;
+}
+
 .v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
@@ -485,6 +490,11 @@ div.v-popupbutton-popup .popupContent {
 	padding: 1px 0px 2px 0px;
 }
 
+div.v-window {
+	box-shadow: none;
+	border: 1px solid #CFCFCF;
+}
+
 .v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
@@ -695,6 +705,11 @@ div.v-popupbutton-popup {
 
 div.v-popupbutton-popup .popupContent {
 	padding: 1px 0px 2px 0px;
+}
+
+div.v-window {
+	box-shadow: none;
+	border: 1px solid #CFCFCF;
 }
 
 a {
