@@ -19,6 +19,7 @@ package com.esofthead.mycollab.jetty;
 import ch.qos.logback.classic.Level;
 import com.esofthead.mycollab.configuration.ApplicationProperties;
 import com.esofthead.mycollab.configuration.DatabaseConfiguration;
+import com.esofthead.mycollab.configuration.LogConfig;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
@@ -34,7 +35,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.resource.FileResource;
-import org.eclipse.jetty.util.resource.JarResource;
 import org.eclipse.jetty.util.resource.PathResource;
 import org.eclipse.jetty.webapp.*;
 import org.slf4j.Logger;
@@ -44,7 +44,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
 
@@ -221,7 +220,7 @@ public abstract class GenericServerRunner {
 
     private WebAppContext initWebAppContext() {
         SiteConfiguration.loadConfiguration();
-//        LogConfig.initMyCollabLog();
+        LogConfig.initMyCollabLog();
         String webAppDirLocation = detectWebApp();
         LOG.debug("Detect web location: {}", webAppDirLocation);
         appContext = buildContext(webAppDirLocation);
@@ -266,11 +265,10 @@ public abstract class GenericServerRunner {
                 for (File file : files) {
                     if (file.getName().matches("mycollab-\\S+.jar$")) {
                         LOG.info("Load jar file to classpath " + file.getAbsolutePath());
-                        try {
-                            appContext.getMetaData().addWebInfJar(JarResource.newJarResource(new PathResource(file.toURI())));
-                        } catch (IOException e) {
-                            LOG.error("Exception when add resource to classpath", e);
-                        }
+
+                            appContext.getMetaData().getWebInfClassesDirs().add(new FileResource(file.toURI()));
+
+
                     }
                 }
             }
