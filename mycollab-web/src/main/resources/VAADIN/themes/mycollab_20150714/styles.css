@@ -252,6 +252,7 @@
 .v-filterselect-button {
 	background: none !important;
 	opacity: 1 !important;
+	margin-right: -10px !important;
 }
 
 .v-filterselect-button:before {
@@ -469,6 +470,7 @@ div.v-window {
 .v-filterselect-button {
 	background: none !important;
 	opacity: 1 !important;
+	margin-right: -10px !important;
 }
 
 .v-filterselect-button:before {
@@ -686,6 +688,7 @@ div.v-window {
 .v-filterselect-button {
 	background: none !important;
 	opacity: 1 !important;
+	margin-right: -10px !important;
 }
 
 .v-filterselect-button:before {
