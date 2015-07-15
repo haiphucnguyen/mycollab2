@@ -22,10 +22,7 @@ import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -86,16 +83,23 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             this.with(taskLinkLbl).expand(taskLinkLbl);
             if (task.isCompleted()) {
                 taskLinkLbl.addStyleName("completed");
+                taskLinkLbl.removeStyleName("overdue pending");
             } else if (task.isOverdue()) {
                 taskLinkLbl.addStyleName("overdue");
+                taskLinkLbl.removeStyleName("completed pending");
             } else if (task.isPending()) {
                 taskLinkLbl.addStyleName("pending");
+                taskLinkLbl.removeStyleName("completed overdue");
             }
             taskLinkLbl.addStyleName("wordWrap");
         }
 
         private String buildTaskLink() {
             String uid = UUID.randomUUID().toString();
+            String taskPriority = task.getPriority();
+            Img priorityLink = new Img(taskPriority, ProjectResources.getIconResourceLink12ByTaskPriority
+                    (taskPriority)).setTitle(taskPriority);
+
             String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
             A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
@@ -106,7 +110,8 @@ public class TaskListDisplay extends DefaultBeanPagedList<ProjectTaskService, Ta
             String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
             Img avatarImg = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
 
-            Div resultDiv = new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
+            Div resultDiv = new DivLessFormatter().appendChild(avatarImg, DivLessFormatter.EMPTY_SPACE(),
+                    priorityLink, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
                     TooltipHelper.buildDivTooltipEnable(uid));
             if (task.getPercentagecomplete() != null && task.getPercentagecomplete() > 0) {
                 Div completeTxt = new Div().appendChild(new Text(String.format(" %s%%", task.getPercentagecomplete())))

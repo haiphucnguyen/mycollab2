@@ -277,6 +277,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false,
                 false));
+        accountLayout.setHeight("40px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.site) {
@@ -337,7 +338,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         }
 
         Label accountNameLabel = new Label(AppContext.getSubDomain());
-        accountNameLabel.setStyleName("subdomain");
+        accountNameLabel.addStyleName("subdomain");
         accountLayout.addComponent(accountNameLabel);
 
         NotificationButton notificationButton = new NotificationButton();

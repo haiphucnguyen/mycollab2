@@ -49,27 +49,27 @@ public class ThemeManager {
 
         if (accountTheme.getTopmenubgselected() != null) {
             Page.getCurrent().getStyles()
-                    .add(".topNavigation .service-menu.v-buttongroup .v-button.selected { background-color: #"
+                    .add(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.selected { background-color: #"
                             + accountTheme.getTopmenubgselected() + "; }");
 
             Page.getCurrent().getStyles()
-                    .add(".topNavigation .service-menu.v-buttongroup .v-button:hover { background-color: #"
+                    .add(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { background-color: #"
                             + accountTheme.getTopmenubgselected() + "; }");
+
         }
 
         if (accountTheme.getTopmenutext() != null) {
             Page.getCurrent().getStyles()
-                    .add(".topNavigation .v-button-caption { color: #"
-                            + accountTheme.getTopmenutext() + "; }");
+                    .add(".topNavigation .v-button { color: #" + accountTheme.getTopmenutext() + "; }");
         }
 
         if (accountTheme.getTopmenutextselected() != null) {
             Page.getCurrent().getStyles()
-                    .add(".topNavigation .service-menu.v-buttongroup .v-button.selected .v-button-caption { color: #"
+                    .add(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.selected { color: #"
                             + accountTheme.getTopmenutextselected() + "; }");
 
             Page.getCurrent().getStyles()
-                    .add(".topNavigation .service-menu.v-buttongroup .v-button .v-button-caption:hover { color: #"
+                    .add(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { color: #"
                             + accountTheme.getTopmenutextselected() + "; }");
         }
 

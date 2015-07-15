@@ -565,13 +565,41 @@
 
   .topNavigation {
     height: 40px;
-    background: none no-repeat 0 0 rgb(87, 87, 87);
+    .serviceMenuContainer {
+      float: left;
+      .service-menu {
+        padding: 8px 12px;
+        background: none !important;
+        border: none;
+        text-shadow: none;
+        .v-button-wrap {
+          padding: 0px;
+        }
+        &.v-buttongroup .v-button {
+          padding: 3px 12px;
+          &.v-button-left, &.v-button-middle, &.v-button-right {
+            background: none;
+            .v-button-wrap, .v-button-wrap:hover {
+              border: none;
+              background: none;
+            }
+          }
+          &:focus {
+            background: none;
+          }
+          &.selected, &:hover {
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+
     .v-button {
       border-radius: 0px;
       box-shadow: initial;
       -webkit-box-shadow: initial;
       -moz-box-shadow: initial;
-      padding: 2px 5px 2px 5px;
+      font-weight: bold;
       .v-button-wrap {
         border-radius: 0px;
         box-shadow: initial;
@@ -580,80 +608,12 @@
         padding: 2px 5px 2px 5px;
       }
     }
-  }
 
-  .serviceMenuContainer {
-    float: left;
-  }
-
-  .service-menu {
-    padding: 8px 12px;
-    background: none !important;
-    border: none;
-    text-shadow: none;
-    .v-button-wrap {
-      padding: 0px;
-    }
-    &.v-buttongroup .v-button {
-      &.v-button-left, &.v-button-middle, &.v-button-right {
-        background: none;
-      }
-    }
-  }
-
-  .topNavigation .service-menu.v-buttongroup .v-button {
-    &:focus {
-      background: none;
-    }
-    &.selected, &:hover {
-      border-radius: 2px;
-    }
-  }
-
-  .topNavigation {
-    .service-menu .v-button-caption {
-      font-weight: bold;
-      font-size: $font-normal;
-      padding: 0 6px 0 3px;
-    }
     .subdomain {
-      font-weight: bold;
       font-size: $font-normal;
       color: white;
       padding: 0 6px 0 3px;
-    }
-    .v-button-wrap {
-      border: none;
-      background: none;
-    }
-    .v-button {
-      &:active .v-button-wrap, span.v-button-wrap, &:active span.v-button-wrap, &:hover span.v-button-wrap {
-        border: none;
-        background: none;
-      }
-    }
-    .v-buttongroup .v-button span.v-button-wrap {
-      border: none;
-      background: none;
-    }
-    .service-menu div.v-button-link {
-      &:focus, &:active {
-        margin: 1px;
-      }
-      margin: 1px;
-      &:focus .v-button-wrap, &:active .v-button-wrap, .v-button-wrap {
-        padding: 2px 5px;
-      }
-    }
-    .v-button-caption {
-      color: white;
-      text-decoration: none;
-      padding: 0 3px;
-    }
-    .v-popupbutton .v-popup-indicator {
-      &:before {
-        content: "";
-      }
+      font-weight: bold;
     }
     .navSeparator {
       display: block;
@@ -664,41 +624,6 @@
       width: 0;
       margin: 10px 0px 0px;
     }
-  }
-
-  #mainLogo {
-    float: left;
-    width: 150px;
-    margin: 2px 15px 1px 0px;
-    display: block;
-  }
-
-  .accountMenuContainer {
-    float: right;
-  }
-
-  .topNavigation .v-button {
-    &.accountMenu,  &.accountMenu.v-pressed {
-      height: 40px;
-      padding: 12px 0px;
-      background: none;
-      border: none;
-      .v-button-caption {
-        font-weight: bold;
-      }
-      .v-button-wrap {
-        padding: 0px 6px;
-      }
-      .v-popup-indicator::before {
-        content:'\f078';
-        color:white;
-      }
-    }
-  }
-
-  /*Notification Button */
-
-  .topNavigation {
     .v-button.notification-button, .v-button.notification-button.v-pressed {
       background: none no-repeat left top #E4E4E4;
       border-radius: 5px;
@@ -712,10 +637,44 @@
         font-size: 16px;
         color: chocolate;
       }
-      .v-button-wrap {
+      .v-button-wrap, .v-button-wrap:hover {
         padding: 4px 6px;
+        background:none;
       }
     }
+    .accountMenuContainer {
+      float: right;
+      .v-button.accountMenu,  .v-button.accountMenu.v-pressed {
+        background-color: transparent;
+        .v-button-wrap {
+          background: none;
+          border: none;
+          .v-button-caption {
+            font-weight: bold;
+          }
+          .v-popup-indicator::before {
+            content:'\f078';
+            color:white;
+          }
+        }
+      }
+    }
+    .v-popupbutton .v-popup-indicator {
+      &:before {
+        content: "";
+      }
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  #mainLogo {
+    float: left;
+    width: 150px;
+    margin: 2px 15px 1px 0px;
+    padding: 0px 15px 0px 0px;
+    display: block;
   }
 
   .notification-type {
