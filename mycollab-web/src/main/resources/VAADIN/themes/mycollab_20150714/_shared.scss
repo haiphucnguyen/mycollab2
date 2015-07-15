@@ -527,4 +527,14 @@
 	margin: 0 -0.2em 0 0.5em;
 	opacity: 0.5;
   }
+
+  /* Popup Button */
+  div.v-popupbutton-popup {
+    border: 1px solid $border-color;
+    border-radius: 0px;
+    box-shadow: none;
+    .popupContent {
+      padding: 1px 0px 2px 0px;
+    }
+  }
 }

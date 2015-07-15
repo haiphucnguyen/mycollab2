@@ -175,8 +175,7 @@
 
   /* Application background */
 
-  .v-window, div.v-popupbutton-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu,
-  .v-menubar-submenu {
+  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
     background-color: white;
     border-radius: 3px;
   }
@@ -389,7 +388,7 @@
     }
   }
 
-  .v-windowm, .v-popupview-popup {
+  .v-window, .v-popupview-popup {
     input, select, button, textarea {
       font: $font-small $font-family !important;
       line-height: normal;
@@ -681,10 +680,6 @@
     &.notification-type-warning {
       color: #c31616;
     }
-  }
-
-  .v-popupbutton-popup-serviceMenu .link .v-button-caption:hover {
-    font-weight: bold;
   }
 
   /* End Top Menu */

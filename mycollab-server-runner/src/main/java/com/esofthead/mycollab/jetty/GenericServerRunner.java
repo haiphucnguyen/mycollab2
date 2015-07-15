@@ -33,6 +33,8 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
+import org.eclipse.jetty.util.resource.FileResource;
+import org.eclipse.jetty.util.resource.JarResource;
 import org.eclipse.jetty.util.resource.PathResource;
 import org.eclipse.jetty.webapp.*;
 import org.slf4j.Logger;
@@ -42,6 +44,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Properties;
 
@@ -241,37 +244,37 @@ public abstract class GenericServerRunner {
             osExprJarFile = ".+\\\\mycollab-\\S+.jar$";
         }
 
-        for (String classpath : classPaths) {
-            if (classpath.matches(osExprClassFolder)) {
-                LOG.info("Load folder to classpath " + classpath);
-                appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath)));
-            } else if (classpath.matches(osExprJarFile)) {
-                try {
-                    LOG.info("Load jar file in path " + classpath);
-                    appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath).toURI().toURL()));
-                } catch (Exception e) {
-                    LOG.error("Exception to resolve classpath: " + classpath, e);
-                }
-            }
-        }
-
-//        File libFolder = new File(System.getProperty("user.dir"), "lib");
-//        LOG.info("User dir: " + System.getProperty("user.dir"));
-//        if (libFolder.isDirectory()) {
-//            File[] files = libFolder.listFiles();
-//            if (files != null) {
-//                for (File file : files) {
-//                    if (file.getName().matches("mycollab-\\S+.jar$")) {
-//                        LOG.info("Load jar file to classpath " + file.getAbsolutePath());
-//                        try {
-//                            appContext.getMetaData().addWebInfJar(JarResource.newJarResource(new FileResource(file.toURI())));
-//                        } catch (IOException e) {
-//                            LOG.error("Exception when add resource to classpath", e);
-//                        }
-//                    }
+//        for (String classpath : classPaths) {
+//            if (classpath.matches(osExprClassFolder)) {
+//                LOG.info("Load folder to classpath " + classpath);
+//                appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath)));
+//            } else if (classpath.matches(osExprJarFile)) {
+//                try {
+//                    LOG.info("Load jar file in path " + classpath);
+//                    appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath).toURI().toURL()));
+//                } catch (Exception e) {
+//                    LOG.error("Exception to resolve classpath: " + classpath, e);
 //                }
 //            }
 //        }
+
+        File libFolder = new File(System.getProperty("user.dir"), "lib");
+        LOG.info("User dir: " + System.getProperty("user.dir"));
+        if (libFolder.isDirectory()) {
+            File[] files = libFolder.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    if (file.getName().matches("mycollab-\\S+.jar$")) {
+                        LOG.info("Load jar file to classpath " + file.getAbsolutePath());
+                        try {
+                            appContext.getMetaData().addWebInfJar(JarResource.newJarResource(new FileResource(file.toURI())));
+                        } catch (IOException e) {
+                            LOG.error("Exception when add resource to classpath", e);
+                        }
+                    }
+                }
+            }
+        }
 
         // Register a mock DataSource scoped to the webapp
         // This must be linked to the webapp via an entry in

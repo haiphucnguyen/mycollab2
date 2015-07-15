@@ -263,6 +263,16 @@
 	opacity: 0.5;
 }
 
+div.v-popupbutton-popup {
+	border: 1px solid #CFCFCF;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+div.v-popupbutton-popup .popupContent {
+	padding: 1px 0px 2px 0px;
+}
+
 .v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
@@ -465,6 +475,16 @@
 	opacity: 0.5;
 }
 
+div.v-popupbutton-popup {
+	border: 1px solid #CFCFCF;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+div.v-popupbutton-popup .popupContent {
+	padding: 1px 0px 2px 0px;
+}
+
 .v-widget.helpPanel {
 	right: 0;
 	z-index: 10;
@@ -665,6 +685,16 @@
 	vertical-align: 0.15em;
 	margin: 0 -0.2em 0 0.5em;
 	opacity: 0.5;
+}
+
+div.v-popupbutton-popup {
+	border: 1px solid #CFCFCF;
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+div.v-popupbutton-popup .popupContent {
+	padding: 1px 0px 2px 0px;
 }
 
 a {
@@ -8010,7 +8040,7 @@ div .v-popupbutton .v-popup-indicator {
 .v-popupbutton-popup.v-popupbutton-popup-select-bg {
 	background-color: #FFF;
 	border: 1px solid #A8A8A8;
-	border-radius: 3px;
+	border-radius: 0px;
 	padding: 0px;
 }
 
@@ -9836,7 +9866,7 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 	background: whitesmoke;
 }
 
-.v-window, div.v-popupbutton-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
+.v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
 	background-color: white;
 	border-radius: 3px;
 }
@@ -10038,7 +10068,7 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
 	line-height: normal;
 }
 
-.v-windowm input, .v-windowm select, .v-windowm button, .v-windowm textarea, .v-popupview-popup input, .v-popupview-popup select, .v-popupview-popup button, .v-popupview-popup textarea {
+.v-window input, .v-window select, .v-window button, .v-window textarea, .v-popupview-popup input, .v-popupview-popup select, .v-popupview-popup button, .v-popupview-popup textarea {
 	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
 	line-height: normal;
 }
@@ -10340,10 +10370,6 @@ input.v-textfield-pagedtable-pagefield {
 
 .notification-type.notification-type-warning {
 	color: #c31616;
-}
-
-.v-popupbutton-popup-serviceMenu .link .v-button-caption:hover {
-	font-weight: bold;
 }
 
 .advSearch .advSearchHeader .h2 {
