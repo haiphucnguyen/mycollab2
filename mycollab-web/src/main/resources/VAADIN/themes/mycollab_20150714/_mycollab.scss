@@ -3155,7 +3155,7 @@
           &.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
             background: none repeat-x scroll left bottom #1c7dce;
           }
-          > .v-tabsheet-tabitem-selected .v-caption:after {
+          > .v-tabsheet-tabitem-selected .v-caption:after, > .v-tabsheet-tabitem:hover .v-caption:after {
             content: "";
             position: absolute;
             bottom: 0px;

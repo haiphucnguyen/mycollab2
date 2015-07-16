@@ -8618,7 +8618,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	zoom: 1;
 	position: relative;
 	padding: 17px 18px;
-	color: #FFF;
 }
 
 .h-sidebar-menu div.v-button-link:active .v-button-wrap, .h-sidebar-menu div.v-button-link:focus .v-button-wrap {
@@ -8647,19 +8646,10 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .h-sidebar-menu .v-button-link .v-button-caption {
 	text-decoration: none;
-	color: #FFF;
 	text-shadow: none;
 	font-weight: bold;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 13px;
-}
-
-.h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption {
-	color: #535353;
-}
-
-.h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption:hover {
-	color: #535353;
 }
 
 .readViewLayout {
@@ -12793,7 +12783,7 @@ div.v-ratingstars-bar {
 	background: none repeat-x scroll left bottom #1c7dce;
 }
 
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem-selected .v-caption:after {
+.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem-selected .v-caption:after, .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem:hover .v-caption:after {
 	content: "";
 	position: absolute;
 	bottom: 0px;

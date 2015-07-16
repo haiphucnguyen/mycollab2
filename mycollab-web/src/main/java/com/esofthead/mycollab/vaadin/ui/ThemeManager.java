@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -36,15 +37,17 @@ public class ThemeManager {
         if (accountTheme == null) {
             accountTheme = themeService.findDefaultTheme(AppContext.getAccountId());
             if (accountTheme == null) {
-                return;
+                throw new UserInvalidInputException("Can not load theme for this account. You may get bad experience " +
+                        "while using MyCollab. Please contact your site admoinistrator to solve this issue or fill a " +
+                        "support request to MyCollab team" +
+                        " ");
             }
         }
 
 		/* Top Menu */
 
         if (accountTheme.getTopmenubg() != null) {
-            Page.getCurrent().getStyles().add(".topNavigation { background-color: #"
-                    + accountTheme.getTopmenubg() + "; }");
+            Page.getCurrent().getStyles().add(".topNavigation { background-color: #" + accountTheme.getTopmenubg() + "; }");
         }
 
         if (accountTheme.getTopmenubgselected() != null) {
@@ -114,6 +117,10 @@ public class ThemeManager {
                             + accountTheme.getTabsheetbg() + "; }");
 
             Page.getCurrent().getStyles()
+                    .add(".h-sidebar-menu .v-button.v-button-link:hover { background-color: #"
+                            + accountTheme.getTabsheetbg() + "; }");
+
+            Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem { background-color: #"
                             + accountTheme.getTabsheetbg() + "; }");
         }
@@ -154,18 +161,22 @@ public class ThemeManager {
 
         if (accountTheme.getTabsheettext() != null) {
             Page.getCurrent().getStyles()
+                    .add(".h-sidebar-menu .v-button.v-button-link.isSelected { color: #" + accountTheme.getTabsheettext() + "; }");
+
+            Page.getCurrent().getStyles()
+                    .add(".h-sidebar-menu .v-button.v-button-link:hover .v-button-caption, .h-sidebar-menu .v-button" +
+                            ".v-button-link.isSelected .v-button-caption:hover { color: #"
+                            + accountTheme.getTabsheettext() + "; }");
+
+            Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem { color: #"
                             + accountTheme.getTabsheettext() + "; }");
         }
 
         if (accountTheme.getTabsheettextselected() != null) {
             Page.getCurrent().getStyles()
-                    .add(".h-sidebar-menu .v-button.v-button-link:focus .v-button-caption, .h-sidebar-menu .v-button.v-button-link:active .v-button-caption { color: #"
+                    .add(".h-sidebar-menu .v-button.v-button-link:active, .h-sidebar-menu .v-button.v-button-link { color: #"
                             + accountTheme.getTabsheettextselected() + "; }");
-
-            Page.getCurrent().getStyles()
-                    .add(".h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption, .h-sidebar-menu .v-button.v-button-link.isSelected .v-button-caption:hover { color: #"
-                            + accountTheme.getTabsheettext() + "; }");
 
             Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected { color: #"
