@@ -12773,7 +12773,6 @@ div.v-ratingstars-bar {
 }
 
 .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem {
-	background: none repeat-x scroll left bottom whitesmoke;
 	border-width: 0px 1px 0px 0px;
 	border-style: solid;
 	border-color: #CFCFCF;
@@ -12788,11 +12787,6 @@ div.v-ratingstars-bar {
 .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem .v-caption .v-captiontext {
 	font-size: 13px;
 	text-shadow: none;
-	color: #525252;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem:hover .v-caption .v-captiontext {
-	color: #5e5e5e;
 }
 
 .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
@@ -12808,14 +12802,6 @@ div.v-ratingstars-bar {
 	height: 8px;
 	background: url(icons/tab-selected-indicator.png) no-repeat center bottom transparent;
 	cursor: pointer;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext {
-	color: #FFF;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected:hover .v-caption .v-captiontext {
-	color: #FFF;
 }
 
 .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr > .v-tabsheet-spacertd {

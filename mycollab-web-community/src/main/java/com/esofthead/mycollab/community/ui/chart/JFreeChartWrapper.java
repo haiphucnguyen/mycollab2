@@ -24,16 +24,12 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.zip.GZIPOutputStream;
 
 /**
  * A simple JFreeChart wrapper that renders charts in SVG to browser.
@@ -81,11 +77,6 @@ public class JFreeChartWrapper extends Embedded {
         chart = chartToBeWrapped;
         setWidth(DEFAULT_WIDTH, Unit.PIXELS);
         setHeight(DEFAULT_HEIGHT, Unit.PIXELS);
-    }
-
-    public JFreeChartWrapper(JFreeChart chartToBeWrapped, RenderingMode renderingMode) {
-        this(chartToBeWrapped);
-        setRenderingMode(renderingMode);
     }
 
     /**
@@ -247,17 +238,6 @@ public class JFreeChartWrapper extends Embedded {
                         int height = getGraphHeight();
 
                         if (mode == RenderingMode.SVG) {
-//                            DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-//                            DocumentBuilder docBuilder = null;
-//                            try {
-//                                docBuilder = docBuilderFactory.newDocumentBuilder();
-//                            } catch (ParserConfigurationException e1) {
-//                                throw new RuntimeException(e1);
-//                            }
-//                            Document document = docBuilder.newDocument();
-//                            Element svgelem = document.createElement("svg");
-//                            document.appendChild(svgelem);
-
                             // Create an instance of the SVG Generator
                             SVGGraphics2D svgGenerator = new SVGGraphics2D(width, height);
 
@@ -265,13 +245,7 @@ public class JFreeChartWrapper extends Embedded {
                             chart.draw(svgGenerator, new Rectangle(width, height));
                             // create an xml string in svg format from the drawing
                             String drawingSVG = svgGenerator.getSVGElement();
-
-//                            Element el = svgGenerator.get.getRoot();
-//                            el.setAttributeNS(null, "viewBox", "0 0 " + width + " " + height + "");
-//                            el.setAttributeNS(null, "style", "width:100%;height:100%;");
-//                            el.setAttributeNS(null, "preserveAspectRatio", getSvgAspectRatio());
-
-                           return  new ByteArrayInputStream(drawingSVG.getBytes(StandardCharsets.UTF_8));
+                            return new ByteArrayInputStream(drawingSVG.getBytes(StandardCharsets.UTF_8));
                         } else {
                             // Draw png to bytestream
                             try {
