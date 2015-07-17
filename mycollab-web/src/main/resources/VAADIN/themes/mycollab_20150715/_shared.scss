@@ -513,19 +513,34 @@
     background: url("icons/year-circle.png") no-repeat right top transparent;
   }
 
+  /* ComboBox Fix*/
+
+  .v-filterselect .v-icon {
+    float: left;
+    margin-top: 0px !important;
+    width: 16px;
+    height: 16px;
+    position: relative;
+  }
+
+  .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
+    margin-left: -16px;
+    padding-left: 18px;
+  }
 
   /* Selection */
   .v-filterselect-button {
     background: none !important;
     opacity: 1 !important;
-    margin-right: -10px !important;
+    margin-right: -16px !important;
+    width: 16px;
   }
-  .v-filterselect-button:before {
-	font-size: 0.7em;
+  .v-filterselect-button::before {
+	font-size: 11px;
 	font-family: FontAwesome;
 	content: '\f078';
-	vertical-align: 0.15em;
-	margin: 0 -0.2em 0 0.5em;
+	vertical-align: 2px;
+	margin: 0 0 0 0px;
 	opacity: 0.5;
   }
 

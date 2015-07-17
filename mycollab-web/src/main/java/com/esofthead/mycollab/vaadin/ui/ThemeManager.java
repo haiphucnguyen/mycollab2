@@ -178,6 +178,8 @@ public class ThemeManager {
                     .add(".h-sidebar-menu .v-button.v-button-link:active, .h-sidebar-menu .v-button.v-button-link { color: #"
                             + accountTheme.getTabsheettextselected() + "; }");
 
+            Page.getCurrent().getStyles().add(".crm-toolbar .quickadd-btn.v-popupbutton{color: #" + accountTheme.getTabsheettextselected() + ";}");
+
             Page.getCurrent().getStyles()
                     .add(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected { color: #"
                             + accountTheme.getTabsheettextselected() + "; }");

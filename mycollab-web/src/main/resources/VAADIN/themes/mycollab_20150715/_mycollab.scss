@@ -1004,6 +1004,7 @@
       #forgotLink {
         float: left;
         width: 50%;
+        color: #006dac;
       }
     }
   }
@@ -1012,6 +1013,7 @@
     margin-top: 20px;
     display: inline-block;
     margin-left: 0px;
+    color: #006dac;
   }
 
   #loginForm #forgotLink .v-button {
@@ -1996,12 +1998,6 @@
     padding: 0px 1px 1px 0px;
   }
 
-  /* Filter Select */
-
-  .v-filterselect .v-icon {
-    float: left;
-    margin-top: 0px !important;
-  }
 
   /* End Filter Select */
 
@@ -3209,18 +3205,6 @@
     content: '\f00c';
   }
 
-  /* ComboBox Fix*/
-
-  .v-filterselect .v-icon {
-    width: 16px;
-    position: relative;
-  }
-
-  .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
-    margin-left: -16px;
-    padding-left: 18px;
-  }
-
   /* Contact Role Edit */
 
   .contactopp-list-header > .v-expand > .v-spacing {
@@ -3720,25 +3704,34 @@
 
   /* CRM toolbar quick add button */
 
-  .crm-toolbar .quickadd-btn .v-button-caption {
-    &:before {
-      content: "+";
-      width: 20px;
-      height: 20px;
-      background-color: #17D61B;
-      border-radius: 10px;
-      border: none;
-      color: #FFF;
-      margin-right: 5px;
-      text-align: center;
-      line-height: 22px;
-      font-size: $font-larger;
-      font-weight: bold;
-      vertical-align: top;
+  .crm-toolbar .quickadd-btn.v-popupbutton  {
+    background-color: transparent;
+    .v-button-wrap {
+      padding: 6px 15px;
+      &:hover {
+        background-color: transparent;
+      }
     }
-    line-height: 20px;
-    display: inline-block;
-    vertical-align: middle;
+    .v-button-caption {
+      &:before {
+        content: "+";
+        width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        border: none;
+        color: #FFF;
+        margin-right: 5px;
+        text-align: center;
+        line-height: 22px;
+        font-size: $font-larger;
+        font-weight: bold;
+        vertical-align: top;
+      }
+      line-height: 20px;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0px;
+    }
   }
 
   /* experimental sidebar */

@@ -253,7 +253,7 @@
     }
     .colored-gridlayout {
       border-bottom: 1px solid $border-color;
-      width:100%;
+      width:100% !important;
     }
     .v-horizontallayout-gridform-caption {
       @include margin-container(5px, 5px, 5px, 18px);
