@@ -233,7 +233,7 @@ public class ThemeManager {
                     accountTheme.getActionbtn() + "; }");
 
             //Year block of activity stream
-            Page.getCurrent().getStyles().add(".v-label.year-lbl:after { background-color:#" + accountTheme
+            Page.getCurrent().getStyles().add(".v-label.year-lbl { box-shadow: 0 0 0 5px #" + accountTheme
                     .getActionbtn() + ";}");
 
             //Date label of activity stream
@@ -258,10 +258,6 @@ public class ThemeManager {
             //Selection text color of selected item
             Page.getCurrent().getStyles().add(".v-filterselect-suggestpopup .gwt-MenuItem-selected { color:#" +
                     accountTheme.getActionbtntext() + "; }");
-
-            //Year block of activity stream
-            Page.getCurrent().getStyles().add(".v-label.year-lbl div { color:#" + accountTheme
-                    .getActionbtntext() + ";}");
 
             //Date label of activity stream
             Page.getCurrent().getStyles().add(".feed-block-wrap .date-lbl { color:#" + accountTheme
