@@ -181,34 +181,22 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         filterBtnLayout.addComponent(uploadDropboxBtn);
 
         linkBtn.setContent(filterBtnLayout);
-
         navButton.addButton(linkBtn);
 
-        Label usedVolumeInfo = new Label();
-        usedVolumeInfo.addStyleName("volumeUsageInfo");
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
         DriveInfoService driveInfoService = ApplicationContextUtil.getSpringBean(DriveInfoService.class);
         String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService
                 .getUsedStorageVolume(AppContext.getAccountId()))
                 + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());
-        usedVolumeInfo
-                .setValue("<div id='left-side'>&nbsp;</div><div id='info-content'>"
-                        + usedStorageTxt
-                        + "</div><div id='right-side'>&nbsp;</div>");
-        usedVolumeInfo.setContentMode(ContentMode.HTML);
-        usedVolumeInfo.setWidth("100%");
-        topControlMenuWrapper.with(usedVolumeInfo).withAlign(usedVolumeInfo,
-                Alignment.TOP_CENTER);
+        Label usedVolumeInfo = new Label("<div>" + usedStorageTxt + "</div>", ContentMode.HTML);
+        usedVolumeInfo.addStyleName("volumeUsageInfo");
+        topControlMenuWrapper.with(usedVolumeInfo).withAlign(usedVolumeInfo, Alignment.TOP_CENTER);
 
         menuLayout.addComponent(topControlMenuWrapper);
 
-        this.rootPath = String
-                .format("%d/Documents", AppContext.getAccountId());
-
+        this.rootPath = String.format("%d/Documents", AppContext.getAccountId());
         this.folderNavigator = new FolderNavigatorMenu(rootPath);
-
         menuLayout.addComponent(this.folderNavigator);
-
         return menuBarContainerHorizontalLayout;
     }
 

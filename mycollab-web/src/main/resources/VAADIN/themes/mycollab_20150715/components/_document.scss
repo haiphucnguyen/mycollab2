@@ -1,19 +1,52 @@
 @mixin mycollab-document {
-  .date-wrapper {
-    background: url('icons/timehdr-bg.png') no-repeat left top rgb(212, 223, 239);
-    font-size: $font-small;
-    padding: 0px 5px;
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    color: white;
-    .v-label {
-      font-size: $font-small;
-    }
-    > .v-csslayout-margin {
-      box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
+  /* volume usage info */
+
+  .v-horizontallayout.border-box2-no-margin.file-topcontrols {
+    border-radius: 2px 3px 0px 0px;
+    border-width: 1px 1px 0px 1px;
+  }
+
+  .file-topcontrols .v-button.v-button-right {
+    border-right: none;
+  }
+
+  .v-horizontallayout.border-box2-no-margin.file-topcontrols .v-buttongroup .v-button.v-button-right {
+    border-radius: 0px 3px 0px 0px;
+  }
+
+  .v-label.volumeUsageInfo {
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    height: 0;
+    overflow: visible;
+    div {
+      position: relative;
+      margin-top:-20px;
+      text-align: center;
     }
   }
+
+/*
+  .v-label.volumeUsageInfo {
+    display: table;
+    div {
+      display: table-cell;
+    }
+    #left-side {
+      width: 30px;
+      height: 100%;
+      background: url('icons/volume-usage-corners.png') no-repeat top left transparent;
+    }
+    #right-side {
+      width: 30px;
+      background: url('icons/volume-usage-corners.png') no-repeat top right transparent;
+    }
+    #info-content {
+      background-color: rgb(190, 167, 118);
+      padding: 3px 0px;
+      color: white;
+      text-align: center;
+    }
+  }
+*/
 }
