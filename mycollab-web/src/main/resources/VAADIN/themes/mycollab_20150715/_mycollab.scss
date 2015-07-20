@@ -452,7 +452,7 @@
   }
 
   .v-table tr.v-selected {
-    background-image: url("icons/grad-light-top2.png");
+    /*background-image: url("icons/grad-light-top2.png");*/
     background-position: left top;
     background-repeat: repeat-x;
   }
@@ -1835,40 +1835,12 @@
 
   /* End Messages */
 
-  /* Button Group */
-
-  .v-button .v-button-v-button-greenbtn-calendar .v-button-greenbtn-calendar .v-popupbutton .v-button-wrap .v-popup-indicator {
-    background: url("icons/sprites-white.png") no-repeat scroll -5px -10px transparent;
-  }
-
-  .v-buttongroup .v-button.graybtn2 {
-    &.v-button-left, &.v-button-middle, &.v-button-right {
-      background-color: $border-color;
-      border-color: rgb(56, 56, 56);
-      color: #FFF;
-      border-top: none;
-      border-bottom: none;
-      border-bottom-left-radius: 0px;
-      border-top-left-radius: 0px;
-      text-shadow: 1px 1px 0px #1570cd;
-      padding: 3px 13px;
-      text-shadow: 1px 1px 0px #1570cd;
-      text-shadow: 1px 1px 0px #1570cd;
-    }
-  }
-
-  /* End Button Group */
-
   /* Error Message */
 
   .v-form-errormessage .gwt-HTML {
     text-align: center;
     color: red;
   }
-
-  /* End Error Message */
-
-  /* End Task List Component */
 
   /* Popup Window */
 
@@ -2505,14 +2477,14 @@
       background-color: rgb(212, 224, 240);
       padding: 0px 10px;
       .infoBlock {
-        padding: 10px 0px;
+        padding: 10px 10px;
         display: table-cell;
       }
       .blockSeparator {
         display: table-cell;
-        width: 25px;
+        width: 5px;
         height: 100%;
-        background: url('icons/block-separator.png') no-repeat center center transparent;
+        background-color: #F5F5F5;
       }
       .infoTitle {
         font-weight: bold;
