@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.file.view.BrowserWindowOpenerOauthFactory;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
@@ -158,7 +159,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         final MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("180px");
 
-        Button uploadDropboxBtn = new Button("Connect Dropbox", new Button.ClickListener() {
+        Button connectDropboxBtn = new Button("Connect Dropbox", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -167,18 +168,14 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             }
         });
 
-        String dropBoxImplCls = "com.esofthead.mycollab.ondemand.module.file.view.DropboxOAuthPopupOpener";
-        try {
-            Class cls = Class.forName(dropBoxImplCls);
-            BrowserWindowOpener opener = (BrowserWindowOpener) cls.newInstance();
-            opener.extend(this);
-        } catch (Exception e) {
-            throw new MyCollabException(e);
-        }
+        BrowserWindowOpenerOauthFactory factory = ApplicationContextUtil.getSpringBean
+                (BrowserWindowOpenerOauthFactory.class);
+        BrowserWindowOpener browserWindowOpener = factory.createDropboxOauthInstance();
+        browserWindowOpener.extend(connectDropboxBtn);
 
-        uploadDropboxBtn.addStyleName("link");
-        uploadDropboxBtn.setIcon(FontAwesome.DROPBOX);
-        filterBtnLayout.addComponent(uploadDropboxBtn);
+        connectDropboxBtn.addStyleName("link");
+        connectDropboxBtn.setIcon(FontAwesome.DROPBOX);
+        filterBtnLayout.addComponent(connectDropboxBtn);
 
         linkBtn.setContent(filterBtnLayout);
         navButton.addButton(linkBtn);
@@ -223,12 +220,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         this.folderNavigator.removeAllItems();
         this.folderNavigator.addItem(this.rootFolder);
         this.folderNavigator.setItemCaption(this.rootFolder, rootFolderName);
-        this.folderNavigator.setItemIcon(this.rootFolder,
-                FontAwesome.FOLDER);
+        this.folderNavigator.setItemIcon(this.rootFolder, FontAwesome.FOLDER);
         this.folderNavigator.collapseItem(this.rootFolder);
 
-        resourceHandlerLayout.displayComponent(this.rootFolder,
-                rootFolderName);
+        resourceHandlerLayout.displayComponent(this.rootFolder, rootFolderName);
 
         resourceHandlerLayout.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
             @Override

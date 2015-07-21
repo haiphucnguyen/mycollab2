@@ -43,6 +43,12 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.1.1
+-----------------------------
+**Library Upgrades**
+
+* Jackson library 2.6.0
+
 Version 5.1.0
 -----------------------------
 **Library Upgrades**
@@ -54,7 +60,7 @@ Version 5.1.0
 * Redesign the email template
 * Can resend the invitation
 * Optimize Vaadin widgetsets
-* Remove Camel library and reduce the number of threads daemon
+* Remove Camel library and reduce the number of threads daemons
 * Reduce chart generator memory footprint
 * Theme color consistent fixed
 * Add outlook smtp help message
