@@ -13,9 +13,7 @@ import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 
 @Service
-public class ExternalDriveServiceImpl extends
-		DefaultCrudService<Integer, ExternalDrive> implements
-		ExternalDriveService {
+public class ExternalDriveServiceImpl extends DefaultCrudService<Integer, ExternalDrive> implements ExternalDriveService {
 
 	@Autowired
 	private ExternalDriveMapper externalDriveMapper;

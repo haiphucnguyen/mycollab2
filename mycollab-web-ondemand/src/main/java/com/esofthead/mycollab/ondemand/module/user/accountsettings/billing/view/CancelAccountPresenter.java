@@ -33,8 +33,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
-public class CancelAccountPresenter extends
-		AbstractPresenter<CancelAccountView> {
+public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView> {
 	private static final long serialVersionUID = 1L;
 
 	public CancelAccountPresenter() {
@@ -47,8 +46,7 @@ public class CancelAccountPresenter extends
 		accountContainer.removeAllComponents();
 		accountContainer.addComponent(view.getWidget());
 
-		AccountSettingBreadcrumb breadcrumb = ViewManager
-				.getCacheComponent(AccountSettingBreadcrumb.class);
+		AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
 		breadcrumb.gotoCancelAccountPage();
 	}
 

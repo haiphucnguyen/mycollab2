@@ -172,6 +172,14 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 (BrowserWindowOpenerOauthFactory.class);
         BrowserWindowOpener browserWindowOpener = factory.createDropboxOauthInstance();
         browserWindowOpener.extend(connectDropboxBtn);
+        String dropBoxImplCls = "com.esofthead.mycollab.ondemand.module.file.view.DropboxOAuthPopupOpener";
+        try {
+            Class cls = Class.forName(dropBoxImplCls);
+            BrowserWindowOpener opener = (BrowserWindowOpener) cls.newInstance();
+            opener.extend(connectDropboxBtn);
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        }
 
         connectDropboxBtn.addStyleName("link");
         connectDropboxBtn.setIcon(FontAwesome.DROPBOX);

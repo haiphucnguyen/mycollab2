@@ -41,6 +41,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -115,7 +116,12 @@ public class BillingServiceImpl implements BillingService {
         billingAccount.setSubdomain(subDomain);
         billingAccount.setDefaulttimezone(timezoneId);
 
-        billingAccountMapper.insertAndReturnKey(billingAccount);
+        try {
+            billingAccountMapper.insertAndReturnKey(billingAccount);
+        } catch (DuplicateKeyException e) {
+            throw new SubdomainExistedException(LocalizationHelper.getMessage(LocalizationHelper.defaultLocale,
+                    ErrorI18nEnum.EXISTING_DOMAIN_REGISTER_ERROR, subDomain));
+        }
         int accountId = billingAccount.getId();
 
         // Check whether user has registered to the system before
