@@ -17,9 +17,14 @@
 package com.esofthead.mycollab.ondemand.module.file.servlet;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.module.ecm.StorageNames;
+import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
+import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.oauth.service.MyCollabOauthServiceFactory;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
+import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
+import com.google.common.eventbus.EventBus;
 import com.vaadin.ui.UI;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
@@ -49,11 +54,16 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
             OAuthService dropboxService = MyCollabOauthServiceFactory.getDropboxService();
             Token accessToken = dropboxService.getAccessToken(null, verifier);
             final String accessTokenVal = accessToken.getToken();
+            CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(StorageNames.DROPBOX, accessTokenVal);
 
             UI ui = (UI) LocalCacheManager.getCache("tempCache").get(state);
             if (ui instanceof MyCollabUI) {
                 MyCollabUI myUI = (MyCollabUI) ui;
-
+                EventBus eventBus = (EventBus) myUI.getAttribute(MyCollabSession.EVENT_BUS_VAL);
+                if (eventBus != null) {
+                    eventBus.post(new CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo(
+                            DropboxAuthServletRequestHandler.this, cloudDriveInfo));
+                }
             }
         } finally {
             LocalCacheManager.getCache("tempCache").removeAsync(state);

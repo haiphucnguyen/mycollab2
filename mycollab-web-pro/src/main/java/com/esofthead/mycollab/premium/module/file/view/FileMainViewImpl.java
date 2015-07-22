@@ -164,8 +164,14 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             public void buttonClick(ClickEvent event) {
                 linkBtn.setPopupVisible(false);
                 OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
-                Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
+                AbstractCloudDriveOAuthWindow dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
                 UI.getCurrent().addWindow(dropboxWindow);
+                dropboxWindow.addExternalDriveConnectedListener(new AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener() {
+                    @Override
+                    public void connectedSuccess(AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent event) {
+                        Object data = event.getData();
+                    }
+                });
             }
         });
 
@@ -280,24 +286,24 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
                 @Override
                 public void buttonClick(ClickEvent event) {
-//                    AbstractCloudDriveOAuthWindow cloudDriveOAuthWindow = ComponentManagerFactory.getCloudDriveOAuthWindow("Add Dropbox");
-//                    cloudDriveOAuthWindow.addExternalDriveConnectedListener(new ExternalDriveConnectedListener() {
-//                        private static final long serialVersionUID = 1L;
-//
-//                        @Override
-//                        public void connectedSuccess(
-//                                ExternalDriveConnectedEvent event) {
-//                            folderNavigator.collapseItem(rootECMFolder);
-//                            folderNavigator.expandItem(rootECMFolder);
-//                            OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
-//                                    (ExternalDrive) event.getData());
-//                            bodyLayout.addComponent(layout);
-//                            bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-//                            bodyLayout.addComponent(new Hr());
-//
-//                        }
-//                    });
-//                    UI.getCurrent().addWindow(cloudDriveOAuthWindow);
+                    OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
+                    AbstractCloudDriveOAuthWindow dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
+                    dropboxWindow.addExternalDriveConnectedListener(new AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void connectedSuccess(AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent event) {
+                            folderNavigator.collapseItem(rootECMFolder);
+                            folderNavigator.expandItem(rootECMFolder);
+                            OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
+                                    (ExternalDrive) event.getData());
+                            bodyLayout.addComponent(layout);
+                            bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
+                            bodyLayout.addComponent(new Hr());
+
+                        }
+                    });
+                    UI.getCurrent().addWindow(dropboxWindow);
                 }
             });
             connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -308,10 +314,10 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             mainLayout.addComponent(bodyLayout);
             this.addComponent(mainLayout);
 
-            List<ExternalDrive> lst = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
+            List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
 
             bodyLayout.addComponent(new Hr());
-            for (ExternalDrive drive : lst) {
+            for (ExternalDrive drive : externalDrives) {
                 OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(drive);
                 bodyLayout.with(layout, new Hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
             }
@@ -349,10 +355,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     titleLayout.with(foldernameLbl).expand(foldernameLbl);
 
                     final PopupButton popupBtn = new PopupButton();
-                    popupBtn.setIcon(new AssetResource("icons/16/item_settings_big.png"));
                     popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
 
-                    final MVerticalLayout popupOptionActionLayout = new MVerticalLayout().withWidth("100px");
+                    final OptionPopupContent popupOptionActionLayout = new OptionPopupContent().withWidth("100px");
 
                     Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
@@ -375,7 +380,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         }
                     });
                     editBtn.addStyleName("link");
-                    popupOptionActionLayout.addComponent(editBtn);
+                    popupOptionActionLayout.addOption(editBtn);
 
                     Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
@@ -383,8 +388,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         @Override
                         public void buttonClick(ClickEvent event) {
                             try {
-                                ConfirmDialogExt.show(UI.getCurrent(),
-                                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
                                                 AppContext.getSiteName()),
                                         AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                         AppContext.getMessage(GenericI18Enum.BUTTON_YES),
@@ -424,7 +428,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         }
                     });
                     deleteBtn.addStyleName("link");
-                    popupOptionActionLayout.addComponent(deleteBtn);
+                    popupOptionActionLayout.addOption(deleteBtn);
                     popupBtn.setContent(popupOptionActionLayout);
                     titleLayout.addComponent(popupBtn);
                     titleLayout.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
@@ -461,7 +465,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                                 }
                                 ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
 
-                                Container dataSource = FileMainViewImpl.this.folderNavigator.getContainerDataSource();
+                                Container dataSource = folderNavigator.getContainerDataSource();
                                 final Object[] dataCollectionArray = dataSource.getItemIds().toArray();
                                 for (int i = 0; i < dataCollectionArray.length; i++) {
                                     Folder folder = (Folder) folderNavigator.getContainerDataSource().getItemIds().toArray()[i];

@@ -570,4 +570,8 @@
     box-shadow: none;
     border: 1px solid $border-color;
   }
+
+  div.v-tree-node-caption div {
+    white-space: normal;
+  }
 }

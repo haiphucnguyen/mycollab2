@@ -16,17 +16,14 @@ import java.util.EventListener;
 public class AbstractCloudDriveOAuthWindow extends Window {
     private static final long serialVersionUID = 1L;
 
-    public void addExternalDriveConnectedListener(
-            ExternalDriveConnectedListener listener) {
-        this.addListener(ExternalDriveConnectedEvent.VIEW_IDENTIFIER,
-                ExternalDriveConnectedEvent.class, listener,
-                ExternalDriveConnectedListener.viewInitMethod);
+    public void addExternalDriveConnectedListener(ExternalDriveConnectedListener listener) {
+        this.addListener(ExternalDriveConnectedEvent.VIEW_IDENTIFIER, ExternalDriveConnectedEvent.class,
+                listener, ExternalDriveConnectedListener.viewInitMethod);
     }
 
     public interface ExternalDriveConnectedListener extends EventListener, Serializable {
-        Method viewInitMethod = ReflectTools.findMethod(
-                ExternalDriveConnectedListener.class, "connectedSuccess",
-                ExternalDriveConnectedEvent.class);
+        Method viewInitMethod = ReflectTools.findMethod(ExternalDriveConnectedListener.class,
+                "connectedSuccess", ExternalDriveConnectedEvent.class);
 
         void connectedSuccess(ExternalDriveConnectedEvent event);
     }

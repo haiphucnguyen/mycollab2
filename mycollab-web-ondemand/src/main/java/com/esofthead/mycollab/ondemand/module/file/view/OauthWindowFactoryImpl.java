@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.ondemand.module.file.view;
 
+import com.esofthead.mycollab.premium.module.file.view.AbstractCloudDriveOAuthWindow;
 import com.esofthead.mycollab.premium.module.file.view.OauthWindowFactory;
-import com.vaadin.ui.Window;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
  * @since 5.1.1
  */
 @Component
-public class OauthWindowFactoryImpl implements OauthWindowFactory{
+public class OauthWindowFactoryImpl implements OauthWindowFactory {
     @Override
-    public Window newDropBoxAuthWindow() {
+    public AbstractCloudDriveOAuthWindow newDropBoxAuthWindow() {
         return new DropBoxOAuthWindow();
     }
 }

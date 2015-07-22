@@ -169,16 +169,15 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
         ButtonGroup navButton = new ButtonGroup();
         navButton.addStyleName(UIConstants.THEME_GREEN_LINK);
-        Button createBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        AddNewFolderWindow addnewFolderWindow = new AddNewFolderWindow();
-                        UI.getCurrent().addWindow(addnewFolderWindow);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                AddNewFolderWindow addnewFolderWindow = new AddNewFolderWindow();
+                UI.getCurrent().addWindow(addnewFolderWindow);
+            }
+        });
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         createBtn.setDescription("Create new folder");
@@ -289,8 +288,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     }
 
     private void deleteResourceAction() {
-        ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(
-                        GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+        ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
                 AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                 AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                 AppContext.getMessage(GenericI18Enum.BUTTON_NO),

@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.core.UnsupportedFeatureException;
-import com.vaadin.ui.Window;
 
 /**
  * @author MyCollab Ltd
@@ -9,7 +8,7 @@ import com.vaadin.ui.Window;
  */
 public class OauthWindowFactoryImpl implements OauthWindowFactory {
     @Override
-    public Window newDropBoxAuthWindow() {
+    public AbstractCloudDriveOAuthWindow newDropBoxAuthWindow() {
         throw new UnsupportedFeatureException("This feature is not supported in this edition");
     }
 }

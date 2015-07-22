@@ -242,6 +242,13 @@ public class ThemeManager {
 
             Page.getCurrent().getStyles().add(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme
                     .getActionbtn() + ";}");
+
+            // Add style for tree selected
+            Page.getCurrent().getStyles().add("div.v-tree-node-selected {background-color:#" + accountTheme
+                    .getActionbtn() + ";}");
+
+            Page.getCurrent().getStyles().add("div.v-tree-node-selected span {background-color:#" + accountTheme
+                    .getActionbtn() + ";}");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -261,6 +268,10 @@ public class ThemeManager {
 
             //Date label of activity stream
             Page.getCurrent().getStyles().add(".feed-block-wrap .date-lbl { color:#" + accountTheme
+                    .getActionbtntext() + ";}");
+
+            //Style for tree
+            Page.getCurrent().getStyles().add("div.v-tree-node-selected span {color:#" + accountTheme
                     .getActionbtntext() + ";}");
         }
 
