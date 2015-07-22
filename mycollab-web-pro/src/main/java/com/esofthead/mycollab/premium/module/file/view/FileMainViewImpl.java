@@ -13,7 +13,6 @@ import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
-import com.esofthead.mycollab.module.file.view.BrowserWindowOpenerOauthFactory;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
@@ -26,7 +25,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.data.Container;
-import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -165,21 +163,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             @Override
             public void buttonClick(ClickEvent event) {
                 linkBtn.setPopupVisible(false);
+                OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
+                Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
+                UI.getCurrent().addWindow(dropboxWindow);
             }
         });
-
-        BrowserWindowOpenerOauthFactory factory = ApplicationContextUtil.getSpringBean
-                (BrowserWindowOpenerOauthFactory.class);
-        BrowserWindowOpener browserWindowOpener = factory.createDropboxOauthInstance();
-        browserWindowOpener.extend(connectDropboxBtn);
-        String dropBoxImplCls = "com.esofthead.mycollab.ondemand.module.file.view.DropboxOAuthPopupOpener";
-        try {
-            Class cls = Class.forName(dropBoxImplCls);
-            BrowserWindowOpener opener = (BrowserWindowOpener) cls.newInstance();
-            opener.extend(connectDropboxBtn);
-        } catch (Exception e) {
-            throw new MyCollabException(e);
-        }
 
         connectDropboxBtn.addStyleName("link");
         connectDropboxBtn.setIcon(FontAwesome.DROPBOX);

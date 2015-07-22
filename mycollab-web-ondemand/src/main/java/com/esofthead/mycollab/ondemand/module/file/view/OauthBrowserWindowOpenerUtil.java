@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.ondemand.module.file.view;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.module.file.view.BrowserWindowOpenerOauthFactory;
 import com.esofthead.mycollab.oauth.service.MyCollabOauthServiceFactory;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.ui.UI;
@@ -15,10 +14,9 @@ import java.util.UUID;
  * @since 5.1.1
  */
 @Component
-public class BrowserWindowOpenerOauthFactoryImpl implements BrowserWindowOpenerOauthFactory {
+public class OauthBrowserWindowOpenerUtil {
 
-    @Override
-    public BrowserWindowOpener createDropboxOauthInstance() {
+    public static BrowserWindowOpener createDropboxOauthInstance() {
         OAuthService service = MyCollabOauthServiceFactory.getDropboxService();
         return newOauthBrowser(service);
     }

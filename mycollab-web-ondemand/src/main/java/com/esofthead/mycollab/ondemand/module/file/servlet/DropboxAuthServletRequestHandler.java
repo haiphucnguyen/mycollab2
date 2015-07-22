@@ -17,12 +17,8 @@
 package com.esofthead.mycollab.ondemand.module.file.servlet;
 
 import com.esofthead.mycollab.cache.LocalCacheManager;
-import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.module.ecm.dao.ExternalDriveMapper;
-import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.oauth.service.MyCollabOauthServiceFactory;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.vaadin.ui.UI;
 import org.scribe.model.Token;
@@ -35,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
@@ -58,16 +53,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
             UI ui = (UI) LocalCacheManager.getCache("tempCache").get(state);
             if (ui instanceof MyCollabUI) {
                 MyCollabUI myUI = (MyCollabUI) ui;
-                ExternalDriveMapper externalDriveMapper = ApplicationContextUtil.getSpringBean(ExternalDriveMapper.class);
-                ExternalDrive externalDrive = new ExternalDrive();
-                externalDrive.setAccesstoken(accessTokenVal);
-                externalDrive.setCreatedtime(new GregorianCalendar().getTime());
-                externalDrive.setFoldername("Dropbox");
-                externalDrive.setStoragename(StorageNames.DROPBOX);
-                externalDrive.setLastupdatedtime(new GregorianCalendar().getTime());
-                externalDrive.setOwner(myUI.getCurrentContext().getUserOfContext().getUsername());
-                externalDriveMapper.insert(externalDrive);
-                myUI.getPage().getJavaScript().execute("window.location.reload();");
+
             }
         } finally {
             LocalCacheManager.getCache("tempCache").removeAsync(state);
