@@ -114,14 +114,13 @@ public class FileUtils {
         return Arrays.binarySearch(INVALID_RESOURCE_FULLNAMES, name.toLowerCase()) < 0;
     }
 
-    private static final String ILLEGAL_FOLDER_PATTERN = "[.<>:&/\\|?*&%()+-]";
-    private static final Pattern pattern = Pattern.compile(ILLEGAL_FOLDER_PATTERN);
+    private static final Pattern ILLEGAL_FOLDER_PATTERN = Pattern.compile("[.<>:&/\\|?*&%()+-]");
 
     public static void assertValidFolderName(String name) {
-        Matcher matcher = pattern.matcher(name);
+        Matcher matcher = ILLEGAL_FOLDER_PATTERN.matcher(name);
         if (matcher.find()) {
             throw new UserInvalidInputException("Please enter valid folder name except any " +
-                    "follow characters : " + ILLEGAL_FOLDER_PATTERN);
+                    "follow characters : " + ILLEGAL_FOLDER_PATTERN.pattern());
         }
     }
 }

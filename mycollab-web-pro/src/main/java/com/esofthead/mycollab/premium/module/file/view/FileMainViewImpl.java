@@ -41,8 +41,6 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author MyCollab Ltd.
@@ -53,8 +51,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(FileMainViewImpl.class);
-
-    private static final String illegalFileNamePattern = "[<>:&/\\|?*&]";
 
     private FolderNavigatorMenu folderNavigator;
 
@@ -155,7 +151,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
         linkBtn.setWidth("65px");
 
-        final MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("180px");
+        final OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("180px");
 
         Button connectDropboxBtn = new Button("Connect Dropbox", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -177,7 +173,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         connectDropboxBtn.addStyleName(UIConstants.THEME_LINK);
         connectDropboxBtn.setIcon(FontAwesome.DROPBOX);
-        filterBtnLayout.addComponent(connectDropboxBtn);
+        filterBtnLayout.addOption(connectDropboxBtn);
 
         linkBtn.setContent(filterBtnLayout);
         navButton.addButton(linkBtn);
@@ -197,12 +193,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         this.folderNavigator = new FolderNavigatorMenu(rootPath);
         menuLayout.addComponent(this.folderNavigator);
         return menuBarContainerHorizontalLayout;
-    }
-
-    private boolean checkValidFolderName(String value) {
-        Pattern pattern = Pattern.compile(illegalFileNamePattern);
-        Matcher matcher = pattern.matcher(value);
-        return matcher.find();
     }
 
     private void gotoFileMainViewPage(Folder baseFolder) {
@@ -459,11 +449,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                         String folderName = folderNameTextField.getValue().trim();
                         try {
                             if (folderName.length() > 0) {
-                                boolean checkingError = checkValidFolderName(folderName);
-                                if (checkingError) {
-                                    NotificationUtil.showErrorNotification("Please enter valid folder name except any follow characters : <>:&/\\|?*&");
-                                    return;
-                                }
+                                FileUtils.assertValidFolderName(folderName);
                                 ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
 
                                 Container dataSource = folderNavigator.getContainerDataSource();
