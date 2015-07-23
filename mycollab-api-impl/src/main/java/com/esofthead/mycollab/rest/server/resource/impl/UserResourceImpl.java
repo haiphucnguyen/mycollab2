@@ -44,8 +44,7 @@ public class UserResourceImpl implements UserResource {
 		String[] result;
 		if (subdomains != null) {
 			result = subdomains.toArray(new String[0]);
-			LOG.debug("There are subdomains for user {} {}", username,
-                    BeanUtility.printBeanObj(result));
+			LOG.debug("There are subdomains for user {} {}", username, BeanUtility.printBeanObj(result));
 
 		} else {
 			LOG.debug("There is no subdomain for user {}", username);

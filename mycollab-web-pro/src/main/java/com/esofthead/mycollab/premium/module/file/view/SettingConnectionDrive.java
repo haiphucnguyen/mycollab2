@@ -40,22 +40,22 @@ public class SettingConnectionDrive extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
-                AbstractCloudDriveOAuthWindow dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
-                dropboxWindow.addExternalDriveConnectedListener(new AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void connectedSuccess(AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent event) {
-//                        folderNavigator.collapseItem(rootECMFolder);
-//                        folderNavigator.expandItem(rootECMFolder);
-//                        OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
-//                                (ExternalDrive) event.getData());
-//                        bodyLayout.addComponent(layout);
-//                        bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-//                        bodyLayout.addComponent(new Hr());
-
-                    }
-                });
+                Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
+//                dropboxWindow.addExternalDriveConnectedListener(new AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener() {
+//                    private static final long serialVersionUID = 1L;
+//
+//                    @Override
+//                    public void connectedSuccess(AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent event) {
+////                        folderNavigator.collapseItem(rootECMFolder);
+////                        folderNavigator.expandItem(rootECMFolder);
+////                        OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
+////                                (ExternalDrive) event.getData());
+////                        bodyLayout.addComponent(layout);
+////                        bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
+////                        bodyLayout.addComponent(new Hr());
+//
+//                    }
+//                });
                 UI.getCurrent().addWindow(dropboxWindow);
             }
         });

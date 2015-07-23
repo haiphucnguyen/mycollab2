@@ -49,25 +49,21 @@ public class AccountResourceImpl implements AccountResource {
             boolean isEmailVerified = entity.isEmailVerified();
 
             LOG.debug("Register account with subDomain {}, username {}", subDomain, email);
-            billingService.registerAccount(subDomain, planId, email,
-                    password, email, timezoneId, isEmailVerified);
+            billingService.registerAccount(subDomain, planId, email, password, email, timezoneId, isEmailVerified);
 
             String siteUrl = SiteConfiguration.getSiteUrl(subDomain);
             LOG.debug("Return site url {} to sign up user {}", siteUrl, email);
 
-            Response response = Response.status(200).entity(siteUrl)
-                    .type(MediaType.TEXT_PLAIN_TYPE).build();
+            Response response = Response.status(200).entity(siteUrl).type(MediaType.TEXT_PLAIN_TYPE).build();
             response.getHeaders().add("Access-Control-Allow-Origin", "*");
             return response;
         } catch (UserInvalidInputException e) {
-            Response response = Response.status(400).entity(e.getMessage())
-                    .type(MediaType.TEXT_PLAIN_TYPE).build();
+            Response response = Response.status(400).entity(e.getMessage()).type(MediaType.TEXT_PLAIN_TYPE).build();
             response.getHeaders().add("Access-Control-Allow-Origin", "*");
             return response;
         } catch (Exception e) {
             LOG.error("Error while sign up", e);
-            Response response = Response.status(500).entity(e.getMessage())
-                    .type(MediaType.TEXT_PLAIN_TYPE).build();
+            Response response = Response.status(500).entity(e.getMessage()).type(MediaType.TEXT_PLAIN_TYPE).build();
             response.getHeaders().add("Access-Control-Allow-Origin", "*");
             return response;
         }

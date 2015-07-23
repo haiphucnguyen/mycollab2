@@ -2,7 +2,6 @@ package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
@@ -149,14 +148,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             public void buttonClick(ClickEvent event) {
                 linkBtn.setPopupVisible(false);
                 OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
-                AbstractCloudDriveOAuthWindow dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
+                Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
                 UI.getCurrent().addWindow(dropboxWindow);
-                dropboxWindow.addExternalDriveConnectedListener(new AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener() {
-                    @Override
-                    public void connectedSuccess(AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent event) {
-                        ExternalDrive data = event.getExternalDrive();
-                    }
-                });
             }
         });
 

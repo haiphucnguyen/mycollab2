@@ -306,7 +306,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                                 ((ExternalFolder) res).getExternalDrive(), res.getPath());
                                     } else {
                                         if (res instanceof Folder) {
-                                            fireEvent(new ResourceRemovedEvent(ResourcesDisplayComponent.this, res));
+                                            //TODO: handle resource removed event
                                         }
                                         resourceService.removeResource(res.getPath(),
                                                 AppContext.getUsername(), AppContext.getAccountId());
@@ -1020,30 +1020,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             this.folderTree.setItemCaption(this.baseFolder, ResourcesDisplayComponent.this.rootFolderName);
 
             this.folderTree.setCollapsed(this.baseFolder, false);
-        }
-    }
-
-    public void addResourceRemovedListener(ResourceRemovedListener listener) {
-        this.addListener(ResourceRemovedEvent.VIEW_IDENTIFIER,
-                ResourceRemovedEvent.class, listener,
-                ResourceRemovedListener.viewInitMethod);
-    }
-
-    public interface ResourceRemovedListener extends EventListener, Serializable {
-        Method viewInitMethod = ReflectTools.findMethod(
-                ResourceRemovedListener.class, "removedResource",
-                ResourceRemovedEvent.class);
-
-        void removedResource(ResourceRemovedEvent event);
-    }
-
-    public static class ResourceRemovedEvent extends ApplicationEvent {
-        private static final long serialVersionUID = 1L;
-
-        public static final String VIEW_IDENTIFIER = "resourceRemoved";
-
-        public ResourceRemovedEvent(Object source, Resource data) {
-            super(source, data);
         }
     }
 

@@ -24,8 +24,7 @@ public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResourc
         }
 
         Gson gson = new Gson();
-        Response response = Response.status(200).entity(gson.toJson(props))
-                .type(MediaType.APPLICATION_JSON_TYPE).build();
+        Response response = Response.status(200).entity(gson.toJson(props)).type(MediaType.APPLICATION_JSON_TYPE).build();
         response.getHeaders().add("Access-Control-Allow-Origin", "*");
         return response;
     }

@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
-import com.esofthead.mycollab.premium.module.file.view.AbstractCloudDriveOAuthWindow;
+import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -30,7 +30,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public abstract class DefaultCloudDriveOAuthWindow extends AbstractCloudDriveOAuthWindow {
+public abstract class DefaultCloudDriveOAuthWindow extends Window {
     private static final long serialVersionUID = 1L;
 
     private static final Logger LOG = LoggerFactory.getLogger(DefaultCloudDriveOAuthWindow.class);
@@ -54,14 +54,12 @@ public abstract class DefaultCloudDriveOAuthWindow extends AbstractCloudDriveOAu
 
     private void registerListeners() {
         final UI ui = UI.getCurrent();
-
         listener = new ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo>() {
             private static final long serialVersionUID = 1L;
 
             @Subscribe
             @Override
             public void handle(CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo event) {
-                ui.setPollInterval(1000);
                 cloudDriveInfo = (CloudDriveInfo) event.getData();
                 LOG.debug("Receive cloud drive info: " + BeanUtility.printBeanObj(cloudDriveInfo));
                 ui.access(new Runnable() {
@@ -70,7 +68,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends AbstractCloudDriveOAu
                         DefaultCloudDriveOAuthWindow.this.setHeight("210px");
                         messageBox.removeAllComponents();
                         messageBox.addComponent(new Label("Access token is retrieved"));
-                        ui.setPollInterval(-1);
+                        ui.push();
                     }
                 });
             }
@@ -154,8 +152,8 @@ public abstract class DefaultCloudDriveOAuthWindow extends AbstractCloudDriveOAu
 
                     ExternalDriveService service = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
                     service.saveWithSession(externalDrive, AppContext.getUsername());
-                    DefaultCloudDriveOAuthWindow.this.fireEvent(new ExternalDriveConnectedEvent(
-                            DefaultCloudDriveOAuthWindow.this, externalDrive));
+                    EventBusFactory.getInstance().post(new FileEvent.ExternalDriveConnectedEvent
+                            (DefaultCloudDriveOAuthWindow.this, externalDrive));
                 } catch (Exception e) {
                     throw new MyCollabException(e);
                 }
