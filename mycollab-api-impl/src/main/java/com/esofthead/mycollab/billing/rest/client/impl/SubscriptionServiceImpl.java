@@ -13,7 +13,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 	@Override
 	public Subscription getSubscription(String company, String reference) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

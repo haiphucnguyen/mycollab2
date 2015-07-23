@@ -1,11 +1,14 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
+import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.Container;
@@ -42,49 +45,47 @@ public class FolderNavigatorMenu extends Tree {
 
             @Override
             public void nodeExpand(final ExpandEvent event) {
-                Object object = event.getItemId();
-                if (object instanceof Folder) {
-                    final Folder expandFolder = (Folder) event.getItemId();
+                final Folder expandFolder = (Folder) event.getItemId();
 
-                    // if expand folder is root, will load external drives also
-                    if (rootPath.equals(expandFolder.getPath())) {
-                        List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
-                        for (ExternalDrive externalDrive : externalDrives) {
-                            ExternalFolder externalMapFolder = new ExternalFolder("/");
-                            externalMapFolder.setStorageName(externalDrive.getStoragename());
-                            externalMapFolder.setExternalDrive(externalDrive);
-                            externalMapFolder.setName(externalDrive.getFoldername());
-                            expandFolder.addChild(externalMapFolder);
-                            addItem(externalMapFolder);
+                // if expand folder is root, will load external drives also
+                if (rootPath.equals(expandFolder.getPath())) {
+                    List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
+                    for (ExternalDrive externalDrive : externalDrives) {
+                        ExternalFolder externalFolder = new ExternalFolder("/");
+                        externalFolder.setStorageName(externalDrive.getStoragename());
+                        externalFolder.setExternalDrive(externalDrive);
+                        externalFolder.setName(externalDrive.getFoldername());
+                        expandFolder.addChild(externalFolder);
 
-                            setItemIcon(externalMapFolder, FontAwesome.DROPBOX);
-                            setItemCaption(externalMapFolder, externalMapFolder.getName());
-                            setParent(externalMapFolder, expandFolder);
-                        }
+                        // Add external folder to tree
+                        addItem(externalFolder);
+                        setItemIcon(externalFolder, FontAwesome.DROPBOX);
+                        setItemCaption(externalFolder, externalFolder.getName());
+                        setParent(externalFolder, expandFolder);
                     }
-                    if (expandFolder instanceof ExternalFolder) {
-                        List<ExternalFolder> subFolders = externalResourceService.getSubFolders(((ExternalFolder) expandFolder)
-                                .getExternalDrive(), expandFolder.getPath());
-                        for (Folder subFolder : subFolders) {
-                            expandFolder.addChild(subFolder);
-                            addItem(subFolder);
-                            setItemIcon(subFolder, FontAwesome.DROPBOX);
-                            setItemCaption(subFolder, subFolder.getName());
-                            setParent(subFolder, expandFolder);
-                        }
-                    } else {
-                        List<Folder> subFolders = resourceService.getSubFolders(expandFolder.getPath());
-                        setItemIcon(expandFolder, FontAwesome.FOLDER_OPEN);
+                }
+                if (expandFolder instanceof ExternalFolder) {
+                    List<ExternalFolder> subFolders = externalResourceService.getSubFolders(((ExternalFolder) expandFolder)
+                            .getExternalDrive(), expandFolder.getPath());
+                    for (Folder subFolder : subFolders) {
+                        expandFolder.addChild(subFolder);
+                        addItem(subFolder);
+                        setItemIcon(subFolder, FontAwesome.DROPBOX);
+                        setItemCaption(subFolder, subFolder.getName());
+                        setParent(subFolder, expandFolder);
+                    }
+                } else {
+                    List<Folder> subFolders = resourceService.getSubFolders(expandFolder.getPath());
+                    setItemIcon(expandFolder, FontAwesome.FOLDER_OPEN);
 
-                        if (subFolders != null) {
-                            for (Folder subFolder : subFolders) {
-                                if (!subFolder.getName().startsWith(".")) {
-                                    expandFolder.addChild(subFolder);
-                                    addItem(subFolder);
-                                    setItemIcon(subFolder, FontAwesome.FOLDER);
-                                    setItemCaption(subFolder, subFolder.getName());
-                                    setParent(subFolder, expandFolder);
-                                }
+                    if (subFolders != null) {
+                        for (Folder subFolder : subFolders) {
+                            if (!subFolder.isHiddenFolder()) {
+                                expandFolder.addChild(subFolder);
+                                addItem(subFolder);
+                                setItemIcon(subFolder, FontAwesome.FOLDER);
+                                setItemCaption(subFolder, subFolder.getName());
+                                setParent(subFolder, expandFolder);
                             }
                         }
                     }
@@ -98,24 +99,34 @@ public class FolderNavigatorMenu extends Tree {
             @Override
             public void nodeCollapse(final CollapseEvent event) {
                 Folder collapseFolder = (Folder) event.getItemId();
-                Container dataSource = FolderNavigatorMenu.this.getContainerDataSource();
+                Container dataSource = getContainerDataSource();
                 Object[] dataCollectionArray = dataSource.getItemIds().toArray();
-                for (Object id : dataCollectionArray) {
-                    Folder folder = (Folder) id;
-                    if (folder.getPath().contains(collapseFolder.getPath()) && !folder.getPath().equals(collapseFolder.getPath())
-                            || collapseFolder.getPath().equals(rootPath)) {
+                if (collapseFolder.getPath().equals(rootPath)) {
+                    for (Object id : dataCollectionArray) {
+                        Folder folder = (Folder) id;
                         if (!folder.getPath().equals(rootPath)) {
-                            if (collapseFolder instanceof ExternalFolder && folder instanceof ExternalFolder) {
-                                if (((ExternalFolder) folder).getExternalDrive()
-                                        .getAccesstoken().equals(((ExternalFolder) folder).getExternalDrive().getAccesstoken()))
-                                    dataSource.removeItem(folder);
-                            } else if (!(collapseFolder instanceof ExternalFolder)) {
+                            dataSource.removeItem(folder);
+                        }
+                    }
+                } else {
+                    for (Object id : dataCollectionArray) {
+                        Folder folder = (Folder) id;
+                        if (folder.getPath().contains(collapseFolder.getPath()) && !folder.getPath().equals
+                                (collapseFolder.getPath())) {
+                            if (collapseFolder instanceof ExternalFolder) {
+                                if (folder instanceof ExternalFolder) {
+                                    if (((ExternalFolder) folder).getExternalDrive()
+                                            .getAccesstoken().equals(((ExternalFolder) folder).getExternalDrive().getAccesstoken()))
+                                        dataSource.removeItem(folder);
+                                }
+                            } else {
                                 dataSource.removeItem(folder);
                             }
                         }
+
                     }
                 }
-                FolderNavigatorMenu.this.setContainerDataSource(dataSource);
+                setContainerDataSource(dataSource);
             }
         });
 
@@ -128,6 +139,26 @@ public class FolderNavigatorMenu extends Tree {
                 fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item));
             }
         });
+    }
+
+    private ApplicationEventListener<FileEvent.ExternalDriveConnectedEvent> externalDriveConnectHandler = new
+            ApplicationEventListener<FileEvent.ExternalDriveConnectedEvent>() {
+                @Override
+                public void handle(FileEvent.ExternalDriveConnectedEvent event) {
+                    ExternalDrive externalDrive = (ExternalDrive) event.getData();
+                }
+            };
+
+    @Override
+    public void attach() {
+        super.attach();
+        EventBusFactory.getInstance().register(externalDriveConnectHandler);
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(externalDriveConnectHandler);
+        super.detach();
     }
 
     public void addSelectFolderListener(SelectedFolderListener listener) {

@@ -42,17 +42,14 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 @ViewComponent
 public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(FileMainViewImpl.class);
 
     private FolderNavigatorMenu folderNavigator;
 
     private Folder rootFolder;
-    private String rootPath;
 
     private ResourcesDisplayComponent resourceHandlerLayout;
 
-    private SettingConnectionDrive settingConnectionDrive;
     private MVerticalLayout mainBodyResourceLayout;
 
     private ResourceService resourceService;
@@ -61,6 +58,9 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     public FileMainViewImpl() {
         resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
         externalResourceService = ApplicationContextUtil.getSpringBean(ExternalResourceService.class);
+
+        String rootPath = String.format("%d/Documents", AppContext.getAccountId());
+        rootFolder = new Folder(rootPath);
 
         MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
 
@@ -72,7 +72,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         separator.setWidthUndefined();
         mainView.with(separator).withAlign(separator, Alignment.TOP_LEFT);
 
-        this.rootFolder = new Folder(rootPath);
 
         // here for MainBodyResourceLayout class
         MVerticalLayout rightColumn = new MVerticalLayout();
@@ -126,9 +125,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                mainBodyResourceLayout.removeAllComponents();
-                settingConnectionDrive = new SettingConnectionDrive();
-                mainBodyResourceLayout.addComponent(settingConnectionDrive);
+                SettingConnectionDrive settingConnectionDrive = new SettingConnectionDrive();
+                UI.getCurrent().addWindow(settingConnectionDrive);
             }
         });
         settingBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
@@ -171,30 +169,25 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         menuLayout.addComponent(topControlMenuWrapper);
 
-        this.rootPath = String.format("%d/Documents", AppContext.getAccountId());
-        this.folderNavigator = new FolderNavigatorMenu(rootPath);
+        this.folderNavigator = new FolderNavigatorMenu(rootFolder.getPath());
         menuLayout.addComponent(this.folderNavigator);
         return menuBarContainerHorizontalLayout;
     }
 
-    private void gotoFileMainViewPage(Folder baseFolder) {
-        this.rootFolder = baseFolder;
-
+    private void browseFolder(Folder baseFolder) {
         mainBodyResourceLayout.removeAllComponents();
         mainBodyResourceLayout.addComponent(resourceHandlerLayout);
-        resourceHandlerLayout.constructBodyItemContainer(rootFolder);
+        resourceHandlerLayout.constructBodyItemContainer(baseFolder);
     }
 
-    private void displayResources(String rootPath, String rootFolderName) {
-        this.rootFolder = new Folder(rootPath);
-
+    private void displayResources(String rootFolderName) {
         this.folderNavigator.removeAllItems();
-        this.folderNavigator.addItem(this.rootFolder);
-        this.folderNavigator.setItemCaption(this.rootFolder, rootFolderName);
-        this.folderNavigator.setItemIcon(this.rootFolder, FontAwesome.FOLDER);
-        this.folderNavigator.collapseItem(this.rootFolder);
+        this.folderNavigator.addItem(rootFolder);
+        this.folderNavigator.setItemCaption(rootFolder, rootFolderName);
+        this.folderNavigator.setItemIcon(rootFolder, FontAwesome.FOLDER);
+        this.folderNavigator.collapseItem(rootFolder);
 
-        resourceHandlerLayout.displayComponent(this.rootFolder, rootFolderName);
+        resourceHandlerLayout.displayComponent(rootFolder, rootFolderName);
 
         resourceHandlerLayout.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
             @Override
@@ -232,11 +225,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             public void selectFolder(SelectFolderEvent event) {
                 Folder folder = event.getFolder();
                 if (folder != null) {
-                    gotoFileMainViewPage(folder);
+                    browseFolder(folder);
                 }
 
             }
         });
-        displayResources(rootPath, "Documents");
+        displayResources("Documents");
     }
 }

@@ -2,9 +2,12 @@ package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
+import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
+import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -21,18 +24,24 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class SettingConnectionDrive extends VerticalLayout {
+public class SettingConnectionDrive extends Window {
     private static final long serialVersionUID = 1L;
 
     private final Button connectAccountBtn;
     private final MVerticalLayout bodyLayout;
     private final MVerticalLayout mainLayout;
 
+    private ExternalResourceService externalResourceService;
     private ExternalDriveService externalDriveService;
 
     public SettingConnectionDrive() {
+        super("Cloud drives setting");
+        this.setWidth("800px");
+        this.setModal(true);
+        this.setResizable(false);
         mainLayout = new MVerticalLayout().withWidth("100%");
         externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
+        externalResourceService = ApplicationContextUtil.getSpringBean(ExternalResourceService.class);
 
         connectAccountBtn = new Button("Connect account", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -41,21 +50,6 @@ public class SettingConnectionDrive extends VerticalLayout {
             public void buttonClick(Button.ClickEvent event) {
                 OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
                 Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
-//                dropboxWindow.addExternalDriveConnectedListener(new AbstractCloudDriveOAuthWindow.ExternalDriveConnectedListener() {
-//                    private static final long serialVersionUID = 1L;
-//
-//                    @Override
-//                    public void connectedSuccess(AbstractCloudDriveOAuthWindow.ExternalDriveConnectedEvent event) {
-////                        folderNavigator.collapseItem(rootECMFolder);
-////                        folderNavigator.expandItem(rootECMFolder);
-////                        OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(
-////                                (ExternalDrive) event.getData());
-////                        bodyLayout.addComponent(layout);
-////                        bodyLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
-////                        bodyLayout.addComponent(new Hr());
-//
-//                    }
-//                });
                 UI.getCurrent().addWindow(dropboxWindow);
             }
         });
@@ -64,9 +58,6 @@ public class SettingConnectionDrive extends VerticalLayout {
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("100%");
 
-        mainLayout.addComponent(bodyLayout);
-        this.addComponent(mainLayout);
-
         List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
 
         bodyLayout.addComponent(new Hr());
@@ -74,6 +65,10 @@ public class SettingConnectionDrive extends VerticalLayout {
             OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(drive);
             bodyLayout.with(layout, new Hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
         }
+
+        mainLayout.addComponent(bodyLayout);
+
+        this.setContent(mainLayout);
     }
 
     private class OneDriveConnectionBodyLayout extends VerticalLayout {
@@ -125,8 +120,7 @@ public class SettingConnectionDrive extends VerticalLayout {
                             isEdit = true;
                             externalDriveEditLayout.addStyleName("driveEditting");
                             titleLayout.removeComponent(popupBtn);
-                            HorizontalLayout layout = editActionHorizontalLayout(drive, titleLayout, foldernameLbl,
-                                    externalDriveEditLayout);
+                            HorizontalLayout layout = editActionHorizontalLayout(drive);
                             titleLayout.replaceComponent(foldernameLbl, layout);
                             titleLayout.setComponentAlignment(layout, Alignment.MIDDLE_LEFT);
                             titleLayout.setExpandRatio(layout, 1.0f);
@@ -155,25 +149,16 @@ public class SettingConnectionDrive extends VerticalLayout {
                                         @Override
                                         public void onClose(final ConfirmDialog dialog) {
                                             if (dialog.isConfirmed()) {
-//                                                externalDriveService.removeWithSession(drive,
-//                                                        AppContext.getUsername(), AppContext.getAccountId());
-//                                                int index = bodyLayout.getComponentIndex(OneDriveConnectionBodyLayout.this);
-//                                                bodyLayout.removeComponent(bodyLayout.getComponent(index + 1));
-//                                                bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
-//                                                ExternalFolder res = (ExternalFolder) externalDriveService
-//                                                        .getCurrentResourceByPath(drive, "/");
-//                                                if (res != null) {
-//                                                    Container dataSource = folderNavigator.getContainerDataSource();
-//                                                    final Object[] dataCollectionArray = dataSource.getItemIds().toArray();
-//                                                    for (Object id : dataCollectionArray) {
-//                                                        Folder folder = (Folder) id;
-//                                                        if (folder.getName().equals(res.getExternalDrive().getFoldername())
-//                                                                && folder instanceof ExternalFolder) {
-//                                                            dataSource.removeItem(folder);
-//                                                        }
-//                                                    }
-//                                                    folderNavigator.setContainerDataSource(dataSource);
-//                                                }
+                                                externalDriveService.removeWithSession(drive,
+                                                        AppContext.getUsername(), AppContext.getAccountId());
+                                                int index = bodyLayout.getComponentIndex(OneDriveConnectionBodyLayout.this);
+                                                bodyLayout.removeComponent(bodyLayout.getComponent(index + 1));
+                                                bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
+                                                ExternalFolder res = (ExternalFolder) externalResourceService.
+                                                        getCurrentResourceByPath(drive, "/");
+
+                                                //TODO: refresh the view with external drive
+
                                             }
                                         }
                                     });
@@ -192,8 +177,7 @@ public class SettingConnectionDrive extends VerticalLayout {
             this.addComponent(externalDriveEditLayout);
         }
 
-        private HorizontalLayout editActionHorizontalLayout(final ExternalDrive drive, final HorizontalLayout parentLayout,
-                                                            final Label lbl, final VerticalLayout externalDriveEditLayout) {
+        private HorizontalLayout editActionHorizontalLayout(final ExternalDrive drive) {
             final MHorizontalLayout layout = new MHorizontalLayout();
             layout.addStyleName("resourceItem");
 
@@ -210,34 +194,21 @@ public class SettingConnectionDrive extends VerticalLayout {
 
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-//                    String folderName = folderNameTextField.getValue().trim();
-//                    try {
-//                        if (folderName.length() > 0) {
-//                            FileUtils.assertValidFolderName(folderName);
-//                            ExternalFolder res = (ExternalFolder) externalDriveService.getCurrentResourceByPath(drive, "/");
-//
-//                            Container dataSource = folderNavigator.getContainerDataSource();
-//                            final Object[] dataCollectionArray = dataSource.getItemIds().toArray();
-//                            for (int i = 0; i < dataCollectionArray.length; i++) {
-//                                Folder folder = (Folder) folderNavigator.getContainerDataSource().getItemIds().toArray()[i];
-//                                if (folder.getName().equals(res.getExternalDrive().getFoldername())
-//                                        && folder instanceof ExternalFolder) {
-//                                    folderNavigator.collapseItem(rootECMFolder);
-//                                    folderNavigator.expandItem(rootECMFolder);
-//                                    break;
-//                                }
-//                            }
-//                            drive.setFoldername(folderName);
-//                            externalDriveService.updateWithSession(drive, AppContext.getUsername());
-//
-//                            foldernameLbl = new Label(folderName);
-//                            foldernameLbl.addStyleName("h3");
-//
-//                            turnBackMainLayout(parentLayout, foldernameLbl, layout, externalDriveEditLayout);
-//                        }
-//                    } catch (Exception e) {
-//                        throw new MyCollabException(e);
-//                    }
+                    String folderName = folderNameTextField.getValue().trim();
+                    try {
+                        if (folderName.length() > 0) {
+                            FileUtils.assertValidFolderName(folderName);
+                            drive.setFoldername(folderName);
+                            externalDriveService.updateWithSession(drive, AppContext.getUsername());
+
+                            foldernameLbl = new Label(folderName);
+                            foldernameLbl.addStyleName("h3");
+                            ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
+                            // TODO: reload external drives
+                        }
+                    } catch (Exception e) {
+                        throw new MyCollabException(e);
+                    }
                 }
             });
             saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
@@ -248,21 +219,12 @@ public class SettingConnectionDrive extends VerticalLayout {
 
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    turnBackMainLayout(parentLayout, lbl, layout, externalDriveEditLayout);
+                    SettingConnectionDrive.this.close();
                 }
             });
             cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
             layout.with(saveBtn, cancelBtn);
             return layout;
-        }
-
-        private void turnBackMainLayout(HorizontalLayout parentLayout, Label lbl, HorizontalLayout newComponent,
-                                        VerticalLayout externalDriveEditLayout) {
-            this.isEdit = false;
-            parentLayout.replaceComponent(newComponent, lbl);
-            parentLayout.setComponentAlignment(lbl, Alignment.MIDDLE_LEFT);
-            parentLayout.setExpandRatio(lbl, 1.0f);
-            externalDriveEditLayout.removeStyleName("driveEditting");
         }
     }
 }
