@@ -8,6 +8,7 @@ import com.vaadin.util.ReflectTools;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.EventListener;
+import java.util.EventObject;
 
 /**
  * @author MyCollab Ltd
@@ -28,13 +29,18 @@ public class AbstractCloudDriveOAuthWindow extends Window {
         void connectedSuccess(ExternalDriveConnectedEvent event);
     }
 
-    public static class ExternalDriveConnectedEvent extends ApplicationEvent {
+    public static class ExternalDriveConnectedEvent extends EventObject {
         private static final long serialVersionUID = 1L;
+        private static final String VIEW_IDENTIFIER = "externalDriveConnectedSuccess";
 
-        public static final String VIEW_IDENTIFIER = "externalDriveConnectedSuccess";
+        private ExternalDrive externalDrive;
 
         public ExternalDriveConnectedEvent(Object source, ExternalDrive data) {
-            super(source, data);
+            super(source);
+        }
+
+        public ExternalDrive getExternalDrive() {
+            return externalDrive;
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
@@ -18,6 +17,7 @@ import com.vaadin.util.ReflectTools;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.EventListener;
+import java.util.EventObject;
 import java.util.List;
 
 /**
@@ -48,8 +48,7 @@ public class FolderNavigatorMenu extends Tree {
 
                     // if expand folder is root, will load external drives also
                     if (rootPath.equals(expandFolder.getPath())) {
-                        List<ExternalDrive> externalDrives = externalDriveService
-                                .getExternalDrivesOfUser(AppContext.getUsername());
+                        List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
                         for (ExternalDrive externalDrive : externalDrives) {
                             ExternalFolder externalMapFolder = new ExternalFolder("/");
                             externalMapFolder.setStorageName(externalDrive.getStoragename());
@@ -66,7 +65,7 @@ public class FolderNavigatorMenu extends Tree {
                     if (expandFolder instanceof ExternalFolder) {
                         List<ExternalFolder> subFolders = externalResourceService.getSubFolders(((ExternalFolder) expandFolder)
                                 .getExternalDrive(), expandFolder.getPath());
-                        for (final Folder subFolder : subFolders) {
+                        for (Folder subFolder : subFolders) {
                             expandFolder.addChild(subFolder);
                             addItem(subFolder);
                             setItemIcon(subFolder, FontAwesome.DROPBOX);
@@ -74,11 +73,11 @@ public class FolderNavigatorMenu extends Tree {
                             setParent(subFolder, expandFolder);
                         }
                     } else {
-                        final List<Folder> subFolders = resourceService.getSubFolders(expandFolder.getPath());
+                        List<Folder> subFolders = resourceService.getSubFolders(expandFolder.getPath());
                         setItemIcon(expandFolder, FontAwesome.FOLDER_OPEN);
 
                         if (subFolders != null) {
-                            for (final Folder subFolder : subFolders) {
+                            for (Folder subFolder : subFolders) {
                                 if (!subFolder.getName().startsWith(".")) {
                                     expandFolder.addChild(subFolder);
                                     addItem(subFolder);
@@ -98,9 +97,9 @@ public class FolderNavigatorMenu extends Tree {
 
             @Override
             public void nodeCollapse(final CollapseEvent event) {
-                final Folder collapseFolder = (Folder) event.getItemId();
+                Folder collapseFolder = (Folder) event.getItemId();
                 Container dataSource = FolderNavigatorMenu.this.getContainerDataSource();
-                final Object[] dataCollectionArray = dataSource.getItemIds().toArray();
+                Object[] dataCollectionArray = dataSource.getItemIds().toArray();
                 for (Object id : dataCollectionArray) {
                     Folder folder = (Folder) id;
                     if (folder.getPath().contains(collapseFolder.getPath()) && !folder.getPath().equals(collapseFolder.getPath())
@@ -108,8 +107,7 @@ public class FolderNavigatorMenu extends Tree {
                         if (!folder.getPath().equals(rootPath)) {
                             if (collapseFolder instanceof ExternalFolder && folder instanceof ExternalFolder) {
                                 if (((ExternalFolder) folder).getExternalDrive()
-                                        .getAccesstoken().equals(((ExternalFolder) folder)
-                                                .getExternalDrive().getAccesstoken()))
+                                        .getAccesstoken().equals(((ExternalFolder) folder).getExternalDrive().getAccesstoken()))
                                     dataSource.removeItem(folder);
                             } else if (!(collapseFolder instanceof ExternalFolder)) {
                                 dataSource.removeItem(folder);
@@ -126,33 +124,38 @@ public class FolderNavigatorMenu extends Tree {
 
             @Override
             public void itemClick(final ItemClickEvent event) {
-                final Folder item = (Folder) event.getItemId();
+                Folder item = (Folder) event.getItemId();
                 fireEvent(new SelectFolderEvent(FolderNavigatorMenu.this, item));
             }
         });
     }
 
     public void addSelectFolderListener(SelectedFolderListener listener) {
-        this.addListener(SelectFolderEvent.VIEW_IDENTIFIER,
-                SelectFolderEvent.class, listener,
+        this.addListener(SelectFolderEvent.VIEW_IDENTIFIER, SelectFolderEvent.class, listener,
                 SelectedFolderListener.viewInitMethod);
     }
 
     public interface SelectedFolderListener extends EventListener, Serializable {
         Method viewInitMethod = ReflectTools.findMethod(
-                SelectedFolderListener.class, "selectFolder",
-                SelectFolderEvent.class);
+                SelectedFolderListener.class, "selectFolder", SelectFolderEvent.class);
 
         void selectFolder(SelectFolderEvent event);
     }
 
-    public static class SelectFolderEvent extends ApplicationEvent {
+    public static class SelectFolderEvent extends EventObject {
         private static final long serialVersionUID = 1L;
 
         public static final String VIEW_IDENTIFIER = "selectfolder";
 
+        private Folder folder;
+
         public SelectFolderEvent(Object source, Folder data) {
-            super(source, data);
+            super(source);
+            folder = data;
+        }
+
+        public Folder getFolder() {
+            return folder;
         }
     }
 }
