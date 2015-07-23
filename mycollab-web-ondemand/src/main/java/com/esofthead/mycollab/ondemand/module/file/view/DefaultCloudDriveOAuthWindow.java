@@ -47,6 +47,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends AbstractCloudDriveOAu
         this.setWidth("420px");
         this.setResizable(false);
         this.center();
+        this.setCaption(windowTitle());
         constructBody();
         registerListeners();
     }
@@ -187,4 +188,6 @@ public abstract class DefaultCloudDriveOAuthWindow extends AbstractCloudDriveOAu
     protected abstract BrowserWindowOpener oauthWindowOpener();
 
     protected abstract String getStorageName();
+
+    protected abstract String windowTitle();
 }

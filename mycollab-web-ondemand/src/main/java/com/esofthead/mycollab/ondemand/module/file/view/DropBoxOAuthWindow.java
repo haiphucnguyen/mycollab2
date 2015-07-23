@@ -19,4 +19,9 @@ public final class DropBoxOAuthWindow extends DefaultCloudDriveOAuthWindow {
     protected String getStorageName() {
         return StorageNames.DROPBOX;
     }
+
+    @Override
+    protected String windowTitle() {
+        return "Connect Dropbox Drive";
+    }
 }

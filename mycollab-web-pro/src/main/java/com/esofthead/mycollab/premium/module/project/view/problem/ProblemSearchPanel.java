@@ -94,8 +94,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
 
             myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
             myItemCheckbox.setWidth("75px");
-            basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox,
-                    Alignment.MIDDLE_CENTER);
+            basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -123,8 +122,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            Button advancedSearchBtn = new Button(AppContext
-                    .getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
+            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -133,7 +131,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
                             ProblemSearchPanel.this.moveToAdvancedSearchLayout();
                         }
                     });
-            advancedSearchBtn.setStyleName("link");
+            advancedSearchBtn.setStyleName(UIConstants.THEME_LINK);
             basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
             return basicSearchBody;
         }

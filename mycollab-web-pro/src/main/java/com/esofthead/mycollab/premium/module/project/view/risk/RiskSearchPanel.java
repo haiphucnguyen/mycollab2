@@ -136,7 +136,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
                             RiskSearchPanel.this.moveToAdvancedSearchLayout();
                         }
                     });
-            advancedSearchBtn.setStyleName("link");
+            advancedSearchBtn.setStyleName(UIConstants.THEME_LINK);
             basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
 
             return basicSearchBody;

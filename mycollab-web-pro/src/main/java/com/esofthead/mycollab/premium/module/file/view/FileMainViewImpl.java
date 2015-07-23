@@ -175,7 +175,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             }
         });
 
-        connectDropboxBtn.addStyleName("link");
+        connectDropboxBtn.addStyleName(UIConstants.THEME_LINK);
         connectDropboxBtn.setIcon(FontAwesome.DROPBOX);
         filterBtnLayout.addComponent(connectDropboxBtn);
 
@@ -209,9 +209,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         this.rootFolder = baseFolder;
 
         mainBodyResourceLayout.removeAllComponents();
-        mainBodyResourceLayout.setSpacing(true);
         mainBodyResourceLayout.addComponent(resourceHandlerLayout);
-
         resourceHandlerLayout.constructBodyItemContainer(rootFolder);
     }
 
@@ -306,7 +304,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                     UI.getCurrent().addWindow(dropboxWindow);
                 }
             });
-            connectAccountBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+            connectAccountBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
             mainLayout.addComponent(connectAccountBtn);
 
             bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("100%");
@@ -337,10 +335,13 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
                 CssLayout iconWapper = new CssLayout();
                 iconWapper.setWidth("60px");
-                Embedded embed = new Embedded();
-                if (drive.getStoragename().equals(StorageNames.DROPBOX))
-                    embed.setIcon(new AssetResource("icons/48/ecm/dropbox.png"));
-                iconWapper.addComponent(embed);
+
+                if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
+                    FontIconLabel driveIcon = new FontIconLabel(FontAwesome.DROPBOX);
+                    driveIcon.addStyleName("icon-38px");
+                    iconWapper.addComponent(driveIcon);
+                }
+
                 titleLayout.with(iconWapper);
 
                 if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
@@ -427,7 +428,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                             }
                         }
                     });
-                    deleteBtn.addStyleName("link");
+                    deleteBtn.addStyleName(UIConstants.THEME_LINK);
                     popupOptionActionLayout.addOption(deleteBtn);
                     popupBtn.setContent(popupOptionActionLayout);
                     titleLayout.addComponent(popupBtn);

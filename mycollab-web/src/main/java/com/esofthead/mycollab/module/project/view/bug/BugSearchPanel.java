@@ -152,7 +152,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
                             moveToAdvancedSearchLayout();
                         }
                     });
-            advancedSearchBtn.setStyleName("link");
+            advancedSearchBtn.setStyleName(UIConstants.THEME_LINK);
             basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
 
             return basicSearchBody;

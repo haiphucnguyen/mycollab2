@@ -89,7 +89,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                                             new ProjectMemberScreenData.Search(null))));
                         }
                     }, false);
-            projectMember.setStyleName("link");
+            projectMember.setStyleName(UIConstants.THEME_LINK);
             MHorizontalLayout metaInfo = new MHorizontalLayout().withWidth("100%");
             metaInfo.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             metaInfo.addComponent(projectMember);

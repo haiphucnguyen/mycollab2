@@ -110,7 +110,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
                 }
             });
 
-            this.setStyleName("link");
+            this.setStyleName(UIConstants.THEME_LINK);
             this.setWidth("110px");
             this.addStyleName(UIConstants.TEXT_ELLIPSIS);
             this.setIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16));

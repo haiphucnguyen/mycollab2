@@ -30,7 +30,7 @@ public class ButtonLinkLegacy extends MButton {
 
 	private ButtonLinkLegacy(String caption, Boolean wordWrap) {
 		super(caption);
-		this.setStyleName("link");
+		this.setStyleName(UIConstants.THEME_LINK);
 		if (wordWrap)
 			this.addStyleName("wordWrap");
 	}
@@ -41,7 +41,7 @@ public class ButtonLinkLegacy extends MButton {
 
 	public ButtonLinkLegacy(String caption, ClickListener listener, Boolean wordWrap) {
 		super(caption, listener);
-		this.setStyleName("link");
+		this.setStyleName(UIConstants.THEME_LINK);
 		if (wordWrap)
 			this.addStyleName("wordWrap");
 	}

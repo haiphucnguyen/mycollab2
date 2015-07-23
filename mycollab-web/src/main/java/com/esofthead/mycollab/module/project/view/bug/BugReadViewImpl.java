@@ -307,7 +307,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                     String bugLinkValue = buildItemValue(relatedBug);
                     Button statusLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
-                    statusLink.setStyleName("link");
+                    statusLink.setStyleName(UIConstants.THEME_LINK);
                     statusLink.addStyleName("block");
                     Label bugLink = new Label(bugLinkValue, ContentMode.HTML);
                     bugContainer.with(bugLink);
@@ -530,7 +530,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                             }
                         });
                         componentContainer.addComponentField(componentLink);
-                        componentLink.setStyleName("link");
+                        componentLink.setStyleName(UIConstants.THEME_LINK);
                         componentLink.addStyleName("block");
                     }
                     return componentContainer;
@@ -551,7 +551,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                             }
                         });
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName("link");
+                        versionLink.setStyleName(UIConstants.THEME_LINK);
                         versionLink.addStyleName("block");
                     }
                     return componentContainer;
@@ -572,7 +572,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                             }
                         });
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName("link");
+                        versionLink.setStyleName(UIConstants.THEME_LINK);
                         versionLink.addStyleName("block");
                     }
                     return componentContainer;

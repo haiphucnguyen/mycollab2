@@ -32,6 +32,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonI18nComp;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
@@ -75,7 +76,7 @@ public class UnresolvedTaskByPriorityWidget extends Depot {
                         Resource iconPriority = new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(priority.name()));
                         userLbl.setIcon(iconPriority);
                         userLbl.setWidth("110px");
-                        userLbl.setStyleName("link");
+                        userLbl.setStyleName(UIConstants.THEME_LINK);
 
                         priorityLayout.addComponent(userLbl);
                         ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount - item.getValue(), false);
@@ -92,7 +93,7 @@ public class UnresolvedTaskByPriorityWidget extends Depot {
                     Resource iconPriority = new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(priority.name()));
                     userLbl.setIcon(iconPriority);
                     userLbl.setWidth("110px");
-                    userLbl.setStyleName("link");
+                    userLbl.setStyleName(UIConstants.THEME_LINK);
                     priorityLayout.addComponent(userLbl);
                     ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount, false);
                     indicator.setWidth("100%");

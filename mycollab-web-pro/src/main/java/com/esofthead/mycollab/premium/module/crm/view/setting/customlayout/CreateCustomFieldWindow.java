@@ -119,33 +119,28 @@ public class CreateCustomFieldWindow extends Window {
         content.with(body).expand(body);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
-        Button saveBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        DynaSection section = fieldPanel.updateCustomField();
-                        viewParent.refreshSectionLayout(section);
-                        CreateCustomFieldWindow.this.close();
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                DynaSection section = fieldPanel.updateCustomField();
+                viewParent.refreshSectionLayout(section);
+                CreateCustomFieldWindow.this.close();
+            }
+        });
         saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_CENTER);
 
-        Button cancelBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        CreateCustomFieldWindow.this.close();
-
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                CreateCustomFieldWindow.this.close();
+            }
+        });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
         buttonControls.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
@@ -155,8 +150,8 @@ public class CreateCustomFieldWindow extends Window {
     private VerticalLayout constructLeftBodyPanel() {
         MVerticalLayout panel = new MVerticalLayout().withSpacing(false).withMargin(false);
         Label title = new Label("Select Field Type");
-        MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).with
-                (title).expand(title).withStyleName("panel-header");
+        MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).with(title).
+                expand(title).withStyleName("panel-header");
         header.setWidthUndefined();
 
         Table fieldSelectionTable = new Table();
@@ -169,20 +164,17 @@ public class CreateCustomFieldWindow extends Window {
 
         for (int i = 0; i < fieldsTable.length; i++) {
             final Object[] rowItems = fieldsTable[i];
-            final Button typeLink = new Button((String) rowItems[1],
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            final Button typeLink = new Button((String) rowItems[1], new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            constructFieldPanel((String) rowItems[1]);
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    constructFieldPanel((String) rowItems[1]);
 
-                        }
-                    });
-            typeLink.addStyleName("link");
-            fieldSelectionTable.addItem(new Object[]{
-                            new Embedded("", (Resource) rowItems[0]), typeLink},
-                    rowItems[1]);
+                }
+            });
+            typeLink.addStyleName(UIConstants.THEME_LINK);
+            fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
         }
 
         panel.with(header, fieldSelectionTable);
@@ -192,8 +184,8 @@ public class CreateCustomFieldWindow extends Window {
     private VerticalLayout constructRightBodyPanel() {
         MVerticalLayout panel = new MVerticalLayout().withMargin(false).withWidth("300px");
         Label title = new Label("Provide Field Detail");
-        MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withSpacing(false).with(title).expand(title).withStyleName
-                ("panel-header");
+        MHorizontalLayout header = new MHorizontalLayout().withWidth("100%").withSpacing(false).with(title).expand(title)
+                .withStyleName("panel-header");
 
         fieldLayoutWrapper = new CssLayout();
         fieldLayoutWrapper.setWidth("100%");
@@ -207,14 +199,11 @@ public class CreateCustomFieldWindow extends Window {
 
         if (TEXT_FIELD.equals(type)) {
             candidateFieldName = viewParent.getCandidateTextFieldName();
-            fieldPanel = new TextDetailFieldInfoPanel(candidateFieldName,
-                    viewParent.getActiveSections());
+            fieldPanel = new TextDetailFieldInfoPanel(candidateFieldName, viewParent.getActiveSections());
         } else if (INTEGER_FIELD.equals(type)) {
-            fieldPanel = new IntegerDetailFieldInfoPanel(candidateFieldName,
-                    viewParent.getActiveSections());
+            fieldPanel = new IntegerDetailFieldInfoPanel(candidateFieldName, viewParent.getActiveSections());
         } else {
-            throw new UnsupportedFeatureException(
-                    "Do not support customize field type " + type);
+            throw new UnsupportedFeatureException("Do not support customize field type " + type);
         }
 
         fieldLayoutWrapper.addComponent(fieldPanel);

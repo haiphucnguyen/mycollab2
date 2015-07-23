@@ -87,7 +87,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
         this.taskSelection = new PopupButton(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASKS));
 
         this.taskSelection.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
-        this.taskSelection.addStyleName("link");
+        this.taskSelection.addStyleName(UIConstants.THEME_LINK);
         this.taskSelection.addStyleName("hdr-text");
 
         MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("200px");
@@ -103,7 +103,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
                         displayAllTasks();
                     }
                 });
-        allTasksFilterBtn.setStyleName("link");
+        allTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
         filterBtnLayout.addComponent(allTasksFilterBtn);
 
         Button activeTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASKS),
@@ -117,7 +117,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
                         displayActiveTasksOnly();
                     }
                 });
-        activeTasksFilterBtn.setStyleName("link");
+        activeTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
         filterBtnLayout.addComponent(activeTasksFilterBtn);
 
         Button pendingTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_PENDING_TASKS),
@@ -131,7 +131,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
                         displayPendingTasksOnly();
                     }
                 });
-        pendingTasksFilterBtn.setStyleName("link");
+        pendingTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
         filterBtnLayout.addComponent(pendingTasksFilterBtn);
 
         Button archievedTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ARCHIEVED_TASKS),
@@ -145,7 +145,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
                         displayInActiveTasks();
                     }
                 });
-        archievedTasksFilterBtn.setStyleName("link");
+        archievedTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
         filterBtnLayout.addComponent(archievedTasksFilterBtn);
         taskSelection.setContent(filterBtnLayout);
     }
@@ -159,7 +159,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
 
         this.taskGroupSelection = new PopupButton(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE));
         this.taskGroupSelection.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
-        this.taskGroupSelection.addStyleName("link");
+        this.taskGroupSelection.addStyleName(UIConstants.THEME_LINK);
         this.taskGroupSelection.addStyleName("hdr-text");
         taskGroupSelection.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK_LIST));
         header.with(taskGroupSelection).withAlign(taskGroupSelection, Alignment.MIDDLE_LEFT).expand(taskGroupSelection);

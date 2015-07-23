@@ -377,8 +377,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                 LOG.error("Error while query renameResource", e);
                             }
                         } else {
-                            throw new MyCollabException(
-                                    "Do not support any external drive different than Dropbox");
+                            throw new MyCollabException("Do not support any external drive different than Dropbox");
                         }
                     }
                 }
@@ -409,8 +408,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
         }
 
-        private HorizontalLayout buildResourceRowComp(final Resource res) {
-            if (res.getName().startsWith(".")) {
+        private HorizontalLayout buildResourceRowComp(final Resource resource) {
+            if (resource.getName().startsWith(".")) {
                 return null;
             }
             MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withHeight("44px");
@@ -425,18 +424,18 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 @Override
                 public void valueChange(ValueChangeEvent event) {
-                    res.setSelected(checkbox.getValue());
+                    resource.setSelected(checkbox.getValue());
                 }
             });
             layout.with(checkbox).withAlign(checkbox, Alignment.MIDDLE_LEFT);
 
             CssLayout resIconWrapper = new CssLayout();
             FontIconLabel resourceIcon;
-            if (res instanceof Folder)
-                resourceIcon = (res instanceof ExternalFolder) ? new FontIconLabel(FontAwesome.DROPBOX) : new
+            if (resource instanceof Folder)
+                resourceIcon = (resource instanceof ExternalFolder) ? new FontIconLabel(FontAwesome.DROPBOX) : new
                         FontIconLabel(FontAwesome.FOLDER);
             else {
-                resourceIcon = new FontIconLabel(FileAssetsUtil.getFileIconResource(res.getName()));
+                resourceIcon = new FontIconLabel(FileAssetsUtil.getFileIconResource(resource.getName()));
             }
             resourceIcon.addStyleName("icon-38px");
             resIconWrapper.addComponent(resourceIcon);
@@ -446,22 +445,22 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             MVerticalLayout informationLayout = new MVerticalLayout().withMargin(false);
 
-            Button resourceLinkBtn = new Button(res.getName(), new ClickListener() {
+            Button resourceLinkBtn = new Button(resource.getName(), new ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    if (res instanceof Folder) {
-                        baseFolder = (Folder) res;
-                        resourcesContainer.constructBody((Folder) res);
-                        fileBreadCrumb.gotoFolder((Folder) res);
+                    if (resource instanceof Folder) {
+                        baseFolder = (Folder) resource;
+                        resourcesContainer.constructBody((Folder) resource);
+                        fileBreadCrumb.gotoFolder((Folder) resource);
                     } else {
-                        FileDownloadWindow fileDownloadWindow = new FileDownloadWindow((Content) res);
+                        FileDownloadWindow fileDownloadWindow = new FileDownloadWindow((Content) resource);
                         UI.getCurrent().addWindow(fileDownloadWindow);
                     }
                 }
             });
-            resourceLinkBtn.addStyleName("link");
+            resourceLinkBtn.addStyleName(UIConstants.THEME_LINK);
             resourceLinkBtn.addStyleName("h3");
             informationLayout.addComponent(resourceLinkBtn);
 
@@ -471,20 +470,20 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             // define the
             // created user so we do not need to display, then we assume the
             // current user is created user
-            if (StringUtils.isEmpty(res.getCreatedUser())) {
+            if (StringUtils.isEmpty(resource.getCreatedUser())) {
                 UserLink usernameLbl = new UserLink(AppContext.getUsername(), AppContext.getUserAvatarId(),
                         AppContext.getUser().getDisplayName());
                 usernameLbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {
                 UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-                SimpleUser user = userService.findUserByUserNameInAccount(res.getCreatedUser(), AppContext.getAccountId());
+                SimpleUser user = userService.findUserByUserNameInAccount(resource.getCreatedUser(), AppContext.getAccountId());
                 if (user != null) {
                     UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName());
                     userLink.addStyleName("grayLabel");
                     moreInfoAboutResLayout.addComponent(userLink);
                 } else {
-                    Label usernameLbl = new Label(res.getCreatedBy());
+                    Label usernameLbl = new Label(resource.getCreatedBy());
                     usernameLbl.addStyleName("grayLabel");
                     moreInfoAboutResLayout.addComponent(usernameLbl);
                 }
@@ -494,9 +493,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             // If renameResource is dropbox renameResource then we can not
             // define the
             // created date so we do not need to display\
-            if (res.getCreated() != null) {
-                Label createdTimeLbl = new Label((AppContext.formatPrettyTime(res.getCreated().getTime())));
-                createdTimeLbl.setDescription(AppContext.formatDateTime(res.getCreated().getTime()));
+            if (resource.getCreated() != null) {
+                Label createdTimeLbl = new Label((AppContext.formatPrettyTime(resource.getCreated().getTime())));
+                createdTimeLbl.setDescription(AppContext.formatDateTime(resource.getCreated().getTime()));
                 createdTimeLbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(createdTimeLbl);
             } else {
@@ -505,9 +504,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 moreInfoAboutResLayout.addComponent(createdTimeLbl);
             }
 
-            if (res instanceof Content) {
+            if (resource instanceof Content) {
                 moreInfoAboutResLayout.addComponent(new Separator());
-                Label lbl = new Label(FileUtils.getVolumeDisplay(res.getSize()));
+                Label lbl = new Label(FileUtils.getVolumeDisplay(resource.getSize()));
                 lbl.addStyleName("grayLabel");
                 moreInfoAboutResLayout.addComponent(lbl);
             }
@@ -523,7 +522,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     resourceSettingPopupBtn.setPopupVisible(false);
-                    UI.getCurrent().addWindow(new RenameResourceWindow(res));
+                    UI.getCurrent().addWindow(new RenameResourceWindow(resource));
                 }
             });
             renameBtn.setIcon(FontAwesome.EDIT);
@@ -537,13 +536,13 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 @Override
                 protected StreamSource buildStreamSource() {
                     List<Resource> lstRes = new ArrayList<>();
-                    lstRes.add(res);
+                    lstRes.add(resource);
                     return StreamDownloadResourceUtil.getStreamSourceSupportExtDrive(lstRes);
                 }
 
                 @Override
                 public String getFilename() {
-                    return res.getName();
+                    return resource.getName();
                 }
             };
 
@@ -558,7 +557,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    UI.getCurrent().addWindow(new MoveResourceWindow(res));
+                    UI.getCurrent().addWindow(new MoveResourceWindow(resource));
                 }
             });
             moveBtn.setIcon(FontAwesome.ARROWS);
