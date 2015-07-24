@@ -163,11 +163,13 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent, Ha
                 curPath.append(pathName);
             }
 
+            final String buttonPath = curPath.toString();
+
             Button btn = new Button(StringUtils.trim(pathName, 25, true), new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     FileSearchCriteria criteria = new FileSearchCriteria();
-                    criteria.setBaseFolder(curPath.toString());
+                    criteria.setBaseFolder(buttonPath);
 
                     criteria.setRootFolder("/");
                     criteria.setStorageName(StorageNames.DROPBOX);

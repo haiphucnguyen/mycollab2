@@ -16,249 +16,240 @@
  */
 package com.esofthead.mycollab.ondemand.module.ecm.service.impl;
 
-import java.io.InputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
+import com.dropbox.core.*;
+import com.dropbox.core.DbxEntry.File;
+import com.dropbox.core.DbxEntry.WithChildren;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.module.ecm.StorageNames;
+import com.esofthead.mycollab.module.ecm.domain.*;
+import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dropbox.core.DbxClient;
-import com.dropbox.core.DbxEntry;
-import com.dropbox.core.DbxEntry.File;
-import com.dropbox.core.DbxEntry.WithChildren;
-import com.dropbox.core.DbxException;
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.DbxWriteMode;
-import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.module.ecm.StorageNames;
-import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.module.ecm.domain.ExternalContent;
-import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
-import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
-import com.esofthead.mycollab.module.ecm.domain.Folder;
-import com.esofthead.mycollab.module.ecm.domain.Resource;
-import com.esofthead.mycollab.module.ecm.service.DropboxResourceService;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.util.*;
 
 @Service
 public class DropboxResourceServiceImpl implements DropboxResourceService {
-	private static final Logger LOG = LoggerFactory
-			.getLogger(DropboxResourceServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DropboxResourceServiceImpl.class);
 
-	@Override
-	public List<Resource> getResources(ExternalDrive drive, String path) {
-		List<Resource> resources = new ArrayList<Resource>();
-		try {
-			DbxRequestConfig requestConfig = new DbxRequestConfig(
-					"MyCollab/1.0", null);
-			DbxClient client = new DbxClient(requestConfig,
-					drive.getAccesstoken());
-			WithChildren children = client.getMetadataWithChildren(path);
-			if (CollectionUtils.isNotEmpty(children.children)) {
-				for (DbxEntry entry : children.children) {
-					if (entry.isFile()) {
-						ExternalContent resource = new ExternalContent(
-								entry.path);
-						resource.setStorageName(StorageNames.DROPBOX);
-						resource.setExternalDrive(drive);
-						Date lastModifiedDate = ((File) entry).lastModified;
-						Calendar createdDate = new GregorianCalendar();
-						createdDate.setTime(lastModifiedDate);
-						resource.setSize(((File) entry).numBytes);
-						resource.setCreated(createdDate);
-						resources.add(resource);
-					} else if (entry.isFolder()) {
-						ExternalFolder resource = new ExternalFolder(entry.path);
-						resource.setStorageName(StorageNames.DROPBOX);
-						resource.setExternalDrive(drive);
-						resources.add(resource);
-					} else {
-						LOG.error("Do not support dropbox resource except file or folder");
-					}
-				}
-			}
-		} catch (Exception e) {
-			LOG.error("Error when get dropbox resource", e);
-			throw new UserInvalidInputException(
-					"Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server");
-		}
-		Collections.sort(resources);
-		return resources;
-	}
+    @Override
+    public List<Resource> getResources(ExternalDrive drive, String path) {
+        List<Resource> resources = new ArrayList<>();
+        try {
+            DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
+            DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+            WithChildren children = client.getMetadataWithChildren(path);
+            if (CollectionUtils.isNotEmpty(children.children)) {
+                for (DbxEntry entry : children.children) {
+                    if (entry.isFile()) {
+                        File file = entry.asFile();
+                        ExternalContent resource = new ExternalContent(file.path);
+                        resource.setStorageName(StorageNames.DROPBOX);
+                        resource.setExternalDrive(drive);
+                        Date lastModifiedDate = file.lastModified;
+                        Calendar createdDate = new GregorianCalendar();
+                        createdDate.setTime(lastModifiedDate);
+                        resource.setSize(file.numBytes);
+                        resource.setCreated(createdDate);
+                        if (file.mightHaveThumbnail) {
+                            ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                            client.getThumbnail(new DbxThumbnailSize("s", 38, 38), DbxThumbnailFormat.PNG, file.path,
+                                    null, outStream);
+                            resource.setThumbnailBytes(outStream.toByteArray());
+                        }
+                        resources.add(resource);
+                    } else if (entry.isFolder()) {
+                        DbxEntry.Folder folder = entry.asFolder();
+                        String iconName = folder.iconName;
+                        ExternalFolder resource = new ExternalFolder(folder.path);
+                        resource.setStorageName(StorageNames.DROPBOX);
+                        resource.setExternalDrive(drive);
+                        resources.add(resource);
+                    } else {
+                        LOG.error("Do not support dropbox resource except file or folder");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Error when get dropbox resource", e);
+            throw new UserInvalidInputException(
+                    "Error when retrieving dropbox files. The most possible issue is can not connect to dropbox server");
+        }
+        Collections.sort(resources);
+        return resources;
+    }
 
-	@Override
-	public List<ExternalFolder> getSubFolders(ExternalDrive drive, String path) {
-		List<ExternalFolder> subFolders = new ArrayList<ExternalFolder>();
+    @Override
+    public List<ExternalFolder> getSubFolders(ExternalDrive drive, String path) {
+        List<ExternalFolder> subFolders = new ArrayList<ExternalFolder>();
 
-		try {
-			DbxRequestConfig requestConfig = new DbxRequestConfig(
-					"MyCollab/1.0", null);
-			DbxClient client = new DbxClient(requestConfig,
-					drive.getAccesstoken());
-			WithChildren children = client.getMetadataWithChildren(path);
-			if (CollectionUtils.isNotEmpty(children.children)) {
-				for (DbxEntry entry : children.children) {
-					if (entry.isFolder()) {
-						ExternalFolder resource = new ExternalFolder(entry.path);
-						resource.setStorageName(StorageNames.DROPBOX);
-						resource.setExternalDrive(drive);
-						subFolders.add(resource);
-					}
+        try {
+            DbxRequestConfig requestConfig = new DbxRequestConfig(
+                    "MyCollab/1.0", null);
+            DbxClient client = new DbxClient(requestConfig,
+                    drive.getAccesstoken());
+            WithChildren children = client.getMetadataWithChildren(path);
+            if (CollectionUtils.isNotEmpty(children.children)) {
+                for (DbxEntry entry : children.children) {
+                    if (entry.isFolder()) {
+                        ExternalFolder resource = new ExternalFolder(entry.path);
+                        resource.setStorageName(StorageNames.DROPBOX);
+                        resource.setExternalDrive(drive);
+                        subFolders.add(resource);
+                    }
 
-				}
-			}
-		} catch (Exception e) {
-			LOG.error("Error when get dropbox resource", e);
-		}
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Error when get dropbox resource", e);
+        }
 
-		return subFolders;
-	}
+        return subFolders;
+    }
 
-	@Override
-	public Resource getCurrentResourceByPath(ExternalDrive drive, String path) {
-		try {
-			DbxRequestConfig requestConfig = new DbxRequestConfig(
-					"MyCollab/1.0", null);
-			DbxClient client = new DbxClient(requestConfig,
-					drive.getAccesstoken());
-			Resource res = null;
+    @Override
+    public Resource getCurrentResourceByPath(ExternalDrive drive, String path) {
+        try {
+            DbxRequestConfig requestConfig = new DbxRequestConfig(
+                    "MyCollab/1.0", null);
+            DbxClient client = new DbxClient(requestConfig,
+                    drive.getAccesstoken());
+            Resource res = null;
 
-			DbxEntry entry = client.getMetadata(path);
-			if (entry == null) {
-				return null;
-			}
+            DbxEntry entry = client.getMetadata(path);
+            if (entry == null) {
+                return null;
+            }
 
-			if (entry.isFile()) {
-				ExternalContent resource = new ExternalContent(entry.path);
-				resource.setStorageName(StorageNames.DROPBOX);
-				resource.setExternalDrive(drive);
-				Date lastModifiedDate = ((File) entry).lastModified;
-				Calendar createdDate = new GregorianCalendar();
-				createdDate.setTime(lastModifiedDate);
-				resource.setSize(((File) entry).numBytes);
-				resource.setCreated(createdDate);
-				res = resource;
-			} else if (entry.isFolder()) {
-				ExternalFolder resource = new ExternalFolder(entry.path);
-				resource.setStorageName(StorageNames.DROPBOX);
-				resource.setExternalDrive(drive);
-				res = resource;
-			}
-			return res;
-		} catch (DbxException e) {
-			LOG.error("Error when get dropbox resource", e);
-			throw new UserInvalidInputException(e);
-		}
+            if (entry.isFile()) {
+                ExternalContent resource = new ExternalContent(entry.path);
+                resource.setStorageName(StorageNames.DROPBOX);
+                resource.setExternalDrive(drive);
+                Date lastModifiedDate = ((File) entry).lastModified;
+                Calendar createdDate = new GregorianCalendar();
+                createdDate.setTime(lastModifiedDate);
+                resource.setSize(((File) entry).numBytes);
+                resource.setCreated(createdDate);
+                res = resource;
+            } else if (entry.isFolder()) {
+                ExternalFolder resource = new ExternalFolder(entry.path);
+                resource.setStorageName(StorageNames.DROPBOX);
+                resource.setExternalDrive(drive);
+                res = resource;
+            }
+            return res;
+        } catch (DbxException e) {
+            LOG.error("Error when get dropbox resource", e);
+            throw new UserInvalidInputException(e);
+        }
 
-	}
+    }
 
-	@Override
-	public Folder getParentResourceFolder(ExternalDrive drive, String childPath) {
-		String folderPath = childPath.substring(0, childPath.lastIndexOf("/"));
-		if (folderPath.length() == 0)
-			folderPath = "/";
-		return (Folder) this.getCurrentResourceByPath(drive, folderPath);
-	}
+    @Override
+    public Folder getParentResourceFolder(ExternalDrive drive, String childPath) {
+        String folderPath = childPath.substring(0, childPath.lastIndexOf("/"));
+        if (folderPath.length() == 0)
+            folderPath = "/";
+        return (Folder) this.getCurrentResourceByPath(drive, folderPath);
+    }
 
-	@Override
-	public Folder createFolder(ExternalDrive drive, String path) {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-		try {
-			client.createFolder(path);
-			return (Folder) this.getCurrentResourceByPath(drive, path);
-		} catch (DbxException e) {
-			LOG.error("Error when createdFolder dropbox resource", e);
-		}
-		return null;
-	}
+    @Override
+    public Folder createFolder(ExternalDrive drive, String path) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+                null);
+        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        try {
+            client.createFolder(path);
+            return (Folder) this.getCurrentResourceByPath(drive, path);
+        } catch (DbxException e) {
+            LOG.error("Error when createdFolder dropbox resource", e);
+        }
+        return null;
+    }
 
-	@Override
-	public void saveContent(ExternalDrive drive, Content content, InputStream in) {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-		try {
-			client.uploadFile(content.getPath(), DbxWriteMode.add(), -1, in);
-		} catch (Exception e) {
-			LOG.error("Error when upload file to Dropbox", e);
-		}
-	}
+    @Override
+    public void saveContent(ExternalDrive drive, Content content, InputStream in) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+                null);
+        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        try {
+            client.uploadFile(content.getPath(), DbxWriteMode.add(), -1, in);
+        } catch (Exception e) {
+            LOG.error("Error when upload file to Dropbox", e);
+        }
+    }
 
-	@Override
-	public void rename(ExternalDrive drive, String oldPath, String newPath) {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-		try {
-			client.copy(oldPath, newPath);
-			client.delete(oldPath);
-		} catch (DbxException e) {
-			LOG.error("Error when rename dropbox resource", e);
-		}
-	}
+    @Override
+    public void rename(ExternalDrive drive, String oldPath, String newPath) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+                null);
+        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        try {
+            client.copy(oldPath, newPath);
+            client.delete(oldPath);
+        } catch (DbxException e) {
+            LOG.error("Error when rename dropbox resource", e);
+        }
+    }
 
-	@Override
-	public void deleteResource(ExternalDrive drive, String path) {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-		try {
-			client.delete(path);
-		} catch (DbxException e) {
-			LOG.error("Error when Delete dropbox resource", e);
-		}
-	}
+    @Override
+    public void deleteResource(ExternalDrive drive, String path) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+                null);
+        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        try {
+            client.delete(path);
+        } catch (DbxException e) {
+            LOG.error("Error when Delete dropbox resource", e);
+        }
+    }
 
-	@Override
-	public InputStream download(ExternalDrive drive, final String path) {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		final DbxClient client = new DbxClient(requestConfig,
-				drive.getAccesstoken());
-		PipedInputStream in = new PipedInputStream();
-		try {
-			final PipedOutputStream out = new PipedOutputStream(in);
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						client.getFile(path, null, out);
-						out.close();
-					} catch (Exception e) {
-						LOG.error("Error when get File from dropbox", e);
-					}
-				}
-			}).start();
-		} catch (Exception e) {
-			throw new MyCollabException(
-					"Error when get inputStream from dropbox file", e);
-		}
-		return in;
-	}
+    @Override
+    public InputStream download(ExternalDrive drive, final String path) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+                null);
+        final DbxClient client = new DbxClient(requestConfig,
+                drive.getAccesstoken());
+        PipedInputStream in = new PipedInputStream();
+        try {
+            final PipedOutputStream out = new PipedOutputStream(in);
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        client.getFile(path, null, out);
+                        out.close();
+                    } catch (Exception e) {
+                        LOG.error("Error when get File from dropbox", e);
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            throw new MyCollabException(
+                    "Error when get inputStream from dropbox file", e);
+        }
+        return in;
+    }
 
-	/**
-	 * @see only support move in Dropbox local, not implement move from Dropbox
-	 *      to MyCollab or against. Must implement it later
-	 */
-	@Override
-	public void move(ExternalDrive drive, String fromPath, String toPath) {
-		DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-				null);
-		DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-		try {
-			client.move(fromPath, toPath);
-		} catch (DbxException e) {
-			LOG.error("Error when move dropbox resource", e);
-		}
-	}
+    /**
+     * @see only support move in Dropbox local, not implement move from Dropbox
+     * to MyCollab or against. Must implement it later
+     */
+    @Override
+    public void move(ExternalDrive drive, String fromPath, String toPath) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
+                null);
+        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        try {
+            client.move(fromPath, toPath);
+        } catch (DbxException e) {
+            LOG.error("Error when move dropbox resource", e);
+        }
+    }
 }

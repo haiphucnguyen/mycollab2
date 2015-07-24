@@ -38,17 +38,16 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.GoogleAnalyticsService;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.event.UIEvents;
-import com.vaadin.server.DefaultErrorHandler;
-import com.vaadin.server.Page;
+import com.vaadin.server.*;
 import com.vaadin.server.Page.UriFragmentChangedEvent;
 import com.vaadin.server.Page.UriFragmentChangedListener;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.communication.PushMode;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import org.slf4j.Logger;
@@ -200,8 +199,22 @@ public class DesktopApplication extends MyCollabUI {
         }
 
         LOG.error("Error", e);
-        NotificationUtil.showErrorNotification(AppContext
-                .getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE));
+        ConfirmDialog dialog = ConfirmDialogExt.show(UI.getCurrent(),
+                AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
+                AppContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
+                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                new ConfirmDialog.Listener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClose(ConfirmDialog dialog) {
+
+                    }
+                });
+        Button okBtn = dialog.getOkButton();
+        BrowserWindowOpener opener = new BrowserWindowOpener("https://www.mycollab.com/contact/");
+        opener.extend(okBtn);
     }
 
     private void enter(String uriFragement) {

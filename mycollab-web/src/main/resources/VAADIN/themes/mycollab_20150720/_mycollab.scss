@@ -3794,9 +3794,9 @@
         vertical-align: middle;
       }
       background-color: rgb(249, 249, 249);
-      img {
-        display: inline-block;
-        vertical-align: middle;
+      .v-icon {
+        font-size: 150px;
+        color:#525252;
       }
     }
     .attachment-name-wrap .v-label {

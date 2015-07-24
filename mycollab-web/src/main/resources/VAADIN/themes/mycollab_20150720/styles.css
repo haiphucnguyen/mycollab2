@@ -13494,9 +13494,9 @@ div.v-csslayout.bean-block.olive-block {
 	vertical-align: middle;
 }
 
-.attachment-block .thumbnail-wrap img {
-	display: inline-block;
-	vertical-align: middle;
+.attachment-block .thumbnail-wrap .v-icon {
+	font-size: 150px;
+	color: #525252;
 }
 
 .attachment-block .attachment-name-wrap .v-label {

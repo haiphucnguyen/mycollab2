@@ -17,9 +17,9 @@
 package com.esofthead.mycollab.module.file.view.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.eventmanager.ApplicationEvent;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.*;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
@@ -42,13 +42,14 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.util.ReflectTools;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -60,14 +61,9 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.Method;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EventListener;
 import java.util.List;
 
 /**
@@ -430,14 +426,40 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             layout.with(checkbox).withAlign(checkbox, Alignment.MIDDLE_LEFT);
 
             CssLayout resIconWrapper = new CssLayout();
-            FontIconLabel resourceIcon;
-            if (resource instanceof Folder)
+            Component resourceIcon = null;
+            if (resource instanceof Folder) {
                 resourceIcon = (resource instanceof ExternalFolder) ? new FontIconLabel(FontAwesome.DROPBOX) : new
                         FontIconLabel(FontAwesome.FOLDER);
-            else {
-                resourceIcon = new FontIconLabel(FileAssetsUtil.getFileIconResource(resource.getName()));
+                resourceIcon.addStyleName("icon-38px");
+            } else if (resource instanceof Content) {
+                Content content = (Content) resource;
+                if (StringUtils.isNotBlank(content.getThumbnail())) {
+                    resourceIcon = new Embedded(null, new ExternalResource(Storage.getResourcePath(content.getThumbnail())));
+                    resourceIcon.setWidth("38px");
+                    resourceIcon.setHeight("38px");
+                } else {
+                    if (content instanceof ExternalContent) {
+                        final byte[] thumbnailBytes = ((ExternalContent) content).getThumbnailBytes();
+                        if (thumbnailBytes != null) {
+                            resourceIcon = new Embedded(null, new StreamResource(new StreamSource() {
+                                @Override
+                                public InputStream getStream() {
+                                    return new ByteArrayInputStream(thumbnailBytes);
+                                }
+                            }, String.format("thumbnail%s.%s", content.getPath(), "png")));
+                            resourceIcon.setWidth("38px");
+                            resourceIcon.setHeight("38px");
+                        }
+                    }
+                }
+            } else {
+                throw new MyCollabException("Do not support resource file " + resource.getClass());
             }
-            resourceIcon.addStyleName("icon-38px");
+            if (resourceIcon == null) {
+                resourceIcon = new FontIconLabel(FileAssetsUtil.getFileIconResource(resource.getName()));
+                resourceIcon.addStyleName("icon-38px");
+            }
+
             resIconWrapper.addComponent(resourceIcon);
 
             layout.addComponent(resIconWrapper);

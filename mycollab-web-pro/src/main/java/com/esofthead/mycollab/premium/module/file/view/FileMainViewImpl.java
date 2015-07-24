@@ -125,8 +125,8 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                SettingConnectionDrive settingConnectionDrive = new SettingConnectionDrive();
-                UI.getCurrent().addWindow(settingConnectionDrive);
+                CloudDriveSettingWindow cloudDriveSettingWindow = new CloudDriveSettingWindow();
+                UI.getCurrent().addWindow(cloudDriveSettingWindow);
             }
         });
         settingBtn.addStyleName(UIConstants.THEME_GRAY_LINK);

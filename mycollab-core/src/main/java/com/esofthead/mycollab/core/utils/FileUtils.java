@@ -67,11 +67,9 @@ public class FileUtils {
 
     public static Reader getReader(String templateFile) {
         try {
-            return new InputStreamReader(FileUtils.class.getClassLoader()
-                    .getResourceAsStream(templateFile), "UTF-8");
+            return new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream(templateFile), "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            return new InputStreamReader(FileUtils.class.getClassLoader()
-                    .getResourceAsStream(templateFile));
+            return new InputStreamReader(FileUtils.class.getClassLoader().getResourceAsStream(templateFile));
         }
     }
 

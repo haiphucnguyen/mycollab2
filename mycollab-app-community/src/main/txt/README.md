@@ -48,6 +48,17 @@ Version 5.1.1
 **Library Upgrades**
 
 * Jackson library 2.6.0
+* Vaadin 7.5.2
+
+**Improvements & New Features**
+
+* Update attachment display
+* Generate thumbnail for images
+
+**Bug Fixes**
+
+* General bug fixes of file module
+
 
 Version 5.1.0
 -----------------------------

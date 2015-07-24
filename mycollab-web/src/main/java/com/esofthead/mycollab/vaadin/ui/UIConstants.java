@@ -26,8 +26,8 @@ public class UIConstants {
 	public static final String BORDER_BOX_2 = "border-box2";
 	public static final String DEFAULT_CAPTION_FORM_WIDTH = "120px";
 	public static final String DEFAULT_CONTROL_WIDTH = "250px";
-	public static final String DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH = "189px";
-	public static final String DEFAULT_ATTACHMENT_THUMBNAIL_HEIGHT = "251px";
+	public static final String DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH = "180px";
+	public static final String DEFAULT_ATTACHMENT_THUMBNAIL_HEIGHT = "180px";
 	public static final String H2_STYLE2 = "h2-style2";
 	public static final String HEADER_VIEW = "hdr-view";
 	public static final String HEADER_TEXT = "hdr-text";
