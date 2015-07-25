@@ -36,6 +36,7 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
+import com.vaadin.shared.communication.SharedState;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.addons.fancybox.Fancybox;
@@ -73,7 +74,6 @@ public class AttachmentDisplayComponent extends CssLayout {
         thumbnailWrap.setStyleName("thumbnail-wrap");
 
         Link thumbnail = new Link();
-        thumbnail.setTargetName("_blank");
         if (org.apache.commons.lang3.StringUtils.isBlank(attachment.getThumbnail())) {
             thumbnail.setIcon(FileAssetsUtil.getFileIconResource(attachment.getName()));
         } else {
@@ -81,8 +81,7 @@ public class AttachmentDisplayComponent extends CssLayout {
         }
 
         if (MimeTypesUtil.isImageType(docName)) {
-            String assetsLink = Storage.getResourcePath(attachment.getPath());
-            thumbnail.setResource(new ExternalResource(assetsLink));
+            thumbnail.setResource(VaadinResource.getInstance().getResource(attachment.getPath()));
             new Fancybox(thumbnail).setPadding(0).setVersion("2.1.5").setEnabled(true).setDebug(true);
         }
 
