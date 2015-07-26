@@ -31,8 +31,7 @@ import java.util.Set;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class SelectionOptionButton extends SplitButton implements
-        HasSelectionOptionHandlers {
+public class SelectionOptionButton extends SplitButton implements HasSelectionOptionHandlers {
     private static final long serialVersionUID = 1L;
     private boolean isSelectAll = false;
     private boolean isSelected = false;
@@ -46,8 +45,7 @@ public class SelectionOptionButton extends SplitButton implements
     private final Button selectThisPageBtn;
 
     @SuppressWarnings("serial")
-    public SelectionOptionButton(
-            @SuppressWarnings("rawtypes") final HasSelectableItemHandlers selectableItemHandlers) {
+    public SelectionOptionButton(HasSelectableItemHandlers selectableItemHandlers) {
         super();
         this.selectableItemHandlers = selectableItemHandlers;
         addStyleName(UIConstants.THEME_GREEN_LINK);
@@ -83,8 +81,7 @@ public class SelectionOptionButton extends SplitButton implements
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = true;
-                SelectionOptionButton.this
-                        .setIcon(FontAwesome.CHECK_SQUARE_O);
+                SelectionOptionButton.this.setIcon(FontAwesome.CHECK_SQUARE_O);
                 fireSelectAll();
                 SelectionOptionButton.this.setPopupVisible(false);
             }
@@ -95,8 +92,7 @@ public class SelectionOptionButton extends SplitButton implements
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = false;
-                SelectionOptionButton.this
-                        .setIcon(FontAwesome.CHECK_SQUARE_O);
+                SelectionOptionButton.this.setIcon(FontAwesome.CHECK_SQUARE_O);
                 fireSelectCurrentPage();
                 SelectionOptionButton.this.setPopupVisible(false);
             }
@@ -108,8 +104,7 @@ public class SelectionOptionButton extends SplitButton implements
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         isSelectAll = false;
-                        SelectionOptionButton.this
-                                .setIcon(FontAwesome.SQUARE_O);
+                        SelectionOptionButton.this.setIcon(FontAwesome.SQUARE_O);
                         fireDeselect();
                         SelectionOptionButton.this.setPopupVisible(false);
                     }

@@ -167,15 +167,14 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             infoStatus.addStyleName("member-email");
             waitingNotLayout.addComponent(infoStatus);
 
-            ButtonLinkLegacy resendInvitationLink = new ButtonLinkLegacy(
-                    "Resend Invitation", new Button.ClickListener() {
+            ButtonLinkLegacy resendInvitationLink = new ButtonLinkLegacy("Resend Invitation", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
                 public void buttonClick(ClickEvent event) {
                     UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-                    userService.updateUserAccountStatus(member.getUsername(),
-                            member.getAccountId(), RegisterStatusConstants.VERIFICATING);
+                    userService.updateUserAccountStatus(member.getUsername(), member.getAccountId(),
+                            RegisterStatusConstants.VERIFICATING);
                     waitingNotLayout.removeAllComponents();
                     Label statusEmail = new Label("Sending invitation email");
                     statusEmail.addStyleName("member-email");

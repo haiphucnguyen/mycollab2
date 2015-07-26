@@ -20,12 +20,14 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.*;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
+import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -302,7 +304,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                                 ((ExternalFolder) res).getExternalDrive(), res.getPath());
                                     } else {
                                         if (res instanceof Folder) {
-                                            //TODO: handle resource removed event
+                                            EventBusFactory.getInstance().post(new FileEvent.ResourceRemovedEvent
+                                                    (ResourcesDisplayComponent.this, res));
                                         }
                                         resourceService.removeResource(res.getPath(),
                                                 AppContext.getUsername(), AppContext.getAccountId());
@@ -722,7 +725,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                                 if (baseFolder instanceof ExternalFolder) {
                                     String path = baseFolder.getPath() + "/" + folderVal;
-                                    externalResourceService.createFolder(
+                                    externalResourceService.createNewFolder(
                                             ((ExternalFolder) baseFolder).getExternalDrive(), path);
                                 } else {
                                     resourceService.createNewFolder(baseFolderPath, folderVal, AppContext.getUsername());
@@ -873,15 +876,14 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private void createPageControls() {
             this.navigator.removeAllComponents();
             if (this.currentPage > 1) {
-                final Button firstLink = new ButtonLinkLegacy("1",
-                        new ClickListener() {
-                            private static final long serialVersionUID = 1L;
+                final Button firstLink = new ButtonLinkLegacy("1", new ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                pageChange(1);
-                            }
-                        }, false);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        pageChange(1);
+                    }
+                }, false);
                 firstLink.addStyleName("buttonPaging");
                 this.navigator.addComponent(firstLink);
             }
@@ -891,8 +893,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(ss1);
             }
             if (this.currentPage > 3) {
-                final Button previous2 = new ButtonLinkLegacy(""
-                        + (this.currentPage - 2), new ClickListener() {
+                final Button previous2 = new ButtonLinkLegacy("" + (this.currentPage - 2), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -904,8 +905,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(previous2);
             }
             if (this.currentPage > 2) {
-                final Button previous1 = new ButtonLinkLegacy(""
-                        + (this.currentPage - 1), new ClickListener() {
+                final Button previous1 = new ButtonLinkLegacy("" + (this.currentPage - 1), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -917,15 +917,14 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(previous1);
             }
             // Here add current ButtonLinkLegacy
-            currentBtn = new ButtonLinkLegacy("" + this.currentPage,
-                    new ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            currentBtn = new ButtonLinkLegacy("" + this.currentPage, new ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            // pageChange(currentPage);
-                        }
-                    }, false);
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    // pageChange(currentPage);
+                }
+            }, false);
             currentBtn.addStyleName("buttonPaging");
             currentBtn.addStyleName("current");
 

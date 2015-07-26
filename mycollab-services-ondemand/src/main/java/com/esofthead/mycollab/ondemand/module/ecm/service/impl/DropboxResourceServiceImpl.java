@@ -67,7 +67,6 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
                         resources.add(resource);
                     } else if (entry.isFolder()) {
                         DbxEntry.Folder folder = entry.asFolder();
-                        String iconName = folder.iconName;
                         ExternalFolder resource = new ExternalFolder(folder.path);
                         resource.setStorageName(StorageNames.DROPBOX);
                         resource.setExternalDrive(drive);
@@ -161,9 +160,8 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     }
 
     @Override
-    public Folder createFolder(ExternalDrive drive, String path) {
-        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0",
-                null);
+    public Folder createNewFolder(ExternalDrive drive, String path) {
+        DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
         DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
         try {
             client.createFolder(path);

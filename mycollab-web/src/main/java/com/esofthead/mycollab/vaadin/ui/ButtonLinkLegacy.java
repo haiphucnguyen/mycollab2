@@ -20,33 +20,35 @@ import org.vaadin.maddon.button.MButton;
 
 /**
  * Button link
- * 
+ *
  * @author MyCollab Ltd.
  * @since 2.0
  */
-@Deprecated
 public class ButtonLinkLegacy extends MButton {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ButtonLinkLegacy(String caption, Boolean wordWrap) {
-		super(caption);
-		this.setStyleName(UIConstants.THEME_LINK);
-		if (wordWrap)
-			this.addStyleName("wordWrap");
-	}
+    private ButtonLinkLegacy(String caption, Boolean wordWrap) {
+        super(caption);
+        this.setStyleName(UIConstants.THEME_LINK);
+        if (wordWrap)
+            this.addStyleName("wordWrap");
+    }
 
-	public ButtonLinkLegacy(String caption) {
-		this(caption, true);
-	}
+    public ButtonLinkLegacy(String caption) {
+        this(caption, true);
+    }
 
-	public ButtonLinkLegacy(String caption, ClickListener listener, Boolean wordWrap) {
-		super(caption, listener);
-		this.setStyleName(UIConstants.THEME_LINK);
-		if (wordWrap)
-			this.addStyleName("wordWrap");
-	}
+    ButtonLinkLegacy(String caption, ClickListener listener, Boolean wordWrap) {
+        super(caption);
+        this.setStyleName(UIConstants.THEME_LINK);
+        if (listener != null) {
+            this.addClickListener(listener);
+        }
+        if (wordWrap)
+            this.addStyleName("wordWrap");
+    }
 
-	public ButtonLinkLegacy(String caption, ClickListener listener) {
-		this(caption, listener, true);
-	}
+    public ButtonLinkLegacy(String caption, ClickListener listener) {
+        this(caption, listener, true);
+    }
 }

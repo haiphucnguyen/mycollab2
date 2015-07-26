@@ -5,12 +5,14 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
+import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Container;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.server.FontAwesome;
@@ -30,6 +32,8 @@ import java.util.List;
 public class FolderNavigatorMenu extends Tree {
     private static final long serialVersionUID = 1L;
 
+    private Folder rootFolder;
+
     public FolderNavigatorMenu(final String rootPath) {
         final ExternalDriveService externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
         final ResourceService resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
@@ -39,6 +43,8 @@ public class FolderNavigatorMenu extends Tree {
         this.setMultiSelect(false);
         this.setSelectable(true);
         this.setImmediate(true);
+
+        rootFolder = new Folder(rootPath);
 
         this.addExpandListener(new Tree.ExpandListener() {
             private static final long serialVersionUID = 1L;
@@ -144,20 +150,57 @@ public class FolderNavigatorMenu extends Tree {
     private ApplicationEventListener<FileEvent.ExternalDriveConnectedEvent> externalDriveConnectHandler = new
             ApplicationEventListener<FileEvent.ExternalDriveConnectedEvent>() {
                 @Override
+                @Subscribe
                 public void handle(FileEvent.ExternalDriveConnectedEvent event) {
-                    ExternalDrive externalDrive = (ExternalDrive) event.getData();
+                    FolderNavigatorMenu.this.collapseItem(rootFolder);
+                    FolderNavigatorMenu.this.expandItem(rootFolder);
+                }
+            };
+
+    private ApplicationEventListener<FileEvent.ExternalDriveDeleteEvent> externalDriveDeleteHandler = new
+            ApplicationEventListener<FileEvent.ExternalDriveDeleteEvent>() {
+                @Override
+                @Subscribe
+                public void handle(FileEvent.ExternalDriveDeleteEvent event) {
+                    FolderNavigatorMenu.this.collapseItem(rootFolder);
+                    FolderNavigatorMenu.this.expandItem(rootFolder);
+                }
+            };
+
+    private ApplicationEventListener<FileEvent.ResourceRemovedEvent> deleteResourceHandler = new
+            ApplicationEventListener<FileEvent.ResourceRemovedEvent>() {
+                @Override
+                @Subscribe
+                public void handle(FileEvent.ResourceRemovedEvent event) {
+                    Resource resource = (Resource) event.getData();
+                    if (resource instanceof Folder) {
+                        Folder folder = (Folder) resource;
+                        Folder parentFolder = (Folder)FolderNavigatorMenu.this.getParent(folder);
+                        FolderNavigatorMenu.this.collapseItem(parentFolder);
+                        FolderNavigatorMenu.this.expandItem(parentFolder);
+                    }
+
                 }
             };
 
     @Override
     public void attach() {
         super.attach();
+        this.removeAllItems();
+        this.addItem(rootFolder);
+        this.setItemCaption(rootFolder, "Documents");
+        this.setItemIcon(rootFolder, FontAwesome.FOLDER);
+        this.collapseItem(rootFolder);
         EventBusFactory.getInstance().register(externalDriveConnectHandler);
+        EventBusFactory.getInstance().register(externalDriveDeleteHandler);
+        EventBusFactory.getInstance().register(deleteResourceHandler);
     }
 
     @Override
     public void detach() {
         EventBusFactory.getInstance().unregister(externalDriveConnectHandler);
+        EventBusFactory.getInstance().unregister(externalDriveDeleteHandler);
+        EventBusFactory.getInstance().unregister(deleteResourceHandler);
         super.detach();
     }
 

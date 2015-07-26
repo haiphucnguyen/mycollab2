@@ -61,32 +61,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         String rootPath = String.format("%d/Documents", AppContext.getAccountId());
         rootFolder = new Folder(rootPath);
-
-        MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
-
-        HorizontalLayout leftColumn = buildLeftColumn();
-        mainView.with(leftColumn).withAlign(leftColumn, Alignment.TOP_LEFT);
-
-        Separator separator = new Separator();
-        separator.setHeight("100%");
-        separator.setWidthUndefined();
-        mainView.with(separator).withAlign(separator, Alignment.TOP_LEFT);
-
-
-        // here for MainBodyResourceLayout class
-        MVerticalLayout rightColumn = new MVerticalLayout();
-        rightColumn.addComponent(constructHeader());
-
-        mainBodyResourceLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
-
-        resourceHandlerLayout = new ResourcesDisplayComponent(rootFolder);
-        mainBodyResourceLayout.addComponent(resourceHandlerLayout);
-
-        rightColumn.addComponent(mainBodyResourceLayout);
-
-        mainView.with(rightColumn).withAlign(rightColumn, Alignment.TOP_LEFT).expand(rightColumn);
-
-        this.with(mainView).withAlign(mainView, Alignment.MIDDLE_CENTER);
     }
 
     private HorizontalLayout constructHeader() {
@@ -160,8 +134,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
         DriveInfoService driveInfoService = ApplicationContextUtil.getSpringBean(DriveInfoService.class);
-        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService
-                .getUsedStorageVolume(AppContext.getAccountId()))
+        String usedStorageTxt = FileUtils.getVolumeDisplay(driveInfoService.getUsedStorageVolume(AppContext.getAccountId()))
                 + " of " + FileUtils.getVolumeDisplay(currentBillingPlan.getVolume());
         Label usedVolumeInfo = new Label("<div>" + usedStorageTxt + "</div>", ContentMode.HTML);
         usedVolumeInfo.addStyleName("volumeUsageInfo");
@@ -181,11 +154,18 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     }
 
     private void displayResources(String rootFolderName) {
-        this.folderNavigator.removeAllItems();
-        this.folderNavigator.addItem(rootFolder);
-        this.folderNavigator.setItemCaption(rootFolder, rootFolderName);
-        this.folderNavigator.setItemIcon(rootFolder, FontAwesome.FOLDER);
-        this.folderNavigator.collapseItem(rootFolder);
+        folderNavigator.addSelectFolderListener(new SelectedFolderListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void selectFolder(SelectFolderEvent event) {
+                Folder folder = event.getFolder();
+                if (folder != null) {
+                    browseFolder(folder);
+                }
+
+            }
+        });
 
         resourceHandlerLayout.displayComponent(rootFolder, rootFolderName);
 
@@ -216,20 +196,38 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         });
     }
 
+    private void initComponents() {
+        this.removeAllComponents();
+        MHorizontalLayout mainView = new MHorizontalLayout().withWidth("100%");
+
+        HorizontalLayout leftColumn = buildLeftColumn();
+        mainView.with(leftColumn).withAlign(leftColumn, Alignment.TOP_LEFT);
+
+        Separator separator = new Separator();
+        separator.setHeight("100%");
+        separator.setWidthUndefined();
+        mainView.with(separator).withAlign(separator, Alignment.TOP_LEFT);
+
+
+        // here for MainBodyResourceLayout class
+        MVerticalLayout rightColumn = new MVerticalLayout();
+        rightColumn.addComponent(constructHeader());
+
+        mainBodyResourceLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
+
+        resourceHandlerLayout = new ResourcesDisplayComponent(rootFolder);
+        mainBodyResourceLayout.addComponent(resourceHandlerLayout);
+
+        rightColumn.addComponent(mainBodyResourceLayout);
+
+        mainView.with(rightColumn).withAlign(rightColumn, Alignment.TOP_LEFT).expand(rightColumn);
+
+        this.with(mainView).withAlign(mainView, Alignment.MIDDLE_CENTER);
+    }
+
     @Override
     public void display() {
-        folderNavigator.addSelectFolderListener(new SelectedFolderListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void selectFolder(SelectFolderEvent event) {
-                Folder folder = event.getFolder();
-                if (folder != null) {
-                    browseFolder(folder);
-                }
-
-            }
-        });
+        initComponents();
         displayResources("Documents");
     }
 }

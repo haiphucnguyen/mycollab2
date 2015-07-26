@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Window;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -54,8 +55,7 @@ public class LeadSelectionWindow extends Window {
         createLeadList();
 
         LeadSimpleSearchPanel leadSimpleSearchPanel = new LeadSimpleSearchPanel();
-        leadSimpleSearchPanel
-                .addSearchHandler(new SearchHandler<LeadSearchCriteria>() {
+        leadSimpleSearchPanel.addSearchHandler(new SearchHandler<LeadSearchCriteria>() {
 
                     @Override
                     public void onSearch(LeadSearchCriteria criteria) {
@@ -82,22 +82,18 @@ public class LeadSelectionWindow extends Window {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public com.vaadin.ui.Component generateCell(final Table source,
-                                                        final Object itemId, final Object columnId) {
+            public Component generateCell(Table source, Object itemId, Object columnId) {
                 final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 
-                ButtonLinkLegacy b = new ButtonLinkLegacy(lead.getLeadName(),
-                        new Button.ClickListener() {
+                ButtonLinkLegacy b = new ButtonLinkLegacy(lead.getLeadName(), new Button.ClickListener() {
 
-                            @Override
-                            public void buttonClick(
-                                    final Button.ClickEvent event) {
-                                fieldSelection.fireValueChange(lead);
-                                LeadSelectionWindow.this.close();
-                            }
-                        });
-                b.setDescription(CrmTooltipGenerator.generateTooltipLead(
-                        AppContext.getUserLocale(), lead,
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        fieldSelection.fireValueChange(lead);
+                        LeadSelectionWindow.this.close();
+                    }
+                });
+                b.setDescription(CrmTooltipGenerator.generateTooltipLead(AppContext.getUserLocale(), lead,
                         AppContext.getSiteUrl(), AppContext.getTimezone()));
                 return b;
             }

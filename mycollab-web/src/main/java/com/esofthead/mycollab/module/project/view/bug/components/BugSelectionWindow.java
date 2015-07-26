@@ -94,9 +94,8 @@ public class BugSelectionWindow extends Window {
                 final SimpleBug bug = tableItem.getBeanByIndex(itemId);
 
                 String bugName = "[%s-%s] %s";
-                bugName = String.format(bugName, CurrentProjectVariables
-                        .getProject().getShortname(), bug.getBugkey(), bug
-                        .getSummary());
+                bugName = String.format(bugName, CurrentProjectVariables.getProject().getShortname(),
+                        bug.getBugkey(), bug.getSummary());
 
                 ButtonLinkLegacy b = new ButtonLinkLegacy(bugName, new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -114,8 +113,7 @@ public class BugSelectionWindow extends Window {
                     b.addStyleName(UIConstants.LINK_OVERDUE);
                 }
 
-                b.setDescription(ProjectTooltipGenerator.generateToolTipBug(
-                        AppContext.getUserLocale(), bug,
+                b.setDescription(ProjectTooltipGenerator.generateToolTipBug(AppContext.getUserLocale(), bug,
                         AppContext.getSiteUrl(), AppContext.getTimezone()));
                 return b;
 

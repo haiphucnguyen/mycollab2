@@ -3,11 +3,13 @@ package com.esofthead.mycollab.premium.module.file.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.ExternalDrive;
 import com.esofthead.mycollab.module.ecm.domain.ExternalFolder;
 import com.esofthead.mycollab.module.ecm.service.ExternalDriveService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
+import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -159,13 +161,9 @@ public class CloudDriveSettingWindow extends Window {
                                             if (dialog.isConfirmed()) {
                                                 externalDriveService.removeWithSession(drive,
                                                         AppContext.getUsername(), AppContext.getAccountId());
-                                                int index = bodyLayout.getComponentIndex(OneDriveConnectionBodyLayout.this);
-                                                bodyLayout.removeComponent(bodyLayout.getComponent(index + 1));
                                                 bodyLayout.removeComponent(OneDriveConnectionBodyLayout.this);
-                                                ExternalFolder res = (ExternalFolder) externalResourceService.
-                                                        getCurrentResourceByPath(drive, "/");
-
-                                                //TODO: refresh the view with external drive
+                                                EventBusFactory.getInstance().post(new FileEvent
+                                                        .ExternalDriveDeleteEvent(CloudDriveSettingWindow.this, drive));
 
                                             }
                                         }
