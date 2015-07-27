@@ -21,7 +21,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -84,7 +84,7 @@ public class CaseSelectionWindow extends Window {
             public Component generateCell(Table source, Object itemId, Object columnId) {
                 final SimpleCase cases = tableItem.getBeanByIndex(itemId);
 
-                ButtonLinkLegacy b = new ButtonLinkLegacy(cases.getSubject(), new Button.ClickListener() {
+                ButtonLink b = new ButtonLink(cases.getSubject(), new Button.ClickListener() {
 
                     @Override
                     public void buttonClick(Button.ClickEvent event) {

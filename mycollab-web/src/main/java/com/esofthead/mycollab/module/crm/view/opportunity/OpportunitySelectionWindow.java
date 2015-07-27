@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -84,7 +84,7 @@ public class OpportunitySelectionWindow extends Window {
             public Component generateCell(Table source, Object itemId, Object columnId) {
                 final SimpleOpportunity opportunity = tableItem.getBeanByIndex(itemId);
 
-                ButtonLinkLegacy b = new ButtonLinkLegacy(opportunity.getOpportunityname(), new Button.ClickListener() {
+                ButtonLink b = new ButtonLink(opportunity.getOpportunityname(), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override

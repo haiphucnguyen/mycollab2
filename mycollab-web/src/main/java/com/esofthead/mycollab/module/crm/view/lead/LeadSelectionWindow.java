@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -57,12 +57,12 @@ public class LeadSelectionWindow extends Window {
         LeadSimpleSearchPanel leadSimpleSearchPanel = new LeadSimpleSearchPanel();
         leadSimpleSearchPanel.addSearchHandler(new SearchHandler<LeadSearchCriteria>() {
 
-                    @Override
-                    public void onSearch(LeadSearchCriteria criteria) {
-                        tableItem.setSearchCriteria(criteria);
-                    }
+            @Override
+            public void onSearch(LeadSearchCriteria criteria) {
+                tableItem.setSearchCriteria(criteria);
+            }
 
-                });
+        });
         layout.with(leadSimpleSearchPanel, tableItem);
         this.setContent(layout);
 
@@ -85,7 +85,7 @@ public class LeadSelectionWindow extends Window {
             public Component generateCell(Table source, Object itemId, Object columnId) {
                 final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 
-                ButtonLinkLegacy b = new ButtonLinkLegacy(lead.getLeadName(), new Button.ClickListener() {
+                ButtonLink b = new ButtonLink(lead.getLeadName(), new Button.ClickListener() {
 
                     @Override
                     public void buttonClick(Button.ClickEvent event) {

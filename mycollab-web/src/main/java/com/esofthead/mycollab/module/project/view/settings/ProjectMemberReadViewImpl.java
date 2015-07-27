@@ -209,7 +209,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 infoStatus.addStyleName("member-email");
                 waitingNotLayout.addComponent(infoStatus);
 
-                ButtonLinkLegacy resendInvitationLink = new ButtonLinkLegacy("Resend Invitation", new Button.ClickListener() {
+                ButtonLink resendInvitationLink = new ButtonLink("Resend Invitation", new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override

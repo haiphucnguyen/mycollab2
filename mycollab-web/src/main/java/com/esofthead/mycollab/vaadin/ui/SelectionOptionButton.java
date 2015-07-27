@@ -64,12 +64,10 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
             public void splitButtonPopupVisibilityChange(
                     final SplitButtonPopupVisibilityEvent event) {
                 if (event.isPopupVisible()) {
-                    selectAllBtn.setCaption("Select All ("
-                            + SelectionOptionButton.this.selectableItemHandlers
+                    selectAllBtn.setCaption("Select All (" + SelectionOptionButton.this.selectableItemHandlers
                             .totalItemsCount() + ")");
 
-                    selectThisPageBtn.setCaption("Select This Page ("
-                            + SelectionOptionButton.this.selectableItemHandlers
+                    selectThisPageBtn.setCaption("Select This Page (" + SelectionOptionButton.this.selectableItemHandlers
                             .currentViewCount() + ")");
                 }
             }
@@ -77,7 +75,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
 
         final OptionPopupContent selectContent = new OptionPopupContent().withWidth("150px");
 
-        selectAllBtn = new ButtonLinkLegacy("", new Button.ClickListener() {
+        selectAllBtn = new ButtonLink("", new Button.ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = true;
@@ -88,7 +86,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
         });
         selectContent.addOption(selectAllBtn);
 
-        selectThisPageBtn = new ButtonLinkLegacy("", new Button.ClickListener() {
+        selectThisPageBtn = new ButtonLink("", new Button.ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = false;
@@ -99,16 +97,15 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
         });
         selectContent.addOption(selectThisPageBtn);
 
-        Button deSelectBtn = new ButtonLinkLegacy("Deselect All",
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        isSelectAll = false;
-                        SelectionOptionButton.this.setIcon(FontAwesome.SQUARE_O);
-                        fireDeselect();
-                        SelectionOptionButton.this.setPopupVisible(false);
-                    }
-                });
+        Button deSelectBtn = new ButtonLink("Deselect All", new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                isSelectAll = false;
+                SelectionOptionButton.this.setIcon(FontAwesome.SQUARE_O);
+                fireDeselect();
+                SelectionOptionButton.this.setPopupVisible(false);
+            }
+        });
         selectContent.addOption(deSelectBtn);
         setContent(selectContent);
     }
@@ -123,7 +120,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
 
     private void fireDeselect() {
         if (handlers != null) {
-            for (final SelectionOptionHandler handler : handlers) {
+            for (SelectionOptionHandler handler : handlers) {
                 handler.onDeSelect();
             }
         }
@@ -140,7 +137,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
 
     private void fireSelectCurrentPage() {
         if (handlers != null) {
-            for (final SelectionOptionHandler handler : handlers) {
+            for (SelectionOptionHandler handler : handlers) {
                 handler.onSelectCurrentPage();
             }
         }
@@ -148,8 +145,8 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
 
     public void setSelectedCheckbox(final boolean selected) {
         isSelected = selected;
-        final Resource icon = (selected) ? FontAwesome.CHECK_SQUARE_O : FontAwesome.SQUARE_O;
-        SelectionOptionButton.this.setIcon(icon);
+        Resource icon = (selected) ? FontAwesome.CHECK_SQUARE_O : FontAwesome.SQUARE_O;
+        this.setIcon(icon);
     }
 
     private void toggleChangeOption() {

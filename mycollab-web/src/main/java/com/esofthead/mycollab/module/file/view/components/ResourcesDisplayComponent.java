@@ -876,7 +876,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private void createPageControls() {
             this.navigator.removeAllComponents();
             if (this.currentPage > 1) {
-                final Button firstLink = new ButtonLinkLegacy("1", new ClickListener() {
+                final Button firstLink = new ButtonLink("1", new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -893,7 +893,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(ss1);
             }
             if (this.currentPage > 3) {
-                final Button previous2 = new ButtonLinkLegacy("" + (this.currentPage - 2), new ClickListener() {
+                final Button previous2 = new ButtonLink("" + (this.currentPage - 2), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -905,7 +905,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(previous2);
             }
             if (this.currentPage > 2) {
-                final Button previous1 = new ButtonLinkLegacy("" + (this.currentPage - 1), new ClickListener() {
+                final Button previous1 = new ButtonLink("" + (this.currentPage - 1), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -917,7 +917,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(previous1);
             }
             // Here add current ButtonLinkLegacy
-            currentBtn = new ButtonLinkLegacy("" + this.currentPage, new ClickListener() {
+            currentBtn = new ButtonLink("" + this.currentPage, new ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -931,7 +931,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             this.navigator.addComponent(currentBtn);
             final int range = this.totalPage - this.currentPage;
             if (range >= 1) {
-                final Button next1 = new ButtonLinkLegacy(
+                final Button next1 = new ButtonLink(
                         "" + (this.currentPage + 1), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -944,7 +944,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(next1);
             }
             if (range >= 2) {
-                final Button next2 = new ButtonLinkLegacy(
+                final Button next2 = new ButtonLink(
                         "" + (this.currentPage + 2), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -962,7 +962,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 this.navigator.addComponent(ss2);
             }
             if (range >= 3) {
-                final Button last = new ButtonLinkLegacy("" + this.totalPage,
+                final Button last = new ButtonLink("" + this.totalPage,
                         new ClickListener() {
                             private static final long serialVersionUID = 1L;
 

@@ -208,17 +208,17 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
             }
         };
 
-        ButtonLinkLegacy todoBtn = new ButtonLinkLegacy("New Task", listener);
+        ButtonLink todoBtn = new ButtonLink("New Task", listener);
         actionBtnLayout.addOption(todoBtn);
         todoBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.TASK));
         todoBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_TASK));
 
-        Button callBtn = new ButtonLinkLegacy("New Call", listener);
+        Button callBtn = new ButtonLink("New Call", listener);
         actionBtnLayout.addOption(callBtn);
         callBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.CALL));
         callBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CALL));
 
-        ButtonLinkLegacy meetingBtn = new ButtonLinkLegacy("New Meeting", listener);
+        ButtonLink meetingBtn = new ButtonLink("New Meeting", listener);
         actionBtnLayout.addOption(meetingBtn);
         meetingBtn.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.MEETING));
         meetingBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_MEETING));

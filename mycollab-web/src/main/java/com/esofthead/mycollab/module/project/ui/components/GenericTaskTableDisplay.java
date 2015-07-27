@@ -68,7 +68,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
 import com.vaadin.ui.Button;
@@ -96,7 +96,7 @@ public class GenericTaskTableDisplay extends
             public Component generateCell(Table source, Object itemId, Object columnId) {
                 final ProjectGenericTask task = getBeanByIndex(itemId);
 
-                final ButtonLinkLegacy taskLink = new ButtonLinkLegacy(task.getName(), new Button.ClickListener() {
+                final ButtonLink taskLink = new ButtonLink(task.getName(), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override

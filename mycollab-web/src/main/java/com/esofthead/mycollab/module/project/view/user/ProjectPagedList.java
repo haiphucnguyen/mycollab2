@@ -74,7 +74,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkIconFix.addComponent(projectLink);
             linkIconFix.setExpandRatio(projectLink, 1.0f);
 
-            ButtonLinkLegacy projectMember = new ButtonLinkLegacy(
+            ButtonLink projectMember = new ButtonLink(
                     project.getNumActiveMembers() + " member"
                             + (project.getNumActiveMembers() > 1 ? "s" : ""),
                     new Button.ClickListener() {
@@ -118,7 +118,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             taskStatusLbl.setStyleName("status-lbl");
             taskLblWrap.addComponent(taskStatusLbl);
 
-            final ButtonLinkLegacy taskStatusBtn = new ButtonLinkLegacy(project.getNumOpenTasks() + "/" + project.getNumTasks(),
+            final ButtonLink taskStatusBtn = new ButtonLink(project.getNumOpenTasks() + "/" + project.getNumTasks(),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -152,7 +152,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             Label bugLbl = new Label("Bugs");
             bugLbl.setStyleName("status-lbl");
             bugLblWrap.addComponent(bugLbl);
-            final ButtonLinkLegacy bugStatusBtn = new ButtonLinkLegacy(
+            final ButtonLink bugStatusBtn = new ButtonLink(
                     project.getNumOpenBugs() + "/" + project.getNumBugs(),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;

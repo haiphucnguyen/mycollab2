@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
-import com.esofthead.mycollab.vaadin.ui.ButtonLinkLegacy;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -83,7 +83,7 @@ public class ContactSelectionWindow extends Window {
             public Component generateCell(Table source, Object itemId, Object columnId) {
                 final SimpleContact contact = tableItem.getBeanByIndex(itemId);
 
-                ButtonLinkLegacy b = new ButtonLinkLegacy(contact.getContactName(), new Button.ClickListener() {
+                ButtonLink b = new ButtonLink(contact.getContactName(), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         fieldSelection.fireValueChange(contact);

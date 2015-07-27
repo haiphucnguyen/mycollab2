@@ -135,7 +135,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         memberInfo.addComponent(layoutButtonDelete);
 
-        ButtonLinkLegacy userAccountLink = new ButtonLinkLegacy(member.getDisplayName());
+        ButtonLink userAccountLink = new ButtonLink(member.getDisplayName());
         userAccountLink.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -167,7 +167,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             infoStatus.addStyleName("member-email");
             waitingNotLayout.addComponent(infoStatus);
 
-            ButtonLinkLegacy resendInvitationLink = new ButtonLinkLegacy("Resend Invitation", new Button.ClickListener() {
+            ButtonLink resendInvitationLink = new ButtonLink("Resend Invitation", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override

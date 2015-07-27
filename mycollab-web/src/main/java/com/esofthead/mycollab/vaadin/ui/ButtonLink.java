@@ -24,21 +24,14 @@ import org.vaadin.maddon.button.MButton;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class ButtonLinkLegacy extends MButton {
+public class ButtonLink extends MButton {
     private static final long serialVersionUID = 1L;
 
-    private ButtonLinkLegacy(String caption, Boolean wordWrap) {
-        super(caption);
-        this.setStyleName(UIConstants.THEME_LINK);
-        if (wordWrap)
-            this.addStyleName("wordWrap");
+    public ButtonLink(String caption) {
+        this(caption, null, true);
     }
 
-    public ButtonLinkLegacy(String caption) {
-        this(caption, true);
-    }
-
-    ButtonLinkLegacy(String caption, ClickListener listener, Boolean wordWrap) {
+    ButtonLink(String caption, ClickListener listener, Boolean wordWrap) {
         super(caption);
         this.setStyleName(UIConstants.THEME_LINK);
         if (listener != null) {
@@ -48,7 +41,7 @@ public class ButtonLinkLegacy extends MButton {
             this.addStyleName("wordWrap");
     }
 
-    public ButtonLinkLegacy(String caption, ClickListener listener) {
+    public ButtonLink(String caption, ClickListener listener) {
         this(caption, listener, true);
     }
 }
