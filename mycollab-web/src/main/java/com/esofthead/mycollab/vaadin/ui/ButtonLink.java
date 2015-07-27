@@ -31,7 +31,7 @@ public class ButtonLink extends MButton {
         this(caption, null, true);
     }
 
-    ButtonLink(String caption, ClickListener listener, Boolean wordWrap) {
+    public ButtonLink(String caption, ClickListener listener, Boolean wordWrap) {
         super(caption);
         this.setStyleName(UIConstants.THEME_LINK);
         if (listener != null) {
