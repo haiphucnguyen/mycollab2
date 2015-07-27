@@ -152,26 +152,21 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             Label bugLbl = new Label("Bugs");
             bugLbl.setStyleName("status-lbl");
             bugLblWrap.addComponent(bugLbl);
-            final ButtonLink bugStatusBtn = new ButtonLink(
-                    project.getNumOpenBugs() + "/" + project.getNumBugs(),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            ButtonLink bugStatusBtn = new ButtonLink(project.getNumOpenBugs() + "/" + project.getNumBugs(), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            EventBusFactory.getInstance()
-                                    .post(new ProjectEvent.GotoMyProject(
-                                            this, new PageActionChain(
-                                            new ProjectScreenData.Goto(project.getId()),
-                                            new BugScreenData.GotoDashboard())));
-                        }
-                    }, false);
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(
+                            this, new PageActionChain(new ProjectScreenData.Goto(project.getId()),
+                            new BugScreenData.GotoDashboard())));
+                }
+            }, false);
             bugLblWrap.addComponent(bugStatusBtn);
             bugLblWrap.setComponentAlignment(bugStatusBtn, Alignment.TOP_RIGHT);
             bugStatus.addComponent(bugLblWrap);
             float bugValue = (project.getNumBugs() != 0) ? ((float) (project
-                    .getNumBugs() - project.getNumOpenBugs()) / project
-                    .getNumBugs()) : 1;
+                    .getNumBugs() - project.getNumOpenBugs()) / project.getNumBugs()) : 1;
             ProgressBar bugProgressBar = new ProgressBar(bugValue);
             bugProgressBar.setStyleName("medium");
             bugStatus.addComponent(bugProgressBar);
@@ -195,16 +190,12 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
 
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(
-                            this, new PageActionChain(
-                            new ProjectScreenData.Goto(project.getId()),
-                            new MilestoneScreenData.Search(null))));
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
+                            new PageActionChain(new ProjectScreenData.Goto(project.getId()), new MilestoneScreenData.Search(null))));
                 }
             };
-            Button closePhaseBtn = new Button(String.format(
-                    "%d <small>%s</small>", project.getNumClosedPhase(),
-                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Closed)),
-                    goToPhaseListener);
+            Button closePhaseBtn = new Button(String.format("%d <small>%s</small>", project.getNumClosedPhase(),
+                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Closed)), goToPhaseListener);
             closePhaseBtn.setHtmlContentAllowed(true);
             closePhaseBtn.setStyleName("phase-status-btn");
             phaseStatus.addComponent(closePhaseBtn);
@@ -226,11 +217,8 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             phaseStatus.addComponent(futurePhaseBtn);
 
             phaseStatusLayout.addComponent(phaseStatus);
-
             linkIconFix.addComponent(phaseStatusLayout);
-
             projectLayout.with(projectStatusLayout).expand(linkWrapper);
-
             layout.addComponent(projectLayout);
             return layout;
         }
