@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.module.ecm.domain;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Calendar;
 
@@ -126,18 +128,22 @@ public class Resource implements Comparable<Resource> {
 
     @Override
     public int hashCode() {
-        return path.hashCode();
+        return new HashCodeBuilder(12, 12).append(getPath()).build();
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj != null) {
-            if (this.getClass() == obj.getClass()) {
-                return this.hashCode() == obj.hashCode();
-            }
+        if (obj == null) {
+            return false;
         }
-
-        return super.equals(obj);
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Resource res = (Resource) obj;
+        return new EqualsBuilder().append(getPath(), res.getPath()).build();
     }
 
     public boolean isExternalResource() {

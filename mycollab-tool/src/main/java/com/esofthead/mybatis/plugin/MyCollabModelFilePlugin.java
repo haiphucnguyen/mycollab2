@@ -1,427 +1,351 @@
 package com.esofthead.mybatis.plugin;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.InnerClass;
-import org.mybatis.generator.api.dom.java.Interface;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
-public class MyCollabModelFilePlugin extends
-		org.mybatis.generator.api.PluginAdapter {
+public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAdapter {
 
-	private static Map<String, InnerEnumEx> enumOfBlobDomains = new HashMap<>();
+    private static Map<String, InnerEnumEx> enumOfBlobDomains = new HashMap<>();
 
-	@Override
-	public boolean validate(List<String> args) {
-		return true;
-	}
+    @Override
+    public boolean validate(List<String> args) {
+        return true;
+    }
 
-	@Override
-	public boolean sqlMapDocumentGenerated(Document document,
-			IntrospectedTable introspectedTable) {
-		if (isTableHasIdPrimaryKey(introspectedTable)) {
-			generateInsertAndReturnKeySqlStatement(document, introspectedTable);
-			generateRemoveMultipleKeysSqlStatement(document, introspectedTable);
-			generateUpdateMultipleKeysSqlStatement(document, introspectedTable);
-		}
+    @Override
+    public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+        if (isTableHasIdPrimaryKey(introspectedTable)) {
+            generateInsertAndReturnKeySqlStatement(document, introspectedTable);
+            generateRemoveMultipleKeysSqlStatement(document, introspectedTable);
+            generateUpdateMultipleKeysSqlStatement(document, introspectedTable);
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public boolean modelFieldGenerated(Field field,
-			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
-			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+    @Override
+    public boolean modelFieldGenerated(Field field, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+                                       IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        if (enumFieldClass == null) {
+            enumFieldClass = buildEnumFieldClass();
+            enumOfBlobDomains.put(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(), enumFieldClass);
+        }
 
-		InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable
-				.getAliasedFullyQualifiedTableNameAtRuntime());
-		if (enumFieldClass == null) {
-			enumFieldClass = buildEnumFieldClass();
-			enumOfBlobDomains.put(introspectedTable
-					.getAliasedFullyQualifiedTableNameAtRuntime(),
-					enumFieldClass);
-		}
+        enumFieldClass.addEnumConstant(field.getName());
 
-		enumFieldClass.addEnumConstant(field.getName());
+        if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
+                || "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
+            topLevelClass.addImportedType("org.hibernate.validator.constraints.Length");
+            String annotation = "@Length(max=%s, message=\"%s\")";
+            annotation = String.format(annotation, introspectedColumn.getLength(), "Field value is too long");
+            field.addAnnotation(annotation);
+        }
 
-		if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
-				|| "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
-			String annotation = "@org.hibernate.validator.constraints.Length(max=%s, message=\"%s\")";
-			annotation = String.format(annotation,
-					introspectedColumn.getLength(), "Field value is too long");
-			field.addAnnotation(annotation);
-		}
+        String columnAnnotation = "@Column(\"%s\")";
+        columnAnnotation = String.format(columnAnnotation, introspectedColumn.getActualColumnName());
+        field.addAnnotation(columnAnnotation);
+        return true;
+    }
 
-		String columnAnnotation = "@com.esofthead.mycollab.core.db.metadata.Column(\"%s\")";
-		columnAnnotation = String.format(columnAnnotation,
-				introspectedColumn.getActualColumnName());
-		field.addAnnotation(columnAnnotation);
-		return true;
-	}
+    private static InnerEnumEx buildEnumFieldClass() {
+        InnerEnumEx enumFieldCls = new InnerEnumEx(new FullyQualifiedJavaType("Field"));
+        enumFieldCls.setFinal(true);
+        enumFieldCls.setVisibility(JavaVisibility.PUBLIC);
+        Method equalToMethod = new Method("equalTo");
+        equalToMethod.setReturnType(new FullyQualifiedJavaType("boolean"));
+        equalToMethod.addParameter(new Parameter(new FullyQualifiedJavaType("Object"), "value"));
+        equalToMethod.setVisibility(JavaVisibility.PUBLIC);
+        equalToMethod.addBodyLine("return name().equals(value);");
+        enumFieldCls.addMethod(equalToMethod);
+        return enumFieldCls;
+    }
 
-	private static InnerEnumEx buildEnumFieldClass() {
-		InnerEnumEx enumFieldCls = new InnerEnumEx(new FullyQualifiedJavaType(
-				"Field"));
-		enumFieldCls.setFinal(true);
-		enumFieldCls.setStatic(true);
-		enumFieldCls.setVisibility(JavaVisibility.PUBLIC);
-		Method equalToMethod = new Method("equalTo");
-		equalToMethod.setReturnType(new FullyQualifiedJavaType("boolean"));
-		equalToMethod.addParameter(new Parameter(new FullyQualifiedJavaType(
-				"Object"), "value"));
-		equalToMethod.setVisibility(JavaVisibility.PUBLIC);
-		equalToMethod.addBodyLine("return name().equals(value);");
-		enumFieldCls.addMethod(equalToMethod);
-		return enumFieldCls;
-	}
+    private static boolean isPrimaryKeyOfTable(IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable) {
+        List<IntrospectedColumn> primaryKeyColumns = introspectedTable.getPrimaryKeyColumns();
+        for (IntrospectedColumn priKey : primaryKeyColumns) {
+            if (introspectedColumn.getActualColumnName().equals(priKey.getActualColumnName())) {
+                return true;
+            }
+        }
 
-	private static boolean isPrimaryKeyOfTable(
-			IntrospectedColumn introspectedColumn,
-			IntrospectedTable introspectedTable) {
-		List<IntrospectedColumn> primaryKeyColumns = introspectedTable
-				.getPrimaryKeyColumns();
-		for (IntrospectedColumn priKey : primaryKeyColumns) {
-			if (introspectedColumn.getActualColumnName().equals(
-					priKey.getActualColumnName())) {
-				return true;
-			}
-		}
+        return false;
+    }
 
-		return false;
-	}
+    private void generateInsertAndReturnKeySqlStatement(Document document, IntrospectedTable introspectedTable) {
+        XmlElement element = new XmlElement("insert");
+        String parameterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
+                .getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
+        element.addAttribute(new Attribute("parameterType", parameterType));
+        element.addAttribute(new Attribute("id", "insertAndReturnKey"));
+        element.addAttribute(new Attribute("useGeneratedKeys", "true"));
+        element.addAttribute(new Attribute("keyProperty", "id"));
 
-	private void generateInsertAndReturnKeySqlStatement(Document document,
-			IntrospectedTable introspectedTable) {
-		XmlElement element = new XmlElement("insert");
-		String parameterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
-				.getBaseRecordType() : introspectedTable
-				.getRecordWithBLOBsType();
-		element.addAttribute(new Attribute("parameterType", parameterType));
-		element.addAttribute(new Attribute("id", "insertAndReturnKey"));
-		element.addAttribute(new Attribute("useGeneratedKeys", "true"));
-		element.addAttribute(new Attribute("keyProperty", "id"));
+        TextElement commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
+        element.addElement(commentElement);
 
-		TextElement commentElement = new TextElement(
-				"<!--WARNING - @mbggenerated-->");
-		element.addElement(commentElement);
+        StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
+                introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()).append(" (");
 
-		StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
-				introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())
-				.append(" (");
+        StringBuilder valueSt = new StringBuilder("values (");
 
-		StringBuilder valueSt = new StringBuilder("values (");
+        List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+        for (int i = 0; i < allColumns.size(); i++) {
+            IntrospectedColumn column = allColumns.get(i);
+            sqlBuilder.append(column.getActualColumnName());
 
-		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
-		for (int i = 0; i < allColumns.size(); i++) {
+            valueSt.append("#{").append(column.getJavaProperty())
+                    .append(",jdbcType=").append(column.getJdbcTypeName()).append("}");
 
-			IntrospectedColumn column = allColumns.get(i);
-			sqlBuilder.append(column.getActualColumnName());
+            if (i < allColumns.size() - 1) {
+                sqlBuilder.append(", ");
+                valueSt.append(", ");
+            }
+        }
+        sqlBuilder.append(") ");
+        sqlBuilder.append(valueSt.toString()).append(")");
 
-			valueSt.append("#{").append(column.getJavaProperty())
-					.append(",jdbcType=").append(column.getJdbcTypeName())
-					.append("}");
+        element.addElement(new TextElement(sqlBuilder.toString()));
 
-			if (i < allColumns.size() - 1) {
-				sqlBuilder.append(", ");
-				valueSt.append(", ");
-			}
-		}
-		sqlBuilder.append(") ");
-		sqlBuilder.append(valueSt.toString()).append(")");
+        document.getRootElement().addElement(element);
+    }
 
-		element.addElement(new TextElement(sqlBuilder.toString()));
+    private void generateRemoveMultipleKeysSqlStatement(Document document,
+                                                        IntrospectedTable introspectedTable) {
+        XmlElement element = new XmlElement("delete");
+        TextElement commentElement = new TextElement(
+                "<!--WARNING - @mbggenerated-->");
+        element.addElement(commentElement);
+        element.addAttribute(new Attribute("id", "removeKeysWithSession"));
+        element.addAttribute(new Attribute("parameterType", "java.util.List"));
 
-		document.getRootElement().addElement(element);
-	}
+        StringBuffer sqlBuilder = new StringBuffer("delete from ").append(introspectedTable
+                .getAliasedFullyQualifiedTableNameAtRuntime())
+                .append(" where id IN <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>");
 
-	private void generateRemoveMultipleKeysSqlStatement(Document document,
-			IntrospectedTable introspectedTable) {
-		XmlElement element = new XmlElement("delete");
-		TextElement commentElement = new TextElement(
-				"<!--WARNING - @mbggenerated-->");
-		element.addElement(commentElement);
-		element.addAttribute(new Attribute("id", "removeKeysWithSession"));
-		element.addAttribute(new Attribute("parameterType", "java.util.List"));
+        element.addElement(new TextElement(sqlBuilder.toString()));
+        document.getRootElement().addElement(element);
+    }
 
-		StringBuffer sqlBuilder = new StringBuffer("delete from ")
-				.append(introspectedTable
-						.getAliasedFullyQualifiedTableNameAtRuntime())
-				.append(" where id IN <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>");
+    private void generateUpdateMultipleKeysSqlStatement(Document document, IntrospectedTable introspectedTable) {
+        XmlElement sqlElement = new XmlElement("sql");
+        sqlElement.addAttribute(new Attribute("id", "massUpdateWithSessionSql"));
+        sqlElement.addElement(new TextElement("<!--WARNING - @mbggenerated-->"));
 
-		element.addElement(new TextElement(sqlBuilder.toString()));
-		document.getRootElement().addElement(element);
-	}
+        StringBuffer sqlBuilder = new StringBuffer("update ")
+                .append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        sqlElement.addElement(new TextElement(sqlBuilder.toString()));
+        XmlElement setElement = new XmlElement("set");
 
-	private void generateUpdateMultipleKeysSqlStatement(Document document,
-			IntrospectedTable introspectedTable) {
-		XmlElement sqlElement = new XmlElement("sql");
-		sqlElement
-				.addAttribute(new Attribute("id", "massUpdateWithSessionSql"));
-		sqlElement
-				.addElement(new TextElement("<!--WARNING - @mbggenerated-->"));
+        // set every field of table
+        List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+        for (IntrospectedColumn column : allColumns) {
+            if (!isPrimaryKeyOfTable(column, introspectedTable)) {
+                XmlElement ifElement = new XmlElement("if");
+                String conditionStr = "record.%s != null";
+                ifElement.addAttribute(new Attribute("test", String.format(conditionStr, column.getJavaProperty())));
 
-		StringBuffer sqlBuilder = new StringBuffer("update ")
-				.append(introspectedTable
-						.getAliasedFullyQualifiedTableNameAtRuntime());
-		sqlElement.addElement(new TextElement(sqlBuilder.toString()));
-		XmlElement setElement = new XmlElement("set");
+                String setStr = "%s = #{record.%s,jdbcType=%s},";
+                ifElement.addElement(new TextElement(String.format(setStr, column.getActualColumnName(), column.getJavaProperty(),
+                        column.getJdbcTypeName())));
 
-		// set every field of table
-		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
-		for (IntrospectedColumn column : allColumns) {
-			if (!isPrimaryKeyOfTable(column, introspectedTable)) {
-				XmlElement ifElement = new XmlElement("if");
-				String conditionStr = "record.%s != null";
-				ifElement.addAttribute(new Attribute("test", String.format(
-						conditionStr, column.getJavaProperty())));
+                setElement.addElement(ifElement);
+            }
+        }
+        sqlElement.addElement(setElement);
+        document.getRootElement().addElement(sqlElement);
 
-				String setStr = "%s = #{record.%s,jdbcType=%s},";
-				ifElement.addElement(new TextElement(String.format(setStr,
-						column.getActualColumnName(), column.getJavaProperty(),
-						column.getJdbcTypeName())));
+        XmlElement element = new XmlElement("update");
+        element.addAttribute(new Attribute("id", "massUpdateWithSession"));
+        element.addAttribute(new Attribute("parameterType", "map"));
+        TextElement commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
+        element.addElement(commentElement);
 
-				setElement.addElement(ifElement);
-			}
-		}
-		sqlElement.addElement(setElement);
-		document.getRootElement().addElement(sqlElement);
+        XmlElement includeElement = new XmlElement("include");
+        includeElement.addAttribute(new Attribute("refid", "massUpdateWithSessionSql"));
 
-		XmlElement element = new XmlElement("update");
-		element.addAttribute(new Attribute("id", "massUpdateWithSession"));
-		element.addAttribute(new Attribute("parameterType", "map"));
-		TextElement commentElement = new TextElement(
-				"<!--WARNING - @mbggenerated-->");
-		element.addElement(commentElement);
+        element.addElement(includeElement);
 
-		XmlElement includeElement = new XmlElement("include");
-		includeElement.addAttribute(new Attribute("refid",
-				"massUpdateWithSessionSql"));
+        // generate query statement
+        XmlElement queryElement = new XmlElement("if");
+        queryElement.addAttribute(new Attribute("test", "_parameter != null"));
+        queryElement.addElement(new TextElement(
+                " where id IN <foreach item=\"item\" index=\"index\" collection=\"primaryKeys\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>"));
 
-		element.addElement(includeElement);
+        element.addElement(queryElement);
+        document.getRootElement().addElement(element);
+    }
 
-		// generate query statement
-		XmlElement queryElement = new XmlElement("if");
-		queryElement.addAttribute(new Attribute("test", "_parameter != null"));
-		queryElement
-				.addElement(new TextElement(
-						" where id IN <foreach item=\"item\" index=\"index\" collection=\"primaryKeys\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>"));
+    private boolean isBlobDomainGenerated(IntrospectedTable introspectedTable) {
+        return !(introspectedTable.getBLOBColumns().size() == 0 || introspectedTable
+                .getBLOBColumns().size() == 1);
+    }
 
-		element.addElement(queryElement);
-		document.getRootElement().addElement(element);
-	}
+    @Override
+    public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        String commentLine = "/*Domain class of table %s*/";
+        topLevelClass.addFileCommentLine(String.format(commentLine,
+                introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()));
+        topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+        Field staticField = new Field("serialVersionUID", new FullyQualifiedJavaType("long"));
+        staticField.setInitializationString("1");
+        staticField.setStatic(true);
+        staticField.setFinal(true);
+        staticField.setVisibility(JavaVisibility.PRIVATE);
+        topLevelClass.addField(staticField);
 
-	private boolean isBlobDomainGenerated(IntrospectedTable introspectedTable) {
-		return !(introspectedTable.getBLOBColumns().size() == 0 || introspectedTable
-				.getBLOBColumns().size() == 1);
-	}
+        if (!isBlobDomainGenerated(introspectedTable)) {
+            topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 
-	@Override
-	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		String commentLine = "/*Domain class of table %s*/";
-		topLevelClass
-				.addFileCommentLine(String.format(commentLine,
-						introspectedTable
-								.getAliasedFullyQualifiedTableNameAtRuntime()));
-		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
-		Field staticField = new Field("serialVersionUID",
-				new FullyQualifiedJavaType("long"));
-		staticField.setInitializationString("1");
-		staticField.setStatic(true);
-		staticField.setFinal(true);
-		staticField.setVisibility(JavaVisibility.PRIVATE);
-		topLevelClass.addField(staticField);
+            InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+            if (enumFieldClass == null) {
+                enumFieldClass = buildEnumFieldClass();
+                enumOfBlobDomains.put(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(), enumFieldClass);
+            }
+            topLevelClass.addInnerEnum(enumFieldClass);
 
-		if (!isBlobDomainGenerated(introspectedTable)) {
-			topLevelClass.setVisibility(JavaVisibility.PUBLIC);
+        } else {
+            topLevelClass.setVisibility(JavaVisibility.DEFAULT);
+        }
 
-			InnerEnumEx enumFieldClass = enumOfBlobDomains
-					.get(introspectedTable
-							.getAliasedFullyQualifiedTableNameAtRuntime());
-			if (enumFieldClass == null) {
-				enumFieldClass = buildEnumFieldClass();
-				enumOfBlobDomains.put(introspectedTable
-						.getAliasedFullyQualifiedTableNameAtRuntime(),
-						enumFieldClass);
-			}
-			topLevelClass.addInnerEnum(enumFieldClass);
+        String tableAnnotation = "@Table(\"%s\")";
+        tableAnnotation = String.format(tableAnnotation, introspectedTable.getTableConfiguration().getTableName());
+        topLevelClass.addAnnotation(tableAnnotation);
 
-		} else {
-			topLevelClass.setVisibility(JavaVisibility.DEFAULT);
-		}
+        return super.modelBaseRecordClassGenerated(topLevelClass, introspectedTable);
+    }
 
-		String tableAnnotation = "@com.esofthead.mycollab.core.db.metadata.Table(\"%s\")";
-		tableAnnotation = String.format(tableAnnotation, introspectedTable
-				.getTableConfiguration().getTableName());
-		topLevelClass.addAnnotation(tableAnnotation);
+    @Override
+    public boolean modelRecordWithBLOBsClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Column");
+        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Table");
+        topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+        Field staticField = new Field("serialVersionUID", new FullyQualifiedJavaType("long"));
+        staticField.setInitializationString("1");
+        staticField.setStatic(true);
+        staticField.setFinal(true);
+        staticField.setVisibility(JavaVisibility.PRIVATE);
+        topLevelClass.addField(staticField);
 
-		return super.modelBaseRecordClassGenerated(topLevelClass,
-				introspectedTable);
-	}
+        InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        if (enumFieldClass == null) {
+            enumFieldClass = buildEnumFieldClass();
+            enumOfBlobDomains.put(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime(), enumFieldClass);
+        }
+        topLevelClass.addInnerEnum(enumFieldClass);
 
-	@Override
-	public boolean modelRecordWithBLOBsClassGenerated(
-			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+        return super.modelRecordWithBLOBsClassGenerated(topLevelClass, introspectedTable);
+    }
 
-		Field staticField = new Field("serialVersionUID",
-				new FullyQualifiedJavaType("long"));
-		staticField.setInitializationString("1");
-		staticField.setStatic(true);
-		staticField.setFinal(true);
-		staticField.setVisibility(JavaVisibility.PRIVATE);
-		topLevelClass.addField(staticField);
+    @Override
+    public boolean modelExampleClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+        List<InnerClass> innerClasses = topLevelClass.getInnerClasses();
+        for (InnerClass innerClass : innerClasses) {
+            innerClass.addAnnotation("@SuppressWarnings(\"ucd\")");
+        }
+        return super.modelExampleClassGenerated(topLevelClass, introspectedTable);
+    }
 
-		InnerEnumEx enumFieldClass = enumOfBlobDomains.get(introspectedTable
-				.getAliasedFullyQualifiedTableNameAtRuntime());
-		if (enumFieldClass == null) {
-			enumFieldClass = buildEnumFieldClass();
-			enumOfBlobDomains.put(introspectedTable
-					.getAliasedFullyQualifiedTableNameAtRuntime(),
-					enumFieldClass);
-		}
-		topLevelClass.addInnerEnum(enumFieldClass);
+    @Override
+    public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        interfaze.addAnnotation("@SuppressWarnings({ \"ucd\", \"rawtypes\" })");
 
-		return super.modelRecordWithBLOBsClassGenerated(topLevelClass,
-				introspectedTable);
-	}
+        if (isTableHasIdPrimaryKey(introspectedTable)) {
+            generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
+            generateRemoveMultipleKeysMethod(interfaze, introspectedTable);
+            generateMassUpdateMultipleKeysMethod(interfaze, introspectedTable);
+        }
 
-	@Override
-	public boolean modelExampleClassGenerated(TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		topLevelClass.addAnnotation("@SuppressWarnings(\"ucd\")");
-		List<InnerClass> innerClasses = topLevelClass.getInnerClasses();
-		for (InnerClass innerClass : innerClasses) {
-			innerClass.addAnnotation("@SuppressWarnings(\"ucd\")");
-		}
-		return super.modelExampleClassGenerated(topLevelClass,
-				introspectedTable);
-	}
+        return true;
+    }
 
-	@Override
-	public boolean clientGenerated(Interface interfaze,
-			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+    private void generateInsertAndReturnKeyMethod(Interface interfaze, IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        method.setName("insertAndReturnKey");
+        String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
+                .getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
+        method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(paramterType), "value"));
+        interfaze.addMethod(method);
+    }
 
-		interfaze.addAnnotation("@SuppressWarnings({ \"ucd\", \"rawtypes\" })");
+    private void generateRemoveMultipleKeysMethod(Interface interfaze, IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        method.setName("removeKeysWithSession");
+        method.setReturnType(new FullyQualifiedJavaType("void"));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType("java.util.List"), "primaryKeys"));
+        interfaze.addMethod(method);
+    }
 
-		if (isTableHasIdPrimaryKey(introspectedTable)) {
-			generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
-			generateRemoveMultipleKeysMethod(interfaze, introspectedTable);
-			generateMassUpdateMultipleKeysMethod(interfaze, introspectedTable);
-		}
+    private void generateMassUpdateMultipleKeysMethod(Interface interfaze, IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        method.setName("massUpdateWithSession");
+        method.setReturnType(new FullyQualifiedJavaType("void"));
 
-		return true;
-	}
+        String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
+                .getBaseRecordType() : introspectedTable.getRecordWithBLOBsType();
 
-	private void generateInsertAndReturnKeyMethod(Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		Method method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		context.getCommentGenerator().addGeneralMethodComment(method,
-				introspectedTable);
-		method.setName("insertAndReturnKey");
-		String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
-				.getBaseRecordType() : introspectedTable
-				.getRecordWithBLOBsType();
-		method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
-		method.addParameter(new Parameter(new FullyQualifiedJavaType(
-				paramterType), "value"));
-		interfaze.addMethod(method);
-	}
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(paramterType), "record", "@Param(\"record\")"));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType("java.util.List"), "primaryKeys", "@Param(\"primaryKeys\")"));
+        interfaze.addMethod(method);
+    }
 
-	private void generateRemoveMultipleKeysMethod(Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		Method method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		context.getCommentGenerator().addGeneralMethodComment(method,
-				introspectedTable);
-		method.setName("removeKeysWithSession");
-		method.setReturnType(new FullyQualifiedJavaType("void"));
-		method.addParameter(new Parameter(new FullyQualifiedJavaType(
-				"java.util.List"), "primaryKeys"));
-		interfaze.addMethod(method);
-	}
+    @Override
+    public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(Method method, Interface interfaze,
+                                                                       IntrospectedTable introspectedTable) {
+        boolean result = isBlobDomainGenerated(introspectedTable);
+        return !result;
+    }
 
-	private void generateMassUpdateMultipleKeysMethod(Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		Method method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		context.getCommentGenerator().addGeneralMethodComment(method,
-				introspectedTable);
-		method.setName("massUpdateWithSession");
-		method.setReturnType(new FullyQualifiedJavaType("void"));
+    @Override
+    public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze,
+                                                                    IntrospectedTable introspectedTable) {
+        boolean result = isBlobDomainGenerated(introspectedTable);
+        return !result;
+    }
 
-		String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
-				.getBaseRecordType() : introspectedTable
-				.getRecordWithBLOBsType();
+    @Override
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method, TopLevelClass topLevelClass,
+                                                                    IntrospectedTable introspectedTable) {
+        boolean result = isBlobDomainGenerated(introspectedTable);
+        return !result;
+    }
 
-		method.addParameter(new Parameter(new FullyQualifiedJavaType(
-				paramterType), "record", "@Param(\"record\")"));
-		method.addParameter(new Parameter(new FullyQualifiedJavaType(
-				"java.util.List"), "primaryKeys", "@Param(\"primaryKeys\")"));
-		interfaze.addMethod(method);
-	}
+    @Override
+    public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(Method method, Interface interfaze,
+                                                                    IntrospectedTable introspectedTable) {
+        boolean result = isBlobDomainGenerated(introspectedTable);
+        return !result;
+    }
 
-	@Override
-	public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
-			Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		boolean result = isBlobDomainGenerated(introspectedTable);
-		return !result;
-	}
-
-	@Override
-	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
-			Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		boolean result = isBlobDomainGenerated(introspectedTable);
-		return !result;
-	}
-
-	@Override
-	public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(
-			Method method, TopLevelClass topLevelClass,
-			IntrospectedTable introspectedTable) {
-		boolean result = isBlobDomainGenerated(introspectedTable);
-		return !result;
-	}
-
-	@Override
-	public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(
-			Method method, Interface interfaze,
-			IntrospectedTable introspectedTable) {
-		boolean result = isBlobDomainGenerated(introspectedTable);
-		return !result;
-	}
-
-	private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
-		List<IntrospectedColumn> primaryKeys = introspectedTable
-				.getPrimaryKeyColumns();
-		if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
-			IntrospectedColumn column = primaryKeys.get(0);
-			return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
-					.equals("java.lang.Integer");
-		} else {
-			return false;
-		}
-	}
+    private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
+        List<IntrospectedColumn> primaryKeys = introspectedTable.getPrimaryKeyColumns();
+        if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
+            IntrospectedColumn column = primaryKeys.get(0);
+            return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
+                    .equals("java.lang.Integer");
+        } else {
+            return false;
+        }
+    }
 }

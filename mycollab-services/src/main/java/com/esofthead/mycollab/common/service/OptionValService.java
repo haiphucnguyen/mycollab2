@@ -16,9 +16,14 @@
  */
 package com.esofthead.mycollab.common.service;
 
+import com.esofthead.mycollab.common.domain.OptionVal;
+
+import java.util.List;
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
 public interface OptionValService {
+    List<OptionVal> findOptionVals(String type, String projectId);
 }

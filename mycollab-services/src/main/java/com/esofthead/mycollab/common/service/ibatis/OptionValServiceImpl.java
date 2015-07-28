@@ -18,11 +18,14 @@ package com.esofthead.mycollab.common.service.ibatis;
 
 import com.esofthead.mycollab.common.dao.OptionValMapper;
 import com.esofthead.mycollab.common.domain.OptionVal;
+import com.esofthead.mycollab.common.domain.OptionValExample;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -36,5 +39,11 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     @Override
     public ICrudGenericDAO<Integer, OptionVal> getCrudMapper() {
         return optionValMapper;
+    }
+
+    @Override
+    public List<OptionVal> findOptionVals(String type, String projectId) {
+        OptionValExample ex = new OptionValExample();
+        return optionValMapper.selectByExampleWithBLOBs(ex);
     }
 }

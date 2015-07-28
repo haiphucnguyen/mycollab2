@@ -46,14 +46,11 @@ public class S3RawContentServiceImpl implements RawContentService {
             metaData.setCacheControl("max-age=8640000");
             metaData.setContentLength(stream.available());
             PutObjectRequest request = new PutObjectRequest(
-                    storageConfiguration.getBucket(), objectPath, stream,
-                    metaData);
+                    storageConfiguration.getBucket(), objectPath, stream, metaData);
 
-            s3client.putObject(request
-                    .withCannedAcl(CannedAccessControlList.PublicRead));
+            s3client.putObject(request.withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (Exception e) {
-            throw new RuntimeException("Can not save s3 object path "
-                    + objectPath, e);
+            throw new RuntimeException("Can not save s3 object path " + objectPath, e);
         }
     }
 
@@ -62,9 +59,7 @@ public class S3RawContentServiceImpl implements RawContentService {
         AmazonS3 s3client = storageConfiguration.newS3Client();
 
         try {
-            S3Object obj = s3client.getObject(new GetObjectRequest(
-                    storageConfiguration.getBucket(), objectPath));
-
+            S3Object obj = s3client.getObject(new GetObjectRequest(storageConfiguration.getBucket(), objectPath));
             return obj.getObjectContent();
         } catch (Exception e) {
             throw new MyCollabException(
@@ -77,17 +72,12 @@ public class S3RawContentServiceImpl implements RawContentService {
         AmazonS3 s3client = storageConfiguration.newS3Client();
 
         try {
-            ObjectListing listObjects = s3client.listObjects(
-                    storageConfiguration.getBucket(), objectPath);
-            for (S3ObjectSummary objectSummary : listObjects
-                    .getObjectSummaries()) {
-                s3client.deleteObject(storageConfiguration.getBucket(),
-                        objectSummary.getKey());
+            ObjectListing listObjects = s3client.listObjects(storageConfiguration.getBucket(), objectPath);
+            for (S3ObjectSummary objectSummary : listObjects.getObjectSummaries()) {
+                s3client.deleteObject(storageConfiguration.getBucket(), objectSummary.getKey());
             }
-
         } catch (Exception e) {
-            throw new MyCollabException("Can not remove object path "
-                    + objectPath, e);
+            throw new MyCollabException("Can not remove object path " + objectPath, e);
         }
     }
 
@@ -96,10 +86,8 @@ public class S3RawContentServiceImpl implements RawContentService {
         AmazonS3 s3client = storageConfiguration.newS3Client();
 
         try {
-            ObjectListing listObjects = s3client.listObjects(
-                    storageConfiguration.getBucket(), oldPath);
-            for (S3ObjectSummary objectSummary : listObjects
-                    .getObjectSummaries()) {
+            ObjectListing listObjects = s3client.listObjects(storageConfiguration.getBucket(), oldPath);
+            for (S3ObjectSummary objectSummary : listObjects.getObjectSummaries()) {
                 String key = objectSummary.getKey();
                 String appendPath = key.substring(oldPath.length());
                 String newAppPath = newPath + appendPath;
@@ -107,12 +95,10 @@ public class S3RawContentServiceImpl implements RawContentService {
                 CopyObjectRequest copyRequest = new CopyObjectRequest(
                         storageConfiguration.getBucket(), key,
                         storageConfiguration.getBucket(), newAppPath);
-                copyRequest
-                        .withCannedAccessControlList(CannedAccessControlList.PublicRead);
+                copyRequest.withCannedAccessControlList(CannedAccessControlList.PublicRead);
                 s3client.copyObject(copyRequest);
 
-                DeleteObjectRequest deleteRequest = new DeleteObjectRequest(
-                        storageConfiguration.getBucket(), key);
+                DeleteObjectRequest deleteRequest = new DeleteObjectRequest(storageConfiguration.getBucket(), key);
                 s3client.deleteObject(deleteRequest);
             }
 
@@ -134,11 +120,9 @@ public class S3RawContentServiceImpl implements RawContentService {
         AmazonS3 s3client = storageConfiguration.newS3Client();
 
         try {
-            ObjectListing listObjects = s3client.listObjects(
-                    storageConfiguration.getBucket(), path);
+            ObjectListing listObjects = s3client.listObjects(storageConfiguration.getBucket(), path);
             long size = 0;
-            for (S3ObjectSummary objectSummary : listObjects
-                    .getObjectSummaries()) {
+            for (S3ObjectSummary objectSummary : listObjects.getObjectSummaries()) {
                 size += objectSummary.getSize();
             }
 
