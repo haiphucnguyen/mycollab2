@@ -12,7 +12,7 @@ CREATE TABLE `m_options` (
   `type` VARCHAR(45) NOT NULL,
   `typeVal` VARCHAR(255) NOT NULL,
   `description` TEXT NULL,
-  `order` INT(3) NOT NULL,
+  `orderIndex` INT(3) NULL,
   `sAccountId` INT(11) NOT NULL,
   `createdtime` DATETIME NOT NULL,
   `createdUser` VARCHAR(45) COLLATE 'utf8mb4_unicode_ci' NULL,

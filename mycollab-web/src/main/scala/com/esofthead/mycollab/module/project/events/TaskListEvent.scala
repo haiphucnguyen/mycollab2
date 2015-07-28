@@ -24,17 +24,16 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
  */
 object TaskListEvent {
 
-  class GotoGanttChartView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class ReoderTaskList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class ReoderTaskList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class SaveReoderTaskList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class SaveReoderTaskList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoTaskListScreen(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoTaskListScreen(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 }

@@ -27,12 +27,14 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener
 import com.esofthead.mycollab.module.page.domain.Page
 import com.esofthead.mycollab.module.project.domain._
 import com.esofthead.mycollab.module.project.domain.criteria._
+import com.esofthead.mycollab.module.project.events.TaskEvent.GotoKanbanView
 import com.esofthead.mycollab.module.project.events._
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus
 import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.file.FilePresenter
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.SearchItem
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoKanbanView
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
@@ -124,12 +126,6 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                 projectView.gotoTaskList(data)
             }
         })
-        this.register(new ApplicationEventListener[TaskListEvent.GotoGanttChartView] {
-            @Subscribe def handle(event: TaskListEvent.GotoGanttChartView) {
-                val data: TaskGroupScreenData.GotoGanttChartView = new TaskGroupScreenData.GotoGanttChartView
-                projectView.gotoTaskList(data)
-            }
-        })
     }
 
     private def bindTaskEvents(): Unit = {
@@ -160,10 +156,17 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         })
         this.register(new ApplicationEventListener[TaskEvent.GotoGanttChart] {
             @Subscribe def handle(event: TaskEvent.GotoGanttChart) {
-                val data: TaskScreenData.GanttChart = new TaskScreenData.GanttChart
+                val data: TaskScreenData.GotoGanttChart = new TaskScreenData.GotoGanttChart
                 projectView.gotoTaskList(data)
             }
         })
+        this.register(new ApplicationEventListener[TaskEvent.GotoKanbanView] {
+            @Subscribe override def handle(event: TaskEvent.GotoKanbanView): Unit = {
+                val data:TaskScreenData.GotoKanbanView = new TaskScreenData.GotoKanbanView
+                projectView.gotoTaskList(data)
+            }
+        })
+
         this.register(new ApplicationEventListener[TaskEvent.Search] {
             @Subscribe def handle(event: TaskEvent.Search) {
                 val data: TaskScreenData.Search = new TaskScreenData.Search(event.getData.asInstanceOf[TaskFilterParameter])

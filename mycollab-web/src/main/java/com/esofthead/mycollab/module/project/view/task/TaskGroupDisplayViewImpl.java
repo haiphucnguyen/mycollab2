@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.i18n.FileI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -300,9 +299,19 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
         chartDisplayBtn.setDescription("Display Gantt chart");
         chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
 
+        Button kanbanBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                displayKanbanView();
+            }
+        });
+        kanbanBtn.setDescription("Kanban View");
+        kanbanBtn.setIcon(FontAwesome.TH);
+
         viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(simpleDisplayBtn);
         viewButtons.addButton(advanceDisplayBtn);
+        viewButtons.addButton(kanbanBtn);
         viewButtons.addButton(chartDisplayBtn);
         viewButtons.setDefaultButton(advanceDisplayBtn);
 
@@ -462,6 +471,11 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
 
     private void displayGanttChartView() {
         EventBusFactory.getInstance().post(new TaskEvent.GotoGanttChart(this, null));
+    }
+
+
+    private void displayKanbanView() {
+        EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
     }
 
     private void displayActiveTaskGroups() {

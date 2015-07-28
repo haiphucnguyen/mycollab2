@@ -79,10 +79,8 @@ public class GridFormLayoutHelper implements Serializable {
         return this.layout.getRows();
     }
 
-    public void addComponent(Component field, String caption, int columns,
-                             int rows, int colspan, String width) {
-        this.addComponent(field, caption, columns, rows, colspan, width,
-                this.captionAlignment);
+    public void addComponent(Component field, String caption, int columns, int rows, int colspan, String width) {
+        this.addComponent(field, caption, columns, rows, colspan, width, this.captionAlignment);
     }
 
     public void addComponent(Component field, String caption, int columns, int rows) {

@@ -78,7 +78,7 @@ public class TaskListGanttItemWrapper extends GanttItemWrapper {
 
     @Override
     String buildTooltip() {
-        return ProjectTooltipGenerator.generateToolTipTaskList(AppContext.getUserLocale(), taskList, AppContext
-                .getSiteUrl(), AppContext.getTimezone());
+        return ProjectTooltipGenerator.generateToolTipTaskList(AppContext.getUserLocale(), taskList,
+                AppContext.getSiteUrl(), AppContext.getTimezone());
     }
 }

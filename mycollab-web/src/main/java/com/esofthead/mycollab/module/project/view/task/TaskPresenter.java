@@ -57,30 +57,21 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
         if (data instanceof TaskScreenData.Read) {
             presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
         } else if (data instanceof TaskGroupScreenData.Read) {
-            presenter = PresenterResolver
-                    .getPresenter(TaskGroupReadPresenter.class);
-        } else if (ClassUtils.instanceOf(data, TaskScreenData.Edit.class,
-                TaskScreenData.Add.class)) {
+            presenter = PresenterResolver.getPresenter(TaskGroupReadPresenter.class);
+        } else if (ClassUtils.instanceOf(data, TaskScreenData.Edit.class, TaskScreenData.Add.class)) {
             presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
-        } else if (ClassUtils.instanceOf(data, TaskGroupScreenData.Add.class,
-                TaskGroupScreenData.Edit.class)) {
-            presenter = PresenterResolver
-                    .getPresenter(TaskGroupAddPresenter.class);
+        } else if (ClassUtils.instanceOf(data, TaskGroupScreenData.Add.class, TaskGroupScreenData.Edit.class)) {
+            presenter = PresenterResolver.getPresenter(TaskGroupAddPresenter.class);
         } else if (data instanceof TaskGroupScreenData.ReorderTaskListRequest) {
-            presenter = PresenterResolver
-                    .getPresenter(TaskGroupReorderPresenter.class);
-        } else if (data instanceof TaskGroupScreenData.GotoDashboard
-                || data == null) {
-            presenter = PresenterResolver
-                    .getPresenter(TaskGroupDisplayPresenter.class);
-        } else if (data instanceof TaskGroupScreenData.GotoGanttChartView) {
-            presenter = PresenterResolver
-                    .getPresenter(GanttChartViewPresenter.class);
+            presenter = PresenterResolver.getPresenter(TaskGroupReorderPresenter.class);
+        } else if (data instanceof TaskGroupScreenData.GotoDashboard || data == null) {
+            presenter = PresenterResolver.getPresenter(TaskGroupDisplayPresenter.class);
         } else if (data instanceof TaskScreenData.Search) {
-            presenter = PresenterResolver
-                    .getPresenter(TaskSearchPresenter.class);
-        } else if (data instanceof TaskScreenData.GanttChart) {
+            presenter = PresenterResolver.getPresenter(TaskSearchPresenter.class);
+        } else if (data instanceof TaskScreenData.GotoGanttChart) {
             presenter = PresenterResolver.getPresenter(GanttChartViewPresenter.class);
+        } else if (data instanceof TaskScreenData.GotoKanbanView) {
+            presenter = PresenterResolver.getPresenter(TaskKanbanPresenter.class);
         } else {
             throw new MyCollabException("No support data: " + data);
         }

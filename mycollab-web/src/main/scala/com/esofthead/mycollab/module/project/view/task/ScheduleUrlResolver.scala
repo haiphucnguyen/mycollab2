@@ -20,7 +20,8 @@ import com.esofthead.mycollab.common.UrlTokenizer
 import com.esofthead.mycollab.eventmanager.EventBusFactory
 import com.esofthead.mycollab.module.project.events.ProjectEvent
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver
-import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskGroupScreenData}
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoGanttChart
+import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskGroupScreenData, TaskScreenData}
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -32,6 +33,7 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
     this.addSubResolver("task", new TaskUrlResolver)
     this.addSubResolver("taskgroup", new TaskGroupUrlResolver)
     this.addSubResolver("gantt", new GanttUrlResolver)
+    this.addSubResolver("kanban", new KanbanUrlResolver)
     this.defaultUrlResolver = new FilterUrlResolver
 
     private class DashboardUrlResolver extends ProjectUrlResolver {
@@ -52,11 +54,20 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
         }
     }
 
+    private class KanbanUrlResolver extends ProjectUrlResolver {
+        protected override def handlePage(params: String*): Unit = {
+            val projectId = new UrlTokenizer(params(0)).getInt
+            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+                new TaskScreenData.GotoKanbanView)
+            EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+        }
+    }
+
     private class GanttUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
             val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new TaskGroupScreenData.GotoGanttChartView)
+                new GotoGanttChart)
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }

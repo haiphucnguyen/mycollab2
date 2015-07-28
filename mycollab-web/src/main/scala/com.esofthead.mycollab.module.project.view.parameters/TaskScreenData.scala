@@ -24,15 +24,17 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData
  * @since 5.0.3
  */
 object TaskScreenData {
-
-  class Search(param: TaskFilterParameter) extends ScreenData[TaskFilterParameter](param) {}
-
-  class Read(param: Integer) extends ScreenData[Integer](param) {}
-
-  class Edit(param: Task) extends ScreenData[Task](param) {}
-
-  class Add(param: Task) extends ScreenData[Task](param) {}
-
-  class GanttChart extends ScreenData {}
-
+    
+    class Search(param: TaskFilterParameter) extends ScreenData[TaskFilterParameter](param) {}
+    
+    class Read(param: Integer) extends ScreenData[Integer](param) {}
+    
+    class Edit(param: Task) extends ScreenData[Task](param) {}
+    
+    class Add(param: Task) extends ScreenData[Task](param) {}
+    
+    class GotoGanttChart extends ScreenData {}
+    
+    class GotoKanbanView extends ScreenData {}
+    
 }

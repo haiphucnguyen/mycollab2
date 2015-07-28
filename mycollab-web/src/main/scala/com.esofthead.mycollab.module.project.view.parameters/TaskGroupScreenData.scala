@@ -31,8 +31,6 @@ object TaskGroupScreenData {
 
   class ReorderTaskListRequest extends ScreenData {}
 
-  class GotoGanttChartView extends ScreenData {}
-
   class Edit(param: TaskList) extends ScreenData[TaskList](param) {}
 
   class Add(param: TaskList) extends ScreenData[TaskList](param) {}

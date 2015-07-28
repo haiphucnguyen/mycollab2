@@ -24,14 +24,16 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
  */
 object TaskEvent {
 
-  class Search(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class Search(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoGanttChart(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoGanttChart(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
+    class GotoKanbanView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
 }
