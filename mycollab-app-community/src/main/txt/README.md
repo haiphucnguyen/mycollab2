@@ -58,6 +58,7 @@ Version 5.1.1
 **Bug Fixes**
 
 * General bug fixes of file module
+* Can not download file folder
 
 
 Version 5.1.0
