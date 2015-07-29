@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.kanban;
 
+import com.esofthead.mycollab.common.domain.OptionVal;
 import com.vaadin.ui.Label;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -24,13 +25,15 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * @since 5.1.1
  */
 public class KanbanBlock extends MVerticalLayout {
-    private String stage;
+    private OptionVal optionVal;
 
-    public KanbanBlock(String stage) {
-        this.stage = stage;
-        Label header = new Label(stage);
+    public KanbanBlock(OptionVal stage) {
+        this.optionVal = stage;
+        Label header = new Label(optionVal.getTypeval());
+        header.addStyleName("header");
         this.with(header);
         this.setWidth("300px");
         this.setHeight("100%");
+        this.addStyleName("kanban-block");
     }
 }

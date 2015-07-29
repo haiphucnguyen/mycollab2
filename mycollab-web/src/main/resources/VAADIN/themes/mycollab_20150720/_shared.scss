@@ -574,4 +574,14 @@
   div.v-tree-node-caption div {
     white-space: normal;
   }
+
+  /* Kanban block */
+  .kanban-block {
+    background-color: #e2e4e6;
+    .header {
+      font-weight: bold;
+      color: black;
+      font-size: $font-large;
+    }
+  }
 }

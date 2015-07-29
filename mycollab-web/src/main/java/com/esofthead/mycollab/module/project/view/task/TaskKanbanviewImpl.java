@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -39,6 +40,8 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import java.util.List;
@@ -51,8 +54,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @ViewComponent
 public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanview {
+    private static Logger LOG = LoggerFactory.getLogger(TaskKanbanviewImpl.class);
 
     private ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+    private OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
+
     private MHorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
 
@@ -89,8 +95,12 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         header.with(headerWrapper, addNewColumnBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
                 .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).withAlign(addNewColumnBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
-        kanbanLayout = new MHorizontalLayout().withFullHeight().withSpacing(false);
-        this.with(header, kanbanLayout).expand(kanbanLayout);
+        kanbanLayout = new MHorizontalLayout().withFullHeight();
+        CssLayout wrapLayout = new CssLayout();
+        wrapLayout.setWidth("100%");
+        wrapLayout.setHeight("100%");
+        wrapLayout.addComponent(kanbanLayout);
+        this.with(header, wrapLayout).expand(wrapLayout);
     }
 
     @Override
@@ -105,16 +115,22 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
+                List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
+                        CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+                for (OptionVal optionVal : optionVals) {
+                    KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
+                    kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
+                    kanbanLayout.with(kanbanBlock);
+                }
+
                 for (SimpleTask task : tasks) {
                     String status = task.getStatus();
                     KanbanBlock kanbanBlock = kanbanBlocks.get(status);
                     if (kanbanBlock == null) {
-                        kanbanBlock = new KanbanBlock(status);
-                        kanbanBlocks.put(status, kanbanBlock);
-                        kanbanLayout.with(kanbanBlock);
+                        LOG.error("Can not find a kanban block for status: " + status);
+                    } else {
+                        kanbanBlock.with(new Label(task.getTaskname()));
                     }
-
-                    kanbanBlock.with(new Label(task.getTaskname()));
                     UI.getCurrent().push();
                 }
             }
@@ -126,7 +142,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
-                KanbanBlock kanbanBlock = new KanbanBlock(option.getTypeval());
+                KanbanBlock kanbanBlock = new KanbanBlock(option);
                 kanbanBlocks.put(option.getTypeval(), kanbanBlock);
                 kanbanLayout.with(kanbanBlock);
                 UI.getCurrent().push();

@@ -71,6 +71,5 @@ public class V20150729_1__Default_Values_Option_Table implements SpringJdbcMigra
                 }
             }
         }
-
     }
 }

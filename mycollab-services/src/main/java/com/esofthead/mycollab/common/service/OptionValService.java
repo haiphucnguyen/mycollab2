@@ -29,5 +29,5 @@ import java.util.List;
  */
 public interface OptionValService extends ICrudService<Integer, OptionVal> {
     @Cacheable
-    List<OptionVal> findOptionVals(String type, String projectId, @CacheKey Integer sAccountId);
+    List<OptionVal> findOptionVals(String type, Integer projectId, @CacheKey Integer sAccountId);
 }

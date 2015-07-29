@@ -59,9 +59,8 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements TaskA
 
     @Override
     protected String initFormHeader() {
-        return (beanItem.getId() == null) ? AppContext
-                .getMessage(TaskI18nEnum.FORM_NEW_TASK_TITLE) : AppContext
-                .getMessage(TaskI18nEnum.FORM_EDIT_TASK_TITLE);
+        return (beanItem.getId() == null) ? AppContext.getMessage(TaskI18nEnum.FORM_NEW_TASK_TITLE) :
+                AppContext.getMessage(TaskI18nEnum.FORM_EDIT_TASK_TITLE);
     }
 
     @Override
@@ -89,8 +88,7 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements TaskA
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.TASK,
-                TaskDefaultFormLayoutFactory.getForm(),
+        return new DynaFormLayout(ProjectTypeConstants.TASK, TaskDefaultFormLayoutFactory.getForm(),
                 Task.Field.parenttaskid.name());
     }
 
@@ -129,10 +127,8 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements TaskA
             } else if (Task.Field.id.equalTo(propertyId)) {
                 TaskAddViewImpl.this.attachmentUploadField = new AttachmentUploadField();
                 if (beanItem.getId() != null) {
-                    String attachmentPath = AttachmentUtils
-                            .getProjectEntityAttachmentPath(AppContext.getAccountId(),
-                                    CurrentProjectVariables.getProjectId(),
-                                    ProjectTypeConstants.TASK, "" + beanItem.getId());
+                    String attachmentPath = AttachmentUtils.getProjectEntityAttachmentPath(AppContext.getAccountId(),
+                            CurrentProjectVariables.getProjectId(), ProjectTypeConstants.TASK, "" + beanItem.getId());
                     attachmentUploadField.getAttachments(attachmentPath);
                 }
                 return attachmentUploadField;
