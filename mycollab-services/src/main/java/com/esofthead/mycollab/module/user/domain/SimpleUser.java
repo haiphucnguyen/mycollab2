@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.user.domain;
 import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.security.PermissionMap;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  * @author MyCollab Ltd.
@@ -106,21 +105,6 @@ public class SimpleUser extends User {
 
     public void setRegisterstatus(String registerstatus) {
         this.registerstatus = registerstatus;
-    }
-
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-
-        SimpleUser user = (SimpleUser) obj;
-        return new EqualsBuilder().append(getUsername(), user.getUsername()).build();
     }
 
     public String getInviteUser() {

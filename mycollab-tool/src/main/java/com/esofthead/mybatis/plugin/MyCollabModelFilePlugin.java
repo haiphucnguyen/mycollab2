@@ -11,6 +11,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author MyCollab Ltd.
@@ -54,11 +55,44 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             annotation = String.format(annotation, introspectedColumn.getLength(), "Field value is too long");
             field.addAnnotation(annotation);
         }
-
         String columnAnnotation = "@Column(\"%s\")";
         columnAnnotation = String.format(columnAnnotation, introspectedColumn.getActualColumnName());
         field.addAnnotation(columnAnnotation);
+
+        if (isPrimaryKeyOfTable(introspectedColumn, introspectedTable)) {
+            generateEqualsMethod(field, topLevelClass);
+            generateHascodeMethod(field, topLevelClass);
+        }
         return true;
+    }
+
+    private void generateEqualsMethod(Field field, TopLevelClass topLevelClass) {
+        topLevelClass.addImportedType("org.apache.commons.lang3.builder.EqualsBuilder");
+        Method m = new Method();
+        m.setName("equals");
+        m.setReturnType(new FullyQualifiedJavaType("boolean"));
+        m.setVisibility(JavaVisibility.PUBLIC);
+        m.setFinal(true);
+        m.addParameter(new Parameter(new FullyQualifiedJavaType("Object"), "obj"));
+        m.addBodyLine("if (obj == null) { return false;}");
+        m.addBodyLine("if (obj == this) { return true;}");
+        m.addBodyLine("if (obj.getClass() != getClass()) { return false;}");
+        m.addBodyLine(String.format("%s item = (%s)obj;", topLevelClass.getType().getShortName(), topLevelClass.getType().getShortName()));
+        m.addBodyLine(String.format("return new EqualsBuilder().append(%s, %s).build();", field.getName(), "item" +
+                "." + field.getName()));
+        topLevelClass.addMethod(m);
+    }
+
+    private void generateHascodeMethod(Field field, TopLevelClass topLevelClass) {
+        topLevelClass.addImportedType(" org.apache.commons.lang3.builder.HashCodeBuilder");
+        Method m = new Method();
+        m.setName("hashCode");
+        m.setReturnType(new FullyQualifiedJavaType("int"));
+        m.setVisibility(JavaVisibility.PUBLIC);
+        m.setFinal(true);
+        m.addBodyLine(String.format("return new HashCodeBuilder(%d, %d).append(%s).build();", Math.abs(new Random()
+                .nextInt(1000)*2 +1), Math.abs(new Random().nextInt(1000)*2 + 1), field.getName()));
+        topLevelClass.addMethod(m);
     }
 
     private static InnerEnumEx buildEnumFieldClass() {
@@ -123,8 +157,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         document.getRootElement().addElement(element);
     }
 
-    private void generateRemoveMultipleKeysSqlStatement(Document document,
-                                                        IntrospectedTable introspectedTable) {
+    private void generateRemoveMultipleKeysSqlStatement(Document document, IntrospectedTable introspectedTable) {
         XmlElement element = new XmlElement("delete");
         TextElement commentElement = new TextElement(
                 "<!--WARNING - @mbggenerated-->");
@@ -196,6 +229,8 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
 
     @Override
     public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Column");
+        topLevelClass.addImportedType("com.esofthead.mycollab.core.db.metadata.Table");
         String commentLine = "/*Domain class of table %s*/";
         topLevelClass.addFileCommentLine(String.format(commentLine,
                 introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime()));
