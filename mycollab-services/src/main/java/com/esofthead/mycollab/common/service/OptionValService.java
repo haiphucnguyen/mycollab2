@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.common.service;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
+import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 import java.util.List;
 
@@ -24,6 +25,6 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public interface OptionValService {
+public interface OptionValService extends ICrudService<Integer, OptionVal> {
     List<OptionVal> findOptionVals(String type, String projectId);
 }

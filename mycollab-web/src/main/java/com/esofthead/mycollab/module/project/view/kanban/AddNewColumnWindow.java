@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.kanban;
 
-import com.esofthead.mycollab.common.dao.OptionValMapper;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.view.IKanbanView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -75,8 +75,8 @@ public class AddNewColumnWindow extends Window {
                 optionVal.setSaccountid(AppContext.getAccountId());
                 optionVal.setType(type);
                 optionVal.setTypeval(stageField.getValue());
-                OptionValMapper optionMapper = ApplicationContextUtil.getSpringBean(OptionValMapper.class);
-                optionMapper.insert(optionVal);
+                OptionValService optionMapper = ApplicationContextUtil.getSpringBean(OptionValService.class);
+                optionMapper.saveWithSession(optionVal, AppContext.getUsername());
                 kanbanView.addColumn(optionVal);
                 AddNewColumnWindow.this.close();
             }

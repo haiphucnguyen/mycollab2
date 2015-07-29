@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.ondemand.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.ondemand.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.ondemand.module.billing.SubdomainExistedException;
+import com.esofthead.mycollab.ondemand.module.billing.esb.AccountCreatedEvent;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.google.common.eventbus.AsyncEventBus;
 import org.apache.commons.collections.CollectionUtils;
@@ -185,6 +186,7 @@ public class BillingServiceImpl implements BillingService {
         userAccount.setUsername(username);
 
         userAccountMapper.insert(userAccount);
+        asyncEventBus.post(new AccountCreatedEvent(accountId));
     }
 
     private int saveEmployeeRole(int accountId) {
@@ -220,8 +222,7 @@ public class BillingServiceImpl implements BillingService {
         role.setIssystemrole(true);
         final int roleId = this.roleService.saveWithSession(role, "");
 
-        this.roleService.savePermission(roleId,
-                PermissionMap.buildGuestPermissionCollection(), accountid);
+        this.roleService.savePermission(roleId, PermissionMap.buildGuestPermissionCollection(), accountid);
         return roleId;
     }
 

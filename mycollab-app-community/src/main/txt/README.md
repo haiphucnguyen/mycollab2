@@ -47,7 +47,7 @@ Version 5.1.1
 -----------------------------
 **Library Upgrades**
 
-* Jackson library 2.6.0
+* Jackson library 2.6.0, DynamicReports 4.0.1
 * Vaadin 7.5.2
 
 **Improvements & New Features**

@@ -54,7 +54,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
     private ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private MHorizontalLayout kanbanLayout;
-    private Map<String, KanbanBlock> kanbanBlocks = new ConcurrentHashMap<>();
+    private Map<String, KanbanBlock> kanbanBlocks;
 
     public TaskKanbanviewImpl() {
         this.setSizeFull();
@@ -96,6 +96,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     @Override
     public void display() {
         kanbanLayout.removeAllComponents();
+        kanbanBlocks = new ConcurrentHashMap<>();
 
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
