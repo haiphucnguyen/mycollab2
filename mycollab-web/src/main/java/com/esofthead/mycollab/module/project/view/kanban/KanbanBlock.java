@@ -33,7 +33,6 @@ public class KanbanBlock extends MVerticalLayout {
         header.addStyleName("header");
         this.with(header);
         this.setWidth("300px");
-        this.setHeight("100%");
         this.addStyleName("kanban-block");
     }
 }

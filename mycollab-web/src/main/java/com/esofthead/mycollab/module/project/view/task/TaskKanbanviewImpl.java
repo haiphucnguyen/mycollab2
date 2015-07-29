@@ -43,6 +43,7 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.List;
 import java.util.Map;
@@ -129,7 +130,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     if (kanbanBlock == null) {
                         LOG.error("Can not find a kanban block for status: " + status);
                     } else {
-                        kanbanBlock.with(new Label(task.getTaskname()));
+                        kanbanBlock.with(new KanbanTaskBlockItem(task));
                     }
                     UI.getCurrent().push();
                 }
@@ -148,5 +149,17 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 UI.getCurrent().push();
             }
         });
+    }
+
+    private static class KanbanTaskBlockItem extends CustomComponent {
+        private SimpleTask task;
+
+        KanbanTaskBlockItem(SimpleTask task) {
+            this.task = task;
+            MVerticalLayout root = new MVerticalLayout();
+            root.addStyleName("kanban-item");
+            root.addComponent(new Label(task.getTaskname()));
+            this.setCompositionRoot(root);
+        }
     }
 }

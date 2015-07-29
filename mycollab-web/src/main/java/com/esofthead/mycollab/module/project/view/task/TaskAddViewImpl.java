@@ -120,6 +120,8 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements TaskA
                 tf.setRequired(true);
                 tf.setRequiredError(AppContext.getMessage(ErrorI18nEnum.FIELD_MUST_NOT_NULL, "Name"));
                 return tf;
+            } else if (Task.Field.status.equalTo(propertyId)) {
+                return new TaskStatusComboBox();
             } else if (Task.Field.percentagecomplete.equalTo(propertyId)) {
                 return new TaskCompleteStatusSelection();
             } else if (Task.Field.priority.equalTo(propertyId)) {

@@ -108,10 +108,11 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
         item.setProjectid(CurrentProjectVariables.getProjectId());
         if (item.getPercentagecomplete() == null) {
             item.setPercentagecomplete(new Double(0));
-            item.setStatus(StatusI18nEnum.Open.name());
         } else if (item.getPercentagecomplete().doubleValue() == 100d) {
             item.setStatus(StatusI18nEnum.Closed.name());
-        } else {
+        }
+
+        if (item.getStatus() == null) {
             item.setStatus(StatusI18nEnum.Open.name());
         }
 

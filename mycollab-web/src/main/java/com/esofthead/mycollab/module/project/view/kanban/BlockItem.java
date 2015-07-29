@@ -16,14 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.view.kanban;
 
-import org.vaadin.maddon.layouts.MVerticalLayout;
+import com.vaadin.ui.CustomComponent;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class BlockItem extends MVerticalLayout {
+public class BlockItem extends CustomComponent {
     public BlockItem() {
-
+        this.addStyleName("kanban-item");
     }
 }
