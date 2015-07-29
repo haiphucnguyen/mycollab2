@@ -76,7 +76,15 @@ public class AddNewColumnWindow extends Window {
                 optionVal.setType(type);
                 optionVal.setTypeval(stageField.getValue());
                 OptionValService optionMapper = ApplicationContextUtil.getSpringBean(OptionValService.class);
-                optionMapper.saveWithSession(optionVal, AppContext.getUsername());
+                int optionValId = optionMapper.saveWithSession(optionVal, AppContext.getUsername());
+
+                if (optionVal.getIsdefault()) {
+                    optionVal.setId(null);
+                    optionVal.setIsdefault(false);
+                    optionVal.setRefoption(optionValId);
+                    optionVal.setExtraid(CurrentProjectVariables.getProjectId());
+                    optionMapper.saveWithSession(optionVal, AppContext.getUsername());
+                }
                 kanbanView.addColumn(optionVal);
                 AddNewColumnWindow.this.close();
             }
