@@ -43,8 +43,9 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     }
 
     @Override
-    public List<OptionVal> findOptionVals(String type, String projectId) {
+    public List<OptionVal> findOptionVals(String type, String projectId, Integer sAccountId) {
         OptionValExample ex = new OptionValExample();
+        ex.createCriteria().andTypeEqualTo(type).andSaccountidEqualTo(sAccountId);
         return optionValMapper.selectByExampleWithBLOBs(ex);
     }
 

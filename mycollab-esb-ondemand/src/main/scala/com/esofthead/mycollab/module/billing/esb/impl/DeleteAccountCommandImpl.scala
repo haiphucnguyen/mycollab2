@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.billing.esb.impl
 
+import com.esofthead.mycollab.common.dao.OptionValMapper
+import com.esofthead.mycollab.common.domain.OptionValExample
 import com.esofthead.mycollab.module.GenericCommand
 import com.esofthead.mycollab.module.billing.esb.DeleteAccountEvent
 import com.esofthead.mycollab.module.ecm.service.ResourceService
@@ -30,9 +32,10 @@ import org.springframework.stereotype.Component
  * @since 1.0
  *
  */
-@Component class AccountDeletedCommandImpl extends GenericCommand {
+@Component class DeleteAccountCommandImpl extends GenericCommand {
     @Autowired private val resourceService: ResourceService = null
     @Autowired private val pageService: PageService = null
+    @Autowired private val optionValMapper: OptionValMapper = null
 
     @AllowConcurrentEvents
     @Subscribe
@@ -40,6 +43,11 @@ import org.springframework.stereotype.Component
         val rootPath: String = event.accountId + ""
         resourceService.removeResource(rootPath, "", event.accountId)
         pageService.removeResource(rootPath)
+
+        //delete all options of this account
+        val optionEx: OptionValExample = new OptionValExample
+        optionEx.createCriteria().andSaccountidEqualTo(event.accountId)
+        optionValMapper.deleteByExample(optionEx)
 
         val feedback = event.feedback
 
