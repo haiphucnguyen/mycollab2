@@ -24,18 +24,20 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
-import com.esofthead.mycollab.module.project.view.kanban.KanbanBlock;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -130,7 +132,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     if (kanbanBlock == null) {
                         LOG.error("Can not find a kanban block for status: " + status);
                     } else {
-                        kanbanBlock.with(new KanbanTaskBlockItem(task));
+                        kanbanBlock.addComponent(new KanbanTaskBlockItem(task), kanbanBlock.getComponentCount() - 1);
                     }
                     UI.getCurrent().push();
                 }
@@ -158,8 +160,38 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             this.task = task;
             MVerticalLayout root = new MVerticalLayout();
             root.addStyleName("kanban-item");
-            root.addComponent(new Label(task.getTaskname()));
             this.setCompositionRoot(root);
+
+            ButtonLink taskBtn = new ButtonLink(task.getTaskname(), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+
+                }
+            });
+            taskBtn.setIcon(new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(task.getPriority())));
+            root.with(taskBtn);
+        }
+    }
+
+    private static class KanbanBlock extends MVerticalLayout {
+        private OptionVal optionVal;
+
+        public KanbanBlock(OptionVal stage) {
+            this.optionVal = stage;
+            Label header = new Label(optionVal.getTypeval());
+            header.addStyleName("header");
+            this.with(header);
+            this.setWidth("300px");
+            this.addStyleName("kanban-block");
+            Button addNewBtn = new Button("Add new task", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+
+                }
+            });
+            addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
+            addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            this.with(addNewBtn);
         }
     }
 }
