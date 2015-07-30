@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -36,12 +37,13 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UIUtils;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Text;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -127,13 +129,14 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 .withAlign(addNewColumnBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         kanbanLayout = new DDHorizontalLayout();
+        kanbanLayout.setHeight("100%");
+        kanbanLayout.addStyleName("kanban-layout");
         kanbanLayout.setSpacing(true);
         kanbanLayout.setComponentHorizontalDropRatio(0.3f);
         kanbanLayout.setDragMode(LayoutDragMode.CLONE);
 
         // Enable dropping components
         kanbanLayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
-        kanbanLayout.addStyleName("kanban-layout");
         this.with(header, kanbanLayout).expand(kanbanLayout);
     }
 
@@ -209,7 +212,8 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            ButtonLink taskBtn = new ButtonLink(task.getTaskname(), new Button.ClickListener() {
+            String taskname = String.format("[%s-%s] %s", task.getProjectShortname(), task.getTaskkey(), task.getTaskname());
+            ButtonLink taskBtn = new ButtonLink(taskname, new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
 
@@ -218,15 +222,39 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             taskBtn.setIcon(new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(task.getPriority())));
             root.with(taskBtn);
 
-            Button extraInfoBtn = new Button("", new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
+            // Build footer
+            if (task.getNumComments() != null || task.getDeadline() != null || task.getAssignuser() != null) {
+                MHorizontalLayout footer = new MHorizontalLayout().withWidth("100%");
 
+                CssLayout extraInfoBtn = new CssLayout();
+                extraInfoBtn.setCaptionAsHtml(true);
+                extraInfoBtn.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                    @Override
+                    public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
+                        NotificationUtil.showNotification("Debug", "Click");
+                    }
+                });
+                footer.with(extraInfoBtn).expand(extraInfoBtn).withAlign(extraInfoBtn, Alignment.TOP_LEFT);
+                Div footerDiv = new Div().setCSSClass(UIConstants.FOOTER_NOTE);
+                if (task.getNumComments() != null) {
+                    Text comment = new Text(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments());
+                    footerDiv.appendChild(comment);
                 }
-            });
-            extraInfoBtn.setCaptionAsHtml(true);
-            extraInfoBtn.setCaption("<b>AAA</b><a href=\"http://vnexpress.net\">a</a>");
-            root.with(extraInfoBtn);
+
+                if (task.getDeadlineRoundPlusOne() != null) {
+                    Text dueDate = new Text(AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                    footerDiv.appendChild(dueDate);
+                }
+
+                extraInfoBtn.addComponent(new Label(footerDiv.write(), ContentMode.HTML));
+
+                if (task.getAssignuser() != null) {
+                    Button image = UserAvatarControlFactory.createUserAvatarEmbeddedButton(task.getAssignUserAvatarId(), 16);
+                    image.setDescription(task.getAssignUserFullName());
+                    footer.with(image).withAlign(image, Alignment.TOP_RIGHT);
+                }
+                root.with(footer);
+            }
         }
     }
 
@@ -236,6 +264,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         private DDVerticalLayout dragLayoutContainer;
 
         public KanbanBlock(OptionVal stage) {
+            this.setHeight("100%");
             this.optionVal = stage;
             root = new MVerticalLayout();
             root.setWidth("300px");
@@ -247,7 +276,8 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
             dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
             dragLayoutContainer.setDropHandler(new DefaultVerticalLayoutDropHandler());
-            new Restrain(dragLayoutContainer).setMinHeight("50px");
+            new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((Page.getCurrent()
+                    .getBrowserWindowHeight() - 265) + "px");
 
             HorizontalLayout headerLayout = new HorizontalLayout();
             headerLayout.setWidth("100%");

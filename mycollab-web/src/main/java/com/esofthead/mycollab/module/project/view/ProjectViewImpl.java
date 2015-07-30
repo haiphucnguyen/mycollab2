@@ -371,6 +371,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
     @Override
     public void setNavigatorVisibility(boolean visibility) {
         myProjectTab.setNavigatorVisibility(visibility);
+        vTabsheetFix.setVisible(visibility);
     }
 
     @Override

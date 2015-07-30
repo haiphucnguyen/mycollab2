@@ -312,7 +312,6 @@ div.v-tree-node-caption div {
 
 .v-slot.v-slot-kanban-layout {
 	overflow-x: scroll;
-	overflow-y: visible;
 }
 
 .v-layout.kanban-layout .kanban-block {
@@ -324,6 +323,10 @@ div.v-tree-node-caption div {
 	font-weight: bold;
 	color: black;
 	font-size: 14px;
+}
+
+.v-layout.kanban-layout .kanban-block .v-verticallayout {
+	overflow-y: auto;
 }
 
 .v-layout.kanban-layout .kanban-block .kanban-item {
@@ -582,7 +585,6 @@ div.v-tree-node-caption div {
 
 .v-slot.v-slot-kanban-layout {
 	overflow-x: scroll;
-	overflow-y: visible;
 }
 
 .v-layout.kanban-layout .kanban-block {
@@ -594,6 +596,10 @@ div.v-tree-node-caption div {
 	font-weight: bold;
 	color: black;
 	font-size: 14px;
+}
+
+.v-layout.kanban-layout .kanban-block .v-verticallayout {
+	overflow-y: auto;
 }
 
 .v-layout.kanban-layout .kanban-block .kanban-item {
@@ -852,7 +858,6 @@ div.v-tree-node-caption div {
 
 .v-slot.v-slot-kanban-layout {
 	overflow-x: scroll;
-	overflow-y: visible;
 }
 
 .v-layout.kanban-layout .kanban-block {
@@ -864,6 +869,10 @@ div.v-tree-node-caption div {
 	font-weight: bold;
 	color: black;
 	font-size: 14px;
+}
+
+.v-layout.kanban-layout .kanban-block .v-verticallayout {
+	overflow-y: auto;
 }
 
 .v-layout.kanban-layout .kanban-block .kanban-item {
@@ -981,9 +990,10 @@ a.pending {
 	background-color: ghostwhite;
 }
 
-.activity-date {
+.footer-note {
 	color: gray;
 	font-size: 12px;
+	cursor: pointer;
 }
 
 .panel-header {
@@ -8402,9 +8412,10 @@ a.pending {
 	background-color: ghostwhite;
 }
 
-.activity-date {
+.footer-note {
 	color: gray;
 	font-size: 12px;
+	cursor: pointer;
 }
 
 .panel-header {

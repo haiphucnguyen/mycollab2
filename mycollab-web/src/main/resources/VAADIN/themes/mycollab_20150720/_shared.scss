@@ -84,9 +84,10 @@
     }
   }
 
-  .activity-date {
+  .footer-note {
     color: gray;
     font-size: $font-small;
+    cursor:pointer;
   }
 
   .panel-header {
@@ -578,7 +579,6 @@
   /* Kanban block */
   .v-slot.v-slot-kanban-layout {
     overflow-x: scroll;
-    overflow-y: visible;
   }
   .v-layout.kanban-layout {
     .kanban-block {
@@ -588,6 +588,9 @@
         font-weight: bold;
         color: black;
         font-size: $font-large;
+      }
+      .v-verticallayout {
+        overflow-y:auto;
       }
       .kanban-item {
         background-color: white;
