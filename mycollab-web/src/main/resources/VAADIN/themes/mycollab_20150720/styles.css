@@ -310,17 +310,22 @@ div.v-tree-node-caption div {
 	white-space: normal;
 }
 
-.kanban-block {
+.v-slot.v-slot-kanban-layout {
+	overflow-x: scroll;
+	overflow-y: visible;
+}
+
+.v-layout.kanban-layout .kanban-block {
 	background-color: #e2e4e6;
 }
 
-.kanban-block .header {
+.v-layout.kanban-layout .kanban-block .header {
 	font-weight: bold;
 	color: black;
 	font-size: 14px;
 }
 
-.kanban-block .kanban-item {
+.v-layout.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 }
 
@@ -573,17 +578,22 @@ div.v-tree-node-caption div {
 	white-space: normal;
 }
 
-.kanban-block {
+.v-slot.v-slot-kanban-layout {
+	overflow-x: scroll;
+	overflow-y: visible;
+}
+
+.v-layout.kanban-layout .kanban-block {
 	background-color: #e2e4e6;
 }
 
-.kanban-block .header {
+.v-layout.kanban-layout .kanban-block .header {
 	font-weight: bold;
 	color: black;
 	font-size: 14px;
 }
 
-.kanban-block .kanban-item {
+.v-layout.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 }
 
@@ -836,17 +846,22 @@ div.v-tree-node-caption div {
 	white-space: normal;
 }
 
-.kanban-block {
+.v-slot.v-slot-kanban-layout {
+	overflow-x: scroll;
+	overflow-y: visible;
+}
+
+.v-layout.kanban-layout .kanban-block {
 	background-color: #e2e4e6;
 }
 
-.kanban-block .header {
+.v-layout.kanban-layout .kanban-block .header {
 	font-weight: bold;
 	color: black;
 	font-size: 14px;
 }
 
-.kanban-block .kanban-item {
+.v-layout.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 }
 
