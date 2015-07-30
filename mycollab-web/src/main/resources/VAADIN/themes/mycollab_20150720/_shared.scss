@@ -582,6 +582,7 @@
   }
   .v-layout.kanban-layout {
     .kanban-block {
+      cursor: move;
       background-color: #e2e4e6;
       .header {
         font-weight: bold;
@@ -590,6 +591,7 @@
       }
       .kanban-item {
         background-color: white;
+        cursor: move;
       }
     }
   }

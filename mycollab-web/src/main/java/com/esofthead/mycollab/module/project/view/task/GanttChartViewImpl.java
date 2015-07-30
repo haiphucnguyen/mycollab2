@@ -30,6 +30,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.*;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -39,6 +40,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -63,9 +65,12 @@ import java.util.*;
 public class GanttChartViewImpl extends AbstractPageView implements GanttChartView {
     private static final long serialVersionUID = 1L;
 
+    private boolean projectNavigatorVisibility = false;
+
     private GanttExt gantt;
     private NativeSelect chartResolution;
     private TaskHierarchyComp taskTable;
+    private Button toogleMenuShowBtn;
 
     private ProjectTaskListService taskListService;
     private ProjectTaskService taskService;
@@ -84,6 +89,20 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
 
+        toogleMenuShowBtn = new Button("", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                projectNavigatorVisibility = !projectNavigatorVisibility;
+                setProjectNavigatorVisibility(projectNavigatorVisibility);
+                if (projectNavigatorVisibility) {
+                    toogleMenuShowBtn.setCaption("Hide menu");
+                } else {
+                    toogleMenuShowBtn.setCaption("Show menu");
+                }
+            }
+        });
+        toogleMenuShowBtn.addStyleName(UIConstants.THEME_LINK);
+
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -93,8 +112,9 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).withAlign(cancelBtn,
-                Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, toogleMenuShowBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
+                .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT)
+                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         taskListService = ApplicationContextUtil.getSpringBean(ProjectTaskListService.class);
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
@@ -105,6 +125,19 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 .with(createControls(), ganttLayout).expand(ganttLayout);
         wrapContent.addStyleName("gantt-view");
         this.with(header, wrapContent).expand(wrapContent);
+    }
+
+    @Override
+    public void detach() {
+        setProjectNavigatorVisibility(true);
+        super.detach();
+    }
+
+    private void setProjectNavigatorVisibility(boolean visibility) {
+        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
+        if (view != null) {
+            view.setNavigatorVisibility(visibility);
+        }
     }
 
     private MHorizontalLayout constructGanttChart() {
@@ -137,7 +170,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
             @Override
             public void onGanttMove(MoveEvent event) {
-                updateTasksInfo((StepExt)event.getStep(), event.getStartDate(), event.getEndDate());
+                updateTasksInfo((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -146,7 +179,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
             @Override
             public void onGanttResize(ResizeEvent event) {
-                updateTasksInfo((StepExt)event.getStep(), event.getStartDate(), event.getEndDate());
+                updateTasksInfo((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -155,9 +188,9 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     }
 
     private void updateTasksInfo(StepExt step, long startDate, long endDate) {
-        GanttItemWrapper ganttItemWrapper =  step.getGanttItemWrapper();
+        GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
         if (ganttItemWrapper instanceof TaskGanttItemWrapper) {
-            SimpleTask task = ((TaskGanttItemWrapper)ganttItemWrapper).getTask();
+            SimpleTask task = ((TaskGanttItemWrapper) ganttItemWrapper).getTask();
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(startDate);
             task.setStartdate(calendar.getTime());
@@ -169,6 +202,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     }
 
     public void displayGanttChart() {
+        toogleMenuShowBtn.setCaption("Show menu");
+        setProjectNavigatorVisibility(false);
         updateStepList();
     }
 
@@ -186,7 +221,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 GanttItemWrapper itemWrapper = new TaskListGanttItemWrapper(task, gantt.getStartDate(), gantt.getEndDate());
                 taskTable.addTaskList(itemWrapper);
                 gantt.addStep(itemWrapper.getStep());
-					/* Add style for row block */
+                    /* Add style for row block */
 //                if (task.isCompleted()) {
 //                    step.setBackgroundColor("53C540");
 //                    step.setStyleName("completed");
@@ -321,7 +356,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     void updateGanttChartBaseOnTreeTableContainer() {
         gantt.removeSteps();
         Collection<GanttItemWrapper> items = (Collection<GanttItemWrapper>) taskTable.getItemIds();
-        for (GanttItemWrapper item: items) {
+        for (GanttItemWrapper item : items) {
             gantt.addStep(item.getStep());
         }
     }

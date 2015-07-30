@@ -18,15 +18,14 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
-import com.esofthead.mycollab.module.project.view.ProjectModule;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -44,9 +43,10 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-            ProjectModule prjView = UIUtils.getRoot(container, ProjectModule.class);
-            prjView.removeAllComponents();
-            prjView.addComponent(view.getWidget());
+            TaskContainer taskContainer = (TaskContainer) container;
+            taskContainer.navigateToContainer(ProjectTypeConstants.TASK);
+            taskContainer.removeAllComponents();
+            taskContainer.addComponent(view.getWidget());
             view.displayGanttChart();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

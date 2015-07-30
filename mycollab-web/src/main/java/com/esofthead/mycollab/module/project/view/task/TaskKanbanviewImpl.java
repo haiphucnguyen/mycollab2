@@ -45,9 +45,15 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
+import fi.jasoft.dragdroplayouts.DDVerticalLayout;
+import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
+import fi.jasoft.dragdroplayouts.drophandlers.DefaultHorizontalLayoutDropHandler;
+import fi.jasoft.dragdroplayouts.drophandlers.DefaultVerticalLayoutDropHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -68,7 +74,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
     private boolean projectNavigatorVisibility = false;
 
-    private HorizontalLayout kanbanLayout;
+    private DDHorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
     private Button toogleMenuShowBtn;
 
@@ -120,8 +126,13 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT)
                 .withAlign(addNewColumnBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
-        kanbanLayout = new HorizontalLayout();
+        kanbanLayout = new DDHorizontalLayout();
         kanbanLayout.setSpacing(true);
+        kanbanLayout.setComponentHorizontalDropRatio(0.3f);
+        kanbanLayout.setDragMode(LayoutDragMode.CLONE);
+
+        // Enable dropping components
+        kanbanLayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
         kanbanLayout.addStyleName("kanban-layout");
         this.with(header, kanbanLayout).expand(kanbanLayout);
     }
@@ -168,7 +179,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     if (kanbanBlock == null) {
                         LOG.error("Can not find a kanban block for status: " + status);
                     } else {
-                        kanbanBlock.addComponent(new KanbanTaskBlockItem(task), kanbanBlock.getComponentCount() - 1);
+                        kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
                     }
                     UI.getCurrent().push();
                 }
@@ -219,11 +230,25 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         }
     }
 
-    private static class KanbanBlock extends MVerticalLayout {
+    private static class KanbanBlock extends CustomComponent {
         private OptionVal optionVal;
+        private MVerticalLayout root;
+        private DDVerticalLayout dragLayoutContainer;
 
         public KanbanBlock(OptionVal stage) {
             this.optionVal = stage;
+            root = new MVerticalLayout();
+            root.setWidth("300px");
+            root.addStyleName("kanban-block");
+            this.setCompositionRoot(root);
+
+            dragLayoutContainer = new DDVerticalLayout();
+            dragLayoutContainer.setSpacing(true);
+            dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
+            dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
+            dragLayoutContainer.setDropHandler(new DefaultVerticalLayoutDropHandler());
+            new Restrain(dragLayoutContainer).setMinHeight("50px");
+
             HorizontalLayout headerLayout = new HorizontalLayout();
             headerLayout.setWidth("100%");
             Label header = new Label(optionVal.getTypeval());
@@ -247,9 +272,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
 
-            this.with(headerLayout);
-            this.setWidth("300px");
-            this.addStyleName("kanban-block");
             Button addNewBtn = new Button("Add a task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
@@ -258,7 +280,11 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             });
             addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
             addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-            this.with(addNewBtn);
+            root.with(headerLayout, dragLayoutContainer, addNewBtn);
+        }
+
+        void addBlockItem(KanbanTaskBlockItem comp) {
+            dragLayoutContainer.addComponent(comp);
         }
     }
 }

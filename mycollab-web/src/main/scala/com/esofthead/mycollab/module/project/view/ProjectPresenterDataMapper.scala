@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
 import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter
-import com.esofthead.mycollab.module.project.view.task.{GanttChartViewPresenter, TaskPresenter}
+import com.esofthead.mycollab.module.project.view.task.TaskPresenter
 import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.esofthead.mycollab.vaadin.mvp.{IPresenter, ScreenData}
@@ -68,7 +68,7 @@ object ProjectPresenterDataMapper {
         classOf[TaskScreenData.Add] -> classOf[TaskPresenter],
         classOf[TaskScreenData.Edit] -> classOf[TaskPresenter],
         classOf[TaskScreenData.Read] -> classOf[TaskPresenter],
-        classOf[TaskScreenData.GotoGanttChart] -> classOf[GanttChartViewPresenter],
+        classOf[TaskScreenData.GotoGanttChart] -> classOf[TaskPresenter],
         classOf[TaskScreenData.GotoKanbanView] -> classOf[TaskPresenter],
         classOf[TaskGroupScreenData.GotoDashboard] -> classOf[TaskPresenter],
         classOf[TaskGroupScreenData.Read] -> classOf[TaskPresenter],

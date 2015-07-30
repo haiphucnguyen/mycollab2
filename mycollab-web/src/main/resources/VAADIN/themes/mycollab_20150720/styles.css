@@ -316,6 +316,7 @@ div.v-tree-node-caption div {
 }
 
 .v-layout.kanban-layout .kanban-block {
+	cursor: move;
 	background-color: #e2e4e6;
 }
 
@@ -327,6 +328,7 @@ div.v-tree-node-caption div {
 
 .v-layout.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
+	cursor: move;
 }
 
 .v-widget.helpPanel {
@@ -584,6 +586,7 @@ div.v-tree-node-caption div {
 }
 
 .v-layout.kanban-layout .kanban-block {
+	cursor: move;
 	background-color: #e2e4e6;
 }
 
@@ -595,6 +598,7 @@ div.v-tree-node-caption div {
 
 .v-layout.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
+	cursor: move;
 }
 
 .v-widget.helpPanel {
@@ -852,6 +856,7 @@ div.v-tree-node-caption div {
 }
 
 .v-layout.kanban-layout .kanban-block {
+	cursor: move;
 	background-color: #e2e4e6;
 }
 
@@ -863,6 +868,7 @@ div.v-tree-node-caption div {
 
 .v-layout.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
+	cursor: move;
 }
 
 a {
