@@ -369,6 +369,11 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
     }
 
     @Override
+    public void setNavigatorVisibility(boolean visibility) {
+        myProjectTab.setNavigatorVisibility(visibility);
+    }
+
+    @Override
     public Component gotoSubView(String viewId) {
         Component comp = myProjectTab.selectTab(viewId);
         if (comp instanceof TransparentContainer) {

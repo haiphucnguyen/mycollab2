@@ -44,4 +44,10 @@ public class OptionPopupContent extends CustomComponent {
         wrap.addComponent(btn);
         ((ComponentContainer) this.getCompositionRoot()).addComponent(wrap);
     }
+
+    @Override
+    public int getComponentCount() {
+        Component root = getCompositionRoot();
+        return root != null ? ((ComponentContainer)root).getComponentCount() : 0;
+    }
 }

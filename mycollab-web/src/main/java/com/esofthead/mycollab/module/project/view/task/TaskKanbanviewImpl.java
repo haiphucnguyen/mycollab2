@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -38,6 +39,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -64,8 +66,11 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     private ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
 
+    private boolean projectNavigatorVisibility = false;
+
     private HorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
+    private Button toogleMenuShowBtn;
 
     public TaskKanbanviewImpl() {
         this.setSizeFull();
@@ -79,6 +84,20 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         headerText.setStyleName(UIConstants.HEADER_TEXT);
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
+
+        toogleMenuShowBtn = new Button("", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                projectNavigatorVisibility = !projectNavigatorVisibility;
+                setProjectNavigatorVisibility(projectNavigatorVisibility);
+                if (projectNavigatorVisibility) {
+                    toogleMenuShowBtn.setCaption("Hide menu");
+                } else {
+                    toogleMenuShowBtn.setCaption("Show menu");
+                }
+            }
+        });
+        toogleMenuShowBtn.addStyleName(UIConstants.THEME_LINK);
 
         Button addNewColumnBtn = new Button("Add a new column", new Button.ClickListener() {
             @Override
@@ -97,8 +116,9 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerWrapper, addNewColumnBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
-                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).withAlign(addNewColumnBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, toogleMenuShowBtn, addNewColumnBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
+                .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT)
+                .withAlign(addNewColumnBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         kanbanLayout = new HorizontalLayout();
         kanbanLayout.setSpacing(true);
@@ -107,9 +127,25 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     }
 
     @Override
+    public void detach() {
+        setProjectNavigatorVisibility(true);
+        super.detach();
+    }
+
+    private void setProjectNavigatorVisibility(boolean visibility) {
+        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
+        if (view != null) {
+            view.setNavigatorVisibility(visibility);
+        }
+    }
+
+    @Override
     public void display() {
         kanbanLayout.removeAllComponents();
         kanbanBlocks = new ConcurrentHashMap<>();
+
+        toogleMenuShowBtn.setCaption("Show menu");
+        setProjectNavigatorVisibility(false);
 
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
@@ -170,6 +206,16 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             });
             taskBtn.setIcon(new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(task.getPriority())));
             root.with(taskBtn);
+
+            Button extraInfoBtn = new Button("", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+
+                }
+            });
+            extraInfoBtn.setCaptionAsHtml(true);
+            extraInfoBtn.setCaption("<b>AAA</b><a href=\"http://vnexpress.net\">a</a>");
+            root.with(extraInfoBtn);
         }
     }
 
@@ -192,7 +238,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
             OptionPopupContent popupContent = new OptionPopupContent();
-            Button addBtn = new Button("Add new task", new Button.ClickListener() {
+            Button addBtn = new Button("Add a task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
 
@@ -204,7 +250,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             this.with(headerLayout);
             this.setWidth("300px");
             this.addStyleName("kanban-block");
-            Button addNewBtn = new Button("Add new task", new Button.ClickListener() {
+            Button addNewBtn = new Button("Add a task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
 
