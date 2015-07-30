@@ -29,7 +29,6 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -41,17 +40,22 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.event.LayoutEvents;
+import com.vaadin.event.dd.DragAndDropEvent;
+import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
+import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
-import fi.jasoft.dragdroplayouts.drophandlers.DefaultHorizontalLayoutDropHandler;
-import fi.jasoft.dragdroplayouts.drophandlers.DefaultVerticalLayoutDropHandler;
+import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
+import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -136,7 +140,25 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         kanbanLayout.setDragMode(LayoutDragMode.CLONE);
 
         // Enable dropping components
-        kanbanLayout.setDropHandler(new DefaultHorizontalLayoutDropHandler());
+        kanbanLayout.setDropHandler(new DropHandler() {
+            @Override
+            public void drop(DragAndDropEvent event) {
+                LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
+
+                DDHorizontalLayout.HorizontalLayoutTargetDetails details = (DDHorizontalLayout.HorizontalLayoutTargetDetails) event
+                        .getTargetDetails();
+                Component dragComponent = transferable.getComponent();
+                if (dragComponent instanceof KanbanBlock) {
+//                    KanbanTaskBlockItem kanbanItem = (KanbanTaskBlockItem) dragComponent;
+//                    kanbanLayout.addComponent(kanbanItem);
+                }
+            }
+
+            @Override
+            public AcceptCriterion getAcceptCriterion() {
+                return new Not(VerticalLocationIs.MIDDLE);
+            }
+        });
         this.with(header, kanbanLayout).expand(kanbanLayout);
     }
 
@@ -275,7 +297,36 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             dragLayoutContainer.setSpacing(true);
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
             dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
-            dragLayoutContainer.setDropHandler(new DefaultVerticalLayoutDropHandler());
+            dragLayoutContainer.setDropHandler(new DropHandler() {
+                @Override
+                public void drop(DragAndDropEvent event) {
+                    LayoutBoundTransferable transferable = (LayoutBoundTransferable) event.getTransferable();
+
+                    DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
+                            .getTargetDetails();
+                    Component dragComponent = transferable.getComponent();
+                    if (dragComponent instanceof KanbanTaskBlockItem) {
+                        KanbanTaskBlockItem kanbanItem = (KanbanTaskBlockItem) dragComponent;
+                        int newIndex = details.getOverIndex();
+                        if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
+                            dragLayoutContainer.addComponent(kanbanItem);
+                        } else if (newIndex == -1) {
+                            dragLayoutContainer.addComponent(kanbanItem, 0);
+                        } else {
+                            dragLayoutContainer.addComponent(kanbanItem, newIndex);
+                        }
+                        SimpleTask task = kanbanItem.task;
+                        task.setStatus(optionVal.getTypeval());
+                        ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                        taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                    }
+                }
+
+                @Override
+                public AcceptCriterion getAcceptCriterion() {
+                    return new Not(VerticalLocationIs.MIDDLE);
+                }
+            });
             new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((Page.getCurrent()
                     .getBrowserWindowHeight() - 265) + "px");
 
