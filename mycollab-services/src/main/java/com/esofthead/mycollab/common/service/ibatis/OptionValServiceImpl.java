@@ -24,9 +24,15 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -37,6 +43,9 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     @Autowired
     private OptionValMapper optionValMapper;
 
+    @Autowired
+    private DataSource dataSource;
+
     @Override
     public ICrudGenericDAO<Integer, OptionVal> getCrudMapper() {
         return optionValMapper;
@@ -46,6 +55,8 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     public List<OptionVal> findOptionVals(String type, Integer projectId, Integer sAccountId) {
         OptionValExample ex = new OptionValExample();
         ex.createCriteria().andTypeEqualTo(type).andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId);
+        ex.setOrderByClause("orderIndex ASC");
+
         return optionValMapper.selectByExampleWithBLOBs(ex);
     }
 
@@ -59,5 +70,23 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
         } else {
             return super.saveWithSession(record, username);
         }
+    }
+
+    @Override
+    public void massUpdateOptionIndexes(final List<Map<String, Integer>> mapIndexes, Integer sAccountId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.batchUpdate("UPDATE `m_options` SET `orderIndex`=? WHERE `id`=?", new
+                BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                        preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
+                        preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return mapIndexes.size();
+                    }
+                });
     }
 }

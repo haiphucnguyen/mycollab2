@@ -48,6 +48,7 @@ import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -151,8 +152,28 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         .getTargetDetails();
                 Component dragComponent = transferable.getComponent();
                 if (dragComponent instanceof KanbanBlock) {
-//                    KanbanTaskBlockItem kanbanItem = (KanbanTaskBlockItem) dragComponent;
-//                    kanbanLayout.addComponent(kanbanItem);
+                    KanbanBlock kanbanItem = (KanbanBlock) dragComponent;
+                    int newIndex = details.getOverIndex();
+                    if (details.getDropLocation() == HorizontalDropLocation.RIGHT) {
+                        kanbanLayout.addComponent(kanbanItem);
+                    } else if (newIndex == -1) {
+                        kanbanLayout.addComponent(kanbanItem, 0);
+                    } else {
+                        kanbanLayout.addComponent(kanbanItem, newIndex);
+                    }
+
+                    //Update options index for this project
+                    List<Map<String, Integer>> indexMap = new ArrayList<>();
+                    for (int i = 0; i < kanbanLayout.getComponentCount(); i++) {
+                        KanbanBlock blockItem = (KanbanBlock) kanbanLayout.getComponent(i);
+                        Map<String, Integer> map = new HashedMap(2);
+                        map.put("id", blockItem.optionVal.getId());
+                        map.put("index", i);
+                        indexMap.add(map);
+                    }
+                    if (indexMap.size() > 0) {
+                        optionValService.massUpdateOptionIndexes(indexMap, AppContext.getAccountId());
+                    }
                 }
             }
 
@@ -313,7 +334,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
                             dragLayoutContainer.addComponent(kanbanItem);
                         } else if (newIndex == -1) {
-                            newIndex = 0;
                             dragLayoutContainer.addComponent(kanbanItem, 0);
                         } else {
                             dragLayoutContainer.addComponent(kanbanItem, newIndex);

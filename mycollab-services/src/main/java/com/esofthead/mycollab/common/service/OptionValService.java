@@ -17,11 +17,13 @@
 package com.esofthead.mycollab.common.service;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -30,4 +32,7 @@ import java.util.List;
 public interface OptionValService extends ICrudService<Integer, OptionVal> {
     @Cacheable
     List<OptionVal> findOptionVals(String type, Integer projectId, @CacheKey Integer sAccountId);
+
+    @CacheEvict
+    void massUpdateOptionIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
 }

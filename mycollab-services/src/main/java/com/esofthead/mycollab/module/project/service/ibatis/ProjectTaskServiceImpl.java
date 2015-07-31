@@ -27,7 +27,6 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.TaskMapper;
@@ -65,8 +64,7 @@ import java.util.concurrent.locks.Lock;
 @Auditable()
 @Watchable(userFieldName = "assignuser", extraTypeId = "projectid")
 @NotifyAgent(ProjectTaskRelayEmailNotificationAction.class)
-public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria> implements
-        ProjectTaskService {
+public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria> implements ProjectTaskService {
 
     static {
         ClassInfoMap.put(ProjectTaskServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK));
@@ -205,16 +203,16 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `taskindex`=? WHERE `id`=?", new
                 BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
-                preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
-            }
+                    @Override
+                    public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                        preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
+                        preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
+                    }
 
-            @Override
-            public int getBatchSize() {
-                return mapIndexes.size();
-            }
-        });
+                    @Override
+                    public int getBatchSize() {
+                        return mapIndexes.size();
+                    }
+                });
     }
 }
