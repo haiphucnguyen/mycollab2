@@ -98,9 +98,11 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     @Override
     public Integer saveWithSession(Task record, String username) {
-        if ((record.getPercentagecomplete() != null) && (record.getPercentagecomplete() == 100)) {
+        if (record.getPercentagecomplete() == 100d) {
             record.setStatus(StatusI18nEnum.Closed.name());
-        } else {
+        }
+
+        if (record.getStatus() == null) {
             record.setStatus(StatusI18nEnum.Open.name());
         }
         record.setLogby(username);
@@ -175,8 +177,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
 
     @Override
     public SimpleTask findByProjectAndTaskKey(Integer taskkey, String projectShortName, Integer sAccountId) {
-        return taskMapperExt.findByProjectAndTaskKey(taskkey, projectShortName,
-                sAccountId);
+        return taskMapperExt.findByProjectAndTaskKey(taskkey, projectShortName, sAccountId);
     }
 
     @SuppressWarnings("unchecked")
@@ -185,8 +186,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setSaccountid(new NumberSearchField(sAccountId));
         searchCriteria.setParentTaskId(new NumberSearchField(parentTaskId));
-        return taskMapperExt.findPagableListByCriteria(searchCriteria,
-                new RowBounds(0, Integer.MAX_VALUE));
+        return taskMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
     }
 
     @Override
@@ -194,8 +194,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setSaccountid(new NumberSearchField(sAccountId));
         searchCriteria.setTaskListId(new NumberSearchField(taskgroupId));
-        return taskMapperExt.findPagableListByCriteria(searchCriteria,
-                new RowBounds(0, Integer.MAX_VALUE));
+        return taskMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
     }
 
     @Override

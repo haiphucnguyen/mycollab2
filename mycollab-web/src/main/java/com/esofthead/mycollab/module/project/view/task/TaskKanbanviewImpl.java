@@ -22,7 +22,6 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
@@ -60,6 +59,7 @@ import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -142,7 +142,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         kanbanLayout.addStyleName("kanban-layout");
         kanbanLayout.setSpacing(true);
         kanbanLayout.setComponentHorizontalDropRatio(0.3f);
-        kanbanLayout.setDragMode(LayoutDragMode.CLONE);
+        kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
 
         // Enable dropping components
         kanbanLayout.setDropHandler(new DropHandler() {
@@ -217,12 +217,10 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             public void run() {
                 List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                         CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
-                LOG.info("Options: " + optionVals.size());
                 for (OptionVal optionVal : optionVals) {
                     KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
                     kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
                     kanbanLayout.addComponent(kanbanBlock);
-                    LOG.info("Option: " + BeanUtility.printBeanObj(optionVal));
                 }
                 UI.getCurrent().push();
 
@@ -335,7 +333,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
-            dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
+            dragLayoutContainer.setDragMode(LayoutDragMode.CLONE_OTHER);
             dragLayoutContainer.setDropHandler(new DropHandler() {
                 @Override
                 public void drop(DragAndDropEvent event) {
@@ -399,7 +397,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             Button addBtn = new Button("Add a task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-
+                    addNewTaskComp();
                 }
             });
             addBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -409,7 +407,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             Button addNewBtn = new Button("Add a task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-
+                    addNewTaskComp();
                 }
             });
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -420,6 +418,47 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
         void addBlockItem(KanbanTaskBlockItem comp) {
             dragLayoutContainer.addComponent(comp);
+        }
+
+        void addNewTaskComp() {
+            final SimpleTask task = new SimpleTask();
+            task.setSaccountid(AppContext.getAccountId());
+            task.setProjectid(CurrentProjectVariables.getProjectId());
+            task.setPercentagecomplete(0d);
+            task.setStatus(optionVal.getTypeval());
+            task.setProjectShortname(CurrentProjectVariables.getShortName());
+            final MVerticalLayout layout = new MVerticalLayout();
+            layout.addStyleName("kanban-item");
+            final TextField taskNameField = new TextField();
+            taskNameField.setWidth("100%");
+            layout.with(taskNameField);
+            MHorizontalLayout controlsBtn = new MHorizontalLayout();
+            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    String taskName = taskNameField.getValue();
+                    if (StringUtils.isNotBlank(taskName)) {
+                        task.setTaskname(taskName);
+                        ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                        taskService.saveWithSession(task, AppContext.getUsername());
+                        dragLayoutContainer.removeComponent(layout);
+                        KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
+                        addBlockItem(kanbanTaskBlockItem);
+                    }
+                }
+            });
+            saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    dragLayoutContainer.removeComponent(layout);
+                }
+            });
+            cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+            controlsBtn.with(saveBtn, cancelBtn);
+            layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
+            dragLayoutContainer.addComponent(layout, 0);
         }
     }
 }
