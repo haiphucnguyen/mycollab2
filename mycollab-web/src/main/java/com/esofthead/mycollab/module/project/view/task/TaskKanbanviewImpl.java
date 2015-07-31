@@ -56,6 +56,7 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -63,6 +64,7 @@ import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -311,6 +313,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         if (details.getDropLocation() == VerticalDropLocation.BOTTOM) {
                             dragLayoutContainer.addComponent(kanbanItem);
                         } else if (newIndex == -1) {
+                            newIndex = 0;
                             dragLayoutContainer.addComponent(kanbanItem, 0);
                         } else {
                             dragLayoutContainer.addComponent(kanbanItem, newIndex);
@@ -319,6 +322,19 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         task.setStatus(optionVal.getTypeval());
                         ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+
+                        //Update task index
+                        List<Map<String, Integer>> indexMap = new ArrayList<>();
+                        for (int i = 0; i < dragLayoutContainer.getComponentCount(); i++) {
+                            KanbanTaskBlockItem blockItem = (KanbanTaskBlockItem) dragLayoutContainer.getComponent(i);
+                            Map<String, Integer> map = new HashedMap(2);
+                            map.put("id", blockItem.task.getId());
+                            map.put("index", i);
+                            indexMap.add(map);
+                        }
+                        if (indexMap.size() > 0) {
+                            taskService.massUpdateTaskIndexes(indexMap, AppContext.getAccountId());
+                        }
                     }
                 }
 

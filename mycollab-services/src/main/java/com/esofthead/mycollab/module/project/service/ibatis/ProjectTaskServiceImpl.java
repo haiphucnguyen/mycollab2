@@ -41,11 +41,17 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotifi
 import com.google.common.eventbus.AsyncEventBus;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -72,6 +78,9 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     private TaskMapperExt taskMapperExt;
     @Autowired
     private AsyncEventBus asyncEventBus;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public ICrudGenericDAO<Integer, Task> getCrudMapper() {
@@ -191,4 +200,21 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 new RowBounds(0, Integer.MAX_VALUE));
     }
 
+    @Override
+    public void massUpdateTaskIndexes(final List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `taskindex`=? WHERE `id`=?", new
+                BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
+                preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
+            }
+
+            @Override
+            public int getBatchSize() {
+                return mapIndexes.size();
+            }
+        });
+    }
 }

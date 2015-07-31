@@ -52,6 +52,7 @@ Version 5.1.1
 
 **Improvements & New Features**
 
+* New kanban board for project tasks
 * Update attachment display
 * Generate thumbnail for images
 
@@ -59,6 +60,7 @@ Version 5.1.1
 
 * General bug fixes of file module
 * Can not download file folder
+* The task widgets do not refresh when task status changed
 
 
 Version 5.1.0
