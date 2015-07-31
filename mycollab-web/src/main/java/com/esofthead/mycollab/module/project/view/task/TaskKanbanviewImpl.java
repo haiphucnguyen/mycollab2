@@ -68,6 +68,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -333,7 +334,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
             dragLayoutContainer.setComponentVerticalDropRatio(0.3f);
-            dragLayoutContainer.setDragMode(LayoutDragMode.CLONE_OTHER);
+            dragLayoutContainer.setDragMode(LayoutDragMode.CLONE);
             dragLayoutContainer.setDropHandler(new DropHandler() {
                 @Override
                 public void drop(DragAndDropEvent event) {
@@ -360,11 +361,14 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         //Update task index
                         List<Map<String, Integer>> indexMap = new ArrayList<>();
                         for (int i = 0; i < dragLayoutContainer.getComponentCount(); i++) {
-                            KanbanTaskBlockItem blockItem = (KanbanTaskBlockItem) dragLayoutContainer.getComponent(i);
-                            Map<String, Integer> map = new HashedMap(2);
-                            map.put("id", blockItem.task.getId());
-                            map.put("index", i);
-                            indexMap.add(map);
+                            Component subComponent = dragLayoutContainer.getComponent(i);
+                            if (subComponent instanceof KanbanTaskBlockItem) {
+                                KanbanTaskBlockItem blockItem = (KanbanTaskBlockItem) dragLayoutContainer.getComponent(i);
+                                Map<String, Integer> map = new HashMap<>(2);
+                                map.put("id", blockItem.task.getId());
+                                map.put("index", i);
+                                indexMap.add(map);
+                            }
                         }
                         if (indexMap.size() > 0) {
                             taskService.massUpdateTaskIndexes(indexMap, AppContext.getAccountId());
@@ -421,44 +425,50 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         }
 
         void addNewTaskComp() {
-            final SimpleTask task = new SimpleTask();
-            task.setSaccountid(AppContext.getAccountId());
-            task.setProjectid(CurrentProjectVariables.getProjectId());
-            task.setPercentagecomplete(0d);
-            task.setStatus(optionVal.getTypeval());
-            task.setProjectShortname(CurrentProjectVariables.getShortName());
-            final MVerticalLayout layout = new MVerticalLayout();
-            layout.addStyleName("kanban-item");
-            final TextField taskNameField = new TextField();
-            taskNameField.setWidth("100%");
-            layout.with(taskNameField);
-            MHorizontalLayout controlsBtn = new MHorizontalLayout();
-            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    String taskName = taskNameField.getValue();
-                    if (StringUtils.isNotBlank(taskName)) {
-                        task.setTaskname(taskName);
-                        ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                        taskService.saveWithSession(task, AppContext.getUsername());
-                        dragLayoutContainer.removeComponent(layout);
-                        KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
-                        addBlockItem(kanbanTaskBlockItem);
-                    }
-                }
-            });
-            saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            if (dragLayoutContainer.getComponentCount() > 0) {
+                Component testComp = dragLayoutContainer.getComponent(0);
+                if (testComp instanceof KanbanTaskBlockItem) {
+                    final SimpleTask task = new SimpleTask();
+                    task.setSaccountid(AppContext.getAccountId());
+                    task.setProjectid(CurrentProjectVariables.getProjectId());
+                    task.setPercentagecomplete(0d);
+                    task.setStatus(optionVal.getTypeval());
+                    task.setProjectShortname(CurrentProjectVariables.getShortName());
+                    final MVerticalLayout layout = new MVerticalLayout();
+                    layout.addStyleName("kanban-item");
+                    final TextField taskNameField = new TextField();
+                    taskNameField.setWidth("100%");
+                    layout.with(taskNameField);
+                    MHorizontalLayout controlsBtn = new MHorizontalLayout();
+                    Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(Button.ClickEvent clickEvent) {
+                            String taskName = taskNameField.getValue();
+                            if (StringUtils.isNotBlank(taskName)) {
+                                task.setTaskname(taskName);
+                                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                                taskService.saveWithSession(task, AppContext.getUsername());
+                                dragLayoutContainer.removeComponent(layout);
+                                KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
+                                addBlockItem(kanbanTaskBlockItem);
+                            }
+                        }
+                    });
+                    saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    dragLayoutContainer.removeComponent(layout);
+                    Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(Button.ClickEvent clickEvent) {
+                            dragLayoutContainer.removeComponent(layout);
+                        }
+                    });
+                    cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+                    controlsBtn.with(saveBtn, cancelBtn);
+                    layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
+                    dragLayoutContainer.addComponent(layout, 0);
+                    dragLayoutContainer.markAsDirty();
                 }
-            });
-            cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-            controlsBtn.with(saveBtn, cancelBtn);
-            layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
-            dragLayoutContainer.addComponent(layout, 0);
+            }
         }
     }
 }
