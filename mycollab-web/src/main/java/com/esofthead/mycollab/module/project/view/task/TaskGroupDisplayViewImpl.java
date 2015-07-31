@@ -91,31 +91,29 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
 
         MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("200px");
 
-        final Button allTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ALL_TASKS),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button allTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ALL_TASKS), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        taskSelection.setPopupVisible(false);
-                        taskSelection.setCaption(event.getButton().getCaption());
-                        displayAllTasks();
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                taskSelection.setPopupVisible(false);
+                taskSelection.setCaption(event.getButton().getCaption());
+                displayAllTasks();
+            }
+        });
         allTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
         filterBtnLayout.addComponent(allTasksFilterBtn);
 
-        Button activeTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASKS),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button activeTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASKS), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        taskSelection.setPopupVisible(false);
-                        taskSelection.setCaption(event.getButton().getCaption());
-                        displayActiveTasksOnly();
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                taskSelection.setPopupVisible(false);
+                taskSelection.setCaption(event.getButton().getCaption());
+                displayActiveTasksOnly();
+            }
+        });
         activeTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
         filterBtnLayout.addComponent(activeTasksFilterBtn);
 
@@ -320,8 +318,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
 
         MVerticalLayout leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false)).with(taskListsWidget);
 
-        this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(
-                new MarginInfo(true, false, false, false));
+        this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(new MarginInfo(true, false, false, false));
 
         mainLayout.with(leftColumn, rightColumn).expand(leftColumn);
 

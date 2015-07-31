@@ -143,56 +143,52 @@ public class TaskGroupDisplayWidget extends BeanList<ProjectTaskListService, Tas
 
             taskListActionControl.setContent(actionBtnLayout);
 
-            Button readBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_VIEW),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button readBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_VIEW), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            taskListActionControl.setPopupVisible(false);
-                            EventBusFactory.getInstance().post(new TaskListEvent.GotoRead(event, taskList.getId()));
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    taskListActionControl.setPopupVisible(false);
+                    EventBusFactory.getInstance().post(new TaskListEvent.GotoRead(event, taskList.getId()));
+                }
+            });
             readBtn.setIcon(FontAwesome.HACKER_NEWS);
             readBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
             actionBtnLayout.addOption(readBtn);
 
-            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            taskListActionControl.setPopupVisible(false);
-                            EventBusFactory.getInstance().post(
-                                    new TaskListEvent.GotoEdit(event, taskList));
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    taskListActionControl.setPopupVisible(false);
+                    EventBusFactory.getInstance().post(new TaskListEvent.GotoEdit(event, taskList));
+                }
+            });
             editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             editBtn.setIcon(FontAwesome.EDIT);
             actionBtnLayout.addOption(editBtn);
 
             Enum actionEnum = (taskList.isArchieved()) ? GenericI18Enum.BUTTON_REOPEN : GenericI18Enum.BUTTON_CLOSE;
 
-            toogleBtn = new Button(AppContext.getMessage(actionEnum),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            toogleBtn = new Button(AppContext.getMessage(actionEnum), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            taskListActionControl.setPopupVisible(false);
-                            if (taskList.isArchieved()) {
-                                taskList.setStatus(StatusI18nEnum.Open.name());
-                            } else {
-                                taskList.setStatus(StatusI18nEnum.Archived.name());
-                            }
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    taskListActionControl.setPopupVisible(false);
+                    if (taskList.isArchieved()) {
+                        taskList.setStatus(StatusI18nEnum.Open.name());
+                    } else {
+                        taskList.setStatus(StatusI18nEnum.Archived.name());
+                    }
 
-                            ProjectTaskListService taskListService = ApplicationContextUtil
-                                    .getSpringBean(ProjectTaskListService.class);
-                            taskListService.updateWithSession(taskList, AppContext.getUsername());
-                            updateToogleButtonStatus();
-                        }
-                    });
+                    ProjectTaskListService taskListService = ApplicationContextUtil
+                            .getSpringBean(ProjectTaskListService.class);
+                    taskListService.updateWithSession(taskList, AppContext.getUsername());
+                    updateToogleButtonStatus();
+                }
+            });
             toogleBtn.setIcon(FontAwesome.TOGGLE_UP);
             toogleBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             actionBtnLayout.addOption(toogleBtn);
@@ -204,8 +200,7 @@ public class TaskGroupDisplayWidget extends BeanList<ProjectTaskListService, Tas
                 public void buttonClick(final ClickEvent event) {
                     taskListActionControl.setPopupVisible(false);
                     ConfirmDialogExt.show(UI.getCurrent(),
-                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                    AppContext.getSiteName()),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
                             AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                             AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                             AppContext.getMessage(GenericI18Enum.BUTTON_NO),

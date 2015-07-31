@@ -68,9 +68,7 @@ public class TaskGroupNoItemView extends ProjectListNoItemView {
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                final TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
-                        null);
-                UI.getCurrent().addWindow(taskListWindow);
+                UI.getCurrent().addWindow(new TaskGroupAddWindow(null));
             }
         };
     }

@@ -27,37 +27,32 @@ import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 2.0
  */
 public class TaskGroupHistoryLogList extends HistoryLogComponent {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public static final FieldGroupFormatter tasklistFormatter;
+    public static final FieldGroupFormatter tasklistFormatter;
 
-	static {
-		tasklistFormatter = new FieldGroupFormatter();
+    static {
+        tasklistFormatter = new FieldGroupFormatter();
 
-		tasklistFormatter.generateFieldDisplayHandler("name",
-				TaskGroupI18nEnum.FORM_NAME_FIELD);
-		tasklistFormatter.generateFieldDisplayHandler("description",
-				TaskGroupI18nEnum.FORM_DESCRIPTION_FIELD);
-		tasklistFormatter.generateFieldDisplayHandler("owner",
-				GenericI18Enum.FORM_ASSIGNEE,
-				new ProjectMemberHistoryFieldFormat());
-		tasklistFormatter.generateFieldDisplayHandler("milestoneid",
-				TaskGroupI18nEnum.FORM_PHASE_FIELD,
-				new MilestoneHistoryFieldFormat());
-	}
+        tasklistFormatter.generateFieldDisplayHandler("name", TaskGroupI18nEnum.FORM_NAME_FIELD);
+        tasklistFormatter.generateFieldDisplayHandler("description", TaskGroupI18nEnum.FORM_DESCRIPTION_FIELD);
+        tasklistFormatter.generateFieldDisplayHandler("owner", GenericI18Enum.FORM_ASSIGNEE,
+                new ProjectMemberHistoryFieldFormat());
+        tasklistFormatter.generateFieldDisplayHandler("milestoneid", TaskGroupI18nEnum.FORM_PHASE_FIELD,
+                new MilestoneHistoryFieldFormat());
+    }
 
-	public TaskGroupHistoryLogList() {
-		super(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK_LIST);
-		this.addStyleName("activity-panel");
-	}
+    public TaskGroupHistoryLogList() {
+        super(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK_LIST);
+        this.addStyleName("activity-panel");
+    }
 
-	@Override
-	protected FieldGroupFormatter buildFormatter() {
-		return tasklistFormatter;
-	}
+    @Override
+    protected FieldGroupFormatter buildFormatter() {
+        return tasklistFormatter;
+    }
 }

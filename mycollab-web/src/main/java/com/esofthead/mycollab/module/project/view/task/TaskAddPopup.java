@@ -18,12 +18,14 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -103,6 +105,7 @@ class TaskAddPopup extends CustomComponent {
                     taskService.saveWithSession(task, AppContext.getUsername());
                     taskNoteComponent.saveContentsToRepo(task.getId());
                     taskDisplayComp.saveTaskSuccess(task);
+                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskAddPopup.this, null));
                     taskDisplayComp.closeTaskAdd();
                 }
             }

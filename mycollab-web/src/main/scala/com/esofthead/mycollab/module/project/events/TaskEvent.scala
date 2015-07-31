@@ -24,6 +24,8 @@ import com.esofthead.mycollab.eventmanager.ApplicationEvent
  */
 object TaskEvent {
 
+    class HasTaskChange(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
     class Search(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
     class GotoAdd(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}

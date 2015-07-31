@@ -95,8 +95,7 @@ public class TaskGroupReadViewImpl extends AbstractPreviewItemComp<SimpleTaskLis
 
     @Override
     protected void initRelatedComponents() {
-        commentList = new CommentDisplay(ProjectTypeConstants.TASK_LIST,
-                CurrentProjectVariables.getProjectId(),
+        commentList = new CommentDisplay(ProjectTypeConstants.TASK_LIST, CurrentProjectVariables.getProjectId(),
                 ProjectTaskGroupRelayEmailNotificationAction.class);
         commentList.setWidth("100%");
         historyList = new TaskGroupHistoryLogList();
@@ -131,22 +130,19 @@ public class TaskGroupReadViewImpl extends AbstractPreviewItemComp<SimpleTaskLis
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.TASK_LIST,
-                TaskGroupDefaultFormLayoutFactory.getForm(),
+        return new DynaFormLayout(ProjectTypeConstants.TASK_LIST, TaskGroupDefaultFormLayoutFactory.getForm(),
                 TaskList.Field.name.name());
     }
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return (new ProjectPreviewFormControlsGenerator<>(
-                previewForm))
-                .createButtonControls(
-                        ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.ASSIGN_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
-                                | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED,
-                        ProjectRolePermissionCollections.TASKS);
+        return (new ProjectPreviewFormControlsGenerator<>(previewForm)).createButtonControls(
+                ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.ASSIGN_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED,
+                ProjectRolePermissionCollections.TASKS);
     }
 
     @Override
@@ -171,14 +167,13 @@ public class TaskGroupReadViewImpl extends AbstractPreviewItemComp<SimpleTaskLis
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (TaskList.Field.milestoneid.equalTo(propertyId)) {
-                    return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "", beanItem.getMilestoneName());
+                    return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "",
+                            beanItem.getMilestoneName());
                 } else if (TaskList.Field.owner.equalTo(propertyId)) {
-                    return new ProjectUserFormLinkField(beanItem.getOwner(),
-                            beanItem.getOwnerAvatarId(),
+                    return new ProjectUserFormLinkField(beanItem.getOwner(), beanItem.getOwnerAvatarId(),
                             beanItem.getOwnerFullName());
                 } else if (TaskList.Field.description.equalTo(propertyId)) {
-                    return new DefaultViewField(beanItem.getDescription(),
-                            ContentMode.HTML);
+                    return new DefaultViewField(beanItem.getDescription(), ContentMode.HTML);
                 } else if (TaskList.Field.groupindex.equalTo(propertyId)) {
                     return new SubTasksField();
                 }
