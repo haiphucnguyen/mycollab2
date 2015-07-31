@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
@@ -216,10 +217,12 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             public void run() {
                 List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                         CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+                LOG.info("Options: " + optionVals.size());
                 for (OptionVal optionVal : optionVals) {
                     KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
                     kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
                     kanbanLayout.addComponent(kanbanBlock);
+                    LOG.info("Option: " + BeanUtility.printBeanObj(optionVal));
                 }
                 UI.getCurrent().push();
 
