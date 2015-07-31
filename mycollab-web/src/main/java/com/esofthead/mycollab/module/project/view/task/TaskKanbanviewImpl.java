@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -386,6 +387,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
                 }
             });
+            addBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
 
@@ -395,6 +397,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
                 }
             });
+            addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
             addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
             root.with(headerLayout, dragLayoutContainer, addNewBtn);
