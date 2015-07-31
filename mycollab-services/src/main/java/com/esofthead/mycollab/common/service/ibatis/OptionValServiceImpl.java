@@ -56,6 +56,7 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
         OptionValExample ex = new OptionValExample();
         ex.createCriteria().andTypeEqualTo(type).andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId);
         ex.setOrderByClause("orderIndex ASC");
+        ex.setDistinct(true);
 
         return optionValMapper.selectByExampleWithBLOBs(ex);
     }

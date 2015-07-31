@@ -221,6 +221,9 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
                     kanbanLayout.addComponent(kanbanBlock);
                 }
+                UI.getCurrent().push();
+
+                int countForPush = 0;
 
                 for (SimpleTask task : tasks) {
                     String status = task.getStatus();
@@ -229,7 +232,16 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         LOG.error("Can not find a kanban block for status: " + status);
                     } else {
                         kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                        countForPush++;
                     }
+
+                    if (countForPush == 10) {
+                        countForPush = 0;
+                        UI.getCurrent().push();
+                    }
+                }
+
+                if (countForPush > 0) {
                     UI.getCurrent().push();
                 }
             }
