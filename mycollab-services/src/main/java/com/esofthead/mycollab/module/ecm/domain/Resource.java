@@ -128,7 +128,7 @@ public class Resource implements Comparable<Resource> {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(12, 12).append(getPath()).build();
+        return new HashCodeBuilder(1, 101).append(getPath()).build();
     }
 
     @Override
