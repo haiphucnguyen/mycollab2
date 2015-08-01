@@ -60,15 +60,14 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         componentsDisplay.setWidth("100%");
 
         componentPopupSelection = new PopupButtonExt();
-        componentPopupSelection
-                .addClickListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        componentPopupSelection.addClickListener(new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        MultiSelectComp.this.initContentPopup();
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                MultiSelectComp.this.initContentPopup();
+            }
+        });
 
         popupContent = new VerticalLayout();
         this.componentPopupSelection.setContent(popupContent);
@@ -133,8 +132,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         String itemName = "";
         if (!"".equals(propertyDisplayField)) {
             try {
-                itemName = (String) PropertyUtils.getProperty(item,
-                        propertyDisplayField);
+                itemName = (String) PropertyUtils.getProperty(item, propertyDisplayField);
             } catch (final Exception e) {
                 e.printStackTrace();
             }
@@ -142,8 +140,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
             itemName = item.toString();
         }
 
-        final ItemSelectionComp<T> chkItem = new ItemSelectionComp<T>(item,
-                itemName);
+        final ItemSelectionComp<T> chkItem = new ItemSelectionComp<>(item, itemName);
         chkItem.setImmediate(true);
 
         chkItem.addValueChangeListener(new ValueChangeListener() {
@@ -173,8 +170,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         Ul ul = new Ul();
         try {
             for (T item : selectedItems) {
-                String objDisplayName = (String) PropertyUtils.getProperty(
-                        item, propertyDisplayField);
+                String objDisplayName = (String) PropertyUtils.getProperty(item, propertyDisplayField);
                 ul.appendChild(new Li().appendText(objDisplayName));
             }
         } catch (Exception e) {
@@ -206,10 +202,8 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
             return false;
         } else {
             try {
-                Integer field1 = (Integer) PropertyUtils.getProperty(
-                        value1, "id");
-                Integer field2 = (Integer) PropertyUtils.getProperty(
-                        value2, "id");
+                Integer field1 = (Integer) PropertyUtils.getProperty(value1, "id");
+                Integer field2 = (Integer) PropertyUtils.getProperty(value2, "id");
                 return field1.equals(field2);
             } catch (final Exception e) {
                 log.error("Error when compare value", e);
@@ -227,8 +221,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
         for (int i = 0; i < selectedItems.size(); i++) {
             final Object itemObj = selectedItems.get(i);
             try {
-                String objDisplayName = (String) PropertyUtils.getProperty(
-                        itemObj, propertyDisplayField);
+                String objDisplayName = (String) PropertyUtils.getProperty(itemObj, propertyDisplayField);
                 if (i == selectedItems.size() - 1) {
                     str.append(objDisplayName);
                 } else {

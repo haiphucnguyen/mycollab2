@@ -93,7 +93,6 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
                         changeItem.setNewvalue(newProp);
                         changeItem.setOldvalue(oldProp);
                         changeItems.add(changeItem);
-
                     }
                 }
             } catch (Exception e) {
@@ -124,7 +123,7 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
     }
 
     @Override
-    public SimpleAuditLog findLatestLog(int auditLogId, int sAccountId) {
+    public SimpleAuditLog findLastestLog(int auditLogId, int sAccountId) {
         return auditLogMapperExt.findLatestLog(auditLogId);
     }
 }

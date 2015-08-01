@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
@@ -266,7 +267,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     private static class KanbanTaskBlockItem extends CustomComponent {
         private SimpleTask task;
 
-        KanbanTaskBlockItem(SimpleTask task) {
+        KanbanTaskBlockItem(final SimpleTask task) {
             this.task = task;
             MVerticalLayout root = new MVerticalLayout();
             root.addStyleName("kanban-item");
@@ -276,7 +277,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             ButtonLink taskBtn = new ButtonLink(taskname, new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoRead(KanbanTaskBlockItem.this, task.getId()));
                 }
             });
             taskBtn.setIcon(new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(task.getPriority())));
@@ -425,49 +426,47 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         }
 
         void addNewTaskComp() {
-            if (dragLayoutContainer.getComponentCount() > 0) {
-                Component testComp = dragLayoutContainer.getComponent(0);
-                if (testComp instanceof KanbanTaskBlockItem) {
-                    final SimpleTask task = new SimpleTask();
-                    task.setSaccountid(AppContext.getAccountId());
-                    task.setProjectid(CurrentProjectVariables.getProjectId());
-                    task.setPercentagecomplete(0d);
-                    task.setStatus(optionVal.getTypeval());
-                    task.setProjectShortname(CurrentProjectVariables.getShortName());
-                    final MVerticalLayout layout = new MVerticalLayout();
-                    layout.addStyleName("kanban-item");
-                    final TextField taskNameField = new TextField();
-                    taskNameField.setWidth("100%");
-                    layout.with(taskNameField);
-                    MHorizontalLayout controlsBtn = new MHorizontalLayout();
-                    Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            String taskName = taskNameField.getValue();
-                            if (StringUtils.isNotBlank(taskName)) {
-                                task.setTaskname(taskName);
-                                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                                taskService.saveWithSession(task, AppContext.getUsername());
-                                dragLayoutContainer.removeComponent(layout);
-                                KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
-                                addBlockItem(kanbanTaskBlockItem);
-                            }
-                        }
-                    });
-                    saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
-
-                    Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
+            Component testComp = (dragLayoutContainer.getComponentCount() > 0) ? dragLayoutContainer.getComponent(0) : null;
+            if (testComp instanceof KanbanTaskBlockItem || testComp == null) {
+                final SimpleTask task = new SimpleTask();
+                task.setSaccountid(AppContext.getAccountId());
+                task.setProjectid(CurrentProjectVariables.getProjectId());
+                task.setPercentagecomplete(0d);
+                task.setStatus(optionVal.getTypeval());
+                task.setProjectShortname(CurrentProjectVariables.getShortName());
+                final MVerticalLayout layout = new MVerticalLayout();
+                layout.addStyleName("kanban-item");
+                final TextField taskNameField = new TextField();
+                taskNameField.setWidth("100%");
+                layout.with(taskNameField);
+                MHorizontalLayout controlsBtn = new MHorizontalLayout();
+                Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        String taskName = taskNameField.getValue();
+                        if (StringUtils.isNotBlank(taskName)) {
+                            task.setTaskname(taskName);
+                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            taskService.saveWithSession(task, AppContext.getUsername());
                             dragLayoutContainer.removeComponent(layout);
+                            KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
+                            dragLayoutContainer.addComponent(kanbanTaskBlockItem, 0);
                         }
-                    });
-                    cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-                    controlsBtn.with(saveBtn, cancelBtn);
-                    layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
-                    dragLayoutContainer.addComponent(layout, 0);
-                    dragLayoutContainer.markAsDirty();
-                }
+                    }
+                });
+                saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+
+                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        dragLayoutContainer.removeComponent(layout);
+                    }
+                });
+                cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+                controlsBtn.with(saveBtn, cancelBtn);
+                layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
+                dragLayoutContainer.addComponent(layout, 0);
+                dragLayoutContainer.markAsDirty();
             }
         }
     }
