@@ -101,8 +101,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private void displayWorkflowControl() {
-        if (BugStatus.Open.name().equals(beanItem.getStatus())
-                || BugStatus.ReOpened.name().equals(beanItem.getStatus())) {
+        if (BugStatus.Open.name().equals(beanItem.getStatus()) || BugStatus.ReOpened.name().equals(beanItem.getStatus())) {
             this.bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
             Button startProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_START_PROGRESS), new Button.ClickListener() {
@@ -392,8 +391,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected ComponentContainer createButtonControls() {
-        ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new
-                ProjectPreviewFormControlsGenerator<>(previewForm);
+        ProjectPreviewFormControlsGenerator<SimpleBug> bugPreviewFormControls = new ProjectPreviewFormControlsGenerator<>(previewForm);
         MButton linkBtn = new MButton("Link", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
@@ -526,7 +524,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
                             @Override
                             public void buttonClick(ClickEvent event) {
-                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(BugReadViewImpl.this, component.getId()));
+                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoRead(
+                                        BugReadViewImpl.this, component.getId()));
                             }
                         });
                         componentContainer.addComponentField(componentLink);

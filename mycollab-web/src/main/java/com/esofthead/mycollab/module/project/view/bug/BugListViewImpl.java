@@ -109,8 +109,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                UI.getCurrent().addWindow(
-                        new BugListCustomizeWindow(BugListView.VIEW_DEF_ID, tableItem));
+                UI.getCurrent().addWindow(new BugListCustomizeWindow(BugListView.VIEW_DEF_ID, tableItem));
 
             }
         });
@@ -122,8 +121,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         final PopupButton exportButtonControl = new PopupButton();
         exportButtonControl.addStyleName(UIConstants.THEME_GRAY_LINK);
         exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
-        exportButtonControl.setDescription(AppContext
-                .getMessage(FileI18nEnum.EXPORT_FILE));
+        exportButtonControl.setDescription(AppContext.getMessage(FileI18nEnum.EXPORT_FILE));
         bugSearchPanel.addHeaderRight(exportButtonControl);
 
         final OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("120px");
@@ -145,14 +143,10 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                                 SearchField.AND, CurrentProjectVariables
                                 .getProject().getId()));
 
-                        return new StreamResource(
-                                new SimpleGridExportItemsStreamResource.AllItems<>(
-                                        title,
-                                        new RpParameterBuilder(tableItem.getDisplayColumns()),
-                                        ReportExportType.PDF,
-                                        ApplicationContextUtil.getSpringBean(BugService.class),
-                                        searchCriteria, SimpleBug.class),
-                                "export.pdf");
+                        return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems<>(title,
+                                new RpParameterBuilder(tableItem.getDisplayColumns()),
+                                ReportExportType.PDF, ApplicationContextUtil.getSpringBean(BugService.class),
+                                searchCriteria, SimpleBug.class), "export.pdf");
                     }
 
                 });
@@ -175,21 +169,17 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                                 SearchField.AND, CurrentProjectVariables
                                 .getProject().getId()));
 
-                        return new StreamResource(
-                                new SimpleGridExportItemsStreamResource.AllItems<>(
-                                        title, new RpParameterBuilder(tableItem.getDisplayColumns()),
-                                        ReportExportType.EXCEL,
-                                        ApplicationContextUtil.getSpringBean(BugService.class),
-                                        searchCriteria, SimpleBug.class),
-                                "export.xlsx");
+                        return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems<>(
+                                title, new RpParameterBuilder(tableItem.getDisplayColumns()),
+                                ReportExportType.EXCEL, ApplicationContextUtil.getSpringBean(BugService.class),
+                                searchCriteria, SimpleBug.class), "export.xlsx");
                     }
                 });
         excelDownloader.extend(exportExcelBtn);
         exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
         popupButtonsControl.addOption(exportExcelBtn);
 
-        Button exportCsvBtn = new Button(
-                AppContext.getMessage(FileI18nEnum.CSV));
+        Button exportCsvBtn = new Button(AppContext.getMessage(FileI18nEnum.CSV));
 
         StreamWrapperFileDownloader csvFileDownloader = new StreamWrapperFileDownloader(
                 new StreamResourceFactory() {
@@ -232,26 +222,22 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
     @Override
     public void enableActionControls(int numOfSelectedItem) {
-        throw new UnsupportedOperationException(
-                "This view doesn't support this operation");
+        throw new UnsupportedOperationException("This view doesn't support this operation");
     }
 
     @Override
     public void disableActionControls() {
-        throw new UnsupportedOperationException(
-                "This view doesn't support this operation");
+        throw new UnsupportedOperationException("This view doesn't support this operation");
     }
 
     @Override
     public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        throw new UnsupportedOperationException(
-                "This view doesn't support this operation");
+        throw new UnsupportedOperationException("This view doesn't support this operation");
     }
 
     @Override
     public HasMassItemActionHandler getPopupActionHandlers() {
-        throw new UnsupportedOperationException(
-                "This view doesn't support this operation");
+        throw new UnsupportedOperationException("This view doesn't support this operation");
     }
 
     @Override
