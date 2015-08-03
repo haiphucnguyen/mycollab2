@@ -62,7 +62,6 @@ class TaskDisplayComponent extends CssLayout {
         //Set default search criteria
         criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setTaskListId(new NumberSearchField(taskList.getId()));
         criteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Open.name(), StatusI18nEnum.Pending.name()));
     }
 

@@ -187,14 +187,6 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     }
 
     @Override
-    public List<SimpleTask> findSubTasksOfGroup(Integer taskgroupId, @CacheKey Integer sAccountId) {
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(sAccountId));
-        searchCriteria.setTaskListId(new NumberSearchField(taskgroupId));
-        return taskMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
-    }
-
-    @Override
     public void massUpdateTaskIndexes(final List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `taskindex`=? WHERE `id`=?", new

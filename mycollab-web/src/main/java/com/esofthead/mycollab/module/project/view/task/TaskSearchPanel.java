@@ -68,7 +68,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             @Override
             public void buttonClick(ClickEvent event) {
                 PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
-                        (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoRichView());
+                        (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoDashboard());
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
             }
         });

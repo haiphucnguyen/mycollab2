@@ -70,7 +70,7 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
                 ViewState viewState = HistoryViewManager.back();
                 if (viewState.hasPresenters(NullViewState.EmptyPresenter.class, ProjectViewPresenter.class)) {
                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
-                            (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoRichView());
+                            (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoDashboard());
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                 }
             }

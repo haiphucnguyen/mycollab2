@@ -65,12 +65,12 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * @since 1.0
  */
 @ViewComponent
-public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements TaskGroupDisplayView {
+public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
 
     private PopupButton taskGroupSelection;
     private PopupButton taskSelection;
-    private TaskGroupDisplayWidget taskListsWidget;
+    private MilestoneGroupComponent taskListsWidget;
 
     private VerticalLayout rightColumn;
     private TextField nameField;
@@ -189,17 +189,19 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
         OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("120px");
         exportButtonControl.setContent(popupButtonsControl);
 
-        Button exportPdfBtn = new Button(AppContext.getMessage(FileI18nEnum.PDF));
-        FileDownloader pdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
-        pdfDownloader.extend(exportPdfBtn);
-        exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
-        popupButtonsControl.addOption(exportPdfBtn);
+        //TODO: export task list to file
 
-        Button exportExcelBtn = new Button(AppContext.getMessage(FileI18nEnum.EXCEL));
-        FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
-        excelDownloader.extend(exportExcelBtn);
-        exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
-        popupButtonsControl.addOption(exportExcelBtn);
+//        Button exportPdfBtn = new Button(AppContext.getMessage(FileI18nEnum.PDF));
+//        FileDownloader pdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
+//        pdfDownloader.extend(exportPdfBtn);
+//        exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
+//        popupButtonsControl.addOption(exportPdfBtn);
+//
+//        Button exportExcelBtn = new Button(AppContext.getMessage(FileI18nEnum.EXCEL));
+//        FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
+//        excelDownloader.extend(exportExcelBtn);
+//        exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
+//        popupButtonsControl.addOption(exportExcelBtn);
 
         header.with(exportButtonControl).withAlign(exportButtonControl, Alignment.MIDDLE_LEFT);
 
@@ -259,7 +261,7 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
         viewButtons.setDefaultButton(advanceDisplayBtn);
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
-        this.taskListsWidget = new TaskGroupDisplayWidget();
+        this.taskListsWidget = new MilestoneGroupComponent();
 
         MVerticalLayout leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false)).with(taskListsWidget);
 
@@ -421,11 +423,6 @@ public class TaskGroupDisplayViewImpl extends AbstractLazyPageView implements Ta
         EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
     }
 
-
-    @Override
-    public void insertTaskList(final SimpleTaskList taskList) {
-
-    }
 
     private TaskSearchCriteria createTaskBaseSearchCriteria() {
         TaskSearchCriteria criteria = new TaskSearchCriteria();

@@ -47,17 +47,18 @@ public class TaskListGanttItemWrapper extends GanttItemWrapper {
 
     @Override
     public List<GanttItemWrapper> subTasks() {
-        List<SimpleTask> subTasks = projectTaskService.findSubTasksOfGroup(taskList.getId(), AppContext.getAccountId());
-        if (subItems == null) {
-            subItems = new ArrayList<>();
-            for (SimpleTask subTask : subTasks) {
-                TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask, minDate, maxDate);
-                subItem.setParent(this);
-                subItems.add(subItem);
-            }
-        }
-
-        return subItems;
+//        List<SimpleTask> subTasks = projectTaskService.findSubTasksOfGroup(taskList.getId(), AppContext.getAccountId());
+//        if (subItems == null) {
+//            subItems = new ArrayList<>();
+//            for (SimpleTask subTask : subTasks) {
+//                TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask, minDate, maxDate);
+//                subItem.setParent(this);
+//                subItems.add(subItem);
+//            }
+//        }
+//
+//        return subItems;
+        return null;
     }
 
     @Override

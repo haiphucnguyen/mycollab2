@@ -33,7 +33,7 @@ object TaskScreenData {
     
     class Add(param: Task) extends ScreenData[Task](param) {}
 
-    class GotoRichView extends ScreenData {}
+    class GotoDashboard extends ScreenData {}
     
     class GotoGanttChart extends ScreenData {}
     

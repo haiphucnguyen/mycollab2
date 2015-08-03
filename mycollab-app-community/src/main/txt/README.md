@@ -55,6 +55,7 @@ Version 5.1.1
 * New kanban board for project tasks
 * Update attachment display
 * Generate thumbnail for images
+* Update the task management workflow to remove the task group !!!
 
 **Bug Fixes**
 

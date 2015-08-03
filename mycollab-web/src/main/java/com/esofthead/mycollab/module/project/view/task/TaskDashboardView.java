@@ -26,7 +26,6 @@ import com.esofthead.mycollab.vaadin.mvp.LazyPageView;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface TaskGroupDisplayView extends ListView<TaskListSearchCriteria, SimpleTaskList>, LazyPageView {
+public interface TaskDashboardView extends ListView<TaskListSearchCriteria, SimpleTaskList>, LazyPageView {
 
-	void insertTaskList(SimpleTaskList taskList);
 }

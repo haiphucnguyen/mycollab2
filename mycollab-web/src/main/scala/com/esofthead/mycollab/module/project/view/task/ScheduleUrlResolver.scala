@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.UrlTokenizer
 import com.esofthead.mycollab.eventmanager.EventBusFactory
 import com.esofthead.mycollab.module.project.events.ProjectEvent
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoGanttChart, GotoRichView}
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoGanttChart, GotoDashboard}
 import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskScreenData}
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain
 
@@ -39,7 +39,7 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
             val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new GotoRichView)
+                new GotoDashboard)
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }
@@ -48,7 +48,7 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
             val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new GotoRichView)
+                new GotoDashboard)
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }

@@ -38,9 +38,6 @@ public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskS
     SimpleTask findById(Integer taskId, @CacheKey Integer sAccountId);
 
     @Cacheable
-    List<SimpleTask> findSubTasksOfGroup(Integer taskgroupId, @CacheKey Integer sAccountId);
-
-    @Cacheable
     List<SimpleTask> findSubTasks(Integer parentTaskId, @CacheKey Integer sAccountId);
 
     @Cacheable
@@ -53,5 +50,5 @@ public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskS
     List<GroupItem> getAssignedDefectsSummary(@CacheKey TaskSearchCriteria criteria);
 
     @CacheEvict
-    void massUpdateTaskIndexes(List<Map<String,Integer>> mapIndexes, @CacheKey Integer sAccountId);
+    void massUpdateTaskIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
 }

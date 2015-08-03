@@ -92,7 +92,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
                                     taskService.removeWithSession(data,
                                             AppContext.getUsername(), AppContext.getAccountId());
                                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
-                                            (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoRichView());
+                                            (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoDashboard());
                                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                                 }
                             }
@@ -109,7 +109,7 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
             @Override
             public void onCancel() {
                 PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
-                        (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoRichView());
+                        (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoDashboard());
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
             }
 
