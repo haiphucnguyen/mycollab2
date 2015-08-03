@@ -210,10 +210,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         toogleMenuShowBtn.setCaption("Show menu");
         setProjectNavigatorVisibility(false);
 
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        final List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
-
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
@@ -227,6 +223,10 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 UI.getCurrent().push();
 
                 int countForPush = 0;
+
+                TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+                searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                final List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
 
                 for (SimpleTask task : tasks) {
                     String status = task.getStatus();
