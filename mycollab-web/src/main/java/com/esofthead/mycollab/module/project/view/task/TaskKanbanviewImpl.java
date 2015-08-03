@@ -90,6 +90,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     private DDHorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
     private Button toogleMenuShowBtn;
+    private ComponentContainer newTaskComp = null;
 
     public TaskKanbanviewImpl() {
         this.setSizeFull();
@@ -98,8 +99,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        Label headerText = new Label(String.format("%s %s (Kanban Board)", FontAwesome.TH.getHtml(),
-                CurrentProjectVariables.getProject().getName()), ContentMode.HTML);
+        Label headerText = new Label("Kanban Board", ContentMode.HTML);
         headerText.setStyleName(UIConstants.HEADER_TEXT);
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
@@ -146,7 +146,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         kanbanLayout.setComponentHorizontalDropRatio(0.3f);
         kanbanLayout.setDragMode(LayoutDragMode.CLONE_OTHER);
 
-        // Enable dropping components
+//      Enable dropping components
         kanbanLayout.setDropHandler(new DropHandler() {
             @Override
             public void drop(DragAndDropEvent event) {
@@ -264,7 +264,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
     }
 
-    private static class KanbanTaskBlockItem extends CustomComponent {
+    private class KanbanTaskBlockItem extends CustomComponent {
         private SimpleTask task;
 
         KanbanTaskBlockItem(final SimpleTask task) {
@@ -319,7 +319,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         }
     }
 
-    private static class KanbanBlock extends CustomComponent {
+    private class KanbanBlock extends CustomComponent {
         private OptionVal optionVal;
         private MVerticalLayout root;
         private DDVerticalLayout dragLayoutContainer;
@@ -437,6 +437,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 final MVerticalLayout layout = new MVerticalLayout();
                 layout.addStyleName("kanban-item");
                 final TextField taskNameField = new TextField();
+                taskNameField.focus();
                 taskNameField.setWidth("100%");
                 layout.with(taskNameField);
                 MHorizontalLayout controlsBtn = new MHorizontalLayout();
@@ -460,11 +461,16 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         dragLayoutContainer.removeComponent(layout);
+                        newTaskComp = null;
                     }
                 });
                 cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
                 controlsBtn.with(saveBtn, cancelBtn);
                 layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
+                if (newTaskComp != null) {
+                    ((ComponentContainer) newTaskComp.getParent()).removeComponent(newTaskComp);
+                }
+                newTaskComp = layout;
                 dragLayoutContainer.addComponent(layout, 0);
                 dragLayoutContainer.markAsDirty();
             }

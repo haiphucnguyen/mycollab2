@@ -43,8 +43,6 @@
 
     <inherits name="org.tltv.gantt.WidgetSet" />
 
-    <inherits name="com.esofthead.vaadin.popupbutton.WidgetSet" />
-
     <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
 
     <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
