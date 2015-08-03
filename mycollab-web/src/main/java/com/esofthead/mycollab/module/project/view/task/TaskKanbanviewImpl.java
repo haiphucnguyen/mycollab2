@@ -323,6 +323,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         private OptionVal optionVal;
         private MVerticalLayout root;
         private DDVerticalLayout dragLayoutContainer;
+        private Label header;
 
         public KanbanBlock(OptionVal stage) {
             this.setHeight("100%");
@@ -343,6 +344,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
                     DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
                             .getTargetDetails();
+
                     Component dragComponent = transferable.getComponent();
                     if (dragComponent instanceof KanbanTaskBlockItem) {
                         KanbanTaskBlockItem kanbanItem = (KanbanTaskBlockItem) dragComponent;
@@ -358,6 +360,13 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         task.setStatus(optionVal.getTypeval());
                         ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                        updateComponentCount();
+
+                        Component sourceComponent = transferable.getSourceComponent();
+                        KanbanBlock sourceKanban = (KanbanBlock) UIUtils.getRoot(sourceComponent, KanbanBlock.class);
+                        if (sourceKanban != null && sourceKanban != KanbanBlock.this) {
+                            sourceKanban.updateComponentCount();
+                        }
 
                         //Update task index
                         List<Map<String, Integer>> indexMap = new ArrayList<>();
@@ -387,7 +396,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
             HorizontalLayout headerLayout = new HorizontalLayout();
             headerLayout.setWidth("100%");
-            Label header = new Label(optionVal.getTypeval());
+            header = new Label(optionVal.getTypeval());
             header.addStyleName("header");
             headerLayout.addComponent(header);
             headerLayout.setComponentAlignment(header, Alignment.MIDDLE_LEFT);
@@ -423,6 +432,11 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
         void addBlockItem(KanbanTaskBlockItem comp) {
             dragLayoutContainer.addComponent(comp);
+            updateComponentCount();
+        }
+
+        private void updateComponentCount() {
+            header.setValue(String.format("%s (%d)", optionVal.getTypeval(), dragLayoutContainer.getComponentCount()));
         }
 
         void addNewTaskComp() {
