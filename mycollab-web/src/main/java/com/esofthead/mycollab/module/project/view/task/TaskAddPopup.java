@@ -22,9 +22,9 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
-import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -51,7 +51,7 @@ class TaskAddPopup extends CustomComponent {
     private final SimpleTask task;
     private final TaskNoteLayout taskNoteComponent;
 
-    public TaskAddPopup(final TaskDisplayComponent taskDisplayComp, final TaskList taskList) {
+    public TaskAddPopup(final TaskDisplayComponent taskDisplayComp, final Milestone milestone) {
         VerticalLayout taskLayout = new VerticalLayout();
         taskLayout.addStyleName("taskadd-popup");
 
@@ -97,7 +97,7 @@ class TaskAddPopup extends CustomComponent {
             public void buttonClick(final ClickEvent event) {
                 if (taskInputForm.validateForm()) {
                     ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                    task.setTasklistid(taskList.getId());
+                    task.setMilestoneid(milestone.getId());
                     task.setProjectid(CurrentProjectVariables.getProjectId());
                     task.setSaccountid(AppContext.getAccountId());
                     task.setNotes(taskNoteComponent.getNote());

@@ -39,7 +39,7 @@ public class TaskSearchCriteria extends SearchCriteria {
 			GenericI18Enum.FORM_ASSIGNEE, "m_prj_task", "assignUser");
 
 	public static final Param p_tasklist = new PropertyListParam("task-list",
-			TaskI18nEnum.FORM_TASKGROUP, "m_prj_task", "tasklistid");
+			TaskI18nEnum.FORM_MILESTONE, "m_prj_task", "tasklistid");
 
 	public static final Param p_duedate = new DateParam("task-duedate",
 			TaskI18nEnum.FORM_DEADLINE, "m_prj_task", "deadline");

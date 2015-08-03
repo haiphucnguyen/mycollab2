@@ -24,11 +24,14 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
@@ -59,15 +62,16 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
 
     @Override
     protected void buildExtraControls() {
-        Button backBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_BACK_TO_DASHBOARD),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button backBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_BACK_TO_DASHBOARD), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBusFactory.getInstance().post(new TaskListEvent.GotoTaskListScreen(this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
+                        (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoRichView());
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
+            }
+        });
         backBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         backBtn.setIcon(FontAwesome.ARROW_LEFT);
         addHeaderRight(backBtn);
@@ -151,15 +155,14 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            moveToAdvancedSearchLayout();
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    moveToAdvancedSearchLayout();
+                }
+            });
             advancedSearchBtn.setStyleName(UIConstants.THEME_LINK);
 
             basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);

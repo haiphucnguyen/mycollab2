@@ -124,11 +124,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
 
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
-                            EventBusFactory.getInstance()
-                                    .post(new ProjectEvent.GotoMyProject(
-                                            this, new PageActionChain(
-                                            new ProjectScreenData.Goto(project.getId()),
-                                            new TaskGroupScreenData.GotoDashboard())));
+                            //TODO: task nevigate event
                         }
                     }, false);
             taskLblWrap.addComponent(taskStatusBtn);

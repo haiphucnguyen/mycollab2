@@ -370,52 +370,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASK_DASHBOARD));
     }
 
-    public void gotoTaskListReorder() {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_REORDER)));
-        AppContext.addFragment("project/task/dashboard/reorder/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_REORDER));
-    }
-
-    public void gotoTaskGroupAdd() {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_NEW)));
-        AppContext.addFragment("project/task/taskgroup/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_NEW));
-    }
-
-    public void gotoTaskGroupRead(TaskList taskList) {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_READ, taskList.getName())));
-        AppContext.addFragment(ProjectLinkGenerator.generateTaskGroupPreviewLink(project.getId(), taskList.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_READ, taskList.getName()));
-    }
-
-    public void gotoTaskGroupEdit(final TaskList taskList) {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_READ, taskList.getName()),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBusFactory.getInstance().post(new TaskListEvent.GotoRead(this, taskList.getId()));
-                    }
-                }));
-        this.setLinkEnabled(true, 2);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment("project/task/taskgroup/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + taskList.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_TASKGROUP_EDIT, taskList.getName()));
-    }
-
     public void gotoTaskAdd() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
@@ -484,7 +438,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
         @Override
         public void buttonClick(ClickEvent event) {
-            EventBusFactory.getInstance().post(new TaskListEvent.GotoTaskListScreen(this, null));
+           //TODO: Task assignment event
         }
     }
 
@@ -719,8 +673,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoUserAdd() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.USERS),
-                new GotoUserListener()));
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.USERS), new GotoUserListener()));
         this.setLinkEnabled(true, 1);
         this.addLink(new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES)));
         AppContext.addFragment("project/user/add/" + UrlEncodeDecoder.encode(project.getId()),

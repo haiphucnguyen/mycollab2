@@ -500,7 +500,7 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
     }
 
     @Override
-    public void gotoTaskList(ScreenData<?> data) {
+    public void gotoTaskView(ScreenData<?> data) {
         taskPresenter.go(ProjectViewImpl.this, data);
     }
 

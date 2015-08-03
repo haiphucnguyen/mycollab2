@@ -52,7 +52,6 @@ import com.google.common.eventbus.Subscribe
  */
 class ProjectController(val projectView: ProjectView) extends AbstractController {
     bindProjectEvents()
-    bindTaskListEvents()
     bindTaskEvents()
     bindRiskEvents()
     bindProblemEvents()
@@ -91,48 +90,11 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         })
     }
 
-    private def bindTaskListEvents(): Unit = {
-        this.register(new ApplicationEventListener[TaskListEvent.GotoRead] {
-            @Subscribe def handle(event: TaskListEvent.GotoRead) {
-                val data: TaskGroupScreenData.Read = new TaskGroupScreenData.Read(event.getData.asInstanceOf[Integer])
-                projectView.gotoTaskList(data)
-            }
-        })
-
-        this.register(new ApplicationEventListener[TaskListEvent.GotoEdit] {
-            @Subscribe def handle(event: TaskListEvent.GotoEdit) {
-                val data: TaskGroupScreenData.Edit = new TaskGroupScreenData.Edit(event.getData.asInstanceOf[TaskList])
-                projectView.gotoTaskList(data)
-            }
-        })
-
-        this.register(new ApplicationEventListener[TaskListEvent.GotoAdd] {
-            @Subscribe def handle(event: TaskListEvent.GotoAdd) {
-                val taskList: TaskList = new TaskList
-                taskList.setProjectid(CurrentProjectVariables.getProjectId)
-                taskList.setStatus(StatusI18nEnum.Open.name)
-                val data: TaskGroupScreenData.Add = new TaskGroupScreenData.Add(taskList)
-                projectView.gotoTaskList(data)
-            }
-        })
-        this.register(new ApplicationEventListener[TaskListEvent.GotoTaskListScreen] {
-            @Subscribe def handle(event: TaskListEvent.GotoTaskListScreen) {
-                projectView.gotoTaskList(null)
-            }
-        })
-        this.register(new ApplicationEventListener[TaskListEvent.ReoderTaskList] {
-            @Subscribe def handle(event: TaskListEvent.ReoderTaskList) {
-                val data: TaskGroupScreenData.ReorderTaskListRequest = new TaskGroupScreenData.ReorderTaskListRequest
-                projectView.gotoTaskList(data)
-            }
-        })
-    }
-
     private def bindTaskEvents(): Unit = {
         this.register(new ApplicationEventListener[TaskEvent.GotoRead] {
             @Subscribe def handle(event: TaskEvent.GotoRead) {
                 val data: TaskScreenData.Read = new TaskScreenData.Read(event.getData.asInstanceOf[Integer])
-                projectView.gotoTaskList(data)
+                projectView.gotoTaskView(data)
             }
         })
         this.register(new ApplicationEventListener[TaskEvent.GotoAdd] {
@@ -145,32 +107,32 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                 else {
                     data = new TaskScreenData.Add(new SimpleTask)
                 }
-                projectView.gotoTaskList(data)
+                projectView.gotoTaskView(data)
             }
         })
         this.register(new ApplicationEventListener[TaskEvent.GotoEdit] {
             @Subscribe def handle(event: TaskEvent.GotoEdit) {
                 val data: TaskScreenData.Edit = new TaskScreenData.Edit(event.getData.asInstanceOf[SimpleTask])
-                projectView.gotoTaskList(data)
+                projectView.gotoTaskView(data)
             }
         })
         this.register(new ApplicationEventListener[TaskEvent.GotoGanttChart] {
             @Subscribe def handle(event: TaskEvent.GotoGanttChart) {
                 val data: TaskScreenData.GotoGanttChart = new TaskScreenData.GotoGanttChart
-                projectView.gotoTaskList(data)
+                projectView.gotoTaskView(data)
             }
         })
         this.register(new ApplicationEventListener[TaskEvent.GotoKanbanView] {
             @Subscribe override def handle(event: TaskEvent.GotoKanbanView): Unit = {
                 val data:TaskScreenData.GotoKanbanView = new TaskScreenData.GotoKanbanView
-                projectView.gotoTaskList(data)
+                projectView.gotoTaskView(data)
             }
         })
 
         this.register(new ApplicationEventListener[TaskEvent.Search] {
             @Subscribe def handle(event: TaskEvent.Search) {
                 val data: TaskScreenData.Search = new TaskScreenData.Search(event.getData.asInstanceOf[TaskFilterParameter])
-                projectView.gotoTaskList(data)
+                projectView.gotoTaskView(data)
             }
         })
     }

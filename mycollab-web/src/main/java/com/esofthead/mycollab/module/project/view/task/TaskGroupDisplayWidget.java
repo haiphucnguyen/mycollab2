@@ -20,13 +20,13 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -43,19 +43,19 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class TaskGroupDisplayWidget extends BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> {
+public class TaskGroupDisplayWidget extends BeanList<MilestoneService, MilestoneSearchCriteria, SimpleMilestone> {
     private static final long serialVersionUID = 1L;
 
     public TaskGroupDisplayWidget() {
-        super(null, ApplicationContextUtil.getSpringBean(ProjectTaskListService.class), TaskListRowDisplayHandler.class);
+        super(null, ApplicationContextUtil.getSpringBean(MilestoneService.class), TaskListRowDisplayHandler.class);
         this.setDisplayEmptyListText(false);
     }
 
-    public static class TaskListRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleTaskList> {
+    public static class TaskListRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleMilestone> {
         private static final long serialVersionUID = 1L;
 
         @Override
-        public Component generateRow(SimpleTaskList taskList, int rowIndex) {
+        public Component generateRow(SimpleMilestone taskList, int rowIndex) {
             return new TaskListDepot(taskList);
         }
     }
@@ -69,17 +69,10 @@ public class TaskGroupDisplayWidget extends BeanList<ProjectTaskListService, Tas
         private TaskDisplayComponent taskDisplayComponent;
         private Button toogleBtn;
 
-        private TaskListDepot(SimpleTaskList taskListParam) {
+        private TaskListDepot(SimpleMilestone taskListParam) {
             super(taskListParam.getName(), null, new TaskDisplayComponent(taskListParam));
 
-            if (taskListParam.isArchieved()) {
-                this.headerLbl.addStyleName(UIConstants.LINK_COMPLETED);
-            }
-            this.taskList = taskListParam;
-            this.addStyleName("task-list");
-            this.initHeader();
-            this.setHeaderColor(true);
-            this.taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
+
         }
 
         private void initHeader() {
@@ -143,31 +136,6 @@ public class TaskGroupDisplayWidget extends BeanList<ProjectTaskListService, Tas
 
             taskListActionControl.setContent(actionBtnLayout);
 
-            Button readBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_VIEW), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    taskListActionControl.setPopupVisible(false);
-                    EventBusFactory.getInstance().post(new TaskListEvent.GotoRead(event, taskList.getId()));
-                }
-            });
-            readBtn.setIcon(FontAwesome.HACKER_NEWS);
-            readBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
-            actionBtnLayout.addOption(readBtn);
-
-            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final ClickEvent event) {
-                    taskListActionControl.setPopupVisible(false);
-                    EventBusFactory.getInstance().post(new TaskListEvent.GotoEdit(event, taskList));
-                }
-            });
-            editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-            editBtn.setIcon(FontAwesome.EDIT);
-            actionBtnLayout.addOption(editBtn);
 
             Enum actionEnum = (taskList.isArchieved()) ? GenericI18Enum.BUTTON_REOPEN : GenericI18Enum.BUTTON_CLOSE;
 

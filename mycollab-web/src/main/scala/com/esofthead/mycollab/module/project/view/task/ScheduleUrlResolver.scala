@@ -20,8 +20,8 @@ import com.esofthead.mycollab.common.UrlTokenizer
 import com.esofthead.mycollab.eventmanager.EventBusFactory
 import com.esofthead.mycollab.module.project.events.ProjectEvent
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoGanttChart
-import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskGroupScreenData, TaskScreenData}
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoGanttChart, GotoRichView}
+import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskScreenData}
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -31,7 +31,6 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain
 class ScheduleUrlResolver extends ProjectUrlResolver {
     this.addSubResolver("dashboard", new DashboardUrlResolver)
     this.addSubResolver("task", new TaskUrlResolver)
-    this.addSubResolver("taskgroup", new TaskGroupUrlResolver)
     this.addSubResolver("gantt", new GanttUrlResolver)
     this.addSubResolver("kanban", new KanbanUrlResolver)
     this.defaultUrlResolver = new FilterUrlResolver
@@ -40,7 +39,7 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
             val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new TaskGroupScreenData.GotoDashboard)
+                new GotoRichView)
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }
@@ -49,7 +48,7 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
             val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new TaskGroupScreenData.GotoDashboard)
+                new GotoRichView)
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }

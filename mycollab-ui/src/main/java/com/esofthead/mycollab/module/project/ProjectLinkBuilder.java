@@ -23,10 +23,8 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
@@ -152,36 +150,6 @@ public class ProjectLinkBuilder {
                 prjShortName);
     }
 
-    public static String generateTaskGroupPreviewFullLink(Integer projectId,
-                                                          Integer taskgroupId) {
-        if (projectId == null || taskgroupId == null) {
-            return "";
-        }
-        return AppContext.getSiteUrl()
-                + GenericLinkUtils.URL_PREFIX_PARAM
-                + ProjectLinkGenerator.generateTaskGroupPreviewLink(projectId,
-                taskgroupId);
-    }
-
-    public static String generateTaskGroupHtmlLink(int taskgroupId) {
-        ProjectTaskListService taskListService = ApplicationContextUtil
-                .getSpringBean(ProjectTaskListService.class);
-        SimpleTaskList taskList = taskListService.findById(taskgroupId,
-                AppContext.getAccountId());
-        if (taskList != null) {
-            DivLessFormatter div = new DivLessFormatter();
-            Text img = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK_LIST).getHtml());
-            A link = new A();
-            link.setHref(generateTaskGroupPreviewFullLink(
-                    taskList.getProjectid(), taskList.getId()));
-            Text text = new Text(taskList.getName());
-            link.appendChild(text);
-            return div.appendChild(img, DivLessFormatter.EMPTY_SPACE(), link).write();
-        } else {
-            return null;
-        }
-    }
-
     public static String generateMilestonePreviewFullLink(Integer projectId,
                                                           Integer milestoneId) {
         if (projectId == null || milestoneId == null) {
@@ -261,9 +229,6 @@ public class ProjectLinkBuilder {
             } else if (ProjectTypeConstants.TASK.equals(type)) {
                 result = ProjectLinkGenerator.generateTaskPreviewLink(
                         Integer.parseInt(typeId), prjShortName);
-            } else if (ProjectTypeConstants.TASK_LIST.equals(type)) {
-                result = ProjectLinkGenerator.generateTaskGroupPreviewLink(
-                        projectId, Integer.parseInt(typeId));
             } else if (ProjectTypeConstants.BUG.equals(type)) {
                 result = ProjectLinkGenerator.generateBugPreviewLink(
                         Integer.parseInt(typeId), prjShortName);

@@ -22,13 +22,11 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
@@ -40,9 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.apache.commons.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -56,9 +52,9 @@ class TaskDisplayComponent extends CssLayout {
     private TaskListDisplay taskDisplay;
     private Button createTaskBtn;
 
-    private SimpleTaskList taskList;
+    private SimpleMilestone taskList;
 
-    public TaskDisplayComponent(SimpleTaskList taskList) {
+    public TaskDisplayComponent(SimpleMilestone taskList) {
         this.taskList = taskList;
         this.showTaskGroupInfo();
         this.setSizeFull();
@@ -71,7 +67,7 @@ class TaskDisplayComponent extends CssLayout {
     }
 
     private void showTaskGroupInfo() {
-        AdvancedPreviewBeanForm<SimpleTaskList> previewForm = new AdvancedPreviewBeanForm<>();
+        AdvancedPreviewBeanForm<SimpleMilestone> previewForm = new AdvancedPreviewBeanForm<>();
         previewForm.setWidth("100%");
         previewForm.setFormLayoutFactory(new IFormLayoutFactory() {
             private static final long serialVersionUID = 1L;
@@ -95,7 +91,7 @@ class TaskDisplayComponent extends CssLayout {
                 }
             }
         });
-        previewForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<SimpleTaskList>(previewForm) {
+        previewForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<SimpleMilestone>(previewForm) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -105,9 +101,6 @@ class TaskDisplayComponent extends CssLayout {
                 } else if ("owner".equals(propertyId)) {
                     return new ProjectUserFormLinkField(taskList.getOwner(),
                             taskList.getOwnerAvatarId(), taskList.getOwnerFullName());
-                } else if ("milestoneid".equals(propertyId)) {
-                    return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, "" + taskList.getMilestoneid(),
-                            taskList.getMilestoneName());
                 }
 
                 return null;
@@ -141,11 +134,11 @@ class TaskDisplayComponent extends CssLayout {
         taskGroupFooter.setComponentAlignment(this.createTaskBtn, Alignment.MIDDLE_RIGHT);
         this.addComponent(taskGroupFooter);
 
-        if (CollectionUtils.isNotEmpty(taskList.getSubTasks())) {
-            taskDisplay.setCurrentDataList(taskList.getSubTasks());
-        } else {
-            taskDisplay.setCurrentDataList(new ArrayList<SimpleTask>());
-        }
+//        if (CollectionUtils.isNotEmpty(taskList.getSubTasks())) {
+//            taskDisplay.setCurrentDataList(taskList.getSubTasks());
+//        } else {
+//            taskDisplay.setCurrentDataList(new ArrayList<SimpleTask>());
+//        }
     }
 
     public void setSearchCriteria(TaskSearchCriteria criteria) {
