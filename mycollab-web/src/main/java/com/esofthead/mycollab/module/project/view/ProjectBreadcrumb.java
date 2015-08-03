@@ -777,7 +777,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_ROLE_NEW));
     }
 
-    public void gotoRoleEdit(SimpleProjectRole role) {
+    public void gotoRoleEdit(ProjectRole role) {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.ROLES), new GotoUserListener()));
         this.setLinkEnabled(true, 1);
