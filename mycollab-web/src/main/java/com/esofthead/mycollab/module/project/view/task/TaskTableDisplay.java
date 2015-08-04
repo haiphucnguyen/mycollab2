@@ -65,16 +65,13 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                 String taskname = String.format("[#%s] %s", task.getTaskkey(), task.getTaskname());
 
                 LabelLink b = new LabelLink(taskname, ProjectLinkBuilder
-                        .generateTaskPreviewFullLink(task.getTaskkey(),
-                                task.getProjectShortname()));
+                        .generateTaskPreviewFullLink(task.getTaskkey(), task.getProjectShortname()));
                 b.setDescription(ProjectTooltipGenerator.generateToolTipTask(
                         AppContext.getUserLocale(), task,
                         AppContext.getSiteUrl(), AppContext.getTimezone()));
 
                 if (StringUtils.isNotBlank(task.getPriority())) {
-                    b.setIconLink(ProjectResources
-                            .getIconResourceLink12ByTaskPriority(task.getPriority()));
-
+                    b.setIconLink(ProjectResources.getIconResourceLink12ByTaskPriority(task.getPriority()));
                 }
 
                 if (task.isCompleted()) {
@@ -138,36 +135,32 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
 
                 OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
 
-                Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+                Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBusFactory.getInstance().post(
-                                        new TaskEvent.GotoEdit(TaskTableDisplay.this, task));
-                            }
-                        });
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(TaskTableDisplay.this, task));
+                    }
+                });
                 editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                 editButton.setIcon(FontAwesome.EDIT);
                 filterBtnLayout.addOption(editButton);
 
                 if (!task.isCompleted()) {
-                    Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE),
-                            new Button.ClickListener() {
-                                private static final long serialVersionUID = 1L;
+                    Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), new Button.ClickListener() {
+                        private static final long serialVersionUID = 1L;
 
-                                @Override
-                                public void buttonClick(Button.ClickEvent event) {
-                                    task.setStatus(StatusI18nEnum.Closed.name());
-                                    task.setPercentagecomplete(100d);
+                        @Override
+                        public void buttonClick(Button.ClickEvent event) {
+                            task.setStatus(StatusI18nEnum.Closed.name());
+                            task.setPercentagecomplete(100d);
 
-                                    ProjectTaskService projectTaskService = ApplicationContextUtil
-                                            .getSpringBean(ProjectTaskService.class);
-                                    projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
-                                    fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "closeTask"));
-                                }
-                            });
+                            ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                            fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "closeTask"));
+                        }
+                    });
                     closeBtn.setIcon(FontAwesome.CHECK_CIRCLE_O);
                     closeBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
                     filterBtnLayout.addOption(closeBtn);
@@ -180,12 +173,9 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                             task.setStatus(StatusI18nEnum.Open.name());
                             task.setPercentagecomplete(0d);
 
-                            ProjectTaskService projectTaskService = ApplicationContextUtil
-                                    .getSpringBean(ProjectTaskService.class);
-                            projectTaskService
-                                    .updateSelectiveWithSession(task, AppContext.getUsername());
-                            fireTableEvent(new TableClickEvent(
-                                    TaskTableDisplay.this, task, "reopenTask"));
+                            ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                            fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "reopenTask"));
                         }
                     });
                     reOpenBtn.setIcon(FontAwesome.UNLOCK);
@@ -203,12 +193,9 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                                 task.setStatus("Pending");
                                 task.setPercentagecomplete(0d);
 
-                                ProjectTaskService projectTaskService = ApplicationContextUtil
-                                        .getSpringBean(ProjectTaskService.class);
-                                projectTaskService.updateSelectiveWithSession(
-                                        task, AppContext.getUsername());
-                                fireTableEvent(new TableClickEvent(
-                                        TaskTableDisplay.this, task, "pendingTask"));
+                                ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                                projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
+                                fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "pendingTask"));
                             }
                         });
                         pendingBtn.setIcon(FontAwesome.HDD_O);
@@ -224,11 +211,8 @@ public class TaskTableDisplay extends DefaultPagedBeanTable<ProjectTaskService, 
                             task.setStatus("Open");
                             task.setPercentagecomplete(0d);
 
-                            ProjectTaskService projectTaskService = ApplicationContextUtil
-                                    .getSpringBean(ProjectTaskService.class);
-                            projectTaskService.updateSelectiveWithSession(task,
-                                    AppContext.getUsername());
-
+                            ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
                             fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "reopenTask"));
                         }
                     });

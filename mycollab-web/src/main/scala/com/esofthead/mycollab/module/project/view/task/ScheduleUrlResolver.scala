@@ -17,11 +17,13 @@
 package com.esofthead.mycollab.module.project.view.task
 
 import com.esofthead.mycollab.common.UrlTokenizer
+import com.esofthead.mycollab.core.arguments.NumberSearchField
 import com.esofthead.mycollab.eventmanager.EventBusFactory
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria
 import com.esofthead.mycollab.module.project.events.ProjectEvent
 import com.esofthead.mycollab.module.project.view.ProjectUrlResolver
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoGanttChart, GotoDashboard}
-import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskScreenData}
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoDashboard, GotoGanttChart, Search}
+import com.esofthead.mycollab.module.project.view.parameters.{ProjectScreenData, TaskFilterParameter, TaskScreenData}
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain
 
 /**
@@ -33,13 +35,13 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
     this.addSubResolver("task", new TaskUrlResolver)
     this.addSubResolver("gantt", new GanttUrlResolver)
     this.addSubResolver("kanban", new KanbanUrlResolver)
-    this.defaultUrlResolver = new FilterUrlResolver
+    this.addSubResolver("filter", new FilterUrlResolver)
+    this.defaultUrlResolver = new DashboardUrlResolver
 
     private class DashboardUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
-            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new GotoDashboard)
+            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new GotoDashboard)
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }
@@ -47,8 +49,10 @@ class ScheduleUrlResolver extends ProjectUrlResolver {
     private class FilterUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
             val projectId = new UrlTokenizer(params(0)).getInt
-            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-                new GotoDashboard)
+            val searchCriteria = new TaskSearchCriteria
+            searchCriteria.setProjectid(new NumberSearchField(projectId))
+            val filterParam = new TaskFilterParameter(searchCriteria, "")
+            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new Search(filterParam))
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }

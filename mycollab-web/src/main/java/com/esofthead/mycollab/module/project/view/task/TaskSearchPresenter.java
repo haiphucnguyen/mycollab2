@@ -28,58 +28,55 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.0.0
- *
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class TaskSearchPresenter extends AbstractPresenter<TaskSearchView> implements ListCommand<TaskSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public TaskSearchPresenter() {
-		super(TaskSearchView.class);
-	}
+    public TaskSearchPresenter() {
+        super(TaskSearchView.class);
+    }
 
-	@Override
-	protected void postInitView() {
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<TaskSearchCriteria>() {
-					@Override
-					public void onSearch(TaskSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
-	}
+    @Override
+    protected void postInitView() {
+        view.getSearchHandlers().addSearchHandler(new SearchHandler<TaskSearchCriteria>() {
+            @Override
+            public void onSearch(TaskSearchCriteria criteria) {
+                doSearch(criteria);
+            }
+        });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoTaskSearch();
 
-			TaskContainer trackerContainer = (TaskContainer) container;
-			trackerContainer.removeAllComponents();
-			trackerContainer.addComponent(view.getWidget());
+            TaskContainer trackerContainer = (TaskContainer) container;
+            trackerContainer.removeAllComponents();
+            trackerContainer.addComponent(view.getWidget());
 
-			TaskFilterParameter param = (TaskFilterParameter) data.getParams();
-			if (param.getAdvanceSearch()) {
-				view.moveToAdvanceSearch();
-			} else {
-				view.moveToBasicSearch();
-			}
+            TaskFilterParameter param = (TaskFilterParameter) data.getParams();
+            if (param.getAdvanceSearch()) {
+                view.moveToAdvanceSearch();
+            } else {
+                view.moveToBasicSearch();
+            }
             doSearch(param.getSearchCriteria());
-		} else {
-			NotificationUtil.showMessagePermissionAlert();
-		}
-	}
+        } else {
+            NotificationUtil.showMessagePermissionAlert();
+        }
+    }
 
-	@Override
-	public void doSearch(TaskSearchCriteria searchCriteria) {
-		if (searchCriteria.getTaskName() != null)
-			view.setSearchInputValue(searchCriteria.getTaskName().getValue());
+    @Override
+    public void doSearch(TaskSearchCriteria searchCriteria) {
+        if (searchCriteria.getTaskName() != null)
+            view.setSearchInputValue(searchCriteria.getTaskName().getValue());
 
-		int totalCountItems = view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        int totalCountItems = view.getPagedBeanTable().setSearchCriteria(searchCriteria);
         view.getSearchHandlers().setTotalCountNumber(totalCountItems);
-	}
+    }
 }

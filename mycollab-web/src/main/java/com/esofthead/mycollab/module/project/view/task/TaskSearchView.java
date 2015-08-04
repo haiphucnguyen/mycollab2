@@ -29,7 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
  *
  */
 public interface TaskSearchView extends PageView {
-	public static final String VIEW_DEF_ID = "project-task-list";
+	String VIEW_DEF_ID = "project-task-list";
 
 	HasSearchHandlers<TaskSearchCriteria> getSearchHandlers();
 

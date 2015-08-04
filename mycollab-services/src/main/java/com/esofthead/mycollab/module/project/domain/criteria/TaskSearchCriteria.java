@@ -47,7 +47,7 @@ public class TaskSearchCriteria extends SearchCriteria {
             "m_prj_task", "lastUpdatedTime");
 
     public static final Param p_createtime = new DateParam("task-createtime",
-            GenericI18Enum.FORM_CREATED_TIME, "m_prj_task", "createTime");
+            GenericI18Enum.FORM_CREATED_TIME, "m_prj_task", "createdTime");
 
     public static final Param p_status = new StringListParam("task-status",
             TaskI18nEnum.FORM_STATUS, "m_prj_task", "status", Arrays.asList(

@@ -62,6 +62,7 @@ Version 5.1.1
 * General bug fixes of file module
 * Can not download file folder
 * The task widgets do not refresh when task status changed
+* Can not display tooltip of CRM task
 
 
 Version 5.1.0
