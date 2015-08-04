@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.file.FilePresenter
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.SearchItem
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoKanbanView
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoDashboard, GotoKanbanView}
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
@@ -132,6 +132,13 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         this.register(new ApplicationEventListener[TaskEvent.Search] {
             @Subscribe def handle(event: TaskEvent.Search) {
                 val data: TaskScreenData.Search = new TaskScreenData.Search(event.getData.asInstanceOf[TaskFilterParameter])
+                projectView.gotoTaskView(data)
+            }
+        })
+
+        this.register(new ApplicationEventListener[TaskEvent.GotoDashboard] {
+            @Subscribe def handle(event: TaskEvent.GotoDashboard) {
+                val data: TaskScreenData.GotoDashboard = new GotoDashboard()
                 projectView.gotoTaskView(data)
             }
         })

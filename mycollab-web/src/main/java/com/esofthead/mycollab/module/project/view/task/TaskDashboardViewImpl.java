@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.common.i18n.FileI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -47,15 +46,11 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
-import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -68,83 +63,17 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
 
-    private PopupButton taskGroupSelection;
-    private PopupButton taskSelection;
+    private Label taskGroupSelection;
     private MilestoneGroupComponent taskListsWidget;
 
     private VerticalLayout rightColumn;
-    private TextField nameField;
 
+    private TextField nameField;
     private TaskSearchViewImpl basicSearchView;
 
     private MHorizontalLayout header;
     private MHorizontalLayout mainLayout;
     private ToggleButtonGroup viewButtons;
-
-    private void implementTaskFilterButton() {
-        this.taskSelection = new PopupButton(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASKS));
-
-        this.taskSelection.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
-        this.taskSelection.addStyleName(UIConstants.THEME_LINK);
-        this.taskSelection.addStyleName("hdr-text");
-
-        MVerticalLayout filterBtnLayout = new MVerticalLayout().withWidth("200px");
-
-        Button allTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ALL_TASKS), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                taskSelection.setPopupVisible(false);
-                taskSelection.setCaption(event.getButton().getCaption());
-                displayAllTasks();
-            }
-        });
-        allTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
-        filterBtnLayout.addComponent(allTasksFilterBtn);
-
-        Button activeTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASKS), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                taskSelection.setPopupVisible(false);
-                taskSelection.setCaption(event.getButton().getCaption());
-                displayActiveTasksOnly();
-            }
-        });
-        activeTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
-        filterBtnLayout.addComponent(activeTasksFilterBtn);
-
-        Button pendingTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_PENDING_TASKS),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        taskSelection.setPopupVisible(false);
-                        taskSelection.setCaption(event.getButton().getCaption());
-                        displayPendingTasksOnly();
-                    }
-                });
-        pendingTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
-        filterBtnLayout.addComponent(pendingTasksFilterBtn);
-
-        Button archievedTasksFilterBtn = new Button(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ARCHIEVED_TASKS),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        taskSelection.setPopupVisible(false);
-                        taskSelection.setCaption(event.getButton().getCaption());
-                        displayInActiveTasks();
-                    }
-                });
-        archievedTasksFilterBtn.setStyleName(UIConstants.THEME_LINK);
-        filterBtnLayout.addComponent(archievedTasksFilterBtn);
-        taskSelection.setContent(filterBtnLayout);
-    }
 
     private void constructUI() {
         this.removeAllComponents();
@@ -153,17 +82,12 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        this.taskGroupSelection = new PopupButton(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE));
+        this.taskGroupSelection = new Label(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE));
         this.taskGroupSelection.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
         this.taskGroupSelection.addStyleName(UIConstants.THEME_LINK);
         this.taskGroupSelection.addStyleName("hdr-text");
         taskGroupSelection.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
         header.with(taskGroupSelection).withAlign(taskGroupSelection, Alignment.MIDDLE_LEFT).expand(taskGroupSelection);
-
-        OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("200px");
-
-
-        this.taskGroupSelection.setContent(filterBtnLayout);
 
         Button newTaskListBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),
                 new Button.ClickListener() {
@@ -205,17 +129,9 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
         header.with(exportButtonControl).withAlign(exportButtonControl, Alignment.MIDDLE_LEFT);
 
-        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                displayAdvancedView();
-            }
-        });
+        Button advanceDisplayBtn = new Button();
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
-        advanceDisplayBtn.setDescription(AppContext
-                .getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
+        advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
         Button simpleDisplayBtn = new Button(null, new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -272,7 +188,6 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         FloatingComponent floatSidebar = FloatingComponent.floatThis(this.rightColumn);
         floatSidebar.setContainerId("main-body");
 
-        implementTaskFilterButton();
         basicSearchView = new TaskSearchViewImpl();
         basicSearchView.getSearchHandlers().addSearchHandler(new SearchHandler<TaskSearchCriteria>() {
             @Override
@@ -313,12 +228,6 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 //                tasklistSearchCriteria), exportFileName);
         //TODO: implement export feature
         return null;
-    }
-
-    private TaskListSearchCriteria createBaseSearchCriteria() {
-        TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        return criteria;
     }
 
     @Override
@@ -421,36 +330,6 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
     private void displayKanbanView() {
         EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
-    }
-
-
-    private TaskSearchCriteria createTaskBaseSearchCriteria() {
-        TaskSearchCriteria criteria = new TaskSearchCriteria();
-        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        return criteria;
-    }
-
-    private void displayActiveTasksOnly() {
-        TaskSearchCriteria criteria = this.createTaskBaseSearchCriteria();
-        criteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
-        this.doSearch(criteria);
-    }
-
-    private void displayPendingTasksOnly() {
-        TaskSearchCriteria criteria = this.createTaskBaseSearchCriteria();
-        criteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Pending.name()));
-        this.doSearch(criteria);
-    }
-
-    private void displayAllTasks() {
-        TaskSearchCriteria criteria = this.createTaskBaseSearchCriteria();
-        this.doSearch(criteria);
-    }
-
-    private void displayInActiveTasks() {
-        TaskSearchCriteria criteria = this.createTaskBaseSearchCriteria();
-        criteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Closed.name()));
-        this.doSearch(criteria);
     }
 
     @Override

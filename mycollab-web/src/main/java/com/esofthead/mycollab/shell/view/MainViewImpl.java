@@ -112,6 +112,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         this.removeAllComponents();
         bodyLayout = new CssLayout();
         bodyLayout.addStyleName("main-view");
+        bodyLayout.setId("main-body");
         bodyLayout.setSizeFull();
         this.with(createTopMenu(), bodyLayout, createFooter()).expand(bodyLayout);
     }

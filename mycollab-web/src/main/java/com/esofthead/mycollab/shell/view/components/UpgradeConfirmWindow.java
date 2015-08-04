@@ -87,7 +87,6 @@ public class UpgradeConfirmWindow extends Window {
         Button autoUpgradeBtn = new Button("Auto Upgrade", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().setPollInterval(1000);
                 new Thread(new AutoUpgradeProcess()).start();
                 UpgradeConfirmWindow.this.close();
             }
@@ -165,7 +164,7 @@ public class UpgradeConfirmWindow extends Window {
                 NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
             } finally {
                 if (UI.getCurrent() != null) {
-                    UI.getCurrent().setPollInterval(-1);
+                    UI.getCurrent().push();
                 }
             }
         }

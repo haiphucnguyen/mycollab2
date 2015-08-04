@@ -438,7 +438,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
         @Override
         public void buttonClick(ClickEvent event) {
-           //TODO: Task assignment event
+           EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, null));
         }
     }
 

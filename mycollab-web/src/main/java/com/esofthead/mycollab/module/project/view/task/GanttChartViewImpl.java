@@ -342,7 +342,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     void insertSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
         if (stepIndex != -1) {
-            UI.getCurrent().setPollInterval(1000);
             for (GanttItemWrapper child : childs) {
                 taskTable.addItem(child);
                 taskTable.setParent(child, parent);
