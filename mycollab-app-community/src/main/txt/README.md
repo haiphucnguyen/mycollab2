@@ -55,12 +55,16 @@ Version 5.1.1
 * New kanban board for project tasks
 * Update attachment display
 * Generate thumbnail for images
+* Update the task management workflow to remove the task group !!!
+* Reduce the time response for heavy loading page
 
 **Bug Fixes**
 
 * General bug fixes of file module
 * Can not download file folder
 * The task widgets do not refresh when task status changed
+* Can not display tooltip of CRM task
+* Upload files do not show the progress properly
 
 
 Version 5.1.0

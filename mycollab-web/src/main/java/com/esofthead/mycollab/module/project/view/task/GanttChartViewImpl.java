@@ -42,7 +42,6 @@ import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.vaadin.data.Property;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -83,8 +82,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        Label headerText = new Label(String.format("%s %s (Gantt chart)", FontAwesome.BAR_CHART_O.getHtml(),
-                CurrentProjectVariables.getProject().getName()), ContentMode.HTML);
+        Label headerText = new Label("Gantt chart", ContentMode.HTML);
         headerText.setStyleName(UIConstants.HEADER_TEXT);
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
@@ -344,7 +342,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     void insertSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
         if (stepIndex != -1) {
-            UI.getCurrent().setPollInterval(1000);
             for (GanttItemWrapper child : childs) {
                 taskTable.addItem(child);
                 taskTable.setParent(child, parent);

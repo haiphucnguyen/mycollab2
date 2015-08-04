@@ -68,11 +68,10 @@ object ProjectPresenterDataMapper {
         classOf[TaskScreenData.Add] -> classOf[TaskPresenter],
         classOf[TaskScreenData.Edit] -> classOf[TaskPresenter],
         classOf[TaskScreenData.Read] -> classOf[TaskPresenter],
+        classOf[TaskScreenData.Search] -> classOf[TaskPresenter],
+        classOf[TaskScreenData.GotoDashboard] -> classOf[TaskPresenter],
         classOf[TaskScreenData.GotoGanttChart] -> classOf[TaskPresenter],
-        classOf[TaskScreenData.GotoKanbanView] -> classOf[TaskPresenter],
-        classOf[TaskGroupScreenData.GotoDashboard] -> classOf[TaskPresenter],
-        classOf[TaskGroupScreenData.Read] -> classOf[TaskPresenter],
-        classOf[TaskGroupScreenData.Edit] -> classOf[TaskPresenter])
+        classOf[TaskScreenData.GotoKanbanView] -> classOf[TaskPresenter])
 
     val trackerMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
         classOf[BugScreenData.Read] -> classOf[TrackerPresenter],

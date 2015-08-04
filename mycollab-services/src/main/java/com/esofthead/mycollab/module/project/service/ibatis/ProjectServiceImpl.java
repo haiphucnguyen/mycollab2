@@ -44,7 +44,6 @@ import com.esofthead.mycollab.module.project.esb.AddProjectEvent;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.google.common.eventbus.AsyncEventBus;
@@ -83,9 +82,6 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 
     @Autowired
     private ProjectRoleService projectRoleService;
-
-    @Autowired
-    private ProjectTaskListService taskListService;
 
     @Autowired
     private BillingPlanCheckerService billingPlanCheckerService;
@@ -191,13 +187,6 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
         projectRoleService.savePermission(projectId, adminRoleId,
                 permissionMapAdmin, record.getSaccountid());
 
-        LOG.debug("Create default task group");
-        TaskList taskList = new TaskList();
-        taskList.setProjectid(projectId);
-        taskList.setSaccountid(record.getSaccountid());
-        taskList.setStatus(StatusI18nEnum.Open.name());
-        taskList.setName("General Assignments");
-        taskListService.saveWithSession(taskList, username);
 
         //Do async task to create some post data after project is created
         AddProjectEvent event = new AddProjectEvent(projectId, record.getSaccountid());

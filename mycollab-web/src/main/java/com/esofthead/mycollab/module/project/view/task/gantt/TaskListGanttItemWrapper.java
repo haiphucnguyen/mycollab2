@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
-import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -48,17 +47,18 @@ public class TaskListGanttItemWrapper extends GanttItemWrapper {
 
     @Override
     public List<GanttItemWrapper> subTasks() {
-        List<SimpleTask> subTasks = projectTaskService.findSubTasksOfGroup(taskList.getId(), AppContext.getAccountId());
-        if (subItems == null) {
-            subItems = new ArrayList<>();
-            for (SimpleTask subTask : subTasks) {
-                TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask, minDate, maxDate);
-                subItem.setParent(this);
-                subItems.add(subItem);
-            }
-        }
-
-        return subItems;
+//        List<SimpleTask> subTasks = projectTaskService.findSubTasksOfGroup(taskList.getId(), AppContext.getAccountId());
+//        if (subItems == null) {
+//            subItems = new ArrayList<>();
+//            for (SimpleTask subTask : subTasks) {
+//                TaskGanttItemWrapper subItem = new TaskGanttItemWrapper(subTask, minDate, maxDate);
+//                subItem.setParent(this);
+//                subItems.add(subItem);
+//            }
+//        }
+//
+//        return subItems;
+        return null;
     }
 
     @Override
@@ -78,7 +78,6 @@ public class TaskListGanttItemWrapper extends GanttItemWrapper {
 
     @Override
     String buildTooltip() {
-        return ProjectTooltipGenerator.generateToolTipTaskList(AppContext.getUserLocale(), taskList,
-                AppContext.getSiteUrl(), AppContext.getTimezone());
+        return "";
     }
 }

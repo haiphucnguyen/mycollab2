@@ -73,8 +73,7 @@ public class TaskSearchViewImpl extends AbstractPageView implements TaskSearchVi
             public void itemClick(final TableClickEvent event) {
                 SimpleTask task = (SimpleTask) event.getData();
                 if ("taskname".equals(event.getFieldName())) {
-                    EventBusFactory.getInstance().post(
-                            new TaskEvent.GotoRead(TaskSearchViewImpl.this, task.getId()));
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoRead(TaskSearchViewImpl.this, task.getId()));
                 }
             }
         });

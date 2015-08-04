@@ -32,6 +32,8 @@ object TaskScreenData {
     class Edit(param: Task) extends ScreenData[Task](param) {}
     
     class Add(param: Task) extends ScreenData[Task](param) {}
+
+    class GotoDashboard extends ScreenData {}
     
     class GotoGanttChart extends ScreenData {}
     

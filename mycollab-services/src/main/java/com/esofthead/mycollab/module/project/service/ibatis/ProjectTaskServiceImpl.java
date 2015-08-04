@@ -113,10 +113,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 Integer key = taskMapperExt.getMaxKey(record.getProjectid());
                 record.setTaskkey((key == null) ? 1 : (key + 1));
 
-                CacheUtils.cleanCaches(record.getSaccountid(),
-                        ProjectService.class, ProjectGenericTaskService.class,
-                        ProjectTaskListService.class, ProjectActivityStreamService.class,
-                        ProjectMemberService.class, MilestoneService.class);
+                CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class, ProjectGenericTaskService.class,
+                        ProjectActivityStreamService.class, ProjectMemberService.class, MilestoneService.class);
 
                 return super.saveWithSession(record, username);
             } else {
@@ -144,8 +142,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         }
 
         CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class,
-                ProjectGenericTaskService.class, ProjectTaskListService.class,
-                ProjectActivityStreamService.class, ProjectMemberService.class,
+                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
                 MilestoneService.class, ItemTimeLoggingService.class);
     }
 
@@ -158,7 +155,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     @Override
     public void massRemoveWithSession(List<Task> items, String username, Integer accountId) {
         super.massRemoveWithSession(items, username, accountId);
-        CacheUtils.cleanCaches(accountId, ProjectTaskListService.class, ProjectService.class, ProjectGenericTaskService.class,
+        CacheUtils.cleanCaches(accountId, ProjectService.class, ProjectGenericTaskService.class,
                 ProjectActivityStreamService.class, MilestoneService.class, ItemTimeLoggingService.class);
         DeleteProjectTaskEvent event = new DeleteProjectTaskEvent(items.toArray(new Task[items.size()]),
                 username, accountId);
@@ -186,14 +183,6 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setSaccountid(new NumberSearchField(sAccountId));
         searchCriteria.setParentTaskId(new NumberSearchField(parentTaskId));
-        return taskMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
-    }
-
-    @Override
-    public List<SimpleTask> findSubTasksOfGroup(Integer taskgroupId, @CacheKey Integer sAccountId) {
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(sAccountId));
-        searchCriteria.setTaskListId(new NumberSearchField(taskgroupId));
         return taskMapperExt.findPagableListByCriteria(searchCriteria, new RowBounds(0, Integer.MAX_VALUE));
     }
 

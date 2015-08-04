@@ -26,8 +26,8 @@ import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
-import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSelection;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -108,8 +108,8 @@ public class TaskAddViewImpl extends AbstractEditItemComp<Task> implements TaskA
         protected Field<?> onCreateField(final Object propertyId) {
             if (Task.Field.assignuser.equalTo(propertyId)) {
                 return new ProjectMemberSelectionField();
-            } else if (Task.Field.tasklistid.equalTo(propertyId)) {
-                return new ProjectTaskListComboBox();
+            } else if (Task.Field.milestoneid.equalTo(propertyId)) {
+                return new MilestoneComboBox();
             } else if (Task.Field.notes.equalTo(propertyId)) {
                 final RichTextArea richTextArea = new RichTextArea();
                 richTextArea.setNullRepresentation("");
