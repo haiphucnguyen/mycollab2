@@ -75,6 +75,7 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.sliderpanel.SliderPanel;
 import org.vaadin.sliderpanel.client.SliderMode;
 import org.vaadin.sliderpanel.client.SliderTabPosition;
+import org.vaadin.teemu.VaadinIcons;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -231,7 +232,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         serviceMenu = new ServiceMenu();
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                new AssetResource(WebResourceIds._16_project), new Button.ClickListener() {
+                VaadinIcons.TASKS, new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -243,7 +244,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                 });
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                new AssetResource(WebResourceIds._16_customer), new Button.ClickListener() {
+                VaadinIcons.MONEY, new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -253,7 +254,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                 });
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                new AssetResource(WebResourceIds._16_document), new Button.ClickListener() {
+                VaadinIcons.SUITCASE, new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
@@ -263,7 +264,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                 });
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
-                new AssetResource(WebResourceIds._16_account), new Button.ClickListener() {
+                VaadinIcons.USERS, new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override

@@ -14,7 +14,9 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
+import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.hp.gagawa.java.elements.Div;
@@ -26,6 +28,7 @@ import com.vaadin.ui.*;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
+import org.vaadin.teemu.VaadinIcons;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -126,15 +129,15 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         };
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                new AssetResource(WebResourceIds._16_customer), clickListener);
+                VaadinIcons.MONEY, clickListener);
 
         serviceMenu.selectService(0);
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                new AssetResource(WebResourceIds._16_project), clickListener);
+                VaadinIcons.TASKS, clickListener);
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                new AssetResource(WebResourceIds._16_document), clickListener);
+                VaadinIcons.SUITCASE, clickListener);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
 

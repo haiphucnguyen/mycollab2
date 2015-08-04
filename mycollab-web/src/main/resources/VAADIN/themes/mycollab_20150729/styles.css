@@ -10508,7 +10508,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .v-button.notification-button, .topNavigation .v-button.notification-button.v-pressed {
-	background: none no-repeat left top #E4E4E4;
+	background: none no-repeat left top white;
 	border-radius: 5px;
 }
 

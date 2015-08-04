@@ -21,6 +21,7 @@ import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
+import org.vaadin.teemu.VaadinIcons;
 
 import java.util.Iterator;
 
@@ -147,14 +148,11 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenutext(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTopmenutext(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
-        propertyLayout.addComponent(new Label(AppContext
-                        .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)),
-                0, 1);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(topMenuText, 1, 1);
 
         CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(
@@ -164,8 +162,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenubgselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTopmenubgselected(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -179,8 +176,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenutextselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTopmenutextselected(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -189,14 +185,12 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
         blockBody.addComponent(propertyLayout);
 
-        CustomLayout previewLayout = CustomLayoutExt
-                .createLayout("topNavigation");
+        CustomLayout previewLayout = CustomLayoutExt.createLayout("topNavigation");
         previewLayout.setStyleName("example-block");
         previewLayout.setHeight("40px");
         previewLayout.setWidth("520px");
 
-        Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(
-                null, 150);
+        Button currentLogo = AccountAssetsResolver.createAccountLogoImageComponent(null, 150);
         previewLayout.addComponent(currentLogo, "mainLogo");
         final ServiceMenu serviceMenu = new ServiceMenu();
 
@@ -217,22 +211,16 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
             }
         };
 
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                new AssetResource(WebResourceIds._16_customer),
-                clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
+                VaadinIcons.MONEY, clickListener);
 
         serviceMenu.selectService(0);
 
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                new AssetResource(WebResourceIds._16_project),
-                clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
+                VaadinIcons.TASKS, clickListener);
 
-        serviceMenu.addService(
-                AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                new AssetResource(WebResourceIds._16_document),
-                clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
+                VaadinIcons.SUITCASE, clickListener);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
         blockBody.addComponent(previewLayout);
@@ -250,10 +238,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         blockLayout.addComponent(blockHeader);
         blockLayout.setSpacing(true);
 
-        HorizontalLayout blockBody = new HorizontalLayout();
-        blockBody.setMargin(new MarginInfo(false, true, false, true));
-        blockBody.setWidth("100%");
-        blockBody.setSpacing(true);
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).withWidth("100%");
         blockLayout.addComponent(blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
@@ -300,8 +285,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTabsheetbgselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTabsheetbgselected(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -315,8 +299,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTabsheettextselected(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTabsheettextselected(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
