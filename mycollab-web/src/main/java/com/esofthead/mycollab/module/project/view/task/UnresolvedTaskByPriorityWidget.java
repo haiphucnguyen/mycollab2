@@ -27,20 +27,17 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ButtonI18nComp;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -57,19 +54,19 @@ public class UnresolvedTaskByPriorityWidget extends Depot {
     private TaskSearchCriteria searchCriteria;
     private ApplicationEventListener<TaskEvent.HasTaskChange> taskChangeHandler = new
             ApplicationEventListener<TaskEvent.HasTaskChange>() {
-        @Override
-        @Subscribe
-        public void handle(TaskEvent.HasTaskChange event) {
-            if (searchCriteria != null) {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        UnresolvedTaskByPriorityWidget.this.setSearchCriteria(searchCriteria);
+                @Override
+                @Subscribe
+                public void handle(TaskEvent.HasTaskChange event) {
+                    if (searchCriteria != null) {
+                        UI.getCurrent().access(new Runnable() {
+                            @Override
+                            public void run() {
+                                UnresolvedTaskByPriorityWidget.this.setSearchCriteria(searchCriteria);
+                            }
+                        });
                     }
-                });
-            }
-        }
-    };
+                }
+            };
 
     public UnresolvedTaskByPriorityWidget() {
         super(AppContext.getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_PRIORITY_TITLE), new MVerticalLayout());
@@ -143,8 +140,7 @@ public class UnresolvedTaskByPriorityWidget extends Depot {
         public void buttonClick(final ClickEvent event) {
             String key = ((ButtonI18nComp) event.getButton()).getKey();
             searchCriteria.setPriorities(new SetSearchField<>(key));
-            TaskFilterParameter filterParam = new TaskFilterParameter(searchCriteria, "Task Filter by Priority: " + key);
-            EventBusFactory.getInstance().post(new TaskEvent.Search(this, filterParam));
+            EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, searchCriteria));
         }
     }
 }

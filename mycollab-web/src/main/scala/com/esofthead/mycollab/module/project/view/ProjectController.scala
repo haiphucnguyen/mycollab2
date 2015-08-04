@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view
 import java.util.GregorianCalendar
 
 import com.esofthead.mycollab.common.domain.Tag
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.esofthead.mycollab.core.MyCollabException
 import com.esofthead.mycollab.core.arguments._
 import com.esofthead.mycollab.core.utils.{BeanUtility, StringUtils}
@@ -27,14 +26,13 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener
 import com.esofthead.mycollab.module.page.domain.Page
 import com.esofthead.mycollab.module.project.domain._
 import com.esofthead.mycollab.module.project.domain.criteria._
-import com.esofthead.mycollab.module.project.events.TaskEvent.GotoKanbanView
 import com.esofthead.mycollab.module.project.events._
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus
 import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.file.FilePresenter
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.SearchItem
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.{GotoDashboard, GotoKanbanView}
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoDashboard
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
@@ -124,14 +122,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         })
         this.register(new ApplicationEventListener[TaskEvent.GotoKanbanView] {
             @Subscribe override def handle(event: TaskEvent.GotoKanbanView): Unit = {
-                val data:TaskScreenData.GotoKanbanView = new TaskScreenData.GotoKanbanView
-                projectView.gotoTaskView(data)
-            }
-        })
-
-        this.register(new ApplicationEventListener[TaskEvent.Search] {
-            @Subscribe def handle(event: TaskEvent.Search) {
-                val data: TaskScreenData.Search = new TaskScreenData.Search(event.getData.asInstanceOf[TaskFilterParameter])
+                val data: TaskScreenData.GotoKanbanView = new TaskScreenData.GotoKanbanView
                 projectView.gotoTaskView(data)
             }
         })

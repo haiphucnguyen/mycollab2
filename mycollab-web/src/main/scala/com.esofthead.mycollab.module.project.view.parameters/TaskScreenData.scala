@@ -25,8 +25,6 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData
  */
 object TaskScreenData {
     
-    class Search(param: TaskFilterParameter) extends ScreenData[TaskFilterParameter](param) {}
-    
     class Read(param: Integer) extends ScreenData[Integer](param) {}
     
     class Edit(param: Task) extends ScreenData[Task](param) {}

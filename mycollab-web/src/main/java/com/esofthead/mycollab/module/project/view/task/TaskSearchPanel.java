@@ -43,7 +43,7 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
- * @since 4.0
+ * @since 4.0.0
  */
 public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteria> {
     private static final long serialVersionUID = 1L;
@@ -53,7 +53,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             TaskSearchCriteria.p_assignee, TaskSearchCriteria.p_createtime,
             TaskSearchCriteria.p_duedate, TaskSearchCriteria.p_lastupdatedtime,
             TaskSearchCriteria.p_status, TaskSearchCriteria.p_startdate, TaskSearchCriteria.p_enddate,
-            TaskSearchCriteria.p_actualstartdate, TaskSearchCriteria.p_actualenddate};
+            TaskSearchCriteria.p_actualstartdate, TaskSearchCriteria.p_actualenddate, TaskSearchCriteria.p_milestoneId};
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {

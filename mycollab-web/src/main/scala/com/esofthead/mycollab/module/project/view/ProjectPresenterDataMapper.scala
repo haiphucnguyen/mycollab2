@@ -68,7 +68,6 @@ object ProjectPresenterDataMapper {
         classOf[TaskScreenData.Add] -> classOf[TaskPresenter],
         classOf[TaskScreenData.Edit] -> classOf[TaskPresenter],
         classOf[TaskScreenData.Read] -> classOf[TaskPresenter],
-        classOf[TaskScreenData.Search] -> classOf[TaskPresenter],
         classOf[TaskScreenData.GotoDashboard] -> classOf[TaskPresenter],
         classOf[TaskScreenData.GotoGanttChart] -> classOf[TaskPresenter],
         classOf[TaskScreenData.GotoKanbanView] -> classOf[TaskPresenter])

@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.parameters.TaskFilterParameter;
 import com.esofthead.mycollab.module.user.CommonTooltipGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -128,10 +127,7 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
                 @Override
                 public void buttonClick(final ClickEvent event) {
                     searchCriteria.setAssignUser(new StringSearchField(assignee));
-                    TaskFilterParameter filterParam = new TaskFilterParameter(
-                            searchCriteria, AppContext.getMessage(
-                            TaskI18nEnum.OPT_FILTER_TASK_BY_ASSIGNEE, assigneeFullName));
-                    EventBusFactory.getInstance().post(new TaskEvent.Search(this, filterParam));
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, searchCriteria));
                 }
             });
 
