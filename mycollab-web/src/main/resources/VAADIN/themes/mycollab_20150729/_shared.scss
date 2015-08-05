@@ -80,7 +80,7 @@
       background-color: #FFF;
     }
     &:hover {
-      background-color: $hover-background-color;
+      @include hover-effect();
     }
   }
 
@@ -472,7 +472,6 @@
         content: "";
         position: absolute;
         border-style: solid;
-        /* reduce the damage in FF3.0 */
         display: block;
         width: 0;
         top: 4px;

@@ -176,7 +176,7 @@
     text-shadow: 0 -1px 0 #495972;
   }
 
-  .v-panel-caption, .v-table-striped .v-table-row-odd {
+  .v-panel-caption {
     background: $background-color;
   }
 
@@ -489,10 +489,6 @@
     -moz-border-radius-bottomright: 0;
     border-radius: 2px 0px 0px 2px;
     height: 24px;
-  }
-
-  .v-table-row-odd {
-    background: none repeat scroll 0% 0% rgb(219, 222, 227);
   }
 
   .v-buttongroup.toggle-btn-group .v-button.active {
@@ -1688,14 +1684,16 @@
   .v-table-row {
     background: none repeat scroll 0% 0% #FFF;
     &:hover {
-      background-color: $hover-background-color;
+      @include hover-effect();
     }
   }
 
   .v-table-row-odd, .v-table-striped .v-table-row-odd {
     background: none repeat scroll 0% 0% $background-color;
+    border: 5px solid black;
+    @include hover-effect();
     &:hover {
-      background-color: $hover-background-color;
+      @include hover-effect();
     }
   }
 
@@ -4014,15 +4012,6 @@
   }
 
   /* Gantt Chart */
-
-  .v-table-focus .v-table-cell-content {
-    border: none;
-  }
-
-  .v-table-row.v-selected .v-button-link .v-button-caption, .v-table-row-odd.v-selected .v-button-link .v-button-caption {
-    color: #FFF;
-  }
-
   .gantt-chart {
     border-width: 0px;
     .v-table-body {

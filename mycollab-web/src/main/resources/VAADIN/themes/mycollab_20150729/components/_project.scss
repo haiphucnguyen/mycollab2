@@ -75,7 +75,7 @@
       border-width: 0px 1px 1px;
       border-style: solid;
       &:hover {
-        background-color: $hover-background-color;
+        @include hover-effect();
       }
       .projectlink-wrapper, .projectlink-wrapper-archived {
         border-right: 1px solid $border-color;
@@ -94,13 +94,13 @@
       .projectlink-wrapper {
         background-color: lavenderblush;
         &:hover {
-          background-color: $hover-background-color;
+          @include hover-effect();
         }
       }
       .projectlink-wrapper-archived {
         background-color: darkgray;
         &:hover {
-          background-color: $hover-background-color;
+          @include hover-effect();
         }
       }
     }
@@ -171,7 +171,7 @@
       background-color: #FFF;
     }
     &:hover {
-      background-color: $hover-background-color;
+      @include hover-effect();
     }
   }
 
@@ -649,9 +649,7 @@
       }
 
       &:hover {
-        -webkit-box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
-        -moz-box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
-        box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
+        @include hover-effect();
       }
     }
   }

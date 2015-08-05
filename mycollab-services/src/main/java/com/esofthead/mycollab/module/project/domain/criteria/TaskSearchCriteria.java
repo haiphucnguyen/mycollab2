@@ -21,10 +21,7 @@ import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
-import com.esofthead.mycollab.core.db.query.StringListParam;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-
-import java.util.Arrays;
 
 /**
  * @author MyCollab Ltd.
@@ -36,7 +33,7 @@ public class TaskSearchCriteria extends SearchCriteria {
     public static final Param p_assignee = new PropertyListParam("task-assignuser",
             GenericI18Enum.FORM_ASSIGNEE, "m_prj_task", "assignUser");
 
-    public static final Param p_milestoneId = new PropertyListParam("task-list",
+    public static final Param p_milestoneId = new PropertyListParam("task-milestone",
             TaskI18nEnum.FORM_MILESTONE, "m_prj_task", "milestoneId");
 
     public static final Param p_duedate = new DateParam("task-duedate",
@@ -49,9 +46,8 @@ public class TaskSearchCriteria extends SearchCriteria {
     public static final Param p_createtime = new DateParam("task-createtime",
             GenericI18Enum.FORM_CREATED_TIME, "m_prj_task", "createdTime");
 
-    public static final Param p_status = new StringListParam("task-status",
-            TaskI18nEnum.FORM_STATUS, "m_prj_task", "status", Arrays.asList(
-            "Open", "Pending", "Closed"));
+    public static final Param p_status = new PropertyListParam("task-status",
+            TaskI18nEnum.FORM_STATUS, "m_prj_task", "status");
 
     public static final Param p_startdate = new DateParam("task-startdate",
             TaskI18nEnum.FORM_START_DATE, "m_prj_task", "startdate");

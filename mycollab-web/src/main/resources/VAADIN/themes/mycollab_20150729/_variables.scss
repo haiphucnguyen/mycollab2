@@ -16,6 +16,12 @@ $font-x-large: 18px;
 $font-xx-large: 24px;
 $font-largest: 36px;
 
+@mixin hover-effect() {
+  -webkit-box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
+  -moz-box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
+  box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
+}
+
 @mixin margin-container($top, $right, $bottom, $left) {
   &.v-margin-top {
     padding-top: $top;

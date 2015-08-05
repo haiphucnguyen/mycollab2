@@ -997,7 +997,9 @@ a.pending {
 }
 
 .list-row:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .footer-note {
@@ -8419,7 +8421,9 @@ a.pending {
 }
 
 .list-row:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .footer-note {
@@ -9125,7 +9129,9 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock:hover, .myprojectlist .projectblock:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
@@ -9147,7 +9153,9 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper:hover, .myprojectlist .projectblock .projectlink-wrapper:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper-archived {
@@ -9155,7 +9163,9 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived:hover, .myprojectlist .projectblock .projectlink-wrapper-archived:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .project-status .v-verticallayout.v-margin-top {
@@ -9246,7 +9256,9 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .prj-list-row:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .widget-short-prj-name {
@@ -10063,7 +10075,7 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 	text-shadow: 0 -1px 0 #495972;
 }
 
-.v-panel-caption, .v-table-striped .v-table-row-odd {
+.v-panel-caption {
 	background: whitesmoke;
 }
 
@@ -10354,10 +10366,6 @@ input.v-textfield.v-datefield-textfield {
 	-moz-border-radius-bottomright: 0;
 	border-radius: 2px 0px 0px 2px;
 	height: 24px;
-}
-
-.v-table-row-odd {
-	background: none repeat scroll 0% 0% #dbdee3;
 }
 
 .v-buttongroup.toggle-btn-group .v-button.active {
@@ -11603,15 +11611,23 @@ td.v-tabsheet-spacertd div {
 }
 
 .v-table-row:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .v-table-row-odd, .v-table-striped .v-table-row-odd {
 	background: none repeat scroll 0% 0% whitesmoke;
+	border: 5px solid black;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .v-table-row-odd:hover, .v-table-striped .v-table-row-odd:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .v-table-row-spacer {
@@ -13819,14 +13835,6 @@ div.v-csslayout.rightsidebar-layout {
 	background: transparent;
 	border-left: 1px dashed #ddd;
 	border-right: 1px dashed #ddd;
-}
-
-.v-table-focus .v-table-cell-content {
-	border: none;
-}
-
-.v-table-row.v-selected .v-button-link .v-button-caption, .v-table-row-odd.v-selected .v-button-link .v-button-caption {
-	color: #FFF;
 }
 
 .gantt-chart {

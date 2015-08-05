@@ -20,18 +20,13 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
-import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
@@ -194,6 +189,10 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         protected Component buildSelectionComp(String fieldId) {
             if ("task-assignuser".equals(fieldId)) {
                 return new ProjectMemberListSelect(false);
+            } else if ("task-milestone".equals(fieldId)) {
+                return new MilestoneListSelect();
+            } else if ("task-status".equals(fieldId)) {
+                return new TaskStatusListSelect();
             }
             return null;
         }
