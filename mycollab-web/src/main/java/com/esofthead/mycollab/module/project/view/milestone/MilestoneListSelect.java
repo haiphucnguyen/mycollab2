@@ -43,10 +43,10 @@ public class MilestoneListSelect extends ListSelect {
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         List<SimpleMilestone> milestones = milestoneService.findPagableListByCriteria(new SearchRequest<>(criteria));
         for (SimpleMilestone milestone : milestones) {
-            this.addItem(milestone);
-            this.setItemCaption(milestone, milestone.getName());
+            this.addItem(milestone.getId());
+            this.setItemCaption(milestone.getId(), milestone.getName());
             String status = milestone.getStatus();
-            this.setItemIcon(milestone, statusIconsMap.get(status));
+            this.setItemIcon(milestone.getId(), statusIconsMap.get(status));
         }
         super.attach();
     }

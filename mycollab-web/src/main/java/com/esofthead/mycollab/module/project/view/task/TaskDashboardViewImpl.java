@@ -24,8 +24,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
@@ -75,11 +74,9 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
     private MHorizontalLayout mainLayout;
 
-    private void constructUI() {
+    public TaskDashboardViewImpl() {
         this.withMargin(new MarginInfo(false, true, true, true));
-
         taskSearchPanel = new TaskSearchPanel();
-
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.addComponent(new Label("Group by:"));
         final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
@@ -144,13 +141,15 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         this.wrapBody = new CssLayout();
 
-        this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(new MarginInfo(true, false, false, false));
+        this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(false);
 
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
 
         FloatingComponent floatSidebar = FloatingComponent.floatThis(this.rightColumn);
         floatSidebar.setContainerId("main-body");
+    }
 
+    private void constructUI() {
         this.with(taskSearchPanel, mainLayout);
     }
 
@@ -162,6 +161,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     private void displayTaskStatistic() {
+        rightColumn.removeAllComponents();
         UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
         rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
 
@@ -175,7 +175,8 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         unresolvedTaskByPriorityWidget.setSearchCriteria(searchCriteria);
     }
 
-    private void queryAndDisplayTasks() {
+    @Override
+    public void queryTask(TaskSearchCriteria searchCriteria) {
         wrapBody.removeAllComponents();
         TaskGroupOrderComponent taskGroupOrderComponent;
         if (GROUP_DUE_DATE.equals(groupByState)) {
@@ -188,11 +189,15 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
             throw new MyCollabException("Do not support group view by " + groupByState);
         }
         wrapBody.addComponent(taskGroupOrderComponent);
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
         List tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
         taskGroupOrderComponent.insertTasks(tasks);
+    }
+
+    private void queryAndDisplayTasks() {
+        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        queryTask(searchCriteria);
     }
 
     private void displayGanttChartView() {
@@ -214,8 +219,8 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     @Override
-    public HasSearchHandlers<TaskListSearchCriteria> getSearchHandlers() {
-        throw new UnsupportedOperationException("This view doesn't support this operation");
+    public HasSearchHandlers<TaskSearchCriteria> getSearchHandlers() {
+        return taskSearchPanel;
     }
 
     @Override
@@ -229,12 +234,12 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     @Override
-    public HasSelectableItemHandlers<SimpleTaskList> getSelectableItemHandlers() {
+    public HasSelectableItemHandlers<SimpleTask> getSelectableItemHandlers() {
         throw new UnsupportedOperationException("This view doesn't support this operation");
     }
 
     @Override
-    public AbstractPagedBeanTable<TaskListSearchCriteria, SimpleTaskList> getPagedBeanTable() {
+    public AbstractPagedBeanTable<TaskSearchCriteria, SimpleTask> getPagedBeanTable() {
         throw new UnsupportedOperationException("This view doesn't support this operation");
     }
 }

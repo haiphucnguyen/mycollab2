@@ -29,8 +29,9 @@ public class TaskStatusListSelect extends ListSelect {
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK, CurrentProjectVariables
                 .getProjectId(), AppContext.getAccountId());
         for (OptionVal option : options) {
-            this.addItem(option);
-            this.setItemCaption(option, AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, option.getTypeval()));
+            this.addItem(option.getTypeval());
+            this.setItemCaption(option.getTypeval(), AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, option
+                    .getTypeval()));
         }
         super.attach();
     }

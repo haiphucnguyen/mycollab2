@@ -19,10 +19,14 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -35,16 +39,31 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDashboardView, TaskListSearchCriteria, SimpleTaskList> {
+public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDashboardView, TaskSearchCriteria, SimpleTask> {
     private static final long serialVersionUID = 1L;
+
+    private ProjectTaskService taskService;
 
     public TaskDashboardPresenter() {
         super(TaskDashboardView.class, TaskGroupNoItemView.class);
+        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     }
 
     @Override
     protected void postInitView() {
-        // Override to avoid presenter setting up search handlers
+        view.getSearchHandlers().addSearchHandler(new SearchHandler<TaskSearchCriteria>() {
+            @Override
+            public void onSearch(TaskSearchCriteria criteria) {
+                doSearch(criteria);
+            }
+        });
+    }
+
+    @Override
+    public void doSearch(TaskSearchCriteria searchCriteria) {
+        int totalCountItems = getSearchService().getTotalCount(searchCriteria);
+        view.getSearchHandlers().setTotalCountNumber(totalCountItems);
+        view.queryTask(searchCriteria);
     }
 
     @Override
@@ -61,8 +80,8 @@ public class TaskDashboardPresenter extends ProjectGenericListPresenter<TaskDash
     }
 
     @Override
-    public ISearchableService<TaskListSearchCriteria> getSearchService() {
-        return null;
+    public ISearchableService<TaskSearchCriteria> getSearchService() {
+        return taskService;
     }
 
     @Override

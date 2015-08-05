@@ -90,8 +90,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
             public void itemClick(final TableClickEvent event) {
                 SimpleBug bug = (SimpleBug) event.getData();
                 if ("summary".equals(event.getFieldName())) {
-                    EventBusFactory.getInstance().post(
-                            new BugEvent.GotoRead(BugListViewImpl.this, bug.getId()));
+                    EventBusFactory.getInstance().post(new BugEvent.GotoRead(BugListViewImpl.this, bug.getId()));
                 }
             }
         });

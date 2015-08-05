@@ -16,16 +16,15 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.desktop.ui.ListView;
 import com.esofthead.mycollab.vaadin.mvp.LazyPageView;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface TaskDashboardView extends ListView<TaskListSearchCriteria, SimpleTaskList>, LazyPageView {
-
+public interface TaskDashboardView extends ListView<TaskSearchCriteria, SimpleTask>, LazyPageView {
+    void queryTask(TaskSearchCriteria searchCriteria);
 }
