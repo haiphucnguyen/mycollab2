@@ -83,15 +83,15 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         controlsBtn = new MHorizontalLayout().withMargin(true);
 
         Button addCriteriaBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD_CRITERIA), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
-                                searchContainer.getComponentCount() + 1);
-                        searchContainer.addComponent(newCriteriaBar);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                CriteriaSelectionLayout newCriteriaBar = new CriteriaSelectionLayout(
+                        searchContainer.getComponentCount() + 1);
+                searchContainer.addComponent(newCriteriaBar);
+            }
+        });
         addCriteriaBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         addCriteriaBtn.setIcon(FontAwesome.PLUS);
 
@@ -794,16 +794,12 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         private void contructComboBox() {
             SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
             searchCriteria.setType(new StringSearchField(searchCategory));
-            searchCriteria.setCreateUser(new StringSearchField(AppContext
-                    .getUsername()));
-            searchCriteria.setSaccountid(new NumberSearchField(AppContext
-                    .getAccountId()));
+            searchCriteria.setCreateUser(new StringSearchField(AppContext.getUsername()));
+            searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 
-            SaveSearchResultService saveSearchResultService = ApplicationContextUtil
-                    .getSpringBean(SaveSearchResultService.class);
-            List<SaveSearchResultWithBLOBs> result = saveSearchResultService
-                    .findPagableListByCriteria(new SearchRequest<>(
-                            searchCriteria, 0, Integer.MAX_VALUE));
+            SaveSearchResultService saveSearchResultService = ApplicationContextUtil.getSpringBean(SaveSearchResultService.class);
+            List<SaveSearchResultWithBLOBs> result = saveSearchResultService.findPagableListByCriteria(new SearchRequest<>(
+                    searchCriteria, 0, Integer.MAX_VALUE));
             beanItem = new BeanContainer<>(SaveSearchResultWithBLOBs.class);
             beanItem.setBeanIdProperty("id");
 
