@@ -94,15 +94,14 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
         taskSearchPanel.addHeaderRight(groupWrapLayout);
 
-        Button newTaskListBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button newTaskListBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TaskDashboardViewImpl.this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TaskDashboardViewImpl.this, null));
+            }
+        });
         newTaskListBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         newTaskListBtn.setIcon(FontAwesome.PLUS);
         newTaskListBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
@@ -182,13 +181,13 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         wrapBody.removeAllComponents();
         TaskGroupOrderComponent taskGroupOrderComponent;
         if (GROUP_DUE_DATE.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", SearchCriteria.DESC)));
             taskGroupOrderComponent = new DueDateOrderComponent();
         } else if (GROUP_START_DATE.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate", SearchCriteria.DESC)));
             taskGroupOrderComponent = new StartDateOrderComponent();
         } else if (PLAIN_LIST.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastupdatedtime", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastupdatedtime", SearchCriteria.DESC)));
             taskGroupOrderComponent = new SimpleListOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);

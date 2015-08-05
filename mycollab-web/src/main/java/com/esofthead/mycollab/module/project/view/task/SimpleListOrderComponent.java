@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.vaadin.ui.HorizontalLayout;
 
 import java.util.List;
 
@@ -17,11 +16,7 @@ public class SimpleListOrderComponent extends TaskGroupOrderComponent {
     @Override
     void insertTasks(List<SimpleTask> tasks) {
         for (SimpleTask task : tasks) {
-            this.addComponent(buildTaskComp(task));
+            this.addComponent(new TaskRowRenderer(task));
         }
-    }
-
-    private HorizontalLayout buildTaskComp(SimpleTask task) {
-        return new TaskRowRenderer(task);
     }
 }
