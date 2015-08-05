@@ -17,7 +17,9 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -28,6 +30,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -37,16 +41,18 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
+import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -56,8 +62,11 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
 
-    static final String GROUP_DUE_DATE = "GROUP_DUE_DATE";
-    static final String GROUP_START_DATE = "GROUP_START_DATE";
+    static final String GROUP_DUE_DATE = "Due Date";
+    static final String GROUP_START_DATE = "Start Date";
+    static final String PLAIN_LIST = "Plain";
+
+    private String groupByState;
 
     private TaskSearchPanel taskSearchPanel;
     private CssLayout wrapBody;
@@ -67,10 +76,23 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     private MHorizontalLayout mainLayout;
 
     private void constructUI() {
-        this.removeAllComponents();
         this.withMargin(new MarginInfo(false, true, true, true));
 
         taskSearchPanel = new TaskSearchPanel();
+
+        MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
+        groupWrapLayout.addComponent(new Label("Group by:"));
+        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
+        groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                groupByState = (String) groupCombo.getValue();
+            }
+        });
+        groupByState = GROUP_DUE_DATE;
+        groupWrapLayout.addComponent(groupCombo);
+
+        taskSearchPanel.addHeaderRight(groupWrapLayout);
 
         Button newTaskListBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),
                 new Button.ClickListener() {
@@ -85,7 +107,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         newTaskListBtn.setIcon(FontAwesome.PLUS);
         newTaskListBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
         newTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        taskSearchPanel.addHeaderRight(newTaskListBtn);
+        groupWrapLayout.addComponent(newTaskListBtn);
 
         Button advanceDisplayBtn = new Button();
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
@@ -116,7 +138,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         viewButtons.addButton(kanbanBtn);
         viewButtons.addButton(chartDisplayBtn);
         viewButtons.setDefaultButton(advanceDisplayBtn);
-        taskSearchPanel.addHeaderRight(viewButtons);
+        groupWrapLayout.addComponent(viewButtons);
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         this.wrapBody = new CssLayout();
@@ -136,6 +158,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     @Override
     protected void displayView() {
         constructUI();
+        queryAndDisplayTasks();
         displayTaskStatistic();
     }
 
@@ -151,6 +174,26 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
         rightColumn.addComponent(unresolvedTaskByPriorityWidget);
         unresolvedTaskByPriorityWidget.setSearchCriteria(searchCriteria);
+    }
+
+    private void queryAndDisplayTasks() {
+        wrapBody.removeAllComponents();
+        TaskGroupOrderComponent taskGroupOrderComponent;
+        if (GROUP_DUE_DATE.equals(groupByState)) {
+            taskGroupOrderComponent = new DueDateOrderComponent();
+        } else if (GROUP_START_DATE.equals(groupByState)) {
+            taskGroupOrderComponent = new StartDateOrderComponent();
+        } else if (PLAIN_LIST.equals(groupByState)) {
+            taskGroupOrderComponent = new SimpleListOrderComponent();
+        } else {
+            throw new MyCollabException("Do not support group view by " + groupByState);
+        }
+        wrapBody.addComponent(taskGroupOrderComponent);
+        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        List tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+        taskGroupOrderComponent.insertTasks(tasks);
     }
 
     private void displayGanttChartView() {

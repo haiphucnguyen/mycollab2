@@ -80,14 +80,6 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         }
     }
 
-    public void getAdvanceSearch() {
-        moveToAdvancedSearchLayout();
-    }
-
-    public void getBasicSearch() {
-        moveToBasicSearchLayout();
-    }
-
     private class TaskBasicSearchLayout extends BasicSearchLayout<TaskSearchCriteria> {
         private static final long serialVersionUID = 1L;
         private TextField nameField;
