@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -51,6 +52,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -87,7 +89,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                 queryAndDisplayTasks();
             }
         });
-        groupByState = PLAIN_LIST;
+        groupByState = GROUP_DUE_DATE;
         groupWrapLayout.addComponent(groupCombo);
 
         taskSearchPanel.addHeaderRight(groupWrapLayout);
@@ -180,10 +182,13 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         wrapBody.removeAllComponents();
         TaskGroupOrderComponent taskGroupOrderComponent;
         if (GROUP_DUE_DATE.equals(groupByState)) {
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", SearchCriteria.ASC)));
             taskGroupOrderComponent = new DueDateOrderComponent();
         } else if (GROUP_START_DATE.equals(groupByState)) {
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate", SearchCriteria.ASC)));
             taskGroupOrderComponent = new StartDateOrderComponent();
         } else if (PLAIN_LIST.equals(groupByState)) {
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastupdatedtime", SearchCriteria.ASC)));
             taskGroupOrderComponent = new SimpleListOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);

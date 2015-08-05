@@ -23,12 +23,10 @@ import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import java.util.List;
 
 /**
- *
- * @author MyCollab Ltd.
- *
  * @param <SearchService>
  * @param <S>
  * @param <T>
+ * @author MyCollab Ltd.
  */
 public class DefaultPagedBeanTable<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
         extends AbstractPagedBeanTable<S, T> {
