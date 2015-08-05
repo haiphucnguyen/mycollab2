@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -68,10 +69,7 @@ import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -226,6 +224,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
                 TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
                 searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
                 final List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
 
                 for (SimpleTask task : tasks) {
@@ -363,7 +362,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         updateComponentCount();
 
                         Component sourceComponent = transferable.getSourceComponent();
-                        KanbanBlock sourceKanban = (KanbanBlock) UIUtils.getRoot(sourceComponent, KanbanBlock.class);
+                        KanbanBlock sourceKanban = UIUtils.getRoot(sourceComponent, KanbanBlock.class);
                         if (sourceKanban != null && sourceKanban != KanbanBlock.this) {
                             sourceKanban.updateComponentCount();
                         }

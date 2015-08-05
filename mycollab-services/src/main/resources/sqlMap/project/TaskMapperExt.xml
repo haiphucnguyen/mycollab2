@@ -170,7 +170,7 @@
                 ${orderField.field} ${orderField.direction},
             #end
         #end
-        m_prj_task.taskindex ASC
+        m_prj_task.lastUpdatedTime DESC, m_prj_task.createdTime DESC
         ]]>
     </sql>
 
