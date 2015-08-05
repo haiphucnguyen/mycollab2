@@ -62,19 +62,6 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
 
     @Override
     protected void buildExtraControls() {
-        Button backBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_BACK_TO_DASHBOARD), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
-                        (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoDashboard());
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-            }
-        });
-        backBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        backBtn.setIcon(FontAwesome.ARROW_LEFT);
-        addHeaderRight(backBtn);
     }
 
     @Override

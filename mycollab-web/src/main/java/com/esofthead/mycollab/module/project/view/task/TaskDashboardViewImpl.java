@@ -22,14 +22,12 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -43,8 +41,10 @@ import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -56,28 +56,21 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
 
-    private MilestoneGroupComponent taskListsWidget;
+    static final String GROUP_DUE_DATE = "GROUP_DUE_DATE";
+    static final String GROUP_START_DATE = "GROUP_START_DATE";
+
+    private TaskSearchPanel taskSearchPanel;
+    private CssLayout wrapBody;
 
     private VerticalLayout rightColumn;
 
-    private TextField nameField;
-
-    private MHorizontalLayout header;
     private MHorizontalLayout mainLayout;
-    private ToggleButtonGroup viewButtons;
 
     private void constructUI() {
         this.removeAllComponents();
         this.withMargin(new MarginInfo(false, true, true, true));
 
-        header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withStyleName("hdr-view").withWidth("100%");
-        header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-
-        Label taskGroupSelection = new Label(AppContext.getMessage(TaskGroupI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE));
-        taskGroupSelection.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
-        taskGroupSelection.addStyleName("hdr-text");
-        taskGroupSelection.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-        header.with(taskGroupSelection).withAlign(taskGroupSelection, Alignment.MIDDLE_LEFT).expand(taskGroupSelection);
+        taskSearchPanel = new TaskSearchPanel();
 
         Button newTaskListBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),
                 new Button.ClickListener() {
@@ -92,8 +85,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         newTaskListBtn.setIcon(FontAwesome.PLUS);
         newTaskListBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
         newTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        header.addComponent(newTaskListBtn);
-        header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
+        taskSearchPanel.addHeaderRight(newTaskListBtn);
 
         Button advanceDisplayBtn = new Button();
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
@@ -119,16 +111,17 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 
-        viewButtons = new ToggleButtonGroup();
+        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
         viewButtons.addButton(chartDisplayBtn);
         viewButtons.setDefaultButton(advanceDisplayBtn);
+        taskSearchPanel.addHeaderRight(viewButtons);
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
-        this.taskListsWidget = new MilestoneGroupComponent();
+        this.wrapBody = new CssLayout();
 
-        MVerticalLayout leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false)).with(taskListsWidget);
+        MVerticalLayout leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false)).with(wrapBody);
 
         this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(new MarginInfo(true, false, false, false));
 
@@ -137,7 +130,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         FloatingComponent floatSidebar = FloatingComponent.floatThis(this.rightColumn);
         floatSidebar.setContainerId("main-body");
 
-        displayAdvancedView();
+        this.with(taskSearchPanel, mainLayout);
     }
 
     @Override
@@ -147,15 +140,12 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     private void displayTaskStatistic() {
-        rightColumn.removeAllComponents();
-
         UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
         rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
 
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
         searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         searchCriteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
-
         unresolvedTaskByAssigneeWidget.setSearchCriteria(searchCriteria);
 
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
@@ -163,16 +153,9 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         unresolvedTaskByPriorityWidget.setSearchCriteria(searchCriteria);
     }
 
-    private void displayAdvancedView() {
-        this.removeAllComponents();
-        header.with(viewButtons).withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
-        this.with(header, mainLayout).withAlign(header, Alignment.TOP_RIGHT);
-    }
-
     private void displayGanttChartView() {
         EventBusFactory.getInstance().post(new TaskEvent.GotoGanttChart(this, null));
     }
-
 
     private void displayKanbanView() {
         EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
