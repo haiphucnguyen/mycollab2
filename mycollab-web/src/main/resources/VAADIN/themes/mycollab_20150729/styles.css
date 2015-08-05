@@ -9777,9 +9777,8 @@ div.v-button.token-field:hover {
 }
 
 .tasklist {
-	border-style: solid;
-	border-color: #CFCFCF;
-	border-width: 0px 1px 1px 1px;
+	margin-top: 10px;
+	border: solid #CFCFCF 1px;
 	min-height: 33px;
 	background-color: #FFF;
 }
@@ -9803,7 +9802,9 @@ div.v-button.token-field:hover {
 }
 
 .tasklist .taskrow:hover {
-	background-color: ghostwhite;
+	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
+	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .task-component {

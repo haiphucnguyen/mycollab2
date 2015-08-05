@@ -84,8 +84,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 
 	protected final Map<Object, ColumnGenerator> columnGenerators = new HashMap<>();
 
-	public AbstractPagedBeanTable(Class<B> type,
-			List<TableViewField> displayColumns) {
+	public AbstractPagedBeanTable(Class<B> type, List<TableViewField> displayColumns) {
 		this(type, null, displayColumns);
 	}
 
@@ -95,8 +94,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 	}
 
 	@SuppressWarnings("unchecked")
-	public AbstractPagedBeanTable(Class<B> type, String viewId,
-			TableViewField requiredColumn, List<TableViewField> displayColumns) {
+	public AbstractPagedBeanTable(Class<B> type, String viewId, TableViewField requiredColumn, List<TableViewField> displayColumns) {
 		if (viewId != null) {
 			CustomViewStoreService customViewStoreService = ApplicationContextUtil
 					.getSpringBean(CustomViewStoreService.class);
@@ -109,8 +107,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B>
 							.fromJson(viewLayoutDef.getViewinfo());
 					// @HACK: the problem in deserialize json cause the list of
 					// list
-					this.displayColumns = (List<TableViewField>) selectedColumns
-							.get(0);
+					this.displayColumns = (List<TableViewField>) selectedColumns.get(0);
 				} catch (Exception e) {
 					LOG.error("Error", e);
 					this.displayColumns = displayColumns;

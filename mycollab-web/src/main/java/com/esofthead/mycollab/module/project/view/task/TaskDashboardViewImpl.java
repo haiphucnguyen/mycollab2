@@ -87,9 +87,10 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
                 groupByState = (String) groupCombo.getValue();
+                queryAndDisplayTasks();
             }
         });
-        groupByState = GROUP_DUE_DATE;
+        groupByState = PLAIN_LIST;
         groupWrapLayout.addComponent(groupCombo);
 
         taskSearchPanel.addHeaderRight(groupWrapLayout);
@@ -143,11 +144,9 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         this.wrapBody = new CssLayout();
 
-        MVerticalLayout leftColumn = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false)).with(wrapBody);
-
         this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(new MarginInfo(true, false, false, false));
 
-        mainLayout.with(leftColumn, rightColumn).expand(leftColumn);
+        mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
 
         FloatingComponent floatSidebar = FloatingComponent.floatThis(this.rightColumn);
         floatSidebar.setContainerId("main-body");
