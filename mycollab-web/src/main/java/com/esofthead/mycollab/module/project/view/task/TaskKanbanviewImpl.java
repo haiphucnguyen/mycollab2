@@ -291,12 +291,12 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 extraInfoBtn.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                     @Override
                     public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
-                        NotificationUtil.showNotification("Debug", "Click");
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoRead(KanbanTaskBlockItem.this, task.getId()));
                     }
                 });
                 footer.with(extraInfoBtn).expand(extraInfoBtn).withAlign(extraInfoBtn, Alignment.TOP_LEFT);
                 Div footerDiv = new Div().setCSSClass(UIConstants.FOOTER_NOTE);
-                if (task.getNumComments() != null) {
+                if (task.getNumComments() != null && task.getNumComments() > 0) {
                     Text comment = new Text(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments());
                     footerDiv.appendChild(comment);
                 }

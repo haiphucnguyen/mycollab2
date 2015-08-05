@@ -152,7 +152,10 @@
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                  log_user.avatarId AS logByAvatarId,
                  concat(log_user.firstname, ' ', LTRIM(concat(IFNULL(log_user.middlename, ''), ' ')), log_user.lastname) AS logByFullName,
-                 parentTask.taskname AS parentTaskName, parentTask.taskkey AS parentTaskKey
+                 parentTask.taskname AS parentTaskName, parentTask.taskkey AS parentTaskKey,
+                 (SELECT count(*)
+                    FROM m_comment
+                    WHERE m_comment.type='Project-Task' AND m_comment.typeid=m_prj_task.id) AS numComments
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
               LEFT OUTER JOIN m_prj_milestone ON (m_prj_milestone.id = m_prj_task.milestoneId)
