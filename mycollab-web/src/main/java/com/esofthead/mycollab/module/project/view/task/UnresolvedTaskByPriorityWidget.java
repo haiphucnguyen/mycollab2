@@ -34,6 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
+import com.rits.cloning.Cloner;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
@@ -139,8 +140,10 @@ public class UnresolvedTaskByPriorityWidget extends Depot {
         @Override
         public void buttonClick(final ClickEvent event) {
             String key = ((ButtonI18nComp) event.getButton()).getKey();
-            searchCriteria.setPriorities(new SetSearchField<>(key));
-            EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, searchCriteria));
+            Cloner cloner = new Cloner();
+            TaskSearchCriteria criteria = cloner.deepClone(searchCriteria);
+            criteria.setPriorities(new SetSearchField<>(key));
+            EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, criteria));
         }
     }
 }

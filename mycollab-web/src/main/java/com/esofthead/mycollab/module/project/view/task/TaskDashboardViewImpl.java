@@ -17,13 +17,13 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -47,6 +47,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -75,10 +76,20 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
     private TaskSearchPanel taskSearchPanel;
     private CssLayout wrapBody;
-
     private VerticalLayout rightColumn;
-
     private MHorizontalLayout mainLayout;
+
+    private ApplicationEventListener<TaskEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<TaskEvent.SearchRequest>() {
+                @Override
+                @Subscribe
+                public void handle(TaskEvent.SearchRequest event) {
+                    TaskSearchCriteria criteria = (TaskSearchCriteria) event.getData();
+                    if (criteria != null) {
+                        queryTask(criteria);
+                    }
+                }
+            };
 
     public TaskDashboardViewImpl() {
         this.withMargin(new MarginInfo(false, true, true, true));
@@ -152,6 +163,18 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
         FloatingComponent floatSidebar = FloatingComponent.floatThis(this.rightColumn);
         floatSidebar.setContainerId("main-body");
+    }
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(searchHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(searchHandler);
+        super.detach();
     }
 
     private void constructUI() {

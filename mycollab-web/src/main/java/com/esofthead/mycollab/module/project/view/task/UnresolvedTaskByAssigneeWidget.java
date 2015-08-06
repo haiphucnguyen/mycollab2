@@ -34,6 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.google.common.eventbus.Subscribe;
+import com.rits.cloning.Cloner;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import org.apache.commons.lang3.StringUtils;
@@ -126,8 +127,10 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    searchCriteria.setAssignUser(new StringSearchField(assignee));
-                    EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, searchCriteria));
+                    Cloner cloner = new Cloner();
+                    TaskSearchCriteria criteria = cloner.deepClone(searchCriteria);
+                    criteria.setAssignUser(new StringSearchField(assignee));
+                    EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, criteria));
                 }
             });
 
