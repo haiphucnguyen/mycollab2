@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -179,16 +180,14 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     private void updateTasksInfo(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        if (ganttItemWrapper instanceof GanttItemWrapper) {
-            SimpleTask task = ((GanttItemWrapper) ganttItemWrapper).getTask();
-            GregorianCalendar calendar = new GregorianCalendar();
-            calendar.setTimeInMillis(startDate);
-            task.setStartdate(calendar.getTime());
+        SimpleTask task = ganttItemWrapper.getTask();
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(startDate);
+        task.setStartdate(calendar.getTime());
 
-            calendar.setTimeInMillis(endDate);
-            task.setEnddate(calendar.getTime());
-            taskService.updateSelectiveWithSession(task, AppContext.getUsername());
-        }
+        calendar.setTimeInMillis(endDate);
+        task.setEnddate(calendar.getTime());
+        taskService.updateSelectiveWithSession(task, AppContext.getUsername());
     }
 
     public void displayGanttChart() {
@@ -203,6 +202,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskTable.removeAllItems();
         TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        criteria.setHasParentTask(new BooleanSearchField());
         List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(criteria));
 
         if (!tasks.isEmpty()) {
@@ -387,7 +387,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         void addTaskList(GanttItemWrapper itemWrapper) {
             this.addItem(itemWrapper);
-
+            this.setColumnCollapsible(itemWrapper, itemWrapper.hasSubTasks());
         }
     }
 }

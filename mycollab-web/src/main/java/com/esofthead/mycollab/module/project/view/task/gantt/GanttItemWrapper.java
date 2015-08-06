@@ -53,6 +53,10 @@ public class GanttItemWrapper {
         return task;
     }
 
+    public boolean hasSubTasks() {
+        return (task.getNumSubTasks() != null && task.getNumSubTasks() > 0);
+    }
+
     public String getName() {
         return task.getTaskname();
     }

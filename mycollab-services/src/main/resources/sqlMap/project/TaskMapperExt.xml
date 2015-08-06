@@ -84,6 +84,10 @@
             ${searchCriteria.dueDate.comparison}
             @{searchCriteria.dueDate.value}
         #end
+
+        #ifnotnull($searchCriteria.hasParentTask)
+            ${searchCriteria.hasParentTask.operation} m_prj_task.parentTaskId IS NULL
+        #end
         
         #selectExpr($searchCriteria.extraFields)
         ]]>
@@ -134,6 +138,10 @@
         
         #ifnotnull($searchCriteria.milestoneId)
             ${searchCriteria.milestoneId.operation} m_prj_task.milestoneId=@{searchCriteria.milestoneId.value,jdbcType=NUMERIC}
+        #end
+
+        #ifnotnull($searchCriteria.hasParentTask)
+            ${searchCriteria.hasParentTask.operation} m_prj_task.parentTaskId IS NULL
         #end
         
         #totalCountExpr($searchCriteria.extraFields)

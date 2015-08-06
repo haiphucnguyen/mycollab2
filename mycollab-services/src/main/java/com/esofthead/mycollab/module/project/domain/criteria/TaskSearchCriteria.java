@@ -71,6 +71,7 @@ public class TaskSearchCriteria extends SearchCriteria {
     private StringSearchField assignUser;
     private SetSearchField<String> statuses;
     private SetSearchField<String> priorities;
+    private BooleanSearchField hasParentTask;
 
     public NumberSearchField getParentTaskId() {
         return parentTaskId;
@@ -143,5 +144,13 @@ public class TaskSearchCriteria extends SearchCriteria {
 
     public void setDueDate(DateSearchField dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public BooleanSearchField getHasParentTask() {
+        return hasParentTask;
+    }
+
+    public void setHasParentTask(BooleanSearchField hasParentTask) {
+        this.hasParentTask = hasParentTask;
     }
 }
