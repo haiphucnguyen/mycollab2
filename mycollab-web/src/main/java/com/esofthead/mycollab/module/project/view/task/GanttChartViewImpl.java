@@ -18,29 +18,24 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
-import com.esofthead.mycollab.module.project.view.task.gantt.*;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
+import com.esofthead.mycollab.module.project.view.task.gantt.StepExt;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UIUtils;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
@@ -49,6 +44,7 @@ import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
+import org.tltv.gantt.client.shared.Step;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
@@ -70,8 +66,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private NativeSelect chartResolution;
     private TaskHierarchyComp taskTable;
     private Button toogleMenuShowBtn;
-
-    private ProjectTaskListService taskListService;
     private ProjectTaskService taskService;
 
     public GanttChartViewImpl() {
@@ -113,8 +107,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         header.with(headerWrapper, toogleMenuShowBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
                 .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT)
                 .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
-
-        taskListService = ApplicationContextUtil.getSpringBean(ProjectTaskListService.class);
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
 
         HorizontalLayout ganttLayout = constructGanttChart();
@@ -187,8 +179,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     private void updateTasksInfo(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        if (ganttItemWrapper instanceof TaskGanttItemWrapper) {
-            SimpleTask task = ((TaskGanttItemWrapper) ganttItemWrapper).getTask();
+        if (ganttItemWrapper instanceof GanttItemWrapper) {
+            SimpleTask task = ((GanttItemWrapper) ganttItemWrapper).getTask();
             GregorianCalendar calendar = new GregorianCalendar();
             calendar.setTimeInMillis(startDate);
             task.setStartdate(calendar.getTime());
@@ -209,26 +201,31 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private void updateStepList() {
         gantt.removeSteps();
         taskTable.removeAllItems();
-        TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setStatus(new StringSearchField(OptionI18nEnum.StatusI18nEnum.Open.name()));
-        List<SimpleTaskList> taskList = taskListService.findPagableListByCriteria(new SearchRequest<>(criteria, 0, Integer.MAX_VALUE));
+        TaskSearchCriteria criteria = new TaskSearchCriteria();
+        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(criteria));
 
-        if (!taskList.isEmpty()) {
-            for (SimpleTaskList task : taskList) {
-                GanttItemWrapper itemWrapper = new TaskListGanttItemWrapper(task, gantt.getStartDate(), gantt.getEndDate());
+        if (!tasks.isEmpty()) {
+            for (SimpleTask task : tasks) {
+                GanttItemWrapper itemWrapper = new GanttItemWrapper(task, gantt.getStartDate(), gantt.getEndDate());
                 taskTable.addTaskList(itemWrapper);
-                gantt.addStep(itemWrapper.getStep());
+                Step step = itemWrapper.getStep();
+                gantt.addStep(step);
+                gantt.addClickListener(new Gantt.ClickListener() {
+                    @Override
+                    public void onGanttClick(Gantt.ClickEvent clickEvent) {
+                        NotificationUtil.showErrorNotification("Debug");
+                    }
+                });
                     /* Add style for row block */
-//                if (task.isCompleted()) {
-//                    step.setBackgroundColor("53C540");
-//                    step.setStyleName("completed");
-//                } else if (task.isPending()) {
-//                    step.setBackgroundColor("e2f852");
-//                } else if (task.isOverdue()) {
-//                    step.setBackgroundColor("FC4350");
-//                }
-//                stepMap.put(taskList, step);
+                if (task.isCompleted()) {
+                    step.setBackgroundColor("53C540");
+                    step.setStyleName("completed");
+                } else if (task.isPending()) {
+                    step.setBackgroundColor("e2f852");
+                } else if (task.isOverdue()) {
+                    step.setBackgroundColor("FC4350");
+                }
             }
         }
     }
@@ -390,6 +387,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         void addTaskList(GanttItemWrapper itemWrapper) {
             this.addItem(itemWrapper);
+
         }
     }
 }

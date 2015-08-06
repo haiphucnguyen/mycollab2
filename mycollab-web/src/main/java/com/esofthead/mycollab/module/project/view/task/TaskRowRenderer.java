@@ -97,7 +97,7 @@ class TaskRowRenderer  extends MHorizontalLayout {
         Div resultDiv = new DivLessFormatter().appendChild(priorityLink, DivLessFormatter.EMPTY_SPACE(),
                 avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
                 TooltipHelper.buildDivTooltipEnable(uid));
-        if (task.getPercentagecomplete() != null && task.getPercentagecomplete() > 0) {
+        if (task.getPercentagecomplete() > 0) {
             Div completeTxt = new Div().appendChild(new Text(String.format(" %s%%", task.getPercentagecomplete())))
                     .setStyle("display:inline").setCSSClass("footer2");
             resultDiv.appendChild(completeTxt);

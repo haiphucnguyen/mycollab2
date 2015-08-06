@@ -28,7 +28,6 @@ import org.tltv.gantt.client.shared.SubStep;
  * @since 5.0.8
  */
 public class GanttExt extends Gantt {
-
     public int getStepIndex(Step step) {
         StepComponent sc = this.stepComponents.get(step);
         return this.getState().steps.indexOf(sc);

@@ -24,10 +24,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectResources;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -280,6 +277,8 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
             });
             taskBtn.setIcon(new ExternalResource(ProjectResources.getIconResourceLink12ByTaskPriority(task.getPriority())));
+            taskBtn.setDescription(ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task,
+                    AppContext.getSiteUrl(), AppContext.getTimezone()));
             root.with(taskBtn);
 
             // Build footer
@@ -297,12 +296,13 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 footer.with(extraInfoBtn).expand(extraInfoBtn).withAlign(extraInfoBtn, Alignment.TOP_LEFT);
                 Div footerDiv = new Div().setCSSClass(UIConstants.FOOTER_NOTE);
                 if (task.getNumComments() != null && task.getNumComments() > 0) {
-                    Text comment = new Text(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments());
+                    Text comment = new Text(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments() + "    ");
                     footerDiv.appendChild(comment);
                 }
 
                 if (task.getDeadlineRoundPlusOne() != null) {
-                    Text dueDate = new Text(AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                    Text dueDate = new Text(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(task
+                            .getDeadlineRoundPlusOne()));
                     footerDiv.appendChild(dueDate);
                 }
 

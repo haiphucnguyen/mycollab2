@@ -16,8 +16,15 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import org.tltv.gantt.client.shared.Step;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,31 +32,87 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 5.0.8
  */
-public abstract class GanttItemWrapper {
-    Date minDate, maxDate;
-    GanttItemWrapper parent;
-    Step ownStep;
-    List<GanttItemWrapper> subItems;
+public class GanttItemWrapper {
+    private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+    private SimpleTask task;
+    private Date startDate, endDate;
+    private Date minDate, maxDate;
+    private GanttItemWrapper parent;
+    private Step ownStep;
+    private List<GanttItemWrapper> subItems;
 
-    GanttItemWrapper(Date minDate, Date maxDate) {
+    public GanttItemWrapper(SimpleTask task, Date minDate, Date maxDate) {
         this.minDate = minDate;
         this.maxDate = maxDate;
+        this.task = task;
+        calculateDates();
+        this.ownStep = generateStep();
     }
 
-    abstract public String getName();
+    public SimpleTask getTask() {
+        return task;
+    }
 
-    abstract public List<GanttItemWrapper> subTasks();
+    public String getName() {
+        return task.getTaskname();
+    }
 
-    abstract Date getStartDate();
+    public List<GanttItemWrapper> subTasks() {
+        List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId());
+        if (subItems == null) {
+            subItems = new ArrayList<>();
+            for (SimpleTask subTask : subTasks) {
+                GanttItemWrapper subItem = new GanttItemWrapper(subTask, minDate, maxDate);
+                subItem.setParent(this);
+                subItems.add(subItem);
+            }
+        }
 
-    abstract Date getEndDate();
+        return subItems;
+    }
 
-    abstract String buildCaption();
+    private void calculateDates() {
+        startDate = task.getStartdate();
+        endDate = task.getEnddate();
 
-    abstract String buildTooltip();
+        if (endDate == null) {
+            endDate = task.getDeadline();
+        }
 
-    public Step getStep() {
-        return ownStep;
+        if (startDate == null) {
+            if (endDate == null) {
+                startDate = DateTimeUtils.getCurrentDateWithoutMS();
+                endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
+            } else {
+                endDate = DateTimeUtils.trimHMSOfDate(endDate);
+                startDate = DateTimeUtils.subtractOrAddDayDuration(endDate, -1);
+            }
+        } else {
+            startDate = DateTimeUtils.trimHMSOfDate(startDate);
+            if (endDate == null) {
+                endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
+            } else {
+                endDate = DateTimeUtils.trimHMSOfDate(endDate);
+                endDate = DateTimeUtils.subtractOrAddDayDuration(endDate, 1);
+            }
+        }
+    }
+
+    Date getStartDate() {
+        return startDate;
+    }
+
+    Date getEndDate() {
+        return endDate;
+    }
+
+    String buildCaption() {
+        return task.getTaskname();
+    }
+
+    String buildTooltip() {
+        return ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, AppContext.getSiteUrl(),
+                AppContext.getTimezone());
     }
 
     StepExt generateStep() {
@@ -77,5 +140,9 @@ public abstract class GanttItemWrapper {
 
     public void setParent(GanttItemWrapper parent) {
         this.parent = parent;
+    }
+
+    public Step getStep() {
+        return ownStep;
     }
 }
