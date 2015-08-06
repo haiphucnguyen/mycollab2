@@ -9791,11 +9791,11 @@ div.v-button.token-field:hover {
 .tasklist {
 	margin-top: 10px;
 	border: solid #CFCFCF 1px;
-	min-height: 33px;
 	background-color: #FFF;
 }
 
 .tasklist .taskrow {
+	padding: 5px 5px 5px 10px;
 	border-style: solid;
 	border-color: #CFCFCF;
 	border-width: 0px 0px 1px 0px;

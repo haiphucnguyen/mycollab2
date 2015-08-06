@@ -33,6 +33,9 @@ public interface OptionValService extends ICrudService<Integer, OptionVal> {
     @Cacheable
     List<OptionVal> findOptionVals(String type, Integer projectId, @CacheKey Integer sAccountId);
 
+    @Cacheable
+    List<OptionVal> findOptionValsExcludeClosed(String type, Integer projectId, @CacheKey Integer sAccountId);
+
     @CacheEvict
     void massUpdateOptionIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
 }

@@ -1,1 +1,0 @@
-$wnd.com_esofthead_mycollab_widgetset_MyCollabWidgetSet.runAsyncCallback2('usb(1852,1,zKe);_.ie=function Lxc(){Ddc((!wdc&&(wdc=new Idc),wdc),this.a.d)};SCe(gp)(2);\n//# sourceURL=com.esofthead.mycollab.widgetset.MyCollabWidgetSet-2.js\n')

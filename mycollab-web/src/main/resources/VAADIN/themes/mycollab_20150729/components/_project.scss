@@ -631,10 +631,10 @@
   .tasklist {
     margin-top: 10px;
     border: solid $border-color 1px;
-    min-height:33px;
     background-color:#FFF;
 
     .taskrow {
+      padding: 5px 5px 5px 10px;
       border-style: solid;
       border-color: $border-color;
       border-width: 0px 0px 1px 0px;

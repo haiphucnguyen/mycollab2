@@ -38,13 +38,11 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.teemu.VaadinIcons;
 
 import java.util.UUID;
 
@@ -52,7 +50,7 @@ import java.util.UUID;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-class TaskRowRenderer  extends MHorizontalLayout {
+class TaskRowRenderer extends MHorizontalLayout {
     private Label taskLinkLbl;
     private SimpleTask task;
 
@@ -60,11 +58,13 @@ class TaskRowRenderer  extends MHorizontalLayout {
 
     TaskRowRenderer(SimpleTask task) {
         this.task = task;
-        withSpacing(false).withMargin(true).withWidth("100%").addStyleName("taskrow");
+        withSpacing(false).withMargin(false).withWidth("100%").addStyleName("taskrow");
         this.with(createTaskActionControl());
 
+        VerticalLayout wrapTaskInfoLayout = new VerticalLayout();
+        wrapTaskInfoLayout.setSpacing(true);
         taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
-        this.with(taskLinkLbl).expand(taskLinkLbl);
+
         if (task.isCompleted()) {
             taskLinkLbl.addStyleName("completed");
             taskLinkLbl.removeStyleName("overdue pending");
@@ -76,6 +76,39 @@ class TaskRowRenderer  extends MHorizontalLayout {
             taskLinkLbl.removeStyleName("completed overdue");
         }
         taskLinkLbl.addStyleName("wordWrap");
+        wrapTaskInfoLayout.addComponent(taskLinkLbl);
+
+        Div resultDiv = new Div().setStyle("display:flex").setCSSClass("footer2");
+        if (task.getNumComments() != null && task.getNumComments() > 0) {
+            Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments()
+                    + "    ").setTitle("Comment");
+            resultDiv.appendChild(comment).appendChild(DivLessFormatter.EMPTY_SPACE());
+        }
+        if (task.getStatus() != null) {
+            Div statusDiv = new Div().appendText(FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus()).setTitle
+                    (AppContext.getMessage(TaskI18nEnum.FORM_STATUS));
+            resultDiv.appendChild(statusDiv).appendChild(DivLessFormatter.EMPTY_SPACE());
+        }
+        if (task.getPercentagecomplete() > 0) {
+            Div completeTxt = new Div().appendText(VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%",
+                    task.getPercentagecomplete())).setTitle(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE));
+            resultDiv.appendChild(completeTxt).appendChild(DivLessFormatter.EMPTY_SPACE());
+        }
+
+        if (task.getDeadline() != null) {
+            String deadlineTooltip = String.format("%s: %s", AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
+                    AppContext.formatDate(task.getDeadline()));
+            Div deadlineDiv = new Div().appendChild(new Text(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
+                    AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne())))).setTitle(deadlineTooltip);
+
+            resultDiv.appendChild(deadlineDiv).appendChild(DivLessFormatter.EMPTY_SPACE());
+        }
+
+        if (resultDiv.getChildren().size() > 0) {
+            Label footer = new Label(resultDiv.write(), ContentMode.HTML);
+            wrapTaskInfoLayout.addComponent(footer);
+        }
+        this.with(wrapTaskInfoLayout).expand(wrapTaskInfoLayout);
     }
 
     private String buildTaskLink() {
@@ -97,19 +130,6 @@ class TaskRowRenderer  extends MHorizontalLayout {
         Div resultDiv = new DivLessFormatter().appendChild(priorityLink, DivLessFormatter.EMPTY_SPACE(),
                 avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
                 TooltipHelper.buildDivTooltipEnable(uid));
-        if (task.getPercentagecomplete() > 0) {
-            Div completeTxt = new Div().appendChild(new Text(String.format(" %s%%", task.getPercentagecomplete())))
-                    .setStyle("display:inline").setCSSClass("footer2");
-            resultDiv.appendChild(completeTxt);
-        }
-
-        if (task.getDeadline() != null) {
-            Div deadlineDiv = new Div().appendChild(new Text(String.format(" - %s: %s", AppContext.getMessage
-                    (TaskI18nEnum.FORM_DEADLINE), AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()))))
-                    .setStyle("display:inline").setCSSClass("footer2").setTitle(AppContext.formatDate(task.getDeadline()));
-
-            resultDiv.appendChild(deadlineDiv);
-        }
         return resultDiv.write();
     }
 
@@ -179,6 +199,7 @@ class TaskRowRenderer  extends MHorizontalLayout {
                     projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
                     taskSettingPopupBtn.setPopupVisible(false);
                     closeTask();
+                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
                 }
             });
             closeBtn.setIcon(FontAwesome.CHECK_CIRCLE_O);
@@ -197,6 +218,7 @@ class TaskRowRenderer  extends MHorizontalLayout {
                     ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                     projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
                     reOpenTask();
+                    EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
                 }
             });
             reOpenBtn.setIcon(FontAwesome.UNLOCK);
@@ -218,6 +240,7 @@ class TaskRowRenderer  extends MHorizontalLayout {
                         ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                         projectTaskService.updateSelectiveWithSession(task, AppContext.getUsername());
                         pendingTask();
+                        EventBusFactory.getInstance().post(new TaskEvent.HasTaskChange(TaskRowRenderer.this, null));
                     }
                 });
                 pendingBtn.setIcon(FontAwesome.HDD_O);

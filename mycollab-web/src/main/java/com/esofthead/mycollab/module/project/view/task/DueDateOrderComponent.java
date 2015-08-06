@@ -68,6 +68,8 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
     private static class GroupComponent extends VerticalLayout {
         private CssLayout wrapBody;
         private Label headerLbl;
+        private String durationLbl;
+        private int numElements = 0;
 
         GroupComponent(DateTime startDate) {
             initComponent();
@@ -75,12 +77,19 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
             DateTimeFormatter fomatter = DateTimeFormat.forPattern("E, dd MMM yyyy");
             String monDayStr = fomatter.print(startDate);
             String sundayStr = fomatter.print(maxValue);
+            durationLbl = String.format("%s - %s", monDayStr, sundayStr);
             headerLbl.setValue(String.format("%s - %s", monDayStr, sundayStr));
+            updateHeader();
         }
 
         GroupComponent() {
             initComponent();
-            headerLbl.setValue("Unscheduled");
+            durationLbl = "Unscheduled";
+            updateHeader();
+        }
+
+        private void updateHeader() {
+            headerLbl.setValue(String.format("%s (%d)", durationLbl, numElements));
         }
 
         private void initComponent() {
@@ -95,6 +104,8 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
 
         void insertTask(SimpleTask task) {
             wrapBody.addComponent(new TaskRowRenderer(task));
+            numElements++;
+            updateHeader();
         }
     }
 }

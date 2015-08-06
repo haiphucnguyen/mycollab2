@@ -19,8 +19,10 @@ package com.esofthead.mycollab.common.service.ibatis;
 import com.esofthead.mycollab.common.dao.OptionValMapper;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.OptionValExample;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +57,17 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     public List<OptionVal> findOptionVals(String type, Integer projectId, Integer sAccountId) {
         OptionValExample ex = new OptionValExample();
         ex.createCriteria().andTypeEqualTo(type).andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId);
+        ex.setOrderByClause("orderIndex ASC");
+        ex.setDistinct(true);
+
+        return optionValMapper.selectByExampleWithBLOBs(ex);
+    }
+
+    @Override
+    public List<OptionVal> findOptionValsExcludeClosed(String type, Integer projectId, @CacheKey Integer sAccountId) {
+        OptionValExample ex = new OptionValExample();
+        ex.createCriteria().andTypeEqualTo(type).andTypevalNotEqualTo(OptionI18nEnum.StatusI18nEnum.Closed.name())
+                .andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId);
         ex.setOrderByClause("orderIndex ASC");
         ex.setDistinct(true);
 

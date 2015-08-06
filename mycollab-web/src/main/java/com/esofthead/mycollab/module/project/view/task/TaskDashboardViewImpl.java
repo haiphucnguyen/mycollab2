@@ -16,7 +16,9 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -25,6 +27,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -68,6 +71,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     static final String PLAIN_LIST = "Plain";
 
     private String groupByState;
+    private TaskSearchCriteria baseCriteria;
 
     private TaskSearchPanel taskSearchPanel;
     private CssLayout wrapBody;
@@ -157,6 +161,17 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     @Override
     protected void displayView() {
         constructUI();
+        baseCriteria = new TaskSearchCriteria();
+        baseCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
+        List<OptionVal> options = optionValService.findOptionValsExcludeClosed(ProjectTypeConstants.TASK,
+                CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+
+        SetSearchField<String> statuses = new SetSearchField<>();
+        for (OptionVal option : options) {
+            statuses.addValue(option.getTypeval());
+        }
+        baseCriteria.setStatuses(statuses);
         queryAndDisplayTasks();
         displayTaskStatistic();
     }
@@ -166,14 +181,11 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
         rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
 
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setStatuses(new SetSearchField<>(StatusI18nEnum.Open.name()));
-        unresolvedTaskByAssigneeWidget.setSearchCriteria(searchCriteria);
+        unresolvedTaskByAssigneeWidget.setSearchCriteria(baseCriteria);
 
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
         rightColumn.addComponent(unresolvedTaskByPriorityWidget);
-        unresolvedTaskByPriorityWidget.setSearchCriteria(searchCriteria);
+        unresolvedTaskByPriorityWidget.setSearchCriteria(baseCriteria);
     }
 
     @Override
@@ -199,9 +211,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     private void queryAndDisplayTasks() {
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        queryTask(searchCriteria);
+        queryTask(baseCriteria);
     }
 
     private void displayGanttChartView() {

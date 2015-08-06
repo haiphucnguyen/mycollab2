@@ -20,14 +20,17 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.OptionValService;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
@@ -36,10 +39,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Text;
-import com.vaadin.event.LayoutEvents;
+import com.hp.gagawa.java.elements.Img;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -217,32 +222,26 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
                 UI.getCurrent().push();
 
-                int countForPush = 0;
-
                 TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
                 searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
-                final List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+                int totalTasks = taskService.getTotalCount(searchCriteria);
+                int pages = totalTasks / 20;
+                for (int page = 0; page < pages + 1; page++) {
+                    List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
 
-                for (SimpleTask task : tasks) {
-                    String status = task.getStatus();
-                    KanbanBlock kanbanBlock = kanbanBlocks.get(status);
-                    if (kanbanBlock == null) {
-                        LOG.error("Can not find a kanban block for status: " + status);
-                    } else {
-                        kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
-                        countForPush++;
+                    for (SimpleTask task : tasks) {
+                        String status = task.getStatus();
+                        KanbanBlock kanbanBlock = kanbanBlocks.get(status);
+                        if (kanbanBlock == null) {
+                            LOG.error("Can not find a kanban block for status: " + status);
+                        } else {
+                            kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                        }
                     }
-
-                    if (countForPush == 10) {
-                        countForPush = 0;
-                        UI.getCurrent().push();
-                    }
-                }
-
-                if (countForPush > 0) {
                     UI.getCurrent().push();
                 }
+
             }
         });
     }
@@ -281,39 +280,31 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     AppContext.getSiteUrl(), AppContext.getTimezone()));
             root.with(taskBtn);
 
+            Div footerDiv = new Div().setStyle("display:flex").setCSSClass("footer2");
+
             // Build footer
-            if (task.getNumComments() != null || task.getDeadline() != null || task.getAssignuser() != null) {
-                MHorizontalLayout footer = new MHorizontalLayout().withWidth("100%");
+            if (task.getNumComments() != null && task.getNumComments() > 0) {
+                Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments()).setTitle("Comment");
+                footerDiv.appendChild(comment).appendChild(DivLessFormatter.EMPTY_SPACE());
+            }
 
-                CssLayout extraInfoBtn = new CssLayout();
-                extraInfoBtn.setCaptionAsHtml(true);
-                extraInfoBtn.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                    @Override
-                    public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
-                        EventBusFactory.getInstance().post(new TaskEvent.GotoRead(KanbanTaskBlockItem.this, task.getId()));
-                    }
-                });
-                footer.with(extraInfoBtn).expand(extraInfoBtn).withAlign(extraInfoBtn, Alignment.TOP_LEFT);
-                Div footerDiv = new Div().setCSSClass(UIConstants.FOOTER_NOTE);
-                if (task.getNumComments() != null && task.getNumComments() > 0) {
-                    Text comment = new Text(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments() + "    ");
-                    footerDiv.appendChild(comment);
-                }
+            if (task.getDeadlineRoundPlusOne() != null) {
+                String deadline = String.format("%s: %s", AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
+                        AppContext.formatDate(task.getDeadlineRoundPlusOne()));
+                Div deadlineDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(task
+                        .getDeadlineRoundPlusOne())).setTitle(deadline);
+                footerDiv.appendChild(deadlineDiv).appendChild(DivLessFormatter.EMPTY_SPACE());
+            }
 
-                if (task.getDeadlineRoundPlusOne() != null) {
-                    Text dueDate = new Text(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(task
-                            .getDeadlineRoundPlusOne()));
-                    footerDiv.appendChild(dueDate);
-                }
+            if (task.getAssignuser() != null) {
+                Img userAvatar = new Img("", Storage.getAvatarPath(task.getAssignUserAvatarId(), 16))
+                        .setTitle(task.getAssignUserFullName());
+                footerDiv.appendChild(userAvatar);
+            }
 
-                extraInfoBtn.addComponent(new Label(footerDiv.write(), ContentMode.HTML));
-
-                if (task.getAssignuser() != null) {
-                    Button image = UserAvatarControlFactory.createUserAvatarEmbeddedButton(task.getAssignUserAvatarId(), 16);
-                    image.setDescription(task.getAssignUserFullName());
-                    footer.with(image).withAlign(image, Alignment.TOP_RIGHT);
-                }
-                root.with(footer);
+            if (footerDiv.getChildren().size() > 0) {
+                Label footer = new Label(footerDiv.write(), ContentMode.HTML);
+                root.addComponent(footer);
             }
         }
     }
@@ -465,6 +456,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                             dragLayoutContainer.removeComponent(layout);
                             KanbanTaskBlockItem kanbanTaskBlockItem = new KanbanTaskBlockItem(task);
                             dragLayoutContainer.addComponent(kanbanTaskBlockItem, 0);
+                            updateComponentCount();
                         }
                     }
                 });

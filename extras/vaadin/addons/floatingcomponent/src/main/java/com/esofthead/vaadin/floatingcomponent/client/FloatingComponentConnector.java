@@ -19,8 +19,6 @@ import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.AbstractExtensionConnector;
 import com.vaadin.shared.ui.Connect;
 
-import java.util.logging.Logger;
-
 /**
  * @author MyCollab Ltd.
  */
@@ -40,8 +38,6 @@ public class FloatingComponentConnector extends AbstractExtensionConnector imple
     private Widget targetWidget;
 
     private Style currentStyle;
-
-    public static Logger log = Logger.getLogger(FloatingComponentConnector.class.getName());
 
     @Override
     protected void extend(ServerConnector target) {

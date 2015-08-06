@@ -18,6 +18,10 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.JavaScript;
+import com.vaadin.ui.JavaScriptFunction;
+import com.vaadin.ui.Notification;
+import elemental.json.JsonArray;
 
 import java.util.List;
 
@@ -27,4 +31,20 @@ import java.util.List;
  */
 abstract class TaskGroupOrderComponent extends CssLayout {
     abstract void insertTasks(List<SimpleTask> tasks);
+
+    @Override
+    public void attach() {
+        JavaScript.getCurrent().addFunction("loadMoreTasks",
+                new JavaScriptFunction() {
+                    @Override
+                    public void call(JsonArray arguments) {
+                        Notification.show("Received call");
+                    }
+                });
+    }
+
+    @Override
+    public void detach() {
+        JavaScript.getCurrent().removeFunction("loadMoreTasks");
+    }
 }
