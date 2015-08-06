@@ -30,12 +30,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -78,34 +78,35 @@ class TaskRowRenderer extends MHorizontalLayout {
         taskLinkLbl.addStyleName("wordWrap");
         wrapTaskInfoLayout.addComponent(taskLinkLbl);
 
-        Div resultDiv = new Div().setStyle("display:flex").setCSSClass("footer2");
+        HorizontalLayout footer = new HorizontalLayout();
+        footer.setSpacing(true);
+        footer.addStyleName(UIConstants.FOOTER_NOTE);
         if (task.getNumComments() != null && task.getNumComments() > 0) {
-            Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments()
-                    + "    ").setTitle("Comment");
-            resultDiv.appendChild(comment).appendChild(DivLessFormatter.EMPTY_SPACE());
+            Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments()).setTitle("Comment");
+            footer.addComponent(new ELabel(comment.write(), ContentMode.HTML).withDescription("Comment"));
         }
         if (task.getStatus() != null) {
-            Div statusDiv = new Div().appendText(FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus()).setTitle
-                    (AppContext.getMessage(TaskI18nEnum.FORM_STATUS));
-            resultDiv.appendChild(statusDiv).appendChild(DivLessFormatter.EMPTY_SPACE());
+            Label statusBtn = new Label(FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus(), ContentMode.HTML);
+            statusBtn.setDescription(AppContext.getMessage(TaskI18nEnum.FORM_STATUS));
+            footer.addComponent(statusBtn);
         }
         if (task.getPercentagecomplete() > 0) {
-            Div completeTxt = new Div().appendText(VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%",
-                    task.getPercentagecomplete())).setTitle(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE));
-            resultDiv.appendChild(completeTxt).appendChild(DivLessFormatter.EMPTY_SPACE());
+            Label percentBtn = new Label(VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%",
+                    task.getPercentagecomplete()), ContentMode.HTML);
+            percentBtn.setDescription(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE));
+            footer.addComponent(percentBtn);
         }
 
         if (task.getDeadline() != null) {
             String deadlineTooltip = String.format("%s: %s", AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
                     AppContext.formatDate(task.getDeadline()));
-            Div deadlineDiv = new Div().appendChild(new Text(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
-                    AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne())))).setTitle(deadlineTooltip);
-
-            resultDiv.appendChild(deadlineDiv).appendChild(DivLessFormatter.EMPTY_SPACE());
+            Label deadlineBtn = new Label(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
+                    AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne())), ContentMode.HTML);
+            deadlineBtn.setDescription(deadlineTooltip);
+            footer.addComponent(deadlineBtn);
         }
 
-        if (resultDiv.getChildren().size() > 0) {
-            Label footer = new Label(resultDiv.write(), ContentMode.HTML);
+        if (footer.getComponentCount() > 0) {
             wrapTaskInfoLayout.addComponent(footer);
         }
         this.with(wrapTaskInfoLayout).expand(wrapTaskInfoLayout);

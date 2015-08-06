@@ -75,7 +75,7 @@ public class DesktopApplication extends MyCollabUI {
 
     @Override
     protected void init(VaadinRequest request) {
-        JavaScript.getCurrent().execute("$(\".v-ui\").scroll(function() { loadMoreTasks(); });");
+        JavaScript.getCurrent().execute("$(\".v-ui\").scroll(function() { alert('Hello') });");
         GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
 

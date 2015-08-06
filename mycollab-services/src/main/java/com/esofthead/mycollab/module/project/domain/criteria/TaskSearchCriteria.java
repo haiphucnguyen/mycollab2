@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.domain.criteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.NumberParam;
 import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -58,6 +59,8 @@ public class TaskSearchCriteria extends SearchCriteria {
 
     public static final Param p_enddate = new DateParam("task-enddate",
             TaskI18nEnum.FORM_END_DATE, "m_prj_task", "enddate");
+
+    public static final Param p_taskkey = new NumberParam("task-key", TaskI18nEnum.FORM_TASK_KEY, "m_prj_task", "taskkey");
 
     public static final Param p_actualenddate = new DateParam("task-actualenddate",
             TaskI18nEnum.FORM_ACTUAL_END_DATE, "m_prj_task", "actualEndDate");
