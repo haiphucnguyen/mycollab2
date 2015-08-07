@@ -72,7 +72,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                DynamicQueryParamLayout.this.callSearchAction();
+                callSearchAction();
             }
         });
         searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

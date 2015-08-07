@@ -65,7 +65,7 @@
 					<span style="display: inline-block; vertical-align: top; margin-top: 10px;">Connect with us:&nbsp;</span>
 					<a href="${defaultUrls.facebook_url}"><img src="${defaultUrls.cdn_url}icons/email/footer-facebook.png" height="20" width="20"></a>
 					<a href="${defaultUrls.google_url}"><img src="${defaultUrls.cdn_url}icons/email/footer-google.png" height="20" width="20"></a>
-					<a href="${defaultUrls.twitter_url}"><img src="${defaultUrls.cdn_url}twitter_social_icon.png" height="25" width="25"></a>
+					<a href="${defaultUrls.twitter_url}"><img src="${defaultUrls.cdn_url}icons/email/footer_twitter.png" height="20" width="20"></a>
 				</div>
 			</td>
 		</tr>
