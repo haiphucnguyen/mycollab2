@@ -58,7 +58,7 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
             } else {
                 if (unspecifiedTasks == null) {
                     unspecifiedTasks = new GroupComponent();
-                    addComponent(unspecifiedTasks, 0);
+                    addComponent(unspecifiedTasks);
                 }
                 unspecifiedTasks.insertTask(task);
             }

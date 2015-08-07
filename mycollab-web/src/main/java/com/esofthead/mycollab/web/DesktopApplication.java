@@ -47,7 +47,6 @@ import com.vaadin.server.Page.UriFragmentChangedEvent;
 import com.vaadin.server.Page.UriFragmentChangedListener;
 import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.JavaScript;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import org.slf4j.Logger;
@@ -75,7 +74,6 @@ public class DesktopApplication extends MyCollabUI {
 
     @Override
     protected void init(VaadinRequest request) {
-        JavaScript.getCurrent().execute("$(\".v-ui\").scroll(function() { alert('Hello') });");
         GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
 

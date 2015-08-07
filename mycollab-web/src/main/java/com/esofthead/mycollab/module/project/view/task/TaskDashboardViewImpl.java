@@ -67,11 +67,17 @@ import java.util.List;
 public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
 
+    static final String DESCENDING = "Descending";
+    static final String ASCENDING = "Ascending";
+
     static final String GROUP_DUE_DATE = "Due Date";
     static final String GROUP_START_DATE = "Start Date";
     static final String PLAIN_LIST = "Plain";
 
+    private int currentPage = 0;
+
     private String groupByState;
+    private String sortDirection;
     private TaskSearchCriteria baseCriteria;
 
     private TaskSearchPanel taskSearchPanel;
@@ -95,6 +101,23 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         this.withMargin(new MarginInfo(false, true, true, true));
         taskSearchPanel = new TaskSearchPanel();
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
+        groupWrapLayout.addComponent(new Label("Sort:"));
+        final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
+        sortCombo.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                String sortValue = (String) sortCombo.getValue();
+                if (ASCENDING.equals(sortValue)) {
+                    sortDirection = SearchCriteria.ASC;
+                } else {
+                    sortDirection = SearchCriteria.DESC;
+                }
+                queryAndDisplayTasks();
+            }
+        });
+        sortDirection = SearchCriteria.DESC;
+        groupWrapLayout.addComponent(sortCombo);
+
         groupWrapLayout.addComponent(new Label("Group by:"));
         final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
@@ -212,24 +235,47 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     @Override
-    public void queryTask(TaskSearchCriteria searchCriteria) {
+    public void queryTask(final TaskSearchCriteria searchCriteria) {
+        baseCriteria = searchCriteria;
         wrapBody.removeAllComponents();
-        TaskGroupOrderComponent taskGroupOrderComponent;
+        final TaskGroupOrderComponent taskGroupOrderComponent;
         if (GROUP_DUE_DATE.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", sortDirection)));
             taskGroupOrderComponent = new DueDateOrderComponent();
         } else if (GROUP_START_DATE.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate", sortDirection)));
             taskGroupOrderComponent = new StartDateOrderComponent();
         } else if (PLAIN_LIST.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastupdatedtime", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastupdatedtime", sortDirection)));
             taskGroupOrderComponent = new SimpleListOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);
         }
         wrapBody.addComponent(taskGroupOrderComponent);
-        ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        List tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+        final ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        int totalTasks = projectTaskService.getTotalCount(searchCriteria);
+        currentPage = 0;
+        int pages = totalTasks / 20;
+        if (currentPage < pages) {
+            Button moreBtn = new Button("More", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent clickEvent) {
+                    int totalTasks = projectTaskService.getTotalCount(searchCriteria);
+                    int pages = totalTasks / 20;
+                    currentPage++;
+                    List<SimpleTask> otherTasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>
+                            (searchCriteria, currentPage + 1, 20));
+                    taskGroupOrderComponent.insertTasks(otherTasks);
+                    if (currentPage == pages) {
+                        wrapBody.removeComponent(wrapBody.getComponent(1));
+                    }
+                }
+            });
+            moreBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+            wrapBody.addComponent(moreBtn);
+        }
+        List<SimpleTask> tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria,
+                currentPage + 1, 20));
         taskGroupOrderComponent.insertTasks(tasks);
     }
 
