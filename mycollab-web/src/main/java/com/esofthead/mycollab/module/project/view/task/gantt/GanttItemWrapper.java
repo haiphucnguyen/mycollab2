@@ -36,14 +36,11 @@ public class GanttItemWrapper {
     private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private SimpleTask task;
     private Date startDate, endDate;
-    private Date minDate, maxDate;
     private GanttItemWrapper parent;
     private Step ownStep;
     private List<GanttItemWrapper> subItems;
 
-    public GanttItemWrapper(SimpleTask task, Date minDate, Date maxDate) {
-        this.minDate = minDate;
-        this.maxDate = maxDate;
+    public GanttItemWrapper(SimpleTask task) {
         this.task = task;
         calculateDates();
         this.ownStep = generateStep();
@@ -66,7 +63,7 @@ public class GanttItemWrapper {
         if (subItems == null) {
             subItems = new ArrayList<>();
             for (SimpleTask subTask : subTasks) {
-                GanttItemWrapper subItem = new GanttItemWrapper(subTask, minDate, maxDate);
+                GanttItemWrapper subItem = new GanttItemWrapper(subTask);
                 subItem.setParent(this);
                 subItems.add(subItem);
             }
@@ -102,12 +99,16 @@ public class GanttItemWrapper {
         }
     }
 
-    Date getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    Date getEndDate() {
+    public Date getEndDate() {
         return endDate;
+    }
+
+    public String getAssignUser() {
+        return task.getAssignuser();
     }
 
     String buildCaption() {
@@ -120,14 +121,6 @@ public class GanttItemWrapper {
     }
 
     StepExt generateStep() {
-        Date startDate = this.getStartDate();
-        if (startDate.before(minDate)) {
-            startDate = minDate;
-        }
-        Date endDate = this.getEndDate();
-        if (endDate.after(maxDate)) {
-            endDate = maxDate;
-        }
         StepExt step = new StepExt();
         step.setCaption(buildCaption());
         step.setCaptionMode(Step.CaptionMode.HTML);

@@ -670,9 +670,7 @@
     }
   }
 
-  div .gantt .bar {
-    height: 31px;
-  }
+
 
   /* Task Group */
 
@@ -744,6 +742,36 @@
     }
     .task-list .v-csslayout-comp-header {
       padding: 5px;
+    }
+  }
+
+  .gantt_tree {
+    .v-treetable-node-open {
+      background: none;
+      &::before {
+        content:"\f147";
+        color:black;
+        font-family: FontAwesome;
+      }
+    }
+    .v-treetable-node-closed {
+      background: none;
+      &::before {
+        content:"\f196";
+        color:black;
+        font-family: FontAwesome;
+      }
+    }
+    .v-table-column-selector {height: 0px; width: 0px;}
+    .v-table-table tr td.v-table-cell-content {
+      height: 30px;
+      .v-label {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .v-table-table tr:first-child td.v-table-cell-content {
+      height: 31px;
     }
   }
 }

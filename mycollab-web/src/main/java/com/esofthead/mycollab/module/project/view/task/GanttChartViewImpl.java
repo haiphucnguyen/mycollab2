@@ -25,8 +25,9 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
@@ -36,22 +37,20 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
-import com.vaadin.data.Property;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.Step;
-import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.util.Calendar;
-import java.util.*;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -64,15 +63,16 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private boolean projectNavigatorVisibility = false;
 
     private GanttExt gantt;
-    private NativeSelect chartResolution;
     private TaskHierarchyComp taskTable;
     private Button toogleMenuShowBtn;
     private ProjectTaskService taskService;
 
+    private GregorianCalendar minDate;
+    private GregorianCalendar maxDate;
+
     public GanttChartViewImpl() {
-        this.setStyleName("gantt-view");
         this.setSizeFull();
-        this.withMargin(new MarginInfo(false, true, true, true));
+        this.withMargin(true);
 
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
@@ -111,11 +111,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
 
         HorizontalLayout ganttLayout = constructGanttChart();
-
-        MVerticalLayout wrapContent = new MVerticalLayout().withSpacing(false).withMargin(false)
-                .with(createControls(), ganttLayout).expand(ganttLayout);
-        wrapContent.addStyleName("gantt-view");
-        this.with(header, wrapContent).expand(wrapContent);
+        this.with(header, ganttLayout).expand(ganttLayout);
     }
 
     @Override
@@ -135,26 +131,13 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         MHorizontalLayout mainLayout = new MHorizontalLayout().withSpacing(false).withWidth("100%");
 
         taskTable = new TaskHierarchyComp();
-        taskTable.setWidth("300px");
+        taskTable.setWidth("800px");
 
         gantt = new GanttExt();
-        gantt.setSizeFull();
+        gantt.setHeight("500px");
         gantt.setResizableSteps(true);
         gantt.setMovableSteps(true);
         gantt.setVerticalScrollDelegateTarget(taskTable);
-
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 1);
-        cal.add(Calendar.DATE, -14);
-
-        gantt.setStartDate(cal.getTime());
-        cal.add(Calendar.DATE, 28);
-        cal.set(Calendar.HOUR_OF_DAY, 23);
-        cal.set(Calendar.MINUTE, 59);
-        cal.set(Calendar.SECOND, 59);
-        gantt.setEndDate(cal.getTime());
 
         gantt.addMoveListener(new Gantt.MoveListener() {
             private static final long serialVersionUID = 1L;
@@ -199,6 +182,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     @SuppressWarnings("unchecked")
     private void updateStepList() {
         gantt.removeSteps();
+        minDate = new GregorianCalendar();
+        maxDate = new GregorianCalendar();
         taskTable.removeAllItems();
         TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
@@ -206,133 +191,41 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(criteria));
 
         if (!tasks.isEmpty()) {
-            for (SimpleTask task : tasks) {
-                GanttItemWrapper itemWrapper = new GanttItemWrapper(task, gantt.getStartDate(), gantt.getEndDate());
-                taskTable.addTaskList(itemWrapper);
+            for (final SimpleTask task : tasks) {
+                GanttItemWrapper itemWrapper = new GanttItemWrapper(task);
+                taskTable.addTask(itemWrapper);
                 Step step = itemWrapper.getStep();
                 gantt.addStep(step);
                 gantt.addClickListener(new Gantt.ClickListener() {
                     @Override
                     public void onGanttClick(Gantt.ClickEvent clickEvent) {
-                        NotificationUtil.showErrorNotification("Debug");
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttChartViewImpl.this, task.getId()));
                     }
                 });
                     /* Add style for row block */
                 if (task.isCompleted()) {
-                    step.setBackgroundColor("53C540");
-                    step.setStyleName("completed");
+//                    step.setBackgroundColor("53C540");
+//                    step.setStyleName("completed");
                 } else if (task.isPending()) {
-                    step.setBackgroundColor("e2f852");
+//                    step.setBackgroundColor("e2f852");
                 } else if (task.isOverdue()) {
-                    step.setBackgroundColor("FC4350");
+//                    step.setBackgroundColor("FC4350");
+                }
+
+                if (minDate.getTimeInMillis() > itemWrapper.getStartDate().getTime()) {
+                    minDate.setTimeInMillis(itemWrapper.getStartDate().getTime());
+                }
+
+                if (maxDate.getTimeInMillis() < itemWrapper.getEndDate().getTime()) {
+                    maxDate.setTimeInMillis(itemWrapper.getEndDate().getTime());
                 }
             }
-        }
-    }
 
-    private Panel createControls() {
-        Panel panel = new Panel();
-        panel.setWidth(100, Unit.PERCENTAGE);
+            minDate.add(Calendar.DATE, -14);
+            gantt.setStartDate(minDate.getTime());
 
-        MHorizontalLayout controls = new MHorizontalLayout().withMargin(true);
-        panel.setContent(controls);
-
-        DateFieldExt start = new DateFieldExt(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
-        start.setValue(gantt.getStartDate());
-        start.setResolution(Resolution.DAY);
-        start.setImmediate(true);
-        start.addValueChangeListener(startDateValueChangeListener);
-
-        DateField end = new DateFieldExt(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
-        end.setValue(gantt.getEndDate());
-        end.setResolution(Resolution.DAY);
-        end.setImmediate(true);
-        end.addValueChangeListener(endDateValueChangeListener);
-
-        chartResolution = new NativeSelect("Resolution");
-        chartResolution.setNullSelectionAllowed(false);
-        chartResolution.addItem(org.tltv.gantt.client.shared.Resolution.Day);
-        chartResolution.addItem(org.tltv.gantt.client.shared.Resolution.Week);
-        chartResolution.setValue(gantt.getResolution());
-        chartResolution.setImmediate(true);
-        chartResolution.addValueChangeListener(resolutionValueChangeListener);
-
-        controls.with(start, end, chartResolution);
-        panel.setStyleName(UIConstants.THEME_NO_BORDER);
-
-        return panel;
-    }
-
-    private Property.ValueChangeListener startDateValueChangeListener = new Property.ValueChangeListener() {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void valueChange(Property.ValueChangeEvent event) {
-            gantt.setStartDate((Date) event.getProperty().getValue());
-            updateStepList();
-        }
-    };
-
-    private Property.ValueChangeListener endDateValueChangeListener = new Property.ValueChangeListener() {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void valueChange(Property.ValueChangeEvent event) {
-            gantt.setEndDate((Date) event.getProperty().getValue());
-            updateStepList();
-        }
-    };
-
-    private Property.ValueChangeListener resolutionValueChangeListener = new Property.ValueChangeListener() {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void valueChange(Property.ValueChangeEvent event) {
-            org.tltv.gantt.client.shared.Resolution res = (org.tltv.gantt.client.shared.Resolution) event.getProperty().getValue();
-            if (validateResolutionChange(res)) {
-                gantt.setResolution(res);
-            }
-        }
-    };
-
-    private boolean validateResolutionChange(final org.tltv.gantt.client.shared.Resolution res) {
-        long max = 4 * 7 * 24 * 60 * 60000L;
-        if (res == org.tltv.gantt.client.shared.Resolution.Hour
-                && (gantt.getEndDate().getTime() - gantt.getStartDate().getTime()) > max) {
-
-            // revert to previous resolution
-            setResolution(gantt.getResolution());
-
-            // make user to confirm hour resolution, if the timeline range is
-            // more than one week long.
-
-            ConfirmDialogExt.show(UI.getCurrent(),
-                    AppContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE),
-                    "Timeline range is a quite long for hour resolution. Rendering may be slow. Continue anyway?",
-                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                    new ConfirmDialog.Listener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void onClose(final ConfirmDialog dialog) {
-                            if (dialog.isConfirmed()) {
-                                setResolution(res);
-                                gantt.setResolution(res);
-                            }
-                        }
-                    });
-            return false;
-        }
-        return true;
-    }
-
-    private void setResolution(org.tltv.gantt.client.shared.Resolution resolution) {
-        chartResolution.removeValueChangeListener(resolutionValueChangeListener);
-        try {
-            chartResolution.setValue(resolution);
-        } finally {
-            chartResolution.addValueChangeListener(resolutionValueChangeListener);
+            maxDate.add(Calendar.DATE, 14);
+            gantt.setEndDate(maxDate.getTime());
         }
     }
 
@@ -342,24 +235,23 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             for (GanttItemWrapper child : childs) {
                 taskTable.addItem(child);
                 taskTable.setParent(child, parent);
-            }
-            updateGanttChartBaseOnTreeTableContainer();
-        }
-    }
+                taskTable.setChildrenAllowed(child, child.hasSubTasks());
 
-    void updateGanttChartBaseOnTreeTableContainer() {
-        gantt.removeSteps();
-        Collection<GanttItemWrapper> items = (Collection<GanttItemWrapper>) taskTable.getItemIds();
-        for (GanttItemWrapper item : items) {
-            gantt.addStep(item.getStep());
+            }
         }
     }
 
     class TaskHierarchyComp extends TreeTable {
         TaskHierarchyComp() {
             super();
+            this.addStyleName("gantt_tree");
             this.addContainerProperty("name", String.class, "");
+            this.addContainerProperty("startDate", String.class, "");
+            this.addContainerProperty("endDate", String.class, "");
             this.setColumnHeader("name", "Name");
+            this.setColumnHeader("startDate", "Start Date");
+            this.setColumnHeader("endDate", "End Date");
+            this.setColumnHeader("assignUser", "Assign User");
             this.addGeneratedColumn("name", new ColumnGenerator() {
                 @Override
                 public Object generateCell(Table table, Object itemId, Object columnId) {
@@ -368,26 +260,51 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 }
             });
 
+            this.addGeneratedColumn("startDate", new ColumnGenerator() {
+                @Override
+                public Object generateCell(Table table, Object itemId, Object columnId) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
+                    return new Label(AppContext.formatDate(item.getStartDate()));
+                }
+            });
+
+            this.addGeneratedColumn("endDate", new ColumnGenerator() {
+                @Override
+                public Object generateCell(Table table, Object itemId, Object columnId) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
+                    return new Label(AppContext.formatDate(item.getEndDate()));
+                }
+            });
+
+            this.addGeneratedColumn("assignUser", new ColumnGenerator() {
+                @Override
+                public Object generateCell(Table table, Object itemId, Object columnId) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
+                    SimpleTask task = item.getTask();
+                    return new ProjectMemberLink(task.getAssignuser(), task.getAssignUserAvatarId(), task.getAssignUserFullName());
+                }
+            });
+
             this.addExpandListener(new Tree.ExpandListener() {
                 @Override
                 public void nodeExpand(Tree.ExpandEvent expandEvent) {
                     GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
                     List<GanttItemWrapper> subTasks = item.subTasks();
-                    GanttChartViewImpl.this.insertSteps(item, subTasks);
+                    insertSteps(item, subTasks);
                 }
             });
 
             this.addCollapseListener(new Tree.CollapseListener() {
                 @Override
                 public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
-                    updateGanttChartBaseOnTreeTableContainer();
+
                 }
             });
         }
 
-        void addTaskList(GanttItemWrapper itemWrapper) {
+        void addTask(GanttItemWrapper itemWrapper) {
             this.addItem(itemWrapper);
-            this.setColumnCollapsible(itemWrapper, itemWrapper.hasSubTasks());
+            this.setChildrenAllowed(itemWrapper, itemWrapper.hasSubTasks());
         }
     }
 }

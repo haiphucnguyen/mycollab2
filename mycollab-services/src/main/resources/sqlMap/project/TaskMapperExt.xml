@@ -163,7 +163,11 @@
                  parentTask.taskname AS parentTaskName, parentTask.taskkey AS parentTaskKey,
                  (SELECT count(*)
                     FROM m_comment
-                    WHERE m_comment.type='Project-Task' AND m_comment.typeid=m_prj_task.id) AS numComments
+                    WHERE m_comment.type='Project-Task' AND m_comment.typeid=m_prj_task.id) AS numComments,
+                 (SELECT count(*)
+                    FROM m_prj_task AS subtask_tbl
+                    WHERE subtask_tbl.parentTaskId = m_prj_task.id
+                 ) AS numSubTasks
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
               LEFT OUTER JOIN m_prj_milestone ON (m_prj_milestone.id = m_prj_task.milestoneId)
