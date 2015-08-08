@@ -123,6 +123,9 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                         throw new UserInvalidInputException("There is no field in search criterion");
                     }
                     fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
+                    TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
+                            fieldInfos);
+                    EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskDashboardViewImpl.this, criteria));
                 }
             }
         });

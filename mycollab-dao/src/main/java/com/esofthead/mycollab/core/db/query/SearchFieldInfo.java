@@ -18,6 +18,8 @@ package com.esofthead.mycollab.core.db.query;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 
 import java.io.Serializable;
 import java.util.List;
@@ -42,8 +44,7 @@ public class SearchFieldInfo implements Serializable {
     public SearchFieldInfo() {
     }
 
-    public SearchFieldInfo(String prefixOper, Param param, String compareOper,
-                           Object value) {
+    public SearchFieldInfo(String prefixOper, Param param, String compareOper, Object value) {
         this.prefixOper = prefixOper;
         this.param = param;
         this.compareOper = compareOper;
@@ -94,9 +95,23 @@ public class SearchFieldInfo implements Serializable {
     public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo> fieldInfos) {
         try {
             S obj = cls.newInstance();
+            for (SearchFieldInfo info : fieldInfos) {
+                Param param = info.getParam();
+                if (param instanceof StringParam) {
+                    StringParam wrapParam = (StringParam) param;
+                    SearchField searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
+                            (String) info.getValue());
+                    obj.addExtraField(searchField);
+                } else if (param instanceof NumberParam) {
+                    NumberParam wrapParam = (NumberParam) param;
+                    SearchField searchField =  wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
+                            Double.parseDouble((String)info.getValue()));
+                    obj.addExtraField(searchField);
+                }
+            }
+            return obj;
         } catch (Exception e) {
-          throw new MyCollabException(e);
+            throw new MyCollabException(e);
         }
-        return null;
     }
 }
