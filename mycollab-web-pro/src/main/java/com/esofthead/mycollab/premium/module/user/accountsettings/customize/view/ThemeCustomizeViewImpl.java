@@ -118,7 +118,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
-        propertyLayout.setStyleName("no-border");
+        propertyLayout.setStyleName(UIConstants.THEME_NO_BORDER);
         propertyLayout.setColumnExpandRatio(0, 1.0f);
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
@@ -243,7 +243,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
-        propertyLayout.setStyleName("no-border");
+        propertyLayout.setStyleName(UIConstants.THEME_NO_BORDER);
         propertyLayout.setColumnExpandRatio(0, 1.0f);
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
@@ -344,7 +344,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
-        propertyLayout.setStyleName("no-border");
+        propertyLayout.setStyleName(UIConstants.THEME_NO_BORDER);
         propertyLayout.setColumnExpandRatio(0, 1.0f);
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
@@ -452,7 +452,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
         GridLayout propertyLayout = new GridLayout(3, 1);
         propertyLayout.setStyleName("example-block");
-        propertyLayout.addStyleName("no-border");
+        propertyLayout.addStyleName(UIConstants.THEME_NO_BORDER);
         propertyLayout.setSpacing(true);
         blockBody.addComponent(propertyLayout);
 

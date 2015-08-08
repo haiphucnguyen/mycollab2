@@ -123,15 +123,13 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Activi
                     content.append(AppContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
                     if (activityStream.getAssoAuditLog() != null) {
-                        content.append(ProjectAuditLogStreamGenerator
-                                .generatorDetailChangeOfActivity(activityStream));
+                        content.append(ProjectAuditLogStreamGenerator.generatorDetailChangeOfActivity(activityStream));
                     }
                 } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
                     content.append(AppContext.getMessage(ProjectCommonI18nEnum.FEED_USER_ACTIVITY_COMMENT_ACTION_TITLE,
                             assigneeParam, itemType, itemParam));
                     if (activityStream.getAssoAuditLog() != null) {
-                        content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog()
-                                .getChangeset()).append("\"</li></ul></p>");
+                        content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog().getChangeset()).append("\"</li></ul></p>");
                     }
 
                 }

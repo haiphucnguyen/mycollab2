@@ -17,12 +17,16 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
+import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.XStreamJsonDeSerializer;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -42,6 +46,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.SavedFilterComboBox;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -53,6 +58,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
@@ -101,6 +107,27 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         this.withMargin(new MarginInfo(false, true, true, true));
         taskSearchPanel = new TaskSearchPanel();
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
+
+        groupWrapLayout.addComponent(new Label("Filter:"));
+        final SavedFilterComboBox savedFilterComboBox = new SavedFilterComboBox(ProjectTypeConstants.TASK);
+        savedFilterComboBox.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                SaveSearchResultWithBLOBs item = (SaveSearchResultWithBLOBs) savedFilterComboBox.getValue();
+                if (item != null) {
+                    List<SearchFieldInfo> fieldInfos = (List<SearchFieldInfo>) XStreamJsonDeSerializer.fromJson(item
+                            .getQuerytext());
+                    // @HACK: === the library serialize with extra list
+                    // wrapper
+                    if (CollectionUtils.isEmpty(fieldInfos)) {
+                        throw new UserInvalidInputException("There is no field in search criterion");
+                    }
+                    fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
+                }
+            }
+        });
+        groupWrapLayout.addComponent(savedFilterComboBox);
+
         groupWrapLayout.addComponent(new Label("Sort:"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
         sortCombo.addValueChangeListener(new Property.ValueChangeListener() {

@@ -48,7 +48,7 @@ public class ProjectLocalizationTypeMap {
     public static ProjectTypeI18nEnum getType(String key) {
         ProjectTypeI18nEnum result = typeMap.get(key);
         if (result == null) {
-            throw new MyCollabException("Can not get key: " + key);
+            return ProjectTypeI18nEnum.TASK_ITEM;
         }
 
         return result;
