@@ -18,12 +18,17 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
+import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.XStreamJsonDeSerializer;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.*;
@@ -39,12 +44,11 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UIUtils;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.vaadin.data.Property;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -62,6 +66,7 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -92,6 +97,20 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     private Button toogleMenuShowBtn;
     private ComponentContainer newTaskComp = null;
 
+    private ApplicationEventListener<TaskEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<TaskEvent.SearchRequest>() {
+                @Override
+                @Subscribe
+                public void handle(TaskEvent.SearchRequest event) {
+                    TaskSearchCriteria criteria = (TaskSearchCriteria) event.getData();
+                    if (criteria != null) {
+                        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                        criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
+                        queryTask(criteria);
+                    }
+                }
+            };
+
     public TaskKanbanviewImpl() {
         this.setSizeFull();
         this.withMargin(new MarginInfo(false, true, true, true));
@@ -118,6 +137,30 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
         toogleMenuShowBtn.addStyleName(UIConstants.THEME_LINK);
 
+        final SavedFilterComboBox savedFilterComboBox = new SavedFilterComboBox(ProjectTypeConstants.TASK);
+        savedFilterComboBox.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                SaveSearchResultWithBLOBs item = (SaveSearchResultWithBLOBs) savedFilterComboBox.getValue();
+                if (item != null) {
+                    List<SearchFieldInfo> fieldInfos = (List<SearchFieldInfo>) XStreamJsonDeSerializer.fromJson(item
+                            .getQuerytext());
+                    // @HACK: === the library serialize with extra list
+                    // wrapper
+                    if (CollectionUtils.isEmpty(fieldInfos)) {
+                        throw new UserInvalidInputException("There is no field in search criterion");
+                    }
+                    fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
+                    TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
+                            fieldInfos);
+                    criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                    EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskKanbanviewImpl.this, criteria));
+                } else {
+                    display();
+                }
+            }
+        });
+
         Button addNewColumnBtn = new Button("Add a new column", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -135,7 +178,8 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerWrapper, toogleMenuShowBtn, addNewColumnBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
+        header.with(headerWrapper, savedFilterComboBox, toogleMenuShowBtn, addNewColumnBtn, cancelBtn)
+                .withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
                 .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT)
                 .withAlign(addNewColumnBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
@@ -190,8 +234,15 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     }
 
     @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(searchHandler);
+        super.attach();
+    }
+
+    @Override
     public void detach() {
         setProjectNavigatorVisibility(true);
+        EventBusFactory.getInstance().unregister(searchHandler);
         super.detach();
     }
 
@@ -204,12 +255,18 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
     @Override
     public void display() {
+        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
+        queryTask(searchCriteria);
+    }
+
+    private void queryTask(final TaskSearchCriteria searchCriteria) {
         kanbanLayout.removeAllComponents();
         kanbanBlocks = new ConcurrentHashMap<>();
 
         toogleMenuShowBtn.setCaption("Show menu");
         setProjectNavigatorVisibility(false);
-
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
@@ -222,9 +279,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
                 UI.getCurrent().push();
 
-                TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-                searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("taskindex", SearchCriteria.ASC)));
                 int totalTasks = taskService.getTotalCount(searchCriteria);
                 int pages = totalTasks / 20;
                 for (int page = 0; page < pages + 1; page++) {

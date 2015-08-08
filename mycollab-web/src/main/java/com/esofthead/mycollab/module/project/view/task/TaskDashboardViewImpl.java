@@ -125,6 +125,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                     fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
                     TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
                             fieldInfos);
+                    criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                     EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskDashboardViewImpl.this, criteria));
                 }
             }
