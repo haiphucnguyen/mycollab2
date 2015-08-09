@@ -33,8 +33,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 	private TextField nameField;
 	private ProjectGenericTaskSearchCriteria searchCriteria;
 
-	public ProjectGenericTaskSelectionWindow(
-			final AssignmentSelectableComp timeEntryWindow) {
+	public ProjectGenericTaskSelectionWindow(final AssignmentSelectableComp timeEntryWindow) {
 		super("Select Assignments");
 		this.center();
 		this.setResizable(false);
@@ -48,8 +47,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
 			@Override
 			public void itemClick(final TableClickEvent event) {
-				final ProjectGenericTask task = (ProjectGenericTask) event
-						.getData();
+				final ProjectGenericTask task = (ProjectGenericTask) event.getData();
 				if ("name".equals(event.getFieldName())) {
 					timeEntryWindow.updateLinkTask(task);
 					ProjectGenericTaskSelectionWindow.this.close();
@@ -58,8 +56,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		});
 
 		searchCriteria = new ProjectGenericTaskSearchCriteria();
-		searchCriteria.setProjectIds(new SetSearchField<>(
-				CurrentProjectVariables.getProjectId()));
+		searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
 		taskTableDisplay.setSearchCriteria(searchCriteria);
 
 		content.addComponent(constructTopPanel());
@@ -76,11 +73,9 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
 		this.nameField = new TextField();
 		this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-		basicSearchBody.with(nameField).withAlign(nameField,
-				Alignment.MIDDLE_CENTER);
+		basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
-		final Button searchBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
+		final Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
 		searchBtn.setIcon(FontAwesome.SEARCH);
 		searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
@@ -96,8 +91,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		basicSearchBody.with(searchBtn).withAlign(searchBtn,
 				Alignment.MIDDLE_LEFT);
 
-		final Button cancelBtn = new Button(
-				AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
+		final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
 		cancelBtn.addClickListener(new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 

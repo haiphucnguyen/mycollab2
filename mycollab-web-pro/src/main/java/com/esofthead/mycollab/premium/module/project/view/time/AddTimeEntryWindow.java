@@ -26,6 +26,7 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
 import java.text.SimpleDateFormat;
@@ -47,18 +48,16 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private RichTextArea descArea;
     private TimeTrackingListView parentView;
     private ProjectGenericTask selectionTask;
-    private HorizontalLayout taskLayout;
+    private MHorizontalLayout taskLayout;
 
     private ItemTimeLoggingService itemTimeLoggingService;
 
     public AddTimeEntryWindow(TimeTrackingListView view) {
-        itemTimeLoggingService = ApplicationContextUtil
-                .getSpringBean(ItemTimeLoggingService.class);
+        itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
         this.setModal(true);
         this.setResizable(false);
         this.parentView = view;
-        this.setCaption(AppContext
-                .getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
+        this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
         selectedDate = new GregorianCalendar().getTime();
 
@@ -69,12 +68,8 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         grid.setSpacing(true);
         content.addComponent(grid);
 
-        grid.addComponent(
-                new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)),
-                0, 0);
-        grid.addComponent(
-                new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)),
-                1, 0);
+        grid.addComponent(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)), 0, 0);
+        grid.addComponent(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)), 1, 0);
         HorizontalLayout isBillable = new HorizontalLayout();
         isBillable.setSpacing(true);
         isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
@@ -114,23 +109,20 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         timeInputTable.addContainerProperty("Saturday", Double.class, 0);
         timeInputTable.addContainerProperty("Sunday", Double.class, 0);
 
-        timeInputTable.addItem(new Double[]{0d, 0d, 0d, 0d, 0d, 0d, 0d},
-                "timeEntry");
+        timeInputTable.addItem(new Double[]{0d, 0d, 0d, 0d, 0d, 0d, 0d}, "timeEntry");
         timeInputTable.setEditable(true);
         updateTimeTableHeader();
         content.addComponent(timeInputTable);
 
-        Label descriptionLbl = new Label(
-                AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
+        Label descriptionLbl = new Label(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION));
         content.addComponent(descriptionLbl);
 
         descArea = new RichTextArea();
         descArea.setWidth("100%");
         content.addComponent(descArea);
         HorizontalLayout footer = new HorizontalLayout();
-        taskLayout = new HorizontalLayout();
+        taskLayout = new MHorizontalLayout();
         taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        taskLayout.setSpacing(true);
         createLinkTaskButton();
 
         footer.addComponent(taskLayout);
@@ -138,30 +130,26 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         HorizontalLayout controlsLayout = new HorizontalLayout();
         controlsLayout.setSpacing(true);
 
-        Button cancelBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        AddTimeEntryWindow.this.close();
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                AddTimeEntryWindow.this.close();
+            }
+        });
         cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
         controlsLayout.addComponent(cancelBtn);
 
-        Button saveBtn = new Button(
-                AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        saveTimeLoggingItems();
-                        AddTimeEntryWindow.this.close();
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                saveTimeLoggingItems();
+                AddTimeEntryWindow.this.close();
+            }
+        });
         saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         controlsLayout.addComponent(saveBtn);
@@ -181,19 +169,16 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             String taskName = this.selectionTask.getName();
             taskLayout.removeAllComponents();
 
-            Button detachTaskBtn = new Button(
-                    AppContext
-                            .getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK),
-                    new Button.ClickListener() {
+            Button detachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), new Button.ClickListener() {
 
-                        private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            createLinkTaskButton();
-                            updateLinkTask(null);
-                        }
-                    });
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    createLinkTaskButton();
+                    updateLinkTask(null);
+                }
+            });
             detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
             taskLayout.addComponent(detachTaskBtn);
 
@@ -201,10 +186,8 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             attachTaskBtn.addStyleName("task-attached");
             attachTaskBtn.setWidth("500px");
 
-            attachTaskBtn
-                    .setDescription(new ProjectGenericTaskTooltipGenerator(
-                            this.selectionTask.getType(), this.selectionTask
-                            .getTypeId()).getContent());
+            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(this.selectionTask.getType(),
+                    this.selectionTask.getTypeId()).getContent());
             taskLayout.addComponent(attachTaskBtn);
             this.selectionTask.getTypeId();
         }
@@ -213,39 +196,33 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
     private void createLinkTaskButton() {
         taskLayout.removeAllComponents();
-        Button attachTaskBtn = new Button(
-                AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button attachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LINK_TASK), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
-                                AddTimeEntryWindow.this);
-                        AddTimeEntryWindow.this.getUI().addWindow(
-                                selectionTaskWindow);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                ProjectGenericTaskSelectionWindow selectionTaskWindow = new ProjectGenericTaskSelectionWindow(
+                        AddTimeEntryWindow.this);
+                getUI().addWindow(selectionTaskWindow);
+            }
+        });
         attachTaskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
         taskLayout.addComponent(attachTaskBtn);
     }
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-            AppContext.getUserDateFormat().getDayMonthFormat());
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(AppContext.getUserDateFormat().getDayMonthFormat());
 
     private void updateTimeTableHeader() {
         Date monday = DateTimeUtils.getBounceDateofWeek(selectedDate)[0];
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(monday);
 
-        timeInputTable.setColumnHeader("Monday", AppContext.getMessage(
-                TimeTrackingI18nEnum.MONDAY_FIELD,
+        timeInputTable.setColumnHeader("Monday", AppContext.getMessage(TimeTrackingI18nEnum.MONDAY_FIELD,
                 simpleDateFormat.format(calendar.getTime())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(
-                TimeTrackingI18nEnum.TUESDAY_FIELD,
+        timeInputTable.setColumnHeader("Tuesday", AppContext.getMessage(TimeTrackingI18nEnum.TUESDAY_FIELD,
                 simpleDateFormat.format(calendar.getTime())));
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
@@ -276,8 +253,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     }
 
     private void saveTimeLoggingItems() {
-        SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox
-                .getValue();
+        SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox.getValue();
         if (user == null) {
             throw new UserInvalidInputException("You must select a member");
         }
@@ -348,8 +324,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);
     }
 
-    private ItemTimeLogging buildItemTimeLogging(String headerId,
-                                                 Calendar calendar, SimpleProjectMember logForMember) {
+    private ItemTimeLogging buildItemTimeLogging(String headerId, Calendar calendar, SimpleProjectMember logForMember) {
         Item timeEntries = timeInputTable.getItem("timeEntry");
         Property<?> itemProperty = timeEntries.getItemProperty(headerId);
         Double timeVal = (Double) itemProperty.getValue();
@@ -360,8 +335,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             timeLogging.setIsbillable(isBillableCheckBox.getValue());
             timeLogging.setLoguser(logForMember.getUsername());
             timeLogging.setCreateduser(AppContext.getUsername());
-            timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar
-                    .getTime()));
+            timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar.getTime()));
             timeLogging.setLogvalue(timeVal);
             timeLogging.setNote(descArea.getValue());
             timeLogging.setProjectid(CurrentProjectVariables.getProjectId());

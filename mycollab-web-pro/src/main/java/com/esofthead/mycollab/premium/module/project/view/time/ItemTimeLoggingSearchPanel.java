@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.*;
+import com.esofthead.mycollab.core.arguments.Order;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -46,8 +49,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new ProjectViewHeader(ProjectTypeConstants.TIME,
-                AppContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
+        return new ProjectViewHeader(ProjectTypeConstants.TIME, AppContext.getMessage(TimeTrackingI18nEnum.SEARCH_TIME_TITLE));
     }
 
     @Override
@@ -152,25 +154,23 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
             buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
 
-            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH),
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            TimeLoggingBasicSearchLayout.this.callSearchAction();
-                        }
-                    });
+            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), new Button.ClickListener() {
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    callSearchAction();
+                }
+            });
 
             searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
-            Button clearBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR),
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            TimeLoggingBasicSearchLayout.this.userField.setValue(null);
-                            setDefaultValue();
-                        }
-                    });
+            Button clearBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), new Button.ClickListener() {
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    userField.setValue(null);
+                    setDefaultValue();
+                }
+            });
             clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
             buttonControls.with(searchBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);

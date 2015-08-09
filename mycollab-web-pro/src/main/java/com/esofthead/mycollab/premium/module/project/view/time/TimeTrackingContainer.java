@@ -11,8 +11,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  * 
  */
 @ViewComponent
-public class TimeTrackingContainer extends AbstractPageView implements
-		ITimeTrackingContainer {
+public class TimeTrackingContainer extends AbstractPageView implements ITimeTrackingContainer {
 	private static final long serialVersionUID = 1L;
 
 }

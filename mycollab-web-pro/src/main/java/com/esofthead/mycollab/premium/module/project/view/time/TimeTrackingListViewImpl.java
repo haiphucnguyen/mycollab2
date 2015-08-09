@@ -49,16 +49,15 @@ import java.util.Arrays;
  * @since 2.0
  */
 @ViewComponent
-public class TimeTrackingListViewImpl extends AbstractPageView implements
-        TimeTrackingListView {
+public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTrackingListView {
     private static final long serialVersionUID = 3742030333599796165L;
 
-    private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
+    private ItemTimeLoggingSearchPanel searchPanel;
 
     private VerticalLayout timeTrackingWrapper;
 
     private final ItemTimeLoggingService itemTimeLoggingService;
-    private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
+    private ItemTimeLoggingSearchCriteria searchCriteria;
 
     private SplitButton exportButtonControl;
 
@@ -70,26 +69,23 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
         headerWrapper.addStyleName(UIConstants.LAYOUT_LOG);
 
-        this.itemTimeLoggingService = ApplicationContextUtil
-                .getSpringBean(ItemTimeLoggingService.class);
+        this.itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-        this.itemTimeLoggingPanel = new ItemTimeLoggingSearchPanel();
-        this.itemTimeLoggingPanel
-                .addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
-                    @Override
-                    public void onSearch(ItemTimeLoggingSearchCriteria criteria) {
-                        setSearchCriteria(criteria);
-                    }
-                });
+        this.searchPanel = new ItemTimeLoggingSearchPanel();
+        this.searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
+            @Override
+            public void onSearch(ItemTimeLoggingSearchCriteria criteria) {
+                setSearchCriteria(criteria);
+            }
+        });
 
-        this.addComponent(this.itemTimeLoggingPanel);
-        this.itemTimeLoggingPanel.addClickListener(new Button.ClickListener() {
+        this.addComponent(this.searchPanel);
+        this.searchPanel.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
-                AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow(
-                        TimeTrackingListViewImpl.this);
+                AddTimeEntryWindow addTimeEntry = new AddTimeEntryWindow(TimeTrackingListViewImpl.this);
                 UI.getCurrent().addWindow(addTimeEntry);
             }
         });
@@ -118,15 +114,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         exportButtonControl.setContent(popupButtonsControl);
 
         Button exportPdfBtn = new Button("Pdf");
-        FileDownloader exportPdfDownloader = new FileDownloader(
-                constructStreamResource(ReportExportType.PDF));
+        FileDownloader exportPdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
         exportPdfDownloader.extend(exportPdfBtn);
         exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
         popupButtonsControl.addOption(exportPdfBtn);
 
         Button exportExcelBtn = new Button("Excel");
-        FileDownloader excelDownloader = new FileDownloader(
-                constructStreamResource(ReportExportType.EXCEL));
+        FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
         excelDownloader.extend(exportExcelBtn);
         exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
         popupButtonsControl.addOption(exportExcelBtn);
@@ -144,56 +138,45 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
                 + ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
                 .getProject().getName() != null) ? CurrentProjectVariables
                 .getProject().getName() : "");
-        ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(
-                title, exportType,
-                ApplicationContextUtil
-                        .getSpringBean(ItemTimeLoggingService.class), itemTimeLogginSearchCriteria);
-        return new StreamResource(exportStream,
-                ExportTimeLoggingStreamResource
-                        .getDefaultExportFileName(exportType));
+        ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(title, exportType,
+                ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class), searchCriteria);
+        return new StreamResource(exportStream, ExportTimeLoggingStreamResource.getDefaultExportFileName(exportType));
     }
 
     private void setTimeRange() {
-        final RangeDateSearchField rangeField = this.itemTimeLogginSearchCriteria
-                .getRangeDate();
+        final RangeDateSearchField rangeField = this.searchCriteria.getRangeDate();
 
         final String fromDate = AppContext.formatDate(rangeField.getFrom());
         final String toDate = AppContext.formatDate(rangeField.getTo());
 
-        this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(true));
-        Double billableHour = this.itemTimeLoggingService
-                .getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
+        this.searchCriteria.setIsBillable(new BooleanSearchField(true));
+        Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
         if (billableHour == null || billableHour < 0) {
             billableHour = 0d;
         }
 
-        this.itemTimeLogginSearchCriteria.setIsBillable(new BooleanSearchField(false));
+        this.searchCriteria.setIsBillable(new BooleanSearchField(false));
         Double nonBillableHour = this.itemTimeLoggingService
-                .getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
+                .getTotalHoursByCriteria(this.searchCriteria);
         if (nonBillableHour == null || nonBillableHour < 0) {
             nonBillableHour = 0d;
         }
 
-        this.itemTimeLogginSearchCriteria.setIsBillable(null);
+        this.searchCriteria.setIsBillable(null);
         final Double totalHour = this.itemTimeLoggingService
-                .getTotalHoursByCriteria(this.itemTimeLogginSearchCriteria);
+                .getTotalHoursByCriteria(this.searchCriteria);
 
         if (totalHour != null && totalHour > 0) {
-            this.lbTimeRange
-                    .setValue(AppContext
-                            .getMessage(
-                                    TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
-                                    fromDate, toDate, totalHour, billableHour,
-                                    nonBillableHour));
+            this.lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+                    fromDate, toDate, totalHour, billableHour, nonBillableHour));
         } else {
-            this.lbTimeRange.setValue(AppContext.getMessage(
-                    TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
+            this.lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
         }
     }
 
     @Override
     public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
-        this.itemTimeLogginSearchCriteria = searchCriteria;
+        this.searchCriteria = searchCriteria;
         refresh();
     }
 
@@ -202,11 +185,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements
         this.setTimeRange();
         timeTrackingWrapper.removeAllComponents();
 
-        AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(this.itemTimeLoggingPanel
-                .getGroupBy());
+        AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());
         timeTrackingWrapper.addComponent(timeDisplayComp);
-        timeDisplayComp.queryData(itemTimeLogginSearchCriteria,
-                this.itemTimeLoggingPanel.getOrderBy());
+        timeDisplayComp.queryData(searchCriteria, searchPanel.getOrderBy());
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {

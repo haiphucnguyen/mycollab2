@@ -23,7 +23,6 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
  * @since 5.0.10
  */
 class AccountInfoChangeWindow extends Window {
-
     private SimpleBillingAccount billingAccount;
 
     private MVerticalLayout content;

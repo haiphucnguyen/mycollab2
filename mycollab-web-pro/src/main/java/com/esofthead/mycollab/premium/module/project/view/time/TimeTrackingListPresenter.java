@@ -16,8 +16,7 @@ import com.vaadin.ui.ComponentContainer;
  * 
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class TimeTrackingListPresenter extends
-		AbstractPresenter<TimeTrackingListView> {
+public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingListView> {
 	private static final long serialVersionUID = 1L;
 
 	public TimeTrackingListPresenter() {
@@ -31,8 +30,7 @@ public class TimeTrackingListPresenter extends
 		timeContainer.addComponent(view.getWidget());
 		view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
-		ProjectBreadcrumb breadCrumb = ViewManager
-				.getCacheComponent(ProjectBreadcrumb.class);
+		ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
 		breadCrumb.gotoTimeTrackingList();
 	}
 }

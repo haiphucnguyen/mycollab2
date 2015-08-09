@@ -17,9 +17,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 2.0
  * 
  */
-public class TimeTrackingPresenter extends
-		AbstractPresenter<ITimeTrackingContainer> implements
-		ITimeTrackingPresenter {
+public class TimeTrackingPresenter extends AbstractPresenter<ITimeTrackingContainer> implements ITimeTrackingPresenter {
 	private static final long serialVersionUID = 1L;
 
 	public TimeTrackingPresenter() {
@@ -36,8 +34,7 @@ public class TimeTrackingPresenter extends
 		AbstractPresenter presenter;
 
 		if (data instanceof TimeTrackingScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(TimeTrackingListPresenter.class);
+			presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
 		} else {
 			throw new MyCollabException("No support screen data " + data);
 		}
