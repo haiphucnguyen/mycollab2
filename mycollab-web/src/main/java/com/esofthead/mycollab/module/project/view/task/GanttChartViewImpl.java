@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -51,6 +52,7 @@ import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.Step;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -192,6 +194,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setHasParentTask(new BooleanSearchField());
+        criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", SearchCriteria.ASC)));
         List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(criteria));
 
         if (!tasks.isEmpty()) {
@@ -265,9 +268,13 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             this.setContainerDataSource(beanContainer);
             this.setVisibleColumns("name", "startDate", "endDate", "assignUser");
             this.setColumnHeader("name", "Task");
+            this.setColumnExpandRatio("name", 1.0f);
             this.setColumnHeader("startDate", "Start");
+            this.setColumnWidth("startDate", UIConstants.TABLE_DATE_WIDTH);
             this.setColumnHeader("endDate", "End");
+            this.setColumnWidth("endDate", UIConstants.TABLE_DATE_WIDTH);
             this.setColumnHeader("assignUser", "Assignee");
+            this.setColumnWidth("assignUser", UIConstants.TABLE_X_LABEL_WIDTH);
             this.addGeneratedColumn("name", new ColumnGenerator() {
                 @Override
                 public Object generateCell(Table table, Object itemId, Object columnId) {
