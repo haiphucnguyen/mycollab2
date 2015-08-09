@@ -40,8 +40,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 		this.setModal(true);
 		this.setWidth("800px");
 		MVerticalLayout content = new MVerticalLayout();
-		taskTableDisplay = new GenericTaskTableDisplay(
-				Arrays.asList(GenericTaskTableFieldDef.name));
+		taskTableDisplay = new GenericTaskTableDisplay(Arrays.asList(GenericTaskTableFieldDef.name));
 		taskTableDisplay.addTableListener(new TableClickListener() {
 			private static final long serialVersionUID = 1L;
 

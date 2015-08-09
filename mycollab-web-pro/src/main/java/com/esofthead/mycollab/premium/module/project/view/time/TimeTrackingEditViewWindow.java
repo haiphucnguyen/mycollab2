@@ -33,11 +33,11 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
     private ProjectGenericTask selectionTask;
     private MHorizontalLayout taskLayout;
     private DateFieldExt dateField;
-    private SimpleItemTimeLogging item;
+    private SimpleItemTimeLogging timeLogging;
     private ObjectProperty<Double> property;
 
-    public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging itemInput) {
-        this.item = itemInput;
+    public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
+        timeLogging = timeLogging;
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
@@ -45,17 +45,17 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
-        dateField = new DateFieldExt("Select date:", this.item.getLogforday());
+        dateField = new DateFieldExt("Select date:", timeLogging.getLogforday());
 
-        property = new ObjectProperty<>(item.getLogvalue());
+        property = new ObjectProperty<>(timeLogging.getLogvalue());
         TextField timeField = new TextField("Hours:", property);
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
-        projectMemberSelectionBox.setValue(this.item.getLoguser());
+        projectMemberSelectionBox.setValue(timeLogging.getLoguser());
         projectMemberSelectionBox.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
         isBillableCheckBox = new CheckBox();
-        isBillableCheckBox.setValue(this.item.getIsbillable());
+        isBillableCheckBox.setValue(timeLogging.getIsbillable());
 
         MHorizontalLayout isBillableBox = new MHorizontalLayout();
         isBillableBox.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
@@ -72,7 +72,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
         content.addComponent(new Label(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)));
 
         descArea = new RichTextArea();
-        descArea.setValue(this.item.getNote());
+        descArea.setValue(timeLogging.getNote());
         descArea.setWidth("100%");
         content.addComponent(descArea);
 
@@ -81,10 +81,10 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
         taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         createLinkTaskButton();
 
-        if (item.getType() != null && item.getTypeid() != null) {
+        if (timeLogging.getType() != null && timeLogging.getTypeid() != null) {
             ProjectGenericTask tempSelectionTask = new ProjectGenericTask();
-            tempSelectionTask.setType(item.getType());
-            tempSelectionTask.setTypeId(item.getTypeid());
+            tempSelectionTask.setType(timeLogging.getType());
+            tempSelectionTask.setTypeId(timeLogging.getTypeid());
             String name = new GenericTaskDetailMapper(tempSelectionTask.getType(), tempSelectionTask.getTypeId()).getName();
 
             tempSelectionTask.setName(name);
@@ -95,16 +95,14 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout();
 
-        Button cancelBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        TimeTrackingEditViewWindow.this.close();
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                TimeTrackingEditViewWindow.this.close();
+            }
+        });
         cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
 
 
@@ -132,9 +130,9 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
     @Override
     public void updateLinkTask(ProjectGenericTask selectionTask) {
-        this.selectionTask = selectionTask;
-        if (this.selectionTask != null) {
-            final String taskName = this.selectionTask.getName();
+        selectionTask = selectionTask;
+        if (selectionTask != null) {
+            final String taskName = selectionTask.getName();
             taskLayout.removeAllComponents();
 
             Button detachTaskBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_DETACH_TASK), new Button.ClickListener() {
@@ -154,10 +152,10 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
             attachTaskBtn.addStyleName("task-attached");
             attachTaskBtn.setWidth("300px");
-            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(
-                    this.selectionTask.getType(), this.selectionTask.getTypeId()).getContent());
+            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(selectionTask.getType(), 
+                    selectionTask.getTypeId()).getContent());
             taskLayout.addComponent(attachTaskBtn);
-            this.selectionTask.getTypeId();
+            selectionTask.getTypeId();
         }
     }
 
@@ -180,29 +178,29 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
     private void saveTimeLoggingItems() {
         SimpleProjectMember user = (SimpleProjectMember) projectMemberSelectionBox.getValue();
-        item.setCreateduser(AppContext.getUsername());
-        item.setLoguser(user.getUsername());
-        item.setLogUserFullName(user.getMemberFullName());
+        timeLogging.setCreateduser(AppContext.getUsername());
+        timeLogging.setLoguser(user.getUsername());
+        timeLogging.setLogUserFullName(user.getMemberFullName());
         if (user.getMemberAvatarId() != null) {
-            item.setLogUserAvatarId(user.getMemberAvatarId());
+            timeLogging.setLogUserAvatarId(user.getMemberAvatarId());
         }
-        item.setLogforday(dateField.getValue());
-        item.setLogvalue(property.getValue());
-        item.setIsbillable(isBillableCheckBox.getValue());
-        item.setNote(descArea.getValue());
-        item.setSaccountid(AppContext.getAccountId());
+        timeLogging.setLogforday(dateField.getValue());
+        timeLogging.setLogvalue(property.getValue());
+        timeLogging.setIsbillable(isBillableCheckBox.getValue());
+        timeLogging.setNote(descArea.getValue());
+        timeLogging.setSaccountid(AppContext.getAccountId());
         if (selectionTask != null) {
-            item.setType(selectionTask.getType());
-            item.setTypeid(selectionTask.getTypeId());
-            item.setSummary(selectionTask.getName());
+            timeLogging.setType(selectionTask.getType());
+            timeLogging.setTypeid(selectionTask.getTypeId());
+            timeLogging.setSummary(selectionTask.getName());
         } else {
-            item.setType(null);
-            item.setTypeid(null);
-            item.setSummary(null);
+            timeLogging.setType(null);
+            timeLogging.setTypeid(null);
+            timeLogging.setSummary(null);
         }
 
         ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
-        itemTimeLoggingService.updateWithSession(item, AppContext.getUsername());
+        itemTimeLoggingService.updateWithSession(timeLogging, AppContext.getUsername());
 
         parentView.refresh();
     }

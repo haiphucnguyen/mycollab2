@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.events
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper
 
 /**
  * @author MyCollab Ltd.
@@ -40,6 +41,8 @@ object TaskEvent {
     class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
     class GotoGanttChart(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
+    class GanttTaskUpdate(source: AnyRef, data: GanttItemWrapper) extends ApplicationEvent(source, data) {}
 
     class GotoKanbanView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 

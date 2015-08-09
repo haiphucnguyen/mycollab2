@@ -52,15 +52,12 @@ import java.util.Arrays;
 public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTrackingListView {
     private static final long serialVersionUID = 3742030333599796165L;
 
-    private ItemTimeLoggingSearchPanel searchPanel;
-
-    private VerticalLayout timeTrackingWrapper;
-
-    private final ItemTimeLoggingService itemTimeLoggingService;
+    private ItemTimeLoggingService itemTimeLoggingService;
     private ItemTimeLoggingSearchCriteria searchCriteria;
 
+    private ItemTimeLoggingSearchPanel searchPanel;
+    private VerticalLayout timeTrackingWrapper;
     private SplitButton exportButtonControl;
-
     private final Label lbTimeRange;
 
     public TimeTrackingListViewImpl() {
@@ -69,7 +66,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
         headerWrapper.addStyleName(UIConstants.LAYOUT_LOG);
 
-        this.itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+        itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         this.searchPanel = new ItemTimeLoggingSearchPanel();
         this.searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
@@ -94,8 +91,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         final MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%");
         headerWrapper.addComponent(headerLayout);
 
-        this.lbTimeRange = new Label("", ContentMode.HTML);
-        this.lbTimeRange.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
+        lbTimeRange = new Label("", ContentMode.HTML);
+        lbTimeRange.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
         headerLayout.with(lbTimeRange).withAlign(lbTimeRange, Alignment.MIDDLE_LEFT).expand(lbTimeRange);
 
         Button exportBtn = new Button("Export", new Button.ClickListener() {
@@ -144,33 +141,31 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private void setTimeRange() {
-        final RangeDateSearchField rangeField = this.searchCriteria.getRangeDate();
+        final RangeDateSearchField rangeField = searchCriteria.getRangeDate();
 
         final String fromDate = AppContext.formatDate(rangeField.getFrom());
         final String toDate = AppContext.formatDate(rangeField.getTo());
 
-        this.searchCriteria.setIsBillable(new BooleanSearchField(true));
+        searchCriteria.setIsBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
         if (billableHour == null || billableHour < 0) {
             billableHour = 0d;
         }
 
-        this.searchCriteria.setIsBillable(new BooleanSearchField(false));
-        Double nonBillableHour = this.itemTimeLoggingService
-                .getTotalHoursByCriteria(this.searchCriteria);
+        searchCriteria.setIsBillable(new BooleanSearchField(false));
+        Double nonBillableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
         if (nonBillableHour == null || nonBillableHour < 0) {
             nonBillableHour = 0d;
         }
 
-        this.searchCriteria.setIsBillable(null);
-        final Double totalHour = this.itemTimeLoggingService
-                .getTotalHoursByCriteria(this.searchCriteria);
+        searchCriteria.setIsBillable(null);
+        final Double totalHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         if (totalHour != null && totalHour > 0) {
-            this.lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+            lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
                     fromDate, toDate, totalHour, billableHour, nonBillableHour));
         } else {
-            this.lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
+            lbTimeRange.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
         }
     }
 
@@ -247,8 +242,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                         });
 
             } else if ("edit".equals(event.getFieldName())) {
-                TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(
-                        TimeTrackingListViewImpl.this, itemLogging);
+                TimeTrackingEditViewWindow timeTrackingEdit = new TimeTrackingEditViewWindow(TimeTrackingListViewImpl.this, itemLogging);
                 UI.getCurrent().addWindow(timeTrackingEdit);
             }
         }

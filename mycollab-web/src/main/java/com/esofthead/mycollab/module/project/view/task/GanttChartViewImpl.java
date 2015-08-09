@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -39,6 +40,8 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
+import com.google.common.eventbus.Subscribe;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -171,6 +174,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         calendar.setTimeInMillis(endDate);
         task.setEnddate(calendar.getTime());
         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+        EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttChartViewImpl.this, ganttItemWrapper));
     }
 
     public void displayGanttChart() {
@@ -242,16 +246,28 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     }
 
     class TaskHierarchyComp extends TreeTable {
+        private BeanItemContainer<GanttItemWrapper> beanContainer;
+
+        private ApplicationEventListener<TaskEvent.GanttTaskUpdate> taskUpdateHandler = new
+                ApplicationEventListener<TaskEvent.GanttTaskUpdate>() {
+                    @Override
+                    @Subscribe
+                    public void handle(TaskEvent.GanttTaskUpdate event) {
+                        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) event.getData();
+                        updateTaskTree(ganttItemWrapper);
+                    }
+                };
+
         TaskHierarchyComp() {
             super();
             this.addStyleName("gantt_tree");
-            this.addContainerProperty("name", String.class, "");
-            this.addContainerProperty("startDate", String.class, "");
-            this.addContainerProperty("endDate", String.class, "");
-            this.setColumnHeader("name", "Name");
-            this.setColumnHeader("startDate", "Start Date");
-            this.setColumnHeader("endDate", "End Date");
-            this.setColumnHeader("assignUser", "Assign User");
+            beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
+            this.setContainerDataSource(beanContainer);
+            this.setVisibleColumns("name", "startDate", "endDate", "assignUser");
+            this.setColumnHeader("name", "Task");
+            this.setColumnHeader("startDate", "Start");
+            this.setColumnHeader("endDate", "End");
+            this.setColumnHeader("assignUser", "Assignee");
             this.addGeneratedColumn("name", new ColumnGenerator() {
                 @Override
                 public Object generateCell(Table table, Object itemId, Object columnId) {
@@ -302,8 +318,24 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             });
         }
 
+        @Override
+        public void attach() {
+            EventBusFactory.getInstance().register(taskUpdateHandler);
+            super.attach();
+        }
+
+        @Override
+        public void detach() {
+            EventBusFactory.getInstance().unregister(taskUpdateHandler);
+            super.detach();
+        }
+
+        private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
+
+        }
+
         void addTask(GanttItemWrapper itemWrapper) {
-            this.addItem(itemWrapper);
+            beanContainer.addBean(itemWrapper);
             this.setChildrenAllowed(itemWrapper, itemWrapper.hasSubTasks());
         }
     }
