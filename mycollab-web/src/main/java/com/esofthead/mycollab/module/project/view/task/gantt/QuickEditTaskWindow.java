@@ -6,7 +6,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
@@ -19,8 +21,13 @@ import org.vaadin.maddon.layouts.MHorizontalLayout;
  * @since 5.1.1
  */
 public class QuickEditTaskWindow extends Window {
+    private GanttExt gantt;
+    private GanttItemWrapper taskModified;
+
     public QuickEditTaskWindow(GanttExt gantt, GanttItemWrapper task) {
         super("Quick Edit Task");
+        this.gantt = gantt;
+        this.taskModified = task;
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
@@ -70,7 +77,14 @@ public class QuickEditTaskWindow extends Window {
                 Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-
+                        if (EditForm.this.validateForm()) {
+                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            taskService.updateWithSession(bean, AppContext.getUsername());
+                            taskModified.markAsDirty();
+                            gantt.markStepDirty(taskModified.getStep());
+                            UI.getCurrent().push();
+                            close();
+                        }
                     }
                 });
                 updateBtn.setStyleName(UIConstants.THEME_GREEN_LINK);

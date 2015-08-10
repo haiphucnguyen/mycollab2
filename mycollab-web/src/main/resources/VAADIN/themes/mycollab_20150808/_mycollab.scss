@@ -72,7 +72,7 @@
   }
 
   .v-tabsheet-content, .v-tabsheet-tabitem-selected, .v-slider-base, .v-window-modalitycurtain, .v-window-opaque, .v-progressindicator-wrapper, .v-table-scrollposition, .v-table-body {
-    background-color: #F5F5F5;
+    background-color: #fff;
   }
 
   /* Base font size and color */
@@ -104,10 +104,6 @@
     &:active {
       border-color: #43533E;
     }
-  }
-
-  .v-table-header-wrap, .v-table-body, .v-table-resizer {
-    border-color: #43533E;
   }
 
   div {

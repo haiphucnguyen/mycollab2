@@ -10000,7 +10000,7 @@ div.v-button.token-field:hover {
 }
 
 .gantt_container .v-table-table tr td.v-table-cell-content {
-	height: 31px;
+	height: 29px;
 	border-style: solid;
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px 0px;
@@ -10012,7 +10012,7 @@ div.v-button.token-field:hover {
 }
 
 .gantt_container .v-table-table tr:first-child td.v-table-cell-content {
-	height: 31px;
+	height: 29px;
 }
 
 .gantt .bar.v-widget {
@@ -10244,7 +10244,7 @@ html {
 }
 
 .v-tabsheet-content, .v-tabsheet-tabitem-selected, .v-slider-base, .v-window-modalitycurtain, .v-window-opaque, .v-progressindicator-wrapper, .v-table-scrollposition, .v-table-body {
-	background-color: #F5F5F5;
+	background-color: #fff;
 }
 
 .v-app, .v-window {
@@ -10270,10 +10270,6 @@ html {
 }
 
 .v-tabsheet-scrollerNext-disabled:active {
-	border-color: #43533E;
-}
-
-.v-table-header-wrap, .v-table-body, .v-table-resizer {
 	border-color: #43533E;
 }
 
