@@ -50,6 +50,10 @@ public class GanttItemWrapper {
         return task;
     }
 
+    public void setTask(SimpleTask task) {
+        this.task = task;
+    }
+
     public boolean hasSubTasks() {
         return (task.getNumSubTasks() != null && task.getNumSubTasks() > 0);
     }
@@ -145,6 +149,7 @@ public class GanttItemWrapper {
     }
 
     public void markAsDirty() {
+        calculateDates();
         ownStep.setCaption(buildCaption());
         ownStep.setDescription(buildTooltip());
         ownStep.setStartDate(startDate);

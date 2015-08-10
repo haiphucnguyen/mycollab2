@@ -51,7 +51,6 @@ import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -59,11 +58,12 @@ import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
-import org.tltv.gantt.client.shared.Step;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
-import java.util.*;
-import java.util.Calendar;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -79,9 +79,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private TaskHierarchyComp taskTable;
     private Button toogleMenuShowBtn;
     private ProjectTaskService taskService;
-
-    private GregorianCalendar minDate;
-    private GregorianCalendar maxDate;
 
     public GanttChartViewImpl() {
         this.setSizeFull();
@@ -148,9 +145,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskTable.setWidth("800px");
 
         gantt = new GanttExt();
-        gantt.setHeight("500px");
-        gantt.setResizableSteps(true);
-        gantt.setMovableSteps(true);
         gantt.setVerticalScrollDelegateTarget(taskTable);
 
         gantt.addMoveListener(new Gantt.MoveListener() {
@@ -187,6 +181,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
         EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttChartViewImpl.this, ganttItemWrapper));
         ganttItemWrapper.markAsDirty();
+        gantt.calculateMaxMinDates(ganttItemWrapper);
     }
 
     public void displayGanttChart() {
@@ -198,8 +193,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     @SuppressWarnings("unchecked")
     private void updateStepList() {
         gantt.removeSteps();
-        minDate = new GregorianCalendar();
-        maxDate = new GregorianCalendar();
         taskTable.removeAllItems();
         final TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
@@ -217,33 +210,10 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                         for (final SimpleTask task : tasks) {
                             final GanttItemWrapper itemWrapper = new GanttItemWrapper(task);
                             taskTable.addTask(itemWrapper);
-                            Step step = itemWrapper.getStep();
-                            gantt.addStep(step);
-
-                            if (task.isCompleted()) {
-//                    step.setBackgroundColor("53C540");
-//                    step.setStyleName("completed");
-                            } else if (task.isPending()) {
-//                    step.setBackgroundColor("e2f852");
-                            } else if (task.isOverdue()) {
-//                    step.setBackgroundColor("FC4350");
-                            }
-
-                            if (minDate.getTimeInMillis() > itemWrapper.getStartDate().getTime()) {
-                                minDate.setTimeInMillis(itemWrapper.getStartDate().getTime());
-                            }
-
-                            if (maxDate.getTimeInMillis() < itemWrapper.getEndDate().getTime()) {
-                                maxDate.setTimeInMillis(itemWrapper.getEndDate().getTime());
-                            }
+                            gantt.addTask(itemWrapper);
                         }
+                        UI.getCurrent().push();
                     }
-                    minDate.add(Calendar.DATE, -14);
-                    gantt.setStartDate(minDate.getTime());
-
-                    maxDate.add(Calendar.DATE, 14);
-                    gantt.setEndDate(maxDate.getTime());
-                    UI.getCurrent().push();
                 }
             }
         });
@@ -304,7 +274,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                     GanttItemWrapper item = (GanttItemWrapper) itemId;
                     SimpleTask task = item.getTask();
 
-                    String taskLinkContent = "";
+                    String taskLinkContent;
                     String uid = UUID.randomUUID().toString();
                     String taskPriority = task.getPriority();
                     Img priorityLink = new Img(taskPriority, ProjectResources.getIconResourceLink12ByTaskPriority
@@ -401,11 +371,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         }
 
         private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
-            BeanItem<GanttItemWrapper> item = beanContainer.getItem(ganttItemWrapper);
-//            item.getItemProperty("assignUser").setValue(ganttItemWrapper.getAssignUser());
-            item.getItemProperty("endDate").setValue(ganttItemWrapper.getEndDate());
-            item.getItemProperty("startDate").setValue(ganttItemWrapper.getStartDate());
-//            item.getItemProperty("name").setValue(ganttItemWrapper.getName());
+            this.markAsDirtyRecursive();
         }
 
         void addTask(GanttItemWrapper itemWrapper) {
