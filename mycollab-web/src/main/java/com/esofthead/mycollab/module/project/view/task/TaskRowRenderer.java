@@ -26,6 +26,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsUtil;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -89,6 +91,12 @@ class TaskRowRenderer extends MHorizontalLayout {
             Label statusBtn = new Label(FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus(), ContentMode.HTML);
             statusBtn.setDescription(AppContext.getMessage(TaskI18nEnum.FORM_STATUS));
             footer.addComponent(statusBtn);
+        }
+        if (task.getMilestoneid() != null) {
+            Label milestoneLbl = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
+                    " " + task.getMilestoneName(), ContentMode.HTML);
+            milestoneLbl.setDescription(AppContext.getMessage(TaskI18nEnum.FORM_MILESTONE));
+            footer.addComponent(milestoneLbl);
         }
         if (task.getPercentagecomplete() > 0) {
             Label percentBtn = new Label(VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%",

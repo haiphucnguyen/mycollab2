@@ -51,13 +51,10 @@ public class QuickEditTaskWindow extends Window {
         this.setClosable(true);
         this.center();
 
-        VerticalLayout content = new VerticalLayout();
-        this.setContent(content);
-
         EditForm editForm = new EditForm();
-        content.addComponent(editForm);
         Cloner cloner = new Cloner();
         editForm.setBean(cloner.deepClone(task.getTask()));
+        this.setContent(editForm);
     }
 
     private class EditForm extends AdvancedEditBeanForm<SimpleTask> {

@@ -90,6 +90,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     private CssLayout wrapBody;
     private VerticalLayout rightColumn;
     private MHorizontalLayout mainLayout;
+    private TaskGroupOrderComponent taskGroupOrderComponent;
 
     private ApplicationEventListener<TaskEvent.SearchRequest> searchHandler = new
             ApplicationEventListener<TaskEvent.SearchRequest>() {
@@ -99,6 +100,19 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                     TaskSearchCriteria criteria = (TaskSearchCriteria) event.getData();
                     if (criteria != null) {
                         queryTask(criteria);
+                    }
+                }
+            };
+
+    private ApplicationEventListener<TaskEvent.NewTaskAdded> newTaskAddedHandler = new
+            ApplicationEventListener<TaskEvent.NewTaskAdded>() {
+                @Override
+                @Subscribe
+                public void handle(TaskEvent.NewTaskAdded event) {
+                    final ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    SimpleTask task = projectTaskService.findById((Integer) event.getData(), AppContext.getAccountId());
+                    if (task != null && taskGroupOrderComponent != null) {
+                        taskGroupOrderComponent.insertTasks(Arrays.asList(task));
                     }
                 }
             };
@@ -115,8 +129,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
             public void valueChange(Property.ValueChangeEvent event) {
                 SaveSearchResultWithBLOBs item = (SaveSearchResultWithBLOBs) savedFilterComboBox.getValue();
                 if (item != null) {
-                    List<SearchFieldInfo> fieldInfos = (List<SearchFieldInfo>) XStreamJsonDeSerializer.fromJson(item
-                            .getQuerytext());
+                    List<SearchFieldInfo> fieldInfos = (List<SearchFieldInfo>) XStreamJsonDeSerializer.fromJson(item.getQuerytext());
                     // @HACK: === the library serialize with extra list
                     // wrapper
                     if (CollectionUtils.isEmpty(fieldInfos)) {
@@ -163,19 +176,19 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
         taskSearchPanel.addHeaderRight(groupWrapLayout);
 
-        Button newTaskListBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+        Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(TaskDashboardViewImpl.this, null));
+                UI.getCurrent().addWindow(new TaskAddWindow());
             }
         });
-        newTaskListBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-        newTaskListBtn.setIcon(FontAwesome.PLUS);
-        newTaskListBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
-        newTaskListBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        groupWrapLayout.addComponent(newTaskListBtn);
+        newTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+        newTaskBtn.setIcon(FontAwesome.PLUS);
+        newTaskBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
+        newTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        groupWrapLayout.addComponent(newTaskBtn);
 
         Button advanceDisplayBtn = new Button();
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
@@ -222,12 +235,14 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(searchHandler);
+        EventBusFactory.getInstance().register(newTaskAddedHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
         EventBusFactory.getInstance().unregister(searchHandler);
+        EventBusFactory.getInstance().unregister(newTaskAddedHandler);
         super.detach();
     }
 
@@ -269,7 +284,6 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     public void queryTask(final TaskSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         wrapBody.removeAllComponents();
-        final TaskGroupOrderComponent taskGroupOrderComponent;
         if (GROUP_DUE_DATE.equals(groupByState)) {
             searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", sortDirection)));
             taskGroupOrderComponent = new DueDateOrderComponent();
@@ -305,8 +319,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
             moreBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
             wrapBody.addComponent(moreBtn);
         }
-        List<SimpleTask> tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria,
-                currentPage + 1, 20));
+        List<SimpleTask> tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, currentPage + 1, 20));
         taskGroupOrderComponent.insertTasks(tasks);
     }
 
