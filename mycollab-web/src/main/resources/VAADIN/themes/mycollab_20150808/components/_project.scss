@@ -745,7 +745,13 @@
     }
   }
 
-  .gantt_tree {
+  .gantt_container {
+    border-style: solid;
+    border-width: 1px 1px 1px 0px;
+    border-color: $border-color;
+    .v-table-row-odd {
+      background: white;
+    }
     .v-treetable-node-open {
       background: none;
       &::before {
@@ -762,13 +768,23 @@
         font-family: FontAwesome;
       }
     }
-    .v-table-column-selector {height: 0px; width: 0px;}
+    .v-table-row-hasChildTasks {
+      background-color: gainsboro;
+      font-weight: bold;
+    }
+    .v-table-column-selector {
+      height: 0px; width: 0px;
+      background: none;
+    }
     .v-table-table tr td.v-table-cell-content {
-      height: 30px;
+      height: 31px;
       .v-label {
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+      border-style: solid;
+      border-color: $border-color;
+      border-width: 0px 1px 1px 0px;
     }
     .v-table-table tr:first-child td.v-table-cell-content {
       height: 31px;

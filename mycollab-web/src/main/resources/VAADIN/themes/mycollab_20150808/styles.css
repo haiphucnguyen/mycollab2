@@ -1080,7 +1080,7 @@ a.pending {
 .v-progressbar-wrapper {
 	height: 18px;
 	background: none no-repeat 0 0 #f9f9f9;
-	border: 1px solid #CDCDCD;
+	border: 1px solid #CFCFCF;
 }
 
 .v-progressbar-indicator {
@@ -1090,7 +1090,7 @@ a.pending {
 	-moz-border-radius: 2px;
 	background: none no-repeat 0 0 #9cd5f2;
 	margin: -1px;
-	border: 1px solid #CDCDCD;
+	border: 1px solid #CFCFCF;
 }
 
 .v-progressbar.medium {
@@ -1142,12 +1142,12 @@ div.v-button-link.buttonPaging .v-button-wrap {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #C8C8C8;
+	border: 1px solid #CFCFCF;
 }
 
 div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
 	padding: 4px 0px 3px;
-	border: 1px solid #777575;
+	border: 1px solid #CFCFCF;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
@@ -8504,7 +8504,7 @@ a.pending {
 .v-progressbar-wrapper {
 	height: 18px;
 	background: none no-repeat 0 0 #f9f9f9;
-	border: 1px solid #CDCDCD;
+	border: 1px solid #CFCFCF;
 }
 
 .v-progressbar-indicator {
@@ -8514,7 +8514,7 @@ a.pending {
 	-moz-border-radius: 2px;
 	background: none no-repeat 0 0 #9cd5f2;
 	margin: -1px;
-	border: 1px solid #CDCDCD;
+	border: 1px solid #CFCFCF;
 }
 
 .v-progressbar.medium {
@@ -8566,12 +8566,12 @@ div.v-button-link.buttonPaging .v-button-wrap {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #C8C8C8;
+	border: 1px solid #CFCFCF;
 }
 
 div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
 	padding: 4px 0px 3px;
-	border: 1px solid #777575;
+	border: 1px solid #CFCFCF;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
@@ -8879,10 +8879,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	font-size: 13px;
 	border-bottom: 1px solid #CFCFCF;
 	color: #454545;
-}
-
-.readViewLayout .v-label-h2.no-border {
-	border: none;
 }
 
 .readViewBottomControls .v-verticallayout {
@@ -9962,41 +9958,60 @@ div.v-button.token-field:hover {
 	padding: 5px;
 }
 
-.gantt_tree .v-treetable-node-open {
+.gantt_container {
+	border-style: solid;
+	border-width: 1px 1px 1px 0px;
+	border-color: #CFCFCF;
+}
+
+.gantt_container .v-table-row-odd {
+	background: white;
+}
+
+.gantt_container .v-treetable-node-open {
 	background: none;
 }
 
-.gantt_tree .v-treetable-node-open::before {
+.gantt_container .v-treetable-node-open::before {
 	content: "\f147";
 	color: black;
 	font-family: FontAwesome;
 }
 
-.gantt_tree .v-treetable-node-closed {
+.gantt_container .v-treetable-node-closed {
 	background: none;
 }
 
-.gantt_tree .v-treetable-node-closed::before {
+.gantt_container .v-treetable-node-closed::before {
 	content: "\f196";
 	color: black;
 	font-family: FontAwesome;
 }
 
-.gantt_tree .v-table-column-selector {
+.gantt_container .v-table-row-hasChildTasks {
+	background-color: gainsboro;
+	font-weight: bold;
+}
+
+.gantt_container .v-table-column-selector {
 	height: 0px;
 	width: 0px;
+	background: none;
 }
 
-.gantt_tree .v-table-table tr td.v-table-cell-content {
-	height: 30px;
+.gantt_container .v-table-table tr td.v-table-cell-content {
+	height: 31px;
+	border-style: solid;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px 0px;
 }
 
-.gantt_tree .v-table-table tr td.v-table-cell-content .v-label {
+.gantt_container .v-table-table tr td.v-table-cell-content .v-label {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
-.gantt_tree .v-table-table tr:first-child td.v-table-cell-content {
+.gantt_container .v-table-table tr:first-child td.v-table-cell-content {
 	height: 31px;
 }
 
@@ -10014,7 +10029,7 @@ div.v-button.token-field:hover {
 	padding-left: 2px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	border-right: 1px solid #A9A9A9;
+	border-right: 1px solid #CFCFCF;
 	background-color: #d0d0d0;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -10037,7 +10052,7 @@ div.v-button.token-field:hover {
 	height: 100%;
 	float: left;
 	overflow: hidden;
-	border-right: 1px solid #A9A9A9;
+	border-right: 1px solid #CFCFCF;
 	background-color: #ddd;
 	font-size: 10px;
 	text-align: center;
@@ -10180,8 +10195,8 @@ div.v-button.token-field:hover {
 	height: 100%;
 	z-index: 2;
 	background: transparent;
-	border-left: 1px dashed #ddd;
-	border-right: 1px dashed #ddd;
+	border-left: 1px dashed #CFCFCF;
+	border-right: 1px dashed #CFCFCF;
 }
 
 .gantt .arrow .start-p, .gantt .arrow .end-p {
@@ -12054,18 +12069,6 @@ div.v-window-header {
 
 .v-table-row-odd .v-ratingstars-wrapper-tiny .v-ratingstars-star {
 	background-image: url("icons/star_12x11.png");
-}
-
-.v-label-h2.no-border {
-	border: none;
-}
-
-.v-panel.no-border .v-panel-nocaption, .v-panel.no-border .v-panel-deco {
-	border-top: none;
-}
-
-.v-panel.no-border div.v-panel-content-light, .v-panel.no-border .v-panel-content {
-	border: none;
 }
 
 div.v-lazyloadingwrapper-loading {

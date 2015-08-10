@@ -72,6 +72,10 @@ public class GanttItemWrapper {
         return subItems;
     }
 
+    public Integer getId() {
+        return task.getId();
+    }
+
     private void calculateDates() {
         startDate = task.getStartdate();
         endDate = task.getEnddate();
@@ -107,6 +111,16 @@ public class GanttItemWrapper {
         return endDate;
     }
 
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+        task.setStartdate(startDate);
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+        task.setEnddate(endDate);
+    }
+
     public String getAssignUser() {
         return task.getAssignuser();
     }
@@ -118,6 +132,13 @@ public class GanttItemWrapper {
     String buildTooltip() {
         return ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, AppContext.getSiteUrl(),
                 AppContext.getTimezone());
+    }
+
+    public void markAsDirty() {
+        ownStep.setCaption(buildCaption());
+        ownStep.setDescription(buildTooltip());
+        ownStep.setStartDate(startDate);
+        ownStep.setEndDate(endDate);
     }
 
     StepExt generateStep() {

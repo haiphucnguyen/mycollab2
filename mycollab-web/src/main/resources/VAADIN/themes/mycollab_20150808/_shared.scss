@@ -155,7 +155,7 @@
   .v-progressbar-wrapper {
     height: 18px;
     background: none no-repeat 0 0 #f9f9f9;
-    border: 1px solid #CDCDCD;
+    border: 1px solid $border-color;
   }
 
   .v-progressbar-indicator {
@@ -165,7 +165,7 @@
     -moz-border-radius: 2px;
     background: none no-repeat 0 0 #9cd5f2;
     margin: -1px;
-    border: 1px solid #CDCDCD;
+    border: 1px solid $border-color;
   }
 
   .v-progressbar.medium {
@@ -215,11 +215,11 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
-        border: 1px solid #C8C8C8;
+        border: 1px solid $border-color;
       }
       &:active .v-button-wrap, &:focus .v-button-wrap {
         padding: 4px 0px 3px;
-        border: 1px solid #777575;
+        border: 1px solid $border-color;
       }
       .v-button-wrap .v-button-caption {
         text-align: center;
