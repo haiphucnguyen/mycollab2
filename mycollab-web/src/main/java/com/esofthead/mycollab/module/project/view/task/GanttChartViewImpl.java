@@ -26,12 +26,14 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.project.*;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
@@ -249,8 +251,10 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         gantt.addClickListener(new Gantt.ClickListener() {
             @Override
             public void onGanttClick(Gantt.ClickEvent clickEvent) {
-                StepExt step = (StepExt) clickEvent.getStep();
-                getUI().addWindow(new QuickEditTaskWindow(gantt, step.getGanttItemWrapper()));
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    StepExt step = (StepExt) clickEvent.getStep();
+                    getUI().addWindow(new QuickEditTaskWindow(gantt, step.getGanttItemWrapper()));
+                }
             }
         });
     }

@@ -10015,6 +10015,10 @@ div.v-button.token-field:hover {
 	height: 31px;
 }
 
+.gantt .bar.v-widget {
+	cursor: pointer;
+}
+
 .gantt {
 	background: #fff;
 	overflow: hidden;

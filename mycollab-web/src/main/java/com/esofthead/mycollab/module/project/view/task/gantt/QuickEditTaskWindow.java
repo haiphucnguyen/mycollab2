@@ -1,18 +1,18 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
+import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
@@ -21,13 +21,13 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public class QuickEditTaskWindow extends Window {
     public QuickEditTaskWindow(GanttExt gantt, GanttItemWrapper task) {
         super("Quick Edit Task");
-        this.setWidth("600px");
+        this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
         this.setClosable(true);
         this.center();
 
-        MVerticalLayout content = new MVerticalLayout();
+        VerticalLayout content = new VerticalLayout();
         this.setContent(content);
 
         EditForm editForm = new EditForm();
@@ -39,7 +39,7 @@ public class QuickEditTaskWindow extends Window {
         @Override
         public void setBean(final SimpleTask item) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-//            this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
+            this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
             super.setBean(item);
         }
 
@@ -50,11 +50,23 @@ public class QuickEditTaskWindow extends Window {
             @Override
             public ComponentContainer getLayout() {
                 VerticalLayout layout = new VerticalLayout();
-                this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
-                layout.addComponent(this.informationLayout.getLayout());
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
+                informationLayout.getLayout().setMargin(false);
+                informationLayout.getLayout().setSpacing(false);
+                layout.addComponent(informationLayout.getLayout());
 
-                MHorizontalLayout buttonControls = new MHorizontalLayout();
+                MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
                 buttonControls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+
+                Button updateAllBtn = new Button("Update other fields", new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditTaskWindow.this, EditForm.this.bean));
+                        close();
+                    }
+                });
+                updateAllBtn.addStyleName(UIConstants.THEME_LINK);
+
                 Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
@@ -70,7 +82,7 @@ public class QuickEditTaskWindow extends Window {
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-                buttonControls.with(updateBtn, cancelBtn);
+                buttonControls.with(updateAllBtn, updateBtn, cancelBtn);
 
                 layout.addComponent(buttonControls);
                 layout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
@@ -79,13 +91,33 @@ public class QuickEditTaskWindow extends Window {
 
             @Override
             public void attachField(Object propertyId, Field<?> field) {
-                if (propertyId.equals("name")) {
-//                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_SUBJECT), );
-                } else if (propertyId.equals("startDate")) {
-                    this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_START_DATE), 0, 0);
-                } else if (propertyId.equals("endDate")) {
-                    this.informationLayout.addComponent(field, "Comment", 0, 1, 2, "100%");
+                if (Task.Field.taskname.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME), 0, 0, 2, "100%");
+                } else if (Task.Field.startdate.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_START_DATE), 0, 1);
+                } else if (Task.Field.enddate.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_END_DATE), 1, 1);
+                } else if (Task.Field.deadline.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE), 0, 2);
+                } else if (Task.Field.assignuser.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
                 }
+            }
+        }
+
+        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
+            private static final long serialVersionUID = 1L;
+
+            public EditFormFieldFactory(GenericBeanForm<SimpleTask> form) {
+                super(form);
+            }
+
+            @Override
+            protected Field<?> onCreateField(final Object propertyId) {
+                if (Task.Field.assignuser.equalTo(propertyId)) {
+                    return new ProjectMemberSelectionField();
+                }
+                return null;
             }
         }
     }
