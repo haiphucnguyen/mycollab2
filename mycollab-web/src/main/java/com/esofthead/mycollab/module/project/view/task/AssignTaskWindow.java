@@ -152,7 +152,7 @@ public class AssignTaskWindow extends Window {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 0);
                 } else if (propertyId.equals("comment")) {
                     informationLayout.addComponent(field,
-                            AppContext.getMessage(TaskI18nEnum.FORM_COMMENT), 0, 1, 2, "100%", Alignment.MIDDLE_LEFT);
+                            AppContext.getMessage(TaskI18nEnum.FORM_COMMENT), 0, 1, 2, "100%");
                 }
             }
         }

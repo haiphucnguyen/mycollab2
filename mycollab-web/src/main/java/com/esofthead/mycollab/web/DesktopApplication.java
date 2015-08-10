@@ -212,7 +212,7 @@ public class DesktopApplication extends MyCollabUI {
                     }
                 });
         Button okBtn = dialog.getOkButton();
-        BrowserWindowOpener opener = new BrowserWindowOpener("https://www.mycollab.com/contact/");
+        BrowserWindowOpener opener = new BrowserWindowOpener("http://support.mycollab.com");
         opener.extend(okBtn);
     }
 

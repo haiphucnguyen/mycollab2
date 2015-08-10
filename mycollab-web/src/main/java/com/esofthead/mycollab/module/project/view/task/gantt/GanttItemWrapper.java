@@ -103,6 +103,16 @@ public class GanttItemWrapper {
         }
     }
 
+    private static final long DAY_IN_MILIS = 1000*60*60*24;
+
+    public Double getDuration() {
+        if (startDate != null && endDate!= null) {
+            return (endDate.getTime() - startDate.getTime())* 1d /DAY_IN_MILIS;
+        } else {
+            return 0d;
+        }
+    }
+
     public Date getStartDate() {
         return startDate;
     }

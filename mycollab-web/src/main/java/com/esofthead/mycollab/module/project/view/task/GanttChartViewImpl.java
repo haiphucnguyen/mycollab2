@@ -18,14 +18,15 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
+import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -38,12 +39,17 @@ import com.esofthead.mycollab.module.project.view.task.gantt.QuickEditTaskWindow
 import com.esofthead.mycollab.module.project.view.task.gantt.StepExt;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -54,10 +60,8 @@ import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.Step;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -213,12 +217,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                             taskTable.addTask(itemWrapper);
                             Step step = itemWrapper.getStep();
                             gantt.addStep(step);
-                            gantt.addClickListener(new Gantt.ClickListener() {
-                                @Override
-                                public void onGanttClick(Gantt.ClickEvent clickEvent) {
-//                                    UI.getCurrent().addWindow(new QuickEditTaskWindow(gantt, itemWrapper));
-                                }
-                            });
 
                             if (task.isCompleted()) {
 //                    step.setBackgroundColor("53C540");
@@ -247,6 +245,14 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 }
             }
         });
+
+        gantt.addClickListener(new Gantt.ClickListener() {
+            @Override
+            public void onGanttClick(Gantt.ClickEvent clickEvent) {
+                StepExt step = (StepExt) clickEvent.getStep();
+                getUI().addWindow(new QuickEditTaskWindow(gantt, step.getGanttItemWrapper()));
+            }
+        });
     }
 
     void insertSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
@@ -256,7 +262,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 taskTable.addItem(child);
                 taskTable.setParent(child, parent);
                 taskTable.setChildrenAllowed(child, child.hasSubTasks());
-
             }
         }
     }
@@ -276,25 +281,51 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         TaskHierarchyComp() {
             super();
+            this.setImmediate(true);
             beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
             this.setContainerDataSource(beanContainer);
-            this.setVisibleColumns("name", "startDate", "endDate", "assignUser");
+            this.setVisibleColumns("name", "startDate", "endDate", "duration");
             this.setColumnHeader("name", "Task");
             this.setColumnExpandRatio("name", 1.0f);
             this.setColumnHeader("startDate", "Start");
             this.setColumnWidth("startDate", 75);
             this.setColumnHeader("endDate", "End");
             this.setColumnWidth("endDate", 75);
-            this.setColumnHeader("assignUser", "Assignee");
-            this.setColumnWidth("assignUser", UIConstants.TABLE_X_LABEL_WIDTH);
+            this.setColumnHeader("duration", "Duration");
+            this.setColumnWidth("duration", 80);
 
             this.addGeneratedColumn("name", new ColumnGenerator() {
                 @Override
                 public Object generateCell(Table table, Object itemId, Object columnId) {
                     GanttItemWrapper item = (GanttItemWrapper) itemId;
-                    Label taskLbl = new Label(item.getName());
-                    taskLbl.setDescription(ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(),
-                            item.getTask(), AppContext.getSiteUrl(), AppContext.getTimezone()));
+                    SimpleTask task = item.getTask();
+
+                    String taskLinkContent = "";
+                    String uid = UUID.randomUUID().toString();
+                    String taskPriority = task.getPriority();
+                    Img priorityLink = new Img(taskPriority, ProjectResources.getIconResourceLink12ByTaskPriority
+                            (taskPriority)).setTitle(taskPriority);
+
+                    String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
+                    A taskLink = new A().setId("tag" + uid).appendText(linkName).setStyle("display:inline");
+
+                    taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
+                    taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+
+                    String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
+                    Img avatarImg = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
+
+                    Div resultDiv = new DivLessFormatter().appendChild(priorityLink, DivLessFormatter.EMPTY_SPACE(),
+                            avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
+                            TooltipHelper.buildDivTooltipEnable(uid));
+                    taskLinkContent = resultDiv.write();
+
+                    Label taskLbl = new Label(taskLinkContent, ContentMode.HTML);
+                    if (task.isCompleted()) {
+                        taskLbl.addStyleName("completed");
+                    } else if (task.isOverdue()) {
+                        taskLbl.addStyleName("overdue");
+                    }
                     return taskLbl;
                 }
             });
@@ -315,12 +346,12 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 }
             });
 
-            this.addGeneratedColumn("assignUser", new ColumnGenerator() {
+            this.addGeneratedColumn("duration", new ColumnGenerator() {
                 @Override
                 public Object generateCell(Table table, Object itemId, Object columnId) {
                     GanttItemWrapper item = (GanttItemWrapper) itemId;
-                    SimpleTask task = item.getTask();
-                    return new ProjectMemberLink(task.getAssignuser(), task.getAssignUserAvatarId(), task.getAssignUserFullName());
+                    double dur = item.getDuration();
+                    return new Label(dur + " d");
                 }
             });
 
@@ -366,7 +397,11 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         }
 
         private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
-
+            BeanItem<GanttItemWrapper> item = beanContainer.getItem(ganttItemWrapper);
+//            item.getItemProperty("assignUser").setValue(ganttItemWrapper.getAssignUser());
+            item.getItemProperty("endDate").setValue(ganttItemWrapper.getEndDate());
+            item.getItemProperty("startDate").setValue(ganttItemWrapper.getStartDate());
+//            item.getItemProperty("name").setValue(ganttItemWrapper.getName());
         }
 
         void addTask(GanttItemWrapper itemWrapper) {
