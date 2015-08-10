@@ -408,10 +408,8 @@ public class ProjectViewImpl extends AbstractCssPageView implements ProjectView 
 
         if (CurrentProjectVariables.hasTaskFeature()) {
             myProjectTab.addTab(constructTaskDashboardComponent(),
-                    ProjectTypeConstants.TASK, 4,
-                    AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
-                    GenericLinkUtils.URL_PREFIX_PARAM
-                            + ProjectLinkGenerator.generateTaskDashboardLink(prjId));
+                    ProjectTypeConstants.TASK, 4, AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK),
+                    GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTaskDashboardLink(prjId));
         } else {
             myProjectTab.removeTab(ProjectTypeConstants.TASK);
         }

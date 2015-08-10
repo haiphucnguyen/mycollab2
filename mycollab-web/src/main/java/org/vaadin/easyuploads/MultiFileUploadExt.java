@@ -17,10 +17,18 @@
 
 package org.vaadin.easyuploads;
 
+import java.io.File;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedList;
+
 import com.esofthead.mycollab.common.i18n.FileI18nEnum;
 import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
+import org.apache.commons.io.FilenameUtils;
+
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.ui.AttachmentUploadComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
@@ -28,16 +36,17 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import org.apache.commons.io.FilenameUtils;
-
-import java.io.File;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.LinkedList;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.DragAndDropWrapper;
+import com.vaadin.ui.Html5File;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.ProgressBar;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
+ *
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -85,7 +94,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
                 }
 
                 if (indicators.size() == 0) {
-                    UI.getCurrent().push();
+                    UI.getCurrent().setPollInterval(-1);
                 }
 
                 File file = receiver.getFile();
@@ -107,7 +116,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
                 for (ProgressBar progressIndicator : indicators) {
                     progressBars.removeComponent(progressIndicator);
                 }
-                UI.getCurrent().push();
+                UI.getCurrent().setPollInterval(-1);
             }
 
             @Override
@@ -116,7 +125,6 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
                 long contentLength = event.getContentLength();
                 float f = (float) readBytes / (float) contentLength;
                 indicators.get(0).setValue(f);
-                UI.getCurrent().push();
             }
 
             @Override
@@ -128,6 +136,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
 
             @Override
             public void filesQueued(Collection<MultiUpload.FileDetail> pendingFiles) {
+                UI.getCurrent().setPollInterval(500);
                 if (indicators == null) {
                     indicators = new LinkedList<>();
                 }
