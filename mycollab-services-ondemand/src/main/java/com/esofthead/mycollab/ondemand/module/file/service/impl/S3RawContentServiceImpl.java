@@ -39,18 +39,16 @@ public class S3RawContentServiceImpl implements RawContentService {
 
     @Override
     public void saveContent(String objectPath, InputStream stream) {
-
         AmazonS3 s3client = storageConfiguration.newS3Client();
         try {
             ObjectMetadata metaData = new ObjectMetadata();
             metaData.setCacheControl("max-age=8640000");
             metaData.setContentLength(stream.available());
-            PutObjectRequest request = new PutObjectRequest(
-                    storageConfiguration.getBucket(), objectPath, stream, metaData);
+            PutObjectRequest request = new PutObjectRequest(storageConfiguration.getBucket(), objectPath, stream, metaData);
 
             s3client.putObject(request.withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (Exception e) {
-            throw new RuntimeException("Can not save s3 object path " + objectPath, e);
+            throw new MyCollabException("Can not save s3 object path " + objectPath, e);
         }
     }
 
@@ -62,8 +60,7 @@ public class S3RawContentServiceImpl implements RawContentService {
             S3Object obj = s3client.getObject(new GetObjectRequest(storageConfiguration.getBucket(), objectPath));
             return obj.getObjectContent();
         } catch (Exception e) {
-            throw new MyCollabException(
-                    "Can not get s3 resource " + objectPath, e);
+            throw new MyCollabException("Can not get s3 resource " + objectPath, e);
         }
     }
 
@@ -103,8 +100,7 @@ public class S3RawContentServiceImpl implements RawContentService {
             }
 
         } catch (Exception e) {
-            throw new MyCollabException("Can not remane from path " + oldPath
-                    + " to " + newPath, e);
+            throw new MyCollabException("Can not remane from path " + oldPath + " to " + newPath, e);
         }
 
     }
