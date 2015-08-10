@@ -77,13 +77,22 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     @Override
     public Integer saveWithSession(OptionVal record, String username) {
         String typeVal = record.getTypeval();
-        OptionValExample ex = new OptionValExample();
-        ex.createCriteria().andTypevalEqualTo(typeVal).andSaccountidEqualTo(record.getSaccountid());
-        if (optionValMapper.countByExample(ex) > 0) {
-            throw new UserInvalidInputException("There is already column name " + typeVal);
+        if (Boolean.TRUE.equals(record.getIsdefault())) {
+            OptionValExample ex = new OptionValExample();
+            ex.createCriteria().andTypevalEqualTo(typeVal).andSaccountidEqualTo(record.getSaccountid());
+            if (optionValMapper.countByExample(ex) > 0) {
+                throw new UserInvalidInputException("There is already column name " + typeVal);
+            }
         } else {
-            return super.saveWithSession(record, username);
+            OptionValExample ex = new OptionValExample();
+            ex.createCriteria().andTypevalEqualTo(typeVal).andSaccountidEqualTo(record.getSaccountid())
+                    .andIsdefaultEqualTo(Boolean.FALSE);
+            if (optionValMapper.countByExample(ex) > 0) {
+                throw new UserInvalidInputException("There is already column name " + typeVal);
+            }
         }
+
+        return super.saveWithSession(record, username);
     }
 
     @Override
