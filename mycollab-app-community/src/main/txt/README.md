@@ -48,7 +48,8 @@ Version 5.1.1
 **Library Upgrades**
 
 * Jackson library 2.6.0, DynamicReports 4.0.1
-* Vaadin 7.5.2
+* Vaadin 7.5.3
+* JQuery 2.1.4
 
 **Improvements & New Features**
 
@@ -57,6 +58,7 @@ Version 5.1.1
 * Generate thumbnail for images
 * Update the task management workflow to remove the task group !!!
 * Reduce the time response for heavy loading page
+* Improve Gantt chart
 
 **Bug Fixes**
 

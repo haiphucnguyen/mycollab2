@@ -46,6 +46,7 @@ import com.vaadin.server.*;
 import com.vaadin.server.Page.UriFragmentChangedEvent;
 import com.vaadin.server.Page.UriFragmentChangedListener;
 import com.vaadin.shared.communication.PushMode;
+import com.vaadin.shared.ui.ui.Transport;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
@@ -62,7 +63,7 @@ import java.util.Collection;
  */
 @Theme(MyCollabVersion.THEME_VERSION)
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
-@Push(value = PushMode.MANUAL)
+@Push(value = PushMode.MANUAL, transport = Transport.LONG_POLLING)
 public class DesktopApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
 

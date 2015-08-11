@@ -3,6 +3,7 @@ package com.esofthead.resteasy.plugins.spring;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import org.jboss.resteasy.plugins.spring.SpringContextLoaderSupport;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
@@ -41,7 +42,7 @@ public class SpringContextLoaderListener extends ContextLoaderListener {
 		}
 
 		if (scanProviders || scanResources) {
-			throw new RuntimeException(
+			throw new MyCollabException(
 					"You cannot use resteasy.scan, resteasy.scan.resources, or resteasy.scan.providers with the SpringContextLoaderLister as this may cause serious deployment errors in your application");
 		}
 

@@ -193,7 +193,7 @@ public class VerticalTabsheet extends CustomComponent {
             SELECTED_TAB_CHANGE_METHOD = SelectedTabChangeListener.class
                     .getDeclaredMethod("selectedTabChange", SelectedTabChangeEvent.class);
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Internal error finding methods in TabSheet");
+            throw new MyCollabException("Internal error finding methods in TabSheet");
         }
     }
 
