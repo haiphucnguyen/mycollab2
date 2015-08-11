@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.view.bug.IBugResolutionSummaryChartWidget;
-import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -47,40 +46,32 @@ import java.util.List;
  * @since 1.0
  */
 @ViewComponent
-public class BugResolutionSummaryChartWidget extends CssLayout implements
-        IBugResolutionSummaryChartWidget {
-
+public class BugResolutionSummaryChartWidget extends CssLayout implements IBugResolutionSummaryChartWidget {
     private static final long serialVersionUID = 1L;
 
     public BugResolutionSummaryChartWidget() {
         this.setSizeFull();
-
     }
 
     @Override
     public void setSearchCriteria(BugSearchCriteria searchCriteria) {
         this.removeAllComponents();
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-
         final DataSeries series = new DataSeries("Resolution");
-
-        List<GroupItem> groupItems = bugService
-                .getResolutionDefectsSummary(searchCriteria);
+        List<GroupItem> groupItems = bugService.getResolutionDefectsSummary(searchCriteria);
         BugResolution[] bugResolutions = OptionI18nEnum.bug_resolutions;
         for (BugResolution resolution : bugResolutions) {
             boolean isFound = false;
             for (GroupItem item : groupItems) {
                 if (resolution.name().equals(item.getGroupid())) {
-                    series.add(new DataSeriesItem(AppContext
-                            .getMessage(resolution), item.getValue()));
+                    series.add(new DataSeriesItem(AppContext.getMessage(resolution), item.getValue()));
                     isFound = true;
                     break;
                 }
             }
 
             if (!isFound) {
-                series.add(new DataSeriesItem(
-                        AppContext.getMessage(resolution), 0));
+                series.add(new DataSeriesItem(AppContext.getMessage(resolution), 0));
             }
         }
 
@@ -93,8 +84,7 @@ public class BugResolutionSummaryChartWidget extends CssLayout implements
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
                 searchCriteria.setResolutions(new SetSearchField<>(key));
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                BugFilterParameter param = new BugFilterParameter(key + " Bug List", searchCriteria);
-                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(param)));
+                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(searchCriteria)));
             }
         });
         Configuration conf = chart.getConfiguration();

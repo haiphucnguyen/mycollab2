@@ -78,6 +78,7 @@ object ProjectPresenterDataMapper {
         classOf[BugScreenData.Add] -> classOf[TrackerPresenter],
         classOf[BugScreenData.Edit] -> classOf[TrackerPresenter],
         classOf[BugScreenData.Search] -> classOf[TrackerPresenter],
+        classOf[BugScreenData.GotoKanbanView] -> classOf[TrackerPresenter],
         classOf[ComponentScreenData.Add] -> classOf[TrackerPresenter],
         classOf[ComponentScreenData.Edit] -> classOf[TrackerPresenter],
         classOf[ComponentScreenData.Read] -> classOf[TrackerPresenter],

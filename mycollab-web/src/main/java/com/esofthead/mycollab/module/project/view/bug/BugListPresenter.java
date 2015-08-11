@@ -21,7 +21,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
-import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -63,9 +62,8 @@ public class BugListPresenter extends ProjectGenericListPresenter<BugListView, B
             trackerContainer.removeAllComponents();
             trackerContainer.addComponent(view.getWidget());
 
-            BugFilterParameter param = (BugFilterParameter) data.getParams();
-            searchCriteria = param.getSearchCriteria();
-            int totalCount = bugService.getTotalCount(param.getSearchCriteria());
+            searchCriteria = (BugSearchCriteria) data.getParams();
+            int totalCount = bugService.getTotalCount(searchCriteria);
 
             if (totalCount > 0) {
                 this.displayListView(container, data);
@@ -83,8 +81,9 @@ public class BugListPresenter extends ProjectGenericListPresenter<BugListView, B
 
     @Override
     public void doSearch(BugSearchCriteria searchCriteria) {
-        int totalCountItems = view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        int totalCountItems = getSearchService().getTotalCount(searchCriteria);
         view.getSearchHandlers().setTotalCountNumber(totalCountItems);
+        view.queryBug(searchCriteria);
     }
 
     @Override

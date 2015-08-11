@@ -220,6 +220,14 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                 projectView.gotoBugView(data)
             }
         })
+
+        this.register(new ApplicationEventListener[BugEvent.GotoKanbanView] {
+            @Subscribe override def handle(event: BugEvent.GotoKanbanView): Unit = {
+                val data: BugScreenData.GotoKanbanView = new BugScreenData.GotoKanbanView
+                projectView.gotoBugView(data)
+            }
+        })
+
         this.register(new ApplicationEventListener[BugEvent.GotoList] {
             @Subscribe def handle(event: BugEvent.GotoList) {
                 val params: Any = event.getData
@@ -227,9 +235,8 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                     val criteria: BugSearchCriteria = new BugSearchCriteria
                     criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
                     criteria.setStatuses(new SetSearchField[String](BugStatus.InProgress.name,
-                        BugStatus.Open.name, BugStatus.ReOpened.name))
-                    val parameter: BugFilterParameter = new BugFilterParameter("Open Bugs", criteria)
-                    projectView.gotoBugView(new BugScreenData.Search(parameter))
+                        BugStatus.Open.name, BugStatus.ReOpened.name, BugStatus.Resolved.name))
+                    projectView.gotoBugView(new BugScreenData.Search(criteria))
                 }
                 else if (params.isInstanceOf[BugScreenData.Search]) {
                     projectView.gotoBugView(params.asInstanceOf[BugScreenData.Search])

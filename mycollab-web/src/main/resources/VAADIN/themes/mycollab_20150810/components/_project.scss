@@ -316,7 +316,7 @@
     }
   }
 
-  .task-attached {
+  .bug-attached {
     background: none;
     padding: 0px 7px 1px;
     margin-right: 2px;
@@ -654,14 +654,14 @@
     }
   }
 
-  .task-component {
+  .bug-component {
     margin-bottom: 5px;
     background-color: $background-color;
     > .v-csslayout-margin {
       border: 1px solid rgba(0, 0, 0, 0.25);
       padding-left: 5px;
     }
-    .task-name {
+    .bug-name {
       font-weight: bold;
     }
     .created-time {
@@ -703,17 +703,17 @@
     }
   }
 
-  .task-list .taskadd-popup .colored-gridlayout {
+  .bug-list .taskadd-popup .colored-gridlayout {
     border: none;
   }
 
-  .task-list .colored-gridlayout {
+  .bug-list .colored-gridlayout {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: $border-color;
   }
 
-  .task-list-footer {
+  .bug-list-footer {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: $border-color;
@@ -721,18 +721,18 @@
   }
 
   .v-tabsheet-content {
-    .task-list .task-list-footer {
+    .bug-list .bug-list-footer {
       border-width: 1px 0px 0px;
     }
-    .depotComp.task-list .task-list-footer {
+    .depotComp.bug-list .bug-list-footer {
       border-width: 0px 1px 1px;
     }
-    .task-list {
+    .bug-list {
       .v-table-header-wrap, .v-table-body-wrapper {
         border-width: 1px 0px 0px;
       }
     }
-    .depotComp.task-list {
+    .depotComp.bug-list {
       .v-table-header-wrap {
         border-width: 1px 1px 0px;
       }
@@ -740,7 +740,7 @@
         border-width: 1px;
       }
     }
-    .task-list .v-csslayout-comp-header {
+    .bug-list .v-csslayout-comp-header {
       padding: 5px;
     }
   }

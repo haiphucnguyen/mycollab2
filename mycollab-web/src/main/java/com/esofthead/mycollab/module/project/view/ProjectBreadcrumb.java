@@ -395,7 +395,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         AppContext.addFragment("project/task/gantt/" + UrlEncodeDecoder.encode(project.getId()), "Gantt chart");
     }
 
-    public void gotoKanbanView() {
+    public void gotoTaskKanbanView() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 1);
@@ -447,6 +447,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.BUGS_DASHBOARD)));
         AppContext.addFragment(ProjectLinkGenerator.generateBugDashboardLink(project.getId()),
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_BUG_DASHBOARD));
+    }
+
+    public void gotoBugKanbanView() {
+        this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.BUGS), new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 1);
+        this.addLink(new Button("Kanban"));
+        AppContext.addFragment("project/bug/kanban/" + UrlEncodeDecoder.encode(project.getId()), "Kanban View");
     }
 
     public void gotoBugList() {

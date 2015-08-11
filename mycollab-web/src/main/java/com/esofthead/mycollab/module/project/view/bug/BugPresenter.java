@@ -20,7 +20,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -54,17 +53,16 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
         AbstractPresenter<?> presenter;
 
-        if (data instanceof BugScreenData.Add
-                || data instanceof BugScreenData.Edit) {
+        if (data instanceof BugScreenData.Add || data instanceof BugScreenData.Edit) {
             presenter = PresenterResolver.getPresenter(BugAddPresenter.class);
         } else if (data instanceof BugScreenData.Read) {
             presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
+        } else if (data instanceof BugScreenData.GotoKanbanView) {
+            presenter = PresenterResolver.getPresenter(BugKanbanPresenter.class);
         } else if (data == null || data instanceof BugScreenData.Search) {
             BugSearchCriteria criteria = new BugSearchCriteria();
-            criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
-                    .getProjectId()));
-            data = new BugScreenData.Search(new BugFilterParameter("All Bugs",
-                    criteria));
+            criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+            data = new BugScreenData.Search(criteria);
             presenter = PresenterResolver.getPresenter(BugListPresenter.class);
         } else {
             throw new MyCollabException("Do not support screen data");

@@ -87,7 +87,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     private TaskSearchCriteria baseCriteria;
 
     private TaskSearchPanel taskSearchPanel;
-    private CssLayout wrapBody;
+    private VerticalLayout wrapBody;
     private VerticalLayout rightColumn;
     private MHorizontalLayout mainLayout;
     private TaskGroupOrderComponent taskGroupOrderComponent;
@@ -222,7 +222,8 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         groupWrapLayout.addComponent(viewButtons);
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
-        this.wrapBody = new CssLayout();
+        this.wrapBody = new VerticalLayout();
+        wrapBody.setSpacing(true);
 
         this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(false);
 

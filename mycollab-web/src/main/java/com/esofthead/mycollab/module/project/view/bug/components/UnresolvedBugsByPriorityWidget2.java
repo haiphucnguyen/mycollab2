@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
-import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -62,8 +61,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
         this.bodyContent.removeAllComponents();
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
         int totalCount = bugService.getTotalCount(searchCriteria);
-        this.setTitle(AppContext
-                .getMessage(BugI18nEnum.WIDGET_UNRESOLVED_BY_PRIORITY_TITLE) + " (" + totalCount + ")");
+        this.setTitle(AppContext.getMessage(BugI18nEnum.WIDGET_UNRESOLVED_BY_PRIORITY_TITLE) + " (" + totalCount + ")");
         List<GroupItem> groupItems = bugService.getPrioritySummary(searchCriteria);
         BugPriorityClickListener listener = new BugPriorityClickListener();
 
@@ -115,10 +113,8 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
         public void buttonClick(final ClickEvent event) {
             String key = ((ButtonI18nComp) event.getButton()).getKey();
             bugSearchCriteria.setPriorities(new SetSearchField<>(new String[]{key}));
-            BugFilterParameter param = new BugFilterParameter("Unresolved " + key + " Bug List",
-                    UnresolvedBugsByPriorityWidget2.this.bugSearchCriteria);
             EventBusFactory.getInstance()
-                    .post(new BugEvent.GotoList(this, new BugScreenData.Search(param)));
+                    .post(new BugEvent.GotoList(this, new BugScreenData.Search(bugSearchCriteria)));
         }
     }
 }

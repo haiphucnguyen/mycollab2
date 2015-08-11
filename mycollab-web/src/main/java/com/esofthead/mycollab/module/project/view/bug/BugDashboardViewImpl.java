@@ -48,8 +48,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 import org.vaadin.maddon.layouts.MVerticalLayout;
 
-import java.util.GregorianCalendar;
-
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -62,8 +60,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDas
 
     private void initUI() {
         this.setMargin(new MarginInfo(false, true, false, true));
-        header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                .withWidth("100%");
+        header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
         header.addStyleName("hdr-view");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         addComponent(header);
@@ -85,13 +82,12 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDas
                 AppContext.getMessage(BugI18nEnum.VIEW_BUG_DASHBOARD_TITLE));
         header.with(title).withAlign(title, Alignment.MIDDLE_LEFT).expand(title);
 
-        Button createBugBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG),
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));
-                    }
-                });
+        Button createBugBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));
+            }
+        });
         createBugBtn.setEnabled(CurrentProjectVariables
                 .canWrite(ProjectRolePermissionCollections.BUGS));
         createBugBtn.setIcon(FontAwesome.PLUS);
@@ -100,32 +96,25 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDas
         controlsBtn.setWidthUndefined();
 
         OptionPopupContent btnControlsLayout = new OptionPopupContent().withWidth("180px");
-        Button createComponentBtn = new Button(
-                AppContext.getMessage(BugI18nEnum.BUTTON_NEW_COMPONENT),
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        controlsBtn.setPopupVisible(false);
-                        EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(this, null));
-                    }
-                });
-        createComponentBtn.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.COMPONENTS));
+        Button createComponentBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_COMPONENT), new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                controlsBtn.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(this, null));
+            }
+        });
+        createComponentBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
         createComponentBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
         btnControlsLayout.addOption(createComponentBtn);
 
-        Button createVersionBtn = new Button(
-                AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION),
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        controlsBtn.setPopupVisible(false);
-                        EventBusFactory.getInstance().post(
-                                new BugVersionEvent.GotoAdd(this, null));
-                    }
-                });
-        createVersionBtn.setEnabled(CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.VERSIONS));
+        Button createVersionBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION), new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                controlsBtn.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new BugVersionEvent.GotoAdd(this, null));
+            }
+        });
+        createVersionBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
         createVersionBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
         btnControlsLayout.addOption(createVersionBtn);
 
@@ -141,20 +130,17 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDas
         MyBugListWidget myBugListWidget = new MyBugListWidget();
         leftColumn.addComponent(myBugListWidget);
         BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
-        myBugsSearchCriteria
-                .setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        myBugsSearchCriteria.setStatuses(new SetSearchField<>(BugStatus.InProgress.name(),
-                BugStatus.Open.name(), BugStatus.ReOpened.name(), BugStatus.Resolved.name()));
-        myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
-                .getUsername()));
+        myBugsSearchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        myBugsSearchCriteria.setStatuses(new SetSearchField<>(BugStatus.InProgress.name(), BugStatus.Open.name(),
+                BugStatus.ReOpened.name()));
+        myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext.getUsername()));
         myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
         DueBugWidget dueBugWidget = new DueBugWidget();
         leftColumn.addComponent(dueBugWidget);
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        dueDefectsCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS(),
-                DateTimeSearchField.LESSTHANEQUAL));
+        dueDefectsCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS(), DateTimeSearchField.LESSTHANEQUAL));
         dueDefectsCriteria.setStatuses(new SetSearchField<>(BugStatus.InProgress.name(),
                 BugStatus.Open.name(), BugStatus.ReOpened.name(), BugStatus.Resolved.name()));
         dueBugWidget.setSearchCriteria(dueDefectsCriteria);
@@ -162,8 +148,7 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDas
         BugSearchCriteria waitingApprovalCriteria = new BugSearchCriteria();
         waitingApprovalCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         waitingApprovalCriteria.setStatuses(new SetSearchField<>(new String[]{BugStatus.Resolved.name()}));
-        waitingApprovalCriteria.setResolutions(new SetSearchField<>(new String[]{OptionI18nEnum.BugResolution
-                .Fixed.name()}));
+        waitingApprovalCriteria.setResolutions(new SetSearchField<>(new String[]{OptionI18nEnum.BugResolution.Fixed.name()}));
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
         int totalWaitingCount = bugService.getTotalCount(waitingApprovalCriteria);
         if (totalWaitingCount > 0) {
@@ -181,31 +166,24 @@ public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDas
         // Unresolved by assignee
         UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
         BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-        unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
-        unresolvedByAssigneeSearchCriteria
-                .setStatuses(new SetSearchField<>(BugStatus.InProgress.name(),
-                        BugStatus.Open.name(), BugStatus.ReOpened.name()));
-        unresolvedByAssigneeWidget
-                .setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+        unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<>(BugStatus.InProgress.name(),
+                BugStatus.Open.name(), BugStatus.ReOpened.name()));
+        unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
         rightColumn.addComponent(unresolvedByAssigneeWidget);
 
         // Unresolve by priority widget
         UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
         BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-        unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
-        unresolvedByPrioritySearchCriteria
-                .setStatuses(new SetSearchField<>(BugStatus.InProgress.name(),
-                        BugStatus.Open.name(), BugStatus.ReOpened.name()));
-        unresolvedByPriorityWidget
-                .setSearchCriteria(unresolvedByPrioritySearchCriteria);
+        unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        unresolvedByPrioritySearchCriteria.setStatuses(new SetSearchField<>(BugStatus.InProgress.name(),
+                BugStatus.Open.name(), BugStatus.ReOpened.name()));
+        unresolvedByPriorityWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
         rightColumn.addComponent(unresolvedByPriorityWidget);
 
         // bug chart
         BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
-        chartSearchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
+        chartSearchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         BugChartComponent bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
         rightColumn.addComponent(bugChartComponent);
     }

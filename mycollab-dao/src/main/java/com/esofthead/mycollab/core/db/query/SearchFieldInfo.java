@@ -107,6 +107,10 @@ public class SearchFieldInfo implements Serializable {
                     SearchField searchField =  wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
                             Double.parseDouble((String)info.getValue()));
                     obj.addExtraField(searchField);
+                } else if (param instanceof CompositionStringParam) {
+                    CompositionStringParam wrapParam = (CompositionStringParam) param;
+                    SearchField searchField =  wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), (String)info.getValue());
+                    obj.addExtraField(searchField);
                 }
             }
             return obj;

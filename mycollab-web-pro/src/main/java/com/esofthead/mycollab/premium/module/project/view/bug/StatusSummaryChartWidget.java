@@ -25,7 +25,6 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.view.bug.IStatusSummaryChartWidget;
-import com.esofthead.mycollab.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -42,9 +41,7 @@ import com.vaadin.ui.CssLayout;
 import java.util.List;
 
 @ViewComponent
-public class StatusSummaryChartWidget extends CssLayout implements
-        IStatusSummaryChartWidget {
-
+public class StatusSummaryChartWidget extends CssLayout implements IStatusSummaryChartWidget {
     private static final long serialVersionUID = 1L;
 
     public StatusSummaryChartWidget() {
@@ -53,20 +50,16 @@ public class StatusSummaryChartWidget extends CssLayout implements
 
     public void setSearchCriteria(BugSearchCriteria searchCriteria) {
         this.removeAllComponents();
-        BugService bugService = ApplicationContextUtil
-                .getSpringBean(BugService.class);
-
+        BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
         final DataSeries series = new DataSeries("Status");
 
-        List<GroupItem> groupItems = bugService
-                .getStatusSummary(searchCriteria);
+        List<GroupItem> groupItems = bugService.getStatusSummary(searchCriteria);
         BugStatus[] bugStatues = OptionI18nEnum.bug_statuses;
         for (BugStatus status : bugStatues) {
             boolean isFound = false;
             for (GroupItem item : groupItems) {
                 if (status.name().equals(item.getGroupid())) {
-                    series.add(new DataSeriesItem(
-                            AppContext.getMessage(status), item.getValue()));
+                    series.add(new DataSeriesItem(AppContext.getMessage(status), item.getValue()));
                     isFound = true;
                     break;
                 }
@@ -86,8 +79,7 @@ public class StatusSummaryChartWidget extends CssLayout implements
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
                 searchCriteria.setStatuses(new SetSearchField<>(key));
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                BugFilterParameter param = new BugFilterParameter(key + " Bug List", searchCriteria);
-                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(param)));
+                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(searchCriteria)));
             }
         });
         Configuration conf = chart.getConfiguration();

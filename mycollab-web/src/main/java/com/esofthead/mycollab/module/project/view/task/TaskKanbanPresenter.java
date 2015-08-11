@@ -45,7 +45,7 @@ public class TaskKanbanPresenter extends AbstractPresenter<TaskKanbanview> {
             view.display();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-            breadCrumb.gotoKanbanView();
+            breadCrumb.gotoTaskKanbanView();
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

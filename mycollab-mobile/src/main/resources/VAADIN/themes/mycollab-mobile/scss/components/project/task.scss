@@ -1,19 +1,19 @@
-@mixin project-task {
+@mixin project-bug {
 	/*Project Task*/
-	.task-group-list {
+	.bug-group-list {
 		.list-item {
-			&.task-list-layout {
+			&.bug-list-layout {
 				padding: 1rem 2.5rem 1rem 1.4rem;
 				border-bottom: 0.1rem solid #DDDDDD;
 				color: #8C8C8C;
-				.task-list-name {
+				.bug-list-name {
 					color: $primary-blue;
 					font-size: 1.4rem;
 				}
 				.last-updated-time {
 					font-size: 1.1rem;
 				}
-				.active-task-num {
+				.active-bug-num {
 					font-size: 1.1rem;
 					color: white;
 					background-color: rgb(124, 124, 124);
@@ -23,9 +23,9 @@
 			}
 		}
 	}
-	.task-list {
+	.bug-list {
 		.list-item {
-			&.task-layout {
+			&.bug-layout {
 				padding: 1rem 2.5rem 1rem 1.4rem;
 				border-bottom: 0.1rem solid $gray-border;
 				color: #8C8C8C;
@@ -47,10 +47,10 @@
 						background-color: $urgent-priority;
 					}
 				}
-				.task-key {
+				.bug-key {
 					color: $primary-blue;
 				}
-				.task-name {
+				.bug-name {
 					padding-top: 0.3rem;
 					text-overflow: ellipsis;
 					white-space: nowrap;

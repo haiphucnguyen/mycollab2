@@ -36,7 +36,7 @@ import java.util.TreeMap;
  * @since 5.1.1
  */
 public class StartDateOrderComponent extends TaskGroupOrderComponent {
-    private Map<DateTime, GroupComponent> dueDateAvailables = new TreeMap<>();
+    private Map<DateTime, GroupComponent> startDateAvailables = new TreeMap<>();
     private GroupComponent unspecifiedTasks;
 
     @Override
@@ -46,12 +46,12 @@ public class StartDateOrderComponent extends TaskGroupOrderComponent {
                 Date startDate = task.getStartdate();
                 DateTime jodaTime = new DateTime(startDate, DateTimeZone.UTC);
                 DateTime monDay = jodaTime.dayOfWeek().withMinimumValue();
-                if (dueDateAvailables.containsKey(monDay)) {
-                    GroupComponent groupComponent = dueDateAvailables.get(monDay);
+                if (startDateAvailables.containsKey(monDay)) {
+                    GroupComponent groupComponent = startDateAvailables.get(monDay);
                     groupComponent.insertTask(task);
                 } else {
                     GroupComponent groupComponent = new GroupComponent(monDay);
-                    dueDateAvailables.put(monDay, groupComponent);
+                    startDateAvailables.put(monDay, groupComponent);
                     addComponent(groupComponent);
                     groupComponent.insertTask(task);
                 }

@@ -80,8 +80,7 @@ class TaskRowRenderer extends MHorizontalLayout {
         taskLinkLbl.addStyleName("wordWrap");
         wrapTaskInfoLayout.addComponent(taskLinkLbl);
 
-        HorizontalLayout footer = new HorizontalLayout();
-        footer.setSpacing(true);
+        MHorizontalLayout footer = new MHorizontalLayout();
         footer.addStyleName(UIConstants.FOOTER_NOTE);
         if (task.getNumComments() != null && task.getNumComments() > 0) {
             Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments()).setTitle("Comment");
