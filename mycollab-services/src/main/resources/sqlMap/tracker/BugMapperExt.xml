@@ -49,7 +49,7 @@
         #set($searchCriteria = $_parameter.searchCriteria)
         
         #ifnotnull($searchCriteria.assignuser)
-            ${searchCriteria.assignuser.operation} m_tracker_bug.assignuser=@{searchCriteria.assignuser.value}
+            ${searchCriteria.assignuser.operation} m_tracker_bug.assignuser #equals($searchCriteria.assignuser.value)
         #end
         
         #ifnotnull($searchCriteria.summary)
@@ -214,7 +214,7 @@
         #set($searchCriteria = $_parameter.searchCriteria)
         
         #ifnotnull($searchCriteria.assignuser)
-            ${searchCriteria.assignuser.operation} m_tracker_bug.assignuser=@{searchCriteria.assignuser.value}
+            ${searchCriteria.assignuser.operation} m_tracker_bug.assignuser #equals($searchCriteria.assignuser.value)
         #end
         
         #ifnotnull($searchCriteria.summary)

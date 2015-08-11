@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -73,8 +72,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
                         isFound = true;
                         MHorizontalLayout priorityLayout = new MHorizontalLayout().withWidth("100%");
                         ButtonI18nComp userLbl = new ButtonI18nComp(priority.name(), priority, listener);
-                        Resource iconPriority = new ExternalResource(
-                                ProjectResources.getIconResourceLink12ByBugPriority(priority.name()));
+                        Resource iconPriority = new ExternalResource(ProjectResources.getIconResourceLink12ByBugPriority(priority.name()));
                         userLbl.setIcon(iconPriority);
                         userLbl.setWidth("110px");
                         userLbl.setStyleName(UIConstants.THEME_LINK);
@@ -113,8 +111,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
         public void buttonClick(final ClickEvent event) {
             String key = ((ButtonI18nComp) event.getButton()).getKey();
             bugSearchCriteria.setPriorities(new SetSearchField<>(new String[]{key}));
-            EventBusFactory.getInstance()
-                    .post(new BugEvent.GotoList(this, new BugScreenData.Search(bugSearchCriteria)));
+            EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, bugSearchCriteria));
         }
     }
 }

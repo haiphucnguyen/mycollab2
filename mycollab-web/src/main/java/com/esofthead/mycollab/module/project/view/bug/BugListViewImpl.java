@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.utils.XStreamJsonDeSerializer;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -54,6 +55,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -95,6 +97,18 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     private VerticalLayout rightColumn;
     private MHorizontalLayout mainLayout;
     private BugGroupOrderComponent bugGroupOrderComponent;
+
+    private ApplicationEventListener<BugEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<BugEvent.SearchRequest>() {
+                @Override
+                @Subscribe
+                public void handle(BugEvent.SearchRequest event) {
+                    BugSearchCriteria criteria = (BugSearchCriteria) event.getData();
+                    if (criteria != null) {
+                        queryBug(criteria);
+                    }
+                }
+            };
 
     public BugListViewImpl() {
         this.withMargin(new MarginInfo(false, true, true, true));
@@ -200,6 +214,18 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         floatSidebar.setContainerId("main-body");
     }
 
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(searchHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(searchHandler);
+        super.detach();
+    }
+
     private void displayBugStastitic() {
         rightColumn.removeAllComponents();
         // Unresolved by assignee
@@ -207,10 +233,8 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
         unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
                 CurrentProjectVariables.getProjectId()));
-        unresolvedByAssigneeSearchCriteria
-                .setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
-                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name(),
-                        OptionI18nEnum.BugStatus.Resolved.name()));
+        unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
+                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
         unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
         rightColumn.addComponent(unresolvedByAssigneeWidget);
 

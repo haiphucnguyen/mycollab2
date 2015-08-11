@@ -22,7 +22,6 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.CommonTooltipGenerator;
@@ -93,7 +92,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
                 @Override
                 public void buttonClick(final ClickEvent event) {
                     bugSearchCriteria.setAssignuser(new StringSearchField(assignee));
-                    EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(bugSearchCriteria)));
+                    EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, bugSearchCriteria));
                 }
             });
 
