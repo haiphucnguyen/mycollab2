@@ -361,25 +361,32 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         }
 
         if (SiteConfiguration.getDeploymentMode() == DeploymentMode.standalone) {
-            try {
-                Client client = ClientBuilder.newBuilder().build();
-                WebTarget target = client.target("https://api.mycollab.com/api/checkupdate?version=" + MyCollabVersion.getVersion());
-                Response response = target.request().get();
-                String values = response.readEntity(String.class);
-                Gson gson = new Gson();
-                Properties props = gson.fromJson(values, Properties.class);
-                String version = props.getProperty("version");
-                if (MyCollabVersion.isEditionNewer(version)) {
-                    if (AppContext.isAdmin() && StringUtils.isNotBlank(props.getProperty("autoDownload"))) {
-                        UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
-                    } else {
-                        EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                                new NewUpdateNotification(props)));
+            UI.getCurrent().access(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Client client = ClientBuilder.newBuilder().build();
+                        WebTarget target = client.target("https://api.mycollab.com/api/checkupdate?version=" + MyCollabVersion.getVersion());
+                        Response response = target.request().get();
+                        String values = response.readEntity(String.class);
+                        Gson gson = new Gson();
+                        Properties props = gson.fromJson(values, Properties.class);
+                        String version = props.getProperty("version");
+                        if (MyCollabVersion.isEditionNewer(version)) {
+                            if (AppContext.isAdmin() && StringUtils.isNotBlank(props.getProperty("autoDownload"))) {
+                                UI.getCurrent().addWindow(new UpgradeConfirmWindow(props));
+                                UI.getCurrent().push();
+                            } else {
+                                EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
+                                        new NewUpdateNotification(props)));
+                            }
+                        }
+                    } catch (Exception e) {
+                        LOG.error("Error when call remote api", e);
                     }
                 }
-            } catch (Exception e) {
-                LOG.error("Error when call remote api", e);
-            }
+            });
+
 
             ExtMailService mailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
             if (!mailService.isMailSetupValid()) {

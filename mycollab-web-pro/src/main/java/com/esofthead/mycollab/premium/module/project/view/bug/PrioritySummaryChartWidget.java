@@ -84,7 +84,7 @@ public class PrioritySummaryChartWidget extends CssLayout implements IPrioritySu
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
                 searchCriteria.setPriorities(new SetSearchField<>(priority));
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(searchCriteria)));
+                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, searchCriteria));
             }
         });
 

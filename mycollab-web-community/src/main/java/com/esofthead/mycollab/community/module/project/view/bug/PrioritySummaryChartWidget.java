@@ -97,6 +97,6 @@ public class PrioritySummaryChartWidget extends PieChartWrapper<BugSearchCriteri
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setPriorities(new SetSearchField<>(key));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(searchCriteria)));
+        EventBusFactory.getInstance().post(new BugEvent.GotoList(this, searchCriteria));
     }
 }

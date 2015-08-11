@@ -30,13 +30,9 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.components.*;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -116,7 +112,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
 
         groupWrapLayout.addComponent(new Label("Filter:"));
-        final SavedFilterComboBox savedFilterComboBox = new SavedFilterComboBox(ProjectTypeConstants.TASK);
+        final SavedFilterComboBox savedFilterComboBox = new SavedFilterComboBox(ProjectTypeConstants.BUG);
         savedFilterComboBox.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
@@ -129,9 +125,9 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                         throw new UserInvalidInputException("There is no field in search criterion");
                     }
                     fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
-                    TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class, fieldInfos);
-                    criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                    EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(BugListViewImpl.this, criteria));
+                    BugSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(BugSearchCriteria.class, fieldInfos);
+                    criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                    EventBusFactory.getInstance().post(new BugEvent.SearchRequest(BugListViewImpl.this, criteria));
                 }
             }
         });
@@ -178,13 +174,13 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         });
         newTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         newTaskBtn.setIcon(FontAwesome.PLUS);
-        newTaskBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
+        newTaskBtn.setDescription(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG));
         newTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         groupWrapLayout.addComponent(newTaskBtn);
 
         Button advanceDisplayBtn = new Button();
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
-        advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
+        advanceDisplayBtn.setDescription("Detail");
 
         Button kanbanBtn = new Button(null, new Button.ClickListener() {
             @Override
@@ -234,7 +230,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
                 CurrentProjectVariables.getProjectId()));
         unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
-                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
+                OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
         unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
         rightColumn.addComponent(unresolvedByAssigneeWidget);
 
@@ -245,8 +241,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 CurrentProjectVariables.getProjectId()));
         unresolvedByPrioritySearchCriteria
                 .setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
-                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name(),
-                        OptionI18nEnum.BugStatus.Resolved.name()));
+                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
         unresolvedByPriorityWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
         rightColumn.addComponent(unresolvedByPriorityWidget);
     }

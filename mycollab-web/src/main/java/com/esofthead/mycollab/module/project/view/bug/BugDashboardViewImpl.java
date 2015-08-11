@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -40,6 +41,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -57,6 +59,30 @@ import org.vaadin.maddon.layouts.MVerticalLayout;
 public class BugDashboardViewImpl extends AbstractLazyPageView implements BugDashboardView {
     private MVerticalLayout leftColumn, rightColumn;
     private MHorizontalLayout header;
+
+    private ApplicationEventListener<BugEvent.SearchRequest> searchHandler = new
+            ApplicationEventListener<BugEvent.SearchRequest>() {
+                @Override
+                @Subscribe
+                public void handle(BugEvent.SearchRequest event) {
+                    BugSearchCriteria criteria = (BugSearchCriteria) event.getData();
+                    if (criteria != null) {
+                        EventBusFactory.getInstance().post(new BugEvent.GotoList(BugDashboardViewImpl.class, criteria));
+                    }
+                }
+            };
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(searchHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(searchHandler);
+        super.detach();
+    }
 
     private void initUI() {
         this.setMargin(new MarginInfo(false, true, false, true));

@@ -84,7 +84,7 @@ public class BugResolutionSummaryChartWidget extends CssLayout implements IBugRe
                 BugSearchCriteria searchCriteria = new BugSearchCriteria();
                 searchCriteria.setResolutions(new SetSearchField<>(key));
                 searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(searchCriteria)));
+                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, searchCriteria));
             }
         });
         Configuration conf = chart.getConfiguration();

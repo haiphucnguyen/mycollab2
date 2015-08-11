@@ -31,7 +31,7 @@ object BugEvent {
 
     class GotoEdit(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-    class GotoList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+    class GotoList(source: AnyRef, data: BugSearchCriteria) extends ApplicationEvent(source, data) {}
 
     class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 

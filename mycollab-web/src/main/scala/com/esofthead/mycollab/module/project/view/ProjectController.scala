@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus
 import com.esofthead.mycollab.module.project.service.StandupReportService
 import com.esofthead.mycollab.module.project.view.file.FilePresenter
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData.Search
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.SearchItem
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoDashboard
 import com.esofthead.mycollab.module.project.view.parameters._
@@ -238,8 +239,8 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                         BugStatus.Open.name, BugStatus.ReOpened.name, BugStatus.Resolved.name))
                     projectView.gotoBugView(new BugScreenData.Search(criteria))
                 }
-                else if (params.isInstanceOf[BugScreenData.Search]) {
-                    projectView.gotoBugView(params.asInstanceOf[BugScreenData.Search])
+                else if (params.isInstanceOf[BugSearchCriteria]) {
+                    projectView.gotoBugView(new Search(params.asInstanceOf[BugSearchCriteria]))
                 }
                 else {
                     throw new MyCollabException("Invalid search parameter: " + BeanUtility.printBeanObj(params))

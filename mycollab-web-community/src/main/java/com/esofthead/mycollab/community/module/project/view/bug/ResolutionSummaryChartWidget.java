@@ -27,7 +27,6 @@ import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.view.bug.IBugResolutionSummaryChartWidget;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -96,6 +95,6 @@ public class ResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCrite
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setResolutions(new SetSearchField<>(key));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        EventBusFactory.getInstance().post(new BugEvent.GotoList(this, new BugScreenData.Search(searchCriteria)));
+        EventBusFactory.getInstance().post(new BugEvent.GotoList(this, searchCriteria));
     }
 }
