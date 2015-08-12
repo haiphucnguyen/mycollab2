@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.vaadin.server.Page;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.StepComponent;
 import org.tltv.gantt.SubStepComponent;
@@ -38,7 +39,7 @@ public class GanttExt extends Gantt {
         maxDate = new GregorianCalendar();
         this.setResizableSteps(true);
         this.setMovableSteps(true);
-        this.setHeight("500px");
+        this.setHeight((Page.getCurrent().getBrowserWindowHeight() - 200) + "px");
     }
 
     public int getStepIndex(Step step) {

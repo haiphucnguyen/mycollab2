@@ -9964,6 +9964,14 @@ div.v-button.token-field:hover {
 	border-color: #CFCFCF;
 }
 
+.gantt_container  > div > div .v-treetable {
+	overflow-x: scroll;
+}
+
+.gantt_container  > div > div .v-treetable .v-table-footer-wrap {
+	height: 0px;
+}
+
 .gantt_container .v-table-header  > div table .v-table-header-cell .v-table-caption-container, .gantt_container .v-table-header  > div table .v-table-header-cell .v-table-resizer {
 	height: 44px;
 }
@@ -9995,12 +10003,6 @@ div.v-button.token-field:hover {
 .gantt_container .v-table-row-hasChildTasks {
 	background-color: gainsboro;
 	font-weight: bold;
-}
-
-.gantt_container .v-table-column-selector {
-	height: 0px;
-	width: 0px;
-	background: none;
 }
 
 .gantt_container .v-table-table tr td.v-table-cell-content {

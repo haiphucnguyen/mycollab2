@@ -280,7 +280,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             this.setImmediate(true);
             beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
             this.setContainerDataSource(beanContainer);
-            this.setVisibleColumns("name", "startDate", "endDate", "duration");
+            this.setVisibleColumns("name", "startDate", "endDate", "duration", "actualStartDate", "actualEndDate");
             this.setColumnHeader("name", "Task");
             this.setColumnExpandRatio("name", 1.0f);
             this.setColumnHeader("startDate", "Start");
@@ -289,6 +289,14 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             this.setColumnWidth("endDate", 75);
             this.setColumnHeader("duration", "Duration");
             this.setColumnWidth("duration", 80);
+            this.setColumnHeader("actualStartDate", "Actual Start");
+            this.setColumnWidth("actualStartDate", 80);
+            this.setColumnHeader("actualEndDate", "Actual End");
+            this.setColumnWidth("actualEndDate", 80);
+            this.setColumnCollapsingAllowed(true);
+            this.setColumnCollapsed("actualStartDate", true);
+            this.setColumnCollapsed("actualEndDate", true);
+
 
             this.addGeneratedColumn("name", new ColumnGenerator() {
                 @Override
@@ -339,6 +347,22 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 public Object generateCell(Table table, Object itemId, Object columnId) {
                     GanttItemWrapper item = (GanttItemWrapper) itemId;
                     return new Label(AppContext.formatDate(item.getEndDate()));
+                }
+            });
+
+            this.addGeneratedColumn("actualEndDate", new ColumnGenerator() {
+                @Override
+                public Object generateCell(Table table, Object itemId, Object columnId) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
+                    return new Label(AppContext.formatDate(item.getActualEndDate()));
+                }
+            });
+
+            this.addGeneratedColumn("actualStartDate", new ColumnGenerator() {
+                @Override
+                public Object generateCell(Table table, Object itemId, Object columnId) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
+                    return new Label(AppContext.formatDate(item.getActualStartDate()));
                 }
             });
 

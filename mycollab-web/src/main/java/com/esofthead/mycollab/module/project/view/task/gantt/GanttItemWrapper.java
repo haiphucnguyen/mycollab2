@@ -125,6 +125,14 @@ public class GanttItemWrapper {
         return endDate;
     }
 
+    public Date getActualStartDate() {
+        return task.getActualstartdate();
+    }
+
+    public Date getActualEndDate() {
+        return task.getActualenddate();
+    }
+
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
         task.setStartdate(startDate);
