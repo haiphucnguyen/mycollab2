@@ -1,6 +1,23 @@
+/**
+ * This file is part of mycollab-web.
+ *
+ * mycollab-web is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-web is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -31,6 +48,8 @@ import java.util.UUID;
 public class GanttTreeTable extends TreeTable {
     private GanttExt gantt;
     private BeanItemContainer<GanttItemWrapper> beanContainer;
+
+    private String sortField = "createdTime";
 
     private ApplicationEventListener<TaskEvent.GanttTaskUpdate> taskUpdateHandler = new
             ApplicationEventListener<TaskEvent.GanttTaskUpdate>() {
@@ -149,7 +168,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public void nodeExpand(Tree.ExpandEvent expandEvent) {
                 GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
-                List<GanttItemWrapper> subTasks = item.subTasks();
+                List<GanttItemWrapper> subTasks = item.subTasks(new SearchCriteria.OrderField(sortField, SearchCriteria.ASC));
                 insertSteps(item, subTasks);
             }
         });
@@ -157,7 +176,9 @@ public class GanttTreeTable extends TreeTable {
         this.addCollapseListener(new Tree.CollapseListener() {
             @Override
             public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
-
+                GanttItemWrapper item = (GanttItemWrapper) collapseEvent.getItemId();
+                List<GanttItemWrapper> subTasks = item.subTasks(new SearchCriteria.OrderField(sortField, SearchCriteria.ASC));
+                removeSubSteps(item, subTasks);
             }
         });
 
@@ -165,6 +186,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public void headerClick(HeaderClickEvent event) {
                 String propertyId = (String) event.getPropertyId();
+                sortField = propertyId;
                 beanContainer.sort(new String[]{propertyId}, new boolean[]{true});
                 List<GanttItemWrapper> items = beanContainer.getItemIds();
                 gantt.removeSteps();
@@ -198,11 +220,24 @@ public class GanttTreeTable extends TreeTable {
 
     void insertSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
+        int count = 0;
         if (stepIndex != -1) {
             for (GanttItemWrapper child : childs) {
                 this.addItem(child);
                 this.setParent(child, parent);
                 this.setChildrenAllowed(child, child.hasSubTasks());
+                gantt.addStep(stepIndex + count + 1, child.getStep());
+                count++;
+            }
+        }
+    }
+
+    void removeSubSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
+        final int stepIndex = gantt.getStepIndex(parent.getStep());
+        if (stepIndex != -1) {
+            for (GanttItemWrapper child : childs) {
+                this.removeItem(child);
+                gantt.removeStep(child.getStep());
             }
         }
     }

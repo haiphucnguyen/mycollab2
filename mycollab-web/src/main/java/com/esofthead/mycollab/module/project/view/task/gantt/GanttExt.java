@@ -40,30 +40,13 @@ public class GanttExt extends Gantt {
         this.setResizableSteps(true);
         this.setMovableSteps(true);
         this.setHeight((Page.getCurrent().getBrowserWindowHeight() - 200) + "px");
+        updateGanttMinDate();
+        updateGanttMaxDate();
     }
 
     public int getStepIndex(Step step) {
         StepComponent sc = this.stepComponents.get(step);
         return this.getState().steps.indexOf(sc);
-    }
-
-    @Override
-    public AbstractStep getStep(String uid) {
-        if (uid == null) {
-            return null;
-        } else {
-            StepExt key = new StepExt();
-            key.setUid(uid);
-            StepComponent sc = this.stepComponents.get(key);
-            if (sc != null) {
-                return sc.getState().step;
-            } else {
-                SubStep key1 = new SubStep();
-                key1.setUid(uid);
-                SubStepComponent sub = this.subStepMap.get(key1);
-                return sub != null ? sub.getState().step : null;
-            }
-        }
     }
 
     public void addTask(GanttItemWrapper task) {
@@ -72,21 +55,29 @@ public class GanttExt extends Gantt {
         calculateMaxMinDates(task);
     }
 
+    private void updateGanttMinDate() {
+        Calendar cloneVal = new GregorianCalendar();
+        cloneVal.setTimeInMillis(minDate.getTimeInMillis());
+        cloneVal.add(Calendar.DATE, -14);
+        this.setStartDate(cloneVal.getTime());
+    }
+
+    private void updateGanttMaxDate() {
+        Calendar cloneVal = new GregorianCalendar();
+        cloneVal.setTimeInMillis(maxDate.getTimeInMillis());
+        cloneVal.add(Calendar.DATE, 14);
+        this.setEndDate(cloneVal.getTime());
+    }
+
     public void calculateMaxMinDates(GanttItemWrapper task) {
         if (minDate.getTimeInMillis() > task.getStartDate().getTime()) {
             minDate.setTimeInMillis(task.getStartDate().getTime());
-            Calendar cloneVal = new GregorianCalendar();
-            cloneVal.setTimeInMillis(minDate.getTimeInMillis());
-            cloneVal.add(Calendar.DATE, -14);
-            this.setStartDate(cloneVal.getTime());
+            updateGanttMinDate();
         }
 
         if (maxDate.getTimeInMillis() < task.getEndDate().getTime()) {
             maxDate.setTimeInMillis(task.getEndDate().getTime());
-            Calendar cloneVal = new GregorianCalendar();
-            cloneVal.setTimeInMillis(maxDate.getTimeInMillis());
-            cloneVal.add(Calendar.DATE, 14);
-            this.setEndDate(cloneVal.getTime());
+            updateGanttMaxDate();
         }
     }
 }
