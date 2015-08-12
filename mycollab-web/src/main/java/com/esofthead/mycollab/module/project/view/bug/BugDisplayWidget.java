@@ -49,8 +49,7 @@ public abstract class BugDisplayWidget extends Depot {
     private String title;
     private boolean isDisplayTotalCount;
 
-    public BugDisplayWidget(String title, boolean isDisplayTotalCount,
-                            Class<? extends RowDisplayHandler<SimpleBug>> rowDisplayHandler) {
+    public BugDisplayWidget(String title, boolean isDisplayTotalCount, Class<? extends RowDisplayHandler<SimpleBug>> rowDisplayHandler) {
         super(title, new VerticalLayout());
         this.title = title;
         this.isDisplayTotalCount = isDisplayTotalCount;

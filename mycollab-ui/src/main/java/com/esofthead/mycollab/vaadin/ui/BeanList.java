@@ -134,8 +134,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
 	@SuppressWarnings("unchecked")
 	public int setSearchRequest(SearchRequest<S> searchRequest) {
-		List<T> currentListData = searchService
-				.findPagableListByCriteria(searchRequest);
+		List<T> currentListData = searchService.findPagableListByCriteria(searchRequest);
 		loadItems(currentListData);
 		return currentListData.size();
 	}
@@ -148,8 +147,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 		contentLayout.removeAllComponents();
 
 		try {
-			if (CollectionUtils.isEmpty(currentListData)
-					&& isDisplayEmptyListText) {
+			if (CollectionUtils.isEmpty(currentListData) && isDisplayEmptyListText) {
 				Label noItemLbl = new Label(AppContext.getMessage(GenericI18Enum.EXT_NO_ITEM));
                 MVerticalLayout widgetFooter = new MVerticalLayout().withWidth("100%");
 				widgetFooter.addStyleName("widget-footer");

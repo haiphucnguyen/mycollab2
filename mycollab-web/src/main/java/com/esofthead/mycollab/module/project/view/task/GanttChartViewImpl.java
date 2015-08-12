@@ -296,7 +296,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             this.setColumnCollapsingAllowed(true);
             this.setColumnCollapsed("actualStartDate", true);
             this.setColumnCollapsed("actualEndDate", true);
-
+            this.setSelectable(true);
 
             this.addGeneratedColumn("name", new ColumnGenerator() {
                 @Override
@@ -388,18 +388,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 @Override
                 public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
 
-                }
-            });
-
-            this.setCellStyleGenerator(new CellStyleGenerator() {
-                @Override
-                public String getStyle(Table table, Object itemId, Object propertyId) {
-                    if (propertyId == null) {
-                        GanttItemWrapper item = (GanttItemWrapper) itemId;
-                        return (item.hasSubTasks()) ? "hasChildTasks" : null;
-                    } else {
-                        return null;
-                    }
                 }
             });
         }

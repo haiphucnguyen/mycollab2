@@ -43,6 +43,7 @@ import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.teemu.VaadinIcons;
 
 import java.util.UUID;
 
@@ -98,7 +99,7 @@ public class BugRowRenderer extends MHorizontalLayout {
         if (bug.getDuedate() != null) {
             String deadlineTooltip = String.format("%s: %s", AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE),
                     AppContext.formatDate(bug.getDuedate()));
-            Label deadlineBtn = new Label(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
+            Label deadlineBtn = new Label(String.format(" %s %s", VaadinIcons.USER_CLOCK.getHtml(),
                     AppContext.formatPrettyTime(bug.getDueDateRoundPlusOne())), ContentMode.HTML);
             deadlineBtn.setDescription(deadlineTooltip);
             footer.addComponent(deadlineBtn);

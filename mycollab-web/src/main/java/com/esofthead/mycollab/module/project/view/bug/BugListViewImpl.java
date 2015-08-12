@@ -286,7 +286,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                     }
                 }
             });
-            moreBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+            moreBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
             wrapBody.addComponent(moreBtn);
         }
         List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, currentPage + 1, 20));

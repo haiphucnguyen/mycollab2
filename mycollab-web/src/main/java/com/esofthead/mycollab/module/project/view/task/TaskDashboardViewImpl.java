@@ -317,7 +317,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                     }
                 }
             });
-            moreBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+            moreBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
             wrapBody.addComponent(moreBtn);
         }
         List<SimpleTask> tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, currentPage + 1, 20));
