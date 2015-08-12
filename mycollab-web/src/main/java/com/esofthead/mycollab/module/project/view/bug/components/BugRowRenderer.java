@@ -23,6 +23,7 @@ import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.*;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -82,7 +83,8 @@ public class BugRowRenderer extends MHorizontalLayout {
             footer.addComponent(new ELabel(comment.write(), ContentMode.HTML).withDescription("Comment"));
         }
         if (bug.getStatus() != null) {
-            Label statusBtn = new Label(FontAwesome.INFO_CIRCLE.getHtml() + " " + bug.getStatus(), ContentMode.HTML);
+            Label statusBtn = new Label(FontAwesome.INFO_CIRCLE.getHtml() + " " + AppContext.getMessage(OptionI18nEnum.BugStatus
+                    .class, bug.getStatus()), ContentMode.HTML);
             statusBtn.setDescription(AppContext.getMessage(BugI18nEnum.FORM_STATUS));
             footer.addComponent(statusBtn);
         }

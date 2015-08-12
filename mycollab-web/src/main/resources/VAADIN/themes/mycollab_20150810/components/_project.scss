@@ -749,6 +749,13 @@
     border-style: solid;
     border-width: 1px 1px 1px 0px;
     border-color: $border-color;
+    .v-table-header {
+      > div table .v-table-header-cell {
+        .v-table-caption-container, .v-table-resizer {
+          height: 44px;
+        }
+      }
+    }
     .v-table-row-odd {
       background: white;
     }

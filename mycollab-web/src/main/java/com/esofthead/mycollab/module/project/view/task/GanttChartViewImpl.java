@@ -47,10 +47,12 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -58,6 +60,7 @@ import com.vaadin.ui.*;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
+import org.tltv.gantt.client.shared.Resolution;
 import org.vaadin.maddon.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
@@ -106,7 +109,26 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         });
         toogleMenuShowBtn.addStyleName(UIConstants.THEME_LINK);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+        HorizontalLayout resWrapper = new HorizontalLayout();
+        Label resLbl = new Label("Resolution: ");
+        final ComboBox resValue = new ValueComboBox(false, "Day", "Week");
+        resValue.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                String val = (String) resValue.getValue();
+                if ("Day".equals(val)) {
+                    gantt.setResolution(Resolution.Day);
+                } else if ("Week".equals(val)) {
+                    gantt.setResolution(Resolution.Week);
+                }
+            }
+        });
+        resWrapper.setSpacing(true);
+        resWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        resWrapper.addComponent(resLbl);
+        resWrapper.addComponent(resValue);
+
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_BACK), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{
@@ -115,9 +137,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerWrapper, toogleMenuShowBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
-                .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT)
-                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, toogleMenuShowBtn, resWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
+                .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
 
         HorizontalLayout ganttLayout = constructGanttChart();
@@ -145,6 +166,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         taskTable.setWidth("800px");
 
         gantt = new GanttExt();
+        gantt.setResponsive(false);
         gantt.setVerticalScrollDelegateTarget(taskTable);
 
         gantt.addMoveListener(new Gantt.MoveListener() {
