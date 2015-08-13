@@ -34,7 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.form.field.AttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd

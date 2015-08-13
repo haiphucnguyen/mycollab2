@@ -16,8 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.tltv.gantt.client.shared.AbstractStep;
 import org.tltv.gantt.client.shared.Step;
 
 /**

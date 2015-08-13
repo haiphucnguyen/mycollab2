@@ -21,7 +21,7 @@ import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Calendar;
 import java.util.Collection;

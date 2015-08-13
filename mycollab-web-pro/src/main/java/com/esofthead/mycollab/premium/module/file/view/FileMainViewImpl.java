@@ -30,10 +30,9 @@ import com.vaadin.ui.Button.ClickListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
-import org.vaadin.maddon.layouts.MMarginInfo;
-import org.vaadin.maddon.layouts.MVerticalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -64,7 +63,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
     }
 
     private HorizontalLayout constructHeader() {
-        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MMarginInfo(true, false, false, false))
+        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
                 .withWidth("100%");
         Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() + " Files", ContentMode.HTML);
         searchTitle.setStyleName("headerName");
@@ -163,7 +162,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 if (folder != null) {
                     browseFolder(folder);
                 }
-
             }
         });
 

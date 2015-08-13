@@ -26,7 +26,7 @@ import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection.LayoutType;
 import com.esofthead.mycollab.form.view.builder.type.TextDynaField;
 import com.vaadin.ui.HorizontalLayout;
-import org.vaadin.maddon.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd

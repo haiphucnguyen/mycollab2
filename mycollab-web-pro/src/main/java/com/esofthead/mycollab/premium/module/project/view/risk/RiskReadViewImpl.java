@@ -33,7 +33,7 @@ import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.maddon.layouts.MVerticalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
