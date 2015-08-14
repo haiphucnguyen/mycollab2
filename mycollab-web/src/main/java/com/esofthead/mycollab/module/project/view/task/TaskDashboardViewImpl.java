@@ -222,10 +222,10 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         groupWrapLayout.addComponent(viewButtons);
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
-        this.wrapBody = new VerticalLayout();
+        wrapBody = new VerticalLayout();
         wrapBody.setSpacing(true);
 
-        this.rightColumn = new MVerticalLayout().withWidth("300px").withMargin(false);
+        rightColumn = new MVerticalLayout().withWidth("300px").withMargin(false);
 
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
 
@@ -285,6 +285,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     public void queryTask(final TaskSearchCriteria searchCriteria) {
         baseCriteria = searchCriteria;
         wrapBody.removeAllComponents();
+
         if (GROUP_DUE_DATE.equals(groupByState)) {
             searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("deadline", sortDirection)));
             taskGroupOrderComponent = new DueDateOrderComponent();

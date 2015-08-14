@@ -190,7 +190,7 @@ public class GanttTreeTable extends TreeTable {
                 beanContainer.sort(new String[]{propertyId}, new boolean[]{true});
                 List<GanttItemWrapper> items = beanContainer.getItemIds();
                 gantt.removeSteps();
-                for (GanttItemWrapper task: items) {
+                for (GanttItemWrapper task : items) {
                     gantt.addTask(task);
                 }
             }
@@ -226,7 +226,7 @@ public class GanttTreeTable extends TreeTable {
                 this.addItem(child);
                 this.setParent(child, parent);
                 this.setChildrenAllowed(child, child.hasSubTasks());
-                gantt.addStep(stepIndex + count + 1, child.getStep());
+                gantt.addTask(stepIndex + count + 1, child);
                 count++;
             }
         }

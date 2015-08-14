@@ -19,10 +19,7 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 import com.vaadin.server.Page;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.StepComponent;
-import org.tltv.gantt.SubStepComponent;
-import org.tltv.gantt.client.shared.AbstractStep;
 import org.tltv.gantt.client.shared.Step;
-import org.tltv.gantt.client.shared.SubStep;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -52,6 +49,13 @@ public class GanttExt extends Gantt {
     public void addTask(GanttItemWrapper task) {
         Step step = task.getStep();
         super.addStep(step);
+        calculateMaxMinDates(task);
+    }
+
+    public void addTask(int index, GanttItemWrapper task) {
+        Step step = task.getStep();
+        System.out.println("Addf step: " + index);
+        super.addStep(index, step);
         calculateMaxMinDates(task);
     }
 
