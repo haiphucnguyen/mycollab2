@@ -597,4 +597,18 @@
       }
     }
   }
+
+  /*Popup view*/
+  .v-popupview.block-popupedit {
+    text-decoration: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #5ca9ff;
+    padding: 0px 7px;
+    color: white;
+    .popupcontent .v-verticallayout {
+      background-color: white;
+    }
+  }
 }
