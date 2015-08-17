@@ -630,9 +630,26 @@
       width: 0;
       margin: 10px 0px 0px;
     }
-    .v-button.notification-button, .v-button.notification-button.v-pressed {
-      background: none no-repeat left top white;
-      border-radius: 5px;
+    .accountMenuContainer {
+      float: right;
+      .v-button.v-popupbutton,  .v-button.v-popupbutton.v-pressed {
+        background-color: transparent;
+        .v-button-wrap {
+          background: none;
+          border: none;
+          .v-button-caption {
+            font-weight: bold;
+          }
+          .v-popup-indicator::before {
+            content:'\f0dd';
+            color:white;
+            font-size: 15px;
+          }
+        }
+      }
+      .v-button.notification-button, .v-button.notification-button.v-pressed {
+        background-color: white;
+        border-radius: 5px;
       .v-button-caption {
         color: #c31616;
       }
@@ -648,30 +665,6 @@
         background:none;
       }
     }
-    .accountMenuContainer {
-      float: right;
-      .v-button.accountMenu,  .v-button.accountMenu.v-pressed {
-        background-color: transparent;
-        .v-button-wrap {
-          background: none;
-          border: none;
-          .v-button-caption {
-            font-weight: bold;
-          }
-          .v-popup-indicator::before {
-            content:'\f078';
-            color:white;
-          }
-        }
-      }
-    }
-    .v-popupbutton .v-popup-indicator {
-      &:before {
-        content: "";
-      }
-      &:hover {
-        background: transparent;
-      }
     }
   }
 

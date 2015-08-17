@@ -1323,6 +1323,8 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 .optionPopupContent {
 	background-color: #ffffff;
 	margin: -5px;
+	border: solid 1px #CFCFCF;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
 
 .optionPopupContent .action-wrap .v-button-action {
@@ -1341,6 +1343,21 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-disabled.v-button-action {
 	border: none;
+}
+
+.optionPopupContent:after {
+	bottom: 100%;
+	right: 10px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 8px;
+	margin-left: -8px;
 }
 
 .v-checkbox input[type="checkbox"]:focus {
@@ -8747,6 +8764,8 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 .optionPopupContent {
 	background-color: #ffffff;
 	margin: -5px;
+	border: solid 1px #CFCFCF;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
 
 .optionPopupContent .action-wrap .v-button-action {
@@ -8765,6 +8784,21 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .optionPopupContent .action-wrap .v-disabled.v-button-action {
 	border: none;
+}
+
+.optionPopupContent:after {
+	bottom: 100%;
+	right: 10px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 8px;
+	margin-left: -8px;
 }
 
 .v-checkbox input[type="checkbox"]:focus {
@@ -10865,57 +10899,50 @@ input.v-textfield-pagedtable-pagefield {
 	margin: 10px 0px 0px;
 }
 
-.topNavigation .v-button.notification-button, .topNavigation .v-button.notification-button.v-pressed {
-	background: none no-repeat left top white;
-	border-radius: 5px;
-}
-
-.topNavigation .v-button.notification-button .v-button-caption, .topNavigation .v-button.notification-button.v-pressed .v-button-caption {
-	color: #c31616;
-}
-
-.topNavigation .v-button.notification-button .v-popup-indicator, .topNavigation .v-button.notification-button.v-pressed .v-popup-indicator {
-	display: none;
-}
-
-.topNavigation .v-button.notification-button .v-icon, .topNavigation .v-button.notification-button.v-pressed .v-icon {
-	font-size: 16px;
-	color: chocolate;
-}
-
-.topNavigation .v-button.notification-button .v-button-wrap, .topNavigation .v-button.notification-button .v-button-wrap:hover, .topNavigation .v-button.notification-button.v-pressed .v-button-wrap, .topNavigation .v-button.notification-button.v-pressed .v-button-wrap:hover {
-	padding: 4px 6px;
-	background: none;
-}
-
 .topNavigation .accountMenuContainer {
 	float: right;
 }
 
-.topNavigation .accountMenuContainer .v-button.accountMenu, .topNavigation .accountMenuContainer .v-button.accountMenu.v-pressed {
+.topNavigation .accountMenuContainer .v-button.v-popupbutton, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed {
 	background-color: transparent;
 }
 
-.topNavigation .accountMenuContainer .v-button.accountMenu .v-button-wrap, .topNavigation .accountMenuContainer .v-button.accountMenu.v-pressed .v-button-wrap {
+.topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap {
 	background: none;
 	border: none;
 }
 
-.topNavigation .accountMenuContainer .v-button.accountMenu .v-button-wrap .v-button-caption, .topNavigation .accountMenuContainer .v-button.accountMenu.v-pressed .v-button-wrap .v-button-caption {
+.topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-button-caption, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-button-caption {
 	font-weight: bold;
 }
 
-.topNavigation .accountMenuContainer .v-button.accountMenu .v-button-wrap .v-popup-indicator::before, .topNavigation .accountMenuContainer .v-button.accountMenu.v-pressed .v-button-wrap .v-popup-indicator::before {
-	content: "\f078";
+.topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-popup-indicator::before, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-popup-indicator::before {
+	content: "\f0dd";
 	color: white;
+	font-size: 15px;
 }
 
-.topNavigation .v-popupbutton .v-popup-indicator:before {
-	content: "";
+.topNavigation .accountMenuContainer .v-button.notification-button, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed {
+	background-color: white;
+	border-radius: 5px;
 }
 
-.topNavigation .v-popupbutton .v-popup-indicator:hover {
-	background: transparent;
+.topNavigation .accountMenuContainer .v-button.notification-button .v-button-caption, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-caption {
+	color: #c31616;
+}
+
+.topNavigation .accountMenuContainer .v-button.notification-button .v-popup-indicator, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-popup-indicator {
+	display: none;
+}
+
+.topNavigation .accountMenuContainer .v-button.notification-button .v-icon, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-icon {
+	font-size: 16px;
+	color: chocolate;
+}
+
+.topNavigation .accountMenuContainer .v-button.notification-button .v-button-wrap, .topNavigation .accountMenuContainer .v-button.notification-button .v-button-wrap:hover, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-wrap, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-wrap:hover {
+	padding: 4px 6px;
+	background: none;
 }
 
 #mainLogo {

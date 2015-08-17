@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.shell.view;
 
-import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.notification.*;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -61,6 +60,7 @@ import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -70,12 +70,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.sliderpanel.SliderPanel;
+import org.vaadin.sliderpanel.SliderPanelBuilder;
 import org.vaadin.sliderpanel.client.SliderMode;
 import org.vaadin.sliderpanel.client.SliderTabPosition;
 import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -139,8 +141,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
     private SliderPanel buildHelpSlider() {
         MVerticalLayout helpContent = new MVerticalLayout().withWidth("250px");
-        SliderPanel topSlider = new SliderPanel(helpContent, false, SliderMode.RIGHT);
-        topSlider.setHeight("300px");
+        SliderPanelBuilder sliderPanelBuilder = new SliderPanelBuilder(helpContent).mode(SliderMode.RIGHT).expanded(false).fixedContentSize(300);
+        SliderPanel topSlider = new SliderPanel(sliderPanelBuilder);
         topSlider.addStyleName("helpPanel");
         Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
                 new A("http://support.mycollab.com/forum/42576-knowledge-base/", "_blank").appendText("Knowledge Base >>")).write(), ContentMode.HTML);
@@ -207,62 +209,55 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         layout.setHeight("40px");
         layout.setWidth("100%");
 
-        Button accountLogo = AccountAssetsResolver.createAccountLogoImageComponent(
-                AppContext.getBillingAccount().getLogopath(), 150);
+        final PopupButton modulePopup = new PopupButton("");
+        modulePopup.setDirection(Alignment.MIDDLE_LEFT);
+        modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppContext.getBillingAccount().getLogopath(), 150));
+        OptionPopupContent modulePopupContent = new OptionPopupContent().withWidth("160px");
+        modulePopup.setContent(modulePopupContent);
 
-        accountLogo.addClickListener(new ClickListener() {
-            private static final long serialVersionUID = 1L;
+        MButton projectModuleBtn = new MButton().withCaption(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT))
+                .withIcon(VaadinIcons.TASKS).withListener(new ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        modulePopup.setPopupVisible(false);
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
+                    }
+                });
+        modulePopupContent.addOption(projectModuleBtn);
 
+        MButton crmModuleBtn = new MButton().withCaption(AppContext.getMessage(GenericI18Enum.MODULE_CRM)).withIcon(
+                VaadinIcons.MONEY).withListener(new ClickListener() {
             @Override
-            public void buttonClick(final ClickEvent event) {
-                String lastModuleVisited = AppContext.getUser().getLastModuleVisit();
-                if (lastModuleVisited == null
-                        || ModuleNameConstants.PRJ.equals(lastModuleVisited)) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
-                } else if (ModuleNameConstants.CRM.equals(lastModuleVisited)) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
-                } else if (ModuleNameConstants.ACCOUNT.equals(lastModuleVisited)) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, null));
-                } else if (ModuleNameConstants.FILE.equals(lastModuleVisited)) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
-                }
+            public void buttonClick(ClickEvent clickEvent) {
+                modulePopup.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
             }
         });
-        layout.addComponent(accountLogo, "mainLogo");
+        modulePopupContent.addOption(crmModuleBtn);
 
-        serviceMenu = new ServiceMenu();
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                VaadinIcons.TASKS, new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
+        MButton fileModuleBtn = new MButton().withCaption(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT))
+                .withIcon(VaadinIcons.SUITCASE).withListener(new ClickListener() {
                     @Override
-                    public void buttonClick(final ClickEvent event) {
-                        if (!event.isCtrlKey() && !event.isMetaKey()) {
-                            EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
-                        }
-                    }
-                });
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                VaadinIcons.MONEY, new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
-                    }
-                });
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                VaadinIcons.SUITCASE, new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
+                    public void buttonClick(ClickEvent clickEvent) {
+                        modulePopup.setPopupVisible(false);
                         EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
                     }
                 });
+        modulePopupContent.addOption(fileModuleBtn);
+
+        MButton peopleBtn = new MButton().withCaption(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE)).withIcon
+                (VaadinIcons.USERS).withListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                modulePopup.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
+            }
+        });
+        modulePopupContent.addOption(peopleBtn);
+
+        layout.addComponent(modulePopup, "mainLogo");
+
+        serviceMenu = new ServiceMenu();
 
         serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
                 VaadinIcons.USERS, new Button.ClickListener() {
@@ -277,8 +272,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         layout.addComponent(serviceMenu, "serviceMenu");
 
-        MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false,
-                false));
+        MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
         accountLayout.setHeight("40px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
@@ -311,8 +305,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     HorizontalLayout informBox = new HorizontalLayout();
                     informBox.addStyleName("trialInformBox");
                     informBox.setSizeFull();
-                    informBox.addComponent(informLbl);
                     informBox.setMargin(new MarginInfo(false, true, false, false));
+                    informBox.addComponent(informLbl);
                     informBox.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -396,19 +390,15 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             SimpleUser user = AppContext.getUser();
             GregorianCalendar tenDaysAgo = new GregorianCalendar();
             tenDaysAgo.add(Calendar.DATE, -10);
-            if (Boolean.TRUE.equals(user.getRequestad()) &&
-                    user.getRegisteredtime().before(tenDaysAgo.getTime())) {
+            if (Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
                 UI.getCurrent().addWindow(new AdRequestWindow(user));
             }
         }
 
-        UserAvatarComp userAvatar = new UserAvatarComp();
-        accountLayout.addComponent(userAvatar);
-        accountLayout.setComponentAlignment(userAvatar, Alignment.MIDDLE_LEFT);
-
-        final PopupButton accountMenu = new PopupButton(com.esofthead.mycollab.core.utils.StringUtils.trim(AppContext.getUser()
-                .getDisplayName(), 20, true));
-        accountMenu.setStyleName("accountMenu");
+        Resource userAvatarRes = UserAvatarControlFactory.createAvatarResource(AppContext.getUserAvatarId(), 24);
+        final PopupButton accountMenu = new PopupButton("");
+        accountMenu.setIcon(userAvatarRes);
+        accountMenu.setDescription(AppContext.getUserDisplayName());
 
         OptionPopupContent accountPopupContent = new OptionPopupContent().withWidth("160px");
 
@@ -696,6 +686,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     }
                 }
             });
+            this.setDescription(AppContext.getUserDisplayName());
         }
 
         private void addUserAvatar() {
