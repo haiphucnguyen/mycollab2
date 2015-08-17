@@ -18,8 +18,6 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.PopupView;
 import org.vaadin.teemu.VaadinIcons;
 
-import java.util.Date;
-
 /**
  * @author MyCollab Ltd
  * @since 5.1.2
@@ -45,7 +43,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + task.getMilestoneName();
+                return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
+                        (MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
             }
         };
         builder.withBean(task).withBindProperty("milestoneid").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_MILESTONE))
@@ -59,7 +58,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%", value);
+                return VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%", task.getPercentagecomplete());
             }
         };
         builder.withBean(task).withBindProperty("percentagecomplete")
@@ -73,7 +72,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime((Date) value));
+                return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE))

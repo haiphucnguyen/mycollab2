@@ -604,11 +604,24 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background-color: #5ca9ff;
+    background: none;
     padding: 0px 7px;
-    color: white;
+    color: #808080;
+    .v-icon {
+      padding: 0px;
+    }
     .popupcontent .v-verticallayout {
       background-color: white;
+    }
+  }
+
+  .v-overlay-container {
+    .v-popupview-popup {
+      margin: 3px;
+      padding: 0px;
+      .popupContent {
+         background-color: white;
+      }
     }
   }
 }

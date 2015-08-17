@@ -72,14 +72,16 @@ public abstract class PopupBeanFieldBuilder<B> {
                     PopupView.Content content = view.getContent();
                     MVerticalLayout layout = (MVerticalLayout) content.getPopupComponent();
                     layout.removeAllComponents();
-                    layout.with(new Label(caption, ContentMode.HTML));
+                    Label headerLbl = new Label(caption, ContentMode.HTML);
+                    headerLbl.addStyleName("h2");
+                    layout.with(headerLbl);
                     layout.with(field);
                     fieldGroup.bind(field, bindProperty);
                 } else {
                     try {
                         fieldGroup.commit();
                         PopupContent content = (PopupContent) view.getContent();
-                        crudService.updateSelectiveWithSession(bean, AppContext.getUsername());
+                        crudService.updateWithSession(bean, AppContext.getUsername());
                         content.setMinimizedValueAsHTML(generateSmallContentAsHtml());
                     } catch (FieldGroup.CommitException e) {
                         throw new MyCollabException(e);

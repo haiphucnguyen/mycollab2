@@ -339,12 +339,25 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #5ca9ff;
+	background: none;
 	padding: 0px 7px;
-	color: white;
+	color: #808080;
+}
+
+.v-popupview.block-popupedit .v-icon {
+	padding: 0px;
 }
 
 .v-popupview.block-popupedit .popupcontent .v-verticallayout {
+	background-color: white;
+}
+
+.v-overlay-container .v-popupview-popup {
+	margin: 3px;
+	padding: 0px;
+}
+
+.v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
 }
 
@@ -626,12 +639,25 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #5ca9ff;
+	background: none;
 	padding: 0px 7px;
-	color: white;
+	color: #808080;
+}
+
+.v-popupview.block-popupedit .v-icon {
+	padding: 0px;
 }
 
 .v-popupview.block-popupedit .popupcontent .v-verticallayout {
+	background-color: white;
+}
+
+.v-overlay-container .v-popupview-popup {
+	margin: 3px;
+	padding: 0px;
+}
+
+.v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
 }
 
@@ -931,12 +957,25 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #5ca9ff;
+	background: none;
 	padding: 0px 7px;
-	color: white;
+	color: #808080;
+}
+
+.v-popupview.block-popupedit .v-icon {
+	padding: 0px;
 }
 
 .v-popupview.block-popupedit .popupcontent .v-verticallayout {
+	background-color: white;
+}
+
+.v-overlay-container .v-popupview-popup {
+	margin: 3px;
+	padding: 0px;
+}
+
+.v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
 }
 
