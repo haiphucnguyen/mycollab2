@@ -79,10 +79,12 @@ public abstract class PopupBeanFieldBuilder<B> {
                     fieldGroup.bind(field, bindProperty);
                 } else {
                     try {
-                        fieldGroup.commit();
-                        PopupContent content = (PopupContent) view.getContent();
-                        crudService.updateWithSession(bean, AppContext.getUsername());
-                        content.setMinimizedValueAsHTML(generateSmallContentAsHtml());
+                        if (fieldGroup.isModified()) {
+                            fieldGroup.commit();
+                            PopupContent content = (PopupContent) view.getContent();
+                            crudService.updateWithSession(bean, AppContext.getUsername());
+                            content.setMinimizedValueAsHTML(generateSmallContentAsHtml());
+                        }
                     } catch (FieldGroup.CommitException e) {
                         throw new MyCollabException(e);
                     }
