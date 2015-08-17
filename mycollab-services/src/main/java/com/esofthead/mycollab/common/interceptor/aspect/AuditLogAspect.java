@@ -20,12 +20,14 @@ package com.esofthead.mycollab.common.interceptor.aspect;
 import com.esofthead.mycollab.cache.LocalCacheManager;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
-import com.esofthead.mycollab.common.domain.*;
+import com.esofthead.mycollab.common.domain.ActivityStreamWithBLOBs;
+import com.esofthead.mycollab.common.domain.AuditLog;
+import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.domain.RelayEmailNotificationWithBLOBs;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
-import com.esofthead.mycollab.common.service.ibatis.AuditLogServiceImpl.AuditLogUtil;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
@@ -40,7 +42,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 
@@ -112,8 +113,7 @@ public class AuditLogAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStreamWithBLOBs activity = TraceableAspect.constructActivity(cls,
-                        traceableAnnotation, bean, username,
-                        ActivityStreamConstants.ACTION_UPDATE);
+                        traceableAnnotation, bean, username, ActivityStreamConstants.ACTION_UPDATE);
                 activityStreamId = activityStreamService.save(activity);
             } catch (Exception e) {
                 LOG.error("Error when save activity for save action of service " + cls.getName(), e);
@@ -141,8 +141,7 @@ public class AuditLogAspect {
                 monitorItem.setSaccountid(sAccountId);
                 monitorItemService.saveWithSession(monitorItem, username);
 
-                // check whether the current user is in monitor list, if
-                // not add him in
+                // check whether the current user is in monitor list, if not add him in
                 if (!watchableAnnotation.userFieldName().equals("")) {
                     String moreUser = (String) PropertyUtils.getProperty(bean, watchableAnnotation.userFieldName());
                     if (moreUser != null && !moreUser.equals(username)) {
@@ -180,15 +179,13 @@ public class AuditLogAspect {
         }
     }
 
-    private Integer saveAuditLog(Class<?> targetCls, Object bean,
-                                 String username, Integer sAccountId, Integer activityStreamId) {
+    private Integer saveAuditLog(Class<?> targetCls, Object bean, String username, Integer sAccountId, Integer activityStreamId) {
         Auditable auditAnnotation = targetCls.getAnnotation(Auditable.class);
         if (auditAnnotation != null) {
             String key;
             String changeSet = "";
             try {
-
-                int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
+                Integer typeid = (Integer) PropertyUtils.getProperty(bean, "id");
                 key = bean.toString() + ClassInfoMap.getType(targetCls) + typeid;
 
                 Object oldValue = caches.get(key);

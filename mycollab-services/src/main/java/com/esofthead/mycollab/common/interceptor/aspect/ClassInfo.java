@@ -22,7 +22,6 @@ package com.esofthead.mycollab.common.interceptor.aspect;
  */
 public class ClassInfo {
     private String module;
-
     private String type;
 
     public ClassInfo(String module, String type) {
