@@ -77,8 +77,7 @@ public class MonitorItemAspect {
                 LOG.debug("Save monitor item: " + BeanUtility.printBeanObj(monitorItem));
 
                 if (!watchableAnnotation.userFieldName().equals("")) {
-                    String moreUser = (String) PropertyUtils.getProperty(bean,
-                            watchableAnnotation.userFieldName());
+                    String moreUser = (String) PropertyUtils.getProperty(bean, watchableAnnotation.userFieldName());
                     if (moreUser != null && !moreUser.equals(username)) {
                         monitorItem.setId(null);
                         monitorItem.setUser(moreUser);
@@ -87,8 +86,8 @@ public class MonitorItemAspect {
                 }
             }
 
-            NotifyAgent notifyAgent = cls.getAnnotation(NotifyAgent.class);
-            if (notifyAgent != null) {
+            Traceable traceAnnotation = cls.getAnnotation(Traceable.class);
+            if (traceAnnotation != null) {
                 int sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
                 int typeId = (Integer) PropertyUtils.getProperty(bean, "id");
                 RelayEmailNotificationWithBLOBs relayNotification = new RelayEmailNotificationWithBLOBs();
@@ -98,7 +97,7 @@ public class MonitorItemAspect {
                 relayNotification.setType(ClassInfoMap.getType(cls));
                 relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
                 relayNotification.setTypeid("" + typeId);
-                relayNotification.setEmailhandlerbean(notifyAgent.value().getName());
+                relayNotification.setEmailhandlerbean(traceAnnotation.notifyAgent().getName());
                 relayEmailNotificationService.saveWithSession(relayNotification, username);
                 // Save notification item
             }

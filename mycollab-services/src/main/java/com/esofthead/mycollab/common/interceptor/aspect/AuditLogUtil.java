@@ -22,7 +22,7 @@ import java.util.List;
 public class AuditLogUtil {
     private static Logger LOG = LoggerFactory.getLogger(AuditLogUtil.class);
 
-    static public String getChangeSet(Object oldObj, Object newObj) {
+    static public String getChangeSet(Object oldObj, Object newObj, List<String> excludeFields) {
         Class cl = oldObj.getClass();
         List<AuditChangeItem> changeItems = new ArrayList<>();
 
@@ -31,6 +31,9 @@ public class AuditLogUtil {
 
             for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
                 String fieldName = propertyDescriptor.getName();
+                if (excludeFields.contains(fieldName)) {
+                    continue;
+                }
                 String oldProp = getValue(PropertyUtils.getProperty(oldObj, fieldName));
 
                 Object newPropVal;
@@ -51,10 +54,10 @@ public class AuditLogUtil {
             }
         } catch (Exception e) {
             LOG.error("There is error when convert changeset", e);
-            return "";
+            return null;
         }
 
-        return JsonDeSerializer.toJson(changeItems);
+        return (changeItems.size() > 0) ? JsonDeSerializer.toJson(changeItems) : null;
     }
 
     private static String getValue(Object obj) {
