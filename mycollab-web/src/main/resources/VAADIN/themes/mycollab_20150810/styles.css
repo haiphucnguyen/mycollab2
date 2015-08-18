@@ -1169,7 +1169,6 @@ a.pending {
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	background: none no-repeat 0 0 #9cd5f2;
 	margin: -1px;
 	border: 1px solid #CFCFCF;
 }
@@ -1190,7 +1189,6 @@ a.pending {
 .v-progressbar.medium .v-progressbar-indicator {
 	height: 7px;
 	border: none;
-	background-color: #9cd5f2;
 }
 
 .listControl {
@@ -8595,7 +8593,6 @@ a.pending {
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	background: none no-repeat 0 0 #9cd5f2;
 	margin: -1px;
 	border: 1px solid #CFCFCF;
 }
@@ -8616,7 +8613,6 @@ a.pending {
 .v-progressbar.medium .v-progressbar-indicator {
 	height: 7px;
 	border: none;
-	background-color: #9cd5f2;
 }
 
 .listControl {

@@ -81,12 +81,15 @@ public class ThemeManager {
         if (accountTheme.getVtabsheetbg() != null) {
             extraStyles.append(".vertical-tabsheet .navigator-wrap { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
-
-            extraStyles.append(".v-progressbar.medium .v-progressbar-indicator { background-color: #"
-                    + accountTheme.getVtabsheetbg() + "; }");
         }
 
         if (accountTheme.getVtabsheetbgselected() != null) {
+            extraStyles.append(".v-progressbar-indicator { background-color: #"
+                    + accountTheme.getVtabsheetbgselected() + "; }");
+
+            extraStyles.append(".v-progressbar.medium .v-progressbar-indicator { background-color: #"
+                    + accountTheme.getVtabsheetbgselected() + "; }");
+
             extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
 
