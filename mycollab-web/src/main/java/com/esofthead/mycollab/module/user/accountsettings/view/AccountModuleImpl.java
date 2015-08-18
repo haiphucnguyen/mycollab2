@@ -68,7 +68,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     private SetupPresenter setupPresenter;
 
     public AccountModuleImpl() {
-        super(true);
+        super();
         ControllerRegistry.addController(new UserAccountController(this));
         this.setWidth("100%");
         this.addStyleName("main-content-wrapper accountViewContainer");
@@ -137,8 +137,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
                 if (SettingUIConstants.PROFILE.equals(tabId)) {
                     profilePresenter.go(AccountModuleImpl.this, null);
                 } else if (SettingUIConstants.BILLING.equals(tabId)) {
-                    billingPresenter.go(AccountModuleImpl.this,
-                            new BillingScreenData.BillingSummary());
+                    billingPresenter.go(AccountModuleImpl.this, new BillingScreenData.BillingSummary());
                 } else if (SettingUIConstants.USERS.equals(tabId)) {
                     userPermissionPresenter.go(AccountModuleImpl.this, null);
                 } else if (SettingUIConstants.GENERAL_SETTING.equals(tabId)) {
@@ -161,8 +160,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     }
 
     private ComponentContainer constructUserRoleComponent() {
-        this.userPermissionPresenter = PresenterResolver
-                .getPresenter(UserPermissionManagementPresenter.class);
+        this.userPermissionPresenter = PresenterResolver.getPresenter(UserPermissionManagementPresenter.class);
         return this.userPermissionPresenter.getView();
     }
 
@@ -194,8 +192,7 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
             serviceMenu.addService("Projects", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoProjectModule(this, new String[]{"dashboard"}));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{"dashboard"}));
                     serviceMenu.selectService(0);
                 }
             });

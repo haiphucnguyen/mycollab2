@@ -43,6 +43,22 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.1.2
+-----------------------------
+
+**Library Upgrades**
+
+
+**Improvements & New Features**
+
+* Support task relationships in Gantt chart
+* Menu navigator is easy to understand for geeks
+
+**Bug Fixes**
+
+* Search in project throws error
+
+
 Version 5.1.1
 -----------------------------
 **Library Upgrades**

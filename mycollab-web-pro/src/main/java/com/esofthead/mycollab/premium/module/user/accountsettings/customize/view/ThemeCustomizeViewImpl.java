@@ -19,9 +19,9 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
+import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-import org.vaadin.teemu.VaadinIcons;
 
 import java.util.Iterator;
 
@@ -415,8 +415,6 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         previewLayout.setStyleName("example-block");
         previewLayout.setWidth("520px");
         CssLayout verticalTabsheetFix = new CssLayout();
-        verticalTabsheetFix.setStyleName("verticaltabsheet-fix");
-        verticalTabsheetFix.addStyleName("is-left");
         verticalTabsheetFix.setWidth("250px");
         previewLayout.addComponent(verticalTabsheetFix);
         blockBody.addComponent(previewLayout);

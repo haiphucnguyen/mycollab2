@@ -57,6 +57,8 @@ public class ThemeManager {
             extraStyles.append(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { background-color: #"
                     + accountTheme.getTopmenubgselected() + "; }");
 
+            extraStyles.append(".v-button.add-project-popup:hover { background-color: white; }");
+
         }
 
         if (accountTheme.getTopmenutext() != null) {
@@ -69,12 +71,18 @@ public class ThemeManager {
 
             extraStyles.append(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { color: #"
                     + accountTheme.getTopmenutextselected() + "; }");
+
+            extraStyles.append(".v-button.add-project-popup:hover { color: #"
+                    + accountTheme.getTopmenutextselected() + "; }");
         }
 
 		/* Vertical Tabsheet */
 
         if (accountTheme.getVtabsheetbg() != null) {
-            extraStyles.append(".verticaltabsheet-fix { background-color: #"
+            extraStyles.append(".vertical-tabsheet .navigator-wrap { background-color: #"
+                    + accountTheme.getVtabsheetbg() + "; }");
+
+            extraStyles.append(".project-info { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
 
             extraStyles.append(".v-progressbar.medium .v-progressbar-indicator { background-color: #"
@@ -321,7 +329,7 @@ public class ThemeManager {
 		/* Vertical Tabsheet */
 
         if (accountTheme.getVtabsheetbg() != null) {
-            demoExtraStyles.append(".example-block .verticaltabsheet-fix { background-color: #"
+            demoExtraStyles.append(".example-block .navigator-wrap { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
         }
 

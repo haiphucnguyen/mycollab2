@@ -9186,10 +9186,6 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .projectDashboardView {
-	min-height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
 	display: block;
 }
 
@@ -9200,7 +9196,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .projectDashboardView .sidebar-menu {
-	padding: 20px 0px 0px;
+	padding: 0px;
 }
 
 .projectDashboardView .sidebar-menu .v-button-wrap .v-icon {
@@ -10088,12 +10084,39 @@ div.v-button.token-field:hover {
 }
 
 .v-button.add-project-popup .v-button-wrap .v-icon {
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .v-button.add-project-popup .v-button-wrap .v-button-caption {
 	display: table-cell;
 	vertical-align: middle;
+}
+
+.v-button.add-project-popup:focus {
+	background: none;
+}
+
+.v-button.add-project-popup.selected, .v-button.add-project-popup:hover {
+	border-radius: 2px;
+}
+
+.v-button.add-project-popup.selected .v-button-wrap, .v-button.add-project-popup:hover .v-button-wrap {
+	background: none;
+}
+
+.v-button.add-project-popup .v-popup-indicator:before {
+	content: "\f0dd";
+	font-size: 15px;
+}
+
+.project-info .header {
+	font-size: 24px;
+	color: white;
+}
+
+.project-info .desc .v-label, .project-info .desc .v-label a {
+	font-size: 12px;
+	color: white;
 }
 
 .gantt {
@@ -13125,9 +13148,10 @@ div.v-ratingstars-bar {
 	width: 4px;
 }
 
-.tab-content {
+.v-csslayout.tab-content {
 	background-color: #fff;
 	height: 100%;
+	overflow-y: auto;
 }
 
 .vertical-tabsheet  > .v-csslayout {
@@ -13140,7 +13164,6 @@ div.v-ratingstars-bar {
 
 .vertical-tabsheet .navigator-wrap {
 	display: inline-block;
-	background: none no-repeat 0 0 transparent;
 }
 
 .vertical-tabsheet .container-wrap {
@@ -13155,6 +13178,7 @@ div.v-ratingstars-bar {
 .vertical-tabsheet .v-button-tab {
 	border: none;
 	background: none no-repeat 0 0 transparent;
+	height: 42px;
 	border-radius: 0px;
 	-webkit-box-shadow: none;
 }
@@ -13722,18 +13746,6 @@ div.v-csslayout.bean-block.olive-block {
 	height: 26px;
 	line-height: 26px;
 	padding: 0 20px 0 10px;
-}
-
-.verticaltabsheet-fix {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	background-color: #6C6C6C;
-}
-
-.verticaltabsheet-fix.is-left {
-	left: 0px;
 }
 
 .v-colorpicker-popup .v-button .v-button-wrap, .v-colorpicker-popup .v-button:active .v-button-wrap {

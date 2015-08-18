@@ -19,10 +19,6 @@
   }
 
   .projectDashboardView {
-    min-height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
     display: block;
     .container-wrap.main-content {
       .top-panel {
@@ -32,7 +28,7 @@
       }
     }
     .sidebar-menu {
-      padding: 20px 0px 0px;
+      padding: 0px;
       .v-button-wrap .v-icon {
         font-size: $font-x-large;
       }
@@ -768,11 +764,41 @@
     .v-button-wrap {
       display: table;
       .v-icon {
-        font-size: 20px;
+        font-size: 18px;
       }
       .v-button-caption {
         display:table-cell;
          vertical-align:middle;
+      }
+    }
+
+    &:focus {
+      background: none;
+    }
+    &.selected, &:hover {
+      border-radius: 2px;
+      .v-button-wrap {
+        background:none;
+      }
+    }
+
+    .v-popup-indicator {
+      &:before {
+        content: "\f0dd";
+        font-size: 15px;
+      }
+    }
+  }
+
+  .project-info {
+    .header {
+      font-size: $font-xx-large;
+      color: white;
+    }
+    .desc {
+      .v-label, .v-label a {
+        font-size: $font-small;
+        color: white;
       }
     }
   }

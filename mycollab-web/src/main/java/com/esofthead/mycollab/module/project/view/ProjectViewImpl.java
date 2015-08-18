@@ -74,26 +74,14 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class ProjectViewImpl extends AbstractPageView implements ProjectView {
     private ProjectViewWrap viewWrap;
 
-    private ProjectDashboardPresenter dashboardPresenter;
-    private MessagePresenter messagePresenter;
-    private MilestonePresenter milestonesPresenter;
-    private TaskPresenter taskPresenter;
-    private TrackerPresenter trackerPresenter;
-    private PagePresenter pagePresenter;
-    private FilePresenter filePresenter;
-    private IProblemPresenter problemPresenter;
-    private IRiskPresenter riskPresenter;
-    private ITimeTrackingPresenter timePresenter;
-    private UserSettingPresenter userPresenter;
-    private IStandupPresenter standupPresenter;
-
     @Override
     public void initView(final SimpleProject project) {
+        this.setSizeFull();
         this.removeAllComponents();
         viewWrap = new ProjectViewWrap(project);
         ControllerRegistry.addController(new ProjectController(this));
         ProjectInfoComponent infoComp = new ProjectInfoComponent(project);
-        this.with(infoComp, viewWrap);
+        this.with(infoComp, viewWrap).expand(viewWrap);
     }
 
     @Override
@@ -106,66 +94,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         return viewWrap.gotoSubView(viewId);
     }
 
-    private Component constructProjectDashboardComponent() {
-        dashboardPresenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
-        return dashboardPresenter.getView();
-    }
-
-    private Component constructProjectUsers() {
-        userPresenter = PresenterResolver.getPresenter(UserSettingPresenter.class);
-        return userPresenter.getView();
-    }
-
-    private Component constructProjectMessageComponent() {
-        messagePresenter = PresenterResolver.getPresenter(MessagePresenter.class);
-        return messagePresenter.getView();
-    }
-
-    private Component constructProjectPageComponent() {
-        pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);
-        return pagePresenter.getView();
-    }
-
-    private Component constructProjectMilestoneComponent() {
-        milestonesPresenter = PresenterResolver.getPresenter(MilestonePresenter.class);
-        return milestonesPresenter.getView();
-    }
-
-    private Component constructProjectRiskComponent() {
-        riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
-        return riskPresenter.getView();
-    }
-
-    private Component constructProjectProblemComponent() {
-        problemPresenter = PresenterResolver.getPresenter(IProblemPresenter.class);
-        return problemPresenter.getView();
-    }
-
-    private Component constructTimeTrackingComponent() {
-        timePresenter = PresenterResolver.getPresenter(ITimeTrackingPresenter.class);
-        return timePresenter.getView();
-    }
-
-    private Component constructProjectStandupMeeting() {
-        standupPresenter = PresenterResolver.getPresenter(IStandupPresenter.class);
-        return standupPresenter.getView();
-    }
-
-    private Component constructTaskDashboardComponent() {
-        taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
-        return taskPresenter.getView();
-    }
-
-    private Component constructProjectBugComponent() {
-        trackerPresenter = PresenterResolver.getPresenter(TrackerPresenter.class);
-        return trackerPresenter.getView();
-    }
-
-    private Component constructProjectFileComponent() {
-        filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
-        return filePresenter.getView();
-    }
-
     @Override
     public void updateProjectFeatures() {
         viewWrap.buildComponents();
@@ -174,9 +102,21 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
     private class ProjectViewWrap extends AbstractCssPageView {
         private ProjectVerticalTabsheet myProjectTab;
 
+        private ProjectDashboardPresenter dashboardPresenter;
+        private MessagePresenter messagePresenter;
+        private MilestonePresenter milestonesPresenter;
+        private TaskPresenter taskPresenter;
+        private TrackerPresenter trackerPresenter;
+        private PagePresenter pagePresenter;
+        private FilePresenter filePresenter;
+        private IProblemPresenter problemPresenter;
+        private IRiskPresenter riskPresenter;
+        private ITimeTrackingPresenter timePresenter;
+        private UserSettingPresenter userPresenter;
+        private IStandupPresenter standupPresenter;
+
         ProjectViewWrap(final SimpleProject project) {
-            super(true);
-            updateVerticalTabsheetFixStatus();
+            super();
             this.setWidth("100%");
 
             this.addStyleName("main-content-wrapper");
@@ -187,6 +127,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             myProjectTab.setNavigatorWidth("100%");
             myProjectTab.setNavigatorStyleName("sidebar-menu");
             myProjectTab.setContainerStyleName("tab-content");
+
+            buildComponents();
 
             myProjectTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
                 @Override
@@ -241,7 +183,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
             VerticalLayout contentWrapper = myProjectTab.getContentWrapper();
             contentWrapper.addStyleName("main-content");
-            MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(true).withWidth("100%").withStyleName("top-panel");
+            MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(true).withWidth("100%").withStyleName
+                    ("top-panel").withHeight("42px");
             contentWrapper.addComponentAsFirst(topPanel);
 
             CssLayout navigatorWrapper = myProjectTab.getNavigatorWrapper();
@@ -254,178 +197,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             breadCrumb.setProject(project);
 
             topPanel.with(breadCrumb).withAlign(breadCrumb, Alignment.MIDDLE_LEFT).expand(breadCrumb);
-
-            if (project.isProjectArchived()) {
-                Button activeProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_ACTIVE_PROJECT),
-                        new ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                                project.setProjectstatus(StatusI18nEnum.Open.name());
-                                projectService.updateSelectiveWithSession(project, AppContext.getUsername());
-
-                                PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
-                                EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-
-                            }
-                        });
-                activeProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-                topPanel.with(activeProjectBtn).withAlign(activeProjectBtn, Alignment.MIDDLE_RIGHT);
-            } else {
-                SearchTextField searchField = new SearchTextField() {
-                    public void doSearch(String value) {
-                        EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectSearchItemsView(ProjectViewImpl.this, value));
-                    }
-                };
-
-                final PopupButton controlsBtn = new PopupButton();
-                controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
-                controlsBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
-
-                OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("150px");
-
-                Button createPhaseBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(ProjectViewImpl.this, null));
-                            }
-                        });
-                createPhaseBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
-                createPhaseBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
-                popupButtonsControl.addOption(createPhaseBtn);
-
-                Button createTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(ProjectViewImpl.this, null));
-                            }
-                        });
-                createTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-                createTaskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-                popupButtonsControl.addOption(createTaskBtn);
-
-                Button createBugBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));
-                            }
-                        });
-                createBugBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-                createBugBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-                popupButtonsControl.addOption(createBugBtn);
-
-                Button createRiskBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
-                            }
-                        });
-                createRiskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
-                createRiskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
-                popupButtonsControl.addOption(createRiskBtn);
-
-                Button createProblemBtn = new Button(
-                        AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                EventBusFactory.getInstance().post(new ProblemEvent.GotoAdd(this, null));
-                            }
-                        });
-                createProblemBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROBLEMS));
-                createProblemBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM));
-                popupButtonsControl.addOption(createProblemBtn);
-
-                Button editProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_EDIT_PROJECT),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                dashboardPresenter.go(ProjectViewImpl.this, new ProjectScreenData.Edit(project));
-                            }
-                        });
-                editProjectBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT));
-                editProjectBtn.setIcon(FontAwesome.EDIT);
-                popupButtonsControl.addOption(editProjectBtn);
-
-                Button archiveProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_ARCHIVE_PROJECT),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                ConfirmDialogExt.show(UI.getCurrent(),
-                                        AppContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, AppContext.getSiteName()),
-                                        AppContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_ARCHIVE_MESSAGE),
-                                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                        new ConfirmDialog.Listener() {
-                                            private static final long serialVersionUID = 1L;
-
-                                            @Override
-                                            public void onClose(ConfirmDialog dialog) {
-                                                if (dialog.isConfirmed()) {
-                                                    ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                                                    project.setProjectstatus(StatusI18nEnum.Archived.name());
-                                                    projectService.updateSelectiveWithSession(project, AppContext.getUsername());
-
-                                                    PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
-                                                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-                                                }
-                                            }
-                                        });
-                            }
-                        });
-                archiveProjectBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT));
-                archiveProjectBtn.setIcon(FontAwesome.ARCHIVE);
-                popupButtonsControl.addOption(archiveProjectBtn);
-
-                if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT)) {
-                    Button deleteProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_DELETE_PROJECT),
-                            new Button.ClickListener() {
-                                @Override
-                                public void buttonClick(ClickEvent event) {
-                                    controlsBtn.setPopupVisible(false);
-                                    ConfirmDialogExt.show(UI.getCurrent(),
-                                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                                            AppContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_DELETE_MESSAGE),
-                                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                            new ConfirmDialog.Listener() {
-                                                private static final long serialVersionUID = 1L;
-
-                                                @Override
-                                                public void onClose(
-                                                        ConfirmDialog dialog) {
-                                                    if (dialog.isConfirmed()) {
-                                                        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                                                        projectService.removeWithSession(CurrentProjectVariables.getProject(),
-                                                                AppContext.getUsername(), AppContext.getAccountId());
-                                                        EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
-                                                    }
-                                                }
-                                            });
-                                }
-                            });
-                    deleteProjectBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT));
-                    deleteProjectBtn.setIcon(FontAwesome.TRASH_O);
-                    popupButtonsControl.addOption(deleteProjectBtn);
-                }
-
-                controlsBtn.setContent(popupButtonsControl);
-                controlsBtn.setWidthUndefined();
-
-                topPanel.with(searchField, controlsBtn).withAlign(searchField, Alignment.MIDDLE_RIGHT).withAlign(controlsBtn,
-                        Alignment.MIDDLE_RIGHT);
-            }
 
             if (project.getContextask() == null || project.getContextask()) {
                 ProjectMemberSearchCriteria searchCriteria = new ProjectMemberSearchCriteria();
@@ -441,7 +212,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
         void setNavigatorVisibility(boolean visibility) {
             myProjectTab.setNavigatorVisibility(visibility);
-            vTabsheetFix.setVisible(visibility);
         }
 
         Component gotoSubView(String viewId) {
@@ -538,6 +308,66 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             myProjectTab.addTab(constructProjectUsers(), ProjectTypeConstants.MEMBER, 12,
                     AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
                     GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateUsersLink(prjId));
+        }
+
+        private Component constructProjectDashboardComponent() {
+            dashboardPresenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
+            return dashboardPresenter.getView();
+        }
+
+        private Component constructProjectUsers() {
+            userPresenter = PresenterResolver.getPresenter(UserSettingPresenter.class);
+            return userPresenter.getView();
+        }
+
+        private Component constructProjectMessageComponent() {
+            messagePresenter = PresenterResolver.getPresenter(MessagePresenter.class);
+            return messagePresenter.getView();
+        }
+
+        private Component constructProjectPageComponent() {
+            pagePresenter = PresenterResolver.getPresenter(PagePresenter.class);
+            return pagePresenter.getView();
+        }
+
+        private Component constructProjectMilestoneComponent() {
+            milestonesPresenter = PresenterResolver.getPresenter(MilestonePresenter.class);
+            return milestonesPresenter.getView();
+        }
+
+        private Component constructProjectRiskComponent() {
+            riskPresenter = PresenterResolver.getPresenter(IRiskPresenter.class);
+            return riskPresenter.getView();
+        }
+
+        private Component constructProjectProblemComponent() {
+            problemPresenter = PresenterResolver.getPresenter(IProblemPresenter.class);
+            return problemPresenter.getView();
+        }
+
+        private Component constructTimeTrackingComponent() {
+            timePresenter = PresenterResolver.getPresenter(ITimeTrackingPresenter.class);
+            return timePresenter.getView();
+        }
+
+        private Component constructProjectStandupMeeting() {
+            standupPresenter = PresenterResolver.getPresenter(IStandupPresenter.class);
+            return standupPresenter.getView();
+        }
+
+        private Component constructTaskDashboardComponent() {
+            taskPresenter = PresenterResolver.getPresenter(TaskPresenter.class);
+            return taskPresenter.getView();
+        }
+
+        private Component constructProjectBugComponent() {
+            trackerPresenter = PresenterResolver.getPresenter(TrackerPresenter.class);
+            return trackerPresenter.getView();
+        }
+
+        private Component constructProjectFileComponent() {
+            filePresenter = PresenterResolver.getPresenter(FilePresenter.class);
+            return filePresenter.getView();
         }
     }
 
