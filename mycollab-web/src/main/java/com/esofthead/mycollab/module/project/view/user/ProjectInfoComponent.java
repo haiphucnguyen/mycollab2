@@ -12,5 +12,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
     public ProjectInfoComponent(SimpleProject project) {
         this.with(new Label("Gaaa"));
         this.setWidth("100%");
+        this.setHeight("100px");
     }
 }

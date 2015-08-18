@@ -67,7 +67,6 @@ public abstract class AbstractCssPageView extends CssLayout implements PageView,
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void addViewListener(ViewListener listener) {
-		addListener(ViewEvent.VIEW_IDENTIFIER(), ViewEvent.class, listener,
-				ViewListener.viewInitMethod);
+		addListener(ViewEvent.VIEW_IDENTIFIER(), ViewEvent.class, listener, ViewListener.viewInitMethod);
 	}
 }
