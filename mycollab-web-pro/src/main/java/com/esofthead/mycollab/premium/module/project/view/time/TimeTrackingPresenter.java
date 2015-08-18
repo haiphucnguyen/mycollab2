@@ -12,10 +12,10 @@ import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
+ *
  * @author MyCollab Ltd
  * @since 2.0
- * 
+ *
  */
 public class TimeTrackingPresenter extends AbstractPresenter<ITimeTrackingContainer> implements ITimeTrackingPresenter {
 	private static final long serialVersionUID = 1L;

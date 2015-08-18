@@ -43,12 +43,9 @@ public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
 		AbstractPresenter presenter;
 
 		if (data instanceof ProblemScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(ProblemListPresenter.class);
-		} else if (data instanceof ProblemScreenData.Add
-				|| data instanceof ProblemScreenData.Edit) {
-			presenter = PresenterResolver
-					.getPresenter(ProblemAddPresenter.class);
+			presenter = PresenterResolver.getPresenter(ProblemListPresenter.class);
+		} else if (data instanceof ProblemScreenData.Add || data instanceof ProblemScreenData.Edit) {
+			presenter = PresenterResolver.getPresenter(ProblemAddPresenter.class);
 		} else if (data instanceof ProblemScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(ProblemReadPresenter.class);

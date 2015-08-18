@@ -43,32 +43,28 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
             public void onCancel() {
                 ViewState viewState = HistoryViewManager.back();
                 if (viewState.hasPresenters(NullViewState.EmptyPresenter.class, ProjectViewPresenter.class)) {
-                    EventBusFactory.getInstance().post(
-                            new RiskEvent.GotoList(this, null));
+                    EventBusFactory.getInstance().post(new RiskEvent.GotoList(this, null));
                 }
             }
 
             @Override
             public void onSaveAndNew(final Risk risk) {
                 saveRisk(risk);
-                EventBusFactory.getInstance().post(
-                        new RiskEvent.GotoAdd(this, null));
+                EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
             }
         });
     }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.RISKS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
             RiskContainer riskContainer = (RiskContainer) container;
             riskContainer.removeAllComponents();
             riskContainer.addComponent(view.getWidget());
             Risk risk = (Risk) data.getParams();
             view.editItem(risk);
 
-            ProjectBreadcrumb breadCrumb = ViewManager
-                    .getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (risk.getId() == null) {
                 breadCrumb.gotoRiskAdd();
             } else {
@@ -80,8 +76,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
     }
 
     private int saveRisk(Risk risk) {
-        RiskService riskService = ApplicationContextUtil
-                .getSpringBean(RiskService.class);
+        RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
         risk.setProjectid(CurrentProjectVariables.getProjectId());
         risk.setSaccountid(AppContext.getAccountId());
 

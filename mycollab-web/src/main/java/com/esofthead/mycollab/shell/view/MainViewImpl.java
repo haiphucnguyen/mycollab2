@@ -253,21 +253,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         headerLayout.addComponent(modulePopup, "mainLogo");
 
-//        serviceMenu = new ServiceMenu();
-//
-//        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
-//                VaadinIcons.USERS, new Button.ClickListener() {
-//                    private static final long serialVersionUID = 1L;
-//
-//                    @Override
-//                    public void buttonClick(final ClickEvent event) {
-//                        EventBusFactory.getInstance().post(
-//                                new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
-//                    }
-//                });
-//
-//        headerLayout.addComponent(serviceMenu, "serviceMenu");
-
         MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
         accountLayout.setHeight("40px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -336,8 +321,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         NotificationButton notificationButton = new NotificationButton();
         accountLayout.addComponent(notificationButton);
         if (AppContext.getUser().getTimezone() == null) {
-            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                    new TimezoneNotification()));
+            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new TimezoneNotification()));
         }
 
         if (StringUtils.isBlank(AppContext.getUser().getAvatarid())) {

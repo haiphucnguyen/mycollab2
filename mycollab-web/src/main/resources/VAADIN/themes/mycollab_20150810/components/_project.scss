@@ -24,19 +24,6 @@
     top: 0;
     left: 0;
     display: block;
-    .navigator-wrap .project-list-comp {
-      .project-name {
-        .v-label {
-          cursor: pointer;
-        }
-        padding: 9px 0px;
-      }
-      .project-description {
-        color: #FFF;
-        padding: 10px 0px 20px;
-        border-bottom: 1px solid $border-color;
-      }
-    }
     .container-wrap.main-content {
       .top-panel {
         background-color: #FFF;
@@ -197,15 +184,6 @@
     margin-top: 15px;
   }
 
-  .projectinfo {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid $border-color;
-    background: none no-repeat left top #FFF;
-    border-radius: 0px;
-  }
-
   .message-toppanel {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -224,15 +202,6 @@
     box-sizing: border-box;
     background: none no-repeat left top $panel-background-color;
     border-radius: 0px;
-  }
-
-  .projectinfo-header {
-    @include margin-container(7px, 10px, 7px, 18px);
-    .project-name {
-      font-weight: bold;
-      font-size: $font-larger;
-      color: #313131;
-    }
   }
 
   .message-toppanel-header {
@@ -326,22 +295,6 @@
     pointer: none;
   }
   /* End Form Container View Field */
-
-  .project-list-comp {
-     padding: 13px 7px 0px;
-     .v-button-wrap {
-       text-align: left;
-       white-space: nowrap;
-       overflow: hidden;
-       text-overflow: ellipsis;
-     }
-     .v-popup-indicator {
-       float: right;
-       position: absolute;
-       right: 7px;
-       top: 7px;
-     }
-   }
 
   .v-button.add-project-btn {
     border: none;
@@ -809,13 +762,18 @@
   }
   /* END GANTT */
 
+  /* New project button */
   .v-button.add-project-popup {
     background: transparent;
-    .v-icon {
-      font-size: 20px;
-    }
-    .v-popup-indicator:before {
-      content: "";
+    .v-button-wrap {
+      display: table;
+      .v-icon {
+        font-size: 20px;
+      }
+      .v-button-caption {
+        display:table-cell;
+         vertical-align:middle;
+      }
     }
   }
 }

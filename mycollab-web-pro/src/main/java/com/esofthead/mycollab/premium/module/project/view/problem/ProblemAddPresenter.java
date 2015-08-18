@@ -30,8 +30,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables
-                .canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
+        if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
             ProblemContainer problemContainer = (ProblemContainer) container;
             problemContainer.removeAllComponents();
             problemContainer.addComponent(view.getWidget());
@@ -39,8 +38,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
             Problem problem = (Problem) data.getParams();
             view.editItem(problem);
 
-            ProjectBreadcrumb breadcrumb = ViewManager
-                    .getCacheComponent(ProjectBreadcrumb.class);
+            ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             if (problem.getId() == null) {
                 breadcrumb.gotoProblemAdd();
             } else {
@@ -67,29 +65,25 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
                     public void onCancel() {
                         ViewState viewState = HistoryViewManager.back();
                         if (viewState.hasPresenters(NullViewState.EmptyPresenter.class, ProjectViewPresenter.class)) {
-                            EventBusFactory.getInstance().post(
-                                    new ProblemEvent.GotoList(this, null));
+                            EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
                         }
                     }
 
                     @Override
                     public void onSaveAndNew(final Problem problem) {
                         saveProblem(problem);
-                        EventBusFactory.getInstance().post(
-                                new ProblemEvent.GotoAdd(this, null));
+                        EventBusFactory.getInstance().post(new ProblemEvent.GotoAdd(this, null));
                     }
                 });
     }
 
     private int saveProblem(Problem problem) {
-        ProblemService problemService = ApplicationContextUtil
-                .getSpringBean(ProblemService.class);
+        ProblemService problemService = ApplicationContextUtil.getSpringBean(ProblemService.class);
         problem.setProjectid(CurrentProjectVariables.getProjectId());
         problem.setSaccountid(AppContext.getAccountId());
 
         if (problem.getId() == null) {
             problemService.saveWithSession(problem, AppContext.getUsername());
-
         } else {
             problemService.updateWithSession(problem, AppContext.getUsername());
         }

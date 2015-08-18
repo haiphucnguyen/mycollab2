@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -31,11 +32,14 @@ import com.esofthead.mycollab.module.user.accountsettings.view.parameters.Billin
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.module.user.ui.components.UserVerticalTabsheet;
 import com.esofthead.mycollab.premium.module.user.accountsettings.view.UserAccountController;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet;
 import com.esofthead.mycollab.vaadin.ui.VerticalTabsheet.TabImpl;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
@@ -51,6 +55,9 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 @ViewComponent
 public class AccountModuleImpl extends AbstractCssPageView implements AccountModule {
     private static final long serialVersionUID = 1L;
+
+    private MHorizontalLayout serviceMenuContainer;
+    private ServiceMenu serviceMenu;
 
     private UserVerticalTabsheet accountTab;
 
@@ -181,6 +188,48 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
 
     @Override
     public MHorizontalLayout buildMenu() {
-        return null;
+        if (serviceMenuContainer == null) {
+            serviceMenuContainer = new MHorizontalLayout();
+            serviceMenu = new ServiceMenu();
+            serviceMenu.addService("Projects", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    EventBusFactory.getInstance().post(
+                            new ShellEvent.GotoProjectModule(this, new String[]{"dashboard"}));
+                    serviceMenu.selectService(0);
+                }
+            });
+
+            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(final Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
+                }
+            });
+
+            serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(final Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoFileModule(this, null));
+                }
+            });
+
+
+            serviceMenu.addService("People", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    EventBusFactory.getInstance().post(
+                            new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
+
+                }
+            });
+            serviceMenuContainer.with(serviceMenu);
+        }
+        serviceMenu.selectService(3);
+        return serviceMenuContainer;
     }
 }
