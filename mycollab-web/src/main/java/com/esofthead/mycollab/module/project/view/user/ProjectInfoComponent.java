@@ -39,7 +39,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         this.withMargin(true);
         this.addStyleName("project-info");
         this.setWidth("100%");
-        this.setHeight("85px");
+        this.setHeight("80px");
         Label headerLbl = new Label(FontAwesome.BUILDING_O.getHtml() + String.format(" %s (%s)", project.getName(),
                 project.getShortname()), ContentMode.HTML);
         headerLbl.setDescription(project.getDescription());

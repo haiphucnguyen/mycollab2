@@ -48,7 +48,7 @@
       display:inline-block;
     }
     .navigator-wrap .basic-info {
-      color: #fff;
+      color: #000;
       &:after {
         content: "";
         border-bottom: 1px solid $border-color;
@@ -60,9 +60,6 @@
       .info-hdr {
         font-size: $font-normal;
         font-weight: bold;
-      }
-      .v-button-wrap .v-button-caption {
-        color: white;
       }
     }
     &.preview-comp {

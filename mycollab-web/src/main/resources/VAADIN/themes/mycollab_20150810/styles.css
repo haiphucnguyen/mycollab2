@@ -8838,7 +8838,7 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .crmContainer .navigator-wrap .basic-info {
-	color: #fff;
+	color: #000;
 }
 
 .crmContainer .navigator-wrap .basic-info:after {
@@ -8853,10 +8853,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 .crmContainer .navigator-wrap .basic-info .info-hdr {
 	font-size: 13px;
 	font-weight: bold;
-}
-
-.crmContainer .navigator-wrap .basic-info .v-button-wrap .v-button-caption {
-	color: white;
 }
 
 .crmContainer.preview-comp {

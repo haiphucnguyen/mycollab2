@@ -82,9 +82,6 @@ public class ThemeManager {
             extraStyles.append(".vertical-tabsheet .navigator-wrap { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
 
-            extraStyles.append(".project-info { background-color: #"
-                    + accountTheme.getVtabsheetbg() + "; }");
-
             extraStyles.append(".v-progressbar.medium .v-progressbar-indicator { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
         }
@@ -125,6 +122,10 @@ public class ThemeManager {
         }
 
         if (accountTheme.getTabsheetbgselected() != null) {
+            extraStyles.append(".project-info { background-color: #"
+                    + accountTheme.getTabsheetbgselected() + "; }");
+
+
             extraStyles.append(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
                     + accountTheme.getTabsheetbgselected() + "; }");
 
