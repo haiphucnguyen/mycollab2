@@ -16,26 +16,76 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
+import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
+import com.esofthead.mycollab.web.IDesktopModule;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewComponent
-public class ProjectModule extends AbstractPageView implements IModule {
-	private static final long serialVersionUID = 1L;
+public class ProjectModule extends AbstractPageView implements IDesktopModule {
+    private static final long serialVersionUID = 1L;
 
-	public ProjectModule() {
-		setStyleName("project-module");
+    public ProjectModule() {
+        setStyleName("project-module");
         setSizeFull();
-		ControllerRegistry.addController(new ProjectModuleController(this));
-	}
+        ControllerRegistry.addController(new ProjectModuleController(this));
+    }
 
-	public void gotoProjectPage() {
-		UserDashboardPresenter presenter = PresenterResolver.getPresenter(UserDashboardPresenter.class);
-		presenter.go(this, null);
-	}
+    public void gotoProjectPage() {
+        UserDashboardPresenter presenter = PresenterResolver.getPresenter(UserDashboardPresenter.class);
+        presenter.go(this, null);
+    }
+
+    @Override
+    public MHorizontalLayout buildMenu() {
+        MHorizontalLayout container = new MHorizontalLayout();
+        ServiceMenu serviceMenu = new ServiceMenu();
+        serviceMenu.addService("Dashboard", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+
+            }
+        });
+        serviceMenu.addService("Timesheet", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+
+            }
+        });
+        serviceMenu.addService("People", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+
+            }
+        });
+
+        PopupButton addPopup = new PopupButton("Quick Add");
+        addPopup.addStyleName("add-project-popup");
+        addPopup.setIcon(FontAwesome.PLUS_CIRCLE);
+        OptionPopupContent content = new OptionPopupContent();
+        addPopup.setContent(content);
+
+        Button newPrjBtn = new Button("Project", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+
+            }
+        });
+        content.addOption(newPrjBtn);
+
+        container.with(serviceMenu, addPopup).withAlign(addPopup, Alignment.MIDDLE_LEFT);
+        return container;
+    }
 }

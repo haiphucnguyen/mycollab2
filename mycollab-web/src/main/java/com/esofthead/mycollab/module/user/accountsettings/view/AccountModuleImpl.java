@@ -144,14 +144,12 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
     }
 
     private ComponentContainer constructAccountSettingsComponent() {
-        this.billingPresenter = PresenterResolver
-                .getPresenter(IBillingPresenter.class);
+        this.billingPresenter = PresenterResolver.getPresenter(IBillingPresenter.class);
         return this.billingPresenter.getView();
     }
 
     private ComponentContainer constructUserInformationComponent() {
-        this.profilePresenter = PresenterResolver
-                .getPresenter(ProfilePresenter.class);
+        this.profilePresenter = PresenterResolver.getPresenter(ProfilePresenter.class);
         return this.profilePresenter.getView();
     }
 
@@ -178,7 +176,11 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
 
     @Override
     public void gotoUserProfilePage() {
-        EventBusFactory.getInstance().post(
-                new ProfileEvent.GotoProfileView(this, null));
+        EventBusFactory.getInstance().post(new ProfileEvent.GotoProfileView(this, null));
+    }
+
+    @Override
+    public MHorizontalLayout buildMenu() {
+        return null;
     }
 }

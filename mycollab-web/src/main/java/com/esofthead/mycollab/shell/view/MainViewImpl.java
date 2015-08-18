@@ -46,11 +46,11 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.desktop.ui.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
-import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
+import com.esofthead.mycollab.web.IDesktopModule;
 import com.google.common.eventbus.Subscribe;
 import com.google.gson.Gson;
 import com.hp.gagawa.java.elements.A;
@@ -100,8 +100,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
     private static Logger LOG = LoggerFactory.getLogger(MainViewImpl.class);
 
+    private CustomLayout headerLayout;
     private CssLayout bodyLayout;
-    private ServiceMenu serviceMenu;
 
     public MainViewImpl() {
         this.setSizeFull();
@@ -120,7 +120,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     }
 
     @Override
-    public void addModule(IModule module) {
+    public void addModule(IDesktopModule module) {
+        headerLayout.removeComponent("serviceMenu");
         ModuleHelper.setCurrentModule(module);
         bodyLayout.removeAllComponents();
 
@@ -128,14 +129,9 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         bodyLayout.addComponent(widget);
         bodyLayout.addComponent(buildHelpSlider());
 
-        if (ModuleHelper.isCurrentProjectModule()) {
-            serviceMenu.selectService(0);
-        } else if (ModuleHelper.isCurrentCrmModule()) {
-            serviceMenu.selectService(1);
-        } else if (ModuleHelper.isCurrentFileModule()) {
-            serviceMenu.selectService(2);
-        } else if (ModuleHelper.isCurrentAccountModule()) {
-            serviceMenu.selectService(3);
+        MHorizontalLayout serviceMenu = module.buildMenu();
+        if (serviceMenu != null) {
+            headerLayout.addComponent(serviceMenu, "serviceMenu");
         }
     }
 
@@ -204,13 +200,13 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     }
 
     private CustomLayout createTopMenu() {
-        CustomLayout layout = CustomLayoutExt.createLayout("topNavigation");
-        layout.setStyleName("topNavigation");
-        layout.setHeight("40px");
-        layout.setWidth("100%");
+        headerLayout = CustomLayoutExt.createLayout("topNavigation");
+        headerLayout.setStyleName("topNavigation");
+        headerLayout.setHeight("40px");
+        headerLayout.setWidth("100%");
 
         final PopupButton modulePopup = new PopupButton("");
-        modulePopup.setDirection(Alignment.MIDDLE_LEFT);
+        modulePopup.setDirection(Alignment.BOTTOM_LEFT);
         modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppContext.getBillingAccount().getLogopath(), 150));
         OptionPopupContent modulePopupContent = new OptionPopupContent().withWidth("160px");
         modulePopup.setContent(modulePopupContent);
@@ -255,22 +251,22 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         });
         modulePopupContent.addOption(peopleBtn);
 
-        layout.addComponent(modulePopup, "mainLogo");
+        headerLayout.addComponent(modulePopup, "mainLogo");
 
-        serviceMenu = new ServiceMenu();
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
-                VaadinIcons.USERS, new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
-                    }
-                });
-
-        layout.addComponent(serviceMenu, "serviceMenu");
+//        serviceMenu = new ServiceMenu();
+//
+//        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PEOPLE),
+//                VaadinIcons.USERS, new Button.ClickListener() {
+//                    private static final long serialVersionUID = 1L;
+//
+//                    @Override
+//                    public void buttonClick(final ClickEvent event) {
+//                        EventBusFactory.getInstance().post(
+//                                new ShellEvent.GotoUserAccountModule(this, new String[]{"user", "list"}));
+//                    }
+//                });
+//
+//        headerLayout.addComponent(serviceMenu, "serviceMenu");
 
         MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
         accountLayout.setHeight("40px");
@@ -497,8 +493,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountMenu.setContent(accountPopupContent);
         accountLayout.addComponent(accountMenu);
 
-        layout.addComponent(accountLayout, "accountMenu");
-        return layout;
+        headerLayout.addComponent(accountLayout, "accountMenu");
+        return headerLayout;
     }
 
     private static class AdRequestWindow extends Window {

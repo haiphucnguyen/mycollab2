@@ -19,8 +19,14 @@ package com.esofthead.mycollab.community.module.file.view;
 import com.esofthead.mycollab.module.file.view.IFileModule;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.NotPresentedView;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 @ViewComponent
 public class FileModule extends NotPresentedView implements IFileModule {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public MHorizontalLayout buildMenu() {
+        return null;
+    }
 }

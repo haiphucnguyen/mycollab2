@@ -16,53 +16,56 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
-import org.vaadin.viritin.layouts.MVerticalLayout;
-
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
-import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
+import com.esofthead.mycollab.web.IDesktopModule;
 import com.vaadin.ui.Alignment;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewComponent
-public class CrmModule extends AbstractPageView implements IModule {
-	private static final long serialVersionUID = 1L;
+public class CrmModule extends AbstractPageView implements IDesktopModule {
+    private static final long serialVersionUID = 1L;
 
-	private final MVerticalLayout container;
+    private final MVerticalLayout container;
 
-	public CrmModule() {
-		this.setStyleName("crm-module");
-		ControllerRegistry.addController(new CrmController(this));
+    public CrmModule() {
+        this.setStyleName("crm-module");
+        ControllerRegistry.addController(new CrmController(this));
 
-		container = new MVerticalLayout().withWidth("100%").withSpacing(false)
-				.withMargin(false).withStyleName("crmContainer");
+        container = new MVerticalLayout().withWidth("100%").withSpacing(false)
+                .withMargin(false).withStyleName("crmContainer");
 
-		CrmToolbar toolbar = new CrmToolbar();
-		container.addComponent(toolbar);
+        CrmToolbar toolbar = new CrmToolbar();
+        container.addComponent(toolbar);
 
-		this.addComponent(container);
-		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
-	}
+        this.addComponent(container);
+        this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
+    }
 
-	public void gotoCrmDashboard() {
-		EventBusFactory.getInstance().post(new CrmEvent.GotoHome(this, null));
-	}
+    public void gotoCrmDashboard() {
+        EventBusFactory.getInstance().post(new CrmEvent.GotoHome(this, null));
+    }
 
-	public void addView(PageView view) {
-		if (container.getComponentCount() > 1) {
-			container.replaceComponent(container.getComponent(1), view.getWidget());
-		} else {
-			container.addComponent(view.getWidget());
-		}
-	}
+    public void addView(PageView view) {
+        if (container.getComponentCount() > 1) {
+            container.replaceComponent(container.getComponent(1), view.getWidget());
+        } else {
+            container.addComponent(view.getWidget());
+        }
+    }
+
+    @Override
+    public MHorizontalLayout buildMenu() {
+        return null;
+    }
 }

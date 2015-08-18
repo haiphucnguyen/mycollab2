@@ -10142,6 +10142,18 @@ div.v-button.token-field:hover {
 	cursor: pointer;
 }
 
+.v-button.add-project-popup {
+	background: transparent;
+}
+
+.v-button.add-project-popup .v-icon {
+	font-size: 20px;
+}
+
+.v-button.add-project-popup .v-popup-indicator:before {
+	content: "";
+}
+
 .gantt {
 	background: #fff;
 	overflow: hidden;

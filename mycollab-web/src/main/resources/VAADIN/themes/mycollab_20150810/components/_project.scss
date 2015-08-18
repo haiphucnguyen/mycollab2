@@ -747,6 +747,7 @@
     }
   }
 
+  /* GANTT */
   .gantt_container {
     border-style: solid;
     border-width: 1px 1px 1px 0px;
@@ -805,5 +806,16 @@
 
   .gantt .bar.v-widget {
     cursor: pointer;
+  }
+  /* END GANTT */
+
+  .v-button.add-project-popup {
+    background: transparent;
+    .v-icon {
+      font-size: 20px;
+    }
+    .v-popup-indicator:before {
+      content: "";
+    }
   }
 }
