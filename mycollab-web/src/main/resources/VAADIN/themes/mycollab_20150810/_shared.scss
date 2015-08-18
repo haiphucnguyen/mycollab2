@@ -334,20 +334,6 @@
         border:none;
       }
     }
-    &:after {
-      bottom: 100%;
-      right: 10px;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(255, 255, 255, 0);
-      border-bottom-color: #ffffff;
-      border-width: 8px;
-      margin-left: -8px;
-    }
   }
 
   .v-checkbox input[type="checkbox"]:focus {

@@ -81,11 +81,10 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
         topPanel.addComponent(breadcrumb);
 
         this.accountTab = new UserVerticalTabsheet();
-        this.accountTab.setWidth("100%");
+        this.accountTab.setSizeFull();
         this.accountTab.setNavigatorWidth("250px");
         this.accountTab.setNavigatorStyleName("sidebar-menu");
         this.accountTab.setContainerStyleName("tab-content");
-        this.accountTab.setHeight(null);
 
         VerticalLayout contentWrapper = this.accountTab.getContentWrapper();
         contentWrapper.addStyleName("main-content");

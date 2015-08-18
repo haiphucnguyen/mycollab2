@@ -1345,21 +1345,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	border: none;
 }
 
-.optionPopupContent:after {
-	bottom: 100%;
-	right: 10px;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(255, 255, 255, 0);
-	border-bottom-color: #ffffff;
-	border-width: 8px;
-	margin-left: -8px;
-}
-
 .v-checkbox input[type="checkbox"]:focus {
 	border: none;
 	box-shadow: none;
@@ -8786,21 +8771,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	border: none;
 }
 
-.optionPopupContent:after {
-	bottom: 100%;
-	right: 10px;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(255, 255, 255, 0);
-	border-bottom-color: #ffffff;
-	border-width: 8px;
-	margin-left: -8px;
-}
-
 .v-checkbox input[type="checkbox"]:focus {
 	border: none;
 	box-shadow: none;
@@ -10087,7 +10057,7 @@ div.v-button.token-field:hover {
 	font-size: 18px;
 }
 
-.v-button.add-project-popup .v-button-wrap .v-button-caption {
+.v-button.add-project-popup .v-button-wrap .v-button-caption, .v-button.add-project-popup .v-button-wrap .v-icon {
 	display: table-cell;
 	vertical-align: middle;
 }
@@ -10107,6 +10077,7 @@ div.v-button.token-field:hover {
 .v-button.add-project-popup .v-popup-indicator:before {
 	content: "\f0dd";
 	font-size: 15px;
+	opacity: 1;
 }
 
 .project-info .header {
@@ -10897,6 +10868,7 @@ input.v-textfield-pagedtable-pagefield {
 	content: "\f0dd";
 	color: white;
 	font-size: 15px;
+	opacity: 1;
 }
 
 .topNavigation .accountMenuContainer .v-button.notification-button, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed {

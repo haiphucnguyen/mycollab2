@@ -766,7 +766,7 @@
       .v-icon {
         font-size: 18px;
       }
-      .v-button-caption {
+      .v-button-caption, .v-icon {
         display:table-cell;
          vertical-align:middle;
       }
@@ -786,6 +786,7 @@
       &:before {
         content: "\f0dd";
         font-size: 15px;
+        opacity: 1;
       }
     }
   }
