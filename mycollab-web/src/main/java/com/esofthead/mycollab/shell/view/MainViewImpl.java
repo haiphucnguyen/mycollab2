@@ -127,7 +127,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         ComponentContainer widget = module.getWidget();
         bodyLayout.addComponent(widget);
-//        bodyLayout.addComponent(buildHelpSlider());
+        bodyLayout.addComponent(buildHelpSlider());
 
         MHorizontalLayout serviceMenu = module.buildMenu();
         if (serviceMenu != null) {

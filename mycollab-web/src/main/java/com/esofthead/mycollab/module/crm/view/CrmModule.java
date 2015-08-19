@@ -32,9 +32,9 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Iterator;
 
@@ -48,18 +48,12 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
 
     private PopupButton addPopupMenu;
     private MHorizontalLayout serviceMenuContainer;
-    private MVerticalLayout container;
     private ServiceMenu serviceMenu;
 
     public CrmModule() {
         this.setStyleName("crm-module");
+        this.addStyleName("crmContainer");
         ControllerRegistry.addController(new CrmController(this));
-
-        container = new MVerticalLayout().withWidth("100%").withSpacing(false)
-                .withMargin(false).withStyleName("crmContainer");
-
-        this.addComponent(container);
-        this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
     }
 
     public void gotoCrmDashboard() {
@@ -67,8 +61,9 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
     }
 
     public void addView(PageView view) {
-        container.removeAllComponents();
-        container.add(view.getWidget());
+        this.removeAllComponents();
+        ComponentContainer wrapContainer = view.getWidget();
+        this.with(wrapContainer).expand(wrapContainer);
     }
 
     @Override

@@ -8884,13 +8884,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	min-height: 100%;
 }
 
-.crm-module .crmContainer {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100%;
-}
-
 .crmContainer {
 	width: 100%;
 }
@@ -13133,12 +13126,10 @@ div.v-ratingstars-bar {
 	text-align: left;
 	border: none;
 	padding: 9px 25px;
-	color: #FFF;
 }
 
 .vertical-tabsheet .v-button-tab.tab-selected .v-button-wrap {
 	background: none no-repeat 0 0 #FFF;
-	color: #525252;
 }
 
 .vertical-tabsheet .v-button-tab .v-button-wrap .v-icon {
