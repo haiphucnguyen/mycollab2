@@ -130,11 +130,6 @@ public class ThemeManager {
             extraStyles.append(".optionPopupContent .action-wrap .v-button-action { color: #" + accountTheme
                     .getTabsheetbgselected() + "; }");
 
-            extraStyles.append(".helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-tab, " +
-                    ".helpPanel .v-sliderpanel-wrapper.layout-vertical .v-sliderpanel-content" +
-                    " { background-color: #" + accountTheme.getTabsheetbgselected() + "; }");
-
-
             //Set link style
             extraStyles.append(".v-app a { color: #" + accountTheme.getTabsheetbgselected() + "; }");
 

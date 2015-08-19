@@ -58,6 +58,7 @@ import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -70,10 +71,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.sliderpanel.SliderPanel;
-import org.vaadin.sliderpanel.SliderPanelBuilder;
-import org.vaadin.sliderpanel.client.SliderMode;
-import org.vaadin.sliderpanel.client.SliderTabPosition;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -127,35 +124,11 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         ComponentContainer widget = module.getWidget();
         bodyLayout.addComponent(widget);
-//        bodyLayout.addComponent(buildHelpSlider());
 
         MHorizontalLayout serviceMenu = module.buildMenu();
         if (serviceMenu != null) {
             headerLayout.addComponent(serviceMenu, "serviceMenu");
         }
-    }
-
-    private SliderPanel buildHelpSlider() {
-        MVerticalLayout helpContent = new MVerticalLayout().withWidth("250px");
-        SliderPanelBuilder sliderPanelBuilder = new SliderPanelBuilder(helpContent).mode(SliderMode.RIGHT).expanded(false).fixedContentSize(300);
-        SliderPanel topSlider = new SliderPanel(sliderPanelBuilder);
-        topSlider.addStyleName("helpPanel");
-        Label helpLink = new Label(new Div().appendChild(new Text(FontAwesome.LIFE_SAVER.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("http://support.mycollab.com/forum/42576-knowledge-base/", "_blank").appendText("Knowledge Base >>")).write(), ContentMode.HTML);
-        Label helpDesc = new Label("Our detail guidance on how to use MyCollab features. All common questions are " +
-                "raised and answered");
-        Label supportLink = new Label(new Div().appendChild(new Text(FontAwesome.CHILD.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("http://support.mycollab.com/", "_blank").appendText("Support >>")).write(), ContentMode.HTML);
-        Label supportDesc = new Label("If you have any issue that could not be found the answer, please send your " +
-                "question to us. All questions will be answered without 1 business day");
-        Label contactLink = new Label(new Div().appendChild(new Text(FontAwesome.FAX.getHtml()), DivLessFormatter.EMPTY_SPACE(),
-                new A("https://www.mycollab.com/contact/", "_blank").appendText("Contact Us >>")).write(), ContentMode.HTML);
-        Label contactDesc = new Label("All other questions such as white branding, partnership or custom development " +
-                "should be sent to our sales team. They will get back to you very soon");
-        helpContent.with(helpLink, helpDesc, supportLink, supportDesc, contactLink, contactDesc);
-        topSlider.setCaption("Get Help");
-        topSlider.setTabPosition(SliderTabPosition.MIDDLE);
-        return topSlider;
     }
 
     private CustomLayout createFooter() {
@@ -394,18 +367,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         myProfileBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.PROFILE));
         accountPopupContent.addOption(myProfileBtn);
 
-        Button myAccountBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(final ClickEvent event) {
-                accountMenu.setPopupVisible(false);
-                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
-            }
-        });
-        myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
-        accountPopupContent.addOption(myAccountBtn);
-
         Button userMgtBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_USERS_AND_ROLES), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -462,6 +423,26 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             accountPopupContent.addOption(aboutBtn);
         }
 
+        accountPopupContent.addSeparator();
+        Button supportBtn = new Button("Support");
+        supportBtn.setIcon(FontAwesome.LIFE_SAVER);
+        ExternalResource supportRes = new ExternalResource("http://support.mycollab.com/");
+        BrowserWindowOpener supportOpener = new BrowserWindowOpener(supportRes);
+        supportOpener.extend(supportBtn);
+        accountPopupContent.addOption(supportBtn);
+
+        Button myAccountBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_BILLING), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                accountMenu.setPopupVisible(false);
+                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"billing"}));
+            }
+        });
+        myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
+        accountPopupContent.addOption(myAccountBtn);
+
         Button signoutBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -472,6 +453,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             }
         });
         signoutBtn.setIcon(FontAwesome.SIGN_OUT);
+        accountPopupContent.addSeparator();
         accountPopupContent.addOption(signoutBtn);
 
         accountMenu.setContent(accountPopupContent);

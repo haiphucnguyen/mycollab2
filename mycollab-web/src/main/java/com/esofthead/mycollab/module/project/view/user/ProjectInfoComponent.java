@@ -181,6 +181,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             createProblemBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM));
             popupButtonsControl.addOption(createProblemBtn);
 
+            popupButtonsControl.addSeparator();
             Button editProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_EDIT_PROJECT),
                     new Button.ClickListener() {
                         @Override
@@ -226,6 +227,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             popupButtonsControl.addOption(archiveProjectBtn);
 
             if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT)) {
+                popupButtonsControl.addSeparator();
                 Button deleteProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_DELETE_PROJECT),
                         new Button.ClickListener() {
                             @Override
