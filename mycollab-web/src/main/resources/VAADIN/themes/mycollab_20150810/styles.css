@@ -361,6 +361,41 @@ div.v-tree-node-caption div {
 	background-color: white;
 }
 
+.v-button.add-btn-popup {
+	background: transparent;
+}
+
+.v-button.add-btn-popup .v-button-wrap {
+	display: table;
+}
+
+.v-button.add-btn-popup .v-button-wrap .v-icon {
+	font-size: 18px;
+}
+
+.v-button.add-btn-popup .v-button-wrap .v-button-caption, .v-button.add-btn-popup .v-button-wrap .v-icon {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.v-button.add-btn-popup:focus {
+	background: none;
+}
+
+.v-button.add-btn-popup.selected, .v-button.add-btn-popup:hover {
+	border-radius: 2px;
+}
+
+.v-button.add-btn-popup.selected .v-button-wrap, .v-button.add-btn-popup:hover .v-button-wrap {
+	background: none;
+}
+
+.v-button.add-btn-popup .v-popup-indicator:before {
+	content: "\f0dd";
+	font-size: 15px;
+	opacity: 1;
+}
+
 .v-widget.helpPanel {
 	right: 0;
 	top: 0;
@@ -659,6 +694,41 @@ div.v-tree-node-caption div {
 
 .v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
+}
+
+.v-button.add-btn-popup {
+	background: transparent;
+}
+
+.v-button.add-btn-popup .v-button-wrap {
+	display: table;
+}
+
+.v-button.add-btn-popup .v-button-wrap .v-icon {
+	font-size: 18px;
+}
+
+.v-button.add-btn-popup .v-button-wrap .v-button-caption, .v-button.add-btn-popup .v-button-wrap .v-icon {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.v-button.add-btn-popup:focus {
+	background: none;
+}
+
+.v-button.add-btn-popup.selected, .v-button.add-btn-popup:hover {
+	border-radius: 2px;
+}
+
+.v-button.add-btn-popup.selected .v-button-wrap, .v-button.add-btn-popup:hover .v-button-wrap {
+	background: none;
+}
+
+.v-button.add-btn-popup .v-popup-indicator:before {
+	content: "\f0dd";
+	font-size: 15px;
+	opacity: 1;
 }
 
 .v-ie8 .gantt .month.even, .v-ie8 .gantt .day.even {
@@ -977,6 +1047,41 @@ div.v-tree-node-caption div {
 
 .v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
+}
+
+.v-button.add-btn-popup {
+	background: transparent;
+}
+
+.v-button.add-btn-popup .v-button-wrap {
+	display: table;
+}
+
+.v-button.add-btn-popup .v-button-wrap .v-icon {
+	font-size: 18px;
+}
+
+.v-button.add-btn-popup .v-button-wrap .v-button-caption, .v-button.add-btn-popup .v-button-wrap .v-icon {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.v-button.add-btn-popup:focus {
+	background: none;
+}
+
+.v-button.add-btn-popup.selected, .v-button.add-btn-popup:hover {
+	border-radius: 2px;
+}
+
+.v-button.add-btn-popup.selected .v-button-wrap, .v-button.add-btn-popup:hover .v-button-wrap {
+	background: none;
+}
+
+.v-button.add-btn-popup .v-popup-indicator:before {
+	content: "\f0dd";
+	font-size: 15px;
+	opacity: 1;
 }
 
 a {
@@ -8795,26 +8900,8 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	min-height: 100%;
 }
 
-.crmContainer .crm-toolbar {
-	z-index: 1;
-	position: relative;
-}
-
-.crmContainer .crm-toolbar.v-margin-right {
-	padding-right: 30px;
-}
-
 .crmContainer .main-view.v-margin-right {
 	padding-right: 30px;
-}
-
-.crmContainer .crm-toolbar.v-margin-left, .crmContainer .main-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.crmContainer .crm-toolbar .v-popupbutton .v-popup-indicator {
-	width: 0px;
-	background: none no-repeat left top transparent;
 }
 
 .crmContainer .v-table-body-noselection {
@@ -8853,78 +8940,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .crmContainer.preview-comp {
 	min-height: 100%;
-}
-
-.h-sidebar-menu {
-	height: 100%;
-	position: relative;
-}
-
-.h-sidebar-menu  > div {
-	display: inline-block;
-	zoom: 1;
-	*display: inline;
-	position: relative;
-}
-
-.h-sidebar-menu .v-button {
-	border-radius: 0px;
-	box-shadow: initial;
-	-webkit-box-shadow: initial;
-	-moz-box-shadow: initial;
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-	position: relative;
-}
-
-.h-sidebar-menu .v-button.v-button-link {
-	height: 50px;
-	background: none no-repeat 0 0 transparent;
-}
-
-.v-ie .h-sidebar-menu .v-pressed.v-button-link {
-	margin: 0px;
-}
-
-.h-sidebar-menu .v-button-link .v-button-wrap, .v-ie .h-sidebar-menu .v-pressed.v-button-link .v-button-wrap {
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-	position: relative;
-	padding: 17px 18px;
-}
-
-.h-sidebar-menu div.v-button-link:active .v-button-wrap, .h-sidebar-menu div.v-button-link:focus .v-button-wrap {
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-	position: relative;
-	padding: 17px 18px;
-}
-
-.h-sidebar-menu div.v-disabled.v-button-link .v-button-wrap {
-	display: inline-block;
-	*display: inline;
-	zoom: 1;
-	position: relative;
-	padding: 17px 18px;
-}
-
-.v-ie .h-sidebar-menu .v-pressed.v-button-link:first-child .v-button-wrap {
-	border: none;
-}
-
-.h-sidebar-menu div.v-button-link:active:first-child .v-button-wrap, .h-sidebar-menu div.v-button-link:focus:first-child .v-button-wrap {
-	border: none;
-}
-
-.h-sidebar-menu .v-button-link .v-button-caption {
-	text-decoration: none;
-	text-shadow: none;
-	font-weight: bold;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 13px;
 }
 
 .readViewLayout {
@@ -9167,10 +9182,6 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 
 .projectDashboardView .addViewLayout {
 	padding: 0px 30px 10px;
-}
-
-.v-popupbutton.myprojectlist {
-	background-color: white;
 }
 
 .v-popupbutton-popup-myprojectlist, .myprojectlist {
@@ -10037,44 +10048,12 @@ div.v-button.token-field:hover {
 	cursor: pointer;
 }
 
-.v-button.add-project-popup {
-	background: transparent;
-}
-
-.v-button.add-project-popup .v-button-wrap {
-	display: table;
-}
-
-.v-button.add-project-popup .v-button-wrap .v-icon {
-	font-size: 18px;
-}
-
-.v-button.add-project-popup .v-button-wrap .v-button-caption, .v-button.add-project-popup .v-button-wrap .v-icon {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.v-button.add-project-popup:focus {
-	background: none;
-}
-
-.v-button.add-project-popup.selected, .v-button.add-project-popup:hover {
-	border-radius: 2px;
-}
-
-.v-button.add-project-popup.selected .v-button-wrap, .v-button.add-project-popup:hover .v-button-wrap {
-	background: none;
-}
-
-.v-button.add-project-popup .v-popup-indicator:before {
-	content: "\f0dd";
-	font-size: 15px;
-	opacity: 1;
-}
-
 .project-info .header {
 	font-size: 24px;
 	color: white;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .project-info .desc .v-label, .project-info .desc .v-label a {
@@ -13763,40 +13742,6 @@ div.v-csslayout.bean-block.olive-block {
 
 .v-window.lazyload-progress .v-window-wrap .v-window-outerheader {
 	display: none;
-}
-
-.crm-toolbar .quickadd-btn.v-popupbutton {
-	background-color: transparent;
-}
-
-.crm-toolbar .quickadd-btn.v-popupbutton .v-button-wrap {
-	padding: 6px 15px;
-}
-
-.crm-toolbar .quickadd-btn.v-popupbutton .v-button-wrap:hover {
-	background-color: transparent;
-}
-
-.crm-toolbar .quickadd-btn.v-popupbutton .v-button-caption {
-	line-height: 20px;
-	display: inline-block;
-	vertical-align: middle;
-	margin: 0px;
-}
-
-.crm-toolbar .quickadd-btn.v-popupbutton .v-button-caption:before {
-	content: "+";
-	width: 20px;
-	height: 20px;
-	border-radius: 10px;
-	border: none;
-	color: #FFF;
-	margin-right: 5px;
-	text-align: center;
-	line-height: 22px;
-	font-size: 16px;
-	font-weight: bold;
-	vertical-align: top;
 }
 
 .sidebar-wrap {

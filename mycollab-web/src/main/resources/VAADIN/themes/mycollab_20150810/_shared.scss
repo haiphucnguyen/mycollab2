@@ -624,4 +624,37 @@
       }
     }
   }
+
+  /* New project button */
+  .v-button.add-btn-popup {
+    background: transparent;
+    .v-button-wrap {
+      display: table;
+      .v-icon {
+        font-size: 18px;
+      }
+      .v-button-caption, .v-icon {
+        display:table-cell;
+        vertical-align:middle;
+      }
+    }
+
+    &:focus {
+      background: none;
+    }
+    &.selected, &:hover {
+      border-radius: 2px;
+      .v-button-wrap {
+        background:none;
+      }
+    }
+
+    .v-popup-indicator {
+      &:before {
+        content: "\f0dd";
+        font-size: 15px;
+        opacity: 1;
+      }
+    }
+  }
 }

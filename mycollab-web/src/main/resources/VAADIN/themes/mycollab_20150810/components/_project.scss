@@ -40,10 +40,6 @@
 
   /* My Project List */
 
-  .v-popupbutton.myprojectlist {
-    background-color:white;
-  }
-
   .v-popupbutton-popup-myprojectlist, .myprojectlist {
     background-color: white;
     .contentWrapper {
@@ -758,43 +754,13 @@
   }
   /* END GANTT */
 
-  /* New project button */
-  .v-button.add-project-popup {
-    background: transparent;
-    .v-button-wrap {
-      display: table;
-      .v-icon {
-        font-size: 18px;
-      }
-      .v-button-caption, .v-icon {
-        display:table-cell;
-         vertical-align:middle;
-      }
-    }
-
-    &:focus {
-      background: none;
-    }
-    &.selected, &:hover {
-      border-radius: 2px;
-      .v-button-wrap {
-        background:none;
-      }
-    }
-
-    .v-popup-indicator {
-      &:before {
-        content: "\f0dd";
-        font-size: 15px;
-        opacity: 1;
-      }
-    }
-  }
-
   .project-info {
     .header {
       font-size: $font-xx-large;
       color: white;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .desc {
       .v-label, .v-label a {

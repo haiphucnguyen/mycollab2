@@ -50,6 +50,12 @@ public class ServiceMenu extends ButtonGroup {
         this.addButton(newService);
     }
 
+    public void addService(String id, String serviceName, ClickListener listener) {
+        Button newService = new Button(serviceName, listener);
+        newService.setId(id);
+        this.addButton(newService);
+    }
+
     public void selectService(int index) {
         Iterator<Component> iterator = this.iterator();
 

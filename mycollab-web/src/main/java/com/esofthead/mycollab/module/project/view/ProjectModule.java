@@ -101,7 +101,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
                         UI.getCurrent().addWindow(new ProjectAddWindow());
                     }
                 });
-                newPrjBtn.addStyleName("add-project-popup");
+                newPrjBtn.addStyleName("add-btn-popup");
                 newPrjBtn.setIcon(FontAwesome.PLUS_CIRCLE);
                 serviceMenuContainer.with(newPrjBtn).withAlign(newPrjBtn, Alignment.MIDDLE_LEFT);
             }
@@ -116,7 +116,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
     private PopupButton buildSwitchProjectBtn() {
         final PopupButton switchProjectPopup = new PopupButton("Switch Project");
         switchProjectPopup.setStyleName("myprojectlist");
-        switchProjectPopup.addStyleName("add-project-popup");
+        switchProjectPopup.addStyleName("add-btn-popup");
         switchProjectPopup.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT_O);
         final ProjectPagedList projectList = new ProjectPagedList();
         projectList.addStyleName("contentWrapper");

@@ -3608,38 +3608,6 @@
     }
   }
 
-  /* CRM toolbar quick add button */
-
-  .crm-toolbar .quickadd-btn.v-popupbutton  {
-    background-color: transparent;
-    .v-button-wrap {
-      padding: 6px 15px;
-      &:hover {
-        background-color: transparent;
-      }
-    }
-    .v-button-caption {
-      &:before {
-        content: "+";
-        width: 20px;
-        height: 20px;
-        border-radius: 10px;
-        border: none;
-        color: #FFF;
-        margin-right: 5px;
-        text-align: center;
-        line-height: 22px;
-        font-size: $font-larger;
-        font-weight: bold;
-        vertical-align: top;
-      }
-      line-height: 20px;
-      display: inline-block;
-      vertical-align: middle;
-      margin: 0px;
-    }
-  }
-
   /* experimental sidebar */
 
   .sidebar-wrap {
