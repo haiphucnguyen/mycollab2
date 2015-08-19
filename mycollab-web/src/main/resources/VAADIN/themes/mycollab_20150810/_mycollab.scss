@@ -1675,18 +1675,11 @@
 
   .v-table-row {
     background: none repeat scroll 0% 0% #FFF;
-    &:hover {
-      @include hover-effect();
-    }
   }
 
   .v-table-row-odd, .v-table-striped .v-table-row-odd {
     background: none repeat scroll 0% 0% $background-color;
     border: 5px solid black;
-    @include hover-effect();
-    &:hover {
-      @include hover-effect();
-    }
   }
 
   .v-table-row-spacer {

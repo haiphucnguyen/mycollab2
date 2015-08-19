@@ -11899,24 +11899,9 @@ td.v-tabsheet-spacertd div {
 	background: none repeat scroll 0% 0% #FFF;
 }
 
-.v-table-row:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-}
-
 .v-table-row-odd, .v-table-striped .v-table-row-odd {
 	background: none repeat scroll 0% 0% whitesmoke;
 	border: 5px solid black;
-	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-}
-
-.v-table-row-odd:hover, .v-table-striped .v-table-row-odd:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-	-moz-box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
-	box-shadow: inset 5px 0px 0px 0px rgba(0, 0, 0, 0.36);
 }
 
 .v-table-row-spacer {
