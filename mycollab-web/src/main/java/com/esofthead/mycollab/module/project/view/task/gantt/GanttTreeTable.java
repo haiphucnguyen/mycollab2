@@ -68,7 +68,8 @@ public class GanttTreeTable extends TreeTable {
         gantt.setVerticalScrollDelegateTarget(this);
         beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
         this.setContainerDataSource(beanContainer);
-        this.setVisibleColumns("name", "startDate", "endDate", "duration", "actualStartDate", "actualEndDate");
+        this.setVisibleColumns("name", "startDate", "endDate", "duration", "actualStartDate", "actualEndDate",
+                "percentageComplete");
         this.setColumnHeader("name", "Task");
         this.setColumnExpandRatio("name", 1.0f);
         this.setColumnHeader("startDate", "Start");
@@ -81,6 +82,8 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnWidth("actualStartDate", 80);
         this.setColumnHeader("actualEndDate", "Actual End");
         this.setColumnWidth("actualEndDate", 80);
+        this.setColumnHeader("percentageComplete", "% Complete");
+        this.setColumnWidth("percentageComplete", 80);
         this.setColumnCollapsingAllowed(true);
         this.setColumnCollapsed("actualStartDate", true);
         this.setColumnCollapsed("actualEndDate", true);
@@ -138,6 +141,15 @@ public class GanttTreeTable extends TreeTable {
                 return new Label(AppContext.formatDate(item.getEndDate()));
             }
         });
+
+        this.addGeneratedColumn("percentageComplete", new ColumnGenerator() {
+            @Override
+            public Object generateCell(Table table, Object itemId, Object columnId) {
+                GanttItemWrapper item = (GanttItemWrapper) itemId;
+                return new Label(item.getPercentageComplete() + " %");
+            }
+        });
+
 
         this.addGeneratedColumn("actualEndDate", new ColumnGenerator() {
             @Override

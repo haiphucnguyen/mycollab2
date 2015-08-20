@@ -57,7 +57,6 @@ public class GanttExt extends Gantt {
 
     public void addTask(int index, GanttItemWrapper task) {
         Step step = task.getStep();
-        System.out.println("Addf step: " + index);
         super.addStep(index, step);
         calculateMaxMinDates(task);
     }
