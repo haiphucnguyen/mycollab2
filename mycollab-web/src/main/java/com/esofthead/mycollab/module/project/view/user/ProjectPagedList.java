@@ -53,7 +53,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
         public Component generateRow(AbstractBeanPagedList host, final SimpleProject project, final int rowIndex) {
             final CssLayout layout = new CssLayout();
             layout.setWidth("100%");
-            layout.setStyleName("projectblock");
+            layout.addStyleName("projectblock");
 
             final MHorizontalLayout projectLayout = new MHorizontalLayout().withSpacing(false).withWidth("100%");
             projectLayout.addStyleName("project-status");
@@ -71,7 +71,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkIconFix.setWidth("100%");
             final LabelLink projectLink = new LabelLink(String.format("[%s] %s", project.getShortname(), project.getName()),
                     ProjectLinkBuilder.generateProjectFullLink(project.getId()));
-            projectLink.addStyleName("project-name");
+            projectLink.addStyleName("h2");
             linkIconFix.addComponent(projectLink);
             linkIconFix.setExpandRatio(projectLink, 1.0f);
 

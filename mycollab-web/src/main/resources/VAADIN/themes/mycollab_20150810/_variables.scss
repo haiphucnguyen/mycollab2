@@ -17,9 +17,9 @@ $font-xx-large: 24px;
 $font-largest: 36px;
 
 @mixin hover-effect() {
-  -webkit-box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
-  -moz-box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
-  box-shadow: inset 5px 0px 0px 0px rgba(0,0,0,0.36);
+  -webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
+  -moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
+  box-shadow: inset 5px 0px 0px 0px #3A97FF;
 }
 
 @mixin margin-container($top, $right, $bottom, $left) {

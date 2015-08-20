@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -37,6 +38,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.TreeTable;
+import org.vaadin.peter.contextmenu.ContextMenu;
 
 import java.util.List;
 import java.util.UUID;
@@ -89,6 +91,7 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnCollapsed("actualEndDate", true);
         this.setSelectable(true);
         this.setSortEnabled(true);
+        this.setEditable(true);
 
         this.addGeneratedColumn("name", new ColumnGenerator() {
             @Override
@@ -207,6 +210,35 @@ public class GanttTreeTable extends TreeTable {
                 }
             }
         });
+
+        final ContextMenu contextMenu = new ContextMenu();
+        contextMenu.setAsContextMenuOf(this);
+        contextMenu.setOpenAutomatically(false);
+
+        ContextMenu.ContextMenuOpenedListener.TableListener tableListener = new ContextMenu.ContextMenuOpenedListener.TableListener() {
+
+            public void onContextMenuOpenFromRow(ContextMenu.ContextMenuOpenedOnTableRowEvent event) {
+                // read clicked row item and property from event and modify menu
+                Object source = event.getSource();
+                contextMenu.removeAllItems();
+                contextMenu.addItem("Hello");
+                Object item = event.getItemId();
+                Object propertyId = event.getPropertyId();
+                contextMenu.open(GanttTreeTable.this);
+            }
+
+            public void onContextMenuOpenFromHeader(ContextMenu.ContextMenuOpenedOnTableHeaderEvent event) {
+                NotificationUtil.showErrorNotification("Open from header");
+            }
+
+            public void onContextMenuOpenFromFooter(ContextMenu.ContextMenuOpenedOnTableFooterEvent event) {
+                NotificationUtil.showErrorNotification("Open from footer");
+            }
+        };
+
+
+
+        contextMenu.addContextMenuTableListener(tableListener);
     }
 
     @Override
