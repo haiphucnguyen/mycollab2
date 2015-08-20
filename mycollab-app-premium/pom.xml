@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.1.1</version>
+        <version>5.1.2</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.esofthead.mycollab</groupId>
@@ -28,43 +28,43 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting-premium</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services-premium</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-jetty-session-premium</artifactId>
-            <version>5.1.1</version>
+            <version>5.1.2</version>
         </dependency>
 
         <dependency>
