@@ -526,7 +526,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
                 controlsBtn.with(saveBtn, cancelBtn);
                 layout.with(controlsBtn).withAlign(controlsBtn, Alignment.MIDDLE_RIGHT);
-                if (newTaskComp != null) {
+                if (newTaskComp != null && newTaskComp.getParent() != null) {
                     ((ComponentContainer) newTaskComp.getParent()).removeComponent(newTaskComp);
                 }
                 newTaskComp = layout;

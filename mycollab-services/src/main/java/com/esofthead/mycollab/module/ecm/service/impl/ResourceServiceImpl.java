@@ -99,8 +99,7 @@ public class ResourceServiceImpl implements ResourceService {
         if (sAccountId != null) {
             try {
                 fileSize = refStream.available();
-                billingPlanCheckerService.validateAccountCanUploadMoreFiles(
-                        sAccountId, fileSize);
+                billingPlanCheckerService.validateAccountCanUploadMoreFiles(sAccountId, fileSize);
             } catch (IOException e) {
                 LOG.error("Can not get available bytes", e);
             }

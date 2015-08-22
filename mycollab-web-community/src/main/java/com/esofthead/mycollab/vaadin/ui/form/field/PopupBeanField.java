@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
@@ -34,7 +36,7 @@ public class PopupBeanField extends PopupView {
 
             @Override
             public Component getPopupComponent() {
-                return new Label("The feature is not presented for this edition");
+                return new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
             }
         });
         this.setStyleName("block-popupedit");

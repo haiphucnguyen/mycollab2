@@ -48,10 +48,10 @@ object DeleteResourcesCommandImpl {
     @AllowConcurrentEvents
     @Subscribe
     def removeResource(event: DeleteResourcesEvent): Unit = {
-        val lock: Lock = DistributionLockUtil.getLock("ecm-" + event.sAccountId)
         if (event.sAccountId == null) {
             return
         }
+        val lock: Lock = DistributionLockUtil.getLock("ecm-" + event.sAccountId)
         try {
             if (lock.tryLock(1, TimeUnit.HOURS)) {
                 var totalSize: Long = 0

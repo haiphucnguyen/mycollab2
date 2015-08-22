@@ -197,7 +197,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         final TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setHasParentTask(new BooleanSearchField());
-        criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", SearchCriteria.ASC)));
+        criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("ganttindex", SearchCriteria.ASC),
+                new SearchCriteria.OrderField("createdTime", SearchCriteria.ASC)));
         int totalTasks = taskService.getTotalCount(criteria);
         final int pages = totalTasks / 20;
         UI.getCurrent().access(new Runnable() {
@@ -228,6 +229,5 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             }
         });
     }
-
 
 }

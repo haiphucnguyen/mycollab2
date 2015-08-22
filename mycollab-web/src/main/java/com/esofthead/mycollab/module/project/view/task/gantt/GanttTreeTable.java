@@ -211,7 +211,7 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
-        final ContextMenu contextMenu = new ContextMenu();
+        final GanttContextMenu contextMenu = new GanttContextMenu();
         contextMenu.setAsContextMenuOf(this);
         contextMenu.setOpenAutomatically(false);
 
@@ -219,11 +219,8 @@ public class GanttTreeTable extends TreeTable {
 
             public void onContextMenuOpenFromRow(ContextMenu.ContextMenuOpenedOnTableRowEvent event) {
                 // read clicked row item and property from event and modify menu
-                Object source = event.getSource();
-                contextMenu.removeAllItems();
-                contextMenu.addItem("Hello");
-                Object item = event.getItemId();
-                Object propertyId = event.getPropertyId();
+                GanttItemWrapper item = (GanttItemWrapper) event.getItemId();
+                contextMenu.setAssociateTask(item);
                 contextMenu.open(GanttTreeTable.this);
             }
 
@@ -235,7 +232,6 @@ public class GanttTreeTable extends TreeTable {
                 NotificationUtil.showErrorNotification("Open from footer");
             }
         };
-
 
 
         contextMenu.addContextMenuTableListener(tableListener);
@@ -283,6 +279,43 @@ public class GanttTreeTable extends TreeTable {
                 this.removeItem(child);
                 gantt.removeStep(child.getStep());
             }
+        }
+    }
+
+    private class GanttContextMenu extends ContextMenu {
+        private GanttItemWrapper taskWrapper;
+
+        GanttContextMenu() {
+            ContextMenuItem detailMenuItem = this.addItem("Detail");
+            detailMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
+                    if (taskWrapper != null) {
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttTreeTable.this,
+                                taskWrapper.getTask().getId()));
+                    }
+                }
+            });
+
+            ContextMenuItem insertRowMenuItem = this.addItem("Insert Row");
+            insertRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
+
+                }
+            });
+
+            ContextMenuItem deleteRowMenuItem = this.addItem("Delete Row");
+            deleteRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
+
+                }
+            });
+        }
+
+        void setAssociateTask(GanttItemWrapper taskWrapper) {
+            this.taskWrapper = taskWrapper;
         }
     }
 }

@@ -43,6 +43,21 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.1.3
+-----------------------------
+
+**Library Upgrades**
+
+* Vaadin 7.5.4, Resteasy 3.0.12.Final
+
+**Improvements & New Features**
+
+* Several minor UI improvements
+
+**Bug Fixes**
+
+
+
 Version 5.1.2
 -----------------------------
 
@@ -54,6 +69,7 @@ Version 5.1.2
 **Bug Fixes**
 
 * Search in project throws error
+* Remove redundant warning message of permission when user access the profile page
 
 
 Version 5.1.1
