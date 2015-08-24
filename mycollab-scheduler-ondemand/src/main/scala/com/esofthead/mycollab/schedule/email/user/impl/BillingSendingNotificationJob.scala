@@ -7,8 +7,7 @@ import com.esofthead.mycollab.common.GenericLinkUtils
 import com.esofthead.mycollab.common.domain.MailRecipientField
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.module.billing.service.BillingService
-import com.esofthead.mycollab.module.mail.IContentGenerator
-import com.esofthead.mycollab.module.mail.service.ExtMailService
+import com.esofthead.mycollab.module.mail.service.{IContentGenerator, ExtMailService}
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners
 import com.esofthead.mycollab.module.user.service.BillingAccountService
 import com.esofthead.mycollab.schedule.jobs.GenericQuartzJobBean

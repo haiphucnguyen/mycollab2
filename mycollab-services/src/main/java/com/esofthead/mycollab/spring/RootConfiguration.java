@@ -30,7 +30,7 @@ import org.springframework.stereotype.Controller;
 @Configuration
 @EnableSpringConfigured
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = "com.esofthead.mycollab",
+@ComponentScan(basePackages = "com.esofthead.mycollab.**.service, com.esofthead.mycollab.spring",
         excludeFilters = {@ComponentScan.Filter(classes = {Controller.class})})
 @Profile("production")
 public class RootConfiguration {

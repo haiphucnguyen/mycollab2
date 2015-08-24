@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.mail
+package com.esofthead.mycollab.module.mail.service
 
 import java.io._
 import java.util.Locale
@@ -22,6 +22,7 @@ import java.util.Locale
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.utils.FileUtils
 import com.esofthead.mycollab.i18n.LocalizationHelper
+import com.esofthead.mycollab.module.mail.service.IContentGenerator
 import com.esofthead.mycollab.schedule.email.MailStyles
 import com.esofthead.mycollab.template.velocity.TemplateContext
 import org.apache.velocity.app.VelocityEngine

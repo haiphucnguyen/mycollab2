@@ -24,8 +24,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.arguments.{SearchRequest, SetSearchField}
 import com.esofthead.mycollab.i18n.LocalizationHelper
 import com.esofthead.mycollab.module.billing.UserStatusConstants
-import com.esofthead.mycollab.module.mail.IContentGenerator
-import com.esofthead.mycollab.module.mail.service.ExtMailService
+import com.esofthead.mycollab.module.mail.service.{IContentGenerator, ExtMailService}
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria

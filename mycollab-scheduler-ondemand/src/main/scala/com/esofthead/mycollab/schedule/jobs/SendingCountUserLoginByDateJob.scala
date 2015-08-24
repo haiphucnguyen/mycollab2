@@ -5,8 +5,7 @@ import java.util.{Arrays, Calendar, Date, GregorianCalendar}
 import com.esofthead.mycollab.common.domain.MailRecipientField
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.arguments.SearchRequest
-import com.esofthead.mycollab.module.mail.IContentGenerator
-import com.esofthead.mycollab.module.mail.service.ExtMailService
+import com.esofthead.mycollab.module.mail.service.{IContentGenerator, ExtMailService}
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria
 import com.esofthead.mycollab.module.user.service.UserService

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-migration.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.db.migration;
+package com.esofthead.mycollab.db.migration.service;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;

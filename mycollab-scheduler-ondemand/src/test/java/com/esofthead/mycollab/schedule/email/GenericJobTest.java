@@ -5,8 +5,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.quartz.JobExecutionContext;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.module.mail.IContentGenerator;
+import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 

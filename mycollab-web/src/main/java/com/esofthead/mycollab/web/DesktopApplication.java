@@ -35,7 +35,7 @@ import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.GoogleAnalyticsService;
+import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Push;

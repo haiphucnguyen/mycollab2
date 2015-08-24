@@ -14,26 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-core.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.template.velocity;
+package com.esofthead.mycollab.template.velocity.service;
 
 import java.io.Reader;
 import java.io.Writer;
 
+import com.esofthead.mycollab.template.velocity.TemplateContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 /**
- * Wrap velocity engine
  * 
  * @author MyCollab Ltd.
- * @since 4.0.0
+ * @since 4.3.0
  * 
  */
-public interface TemplateEngine {
-	/**
-	 *
-	 * @param context
-	 * @param writer
-	 * @param message
-	 * @param reader
-	 */
-	void evaluate(TemplateContext context, Writer writer, String message,
-			Reader reader);
+@Component
+public class TemplateEngineImpl implements TemplateEngine {
+
+	@Autowired
+	private VelocityEngine voEngine;
+
+	@Override
+	public void evaluate(TemplateContext context, Writer writer, String message, Reader reader) {
+		voEngine.evaluate(context.getVelocityContext(), writer, "log", reader);
+	}
 }

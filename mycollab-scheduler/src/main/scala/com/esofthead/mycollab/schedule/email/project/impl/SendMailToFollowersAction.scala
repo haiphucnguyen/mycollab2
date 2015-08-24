@@ -19,8 +19,8 @@ package com.esofthead.mycollab.schedule.email.project.impl
 import com.esofthead.mycollab.common.domain.{MailRecipientField, SimpleAuditLog, SimpleRelayEmailNotification}
 import com.esofthead.mycollab.common.service.AuditLogService
 import com.esofthead.mycollab.configuration.SiteConfiguration
-import com.esofthead.mycollab.module.mail.service.ExtMailService
-import com.esofthead.mycollab.module.mail.{IContentGenerator, MailUtils}
+import com.esofthead.mycollab.module.mail.service.{IContentGenerator, ExtMailService}
+import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext, SendingRelayEmailNotificationAction}

@@ -27,8 +27,7 @@ import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.template.velocity.TemplateEngine;
+import com.esofthead.mycollab.template.velocity.service.TemplateEngine;
 
 public class GenericServletTest {
 

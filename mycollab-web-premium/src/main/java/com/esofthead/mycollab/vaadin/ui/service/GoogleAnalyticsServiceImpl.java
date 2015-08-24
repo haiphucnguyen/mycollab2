@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.vaadin.ui.service;
 
 import com.vaadin.ui.UI;
 import org.springframework.stereotype.Service;

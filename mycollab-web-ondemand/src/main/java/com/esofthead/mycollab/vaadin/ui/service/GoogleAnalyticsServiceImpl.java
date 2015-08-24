@@ -1,5 +1,7 @@
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.vaadin.ui.service;
 
+import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
+import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.vaadin.ui.UI;
 import org.springframework.stereotype.Service;
 import org.vaadin.googleanalytics.tracking.GoogleAnalyticsTracker;
@@ -10,7 +12,6 @@ import org.vaadin.googleanalytics.tracking.GoogleAnalyticsTracker;
  */
 @Service
 public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService {
-    private GoogleAnalyticsTracker tracker;
 
     @Override
     public void registerUI(UI ui) {
