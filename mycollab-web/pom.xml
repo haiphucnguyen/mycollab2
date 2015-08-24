@@ -293,18 +293,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <version>${restVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <version>${restVersion}</version>
-        </dependency>
-
-        <dependency>
             <groupId>se.jiderhamn</groupId>
             <artifactId>classloader-leak-prevention</artifactId>
             <version>1.13.0</version>

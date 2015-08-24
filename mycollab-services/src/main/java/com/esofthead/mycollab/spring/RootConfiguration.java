@@ -16,11 +16,12 @@
  */
 package com.esofthead.mycollab.spring;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.stereotype.Controller;
 
 /**
  * @author MyCollab Ltd.
@@ -29,7 +30,8 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 @Configuration
 @EnableSpringConfigured
 @EnableAspectJAutoProxy
-@ImportResource(value = "classpath:META-INF/spring/core-context.xml")
+@ComponentScan(basePackages = "com.esofthead.mycollab",
+        excludeFilters = {@ComponentScan.Filter(classes = {Controller.class})})
 @Profile("production")
 public class RootConfiguration {
 }

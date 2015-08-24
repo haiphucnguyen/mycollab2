@@ -75,12 +75,6 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-api-impl</artifactId>
-            <version>5.1.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-migration-ondemand</artifactId>
             <version>5.1.2</version>
         </dependency>

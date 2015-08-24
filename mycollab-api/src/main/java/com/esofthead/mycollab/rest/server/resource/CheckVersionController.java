@@ -1,18 +1,24 @@
-package com.esofthead.mycollab.rest.server.resource.impl;
+package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
-import com.esofthead.mycollab.rest.server.resource.CheckUpdateVersionResource;
 import com.google.gson.Gson;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.Properties;
 
-@Service
-public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResource {
-    @Override
-    public Response getLatestVersion(String version) {
+/**
+ * @author MyCollab Ltd
+ * @since 5.1.2
+ */
+@RestController
+@RequestMapping("/checkupdate")
+public class CheckVersionController {
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "http://community.mycollab.com/download/");
@@ -24,8 +30,6 @@ public class CheckUpdateVersionResourceImpl implements CheckUpdateVersionResourc
         }
 
         Gson gson = new Gson();
-        Response response = Response.status(200).entity(gson.toJson(props)).type(MediaType.APPLICATION_JSON_TYPE).build();
-        response.getHeaders().add("Access-Control-Allow-Origin", "*");
-        return response;
+        return gson.toJson(props);
     }
 }

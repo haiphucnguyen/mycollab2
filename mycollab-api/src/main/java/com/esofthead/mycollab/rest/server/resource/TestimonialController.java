@@ -2,16 +2,13 @@ package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.module.mail.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.esofthead.mycollab.module.support.domain.Testimonial;
-import com.esofthead.mycollab.module.support.service.TestimonialService;
-import com.esofthead.mycollab.support.domain.TestimonialForm;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,9 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 5.1.2
  */
 @RestController
+@RequestMapping(value = "/testimonial")
 public class TestimonialController {
-    @Autowired
-    private TestimonialService testimonialService;
 
     @Autowired
     private IContentGenerator contentGenerator;
@@ -29,25 +25,19 @@ public class TestimonialController {
     @Autowired
     private MailRelayService mailRelayService;
 
-    @RequestMapping(value = "/testimonial", method = RequestMethod.POST)
-    public void submit(@RequestBody TestimonialForm entity) {
-        Testimonial testimonial = new Testimonial();
-        testimonial.setCompany(entity.getCompany());
-        testimonial.setDisplayname(entity.getDisplayname());
-        testimonial.setJobrole(entity.getJobrole());
-        testimonial.setTestimonial(entity.getTestimonial());
-        testimonial.setWebsite(entity.getWebsite());
-        testimonialService.saveWithSession(testimonial, "");
-
+    @RequestMapping(method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
+    public void submit(@RequestParam("company") String company, @RequestParam("displayname") String displayname,
+                       @RequestParam("jobrole") String jobrole, @RequestParam("email") String email,
+                       @RequestParam("website") String website, @RequestParam("testimonial") String testimonial) {
         Div bodyContent = new Div().appendChild(new Ul().appendChild(
-                new Li().appendText(String.format("Display name: %s", entity.getDisplayname())),
-                new Li().appendText(String.format("Company: %s", entity.getCompany())),
-                new Li().appendText(String.format("Role: %s", entity.getJobrole())),
-                new Li().appendText(String.format("Email: %s", entity.getEmail())),
-                new Li().appendText(String.format("Website: %s", entity.getWebsite())),
-                new Li().appendText(String.format("Testimonial: %s", entity.getTestimonial()))));
+                new Li().appendText(String.format("Display name: %s", displayname)),
+                new Li().appendText(String.format("Company: %s", company)),
+                new Li().appendText(String.format("Role: %s", jobrole)),
+                new Li().appendText(String.format("Email: %s", email)),
+                new Li().appendText(String.format("Website: %s", website)),
+                new Li().appendText(String.format("Testimonial: %s", testimonial))));
         mailRelayService.saveRelayEmail(new String[]{"Sir"},
-                new String[]{"hainguyen@esofthead.com"}, contentGenerator
+                new String[]{"hainguyen@mycollab.com"}, contentGenerator
                         .parseString("New testimonial for you"), bodyContent.write());
     }
 }
