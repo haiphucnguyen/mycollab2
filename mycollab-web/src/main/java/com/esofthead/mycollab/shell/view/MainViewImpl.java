@@ -70,6 +70,7 @@ import com.vaadin.ui.Button.ClickListener;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;

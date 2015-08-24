@@ -29,7 +29,7 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 @Configuration
 @EnableSpringConfigured
 @EnableAspectJAutoProxy
-@ImportResource(value="classpath:META-INF/spring/core-context.xml")
+@ImportResource(value = "classpath:META-INF/spring/core-context.xml")
 @Profile("production")
 public class RootConfiguration {
 }
