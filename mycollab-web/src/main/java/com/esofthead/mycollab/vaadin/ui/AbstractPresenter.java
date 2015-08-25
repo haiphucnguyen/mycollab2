@@ -19,8 +19,10 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.security.PermissionChecker;
 import com.esofthead.mycollab.security.PermissionMap;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.vaadin.mvp.service.ComponentScannerService;
 import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +43,8 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     @SuppressWarnings("unchecked")
     public AbstractPresenter(Class<V> viewClass) {
         this.viewClass = viewClass;
-        implClass = (Class<V>) ViewManager.getViewImplCls(viewClass);
+        ComponentScannerService componentScannerService = ApplicationContextUtil.getSpringBean(ComponentScannerService.class);
+        implClass = (Class<V>) componentScannerService.getViewImplCls(viewClass);
         if (implClass == null) {
             throw new MyCollabException("Can not find the implementation for view " + viewClass);
         }
