@@ -16,15 +16,12 @@
  */
 package com.esofthead.mycollab.core.utils;
 
-import com.esofthead.mycollab.core.MyCollabException;
-import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -66,7 +63,7 @@ public class DateTimeUtils {
     }
 
     public static Date convertDateByString(String strDate, String format) {
-        if (!StringUtils.isEmpty(strDate)) {
+        if (!StringUtils.isBlank(strDate)) {
             try {
                 SimpleDateFormat formatter = new SimpleDateFormat(format);
                 return formatter.parse(strDate);

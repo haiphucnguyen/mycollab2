@@ -113,7 +113,7 @@ import org.springframework.stereotype.Component
         }
 
         def formatField(context: MailContext[_], value: String): String = {
-            if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
+            if (StringUtils.isBlank(value)) {
                 new Span().write
             }
             try {

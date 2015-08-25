@@ -119,7 +119,7 @@ class ComponentRelayEmailNotificationActionImpl extends SendMailToAllMembersActi
         }
 
         def formatField(context: MailContext[_], value: String): String = {
-            if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
+            if (StringUtils.isBlank(value)) {
                 return new Span().write
             }
             val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])

@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.ecm.esb.DeleteResourcesEvent
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService
 import com.esofthead.mycollab.module.file.service.RawContentService
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.{Logger, LoggerFactory}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

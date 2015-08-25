@@ -21,14 +21,13 @@ import com.esofthead.mycollab.common.domain.{MailRecipientField, SimpleAuditLog,
 import com.esofthead.mycollab.common.service.AuditLogService
 import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.arguments.ValuedBean
-import com.esofthead.mycollab.core.utils.BeanUtility
+import com.esofthead.mycollab.core.utils.{StringUtils, BeanUtility}
 import com.esofthead.mycollab.module.crm.service.CrmNotificationSettingService
 import com.esofthead.mycollab.module.mail.service.{IContentGenerator, ExtMailService}
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext, SendingRelayEmailNotificationAction}
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 

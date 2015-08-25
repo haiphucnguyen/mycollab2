@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -42,6 +43,7 @@ public class SimpleTask extends Task {
     private String parentTaskName;
     private Integer parentTaskKey;
     private Integer numSubTasks;
+    private List<Predecessor> predecessors;
 
     public Integer getNumComments() {
         return numComments;
@@ -184,7 +186,15 @@ public class SimpleTask extends Task {
         return (value !=  null) ?  DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
     }
 
-    public static enum Field {
+    public List<Predecessor> getPredecessors() {
+        return predecessors;
+    }
+
+    public void setPredecessors(List<Predecessor> predecessors) {
+        this.predecessors = predecessors;
+    }
+
+    public enum Field {
         assignUserFullName, taskListName;
 
         public boolean equalTo(Object value) {

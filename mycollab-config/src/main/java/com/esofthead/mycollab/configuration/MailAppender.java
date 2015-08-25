@@ -21,7 +21,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Layout;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.core.MyCollabVersion;
-import org.apache.commons.lang3.StringUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 
 /**
  * @author MyCollab Ltd
