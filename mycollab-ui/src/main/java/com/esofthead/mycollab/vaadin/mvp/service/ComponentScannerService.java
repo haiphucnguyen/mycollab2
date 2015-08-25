@@ -70,7 +70,7 @@ public class ComponentScannerService implements InitializingBean {
     public Class<?> getPresenterImplCls(Class<?> presenterClass) {
         for (Class<?> classInstance : presenterClasses) {
             if (presenterClass.isAssignableFrom(classInstance) && !classInstance.isInterface()) {
-                return presenterClass;
+                return classInstance;
             }
         }
         return null;

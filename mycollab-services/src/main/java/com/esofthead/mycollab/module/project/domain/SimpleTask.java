@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.domain;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 
@@ -43,6 +44,8 @@ public class SimpleTask extends Task {
     private String parentTaskName;
     private Integer parentTaskKey;
     private Integer numSubTasks;
+
+    @NotBindable
     private List<Predecessor> predecessors;
 
     public Integer getNumComments() {

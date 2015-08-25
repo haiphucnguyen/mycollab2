@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.ecm.esb.impl
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.Lock
 
+import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.lock.DistributionLockUtil
 import com.esofthead.mycollab.module.GenericCommand
 import com.esofthead.mycollab.module.ecm.domain.DriveInfo
