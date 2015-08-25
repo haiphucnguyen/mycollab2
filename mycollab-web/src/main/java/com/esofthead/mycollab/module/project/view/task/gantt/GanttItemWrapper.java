@@ -148,6 +148,14 @@ public class GanttItemWrapper {
         task.setEnddate(endDate);
     }
 
+    public Integer getGanttIndex() {
+        return task.getGanttindex();
+    }
+
+    public void setGanttIndex(Integer ganttIndex) {
+        task.setGanttindex(ganttIndex);
+    }
+
     public String getAssignUser() {
         return task.getAssignuser();
     }
@@ -178,7 +186,6 @@ public class GanttItemWrapper {
         step.setEndDate(endDate);
         step.setGanttItemWrapper(this);
         step.setProgress(task.getPercentagecomplete());
-//        step.setShowProgress(true);
         return step;
     }
 

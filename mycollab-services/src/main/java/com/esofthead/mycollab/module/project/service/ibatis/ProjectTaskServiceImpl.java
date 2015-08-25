@@ -211,4 +211,22 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                     }
                 });
     }
+
+    @Override
+    public void massUpdateGanttIndexes(final List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `ganttindex`=? WHERE `id`=?", new
+                BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                        preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
+                        preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return mapIndexes.size();
+                    }
+                });
+    }
 }

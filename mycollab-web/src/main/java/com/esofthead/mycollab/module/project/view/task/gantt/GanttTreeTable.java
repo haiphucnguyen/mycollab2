@@ -25,6 +25,8 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -40,17 +42,18 @@ import com.vaadin.ui.Tree;
 import com.vaadin.ui.TreeTable;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
 public class GanttTreeTable extends TreeTable {
+    private ProjectTaskService projectTaskService;
     private GanttExt gantt;
     private BeanItemContainer<GanttItemWrapper> beanContainer;
 
+    private boolean ganttIndexIsChanged = false;
     private String sortField = "createdTime";
 
     private ApplicationEventListener<TaskEvent.GanttTaskUpdate> taskUpdateHandler = new
@@ -65,15 +68,19 @@ public class GanttTreeTable extends TreeTable {
 
     public GanttTreeTable(final GanttExt gantt) {
         super();
+        projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
         this.gantt = gantt;
         this.setWidth("800px");
         gantt.setVerticalScrollDelegateTarget(this);
         beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
         this.setContainerDataSource(beanContainer);
-        this.setVisibleColumns("name", "startDate", "endDate", "duration", "actualStartDate", "actualEndDate",
-                "percentageComplete");
+        this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "actualStartDate",
+                "actualEndDate", "percentageComplete");
+        this.setColumnHeader("ganttIndex", "");
+        this.setColumnWidth("ganttIndex", 35);
         this.setColumnHeader("name", "Task");
         this.setColumnExpandRatio("name", 1.0f);
+        this.setHierarchyColumn("name");
         this.setColumnHeader("startDate", "Start");
         this.setColumnWidth("startDate", 75);
         this.setColumnHeader("endDate", "End");
@@ -92,6 +99,14 @@ public class GanttTreeTable extends TreeTable {
         this.setSelectable(true);
         this.setSortEnabled(true);
         this.setEditable(true);
+
+        this.addGeneratedColumn("ganttIndex", new ColumnGenerator() {
+            @Override
+            public Object generateCell(Table table, Object itemId, Object columnId) {
+                GanttItemWrapper item = (GanttItemWrapper) itemId;
+                return new Label("" + item.getGanttIndex());
+            }
+        });
 
         this.addGeneratedColumn("name", new ColumnGenerator() {
             @Override
@@ -184,7 +199,7 @@ public class GanttTreeTable extends TreeTable {
             public void nodeExpand(Tree.ExpandEvent expandEvent) {
                 GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
                 List<GanttItemWrapper> subTasks = item.subTasks(new SearchCriteria.OrderField(sortField, SearchCriteria.ASC));
-                insertSteps(item, subTasks);
+                insertSubSteps(item, subTasks);
             }
         });
 
@@ -255,15 +270,32 @@ public class GanttTreeTable extends TreeTable {
 
     public void addTask(GanttItemWrapper itemWrapper) {
         beanContainer.addBean(itemWrapper);
-        this.setChildrenAllowed(itemWrapper, itemWrapper.hasSubTasks());
+        if (itemWrapper.getGanttIndex() == null) {
+            int ganttIndex = beanContainer.indexOfId(itemWrapper);
+            itemWrapper.setGanttIndex(ganttIndex);
+            ganttIndexIsChanged = true;
+        }
+
+        if (itemWrapper.hasSubTasks()) {
+            this.setChildrenAllowed(itemWrapper, true);
+            this.setCollapsed(itemWrapper, false);
+        } else {
+            this.setChildrenAllowed(itemWrapper, false);
+        }
+
     }
 
-    void insertSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
+    private void insertSubSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
         int count = 0;
         if (stepIndex != -1) {
             for (GanttItemWrapper child : childs) {
                 this.addItem(child);
+                if (child.getGanttIndex() == null) {
+                    int ganttIndex = beanContainer.indexOfId(child);
+                    child.setGanttIndex(ganttIndex);
+                    ganttIndexIsChanged = true;
+                }
                 this.setParent(child, parent);
                 this.setChildrenAllowed(child, child.hasSubTasks());
                 gantt.addTask(stepIndex + count + 1, child);
@@ -279,6 +311,20 @@ public class GanttTreeTable extends TreeTable {
                 this.removeItem(child);
                 gantt.removeStep(child.getStep());
             }
+        }
+    }
+
+    public void updateWholeGanttIndexes() {
+        if (ganttIndexIsChanged) {
+            List<GanttItemWrapper> items = beanContainer.getItemIds();
+            List<Map<String, Integer>> mapIndexes = new ArrayList<>();
+            for (GanttItemWrapper item: items) {
+                Map<String, Integer> value = new HashMap<>(2);
+                value.put("id", item.getId());
+                value.put("index", item.getGanttIndex());
+                mapIndexes.add(value);
+            }
+            projectTaskService.massUpdateGanttIndexes(mapIndexes, AppContext.getAccountId());
         }
     }
 

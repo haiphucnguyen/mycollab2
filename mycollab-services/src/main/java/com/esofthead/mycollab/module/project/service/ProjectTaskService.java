@@ -52,4 +52,7 @@ public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskS
 
     @CacheEvict
     void massUpdateTaskIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
+
+    @CacheEvict
+    void massUpdateGanttIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
 }

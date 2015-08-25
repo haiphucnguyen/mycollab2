@@ -189,11 +189,11 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         mainLayout.with(taskTable, gantt).expand(gantt);
 
-        updateStepList();
+        showSteps();
     }
 
     @SuppressWarnings("unchecked")
-    private void updateStepList() {
+    private void showSteps() {
         final TaskSearchCriteria criteria = new TaskSearchCriteria();
         criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setHasParentTask(new BooleanSearchField());
@@ -216,6 +216,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                         UI.getCurrent().push();
                     }
                 }
+                taskTable.updateWholeGanttIndexes();
             }
         });
 
