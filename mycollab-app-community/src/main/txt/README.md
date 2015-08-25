@@ -48,10 +48,11 @@ Version 5.1.3
 
 **Library Upgrades**
 
-* Vaadin 7.5.4, Resteasy 3.0.12.Final
+* Vaadin 7.5.4
 
 **Improvements & New Features**
 
+* Reduce the startup time
 * Several minor UI improvements
 
 **Bug Fixes**
