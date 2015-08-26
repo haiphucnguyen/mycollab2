@@ -1113,7 +1113,7 @@
       }
     }
     .addNewControl {
-      @margin-container(5px, 0px, 5px, 0px);
+      @include margin-container(5px, 0px, 5px, 0px);
     }
     .addViewTopControls {
       .edit-btn .v-horizontallayout-margin {
@@ -2930,7 +2930,6 @@
   .v-csslayout.tab-content {
     background-color: #fff;
     height: 100%;
-    overflow-y:auto;
   }
 
   .vertical-tabsheet {

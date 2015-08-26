@@ -335,44 +335,8 @@
   }
 
   .v-checkbox input[type="checkbox"]:focus {
-      border: none;
-      box-shadow: none;
-    }
-  }
-
-  .v-widget.helpPanel {
-    right: 0;
-    top: 0;
-    z-index:10;
-    margin: 80px auto;
-    position: absolute;
-  }
-
-  .helpPanel .v-sliderpanel-wrapper.layout-vertical {
-    height: 300px;
-    margin: 80px auto;
-    .v-sliderpanel-tab, .v-sliderpanel-content {
-      background-color: #1C7D94;
-    }
-
-    .v-sliderpanel-tab .v-sliderpanel-caption {
-      color:white;
-      text-align:center;
-      font-size: $font-large;
-      font-weight: bold;
-    }
-
-    .v-sliderpanel-content {
-      .v-icon, a {
-        color: white;
-        font-size: 14px;
-        font-weight: bold;
-      }
-      .v-label {
-        color: white;
-        font-size: 11px;
-      }
-    }
+    border: none;
+    box-shadow: none;
   }
 
   /* Toogle button groups*/

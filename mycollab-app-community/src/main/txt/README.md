@@ -57,6 +57,8 @@ Version 5.1.3
 
 **Bug Fixes**
 
+* Has redundant scrollbar on internet explorer
+* 
 
 
 Version 5.1.2

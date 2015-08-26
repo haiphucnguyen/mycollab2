@@ -498,7 +498,7 @@
     .report-content {
       border-left: 1px solid $border-color;
       background-color: #FFF;
-      @margin-container(20px, 20px, 20px, 20px);
+      @include margin-container(20px, 20px, 20px, 20px);
       .v-label.h2 {
         color: #a56116;
         font-size: $font-large;
