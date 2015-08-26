@@ -46,7 +46,7 @@ public class SimpleTask extends Task {
     private Integer numSubTasks;
 
     @NotBindable
-    private List<Predecessor> predecessors;
+    private List<TaskPredecessor> predecessors;
 
     public Integer getNumComments() {
         return numComments;
@@ -167,7 +167,7 @@ public class SimpleTask extends Task {
     }
 
     public boolean isCompleted() {
-        return OptionI18nEnum.StatusI18nEnum.Closed.name().equals(getStatus()) && (getPercentagecomplete() !=  null)
+        return OptionI18nEnum.StatusI18nEnum.Closed.name().equals(getStatus()) && (getPercentagecomplete() != null)
                 && (100d == getPercentagecomplete());
     }
 
@@ -186,14 +186,14 @@ public class SimpleTask extends Task {
 
     public Date getDeadlineRoundPlusOne() {
         Date value = getDeadline();
-        return (value !=  null) ?  DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
+        return (value != null) ? DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
     }
 
-    public List<Predecessor> getPredecessors() {
+    public List<TaskPredecessor> getPredecessors() {
         return predecessors;
     }
 
-    public void setPredecessors(List<Predecessor> predecessors) {
+    public void setPredecessors(List<TaskPredecessor> predecessors) {
         this.predecessors = predecessors;
     }
 

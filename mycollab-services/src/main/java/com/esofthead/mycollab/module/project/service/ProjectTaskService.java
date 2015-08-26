@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
 import java.util.List;
@@ -55,4 +56,6 @@ public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskS
 
     @CacheEvict
     void massUpdateGanttIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
+
+    void massUpdatePredecessors(Integer taskSourceId, List<TaskPredecessor> predecessors, @CacheKey Integer sAccountId);
 }

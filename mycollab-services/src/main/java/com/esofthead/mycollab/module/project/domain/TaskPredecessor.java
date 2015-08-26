@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
+import java.util.Date;
+
 /**
  * @author MyCollab Ltd
  * @since 5.1.3
@@ -27,6 +29,8 @@ public class TaskPredecessor extends Predecessor {
     public static final String SF = "SF";
 
     private int ganttIndex;
+    private Date startDate;
+    private Date endDate;
 
     public int getGanttIndex() {
         return ganttIndex;
@@ -34,5 +38,21 @@ public class TaskPredecessor extends Predecessor {
 
     public void setGanttIndex(int ganttIndex) {
         this.ganttIndex = ganttIndex;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

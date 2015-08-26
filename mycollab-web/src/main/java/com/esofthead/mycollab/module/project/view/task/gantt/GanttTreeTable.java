@@ -35,11 +35,9 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Tree;
-import com.vaadin.ui.TreeTable;
+import com.vaadin.ui.*;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
 import java.util.*;
@@ -235,7 +233,7 @@ public class GanttTreeTable extends TreeTable {
             public void onContextMenuOpenFromRow(ContextMenu.ContextMenuOpenedOnTableRowEvent event) {
                 // read clicked row item and property from event and modify menu
                 GanttItemWrapper item = (GanttItemWrapper) event.getItemId();
-                contextMenu.setAssociateTask(item);
+                contextMenu.displayContextMenu(item);
                 contextMenu.open(GanttTreeTable.this);
             }
 
@@ -250,6 +248,10 @@ public class GanttTreeTable extends TreeTable {
 
 
         contextMenu.addContextMenuTableListener(tableListener);
+    }
+
+    BeanItemContainer<GanttItemWrapper> getRawContainerDataSource() {
+        return beanContainer;
     }
 
     @Override
@@ -318,7 +320,7 @@ public class GanttTreeTable extends TreeTable {
         if (ganttIndexIsChanged) {
             List<GanttItemWrapper> items = beanContainer.getItemIds();
             List<Map<String, Integer>> mapIndexes = new ArrayList<>();
-            for (GanttItemWrapper item: items) {
+            for (GanttItemWrapper item : items) {
                 Map<String, Integer> value = new HashMap<>(2);
                 value.put("id", item.getId());
                 value.put("index", item.getGanttIndex());
@@ -331,19 +333,20 @@ public class GanttTreeTable extends TreeTable {
     private class GanttContextMenu extends ContextMenu {
         private GanttItemWrapper taskWrapper;
 
-        GanttContextMenu() {
-            ContextMenuItem detailMenuItem = this.addItem("Detail");
+        GanttContextMenu() {}
+
+        void displayContextMenu(final GanttItemWrapper taskWrapper) {
+            this.removeAllItems();
+            ContextMenuItem detailMenuItem = this.addItem("Detail", FontAwesome.BARS);
             detailMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
-                    if (taskWrapper != null) {
-                        EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttTreeTable.this,
-                                taskWrapper.getTask().getId()));
-                    }
+                    EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttTreeTable.this,
+                            taskWrapper.getTask().getId()));
                 }
             });
 
-            ContextMenuItem insertRowMenuItem = this.addItem("Insert Row");
+            ContextMenuItem insertRowMenuItem = this.addItem("Insert Row", FontAwesome.PLUS_SQUARE_O);
             insertRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
@@ -351,17 +354,21 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
 
-            ContextMenuItem deleteRowMenuItem = this.addItem("Delete Row");
+            ContextMenuItem deleteRowMenuItem = this.addItem("Delete Row", FontAwesome.TRASH_O);
             deleteRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
 
                 }
             });
-        }
 
-        void setAssociateTask(GanttItemWrapper taskWrapper) {
-            this.taskWrapper = taskWrapper;
+            ContextMenuItem predecessorMenuItem = this.addItem("Predecessors", FontAwesome.MAP_MARKER);
+            predecessorMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
+                    UI.getCurrent().addWindow(new PredecessorWindow(GanttTreeTable.this, taskWrapper));
+                }
+            });
         }
     }
 }
