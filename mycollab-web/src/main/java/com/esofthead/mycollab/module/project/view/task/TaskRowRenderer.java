@@ -26,13 +26,11 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSelection;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
@@ -43,7 +41,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.UUID;
@@ -84,10 +81,9 @@ class TaskRowRenderer extends MHorizontalLayout {
         footer.addStyleName(UIConstants.FOOTER_NOTE);
 
         TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
-        if (task.getNumComments() != null && task.getNumComments() > 0) {
-            PopupView field = popupFieldFactory.createTaskCommentsPopupField(task);
-            footer.addComponent(field);
-        }
+
+        PopupView commentField = popupFieldFactory.createTaskCommentsPopupField(task);
+        footer.addComponent(commentField);
 
         if (task.getStatus() != null) {
             PopupView field = popupFieldFactory.createTaskStatusPopupField(task);
@@ -110,9 +106,7 @@ class TaskRowRenderer extends MHorizontalLayout {
             footer.addComponent(field);
         }
 
-        if (footer.getComponentCount() > 0) {
-            wrapTaskInfoLayout.addComponent(footer);
-        }
+        wrapTaskInfoLayout.addComponent(footer);
         this.with(wrapTaskInfoLayout).expand(wrapTaskInfoLayout);
     }
 

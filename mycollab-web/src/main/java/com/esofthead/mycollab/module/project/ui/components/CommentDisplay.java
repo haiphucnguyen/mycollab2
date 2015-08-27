@@ -71,7 +71,7 @@ public class CommentDisplay extends MVerticalLayout implements ReloadableCompone
         }
     }
 
-    public void loadComments(final String typeId) {
+    public void loadComments(String typeId) {
         this.typeId = typeId;
         if (commentBox != null) {
             commentBox.setTypeAndId(typeId);

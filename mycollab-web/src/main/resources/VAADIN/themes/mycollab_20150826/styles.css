@@ -711,6 +711,7 @@ div.v-tree-node-caption div {
 
 .v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
+	overflow-y: auto;
 }
 
 .v-button.add-btn-popup {
@@ -8435,6 +8436,7 @@ div.v-tree-node-caption div {
 
 .v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
+	overflow-y: auto;
 }
 
 .v-button.add-btn-popup {

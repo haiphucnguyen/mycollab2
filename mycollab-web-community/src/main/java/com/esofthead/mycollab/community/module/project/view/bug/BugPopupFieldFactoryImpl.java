@@ -16,6 +16,16 @@ import com.vaadin.ui.PopupView;
  */
 @ViewComponent
 public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
+
+    @Override
+    public PopupView createBugCommentsPopupField(SimpleBug bug) {
+        if (bug.getNumComments() != null) {
+            return new PopupBeanField(FontAwesome.COMMENT_O.getHtml() + " " + bug.getNumComments());
+        } else {
+            return new PopupBeanField(FontAwesome.COMMENT_O.getHtml() + " 0");
+        }
+    }
+
     @Override
     public PopupView createBugMilestonePopupField(SimpleBug bug) {
         return new PopupBeanField(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +

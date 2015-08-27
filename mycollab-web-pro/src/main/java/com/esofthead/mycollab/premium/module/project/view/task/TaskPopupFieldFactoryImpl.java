@@ -11,15 +11,17 @@ import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSel
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.task.TaskStatusComboBox;
-import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.PopupView;
 import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
@@ -29,12 +31,38 @@ import org.vaadin.teemu.VaadinIcons;
 public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     @Override
     public PopupView createTaskCommentsPopupField(SimpleTask task) {
-        PopupView view = new PopupView(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments(),
-                new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId(),
-                        BugRelayEmailNotificationAction.class));
-        view.setStyleName("block-popupedit");
+        TaskCommentsPopupView view = new TaskCommentsPopupView(task);
         view.setDescription("Click to edit");
         return view;
+    }
+
+    private static class TaskCommentsPopupView extends LazyPopupView {
+        private SimpleTask task;
+
+        public TaskCommentsPopupView(SimpleTask task) {
+            super("");
+            this.task = task;
+            if (task.getNumComments() == null || task.getNumComments() == 0) {
+                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " 0");
+            } else {
+                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments());
+            }
+        }
+
+        @Override
+        protected void doShow() {
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId(),
+                    ProjectTaskRelayEmailNotificationAction.class);
+            MVerticalLayout layout = getWrapContent();
+            layout.removeAllComponents();
+            layout.with(commentDisplay);
+            commentDisplay.loadComments(task.getId() + "");
+        }
+
+        @Override
+        protected void doHide() {
+            super.doHide();
+        }
     }
 
     @Override

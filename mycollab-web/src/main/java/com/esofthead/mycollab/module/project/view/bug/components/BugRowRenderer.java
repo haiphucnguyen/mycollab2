@@ -84,10 +84,10 @@ public class BugRowRenderer extends MHorizontalLayout {
 
         MHorizontalLayout footer = new MHorizontalLayout();
         footer.addStyleName(UIConstants.FOOTER_NOTE);
-        if (bug.getNumComments() != null && bug.getNumComments() > 0) {
-            Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + bug.getNumComments()).setTitle("Comment");
-            footer.addComponent(new ELabel(comment.write(), ContentMode.HTML).withDescription("Comment"));
-        }
+
+        PopupView commentsField =  popupFieldFactory.createBugCommentsPopupField(bug);
+        footer.addComponent(commentsField);
+
         if (bug.getStatus() != null) {
             PopupView field = popupFieldFactory.createBugStatusPopupField(bug);
             footer.addComponent(field);
@@ -105,9 +105,7 @@ public class BugRowRenderer extends MHorizontalLayout {
             footer.addComponent(field);
         }
 
-        if (footer.getComponentCount() > 0) {
-            wrapBugInfoLayout.addComponent(footer);
-        }
+        wrapBugInfoLayout.addComponent(footer);
         this.with(wrapBugInfoLayout).expand(wrapBugInfoLayout);
     }
 
