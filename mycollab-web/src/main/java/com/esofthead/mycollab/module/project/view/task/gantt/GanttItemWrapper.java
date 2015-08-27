@@ -20,6 +20,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -118,6 +119,10 @@ public class GanttItemWrapper {
         }
     }
 
+    public List<TaskPredecessor> getPredecessors() {
+        return task.getPredecessors();
+    }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -132,6 +137,10 @@ public class GanttItemWrapper {
 
     public Date getActualEndDate() {
         return task.getActualenddate();
+    }
+
+    public Date getDueDate() {
+        return task.getDeadline();
     }
 
     public Double getPercentageComplete() {

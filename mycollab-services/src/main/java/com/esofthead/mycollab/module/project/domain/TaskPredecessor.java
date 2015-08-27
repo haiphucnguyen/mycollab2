@@ -31,6 +31,7 @@ public class TaskPredecessor extends Predecessor {
     private int ganttIndex;
     private Date startDate;
     private Date endDate;
+    private Date dueDate;
 
     public int getGanttIndex() {
         return ganttIndex;
@@ -54,5 +55,13 @@ public class TaskPredecessor extends Predecessor {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 }

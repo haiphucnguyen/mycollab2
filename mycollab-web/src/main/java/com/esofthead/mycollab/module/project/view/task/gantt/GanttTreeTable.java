@@ -24,6 +24,7 @@ import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -72,8 +73,8 @@ public class GanttTreeTable extends TreeTable {
         gantt.setVerticalScrollDelegateTarget(this);
         beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
         this.setContainerDataSource(beanContainer);
-        this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "actualStartDate",
-                "actualEndDate", "percentageComplete");
+        this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "predecessors",
+                "actualStartDate", "actualEndDate", "percentageComplete");
         this.setColumnHeader("ganttIndex", "");
         this.setColumnWidth("ganttIndex", 35);
         this.setColumnHeader("name", "Task");
@@ -85,6 +86,8 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnWidth("endDate", 75);
         this.setColumnHeader("duration", "Duration");
         this.setColumnWidth("duration", 80);
+        this.setColumnHeader("predecessors", "Predecessors");
+        this.setColumnWidth("predecessors", 80);
         this.setColumnHeader("actualStartDate", "Actual Start");
         this.setColumnWidth("actualStartDate", 80);
         this.setColumnHeader("actualEndDate", "Actual End");
@@ -166,6 +169,26 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
+        this.addGeneratedColumn("predecessors", new ColumnGenerator() {
+            @Override
+            public Object generateCell(Table table, Object itemId, Object columnId) {
+                GanttItemWrapper item = (GanttItemWrapper) itemId;
+                List<TaskPredecessor> predecessors = item.getPredecessors();
+                if (predecessors != null && predecessors.size() > 0) {
+                    StringBuilder builder = new StringBuilder();
+                    for (TaskPredecessor predecessor : predecessors) {
+                        builder.append(predecessor.getGanttIndex());
+                        builder.append(",");
+                    }
+                    if (builder.charAt(builder.length() - 1) == ',') {
+                        builder.deleteCharAt(builder.length() - 1);
+                    }
+                    return new Label(builder.toString());
+                } else {
+                    return new Label();
+                }
+            }
+        });
 
         this.addGeneratedColumn("actualEndDate", new ColumnGenerator() {
             @Override
@@ -333,7 +356,8 @@ public class GanttTreeTable extends TreeTable {
     private class GanttContextMenu extends ContextMenu {
         private GanttItemWrapper taskWrapper;
 
-        GanttContextMenu() {}
+        GanttContextMenu() {
+        }
 
         void displayContextMenu(final GanttItemWrapper taskWrapper) {
             this.removeAllItems();

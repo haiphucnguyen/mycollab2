@@ -266,6 +266,7 @@ class PredecessorWindow extends Window {
                     predecessor.setDescid(item.getTask().getId());
                     predecessor.setStartDate(item.getStartDate());
                     predecessor.setEndDate(item.getEndDate());
+                    predecessor.setDueDate(item.getDueDate());
                     return predecessor;
                 }
                 return null;
