@@ -1,14 +1,17 @@
 package com.esofthead.mycollab.premium.module.project.view.task;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSelection;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.task.TaskStatusComboBox;
+import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -24,6 +27,16 @@ import org.vaadin.teemu.VaadinIcons;
  */
 @ViewComponent
 public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
+    @Override
+    public PopupView createTaskCommentsPopupField(SimpleTask task) {
+        PopupView view = new PopupView(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments(),
+                new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId(),
+                        BugRelayEmailNotificationAction.class));
+        view.setStyleName("block-popupedit");
+        view.setDescription("Click to edit");
+        return view;
+    }
+
     @Override
     public PopupView createTaskStatusPopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {

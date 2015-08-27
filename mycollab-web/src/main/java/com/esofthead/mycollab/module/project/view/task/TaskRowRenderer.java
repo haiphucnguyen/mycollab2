@@ -82,12 +82,12 @@ class TaskRowRenderer extends MHorizontalLayout {
 
         MHorizontalLayout footer = new MHorizontalLayout().withSpacing(false);
         footer.addStyleName(UIConstants.FOOTER_NOTE);
-        if (task.getNumComments() != null && task.getNumComments() > 0) {
-            Div comment = new Div().appendText(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments()).setTitle("Comment");
-            footer.addComponent(new ELabel(comment.write(), ContentMode.HTML).withDescription("Comment"));
-        }
 
         TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
+        if (task.getNumComments() != null && task.getNumComments() > 0) {
+            PopupView field = popupFieldFactory.createTaskCommentsPopupField(task);
+            footer.addComponent(field);
+        }
 
         if (task.getStatus() != null) {
             PopupView field = popupFieldFactory.createTaskStatusPopupField(task);

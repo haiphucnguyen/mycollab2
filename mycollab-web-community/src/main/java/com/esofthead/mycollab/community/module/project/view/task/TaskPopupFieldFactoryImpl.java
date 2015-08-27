@@ -34,6 +34,11 @@ import org.vaadin.teemu.VaadinIcons;
 @ViewComponent
 public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     @Override
+    public PopupView createTaskCommentsPopupField(SimpleTask task) {
+        return new PopupBeanField(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments());
+    }
+
+    @Override
     public PopupView createTaskStatusPopupField(SimpleTask task) {
         return new PopupBeanField(FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus());
     }
