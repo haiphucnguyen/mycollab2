@@ -574,8 +574,14 @@
     .v-icon {
       padding: 0px;
     }
-    .popupcontent .v-verticallayout {
-      background-color: white;
+  }
+
+  .v-popupview-popup.v-popupview-popup-block-popupedit {
+    .popupContent {
+      overflow-y: auto;
+      > .v-verticallayout {
+        background-color: white;
+      }
     }
   }
 
@@ -585,7 +591,6 @@
       padding: 0px;
       .popupContent {
          background-color: white;
-         overflow-y: auto;
       }
     }
   }

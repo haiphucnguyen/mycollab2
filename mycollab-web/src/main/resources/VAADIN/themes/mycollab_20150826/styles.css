@@ -700,7 +700,11 @@ div.v-tree-node-caption div {
 	padding: 0px;
 }
 
-.v-popupview.block-popupedit .popupcontent .v-verticallayout {
+.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent {
+	overflow-y: auto;
+}
+
+.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent  > .v-verticallayout {
 	background-color: white;
 }
 
@@ -711,7 +715,6 @@ div.v-tree-node-caption div {
 
 .v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
-	overflow-y: auto;
 }
 
 .v-button.add-btn-popup {
@@ -8425,7 +8428,11 @@ div.v-tree-node-caption div {
 	padding: 0px;
 }
 
-.v-popupview.block-popupedit .popupcontent .v-verticallayout {
+.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent {
+	overflow-y: auto;
+}
+
+.v-popupview-popup.v-popupview-popup-block-popupedit .popupContent  > .v-verticallayout {
 	background-color: white;
 }
 
@@ -8436,7 +8443,6 @@ div.v-tree-node-caption div {
 
 .v-overlay-container .v-popupview-popup .popupContent {
 	background-color: white;
-	overflow-y: auto;
 }
 
 .v-button.add-btn-popup {
