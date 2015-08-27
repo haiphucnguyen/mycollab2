@@ -20,6 +20,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public abstract class PopupBeanFieldBuilder<B> {
     protected Object value;
     protected String caption;
+    protected String description = "Click to edit";
     protected Field field;
     protected B bean;
     protected String bindProperty;
@@ -28,6 +29,11 @@ public abstract class PopupBeanFieldBuilder<B> {
 
     public PopupBeanFieldBuilder withValue(Object value) {
         this.value = value;
+        return this;
+    }
+
+    public PopupBeanFieldBuilder withDescription(String description) {
+        this.description = description;
         return this;
     }
 
@@ -58,9 +64,13 @@ public abstract class PopupBeanFieldBuilder<B> {
 
     abstract protected String generateSmallContentAsHtml();
 
+    protected String generateDescription() {
+        return description;
+    }
+
     public PopupView build() {
         final PopupView view = new BeanPopupView(generateSmallContentAsHtml());
-        view.setDescription("Click to edit");
+        view.setDescription(description);
         return view;
     }
 
@@ -76,6 +86,7 @@ public abstract class PopupBeanFieldBuilder<B> {
                     fieldGroup.commit();
                     crudService.updateWithSession(bean, AppContext.getUsername());
                     setMinimizedValueAsHTML(generateSmallContentAsHtml());
+                    BeanPopupView.this.setDescription(generateDescription());
                 }
             } catch (FieldGroup.CommitException e) {
                 throw new MyCollabException(e);

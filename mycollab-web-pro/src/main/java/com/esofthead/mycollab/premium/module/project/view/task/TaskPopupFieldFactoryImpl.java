@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.premium.module.project.view.task;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -9,7 +12,9 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSelection;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
+import com.esofthead.mycollab.module.project.view.task.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.task.TaskStatusComboBox;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -17,6 +22,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
+import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.PopupView;
@@ -29,6 +35,49 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 @ViewComponent
 public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
+
+    @Override
+    public PopupView createTaskAssigneePopupField(final SimpleTask task) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
+                Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
+                return img.write();
+            }
+
+            @Override
+            protected String generateDescription() {
+                return task.getAssignUserFullName();
+            }
+        };
+        builder.withBean(task).withBindProperty("assignuser").withDescription(task.getAssignUserFullName())
+                .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser());
+        return builder.build();
+    }
+
+    @Override
+    public PopupView createTaskPriorityPopupField(final SimpleTask task) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                String taskPriority = task.getPriority();
+                Img img = new Img(task.getPriority(), ProjectResources.getIconResourceLink12ByTaskPriority(taskPriority));
+                return img.write();
+            }
+
+            @Override
+            protected String generateDescription() {
+                return task.getPriority();
+            }
+        };
+        builder.withBean(task).withBindProperty("priority").withDescription(task.getPriority())
+                .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY)).withField(new TaskPriorityComboBox())
+                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority());
+        return builder.build();
+    }
+
     @Override
     public PopupView createTaskCommentsPopupField(SimpleTask task) {
         TaskCommentsPopupView view = new TaskCommentsPopupView(task);
