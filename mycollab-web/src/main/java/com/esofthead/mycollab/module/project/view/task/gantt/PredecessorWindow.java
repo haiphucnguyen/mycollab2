@@ -55,7 +55,7 @@ class PredecessorWindow extends Window {
     private GanttTreeTable taskTreeTable;
     private GanttItemWrapper ganttItemWrapper;
 
-    PredecessorWindow(GanttTreeTable taskTreeTable, final GanttItemWrapper ganttItemWrapper) {
+    PredecessorWindow(final GanttTreeTable taskTreeTable, final GanttItemWrapper ganttItemWrapper) {
         super("Edit predecessors");
         this.setModal(true);
         this.setResizable(false);
@@ -103,6 +103,7 @@ class PredecessorWindow extends Window {
                     ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                     projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
                     ganttItemWrapper.getTask().setPredecessors(predecessors);
+                    taskTreeTable.refreshRowCache();
                     PredecessorWindow.this.close();
                 } else {
                     throw new UserInvalidInputException("Invalid constraints");

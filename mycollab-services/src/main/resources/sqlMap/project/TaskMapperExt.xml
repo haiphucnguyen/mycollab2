@@ -21,8 +21,9 @@
             jdbcType="VARCHAR" />
         <result column="logByFullName" property="logByFullName"
             jdbcType="VARCHAR" />
-        <result column="numSubTasks" property="numSubTasks"
-                jdbcType="INTEGER" />
+        <result column="numSubTasks" property="numSubTasks" jdbcType="INTEGER" />
+        <result column="parentTaskKey" property="parentTaskKey" jdbcType="INTEGER" />
+        <result column="parentTaskName" property="parentTaskName" jdbcType="VARCHAR" />
         <collection property="predecessors" ofType="com.esofthead.mycollab.module.project.domain.TaskPredecessor">
             <id property="id" column="pre_id"/>
             <result property="type" column="pre_type"/>
@@ -31,6 +32,9 @@
             <result property="predestype" column="pre_predestype"/>
             <result property="lagday" column="pre_lagDay"/>
             <result property="ganttIndex" column="pre_ganttindex"/>
+            <result property="startDate" column="pre_startDate"/>
+            <result property="endDate" column="pre_endDate"/>
+            <result property="dueDate" column="pre_dueDate"/>
         </collection>
     </resultMap>
 
@@ -179,14 +183,15 @@
                  ) AS numSubTasks,
                  m_prj_predecessor.id AS pre_id, m_prj_predecessor.type AS pre_type, m_prj_predecessor.sourceId AS pre_sourceId,
                  m_prj_predecessor.descId AS pre_descId, m_prj_predecessor.predestype AS pre_predestype, m_prj_predecessor.lagDay AS pre_lagDay,
-                 (SELECT ref_task.ganttindex FROM m_prj_task AS ref_task WHERE m_prj_predecessor.descId=ref_task.id) AS pre_ganttindex
+                 ref_task.ganttindex AS pre_ganttindex, ref_task.startdate AS pre_startDate, ref_task.enddate AS pre_endDate, ref_task.deadline AS pre_dueDate
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
               LEFT OUTER JOIN m_prj_milestone ON (m_prj_milestone.id = m_prj_task.milestoneId)
               LEFT OUTER JOIN s_user ON (s_user.username = m_prj_task.assignUser)
               LEFT OUTER JOIN s_user AS log_user ON (log_user.username = m_prj_task.logBy)
-              LEFT OUTER JOIN m_prj_task AS parentTask ON (m_prj_task.parentTaskId=parentTask.id)
+              LEFT OUTER JOIN m_prj_task AS parentTask ON (m_prj_task.parentTaskId = parentTask.id)
               LEFT OUTER JOIN m_prj_predecessor ON (m_prj_task.id=m_prj_predecessor.sourceId AND m_prj_predecessor.type='Project-Task')
+              LEFT OUTER JOIN m_prj_task AS ref_task ON (m_prj_predecessor.descId=ref_task.id)
         ]]>
     </sql>
 
