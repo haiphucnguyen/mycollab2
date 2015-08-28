@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.premium.module.project.view.task;
 
+import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -43,6 +46,15 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             protected String generateSmallContentAsHtml() {
                 String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
+                return img.write();
+            }
+
+            @Override
+            protected String generateSmallAsHtmlAfterUpdate() {
+                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                SimpleTask newTask = taskService.findById(task.getId(), AppContext.getAccountId());
+                String avatarLink = Storage.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
+                Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName());
                 return img.write();
             }
 
@@ -110,7 +122,12 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
         @Override
         protected void doHide() {
-            super.doHide();
+            CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
+            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+            searchCriteria.setTypeid(new StringSearchField(task.getId() + ""));
+            CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
+            int commentCount = commentService.getTotalCount(searchCriteria);
+            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
         }
     }
 

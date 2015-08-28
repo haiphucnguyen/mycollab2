@@ -51,7 +51,7 @@ public class BusinessDayTimeUtils {
         calc1.setStartDate(end);
         end = calc1.getCurrentBusinessDate();
         long possibleDurations = (end.toDate().getTime() - start.toDate().getTime()) / DAY_IN_MILIS;
-        int varDays = (int) possibleDurations / 2;
+        int varDays = Math.round((possibleDurations + 1) / 2);
         int candidateDuration = 0;
         calc1.setStartDate(start);
         LocalDate testDate;
@@ -60,11 +60,11 @@ public class BusinessDayTimeUtils {
             calc1.moveByBusinessDays(varDays);
             testDate = calc1.getCurrentBusinessDate();
             if (testDate.isAfter(end)) {
-                varDays = varDays / 2;
+                varDays = Math.round((varDays + 1) / 2);
                 calc1.setCurrentBusinessDate(previousBizDate);
             } else if (testDate.isBefore(end)) {
                 candidateDuration += varDays;
-                varDays = varDays / 2;
+                varDays = Math.round(varDays / 2);
                 calc1.setStartDate(testDate);
             } else {
                 return candidateDuration + varDays;

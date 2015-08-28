@@ -64,6 +64,10 @@ public abstract class PopupBeanFieldBuilder<B> {
 
     abstract protected String generateSmallContentAsHtml();
 
+    protected String generateSmallAsHtmlAfterUpdate() {
+        return generateSmallContentAsHtml();
+    }
+
     protected String generateDescription() {
         return description;
     }
@@ -85,7 +89,7 @@ public abstract class PopupBeanFieldBuilder<B> {
                 if (fieldGroup.isModified()) {
                     fieldGroup.commit();
                     crudService.updateWithSession(bean, AppContext.getUsername());
-                    setMinimizedValueAsHTML(generateSmallContentAsHtml());
+                    setMinimizedValueAsHTML(generateSmallAsHtmlAfterUpdate());
                     BeanPopupView.this.setDescription(generateDescription());
                 }
             } catch (FieldGroup.CommitException e) {

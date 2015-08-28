@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.premium.module.project.view.bug;
 
+import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -59,6 +62,16 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             layout.removeAllComponents();
             layout.with(commentDisplay);
             commentDisplay.loadComments(bug.getId() + "");
+        }
+
+        @Override
+        protected void doHide() {
+            CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
+            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+            searchCriteria.setTypeid(new StringSearchField(bug.getId() + ""));
+            CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
+            int commentCount = commentService.getTotalCount(searchCriteria);
+            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
         }
     }
 
