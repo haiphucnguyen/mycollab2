@@ -99,23 +99,19 @@ class PredecessorWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
-                if (adjustTaskAndItsPredeccessors()) {
-                    ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                boolean datesChanges = taskTreeTable.adjustTaskDatesByPredecessors(ganttItemWrapper, predecessors);
+                ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                if (datesChanges) {
                     projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
-                    ganttItemWrapper.getTask().setPredecessors(predecessors);
-                    taskTreeTable.refreshRowCache();
-                    PredecessorWindow.this.close();
-                } else {
-                    throw new UserInvalidInputException("Invalid constraints");
                 }
+                projectTaskService.updateWithSession(ganttItemWrapper.getTask(), AppContext.getUsername());
+                ganttItemWrapper.getTask().setPredecessors(predecessors);
+                taskTreeTable.refreshRowCache();
+                PredecessorWindow.this.close();
             }
         });
         saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         buttonControls.with(cancelBtn, saveBtn);
-    }
-
-    private boolean adjustTaskAndItsPredeccessors() {
-        return true;
     }
 
     private class PredecessorsLayout extends VerticalLayout {
@@ -165,7 +161,7 @@ class PredecessorWindow extends Window {
                         String value = rowField.getValue();
                         try {
                             int rowValue = Integer.parseInt(value);
-                            GanttItemWrapper item = getGanttItemByRow(rowValue);
+                            GanttItemWrapper item = taskTreeTable.getRawContainer().getItemByGanttIndex(rowValue);
                             if (item != null) {
                                 taskComboBox.setValue(item);
                                 if (predecessorComboBox.getValue() == null) {
@@ -233,7 +229,7 @@ class PredecessorWindow extends Window {
                 if (taskPredecessor != null) {
                     rowField.setValue(taskPredecessor.getGanttIndex() + "");
                     predecessorComboBox.setValue(taskPredecessor.getPredestype());
-                    GanttItemWrapper item = getGanttItemByRow(taskPredecessor.getGanttIndex());
+                    GanttItemWrapper item = taskTreeTable.getRawContainer().getItemByGanttIndex(taskPredecessor.getGanttIndex());
                     if (item != null) {
                         taskComboBox.setValue(item);
                     }
@@ -245,17 +241,6 @@ class PredecessorWindow extends Window {
                 }
             }
 
-            private GanttItemWrapper getGanttItemByRow(int rowIndex) {
-                BeanItemContainer<GanttItemWrapper> beanItemContainer = taskTreeTable.getRawContainerDataSource();
-                List<GanttItemWrapper> items = beanItemContainer.getItemIds();
-                for (GanttItemWrapper item : items) {
-                    if (rowIndex == item.getGanttIndex()) {
-                        return item;
-                    }
-                }
-                return null;
-            }
-
             TaskPredecessor buildPredecessor() {
                 GanttItemWrapper item = (GanttItemWrapper) taskComboBox.getValue();
                 if (item != null && item.getTask().getId() != ganttItemWrapper.getTask().getId()) {
@@ -265,8 +250,8 @@ class PredecessorWindow extends Window {
                     predecessor.setPredestype(getPreDesType());
                     predecessor.setSourceid(ganttItemWrapper.getTask().getId());
                     predecessor.setDescid(item.getTask().getId());
-                    predecessor.setStartDate(item.getStartDate());
-                    predecessor.setEndDate(item.getEndDate());
+                    predecessor.setStartDate(item.getStartDate().toDate());
+                    predecessor.setEndDate(item.getEndDate().toDate());
                     predecessor.setDueDate(item.getDueDate());
                     return predecessor;
                 }
@@ -291,7 +276,7 @@ class PredecessorWindow extends Window {
             TaskComboBox() {
                 this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
                 this.setFilteringMode(FilteringMode.CONTAINS);
-                BeanItemContainer<GanttItemWrapper> beanItemContainer = taskTreeTable.getRawContainerDataSource();
+                BeanItemContainer<GanttItemWrapper> beanItemContainer = taskTreeTable.getRawContainer();
                 List<GanttItemWrapper> itemIds = beanItemContainer.getItemIds();
                 for (GanttItemWrapper item : itemIds) {
                     this.addItem(item);

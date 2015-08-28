@@ -18,6 +18,7 @@ package com.esofthead.mycollab.core.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -197,4 +198,23 @@ public class DateTimeUtils {
         return newDate1.compareTo(newDate2);
     }
 
+    public static LocalDate min(LocalDate... values) {
+        LocalDate minVal = values[0];
+        for (int i = 1; i < values.length; i++) {
+            if (minVal.isAfter(values[i])) {
+                minVal = values[i];
+            }
+        }
+        return minVal;
+    }
+
+    public static LocalDate max(LocalDate... values) {
+        LocalDate max = values[0];
+        for (int i = 1; i < values.length; i++) {
+            if (max.isBefore(values[i])) {
+                max = values[i];
+            }
+        }
+        return max;
+    }
 }

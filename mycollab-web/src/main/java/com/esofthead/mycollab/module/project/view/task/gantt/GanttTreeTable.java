@@ -17,7 +17,11 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -35,10 +39,10 @@ import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.joda.time.LocalDate;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
 import java.util.*;
@@ -50,7 +54,7 @@ import java.util.*;
 public class GanttTreeTable extends TreeTable {
     private ProjectTaskService projectTaskService;
     private GanttExt gantt;
-    private BeanItemContainer<GanttItemWrapper> beanContainer;
+    private GanttItemContainer beanContainer;
 
     private boolean ganttIndexIsChanged = false;
     private String sortField = "createdTime";
@@ -71,7 +75,7 @@ public class GanttTreeTable extends TreeTable {
         this.gantt = gantt;
         this.setWidth("800px");
         gantt.setVerticalScrollDelegateTarget(this);
-        beanContainer = new BeanItemContainer<>(GanttItemWrapper.class);
+        beanContainer = new GanttItemContainer();
         this.setContainerDataSource(beanContainer);
         this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "predecessors",
                 "actualStartDate", "actualEndDate", "percentageComplete");
@@ -95,6 +99,7 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnHeader("percentageComplete", "% Complete");
         this.setColumnWidth("percentageComplete", 80);
         this.setColumnCollapsingAllowed(true);
+//        this.setColumnCollapsed("predecessors", true);
         this.setColumnCollapsed("actualStartDate", true);
         this.setColumnCollapsed("actualEndDate", true);
         this.setSelectable(true);
@@ -149,7 +154,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(AppContext.formatDate(item.getStartDate()));
+                return new Label(AppContext.formatDate(item.getStartDate().toDate()));
             }
         });
 
@@ -157,7 +162,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(AppContext.formatDate(item.getEndDate()));
+                return new Label(AppContext.formatDate(item.getEndDate().toDate()));
             }
         });
 
@@ -269,11 +274,10 @@ public class GanttTreeTable extends TreeTable {
             }
         };
 
-
         contextMenu.addContextMenuTableListener(tableListener);
     }
 
-    BeanItemContainer<GanttItemWrapper> getRawContainerDataSource() {
+    GanttItemContainer getRawContainer() {
         return beanContainer;
     }
 
@@ -353,6 +357,79 @@ public class GanttTreeTable extends TreeTable {
         }
     }
 
+    public boolean adjustTaskDatesByPredecessors(GanttItemWrapper item, List<TaskPredecessor> predecessors) {
+        LocalDate currentStartDate = new LocalDate(item.getStartDate());
+        LocalDate currentEndDate = new LocalDate(item.getEndDate());
+        LocalDate boundStartDate = new LocalDate(1970, 1, 1);
+        LocalDate boundEndDate = new LocalDate(2100, 1, 1);
+
+        for (TaskPredecessor predecessor : predecessors) {
+            int ganttIndex = predecessor.getGanttIndex();
+            GanttItemWrapper ganttPredecessor = beanContainer.getItemByGanttIndex(ganttIndex);
+
+            if (ganttPredecessor != null) {
+                Integer lagDay = predecessor.getLagday() + 1;
+                int dur = 0;
+
+                if (TaskPredecessor.FS.equals(predecessor.getPredestype())) {
+                    LocalDate endDate = new LocalDate(ganttPredecessor.getEndDate());
+                    LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(endDate, lagDay);
+                    if (boundStartDate.isBefore(expectedStartDate)) {
+                        boundStartDate = expectedStartDate;
+                    }
+                    if (currentStartDate.isBefore(expectedStartDate)) {
+                        currentStartDate = expectedStartDate;
+                        LocalDate expectedEndDate = currentStartDate.plusDays(dur);
+                        currentEndDate = DateTimeUtils.min(boundEndDate, expectedEndDate);
+                    }
+                } else if (TaskPredecessor.FF.equals(predecessor.getPredestype())) {
+                    LocalDate endDate = new LocalDate(ganttPredecessor.getEndDate());
+                    LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(endDate, lagDay);
+                    if (boundEndDate.isAfter(expectedEndDate)) {
+                        boundEndDate = expectedEndDate;
+                    }
+                    if (currentEndDate.isAfter(expectedEndDate)) {
+                        currentEndDate = expectedEndDate;
+                        LocalDate expectedStartDate = currentEndDate.minusDays(dur);
+                        currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
+                    }
+                } else if (TaskPredecessor.SF.equals(predecessor.getPredestype())) {
+                    LocalDate startDate = new LocalDate(predecessor.getStartDate());
+                    LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+                    if (boundEndDate.isAfter(expectedEndDate)) {
+                        boundEndDate = expectedEndDate;
+                    }
+                    if (currentEndDate.isAfter(expectedEndDate)) {
+                        currentEndDate = expectedEndDate;
+                        LocalDate expectedStartDate = currentEndDate.minusDays(dur);
+                        currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
+                    }
+                } else if (TaskPredecessor.SS.equals(predecessor.getPredestype())) {
+                    LocalDate startDate = new LocalDate(predecessor.getStartDate());
+                    LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+
+                    if (boundStartDate.isBefore(expectedStartDate)) {
+                        boundStartDate = expectedStartDate;
+                    }
+
+                    if (currentStartDate.isAfter(expectedStartDate)) {
+                        currentStartDate = expectedStartDate;
+                        LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+                    }
+                } else {
+                    throw new MyCollabException("Do not support predecessor type " + predecessor.getPredestype());
+                }
+
+                if (currentEndDate.isBefore(currentStartDate)) {
+                    throw new UserInvalidInputException("Invalid constraint");
+                }
+                item.setStartDate(currentStartDate);
+                item.setEndDate(currentEndDate);
+            }
+        }
+        return false;
+    }
+
     private class GanttContextMenu extends ContextMenu {
         private GanttItemWrapper taskWrapper;
 
@@ -370,21 +447,21 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
 
-            ContextMenuItem insertRowMenuItem = this.addItem("Insert Row", FontAwesome.PLUS_SQUARE_O);
-            insertRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
-                @Override
-                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
-
-                }
-            });
-
-            ContextMenuItem deleteRowMenuItem = this.addItem("Delete Row", FontAwesome.TRASH_O);
-            deleteRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
-                @Override
-                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
-
-                }
-            });
+//            ContextMenuItem insertRowMenuItem = this.addItem("Insert Row", FontAwesome.PLUS_SQUARE_O);
+//            insertRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+//                @Override
+//                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
+//
+//                }
+//            });
+//
+//            ContextMenuItem deleteRowMenuItem = this.addItem("Delete Row", FontAwesome.TRASH_O);
+//            deleteRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+//                @Override
+//                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
+//
+//                }
+//            });
 
             ContextMenuItem predecessorMenuItem = this.addItem("Predecessors", FontAwesome.MAP_MARKER);
             predecessorMenuItem.addItemClickListener(new ContextMenuItemClickListener() {

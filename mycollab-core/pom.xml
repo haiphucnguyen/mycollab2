@@ -111,5 +111,25 @@
             <version>${junitVersion}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-joda-time</artifactId>
+            <version>1.1.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--Business days calculation library-->
+        <dependency>
+            <groupId>net.objectlab.kit</groupId>
+            <artifactId>datecalc-common</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.objectlab.kit</groupId>
+            <artifactId>datecalc-joda</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
 </project>

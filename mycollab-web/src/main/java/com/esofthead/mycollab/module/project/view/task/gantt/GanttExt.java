@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.vaadin.server.Page;
+import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.StepComponent;
 import org.tltv.gantt.SubStepComponent;
@@ -24,19 +25,16 @@ import org.tltv.gantt.client.shared.AbstractStep;
 import org.tltv.gantt.client.shared.Step;
 import org.tltv.gantt.client.shared.SubStep;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 /**
  * @author MyCollab Ltd
  * @since 5.0.8
  */
 public class GanttExt extends Gantt {
-    private GregorianCalendar minDate, maxDate;
+    private LocalDate minDate, maxDate;
 
     public GanttExt() {
-        minDate = new GregorianCalendar();
-        maxDate = new GregorianCalendar();
+        minDate = new LocalDate();
+        maxDate = new LocalDate();
         this.setResizableSteps(true);
         this.setMovableSteps(true);
         this.setHeight((Page.getCurrent().getBrowserWindowHeight() - 270) + "px");
@@ -62,27 +60,21 @@ public class GanttExt extends Gantt {
     }
 
     private void updateGanttMinDate() {
-        Calendar cloneVal = new GregorianCalendar();
-        cloneVal.setTimeInMillis(minDate.getTimeInMillis());
-        cloneVal.add(Calendar.DATE, -14);
-        this.setStartDate(cloneVal.getTime());
+        this.setStartDate(minDate.minusDays(14).toDate());
     }
 
     private void updateGanttMaxDate() {
-        Calendar cloneVal = new GregorianCalendar();
-        cloneVal.setTimeInMillis(maxDate.getTimeInMillis());
-        cloneVal.add(Calendar.DATE, 14);
-        this.setEndDate(cloneVal.getTime());
+        this.setEndDate(maxDate.plusDays(14).toDate());
     }
 
     public void calculateMaxMinDates(GanttItemWrapper task) {
-        if (minDate.getTimeInMillis() > task.getStartDate().getTime()) {
-            minDate.setTimeInMillis(task.getStartDate().getTime());
+        if (minDate.isAfter(task.getStartDate())) {
+            minDate = task.getStartDate();
             updateGanttMinDate();
         }
 
-        if (maxDate.getTimeInMillis() < task.getEndDate().getTime()) {
-            maxDate.setTimeInMillis(task.getEndDate().getTime());
+        if (maxDate.isBefore(task.getEndDate())) {
+            maxDate = task.getEndDate();
             updateGanttMaxDate();
         }
     }

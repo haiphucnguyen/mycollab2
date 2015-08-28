@@ -17,13 +17,16 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
 
 import java.util.ArrayList;
@@ -37,7 +40,7 @@ import java.util.List;
 public class GanttItemWrapper {
     private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private SimpleTask task;
-    private Date startDate, endDate;
+    private LocalDate startDate, endDate;
     private GanttItemWrapper parent;
     private Step ownStep;
     private List<GanttItemWrapper> subItems;
@@ -83,39 +86,15 @@ public class GanttItemWrapper {
     }
 
     private void calculateDates() {
-        startDate = task.getStartdate();
-        endDate = task.getEnddate();
-
-        if (endDate == null) {
-            endDate = task.getDeadline();
-        }
-
-        if (startDate == null) {
-            if (endDate == null) {
-                startDate = DateTimeUtils.getCurrentDateWithoutMS();
-                endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
-            } else {
-                endDate = DateTimeUtils.trimHMSOfDate(endDate);
-                startDate = DateTimeUtils.subtractOrAddDayDuration(endDate, -1);
-            }
-        } else {
-            startDate = DateTimeUtils.trimHMSOfDate(startDate);
-            if (endDate == null) {
-                endDate = DateTimeUtils.subtractOrAddDayDuration(startDate, 1);
-            } else {
-                endDate = DateTimeUtils.trimHMSOfDate(endDate);
-                endDate = DateTimeUtils.subtractOrAddDayDuration(endDate, 1);
-            }
-        }
+        startDate = (task.getStartdate() != null) ? new LocalDate(task.getStartdate()) : new LocalDate();
+        endDate = (task.getEnddate() != null) ? new LocalDate(task.getEnddate()) : new LocalDate();
     }
 
-    private static final long DAY_IN_MILIS = 1000*60*60*24;
-
     public Double getDuration() {
-        if (startDate != null && endDate!= null) {
-            return (endDate.getTime() - startDate.getTime())* 1d /DAY_IN_MILIS;
+        if (task.getDuration() != null) {
+            return task.getDuration();
         } else {
-            return 0d;
+            return (BusinessDayTimeUtils.duration(startDate, endDate) + 1) * 1d;
         }
     }
 
@@ -123,11 +102,11 @@ public class GanttItemWrapper {
         return task.getPredecessors();
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -147,14 +126,14 @@ public class GanttItemWrapper {
         return task.getPercentagecomplete();
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-        task.setStartdate(startDate);
+        task.setStartdate(startDate.toDate());
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-        task.setEnddate(endDate);
+        task.setEnddate(endDate.toDate());
     }
 
     public Integer getGanttIndex() {
@@ -182,8 +161,8 @@ public class GanttItemWrapper {
         calculateDates();
         ownStep.setCaption(buildCaption());
         ownStep.setDescription(buildTooltip());
-        ownStep.setStartDate(startDate);
-        ownStep.setEndDate(endDate);
+        ownStep.setStartDate(startDate.toDate());
+        ownStep.setEndDate(endDate.plusDays(1).toDate());
     }
 
     StepExt generateStep() {
@@ -191,8 +170,8 @@ public class GanttItemWrapper {
         step.setCaption(buildCaption());
         step.setCaptionMode(Step.CaptionMode.HTML);
         step.setDescription(buildTooltip());
-        step.setStartDate(startDate);
-        step.setEndDate(endDate);
+        step.setStartDate(startDate.toDate());
+        step.setEndDate(endDate.plusDays(1).toDate());
         step.setGanttItemWrapper(this);
         step.setProgress(task.getPercentagecomplete());
         return step;

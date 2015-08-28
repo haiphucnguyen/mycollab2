@@ -43,6 +43,8 @@ import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
 import org.tltv.gantt.Gantt.ResizeEvent;
@@ -50,7 +52,6 @@ import org.tltv.gantt.client.shared.Resolution;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -149,12 +150,9 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private void updateTasksInfo(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
         SimpleTask task = ganttItemWrapper.getTask();
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTimeInMillis(startDate);
-        ganttItemWrapper.setStartDate(calendar.getTime());
+        ganttItemWrapper.setStartDate(new LocalDate(startDate));
 
-        calendar.setTimeInMillis(endDate);
-        ganttItemWrapper.setEndDate(calendar.getTime());
+        ganttItemWrapper.setEndDate(new LocalDate(endDate));
         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
         EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttChartViewImpl.this, ganttItemWrapper));
         ganttItemWrapper.markAsDirty();
