@@ -27,39 +27,21 @@ public class BillingServiceImpl implements BillingService {
     @Autowired
     private BillingAccountMapper billingAccountMapper;
 
-    @Autowired
-    private BillingAccountMapperExt billingAccountMapperExt;
-
-    @Autowired
-    private UserAccountMapper userAccountMapper;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private RoleService roleService;
-
     @Override
     @Transactional
-    public void registerAccount(final String subdomain,
-                                final int billingPlanId, final String username,
-                                final String password, final String email, final String timezoneId,
-                                boolean isEmailVerified) {
-
-        throw new UnsupportedFeatureException(
-                "This feature is not supported except onsite mode");
+    public void registerAccount(final String subdomain, final int billingPlanId, final String username,
+                                final String password, final String email, final String timezoneId, boolean isEmailVerified) {
+        throw new UnsupportedFeatureException("This feature is not supported except onsite mode");
     }
 
     @Override
     public List<String> getSubDomainsOfUser(final String username) {
-        throw new UnsupportedFeatureException(
-                "This feature is not supported except onsite mode");
+        throw new UnsupportedFeatureException("This feature is not supported except onsite mode");
     }
 
     @Override
     public List<BillingPlan> getAvailablePlans() {
-        throw new UnsupportedFeatureException(
-                "This feature is not supported except onsite mode");
+        throw new UnsupportedFeatureException("This feature is not supported except onsite mode");
     }
 
     @Override
@@ -69,10 +51,8 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
-    public void cancelAccount(Integer accountid,
-                              CustomerFeedbackWithBLOBs feedback) {
-        throw new UnsupportedFeatureException(
-                "This feature is not supported except onsite mode");
+    public void cancelAccount(Integer accountid, CustomerFeedbackWithBLOBs feedback) {
+        throw new UnsupportedFeatureException("This feature is not supported except onsite mode");
     }
 
     @Override
@@ -89,8 +69,7 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public BillingPlan findBillingPlan(@CacheKey Integer sAccountId) {
-        BillingAccount billingAccount = billingAccountMapper
-                .selectByPrimaryKey(sAccountId);
+        BillingAccount billingAccount = billingAccountMapper.selectByPrimaryKey(sAccountId);
         if (billingAccount != null) {
             Integer billingplanid = billingAccount.getBillingplanid();
             return billingPlanMapper.selectByPrimaryKey(billingplanid);

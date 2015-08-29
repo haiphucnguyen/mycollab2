@@ -24,7 +24,7 @@ public class UserController {
     @Autowired
     private BillingService billingService;
 
-    @RequestMapping(value = "/subdomains/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "/subdomains/{username:.+}", method = RequestMethod.GET)
     public String[] getSubdomainsOfUser(@PathVariable("username") String username) {
         List<String> subdomains = billingService.getSubDomainsOfUser(username);
         String[] result;
