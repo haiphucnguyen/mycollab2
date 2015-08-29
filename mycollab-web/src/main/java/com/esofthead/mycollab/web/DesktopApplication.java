@@ -38,6 +38,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -61,6 +62,7 @@ import java.util.Collection;
  * @since 1.0
  */
 @Theme(MyCollabVersion.THEME_VERSION)
+@PreserveOnRefresh
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
 @Push(value = PushMode.MANUAL)
 public class DesktopApplication extends MyCollabUI {
