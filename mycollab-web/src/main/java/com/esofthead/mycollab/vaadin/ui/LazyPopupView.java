@@ -26,6 +26,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.1.3
  */
 public class LazyPopupView extends PopupView {
+
     public LazyPopupView(String valueAsHtml) {
         super(new PopupContent(valueAsHtml));
         addPopupVisibilityListener(new PopupVisibilityListener() {
