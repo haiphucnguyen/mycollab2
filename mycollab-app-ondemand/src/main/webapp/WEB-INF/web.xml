@@ -79,6 +79,7 @@
     <filter-mapping>
         <filter-name>cross-origin</filter-name>
         <url-pattern>/VAADIN/themes/base/fonts/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </filter-mapping>
 
     <!-- VAADIN PARAMS -->
@@ -109,7 +110,8 @@
     </error-page>
 
     <error-page>
-        <exception-type>javax.servlet.ServletException, com.esofthead.mycollab.core.ResourceNotFoundException</exception-type>
+        <exception-type>javax.servlet.ServletException, com.esofthead.mycollab.core.ResourceNotFoundException
+        </exception-type>
         <location>/error</location>
     </error-page>
 
