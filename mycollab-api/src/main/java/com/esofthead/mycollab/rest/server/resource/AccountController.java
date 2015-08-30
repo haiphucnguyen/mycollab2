@@ -22,7 +22,8 @@ public class AccountController {
     @Autowired
     private BillingService billingService;
 
-    @RequestMapping(method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
+    @RequestMapping(value = "signup", method = RequestMethod.POST, headers =
+            "Content-Type=application/x-www-form-urlencoded")
     public String signup(@RequestParam("subdomain") String subdomain, @RequestParam("planId") Integer planId,
                          @RequestParam("password") String password, @RequestParam("email") String email,
                          @RequestParam("timezoneId") String timezoneId, @RequestParam("isEmailVerified") Boolean isEmailVerified) {
