@@ -123,7 +123,7 @@ public class AppExceptionHandler extends GenericHttpServlet {
         Enumeration<String> params = request.getParameterNames();
         while (params.hasMoreElements()) {
             String param = params.nextElement();
-            builder.append("\n    param: " + request.getParameter(param));
+            builder.append("\n    param: " + param + "----" + request.getParameter(param));
         }
         return builder.toString();
     }
