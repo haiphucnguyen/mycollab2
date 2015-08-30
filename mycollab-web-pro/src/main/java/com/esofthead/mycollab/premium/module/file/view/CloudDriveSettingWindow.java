@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -50,7 +51,7 @@ public class CloudDriveSettingWindow extends Window {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
+                OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
                 Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
                 UI.getCurrent().addWindow(dropboxWindow);
             }

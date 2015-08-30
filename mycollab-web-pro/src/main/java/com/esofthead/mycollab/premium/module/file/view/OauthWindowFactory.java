@@ -1,11 +1,12 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 import com.vaadin.ui.Window;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public interface OauthWindowFactory {
+public interface OauthWindowFactory extends CacheableComponent {
     Window newDropBoxAuthWindow();
 }

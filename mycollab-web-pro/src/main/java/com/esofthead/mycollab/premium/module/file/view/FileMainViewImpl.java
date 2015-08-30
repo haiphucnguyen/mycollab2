@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.Separator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -118,7 +119,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             @Override
             public void buttonClick(ClickEvent event) {
                 linkBtn.setPopupVisible(false);
-                OauthWindowFactory oauthWindowFactory = ApplicationContextUtil.getSpringBean(OauthWindowFactory.class);
+                OauthWindowFactory oauthWindowFactory = ViewManager.getCacheComponent(OauthWindowFactory.class);
                 Window dropboxWindow = oauthWindowFactory.newDropBoxAuthWindow();
                 UI.getCurrent().addWindow(dropboxWindow);
             }

@@ -1,14 +1,14 @@
 package com.esofthead.mycollab.ondemand.module.file.view;
 
 import com.esofthead.mycollab.premium.module.file.view.OauthWindowFactory;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Window;
-import org.springframework.stereotype.Component;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-@Component
+@ViewComponent
 public class OauthWindowFactoryImpl implements OauthWindowFactory {
     @Override
     public Window newDropBoxAuthWindow() {

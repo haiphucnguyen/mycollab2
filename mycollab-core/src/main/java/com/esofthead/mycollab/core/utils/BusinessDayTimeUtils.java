@@ -45,40 +45,45 @@ public class BusinessDayTimeUtils {
     private static final long DAY_IN_MILIS = 1000 * 60 * 60 * 24;
 
     public static int duration(LocalDate start, LocalDate end) {
-        DateCalculator<LocalDate> calc1 = LocalDateKitCalculatorsFactory.forwardCalculator("MyCollab");
-        calc1.setStartDate(start);
-        start = calc1.getCurrentBusinessDate();
-        calc1.setStartDate(end);
-        end = calc1.getCurrentBusinessDate();
-        long possibleDurations = (end.toDate().getTime() - start.toDate().getTime()) / DAY_IN_MILIS;
-        int varDays = Math.round((possibleDurations + 1) / 2);
         int candidateDuration = 0;
-        calc1.setStartDate(start);
-        LocalDate testDate;
-        while (true) {
-            LocalDate previousBizDate = calc1.getCurrentBusinessDate();
-            calc1.moveByBusinessDays(varDays);
-            testDate = calc1.getCurrentBusinessDate();
-            if (testDate.isAfter(end)) {
-                varDays = Math.round((varDays + 1) / 2);
-                calc1.setCurrentBusinessDate(previousBizDate);
-            } else if (testDate.isBefore(end)) {
-                candidateDuration += varDays;
-                varDays = Math.round(varDays / 2);
-                calc1.setStartDate(testDate);
-            } else {
-                return candidateDuration + varDays;
-            }
-
-            if (varDays == 0) {
-                calc1.setStartDate(testDate);
-                calc1.moveByBusinessDays(1);
+        try {
+            DateCalculator<LocalDate> calc1 = LocalDateKitCalculatorsFactory.forwardCalculator("MyCollab");
+            calc1.setStartDate(start);
+            start = calc1.getCurrentBusinessDate();
+            calc1.setStartDate(end);
+            end = calc1.getCurrentBusinessDate();
+            long possibleDurations = (end.toDate().getTime() - start.toDate().getTime()) / DAY_IN_MILIS;
+            int varDays = Math.round((possibleDurations + 1) / 2);
+            calc1.setStartDate(start);
+            LocalDate testDate;
+            while (true) {
+                LocalDate previousBizDate = calc1.getCurrentBusinessDate();
+                calc1.moveByBusinessDays(varDays);
                 testDate = calc1.getCurrentBusinessDate();
-                if (!testDate.isEqual(end)) {
-                    LOG.error("Error while calculate duration of " + start + "--" + end);
+                if (testDate.isAfter(end)) {
+                    varDays = Math.round((varDays + 1) / 2);
+                    calc1.setCurrentBusinessDate(previousBizDate);
+                } else if (testDate.isBefore(end)) {
+                    candidateDuration += varDays;
+                    varDays = Math.round(varDays / 2);
+                    calc1.setStartDate(testDate);
+                } else {
+                    return candidateDuration + varDays;
                 }
-                return candidateDuration + 1;
+
+                if (varDays == 0) {
+                    calc1.setStartDate(testDate);
+                    calc1.moveByBusinessDays(1);
+                    testDate = calc1.getCurrentBusinessDate();
+                    if (!testDate.isEqual(end)) {
+                        LOG.error("Error while calculate duration of " + start + "--" + end);
+                    }
+                    return candidateDuration + 1;
+                }
             }
+        } catch (Exception e) {
+            LOG.error("Error while calculate duration of " + start + "--" + end);
+            return candidateDuration;
         }
     }
 }
