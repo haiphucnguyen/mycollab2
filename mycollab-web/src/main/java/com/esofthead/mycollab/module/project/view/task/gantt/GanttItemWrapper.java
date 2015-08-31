@@ -129,11 +129,13 @@ public class GanttItemWrapper {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
         task.setStartdate(startDate.toDate());
+        ownStep.setStartDate(startDate.toDate());
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
         task.setEnddate(endDate.toDate());
+        ownStep.setEndDate(endDate.toDate());
     }
 
     public Integer getGanttIndex() {

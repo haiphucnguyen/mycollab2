@@ -62,7 +62,6 @@ import java.util.Collection;
  * @since 1.0
  */
 @Theme(MyCollabVersion.THEME_VERSION)
-@PreserveOnRefresh
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
 @Push(value = PushMode.MANUAL)
 public class DesktopApplication extends MyCollabUI {
@@ -120,13 +119,6 @@ public class DesktopApplication extends MyCollabUI {
             NotificationUtil.showWarningNotification("Your browser is out of date. Some features of MyCollab will not" +
                     " behave correctly. You should upgrade to the newer browser.");
         }
-
-        addPollListener(new UIEvents.PollListener() {
-            @Override
-            public void poll(UIEvents.PollEvent event) {
-                LOG.info("Poll event: " + event.getSource());
-            }
-        });
     }
 
     private boolean isInNotSupportedBrowserList(String userAgent) {

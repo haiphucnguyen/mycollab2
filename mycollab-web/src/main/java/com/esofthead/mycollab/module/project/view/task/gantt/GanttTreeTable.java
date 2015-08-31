@@ -99,7 +99,6 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnHeader("percentageComplete", "% Complete");
         this.setColumnWidth("percentageComplete", 80);
         this.setColumnCollapsingAllowed(true);
-//        this.setColumnCollapsed("predecessors", true);
         this.setColumnCollapsed("actualStartDate", true);
         this.setColumnCollapsed("actualEndDate", true);
         this.setSelectable(true);
@@ -318,6 +317,9 @@ public class GanttTreeTable extends TreeTable {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
         int count = 0;
         if (stepIndex != -1) {
+            LocalDate startDate = parent.getStartDate();
+            LocalDate endDate = parent.getEndDate();
+
             for (GanttItemWrapper child : childs) {
                 this.addItem(child);
                 if (child.getGanttIndex() == null) {
@@ -329,7 +331,12 @@ public class GanttTreeTable extends TreeTable {
                 this.setChildrenAllowed(child, child.hasSubTasks());
                 gantt.addTask(stepIndex + count + 1, child);
                 count++;
+                startDate = DateTimeUtils.min(startDate, child.getStartDate());
+                endDate = DateTimeUtils.max(endDate, child.getEndDate());
             }
+            parent.setStartDate(startDate);
+            parent.setEndDate(endDate);
+            gantt.markStepDirty(parent.getStep());
         }
     }
 
@@ -415,6 +422,7 @@ public class GanttTreeTable extends TreeTable {
                     if (currentStartDate.isAfter(expectedStartDate)) {
                         currentStartDate = expectedStartDate;
                         LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+                        currentEndDate = DateTimeUtils.min(boundEndDate, expectedEndDate);
                     }
                 } else {
                     throw new MyCollabException("Do not support predecessor type " + predecessor.getPredestype());
@@ -423,11 +431,25 @@ public class GanttTreeTable extends TreeTable {
                 if (currentEndDate.isBefore(currentStartDate)) {
                     throw new UserInvalidInputException("Invalid constraint");
                 }
-                item.setStartDate(currentStartDate);
-                item.setEndDate(currentEndDate);
             }
         }
+        item.setStartDate(currentStartDate);
+        item.setEndDate(currentEndDate);
+
+        projectTaskService.updateWithSession(item.getTask(), AppContext.getUsername());
+
+        updateParentDates(item);
         return false;
+    }
+
+    private void updateParentDates(GanttItemWrapper itemWrapper) {
+        GanttItemWrapper parentTask = itemWrapper.getParent();
+        if (parentTask != null) {
+            parentTask.setStartDate(DateTimeUtils.min(parentTask.getStartDate(), itemWrapper.getStartDate()));
+            parentTask.setEndDate(DateTimeUtils.max(parentTask.getEndDate(), itemWrapper.getEndDate()));
+            projectTaskService.updateWithSession(parentTask.getTask(), AppContext.getUsername());
+            updateParentDates(parentTask);
+        }
     }
 
     private class GanttContextMenu extends ContextMenu {
@@ -446,22 +468,6 @@ public class GanttTreeTable extends TreeTable {
                             taskWrapper.getTask().getId()));
                 }
             });
-
-//            ContextMenuItem insertRowMenuItem = this.addItem("Insert Row", FontAwesome.PLUS_SQUARE_O);
-//            insertRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
-//                @Override
-//                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
-//
-//                }
-//            });
-//
-//            ContextMenuItem deleteRowMenuItem = this.addItem("Delete Row", FontAwesome.TRASH_O);
-//            deleteRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
-//                @Override
-//                public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
-//
-//                }
-//            });
 
             ContextMenuItem predecessorMenuItem = this.addItem("Predecessors", FontAwesome.MAP_MARKER);
             predecessorMenuItem.addItemClickListener(new ContextMenuItemClickListener() {

@@ -118,7 +118,7 @@ public class AppExceptionHandler extends GenericHttpServlet {
 
     private String printRequest(HttpServletRequest request) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Request: " + ((Request) request).getUri());
+        builder.append("Request: " + ((Request) request).getUri() + "--- Agent: " + request.getHeader("User-Agent"));
         builder.append("\n Parameters: ");
         Enumeration<String> params = request.getParameterNames();
         while (params.hasMoreElements()) {

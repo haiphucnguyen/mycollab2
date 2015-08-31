@@ -104,7 +104,6 @@ class PredecessorWindow extends Window {
                 if (datesChanges) {
                     projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
                 }
-                projectTaskService.updateWithSession(ganttItemWrapper.getTask(), AppContext.getUsername());
                 ganttItemWrapper.getTask().setPredecessors(predecessors);
                 taskTreeTable.refreshRowCache();
                 PredecessorWindow.this.close();
