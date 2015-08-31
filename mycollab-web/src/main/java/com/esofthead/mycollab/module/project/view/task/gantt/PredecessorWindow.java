@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -99,7 +98,7 @@ class PredecessorWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
-                boolean datesChanges = taskTreeTable.adjustTaskDatesByPredecessors(ganttItemWrapper, predecessors);
+                boolean datesChanges = ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
                 ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                 if (datesChanges) {
                     projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());

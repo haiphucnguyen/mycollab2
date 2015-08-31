@@ -75,7 +75,7 @@ public class GanttTreeTable extends TreeTable {
         this.gantt = gantt;
         this.setWidth("800px");
         gantt.setVerticalScrollDelegateTarget(this);
-        beanContainer = new GanttItemContainer();
+        beanContainer = gantt.getBeanContainer();
         this.setContainerDataSource(beanContainer);
         this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "predecessors",
                 "actualStartDate", "actualEndDate", "percentageComplete");
@@ -361,94 +361,6 @@ public class GanttTreeTable extends TreeTable {
                 mapIndexes.add(value);
             }
             projectTaskService.massUpdateGanttIndexes(mapIndexes, AppContext.getAccountId());
-        }
-    }
-
-    public boolean adjustTaskDatesByPredecessors(GanttItemWrapper item, List<TaskPredecessor> predecessors) {
-        LocalDate currentStartDate = new LocalDate(item.getStartDate());
-        LocalDate currentEndDate = new LocalDate(item.getEndDate());
-        LocalDate boundStartDate = new LocalDate(1970, 1, 1);
-        LocalDate boundEndDate = new LocalDate(2100, 1, 1);
-
-        for (TaskPredecessor predecessor : predecessors) {
-            int ganttIndex = predecessor.getGanttIndex();
-            GanttItemWrapper ganttPredecessor = beanContainer.getItemByGanttIndex(ganttIndex);
-
-            if (ganttPredecessor != null) {
-                Integer lagDay = predecessor.getLagday() + 1;
-                int dur = 0;
-
-                if (TaskPredecessor.FS.equals(predecessor.getPredestype())) {
-                    LocalDate endDate = new LocalDate(ganttPredecessor.getEndDate());
-                    LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(endDate, lagDay);
-                    if (boundStartDate.isBefore(expectedStartDate)) {
-                        boundStartDate = expectedStartDate;
-                    }
-                    if (currentStartDate.isBefore(expectedStartDate)) {
-                        currentStartDate = expectedStartDate;
-                        LocalDate expectedEndDate = currentStartDate.plusDays(dur);
-                        currentEndDate = DateTimeUtils.min(boundEndDate, expectedEndDate);
-                    }
-                } else if (TaskPredecessor.FF.equals(predecessor.getPredestype())) {
-                    LocalDate endDate = new LocalDate(ganttPredecessor.getEndDate());
-                    LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(endDate, lagDay);
-                    if (boundEndDate.isAfter(expectedEndDate)) {
-                        boundEndDate = expectedEndDate;
-                    }
-                    if (currentEndDate.isAfter(expectedEndDate)) {
-                        currentEndDate = expectedEndDate;
-                        LocalDate expectedStartDate = currentEndDate.minusDays(dur);
-                        currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
-                    }
-                } else if (TaskPredecessor.SF.equals(predecessor.getPredestype())) {
-                    LocalDate startDate = new LocalDate(predecessor.getStartDate());
-                    LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
-                    if (boundEndDate.isAfter(expectedEndDate)) {
-                        boundEndDate = expectedEndDate;
-                    }
-                    if (currentEndDate.isAfter(expectedEndDate)) {
-                        currentEndDate = expectedEndDate;
-                        LocalDate expectedStartDate = currentEndDate.minusDays(dur);
-                        currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
-                    }
-                } else if (TaskPredecessor.SS.equals(predecessor.getPredestype())) {
-                    LocalDate startDate = new LocalDate(predecessor.getStartDate());
-                    LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
-
-                    if (boundStartDate.isBefore(expectedStartDate)) {
-                        boundStartDate = expectedStartDate;
-                    }
-
-                    if (currentStartDate.isAfter(expectedStartDate)) {
-                        currentStartDate = expectedStartDate;
-                        LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
-                        currentEndDate = DateTimeUtils.min(boundEndDate, expectedEndDate);
-                    }
-                } else {
-                    throw new MyCollabException("Do not support predecessor type " + predecessor.getPredestype());
-                }
-
-                if (currentEndDate.isBefore(currentStartDate)) {
-                    throw new UserInvalidInputException("Invalid constraint");
-                }
-            }
-        }
-        item.setStartDate(currentStartDate);
-        item.setEndDate(currentEndDate);
-
-        projectTaskService.updateWithSession(item.getTask(), AppContext.getUsername());
-
-        updateParentDates(item);
-        return false;
-    }
-
-    private void updateParentDates(GanttItemWrapper itemWrapper) {
-        GanttItemWrapper parentTask = itemWrapper.getParent();
-        if (parentTask != null) {
-            parentTask.setStartDate(DateTimeUtils.min(parentTask.getStartDate(), itemWrapper.getStartDate()));
-            parentTask.setEndDate(DateTimeUtils.max(parentTask.getEndDate(), itemWrapper.getEndDate()));
-            projectTaskService.updateWithSession(parentTask.getTask(), AppContext.getUsername());
-            updateParentDates(parentTask);
         }
     }
 

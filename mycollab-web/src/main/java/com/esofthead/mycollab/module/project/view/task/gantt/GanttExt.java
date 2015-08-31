@@ -16,6 +16,15 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
@@ -31,6 +40,8 @@ import org.tltv.gantt.client.shared.SubStep;
  */
 public class GanttExt extends Gantt {
     private LocalDate minDate, maxDate;
+    private GanttItemContainer beanContainer;
+    private ProjectTaskService taskService;
 
     public GanttExt() {
         minDate = new LocalDate();
@@ -40,6 +51,42 @@ public class GanttExt extends Gantt {
         this.setHeight((Page.getCurrent().getBrowserWindowHeight() - 270) + "px");
         updateGanttMinDate();
         updateGanttMaxDate();
+        beanContainer = new GanttItemContainer();
+
+        this.addClickListener(new Gantt.ClickListener() {
+            @Override
+            public void onGanttClick(Gantt.ClickEvent clickEvent) {
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    StepExt step = (StepExt) clickEvent.getStep();
+                    getUI().addWindow(new QuickEditTaskWindow(GanttExt.this, step.getGanttItemWrapper()));
+                }
+            }
+        });
+
+        this.addMoveListener(new Gantt.MoveListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onGanttMove(MoveEvent event) {
+                StepExt step = (StepExt) event.getStep();
+                updateTasksInfo(step, event.getStartDate(), event.getEndDate());
+            }
+        });
+
+        this.addResizeListener(new Gantt.ResizeListener() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onGanttResize(ResizeEvent event) {
+                updateTasksInfo((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
+            }
+        });
+
+        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+    }
+
+    public GanttItemContainer getBeanContainer() {
+        return beanContainer;
     }
 
     public int getStepIndex(Step step) {
@@ -80,6 +127,40 @@ public class GanttExt extends Gantt {
     }
 
     @Override
+    protected void fireMoveEvent(String stepUid, String newStepUid, long startDate, long endDate) {
+        AbstractStep step = getStep(stepUid);
+        if (step instanceof StepExt) {
+            StepExt stepExt = (StepExt) step;
+            GanttItemWrapper item = stepExt.getGanttItemWrapper();
+            if (item.hasSubTasks()) {
+                step.setStartDate(item.getStartDate().toDate());
+                step.setEndDate(item.getEndDate().plusDays(1).toDate());
+                this.markStepDirty(step);
+                NotificationUtil.showWarningNotification("Can not adjust dates of parent task");
+            } else {
+                super.fireMoveEvent(stepUid, newStepUid, startDate, endDate);
+            }
+        }
+    }
+
+    @Override
+    protected void fireResizeEvent(String stepUid, long startDate, long endDate) {
+        AbstractStep step = getStep(stepUid);
+        if (step instanceof StepExt) {
+            StepExt stepExt = (StepExt) step;
+            GanttItemWrapper item = stepExt.getGanttItemWrapper();
+            if (item.hasSubTasks()) {
+                step.setStartDate(item.getStartDate().toDate());
+                step.setEndDate(item.getEndDate().plusDays(1).toDate());
+                this.markStepDirty(step);
+                NotificationUtil.showWarningNotification("Can not adjust dates of parent task");
+            } else {
+                super.fireResizeEvent(stepUid, startDate, endDate);
+            }
+        }
+    }
+
+    @Override
     public AbstractStep getStep(String uid) {
         if (uid == null) {
             return null;
@@ -96,5 +177,17 @@ public class GanttExt extends Gantt {
                 return sub != null ? sub.getState().step : null;
             }
         }
+    }
+
+    private void updateTasksInfo(StepExt step, long startDate, long endDate) {
+        GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
+        SimpleTask task = ganttItemWrapper.getTask();
+        ganttItemWrapper.setStartDate(new LocalDate(startDate));
+        ganttItemWrapper.setEndDate(new LocalDate(endDate));
+        ganttItemWrapper.markAsDirty();
+        taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+        ganttItemWrapper.updateParentDates();
+        EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttExt.this, ganttItemWrapper));
+        this.calculateMaxMinDates(ganttItemWrapper);
     }
 }

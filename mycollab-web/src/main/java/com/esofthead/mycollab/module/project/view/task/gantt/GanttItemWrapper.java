@@ -16,16 +16,17 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
 
@@ -41,11 +42,14 @@ public class GanttItemWrapper {
     private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private SimpleTask task;
     private LocalDate startDate, endDate;
+
+    private GanttExt gantt;
     private GanttItemWrapper parent;
     private Step ownStep;
     private List<GanttItemWrapper> subItems;
 
-    public GanttItemWrapper(SimpleTask task) {
+    public GanttItemWrapper(GanttExt gantt, SimpleTask task) {
+        this.gantt = gantt;
         this.task = task;
         calculateDates();
         this.ownStep = generateStep();
@@ -68,11 +72,11 @@ public class GanttItemWrapper {
     }
 
     public List<GanttItemWrapper> subTasks(SearchCriteria.OrderField orderField) {
-        List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId(), orderField);
         if (subItems == null) {
+            List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId(), orderField);
             subItems = new ArrayList<>();
             for (SimpleTask subTask : subTasks) {
-                GanttItemWrapper subItem = new GanttItemWrapper(subTask);
+                GanttItemWrapper subItem = new GanttItemWrapper(gantt, subTask);
                 subItem.setParent(this);
                 subItems.add(subItem);
             }
@@ -135,7 +139,7 @@ public class GanttItemWrapper {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
         task.setEnddate(endDate.toDate());
-        ownStep.setEndDate(endDate.toDate());
+        ownStep.setEndDate(endDate.plusDays(1).toDate());
     }
 
     public Integer getGanttIndex() {
@@ -189,5 +193,95 @@ public class GanttItemWrapper {
 
     public Step getStep() {
         return ownStep;
+    }
+
+    public boolean adjustTaskDatesByPredecessors(List<TaskPredecessor> predecessors) {
+        LocalDate currentStartDate = new LocalDate(getStartDate());
+        LocalDate currentEndDate = new LocalDate(getEndDate());
+        LocalDate boundStartDate = new LocalDate(1970, 1, 1);
+        LocalDate boundEndDate = new LocalDate(2100, 1, 1);
+
+        for (TaskPredecessor predecessor : predecessors) {
+            int ganttIndex = predecessor.getGanttIndex();
+
+            GanttItemWrapper ganttPredecessor = gantt.getBeanContainer().getItemByGanttIndex(ganttIndex);
+
+            if (ganttPredecessor != null) {
+                Integer lagDay = predecessor.getLagday() + 1;
+                int dur = 0;
+
+                if (TaskPredecessor.FS.equals(predecessor.getPredestype())) {
+                    LocalDate endDate = new LocalDate(ganttPredecessor.getEndDate());
+                    LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(endDate, lagDay);
+                    if (boundStartDate.isBefore(expectedStartDate)) {
+                        boundStartDate = expectedStartDate;
+                    }
+                    if (currentStartDate.isBefore(expectedStartDate)) {
+                        currentStartDate = expectedStartDate;
+                        LocalDate expectedEndDate = currentStartDate.plusDays(dur);
+                        currentEndDate = DateTimeUtils.min(boundEndDate, expectedEndDate);
+                    }
+                } else if (TaskPredecessor.FF.equals(predecessor.getPredestype())) {
+                    LocalDate endDate = new LocalDate(ganttPredecessor.getEndDate());
+                    LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(endDate, lagDay);
+                    if (boundEndDate.isAfter(expectedEndDate)) {
+                        boundEndDate = expectedEndDate;
+                    }
+                    if (currentEndDate.isAfter(expectedEndDate)) {
+                        currentEndDate = expectedEndDate;
+                        LocalDate expectedStartDate = currentEndDate.minusDays(dur);
+                        currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
+                    }
+                } else if (TaskPredecessor.SF.equals(predecessor.getPredestype())) {
+                    LocalDate startDate = new LocalDate(predecessor.getStartDate());
+                    LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+                    if (boundEndDate.isAfter(expectedEndDate)) {
+                        boundEndDate = expectedEndDate;
+                    }
+                    if (currentEndDate.isAfter(expectedEndDate)) {
+                        currentEndDate = expectedEndDate;
+                        LocalDate expectedStartDate = currentEndDate.minusDays(dur);
+                        currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
+                    }
+                } else if (TaskPredecessor.SS.equals(predecessor.getPredestype())) {
+                    LocalDate startDate = new LocalDate(predecessor.getStartDate());
+                    LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+
+                    if (boundStartDate.isBefore(expectedStartDate)) {
+                        boundStartDate = expectedStartDate;
+                    }
+
+                    if (currentStartDate.isAfter(expectedStartDate)) {
+                        currentStartDate = expectedStartDate;
+                        LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
+                        currentEndDate = DateTimeUtils.min(boundEndDate, expectedEndDate);
+                    }
+                } else {
+                    throw new MyCollabException("Do not support predecessor type " + predecessor.getPredestype());
+                }
+
+                if (currentEndDate.isBefore(currentStartDate)) {
+                    throw new UserInvalidInputException("Invalid constraint");
+                }
+            }
+        }
+        setStartDate(currentStartDate);
+        setEndDate(currentEndDate);
+
+        projectTaskService.updateWithSession(getTask(), AppContext.getUsername());
+
+        updateParentDates();
+        return false;
+    }
+
+    public void updateParentDates() {
+        GanttItemWrapper parentTask = this.getParent();
+        if (parentTask != null) {
+            parentTask.setStartDate(DateTimeUtils.min(parentTask.getStartDate(), this.getStartDate()));
+            parentTask.setEndDate(DateTimeUtils.max(parentTask.getEndDate(), this.getEndDate()));
+            parentTask.markAsDirty();
+            projectTaskService.updateWithSession(parentTask.getTask(), AppContext.getUsername());
+            parentTask.updateParentDates();
+        }
     }
 }

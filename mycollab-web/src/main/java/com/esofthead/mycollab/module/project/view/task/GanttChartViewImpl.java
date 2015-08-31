@@ -43,7 +43,6 @@ import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.Gantt.MoveEvent;
@@ -147,18 +146,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         }
     }
 
-    private void updateTasksInfo(StepExt step, long startDate, long endDate) {
-        GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        SimpleTask task = ganttItemWrapper.getTask();
-        ganttItemWrapper.setStartDate(new LocalDate(startDate));
-
-        ganttItemWrapper.setEndDate(new LocalDate(endDate));
-        taskService.updateSelectiveWithSession(task, AppContext.getUsername());
-        EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttChartViewImpl.this, ganttItemWrapper));
-        ganttItemWrapper.markAsDirty();
-        gantt.calculateMaxMinDates(ganttItemWrapper);
-    }
-
     public void displayGanttChart() {
         toogleMenuShowBtn.setCaption("Show menu");
         setProjectNavigatorVisibility(false);
@@ -166,24 +153,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         gantt = new GanttExt();
         taskTable = new GanttTreeTable(gantt);
-
-        gantt.addMoveListener(new Gantt.MoveListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onGanttMove(MoveEvent event) {
-                updateTasksInfo((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
-            }
-        });
-
-        gantt.addResizeListener(new Gantt.ResizeListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onGanttResize(ResizeEvent event) {
-                updateTasksInfo((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
-            }
-        });
 
         mainLayout.with(taskTable, gantt).expand(gantt);
 
@@ -207,7 +176,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
                     if (!tasks.isEmpty()) {
                         for (final SimpleTask task : tasks) {
-                            final GanttItemWrapper itemWrapper = new GanttItemWrapper(task);
+                            final GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, task);
                             gantt.addTask(itemWrapper);
                             taskTable.addTask(itemWrapper);
                         }
@@ -217,16 +186,5 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 taskTable.updateWholeGanttIndexes();
             }
         });
-
-        gantt.addClickListener(new Gantt.ClickListener() {
-            @Override
-            public void onGanttClick(Gantt.ClickEvent clickEvent) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    StepExt step = (StepExt) clickEvent.getStep();
-                    getUI().addWindow(new QuickEditTaskWindow(gantt, step.getGanttItemWrapper()));
-                }
-            }
-        });
     }
-
 }
