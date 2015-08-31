@@ -45,14 +45,13 @@ public class GanttItemWrapper {
 
     private GanttExt gantt;
     private GanttItemWrapper parent;
-    private Step ownStep;
+    private StepExt ownStep;
     private List<GanttItemWrapper> subItems;
 
     public GanttItemWrapper(GanttExt gantt, SimpleTask task) {
         this.gantt = gantt;
-        this.task = task;
-        calculateDates();
-        this.ownStep = generateStep();
+        ownStep = new StepExt();
+        setTask(task);
     }
 
     public SimpleTask getTask() {
@@ -61,6 +60,15 @@ public class GanttItemWrapper {
 
     public void setTask(SimpleTask task) {
         this.task = task;
+        startDate = (task.getStartdate() != null) ? new LocalDate(task.getStartdate()) : new LocalDate();
+        endDate = (task.getEnddate() != null) ? new LocalDate(task.getEnddate()) : new LocalDate();
+        ownStep.setCaption(task.getTaskname());
+        ownStep.setCaptionMode(Step.CaptionMode.HTML);
+        ownStep.setDescription(buildTooltip());
+        ownStep.setStartDate(startDate.toDate());
+        ownStep.setEndDate(endDate.plusDays(1).toDate());
+        ownStep.setGanttItemWrapper(this);
+        ownStep.setProgress(task.getPercentagecomplete());
     }
 
     public boolean hasSubTasks() {
@@ -87,11 +95,6 @@ public class GanttItemWrapper {
 
     public Integer getId() {
         return task.getId();
-    }
-
-    private void calculateDates() {
-        startDate = (task.getStartdate() != null) ? new LocalDate(task.getStartdate()) : new LocalDate();
-        endDate = (task.getEnddate() != null) ? new LocalDate(task.getEnddate()) : new LocalDate();
     }
 
     public Double getDuration() {
@@ -154,33 +157,9 @@ public class GanttItemWrapper {
         return task.getAssignuser();
     }
 
-    String buildCaption() {
-        return task.getTaskname();
-    }
-
     String buildTooltip() {
         return ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, AppContext.getSiteUrl(),
                 AppContext.getTimezone());
-    }
-
-    public void markAsDirty() {
-        calculateDates();
-        ownStep.setCaption(buildCaption());
-        ownStep.setDescription(buildTooltip());
-        ownStep.setStartDate(startDate.toDate());
-        ownStep.setEndDate(endDate.plusDays(1).toDate());
-    }
-
-    StepExt generateStep() {
-        StepExt step = new StepExt();
-        step.setCaption(buildCaption());
-        step.setCaptionMode(Step.CaptionMode.HTML);
-        step.setDescription(buildTooltip());
-        step.setStartDate(startDate.toDate());
-        step.setEndDate(endDate.plusDays(1).toDate());
-        step.setGanttItemWrapper(this);
-        step.setProgress(task.getPercentagecomplete());
-        return step;
     }
 
     public GanttItemWrapper getParent() {
@@ -279,7 +258,6 @@ public class GanttItemWrapper {
         if (parentTask != null) {
             parentTask.setStartDate(DateTimeUtils.min(parentTask.getStartDate(), this.getStartDate()));
             parentTask.setEndDate(DateTimeUtils.max(parentTask.getEndDate(), this.getEndDate()));
-            parentTask.markAsDirty();
             projectTaskService.updateWithSession(parentTask.getTask(), AppContext.getUsername());
             parentTask.updateParentDates();
         }

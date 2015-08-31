@@ -184,7 +184,6 @@ public class GanttExt extends Gantt {
         SimpleTask task = ganttItemWrapper.getTask();
         ganttItemWrapper.setStartDate(new LocalDate(startDate));
         ganttItemWrapper.setEndDate(new LocalDate(endDate));
-        ganttItemWrapper.markAsDirty();
         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
         ganttItemWrapper.updateParentDates();
         EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttExt.this, ganttItemWrapper));

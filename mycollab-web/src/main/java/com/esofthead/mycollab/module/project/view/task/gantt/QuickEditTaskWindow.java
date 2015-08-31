@@ -97,7 +97,6 @@ public class QuickEditTaskWindow extends Window {
                             taskService.updateWithSession(bean, AppContext.getUsername());
                             SimpleTask updateTask = taskService.findById(bean.getId(), AppContext.getAccountId());
                             taskModified.setTask(updateTask);
-                            taskModified.markAsDirty();
                             gantt.markStepDirty(taskModified.getStep());
                             gantt.calculateMaxMinDates(taskModified);
                             EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(QuickEditTaskWindow.this, taskModified));
