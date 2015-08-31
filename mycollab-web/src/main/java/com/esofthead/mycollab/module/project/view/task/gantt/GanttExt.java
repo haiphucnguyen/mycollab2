@@ -69,7 +69,7 @@ public class GanttExt extends Gantt {
             @Override
             public void onGanttMove(MoveEvent event) {
                 StepExt step = (StepExt) event.getStep();
-                updateTasksInfo(step, event.getStartDate(), event.getEndDate());
+                updateTasksInfoByResizeOrMove(step, event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -78,7 +78,7 @@ public class GanttExt extends Gantt {
 
             @Override
             public void onGanttResize(ResizeEvent event) {
-                updateTasksInfo((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
+                updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
 
@@ -179,11 +179,11 @@ public class GanttExt extends Gantt {
         }
     }
 
-    private void updateTasksInfo(StepExt step, long startDate, long endDate) {
+    private void updateTasksInfoByResizeOrMove(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
         SimpleTask task = ganttItemWrapper.getTask();
         ganttItemWrapper.setStartDate(new LocalDate(startDate));
-        ganttItemWrapper.setEndDate(new LocalDate(endDate));
+        ganttItemWrapper.setEndDate(new LocalDate(endDate).minusDays(1));
         taskService.updateSelectiveWithSession(task, AppContext.getUsername());
         ganttItemWrapper.updateParentDates();
         EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttExt.this, ganttItemWrapper));
