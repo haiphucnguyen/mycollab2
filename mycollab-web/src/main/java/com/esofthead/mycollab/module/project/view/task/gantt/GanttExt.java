@@ -64,8 +64,9 @@ public class GanttExt extends Gantt {
 
             @Override
             public void onGanttMove(MoveEvent event) {
-                StepExt step = (StepExt) event.getStep();
-                updateTasksInfoByResizeOrMove(step, event.getStartDate(), event.getEndDate());
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
+                }
             }
         });
 
@@ -74,7 +75,9 @@ public class GanttExt extends Gantt {
 
             @Override
             public void onGanttResize(ResizeEvent event) {
-                updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
+                }
             }
         });
     }
@@ -178,6 +181,7 @@ public class GanttExt extends Gantt {
         ganttItemWrapper.setStartDate(new LocalDate(startDate));
         ganttItemWrapper.setEndDate(new LocalDate(endDate));
         ganttItemWrapper.adjustTaskDatesByPredecessors(ganttItemWrapper.getPredecessors());
+        this.markStepDirty(ganttItemWrapper.getStep());
         SimpleTask task = ganttItemWrapper.getTask();
         EventBusFactory.getInstance().post(new TaskEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
         EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));

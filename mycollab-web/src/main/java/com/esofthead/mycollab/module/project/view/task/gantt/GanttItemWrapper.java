@@ -278,14 +278,14 @@ public class GanttItemWrapper implements PropertyChangeListener {
 
             setStartDate(currentStartDate);
             setEndDate(currentEndDate);
+            System.out.println("Start date: " + currentStartDate + "---" + currentEndDate + " Step start " + new
+                    LocalDate(getStep().getStartDate()) + "--Step end: " + new LocalDate(getStep().getEndDate()));
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        gantt.markStepDirty(getStep());
         updateParentDates();
-        EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, getTask()));
     }
 
     public void updateParentDates() {

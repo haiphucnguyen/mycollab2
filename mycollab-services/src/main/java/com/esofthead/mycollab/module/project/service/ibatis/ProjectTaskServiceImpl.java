@@ -31,6 +31,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.PredecessorMapper;
@@ -47,6 +48,8 @@ import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotifi
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.google.common.eventbus.AsyncEventBus;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -55,6 +58,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -74,6 +78,7 @@ import java.util.concurrent.locks.Lock;
 @Traceable(nameField = "taskname", extraFieldName = "projectid", notifyAgent = ProjectTaskRelayEmailNotificationAction.class)
 @Watchable(userFieldName = "assignuser", extraTypeId = "projectid")
 public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria> implements ProjectTaskService {
+    private static Logger LOG = LoggerFactory.getLogger(ProjectTaskServiceImpl.class);
 
     static {
         ClassInfo taskInfo = new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK);
@@ -274,30 +279,36 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
 
     @Override
     public void massUpdateTaskDates(final List<SimpleTask> tasks, @CacheKey Integer sAccountId) {
-        Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
-        try {
-            final long now = new GregorianCalendar().getTimeInMillis();
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-            if (lock.tryLock(30, TimeUnit.SECONDS)) {
-                jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=?" +
-                                " WHERE `id` = ?",
-                        new BatchPreparedStatementSetter() {
-                            @Override
-                            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+        if (tasks.size() > 0) {
+            Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
+            try {
+                final long now = new GregorianCalendar().getTimeInMillis();
+                if (lock.tryLock(30, TimeUnit.SECONDS)) {
+                    try (Connection connection = dataSource.getConnection()) {
+                        connection.setAutoCommit(false);
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET `startdate` = ?, " +
+                                "`enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
+                        for (int i = 0; i < tasks.size(); i++) {
+                            SimpleTask task = tasks.get(i);
+                            if (task.getStartdate() != null && task.getEnddate() != null) {
                                 preparedStatement.setDate(1, new Date(tasks.get(i).getStartdate().getTime()));
                                 preparedStatement.setDate(2, new Date(tasks.get(i).getEnddate().getTime()));
                                 preparedStatement.setDate(3, new Date(now));
                                 preparedStatement.setInt(4, tasks.get(i).getId());
+                                preparedStatement.addBatch();
+                            } else {
+                                LOG.error("Task " + BeanUtility.printBeanObj(task) + " should have not null dates");
                             }
 
-                            @Override
-                            public int getBatchSize() {
-                                return tasks.size();
-                            }
-                        });
+                        }
+                        preparedStatement.executeBatch();
+                        connection.commit();
+                    }
+                }
+            } catch (Exception e) {
+                throw new MyCollabException(e);
             }
-        } catch (Exception e) {
-            throw new MyCollabException(e);
         }
+
     }
 }

@@ -112,7 +112,7 @@ public class QuickEditTaskWindow extends Window {
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-                buttonControls.with(updateAllBtn, updateBtn, cancelBtn);
+                buttonControls.with(updateAllBtn, cancelBtn, updateBtn);
 
                 layout.addComponent(buttonControls);
                 layout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
