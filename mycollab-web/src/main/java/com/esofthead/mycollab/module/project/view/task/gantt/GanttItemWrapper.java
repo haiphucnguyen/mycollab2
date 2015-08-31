@@ -83,14 +83,29 @@ public class GanttItemWrapper {
         if (subItems == null) {
             List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId(), orderField);
             subItems = new ArrayList<>();
-            for (SimpleTask subTask : subTasks) {
-                GanttItemWrapper subItem = new GanttItemWrapper(gantt, subTask);
-                subItem.setParent(this);
-                subItems.add(subItem);
+            if (subTasks.size() > 0) {
+                for (SimpleTask subTask : subTasks) {
+                    GanttItemWrapper subItem = new GanttItemWrapper(gantt, subTask);
+                    subItem.setParent(this);
+                    subItems.add(subItem);
+                }
             }
         }
-
+        calculateDatesByChildTasks();
         return subItems;
+    }
+
+    private void calculateDatesByChildTasks() {
+        if (subItems != null && subItems.size() > 0) {
+            LocalDate calStartDate = new LocalDate(2099, 1, 1);
+            LocalDate calEndDate = new LocalDate(1970, 1, 1);
+            for (GanttItemWrapper item : subItems) {
+                calStartDate = DateTimeUtils.min(calStartDate, item.getStartDate());
+                calEndDate = DateTimeUtils.max(calEndDate, item.getEndDate());
+            }
+            this.setStartDate(calStartDate);
+            this.setEndDate(calEndDate);
+        }
     }
 
     public Integer getId() {
@@ -256,9 +271,9 @@ public class GanttItemWrapper {
     public void updateParentDates() {
         GanttItemWrapper parentTask = this.getParent();
         if (parentTask != null) {
-            parentTask.setStartDate(DateTimeUtils.min(parentTask.getStartDate(), this.getStartDate()));
-            parentTask.setEndDate(DateTimeUtils.max(parentTask.getEndDate(), this.getEndDate()));
+            parentTask.calculateDatesByChildTasks();
             projectTaskService.updateWithSession(parentTask.getTask(), AppContext.getUsername());
+            gantt.markStepDirty(parentTask.getStep());
             parentTask.updateParentDates();
         }
     }
