@@ -22,15 +22,17 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
-import com.esofthead.mycollab.module.project.view.task.gantt.*;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
+import com.esofthead.mycollab.module.project.view.task.gantt.GanttTreeTable;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -39,19 +41,15 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.joda.time.LocalDate;
-import org.tltv.gantt.Gantt;
-import org.tltv.gantt.Gantt.MoveEvent;
-import org.tltv.gantt.Gantt.ResizeEvent;
 import org.tltv.gantt.client.shared.Resolution;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -68,6 +66,27 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private GanttTreeTable taskTable;
     private Button toogleMenuShowBtn;
     private ProjectTaskService taskService;
+
+    private Set<SimpleTask> queueSetTasksUpdate = new HashSet<>();
+
+    private ApplicationEventListener<TaskEvent.ClearGanttItemsNeedUpdate> massUpdateGanttItemsUpdateHandler = new
+            ApplicationEventListener<TaskEvent.ClearGanttItemsNeedUpdate>() {
+                @Override
+                @Subscribe
+                public void handle(TaskEvent.ClearGanttItemsNeedUpdate event) {
+                    massUpdateTasksDatesInQueue();
+                }
+            };
+
+    private ApplicationEventListener<TaskEvent.AddGanttItemUpdateToQueue> addTaskToQueueHandler = new
+            ApplicationEventListener<TaskEvent.AddGanttItemUpdateToQueue>() {
+                @Override
+                @Subscribe
+                public void handle(TaskEvent.AddGanttItemUpdateToQueue event) {
+                    SimpleTask item = (SimpleTask) event.getData();
+                    queueSetTasksUpdate.add(item);
+                }
+            };
 
     public GanttChartViewImpl() {
         this.setSizeFull();
@@ -134,9 +153,26 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     }
 
     @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(addTaskToQueueHandler);
+        EventBusFactory.getInstance().register(massUpdateGanttItemsUpdateHandler);
+        super.attach();
+    }
+
+    @Override
     public void detach() {
+        massUpdateTasksDatesInQueue();
+        EventBusFactory.getInstance().unregister(addTaskToQueueHandler);
+        EventBusFactory.getInstance().unregister(massUpdateGanttItemsUpdateHandler);
         setProjectNavigatorVisibility(true);
         super.detach();
+    }
+
+    private void massUpdateTasksDatesInQueue() {
+        if (queueSetTasksUpdate.size() > 0) {
+            taskService.massUpdateTaskDates(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
+            queueSetTasksUpdate.clear();
+        }
     }
 
     private void setProjectNavigatorVisibility(boolean visibility) {

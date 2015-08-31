@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -59,4 +60,7 @@ public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskS
 
     @CacheEvict
     void massUpdatePredecessors(Integer taskSourceId, List<TaskPredecessor> predecessors, @CacheKey Integer sAccountId);
+
+    @CacheEvict
+    void massUpdateTaskDates(List<SimpleTask> tasks, @CacheKey Integer sAccountId);
 }

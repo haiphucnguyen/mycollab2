@@ -237,7 +237,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     }
 
     @Override
-    public void massUpdatePredecessors(Integer taskSourceId, final List<TaskPredecessor> predecessors, @CacheKey Integer sAccountId) {
+    public void massUpdatePredecessors(Integer taskSourceId, final List<TaskPredecessor> predecessors, Integer sAccountId) {
         Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
         try {
             PredecessorMapper predecessorMapper = ApplicationContextUtil.getSpringBean(PredecessorMapper.class);
@@ -270,5 +270,34 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
             throw new MyCollabException(e);
         }
 
+    }
+
+    @Override
+    public void massUpdateTaskDates(final List<SimpleTask> tasks, @CacheKey Integer sAccountId) {
+        Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
+        try {
+            final long now = new GregorianCalendar().getTimeInMillis();
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+            if (lock.tryLock(30, TimeUnit.SECONDS)) {
+                jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=?" +
+                                " WHERE `id` = ?",
+                        new BatchPreparedStatementSetter() {
+                            @Override
+                            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                                preparedStatement.setDate(1, new Date(tasks.get(i).getStartdate().getTime()));
+                                preparedStatement.setDate(2, new Date(tasks.get(i).getEnddate().getTime()));
+                                preparedStatement.setDate(3, new Date(now));
+                                preparedStatement.setInt(4, tasks.get(i).getId());
+                            }
+
+                            @Override
+                            public int getBatchSize() {
+                                return tasks.size();
+                            }
+                        });
+            }
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        }
     }
 }

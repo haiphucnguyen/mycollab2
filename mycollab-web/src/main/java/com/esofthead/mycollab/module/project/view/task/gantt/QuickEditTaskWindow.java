@@ -99,7 +99,6 @@ public class QuickEditTaskWindow extends Window {
                             taskModified.setTask(updateTask);
                             gantt.markStepDirty(taskModified.getStep());
                             gantt.calculateMaxMinDates(taskModified);
-                            EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(QuickEditTaskWindow.this, taskModified));
                             close();
                         }
                     }

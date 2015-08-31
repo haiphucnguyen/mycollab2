@@ -17,10 +17,7 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.configuration.Storage;
-import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -59,13 +56,13 @@ public class GanttTreeTable extends TreeTable {
     private boolean ganttIndexIsChanged = false;
     private String sortField = "createdTime";
 
-    private ApplicationEventListener<TaskEvent.GanttTaskUpdate> taskUpdateHandler = new
-            ApplicationEventListener<TaskEvent.GanttTaskUpdate>() {
-                @Override
+    private ApplicationEventListener<TaskEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
+            ApplicationEventListener<TaskEvent.UpdateGanttItemDates>() {
                 @Subscribe
-                public void handle(TaskEvent.GanttTaskUpdate event) {
-                    GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) event.getData();
-                    updateTaskTree(ganttItemWrapper);
+                @Override
+                public void handle(TaskEvent.UpdateGanttItemDates event) {
+                    GanttItemWrapper item = (GanttItemWrapper) event.getData();
+                    updateTaskTree(item);
                 }
             };
 
@@ -74,7 +71,7 @@ public class GanttTreeTable extends TreeTable {
         projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
         this.gantt = gantt;
         this.setWidth("800px");
-        gantt.setVerticalScrollDelegateTarget(this);
+        this.setBuffered(false);
         beanContainer = gantt.getBeanContainer();
         this.setContainerDataSource(beanContainer);
         this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "predecessors",
@@ -274,6 +271,7 @@ public class GanttTreeTable extends TreeTable {
         };
 
         contextMenu.addContextMenuTableListener(tableListener);
+        gantt.setVerticalScrollDelegateTarget(this);
     }
 
     GanttItemContainer getRawContainer() {
@@ -282,19 +280,20 @@ public class GanttTreeTable extends TreeTable {
 
     @Override
     public void attach() {
-        EventBusFactory.getInstance().register(taskUpdateHandler);
+        EventBusFactory.getInstance().register(updateTaskInfoHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
-        EventBusFactory.getInstance().unregister(taskUpdateHandler);
+        EventBusFactory.getInstance().unregister(updateTaskInfoHandler);
         super.detach();
     }
 
     private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
         this.markAsDirtyRecursive();
     }
+
 
     public void addTask(GanttItemWrapper itemWrapper) {
         beanContainer.addBean(itemWrapper);

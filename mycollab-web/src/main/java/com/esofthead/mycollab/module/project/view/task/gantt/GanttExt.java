@@ -21,9 +21,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
 import org.joda.time.LocalDate;
@@ -41,7 +38,6 @@ import org.tltv.gantt.client.shared.SubStep;
 public class GanttExt extends Gantt {
     private LocalDate minDate, maxDate;
     private GanttItemContainer beanContainer;
-    private ProjectTaskService taskService;
 
     public GanttExt() {
         minDate = new LocalDate();
@@ -81,8 +77,6 @@ public class GanttExt extends Gantt {
                 updateTasksInfoByResizeOrMove((StepExt) event.getStep(), event.getStartDate(), event.getEndDate());
             }
         });
-
-        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     }
 
     public GanttItemContainer getBeanContainer() {
@@ -181,12 +175,12 @@ public class GanttExt extends Gantt {
 
     private void updateTasksInfoByResizeOrMove(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        SimpleTask task = ganttItemWrapper.getTask();
         ganttItemWrapper.setStartDate(new LocalDate(startDate));
-        ganttItemWrapper.setEndDate(new LocalDate(endDate).minusDays(1));
-        taskService.updateSelectiveWithSession(task, AppContext.getUsername());
-        ganttItemWrapper.updateParentDates();
-        EventBusFactory.getInstance().post(new TaskEvent.GanttTaskUpdate(GanttExt.this, ganttItemWrapper));
+        ganttItemWrapper.setEndDate(new LocalDate(endDate));
+        ganttItemWrapper.adjustTaskDatesByPredecessors(ganttItemWrapper.getPredecessors());
+        SimpleTask task = ganttItemWrapper.getTask();
+        EventBusFactory.getInstance().post(new TaskEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
+        EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));
         this.calculateMaxMinDates(ganttItemWrapper);
     }
 }

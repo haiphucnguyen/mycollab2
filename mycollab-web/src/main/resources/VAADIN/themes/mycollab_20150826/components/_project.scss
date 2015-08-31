@@ -689,7 +689,7 @@
     border-width: 1px 1px 1px 0px;
     border-color: $border-color;
     > div > div .v-treetable {
-      overflow-x: scroll;
+      /*overflow-x: auto;*/
       .v-table-footer-wrap {
         height: 0px;
       }

@@ -9589,10 +9589,6 @@ div.v-button.token-field:hover {
 	border-color: #CFCFCF;
 }
 
-.gantt_container  > div > div .v-treetable {
-	overflow-x: scroll;
-}
-
 .gantt_container  > div > div .v-treetable .v-table-footer-wrap {
 	height: 0px;
 }

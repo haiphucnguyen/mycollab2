@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.servlet;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
+import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.i18n.LocalizationHelper;
 import com.esofthead.mycollab.template.velocity.TemplateContext;
 import com.esofthead.mycollab.template.velocity.service.TemplateEngine;
@@ -118,7 +119,14 @@ public class AppExceptionHandler extends GenericHttpServlet {
 
     private String printRequest(HttpServletRequest request) {
         StringBuilder builder = new StringBuilder();
-        builder.append("Request: " + ((Request) request).getUri() + "--- Agent: " + request.getHeader("User-Agent"));
+        String subDomain;
+        if (SiteConfiguration.getDeploymentMode() == DeploymentMode.site) {
+            subDomain = request.getServerName().split("\\.")[0];
+        } else {
+            subDomain = request.getServerName();
+        }
+        builder.append("Request: " + ((Request) request).getUri() + "--- Agent: " + request.getHeader("User-Agent") +
+                "-- Sub domain: " + subDomain);
         builder.append("\n Parameters: ");
         Enumeration<String> params = request.getParameterNames();
         while (params.hasMoreElements()) {

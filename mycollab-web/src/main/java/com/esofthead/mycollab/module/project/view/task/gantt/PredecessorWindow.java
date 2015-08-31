@@ -98,11 +98,9 @@ class PredecessorWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
-                boolean datesChanges = ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
+                ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
                 ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                if (datesChanges) {
-                    projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
-                }
+                projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
                 ganttItemWrapper.getTask().setPredecessors(predecessors);
                 taskTreeTable.refreshRowCache();
                 PredecessorWindow.this.close();
@@ -140,6 +138,15 @@ class PredecessorWindow extends Window {
             return predecessors;
         }
 
+        boolean hasEmptyRow() {
+            if (this.getComponentCount() > 0) {
+                PredecessorInputLayout component = (PredecessorInputLayout) this.getComponent(getComponentCount() - 1);
+                return component.isEmptyPredecessor();
+            } else {
+                return false;
+            }
+        }
+
         private class PredecessorInputLayout extends MHorizontalLayout {
             private TextField rowField;
             private TaskComboBox taskComboBox;
@@ -165,8 +172,12 @@ class PredecessorWindow extends Window {
                                 if (predecessorComboBox.getValue() == null) {
                                     predecessorComboBox.setValue(TaskPredecessor.FS);
                                 }
-                                PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
+
+                                if (!PredecessorsLayout.this.hasEmptyRow()) {
+                                    PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
+                                }
                             } else {
+                                rowField.setValue("");
                                 predecessorComboBox.setValue(null);
                             }
                         } catch (NumberFormatException e) {
@@ -267,6 +278,10 @@ class PredecessorWindow extends Window {
             String getPreDesType() {
                 String preType = (String) predecessorComboBox.getValue();
                 return (preType == null) ? TaskPredecessor.FS : preType;
+            }
+
+            boolean isEmptyPredecessor() {
+                return rowField.getValue().trim().equals("");
             }
         }
 
