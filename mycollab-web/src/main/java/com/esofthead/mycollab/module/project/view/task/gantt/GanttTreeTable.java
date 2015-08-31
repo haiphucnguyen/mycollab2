@@ -296,12 +296,13 @@ public class GanttTreeTable extends TreeTable {
 
 
     public void addTask(GanttItemWrapper itemWrapper) {
-        beanContainer.addBean(itemWrapper);
         if (itemWrapper.getGanttIndex() == null) {
-            int ganttIndex = beanContainer.indexOfId(itemWrapper);
+            int ganttIndex = beanContainer.size();
             itemWrapper.setGanttIndex(ganttIndex);
             ganttIndexIsChanged = true;
         }
+
+        beanContainer.addBean(itemWrapper);
 
         if (itemWrapper.hasSubTasks()) {
             this.setChildrenAllowed(itemWrapper, true);
