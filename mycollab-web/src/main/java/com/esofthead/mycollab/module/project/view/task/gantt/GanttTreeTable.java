@@ -334,8 +334,7 @@ public class GanttTreeTable extends TreeTable {
                 startDate = DateTimeUtils.min(startDate, child.getStartDate());
                 endDate = DateTimeUtils.max(endDate, child.getEndDate());
             }
-            parent.setStartDate(startDate);
-            parent.setEndDate(endDate);
+            parent.setStartAndEndDate(startDate, endDate);
             gantt.markStepDirty(parent.getStep());
         }
     }

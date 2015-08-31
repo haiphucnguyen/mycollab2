@@ -29,12 +29,12 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.ui.UI;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,8 +43,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 5.0.8
  */
-public class GanttItemWrapper implements PropertyChangeListener {
-    private PropertyChangeSupport pcs;
+public class GanttItemWrapper {
     private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private SimpleTask task;
     private LocalDate startDate, endDate;
@@ -58,8 +57,6 @@ public class GanttItemWrapper implements PropertyChangeListener {
         this.gantt = gantt;
         ownStep = new StepExt();
         setTask(task);
-        pcs = new PropertyChangeSupport(this);
-        pcs.addPropertyChangeListener(this);
     }
 
     public SimpleTask getTask() {
@@ -111,8 +108,7 @@ public class GanttItemWrapper implements PropertyChangeListener {
                 calStartDate = DateTimeUtils.min(calStartDate, item.getStartDate());
                 calEndDate = DateTimeUtils.max(calEndDate, item.getEndDate());
             }
-            this.setStartDate(calStartDate);
-            this.setEndDate(calEndDate);
+            setStartAndEndDate(calStartDate, calEndDate);
         }
     }
 
@@ -156,23 +152,24 @@ public class GanttItemWrapper implements PropertyChangeListener {
         return task.getPercentagecomplete();
     }
 
-    public void setStartDate(LocalDate startDate) {
-        if (!this.startDate.isEqual(startDate)) {
-            LocalDate oldValue = this.startDate;
-            this.startDate = startDate;
+    public void setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate) {
+        boolean hasChange = false;
+        if (!this.startDate.isEqual(newStartDate)) {
+            hasChange = true;
+            this.startDate = newStartDate;
             task.setStartdate(startDate.toDate());
             ownStep.setStartDate(startDate.toDate());
-            pcs.firePropertyChange("startDate", oldValue, startDate);
         }
-    }
 
-    public void setEndDate(LocalDate endDate) {
-        if (!this.endDate.isEqual(endDate)) {
-            LocalDate oldValue = this.endDate;
-            this.endDate = endDate;
+        if (!this.endDate.isEqual(newEndDate)) {
+            hasChange = true;
+            this.endDate = newEndDate;
             task.setEnddate(endDate.toDate());
             ownStep.setEndDate(endDate.plusDays(1).toDate());
-            pcs.firePropertyChange("endDate", oldValue, endDate);
+        }
+
+        if (hasChange) {
+            onDateChanges();
         }
     }
 
@@ -276,19 +273,18 @@ public class GanttItemWrapper implements PropertyChangeListener {
                 }
             }
 
-            setStartDate(currentStartDate);
-            setEndDate(currentEndDate);
-            System.out.println("Start date: " + currentStartDate + "---" + currentEndDate + " Step start " + new
-                    LocalDate(getStep().getStartDate()) + "--Step end: " + new LocalDate(getStep().getEndDate()));
+            setStartAndEndDate(currentStartDate, currentEndDate);
         }
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent event) {
+    private void onDateChanges() {
+        EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, task));
+        gantt.markStepDirty(ownStep);
         updateParentDates();
+        UI.getCurrent().push();
     }
 
-    public void updateParentDates() {
+    private void updateParentDates() {
         GanttItemWrapper parentTask = this.getParent();
         if (parentTask != null) {
             parentTask.calculateDatesByChildTasks();

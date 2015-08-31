@@ -178,8 +178,7 @@ public class GanttExt extends Gantt {
 
     private void updateTasksInfoByResizeOrMove(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        ganttItemWrapper.setStartDate(new LocalDate(startDate));
-        ganttItemWrapper.setEndDate(new LocalDate(endDate));
+        ganttItemWrapper.setStartAndEndDate(new LocalDate(startDate), new LocalDate(endDate));
         ganttItemWrapper.adjustTaskDatesByPredecessors(ganttItemWrapper.getPredecessors());
         this.markStepDirty(ganttItemWrapper.getStep());
         SimpleTask task = ganttItemWrapper.getTask();
