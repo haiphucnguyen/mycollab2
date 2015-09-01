@@ -21,7 +21,10 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.*;
+import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
+import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
+import com.esofthead.mycollab.module.project.domain.ProjectGanttItem;
+import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -67,7 +70,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private GanttAssignmentService ganttAssignmentService;
     private ProjectTaskService taskService;
 
-    private Set<SimpleTask> queueSetTasksUpdate = new HashSet<>();
+    private Set<AssignWithPredecessors> queueSetTasksUpdate = new HashSet<>();
 
     private ApplicationEventListener<TaskEvent.ClearGanttItemsNeedUpdate> massUpdateGanttItemsUpdateHandler = new
             ApplicationEventListener<TaskEvent.ClearGanttItemsNeedUpdate>() {
@@ -83,7 +86,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 @Override
                 @Subscribe
                 public void handle(TaskEvent.AddGanttItemUpdateToQueue event) {
-                    SimpleTask item = (SimpleTask) event.getData();
+                    AssignWithPredecessors item = (AssignWithPredecessors) event.getData();
                     queueSetTasksUpdate.add(item);
                 }
             };
@@ -172,7 +175,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     private void massUpdateTasksDatesInQueue() {
         if (queueSetTasksUpdate.size() > 0) {
-            taskService.massUpdateTaskDates(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
+            ganttAssignmentService.massUpdateTaskDates(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
             queueSetTasksUpdate.clear();
         }
     }
@@ -207,16 +210,14 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                 if (assignments.size() == 1) {
                     ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
                     List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getSubTasks();
-                    for (MilestoneGanttItem milestoneGanttItem:milestoneGanttItems) {
+                    for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
                         GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
-                        gantt.addTask(itemWrapper);
                         taskTable.addTask(itemWrapper);
                     }
 
                     List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
-                    for (TaskGanttItem taskGanttItem:taskGanttItems) {
+                    for (TaskGanttItem taskGanttItem : taskGanttItems) {
                         GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
-                        gantt.addTask(itemWrapper);
                         taskTable.addTask(itemWrapper);
                     }
                     UI.getCurrent().push();

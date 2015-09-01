@@ -35,4 +35,39 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
     public List<AssignWithPredecessors> getTaskWithPredecessors(List<Integer> projectIds, @CacheKey Integer sAccountId) {
         return ganttMapperExt.getTaskWithPredecessors(projectIds, sAccountId);
     }
+
+    @Override
+    public void massUpdateTaskDates(final List<AssignWithPredecessors> tasks, @CacheKey Integer sAccountId) {
+//        if (tasks.size() > 0) {
+//            Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
+//            try {
+//                final long now = new GregorianCalendar().getTimeInMillis();
+//                if (lock.tryLock(30, TimeUnit.SECONDS)) {
+//                    try (Connection connection = dataSource.getConnection()) {
+//                        connection.setAutoCommit(false);
+//                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET `startdate` = ?, " +
+//                                "`enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
+//                        for (int i = 0; i < tasks.size(); i++) {
+//                            SimpleTask task = tasks.get(i);
+//                            if (task.getStartdate() != null && task.getEnddate() != null) {
+//                                preparedStatement.setDate(1, new Date(tasks.get(i).getStartdate().getTime()));
+//                                preparedStatement.setDate(2, new Date(tasks.get(i).getEnddate().getTime()));
+//                                preparedStatement.setDate(3, new Date(now));
+//                                preparedStatement.setInt(4, tasks.get(i).getId());
+//                                preparedStatement.addBatch();
+//                            } else {
+//                                LOG.error("Task " + BeanUtility.printBeanObj(task) + " should have not null dates");
+//                            }
+//
+//                        }
+//                        preparedStatement.executeBatch();
+//                        connection.commit();
+//                    }
+//                }
+//            } catch (Exception e) {
+//                throw new MyCollabException(e);
+//            }
+//        }
+
+    }
 }

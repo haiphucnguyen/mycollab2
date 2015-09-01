@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.domain;
 
 
+import org.apache.commons.collections.CollectionUtils;
+
 import java.util.List;
 
 public class TaskGanttItem extends AssignWithPredecessors {
@@ -22,5 +24,10 @@ public class TaskGanttItem extends AssignWithPredecessors {
 
     public void setParentTaskId(Integer parentTaskId) {
         this.parentTaskId = parentTaskId;
+    }
+
+    @Override
+    public boolean hasSubAssignments() {
+        return CollectionUtils.isNotEmpty(subTasks);
     }
 }

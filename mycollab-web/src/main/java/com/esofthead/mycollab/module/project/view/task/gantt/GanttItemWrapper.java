@@ -18,24 +18,18 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
+import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.ui.UI;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +39,6 @@ import java.util.List;
  * @since 5.0.8
  */
 public class GanttItemWrapper {
-    private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     private AssignWithPredecessors task;
     private LocalDate startDate, endDate;
 
@@ -84,8 +77,37 @@ public class GanttItemWrapper {
         return task.getName();
     }
 
-    public List<GanttItemWrapper> subTasks(SearchCriteria.OrderField orderField) {
-       return null;
+    public List<GanttItemWrapper> subTasks() {
+        if (subItems == null) {
+            if (task instanceof MilestoneGanttItem) {
+                subItems = buildSubTasks(gantt, (MilestoneGanttItem) task);
+            } else if (task instanceof TaskGanttItem) {
+                subItems = buildSubTasks(gantt, (TaskGanttItem) task);
+            } else {
+                throw new MyCollabException("Do not support type except milestone and task");
+            }
+        }
+
+        return subItems;
+    }
+
+    private static List<GanttItemWrapper> buildSubTasks(GanttExt gantt, MilestoneGanttItem ganttItem) {
+        List<TaskGanttItem> items = ganttItem.getSubTasks();
+        return buildSubTasks(gantt, items);
+    }
+
+    private static List<GanttItemWrapper> buildSubTasks(GanttExt gantt, TaskGanttItem ganttItem) {
+        List<TaskGanttItem> items = ganttItem.getSubTasks();
+        return buildSubTasks(gantt, items);
+    }
+
+    private static List<GanttItemWrapper> buildSubTasks(GanttExt gantt, List<TaskGanttItem> items) {
+        List<GanttItemWrapper> tmpList = new ArrayList<>(items.size());
+        for (TaskGanttItem item : items) {
+            GanttItemWrapper ganttItemWrapper = new GanttItemWrapper(gantt, item);
+            tmpList.add(ganttItemWrapper);
+        }
+        return tmpList;
     }
 
     private void calculateDatesByChildTasks() {

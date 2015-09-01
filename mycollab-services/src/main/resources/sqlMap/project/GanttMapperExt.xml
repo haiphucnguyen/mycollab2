@@ -35,7 +35,14 @@
                extends="AssignWithPredecessors">
         <result column="parentTaskId" property="parentTaskId" jdbcType="INTEGER"/>
         <collection property="subTasks" ofType="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
-                    column="parentTaskId" select="selectSubTasks"/>
+                    column="id" select="selectSubTasks"/>
+    </resultMap>
+
+    <resultMap id="TaskGanttItemWithoutParent" type="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
+               extends="AssignWithPredecessors">
+        <result column="parentTaskId" property="parentTaskId" jdbcType="INTEGER"/>
+        <collection property="subTasks" ofType="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
+                    column="id" select="selectSubTasks"/>
     </resultMap>
 
     <resultMap id="MilestoneGanttItem" type="com.esofthead.mycollab.module.project.domain.MilestoneGanttItem"
@@ -82,13 +89,13 @@
         ORDER BY m_prj_milestone.startdate ASC, m_prj_milestone.enddate ASC
     </select>
 
-    <select id="selectTasksWithMilestone" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
+    <select id="selectTasksWithMilestone" resultMap="TaskGanttItemWithoutParent" parameterType="Integer" lang="velocity">
         SELECT m_prj_task.projectid AS prjId, m_prj_task.taskname AS name, m_prj_task.assignUser,
         m_prj_task.startdate AS startDate, m_prj_task.enddate AS endDate, m_prj_task.status,
         m_prj_task.id, m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Task' AS type, m_prj_task.ganttindex,
-        m_prj_task.duration, m_prj_task.parentTaskId
+        m_prj_task.duration, m_prj_task.parentTaskId IS NULL
         FROM m_prj_task
         LEFT OUTER JOIN s_user ON (m_prj_task.assignUser = s_user.username)
         WHERE m_prj_task.milestoneId = @{id}
@@ -109,7 +116,7 @@
         LEFT OUTER JOIN s_user ON (m_prj_task.assignUser = s_user.username)
         LEFT OUTER JOIN m_prj_predecessor ON (m_prj_task.id=m_prj_predecessor.sourceId AND m_prj_predecessor.type='Project-Task')
         LEFT OUTER JOIN m_prj_task AS ref_task ON (m_prj_predecessor.descId=ref_task.id)
-        WHERE m_prj_task.milestoneId IS NULL AND m_prj_task.projectid = @{prjId}
+        WHERE m_prj_task.milestoneId IS NULL AND m_prj_task.projectid = @{prjId} AND m_prj_task.parentTaskId IS NULL
         ORDER BY m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
     </select>
 
@@ -127,7 +134,7 @@
         LEFT OUTER JOIN s_user ON (m_prj_task.assignUser = s_user.username)
         LEFT OUTER JOIN m_prj_predecessor ON (m_prj_task.id=m_prj_predecessor.sourceId AND m_prj_predecessor.type='Project-Task')
         LEFT OUTER JOIN m_prj_task AS ref_task ON (m_prj_predecessor.descId=ref_task.id)
-        WHERE m_prj_task.parentTaskId = @{parentTaskId}
+        WHERE m_prj_task.parentTaskId = @{id}
         ORDER BY m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
     </select>
 </mapper>

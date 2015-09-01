@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -25,6 +24,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
@@ -32,10 +32,7 @@ import com.vaadin.ui.*;
 import org.joda.time.LocalDate;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -47,7 +44,6 @@ public class GanttTreeTable extends TreeTable {
     private GanttItemContainer beanContainer;
 
     private boolean ganttIndexIsChanged = false;
-    private String sortField = "createdTime";
 
     private ApplicationEventListener<TaskEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
             ApplicationEventListener<TaskEvent.UpdateGanttItemDates>() {
@@ -92,7 +88,6 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnCollapsed("actualStartDate", true);
         this.setColumnCollapsed("actualEndDate", true);
         this.setSelectable(true);
-        this.setSortEnabled(true);
         this.setEditable(true);
 
         this.addGeneratedColumn("ganttIndex", new ColumnGenerator() {
@@ -107,36 +102,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(item.getName());
-//                SimpleTask task = item.getTask();
-//
-//                String taskLinkContent;
-//                String uid = UUID.randomUUID().toString();
-//                String taskPriority = task.getPriority();
-//                Img priorityLink = new Img(taskPriority, ProjectResources.getIconResourceLink12ByTaskPriority
-//                        (taskPriority)).setTitle(taskPriority);
-//
-//                String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
-//                A taskLink = new A().setId("tag" + uid).appendText(linkName).setStyle("display:inline");
-//
-//                taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
-//                taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-//
-//                String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
-//                Img avatarImg = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
-//
-//                Div resultDiv = new DivLessFormatter().appendChild(priorityLink, DivLessFormatter.EMPTY_SPACE(),
-//                        avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
-//                        TooltipHelper.buildDivTooltipEnable(uid));
-//                taskLinkContent = resultDiv.write();
-//
-//                Label taskLbl = new Label(taskLinkContent, ContentMode.HTML);
-//                if (task.isCompleted()) {
-//                    taskLbl.addStyleName("completed");
-//                } else if (task.isOverdue()) {
-//                    taskLbl.addStyleName("overdue");
-//                }
-//                return taskLbl;
+                return new ELabel(item.getName()).withDescription(item.getName());
             }
         });
 
@@ -218,7 +184,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public void nodeExpand(Tree.ExpandEvent expandEvent) {
                 GanttItemWrapper item = (GanttItemWrapper) expandEvent.getItemId();
-                List<GanttItemWrapper> subTasks = item.subTasks(new SearchCriteria.OrderField(sortField, SearchCriteria.ASC));
+                List<GanttItemWrapper> subTasks = item.subTasks();
                 insertSubSteps(item, subTasks);
             }
         });
@@ -227,22 +193,8 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public void nodeCollapse(Tree.CollapseEvent collapseEvent) {
                 GanttItemWrapper item = (GanttItemWrapper) collapseEvent.getItemId();
-                List<GanttItemWrapper> subTasks = item.subTasks(new SearchCriteria.OrderField(sortField, SearchCriteria.ASC));
+                List<GanttItemWrapper> subTasks = item.subTasks();
                 removeSubSteps(item, subTasks);
-            }
-        });
-
-        this.addHeaderClickListener(new HeaderClickListener() {
-            @Override
-            public void headerClick(HeaderClickEvent event) {
-                String propertyId = (String) event.getPropertyId();
-                sortField = propertyId;
-                beanContainer.sort(new String[]{propertyId}, new boolean[]{true});
-                List<GanttItemWrapper> items = beanContainer.getItemIds();
-                gantt.removeSteps();
-                for (GanttItemWrapper task : items) {
-                    gantt.addTask(task);
-                }
             }
         });
 
@@ -294,13 +246,12 @@ public class GanttTreeTable extends TreeTable {
 
 
     public void addTask(GanttItemWrapper itemWrapper) {
-        if (itemWrapper.getGanttIndex() == null) {
-            int ganttIndex = beanContainer.size();
-            itemWrapper.setGanttIndex(ganttIndex);
-            ganttIndexIsChanged = true;
-        }
-
         beanContainer.addBean(itemWrapper);
+        gantt.addTask(itemWrapper);
+
+        int ganttIndex = beanContainer.size();
+        itemWrapper.setGanttIndex(ganttIndex);
+        ganttIndexIsChanged = true;
 
         if (itemWrapper.hasSubTasks()) {
             this.setChildrenAllowed(itemWrapper, true);
@@ -308,7 +259,6 @@ public class GanttTreeTable extends TreeTable {
         } else {
             this.setChildrenAllowed(itemWrapper, false);
         }
-
     }
 
     private void insertSubSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
@@ -320,14 +270,20 @@ public class GanttTreeTable extends TreeTable {
 
             for (GanttItemWrapper child : childs) {
                 this.addItem(child);
-                if (child.getGanttIndex() == null) {
-                    int ganttIndex = beanContainer.indexOfId(child);
-                    child.setGanttIndex(ganttIndex);
-                    ganttIndexIsChanged = true;
-                }
+
+                int ganttIndex = beanContainer.indexOfId(child) + 1;
+                child.setGanttIndex(ganttIndex);
+                ganttIndexIsChanged = true;
+
                 this.setParent(child, parent);
-                this.setChildrenAllowed(child, child.hasSubTasks());
                 gantt.addTask(stepIndex + count + 1, child);
+                if (child.hasSubTasks()) {
+                    System.out.println("Task: " + child.getName());
+                    this.setChildrenAllowed(child, true);
+                    this.setCollapsed(child, false);
+                } else {
+                    this.setChildrenAllowed(child, false);
+                }
                 count++;
                 startDate = DateTimeUtils.min(startDate, child.getStartDate());
                 endDate = DateTimeUtils.max(endDate, child.getEndDate());
@@ -349,7 +305,7 @@ public class GanttTreeTable extends TreeTable {
 
     public void updateWholeGanttIndexes() {
         if (ganttIndexIsChanged) {
-            List<GanttItemWrapper> items = beanContainer.getItemIds();
+            Collection<GanttItemWrapper> items = beanContainer.getItemIds();
             List<Map<String, Integer>> mapIndexes = new ArrayList<>();
             for (GanttItemWrapper item : items) {
                 Map<String, Integer> value = new HashMap<>(2);

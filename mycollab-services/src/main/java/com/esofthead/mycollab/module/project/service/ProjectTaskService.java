@@ -60,7 +60,4 @@ public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskS
 
     @CacheEvict
     void massUpdatePredecessors(Integer taskSourceId, List<TaskPredecessor> predecessors, @CacheKey Integer sAccountId);
-
-    @CacheEvict
-    void massUpdateTaskDates(List<SimpleTask> tasks, @CacheKey Integer sAccountId);
 }

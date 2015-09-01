@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.domain;
 
 
+import org.apache.commons.collections.CollectionUtils;
+
 import java.util.List;
 
 public class ProjectGanttItem extends AssignWithPredecessors {
@@ -22,5 +24,10 @@ public class ProjectGanttItem extends AssignWithPredecessors {
 
     public void setTasksWithNoMilestones(List<TaskGanttItem> tasksWithNoMilestones) {
         this.tasksWithNoMilestones = tasksWithNoMilestones;
+    }
+
+    @Override
+    public boolean hasSubAssignments() {
+        return CollectionUtils.isNotEmpty(subTasks) || CollectionUtils.isNotEmpty(tasksWithNoMilestones);
     }
 }

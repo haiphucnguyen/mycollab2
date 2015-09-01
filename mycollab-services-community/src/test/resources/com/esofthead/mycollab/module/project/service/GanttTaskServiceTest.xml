@@ -9,5 +9,6 @@
     <m_prj_task id="2" taskname="Task 2" percentagecomplete="0" projectid="1" sAccountId="1" milestoneId="1"/>
     <m_prj_task id="3" taskname="Task 3" percentagecomplete="0" projectid="1" sAccountId="1" milestoneId="2"/>
     <m_prj_task id="4" taskname="Task 4" percentagecomplete="0" projectid="1" sAccountId="1" milestoneId="2"/>
-    <m_prj_task id="5" taskname="Task 5" percentagecomplete="0" projectid="1" sAccountId="1"/>
+    <m_prj_task id="5" taskname="Task 5" percentagecomplete="0" projectid="1" sAccountId="1" parentTaskId="4"/>
+    <m_prj_task id="6" taskname="Task 6" percentagecomplete="0" projectid="1" sAccountId="1"/>
 </dataset>

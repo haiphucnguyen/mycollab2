@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.service;
 
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IService;
@@ -27,4 +28,7 @@ import java.util.List;
 public interface GanttAssignmentService extends IService {
     @Cacheable
     List<AssignWithPredecessors> getTaskWithPredecessors(List<Integer> projectIds, @CacheKey Integer sAccountId);
+
+    @CacheEvict
+    void massUpdateTaskDates(List<AssignWithPredecessors> tasks, @CacheKey Integer sAccountId);
 }

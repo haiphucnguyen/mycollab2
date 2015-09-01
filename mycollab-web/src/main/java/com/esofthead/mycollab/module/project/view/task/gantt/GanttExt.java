@@ -91,7 +91,7 @@ public class GanttExt extends Gantt {
         return this.getState().steps.indexOf(sc);
     }
 
-    public void addTask(GanttItemWrapper task) {
+    void addTask(GanttItemWrapper task) {
         Step step = task.getStep();
         super.addStep(step);
         calculateMaxMinDates(task);

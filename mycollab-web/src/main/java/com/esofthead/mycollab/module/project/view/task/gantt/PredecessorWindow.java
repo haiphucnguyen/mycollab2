@@ -25,7 +25,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Property;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.combobox.FilteringMode;
@@ -36,6 +35,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -289,8 +289,8 @@ class PredecessorWindow extends Window {
             TaskComboBox() {
                 this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
                 this.setFilteringMode(FilteringMode.CONTAINS);
-                BeanItemContainer<GanttItemWrapper> beanItemContainer = taskTreeTable.getRawContainer();
-                List<GanttItemWrapper> itemIds = beanItemContainer.getItemIds();
+                GanttItemContainer beanItemContainer = taskTreeTable.getRawContainer();
+                Collection<GanttItemWrapper> itemIds = (Collection<GanttItemWrapper>) beanItemContainer.getItemIds();
                 for (GanttItemWrapper item : itemIds) {
                     this.addItem(item);
                     this.setItemCaption(item, String.format("[Row %d]: %s", item.getGanttIndex(), StringUtils.trim(item
