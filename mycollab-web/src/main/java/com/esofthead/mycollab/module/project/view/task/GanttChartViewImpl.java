@@ -21,8 +21,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -43,6 +42,8 @@ import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tltv.gantt.client.shared.Resolution;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -55,6 +56,7 @@ import java.util.*;
 @ViewComponent
 public class GanttChartViewImpl extends AbstractPageView implements GanttChartView {
     private static final long serialVersionUID = 1L;
+    private static Logger LOG = LoggerFactory.getLogger(GanttChartViewImpl.class);
 
     private boolean projectNavigatorVisibility = false;
 
@@ -202,13 +204,24 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
             public void run() {
                 List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
                         (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
-                if (!assignments.isEmpty()) {
-                    for (AssignWithPredecessors assignment : assignments) {
-                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, assignment);
+                if (assignments.size() == 1) {
+                    ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
+                    List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getSubTasks();
+                    for (MilestoneGanttItem milestoneGanttItem:milestoneGanttItems) {
+                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
+                        gantt.addTask(itemWrapper);
+                        taskTable.addTask(itemWrapper);
+                    }
+
+                    List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
+                    for (TaskGanttItem taskGanttItem:taskGanttItems) {
+                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
                         gantt.addTask(itemWrapper);
                         taskTable.addTask(itemWrapper);
                     }
                     UI.getCurrent().push();
+                } else {
+                    LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
                 }
             }
         });

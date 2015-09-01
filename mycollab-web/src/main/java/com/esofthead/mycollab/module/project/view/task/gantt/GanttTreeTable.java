@@ -107,7 +107,7 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label("AAA");
+                return new Label(item.getName());
 //                SimpleTask task = item.getTask();
 //
 //                String taskLinkContent;
@@ -160,7 +160,11 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(item.getPercentageComplete() + " %");
+                if (item.getPercentageComplete() != null) {
+                    return new Label(item.getPercentageComplete() + " %");
+                } else {
+                    return new Label("0 %");
+                }
             }
         });
 

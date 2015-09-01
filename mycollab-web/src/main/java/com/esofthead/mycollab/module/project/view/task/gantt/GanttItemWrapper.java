@@ -74,7 +74,6 @@ public class GanttItemWrapper {
         ownStep.setStartDate(startDate.toDate());
         ownStep.setEndDate(endDate.plusDays(1).toDate());
         ownStep.setGanttItemWrapper(this);
-        ownStep.setProgress(task.getProgress());
     }
 
     public boolean hasSubTasks() {
