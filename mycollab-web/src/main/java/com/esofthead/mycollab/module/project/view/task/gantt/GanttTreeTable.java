@@ -16,19 +16,25 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
@@ -102,7 +108,14 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new ELabel(item.getName()).withDescription(item.getName());
+                if (item.isMilestone()) {
+                    return new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + item.getName(),
+                            ContentMode.HTML).withDescription(item.getName());
+                } else if (item.isTask()) {
+                    return new ELabel(item.getName(), ContentMode.HTML).withDescription(item.getName());
+                } else {
+                    throw new MyCollabException("Do not support type " + item.getTask());
+                }
             }
         });
 
@@ -139,7 +152,7 @@ public class GanttTreeTable extends TreeTable {
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
                 List<TaskPredecessor> predecessors = item.getPredecessors();
-                if (predecessors != null && predecessors.size() > 0) {
+                if (CollectionUtils.isNotEmpty(predecessors)) {
                     StringBuilder builder = new StringBuilder();
                     for (TaskPredecessor predecessor : predecessors) {
                         builder.append(predecessor.getGanttIndex());
@@ -329,8 +342,11 @@ public class GanttTreeTable extends TreeTable {
             detailMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent event) {
-                    EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttTreeTable.this,
-                            taskWrapper.getTask().getId()));
+                    if (taskWrapper.isTask()) {
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoRead(GanttTreeTable.this, taskWrapper.getId()));
+                    } else if (taskWrapper.isMilestone()) {
+                        EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(GanttTreeTable.this, taskWrapper.getId()));
+                    }
                 }
             });
 
@@ -338,7 +354,11 @@ public class GanttTreeTable extends TreeTable {
             predecessorMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
-                    UI.getCurrent().addWindow(new PredecessorWindow(GanttTreeTable.this, taskWrapper));
+                    if (taskWrapper.isTask()) {
+                        UI.getCurrent().addWindow(new PredecessorWindow(GanttTreeTable.this, taskWrapper));
+                    } else {
+                        NotificationUtil.showWarningNotification("Can not edit predecessors for milestone");
+                    }
                 }
             });
         }

@@ -69,6 +69,14 @@ public class GanttItemWrapper {
         ownStep.setGanttItemWrapper(this);
     }
 
+    public boolean isMilestone() {
+        return task instanceof MilestoneGanttItem;
+    }
+
+    public boolean isTask() {
+        return task instanceof TaskGanttItem;
+    }
+
     public boolean hasSubTasks() {
         return task.hasSubAssignments();
     }
