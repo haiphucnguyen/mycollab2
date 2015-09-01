@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-test.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.spring.test;
+package com.esofthead.mycollab.spring.test.service;
 
 import javax.sql.DataSource;
 
@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import com.esofthead.mycollab.test.DataSourceFactoryBean;
+import com.esofthead.mycollab.test.service.DataSourceFactoryBean;
 
 @Configuration
 @Profile("test")

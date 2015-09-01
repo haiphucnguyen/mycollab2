@@ -53,7 +53,7 @@ public class QuickEditTaskWindow extends Window {
 
         EditForm editForm = new EditForm();
         Cloner cloner = new Cloner();
-        editForm.setBean(cloner.deepClone(task.getTask()));
+//        editForm.setBean(cloner.deepClone(task.getTask()));
         this.setContent(editForm);
     }
 
@@ -96,7 +96,7 @@ public class QuickEditTaskWindow extends Window {
                             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                             taskService.updateWithSession(bean, AppContext.getUsername());
                             SimpleTask updateTask = taskService.findById(bean.getId(), AppContext.getAccountId());
-                            taskModified.setTask(updateTask);
+//                            taskModified.setTask(updateTask);
                             gantt.markStepDirty(taskModified.getStep());
                             gantt.calculateMaxMinDates(taskModified);
                             close();

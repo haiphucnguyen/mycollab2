@@ -28,16 +28,16 @@ public class TaskPredecessor extends Predecessor {
     public static final String FF = "FF";
     public static final String SF = "SF";
 
-    private int ganttIndex;
+    private Integer ganttIndex;
     private Date startDate;
     private Date endDate;
     private Date dueDate;
 
-    public int getGanttIndex() {
+    public Integer getGanttIndex() {
         return ganttIndex;
     }
 
-    public void setGanttIndex(int ganttIndex) {
+    public void setGanttIndex(Integer ganttIndex) {
         this.ganttIndex = ganttIndex;
     }
 

@@ -17,12 +17,10 @@
 package com.esofthead.mycollab.module.project.domain;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -44,9 +42,6 @@ public class SimpleTask extends Task {
     private String parentTaskName;
     private Integer parentTaskKey;
     private Integer numSubTasks;
-
-    @NotBindable
-    private List<TaskPredecessor> predecessors;
 
     public Integer getNumComments() {
         return numComments;
@@ -187,14 +182,6 @@ public class SimpleTask extends Task {
     public Date getDeadlineRoundPlusOne() {
         Date value = getDeadline();
         return (value != null) ? DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
-    }
-
-    public List<TaskPredecessor> getPredecessors() {
-        return predecessors;
-    }
-
-    public void setPredecessors(List<TaskPredecessor> predecessors) {
-        this.predecessors = predecessors;
     }
 
     public enum Field {

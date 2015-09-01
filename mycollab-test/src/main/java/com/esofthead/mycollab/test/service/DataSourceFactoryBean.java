@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-test.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.test;
+package com.esofthead.mycollab.test.service;
 
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import com.esofthead.mycollab.test.TestDbConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;

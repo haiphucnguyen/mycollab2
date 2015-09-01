@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-test.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.spring.test;
+package com.esofthead.mycollab.spring.test.service;
 
 import com.esofthead.mycollab.module.ecm.MyCollabContentSessionFactory;
 import org.springframework.context.annotation.Bean;

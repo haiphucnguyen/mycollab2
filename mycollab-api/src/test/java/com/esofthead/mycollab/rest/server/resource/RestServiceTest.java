@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.spring.test.RootConfigurationTest;
+import com.esofthead.mycollab.spring.test.service.RootConfigurationTest;
 import com.esofthead.mycollab.test.rule.DbUnitInitializerRule;
 import com.esofthead.mycollab.test.rule.EssentialInitRule;
 import com.esofthead.mycollab.test.rule.ServerLifecycleRule;

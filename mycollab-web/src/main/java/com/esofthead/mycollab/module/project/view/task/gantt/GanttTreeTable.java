@@ -16,33 +16,26 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
-import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.html.DivLessFormatter;
-import com.esofthead.mycollab.module.project.ProjectResources;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.google.common.eventbus.Subscribe;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.joda.time.LocalDate;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -114,35 +107,36 @@ public class GanttTreeTable extends TreeTable {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
-                SimpleTask task = item.getTask();
-
-                String taskLinkContent;
-                String uid = UUID.randomUUID().toString();
-                String taskPriority = task.getPriority();
-                Img priorityLink = new Img(taskPriority, ProjectResources.getIconResourceLink12ByTaskPriority
-                        (taskPriority)).setTitle(taskPriority);
-
-                String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
-                A taskLink = new A().setId("tag" + uid).appendText(linkName).setStyle("display:inline");
-
-                taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
-                taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-
-                String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
-                Img avatarImg = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
-
-                Div resultDiv = new DivLessFormatter().appendChild(priorityLink, DivLessFormatter.EMPTY_SPACE(),
-                        avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
-                        TooltipHelper.buildDivTooltipEnable(uid));
-                taskLinkContent = resultDiv.write();
-
-                Label taskLbl = new Label(taskLinkContent, ContentMode.HTML);
-                if (task.isCompleted()) {
-                    taskLbl.addStyleName("completed");
-                } else if (task.isOverdue()) {
-                    taskLbl.addStyleName("overdue");
-                }
-                return taskLbl;
+                return new Label("AAA");
+//                SimpleTask task = item.getTask();
+//
+//                String taskLinkContent;
+//                String uid = UUID.randomUUID().toString();
+//                String taskPriority = task.getPriority();
+//                Img priorityLink = new Img(taskPriority, ProjectResources.getIconResourceLink12ByTaskPriority
+//                        (taskPriority)).setTitle(taskPriority);
+//
+//                String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
+//                A taskLink = new A().setId("tag" + uid).appendText(linkName).setStyle("display:inline");
+//
+//                taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
+//                taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+//
+//                String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
+//                Img avatarImg = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
+//
+//                Div resultDiv = new DivLessFormatter().appendChild(priorityLink, DivLessFormatter.EMPTY_SPACE(),
+//                        avatarImg, DivLessFormatter.EMPTY_SPACE(), taskLink, DivLessFormatter.EMPTY_SPACE(),
+//                        TooltipHelper.buildDivTooltipEnable(uid));
+//                taskLinkContent = resultDiv.write();
+//
+//                Label taskLbl = new Label(taskLinkContent, ContentMode.HTML);
+//                if (task.isCompleted()) {
+//                    taskLbl.addStyleName("completed");
+//                } else if (task.isOverdue()) {
+//                    taskLbl.addStyleName("overdue");
+//                }
+//                return taskLbl;
             }
         });
 

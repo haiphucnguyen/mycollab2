@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
+import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -45,7 +46,7 @@ import java.util.List;
  */
 public class GanttItemWrapper {
     private ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-    private SimpleTask task;
+    private AssignWithPredecessors task;
     private LocalDate startDate, endDate;
 
     private GanttExt gantt;
@@ -53,51 +54,39 @@ public class GanttItemWrapper {
     private StepExt ownStep;
     private List<GanttItemWrapper> subItems;
 
-    public GanttItemWrapper(GanttExt gantt, SimpleTask task) {
+    public GanttItemWrapper(GanttExt gantt, AssignWithPredecessors task) {
         this.gantt = gantt;
         ownStep = new StepExt();
         setTask(task);
     }
 
-    public SimpleTask getTask() {
+    public AssignWithPredecessors getTask() {
         return task;
     }
 
-    public void setTask(SimpleTask task) {
+    public void setTask(AssignWithPredecessors task) {
         this.task = task;
-        startDate = (task.getStartdate() != null) ? new LocalDate(task.getStartdate()) : new LocalDate();
-        endDate = (task.getEnddate() != null) ? new LocalDate(task.getEnddate()) : new LocalDate();
-        ownStep.setCaption(task.getTaskname());
+        startDate = (task.getStartDate() != null) ? new LocalDate(task.getStartDate()) : new LocalDate();
+        endDate = (task.getEndDate() != null) ? new LocalDate(task.getEndDate()) : new LocalDate();
+        ownStep.setCaption(task.getName());
         ownStep.setCaptionMode(Step.CaptionMode.HTML);
         ownStep.setDescription(buildTooltip());
         ownStep.setStartDate(startDate.toDate());
         ownStep.setEndDate(endDate.plusDays(1).toDate());
         ownStep.setGanttItemWrapper(this);
-        ownStep.setProgress(task.getPercentagecomplete());
+        ownStep.setProgress(task.getProgress());
     }
 
     public boolean hasSubTasks() {
-        return (task.getNumSubTasks() != null && task.getNumSubTasks() > 0);
+        return task.hasSubAssignments();
     }
 
     public String getName() {
-        return task.getTaskname();
+        return task.getName();
     }
 
     public List<GanttItemWrapper> subTasks(SearchCriteria.OrderField orderField) {
-        if (subItems == null) {
-            List<SimpleTask> subTasks = projectTaskService.findSubTasks(task.getId(), AppContext.getAccountId(), orderField);
-            subItems = new ArrayList<>();
-            if (subTasks.size() > 0) {
-                for (SimpleTask subTask : subTasks) {
-                    GanttItemWrapper subItem = new GanttItemWrapper(gantt, subTask);
-                    subItem.setParent(this);
-                    subItems.add(subItem);
-                }
-            }
-        }
-        calculateDatesByChildTasks();
-        return subItems;
+       return null;
     }
 
     private void calculateDatesByChildTasks() {
@@ -137,11 +126,11 @@ public class GanttItemWrapper {
     }
 
     public Date getActualStartDate() {
-        return task.getActualstartdate();
+        return task.getActualStartDate();
     }
 
     public Date getActualEndDate() {
-        return task.getActualenddate();
+        return task.getActualEndDate();
     }
 
     public Date getDueDate() {
@@ -149,7 +138,7 @@ public class GanttItemWrapper {
     }
 
     public Double getPercentageComplete() {
-        return task.getPercentagecomplete();
+        return task.getProgress();
     }
 
     public void setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate) {
@@ -157,15 +146,15 @@ public class GanttItemWrapper {
         if (!this.startDate.isEqual(newStartDate)) {
             hasChange = true;
             this.startDate = newStartDate;
-            task.setStartdate(startDate.toDate());
+            task.setStartDate(startDate.toDate());
             ownStep.setStartDate(startDate.toDate());
         }
 
         if (!this.endDate.isEqual(newEndDate)) {
             hasChange = true;
             this.endDate = newEndDate;
-            task.setEnddate(endDate.toDate());
-            ownStep.setEndDate(endDate.plusDays(1).toDate());
+            task.setEndDate(endDate.toDate());
+            ownStep.setEndDate(endDate.toDate());
         }
 
         if (hasChange) {
@@ -174,20 +163,19 @@ public class GanttItemWrapper {
     }
 
     public Integer getGanttIndex() {
-        return task.getGanttindex();
+        return task.getGanttIndex();
     }
 
     public void setGanttIndex(Integer ganttIndex) {
-        task.setGanttindex(ganttIndex);
+        task.setGanttIndex(ganttIndex);
     }
 
     public String getAssignUser() {
-        return task.getAssignuser();
+        return task.getAssignUser();
     }
 
     String buildTooltip() {
-        return ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, AppContext.getSiteUrl(),
-                AppContext.getTimezone());
+        return "";
     }
 
     public GanttItemWrapper getParent() {
@@ -277,7 +265,12 @@ public class GanttItemWrapper {
         }
     }
 
+    public void adjustDependentTasksDates() {
+
+    }
+
     private void onDateChanges() {
+        ownStep.setDescription(buildTooltip());
         EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, task));
         gantt.markStepDirty(ownStep);
         updateParentDates();

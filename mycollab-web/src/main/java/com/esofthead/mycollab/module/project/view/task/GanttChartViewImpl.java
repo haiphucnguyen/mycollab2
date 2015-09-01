@@ -18,16 +18,13 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
@@ -65,6 +62,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private GanttExt gantt;
     private GanttTreeTable taskTable;
     private Button toogleMenuShowBtn;
+    private GanttAssignmentService ganttAssignmentService;
     private ProjectTaskService taskService;
 
     private Set<SimpleTask> queueSetTasksUpdate = new HashSet<>();
@@ -144,7 +142,9 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         header.with(headerWrapper, toogleMenuShowBtn, resWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
                 .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+
         taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
 
         mainLayout = new MHorizontalLayout().withSpacing(false);
         mainLayout.addStyleName("gantt_container");
@@ -197,29 +197,19 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     @SuppressWarnings("unchecked")
     private void showSteps() {
-        final TaskSearchCriteria criteria = new TaskSearchCriteria();
-        criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setHasParentTask(new BooleanSearchField());
-        criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("ganttindex", SearchCriteria.ASC),
-                new SearchCriteria.OrderField("createdTime", SearchCriteria.ASC)));
-        int totalTasks = taskService.getTotalCount(criteria);
-        final int pages = totalTasks / 20;
         UI.getCurrent().access(new Runnable() {
             @Override
             public void run() {
-                for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(criteria, page + 1, 20));
-
-                    if (!tasks.isEmpty()) {
-                        for (final SimpleTask task : tasks) {
-                            final GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, task);
-                            gantt.addTask(itemWrapper);
-                            taskTable.addTask(itemWrapper);
-                        }
-                        UI.getCurrent().push();
+                List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
+                        (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
+                if (!assignments.isEmpty()) {
+                    for (AssignWithPredecessors assignment : assignments) {
+                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, assignment);
+                        gantt.addTask(itemWrapper);
+                        taskTable.addTask(itemWrapper);
                     }
+                    UI.getCurrent().push();
                 }
-                taskTable.updateWholeGanttIndexes();
             }
         });
     }

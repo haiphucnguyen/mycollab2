@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
@@ -178,10 +178,12 @@ public class GanttExt extends Gantt {
 
     private void updateTasksInfoByResizeOrMove(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        ganttItemWrapper.setStartAndEndDate(new LocalDate(startDate), new LocalDate(endDate));
+        LocalDate suggestedStartDate = new LocalDate(startDate);
+        LocalDate suggestedEndDate = new LocalDate(endDate);
+        ganttItemWrapper.setStartAndEndDate(suggestedStartDate, suggestedEndDate);
         ganttItemWrapper.adjustTaskDatesByPredecessors(ganttItemWrapper.getPredecessors());
         this.markStepDirty(ganttItemWrapper.getStep());
-        SimpleTask task = ganttItemWrapper.getTask();
+        AssignWithPredecessors task = ganttItemWrapper.getTask();
         EventBusFactory.getInstance().post(new TaskEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
         EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));
         this.calculateMaxMinDates(ganttItemWrapper);
