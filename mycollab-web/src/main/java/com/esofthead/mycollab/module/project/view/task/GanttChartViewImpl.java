@@ -220,6 +220,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                         GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
                         taskTable.addTask(itemWrapper);
                     }
+                    taskTable.updateWholeGanttIndexes();
                     UI.getCurrent().push();
                 } else {
                     LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());

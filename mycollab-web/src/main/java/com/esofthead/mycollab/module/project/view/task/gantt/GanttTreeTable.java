@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -46,6 +47,7 @@ import java.util.*;
  */
 public class GanttTreeTable extends TreeTable {
     private ProjectTaskService projectTaskService;
+    private MilestoneService milestoneService;
     private GanttExt gantt;
     private GanttItemContainer beanContainer;
 
@@ -64,6 +66,7 @@ public class GanttTreeTable extends TreeTable {
     public GanttTreeTable(final GanttExt gantt) {
         super();
         projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+        milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
         this.gantt = gantt;
         this.setWidth("800px");
         this.setBuffered(false);
@@ -257,7 +260,6 @@ public class GanttTreeTable extends TreeTable {
         this.markAsDirtyRecursive();
     }
 
-
     public void addTask(GanttItemWrapper itemWrapper) {
         beanContainer.addBean(itemWrapper);
         gantt.addTask(itemWrapper);
@@ -291,7 +293,6 @@ public class GanttTreeTable extends TreeTable {
                 this.setParent(child, parent);
                 gantt.addTask(stepIndex + count + 1, child);
                 if (child.hasSubTasks()) {
-                    System.out.println("Task: " + child.getName());
                     this.setChildrenAllowed(child, true);
                     this.setCollapsed(child, false);
                 } else {
@@ -319,14 +320,22 @@ public class GanttTreeTable extends TreeTable {
     public void updateWholeGanttIndexes() {
         if (ganttIndexIsChanged) {
             Collection<GanttItemWrapper> items = beanContainer.getItemIds();
-            List<Map<String, Integer>> mapIndexes = new ArrayList<>();
+            List<Map<String, Integer>> taskMapIndexes = new ArrayList<>();
+            List<Map<String, Integer>> milestoneMapIndexes = new ArrayList<>();
             for (GanttItemWrapper item : items) {
                 Map<String, Integer> value = new HashMap<>(2);
                 value.put("id", item.getId());
                 value.put("index", item.getGanttIndex());
-                mapIndexes.add(value);
+                if (item.isTask()) {
+                    taskMapIndexes.add(value);
+                } else if (item.isMilestone()) {
+                    milestoneMapIndexes.add(value);
+                } else {
+                    throw new MyCollabException("Do not support type " + item.getTask());
+                }
             }
-            projectTaskService.massUpdateGanttIndexes(mapIndexes, AppContext.getAccountId());
+            projectTaskService.massUpdateGanttIndexes(taskMapIndexes, AppContext.getAccountId());
+            milestoneService.massUpdateGanttIndexes(milestoneMapIndexes, AppContext.getAccountId());
         }
     }
 

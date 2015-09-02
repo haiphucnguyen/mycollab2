@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -37,14 +38,14 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class QuickEditTaskWindow extends Window {
+public class QuickEditGanttItemWindow extends Window {
     private GanttExt gantt;
-    private GanttItemWrapper taskModified;
+    private GanttItemWrapper ganttItemModified;
 
-    public QuickEditTaskWindow(GanttExt gantt, GanttItemWrapper task) {
+    public QuickEditGanttItemWindow(GanttExt gantt, GanttItemWrapper ganttItem) {
         super("Quick Edit Task");
         this.gantt = gantt;
-        this.taskModified = task;
+        this.ganttItemModified = ganttItem;
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
@@ -53,13 +54,13 @@ public class QuickEditTaskWindow extends Window {
 
         EditForm editForm = new EditForm();
         Cloner cloner = new Cloner();
-//        editForm.setBean(cloner.deepClone(task.getTask()));
+        editForm.setBean(cloner.deepClone(ganttItem.getTask()));
         this.setContent(editForm);
     }
 
-    private class EditForm extends AdvancedEditBeanForm<SimpleTask> {
+    private class EditForm extends AdvancedEditBeanForm<AssignWithPredecessors> {
         @Override
-        public void setBean(final SimpleTask item) {
+        public void setBean(final AssignWithPredecessors item) {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setBeanFormFieldFactory(new EditFormFieldFactory(EditForm.this));
             super.setBean(item);
@@ -83,7 +84,7 @@ public class QuickEditTaskWindow extends Window {
                 Button updateAllBtn = new Button("Update other fields", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditTaskWindow.this, EditForm.this.bean));
+                        EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, EditForm.this.bean));
                         close();
                     }
                 });
@@ -94,11 +95,11 @@ public class QuickEditTaskWindow extends Window {
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         if (EditForm.this.validateForm()) {
                             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                            taskService.updateWithSession(bean, AppContext.getUsername());
+//                            taskService.updateWithSession(bean, AppContext.getUsername());
                             SimpleTask updateTask = taskService.findById(bean.getId(), AppContext.getAccountId());
-//                            taskModified.setTask(updateTask);
-                            gantt.markStepDirty(taskModified.getStep());
-                            gantt.calculateMaxMinDates(taskModified);
+//                            ganttItemModified.setTask(updateTask);
+                            gantt.markStepDirty(ganttItemModified.getStep());
+                            gantt.calculateMaxMinDates(ganttItemModified);
                             close();
                         }
                     }
@@ -108,7 +109,7 @@ public class QuickEditTaskWindow extends Window {
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        QuickEditTaskWindow.this.close();
+                        QuickEditGanttItemWindow.this.close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
@@ -135,10 +136,10 @@ public class QuickEditTaskWindow extends Window {
             }
         }
 
-        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleTask> {
+        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<AssignWithPredecessors> {
             private static final long serialVersionUID = 1L;
 
-            public EditFormFieldFactory(GenericBeanForm<SimpleTask> form) {
+            public EditFormFieldFactory(GenericBeanForm<AssignWithPredecessors> form) {
                 super(form);
             }
 

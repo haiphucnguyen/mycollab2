@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
@@ -168,13 +169,17 @@ class PredecessorWindow extends Window {
                             int rowValue = Integer.parseInt(value);
                             GanttItemWrapper item = taskTreeTable.getRawContainer().getItemByGanttIndex(rowValue);
                             if (item != null) {
-                                taskComboBox.setValue(item);
-                                if (predecessorComboBox.getValue() == null) {
-                                    predecessorComboBox.setValue(TaskPredecessor.FS);
-                                }
+                                if (item.isTask()) {
+                                    taskComboBox.setValue(item);
+                                    if (predecessorComboBox.getValue() == null) {
+                                        predecessorComboBox.setValue(TaskPredecessor.FS);
+                                    }
 
-                                if (!PredecessorsLayout.this.hasEmptyRow()) {
-                                    PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
+                                    if (!PredecessorsLayout.this.hasEmptyRow()) {
+                                        PredecessorsLayout.this.addComponent(new PredecessorInputLayout());
+                                    }
+                                } else {
+                                    NotificationUtil.showWarningNotification("The predecessor must be a task");
                                 }
                             } else {
                                 rowField.setValue("");
@@ -290,11 +295,13 @@ class PredecessorWindow extends Window {
                 this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
                 this.setFilteringMode(FilteringMode.CONTAINS);
                 GanttItemContainer beanItemContainer = taskTreeTable.getRawContainer();
-                Collection<GanttItemWrapper> itemIds = (Collection<GanttItemWrapper>) beanItemContainer.getItemIds();
+                Collection<GanttItemWrapper> itemIds = beanItemContainer.getItemIds();
                 for (GanttItemWrapper item : itemIds) {
-                    this.addItem(item);
-                    this.setItemCaption(item, String.format("[Row %d]: %s", item.getGanttIndex(), StringUtils.trim(item
-                            .getName(), 50, true)));
+                    if (item.isTask()) {
+                        this.addItem(item);
+                        this.setItemCaption(item, String.format("[Row %d]: %s", item.getGanttIndex(), StringUtils.trim(item
+                                .getName(), 50, true)));
+                    }
                 }
             }
         }

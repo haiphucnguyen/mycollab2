@@ -17,21 +17,25 @@
 
 package com.esofthead.mycollab.module.project.service;
 
+import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
- * 
  * @author MyCollab Ltd.
  */
-public interface MilestoneService extends
-		IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {
+public interface MilestoneService extends IDefaultService<Integer, Milestone, MilestoneSearchCriteria> {
 
-	@Cacheable
-	SimpleMilestone findById(Integer milestoneId, @CacheKey Integer sAccountId);
+    @Cacheable
+    SimpleMilestone findById(Integer milestoneId, @CacheKey Integer sAccountId);
+
+    @CacheEvict
+    void massUpdateGanttIndexes(List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId);
 }
