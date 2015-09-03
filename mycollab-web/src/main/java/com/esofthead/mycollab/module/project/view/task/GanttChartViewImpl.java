@@ -25,9 +25,8 @@ import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
 import com.esofthead.mycollab.module.project.domain.ProjectGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
@@ -68,24 +67,23 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private GanttTreeTable taskTable;
     private Button toogleMenuShowBtn;
     private GanttAssignmentService ganttAssignmentService;
-    private ProjectTaskService taskService;
 
     private Set<AssignWithPredecessors> queueSetTasksUpdate = new HashSet<>();
 
-    private ApplicationEventListener<TaskEvent.ClearGanttItemsNeedUpdate> massUpdateGanttItemsUpdateHandler = new
-            ApplicationEventListener<TaskEvent.ClearGanttItemsNeedUpdate>() {
+    private ApplicationEventListener<GanttEvent.ClearGanttItemsNeedUpdate> massUpdateGanttItemsUpdateHandler = new
+            ApplicationEventListener<GanttEvent.ClearGanttItemsNeedUpdate>() {
                 @Override
                 @Subscribe
-                public void handle(TaskEvent.ClearGanttItemsNeedUpdate event) {
+                public void handle(GanttEvent.ClearGanttItemsNeedUpdate event) {
                     massUpdateTasksDatesInQueue();
                 }
             };
 
-    private ApplicationEventListener<TaskEvent.AddGanttItemUpdateToQueue> addTaskToQueueHandler = new
-            ApplicationEventListener<TaskEvent.AddGanttItemUpdateToQueue>() {
+    private ApplicationEventListener<GanttEvent.AddGanttItemUpdateToQueue> addTaskToQueueHandler = new
+            ApplicationEventListener<GanttEvent.AddGanttItemUpdateToQueue>() {
                 @Override
                 @Subscribe
-                public void handle(TaskEvent.AddGanttItemUpdateToQueue event) {
+                public void handle(GanttEvent.AddGanttItemUpdateToQueue event) {
                     AssignWithPredecessors item = (AssignWithPredecessors) event.getData();
                     queueSetTasksUpdate.add(item);
                 }
@@ -148,7 +146,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         header.with(headerWrapper, toogleMenuShowBtn, resWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
                 .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
-        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
         ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
 
         mainLayout = new MHorizontalLayout().withSpacing(false);

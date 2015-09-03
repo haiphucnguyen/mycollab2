@@ -22,6 +22,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
+import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
@@ -53,11 +54,11 @@ public class GanttTreeTable extends TreeTable {
 
     private boolean ganttIndexIsChanged = false;
 
-    private ApplicationEventListener<TaskEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
-            ApplicationEventListener<TaskEvent.UpdateGanttItemDates>() {
+    private ApplicationEventListener<GanttEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
+            ApplicationEventListener<GanttEvent.UpdateGanttItemDates>() {
                 @Subscribe
                 @Override
-                public void handle(TaskEvent.UpdateGanttItemDates event) {
+                public void handle(GanttEvent.UpdateGanttItemDates event) {
                     GanttItemWrapper item = (GanttItemWrapper) event.getData();
                     updateTaskTree(item);
                 }

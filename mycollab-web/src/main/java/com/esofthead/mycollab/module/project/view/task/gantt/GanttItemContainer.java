@@ -25,6 +25,7 @@ import java.util.List;
  * @since 5.1.3
  */
 public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
+
     public GanttItemContainer() {
         super(GanttItemWrapper.class);
     }

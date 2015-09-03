@@ -25,8 +25,9 @@ import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.vaadin.ui.UI;
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
 
@@ -41,6 +42,7 @@ import java.util.List;
 public class GanttItemWrapper {
     private AssignWithPredecessors task;
     private LocalDate startDate, endDate;
+    private LocalDate boundStartDate = new LocalDate(1970, 1, 1), boundEndDate = new LocalDate(2100, 1, 1);
 
     private GanttExt gantt;
     private GanttItemWrapper parent;
@@ -120,7 +122,7 @@ public class GanttItemWrapper {
 
     private void calculateDatesByChildTasks() {
         if (subItems != null && subItems.size() > 0) {
-            LocalDate calStartDate = new LocalDate(2099, 1, 1);
+            LocalDate calStartDate = new LocalDate(2100, 1, 1);
             LocalDate calEndDate = new LocalDate(1970, 1, 1);
             for (GanttItemWrapper item : subItems) {
                 calStartDate = DateTimeUtils.min(calStartDate, item.getStartDate());
@@ -220,11 +222,11 @@ public class GanttItemWrapper {
     }
 
     public void adjustTaskDatesByPredecessors(List<TaskPredecessor> predecessors) {
-        if (predecessors.size() > 0) {
+        if (CollectionUtils.isNotEmpty(predecessors)) {
             LocalDate currentStartDate = new LocalDate(getStartDate());
             LocalDate currentEndDate = new LocalDate(getEndDate());
-            LocalDate boundStartDate = new LocalDate(1970, 1, 1);
-            LocalDate boundEndDate = new LocalDate(2100, 1, 1);
+            boundStartDate = new LocalDate(1970, 1, 1);
+            boundEndDate = new LocalDate(2100, 1, 1);
 
             for (TaskPredecessor predecessor : predecessors) {
                 int ganttIndex = predecessor.getGanttIndex();
@@ -294,13 +296,33 @@ public class GanttItemWrapper {
         }
     }
 
-    public void adjustDependentTasksDates() {
+    public void resetBoundDates() {
+        boundStartDate = new LocalDate(1970, 1, 1);
+        boundEndDate = new LocalDate(2100, 1, 1);
+    }
 
+    public void adjustDependentTasksDates() {
+        List<TaskPredecessor> dependents = task.getDependents();
+        if (CollectionUtils.isNotEmpty(dependents)) {
+            for (TaskPredecessor dependent : dependents) {
+                if (TaskPredecessor.FS.equals(dependent.getPredestype())) {
+
+                } else if (TaskPredecessor.FF.equals(dependent.getPredestype())) {
+
+                } else if (TaskPredecessor.SF.equals(dependent.getPredestype())) {
+
+                } else if (TaskPredecessor.SS.equals(dependent.getPredestype())) {
+
+                } else {
+                    throw new MyCollabException("Do not support predecessor type " + dependent.getPredestype());
+                }
+            }
+        }
     }
 
     private void onDateChanges() {
         ownStep.setDescription(buildTooltip());
-        EventBusFactory.getInstance().post(new TaskEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, task));
+        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, task));
         gantt.markStepDirty(ownStep);
         updateParentDates();
         UI.getCurrent().push();

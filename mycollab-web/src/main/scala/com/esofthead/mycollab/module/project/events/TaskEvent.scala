@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.project.events
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent
-import com.esofthead.mycollab.module.project.domain.{AssignWithPredecessors, SimpleTask}
+import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper
 
@@ -44,12 +44,6 @@ object TaskEvent {
     class GotoRead(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
     class GotoGanttChart(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-
-    class ClearGanttItemsNeedUpdate(source: AnyRef) extends ApplicationEvent(source, null) {}
-
-    class UpdateGanttItemDates(source: AnyRef, data: GanttItemWrapper) extends ApplicationEvent(source, data) {}
-
-    class AddGanttItemUpdateToQueue(source: AnyRef, data: AssignWithPredecessors) extends ApplicationEvent(source, data) {}
 
     class GotoKanbanView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
