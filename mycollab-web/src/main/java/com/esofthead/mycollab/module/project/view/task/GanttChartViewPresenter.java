@@ -77,6 +77,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
     private ApplicationEventListener<GanttEvent.ModifyPredecessors> predecessorsModifyHandler = new
             ApplicationEventListener<GanttEvent.ModifyPredecessors>() {
                 @Override
+                @Subscribe
                 public void handle(GanttEvent.ModifyPredecessors event) {
                     GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) event.getSource();
                     List<TaskPredecessor> predecessors = (List<TaskPredecessor>) event.getData();
@@ -110,7 +111,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
 
     private void massUpdateTasksDatesInQueue() {
         if (queueSetTasksUpdate.size() > 0) {
-            ganttAssignmentService.massUpdateTaskDates(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
+            ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
             queueSetTasksUpdate.clear();
         }
     }

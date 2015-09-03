@@ -16,20 +16,40 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.dao.GanttMapperExt;
 import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
+import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
+import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 @Service
 public class GanttAssignmentServiceImpl implements GanttAssignmentService {
+    private static Logger LOG = LoggerFactory.getLogger(GanttAssignmentServiceImpl.class);
 
     @Autowired
     private GanttMapperExt ganttMapperExt;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     public List<AssignWithPredecessors> getTaskWithPredecessors(List<Integer> projectIds, @CacheKey Integer sAccountId) {
@@ -37,37 +57,90 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
     }
 
     @Override
-    public void massUpdateTaskDates(final List<AssignWithPredecessors> tasks, @CacheKey Integer sAccountId) {
-//        if (tasks.size() > 0) {
-//            Lock lock = DistributionLockUtil.getLock("task-service" + sAccountId);
-//            try {
-//                final long now = new GregorianCalendar().getTimeInMillis();
-//                if (lock.tryLock(30, TimeUnit.SECONDS)) {
-//                    try (Connection connection = dataSource.getConnection()) {
-//                        connection.setAutoCommit(false);
-//                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET `startdate` = ?, " +
-//                                "`enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
-//                        for (int i = 0; i < tasks.size(); i++) {
-//                            SimpleTask task = tasks.get(i);
-//                            if (task.getStartdate() != null && task.getEnddate() != null) {
-//                                preparedStatement.setDate(1, new Date(tasks.get(i).getStartdate().getTime()));
-//                                preparedStatement.setDate(2, new Date(tasks.get(i).getEnddate().getTime()));
-//                                preparedStatement.setDate(3, new Date(now));
-//                                preparedStatement.setInt(4, tasks.get(i).getId());
-//                                preparedStatement.addBatch();
-//                            } else {
-//                                LOG.error("Task " + BeanUtility.printBeanObj(task) + " should have not null dates");
-//                            }
-//
-//                        }
-//                        preparedStatement.executeBatch();
-//                        connection.commit();
-//                    }
-//                }
-//            } catch (Exception e) {
-//                throw new MyCollabException(e);
-//            }
-//        }
+    public void massUpdateGanttItems(final List<AssignWithPredecessors> ganttItems, Integer sAccountId) {
+        if (CollectionUtils.isNotEmpty(ganttItems)) {
+            List<MilestoneGanttItem> milestoneGanttItems = new ArrayList<>();
+            List<TaskGanttItem> taskGanttItems = new ArrayList<>();
+            for (AssignWithPredecessors ganttItem : ganttItems) {
+                if (ganttItem instanceof MilestoneGanttItem) {
+                    milestoneGanttItems.add((MilestoneGanttItem) ganttItem);
+                } else if (ganttItem instanceof TaskGanttItem) {
+                    taskGanttItems.add((TaskGanttItem) ganttItem);
+                } else {
+                    throw new MyCollabException("Do not support save gantt item " + ganttItem);
+                }
+            }
+            massUpdateMilestoneGanttItems(milestoneGanttItems, sAccountId);
+            massUpdateTaskGanttItems(taskGanttItems, sAccountId);
+        }
 
+    }
+
+    private void massUpdateMilestoneGanttItems(final List<MilestoneGanttItem> milestoneGanttItems, Integer sAccountId) {
+        if (CollectionUtils.isNotEmpty(milestoneGanttItems)) {
+            Lock lock = DistributionLockUtil.getLock("gantt-task-service" + sAccountId);
+            try {
+                final long now = new GregorianCalendar().getTimeInMillis();
+                if (lock.tryLock(30, TimeUnit.SECONDS)) {
+                    try (Connection connection = dataSource.getConnection()) {
+                        connection.setAutoCommit(false);
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_milestone` SET " +
+                                "name = ?, `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
+                        for (int i = 0; i < milestoneGanttItems.size(); i++) {
+                            MilestoneGanttItem milestone = milestoneGanttItems.get(i);
+                            if (milestone.getStartDate() != null && milestone.getEndDate() != null) {
+                                preparedStatement.setString(1, milestoneGanttItems.get(i).getName());
+                                preparedStatement.setDate(2, new Date(milestoneGanttItems.get(i).getStartDate().getTime()));
+                                preparedStatement.setDate(3, new Date(milestoneGanttItems.get(i).getEndDate().getTime()));
+                                preparedStatement.setDate(4, new Date(now));
+                                preparedStatement.setInt(5, milestoneGanttItems.get(i).getId());
+                                preparedStatement.addBatch();
+                            } else {
+                                LOG.error("Task " + BeanUtility.printBeanObj(milestone) + " should have not null dates");
+                            }
+
+                        }
+                        preparedStatement.executeBatch();
+                        connection.commit();
+                    }
+                }
+            } catch (Exception e) {
+                throw new MyCollabException(e);
+            }
+        }
+    }
+
+    private void massUpdateTaskGanttItems(final List<TaskGanttItem> taskGanttItems, Integer sAccountId) {
+        if (CollectionUtils.isNotEmpty(taskGanttItems)) {
+            Lock lock = DistributionLockUtil.getLock("gantt-task-service" + sAccountId);
+            try {
+                final long now = new GregorianCalendar().getTimeInMillis();
+                if (lock.tryLock(30, TimeUnit.SECONDS)) {
+                    try (Connection connection = dataSource.getConnection()) {
+                        connection.setAutoCommit(false);
+                        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET " +
+                                "taskname = ?, `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
+                        for (int i = 0; i < taskGanttItems.size(); i++) {
+                            TaskGanttItem task = taskGanttItems.get(i);
+                            if (task.getStartDate() != null && task.getEndDate() != null) {
+                                preparedStatement.setString(1, taskGanttItems.get(i).getName());
+                                preparedStatement.setDate(2, new Date(taskGanttItems.get(i).getStartDate().getTime()));
+                                preparedStatement.setDate(3, new Date(taskGanttItems.get(i).getEndDate().getTime()));
+                                preparedStatement.setDate(4, new Date(now));
+                                preparedStatement.setInt(5, taskGanttItems.get(i).getId());
+                                preparedStatement.addBatch();
+                            } else {
+                                LOG.error("Task " + BeanUtility.printBeanObj(task) + " should have not null dates");
+                            }
+
+                        }
+                        preparedStatement.executeBatch();
+                        connection.commit();
+                    }
+                }
+            } catch (Exception e) {
+                throw new MyCollabException(e);
+            }
+        }
     }
 }

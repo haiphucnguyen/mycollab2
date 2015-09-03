@@ -305,16 +305,9 @@ public class GanttItemWrapper {
         List<TaskPredecessor> dependents = task.getDependents();
         if (CollectionUtils.isNotEmpty(dependents)) {
             for (TaskPredecessor dependent : dependents) {
-                if (TaskPredecessor.FS.equals(dependent.getPredestype())) {
-
-                } else if (TaskPredecessor.FF.equals(dependent.getPredestype())) {
-
-                } else if (TaskPredecessor.SF.equals(dependent.getPredestype())) {
-
-                } else if (TaskPredecessor.SS.equals(dependent.getPredestype())) {
-
-                } else {
-                    throw new MyCollabException("Do not support predecessor type " + dependent.getPredestype());
+                GanttItemWrapper dependentGanttItem = gantt.getBeanContainer().getItemByGanttIndex(dependent.getGanttIndex());
+                if (dependentGanttItem != null) {
+                    dependentGanttItem.adjustTaskDatesByPredecessors(dependentGanttItem.getPredecessors());
                 }
             }
         }

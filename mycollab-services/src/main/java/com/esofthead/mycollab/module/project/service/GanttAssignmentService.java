@@ -30,5 +30,5 @@ public interface GanttAssignmentService extends IService {
     List<AssignWithPredecessors> getTaskWithPredecessors(List<Integer> projectIds, @CacheKey Integer sAccountId);
 
     @CacheEvict
-    void massUpdateTaskDates(List<AssignWithPredecessors> tasks, @CacheKey Integer sAccountId);
+    void massUpdateGanttItems(List<AssignWithPredecessors> ganttItems, @CacheKey Integer sAccountId);
 }

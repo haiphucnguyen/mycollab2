@@ -73,7 +73,8 @@
         #repeat($_parameter.projectIds $projectId "," "(" ")")
         @{projectId}
         #end
-        ORDER BY m_prj_project.planStartDate ASC, m_prj_project.planEndDate ASC
+        ORDER BY ISNULL(m_prj_milestone.ganttindex), m_prj_milestone.ganttindex ASC, m_prj_project.planStartDate ASC, m_prj_project.planEndDate
+        ASC
     </select>
 
     <select id="selectMilestones" resultMap="MilestoneGanttItem" parameterType="Integer" lang="velocity">
@@ -86,7 +87,7 @@
         FROM m_prj_milestone
         LEFT OUTER JOIN s_user ON (m_prj_milestone.owner = s_user.username)
         WHERE m_prj_milestone.projectid = @{prjId}
-        ORDER BY m_prj_milestone.startdate ASC, m_prj_milestone.enddate ASC
+        ORDER BY ISNULL(m_prj_milestone.ganttindex), m_prj_milestone.ganttindex ASC, m_prj_milestone.startdate ASC, m_prj_milestone.enddate ASC
     </select>
 
     <select id="selectTasksWithMilestone" resultMap="TaskGanttItemWithoutParent" parameterType="Integer" lang="velocity">
@@ -113,7 +114,7 @@
         LEFT OUTER JOIN m_prj_predecessor AS dep_predecessor ON (m_prj_task.id=dep_predecessor.descId AND dep_predecessor.type='Project-Task')
         LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
         WHERE m_prj_task.milestoneId = @{id}
-        ORDER BY m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
+        ORDER BY ISNULL(m_prj_task.ganttindex), m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
     </select>
 
     <select id="selectTasksWithoutMilestone" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
@@ -140,7 +141,8 @@
         LEFT OUTER JOIN m_prj_predecessor AS dep_predecessor ON (m_prj_task.id=dep_predecessor.descId AND dep_predecessor.type='Project-Task')
         LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
         WHERE m_prj_task.milestoneId IS NULL AND m_prj_task.projectid = @{prjId} AND m_prj_task.parentTaskId IS NULL
-        ORDER BY m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
+        ORDER BY ISNULL(m_prj_task.ganttindex), m_prj_task.ganttindex ASC, m_prj_task.startdate ASC,
+        m_prj_task.enddate ASC
     </select>
 
     <select id="selectSubTasks" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
@@ -167,6 +169,6 @@
         LEFT OUTER JOIN m_prj_predecessor AS dep_predecessor ON (m_prj_task.id=dep_predecessor.descId AND dep_predecessor.type='Project-Task')
         LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
         WHERE m_prj_task.parentTaskId = @{id}
-        ORDER BY m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
+        ORDER BY ISNULL(m_prj_task.ganttindex), m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
     </select>
 </mapper>
