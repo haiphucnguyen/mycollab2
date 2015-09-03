@@ -18,14 +18,12 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
 import com.esofthead.mycollab.module.project.domain.ProjectGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
-import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
@@ -39,7 +37,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -49,7 +46,8 @@ import org.slf4j.LoggerFactory;
 import org.tltv.gantt.client.shared.Resolution;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -67,27 +65,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private GanttTreeTable taskTable;
     private Button toogleMenuShowBtn;
     private GanttAssignmentService ganttAssignmentService;
-
-    private Set<AssignWithPredecessors> queueSetTasksUpdate = new HashSet<>();
-
-    private ApplicationEventListener<GanttEvent.ClearGanttItemsNeedUpdate> massUpdateGanttItemsUpdateHandler = new
-            ApplicationEventListener<GanttEvent.ClearGanttItemsNeedUpdate>() {
-                @Override
-                @Subscribe
-                public void handle(GanttEvent.ClearGanttItemsNeedUpdate event) {
-                    massUpdateTasksDatesInQueue();
-                }
-            };
-
-    private ApplicationEventListener<GanttEvent.AddGanttItemUpdateToQueue> addTaskToQueueHandler = new
-            ApplicationEventListener<GanttEvent.AddGanttItemUpdateToQueue>() {
-                @Override
-                @Subscribe
-                public void handle(GanttEvent.AddGanttItemUpdateToQueue event) {
-                    AssignWithPredecessors item = (AssignWithPredecessors) event.getData();
-                    queueSetTasksUpdate.add(item);
-                }
-            };
 
     public GanttChartViewImpl() {
         this.setSizeFull();
@@ -154,27 +131,11 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         this.with(header, mainLayout).expand(mainLayout);
     }
 
-    @Override
-    public void attach() {
-        EventBusFactory.getInstance().register(addTaskToQueueHandler);
-        EventBusFactory.getInstance().register(massUpdateGanttItemsUpdateHandler);
-        super.attach();
-    }
 
     @Override
     public void detach() {
-        massUpdateTasksDatesInQueue();
-        EventBusFactory.getInstance().unregister(addTaskToQueueHandler);
-        EventBusFactory.getInstance().unregister(massUpdateGanttItemsUpdateHandler);
         setProjectNavigatorVisibility(true);
         super.detach();
-    }
-
-    private void massUpdateTasksDatesInQueue() {
-        if (queueSetTasksUpdate.size() > 0) {
-            ganttAssignmentService.massUpdateTaskDates(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
-            queueSetTasksUpdate.clear();
-        }
     }
 
     private void setProjectNavigatorVisibility(boolean visibility) {
@@ -195,6 +156,16 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         mainLayout.with(taskTable, gantt).expand(gantt);
 
         showSteps();
+    }
+
+    @Override
+    public GanttExt getGantt() {
+        return gantt;
+    }
+
+    @Override
+    public GanttTreeTable getTaskTable() {
+        return taskTable;
     }
 
     @SuppressWarnings("unchecked")

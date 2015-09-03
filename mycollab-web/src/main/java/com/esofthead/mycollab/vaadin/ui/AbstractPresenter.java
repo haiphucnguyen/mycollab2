@@ -23,6 +23,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.mvp.service.ComponentScannerService;
+import com.vaadin.server.ClientConnector;
 import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +61,19 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         if (view == null) {
             try {
                 view = implClass.newInstance();
+                view.addAttachListener(new ClientConnector.AttachListener() {
+                    @Override
+                    public void attach(ClientConnector.AttachEvent event) {
+                        viewAttached();
+                    }
+                });
+
+                view.addDetachListener(new ClientConnector.DetachListener() {
+                    @Override
+                    public void detach(ClientConnector.DetachEvent event) {
+                        viewDetached();
+                    }
+                });
                 postInitView();
             } catch (Exception e) {
                 LOG.error("Can not init view " + implClass, e);
@@ -69,6 +83,11 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
 
     protected void postInitView() {
     }
+
+    protected void viewAttached() {
+    }
+
+    protected void viewDetached() {}
 
     @Override
     public void go(ComponentContainer container, ScreenData<?> data) {

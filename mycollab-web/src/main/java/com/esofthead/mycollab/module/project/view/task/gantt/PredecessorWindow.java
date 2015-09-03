@@ -18,7 +18,9 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
+import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -99,11 +101,7 @@ class PredecessorWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 List<TaskPredecessor> predecessors = predecessorsLayout.buildPredecessors();
-                ganttItemWrapper.adjustTaskDatesByPredecessors(predecessors);
-                ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                projectTaskService.massUpdatePredecessors(ganttItemWrapper.getId(), predecessors, AppContext.getAccountId());
-                ganttItemWrapper.getTask().setPredecessors(predecessors);
-                taskTreeTable.refreshRowCache();
+                EventBusFactory.getInstance().post(new GanttEvent.ModifyPredecessors(ganttItemWrapper, predecessors));
                 PredecessorWindow.this.close();
             }
         });
