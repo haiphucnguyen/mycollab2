@@ -130,7 +130,7 @@ public class GanttItemWrapper {
     }
 
     private void calculateDatesByChildTasks() {
-        if (subItems != null && subItems.size() > 0) {
+        if (CollectionUtils.isNotEmpty(subItems)) {
             LocalDate calStartDate = new LocalDate(2100, 1, 1);
             LocalDate calEndDate = new LocalDate(1970, 1, 1);
             for (GanttItemWrapper item : subItems) {
@@ -357,7 +357,6 @@ public class GanttItemWrapper {
         if (parentTask != null) {
             parentTask.calculateDatesByChildTasks();
             gantt.markStepDirty(parentTask.getStep());
-            parentTask.updateParentDates();
         }
     }
 }

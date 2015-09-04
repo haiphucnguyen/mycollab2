@@ -66,7 +66,10 @@ public class BusinessDayTimeUtils {
             calc1.setStartDate(start);
             start = calc1.getCurrentBusinessDate();
             calc1.setStartDate(end);
-            end = calc1.getCurrentBusinessDate();
+            if (calc1.isNonWorkingDay(end)) {
+                candidateDuration -=1;
+                end = calc1.getCurrentBusinessDate();
+            }
             long possibleDurations = (end.toDate().getTime() - start.toDate().getTime()) / DAY_IN_MILIS;
             int varDays = Math.round((possibleDurations + 1) / 2);
             calc1.setStartDate(start);

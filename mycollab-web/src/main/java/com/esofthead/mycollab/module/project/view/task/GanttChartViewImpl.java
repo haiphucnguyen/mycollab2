@@ -70,7 +70,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         this.setSizeFull();
         this.withMargin(true);
 
-        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
+        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         Label headerText = new Label("Gantt chart", ContentMode.HTML);
