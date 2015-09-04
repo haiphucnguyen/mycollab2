@@ -121,5 +121,9 @@ public class BusinessDateTimeUtilsTest {
         startDate = new LocalDate(2015, 8, 27);
         endDate = new LocalDate(2015, 8, 30);
         Assert.assertEquals(2, BusinessDayTimeUtils.duration(startDate, endDate));
+
+        startDate = new LocalDate(2013, 5, 3);
+        endDate = new LocalDate(2015, 9, 4);
+        Assert.assertEquals(611, BusinessDayTimeUtils.duration(startDate, endDate));
     }
 }

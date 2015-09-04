@@ -184,9 +184,7 @@ public class GanttExt extends Gantt {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
         LocalDate suggestedStartDate = new LocalDate(startDate);
         LocalDate suggestedEndDate = new LocalDate(endDate);
-        ganttItemWrapper.setStartAndEndDate(suggestedStartDate, suggestedEndDate);
-        ganttItemWrapper.adjustTaskDatesByPredecessors(ganttItemWrapper.getPredecessors());
-        ganttItemWrapper.adjustDependentTasksDates();
+        ganttItemWrapper.setStartAndEndDate(suggestedStartDate, suggestedEndDate, true, true);
         this.markStepDirty(ganttItemWrapper.getStep());
         AssignWithPredecessors task = ganttItemWrapper.getTask();
         EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));

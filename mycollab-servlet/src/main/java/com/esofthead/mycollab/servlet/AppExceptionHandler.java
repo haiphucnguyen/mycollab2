@@ -57,6 +57,10 @@ public class AppExceptionHandler extends GenericHttpServlet {
             requestUri = "Unknown";
         }
 
+        if (request.getHeader("User-Agent") == null) {
+            return;
+        }
+
         try {
             if ((status_code != null && status_code == 404) || ("404".equals(request.getParameter("param")))) {
                 LOG.error("Page 404: " + printRequest(request));
