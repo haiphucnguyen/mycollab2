@@ -194,7 +194,7 @@ public class GanttItemWrapper {
             hasChange = true;
             this.endDate = newEndDate;
             task.setEndDate(endDate.toDate());
-            ownStep.setEndDate(endDate.toDate());
+            ownStep.setEndDate(endDate.plusDays(1).toDate());
         }
 
         if (hasChange) {

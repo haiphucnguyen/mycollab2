@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
+import com.vaadin.ui.UI;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.StepComponent;
@@ -191,5 +192,6 @@ public class GanttExt extends Gantt {
         EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));
         this.calculateMaxMinDates(ganttItemWrapper);
+        UI.getCurrent().push();
     }
 }
