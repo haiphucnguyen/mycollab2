@@ -4,8 +4,6 @@
     <resultMap id="TaskPredecessor" type="com.esofthead.mycollab.module.project.domain.TaskPredecessor"
                extends="com.esofthead.mycollab.module.project.dao.PredecessorMapper.BaseResultMap">
         <result column="ganttIndex" jdbcType="INTEGER" property="ganttIndex"/>
-        <result column="startDate" property="startDate" jdbcType="TIMESTAMP"/>
-        <result column="endDate" property="endDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <resultMap id="AssignWithPredecessors" type="com.esofthead.mycollab.module.project.domain.AssignWithPredecessors">
@@ -99,13 +97,10 @@
         m_prj_task.duration, m_prj_task.parentTaskId IS NULL,
         pre_predecessor.id AS pre_id, pre_predecessor.type AS pre_type, pre_predecessor.sourceId AS pre_sourceId,
         pre_predecessor.descId AS pre_descId, pre_predecessor.predestype AS pre_predestype, pre_predecessor.lagDay AS pre_lagDay,
-        pre_task.ganttindex AS pre_ganttindex, pre_task.startdate AS pre_startDate, pre_task.enddate AS pre_endDate,
-        pre_task.deadline AS pre_dueDate,
+        pre_task.ganttindex AS pre_ganttindex,
         dep_predecessor.id AS dep_id, dep_predecessor.type AS dep_type, dep_predecessor.sourceId AS dep_sourceId,
         dep_predecessor.descId AS dep_descId, dep_predecessor.predestype AS dep_predestype, dep_predecessor.lagDay AS
-        dep_lagDay,
-        dep_task.ganttindex AS dep_ganttindex, dep_task.startdate AS dep_startDate, dep_task.enddate AS dep_endDate,
-        dep_task.deadline AS dep_dueDate
+        dep_lagDay,dep_task.ganttindex AS dep_ganttindex
         FROM m_prj_task
         LEFT OUTER JOIN s_user ON (m_prj_task.assignUser = s_user.username)
         LEFT OUTER JOIN m_prj_predecessor AS pre_predecessor ON (m_prj_task.id=pre_predecessor.sourceId AND
@@ -126,13 +121,10 @@
         m_prj_task.duration, m_prj_task.parentTaskId,
         pre_predecessor.id AS pre_id, pre_predecessor.type AS pre_type, pre_predecessor.sourceId AS pre_sourceId,
         pre_predecessor.descId AS pre_descId, pre_predecessor.predestype AS pre_predestype, pre_predecessor.lagDay AS pre_lagDay,
-        pre_task.ganttindex AS pre_ganttindex, pre_task.startdate AS pre_startDate, pre_task.enddate AS pre_endDate,
-        pre_task.deadline AS pre_dueDate,
+        pre_task.ganttindex AS pre_ganttindex,
         dep_predecessor.id AS dep_id, dep_predecessor.type AS dep_type, dep_predecessor.sourceId AS dep_sourceId,
         dep_predecessor.descId AS dep_descId, dep_predecessor.predestype AS dep_predestype, dep_predecessor.lagDay AS
-        dep_lagDay,
-        dep_task.ganttindex AS dep_ganttindex, dep_task.startdate AS dep_startDate, dep_task.enddate AS dep_endDate,
-        dep_task.deadline AS dep_dueDate
+        dep_lagDay,dep_task.ganttindex AS dep_ganttindex
         FROM m_prj_task
         LEFT OUTER JOIN s_user ON (m_prj_task.assignUser = s_user.username)
         LEFT OUTER JOIN m_prj_predecessor AS pre_predecessor ON (m_prj_task.id=pre_predecessor.sourceId AND
@@ -154,13 +146,10 @@
         m_prj_task.duration, m_prj_task.parentTaskId,
         pre_predecessor.id AS pre_id, pre_predecessor.type AS pre_type, pre_predecessor.sourceId AS pre_sourceId,
         pre_predecessor.descId AS pre_descId, pre_predecessor.predestype AS pre_predestype, pre_predecessor.lagDay AS pre_lagDay,
-        pre_task.ganttindex AS pre_ganttindex, pre_task.startdate AS pre_startDate, pre_task.enddate AS pre_endDate,
-        pre_task.deadline AS pre_dueDate,
+        pre_task.ganttindex AS pre_ganttindex,
         dep_predecessor.id AS dep_id, dep_predecessor.type AS dep_type, dep_predecessor.sourceId AS dep_sourceId,
         dep_predecessor.descId AS dep_descId, dep_predecessor.predestype AS dep_predestype, dep_predecessor.lagDay AS
-        dep_lagDay,
-        dep_task.ganttindex AS dep_ganttindex, dep_task.startdate AS dep_startDate, dep_task.enddate AS dep_endDate,
-        dep_task.deadline AS dep_dueDate
+        dep_lagDay, dep_task.ganttindex AS dep_ganttindex
         FROM m_prj_task
         LEFT OUTER JOIN s_user ON (m_prj_task.assignUser = s_user.username)
         LEFT OUTER JOIN m_prj_predecessor AS pre_predecessor ON (m_prj_task.id=pre_predecessor.sourceId AND

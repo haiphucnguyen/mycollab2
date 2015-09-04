@@ -305,7 +305,7 @@ public class GanttItemWrapper {
                             currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
                         }
                     } else if (TaskPredecessor.SF.equals(predecessor.getPredestype())) {
-                        LocalDate startDate = new LocalDate(predecessor.getStartDate());
+                        LocalDate startDate = new LocalDate(ganttPredecessor.getStartDate());
                         LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
                         if (boundEndDate.isAfter(expectedEndDate)) {
                             boundEndDate = expectedEndDate;
@@ -316,7 +316,7 @@ public class GanttItemWrapper {
                             currentStartDate = DateTimeUtils.max(boundStartDate, expectedStartDate);
                         }
                     } else if (TaskPredecessor.SS.equals(predecessor.getPredestype())) {
-                        LocalDate startDate = new LocalDate(predecessor.getStartDate());
+                        LocalDate startDate = new LocalDate(ganttPredecessor.getStartDate());
                         LocalDate expectedStartDate = BusinessDayTimeUtils.plusDays(startDate, lagDay);
 
                         if (boundStartDate.isBefore(expectedStartDate)) {

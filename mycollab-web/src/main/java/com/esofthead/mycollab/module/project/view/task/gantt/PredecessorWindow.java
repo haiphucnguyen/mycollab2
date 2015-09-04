@@ -262,9 +262,6 @@ class PredecessorWindow extends Window {
                     predecessor.setPredestype(getPreDesType());
                     predecessor.setSourceid(ganttItemWrapper.getTask().getId());
                     predecessor.setDescid(item.getTask().getId());
-                    predecessor.setStartDate(item.getStartDate().toDate());
-                    predecessor.setEndDate(item.getEndDate().toDate());
-                    predecessor.setDueDate(item.getDueDate());
                     return predecessor;
                 }
                 return null;
