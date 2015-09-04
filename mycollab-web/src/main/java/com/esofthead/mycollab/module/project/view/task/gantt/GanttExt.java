@@ -23,7 +23,6 @@ import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
-import com.vaadin.ui.UI;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
 import org.tltv.gantt.StepComponent;
@@ -45,13 +44,11 @@ public class GanttExt extends Gantt {
     public GanttExt() {
         this.setTimeZone(TimeZone.getTimeZone("UTC"));
         this.setImmediate(true);
-        minDate = new LocalDate();
-        maxDate = new LocalDate();
+        minDate = new LocalDate(2100, 1, 1);
+        maxDate = new LocalDate(1970, 1, 1);
         this.setResizableSteps(true);
         this.setMovableSteps(true);
         this.setHeight((Page.getCurrent().getBrowserWindowHeight() - 270) + "px");
-        updateGanttMinDate();
-        updateGanttMaxDate();
         beanContainer = new GanttItemContainer();
 
         this.addClickListener(new Gantt.ClickListener() {
@@ -108,60 +105,25 @@ public class GanttExt extends Gantt {
         calculateMaxMinDates(task);
     }
 
-    private void updateGanttMinDate() {
+    private void updateGanttDates() {
+        if (minDate.isAfter(maxDate)) {
+            minDate = new LocalDate();
+            maxDate = new LocalDate();
+        }
         this.setStartDate(minDate.minusDays(14).toDate());
-    }
-
-    private void updateGanttMaxDate() {
         this.setEndDate(maxDate.plusDays(14).toDate());
     }
 
     public void calculateMaxMinDates(GanttItemWrapper task) {
-        LocalDate testMinDate = task.getStartDate().minusDays(14);
-        if (minDate.isAfter(testMinDate)) {
+        if (minDate.isAfter(task.getStartDate())) {
             minDate = task.getStartDate();
-            updateGanttMinDate();
         }
 
-        LocalDate testMaxDate = task.getEndDate().plusDays(14);
-        if (maxDate.isBefore(testMaxDate)) {
+        if (maxDate.isBefore(task.getEndDate())) {
             maxDate = task.getEndDate();
-            updateGanttMaxDate();
         }
-    }
 
-    @Override
-    protected void fireMoveEvent(String stepUid, String newStepUid, long startDate, long endDate) {
-        AbstractStep step = getStep(stepUid);
-        if (step instanceof StepExt) {
-            StepExt stepExt = (StepExt) step;
-            GanttItemWrapper item = stepExt.getGanttItemWrapper();
-            if (item.hasSubTasks()) {
-                step.setStartDate(item.getStartDate().toDate());
-                step.setEndDate(item.getEndDate().plusDays(1).toDate());
-                this.markStepDirty(step);
-                NotificationUtil.showWarningNotification("Can not adjust dates of parent task");
-            } else {
-                super.fireMoveEvent(stepUid, newStepUid, startDate, endDate);
-            }
-        }
-    }
-
-    @Override
-    protected void fireResizeEvent(String stepUid, long startDate, long endDate) {
-        AbstractStep step = getStep(stepUid);
-        if (step instanceof StepExt) {
-            StepExt stepExt = (StepExt) step;
-            GanttItemWrapper item = stepExt.getGanttItemWrapper();
-            if (item.hasSubTasks()) {
-                step.setStartDate(item.getStartDate().toDate());
-                step.setEndDate(item.getEndDate().plusDays(1).toDate());
-                this.markStepDirty(step);
-                NotificationUtil.showWarningNotification("Can not adjust dates of parent task");
-            } else {
-                super.fireResizeEvent(stepUid, startDate, endDate);
-            }
-        }
+        updateGanttDates();
     }
 
     @Override
@@ -185,12 +147,19 @@ public class GanttExt extends Gantt {
 
     private void updateTasksInfoByResizeOrMove(StepExt step, long startDate, long endDate) {
         GanttItemWrapper ganttItemWrapper = step.getGanttItemWrapper();
-        LocalDate suggestedStartDate = new LocalDate(startDate);
-        LocalDate suggestedEndDate = new LocalDate(endDate);
-        ganttItemWrapper.setStartAndEndDate(suggestedStartDate, suggestedEndDate, true, true);
-        AssignWithPredecessors task = ganttItemWrapper.getTask();
-        EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
-        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));
-        this.calculateMaxMinDates(ganttItemWrapper);
+        if (ganttItemWrapper.hasSubTasks()) {
+            step.setStartDate(ganttItemWrapper.getStartDate().toDate());
+            step.setEndDate(ganttItemWrapper.getEndDate().plusDays(1).toDate());
+            this.markStepDirty(step);
+            NotificationUtil.showWarningNotification("Can not adjust dates of parent task");
+        } else {
+            LocalDate suggestedStartDate = new LocalDate(startDate);
+            LocalDate suggestedEndDate = new LocalDate(endDate);
+            ganttItemWrapper.setStartAndEndDate(suggestedStartDate, suggestedEndDate, true, true);
+            AssignWithPredecessors task = ganttItemWrapper.getTask();
+            EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
+            EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));
+            this.calculateMaxMinDates(ganttItemWrapper);
+        }
     }
 }
