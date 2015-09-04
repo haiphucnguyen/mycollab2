@@ -17,11 +17,13 @@
 package com.esofthead.mycollab.module.project.domain;
 
 
+import com.esofthead.mycollab.core.arguments.NotBindable;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 
 public class TaskGanttItem extends AssignWithPredecessors {
+    @NotBindable
     private List<TaskGanttItem> subTasks;
 
     private Integer parentTaskId;

@@ -26,7 +26,8 @@ public class AccountController {
             "Content-Type=application/x-www-form-urlencoded")
     public String signup(@RequestParam("subdomain") String subdomain, @RequestParam("planId") Integer planId,
                          @RequestParam("password") String password, @RequestParam("email") String email,
-                         @RequestParam("timezoneId") String timezoneId, @RequestParam("isEmailVerified") Boolean isEmailVerified) {
+                         @RequestParam("timezone") String timezoneId, @RequestParam("isEmailVerified") Boolean
+                                     isEmailVerified) {
         LOG.debug("Register account with subDomain {}, username {}", subdomain, email);
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 

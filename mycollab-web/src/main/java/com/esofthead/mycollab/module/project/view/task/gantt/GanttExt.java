@@ -31,6 +31,8 @@ import org.tltv.gantt.client.shared.AbstractStep;
 import org.tltv.gantt.client.shared.Step;
 import org.tltv.gantt.client.shared.SubStep;
 
+import java.util.TimeZone;
+
 /**
  * @author MyCollab Ltd
  * @since 5.0.8
@@ -40,6 +42,7 @@ public class GanttExt extends Gantt {
     private GanttItemContainer beanContainer;
 
     public GanttExt() {
+        this.setTimeZone(TimeZone.getTimeZone("UTC"));
         minDate = new LocalDate();
         maxDate = new LocalDate();
         this.setResizableSteps(true);

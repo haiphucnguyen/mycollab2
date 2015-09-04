@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.esofthead.mycollab.common.TooltipBuilder;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
@@ -26,6 +27,11 @@ import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
+import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
+import com.hp.gagawa.java.elements.Td;
+import com.hp.gagawa.java.elements.Tr;
 import com.vaadin.ui.UI;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
@@ -34,6 +40,9 @@ import org.tltv.gantt.client.shared.Step;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.esofthead.mycollab.common.TooltipBuilder.TdUtil.buildCellName;
+import static com.esofthead.mycollab.common.TooltipBuilder.TdUtil.buildCellValue;
 
 /**
  * @author MyCollab Ltd.
@@ -140,7 +149,7 @@ public class GanttItemWrapper {
         if (task.getDuration() != null) {
             return task.getDuration();
         } else {
-            return (BusinessDayTimeUtils.duration(startDate, endDate) + 1) * 1d;
+            return BusinessDayTimeUtils.duration(startDate, endDate) * 1d;
         }
     }
 
@@ -206,7 +215,29 @@ public class GanttItemWrapper {
     }
 
     String buildTooltip() {
-        return "";
+        TooltipBuilder tooltipBuilder = new TooltipBuilder();
+        tooltipBuilder.setTitle(task.getName());
+        Tr trRow2 = new Tr();
+        Td cell21 = buildCellName(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE));
+        String startDate = AppContext.formatDate(task.getStartDate());
+        Td cell22 = buildCellValue(startDate);
+        Td cell23 = buildCellName(AppContext.getMessage(TaskI18nEnum.FORM_ACTUAL_START_DATE));
+        String actualStartDate = AppContext.formatDate(task.getActualStartDate());
+        Td cell24 = buildCellValue(actualStartDate);
+        trRow2.appendChild(cell21, cell22, cell23, cell24);
+        tooltipBuilder.appendRow(trRow2);
+
+        Tr trRow3 = new Tr();
+        Td cell31 = buildCellName(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE));
+        String endDate = AppContext.formatDate(task.getEndDate());
+        Td cell32 = buildCellValue(endDate);
+        Td cell33 = buildCellName(AppContext.getMessage(TaskI18nEnum.FORM_ACTUAL_END_DATE));
+        String actualEndDate = AppContext.formatDate(task.getActualEndDate());
+        Td cell34 = buildCellValue(actualEndDate);
+        trRow3.appendChild(cell31, cell32, cell33, cell34);
+        tooltipBuilder.appendRow(trRow3);
+
+        return tooltipBuilder.create().write();
     }
 
     public GanttItemWrapper getParent() {

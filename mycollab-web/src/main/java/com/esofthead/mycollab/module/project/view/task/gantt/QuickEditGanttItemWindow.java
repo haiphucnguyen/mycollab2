@@ -17,12 +17,14 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.*;
+import com.esofthead.mycollab.module.project.events.GanttEvent;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -40,12 +42,12 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  */
 public class QuickEditGanttItemWindow extends Window {
     private GanttExt gantt;
-    private GanttItemWrapper ganttItemModified;
+    private GanttItemWrapper ganttItem;
 
     public QuickEditGanttItemWindow(GanttExt gantt, GanttItemWrapper ganttItem) {
         super("Quick Edit Task");
         this.gantt = gantt;
-        this.ganttItemModified = ganttItem;
+        this.ganttItem = ganttItem;
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
@@ -84,7 +86,17 @@ public class QuickEditGanttItemWindow extends Window {
                 Button updateAllBtn = new Button("Update other fields", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, EditForm.this.bean));
+                        if (bean instanceof TaskGanttItem) {
+                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                            SimpleTask task = taskService.findById(bean.getId(), AppContext.getAccountId());
+                            EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(QuickEditGanttItemWindow.this, task));
+                        } else if (bean instanceof MilestoneGanttItem) {
+                            MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                            SimpleMilestone milestone = milestoneService.findById(bean.getId(), AppContext.getAccountId());
+                            EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(QuickEditGanttItemWindow.this, milestone));
+                        } else {
+                            throw new MyCollabException("Do not support gantt item type " + bean);
+                        }
                         close();
                     }
                 });
@@ -94,12 +106,10 @@ public class QuickEditGanttItemWindow extends Window {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
                         if (EditForm.this.validateForm()) {
-                            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-//                            taskService.updateWithSession(bean, AppContext.getUsername());
-                            SimpleTask updateTask = taskService.findById(bean.getId(), AppContext.getAccountId());
-//                            ganttItemModified.setTask(updateTask);
-                            gantt.markStepDirty(ganttItemModified.getStep());
-                            gantt.calculateMaxMinDates(ganttItemModified);
+                            ganttItem.setTask(bean);
+                            gantt.markStepDirty(ganttItem.getStep());
+                            gantt.calculateMaxMinDates(ganttItem);
+                            EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(QuickEditGanttItemWindow.this, bean));
                             close();
                         }
                     }
@@ -122,15 +132,15 @@ public class QuickEditGanttItemWindow extends Window {
 
             @Override
             public void attachField(Object propertyId, Field<?> field) {
-                if (Task.Field.taskname.equalTo(propertyId)) {
+                if ("name".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME), 0, 0, 2, "100%");
-                } else if (Task.Field.startdate.equalTo(propertyId)) {
+                } else if ("startDate".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_START_DATE), 0, 1);
-                } else if (Task.Field.enddate.equalTo(propertyId)) {
+                } else if ("endDate".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_END_DATE), 1, 1);
-                } else if (Task.Field.deadline.equalTo(propertyId)) {
+                } else if ("deadline".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE), 0, 2);
-                } else if (Task.Field.assignuser.equalTo(propertyId)) {
+                } else if ("assignUser".equals(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 2);
                 }
             }
@@ -145,7 +155,7 @@ public class QuickEditGanttItemWindow extends Window {
 
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
-                if (Task.Field.assignuser.equalTo(propertyId)) {
+                if ("assignUser".equals(propertyId)) {
                     return new ProjectMemberSelectionField();
                 }
                 return null;

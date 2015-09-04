@@ -31,13 +31,28 @@ public class BusinessDayTimeUtils {
 
     public static LocalDate plusDays(LocalDate refDate, int lagDate) {
         DateCalculator<LocalDate> calc1;
+        boolean isFoward = false;
         if (lagDate >= 0) {
             calc1 = LocalDateKitCalculatorsFactory.forwardCalculator("MyCollab");
+            isFoward = true;
         } else {
             calc1 = LocalDateKitCalculatorsFactory.backwardCalculator("MyCollab");
         }
 
+        if (isFoward) {
+            refDate = refDate.minusDays(1);
+            while (calc1.isNonWorkingDay(refDate)) {
+                refDate = refDate.minusDays(1);
+            }
+        } else {
+            refDate.plusDays(1);
+            while (calc1.isNonWorkingDay(refDate)) {
+                refDate = refDate.plusDays(1);
+            }
+        }
+
         calc1.setStartDate(refDate);
+
         calc1.moveByBusinessDays(lagDate);
         return calc1.getCurrentBusinessDate();
     }
@@ -45,7 +60,7 @@ public class BusinessDayTimeUtils {
     private static final long DAY_IN_MILIS = 1000 * 60 * 60 * 24;
 
     public static int duration(LocalDate start, LocalDate end) {
-        int candidateDuration = 0;
+        int candidateDuration = 1;
         try {
             DateCalculator<LocalDate> calc1 = LocalDateKitCalculatorsFactory.forwardCalculator("MyCollab");
             calc1.setStartDate(start);

@@ -222,7 +222,6 @@ public class GanttTreeTable extends TreeTable {
         ContextMenu.ContextMenuOpenedListener.TableListener tableListener = new ContextMenu.ContextMenuOpenedListener.TableListener() {
 
             public void onContextMenuOpenFromRow(ContextMenu.ContextMenuOpenedOnTableRowEvent event) {
-                // read clicked row item and property from event and modify menu
                 GanttItemWrapper item = (GanttItemWrapper) event.getItemId();
                 contextMenu.displayContextMenu(item);
                 contextMenu.open(GanttTreeTable.this);

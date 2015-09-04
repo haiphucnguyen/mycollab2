@@ -32,24 +32,24 @@ public class BusinessDateTimeUtilsTest {
 
         // Monday
         LocalDate result = BusinessDayTimeUtils.plusDays(date, 1);
-        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 8, 31)));
+        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 8, 28)));
 
         //Next Friday
         result = BusinessDayTimeUtils.plusDays(date, 5);
-        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 9, 4)));
+        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 9, 3)));
 
         // Tuesday
         date = new LocalDate(2015, 8, 25);
         result = BusinessDayTimeUtils.plusDays(date, 8);
-        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 9, 4)));
+        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 9, 3)));
 
         //the same day
         result = BusinessDayTimeUtils.plusDays(date, 0);
-        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 8, 25)));
+        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 8, 24)));
 
         date = new LocalDate(2015, 8, 28);
         result = BusinessDayTimeUtils.plusDays(date, 23);
-        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 9, 30)));
+        Assert.assertEquals(0, result.compareTo(new LocalDate(2015, 9, 29)));
     }
 
     @Test
@@ -74,26 +74,48 @@ public class BusinessDateTimeUtilsTest {
         // Friday
         LocalDate startDate = new LocalDate(2015, 8, 28);
         LocalDate endDate = new LocalDate(2015, 8, 28);
-        Assert.assertEquals(0, BusinessDayTimeUtils.duration(startDate, endDate));
+        int duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(1, duration);
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
 
         startDate = new LocalDate(2015, 8, 28);
         endDate = new LocalDate(2015, 8, 31);
-        Assert.assertEquals(1, BusinessDayTimeUtils.duration(startDate, endDate));
+        duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
+        Assert.assertEquals(2, duration);
 
         startDate = new LocalDate(2015, 8, 28);
         endDate = new LocalDate(2015, 9, 30);
-        Assert.assertEquals(23, BusinessDayTimeUtils.duration(startDate, endDate));
+        duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(24, BusinessDayTimeUtils.duration(startDate, endDate));
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
 
         startDate = new LocalDate(2015, 8, 24);
         endDate = new LocalDate(2015, 8, 31);
-        Assert.assertEquals(5, BusinessDayTimeUtils.duration(startDate, endDate));
+        duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(6, duration);
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
 
         startDate = new LocalDate(2015, 6, 8);
         endDate = new LocalDate(2015, 6, 26);
-        Assert.assertEquals(14, BusinessDayTimeUtils.duration(startDate, endDate));
+        duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(15, BusinessDayTimeUtils.duration(startDate, endDate));
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
 
         startDate = new LocalDate(2015, 8, 17);
         endDate = new LocalDate(2016, 12, 26);
-        Assert.assertEquals(355, BusinessDayTimeUtils.duration(startDate, endDate));
+        duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(356, duration);
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
+
+        startDate = new LocalDate(2015, 9, 9);
+        endDate = new LocalDate(2015, 9, 16);
+        duration = BusinessDayTimeUtils.duration(startDate, endDate);
+        Assert.assertEquals(6, duration);
+        Assert.assertEquals(true, endDate.isEqual(BusinessDayTimeUtils.plusDays(startDate, duration)));
+
+        startDate = new LocalDate(2015, 9, 5);
+        endDate = new LocalDate(2015, 9, 7);
+        Assert.assertEquals(1, BusinessDayTimeUtils.duration(startDate, endDate));
     }
 }
