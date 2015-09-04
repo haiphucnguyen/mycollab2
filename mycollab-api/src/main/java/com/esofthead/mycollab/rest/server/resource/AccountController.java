@@ -29,6 +29,9 @@ public class AccountController {
                          @RequestParam("timezone") String timezoneId, @RequestParam("isEmailVerified") Boolean
                                      isEmailVerified) {
         LOG.debug("Register account with subDomain {}, username {}", subdomain, email);
+        if (isEmailVerified == null) {
+            isEmailVerified = Boolean.FALSE;
+        }
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 
         String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
