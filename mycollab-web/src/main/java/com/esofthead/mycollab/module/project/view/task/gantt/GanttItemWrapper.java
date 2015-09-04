@@ -31,7 +31,6 @@ import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.hp.gagawa.java.elements.Td;
 import com.hp.gagawa.java.elements.Tr;
-import com.vaadin.ui.UI;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.client.shared.Step;
@@ -278,7 +277,7 @@ public class GanttItemWrapper {
                 int ganttIndex = predecessor.getGanttIndex();
 
                 GanttItemWrapper ganttPredecessor = gantt.getBeanContainer().getItemByGanttIndex(ganttIndex);
-                int dur = getDuration().intValue();
+                int dur = getDuration().intValue() - 1;
                 if (ganttPredecessor != null) {
                     Integer lagDay = predecessor.getLagday() + 1;
 
@@ -382,14 +381,12 @@ public class GanttItemWrapper {
 
         updateParentDates();
         gantt.markStepDirty(ownStep);
-        UI.getCurrent().push();
     }
 
     private void updateParentDates() {
         GanttItemWrapper parentTask = this.getParent();
         if (parentTask != null) {
             parentTask.calculateDatesByChildTasks();
-            gantt.markStepDirty(parentTask.getStep());
         }
     }
 }

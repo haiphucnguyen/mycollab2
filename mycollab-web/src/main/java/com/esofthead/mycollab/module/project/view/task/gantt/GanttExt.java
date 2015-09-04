@@ -44,6 +44,7 @@ public class GanttExt extends Gantt {
 
     public GanttExt() {
         this.setTimeZone(TimeZone.getTimeZone("UTC"));
+        this.setImmediate(true);
         minDate = new LocalDate();
         maxDate = new LocalDate();
         this.setResizableSteps(true);
@@ -116,12 +117,14 @@ public class GanttExt extends Gantt {
     }
 
     public void calculateMaxMinDates(GanttItemWrapper task) {
-        if (minDate.isAfter(task.getStartDate())) {
+        LocalDate testMinDate = task.getStartDate().minusDays(14);
+        if (minDate.isAfter(testMinDate)) {
             minDate = task.getStartDate();
             updateGanttMinDate();
         }
 
-        if (maxDate.isBefore(task.getEndDate())) {
+        LocalDate testMaxDate = task.getEndDate().plusDays(14);
+        if (maxDate.isBefore(testMaxDate)) {
             maxDate = task.getEndDate();
             updateGanttMaxDate();
         }
@@ -185,11 +188,9 @@ public class GanttExt extends Gantt {
         LocalDate suggestedStartDate = new LocalDate(startDate);
         LocalDate suggestedEndDate = new LocalDate(endDate);
         ganttItemWrapper.setStartAndEndDate(suggestedStartDate, suggestedEndDate, true, true);
-        this.markStepDirty(ganttItemWrapper.getStep());
         AssignWithPredecessors task = ganttItemWrapper.getTask();
         EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItemDates(GanttExt.this, ganttItemWrapper));
         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttExt.this, task));
         this.calculateMaxMinDates(ganttItemWrapper);
-        UI.getCurrent().push();
     }
 }
