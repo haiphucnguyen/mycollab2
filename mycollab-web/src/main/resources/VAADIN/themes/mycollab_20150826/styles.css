@@ -9621,13 +9621,12 @@ div.v-button.token-field:hover {
 	font-family: FontAwesome;
 }
 
-.gantt_container .v-table-row-hasChildTasks {
-	background-color: gainsboro;
-	font-weight: bold;
+.gantt_container .v-table-table .v-table-row-milestone {
+	background-color: #f7f4f0;
 }
 
 .gantt_container .v-table-table tr td.v-table-cell-content {
-	height: 29px;
+	height: 34px;
 	border-style: solid;
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px 0px;
@@ -9638,8 +9637,18 @@ div.v-button.token-field:hover {
 	text-overflow: ellipsis;
 }
 
+.gantt_container .v-table-table tr td.v-table-cell-content input.v-widget.v-textfield[type="text"] {
+	border: none;
+	background-color: transparent;
+}
+
+.gantt_container .v-table-table tr td.v-table-cell-content input.v-widget.v-textfield.v-textfield-focus[type="text"], .gantt_container .v-table-table tr td.v-table-cell-content input.v-widget.v-textfield[type="text"]:hover {
+	border: solid 1px #CFCFCF;
+	background-color: white;
+}
+
 .gantt_container .v-table-table tr:first-child td.v-table-cell-content {
-	height: 29px;
+	height: 34px;
 }
 
 .gantt .bar.v-widget {
@@ -9763,7 +9772,7 @@ div.v-button.token-field:hover {
 
 .gantt .bar {
 	position: absolute;
-	height: 30px;
+	height: 34px;
 	z-index: 1;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;

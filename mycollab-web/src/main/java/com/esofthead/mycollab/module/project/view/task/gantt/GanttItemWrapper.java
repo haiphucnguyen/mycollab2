@@ -106,6 +106,10 @@ public class GanttItemWrapper {
         return task.getName();
     }
 
+    public void setName(String name) {
+        task.setName(name);
+    }
+
     public List<GanttItemWrapper> subTasks() {
         if (subItems == null) {
             if (task instanceof MilestoneGanttItem) {
@@ -172,9 +176,18 @@ public class GanttItemWrapper {
         return startDate;
     }
 
+    public void setStartDate(LocalDate date) {
+        setStartAndEndDate(date, endDate, true, true);
+    }
+
     public LocalDate getEndDate() {
         return endDate;
     }
+
+    public void setEndDate(LocalDate date) {
+        setStartAndEndDate(startDate, date, true, true);
+    }
+
 
     public Date getActualStartDate() {
         return task.getActualStartDate();
@@ -190,6 +203,10 @@ public class GanttItemWrapper {
 
     public Double getPercentageComplete() {
         return task.getProgress();
+    }
+
+    public void setPercentageComplete(Double percentageComplete) {
+        task.setProgress(percentageComplete);
     }
 
     public boolean setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate, boolean askToCheckPredecessors,
@@ -226,6 +243,10 @@ public class GanttItemWrapper {
 
     public String getAssignUser() {
         return task.getAssignUser();
+    }
+
+    public void setAssignUser(String assignUser) {
+        task.setAssignUser(assignUser);
     }
 
     String buildTooltip() {

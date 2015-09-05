@@ -96,7 +96,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                                 preparedStatement.setInt(5, milestoneGanttItems.get(i).getId());
                                 preparedStatement.addBatch();
                             } else {
-                                LOG.error("Task " + BeanUtility.printBeanObj(milestone) + " should have not null dates");
+//                                LOG.error("Task " + BeanUtility.printBeanObj(milestone) + " should have not null dates");
                             }
 
                         }

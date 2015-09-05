@@ -17,24 +17,26 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.form.field.converter.LocalDateConverter;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.data.Container;
+import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
@@ -54,6 +56,8 @@ public class GanttTreeTable extends TreeTable {
 
     private boolean ganttIndexIsChanged = false;
 
+    protected List<Field> fields = new ArrayList<>();
+
     private ApplicationEventListener<GanttEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
             ApplicationEventListener<GanttEvent.UpdateGanttItemDates>() {
                 @Subscribe
@@ -70,11 +74,11 @@ public class GanttTreeTable extends TreeTable {
         milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
         this.gantt = gantt;
         this.setWidth("800px");
-        this.setBuffered(false);
+        this.setBuffered(true);
         beanContainer = gantt.getBeanContainer();
         this.setContainerDataSource(beanContainer);
-        this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "predecessors",
-                "actualStartDate", "actualEndDate", "percentageComplete");
+        this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "percentageComplete",
+                "predecessors", "actualStartDate", "actualEndDate");
         this.setColumnHeader("ganttIndex", "");
         this.setColumnWidth("ganttIndex", 35);
         this.setColumnHeader("name", "Task");
@@ -97,7 +101,6 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnCollapsingAllowed(true);
         this.setColumnCollapsed("actualStartDate", true);
         this.setColumnCollapsed("actualEndDate", true);
-        this.setSelectable(true);
         this.setEditable(true);
 
         this.addGeneratedColumn("ganttIndex", new ColumnGenerator() {
@@ -105,49 +108,6 @@ public class GanttTreeTable extends TreeTable {
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
                 return new Label("" + item.getGanttIndex());
-            }
-        });
-
-        this.addGeneratedColumn("name", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                if (item.isMilestone()) {
-                    return new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + item.getName(),
-                            ContentMode.HTML).withDescription(item.getName());
-                } else if (item.isTask()) {
-                    return new ELabel(item.getName(), ContentMode.HTML).withDescription(item.getName());
-                } else {
-                    throw new MyCollabException("Do not support type " + item.getTask());
-                }
-            }
-        });
-
-        this.addGeneratedColumn("startDate", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(AppContext.formatDate(item.getStartDate().toDate()));
-            }
-        });
-
-        this.addGeneratedColumn("endDate", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(AppContext.formatDate(item.getEndDate().toDate()));
-            }
-        });
-
-        this.addGeneratedColumn("percentageComplete", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                if (item.getPercentageComplete() != null) {
-                    return new Label(item.getPercentageComplete() + " %");
-                } else {
-                    return new Label("0 %");
-                }
             }
         });
 
@@ -172,28 +132,71 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
-        this.addGeneratedColumn("actualEndDate", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(AppContext.formatDate(item.getActualEndDate()));
-            }
-        });
-
-        this.addGeneratedColumn("actualStartDate", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                return new Label(AppContext.formatDate(item.getActualStartDate()));
-            }
-        });
-
         this.addGeneratedColumn("duration", new ColumnGenerator() {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
                 double dur = item.getDuration();
                 return new Label(dur + " d");
+            }
+        });
+
+
+        this.setTableFieldFactory(new TableFieldFactory() {
+            @Override
+            public Field<?> createField(Container container, Object itemId, Object propertyId, Component uiContext) {
+                Field field = null;
+                final GanttItemWrapper ganttItem = (GanttItemWrapper) itemId;
+                if ("name".equals(propertyId)) {
+                    if (ganttItem.isMilestone()) {
+                        field = new MilestoneNameCellField();
+                    } else {
+                        field = new TextField();
+                        ((TextField) field).setDescription(ganttItem.getName());
+                    }
+
+                    field.setWidth("100%");
+                } else if ("percentageComplete".equals(propertyId)) {
+                    field = new TextField();
+                    ((TextField) field).setNullRepresentation("0");
+                    ((TextField) field).setImmediate(true);
+                    field.setWidth("100%");
+                } else if ("startDate".equals(propertyId) || "endDate".equals(propertyId) ||
+                        "actualStartDate".equals(propertyId) || "actualEndDate".equals(propertyId)) {
+                    field = new DateField();
+                    ((DateField) field).setConverter(new LocalDateConverter());
+                    ((DateField) field).setImmediate(true);
+                    field.setWidth("100%");
+                }
+
+                if (field != null) {
+                    if (ganttItem.isMilestone()) {
+                        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                            field.setReadOnly(true);
+                        }
+                    } else if (ganttItem.isTask()) {
+                        if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                            field.setReadOnly(true);
+                        }
+                    } else {
+                        throw new MyCollabException("Do not support gantt item type " + ganttItem.getTask());
+                    }
+
+                    if (field instanceof FieldEvents.BlurNotifier) {
+                        ((FieldEvents.BlurNotifier) field).addBlurListener(new FieldEvents.BlurListener() {
+                            @Override
+                            public void blur(FieldEvents.BlurEvent event) {
+                                Object o = event.getSource();
+                                if (o instanceof Field) {
+                                    Field f = (Field) o;
+                                    f.commit();
+                                    System.out.println("Gantt item: " + BeanUtility.printBeanObj(ganttItem));
+                                }
+                            }
+                        });
+                    }
+                }
+                return field;
             }
         });
 
@@ -215,6 +218,17 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
+        this.setCellStyleGenerator(new CellStyleGenerator() {
+            @Override
+            public String getStyle(Table source, Object itemId, Object propertyId) {
+                GanttItemWrapper item = (GanttItemWrapper) itemId;
+                if (item.isMilestone()) {
+                    return "milestone";
+                }
+                return null;
+            }
+        });
+
         final GanttContextMenu contextMenu = new GanttContextMenu();
         contextMenu.setAsContextMenuOf(this);
         contextMenu.setOpenAutomatically(false);
@@ -228,11 +242,9 @@ public class GanttTreeTable extends TreeTable {
             }
 
             public void onContextMenuOpenFromHeader(ContextMenu.ContextMenuOpenedOnTableHeaderEvent event) {
-                NotificationUtil.showErrorNotification("Open from header");
             }
 
             public void onContextMenuOpenFromFooter(ContextMenu.ContextMenuOpenedOnTableFooterEvent event) {
-                NotificationUtil.showErrorNotification("Open from footer");
             }
         };
 
