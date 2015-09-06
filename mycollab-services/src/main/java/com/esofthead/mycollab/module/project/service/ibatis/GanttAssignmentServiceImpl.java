@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.dao.GanttMapperExt;
 import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
@@ -121,17 +120,13 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET " +
                                 "taskname = ?, `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
                         for (int i = 0; i < taskGanttItems.size(); i++) {
-                            TaskGanttItem task = taskGanttItems.get(i);
-                            if (task.getStartDate() != null && task.getEndDate() != null) {
-                                preparedStatement.setString(1, taskGanttItems.get(i).getName());
-                                preparedStatement.setDate(2, new Date(taskGanttItems.get(i).getStartDate().getTime()));
-                                preparedStatement.setDate(3, new Date(taskGanttItems.get(i).getEndDate().getTime()));
-                                preparedStatement.setDate(4, new Date(now));
-                                preparedStatement.setInt(5, taskGanttItems.get(i).getId());
-                                preparedStatement.addBatch();
-                            } else {
-                                LOG.error("Task " + BeanUtility.printBeanObj(task) + " should have not null dates");
-                            }
+                            preparedStatement.setString(1, taskGanttItems.get(i).getName());
+                            preparedStatement.setDate(2, getDateWithNullValue(taskGanttItems.get(i).getStartDate()));
+                            preparedStatement.setDate(3, getDateWithNullValue(taskGanttItems.get(i).getEndDate()));
+                            preparedStatement.setDate(4, new Date(now));
+                            preparedStatement.setInt(5, taskGanttItems.get(i).getId());
+                            preparedStatement.addBatch();
+
 
                         }
                         preparedStatement.executeBatch();
@@ -142,5 +137,9 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                 throw new MyCollabException(e);
             }
         }
+    }
+
+    private static Date getDateWithNullValue(java.util.Date date) {
+        return (date != null) ? new Date(date.getTime()) : null;
     }
 }

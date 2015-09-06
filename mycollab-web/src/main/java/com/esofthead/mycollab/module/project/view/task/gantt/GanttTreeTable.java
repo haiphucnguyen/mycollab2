@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -170,6 +169,7 @@ public class GanttTreeTable extends TreeTable {
                 }
 
                 if (field != null) {
+                    field.setBuffered(true);
                     if (ganttItem.isMilestone()) {
                         if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                             field.setReadOnly(true);
@@ -189,8 +189,11 @@ public class GanttTreeTable extends TreeTable {
                                 Object o = event.getSource();
                                 if (o instanceof Field) {
                                     Field f = (Field) o;
-                                    f.commit();
-                                    System.out.println("Gantt item: " + BeanUtility.printBeanObj(ganttItem));
+                                    if (f.isModified()) {
+                                        f.commit();
+                                        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
+                                                (GanttTreeTable.this, ganttItem.getTask()));
+                                    }
                                 }
                             }
                         });

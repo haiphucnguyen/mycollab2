@@ -21,6 +21,7 @@ class MilestoneNameCellField extends CustomField<String> implements FieldEvents.
         MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         field.setImmediate(true);
+        field.setBuffered(true);
         field.setWidth("100%");
         Label icon = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml(), ContentMode.HTML);
         layout.with(new CssLayout(icon), field).expand(field);
