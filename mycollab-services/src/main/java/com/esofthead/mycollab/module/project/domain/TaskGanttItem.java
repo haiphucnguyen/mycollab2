@@ -48,4 +48,19 @@ public class TaskGanttItem extends AssignWithPredecessors {
     public boolean hasSubAssignments() {
         return CollectionUtils.isNotEmpty(subTasks);
     }
+
+    @Override
+    public Double getProgress() {
+        if (hasSubAssignments()) {
+            Double summary = 0d;
+            for (TaskGanttItem item : subTasks) {
+                if (item.getProgress() != null) {
+                    summary += item.getProgress();
+                }
+            }
+            return summary / subTasks.size();
+        } else {
+            return super.getProgress();
+        }
+    }
 }

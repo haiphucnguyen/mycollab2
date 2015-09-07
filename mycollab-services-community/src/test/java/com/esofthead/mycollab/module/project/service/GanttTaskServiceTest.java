@@ -79,6 +79,7 @@ public class GanttTaskServiceTest extends IntergrationServiceTest {
 
         TaskGanttItem task5 = task.getSubTasks().get(0);
         assertThat(task5.getName()).isEqualTo("Task 5");
+        assertThat(task5.getProgress()).isEqualTo(10);
         assertThat(task5.getPredecessors()).hasSize(1);
         TaskPredecessor predecessor = task5.getPredecessors().get(0);
         assertThat(predecessor.getDescid()).isEqualTo(2);

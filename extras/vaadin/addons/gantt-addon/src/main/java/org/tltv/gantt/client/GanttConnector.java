@@ -453,7 +453,6 @@ public class GanttConnector extends AbstractHasComponentsConnector {
 
             @Override
             public void execute() {
-                LOG.warning("Execute scheduler");
                 getWidget().update(getSteps());
                 if (notifyHeight) {
                     getWidget().notifyHeightChanged(previousHeight);

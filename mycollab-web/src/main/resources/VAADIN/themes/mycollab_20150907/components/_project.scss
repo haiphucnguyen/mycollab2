@@ -726,6 +726,9 @@
 
     .v-table-table tr td.v-table-cell-content {
       height: 34px;
+      .v-disabled {
+        opacity: 1.0 !important;
+      }
       .v-label {
         white-space: nowrap;
         text-overflow: ellipsis;

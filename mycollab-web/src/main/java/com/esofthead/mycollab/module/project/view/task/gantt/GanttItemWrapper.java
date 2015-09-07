@@ -108,6 +108,8 @@ public class GanttItemWrapper {
 
     public void setName(String name) {
         task.setName(name);
+        ownStep.setCaption(name);
+        gantt.markStepDirty(ownStep);
     }
 
     public List<GanttItemWrapper> subTasks() {
@@ -189,12 +191,28 @@ public class GanttItemWrapper {
     }
 
 
-    public Date getActualStartDate() {
-        return task.getActualStartDate();
+    public LocalDate getActualStartDate() {
+        return new LocalDate(task.getActualStartDate());
     }
 
-    public Date getActualEndDate() {
-        return task.getActualEndDate();
+    public void setActualStartDate(LocalDate actualStartDate) {
+        if (actualStartDate == null) {
+            task.setActualStartDate(null);
+        } else {
+            task.setActualStartDate(actualStartDate.toDate());
+        }
+    }
+
+    public LocalDate getActualEndDate() {
+        return new LocalDate(task.getActualEndDate());
+    }
+
+    public void setActualEndDate(LocalDate actualEndDate) {
+        if (actualEndDate == null) {
+            task.setActualEndDate(null);
+        } else {
+            task.setActualEndDate(actualEndDate.toDate());
+        }
     }
 
     public Date getDueDate() {
@@ -207,10 +225,16 @@ public class GanttItemWrapper {
 
     public void setPercentageComplete(Double percentageComplete) {
         task.setProgress(percentageComplete);
+        if (parent != null) {
+            parent.setPercentageComplete(parent.getPercentageComplete());
+        }
     }
 
     public boolean setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate, boolean askToCheckPredecessors,
                                       boolean requestToCheckDependents) {
+        if (newStartDate.isBefore(boundStartDate) || newEndDate.isAfter(boundEndDate)) {
+            throw new UserInvalidInputException("Invalid constraints");
+        }
         boolean hasChange = false;
         if (!this.startDate.isEqual(newStartDate)) {
             hasChange = true;

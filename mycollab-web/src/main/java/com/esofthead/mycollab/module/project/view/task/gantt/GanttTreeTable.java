@@ -84,11 +84,11 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnExpandRatio("name", 1.0f);
         this.setHierarchyColumn("name");
         this.setColumnHeader("startDate", "Start");
-        this.setColumnWidth("startDate", 75);
+        this.setColumnWidth("startDate", 80);
         this.setColumnHeader("endDate", "End");
-        this.setColumnWidth("endDate", 75);
+        this.setColumnWidth("endDate", 80);
         this.setColumnHeader("duration", "Duration");
-        this.setColumnWidth("duration", 80);
+        this.setColumnWidth("duration", 75);
         this.setColumnHeader("predecessors", "Predecessors");
         this.setColumnWidth("predecessors", 80);
         this.setColumnHeader("actualStartDate", "Actual Start");
@@ -159,12 +159,24 @@ public class GanttTreeTable extends TreeTable {
                     field = new TextField();
                     ((TextField) field).setNullRepresentation("0");
                     ((TextField) field).setImmediate(true);
+                    if (ganttItem.hasSubTasks()) {
+                        field.setEnabled(false);
+                        ((TextField) field).setDescription("Because this row has sub-tasks, this cell " +
+                                "is a summary value and can not be edited directly. You can edit cells " +
+                                "beneath this row to change its value");
+                    }
                     field.setWidth("100%");
                 } else if ("startDate".equals(propertyId) || "endDate".equals(propertyId) ||
                         "actualStartDate".equals(propertyId) || "actualEndDate".equals(propertyId)) {
                     field = new DateField();
                     ((DateField) field).setConverter(new LocalDateConverter());
                     ((DateField) field).setImmediate(true);
+                    if (ganttItem.hasSubTasks()) {
+                        field.setEnabled(false);
+                        ((DateField) field).setDescription("Because this row has sub-tasks, this cell " +
+                                "is a summary value and can not be edited directly. You can edit cells " +
+                                "beneath this row to change its value");
+                    }
                     field.setWidth("100%");
                 }
 
@@ -193,6 +205,7 @@ public class GanttTreeTable extends TreeTable {
                                         f.commit();
                                         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
                                                 (GanttTreeTable.this, ganttItem.getTask()));
+                                        GanttTreeTable.this.refreshRowCache();
                                     }
                                 }
                             }

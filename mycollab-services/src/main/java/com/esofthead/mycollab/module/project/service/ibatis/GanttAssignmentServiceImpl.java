@@ -25,8 +25,6 @@ import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +40,6 @@ import java.util.concurrent.locks.Lock;
 
 @Service
 public class GanttAssignmentServiceImpl implements GanttAssignmentService {
-    private static Logger LOG = LoggerFactory.getLogger(GanttAssignmentServiceImpl.class);
 
     @Autowired
     private GanttMapperExt ganttMapperExt;
@@ -84,19 +81,17 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                     try (Connection connection = dataSource.getConnection()) {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_milestone` SET " +
-                                "name = ?, `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
+                                "name = ?, `startdate` = ?, `enddate` = ?, `actualstartdate`=?,`actualenddate`=?, " +
+                                "`lastUpdatedTime`=? WHERE `id` = ?");
                         for (int i = 0; i < milestoneGanttItems.size(); i++) {
-                            MilestoneGanttItem milestone = milestoneGanttItems.get(i);
-                            if (milestone.getStartDate() != null && milestone.getEndDate() != null) {
-                                preparedStatement.setString(1, milestoneGanttItems.get(i).getName());
-                                preparedStatement.setDate(2, new Date(milestoneGanttItems.get(i).getStartDate().getTime()));
-                                preparedStatement.setDate(3, new Date(milestoneGanttItems.get(i).getEndDate().getTime()));
-                                preparedStatement.setDate(4, new Date(now));
-                                preparedStatement.setInt(5, milestoneGanttItems.get(i).getId());
-                                preparedStatement.addBatch();
-                            } else {
-//                                LOG.error("Task " + BeanUtility.printBeanObj(milestone) + " should have not null dates");
-                            }
+                            preparedStatement.setString(1, milestoneGanttItems.get(i).getName());
+                            preparedStatement.setDate(2, getDateWithNullValue(milestoneGanttItems.get(i).getStartDate()));
+                            preparedStatement.setDate(3, getDateWithNullValue(milestoneGanttItems.get(i).getEndDate()));
+                            preparedStatement.setDate(4, getDateWithNullValue(milestoneGanttItems.get(i).getActualStartDate()));
+                            preparedStatement.setDate(5, getDateWithNullValue(milestoneGanttItems.get(i).getActualEndDate()));
+                            preparedStatement.setDate(6, new Date(now));
+                            preparedStatement.setInt(7, milestoneGanttItems.get(i).getId());
+                            preparedStatement.addBatch();
 
                         }
                         preparedStatement.executeBatch();
@@ -118,16 +113,18 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                     try (Connection connection = dataSource.getConnection()) {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET " +
-                                "taskname = ?, `startdate` = ?, `enddate` = ?, `lastUpdatedTime`=? WHERE `id` = ?");
+                                "taskname = ?, `startdate` = ?, `enddate` = ?, `actualStartDate`=?, `actualEndDate`=?, " +
+                                "`lastUpdatedTime`=?, `percentagecomplete`=? WHERE `id` = ?");
                         for (int i = 0; i < taskGanttItems.size(); i++) {
                             preparedStatement.setString(1, taskGanttItems.get(i).getName());
                             preparedStatement.setDate(2, getDateWithNullValue(taskGanttItems.get(i).getStartDate()));
                             preparedStatement.setDate(3, getDateWithNullValue(taskGanttItems.get(i).getEndDate()));
-                            preparedStatement.setDate(4, new Date(now));
-                            preparedStatement.setInt(5, taskGanttItems.get(i).getId());
+                            preparedStatement.setDate(4, getDateWithNullValue(taskGanttItems.get(i).getActualStartDate()));
+                            preparedStatement.setDate(5, getDateWithNullValue(taskGanttItems.get(i).getActualEndDate()));
+                            preparedStatement.setDate(6, new Date(now));
+                            preparedStatement.setDouble(7, taskGanttItems.get(i).getProgress());
+                            preparedStatement.setInt(8, taskGanttItems.get(i).getId());
                             preparedStatement.addBatch();
-
-
                         }
                         preparedStatement.executeBatch();
                         connection.commit();

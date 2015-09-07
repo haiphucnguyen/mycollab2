@@ -9632,6 +9632,10 @@ div.v-button.token-field:hover {
 	border-width: 0px 1px 1px 0px;
 }
 
+.gantt_container .v-table-table tr td.v-table-cell-content .v-disabled {
+	opacity: 1 !important;
+}
+
 .gantt_container .v-table-table tr td.v-table-cell-content .v-label {
 	white-space: nowrap;
 	text-overflow: ellipsis;

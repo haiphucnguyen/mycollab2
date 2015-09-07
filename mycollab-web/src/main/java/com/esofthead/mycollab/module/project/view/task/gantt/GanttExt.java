@@ -53,9 +53,9 @@ public class GanttExt extends Gantt {
 
         this.addClickListener(new Gantt.ClickListener() {
             @Override
-            public void onGanttClick(Gantt.ClickEvent clickEvent) {
+            public void onGanttClick(Gantt.ClickEvent event) {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    StepExt step = (StepExt) clickEvent.getStep();
+                    StepExt step = (StepExt) event.getStep();
                     getUI().addWindow(new QuickEditGanttItemWindow(GanttExt.this, step.getGanttItemWrapper()));
                 }
             }

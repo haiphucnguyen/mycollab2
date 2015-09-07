@@ -9,7 +9,7 @@
     <m_prj_task id="2" taskname="Task 2" percentagecomplete="0" projectid="1" sAccountId="1" milestoneId="1"/>
     <m_prj_task id="3" taskname="Task 3" percentagecomplete="0" projectid="1" sAccountId="1" milestoneId="2"/>
     <m_prj_task id="4" taskname="Task 4" percentagecomplete="0" projectid="1" sAccountId="1" milestoneId="2"/>
-    <m_prj_task id="5" taskname="Task 5" percentagecomplete="0" projectid="1" sAccountId="1" parentTaskId="4"/>
+    <m_prj_task id="5" taskname="Task 5" percentagecomplete="10" projectid="1" sAccountId="1" parentTaskId="4"/>
     <m_prj_task id="6" taskname="Task 6" percentagecomplete="0" projectid="1" sAccountId="1"/>
     <m_prj_predecessor id="1" type="Project-Task" predestype="FS" createdTime="2013-04-10 13:29:23" sourceId="5"
                        descId="2" lagDay="0"/>
