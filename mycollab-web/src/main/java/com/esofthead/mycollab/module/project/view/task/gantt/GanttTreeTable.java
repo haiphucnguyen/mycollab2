@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task.gantt;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -77,7 +78,7 @@ public class GanttTreeTable extends TreeTable {
         beanContainer = gantt.getBeanContainer();
         this.setContainerDataSource(beanContainer);
         this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "percentageComplete",
-                "predecessors", "actualStartDate", "actualEndDate");
+                "predecessors", "assignUser", "actualStartDate", "actualEndDate");
         this.setColumnHeader("ganttIndex", "");
         this.setColumnWidth("ganttIndex", 35);
         this.setColumnHeader("name", "Task");
@@ -97,9 +98,12 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnWidth("actualEndDate", 80);
         this.setColumnHeader("percentageComplete", "% Complete");
         this.setColumnWidth("percentageComplete", 80);
+        this.setColumnHeader("assignUser", "Assignee");
+        this.setColumnWidth("assignUser", 80);
         this.setColumnCollapsingAllowed(true);
         this.setColumnCollapsed("actualStartDate", true);
         this.setColumnCollapsed("actualEndDate", true);
+        this.setColumnCollapsed("assignUser", true);
         this.setEditable(true);
 
         this.addGeneratedColumn("ganttIndex", new ColumnGenerator() {
@@ -154,7 +158,6 @@ public class GanttTreeTable extends TreeTable {
                         ((TextField) field).setDescription(ganttItem.getName());
                     }
 
-                    field.setWidth("100%");
                 } else if ("percentageComplete".equals(propertyId)) {
                     field = new TextField();
                     ((TextField) field).setNullRepresentation("0");
@@ -165,7 +168,6 @@ public class GanttTreeTable extends TreeTable {
                                 "is a summary value and can not be edited directly. You can edit cells " +
                                 "beneath this row to change its value");
                     }
-                    field.setWidth("100%");
                 } else if ("startDate".equals(propertyId) || "endDate".equals(propertyId) ||
                         "actualStartDate".equals(propertyId) || "actualEndDate".equals(propertyId)) {
                     field = new DateField();
@@ -177,18 +179,22 @@ public class GanttTreeTable extends TreeTable {
                                 "is a summary value and can not be edited directly. You can edit cells " +
                                 "beneath this row to change its value");
                     }
-                    field.setWidth("100%");
+                } else if ("assignUser".equals(propertyId)) {
+                    field = new ProjectMemberSelectionField();
                 }
 
                 if (field != null) {
                     field.setBuffered(true);
+                    field.setWidth("100%");
                     if (ganttItem.isMilestone()) {
                         if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                            field.setReadOnly(true);
+                            field.setEnabled(false);
+                            ((AbstractComponent) field).setDescription(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK));
                         }
                     } else if (ganttItem.isTask()) {
                         if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                            field.setReadOnly(true);
+                            field.setEnabled(false);
+                            ((AbstractComponent) field).setDescription(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK));
                         }
                     } else {
                         throw new MyCollabException("Do not support gantt item type " + ganttItem.getTask());

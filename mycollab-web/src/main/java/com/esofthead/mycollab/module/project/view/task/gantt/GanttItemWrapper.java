@@ -87,6 +87,13 @@ public class GanttItemWrapper {
         ownStep.setDescription(buildTooltip());
         ownStep.setStartDate(startDate.toDate());
         ownStep.setEndDate(endDate.plusDays(1).toDate());
+        if (task.getProgress() == null) {
+            ownStep.setProgress(0);
+        } else {
+            ownStep.setProgress(task.getProgress());
+        }
+
+        ownStep.setShowProgress(false);
         ownStep.setGanttItemWrapper(this);
     }
 
