@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.5.4";
+	content: "7.5.5";
 }
 
 .v-generated-body {
@@ -1017,10 +1017,6 @@ table {
 
 .v-ie  .v-nativebutton-link {
 	padding: 0;
-}
-
-.v-checkbox {
-	display: block;
 }
 
 .v-checkbox, .v-checkbox label, .v-checkbox input, .v-checkbox .v-icon {
@@ -9776,7 +9772,7 @@ div.v-button.token-field:hover {
 
 .gantt .bar {
 	position: absolute;
-	height: 34px;
+	height: 35px;
 	z-index: 1;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;

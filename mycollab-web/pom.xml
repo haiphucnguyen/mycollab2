@@ -238,7 +238,7 @@
         <dependency>
             <groupId>org.xhtmlrenderer</groupId>
             <artifactId>flying-saucer-pdf</artifactId>
-            <version>9.0.7</version>
+            <version>9.0.8</version>
             <exclusions>
                 <exclusion>
                     <groupId>bouncycastle</groupId>

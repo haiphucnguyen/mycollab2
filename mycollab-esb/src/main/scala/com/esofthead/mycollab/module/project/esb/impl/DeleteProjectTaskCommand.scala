@@ -59,8 +59,8 @@ import org.springframework.stereotype.Component
 
     private def removePredecessorTasks(taskId: Integer): Unit = {
         val ex: PredecessorExample = new PredecessorExample
-        ex.or().andSourceidEqualTo(taskId).andTypeEqualTo (ProjectTypeConstants.TASK)
-        ex.or().andDescidEqualTo(taskId).andTypeEqualTo(ProjectTypeConstants.TASK)
+        ex.or().andSourceidEqualTo(taskId).andSourcetypeEqualTo(ProjectTypeConstants.TASK)
+        ex.or().andDescidEqualTo(taskId).andDesctypeEqualTo(ProjectTypeConstants.TASK)
         predecessorMapper.deleteByExample(ex);
     }
 }
