@@ -58,7 +58,6 @@ public class GanttItemWrapper {
 
     public GanttItemWrapper(GanttExt gantt, AssignWithPredecessors task) {
         this.gantt = gantt;
-        ownStep = new StepExt();
         setTask(task);
     }
 
@@ -82,19 +81,26 @@ public class GanttItemWrapper {
             endDate = new LocalDate(task.getEndDate());
         }
 
-        ownStep.setCaption(task.getName());
-        ownStep.setCaptionMode(Step.CaptionMode.HTML);
-        ownStep.setDescription(buildTooltip());
-        ownStep.setStartDate(startDate.toDate());
-        ownStep.setEndDate(endDate.plusDays(1).toDate());
-        if (task.getProgress() == null) {
-            ownStep.setProgress(0);
-        } else {
-            ownStep.setProgress(task.getProgress());
-        }
+        buildAssociateStepIfNotExisted();
+    }
 
-        ownStep.setShowProgress(false);
-        ownStep.setGanttItemWrapper(this);
+    private void buildAssociateStepIfNotExisted() {
+        if (ownStep == null) {
+            ownStep = new StepExt();
+            ownStep.setCaption(task.getName());
+            ownStep.setCaptionMode(Step.CaptionMode.HTML);
+            ownStep.setDescription(buildTooltip());
+            ownStep.setStartDate(startDate.toDate());
+            ownStep.setEndDate(endDate.plusDays(1).toDate());
+            if (task.getProgress() == null) {
+                ownStep.setProgress(0);
+            } else {
+                ownStep.setProgress(task.getProgress());
+            }
+
+            ownStep.setShowProgress(false);
+            ownStep.setGanttItemWrapper(this);
+        }
     }
 
     public boolean isMilestone() {

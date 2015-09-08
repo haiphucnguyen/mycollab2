@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.1.2</version>
+        <version>5.1.3</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.esofthead.mycollab</groupId>
@@ -28,67 +28,67 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-esb-ondemand</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet-ondemand</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services-ondemand</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-ondemand</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-jetty-session-premium</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-api</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-migration-ondemand</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-scheduler-ondemand</artifactId>
-            <version>5.1.2</version>
+            <version>5.1.3</version>
         </dependency>
 
         <dependency>
