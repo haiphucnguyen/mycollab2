@@ -29,6 +29,7 @@
         <module>../mycollab-reporting</module>
         <module>../mycollab-reporting-premium</module>
         <module>../mycollab-servlet</module>
+        <module>../mycollab-simple-monitoring</module>
         <module>../mycollab-server-runner</module>
         <module>../mycollab-scheduler</module>
         <module>../mycollab-ui</module>

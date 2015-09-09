@@ -7,10 +7,13 @@
             <pattern>%d{"HH:mm:ss,SSS"} %5p %c{1}:%L - %m%n</pattern>
         </encoder>
     </appender>
-    <appender name="email" class="com.esofthead.mycollab.configuration.MailAppender">
+    <appender name="email" class="com.esofthead.mycollab.configuration.logging.MailAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%5p %c{1}:%L - %m%n</pattern>
         </layout>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
     </appender>
     <logger name="org.springframework" level="INFO"></logger>
     <logger name="com.esofthead" level="INFO"/>

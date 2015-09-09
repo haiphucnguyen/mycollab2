@@ -18,7 +18,6 @@ package com.esofthead.mycollab.vaadin;
 
 import com.vaadin.addon.touchkit.annotations.CacheManifestEnabled;
 import com.vaadin.addon.touchkit.server.TouchKitServlet;
-import com.vaadin.addon.touchkit.settings.TouchKitSettings;
 import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
 
@@ -43,7 +42,6 @@ public class MyCollabServlet extends TouchKitServlet {
     @Override
     protected void servletInitialized() throws ServletException {
         super.servletInitialized();
-        TouchKitSettings s = getTouchKitSettings();
 
         getService().addSessionInitListener(new SessionInitListener() {
             private static final long serialVersionUID = 1L;

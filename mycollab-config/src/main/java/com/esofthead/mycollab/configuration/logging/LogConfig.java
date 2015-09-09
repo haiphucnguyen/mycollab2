@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-config.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.configuration;
+package com.esofthead.mycollab.configuration.logging;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.core.joran.spi.JoranException;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import org.slf4j.LoggerFactory;

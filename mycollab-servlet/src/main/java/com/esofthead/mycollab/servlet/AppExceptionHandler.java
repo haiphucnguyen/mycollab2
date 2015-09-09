@@ -25,6 +25,7 @@ import org.eclipse.jetty.server.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,10 +53,6 @@ public class AppExceptionHandler extends GenericHttpServlet {
     @Override
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer status_code = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
-        if (requestUri == null) {
-            requestUri = "Unknown";
-        }
 
         if (request.getHeader("User-Agent") == null) {
             return;
@@ -66,14 +63,9 @@ public class AppExceptionHandler extends GenericHttpServlet {
                 LOG.error("Page 404: " + printRequest(request));
                 responsePage404(response);
             } else {
-                LOG.error("Page 500: " + printRequest(request));
-                responsePage500(response);
-            }
-
-            // Analyze the servlet exception
-            Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
-            if (throwable != null) {
-                LOG.error("Error in servlet " + requestUri, throwable);
+                // Analyze the servlet exception
+                Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+                responsePage500(response, throwable);
             }
 
         } catch (Exception e) {
@@ -101,7 +93,16 @@ public class AppExceptionHandler extends GenericHttpServlet {
         out.println(html);
     }
 
-    private void responsePage500(HttpServletResponse response) throws IOException {
+    private void responsePage500(HttpServletResponse response, Throwable throwable) throws IOException {
+        if (throwable != null) {
+            DataAccessException exception = getExceptionType(throwable, DataAccessException.class);
+            if (exception != null) {
+                response.getWriter().println("<h1>Error establishing a database connection</h1>");
+                return;
+            }
+            LOG.error("Exception in mycollab", throwable);
+        }
+
         String errorPage = "templates/page/500Page.mt";
         TemplateContext context = new TemplateContext();
 
@@ -112,6 +113,7 @@ public class AppExceptionHandler extends GenericHttpServlet {
         defaultUrls.put("cdn_url", SiteConfiguration.getCdnUrl());
         defaultUrls.put("app_url", SiteConfiguration.getAppUrl());
         context.put("defaultUrls", defaultUrls);
+
 
         StringWriter writer = new StringWriter();
         templateEngine.evaluate(context, writer, "log task", reader);
@@ -138,5 +140,15 @@ public class AppExceptionHandler extends GenericHttpServlet {
             builder.append("\n    param: " + param + "----" + request.getParameter(param));
         }
         return builder.toString();
+    }
+
+    private static <T> T getExceptionType(Throwable e, Class<T> exceptionType) {
+        if (exceptionType.isAssignableFrom(e.getClass())) {
+            return (T) e;
+        } else if (e.getCause() != null) {
+            return getExceptionType(e.getCause(), exceptionType);
+        } else {
+            return null;
+        }
     }
 }
