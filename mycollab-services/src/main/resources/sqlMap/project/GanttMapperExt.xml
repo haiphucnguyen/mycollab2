@@ -95,7 +95,7 @@
         m_prj_task.id, m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Task' AS type, m_prj_task.ganttindex,
-        m_prj_task.duration, m_prj_task.parentTaskId IS NULL, m_prj_task.percentagecomplete AS progress,
+        m_prj_task.duration, m_prj_task.parentTaskId, m_prj_task.percentagecomplete AS progress,
         pre_predecessor.id AS pre_id, pre_predecessor.sourceType AS pre_type, pre_predecessor.sourceId AS pre_sourceId,
         pre_predecessor.descId AS pre_descId, pre_predecessor.predestype AS pre_predestype, pre_predecessor.lagDay AS pre_lagDay,
         pre_task.ganttindex AS pre_ganttindex,
@@ -110,7 +110,7 @@
         LEFT OUTER JOIN m_prj_predecessor AS dep_predecessor ON (m_prj_task.id=dep_predecessor.descId AND
         dep_predecessor.descType='Project-Task')
         LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
-        WHERE m_prj_task.milestoneId = @{id}
+        WHERE m_prj_task.milestoneId = @{id} AND m_prj_task.parentTaskId IS NULL
         ORDER BY ISNULL(m_prj_task.ganttindex), m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
     </select>
 

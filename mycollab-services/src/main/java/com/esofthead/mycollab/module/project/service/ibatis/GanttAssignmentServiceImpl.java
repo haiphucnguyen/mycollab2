@@ -20,10 +20,11 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.dao.GanttMapperExt;
-import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
-import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
-import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
+import com.esofthead.mycollab.module.project.dao.MilestoneMapper;
+import com.esofthead.mycollab.module.project.dao.TaskMapper;
+import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -135,6 +136,48 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             } catch (Exception e) {
                 throw new MyCollabException(e);
             }
+        }
+    }
+
+    @Override
+    public void massDeleteGanttItems(List<AssignWithPredecessors> ganttItems, Integer sAccountId) {
+        if (CollectionUtils.isNotEmpty(ganttItems)) {
+            List<Integer> milestoneIds = new ArrayList<>();
+            List<Integer> taskIds = new ArrayList<>();
+            for (AssignWithPredecessors ganttItem : ganttItems) {
+                if (ganttItem instanceof MilestoneGanttItem) {
+                    if (ganttItem.getId() != null) {
+                        milestoneIds.add(ganttItem.getId());
+                    }
+
+                } else if (ganttItem instanceof TaskGanttItem) {
+                    if (ganttItem.getId() != null) {
+                        taskIds.add(ganttItem.getId());
+                    }
+                } else {
+                    throw new MyCollabException("Do not support delete gantt item " + ganttItem);
+                }
+            }
+            massDeleteMilestoneGanttItems(milestoneIds);
+            massDeleteTaskGanttItems(taskIds);
+        }
+    }
+
+    private void massDeleteMilestoneGanttItems(List<Integer> milestoneIds) {
+        if (CollectionUtils.isNotEmpty(milestoneIds)) {
+            MilestoneMapper milestoneMapper = ApplicationContextUtil.getSpringBean(MilestoneMapper.class);
+            MilestoneExample ex = new MilestoneExample();
+            ex.createCriteria().andIdIn(milestoneIds);
+            milestoneMapper.deleteByExample(ex);
+        }
+    }
+
+    private void massDeleteTaskGanttItems(List<Integer> taskIds) {
+        if (CollectionUtils.isNotEmpty(taskIds)) {
+            TaskMapper taskMapper = ApplicationContextUtil.getSpringBean(TaskMapper.class);
+            TaskExample ex = new TaskExample();
+            ex.createCriteria().andIdIn(taskIds);
+            taskMapper.deleteByExample(ex);
         }
     }
 

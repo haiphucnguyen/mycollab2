@@ -31,4 +31,6 @@ public interface GanttAssignmentService extends IService {
 
     @CacheEvict
     void massUpdateGanttItems(List<AssignWithPredecessors> ganttItems, @CacheKey Integer sAccountId);
+
+    @CacheEvict void massDeleteGanttItems(List<AssignWithPredecessors> ganttItems, @CacheKey Integer sAccountId);
 }

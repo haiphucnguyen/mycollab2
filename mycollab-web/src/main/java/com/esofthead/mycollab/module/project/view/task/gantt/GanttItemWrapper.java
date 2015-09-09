@@ -98,6 +98,14 @@ public class GanttItemWrapper {
                 ownStep.setProgress(task.getProgress());
             }
 
+            if (isMilestone()) {
+                ownStep.setBackgroundColor("f7f4f0");
+            } else if (isTask() && task.hasSubAssignments()) {
+                ownStep.setBackgroundColor("d1e3f7");
+            } else {
+                ownStep.setBackgroundColor("d1e3f7");
+            }
+
             ownStep.setShowProgress(false);
             ownStep.setGanttItemWrapper(this);
         }
@@ -446,5 +454,13 @@ public class GanttItemWrapper {
         if (parentTask != null) {
             parentTask.calculateDatesByChildTasks();
         }
+    }
+
+    boolean isIndetable() {
+        return false;
+    }
+
+    boolean isOutdentable() {
+        return false;
     }
 }

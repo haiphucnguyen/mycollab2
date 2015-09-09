@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.form.field.converter.LocalDateConverter;
 import com.google.common.eventbus.Subscribe;
@@ -40,6 +41,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
 import java.util.*;
@@ -309,17 +311,18 @@ public class GanttTreeTable extends TreeTable {
         }
     }
 
-    private void insertSubSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> childs) {
+    private void insertSubSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> children) {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
         int count = 0;
         if (stepIndex != -1) {
             LocalDate startDate = parent.getStartDate();
             LocalDate endDate = parent.getEndDate();
+            int ganttStartIndex = (parent.getGanttIndex() != null) ? parent.getGanttIndex() : beanContainer.indexOfId(parent) + 1;
 
-            for (GanttItemWrapper child : childs) {
+            for (GanttItemWrapper child : children) {
                 this.addItem(child);
 
-                int ganttIndex = beanContainer.indexOfId(child) + 1;
+                int ganttIndex = ++ganttStartIndex;
                 child.setGanttIndex(ganttIndex);
                 ganttIndexIsChanged = true;
 
@@ -401,6 +404,55 @@ public class GanttTreeTable extends TreeTable {
                     } else {
                         NotificationUtil.showWarningNotification("Can not edit predecessors for milestone");
                     }
+                }
+            });
+
+            ContextMenuItem indentMenuItem = this.addItem("Indent", FontAwesome.INDENT);
+            indentMenuItem.setEnabled(taskWrapper.isIndetable());
+            indentMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
+
+                }
+            });
+
+            ContextMenuItem outdentMenuItem = this.addItem("Outdent", FontAwesome.OUTDENT);
+            outdentMenuItem.setEnabled(taskWrapper.isOutdentable());
+            outdentMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
+
+                }
+            });
+
+            ContextMenuItem inserRowMenuItem = this.addItem("Insert row", FontAwesome.PLUS_CIRCLE);
+            inserRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
+
+                }
+            });
+
+            ContextMenuItem deleteRowMenuItem = this.addItem("Delete row", FontAwesome.TRASH_O);
+            deleteRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                @Override
+                public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+                                    AppContext.getSiteName()),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+
+                                    }
+                                }
+                            });
                 }
             });
         }
