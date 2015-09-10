@@ -75,6 +75,14 @@ public class CurrentProjectVariables {
         }
     }
 
+    public static boolean getProjectToogleMenu() {
+        return (Boolean) MyCollabSession.getVariable(TOOGLE_MENU_FLAG);
+    }
+
+    public static void setProjectToogleMenu(boolean visibility) {
+        MyCollabSession.putVariable(TOOGLE_MENU_FLAG, new Boolean(visibility));
+    }
+
     private static void setProjectMember(SimpleProjectMember prjMember) {
         MyCollabSession.putVariable(PROJECT_MEMBER, prjMember);
     }

@@ -90,7 +90,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
 
     private HorizontalLayout kanbanLayout;
     private Map<String, KanbanBlock> kanbanBlocks;
-    private Button toogleMenuShowBtn;
     private com.vaadin.ui.ComponentContainer newBugComp = null;
 
     private ApplicationEventListener<BugEvent.SearchRequest> searchHandler = new
@@ -118,20 +117,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         headerText.setStyleName(UIConstants.HEADER_TEXT);
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
-
-        toogleMenuShowBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                projectNavigatorVisibility = !projectNavigatorVisibility;
-                setProjectNavigatorVisibility(projectNavigatorVisibility);
-                if (projectNavigatorVisibility) {
-                    toogleMenuShowBtn.setCaption("Hide menu");
-                } else {
-                    toogleMenuShowBtn.setCaption("Show menu");
-                }
-            }
-        });
-        toogleMenuShowBtn.addStyleName(UIConstants.THEME_LINK);
 
         final SavedFilterComboBox savedFilterComboBox = new SavedFilterComboBox(ProjectTypeConstants.BUG);
         savedFilterComboBox.addValueChangeListener(new Property.ValueChangeListener() {
@@ -165,8 +150,8 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerWrapper, savedFilterComboBox, toogleMenuShowBtn, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
-                .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, savedFilterComboBox, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
+                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         kanbanLayout = new HorizontalLayout();
         kanbanLayout.setHeight("100%");
@@ -207,7 +192,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         kanbanLayout.removeAllComponents();
         kanbanBlocks = new ConcurrentHashMap<>();
 
-        toogleMenuShowBtn.setCaption("Show menu");
         setProjectNavigatorVisibility(false);
         UI.getCurrent().access(new Runnable() {
             @Override

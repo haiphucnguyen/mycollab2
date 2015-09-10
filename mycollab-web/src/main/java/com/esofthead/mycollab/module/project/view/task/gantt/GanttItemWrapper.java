@@ -343,7 +343,10 @@ public class GanttItemWrapper {
 
     public void updateParentRelationship(GanttItemWrapper newParent) {
         GanttItemWrapper oldParent = this.parent;
-        oldParent.removeSubTask(this);
+        if (oldParent != null) {
+            oldParent.removeSubTask(this);
+        }
+
         this.parent = newParent;
         if (parent != null) {
             this.parent.addSubTask(this);

@@ -63,7 +63,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     private MHorizontalLayout mainLayout;
     private GanttExt gantt;
     private GanttTreeTable taskTable;
-    private Button toogleMenuShowBtn;
     private GanttAssignmentService ganttAssignmentService;
 
     public GanttChartViewImpl() {
@@ -77,20 +76,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         headerText.setStyleName(UIConstants.HEADER_TEXT);
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
-
-        toogleMenuShowBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                projectNavigatorVisibility = !projectNavigatorVisibility;
-                setProjectNavigatorVisibility(projectNavigatorVisibility);
-                if (projectNavigatorVisibility) {
-                    toogleMenuShowBtn.setCaption("Hide menu");
-                } else {
-                    toogleMenuShowBtn.setCaption("Show menu");
-                }
-            }
-        });
-        toogleMenuShowBtn.addStyleName(UIConstants.THEME_LINK);
 
         HorizontalLayout resWrapper = new HorizontalLayout();
         Label resLbl = new Label("Resolution: ");
@@ -120,8 +105,8 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
-        header.with(headerWrapper, toogleMenuShowBtn, resWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
-                .withAlign(toogleMenuShowBtn, Alignment.MIDDLE_RIGHT).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, resWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
+                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
 
         ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
 
@@ -146,7 +131,6 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     }
 
     public void displayGanttChart() {
-        toogleMenuShowBtn.setCaption("Show menu");
         setProjectNavigatorVisibility(false);
         mainLayout.removeAllComponents();
 

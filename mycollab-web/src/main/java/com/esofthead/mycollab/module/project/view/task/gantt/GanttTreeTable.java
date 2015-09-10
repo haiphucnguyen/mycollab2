@@ -23,6 +23,7 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
@@ -413,6 +414,8 @@ public class GanttTreeTable extends TreeTable {
                         GanttTreeTable.this.setParent(taskWrapper, preItemWrapper);
                         GanttTreeTable.this.setCollapsed(preItemWrapper, false);
                         GanttTreeTable.this.refreshRowCache();
+                        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
+                                (GanttTreeTable.this, taskWrapper.getTask()));
                     }
                 }
             });
@@ -449,7 +452,14 @@ public class GanttTreeTable extends TreeTable {
             inserRowBeforeMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
-                    beanContainer.prevItemId(taskWrapper);
+                    GanttItemWrapper prevItem = beanContainer.prevItemId(taskWrapper);
+                    if (prevItem == null) {
+                        TaskGanttItem newTask = new TaskGanttItem();
+                        newTask.setName("New Task");
+                        GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
+                        beanContainer.addItemAt(1, newGanttItem);
+                        GanttTreeTable.this.refreshRowCache();
+                    }
                 }
             });
 
