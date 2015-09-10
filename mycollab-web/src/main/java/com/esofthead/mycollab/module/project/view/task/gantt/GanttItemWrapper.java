@@ -67,6 +67,13 @@ public class GanttItemWrapper {
         }
     }
 
+    public void addSubTask(GanttItemWrapper subTask) {
+        if (subItems == null) {
+            subItems = new ArrayList<>();
+        }
+        subItems.add(subTask);
+    }
+
     public AssignWithPredecessors getTask() {
         return task;
     }
@@ -334,6 +341,26 @@ public class GanttItemWrapper {
         this.parent = parent;
     }
 
+    public void updateParentRelationship(GanttItemWrapper newParent) {
+        GanttItemWrapper oldParent = this.parent;
+        oldParent.removeSubTask(this);
+        this.parent = newParent;
+        if (parent != null) {
+            this.parent.addSubTask(this);
+        }
+
+        if (parent != null && parent.getTask() instanceof MilestoneGanttItem) {
+            ((TaskGanttItem) getTask()).setMilestoneId(parent.getId());
+        } else if (parent != null && parent.getTask() instanceof TaskGanttItem) {
+            ((TaskGanttItem) getTask()).setParentTaskId(parent.getId());
+        } else if (parent == null) {
+            ((TaskGanttItem) getTask()).setParentTaskId(null);
+            ((TaskGanttItem) getTask()).setMilestoneId(null);
+        } else {
+            throw new MyCollabException("Not support parent type " + getTask());
+        }
+    }
+
     public Step getStep() {
         return ownStep;
     }
@@ -472,6 +499,6 @@ public class GanttItemWrapper {
     }
 
     boolean isOutdentable() {
-       return (this.getParent() != null);
+        return (this.getParent() != null);
     }
 }

@@ -117,8 +117,8 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET " +
                                 "taskname = ?, `startdate` = ?, `enddate` = ?, `actualStartDate`=?, `actualEndDate`=?, " +
-                                "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignUser`=?, `ganttindex`=? WHERE " +
-                                "`id` = ?");
+                                "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignUser`=?, `ganttindex`=?, " +
+                                "`milestoneId`=?, `parentTaskId`=? WHERE `id` = ?");
                         for (int i = 0; i < taskGanttItems.size(); i++) {
                             preparedStatement.setString(1, taskGanttItems.get(i).getName());
                             preparedStatement.setDate(2, getDateWithNullValue(taskGanttItems.get(i).getStartDate()));
@@ -129,7 +129,9 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                             preparedStatement.setDouble(7, taskGanttItems.get(i).getProgress());
                             preparedStatement.setString(8, taskGanttItems.get(i).getAssignUser());
                             preparedStatement.setInt(9, taskGanttItems.get(i).getGanttIndex());
-                            preparedStatement.setInt(10, taskGanttItems.get(i).getId());
+                            preparedStatement.setObject(10, taskGanttItems.get(i).getMilestoneId());
+                            preparedStatement.setObject(11, taskGanttItems.get(i).getParentTaskId());
+                            preparedStatement.setInt(12, taskGanttItems.get(i).getId());
                             preparedStatement.addBatch();
                         }
                         preparedStatement.executeBatch();
