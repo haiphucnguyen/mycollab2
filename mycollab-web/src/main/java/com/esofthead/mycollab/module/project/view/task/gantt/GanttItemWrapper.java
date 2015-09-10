@@ -22,10 +22,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
-import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
-import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
-import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
+import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -171,13 +168,17 @@ public class GanttItemWrapper {
     }
 
     private static List<GanttItemWrapper> buildSubTasks(GanttExt gantt, GanttItemWrapper parent, List<TaskGanttItem> items) {
-        List<GanttItemWrapper> tmpList = new ArrayList<>(items.size());
-        for (TaskGanttItem item : items) {
-            GanttItemWrapper ganttItemWrapper = new GanttItemWrapper(gantt, item);
-            tmpList.add(ganttItemWrapper);
-            ganttItemWrapper.setParent(parent);
+        if (CollectionUtils.isNotEmpty(items)) {
+            List<GanttItemWrapper> tmpList = new ArrayList<>(items.size());
+            for (TaskGanttItem item : items) {
+                GanttItemWrapper ganttItemWrapper = new GanttItemWrapper(gantt, item);
+                tmpList.add(ganttItemWrapper);
+                ganttItemWrapper.setParent(parent);
+            }
+            return tmpList;
+        } else {
+            return new ArrayList<>();
         }
-        return tmpList;
     }
 
     private void calculateDatesByChildTasks() {
@@ -194,6 +195,10 @@ public class GanttItemWrapper {
 
     public Integer getId() {
         return task.getId();
+    }
+
+    public void setId(Integer id) {
+        task.setId(id);
     }
 
     public Double getDuration() {
@@ -471,7 +476,7 @@ public class GanttItemWrapper {
 
     private void onDateChanges(boolean askToCheckPredecessors, boolean requestToCheckDependents) {
         ownStep.setDescription(buildTooltip());
-        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, task));
+        EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttItemWrapper.this, this));
 
         if (askToCheckPredecessors) {
             adjustTaskDatesByPredecessors(getPredecessors());
@@ -503,5 +508,15 @@ public class GanttItemWrapper {
 
     boolean isOutdentable() {
         return (this.getParent() != null);
+    }
+
+    public Task buildNewTask() {
+        if (task instanceof TaskGanttItem) {
+            Task newTask = ((TaskGanttItem) task).buildNewTask();
+            newTask.setSaccountid(AppContext.getAccountId());
+            return newTask;
+        } else {
+            throw new MyCollabException("Invalid method call");
+        }
     }
 }

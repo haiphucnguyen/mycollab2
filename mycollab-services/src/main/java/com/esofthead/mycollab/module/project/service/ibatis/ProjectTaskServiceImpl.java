@@ -114,6 +114,10 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     @Override
     public Integer saveWithSession(Task record, String username) {
+        if (record.getPercentagecomplete() == null) {
+            record.setStatus(StatusI18nEnum.Open.name());
+            record.setPercentagecomplete(0d);
+        }
         if (record.getPercentagecomplete() == 100d) {
             record.setStatus(StatusI18nEnum.Closed.name());
         }

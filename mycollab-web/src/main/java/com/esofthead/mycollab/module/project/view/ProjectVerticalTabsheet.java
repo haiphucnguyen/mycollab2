@@ -77,6 +77,6 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
         });
 
         boolean visibility = CurrentProjectVariables.getProjectToogleMenu();
-        setNavigatorVisibility(!visibility);
+        setNavigatorVisibility(visibility);
     }
 }
