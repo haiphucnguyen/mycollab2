@@ -721,7 +721,11 @@
     }
 
     .v-table-table .v-table-row-milestone {
-      background-color: #f7f4f0;
+      background-color: #C2DFFF;
+    }
+
+    .v-table-table .v-table-row-task {
+      background-color: #E4F1FF;
     }
 
     .v-table-table tr td.v-table-cell-content {
@@ -736,6 +740,9 @@
       input.v-widget.v-textfield[type="text"] {
         border: none;
         background-color:transparent;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
       }
       input.v-widget.v-textfield.v-textfield-focus[type="text"], input.v-widget.v-textfield[type="text"]:hover {
         border: solid 1px $border-color;

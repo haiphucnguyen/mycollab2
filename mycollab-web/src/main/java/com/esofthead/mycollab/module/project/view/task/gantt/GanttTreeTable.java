@@ -249,6 +249,8 @@ public class GanttTreeTable extends TreeTable {
                 GanttItemWrapper item = (GanttItemWrapper) itemId;
                 if (item.isMilestone()) {
                     return "milestone";
+                } else if (item.isTask()) {
+                    return "task";
                 }
                 return null;
             }
