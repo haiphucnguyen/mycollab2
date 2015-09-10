@@ -463,22 +463,38 @@ public class GanttTreeTable extends TreeTable {
                 }
             });
 
-            ContextMenuItem inserRowBeforeMenuItem = this.addItem("Insert row before", FontAwesome.PLUS_CIRCLE);
-            inserRowBeforeMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
-                @Override
-                public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
-                    int index = beanContainer.indexOfId(taskWrapper);
-                    TaskGanttItem newTask = new TaskGanttItem();
-                    newTask.setType(ProjectTypeConstants.TASK);
-                    newTask.setPrjId(taskWrapper.getTask().getPrjId());
-                    newTask.setName("New Task");
-                    newTask.setProgress(0d);
-                    newTask.setsAccountId(AppContext.getAccountId());
-                    GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
+            if (beanContainer.indexOfId(taskWrapper) > 0) {
+                ContextMenuItem inserRowBeforeMenuItem = this.addItem("Insert row before", FontAwesome.PLUS_CIRCLE);
+                inserRowBeforeMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
+                    @Override
+                    public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
+                        int index = beanContainer.indexOfId(taskWrapper);
+                        if (index > 0) {
+                            TaskGanttItem newTask = new TaskGanttItem();
+                            newTask.setType(ProjectTypeConstants.TASK);
+                            newTask.setPrjId(taskWrapper.getTask().getPrjId());
+                            newTask.setName("New Task");
+                            newTask.setProgress(0d);
+                            newTask.setsAccountId(AppContext.getAccountId());
+                            GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
+                            newGanttItem.setGanttIndex(index + 1);
+                            GanttItemWrapper prevItem = beanContainer.prevItemId(taskWrapper);
+                            beanContainer.addItemAfter(prevItem, newGanttItem);
+                            gantt.addTask(index, newGanttItem);
+                            GanttTreeTable.this.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
 
-                    GanttTreeTable.this.refreshRowCache();
-                }
-            });
+                            if (taskWrapper.getParent() != null) {
+                                GanttTreeTable.this.setParent(newGanttItem, taskWrapper.getParent());
+                                newGanttItem.updateParentRelationship(taskWrapper.getParent());
+                            }
+                        }
+
+                        calculateWholeGanttIndexes();
+                        GanttTreeTable.this.refreshRowCache();
+                    }
+                });
+            }
+
 
             ContextMenuItem insertRowAfterMenuItem = this.addItem("Insert row after", FontAwesome.PLUS_CIRCLE);
             insertRowAfterMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
