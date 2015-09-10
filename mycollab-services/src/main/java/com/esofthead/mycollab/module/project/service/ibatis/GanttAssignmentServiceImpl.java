@@ -83,7 +83,7 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_milestone` SET " +
                                 "name = ?, `startdate` = ?, `enddate` = ?, `actualstartdate`=?,`actualenddate`=?, " +
-                                "`lastUpdatedTime`=?, `owner`=? WHERE `id` = ?");
+                                "`lastUpdatedTime`=?, `owner`=?, `ganttIndex`=? WHERE `id` = ?");
                         for (int i = 0; i < milestoneGanttItems.size(); i++) {
                             preparedStatement.setString(1, milestoneGanttItems.get(i).getName());
                             preparedStatement.setDate(2, getDateWithNullValue(milestoneGanttItems.get(i).getStartDate()));
@@ -92,7 +92,8 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                             preparedStatement.setDate(5, getDateWithNullValue(milestoneGanttItems.get(i).getActualEndDate()));
                             preparedStatement.setDate(6, new Date(now));
                             preparedStatement.setString(7, milestoneGanttItems.get(i).getAssignUser());
-                            preparedStatement.setInt(8, milestoneGanttItems.get(i).getId());
+                            preparedStatement.setInt(8, milestoneGanttItems.get(i).getGanttIndex());
+                            preparedStatement.setInt(9, milestoneGanttItems.get(i).getId());
                             preparedStatement.addBatch();
 
                         }
@@ -116,7 +117,8 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET " +
                                 "taskname = ?, `startdate` = ?, `enddate` = ?, `actualStartDate`=?, `actualEndDate`=?, " +
-                                "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignUser`=? WHERE `id` = ?");
+                                "`lastUpdatedTime`=?, `percentagecomplete`=?, `assignUser`=?, `ganttindex`=? WHERE " +
+                                "`id` = ?");
                         for (int i = 0; i < taskGanttItems.size(); i++) {
                             preparedStatement.setString(1, taskGanttItems.get(i).getName());
                             preparedStatement.setDate(2, getDateWithNullValue(taskGanttItems.get(i).getStartDate()));
@@ -126,7 +128,8 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
                             preparedStatement.setDate(6, new Date(now));
                             preparedStatement.setDouble(7, taskGanttItems.get(i).getProgress());
                             preparedStatement.setString(8, taskGanttItems.get(i).getAssignUser());
-                            preparedStatement.setInt(9, taskGanttItems.get(i).getId());
+                            preparedStatement.setInt(9, taskGanttItems.get(i).getGanttIndex());
+                            preparedStatement.setInt(10, taskGanttItems.get(i).getId());
                             preparedStatement.addBatch();
                         }
                         preparedStatement.executeBatch();

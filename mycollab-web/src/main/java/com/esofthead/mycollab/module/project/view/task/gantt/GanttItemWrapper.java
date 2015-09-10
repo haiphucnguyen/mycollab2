@@ -61,6 +61,12 @@ public class GanttItemWrapper {
         setTask(task);
     }
 
+    public void removeSubTask(GanttItemWrapper subTask) {
+        if (CollectionUtils.isNotEmpty(subItems)) {
+            subItems.remove(subTask);
+        }
+    }
+
     public AssignWithPredecessors getTask() {
         return task;
     }
@@ -456,11 +462,16 @@ public class GanttItemWrapper {
         }
     }
 
-    boolean isIndetable() {
+    boolean isIndentable() {
+        GanttItemContainer beanContainer = gantt.getBeanContainer();
+        GanttItemWrapper prevItemId = beanContainer.prevItemId(this);
+        if (prevItemId != null && this.getParent() != prevItemId) {
+            return true;
+        }
         return false;
     }
 
     boolean isOutdentable() {
-        return false;
+       return (this.getParent() != null);
     }
 }

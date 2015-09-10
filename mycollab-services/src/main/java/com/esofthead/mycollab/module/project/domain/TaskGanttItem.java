@@ -28,6 +28,8 @@ public class TaskGanttItem extends AssignWithPredecessors {
 
     private Integer parentTaskId;
 
+    private Integer milestoneId;
+
     public List<TaskGanttItem> getSubTasks() {
         return subTasks;
     }
@@ -42,6 +44,14 @@ public class TaskGanttItem extends AssignWithPredecessors {
 
     public void setParentTaskId(Integer parentTaskId) {
         this.parentTaskId = parentTaskId;
+    }
+
+    public Integer getMilestoneId() {
+        return milestoneId;
+    }
+
+    public void setMilestoneId(Integer milestoneId) {
+        this.milestoneId = milestoneId;
     }
 
     @Override

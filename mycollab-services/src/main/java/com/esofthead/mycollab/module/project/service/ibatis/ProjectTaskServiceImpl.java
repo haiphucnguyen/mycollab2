@@ -31,7 +31,6 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.PredecessorMapper;
@@ -58,7 +57,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -209,24 +207,6 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     public void massUpdateTaskIndexes(final List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `taskindex`=? WHERE `id`=?", new
-                BatchPreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                        preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
-                        preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
-                    }
-
-                    @Override
-                    public int getBatchSize() {
-                        return mapIndexes.size();
-                    }
-                });
-    }
-
-    @Override
-    public void massUpdateGanttIndexes(final List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.batchUpdate("UPDATE `m_prj_task` SET `ganttindex`=? WHERE `id`=?", new
                 BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {

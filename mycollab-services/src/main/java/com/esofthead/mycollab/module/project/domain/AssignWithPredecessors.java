@@ -223,4 +223,25 @@ public abstract class AssignWithPredecessors {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AssignWithPredecessors)) return false;
+
+        AssignWithPredecessors that = (AssignWithPredecessors) o;
+
+        if (!prjId.equals(that.prjId)) return false;
+        if (!type.equals(that.type)) return false;
+        return id.equals(that.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = prjId.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + id.hashCode();
+        return result;
+    }
 }

@@ -22,7 +22,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfoMap;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
-import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -36,16 +35,10 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.schedule.email.project.ProjectMilestoneRelayEmailNotificationAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -94,23 +87,5 @@ public class MilestoneServiceImpl extends DefaultService<Integer, Milestone, Mil
     public Integer updateWithSession(Milestone record, String username) {
         CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class);
         return super.updateWithSession(record, username);
-    }
-
-    @Override
-    public void massUpdateGanttIndexes(final List<Map<String, Integer>> mapIndexes, @CacheKey Integer sAccountId) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate.batchUpdate("UPDATE `m_prj_milestone` SET `ganttindex`=? WHERE `id`=?", new
-                BatchPreparedStatementSetter() {
-                    @Override
-                    public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                        preparedStatement.setInt(1, mapIndexes.get(i).get("index"));
-                        preparedStatement.setInt(2, mapIndexes.get(i).get("id"));
-                    }
-
-                    @Override
-                    public int getBatchSize() {
-                        return mapIndexes.size();
-                    }
-                });
     }
 }

@@ -27,9 +27,6 @@ import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.service.MilestoneService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -44,15 +41,16 @@ import org.joda.time.LocalDate;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
 public class GanttTreeTable extends TreeTable {
-    private ProjectTaskService projectTaskService;
-    private MilestoneService milestoneService;
     private GanttExt gantt;
     private GanttItemContainer beanContainer;
 
@@ -72,8 +70,6 @@ public class GanttTreeTable extends TreeTable {
 
     public GanttTreeTable(final GanttExt gantt) {
         super();
-        projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
         this.gantt = gantt;
         this.setWidth("800px");
         this.setBuffered(true);
@@ -356,27 +352,25 @@ public class GanttTreeTable extends TreeTable {
     public void updateWholeGanttIndexes() {
         if (ganttIndexIsChanged) {
             Collection<GanttItemWrapper> items = beanContainer.getItemIds();
-            List<Map<String, Integer>> taskMapIndexes = new ArrayList<>();
-            List<Map<String, Integer>> milestoneMapIndexes = new ArrayList<>();
             for (GanttItemWrapper item : items) {
-                Map<String, Integer> value = new HashMap<>(2);
-                value.put("id", item.getId());
-                value.put("index", item.getGanttIndex());
-                if (item.isTask()) {
-                    taskMapIndexes.add(value);
-                } else if (item.isMilestone()) {
-                    milestoneMapIndexes.add(value);
-                } else {
-                    throw new MyCollabException("Do not support type " + item.getTask());
-                }
+                EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttTreeTable.this, item.getTask()));
             }
-            projectTaskService.massUpdateGanttIndexes(taskMapIndexes, AppContext.getAccountId());
-            milestoneService.massUpdateGanttIndexes(milestoneMapIndexes, AppContext.getAccountId());
         }
     }
 
+    private void calculateWholeGanttIndexes() {
+        GanttItemWrapper item = beanContainer.firstItemId();
+        int index = 1;
+        while (item != null) {
+            System.out.println("Item: " + index + "---" + item.getName());
+            item.setGanttIndex(index);
+            item = beanContainer.nextItemId(item);
+            index++;
+        }
+        this.refreshRowCache();
+    }
+
     private class GanttContextMenu extends ContextMenu {
-        private GanttItemWrapper taskWrapper;
 
         GanttContextMenu() {
         }
@@ -408,11 +402,16 @@ public class GanttTreeTable extends TreeTable {
             });
 
             ContextMenuItem indentMenuItem = this.addItem("Indent", FontAwesome.INDENT);
-            indentMenuItem.setEnabled(taskWrapper.isIndetable());
+            indentMenuItem.setEnabled(taskWrapper.isIndentable());
             indentMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
-
+                    GanttItemWrapper preItemWrapper = beanContainer.prevItemId(taskWrapper);
+                    if (preItemWrapper != null && preItemWrapper != taskWrapper.getParent()) {
+                        taskWrapper.setParent(preItemWrapper);
+                        GanttTreeTable.this.setParent(taskWrapper, preItemWrapper);
+                        GanttTreeTable.this.refreshRowCache();
+                    }
                 }
             });
 
@@ -429,7 +428,7 @@ public class GanttTreeTable extends TreeTable {
             inserRowMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override
                 public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
-
+                    beanContainer.prevItemId(taskWrapper);
                 }
             });
 
@@ -449,12 +448,31 @@ public class GanttTreeTable extends TreeTable {
                                 @Override
                                 public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
-
+                                        removeTask(taskWrapper);
                                     }
                                 }
                             });
                 }
             });
+        }
+
+        private void removeTask(GanttItemWrapper task) {
+//            EventBusFactory.getInstance().post(new GanttEvent
+//                    .DeleteGanttItemUpdateToQueue(GanttTreeTable.this, task.getTask()));
+            GanttTreeTable.this.removeItem(task);
+            if (task.getParent() != null) {
+                task.getParent().removeSubTask(task);
+            }
+
+            if (task.hasSubTasks()) {
+                Iterator<GanttItemWrapper> iter = task.subTasks().iterator();
+                while (iter.hasNext()) {
+                    GanttItemWrapper subTask = iter.next();
+                    iter.remove();
+                    removeTask(subTask);
+                }
+            }
+            calculateWholeGanttIndexes();
         }
     }
 }
