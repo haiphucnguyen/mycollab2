@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -38,7 +37,6 @@ import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -141,17 +139,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             }
         });
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{
-                        "bug", "dashboard", UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId())}));
-            }
-        });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-
-        header.with(headerWrapper, savedFilterComboBox, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
-                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, savedFilterComboBox).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).expand(headerWrapper);
 
         kanbanLayout = new HorizontalLayout();
         kanbanLayout.setHeight("100%");

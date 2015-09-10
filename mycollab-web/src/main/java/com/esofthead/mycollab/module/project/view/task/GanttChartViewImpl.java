@@ -16,9 +16,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
@@ -29,7 +26,6 @@ import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttTreeTable;
-import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -96,17 +92,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
         resWrapper.addComponent(resLbl);
         resWrapper.addComponent(resValue);
 
-        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_BACK), new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{
-                        "task", "dashboard", UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId())}));
-            }
-        });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-
-        header.with(headerWrapper, resWrapper, cancelBtn).withAlign(headerWrapper, Alignment.MIDDLE_LEFT)
-                .withAlign(cancelBtn, Alignment.MIDDLE_RIGHT).expand(headerWrapper);
+        header.with(headerWrapper, resWrapper).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).expand(headerWrapper);
 
         ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
 

@@ -298,7 +298,7 @@ public class GanttTreeTable extends TreeTable {
 
     public void addTask(GanttItemWrapper itemWrapper) {
         int ganttIndex = beanContainer.size() + 1;
-        if (itemWrapper.getGanttIndex() != ganttIndex) {
+        if (itemWrapper.getGanttIndex() == null || ganttIndex != itemWrapper.getGanttIndex()) {
             itemWrapper.setGanttIndex(ganttIndex);
             ganttIndexIsChanged = true;
         }
@@ -548,9 +548,9 @@ public class GanttTreeTable extends TreeTable {
         }
 
         private void removeTask(GanttItemWrapper task) {
-//            EventBusFactory.getInstance().post(new GanttEvent
-//                    .DeleteGanttItemUpdateToQueue(GanttTreeTable.this, task.getTask()));
-            GanttTreeTable.this.removeItem(task);
+            EventBusFactory.getInstance().post(new GanttEvent.DeleteGanttItemUpdateToQueue(GanttTreeTable.this, task));
+            beanContainer.removeItem(task);
+            gantt.removeStep(task.getStep());
             if (task.getParent() != null) {
                 task.getParent().removeSubTask(task);
             }
