@@ -109,11 +109,11 @@ public class GanttItemWrapper {
             }
 
             if (isMilestone()) {
-                ownStep.setBackgroundColor("f7f4f0");
+                ownStep.setBackgroundColor("C2DFFF");
             } else if (isTask() && task.hasSubAssignments()) {
-                ownStep.setBackgroundColor("d1e3f7");
+                ownStep.setBackgroundColor("E4F1FF");
             } else {
-                ownStep.setBackgroundColor("d1e3f7");
+                ownStep.setBackgroundColor("E4F1FF");
             }
 
             ownStep.setShowProgress(false);
@@ -512,9 +512,7 @@ public class GanttItemWrapper {
 
     public Task buildNewTask() {
         if (task instanceof TaskGanttItem) {
-            Task newTask = ((TaskGanttItem) task).buildNewTask();
-            newTask.setSaccountid(AppContext.getAccountId());
-            return newTask;
+            return ((TaskGanttItem) task).buildNewTask();
         } else {
             throw new MyCollabException("Invalid method call");
         }

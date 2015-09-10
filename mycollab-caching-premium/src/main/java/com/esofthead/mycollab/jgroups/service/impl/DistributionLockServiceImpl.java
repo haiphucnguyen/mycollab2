@@ -39,17 +39,14 @@ public class DistributionLockServiceImpl implements DistributionLockService {
 
 	private static ForkChannel getChannel() {
 		try {
-			CacheImpl<Object, Object> cache = (CacheImpl<Object, Object>) LocalCacheManager
-					.getCache();
-			Transport tp = cache.getAdvancedCache().getCacheManager()
-					.getTransport();
+			CacheImpl<Object, Object> cache = (CacheImpl<Object, Object>) LocalCacheManager.getCache();
+			Transport tp = cache.getAdvancedCache().getCacheManager().getTransport();
 
 			ForkChannel fork_ch;
 
 			Channel main_ch = ((JGroupsTransport) tp).getChannel();
 
-			fork_ch = new ForkChannel(main_ch, "hijack-stack", "lead-hijacker",
-					true, ProtocolStack.ABOVE, CENTRAL_LOCK.class);
+			fork_ch = new ForkChannel(main_ch, "hijack-stack", "lead-hijacker", true, ProtocolStack.ABOVE, CENTRAL_LOCK.class);
 			return fork_ch;
 		} catch (Exception e) {
 			// LOG.error("Can not init the distributed lock", e);

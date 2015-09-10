@@ -82,6 +82,9 @@ public class TaskGanttItem extends AssignWithPredecessors {
         newTask.setActualstartdate(getActualStartDate());
         newTask.setActualenddate(getActualEndDate());
         newTask.setPercentagecomplete(getProgress());
+        newTask.setGanttindex(getGanttIndex());
+        newTask.setParenttaskid(getParentTaskId());
+        newTask.setMilestoneid(getMilestoneId());
         newTask.setProjectid(getPrjId());
         newTask.setSaccountid(getsAccountId());
         return newTask;

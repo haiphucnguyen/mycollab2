@@ -143,6 +143,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         } catch (InterruptedException e) {
             throw new MyCollabException(e);
         } finally {
+            DistributionLockUtil.removeLock("task-" + record.getSaccountid());
             lock.unlock();
         }
     }
@@ -257,6 +258,9 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
             }
         } catch (Exception e) {
             throw new MyCollabException(e);
+        } finally {
+            DistributionLockUtil.removeLock("task-service" + sAccountId);
+            lock.unlock();
         }
 
     }

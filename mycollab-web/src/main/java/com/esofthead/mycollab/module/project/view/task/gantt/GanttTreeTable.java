@@ -165,7 +165,7 @@ public class GanttTreeTable extends TreeTable {
                     field = new TextField();
                     ((TextField) field).setNullRepresentation("0");
                     ((TextField) field).setImmediate(true);
-                    if (ganttItem.hasSubTasks()) {
+                    if (ganttItem.hasSubTasks() || ganttItem.isMilestone()) {
                         field.setEnabled(false);
                         ((TextField) field).setDescription("Because this row has sub-tasks, this cell " +
                                 "is a summary value and can not be edited directly. You can edit cells " +
@@ -298,10 +298,13 @@ public class GanttTreeTable extends TreeTable {
 
     public void addTask(GanttItemWrapper itemWrapper) {
         int ganttIndex = beanContainer.size() + 1;
-        itemWrapper.setGanttIndex(ganttIndex);
+        if (itemWrapper.getGanttIndex() != ganttIndex) {
+            itemWrapper.setGanttIndex(ganttIndex);
+            ganttIndexIsChanged = true;
+        }
+
         beanContainer.addBean(itemWrapper);
         gantt.addTask(itemWrapper);
-        ganttIndexIsChanged = true;
 
         if (itemWrapper.hasSubTasks()) {
             this.setChildrenAllowed(itemWrapper, true);
@@ -309,21 +312,6 @@ public class GanttTreeTable extends TreeTable {
         } else {
             this.setChildrenAllowed(itemWrapper, false);
         }
-    }
-
-    public void addTask(int index, GanttItemWrapper itemWrapper) {
-        itemWrapper.setGanttIndex(index + 1);
-        beanContainer.addItemAt(index, itemWrapper);
-        gantt.addTask(index, itemWrapper);
-        ganttIndexIsChanged = true;
-
-        if (itemWrapper.hasSubTasks()) {
-            this.setChildrenAllowed(itemWrapper, true);
-            this.setCollapsed(itemWrapper, false);
-        } else {
-            this.setChildrenAllowed(itemWrapper, false);
-        }
-        calculateWholeGanttIndexes();
     }
 
     private void insertSubSteps(final GanttItemWrapper parent, final List<GanttItemWrapper> children) {
@@ -381,7 +369,11 @@ public class GanttTreeTable extends TreeTable {
         GanttItemWrapper item = beanContainer.firstItemId();
         int index = 1;
         while (item != null) {
-            item.setGanttIndex(index);
+            if (item.getGanttIndex() != index) {
+                item.setGanttIndex(index);
+                ganttIndexIsChanged = true;
+            }
+
             item = beanContainer.nextItemId(item);
             index++;
         }
@@ -481,8 +473,9 @@ public class GanttTreeTable extends TreeTable {
                     newTask.setPrjId(taskWrapper.getTask().getPrjId());
                     newTask.setName("New Task");
                     newTask.setProgress(0d);
+                    newTask.setsAccountId(AppContext.getAccountId());
                     GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
-                    addTask(index, newGanttItem);
+
                     GanttTreeTable.this.refreshRowCache();
                 }
             });
@@ -497,8 +490,19 @@ public class GanttTreeTable extends TreeTable {
                     newTask.setPrjId(taskWrapper.getTask().getPrjId());
                     newTask.setName("New Task");
                     newTask.setProgress(0d);
+                    newTask.setsAccountId(AppContext.getAccountId());
                     GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
-                    addTask(index, newGanttItem);
+                    newGanttItem.setGanttIndex(index);
+                    beanContainer.addItemAfter(taskWrapper, newGanttItem);
+                    gantt.addTask(index, newGanttItem);
+
+                    if (taskWrapper.hasSubTasks()) {
+                        GanttTreeTable.this.setParent(newGanttItem, taskWrapper);
+                        newGanttItem.updateParentRelationship(taskWrapper);
+                    }
+                    GanttTreeTable.this.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
+                    ganttIndexIsChanged = true;
+                    calculateWholeGanttIndexes();
                     GanttTreeTable.this.refreshRowCache();
                 }
             });
