@@ -703,9 +703,12 @@
     .v-table-row-odd {
       background: white;
     }
+
     .v-treetable-node-open {
       background: none;
-      &::before {
+      &::after {
+        float:right;
+        vertical-align: middle;
         content:"\f147";
         color:black;
         font-family: FontAwesome;
@@ -713,7 +716,9 @@
     }
     .v-treetable-node-closed {
       background: none;
-      &::before {
+      &::after {
+        float:right;
+        vertical-align: middle;
         content:"\f196";
         color:black;
         font-family: FontAwesome;

@@ -238,8 +238,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
             JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
             final long now = new GregorianCalendar().getTimeInMillis();
             if (lock.tryLock(30, TimeUnit.SECONDS)) {
-                jdbcTemplate.batchUpdate("INSERT INTO `m_prj_predecessor`(`type`, `predestype`, `lagDay`, `sourceId`," +
-                                "`descId`, `createdTime`) VALUES ('Project-Task', ?, ?, ?, ?, ?)",
+                jdbcTemplate.batchUpdate("INSERT INTO `m_prj_predecessor`(`sourceType`, `descType`, `predestype`,`lagDay`, " +
+                                "`sourceId`,`descId`, `createdTime`) VALUES ('Project-Task', 'Project-Task', ?, ?, ?, ?, ?)",
                         new BatchPreparedStatementSetter() {
                             @Override
                             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {

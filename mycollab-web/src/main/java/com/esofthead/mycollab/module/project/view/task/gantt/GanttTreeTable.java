@@ -497,7 +497,6 @@ public class GanttTreeTable extends TreeTable {
                 });
             }
 
-
             ContextMenuItem insertRowAfterMenuItem = this.addItem("Insert row after", FontAwesome.PLUS_CIRCLE);
             insertRowAfterMenuItem.addItemClickListener(new ContextMenuItemClickListener() {
                 @Override

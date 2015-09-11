@@ -46,7 +46,8 @@ import static com.esofthead.mycollab.common.TooltipBuilder.TdUtil.buildCellValue
 public class GanttItemWrapper {
     private AssignWithPredecessors task;
     private LocalDate startDate, endDate;
-    private LocalDate boundStartDate = new LocalDate(1970, 1, 1), boundEndDate = new LocalDate(2100, 1, 1);
+    private LocalDate fixedStartDateByChilds = new LocalDate(1970, 1, 1), fixedEndDatebyChilds = new LocalDate(2100, 1,
+            1);
 
     private GanttExt gantt;
     private GanttItemWrapper parent;
@@ -185,6 +186,8 @@ public class GanttItemWrapper {
                 calStartDate = DateTimeUtils.min(calStartDate, item.getStartDate());
                 calEndDate = DateTimeUtils.max(calEndDate, item.getEndDate());
             }
+            fixedStartDateByChilds = calStartDate;
+            fixedEndDatebyChilds = calEndDate;
             setStartAndEndDate(calStartDate, calEndDate, true, true);
         }
     }
@@ -260,14 +263,15 @@ public class GanttItemWrapper {
 
     public void setPercentageComplete(Double percentageComplete) {
         task.setProgress(percentageComplete);
-        if (parent != null) {
+        while (parent != null) {
             parent.setPercentageComplete(parent.getPercentageComplete());
+            parent = parent.getParent();
         }
     }
 
     public boolean setStartAndEndDate(LocalDate newStartDate, LocalDate newEndDate, boolean askToCheckPredecessors,
                                       boolean requestToCheckDependents) {
-        if (newStartDate.isBefore(boundStartDate) || newEndDate.isAfter(boundEndDate)) {
+        if (newStartDate.isBefore(fixedStartDateByChilds) || newEndDate.isAfter(fixedEndDatebyChilds)) {
             throw new UserInvalidInputException("Invalid constraints");
         }
         boolean hasChange = false;
@@ -373,8 +377,8 @@ public class GanttItemWrapper {
         if (CollectionUtils.isNotEmpty(predecessors)) {
             LocalDate currentStartDate = new LocalDate(getStartDate());
             LocalDate currentEndDate = new LocalDate(getEndDate());
-            boundStartDate = new LocalDate(1970, 1, 1);
-            boundEndDate = new LocalDate(2100, 1, 1);
+            LocalDate boundStartDate = new LocalDate(1970, 1, 1);
+            LocalDate boundEndDate = new LocalDate(2100, 1, 1);
 
             for (TaskPredecessor predecessor : predecessors) {
                 int ganttIndex = predecessor.getGanttIndex();
@@ -445,19 +449,6 @@ public class GanttItemWrapper {
         }
     }
 
-    public void resetBoundDates() {
-        boundStartDate = new LocalDate(1970, 1, 1);
-        boundEndDate = new LocalDate(2100, 1, 1);
-    }
-
-    public LocalDate getBoundEndDate() {
-        return boundEndDate;
-    }
-
-    public LocalDate getBoundStartDate() {
-        return boundStartDate;
-    }
-
     private void adjustDependentTasksDates() {
         List<TaskPredecessor> dependents = task.getDependents();
         if (CollectionUtils.isNotEmpty(dependents)) {
@@ -481,7 +472,6 @@ public class GanttItemWrapper {
         if (requestToCheckDependents) {
             adjustDependentTasksDates();
         }
-
         updateParentDates();
         gantt.markStepDirty(ownStep);
     }
@@ -512,5 +502,15 @@ public class GanttItemWrapper {
         } else {
             throw new MyCollabException("Invalid method call");
         }
+    }
+
+    public boolean isAncestor(GanttItemWrapper item) {
+        if (item != null) {
+            if (this == item) {
+                return true;
+            }
+            return isAncestor(item.getParent());
+        }
+        return false;
     }
 }
