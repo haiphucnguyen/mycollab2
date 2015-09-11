@@ -444,19 +444,19 @@ public class GanttTreeTable extends TreeTable {
                 public void contextMenuItemClicked(ContextMenuItemClickEvent contextMenuItemClickEvent) {
                     GanttItemWrapper parent = taskWrapper.getParent();
                     if (parent != null) {
-                        GanttItemWrapper nextItem = beanContainer.nextItemId(taskWrapper);
-
+                        GanttTreeTable.this.setParent(taskWrapper, parent.getParent());
+                        taskWrapper.updateParentRelationship(parent.getParent());
+                        GanttTreeTable.this.setCollapsed(taskWrapper, false);
                         // Set all below tasks of taskWrapper have parent is taskWrapper
+                        GanttItemWrapper nextItem = beanContainer.nextItemId(taskWrapper);
                         while (nextItem != null && nextItem.getParent() == parent) {
+                            GanttTreeTable.this.setChildrenAllowed(taskWrapper, true);
                             nextItem.updateParentRelationship(taskWrapper);
                             GanttTreeTable.this.setParent(nextItem, taskWrapper);
                             EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
                                     (GanttTreeTable.this, nextItem));
                         }
                         GanttTreeTable.this.setChildrenAllowed(taskWrapper, taskWrapper.hasSubTasks());
-
-                        taskWrapper.updateParentRelationship(parent.getParent());
-                        GanttTreeTable.this.setParent(taskWrapper, parent.getParent());
                         GanttTreeTable.this.setChildrenAllowed(parent, parent.hasSubTasks());
                         GanttTreeTable.this.refreshRowCache();
                         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue

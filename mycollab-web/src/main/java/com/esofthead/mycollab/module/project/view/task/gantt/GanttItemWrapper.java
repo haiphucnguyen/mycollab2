@@ -56,6 +56,12 @@ public class GanttItemWrapper {
     public GanttItemWrapper(GanttExt gantt, AssignWithPredecessors task) {
         this.gantt = gantt;
         setTask(task);
+
+        if (task instanceof MilestoneGanttItem) {
+            subItems = buildSubTasks(gantt, this, (MilestoneGanttItem) task);
+        } else if (task instanceof TaskGanttItem) {
+            subItems = buildSubTasks(gantt, this, (TaskGanttItem) task);
+        }
     }
 
     public void removeSubTask(GanttItemWrapper subTask) {
@@ -130,7 +136,7 @@ public class GanttItemWrapper {
     }
 
     public boolean hasSubTasks() {
-        return task.hasSubAssignments();
+        return subItems.size() > 0;
     }
 
     public String getName() {
@@ -144,16 +150,6 @@ public class GanttItemWrapper {
     }
 
     public List<GanttItemWrapper> subTasks() {
-        if (subItems == null) {
-            if (task instanceof MilestoneGanttItem) {
-                subItems = buildSubTasks(gantt, this, (MilestoneGanttItem) task);
-            } else if (task instanceof TaskGanttItem) {
-                subItems = buildSubTasks(gantt, this, (TaskGanttItem) task);
-            } else {
-                throw new MyCollabException("Do not support type except milestone and task");
-            }
-        }
-
         return subItems;
     }
 

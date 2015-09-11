@@ -147,7 +147,7 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
                         (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
                 if (assignments.size() == 1) {
                     ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
-                    List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getSubTasks();
+                    List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
                     for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
                         GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
                         taskTable.addTask(itemWrapper);
