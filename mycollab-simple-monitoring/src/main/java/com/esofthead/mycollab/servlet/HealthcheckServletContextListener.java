@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.servlet;
 
-import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.codahale.metrics.servlets.HealthCheckServlet;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -18,8 +18,12 @@ package com.esofthead.mycollab.spring;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 /**
  * @author MyCollab Ltd
@@ -27,15 +31,22 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Monitoring {
+    @Autowired
+    private DataSource dataSource;
+
     @Bean
     public MetricRegistry metricRegistry() {
         MetricRegistry registry = new MetricRegistry();
+        HikariDataSource hirakiDataSource = (HikariDataSource) dataSource;
+        hirakiDataSource.setMetricRegistry(registry);
         return registry;
     }
 
     @Bean
     public HealthCheckRegistry healthCheckRegistry() {
         HealthCheckRegistry registry = new HealthCheckRegistry();
+        HikariDataSource hirakiDataSource = (HikariDataSource) dataSource;
+        hirakiDataSource.setHealthCheckRegistry(registry);
         return registry;
     }
 }
