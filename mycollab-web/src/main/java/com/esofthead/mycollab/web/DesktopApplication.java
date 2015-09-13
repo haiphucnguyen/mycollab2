@@ -72,7 +72,7 @@ public class DesktopApplication extends MyCollabUI {
     private MainWindowContainer mainWindowContainer;
 
     @Override
-    protected void init(VaadinRequest request) {
+    protected void init(final VaadinRequest request) {
         GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
 
@@ -84,7 +84,7 @@ public class DesktopApplication extends MyCollabUI {
             @Override
             public void error(com.vaadin.server.ErrorEvent event) {
                 Throwable e = event.getThrowable();
-                handleException(e);
+                handleException(request.getHeader("user-agent").toLowerCase(), e);
             }
         });
 
@@ -124,7 +124,7 @@ public class DesktopApplication extends MyCollabUI {
                 || userAgent.indexOf("msie 7.0") != -1 || userAgent.indexOf("msie 8.0") != -1 || userAgent.indexOf("msie 9.0") != -1;
     }
 
-    private void handleException(Throwable e) {
+    private void handleException(String userAgent, Throwable e) {
         IgnoreException ignoreException = getExceptionType(e, IgnoreException.class);
         if (ignoreException != null) {
             return;
@@ -185,7 +185,7 @@ public class DesktopApplication extends MyCollabUI {
             return;
         }
 
-        LOG.error("Error", e);
+        LOG.error("Error " + userAgent, e);
         ConfirmDialog dialog = ConfirmDialogExt.show(UI.getCurrent(),
                 AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
                 AppContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
@@ -259,7 +259,7 @@ public class DesktopApplication extends MyCollabUI {
         @Subscribe
         public void handle(ShellEvent.NotifyErrorEvent event) {
             Throwable e = (Throwable) event.getData();
-            handleException(e);
+            handleException("", e);
         }
     }
 }
