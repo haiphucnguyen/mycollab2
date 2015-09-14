@@ -115,7 +115,35 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             DistributionLockUtil.removeLock("task-service" + sAccountId);
             lock.unlock();
         }
+    }
 
+    @Override
+    public void massDeletePredecessors(List<TaskPredecessor> predecessors, @CacheKey Integer sAccountId) {
+        Lock lock = DistributionLockUtil.getLock("gantt-predecessor-service" + sAccountId);
+        try {
+            if (lock.tryLock(30, TimeUnit.SECONDS)) {
+                try (Connection connection = dataSource.getConnection()) {
+                    connection.setAutoCommit(false);
+                    PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " +
+                            "`m_prj_predecessor` WHERE sourceType=? AND predestype=? AND sourceId=? AND descId=? AND descType=?");
+                    for (int i = 0; i < predecessors.size(); i++) {
+                        preparedStatement.setString(1, predecessors.get(i).getSourcetype());
+                        preparedStatement.setString(2, predecessors.get(i).getPredestype());
+                        preparedStatement.setInt(3, predecessors.get(i).getSourceid());
+                        preparedStatement.setInt(4, predecessors.get(i).getDescid());
+                        preparedStatement.setString(5, predecessors.get(i).getDesctype());
+                        preparedStatement.addBatch();
+                    }
+                    preparedStatement.executeBatch();
+                    connection.commit();
+                }
+            }
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        } finally {
+            DistributionLockUtil.removeLock("gantt-predecessor-service" + sAccountId);
+            lock.unlock();
+        }
     }
 
     private void massUpdateMilestoneGanttItems(final List<MilestoneGanttItem> milestoneGanttItems, Integer sAccountId) {
@@ -124,9 +152,6 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             try {
                 final long now = new GregorianCalendar().getTimeInMillis();
                 if (lock.tryLock(30, TimeUnit.SECONDS)) {
-                    if (CollectionUtils.isEmpty(milestoneGanttItems)) {
-                        return;
-                    }
                     try (Connection connection = dataSource.getConnection()) {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_milestone` SET " +
@@ -164,9 +189,6 @@ public class GanttAssignmentServiceImpl implements GanttAssignmentService {
             try {
                 final long now = new GregorianCalendar().getTimeInMillis();
                 if (lock.tryLock(30, TimeUnit.SECONDS)) {
-                    if (CollectionUtils.isEmpty(taskGanttItems)) {
-                        return;
-                    }
                     try (Connection connection = dataSource.getConnection()) {
                         connection.setAutoCommit(false);
                         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `m_prj_task` SET " +

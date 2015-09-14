@@ -222,6 +222,10 @@ public class GanttItemWrapper {
         return task.getPredecessors();
     }
 
+    public void setPredecessors(List<TaskPredecessor> predecessors) {
+        task.setPredecessors(predecessors);
+    }
+
     public List<TaskPredecessor> getDependents() {
         return task.getDependents();
     }

@@ -18,9 +18,13 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
+import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.util.BeanItemContainer;
 import org.apache.commons.collections.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,6 +62,8 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
     private void removeAssociatesPredecessorsAndDependents(GanttItemWrapper removedTask) {
         List<GanttItemWrapper> items = getItemIds();
         for (GanttItemWrapper item : items) {
+            List<TaskPredecessor> removedPredecessors = new ArrayList<>();
+
             List<TaskPredecessor> predecessors = item.getPredecessors();
             if (CollectionUtils.isNotEmpty(predecessors)) {
                 Iterator<TaskPredecessor> iterator = predecessors.iterator();
@@ -65,8 +71,15 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
                     TaskPredecessor predecessor = iterator.next();
                     if (predecessor.getDescid().intValue() == removedTask.getId().intValue()) {
                         iterator.remove();
+                        removedPredecessors.add(predecessor);
                     }
                 }
+            }
+
+            if (CollectionUtils.isNotEmpty(removedPredecessors)) {
+                GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean
+                        (GanttAssignmentService.class);
+                ganttAssignmentService.massDeletePredecessors(removedPredecessors, AppContext.getAccountId());
             }
 
             List<TaskPredecessor> dependents = item.getDependents();

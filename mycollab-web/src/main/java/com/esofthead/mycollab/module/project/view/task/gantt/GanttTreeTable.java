@@ -35,9 +35,11 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.converter.LocalDateConverter;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Container;
+import com.vaadin.data.util.converter.Converter;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -46,10 +48,7 @@ import org.joda.time.LocalDate;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -117,27 +116,6 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
-        this.addGeneratedColumn("predecessors", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                List<TaskPredecessor> predecessors = item.getPredecessors();
-                if (CollectionUtils.isNotEmpty(predecessors)) {
-                    StringBuilder builder = new StringBuilder();
-                    for (TaskPredecessor predecessor : predecessors) {
-                        builder.append(predecessor.getGanttIndex());
-                        builder.append(",");
-                    }
-                    if (builder.charAt(builder.length() - 1) == ',') {
-                        builder.deleteCharAt(builder.length() - 1);
-                    }
-                    return new Label(builder.toString());
-                } else {
-                    return new Label();
-                }
-            }
-        });
-
         this.addGeneratedColumn("duration", new ColumnGenerator() {
             @Override
             public Object generateCell(Table table, Object itemId, Object columnId) {
@@ -184,6 +162,10 @@ public class GanttTreeTable extends TreeTable {
                     }
                 } else if ("assignUser".equals(propertyId)) {
                     field = new ProjectMemberSelectionField();
+                } else if ("predecessors".equals(propertyId)) {
+                    field = new DefaultViewField("");
+                    ((DefaultViewField) field).setConverter(new PredecessorConverter());
+                    return field;
                 }
 
                 if (field != null) {
@@ -593,6 +575,41 @@ public class GanttTreeTable extends TreeTable {
                 parentTask.calculateDatesByChildTasks();
             }
             calculateWholeGanttIndexes();
+        }
+    }
+
+    private static class PredecessorConverter implements Converter<String, List> {
+        @Override
+        public List convertToModel(String value, Class<? extends List> targetType, Locale locale) throws ConversionException {
+            return null;
+        }
+
+        @Override
+        public String convertToPresentation(List predecessors, Class<? extends String> targetType, Locale locale) throws ConversionException {
+            if (CollectionUtils.isNotEmpty(predecessors)) {
+                StringBuilder builder = new StringBuilder();
+                for (Object item : predecessors) {
+                    TaskPredecessor predecessor = (TaskPredecessor) item;
+                    builder.append(predecessor.getGanttIndex());
+                    builder.append(",");
+                }
+                if (builder.charAt(builder.length() - 1) == ',') {
+                    builder.deleteCharAt(builder.length() - 1);
+                }
+                return builder.toString();
+            } else {
+                return "";
+            }
+        }
+
+        @Override
+        public Class<List> getModelType() {
+            return List.class;
+        }
+
+        @Override
+        public Class<String> getPresentationType() {
+            return String.class;
         }
     }
 }
