@@ -325,23 +325,26 @@ public class GanttTreeTable extends TreeTable {
             int ganttStartIndex = (parent.getGanttIndex() != null) ? parent.getGanttIndex() : beanContainer.indexOfId(parent) + 1;
 
             for (GanttItemWrapper child : children) {
-                this.addItem(child);
+                if (!beanContainer.containsId(child)) {
+                    this.addItem(child);
 
-                int ganttIndex = ++ganttStartIndex;
-                child.setGanttIndex(ganttIndex);
-                ganttIndexIsChanged = true;
+                    int ganttIndex = ++ganttStartIndex;
+                    child.setGanttIndex(ganttIndex);
+                    ganttIndexIsChanged = true;
 
-                this.setParent(child, parent);
-                gantt.addTask(stepIndex + count + 1, child);
-                if (child.hasSubTasks()) {
-                    this.setChildrenAllowed(child, true);
-                    this.setCollapsed(child, false);
-                } else {
-                    this.setChildrenAllowed(child, false);
+                    this.setParent(child, parent);
+                    gantt.addTask(stepIndex + count + 1, child);
+                    if (child.hasSubTasks()) {
+                        this.setChildrenAllowed(child, true);
+                        this.setCollapsed(child, false);
+                    } else {
+                        this.setChildrenAllowed(child, false);
+                    }
+                    count++;
+                    startDate = DateTimeUtils.min(startDate, child.getStartDate());
+                    endDate = DateTimeUtils.max(endDate, child.getEndDate());
                 }
-                count++;
-                startDate = DateTimeUtils.min(startDate, child.getStartDate());
-                endDate = DateTimeUtils.max(endDate, child.getEndDate());
+
             }
             parent.setStartAndEndDate(startDate, endDate, false, false);
             gantt.markStepDirty(parent.getStep());
