@@ -63,7 +63,7 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
                 Iterator<TaskPredecessor> iterator = predecessors.iterator();
                 while (iterator.hasNext()) {
                     TaskPredecessor predecessor = iterator.next();
-                    if (predecessor.getSourceid() == removedTask.getId()) {
+                    if (predecessor.getDescid().intValue() == removedTask.getId().intValue()) {
                         iterator.remove();
                     }
                 }
@@ -71,10 +71,21 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
 
             List<TaskPredecessor> dependents = item.getDependents();
             if (CollectionUtils.isNotEmpty(dependents)) {
-                for (TaskPredecessor dependent : dependents) {
-
+                Iterator<TaskPredecessor> iterator = predecessors.iterator();
+                while (iterator.hasNext()) {
+                    TaskPredecessor dependent = iterator.next();
+                    if (dependent.getSourceid().intValue() == removedTask.getId().intValue()) {
+                        iterator.remove();
+                    }
                 }
             }
         }
+    }
+
+    public boolean hasCircularRelationship(GanttItemWrapper item1, GanttItemWrapper item2) {
+        if (item1.isAncestor(item2) || item2.isAncestor(item1)) {
+            return true;
+        }
+        return false;
     }
 }

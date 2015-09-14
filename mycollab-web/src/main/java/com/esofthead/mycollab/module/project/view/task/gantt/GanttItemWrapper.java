@@ -22,6 +22,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.BusinessDayTimeUtils;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -197,6 +198,16 @@ public class GanttItemWrapper {
 
     public void setId(Integer id) {
         task.setId(id);
+    }
+
+    public String getType() {
+        if (task instanceof TaskGanttItem) {
+            return ProjectTypeConstants.TASK;
+        } else if (task instanceof MilestoneGanttItem) {
+            return ProjectTypeConstants.MILESTONE;
+        } else {
+            throw new MyCollabException("Do not support assignment type " + this);
+        }
     }
 
     public Double getDuration() {
