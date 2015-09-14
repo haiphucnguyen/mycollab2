@@ -46,8 +46,7 @@ import static com.esofthead.mycollab.common.TooltipBuilder.TdUtil.buildCellValue
 public class GanttItemWrapper {
     private AssignWithPredecessors task;
     private LocalDate startDate, endDate;
-    private LocalDate fixedStartDateByChilds = new LocalDate(1970, 1, 1), fixedEndDatebyChilds = new LocalDate(2100, 1,
-            1);
+    private LocalDate fixedStartDateByChilds = new LocalDate(1970, 1, 1), fixedEndDatebyChilds = new LocalDate(2100, 1, 1);
 
     private GanttExt gantt;
     private GanttItemWrapper parent;
@@ -178,7 +177,7 @@ public class GanttItemWrapper {
         }
     }
 
-    private void calculateDatesByChildTasks() {
+    void calculateDatesByChildTasks() {
         if (CollectionUtils.isNotEmpty(subItems)) {
             LocalDate calStartDate = new LocalDate(2100, 1, 1);
             LocalDate calEndDate = new LocalDate(1970, 1, 1);

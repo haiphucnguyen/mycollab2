@@ -9603,10 +9603,10 @@ div.v-button.token-field:hover {
 
 .gantt_container .v-treetable-node-open::after {
 	float: right;
-	vertical-align: middle;
 	content: "\f147";
 	color: black;
 	font-family: FontAwesome;
+	padding-right: 5px;
 }
 
 .gantt_container .v-treetable-node-closed {

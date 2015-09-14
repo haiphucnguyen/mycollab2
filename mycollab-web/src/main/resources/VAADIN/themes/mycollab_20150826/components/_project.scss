@@ -708,10 +708,10 @@
       background: none;
       &::after {
         float:right;
-        vertical-align: middle;
         content:"\f147";
         color:black;
         font-family: FontAwesome;
+        padding-right: 5px;
       }
     }
     .v-treetable-node-closed {

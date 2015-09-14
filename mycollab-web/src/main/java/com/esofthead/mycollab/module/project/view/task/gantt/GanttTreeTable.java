@@ -429,6 +429,7 @@ public class GanttTreeTable extends TreeTable {
                         taskWrapper.updateParentRelationship(preItemWrapper);
                         GanttTreeTable.this.setChildrenAllowed(preItemWrapper, true);
                         GanttTreeTable.this.setParent(taskWrapper, preItemWrapper);
+                        preItemWrapper.calculateDatesByChildTasks();
                         GanttTreeTable.this.setCollapsed(preItemWrapper, false);
                         GanttTreeTable.this.refreshRowCache();
                         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
@@ -456,8 +457,17 @@ public class GanttTreeTable extends TreeTable {
                             EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
                                     (GanttTreeTable.this, nextItem));
                         }
+
+                        if (taskWrapper.hasSubTasks()) {
+                            taskWrapper.calculateDatesByChildTasks();
+                        }
                         GanttTreeTable.this.setChildrenAllowed(taskWrapper, taskWrapper.hasSubTasks());
+                        parent.calculateDatesByChildTasks();
                         GanttTreeTable.this.setChildrenAllowed(parent, parent.hasSubTasks());
+
+                        if (parent.getParent() != null) {
+                            parent.getParent().calculateDatesByChildTasks();
+                        }
                         GanttTreeTable.this.refreshRowCache();
                         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
                                 (GanttTreeTable.this, taskWrapper));
