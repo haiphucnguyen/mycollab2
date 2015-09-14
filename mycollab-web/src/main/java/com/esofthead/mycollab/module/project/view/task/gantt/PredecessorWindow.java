@@ -306,8 +306,8 @@ class PredecessorWindow extends Window {
                 for (GanttItemWrapper item : itemIds) {
                     if (item.isTask()) {
                         this.addItem(item);
-                        this.setItemCaption(item, String.format("[Row %d]: %s", item.getGanttIndex(), StringUtils.trim(item
-                                .getName(), 50, true)));
+                        this.setItemCaption(item, String.format("[Row %d]: %s", item.getGanttIndex(),
+                                StringUtils.trim(item.getName(), 50, true)));
                     }
                 }
             }

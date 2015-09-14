@@ -84,7 +84,7 @@ public class DesktopApplication extends MyCollabUI {
             @Override
             public void error(com.vaadin.server.ErrorEvent event) {
                 Throwable e = event.getThrowable();
-                handleException(request.getHeader("user-agent").toLowerCase(), e);
+                handleException(request.getHeader("user-agent"), e);
             }
         });
 

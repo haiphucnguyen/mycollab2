@@ -211,6 +211,10 @@ public class GanttItemWrapper {
         return task.getPredecessors();
     }
 
+    public List<TaskPredecessor> getDependents() {
+        return task.getDependents();
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }
