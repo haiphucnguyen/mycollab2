@@ -552,8 +552,11 @@ public class GanttTreeTable extends TreeTable {
             EventBusFactory.getInstance().post(new GanttEvent.DeleteGanttItemUpdateToQueue(GanttTreeTable.this, task));
             beanContainer.removeItem(task);
             gantt.removeStep(task.getStep());
-            if (task.getParent() != null) {
-                task.getParent().removeSubTask(task);
+
+            GanttItemWrapper parentTask = task.getParent();
+            if (parentTask != null) {
+                parentTask.removeSubTask(task);
+                GanttTreeTable.this.setChildrenAllowed(parentTask, parentTask.hasSubTasks());
             }
 
             if (task.hasSubTasks()) {
