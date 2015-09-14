@@ -526,9 +526,14 @@ public class GanttTreeTable extends TreeTable {
                     if (taskWrapper.hasSubTasks()) {
                         GanttTreeTable.this.setParent(newGanttItem, taskWrapper);
                         newGanttItem.updateParentRelationship(taskWrapper);
+                        taskWrapper.calculateDatesByChildTasks();
+                    } else if (taskWrapper.getParent() != null) {
+                        GanttItemWrapper parentTask = taskWrapper.getParent();
+                        GanttTreeTable.this.setParent(newGanttItem, parentTask);
+                        newGanttItem.updateParentRelationship(parentTask);
+                        parentTask.calculateDatesByChildTasks();
                     }
                     GanttTreeTable.this.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
-                    ganttIndexIsChanged = true;
                     calculateWholeGanttIndexes();
                     GanttTreeTable.this.refreshRowCache();
                 }
@@ -562,6 +567,7 @@ public class GanttTreeTable extends TreeTable {
             EventBusFactory.getInstance().post(new GanttEvent.DeleteGanttItemUpdateToQueue(GanttTreeTable.this, task));
             beanContainer.removeItem(task);
             gantt.removeStep(task.getStep());
+            gantt.markAsDirtyRecursive();
 
             GanttItemWrapper parentTask = task.getParent();
             if (parentTask != null) {
@@ -576,6 +582,10 @@ public class GanttTreeTable extends TreeTable {
                     iter.remove();
                     removeTask(subTask);
                 }
+            }
+
+            if (parentTask != null) {
+                parentTask.calculateDatesByChildTasks();
             }
             calculateWholeGanttIndexes();
         }
