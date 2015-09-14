@@ -364,7 +364,38 @@ public class GanttTreeTable extends TreeTable {
             item = beanContainer.nextItemId(item);
             index++;
         }
+
+        if (ganttIndexIsChanged) {
+            calculateGanttIndexOfPredecessors();
+        }
         this.refreshRowCache();
+    }
+
+    private void calculateGanttIndexOfPredecessors() {
+        List<GanttItemWrapper> items = beanContainer.getItemIds();
+        for (GanttItemWrapper item : items) {
+            List<TaskPredecessor> predecessors = item.getPredecessors();
+            if (CollectionUtils.isNotEmpty(predecessors)) {
+                for (TaskPredecessor predecessor : predecessors) {
+                    Integer descId = predecessor.getDescid();
+                    String descType = predecessor.getDesctype();
+                    GanttItemWrapper predecessorGanttItem = findGanttItem(descId, descType);
+                    if (predecessorGanttItem != null) {
+                        predecessor.setGanttIndex(predecessorGanttItem.getGanttIndex());
+                    }
+                }
+            }
+        }
+    }
+
+    private GanttItemWrapper findGanttItem(Integer assignmentId, String assignmentType) {
+        List<GanttItemWrapper> items = beanContainer.getItemIds();
+        for (GanttItemWrapper item : items) {
+            if (assignmentId.intValue() == item.getId().intValue() && assignmentType.equals(item.getType())) {
+                return item;
+            }
+        }
+        return null;
     }
 
     private class GanttContextMenu extends ContextMenu {
@@ -590,7 +621,21 @@ public class GanttTreeTable extends TreeTable {
                 StringBuilder builder = new StringBuilder();
                 for (Object item : predecessors) {
                     TaskPredecessor predecessor = (TaskPredecessor) item;
-                    builder.append(predecessor.getGanttIndex());
+                    if (predecessor.getLagday() == 0) {
+                        if (TaskPredecessor.FS.equals(predecessor.getPredestype())) {
+                            builder.append(predecessor.getGanttIndex());
+                        } else {
+                            builder.append(predecessor.getGanttIndex() + predecessor.getPredestype());
+                        }
+                    } else {
+                        builder.append(predecessor.getGanttIndex() + predecessor.getPredestype());
+                        if (predecessor.getLagday() > 0) {
+                            builder.append("+" + predecessor.getLagday() + "d");
+                        } else {
+                            builder.append(predecessor.getLagday() + "d");
+                        }
+                    }
+
                     builder.append(",");
                 }
                 if (builder.charAt(builder.length() - 1) == ',') {
