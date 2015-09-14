@@ -496,8 +496,10 @@ public class GanttTreeTable extends TreeTable {
                             GanttTreeTable.this.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
 
                             if (taskWrapper.getParent() != null) {
-                                GanttTreeTable.this.setParent(newGanttItem, taskWrapper.getParent());
-                                newGanttItem.updateParentRelationship(taskWrapper.getParent());
+                                GanttItemWrapper parentTask = taskWrapper.getParent();
+                                GanttTreeTable.this.setParent(newGanttItem, parentTask);
+                                newGanttItem.updateParentRelationship(parentTask);
+                                parentTask.calculateDatesByChildTasks();
                             }
                         }
 

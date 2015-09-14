@@ -712,16 +712,18 @@
         color:black;
         font-family: FontAwesome;
         padding-right: 5px;
+        padding-top: 3px;
       }
     }
     .v-treetable-node-closed {
       background: none;
       &::after {
         float:right;
-        vertical-align: middle;
         content:"\f196";
         color:black;
         font-family: FontAwesome;
+        padding-right: 5px;
+        padding-top: 3px;
       }
     }
 
