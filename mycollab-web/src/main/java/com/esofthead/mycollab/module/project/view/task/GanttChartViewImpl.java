@@ -16,11 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.domain.MilestoneGanttItem;
 import com.esofthead.mycollab.module.project.domain.ProjectGanttItem;
 import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
@@ -30,10 +33,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Property;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -87,7 +92,7 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);
 
-        HorizontalLayout resWrapper = new HorizontalLayout();
+        MHorizontalLayout resWrapper = new MHorizontalLayout();
         Label resLbl = new Label("Resolution: ");
         final ComboBox resValue = new ValueComboBox(false, "Day", "Week");
         resValue.addValueChangeListener(new Property.ValueChangeListener() {
@@ -101,10 +106,37 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
                 }
             }
         });
-        resWrapper.setSpacing(true);
         resWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        resWrapper.addComponent(resLbl);
-        resWrapper.addComponent(resValue);
+        resWrapper.with(resLbl, resValue);
+
+        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(GanttChartViewImpl.this, null));
+            }
+        });
+        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
+        advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
+
+        Button chartDisplayBtn = new Button();
+        chartDisplayBtn.setDescription("Display Gantt chart");
+        chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
+
+        Button kanbanBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
+            }
+        });
+        kanbanBtn.setDescription("Kanban View");
+        kanbanBtn.setIcon(FontAwesome.TH);
+
+        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        viewButtons.addButton(advanceDisplayBtn);
+        viewButtons.addButton(kanbanBtn);
+        viewButtons.addButton(chartDisplayBtn);
+        viewButtons.setDefaultButton(chartDisplayBtn);
+        resWrapper.addComponent(viewButtons);
 
         header.with(headerWrapper, resWrapper).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).expand(headerWrapper);
 
