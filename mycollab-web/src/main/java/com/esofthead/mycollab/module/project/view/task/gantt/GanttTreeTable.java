@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.HumanTime;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -116,15 +117,6 @@ public class GanttTreeTable extends TreeTable {
             }
         });
 
-        this.addGeneratedColumn("duration", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table table, Object itemId, Object columnId) {
-                GanttItemWrapper item = (GanttItemWrapper) itemId;
-                double dur = item.getDuration();
-                return new Label(dur + " d");
-            }
-        });
-
 
         this.setTableFieldFactory(new TableFieldFactory() {
             @Override
@@ -166,6 +158,15 @@ public class GanttTreeTable extends TreeTable {
                     field = new DefaultViewField("");
                     ((DefaultViewField) field).setConverter(new PredecessorConverter());
                     return field;
+                } else if ("duration".equals(propertyId)) {
+                    field = new TextField();
+                    ((TextField) field).setConverter(new HumanTimeConverter());
+                    if (ganttItem.hasSubTasks()) {
+                        field.setEnabled(false);
+                        ((TextField) field).setDescription("Because this row has sub-tasks, this cell " +
+                                "is a summary value and can not be edited directly. You can edit cells " +
+                                "beneath this row to change its value");
+                    }
                 }
 
                 if (field != null) {
@@ -606,6 +607,30 @@ public class GanttTreeTable extends TreeTable {
                 parentTask.calculateDatesByChildTasks();
             }
             calculateWholeGanttIndexes();
+        }
+    }
+
+    private static class HumanTimeConverter implements Converter<String, Double> {
+        @Override
+        public Double convertToModel(String value, Class<? extends Double> targetType, Locale locale) throws ConversionException {
+            HumanTime humanTime = HumanTime.eval(value);
+            return new Double(humanTime.getDelta());
+        }
+
+        @Override
+        public String convertToPresentation(Double value, Class<? extends String> targetType, Locale locale) throws ConversionException {
+            HumanTime humanTime = new HumanTime(value.longValue());
+            return humanTime.getApproximately();
+        }
+
+        @Override
+        public Class<Double> getModelType() {
+            return Double.class;
+        }
+
+        @Override
+        public Class<String> getPresentationType() {
+            return String.class;
         }
     }
 

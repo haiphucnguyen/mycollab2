@@ -210,11 +210,21 @@ public class GanttItemWrapper {
         }
     }
 
+    private static final long SECONDS_IN_DAYS = 1000 * 60 * 60 * 24;
+
     public Double getDuration() {
         if (task.getDuration() != null) {
             return task.getDuration();
         } else {
-            return BusinessDayTimeUtils.duration(startDate, endDate) * 1d;
+            return BusinessDayTimeUtils.duration(startDate, endDate) * SECONDS_IN_DAYS * 1d;
+        }
+    }
+
+    public void setDuration(Double duration) {
+        task.setDuration(duration);
+        if (startDate != null) {
+            LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(startDate, (int) (duration.longValue() / SECONDS_IN_DAYS));
+            setStartAndEndDate(startDate, expectedEndDate, true, true);
         }
     }
 
@@ -236,7 +246,7 @@ public class GanttItemWrapper {
 
     public void setStartDate(LocalDate date) {
         Double duration = getDuration();
-        LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(date, duration.intValue());
+        LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(date, (int) (duration.longValue() / SECONDS_IN_DAYS));
         setStartAndEndDate(date, expectedEndDate, true, true);
     }
 
