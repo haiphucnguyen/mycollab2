@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttTreeTable;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
@@ -50,11 +50,9 @@ import java.util.List;
  * @since 4.0
  */
 @ViewComponent
-public class GanttChartViewImpl extends AbstractPageView implements GanttChartView {
+public class GanttChartViewImpl extends AbstractLazyPageView implements GanttChartView {
     private static final long serialVersionUID = 1L;
     private static Logger LOG = LoggerFactory.getLogger(GanttChartViewImpl.class);
-
-    private boolean projectNavigatorVisibility = false;
 
     private MHorizontalLayout mainLayout;
     private GanttExt gantt;
@@ -64,7 +62,23 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
     public GanttChartViewImpl() {
         this.setSizeFull();
         this.withMargin(true);
+        ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
+    }
 
+    @Override
+    public void detach() {
+        setProjectNavigatorVisibility(true);
+        super.detach();
+    }
+
+    private void setProjectNavigatorVisibility(boolean visibility) {
+        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
+        if (view != null) {
+            view.setNavigatorVisibility(visibility);
+        }
+    }
+
+    private void constructUI() {
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -94,31 +108,16 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
         header.with(headerWrapper, resWrapper).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).expand(headerWrapper);
 
-        ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
-
         mainLayout = new MHorizontalLayout().withSpacing(false);
         mainLayout.addStyleName("gantt_container");
         mainLayout.setSizeFull();
         this.with(header, mainLayout).expand(mainLayout);
     }
 
-
     @Override
-    public void detach() {
-        setProjectNavigatorVisibility(true);
-        super.detach();
-    }
-
-    private void setProjectNavigatorVisibility(boolean visibility) {
-        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
-        if (view != null) {
-            view.setNavigatorVisibility(visibility);
-        }
-    }
-
-    public void displayGanttChart() {
+    protected void displayView() {
         setProjectNavigatorVisibility(false);
-        mainLayout.removeAllComponents();
+        constructUI();
 
         gantt = new GanttExt();
         taskTable = new GanttTreeTable(gantt);
@@ -140,30 +139,24 @@ public class GanttChartViewImpl extends AbstractPageView implements GanttChartVi
 
     @SuppressWarnings("unchecked")
     private void showSteps() {
-        UI.getCurrent().access(new Runnable() {
-            @Override
-            public void run() {
-                List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
-                        (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
-                if (assignments.size() == 1) {
-                    ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
-                    List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
-                    for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
-                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
-                        taskTable.addTask(itemWrapper);
-                    }
-
-                    List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
-                    for (TaskGanttItem taskGanttItem : taskGanttItems) {
-                        GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
-                        taskTable.addTask(itemWrapper);
-                    }
-                    taskTable.updateWholeGanttIndexes();
-                    UI.getCurrent().push();
-                } else {
-                    LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
-                }
+        final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
+                (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
+        if (assignments.size() == 1) {
+            ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
+            List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
+            for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
+                GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
+                taskTable.addTask(itemWrapper);
             }
-        });
+
+            List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
+            for (TaskGanttItem taskGanttItem : taskGanttItems) {
+                GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
+                taskTable.addTask(itemWrapper);
+            }
+            taskTable.updateWholeGanttIndexes();
+        } else {
+            LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
+        }
     }
 }

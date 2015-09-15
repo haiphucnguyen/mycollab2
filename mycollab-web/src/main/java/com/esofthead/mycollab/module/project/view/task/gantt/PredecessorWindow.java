@@ -323,6 +323,7 @@ class PredecessorWindow extends Window {
 
     private static class PredecessorComboBox extends ComboBox {
         PredecessorComboBox() {
+            this.setNullSelectionAllowed(false);
             this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
             this.addItem(TaskPredecessor.FS);
             this.setItemCaption(TaskPredecessor.FS, "Finish to Start (FS)");
@@ -335,6 +336,7 @@ class PredecessorWindow extends Window {
 
             this.addItem(TaskPredecessor.FF);
             this.setItemCaption(TaskPredecessor.FF, "Finish to Finish (FF)");
+            this.setValue(TaskPredecessor.FS);
         }
     }
 }
