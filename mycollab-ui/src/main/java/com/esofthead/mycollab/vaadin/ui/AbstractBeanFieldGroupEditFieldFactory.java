@@ -152,10 +152,8 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
     }
 
     @Override
-    public void postCommit(FieldGroup.CommitEvent commitEvent)
-            throws CommitException {
-        Set<ConstraintViolation<B>> violations = validation.validate(attachForm
-                .getBean());
+    public void postCommit(FieldGroup.CommitEvent commitEvent) throws CommitException {
+        Set<ConstraintViolation<B>> violations = validation.validate(attachForm.getBean());
         if (violations.size() > 0) {
             StringBuilder errorMsg = new StringBuilder();
 

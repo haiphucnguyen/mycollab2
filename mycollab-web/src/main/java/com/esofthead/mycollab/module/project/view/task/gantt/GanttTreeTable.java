@@ -128,7 +128,7 @@ public class GanttTreeTable extends TreeTable {
 
         this.setTableFieldFactory(new TableFieldFactory() {
             @Override
-            public Field<?> createField(Container container, Object itemId, Object propertyId, Component uiContext) {
+            public Field<?> createField(Container container, Object itemId, final Object propertyId, Component uiContext) {
                 Field field = null;
                 final GanttItemWrapper ganttItem = (GanttItemWrapper) itemId;
                 if ("name".equals(propertyId)) {

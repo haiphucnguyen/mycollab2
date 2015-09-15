@@ -235,7 +235,9 @@ public class GanttItemWrapper {
     }
 
     public void setStartDate(LocalDate date) {
-        setStartAndEndDate(date, endDate, true, true);
+        Double duration = getDuration();
+        LocalDate expectedEndDate = BusinessDayTimeUtils.plusDays(date, duration.intValue());
+        setStartAndEndDate(date, expectedEndDate, true, true);
     }
 
     public LocalDate getEndDate() {
