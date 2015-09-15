@@ -50,6 +50,7 @@ Version 5.1.3
 
 * Vaadin 7.5.5
 * Spring framework 4.2.1.RELEASE
+* Scala 2.11.7, Jackson 2.6.2
 
 **Improvements & New Features**
 

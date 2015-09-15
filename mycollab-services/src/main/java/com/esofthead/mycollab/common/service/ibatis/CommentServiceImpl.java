@@ -37,6 +37,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectActivityStreamService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
+import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,9 @@ public class CommentServiceImpl extends DefaultService<Integer, CommentWithBLOBs
 
     @Autowired
     private ActivityStreamService activityStreamService;
+
+    @Autowired
+    private AsyncEventBus asyncEventBus;
 
     @Override
     public ICrudGenericDAO<Integer, CommentWithBLOBs> getCrudMapper() {
