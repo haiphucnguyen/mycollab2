@@ -50,6 +50,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.util.BrowserCookie;
 
@@ -124,6 +125,8 @@ public class DesktopApplication extends MyCollabUI {
                 || userAgent.indexOf("msie 7.0") != -1 || userAgent.indexOf("msie 8.0") != -1 || userAgent.indexOf("msie 9.0") != -1;
     }
 
+    private static Class[] systemExceptions = new Class[]{UncategorizedSQLException.class};
+
     private void handleException(String userAgent, Throwable e) {
         IgnoreException ignoreException = getExceptionType(e, IgnoreException.class);
         if (ignoreException != null) {
@@ -183,6 +186,29 @@ public class DesktopApplication extends MyCollabUI {
             NotificationUtil.showWarningNotification("Can not found resource.");
             LOG.error("404", resourceNotFoundException);
             return;
+        }
+
+        for (Class systemEx : systemExceptions) {
+            Exception ex = (Exception) getExceptionType(e, systemEx);
+            if (ex != null) {
+                ConfirmDialog dialog = ConfirmDialogExt.show(UI.getCurrent(),
+                        AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
+                        AppContext.getMessage(GenericI18Enum.ERROR_USER_SYSTEM_ERROR, ex.getMessage()),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                        new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+
+                            }
+                        });
+                Button okBtn = dialog.getOkButton();
+                BrowserWindowOpener opener = new BrowserWindowOpener("http://support.mycollab.com");
+                opener.extend(okBtn);
+                return;
+            }
         }
 
         LOG.error("Error " + userAgent, e);

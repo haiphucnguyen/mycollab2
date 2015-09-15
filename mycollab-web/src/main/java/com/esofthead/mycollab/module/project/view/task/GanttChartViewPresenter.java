@@ -42,6 +42,7 @@ import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -146,7 +147,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
     private void massUpdateTasksInfoInQueue() {
         if (queueSetTasksUpdate.size() > 0) {
             try {
-//                ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
+                ganttAssignmentService.massUpdateGanttItems(new ArrayList<>(queueSetTasksUpdate), AppContext.getAccountId());
             } finally {
                 queueSetTasksUpdate.clear();
             }
@@ -156,7 +157,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
     private void massDeleteTasksInQueue() {
         if (queueSetTasksDelete.size() > 0) {
             try {
-//                ganttAssignmentService.massDeleteGanttItems(new ArrayList<>(queueSetTasksDelete), AppContext.getAccountId());
+                ganttAssignmentService.massDeleteGanttItems(new ArrayList<>(queueSetTasksDelete), AppContext.getAccountId());
             } finally {
                 queueSetTasksDelete.clear();
             }

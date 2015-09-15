@@ -43,8 +43,6 @@ import com.esofthead.mycollab.module.project.service.*;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.google.common.eventbus.AsyncEventBus;
 import org.apache.ibatis.session.RowBounds;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -70,8 +68,6 @@ import java.util.concurrent.locks.Lock;
 @Traceable(nameField = "taskname", extraFieldName = "projectid", notifyAgent = ProjectTaskRelayEmailNotificationAction.class)
 @Watchable(userFieldName = "assignuser", extraTypeId = "projectid")
 public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria> implements ProjectTaskService {
-    private static Logger LOG = LoggerFactory.getLogger(ProjectTaskServiceImpl.class);
-
     static {
         ClassInfo taskInfo = new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.TASK);
         taskInfo.addExcludeHistoryField(Task.Field.taskindex.name());
