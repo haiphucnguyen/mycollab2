@@ -47,6 +47,7 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements L
                             try {
                                 progressIndicator = new ProgressIndicator();
                                 currentUI.addWindow(progressIndicator);
+                                currentUI.push();
                                 displayView();
                             } finally {
                                 currentUI.removeWindow(progressIndicator);
