@@ -48,6 +48,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tltv.gantt.client.shared.Step;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
@@ -299,6 +300,7 @@ public class GanttTreeTable extends TreeTable {
                 this.addTask(itemWrapper);
             }
             this.updateWholeGanttIndexes();
+            gantt.addStep(new Step());
         } else {
             LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
         }
