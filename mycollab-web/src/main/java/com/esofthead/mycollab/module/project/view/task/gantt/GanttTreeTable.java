@@ -26,12 +26,11 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.Task;
-import com.esofthead.mycollab.module.project.domain.TaskGanttItem;
-import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
+import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -47,6 +46,8 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.contextmenu.ContextMenu;
 
@@ -57,12 +58,14 @@ import java.util.*;
  * @since 5.1.1
  */
 public class GanttTreeTable extends TreeTable {
+    private static Logger LOG = LoggerFactory.getLogger(GanttTreeTable.class);
+
     private GanttExt gantt;
     private GanttItemContainer beanContainer;
 
     private boolean ganttIndexIsChanged = false;
-
     protected List<Field> fields = new ArrayList<>();
+    private boolean isStartedGanttChart = false;
 
     private ApplicationEventListener<GanttEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
             ApplicationEventListener<GanttEvent.UpdateGanttItemDates>() {
@@ -278,6 +281,30 @@ public class GanttTreeTable extends TreeTable {
         super.detach();
     }
 
+    public void loadAssignments() {
+        GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
+        final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
+                (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
+        if (assignments.size() == 1) {
+            ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
+            List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
+            for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
+                GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
+                this.addTask(itemWrapper);
+            }
+
+            List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
+            for (TaskGanttItem taskGanttItem : taskGanttItems) {
+                GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
+                this.addTask(itemWrapper);
+            }
+            this.updateWholeGanttIndexes();
+        } else {
+            LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
+        }
+        isStartedGanttChart = true;
+    }
+
     private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
         this.markAsDirtyRecursive();
     }
@@ -306,15 +333,16 @@ public class GanttTreeTable extends TreeTable {
         if (stepIndex != -1) {
             LocalDate startDate = parent.getStartDate();
             LocalDate endDate = parent.getEndDate();
-            int ganttStartIndex = (parent.getGanttIndex() != null) ? parent.getGanttIndex() : beanContainer.indexOfId(parent) + 1;
 
             for (GanttItemWrapper child : children) {
                 if (!beanContainer.containsId(child)) {
-                    this.addItem(child);
+                    beanContainer.addBean(child);
 
-                    int ganttIndex = ++ganttStartIndex;
-                    child.setGanttIndex(ganttIndex);
-                    ganttIndexIsChanged = true;
+                    int ganttIndex = beanContainer.indexOfId(child) + 1;
+                    if (child.getGanttIndex() == null || (child.getGanttIndex() != ganttIndex && !isStartedGanttChart)) {
+                        child.setGanttIndex(ganttIndex);
+                        ganttIndexIsChanged = true;
+                    }
 
                     this.setParent(child, parent);
                     gantt.addTask(stepIndex + count + 1, child);
@@ -339,6 +367,9 @@ public class GanttTreeTable extends TreeTable {
         final int stepIndex = gantt.getStepIndex(parent.getStep());
         if (stepIndex != -1) {
             for (GanttItemWrapper child : childs) {
+                if (child.hasSubTasks()) {
+                    removeSubSteps(child, child.subTasks());
+                }
                 this.removeItem(child);
                 gantt.removeStep(child.getStep());
             }

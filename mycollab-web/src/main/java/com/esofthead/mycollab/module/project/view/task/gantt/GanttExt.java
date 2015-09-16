@@ -96,14 +96,12 @@ public class GanttExt extends Gantt {
         Step step = task.getStep();
         super.addStep(step);
         calculateMaxMinDates(task);
-        System.out.println("ADD TASK " + task.getName());
     }
 
     public void addTask(int index, GanttItemWrapper task) {
         Step step = task.getStep();
         super.addStep(index, step);
         calculateMaxMinDates(task);
-        System.out.println("ADD TASK " + task.getName());
     }
 
     private void updateGanttDates() {
@@ -126,6 +124,14 @@ public class GanttExt extends Gantt {
 
         updateGanttDates();
     }
+
+    @Override
+    public boolean removeStep(Step step) {
+        StepComponent sc = stepComponents.remove(step);
+        sc.setParent(null);
+        return getState().steps.remove(sc);
+    }
+
 
     @Override
     public AbstractStep getStep(String uid) {

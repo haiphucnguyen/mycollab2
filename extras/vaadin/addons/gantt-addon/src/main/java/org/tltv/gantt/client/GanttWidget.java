@@ -35,6 +35,7 @@ import org.tltv.gantt.client.shared.GanttUtil;
 import org.tltv.gantt.client.shared.Resolution;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 import static org.tltv.gantt.client.shared.GanttUtil.*;
 
@@ -79,6 +80,7 @@ import static org.tltv.gantt.client.shared.GanttUtil.*;
  * @author Tltv
  */
 public class GanttWidget extends ComplexPanel implements HasEnabled, HasWidgets {
+    private static Logger LOG = Logger.getLogger(GanttConnector.class.getName());
 
     private static final int RESIZE_WIDTH = 10;
     private static final int BAR_MIN_WIDTH = RESIZE_WIDTH;
@@ -408,6 +410,7 @@ public class GanttWidget extends ComplexPanel implements HasEnabled, HasWidgets 
      * @param widget
      */
     public void addStep(int stepIndex, Widget widget) {
+        LOG.fine("Add step: " + stepIndex);
         insert(stepIndex + getAdditonalContentElementCount(), widget);
         DivElement bar = DivElement.as(widget.getElement());
         // bar height should be defined in css
