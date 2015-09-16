@@ -35,7 +35,6 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.module.project.service.ProjectActivityStreamService;
 import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
@@ -107,7 +106,6 @@ public class CommentServiceImpl extends DefaultService<Integer, CommentWithBLOBs
         activityStream.setExtratypeid(record.getExtratypeid());
         if (record.getType() != null && record.getType().startsWith("Project-")) {
             activityStream.setModule(ModuleNameConstants.PRJ);
-            CacheUtils.cleanCaches(record.getSaccountid(), ProjectActivityStreamService.class);
         } else if (record.getType() != null && record.getType().startsWith("Crm-")) {
             activityStream.setModule(ModuleNameConstants.CRM);
         } else {

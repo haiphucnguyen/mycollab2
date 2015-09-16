@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import com.esofthead.mycollab.cache.CacheUtils;
+import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
@@ -123,10 +123,10 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 Integer key = taskMapperExt.getMaxKey(record.getProjectid());
                 record.setTaskkey((key == null) ? 1 : (key + 1));
 
-                CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class, ProjectGenericTaskService.class,
-                        ProjectActivityStreamService.class, ProjectMemberService.class, MilestoneService.class);
-
-                return super.saveWithSession(record, username);
+                int result = super.saveWithSession(record, username);
+                asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class, ProjectGenericTaskService.class,
+                        ProjectActivityStreamService.class, ProjectMemberService.class, MilestoneService.class}));
+                return result;
             } else {
                 throw new MyCollabException("Timeout operation.");
             }
@@ -142,7 +142,11 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     @Override
     public Integer updateWithSession(Task record, String username) {
         beforeUpdate(record);
-        return super.updateWithSession(record, username);
+        int result = super.updateWithSession(record, username);
+        asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
+                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
+                MilestoneService.class, ItemTimeLoggingService.class}));
+        return result;
     }
 
     private void beforeUpdate(Task record) {
@@ -151,23 +155,24 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         } else if (record.getStatus() == null) {
             record.setStatus(StatusI18nEnum.Open.name());
         }
-
-        CacheUtils.cleanCaches(record.getSaccountid(), ProjectService.class,
-                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
-                MilestoneService.class, ItemTimeLoggingService.class);
     }
 
     @Override
     public Integer updateSelectiveWithSession(Task record, String username) {
         beforeUpdate(record);
-        return super.updateSelectiveWithSession(record, username);
+        int result = super.updateSelectiveWithSession(record, username);
+        asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
+                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
+                MilestoneService.class, ItemTimeLoggingService.class}));
+        return result;
     }
 
     @Override
     public void massRemoveWithSession(List<Task> items, String username, Integer accountId) {
         super.massRemoveWithSession(items, username, accountId);
-        CacheUtils.cleanCaches(accountId, ProjectService.class, ProjectGenericTaskService.class,
-                ProjectActivityStreamService.class, MilestoneService.class, ItemTimeLoggingService.class);
+        asyncEventBus.post(new CleanCacheEvent(accountId, new Class[]{ProjectService.class,
+                ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
+                MilestoneService.class, ItemTimeLoggingService.class}));
         DeleteProjectTaskEvent event = new DeleteProjectTaskEvent(items.toArray(new Task[items.size()]),
                 username, accountId);
         asyncEventBus.post(event);
