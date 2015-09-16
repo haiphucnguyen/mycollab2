@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.task.gantt;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.AssignWithPredecessors;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.server.Page;
@@ -97,12 +96,14 @@ public class GanttExt extends Gantt {
         Step step = task.getStep();
         super.addStep(step);
         calculateMaxMinDates(task);
+        System.out.println("ADD TASK " + task.getName());
     }
 
     public void addTask(int index, GanttItemWrapper task) {
         Step step = task.getStep();
         super.addStep(index, step);
         calculateMaxMinDates(task);
+        System.out.println("ADD TASK " + task.getName());
     }
 
     private void updateGanttDates() {
