@@ -345,7 +345,12 @@ public class GanttTreeTable extends TreeTable {
                     }
 
                     this.setParent(child, parent);
-                    gantt.addTask(stepIndex + count + 1, child);
+                    if (!isStartedGanttChart) {
+                        gantt.addTask(child);
+                    } else {
+                        gantt.addTask(stepIndex + count + 1, child);
+                    }
+
                     if (child.hasSubTasks()) {
                         this.setChildrenAllowed(child, true);
                         this.setCollapsed(child, false);
