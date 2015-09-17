@@ -6,7 +6,6 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -74,9 +73,10 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String taskPriority = task.getPriority();
-                Img img = new Img(task.getPriority(), ProjectResources.getIconResourceLink12ByTaskPriority(taskPriority));
-                return img.write();
+                return ProjectAssetsManager.getTaskPriorityHtml(task.getPriority());
+//                String taskPriority = task.getPriority();
+//                Img img = new Img(task.getPriority(), ProjectResources.getIconResourceLink12ByTaskPriority(taskPriority));
+//                return img.write();
             }
 
             @Override

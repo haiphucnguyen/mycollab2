@@ -784,4 +784,163 @@
       }
     }
   }
+
+  /* TASK PRIORITY STYLES */
+  $task-urgent-color: #d32d1a;
+  $task-high-color: #e53d2a;
+  $task-medium-color: #e95948;
+  $task-low-color: #ec7467;
+  $task-none-color: #f09085;
+
+  .task-urgent, .v-filterselect-item-task-urgent {
+    .v-icon {
+      color: $task-urgent-color;
+    }
+  }
+
+  .task-urgent.v-icon {
+    color: $task-urgent-color;
+  }
+
+  .task-high, .v-filterselect-item-task-high {
+    .v-icon {
+      color: $task-high-color;
+    }
+  }
+
+  .task-high.v-icon {
+      color: $task-high-color;
+  }
+
+  .task-medium, .v-filterselect-item-task-medium {
+    .v-icon {
+      color: $task-medium-color;
+    }
+  }
+
+  .task-medium.v-icon {
+    color: $task-medium-color;
+  }
+
+  .task-low, .v-filterselect-item-task-low {
+    .v-icon {
+      color: $task-low-color;
+    }
+  }
+
+  .task-low.v-icon {
+    color: $task-low-color;
+  }
+
+  .task-none, .v-filterselect-item-task-none {
+    .v-icon {
+      color: $task-none-color;
+    }
+  }
+
+  .task-none.v-icon {
+    color: $task-none-color;
+  }
+  /*END TASK PRIORITY STYLES*/
+
+  /*BUG PRIORITY STYLES*/
+  $bug-blocker-color: #d32d1a;
+  $bug-critical-color: #e53d2a;
+  $bug-major-color: #e95948;
+  $bug-minor-color: #ec7467;
+  $bug-trivial-color: #f09085;
+
+  .bug-blocker, .v-filterselect-item-bug-blocker {
+    .v-icon {
+      color: $bug-blocker-color;
+    }
+  }
+
+  .bug-blocker.v-icon {
+    color: $bug-blocker-color;
+  }
+
+  .bug-critical, .v-filterselect-item-bug-critical {
+    .v-icon {
+      color: $bug-critical-color;
+    }
+  }
+
+  .bug-critical.v-icon {
+    color: $bug-critical-color;
+  }
+
+  .bug-major, .v-filterselect-item-bug-major {
+    .v-icon {
+      color: $bug-major-color;
+    }
+  }
+
+  .bug-major.v-icon {
+    color: $bug-major-color;
+  }
+
+  .bug-minor, .v-filterselect-item-bug-minor {
+    .v-icon {
+      color: $bug-minor-color;
+    }
+  }
+
+  .bug-minor.v-icon {
+    color: $bug-minor-color;
+  }
+
+  .bug-trivial, .v-filterselect-item-bug-trivial {
+    .v-icon {
+      color: $bug-trivial-color;
+    }
+  }
+
+  .bug-trivial.v-icon {
+    color: $bug-trivial-color;
+  }
+  /*END BUG PRIORITY STYLES*/
+
+  /*BUG SEVERITY STYLES*/
+  $bug-severity-critical-color: #d32d1a;
+  $bug-severity-major-color: #e53d2a;
+  $bug-severity-minor-color: #f0fb83;
+  $bug-severity-trivial-color: #a2afb1;
+
+  .bug-severity-critical, .v-filterselect-item-bug-severity-critical {
+    .v-icon {
+      color: $bug-severity-critical-color;
+    }
+  }
+  .bug-severity-critical.v-icon {
+    color: $bug-severity-critical-color;
+  }
+
+  .bug-severity-major, .v-filterselect-item-bug-severity-major {
+    .v-icon {
+      color: $bug-severity-major-color;
+    }
+  }
+  .bug-severity-major.v-icon {
+    color: $bug-severity-major-color;
+  }
+
+  .bug-minor-minor, .v-filterselect-item-bug-minor-minor {
+    .v-icon {
+      color: $bug-severity-minor-color;
+    }
+  }
+  .bug-severity-minor.v-icon {
+    color: $bug-severity-minor-color;
+  }
+
+  .bug-severity-trivial, .v-filterselect-item-bug-severity-trivial {
+    .v-icon {
+      color: $bug-severity-trivial-color;
+    }
+  }
+  .bug-severity-trivial.v-icon {
+    color: $bug-severity-trivial-color;
+  }
+  /*END BUG SEVERITY STYLES*/
 }
