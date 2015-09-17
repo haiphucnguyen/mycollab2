@@ -69,17 +69,18 @@ public class ProjectAssetsManager {
     }
 
     public static String getBugPriorityHtml(String bugPriority) {
-        if (StringUtils.isNotBlank(bugPriority)) {
-            FontAwesome fontAwesome = getBugPriority(bugPriority);
-            return String.format("<span class=\"bug-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
-                    bugPriority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
+        if (StringUtils.isBlank(bugPriority)) {
+            bugPriority = OptionI18nEnum.BugPriority.Major.name();
         }
-        return "";
+
+        FontAwesome fontAwesome = getBugPriority(bugPriority);
+        return String.format("<span class=\"bug-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
+                bugPriority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
     }
 
     public static FontAwesome getTaskPriority(String taskPriority) {
         if (OptionI18nEnum.TaskPriority.Urgent.name().equals(taskPriority) || OptionI18nEnum.TaskPriority.High.name()
-                .equals(taskPriority) || OptionI18nEnum.TaskPriority.Medium.name().equals(taskPriority)) {
+                .equals(taskPriority) || OptionI18nEnum.TaskPriority.Medium.name().equals(taskPriority) || taskPriority == null) {
             return FontAwesome.ARROW_UP;
         } else {
             return FontAwesome.ARROW_DOWN;
@@ -87,11 +88,11 @@ public class ProjectAssetsManager {
     }
 
     public static String getTaskPriorityHtml(String taskPriority) {
-        if (StringUtils.isNotBlank(taskPriority)) {
-            FontAwesome fontAwesome = getTaskPriority(taskPriority);
-            return String.format("<span class=\"task-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
-                    taskPriority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
+        if (StringUtils.isBlank(taskPriority)) {
+            taskPriority = OptionI18nEnum.TaskPriority.Medium.name();
         }
-        return "";
+        FontAwesome fontAwesome = getTaskPriority(taskPriority);
+        return String.format("<span class=\"task-%s v-icon\" style=\"font-family: FontAwesome;\">&#x%s;</span>",
+                taskPriority.toLowerCase(), Integer.toHexString(fontAwesome.getCodepoint()));
     }
 }

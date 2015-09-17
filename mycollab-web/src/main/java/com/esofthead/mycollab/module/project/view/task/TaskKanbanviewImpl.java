@@ -35,6 +35,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -336,10 +337,9 @@ public class TaskKanbanviewImpl extends AbstractLazyPageView implements TaskKanb
                     EventBusFactory.getInstance().post(new TaskEvent.GotoRead(KanbanTaskBlockItem.this, task.getId()));
                 }
             });
-            taskBtn.setIcon(ProjectAssetsManager.getTaskPriority(task.getPriority()));
-            if (task.getPriority() != null) {
-                taskBtn.addStyleName("task-" + task.getPriority().toLowerCase());
-            }
+            String taskPriority = (task.getPriority() != null) ? task.getPriority() : OptionI18nEnum.TaskPriority.Medium.name();
+            taskBtn.setIcon(ProjectAssetsManager.getTaskPriority(taskPriority));
+            taskBtn.addStyleName("task-" + taskPriority.toLowerCase());
             taskBtn.setDescription(ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task,
                     AppContext.getSiteUrl(), AppContext.getTimezone()));
             root.with(taskBtn);

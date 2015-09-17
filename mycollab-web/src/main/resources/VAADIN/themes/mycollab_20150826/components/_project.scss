@@ -787,10 +787,10 @@
 
   /* TASK PRIORITY STYLES */
   $task-urgent-color: #d32d1a;
-  $task-high-color: #e53d2a;
-  $task-medium-color: #e95948;
-  $task-low-color: #ec7467;
-  $task-none-color: #f09085;
+  $task-high-color: #e95948;
+  $task-medium-color: #f09085;
+  $task-low-color: #f7c7c1;
+  $task-none-color: #b7b9b0;
 
   .task-urgent, .v-filterselect-item-task-urgent {
     .v-icon {
@@ -845,10 +845,10 @@
 
   /*BUG PRIORITY STYLES*/
   $bug-blocker-color: #d32d1a;
-  $bug-critical-color: #e53d2a;
-  $bug-major-color: #e95948;
-  $bug-minor-color: #ec7467;
-  $bug-trivial-color: #f09085;
+  $bug-critical-color: #e95948;
+  $bug-major-color: #f09085;
+  $bug-minor-color: #f7c7c1;
+  $bug-trivial-color: #b7b9b0;
 
   .bug-blocker, .v-filterselect-item-bug-blocker {
     .v-icon {
@@ -903,9 +903,9 @@
 
   /*BUG SEVERITY STYLES*/
   $bug-severity-critical-color: #d32d1a;
-  $bug-severity-major-color: #e53d2a;
-  $bug-severity-minor-color: #f0fb83;
-  $bug-severity-trivial-color: #a2afb1;
+  $bug-severity-major-color: #e95948;
+  $bug-severity-minor-color: #f09085;
+  $bug-severity-trivial-color: #f7c7c1;
 
   .bug-severity-critical, .v-filterselect-item-bug-severity-critical {
     .v-icon {
@@ -925,7 +925,7 @@
     color: $bug-severity-major-color;
   }
 
-  .bug-minor-minor, .v-filterselect-item-bug-minor-minor {
+  .bug-severity-minor, .v-filterselect-item-bug-severity-minor {
     .v-icon {
       color: $bug-severity-minor-color;
     }
