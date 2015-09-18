@@ -16,17 +16,7 @@
  */
 package com.esofthead.mycollab.common.ui.components.notification;
 
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.ui.AbstractNotification;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.esofthead.mycollab.core.AbstractNotification;
 
 /**
  * @author MyCollab Ltd.
@@ -35,23 +25,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class TimezoneNotification extends AbstractNotification {
 
     public TimezoneNotification() {
-        super(AbstractNotification.WARNING);
-    }
-
-    @Override
-    public Component renderContent() {
-        MHorizontalLayout wrapper = new MHorizontalLayout();
-        wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " The correct your timezone will help you get the event right", ContentMode.HTML));
-        Button actionBtn = new Button("Action", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
-            }
-        });
-        actionBtn.setStyleName(UIConstants.THEME_LINK);
-        actionBtn.addStyleName("block");
-        wrapper.addComponent(actionBtn);
-        return wrapper;
+        super(SCOPE_USER, WARNING);
     }
 }

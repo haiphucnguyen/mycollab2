@@ -682,6 +682,12 @@
     &.notification-type-warning {
       color: #c31616;
     }
+    &.notification-type-news {
+      color: #c31616;
+    }
+    .v-label span {
+      word-wrap: break-word;
+    }
   }
 
   /* End Top Menu */

@@ -10647,6 +10647,14 @@ input.v-textfield-pagedtable-pagefield {
 	color: #c31616;
 }
 
+.notification-type.notification-type-news {
+	color: #c31616;
+}
+
+.notification-type .v-label span {
+	word-wrap: break-word;
+}
+
 .advSearch .advSearchHeader .h2 {
 	padding-top: 0px;
 	font-size: 13px;

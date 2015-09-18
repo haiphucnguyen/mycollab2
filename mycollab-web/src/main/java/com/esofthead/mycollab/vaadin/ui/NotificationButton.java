@@ -16,34 +16,48 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.ui.components.notification.*;
+import com.esofthead.mycollab.core.AbstractNotification;
+import com.esofthead.mycollab.core.NewUpdateAvailableNotification;
+import com.esofthead.mycollab.core.NotificationBroadcaster;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.shell.view.components.AdRequestWindow;
+import com.esofthead.mycollab.shell.view.components.UpgradeConfirmWindow;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.1
  */
 public class NotificationButton extends PopupButton implements PopupButton.PopupVisibilityListener,
-        ApplicationEventListener<ShellEvent.NewNotification> {
+        ApplicationEventListener<ShellEvent.NewNotification>, NotificationBroadcaster.BroadcastListener {
+    private static Logger LOG = LoggerFactory.getLogger(NotificationButton.class);
     private static final long serialVersionUID = 2908372640829060184L;
 
-    private final List<AbstractNotification> notificationItems;
+    private final Set<AbstractNotification> notificationItems;
     private final VerticalLayout notificationContainer;
 
     public NotificationButton() {
         super();
-        notificationItems = new ArrayList<>();
+        notificationItems = new HashSet<>();
         notificationContainer = new VerticalLayout();
         notificationContainer.setMargin(true);
         this.setContent(notificationContainer);
@@ -52,6 +66,15 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
 
         addPopupVisibilityListener(this);
         EventBusFactory.getInstance().register(this);
+
+        // Register to receive broadcasts
+        NotificationBroadcaster.register(this);
+    }
+
+    @Override
+    public void detach() {
+        NotificationBroadcaster.unregister(this);
+        super.detach();
     }
 
     @Override
@@ -60,7 +83,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
 
         if (notificationItems.size() > 0) {
             for (AbstractNotification item : notificationItems) {
-                Component comp = item.renderContent();
+                Component comp = buildComponentFromNotification(item);
                 comp.setStyleName("notification-type");
                 comp.addStyleName("notification-type-" + item.getType());
                 notificationContainer.addComponent(comp);
@@ -75,6 +98,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
     public void addNotification(AbstractNotification notification) {
         notificationItems.add(notification);
         updateCaption();
+        displayTrayNotification(notification);
     }
 
     public void removeNotification(AbstractNotification notification) {
@@ -96,5 +120,135 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
         if (event.getData() instanceof AbstractNotification) {
             addNotification((AbstractNotification) event.getData());
         }
+    }
+
+    @Override
+    public void broadcastNotification(AbstractNotification notification) {
+        addNotification(notification);
+    }
+
+    private void displayTrayNotification(AbstractNotification item) {
+        if (item instanceof NewUpdateAvailableNotification) {
+            Notification no = new Notification(AppContext.getMessage(GenericI18Enum.WINDOW_INFORMATION_TITLE), "There" +
+                    " is the new MyCollab version " + ((NewUpdateAvailableNotification) item).getVersion(),
+                    Notification.Type.TRAY_NOTIFICATION);
+            no.setHtmlContentAllowed(true);
+            no.setDelayMsec(3000);
+
+            UI currentUI = getUI();
+            if (currentUI != null) {
+                no.show(currentUI.getPage());
+                currentUI.push();
+            }
+        }
+    }
+
+    private Component buildComponentFromNotification(AbstractNotification item) {
+        final MHorizontalLayout wrapper = new MHorizontalLayout();
+        wrapper.setData(item);
+        wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+
+        if (item instanceof ChangeDefaultUsernameNotification) {
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " You are using the default username " +
+                    "'admin@mycollab.com'. You can not receive the site notifications without using your right email",
+                    ContentMode.HTML));
+            Button actionBtn = new Button("Change it", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+                    NotificationButton.this.setPopupVisible(false);
+                }
+            });
+            actionBtn.setStyleName(UIConstants.THEME_LINK);
+            actionBtn.addStyleName("block");
+            wrapper.addComponent(actionBtn);
+        } else if (item instanceof NewUpdateAvailableNotification) {
+            final NewUpdateAvailableNotification notification = (NewUpdateAvailableNotification) item;
+            Span spanEl = new Span();
+            spanEl.appendText("There is the new MyCollab version " + notification.getVersion() + " . For the " +
+                    "enhancements and security purpose, the system administrator should upgrade to the latest version");
+            Label lbl = new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);
+            lbl.setWidth("100%");
+            wrapper.addComponent(lbl);
+            if (AppContext.isAdmin()) {
+                Button upgradeBtn = new Button("Upgrade", new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        UI.getCurrent().addWindow(new UpgradeConfirmWindow(notification.getVersion(), notification
+                                .getAutoDownloadLink(), notification.getManualDownloadLink(), notification.getInstallerFile()));
+                        NotificationButton.this.setPopupVisible(false);
+                    }
+                });
+                upgradeBtn.setStyleName(UIConstants.THEME_LINK);
+                upgradeBtn.addStyleName("block");
+                wrapper.addComponent(upgradeBtn);
+            }
+        } else if (item instanceof RequestUploadAvatarNotification) {
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " Let people recognize you", ContentMode.HTML));
+            Button uploadAvatarBtn = new Button("Upload your avatar", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+                    NotificationButton.this.setPopupVisible(false);
+                }
+            });
+            uploadAvatarBtn.setStyleName(UIConstants.THEME_LINK);
+            uploadAvatarBtn.addStyleName("block");
+            wrapper.add(uploadAvatarBtn);
+        } else if (item instanceof SmtpSetupNotification) {
+            Button smtpBtn = new Button("Setup", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    EventBusFactory.getInstance().post(
+                            new ShellEvent.GotoUserAccountModule(this, new String[]{"setup"}));
+                    NotificationButton.this.setPopupVisible(false);
+                }
+            });
+            smtpBtn.setStyleName(UIConstants.THEME_LINK);
+            smtpBtn.addStyleName("block");
+            wrapper.with(new Label(FontAwesome.EXCLAMATION.getHtml() + " Your members can not receive any mail notification without a proper SMTP setting", ContentMode.HTML), smtpBtn);
+        } else if (item instanceof TimezoneNotification) {
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " The correct your timezone will help you get the event right", ContentMode.HTML));
+            Button actionBtn = new Button("Action", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+                    NotificationButton.this.setPopupVisible(false);
+                }
+            });
+            actionBtn.setStyleName(UIConstants.THEME_LINK);
+            actionBtn.addStyleName("block");
+            wrapper.addComponent(actionBtn);
+        } else if (item instanceof RequestPreviewNotification) {
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " Help us to spread the world",
+                    ContentMode.HTML));
+            Button dismissBtn = new Button("Dismiss", new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    SimpleUser user = AppContext.getUser();
+                    user.setRequestad(false);
+                    UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+                    userService.updateSelectiveWithSession(user, AppContext.getUsername());
+                    notificationContainer.removeComponent(wrapper);
+                    NotificationButton.this.setPopupVisible(false);
+                }
+            });
+            dismissBtn.setStyleName(UIConstants.THEME_LINK);
+            dismissBtn.addStyleName("block");
+            wrapper.addComponent(dismissBtn);
+            Button spreadBtn = new Button("I will", new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    UI.getCurrent().addWindow(new AdRequestWindow(AppContext.getUser()));
+                    NotificationButton.this.setPopupVisible(false);
+                }
+            });
+            spreadBtn.setStyleName(UIConstants.THEME_LINK);
+            spreadBtn.addStyleName("block");
+            wrapper.addComponent(spreadBtn);
+        } else {
+            LOG.error("Do not render notification " + item);
+        }
+        return wrapper;
     }
 }

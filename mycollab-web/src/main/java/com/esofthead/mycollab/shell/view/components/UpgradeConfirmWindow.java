@@ -16,30 +16,23 @@
  */
 package com.esofthead.mycollab.shell.view.components;
 
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.core.IgnoreException;
 import com.esofthead.mycollab.jetty.ServerInstance;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Window;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Properties;
-import java.util.concurrent.locks.Lock;
 
 /**
  * @author MyCollab Ltd.
@@ -49,11 +42,9 @@ public class UpgradeConfirmWindow extends Window {
     private static String headerTemplate = "MyCollab just got better . For the " +
             "enhancements and security purpose, you should upgrade to the latest version";
 
-    private Properties props;
-
-    public UpgradeConfirmWindow(Properties props) {
+    public UpgradeConfirmWindow(final String version, final String autoDownloadLink, String manualDownloadLink,
+                                final String installerFilePath) {
         super("A new update is ready to install");
-        this.props = props;
         this.setModal(true);
         this.setResizable(false);
         this.center();
@@ -62,16 +53,16 @@ public class UpgradeConfirmWindow extends Window {
         MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
 
-        Div titleDiv = new Div().appendText(String.format(headerTemplate, props.getProperty("version"))).setStyle("font-weight:bold");
+        Div titleDiv = new Div().appendText(String.format(headerTemplate, version)).setStyle("font-weight:bold");
         content.with(new Label(titleDiv.write(), ContentMode.HTML));
 
         Div manualInstallLink = new Div().appendText("&nbsp;&nbsp;&nbsp;&nbsp;Manual install: ")
-                .appendChild(new A(props.getProperty("downloadLink"), "_blank")
+                .appendChild(new A(manualDownloadLink, "_blank")
                         .appendText("Download link"));
         content.with(new Label(manualInstallLink.write(), ContentMode.HTML));
 
         Div releaseNoteLink = new Div().appendText("&nbsp;&nbsp;&nbsp;&nbsp;Release Notes: ")
-                .appendChild(new A(props.getProperty("releaseNotes"), "_blank")
+                .appendChild(new A("https://community.mycollab.com/release-notes/", "_blank")
                         .appendText("Link"));
         content.with(new Label(releaseNoteLink.write(), ContentMode.HTML));
 
@@ -87,7 +78,7 @@ public class UpgradeConfirmWindow extends Window {
         Button autoUpgradeBtn = new Button("Auto Upgrade", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                new Thread(new AutoUpgradeProcess()).start();
+                new Thread(new AutoUpgradeProcess(installerFilePath)).start();
                 UpgradeConfirmWindow.this.close();
             }
         });
@@ -97,118 +88,25 @@ public class UpgradeConfirmWindow extends Window {
     }
 
     class AutoUpgradeProcess implements Runnable {
-        private boolean isKill = false;
+        private String installerFilePath;
+
+        AutoUpgradeProcess(String installerFilePath) {
+            this.installerFilePath = installerFilePath;
+        }
 
         @Override
         public void run() {
-            try {
-                Lock lock = UI.getCurrent().getSession().getLockInstance();
-                lock.lock();
-                DownloadProgressWindow progressWindow = new DownloadProgressWindow();
-                UI.getCurrent().addWindow(progressWindow);
-                lock.unlock();
-                File tmpFile = File.createTempFile("mycollab", ".zip");
-                URL url = new URL(props.getProperty("autoDownload"));
-                HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-                int responseCode = httpConn.getResponseCode();
-
-                // always check HTTP response code first
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    int contentLength = httpConn.getContentLength();
-                    progressWindow.setContentLength(Long.valueOf(contentLength));
-
-                    // opens input stream from the HTTP connection
-                    InputStream inputStream = httpConn.getInputStream();
-
-                    // opens an output stream to save into file
-                    try(FileOutputStream outputStream = new FileOutputStream(tmpFile)) {
-                        long currentBytesRead = 0;
-                        int bytesRead;
-                        byte[] buffer = new byte[4096];
-                        while (((bytesRead = inputStream.read(buffer)) != -1) && !isKill) {
-                            outputStream.write(buffer, 0, bytesRead);
-                            currentBytesRead += bytesRead;
-                            progressWindow.setProgressValue(currentBytesRead);
-                        }
-                        outputStream.close();
-                        inputStream.close();
-                        httpConn.disconnect();
-
-                        if (isKill) {
-                            progressWindow.close();
-                            return;
-                        }
-
-                        UI.getCurrent().setPollInterval(-1);
-                        ServerInstance.getInstance().preUpgrade();
-                        String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
-                        lock = UI.getCurrent().getSession().getLockInstance();
-                        lock.lock();
-                        Page.getCurrent().setLocation(locUrl);
-                        progressWindow.close();
-                        lock.unlock();
-
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        ServerInstance.getInstance().upgrade(tmpFile);
-                    }
-                } else {
-                    NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
-                    httpConn.disconnect();
-                    progressWindow.close();
+            if (installerFilePath != null) {
+                File installerFile = new File(installerFilePath);
+                if (installerFile.exists()) {
+                    ServerInstance.getInstance().preUpgrade();
+                    String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
+                    Page.getCurrent().setLocation(locUrl);
+                    ServerInstance.getInstance().upgrade(installerFile);
+                    return;
                 }
-            } catch (IOException e) {
-                NotificationUtil.showErrorNotification("Can not download the latest MyCollab distribution. You could try again or install MyCollab manually");
-            } finally {
-                if (UI.getCurrent() != null) {
-                    UI.getCurrent().push();
-                }
-            }
-        }
-
-        class DownloadProgressWindow extends Window {
-            private Long contentLength;
-            private MVerticalLayout content;
-            private ProgressBarIndicator progressBar;
-            private Label currentVolumeLabel;
-
-            DownloadProgressWindow() {
-                super("Upgrading MyCollab (Beta)");
-                this.setResizable(false);
-                this.setModal(false);
-                this.setWidth("600px");
-
-                content = new MVerticalLayout();
-                content.with(new Label("Connecting to the server. Please wait for a moment"));
-                this.setContent(content);
-            }
-
-            void setContentLength(Long contentLength) {
-                this.contentLength = contentLength;
-                content.removeAllComponents();
-                MHorizontalLayout progressLayout = new MHorizontalLayout();
-                Label totalVolumeLabel = new Label(FileUtils.getVolumeDisplay(contentLength));
-                currentVolumeLabel = new Label();
-                progressBar = new ProgressBarIndicator();
-                progressBar.setWidth("100%");
-                progressLayout.with(progressBar, new MHorizontalLayout().with(currentVolumeLabel, new Label("/"), totalVolumeLabel)).expand(progressBar);
-                content.with(new Label("Downloading the latest MyCollab distribution. Please be patient"), progressLayout);
-                Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        isKill = true;
-                    }
-                });
-                cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-                content.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_RIGHT);
-            }
-
-            void setProgressValue(Long value) {
-                progressBar.setProgressValue((float) value / contentLength);
-                currentVolumeLabel.setValue(FileUtils.getVolumeDisplay(value));
+            } else {
+                throw new IgnoreException("Can not upgrade MyCollab");
             }
         }
     }

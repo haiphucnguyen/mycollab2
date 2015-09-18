@@ -16,17 +16,7 @@
  */
 package com.esofthead.mycollab.common.ui.components.notification;
 
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.ui.AbstractNotification;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.esofthead.mycollab.core.AbstractNotification;
 
 /**
  * @author MyCollab Ltd.
@@ -35,24 +25,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public class RequestUploadAvatarNotification extends AbstractNotification {
 
     public RequestUploadAvatarNotification() {
-        super(AbstractNotification.WARNING);
+        super(SCOPE_USER, WARNING);
     }
-
-
-    public Component renderContent() {
-        MHorizontalLayout wrapper = new MHorizontalLayout();
-        wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " Let people recognize you", ContentMode.HTML));
-        Button uploadAvatarBtn = new Button("Upload your avatar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
-            }
-        });
-        uploadAvatarBtn.setStyleName(UIConstants.THEME_LINK);
-        uploadAvatarBtn.addStyleName("block");
-        wrapper.add(uploadAvatarBtn);
-        return wrapper;
-    }
-
 }

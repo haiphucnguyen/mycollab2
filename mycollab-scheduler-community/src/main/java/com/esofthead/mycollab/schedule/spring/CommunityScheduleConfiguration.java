@@ -4,8 +4,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.DeploymentMode;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
-import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
-import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
+import com.esofthead.mycollab.schedule.jobs.CheckUpdateJob;
 import com.esofthead.mycollab.spring.DataSourceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -16,38 +15,23 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 /**
- * @author MyCollab Ltd.
- * @since 4.6.0
+ * @author MyCollab Ltd
+ * @since 5.1.3
  */
 @Configuration
-public class DemandScheduleConfiguration {
+public class CommunityScheduleConfiguration {
     @Bean
-    public JobDetailFactoryBean sendCountUserLoginByDateJob() {
+    public JobDetailFactoryBean checkUpdateJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
-        bean.setJobClass(SendingCountUserLoginByDateJob.class);
+        bean.setJobClass(CheckUpdateJob.class);
         return bean;
     }
 
     @Bean
-    public CronTriggerFactoryBean sendingCountUserLoginByDateTrigger() {
+    public CronTriggerFactoryBean checkUpdateJobTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(sendCountUserLoginByDateJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
-        return bean;
-    }
-
-    @Bean
-    public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
-        JobDetailFactoryBean bean = new JobDetailFactoryBean();
-        bean.setJobClass(BillingSendingNotificationJob.class);
-        return bean;
-    }
-
-    @Bean
-    public CronTriggerFactoryBean sendAccountBillingEmailTrigger() {
-        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setJobDetail(sendAccountBillingRequestEmailJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
+        bean.setJobDetail(checkUpdateJob().getObject());
+        bean.setCronExpression("0 * * * * ?");
         return bean;
     }
 
@@ -55,21 +39,21 @@ public class DemandScheduleConfiguration {
     private ApplicationContext applicationContext;
 
     @Bean
-    public SchedulerFactoryBean quartzSchedulerDemand() {
+    public SchedulerFactoryBean quartzSchedulerCommunity() {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
+
         if (DeploymentMode.site == SiteConfiguration.getDeploymentMode()) {
             bean.setDataSource(new DataSourceConfiguration().dataSource());
         }
 
         bean.setQuartzProperties(new QuartzScheduleProperties());
+        bean.setOverwriteExistingJobs(true);
         AutowiringSpringBeanJobFactory factory = new AutowiringSpringBeanJobFactory();
         factory.setApplicationContext(applicationContext);
         bean.setJobFactory(factory);
-        bean.setOverwriteExistingJobs(true);
-        bean.setAutoStartup(true);
-        bean.setApplicationContextSchedulerContextKey("onDemandScheduleContext");
+        bean.setApplicationContextSchedulerContextKey("communityScheduler");
 
-        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(), sendAccountBillingEmailTrigger().getObject());
+        bean.setTriggers(checkUpdateJobTrigger().getObject());
         return bean;
     }
 }
