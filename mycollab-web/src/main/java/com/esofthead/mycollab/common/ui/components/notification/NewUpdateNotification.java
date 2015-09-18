@@ -16,15 +16,14 @@
  */
 package com.esofthead.mycollab.common.ui.components.notification;
 
-import com.esofthead.mycollab.common.ui.components.AbstractNotification;
-import com.esofthead.mycollab.module.user.AccountLinkGenerator;
-import com.esofthead.mycollab.vaadin.AppContext;
-import com.hp.gagawa.java.elements.A;
+import com.esofthead.mycollab.vaadin.ui.AbstractNotification;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Properties;
 
@@ -43,13 +42,12 @@ public class NewUpdateNotification extends AbstractNotification {
 
     @Override
     public Component renderContent() {
+        MHorizontalLayout wrapper = new MHorizontalLayout();
+        wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         Span spanEl = new Span();
         spanEl.appendText("There is the new MyCollab version " + props.getProperty("version") + " . For the " +
-                "enhancements and security purpose, the system administrator should upgrade to the latest version at ");
-
-        A link = new A(props.getProperty("downloadLink"), "_blank");
-        link.appendText("here");
-        spanEl.appendChild(link);
-        return new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);
+                "enhancements and security purpose, the system administrator should upgrade to the latest version");
+        wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML));
+        return wrapper;
     }
 }

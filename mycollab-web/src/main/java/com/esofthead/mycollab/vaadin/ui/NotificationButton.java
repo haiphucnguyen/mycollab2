@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.common.ui.components.AbstractNotification;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -63,15 +62,13 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
             for (AbstractNotification item : notificationItems) {
                 Component comp = item.renderContent();
                 comp.setStyleName("notification-type");
-                comp.addStyleName("notification-type-"
-                        + item.getType());
+                comp.addStyleName("notification-type-" + item.getType());
                 notificationContainer.addComponent(comp);
             }
         } else {
             Label noItemLbl = new Label("There is no notification right now");
             notificationContainer.addComponent(noItemLbl);
-            notificationContainer.setComponentAlignment(noItemLbl,
-                    Alignment.MIDDLE_CENTER);
+            notificationContainer.setComponentAlignment(noItemLbl, Alignment.MIDDLE_CENTER);
         }
     }
 
@@ -87,7 +84,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
 
     protected void updateCaption() {
         if (notificationItems.size() > 0) {
-            this.setCaption(String.valueOf(notificationItems.size()));
+            this.setCaption("" + notificationItems.size());
         } else {
             this.setCaption(null);
         }

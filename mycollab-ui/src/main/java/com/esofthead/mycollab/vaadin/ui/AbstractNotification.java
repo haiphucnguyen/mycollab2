@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.common.ui.components;
+package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.Component;
 
 /**
- * 
+ *
  * @author MyCollab Ltd.
  * @since 4.1
- * 
+ *
  */
 public abstract class AbstractNotification {
 	private String type;

@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.common.ui.components.notification;
 
-import com.esofthead.mycollab.common.ui.components.AbstractNotification;
+import com.esofthead.mycollab.vaadin.ui.AbstractNotification;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -50,6 +50,7 @@ public class SmtpSetupNotification  extends AbstractNotification {
             }
         });
         smtpBtn.setStyleName(UIConstants.THEME_LINK);
+        smtpBtn.addStyleName("block");
         layout.with(new Label(FontAwesome.EXCLAMATION.getHtml() + " Your members can not receive any mail notification without a proper SMTP setting", ContentMode.HTML), smtpBtn);
         return layout;
     }

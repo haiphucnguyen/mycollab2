@@ -10639,6 +10639,10 @@ input.v-textfield-pagedtable-pagefield {
 	display: block;
 }
 
+.notification-type {
+	padding: 3px 0px;
+}
+
 .notification-type.notification-type-warning {
 	color: #c31616;
 }

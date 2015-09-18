@@ -16,21 +16,23 @@
  */
 package com.esofthead.mycollab.common.ui.components.notification;
 
-import com.esofthead.mycollab.common.ui.components.AbstractNotification;
-import com.esofthead.mycollab.module.user.AccountLinkGenerator;
-import com.esofthead.mycollab.vaadin.AppContext;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Span;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.vaadin.ui.AbstractNotification;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 5.0.6
  */
-public class ChangeDefaultUsernameNotification  extends AbstractNotification {
+public class ChangeDefaultUsernameNotification extends AbstractNotification {
 
     public ChangeDefaultUsernameNotification() {
         super(AbstractNotification.WARNING);
@@ -38,13 +40,21 @@ public class ChangeDefaultUsernameNotification  extends AbstractNotification {
 
     @Override
     public Component renderContent() {
-        Span spanEl = new Span();
-        spanEl.appendText("You are using the default username 'admin@mycollab.com'. You should change it at ");
-
-        A link = new A(AccountLinkGenerator.generateFullProfileLink(AppContext.getSiteUrl()));
-        link.appendText("here");
-        spanEl.appendChild(link);
-        return new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);
+        MHorizontalLayout wrapper = new MHorizontalLayout();
+        wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " You are using the default username " +
+                "'admin@mycollab.com'. You can not receive the site notifications without using your right email",
+                ContentMode.HTML));
+        Button actionBtn = new Button("Change it", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
+            }
+        });
+        actionBtn.setStyleName(UIConstants.THEME_LINK);
+        actionBtn.addStyleName("block");
+        wrapper.addComponent(actionBtn);
+        return wrapper;
     }
 
 }
