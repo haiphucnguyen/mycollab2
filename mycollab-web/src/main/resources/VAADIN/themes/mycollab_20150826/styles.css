@@ -10639,19 +10639,23 @@ input.v-textfield-pagedtable-pagefield {
 	display: block;
 }
 
-.notification-type {
+.v-popupbutton-popup-notification-button .popupContent {
+	background-color: #f6f6f6 !important;
+}
+
+.v-popupbutton-popup-notification-button .popupContent .notification-type {
 	padding: 10px;
 }
 
-.notification-type.notification-type-warning {
+.v-popupbutton-popup-notification-button .popupContent .notification-type.notification-type-warning {
 	color: #c31616;
 }
 
-.notification-type.notification-type-news {
+.v-popupbutton-popup-notification-button .popupContent .notification-type.notification-type-news {
 	color: #c31616;
 }
 
-.notification-type .v-label span {
+.v-popupbutton-popup-notification-button .popupContent .notification-type .v-label span {
 	word-wrap: break-word;
 }
 

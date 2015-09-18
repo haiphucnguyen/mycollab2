@@ -1,3 +1,19 @@
+/**
+ * This file is part of mycollab-scheduler-community.
+ *
+ * mycollab-scheduler-community is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * mycollab-scheduler-community is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with mycollab-scheduler-community.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.esofthead.mycollab.schedule.jobs;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
@@ -78,15 +94,17 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
         @Override
         public void run() {
             LOG.info("Assump download " + downloadLink);
-            try {
-                tmpFile = File.createTempFile("mycollab" + version.replace('.', '_'), ".zip");
+            tmpFile = new File("/Users/baohan/Downloads/mycollab.zip");
+//            try {
+//                tmpFile = File.createTempFile("mycollab" + version.replace('.', '_'), ".zip");
 //                URL url = new URL(downloadLink);
 //                HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 //                int responseCode = httpConn.getResponseCode();
 //
 //                // always check HTTP response code first
 //                if (responseCode == HttpURLConnection.HTTP_OK) {
-//
+//                    int contentLength = httpConn.getContentLength();
+//                    int downloadedSize = 0;
 //                    // opens input stream from the HTTP connection
 //                    InputStream inputStream = httpConn.getInputStream();
 //
@@ -96,16 +114,17 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
 //                        byte[] buffer = new byte[4096];
 //                        while (((bytesRead = inputStream.read(buffer)) != -1)) {
 //                            outputStream.write(buffer, 0, bytesRead);
-//                            LOG.info("Read: " + bytesRead);
+//                            downloadedSize += bytesRead;
+//                            LOG.info("Read: " + ((float) downloadedSize / contentLength) * 100);
 //                        }
 //                        outputStream.close();
 //                        inputStream.close();
 //                        httpConn.disconnect();
 //                    }
 //                }
-            } catch (Exception e) {
-                LOG.error("Error while download " + downloadLink, e);
-            }
+//            } catch (Exception e) {
+//                LOG.error("Error while download " + downloadLink, e);
+//            }
         }
     }
 }

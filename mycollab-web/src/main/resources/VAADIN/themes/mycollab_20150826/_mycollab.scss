@@ -677,16 +677,19 @@
     display: block;
   }
 
-  .notification-type {
-    padding: 10px;
-    &.notification-type-warning {
-      color: #c31616;
-    }
-    &.notification-type-news {
-      color: #c31616;
-    }
-    .v-label span {
-      word-wrap: break-word;
+  .v-popupbutton-popup-notification-button .popupContent {
+    background-color: #f6f6f6 !important;
+    .notification-type {
+      padding: 10px;
+      &.notification-type-warning {
+        color: #c31616;
+      }
+      &.notification-type-news {
+        color: #c31616;
+      }
+      .v-label span {
+        word-wrap: break-word;
+      }
     }
   }
 

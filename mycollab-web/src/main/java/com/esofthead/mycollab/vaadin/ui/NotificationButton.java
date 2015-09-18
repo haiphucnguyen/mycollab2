@@ -38,6 +38,7 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
         super();
         notificationItems = new ArrayList<>();
         notificationContainer = new VerticalLayout();
+        new Restrain(notificationContainer).setMaxWidth("500px");
         notificationContainer.setWidth("500px");
         this.setContent(notificationContainer);
         this.setIcon(FontAwesome.BELL);
