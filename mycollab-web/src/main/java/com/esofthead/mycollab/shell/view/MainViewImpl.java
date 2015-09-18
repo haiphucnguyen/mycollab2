@@ -294,7 +294,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             SimpleUser user = AppContext.getUser();
             GregorianCalendar tenDaysAgo = new GregorianCalendar();
             tenDaysAgo.add(Calendar.DATE, -10);
-            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestPreviewNotification()));
             if (Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
                 EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new RequestPreviewNotification()));
             }

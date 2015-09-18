@@ -40,8 +40,8 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -52,14 +52,14 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
     private static Logger LOG = LoggerFactory.getLogger(NotificationButton.class);
     private static final long serialVersionUID = 2908372640829060184L;
 
-    private final Set<AbstractNotification> notificationItems;
+    private final List<AbstractNotification> notificationItems;
     private final VerticalLayout notificationContainer;
 
     public NotificationButton() {
         super();
-        notificationItems = new HashSet<>();
+        notificationItems = new ArrayList<>();
         notificationContainer = new VerticalLayout();
-        notificationContainer.setMargin(true);
+        notificationContainer.setWidth("500px");
         this.setContent(notificationContainer);
         this.setIcon(FontAwesome.BELL);
         this.setStyleName("notification-button");
@@ -82,11 +82,15 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
         notificationContainer.removeAllComponents();
 
         if (notificationItems.size() > 0) {
-            for (AbstractNotification item : notificationItems) {
+            for (int i = 0; i < notificationItems.size(); i++) {
+                AbstractNotification item = notificationItems.get(i);
                 Component comp = buildComponentFromNotification(item);
                 comp.setStyleName("notification-type");
                 comp.addStyleName("notification-type-" + item.getType());
                 notificationContainer.addComponent(comp);
+                if (i < notificationItems.size() - 1) {
+                    notificationContainer.addComponent(new Hr());
+                }
             }
         } else {
             Label noItemLbl = new Label("There is no notification right now");
@@ -146,7 +150,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
     private Component buildComponentFromNotification(AbstractNotification item) {
         final MHorizontalLayout wrapper = new MHorizontalLayout();
         wrapper.setData(item);
-        wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        wrapper.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
         if (item instanceof ChangeDefaultUsernameNotification) {
             wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " You are using the default username " +
@@ -169,7 +173,10 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                     "enhancements and security purpose, the system administrator should upgrade to the latest version");
             Label lbl = new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);
             lbl.setWidth("100%");
-            wrapper.addComponent(lbl);
+            CssLayout lblWrapper = new CssLayout();
+            lblWrapper.addComponent(lbl);
+            wrapper.addComponent(lblWrapper);
+            wrapper.expand(lblWrapper);
             if (AppContext.isAdmin()) {
                 Button upgradeBtn = new Button("Upgrade", new Button.ClickListener() {
                     @Override
