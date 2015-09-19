@@ -23,32 +23,39 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
-import com.vaadin.server.Page;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.io.File;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author MyCollab Ltd.
  * @since 5.0.4
  */
 public class UpgradeConfirmWindow extends Window {
+    private static Logger LOG = LoggerFactory.getLogger(UpgradeConfirmWindow.class);
+
     private static String headerTemplate = "MyCollab just got better . For the " +
             "enhancements and security purpose, you should upgrade to the latest version";
 
-    public UpgradeConfirmWindow(final String version, final String autoDownloadLink, String manualDownloadLink,
-                                final String installerFilePath) {
+    private UI currentUI;
+    private String installerFilePath;
+
+    public UpgradeConfirmWindow(final String version, String manualDownloadLink, final String installerFilePath) {
         super("A new update is ready to install");
         this.setModal(true);
         this.setResizable(false);
         this.center();
         this.setWidth("600px");
+        this.installerFilePath = installerFilePath;
+
+        currentUI = UI.getCurrent();
 
         MVerticalLayout content = new MVerticalLayout();
         this.setContent(content);
@@ -78,8 +85,8 @@ public class UpgradeConfirmWindow extends Window {
         Button autoUpgradeBtn = new Button("Auto Upgrade", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                new Thread(new AutoUpgradeProcess(installerFilePath)).start();
                 UpgradeConfirmWindow.this.close();
+                navigateToWaitingUpgradePage();
             }
         });
         autoUpgradeBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
@@ -87,27 +94,34 @@ public class UpgradeConfirmWindow extends Window {
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
     }
 
-    class AutoUpgradeProcess implements Runnable {
-        private String installerFilePath;
+    private void navigateToWaitingUpgradePage() {
+        new Thread() {
+            public void run() {
+                if (installerFilePath != null) {
+                    File installerFile = new File(installerFilePath);
+                    if (installerFile.exists()) {
+                        ServerInstance.getInstance().preUpgrade();
+                        final String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
+                        Future<Void> access = currentUI.access(new Runnable() {
+                            @Override
+                            public void run() {
+                                currentUI.getPage().setLocation(locUrl);
+                                currentUI.push();
+                            }
+                        });
 
-        AutoUpgradeProcess(String installerFilePath) {
-            this.installerFilePath = installerFilePath;
-        }
-
-        @Override
-        public void run() {
-            if (installerFilePath != null) {
-                File installerFile = new File(installerFilePath);
-                if (installerFile.exists()) {
-                    ServerInstance.getInstance().preUpgrade();
-                    String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
-                    Page.getCurrent().setLocation(locUrl);
-                    ServerInstance.getInstance().upgrade(installerFile);
-                    return;
+                        try {
+                            access.get();
+                            TimeUnit.SECONDS.sleep(5);
+                            ServerInstance.getInstance().upgrade(installerFile);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    throw new IgnoreException("Can not upgrade MyCollab");
                 }
-            } else {
-                throw new IgnoreException("Can not upgrade MyCollab");
             }
-        }
+        }.start();
     }
 }

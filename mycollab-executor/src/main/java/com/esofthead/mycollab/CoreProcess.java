@@ -43,7 +43,7 @@ class CoreProcess {
                 try {
                     File workingDir = new File(System.getProperty("user.dir"));
                     File iniFile = new File(workingDir, "bin/mycollab.ini");
-                    System.out.println("Load config variables at " + iniFile.getAbsolutePath());
+                    LOG.info("Load config variables at " + iniFile.getAbsolutePath());
                     String options = "";
                     if (iniFile.exists()) {
                         Properties properties = new Properties();

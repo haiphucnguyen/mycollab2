@@ -96,7 +96,7 @@ public class AdRequestWindow extends Window {
         loveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         loveBtn.setIcon(FontAwesome.HEART);
 
-        btnControls.with(loveBtn, ignoreBtn);
+        btnControls.with(ignoreBtn, loveBtn);
 
         content.with(message, shareControls, btnControls).withAlign(btnControls, Alignment.MIDDLE_RIGHT);
         this.setContent(content);

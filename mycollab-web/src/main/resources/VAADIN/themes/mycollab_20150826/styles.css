@@ -10639,20 +10639,18 @@ input.v-textfield-pagedtable-pagefield {
 	display: block;
 }
 
-.v-popupbutton-popup-notification-button .popupContent {
-	background-color: #f6f6f6 !important;
-}
-
 .v-popupbutton-popup-notification-button .popupContent .notification-type {
 	padding: 10px;
 }
 
-.v-popupbutton-popup-notification-button .popupContent .notification-type.notification-type-warning {
+.v-popupbutton-popup-notification-button .popupContent .notification-type.notification-type-warning .v-icon {
 	color: #c31616;
+	font-size: 15px;
 }
 
-.v-popupbutton-popup-notification-button .popupContent .notification-type.notification-type-news {
-	color: #c31616;
+.v-popupbutton-popup-notification-button .popupContent .notification-type.notification-type-news .v-icon {
+	color: #12ca07;
+	font-size: 15px;
 }
 
 .v-popupbutton-popup-notification-button .popupContent .notification-type .v-label span {

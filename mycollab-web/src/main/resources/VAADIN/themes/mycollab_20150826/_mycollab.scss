@@ -678,14 +678,15 @@
   }
 
   .v-popupbutton-popup-notification-button .popupContent {
-    background-color: #f6f6f6 !important;
     .notification-type {
       padding: 10px;
-      &.notification-type-warning {
+      &.notification-type-warning .v-icon {
         color: #c31616;
+        font-size:15px;
       }
-      &.notification-type-news {
-        color: #c31616;
+      &.notification-type-news .v-icon {
+        color: #12ca07;
+        font-size:15px;
       }
       .v-label span {
         word-wrap: break-word;

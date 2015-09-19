@@ -155,7 +155,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
         wrapper.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 
         if (item instanceof ChangeDefaultUsernameNotification) {
-            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " You are using the default username " +
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml() + " You are using the default username " +
                     "'admin@mycollab.com'. You can not receive the site notifications without using your right email",
                     ContentMode.HTML));
             Button actionBtn = new Button("Change it", new Button.ClickListener() {
@@ -173,7 +173,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
             Span spanEl = new Span();
             spanEl.appendText("There is the new MyCollab version " + notification.getVersion() + " . For the " +
                     "enhancements and security purpose, the system administrator should upgrade to the latest version");
-            Label lbl = new Label(FontAwesome.EXCLAMATION.getHtml() + " " + spanEl.write(), ContentMode.HTML);
+            Label lbl = new Label(FontAwesome.INFO_CIRCLE.getHtml() + " " + spanEl.write(), ContentMode.HTML);
             lbl.setWidth("100%");
             CssLayout lblWrapper = new CssLayout();
             lblWrapper.addComponent(lbl);
@@ -183,8 +183,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 Button upgradeBtn = new Button("Upgrade", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        UI.getCurrent().addWindow(new UpgradeConfirmWindow(notification.getVersion(), notification
-                                .getAutoDownloadLink(), notification.getManualDownloadLink(), notification.getInstallerFile()));
+                        UI.getCurrent().addWindow(new UpgradeConfirmWindow(notification.getVersion(), notification.getManualDownloadLink(), notification.getInstallerFile()));
                         NotificationButton.this.setPopupVisible(false);
                     }
                 });
@@ -193,7 +192,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 wrapper.addComponent(upgradeBtn);
             }
         } else if (item instanceof RequestUploadAvatarNotification) {
-            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " Let people recognize you", ContentMode.HTML));
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml() + " Let people recognize you", ContentMode.HTML));
             Button uploadAvatarBtn = new Button("Upload your avatar", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
@@ -215,9 +214,14 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
             });
             smtpBtn.setStyleName(UIConstants.THEME_LINK);
             smtpBtn.addStyleName("block");
-            wrapper.with(new Label(FontAwesome.EXCLAMATION.getHtml() + " Your members can not receive any mail notification without a proper SMTP setting", ContentMode.HTML), smtpBtn);
+            Label lbl = new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml() + " Your members can not receive any mail " +
+                    "notification without a proper SMTP setting", ContentMode.HTML);
+            CssLayout lblWrapper = new CssLayout();
+            lblWrapper.addComponent(lbl);
+            wrapper.with(lblWrapper, smtpBtn).expand(lblWrapper);
         } else if (item instanceof TimezoneNotification) {
-            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " The correct your timezone will help you get the event right", ContentMode.HTML));
+            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml() + " The correct your timezone will help you get " +
+                    "the event right", ContentMode.HTML));
             Button actionBtn = new Button("Action", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
@@ -229,7 +233,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
             actionBtn.addStyleName("block");
             wrapper.addComponent(actionBtn);
         } else if (item instanceof RequestPreviewNotification) {
-            wrapper.addComponent(new Label(FontAwesome.EXCLAMATION.getHtml() + " Help us to spread the world",
+            wrapper.addComponent(new Label(FontAwesome.THUMBS_O_UP.getHtml() + " Help us to spread the world",
                     ContentMode.HTML));
             Button dismissBtn = new Button("Dismiss", new ClickListener() {
                 @Override
