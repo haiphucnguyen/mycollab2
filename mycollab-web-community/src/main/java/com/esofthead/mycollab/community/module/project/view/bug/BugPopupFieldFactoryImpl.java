@@ -23,6 +23,8 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanField;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.PopupView;
 
@@ -44,8 +46,15 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createBugMilestonePopupField(SimpleBug bug) {
-        return new PopupBeanField(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
-                " " + bug.getMilestoneName());
+        if (bug.getMilestoneid() == null) {
+            Div divHint = new Div().setCSSClass("nonValue");
+            divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            return new PopupBeanField(divHint.write());
+        } else {
+            return new PopupBeanField(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
+                    " " + bug.getMilestoneName());
+        }
     }
 
     @Override
@@ -55,7 +64,14 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createBugDeadlinePopupField(SimpleBug bug) {
-        return new PopupBeanField(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
-                AppContext.formatPrettyTime(bug.getDueDateRoundPlusOne())));
+        if (bug.getDueDateRoundPlusOne() == null) {
+            Div divHint = new Div().setCSSClass("nonValue");
+            divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+            divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
+            return new PopupBeanField(divHint.write());
+        } else {
+            return new PopupBeanField(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
+                    AppContext.formatPrettyTime(bug.getDueDateRoundPlusOne())));
+        }
     }
 }

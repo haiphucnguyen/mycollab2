@@ -570,9 +570,21 @@
     border-radius: 5px;
     background: none;
     padding: 0px 3px;
-    color: #808080;
+    color: #919191;
     .v-icon {
       padding: 0px;
+    }
+    &:hover {
+      background-color:#5ca9ff;
+      color: white;
+    }
+
+    .nonValue .hide {
+      display: none;
+    }
+
+    .nonValue:hover .hide {
+      display: inline;
     }
   }
 

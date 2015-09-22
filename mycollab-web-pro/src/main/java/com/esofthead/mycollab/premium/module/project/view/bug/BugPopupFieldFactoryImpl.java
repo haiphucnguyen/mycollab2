@@ -21,6 +21,8 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.DateField;
@@ -203,8 +205,15 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
-                        (MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
+                if (bug.getMilestoneid() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
+                            (MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
+                }
             }
         };
         builder.withBean(bug).withBindProperty("milestoneid").withCaption(AppContext.getMessage(BugI18nEnum.FORM_PHASE))
@@ -218,7 +227,14 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(bug.getDueDateRoundPlusOne()));
+                if (bug.getDueDateRoundPlusOne() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(bug.getDueDateRoundPlusOne()));
+                }
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE))

@@ -24,7 +24,9 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
+import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.PopupView;
@@ -74,9 +76,6 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             @Override
             protected String generateSmallContentAsHtml() {
                 return ProjectAssetsManager.getTaskPriorityHtml(task.getPriority());
-//                String taskPriority = task.getPriority();
-//                Img img = new Img(task.getPriority(), ProjectResources.getIconResourceLink12ByTaskPriority(taskPriority));
-//                return img.write();
             }
 
             @Override
@@ -136,7 +135,14 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus();
+                if (task.getStatus() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(FontAwesome.INFO_CIRCLE.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus();
+                }
             }
         };
         builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_STATUS))
@@ -150,8 +156,15 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
-                        (MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
+                if (task.getMilestoneid() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
+                            (MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
+                }
             }
         };
         builder.withBean(task).withBindProperty("milestoneid").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_MILESTONE))
@@ -165,11 +178,19 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%", task.getPercentagecomplete());
+                if (task.getPercentagecomplete() != null && task.getPercentagecomplete() > 0) {
+                    return VaadinIcons.CALENDAR_CLOCK.getHtml() + " " + String.format(" %s%%", task.getPercentagecomplete());
+                } else {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(VaadinIcons.CALENDAR_CLOCK.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                }
             }
         };
         builder.withBean(task).withBindProperty("percentagecomplete")
                 .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskCompleteStatusSelection())
+                .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
                 .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete());
         return builder.build();
     }
@@ -179,7 +200,15 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                if (task.getDeadlineRoundPlusOne() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(FontAwesome.CLOCK_O.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(), AppContext.formatPrettyTime(task.getDeadlineRoundPlusOne()));
+                }
+
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE))
