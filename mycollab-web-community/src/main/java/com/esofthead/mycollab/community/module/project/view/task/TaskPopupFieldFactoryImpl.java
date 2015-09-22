@@ -57,7 +57,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
     @Override
     public PopupView createTaskStatusPopupField(SimpleTask task) {
-        return new PopupBeanField(FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus());
+        return new PopupBeanField(FontAwesome.INFO_CIRCLE, task.getStatus());
     }
 
     @Override
@@ -81,8 +81,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
             return new PopupBeanField(divHint.write());
         } else {
-            return new PopupBeanField(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() +
-                    " " + task.getMilestoneName());
+            return new PopupBeanField(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), task.getMilestoneName());
         }
     }
 

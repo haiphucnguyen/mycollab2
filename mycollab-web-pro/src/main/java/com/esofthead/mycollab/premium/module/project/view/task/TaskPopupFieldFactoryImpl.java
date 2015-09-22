@@ -5,6 +5,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -141,7 +142,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                     divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return FontAwesome.INFO_CIRCLE.getHtml() + " " + task.getStatus();
+                    return FontAwesome.INFO_CIRCLE.getHtml() + " " + StringUtils.trim(task.getStatus(), 20, true);
                 }
             }
         };
@@ -162,13 +163,16 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                     divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
-                            (MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
+                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(task.getMilestoneid());
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+                            StringUtils.trim(milestoneName, 20, true);
                 }
             }
         };
+        MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
+        milestoneComboBox.setWidth("300px");
         builder.withBean(task).withBindProperty("milestoneid").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_MILESTONE))
-                .withField(new MilestoneComboBox()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class))
+                .withField(milestoneComboBox).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class))
                 .withValue(task.getMilestoneid());
         return builder.build();
     }

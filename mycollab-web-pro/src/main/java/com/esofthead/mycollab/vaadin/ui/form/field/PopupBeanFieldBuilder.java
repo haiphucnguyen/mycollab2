@@ -8,9 +8,11 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
+import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -110,6 +112,10 @@ public abstract class PopupBeanFieldBuilder<B> {
             headerLbl.addStyleName("h2");
             layout.with(headerLbl);
             layout.with(field);
+            if (field instanceof AbstractComponent) {
+                new Restrain((AbstractComponent) field).setMaxWidth("300px");
+            }
+
             fieldGroup.bind(field, bindProperty);
         }
     }

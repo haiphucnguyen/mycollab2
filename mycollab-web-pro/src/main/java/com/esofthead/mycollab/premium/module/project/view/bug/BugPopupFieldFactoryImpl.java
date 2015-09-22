@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -211,13 +212,16 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
                     return divHint.write();
                 } else {
-                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " + (
-                            (MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
+                    String milestoneName = ((MilestoneComboBox) field).getItemCaption(bug.getMilestoneid());
+                    return ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " " +
+                            StringUtils.trim(milestoneName, 20, true);
                 }
             }
         };
+        MilestoneComboBox milestoneComboBox = new MilestoneComboBox();
+        milestoneComboBox.setWidth("300px");
         builder.withBean(bug).withBindProperty("milestoneid").withCaption(AppContext.getMessage(BugI18nEnum.FORM_PHASE))
-                .withField(new MilestoneComboBox()).withService(ApplicationContextUtil.getSpringBean(BugService.class))
+                .withField(milestoneComboBox).withService(ApplicationContextUtil.getSpringBean(BugService.class))
                 .withValue(bug.getMilestoneid());
         return builder.build();
     }
