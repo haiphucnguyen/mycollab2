@@ -85,8 +85,4 @@ public class InfinispanCacheService implements CacheService, InitializingBean {
             removeCacheItems(group, prefKey.getName());
         }
     }
-
-    public BasicCache<String, Object> getCache() {
-        return getCache(GLOBAL_CACHE);
-    }
 }

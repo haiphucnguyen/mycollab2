@@ -9,7 +9,11 @@ import java.util.WeakHashMap;
  * @since 5.1.4
  */
 public class CacheObject<K, V> {
-    private Map objects = new WeakHashMap();
+    private Map<K, V> objects = new WeakHashMap<>();
+
+    public V get(K key) {
+        return objects.get(key);
+    }
 
     public Set<K> keySet() {
         return objects.keySet();

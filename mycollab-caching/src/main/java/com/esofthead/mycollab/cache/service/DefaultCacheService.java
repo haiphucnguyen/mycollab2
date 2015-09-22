@@ -20,6 +20,10 @@ public class DefaultCacheService implements CacheService {
 
     @Override
     public Object getValue(String group, String key) {
+        CacheObject<String, Object> cacheObject = getCache(group);
+        if (cacheObject != null) {
+            return cacheObject.get(key);
+        }
         return null;
     }
 

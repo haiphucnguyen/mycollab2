@@ -99,8 +99,7 @@ public class AuditLogAspect {
 
                 cacheService.putValue(AUDIT_TEMP_CACHE, key, oldValue);
             } catch (Exception e) {
-                LOG.error("Error when save audit for save action of service "
-                        + cls.getName(), e);
+                LOG.error("Error when save audit for save action of service " + cls.getName(), e);
             }
         }
     }
