@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.cache.service;
 
-import com.esofthead.mycollab.cache.CacheUtils;
 import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.module.GenericCommand;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,9 +13,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CleanCacheCommand extends GenericCommand {
+
+    @Autowired
+    private CacheService cacheService;
+
     @AllowConcurrentEvents
     @Subscribe
     public void cleanCaches(CleanCacheEvent event) {
-        CacheUtils.cleanCaches(event.sAccountId(), event.cls());
+        cacheService.removeCacheItems(event.sAccountId().toString(), event.cls());
     }
 }

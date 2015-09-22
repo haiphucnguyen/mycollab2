@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.jetty;
 
-import com.esofthead.mycollab.jetty.clustering.InfinispanSessionManager;
-import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -16,15 +14,6 @@ public class OnDemandServerRunner extends GenericServerRunner {
         webAppContext.setContextPath("/");
         webAppContext.setWar(baseDir);
         webAppContext.setResourceBase(baseDir);
-
-        // create a InfinispanSessionManager instance
-        InfinispanSessionManager sm = new InfinispanSessionManager();
-
-        // apply the session manager to the jetty server
-        SessionHandler sh = new SessionHandler();
-        sh.setSessionManager(sm);
-
-        webAppContext.setSessionHandler(sh);
         return webAppContext;
     }
 

@@ -16,12 +16,13 @@
  */
 package com.esofthead.mycollab.ondemand.module.file.servlet;
 
-import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.cache.service.CacheService;
 import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.esb.CloudDriveOAuthCallbackEvent;
 import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.oauth.service.MyCollabOauthServiceFactory;
 import com.esofthead.mycollab.servlet.GenericHttpServlet;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
 import com.google.common.eventbus.EventBus;
@@ -47,6 +48,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
     protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String oauthVerifier = request.getParameter("code");
         String state = request.getParameter("state");
+        CacheService cacheService = ApplicationContextUtil.getSpringBean(CacheService.class);
 
         try {
             // getting access token
@@ -56,7 +58,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
             final String accessTokenVal = accessToken.getToken();
             CloudDriveInfo cloudDriveInfo = new CloudDriveInfo(StorageNames.DROPBOX, accessTokenVal);
 
-            UI ui = (UI) LocalCacheManager.getCache("tempCache").get(state);
+            UI ui = (UI) cacheService.getValue("tempCache", state);
             if (ui instanceof MyCollabUI) {
                 MyCollabUI myUI = (MyCollabUI) ui;
                 EventBus eventBus = (EventBus) myUI.getAttribute(MyCollabSession.EVENT_BUS_VAL);
@@ -66,7 +68,7 @@ public class DropboxAuthServletRequestHandler extends GenericHttpServlet {
                 }
             }
         } finally {
-            LocalCacheManager.getCache("tempCache").removeAsync(state);
+            cacheService.removeCacheItems("tempCache", state);
             // response script close current window
             PrintWriter out = response.getWriter();
             out.println("<html>"

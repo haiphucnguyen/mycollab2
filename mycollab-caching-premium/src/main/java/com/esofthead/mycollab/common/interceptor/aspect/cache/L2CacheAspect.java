@@ -1,21 +1,22 @@
 package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import com.esofthead.mycollab.cache.CacheUtils;
-import com.esofthead.mycollab.cache.LocalCacheManager;
+import com.esofthead.mycollab.cache.service.CacheService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.utils.ArrayUtils;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.JsonDeSerializer;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.infinispan.commons.api.BasicCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,9 @@ import java.lang.reflect.Method;
 @Configurable
 public class L2CacheAspect {
     private static final Logger LOG = LoggerFactory.getLogger(L2CacheAspect.class);
+
+    @Autowired
+    private CacheService cacheService;
 
     @Around("execution(public * com.esofthead.mycollab..service..*.*(..))")
     public Object cacheGet(ProceedingJoinPoint pjp) throws Throwable {
@@ -79,16 +83,15 @@ public class L2CacheAspect {
                         }
 
                         String key = String.format("%s-%s-%s", CacheUtils.getEnclosingServiceInterfaceName(cls),
-                                method.getName(), CacheUtils.constructParamsKey(args));
-                        BasicCache<String, Object> cache = LocalCacheManager.getCache(groupId.toString());
-                        Object returnVal = cache.get(key);
+                                method.getName(), JsonDeSerializer.toJson(args));
+                        Object returnVal = cacheService.getValue(groupId.toString(), key);
                         if (returnVal == null) {
                             returnVal = pjp.proceed();
                             try {
                                 if (returnVal == null) {
                                     return returnVal;
                                 }
-                                cache.put(key, returnVal);
+                                cacheService.putValue(groupId.toString(), key, returnVal);
                                 LOG.debug("There is no exist value of key {}, query from database then put it to cache", key);
                             } catch (Exception e) {
                                 LOG.error("Error while put to cache", e);

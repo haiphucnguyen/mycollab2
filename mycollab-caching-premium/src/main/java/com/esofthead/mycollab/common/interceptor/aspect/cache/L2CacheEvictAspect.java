@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.common.interceptor.aspect.cache;
 
 import com.esofthead.mycollab.cache.CacheUtils;
+import com.esofthead.mycollab.cache.service.CacheService;
 import com.esofthead.mycollab.core.cache.CacheArgs;
 import com.esofthead.mycollab.core.cache.CacheEvict;
 import com.esofthead.mycollab.core.cache.CacheKey;
@@ -13,6 +14,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,9 @@ import java.lang.reflect.Method;
 @Configurable
 public class L2CacheEvictAspect {
     private static final Logger LOG = LoggerFactory.getLogger(L2CacheEvictAspect.class);
+
+    @Autowired
+    private CacheService cacheService;
 
     @AfterReturning("execution(public * com.esofthead.mycollab..service..*.*(..))")
     public void cacheEvict(JoinPoint pjp) throws Throwable {
@@ -70,7 +75,7 @@ public class L2CacheEvictAspect {
                         String prefixKey = CacheUtils.getEnclosingServiceInterfaceName(cls);
 
                         if (groupId != null) {
-                            CacheUtils.cleanCache(groupId, prefixKey);
+                            cacheService.removeCacheItems(groupId.toString(), prefixKey);
 
                             try {
                                 method = cls.getDeclaredMethod(method.getName(), method.getParameterTypes());
@@ -82,7 +87,7 @@ public class L2CacheEvictAspect {
                             if (cacheable != null) {
                                 if (cacheable.values() != null && cacheable.values().length > 0) {
                                     for (Class prefKey : cacheable.values()) {
-                                        CacheUtils.cleanCache(groupId, prefKey.getName());
+                                        cacheService.removeCacheItems(groupId.toString(), prefKey.getName());
                                     }
                                 }
                             }
