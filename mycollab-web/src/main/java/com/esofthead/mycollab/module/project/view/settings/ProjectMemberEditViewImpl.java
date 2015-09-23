@@ -97,10 +97,8 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
 
-            if (propertyId.equals("username")) {
-                TextField field = new TextField("", beanItem.getMemberFullName());
-                field.setReadOnly(true);
-                return field;
+            if (propertyId.equals("memberFullName")) {
+                return new DefaultViewField(beanItem.getMemberFullName());
             } else if (propertyId.equals("projectroleid")) {
                 return new AdminRoleSelectionField();
             } else if (propertyId.equals("isadmin")) {

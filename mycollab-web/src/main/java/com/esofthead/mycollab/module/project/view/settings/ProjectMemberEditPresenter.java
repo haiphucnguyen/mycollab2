@@ -100,7 +100,6 @@ public class ProjectMemberEditPresenter extends AbstractPresenter<ProjectMemberE
 
         if (projectMember.getId() == null) {
             throw new MyCollabException("User not exist in projectMember table, something goes wrong in DB");
-
         } else {
             projectMemberService.updateWithSession(projectMember, AppContext.getUsername());
         }
