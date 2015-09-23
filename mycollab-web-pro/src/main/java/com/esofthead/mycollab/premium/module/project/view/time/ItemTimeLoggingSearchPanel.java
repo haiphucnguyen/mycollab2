@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
+import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
@@ -23,6 +24,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -33,6 +35,7 @@ import java.util.Date;
  */
 class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggingSearchCriteria> {
     private static final long serialVersionUID = 1L;
+
     private TimeLoggingBasicSearchLayout layout;
     private Button createBtn;
 
@@ -91,7 +94,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         @SuppressWarnings("unchecked")
         public TimeLoggingBasicSearchLayout() {
             super(ItemTimeLoggingSearchPanel.this);
-            this.setStyleName("time-tracking-logging");
         }
 
         @Override
@@ -123,9 +125,21 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             setDefaultValue();
 
             this.groupField = new ValueComboBox(false, "Date", "User");
+            groupField.addValueChangeListener(new Property.ValueChangeListener() {
+                @Override
+                public void valueChange(Property.ValueChangeEvent event) {
+                    callSearchAction();
+                }
+            });
             this.groupField.setWidth("100px");
 
             this.orderField = new ItemOrderComboBox();
+            orderField.addValueChangeListener(new Property.ValueChangeListener() {
+                @Override
+                public void valueChange(Property.ValueChangeEvent event) {
+                    callSearchAction();
+                }
+            });
             this.orderField.setWidth("100px");
 
             Label dateStartLb = new Label("From:");
@@ -189,13 +203,23 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         protected SearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-
             searchCriteria.setRangeDate(getRangeSearchValue());
-
             Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
-
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
                 searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
+            }
+            Order order = (Order) orderField.getValue();
+            String sortDirection;
+            if (Order.ASCENDING == order) {
+                sortDirection = SearchCriteria.ASC;
+            } else {
+                sortDirection = SearchCriteria.DESC;
+            }
+
+            if ("Date".equals(groupField.getValue())) {
+                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("logForDay", sortDirection)));
+            } else if ("User".equals(groupField.getValue())) {
+                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("loguser", sortDirection)));
             }
             return searchCriteria;
         }

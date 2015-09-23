@@ -19,9 +19,7 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
-import com.google.common.collect.Ordering;
 import com.vaadin.ui.Label;
 import org.apache.commons.lang3.time.FastDateFormat;
 
@@ -42,30 +40,13 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
     }
 
     @Override
-    protected void addItem(SimpleItemTimeLogging itemTimeLogging, List<SimpleItemTimeLogging> timeLoggingEntries) {
-        if (timeLoggingEntries.size() > 0 && DateTimeUtils.compareByDate(itemTimeLogging.getLogforday(),
-                timeLoggingEntries.get(0).getLogforday()) != 0) {
-            displayGroupItems(timeLoggingEntries);
-            timeLoggingEntries.clear();
-        }
-
-        timeLoggingEntries.add(itemTimeLogging);
-    }
-
-    @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
             Label label = new Label(DATE_FORMAT.format(timeLoggingEntries.get(0).getLogforday()));
-            label.addStyleName(UIConstants.TEXT_LOG_DATE);
+            label.addStyleName("h2");
             addComponent(label);
-
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
-    }
-
-    @Override
-    protected Ordering<SimpleItemTimeLogging> sortEntries() {
-        return Ordering.from(new DateComparator()).compound(new ProjectComparator()).compound(new UserComparator());
     }
 
     @Override

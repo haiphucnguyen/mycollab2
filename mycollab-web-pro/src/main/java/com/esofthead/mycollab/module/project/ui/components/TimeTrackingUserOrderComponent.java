@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
-import com.google.common.collect.Ordering;
 
 import java.util.List;
 
@@ -37,29 +36,12 @@ public class TimeTrackingUserOrderComponent extends AbstractTimeTrackingDisplayC
     }
 
     @Override
-    protected void addItem(SimpleItemTimeLogging itemTimeLogging, List<SimpleItemTimeLogging> timeLoggingEntries) {
-        if (timeLoggingEntries.size() > 0
-                && !itemTimeLogging.getLoguser().equals(timeLoggingEntries.get(0).getLoguser())) {
-            displayGroupItems(timeLoggingEntries);
-            timeLoggingEntries.clear();
-        }
-
-        timeLoggingEntries.add(itemTimeLogging);
-    }
-
-    @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
             SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
             addComponent(new ProjectUserLink(firstItem.getLoguser(), firstItem.getLogUserAvatarId(), firstItem.getLogUserFullName()));
-
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
-    }
-
-    @Override
-    protected Ordering<SimpleItemTimeLogging> sortEntries() {
-        return Ordering.from(new UserComparator()).compound(new ProjectComparator()).compound(new DateComparator());
     }
 
     @Override

@@ -37,7 +37,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
     private ObjectProperty<Double> property;
 
     public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
-        timeLogging = timeLogging;
+        this.timeLogging = timeLogging;
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
@@ -118,7 +118,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
         saveBtn.setIcon(FontAwesome.SAVE);
         saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
 
-        controlsLayout.with(saveBtn, cancelBtn);
+        controlsLayout.with(cancelBtn, saveBtn);
 
         footer.addComponent(controlsLayout);
         footer.setSizeFull();
@@ -130,7 +130,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
     @Override
     public void updateLinkTask(ProjectGenericTask selectionTask) {
-        selectionTask = selectionTask;
+        this.selectionTask = selectionTask;
         if (selectionTask != null) {
             final String taskName = selectionTask.getName();
             taskLayout.removeAllComponents();

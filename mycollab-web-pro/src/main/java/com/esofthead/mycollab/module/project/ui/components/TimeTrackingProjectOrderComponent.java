@@ -23,7 +23,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
-import com.google.common.collect.Ordering;
 
 import java.util.List;
 
@@ -40,17 +39,6 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
     }
 
     @Override
-    protected void addItem(SimpleItemTimeLogging itemTimeLogging, List<SimpleItemTimeLogging> timeLoggingEntries) {
-        if (timeLoggingEntries.size() > 0 && !itemTimeLogging.getProjectShortName().equals(
-                timeLoggingEntries.get(0).getProjectShortName())) {
-            displayGroupItems(timeLoggingEntries);
-            timeLoggingEntries.clear();
-        }
-
-        timeLoggingEntries.add(itemTimeLogging);
-    }
-
-    @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
             SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
@@ -61,11 +49,6 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
             addComponent(link);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
-    }
-
-    @Override
-    protected Ordering<SimpleItemTimeLogging> sortEntries() {
-        return Ordering.from(new ProjectComparator()).compound(new DateComparator()).compound(new UserComparator());
     }
 
     @Override

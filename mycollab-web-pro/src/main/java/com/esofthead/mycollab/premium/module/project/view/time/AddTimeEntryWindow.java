@@ -127,8 +127,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
         footer.addComponent(taskLayout);
 
-        HorizontalLayout controlsLayout = new HorizontalLayout();
-        controlsLayout.setSpacing(true);
+        MHorizontalLayout controlsLayout = new MHorizontalLayout();
 
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -139,7 +138,6 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             }
         });
         cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
-        controlsLayout.addComponent(cancelBtn);
 
         Button saveBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -152,7 +150,8 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         });
         saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-        controlsLayout.addComponent(saveBtn);
+
+        controlsLayout.with(cancelBtn, saveBtn);
 
         footer.addComponent(controlsLayout);
         footer.setSizeFull();

@@ -3236,10 +3236,6 @@
     border: none;
   }
 
-  .time-tracking-logging .advSearchFooterContainer {
-    display: none;
-  }
-
   /* Icon only button */
 
   img.icon-btn {
@@ -3685,10 +3681,6 @@
 
   /* Time Tracking */
 
-  .layout-log {
-    margin-top: 30px;
-  }
-
   .text-log-hours {
     text-align: right;
     color: gray;
@@ -3699,17 +3691,6 @@
     text-align: right;
     font-weight: bold;
     color: gray;
-  }
-
-  .text-log-date {
-    font-size: $font-larger;
-    font-weight: bold;
-    color: gray;
-  }
-
-  .text-log-date-full {
-    font-size: $font-large;
-    font-weight: bold;
   }
 
   /* Lazy Page */

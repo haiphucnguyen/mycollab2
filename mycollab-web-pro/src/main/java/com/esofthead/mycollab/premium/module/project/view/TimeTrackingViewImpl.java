@@ -291,8 +291,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             selectionLayout.addComponent(queryBtn, 8, 0);
 
             totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs", ContentMode.HTML);
-            totalHoursLoggingLabel.addStyleName(UIConstants.LAYOUT_LOG);
-            totalHoursLoggingLabel.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
+            totalHoursLoggingLabel.addStyleName("h2");
             MHorizontalLayout loggingPanel = new MHorizontalLayout().withWidth("100%");
             loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
@@ -388,7 +387,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
         AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
         timeTrackingWrapper.addComponent(timeDisplayComp);
-        timeDisplayComp.queryData(searchCriteria, (Order) this.orderField.getValue());
+//        timeDisplayComp.queryData(searchCriteria, (Order) this.orderField.getValue());
     }
 
     private IPagedBeanTable.TableClickListener tableClickListener = new IPagedBeanTable.TableClickListener() {

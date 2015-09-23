@@ -3,7 +3,9 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -43,6 +45,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -64,7 +67,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         this.setMargin(new MarginInfo(false, true, false, true));
 
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
-        headerWrapper.addStyleName(UIConstants.LAYOUT_LOG);
 
         itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
@@ -92,7 +94,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         headerWrapper.addComponent(headerLayout);
 
         lbTimeRange = new Label("", ContentMode.HTML);
-        lbTimeRange.addStyleName(UIConstants.TEXT_LOG_DATE_FULL);
+        lbTimeRange.addStyleName("h2");
         headerLayout.with(lbTimeRange).withAlign(lbTimeRange, Alignment.MIDDLE_LEFT).expand(lbTimeRange);
 
         Button exportBtn = new Button("Export", new Button.ClickListener() {
@@ -178,11 +180,37 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     @Override
     public void refresh() {
         this.setTimeRange();
+        queryTimeLoggings(searchCriteria, searchPanel.getOrderBy());
+    }
+
+    private void queryTimeLoggings(final ItemTimeLoggingSearchCriteria searchCriteria, Order orderBy) {
         timeTrackingWrapper.removeAllComponents();
 
-        AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());
+        final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());
         timeTrackingWrapper.addComponent(timeDisplayComp);
-        timeDisplayComp.queryData(searchCriteria, searchPanel.getOrderBy());
+
+        new Thread() {
+            @Override
+            public void run() {
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                        int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
+                        int pages = totalCount / 20;
+                        for (int page = 0; page < pages + 1; page++) {
+                            List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
+                                    SearchRequest<>(searchCriteria, page + 1, 20));
+                            for (SimpleItemTimeLogging item : itemTimeLoggings) {
+                                timeDisplayComp.insertItem(item);
+                            }
+                        }
+                        timeDisplayComp.flush();
+                        UI.getCurrent().push();
+                    }
+                });
+            }
+        }.start();
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {
@@ -235,7 +263,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                                             .getSpringBean(ItemTimeLoggingService.class);
                                     itemTimeLoggingService.removeWithSession(itemLogging,
                                             AppContext.getUsername(), AppContext.getAccountId());
-
                                     refresh();
                                 }
                             }
