@@ -45,7 +45,7 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
 
             LabelLink link = new LabelLink(firstItem.getProjectName(), ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid()));
             link.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
-
+            link.addStyleName("h2");
             addComponent(link);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }

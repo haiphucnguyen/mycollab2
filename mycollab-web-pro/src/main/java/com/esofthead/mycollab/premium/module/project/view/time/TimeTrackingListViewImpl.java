@@ -180,10 +180,10 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     @Override
     public void refresh() {
         this.setTimeRange();
-        queryTimeLoggings(searchCriteria, searchPanel.getOrderBy());
+        queryTimeLoggings(searchCriteria);
     }
 
-    private void queryTimeLoggings(final ItemTimeLoggingSearchCriteria searchCriteria, Order orderBy) {
+    private void queryTimeLoggings(final ItemTimeLoggingSearchCriteria searchCriteria) {
         timeTrackingWrapper.removeAllComponents();
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());

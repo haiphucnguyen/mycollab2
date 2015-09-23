@@ -24,8 +24,6 @@ import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.RpParameterBuilder;
-import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -35,6 +33,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.vaadin.data.Property;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
@@ -44,8 +43,10 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.*;
+import java.util.Calendar;
 
 /**
  * @author MyCollab Ltd
@@ -69,11 +70,9 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     private Label totalHoursLoggingLabel;
     private SplitButton exportButtonControl;
 
-    private ItemTimeLoggingSearchCriteria searchCriteria;
-    private Date fromDate, toDate;
     private ItemTimeLoggingService itemTimeLoggingService;
 
-    private VerticalLayout timeTrackingWrapper;
+    private MVerticalLayout timeTrackingWrapper;
 
     private void initListSelectStyle(ListSelect listSelect) {
         listSelect.setWidth("300px");
@@ -89,10 +88,11 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
             @Override
             protected StreamResource.StreamSource buildStreamSource() {
-                return new SimpleGridExportItemsStreamResource.AllItems<>(
-                        "Time Report", new RpParameterBuilder(getVisibleFields()), exportType,
-                        itemTimeLoggingService, searchCriteria,
-                        SimpleItemTimeLogging.class);
+//                return new SimpleGridExportItemsStreamResource.AllItems<>(
+//                        "Time Report", new RpParameterBuilder(getVisibleFields()), exportType,
+//                        itemTimeLoggingService, searchCriteria,
+//                        SimpleItemTimeLogging.class);
+                throw new MyCollabException("Not support reporting yet");
             }
         };
         return new StreamResource(streamSource, ExportItemsStreamResource.getDefaultExportFileName(exportType));
@@ -135,8 +135,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     @Override
     public void display() {
         projects = ApplicationContextUtil.getSpringBean(ProjectService.class)
-                .getProjectsUserInvolved(AppContext.getUsername(),
-                        AppContext.getAccountId());
+                .getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
@@ -162,14 +161,10 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             MHorizontalLayout controlsPanel = new MHorizontalLayout().withWidth("100%");
             contentWrapper.addComponent(controlsPanel);
 
-            Button backBtn = new Button("Back to Workboard");
-            backBtn.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
+            Button backBtn = new Button("Back to Workboard", new Button.ClickListener() {
                 @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(
-                            TimeTrackingViewImpl.this, null));
+                public void buttonClick(Button.ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(TimeTrackingViewImpl.this, null));
                 }
             });
             backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
@@ -182,7 +177,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     exportButtonControl.setPopupVisible(true);
-
                 }
             });
             exportButtonControl = new SplitButton(exportBtn);
@@ -200,15 +194,13 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             popupButtonsControl.addOption(exportPdfBtn);
 
             Button exportExcelBtn = new Button("Excel");
-            FileDownloader excelDownloader = new FileDownloader(
-                    constructStreamResource(ReportExportType.EXCEL));
+            FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
             excelDownloader.extend(exportExcelBtn);
             exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
             popupButtonsControl.addOption(exportExcelBtn);
 
             controlBtns.addComponent(exportButtonControl);
-            controlBtns.setComponentAlignment(exportButtonControl,
-                    Alignment.TOP_RIGHT);
+            controlBtns.setComponentAlignment(exportButtonControl, Alignment.TOP_RIGHT);
             controlBtns.setComponentAlignment(backBtn, Alignment.TOP_LEFT);
             controlBtns.setSizeFull();
 
@@ -249,6 +241,12 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
             this.groupField = new ValueComboBox(false, GROUPBY_PROJECT, GROUPBY_DATE, GROUPBY_USER);
             this.groupField.setWidth("100px");
+            groupField.addValueChangeListener(new Property.ValueChangeListener() {
+                @Override
+                public void valueChange(Property.ValueChangeEvent event) {
+                    searchTimeReporting();
+                }
+            });
             selectionLayout.addComponent(this.groupField, 1, 1);
 
             Label sortLb = new Label("Sort:");
@@ -256,6 +254,12 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             selectionLayout.addComponent(sortLb, 2, 1);
 
             this.orderField = new ItemOrderComboBox();
+            orderField.addValueChangeListener(new Property.ValueChangeListener() {
+                @Override
+                public void valueChange(Property.ValueChangeEvent event) {
+                    searchTimeReporting();
+                }
+            });
             this.orderField.setWidth("100px");
             selectionLayout.addComponent(this.orderField, 3, 1);
 
@@ -280,9 +284,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
                 @Override
                 public void buttonClick(final Button.ClickEvent event) {
-                    fromDate = fromDateField.getValue();
-                    toDate = toDateField.getValue();
-                    searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
                     searchTimeReporting();
                 }
             });
@@ -292,72 +293,79 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
             totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs", ContentMode.HTML);
             totalHoursLoggingLabel.addStyleName("h2");
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withWidth("100%");
+            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
+                    false)).withWidth("100%");
             loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
 
-            this.timeTrackingWrapper = new VerticalLayout();
-            this.timeTrackingWrapper.setWidth("100%");
+            timeTrackingWrapper = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(true, false,
+                    true, false));
             contentWrapper.addComponent(this.timeTrackingWrapper);
 
-            java.util.Calendar date = new GregorianCalendar();
+            Calendar date = new GregorianCalendar();
             date.set(java.util.Calendar.DAY_OF_MONTH, 1);
-
-            fromDate = date.getTime();
+            fromDateField.setValue(date.getTime());
             date.add(java.util.Calendar.DAY_OF_MONTH, date.getActualMaximum(java.util.Calendar.DAY_OF_MONTH));
-            toDate = date.getTime();
-
-            fromDateField.setValue(fromDate);
-            toDateField.setValue(toDate);
-
-            searchCriteria = new ItemTimeLoggingSearchCriteria();
-            searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
+            toDateField.setValue(date.getTime());
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
+            searchTimeReporting();
         } else {
-            Button backBtn = new Button("Back to Workboard");
-            backBtn.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
+            Button backBtn = new Button("Back to Workboard", new Button.ClickListener() {
                 @Override
-                public void buttonClick(final Button.ClickEvent event) {
+                public void buttonClick(Button.ClickEvent event) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(
                             TimeTrackingViewImpl.this, null));
-
                 }
             });
-
             backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
             backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
-            VerticalLayout contentWrapper = new VerticalLayout();
-            contentWrapper.setSpacing(true);
+            MVerticalLayout contentWrapper = new MVerticalLayout();
+            contentWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
             Label infoLbl = new Label("You are not involved in any project yet to track time working");
             infoLbl.setWidthUndefined();
-            contentWrapper.setMargin(true);
-            contentWrapper.addComponent(infoLbl);
-            contentWrapper.setComponentAlignment(infoLbl, Alignment.MIDDLE_CENTER);
-
-            contentWrapper.addComponent(backBtn);
-            contentWrapper.setComponentAlignment(backBtn, Alignment.MIDDLE_CENTER);
+            contentWrapper.with(infoLbl, backBtn);
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
         }
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private void searchTimeReporting() {
+        final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+
+        Order order = (Order) orderField.getValue();
+        String sortDirection;
+        if (Order.ASCENDING == order) {
+            sortDirection = SearchCriteria.ASC;
+        } else {
+            sortDirection = SearchCriteria.DESC;
+        }
+
+        if (GROUPBY_DATE.equals(groupField.getValue())) {
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("logForDay", sortDirection)));
+        } else if (GROUPBY_USER.equals(groupField.getValue())) {
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("loguser", sortDirection)));
+        } else if (GROUPBY_PROJECT.equals(groupField.getValue())) {
+            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("projectName", sortDirection)));
+        }
+
+        Date fromDate = fromDateField.getValue();
+        Date toDate = toDateField.getValue();
+        searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
+
         Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {
-            searchCriteria.setLogUsers(new SetSearchField(SearchField.AND, selectedUsers));
+            searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
         } else {
-            searchCriteria.setLogUsers(new SetSearchField(SearchField.AND, this.userField.getUsernames()));
+            searchCriteria.setLogUsers(new SetSearchField(userField.getUsernames()));
         }
 
         Collection<Integer> selectedProjects = (Collection<Integer>) this.projectField.getValue();
         if (CollectionUtils.isNotEmpty(selectedProjects)) {
-            searchCriteria.setProjectIds(new SetSearchField(SearchField.AND, selectedProjects));
+            searchCriteria.setProjectIds(new SetSearchField<>(selectedProjects));
         } else {
-            searchCriteria.setProjectIds(new SetSearchField(SearchField.AND, getProjectIds()));
+            searchCriteria.setProjectIds(new SetSearchField<>(getProjectIds()));
         }
 
         searchCriteria.setIsBillable(new BooleanSearchField(true));
@@ -378,16 +386,36 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         if (totalHour == null || totalHour < 0) {
             totalHoursLoggingLabel.setValue("Total hours logging: 0 Hrs");
         } else {
-            totalHoursLoggingLabel.setValue(AppContext.getMessage(
-                    TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
+            totalHoursLoggingLabel.setValue(AppContext.getMessage(TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR,
                     fromDate, toDate, totalHour, billableHour, nonBillableHours));
         }
 
         timeTrackingWrapper.removeAllComponents();
 
-        AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
+        final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
         timeTrackingWrapper.addComponent(timeDisplayComp);
-//        timeDisplayComp.queryData(searchCriteria, (Order) this.orderField.getValue());
+        new Thread() {
+            @Override
+            public void run() {
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                        int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
+                        int pages = totalCount / 20;
+                        for (int page = 0; page < pages + 1; page++) {
+                            List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
+                                    SearchRequest<>(searchCriteria, page + 1, 20));
+                            for (SimpleItemTimeLogging item : itemTimeLoggings) {
+                                timeDisplayComp.insertItem(item);
+                            }
+                        }
+                        timeDisplayComp.flush();
+                        UI.getCurrent().push();
+                    }
+                });
+            }
+        }.start();
     }
 
     private IPagedBeanTable.TableClickListener tableClickListener = new IPagedBeanTable.TableClickListener() {
