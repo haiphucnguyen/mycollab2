@@ -156,6 +156,28 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             createBugBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
             popupButtonsControl.addOption(createBugBtn);
 
+            Button createComponentBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_COMPONENT), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    controlsBtn.setPopupVisible(false);
+                    EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(this, null));
+                }
+            });
+            createComponentBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+            createComponentBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_COMPONENT));
+            popupButtonsControl.addOption(createComponentBtn);
+
+            Button createVersionBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_VERSION), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    controlsBtn.setPopupVisible(false);
+                    EventBusFactory.getInstance().post(new BugVersionEvent.GotoAdd(this, null));
+                }
+            });
+            createVersionBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
+            createVersionBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG_VERSION));
+            popupButtonsControl.addOption(createVersionBtn);
+
             Button createRiskBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
                     new Button.ClickListener() {
                         @Override
