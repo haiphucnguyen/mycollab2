@@ -272,13 +272,12 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     private void displayTaskStatistic() {
         rightColumn.removeAllComponents();
         UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
+        unresolvedTaskByAssigneeWidget.setSearchCriteria(baseCriteria);
         rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
 
-        unresolvedTaskByAssigneeWidget.setSearchCriteria(baseCriteria);
-
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
-        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
         unresolvedTaskByPriorityWidget.setSearchCriteria(baseCriteria);
+        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
     }
 
     @Override

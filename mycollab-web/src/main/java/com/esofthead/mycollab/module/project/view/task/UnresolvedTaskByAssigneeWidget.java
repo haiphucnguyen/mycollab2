@@ -71,7 +71,7 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
 
     public UnresolvedTaskByAssigneeWidget() {
         super(AppContext.getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE), new MVerticalLayout());
-        this.setMargin(new MarginInfo(true, false, false, false));
+        this.setMargin(new MarginInfo(false, false, true, false));
         this.setContentBorder(true);
     }
 

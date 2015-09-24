@@ -70,7 +70,7 @@ public class UnresolvedTaskByPriorityWidget extends Depot {
 
     public UnresolvedTaskByPriorityWidget() {
         super(AppContext.getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_PRIORITY_TITLE), new MVerticalLayout());
-        this.setMargin(new MarginInfo(true, false, false, false));
+        this.setMargin(new MarginInfo(false, false, true, false));
         this.setContentBorder(true);
     }
 
