@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -24,6 +25,7 @@ public abstract class PopupBeanFieldBuilder<B> {
     protected String caption;
     protected String description = "Click to edit";
     protected Field field;
+    protected boolean hasPermission = true;
     protected B bean;
     protected String bindProperty;
     protected BeanFieldGroup fieldGroup;
@@ -61,6 +63,11 @@ public abstract class PopupBeanFieldBuilder<B> {
 
     public PopupBeanFieldBuilder withService(ICrudService crudService) {
         this.crudService = crudService;
+        return this;
+    }
+
+    public PopupBeanFieldBuilder withHasPermission(boolean hasPermission) {
+        this.hasPermission = hasPermission;
         return this;
     }
 
@@ -117,6 +124,10 @@ public abstract class PopupBeanFieldBuilder<B> {
             }
 
             fieldGroup.bind(field, bindProperty);
+            field.setEnabled(hasPermission);
+            if (!hasPermission) {
+                layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+            }
         }
     }
 }

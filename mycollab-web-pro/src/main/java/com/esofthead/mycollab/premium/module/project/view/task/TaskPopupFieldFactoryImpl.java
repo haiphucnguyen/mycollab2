@@ -7,6 +7,7 @@ import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
@@ -67,7 +68,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         };
         builder.withBean(task).withBindProperty("assignuser").withDescription(task.getAssignUserFullName())
                 .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
-                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser());
+                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getAssignuser())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -86,7 +88,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         };
         builder.withBean(task).withBindProperty("priority").withDescription(task.getPriority())
                 .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY)).withField(new TaskPriorityComboBox())
-                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority());
+                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPriority())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -147,8 +150,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("status").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_STATUS))
-                .withField(new TaskStatusComboBox()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class))
-                .withValue(task.getStatus());
+                .withField(new TaskStatusComboBox()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStatus())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -173,7 +176,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         milestoneComboBox.setWidth("300px");
         builder.withBean(task).withBindProperty("milestoneid").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_MILESTONE))
                 .withField(milestoneComboBox).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class))
-                .withValue(task.getMilestoneid());
+                .withValue(task.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -195,7 +198,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         builder.withBean(task).withBindProperty("percentagecomplete")
                 .withCaption(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE)).withField(new TaskCompleteStatusSelection())
                 .withDescription(AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE))
-                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete());
+                .withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getPercentagecomplete())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 
@@ -216,8 +220,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             }
         };
         builder.withBean(task).withBindProperty("deadline").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class))
-                .withValue(task.getDeadline());
+                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getDeadline())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         return builder.build();
     }
 }

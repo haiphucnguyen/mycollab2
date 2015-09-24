@@ -6,6 +6,7 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
@@ -25,10 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.PopupView;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -98,6 +96,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         protected void doShow() {
             MVerticalLayout content = getWrapContent();
             content.removeAllComponents();
+            boolean hasPermission = CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
             if (OptionI18nEnum.BugStatus.Open.name().equals(beanItem.getStatus()) ||
                     OptionI18nEnum.BugStatus.ReOpened.name().equals(beanItem.getStatus())) {
                 Button startProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_START_PROGRESS), new Button.ClickListener() {
@@ -111,6 +110,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 startProgressBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                startProgressBtn.setEnabled(hasPermission);
 
                 Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
                     @Override
@@ -120,6 +120,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 resolveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                resolveBtn.setEnabled(hasPermission);
 
                 Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
                     @Override
@@ -129,6 +130,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 wontFixBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                wontFixBtn.setEnabled(hasPermission);
                 content.with(startProgressBtn, resolveBtn, wontFixBtn);
             } else if (OptionI18nEnum.BugStatus.InProgress.name().equals(beanItem.getStatus())) {
                 Button stopProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_STOP_PROGRESS), new Button.ClickListener() {
@@ -142,6 +144,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 stopProgressBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                stopProgressBtn.setEnabled(hasPermission);
 
                 Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
                     @Override
@@ -151,6 +154,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 resolveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                resolveBtn.setEnabled(hasPermission);
                 content.with(stopProgressBtn, resolveBtn);
             } else if (OptionI18nEnum.BugStatus.Verified.name().equals(beanItem.getStatus())) {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
@@ -161,6 +165,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                reopenBtn.setEnabled(hasPermission);
                 content.with(reopenBtn);
             } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
@@ -171,6 +176,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                reopenBtn.setEnabled(hasPermission);
 
                 Button approveNCloseBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), new Button.ClickListener() {
                     @Override
@@ -180,6 +186,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 approveNCloseBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                approveNCloseBtn.setEnabled(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
             } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
@@ -189,7 +196,11 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     }
                 });
                 reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                reopenBtn.setEnabled(hasPermission);
                 content.with(reopenBtn);
+            }
+            if (!hasPermission) {
+                content.addComponent(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
             }
         }
 
@@ -222,7 +233,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         milestoneComboBox.setWidth("300px");
         builder.withBean(bug).withBindProperty("milestoneid").withCaption(AppContext.getMessage(BugI18nEnum.FORM_PHASE))
                 .withField(milestoneComboBox).withService(ApplicationContextUtil.getSpringBean(BugService.class))
-                .withValue(bug.getMilestoneid());
+                .withValue(bug.getMilestoneid()).withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 
@@ -242,7 +253,8 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             }
         };
         builder.withBean(bug).withBindProperty("duedate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_DUE_DATE))
-                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate());
+                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getDuedate())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
 }
