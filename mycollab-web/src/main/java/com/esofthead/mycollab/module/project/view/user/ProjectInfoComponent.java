@@ -184,6 +184,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                     Button.ClickListener() {
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
+                            controlsBtn.setPopupVisible(false);
                             EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null));
                         }
                     });
@@ -194,6 +195,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             Button settingBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS), new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
+                    controlsBtn.setPopupVisible(false);
                     EventBusFactory.getInstance().post(new ProjectNotificationEvent.GotoList(this, null));
                 }
             });
