@@ -45,8 +45,7 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
     @Override
     public void onSelect(String id) {
         if (ViewItemAction.DELETE_ACTION().equals(id)) {
-            ConfirmDialogExt.show(UI.getCurrent(),
-                    AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
+            ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
                             AppContext.getSiteName()),
                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                     AppContext.getMessage(GenericI18Enum.BUTTON_YES),
@@ -87,9 +86,8 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
 
         AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter.getView()).getPagedBeanTable();
         if (presenter.isSelectAll) {
-            return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems(
-                    getReportTitle(), new RpParameterBuilder(
-                    pagedBeanTable.getDisplayColumns()), exportType,
+            return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems(getReportTitle(),
+                    new RpParameterBuilder(pagedBeanTable.getDisplayColumns()), exportType,
                     presenter.getSearchService(),
                     presenter.searchCriteria, getReportModelClassType()), exportFileName);
         } else {

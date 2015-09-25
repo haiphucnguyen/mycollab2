@@ -50,10 +50,12 @@ Version 5.1.4
 
 * Calculating end date by start date and duration
 * Other minor improvements
+* A lot of reporting enhancements: better layout, more detail information, font awesome and more
 
 **Bug Fixes**
 
 * Can not change the role of project member
+* Several minor bug fixes of reporting
 
 Version 5.1.3
 -----------------------------

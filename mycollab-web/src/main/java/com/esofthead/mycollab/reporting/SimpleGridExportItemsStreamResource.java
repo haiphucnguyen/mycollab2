@@ -16,31 +16,27 @@
  */
 package com.esofthead.mycollab.reporting;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
-import net.sf.dynamicreports.report.builder.column.ComponentColumnBuilder;
-import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
-import net.sf.dynamicreports.report.exception.DRException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.reporting.expression.MValue;
 import com.esofthead.mycollab.vaadin.AppContext;
+import net.sf.dynamicreports.report.builder.column.ComponentColumnBuilder;
+import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
+import net.sf.dynamicreports.report.exception.DRException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
 
 /**
- *
+ * @param <T>
  * @author MyCollab Ltd.
  * @since 2.0
- *
- * @param <T>
  */
 public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItemsStreamResource {
     private static final long serialVersionUID = 1L;
@@ -50,8 +46,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
     private Class<T> classType;
     private RpParameterBuilder parameters;
 
-    SimpleGridExportItemsStreamResource(String reportTitle, RpParameterBuilder parameters,
-                                        ReportExportType outputForm, Class<T> classType) {
+    SimpleGridExportItemsStreamResource(String reportTitle, RpParameterBuilder parameters, ReportExportType outputForm, Class<T> classType) {
         super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, outputForm);
         this.parameters = parameters;
         this.classType = classType;
@@ -69,6 +64,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
 
             DRIDataType<Object, ? extends Object> jrType = DRIDataTypeFactory.detectType(objField);
             if (jrType != null) {
+                LOG.debug("  Add field: " + objField.getName());
                 reportBuilder.addField(objField.getName(), jrType);
             }
         }
@@ -84,8 +80,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
                 }
 
                 LOG.debug("Construct component builder {} and width {}", field.getField(), field.getDefaultWidth());
-                ComponentColumnBuilder columnBuilder = col.componentColumn(
-                        AppContext.getMessage(field.getDescKey()),
+                ComponentColumnBuilder columnBuilder = col.componentColumn(AppContext.getMessage(field.getDescKey()),
                         field.getComponentBuilder()).setWidth(field.getDefaultWidth());
 
                 reportBuilder.addColumn(columnBuilder);
@@ -112,15 +107,13 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
         protected void fillReport() {
             reportBuilder.setDataSource(new GroupIteratorDataSource(searchService, searchCriteria));
         }
-
     }
 
     public static class ListData<T> extends SimpleGridExportItemsStreamResource<T> {
         private static final long serialVersionUID = 1L;
         private List<T> data;
 
-        public ListData(String reportTitle, RpParameterBuilder parameters,
-                        ReportExportType outputForm, List<T> data, Class<T> classType) {
+        public ListData(String reportTitle, RpParameterBuilder parameters, ReportExportType outputForm, List<T> data, Class<T> classType) {
             super(reportTitle, parameters, outputForm, classType);
             this.data = data;
         }
