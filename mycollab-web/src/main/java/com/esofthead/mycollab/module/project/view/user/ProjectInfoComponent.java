@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -37,10 +38,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
-import com.esofthead.mycollab.vaadin.ui.SearchTextField;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
@@ -108,24 +106,22 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         }
 
         if (project.getNumActiveMembers() > 0) {
-            Label activeMembersLbl = new Label(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers(),
-                    ContentMode.HTML);
-            activeMembersLbl.setDescription("Active members");
+            Label activeMembersLbl = new ELabel(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers(),
+                    ContentMode.HTML).withDescription("Active members");
             footer.addComponent(activeMembersLbl);
         }
 
-        Label createdTimeLbl = new Label(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(project.getCreatedtime()),
-                ContentMode.HTML);
-        createdTimeLbl.setDescription("Created time");
+        Label createdTimeLbl = new ELabel(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(project.getCreatedtime()),
+                ContentMode.HTML).withDescription("Created time");
         footer.add(createdTimeLbl);
 
-        billableHoursLbl = new Label(FontAwesome.MONEY.getHtml() + " " + project.getTotalBillableHours(), ContentMode.HTML);
-        billableHoursLbl.setDescription("Billable hours");
-        footer.add(billableHoursLbl);
+        billableHoursLbl = new ELabel(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours()),
+                ContentMode.HTML).withDescription("Billable hours");
+        footer.addComponent(billableHoursLbl);
 
-        nonBillableHoursLbl = new Label(FontAwesome.GIFT.getHtml() + " " + project.getTotalNonBillableHours(), ContentMode.HTML);
-        nonBillableHoursLbl.setDescription("Non billable hours");
-        footer.add(nonBillableHoursLbl);
+        nonBillableHoursLbl = new ELabel(FontAwesome.GIFT.getHtml() + " " + project.getTotalNonBillableHours(),
+                ContentMode.HTML).withDescription("Non billable hours");
+        footer.addComponent(nonBillableHoursLbl);
 
         headerLayout.with(footer);
         this.with(headerLayout).expand(headerLayout);
