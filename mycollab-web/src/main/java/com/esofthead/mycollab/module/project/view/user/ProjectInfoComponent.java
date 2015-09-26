@@ -18,13 +18,18 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.*;
 import com.esofthead.mycollab.module.project.i18n.*;
+import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -36,6 +41,8 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -54,6 +61,31 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 5.1.2
  */
 public class ProjectInfoComponent extends MHorizontalLayout {
+
+    private Label billableHoursLbl, nonBillableHoursLbl;
+
+    private ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent>
+            timeLoggingChangedEventApplicationEventListener = new ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent>() {
+        @Subscribe
+        @AllowConcurrentEvents
+        @Override
+        public void handle(ProjectEvent.TimeLoggingChangedEvent event) {
+            ItemTimeLoggingSearchCriteria baseCriteria = new ItemTimeLoggingSearchCriteria();
+            baseCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+
+            //get Billable hours
+            baseCriteria.setIsBillable(new BooleanSearchField(true));
+            ItemTimeLoggingService loggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+            Double billableHours = loggingService.getTotalHoursByCriteria(baseCriteria);
+            billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " " + billableHours);
+
+            // Get Non billable hours
+            baseCriteria.setIsBillable(new BooleanSearchField(false));
+            Double nonBillableHours = loggingService.getTotalHoursByCriteria(baseCriteria);
+            nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " " + nonBillableHours);
+        }
+    };
+
     public ProjectInfoComponent(final SimpleProject project) {
         this.withMargin(true);
         this.addStyleName("project-info");
@@ -82,38 +114,43 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             footer.addComponent(activeMembersLbl);
         }
 
-        Label createdTimeLbl = new Label(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(project
-                .getCreatedtime()), ContentMode.HTML);
+        Label createdTimeLbl = new Label(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(project.getCreatedtime()),
+                ContentMode.HTML);
         createdTimeLbl.setDescription("Created time");
         footer.add(createdTimeLbl);
 
-        headerLayout.with(footer);
+        billableHoursLbl = new Label(FontAwesome.MONEY.getHtml() + " " + project.getTotalBillableHours(), ContentMode.HTML);
+        billableHoursLbl.setDescription("Billable hours");
+        footer.add(billableHoursLbl);
 
+        nonBillableHoursLbl = new Label(FontAwesome.GIFT.getHtml() + " " + project.getTotalNonBillableHours(), ContentMode.HTML);
+        nonBillableHoursLbl.setDescription("Non billable hours");
+        footer.add(nonBillableHoursLbl);
+
+        headerLayout.with(footer);
         this.with(headerLayout).expand(headerLayout);
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(false);
         this.with(topPanel).withAlign(topPanel, Alignment.TOP_RIGHT);
         if (project.isProjectArchived()) {
-            Button activeProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_ACTIVE_PROJECT),
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                            project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Open.name());
-                            projectService.updateSelectiveWithSession(project, AppContext.getUsername());
+            Button activeProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_ACTIVE_PROJECT), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+                    project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Open.name());
+                    projectService.updateSelectiveWithSession(project, AppContext.getUsername());
 
-                            PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
-                            EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
+                    PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
 
-                        }
-                    });
+                }
+            });
             activeProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
             topPanel.with(activeProjectBtn).withAlign(activeProjectBtn, Alignment.MIDDLE_RIGHT);
         } else {
             SearchTextField searchField = new SearchTextField() {
                 public void doSearch(String value) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectSearchItemsView(ProjectInfoComponent.this,
-                            value));
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectSearchItemsView(ProjectInfoComponent.this, value));
                 }
             };
 
@@ -238,65 +275,63 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             editProjectBtn.setIcon(FontAwesome.EDIT);
             popupButtonsControl.addOption(editProjectBtn);
 
-            Button archiveProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_ARCHIVE_PROJECT),
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            controlsBtn.setPopupVisible(false);
-                            ConfirmDialogExt.show(UI.getCurrent(),
-                                    AppContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, AppContext.getSiteName()),
-                                    AppContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_ARCHIVE_MESSAGE),
-                                    AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                    AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                    new ConfirmDialog.Listener() {
-                                        private static final long serialVersionUID = 1L;
+            Button archiveProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_ARCHIVE_PROJECT), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    controlsBtn.setPopupVisible(false);
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            AppContext.getMessage(GenericI18Enum.WINDOW_WARNING_TITLE, AppContext.getSiteName()),
+                            AppContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_ARCHIVE_MESSAGE),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
 
-                                        @Override
-                                        public void onClose(ConfirmDialog dialog) {
-                                            if (dialog.isConfirmed()) {
-                                                ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                                                project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Archived.name());
-                                                projectService.updateSelectiveWithSession(project, AppContext.getUsername());
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+                                        project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Archived.name());
+                                        projectService.updateSelectiveWithSession(project, AppContext.getUsername());
 
-                                                PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
-                                                EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-                                            }
-                                        }
-                                    });
-                        }
-                    });
+                                        PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(CurrentProjectVariables.getProjectId()));
+                                        EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
+                                    }
+                                }
+                            });
+                }
+            });
             archiveProjectBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT));
             archiveProjectBtn.setIcon(FontAwesome.ARCHIVE);
             popupButtonsControl.addOption(archiveProjectBtn);
 
             if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT)) {
                 popupButtonsControl.addSeparator();
-                Button deleteProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_DELETE_PROJECT),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                controlsBtn.setPopupVisible(false);
-                                ConfirmDialogExt.show(UI.getCurrent(),
-                                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                                        AppContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_DELETE_MESSAGE),
-                                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                                        new ConfirmDialog.Listener() {
-                                            private static final long serialVersionUID = 1L;
+                Button deleteProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_DELETE_PROJECT), new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
+                        ConfirmDialogExt.show(UI.getCurrent(),
+                                AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                                AppContext.getMessage(ProjectCommonI18nEnum.DIALOG_CONFIRM_PROJECT_DELETE_MESSAGE),
+                                AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                                AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                                new ConfirmDialog.Listener() {
+                                    private static final long serialVersionUID = 1L;
 
-                                            @Override
-                                            public void onClose(
-                                                    ConfirmDialog dialog) {
-                                                if (dialog.isConfirmed()) {
-                                                    ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                                                    projectService.removeWithSession(CurrentProjectVariables.getProject(),
-                                                            AppContext.getUsername(), AppContext.getAccountId());
-                                                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
-                                                }
-                                            }
-                                        });
-                            }
-                        });
+                                    @Override
+                                    public void onClose(
+                                            ConfirmDialog dialog) {
+                                        if (dialog.isConfirmed()) {
+                                            ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+                                            projectService.removeWithSession(CurrentProjectVariables.getProject(),
+                                                    AppContext.getUsername(), AppContext.getAccountId());
+                                            EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
+                                        }
+                                    }
+                                });
+                    }
+                });
                 deleteProjectBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT));
                 deleteProjectBtn.setIcon(FontAwesome.TRASH_O);
                 popupButtonsControl.addOption(deleteProjectBtn);
@@ -308,5 +343,17 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             topPanel.with(searchField, controlsBtn).withAlign(searchField, Alignment.MIDDLE_RIGHT).withAlign(controlsBtn,
                     Alignment.MIDDLE_RIGHT);
         }
+    }
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(timeLoggingChangedEventApplicationEventListener);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(timeLoggingChangedEventApplicationEventListener);
+        super.detach();
     }
 }
