@@ -163,7 +163,14 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        SplitButton exportSplitBtn = new SplitButton(new Button("Export"));
+        Button exportBtn = new Button("Export");
+        final SplitButton exportSplitBtn = new SplitButton(exportBtn);
+        exportBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                exportSplitBtn.setPopupVisible(true);
+            }
+        });
         exportSplitBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         OptionPopupContent popupButtonsControl = new OptionPopupContent();
 

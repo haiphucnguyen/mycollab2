@@ -43,8 +43,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
     }
 
     private AddViewLayout2 initUI() {
-        AddViewLayout2 mainLayout = new AddViewLayout2("Theme Customization",
-                SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
+        AddViewLayout2 mainLayout = new AddViewLayout2("Theme Customization", SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
         mainLayout.setWidth("100%");
         mainLayout.addStyleName("theme-customize-view");
         return mainLayout;
@@ -70,35 +69,29 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
         MHorizontalLayout controlButton = new MHorizontalLayout();
 
-        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = -6901103392231786935L;
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+            private static final long serialVersionUID = -6901103392231786935L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new SettingEvent.SaveTheme(this, accountTheme));
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBusFactory.getInstance().post(new SettingEvent.SaveTheme(this, accountTheme));
+            }
+        });
         saveBtn.setIcon(FontAwesome.SAVE);
         saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         saveBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        controlButton.addComponent(saveBtn);
 
-        Button resetToDefaultBtn = new Button(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 5182152510759528123L;
+        Button resetToDefaultBtn = new Button(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT), new Button.ClickListener() {
+            private static final long serialVersionUID = 5182152510759528123L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
+            }
+        });
         resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);
         resetToDefaultBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        controlButton.addComponent(resetToDefaultBtn);
-        controlButton.setExpandRatio(resetToDefaultBtn, 1.0f);
+        controlButton.with(resetToDefaultBtn, saveBtn);
 
         mainLayout.addBody(mainBody);
         mainLayout.addControlButtons(controlButton);
@@ -112,8 +105,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         blockLayout.addComponent(blockHeader);
         blockLayout.setSpacing(true);
 
-        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
-                .withWidth("100%");
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).withWidth("100%");
         blockLayout.addComponent(blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
@@ -123,25 +115,21 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
 
-        CustomColorPickerArea topMenuBg = new CustomColorPickerArea(
-                AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB),
+        CustomColorPickerArea topMenuBg = new CustomColorPickerArea(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB),
                 accountTheme.getTopmenubg());
         topMenuBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3462278784149813444L;
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTopmenubg(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTopmenubg(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
-        propertyLayout.addComponent(new Label(AppContext
-                .getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
+        propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(topMenuBg, 1, 0);
 
-        CustomColorPickerArea topMenuText = new CustomColorPickerArea(
-                AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
+        CustomColorPickerArea topMenuText = new CustomColorPickerArea(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
                 accountTheme.getTopmenutext());
         topMenuText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -1370026552930193996L;
@@ -155,8 +143,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(topMenuText, 1, 1);
 
-        CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(
-                "Selected Tab", accountTheme.getTopmenubgselected());
+        CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea("Selected Tab", accountTheme.getTopmenubgselected());
         topMenuBgSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -7897981001643385884L;
 
@@ -255,8 +242,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTabsheetbg(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTabsheetbg(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -270,8 +256,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setTabsheettext(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setTabsheettext(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
@@ -336,10 +321,9 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         blockLayout.addComponent(blockHeader);
         blockLayout.setSpacing(true);
 
-        HorizontalLayout blockBody = new HorizontalLayout();
-        blockBody.setMargin(new MarginInfo(false, true, false, true));
-        blockBody.setWidth("100%");
-        blockBody.setSpacing(true);
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
+                .withWidth("100%");
+
         blockLayout.addComponent(blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
@@ -349,23 +333,20 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
 
-        CustomColorPickerArea vTabsheetBg = new CustomColorPickerArea(
-                "Normal Menu", accountTheme.getVtabsheetbg());
+        CustomColorPickerArea vTabsheetBg = new CustomColorPickerArea("Normal Menu", accountTheme.getVtabsheetbg());
         vTabsheetBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -675674373089622451L;
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheetbg(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setVtabsheetbg(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
         propertyLayout.addComponent(new Label("Normal Menu"), 0, 0);
         propertyLayout.addComponent(vTabsheetBg, 1, 0);
 
-        CustomColorPickerArea vTabsheetText = new CustomColorPickerArea(
-                "Normal Menu Text", accountTheme.getVtabsheettext());
+        CustomColorPickerArea vTabsheetText = new CustomColorPickerArea("Normal Menu Text", accountTheme.getVtabsheettext());
         vTabsheetText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 3487570137637191332L;
 
@@ -519,30 +500,26 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         optionBtnColorPane.setSpacing(true);
         optionBtnPanel.addComponent(optionBtnColorPane);
 
-        CustomColorPickerArea optionBtnBg = new CustomColorPickerArea(
-                "Button Background", accountTheme.getOptionbtn());
+        CustomColorPickerArea optionBtnBg = new CustomColorPickerArea("Button Background", accountTheme.getOptionbtn());
         optionBtnBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3852566371241071966L;
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
+                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
                 accountTheme.setOptionbtn(colorHexString);
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
         optionBtnColorPane.addComponent(optionBtnBg);
 
-        CustomColorPickerArea optionBtnText = new CustomColorPickerArea(
-                "Button Text", accountTheme.getOptionbtntext());
+        CustomColorPickerArea optionBtnText = new CustomColorPickerArea("Button Text", accountTheme.getOptionbtntext());
         optionBtnText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 7947045019055649130L;
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
+                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
                 accountTheme.setOptionbtntext(colorHexString);
                 ThemeManager.loadDemoTheme(accountTheme);
             }
@@ -550,11 +527,9 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         optionBtnColorPane.addComponent(optionBtnText);
 
         // Danger Button
-        VerticalLayout dangerBtnPanel = new VerticalLayout();
+        MVerticalLayout dangerBtnPanel = new MVerticalLayout().withMargin(false);
         dangerBtnPanel.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         dangerBtnPanel.setSizeUndefined();
-        dangerBtnPanel.setSpacing(true);
-        dangerBtnPanel.setMargin(false);
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
         Button exampleDangerBtn = new Button("Button");
@@ -567,30 +542,26 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         dangerBtnColorPane.setSpacing(true);
         dangerBtnPanel.addComponent(dangerBtnColorPane);
 
-        CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea(
-                "Button Background", accountTheme.getDangerbtn());
+        CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea("Button Background", accountTheme.getDangerbtn());
         dangerBtnBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3852566371241071966L;
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
+                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
                 accountTheme.setDangerbtn(colorHexString);
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });
         dangerBtnColorPane.addComponent(dangerBtnBg);
 
-        CustomColorPickerArea dangerBtnText = new CustomColorPickerArea(
-                "Button Text", accountTheme.getDangerbtntext());
+        CustomColorPickerArea dangerBtnText = new CustomColorPickerArea("Button Text", accountTheme.getDangerbtntext());
         dangerBtnText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 7947045019055649130L;
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                String colorHexString = event.getColor().getCSS().substring(1)
-                        .toUpperCase();
+                String colorHexString = event.getColor().getCSS().substring(1).toUpperCase();
                 accountTheme.setDangerbtntext(colorHexString);
                 ThemeManager.loadDemoTheme(accountTheme);
             }

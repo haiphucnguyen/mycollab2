@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -13,7 +14,10 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.view.bug.*;
+import com.esofthead.mycollab.module.project.view.bug.components.BugPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
@@ -24,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -35,6 +40,57 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 @ViewComponent
 public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
+
+    @Override
+    public PopupView createBugPriorityPopupField(final SimpleBug bug) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                return ProjectAssetsManager.getBugPriorityHtml(bug.getPriority());
+            }
+
+            @Override
+            protected String generateDescription() {
+                return bug.getPriority();
+            }
+        };
+        builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.priority.name()).withDescription(bug.getPriority())
+                .withCaption(AppContext.getMessage(BugI18nEnum.FORM_PRIORITY)).withField(new BugPriorityComboBox())
+                .withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getPriority())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+        return builder.build();
+    }
+
+    @Override
+    public PopupView createBugAssigneePopupField(final SimpleBug bug) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                String avatarLink = Storage.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+                Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName());
+                return img.write();
+            }
+
+            @Override
+            protected String generateSmallAsHtmlAfterUpdate() {
+                BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                SimpleBug newBug = bugService.findById(bug.getId(), AppContext.getAccountId());
+                String avatarLink = Storage.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
+                Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName());
+                return img.write();
+            }
+
+            @Override
+            protected String generateDescription() {
+                return bug.getAssignuserFullName();
+            }
+        };
+        builder.withBean(bug).withBindProperty(BugWithBLOBs.Field.assignuser.name()).withDescription(bug.getAssignuserFullName())
+                .withCaption(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE)).withField(new ProjectMemberSelectionField())
+                .withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getAssignuser())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+        return builder.build();
+    }
 
     @Override
     public PopupView createBugCommentsPopupField(SimpleBug bug) {
