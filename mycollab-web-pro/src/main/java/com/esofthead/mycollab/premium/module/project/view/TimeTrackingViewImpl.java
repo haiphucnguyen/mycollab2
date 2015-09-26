@@ -95,7 +95,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                 throw new MyCollabException("Not support reporting yet");
             }
         };
-        return new StreamResource(streamSource, ExportItemsStreamResource.getDefaultExportFileName(exportType));
+        return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp() {

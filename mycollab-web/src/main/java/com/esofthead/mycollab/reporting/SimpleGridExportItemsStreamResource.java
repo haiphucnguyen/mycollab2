@@ -44,11 +44,12 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
     private static final Logger LOG = LoggerFactory.getLogger(SimpleGridExportItemsStreamResource.class);
 
     private Class<T> classType;
-    private RpParameterBuilder parameters;
+    private RpFieldsBuilder fieldBuilder;
 
-    SimpleGridExportItemsStreamResource(String reportTitle, RpParameterBuilder parameters, ReportExportType outputForm, Class<T> classType) {
-        super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, outputForm);
-        this.parameters = parameters;
+    SimpleGridExportItemsStreamResource(String reportTitle, RpFieldsBuilder fieldBuilder, ReportExportType outputForm,
+                                        Class<T> classType, Map<String, Object> parameters) {
+        super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, outputForm, parameters);
+        this.fieldBuilder = fieldBuilder;
         this.classType = classType;
     }
 
@@ -68,7 +69,7 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
                 reportBuilder.addField(objField.getName(), jrType);
             }
         }
-        List<TableViewFieldDecorator> fields = parameters.getFields();
+        List<TableViewFieldDecorator> fields = fieldBuilder.getFields();
 
         Map<String, MValue> lstFieldBuilder = ColumnBuilderClassMapper.getListFieldBuilder(classType);
         if (lstFieldBuilder != null) {
@@ -95,9 +96,9 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
         private ISearchableService<S> searchService;
         private S searchCriteria;
 
-        public AllItems(String reportTitle, RpParameterBuilder parameters, ReportExportType outputForm,
-                        ISearchableService<S> searchService, S searchCriteria, Class<T> classType) {
-            super(reportTitle, parameters, outputForm, classType);
+        public AllItems(String reportTitle, RpFieldsBuilder fieldBuilder, ReportExportType outputForm,
+                        ISearchableService<S> searchService, S searchCriteria, Class<T> classType, Map<String, Object> parameters) {
+            super(reportTitle, fieldBuilder, outputForm, classType, parameters);
             this.searchService = searchService;
             this.searchCriteria = searchCriteria;
         }
@@ -113,8 +114,9 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
         private static final long serialVersionUID = 1L;
         private List<T> data;
 
-        public ListData(String reportTitle, RpParameterBuilder parameters, ReportExportType outputForm, List<T> data, Class<T> classType) {
-            super(reportTitle, parameters, outputForm, classType);
+        public ListData(String reportTitle, RpFieldsBuilder fieldBuilder, ReportExportType outputForm, List<T> data,
+                        Class<T> classType, Map<String, Object> parameters) {
+            super(reportTitle, fieldBuilder, outputForm, classType, parameters);
             this.data = data;
         }
 

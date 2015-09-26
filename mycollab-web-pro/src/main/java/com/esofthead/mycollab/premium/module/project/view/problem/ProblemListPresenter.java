@@ -52,8 +52,7 @@ public class ProblemListPresenter extends ProjectGenericListPresenter<ProblemLis
                     UI.getCurrent().addWindow(new MailFormWindow());
                 } else if (ViewItemAction.MASS_UPDATE_ACTION().equals(id)) {
                     MassUpdateProblemWindow massUpdateWindow = new MassUpdateProblemWindow(
-                            "Mass Update Problems",
-                            ProblemListPresenter.this);
+                            "Mass Update Problems", ProblemListPresenter.this);
                     UI.getCurrent().addWindow(massUpdateWindow);
                 }
 
@@ -61,7 +60,7 @@ public class ProblemListPresenter extends ProjectGenericListPresenter<ProblemLis
 
             @Override
             protected String getReportTitle() {
-                return "Problem List";
+                return "Problems";
             }
 
             @Override
@@ -114,7 +113,6 @@ public class ProblemListPresenter extends ProjectGenericListPresenter<ProblemLis
         }
 
         int totalCount = problemService.getTotalCount(searchCriteria);
-
         if (totalCount > 0) {
             doSearch(searchCriteria);
             displayListView((ComponentContainer) view.getParent(), null);
@@ -127,8 +125,7 @@ public class ProblemListPresenter extends ProjectGenericListPresenter<ProblemLis
     @Override
     public void massUpdate(Problem value) {
         if (!isSelectAll) {
-            Collection<SimpleProblem> currentDataList = view
-                    .getPagedBeanTable().getCurrentDataList();
+            Collection<SimpleProblem> currentDataList = view.getPagedBeanTable().getCurrentDataList();
             List<Integer> keyList = new ArrayList<>();
             for (SimpleProblem item : currentDataList) {
                 if (item.isSelected()) {
@@ -137,8 +134,7 @@ public class ProblemListPresenter extends ProjectGenericListPresenter<ProblemLis
             }
 
             if (keyList.size() > 0) {
-                problemService.massUpdateWithSession(value, keyList,
-                        AppContext.getAccountId());
+                problemService.massUpdateWithSession(value, keyList, AppContext.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

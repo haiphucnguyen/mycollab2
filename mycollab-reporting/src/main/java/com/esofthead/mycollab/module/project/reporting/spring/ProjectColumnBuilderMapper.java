@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.project.reporting.spring;
 
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
@@ -72,7 +56,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer taskKey = reportParameters.getFieldValue(Task.Field.taskkey.name());
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
                 return ProjectLinkGenerator.generateTaskPreviewFullLink(siteUrl, taskKey, projectShortName);
             }
@@ -89,7 +73,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -112,7 +96,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer bugKey = reportParameters.getFieldValue("bugkey");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
                 return ProjectLinkGenerator.generateBugPreviewFullLink(siteUrl, bugKey, projectShortName);
             }
@@ -127,7 +111,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -152,7 +136,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer componentId = reportParameters.getFieldValue("id");
                 Integer projectId = reportParameters.getFieldValue("projectId");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return ProjectLinkGenerator.generateBugComponentPreviewFullLink(siteUrl, projectId, componentId);
             }
         };
@@ -166,7 +150,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("userlead");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -190,7 +174,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer versionid = reportParameters.getFieldValue("id");
                 Integer projectId = reportParameters.getFieldValue("projectId");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return ProjectLinkGenerator.generateBugVersionPreviewFullLink(siteUrl, projectId, versionid);
             }
         };
@@ -203,29 +187,29 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         LOG.debug("Build report mapper for project::risk module");
 
         Map<String, MValue> map = new HashMap<>();
-        DRIExpression<String> summaryTitleExpr = new StringExpression("riskname");
+        DRIExpression<String> summaryTitleExpr = new StringExpression(Risk.Field.riskname.name());
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                Integer riskId = reportParameters.getFieldValue("id");
-                Integer projectId = reportParameters.getFieldValue("projectId");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                Integer riskId = reportParameters.getFieldValue(Risk.Field.id.name());
+                Integer projectId = reportParameters.getFieldValue(Risk.Field.projectid.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return ProjectLinkGenerator.generateRiskPreviewFullLink(siteUrl, projectId, riskId);
             }
         };
-        map.put("riskname", new HyperlinkValue(summaryTitleExpr, summaryHrefExpr));
+        map.put(Risk.Field.riskname.name(), new HyperlinkValue(summaryTitleExpr, summaryHrefExpr));
 
-        DRIExpression<String> assigneeTitleExpr = new StringExpression("assignedToUserFullName");
+        DRIExpression<String> assigneeTitleExpr = new StringExpression(SimpleRisk.Field.assignedToUserFullName.name());
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                String assignUser = reportParameters.getFieldValue("assigntouser");
+                String assignUser = reportParameters.getFieldValue(Risk.Field.assigntouser.name());
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -233,14 +217,14 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             }
         };
 
-        map.put("assignedToUserFullName", new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
+        map.put(SimpleRisk.Field.assignedToUserFullName.name(), new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
 
         AbstractSimpleExpression<String> ratingExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public String evaluate(ReportParameters param) {
-                Double level = param.getFieldValue("level");
+                Double level = param.getFieldValue(Risk.Field.level.name());
                 switch (level.intValue()) {
                     case 1:
                         return "images/1.png";
@@ -261,8 +245,8 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         HorizontalListBuilder ratingBuilder = cmp.horizontalList().setFixedWidth(120);
         ImageBuilder imgBuilder = cmp.image(ratingExpr).setFixedDimension(80, 15);
         ratingBuilder.add(imgBuilder);
-        map.put("level", new CompBuilderValue(ratingBuilder));
-        map.put("datedue", new DateExpression("datedue"));
+        map.put(Risk.Field.level.name(), new CompBuilderValue(ratingBuilder));
+        map.put(Risk.Field.datedue.name(), new DateExpression(Risk.Field.datedue.name()));
 
         return map;
     }
@@ -271,29 +255,29 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         LOG.debug("Build report mapper for project::problem module");
 
         Map<String, MValue> map = new HashMap<>();
-        DRIExpression<String> summaryTitleExpr = new StringExpression("issuename");
+        DRIExpression<String> summaryTitleExpr = new StringExpression(Problem.Field.issuename.name());
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                Integer problemId = reportParameters.getFieldValue("id");
-                Integer projectId = reportParameters.getFieldValue("projectId");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                Integer problemId = reportParameters.getFieldValue(Problem.Field.id.name());
+                Integer projectId = reportParameters.getFieldValue(Problem.Field.projectid.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return ProjectLinkGenerator.generateProblemPreviewFullLink(siteUrl, projectId, problemId);
             }
         };
-        map.put("issuename", new HyperlinkValue(summaryTitleExpr, summaryHrefExpr));
+        map.put(Problem.Field.issuename.name(), new HyperlinkValue(summaryTitleExpr, summaryHrefExpr));
 
-        DRIExpression<String> assigneeTitleExpr = new StringExpression("assignedUserFullName");
+        DRIExpression<String> assigneeTitleExpr = new StringExpression(SimpleProblem.Field.assignedUserFullName.name());
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                String assignUser = reportParameters.getFieldValue("assigntouser");
+                String assignUser = reportParameters.getFieldValue(Problem.Field.assigntouser.name());
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -301,7 +285,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             }
         };
 
-        map.put("assignedUserFullName", new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
+        map.put(SimpleProblem.Field.assignedUserFullName.name(), new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
 
         AbstractSimpleExpression<String> ratingExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -329,8 +313,8 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         HorizontalListBuilder ratingBuilder = cmp.horizontalList().setFixedWidth(120);
         ImageBuilder imgBuilder = cmp.image(ratingExpr).setFixedDimension(80, 15);
         ratingBuilder.add(imgBuilder);
-        map.put("level", new CompBuilderValue(ratingBuilder));
-        map.put("datedue", new DateExpression("datedue"));
+        map.put(Problem.Field.level.name(), new CompBuilderValue(ratingBuilder));
+        map.put(Problem.Field.datedue.name(), new DateExpression(Problem.Field.datedue.name()));
         return map;
     }
 
@@ -345,8 +329,8 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer roleId = reportParameters.getFieldValue("id");
-                Integer projectId = reportParameters.getFieldValue("projectId");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                Integer projectId = reportParameters.getFieldValue(ProjectRole.Field.projectid.name());
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return ProjectLinkGenerator.generateRolePreviewFullLink(siteUrl, projectId, roleId);
             }
         };
@@ -366,7 +350,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("loguser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -384,7 +368,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer projectId = reportParameters.getFieldValue("projectId");
                 if (projectId != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return ProjectLinkGenerator.generateProjectFullLink(siteUrl, projectId);
                 }
 
@@ -423,7 +407,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 Integer typeId = reportParameters.getFieldValue("typeid");
                 Integer projectId = reportParameters.getFieldValue("projectId");
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
 
                 if (type == null) {
                     return "";
@@ -456,7 +440,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 String type = reportParameters.getFieldValue("type");
                 Integer typeId = reportParameters.getFieldValue("typeId");
                 String projectShortName = reportParameters.getFieldValue("projectShortName");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
 
                 if (type == null) {
                     return "";
@@ -478,7 +462,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 Integer projectId = reportParameters.getFieldValue("projectId");
                 if (projectId != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return ProjectLinkGenerator.generateProjectFullLink(siteUrl, projectId);
                 }
 
@@ -496,7 +480,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignUser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 

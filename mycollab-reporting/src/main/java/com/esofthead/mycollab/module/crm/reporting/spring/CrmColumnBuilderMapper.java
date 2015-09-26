@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.crm.reporting.spring;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
@@ -69,7 +53,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 if (assignUser != null) {
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
@@ -87,7 +71,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer accountid = reportParameters.getFieldValue("id");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, accountid);
             }
         };
@@ -106,7 +90,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer accountId = reportParameters.getFieldValue("accountid");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, accountId);
             }
         };
@@ -119,7 +103,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer contactid = reportParameters.getFieldValue("id");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateContactPreviewFullLink(siteUrl, contactid);
             }
         };
@@ -133,7 +117,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -156,7 +140,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -173,7 +157,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer campaignid = reportParameters.getFieldValue("id");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateCampaignPreviewFullLink(siteUrl, campaignid);
             }
         };
@@ -193,7 +177,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -210,7 +194,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer leadid = reportParameters.getFieldValue("id");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateLeadPreviewFullLink(siteUrl, leadid);
             }
         };
@@ -230,7 +214,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -247,7 +231,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer opportunityid = reportParameters.getFieldValue("id");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateOpportunityPreviewFullLink(siteUrl, opportunityid);
             }
         };
@@ -300,7 +284,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             public String evaluate(ReportParameters reportParameters) {
                 String assignUser = reportParameters.getFieldValue("assignuser");
                 if (assignUser != null) {
-                    String siteUrl = reportParameters.getFieldValue("siteUrl");
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
                     return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, assignUser);
                 }
 
@@ -317,7 +301,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             @Override
             public String evaluate(ReportParameters reportParameters) {
                 Integer caseid = reportParameters.getFieldValue("id");
-                String siteUrl = reportParameters.getFieldValue("siteUrl");
+                String siteUrl = reportParameters.getParameterValue("siteUrl");
                 return CrmLinkGenerator.generateCasePreviewFullLink(siteUrl, caseid);
             }
         };

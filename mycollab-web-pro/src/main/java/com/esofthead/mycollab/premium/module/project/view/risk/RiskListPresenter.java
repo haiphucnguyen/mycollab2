@@ -58,7 +58,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
 
             @Override
             protected String getReportTitle() {
-                return "Risk List";
+                return "Risks";
             }
 
             @Override

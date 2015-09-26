@@ -3,7 +3,6 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.Order;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -139,7 +138,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 .getProject().getName() : "");
         ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(title, exportType,
                 ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class), searchCriteria);
-        return new StreamResource(exportStream, ExportTimeLoggingStreamResource.getDefaultExportFileName(exportType));
+        return new StreamResource(exportStream, exportType.getDefaultFileName());
     }
 
     private void setTimeRange() {
