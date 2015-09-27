@@ -28,16 +28,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectRoleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.MarginInfo;
@@ -65,8 +61,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
         MButton inviteMemberBtn = new MButton("+").withStyleName("add-project-btn").withListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(
-                        new ProjectMemberEvent.GotoInviteMembers(this, null));
+                EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null));
             }
         });
         inviteMemberBtn.setWidth("20px");
@@ -97,8 +92,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
         @Override
         public Component generateRow(AbstractBeanPagedList host, SimpleProjectMember member, int rowIndex) {
             MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withStyleName("list-row");
-            layout.addComponent(UserAvatarControlFactory
-                    .createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 48));
+            layout.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 48));
 
             VerticalLayout content = new VerticalLayout();
             content.addComponent(new Label(buildAssigneeValue(member), ContentMode.HTML));
@@ -107,20 +101,19 @@ public class ProjectMembersWidget extends MVerticalLayout {
             CssLayout footer = new CssLayout();
             footer.setStyleName(UIConstants.FOOTER_NOTE);
 
-            Label memberRole = new Label();
-            memberRole.setContentMode(ContentMode.HTML);
-            String joinDateMsg;
+            String roleVal;
             if (member.isAdmin()) {
-                joinDateMsg = AppContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY);
+                roleVal = AppContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY);
             } else {
-                joinDateMsg = member.getRoleName();
+                roleVal = member.getRoleName();
             }
-            joinDateMsg += AppContext.getMessage(
-                    ProjectMemberI18nEnum.OPT_MEMBER_JOIN_DATE, AppContext.formatPrettyTime(member.getJoindate()));
-            memberRole.setValue(joinDateMsg);
-            memberRole.setDescription(AppContext.formatDateTime(member.getJoindate()));
-
+            ELabel memberRole = new ELabel(roleVal, ContentMode.HTML).withDescription("Role");
             footer.addComponent(memberRole);
+
+            ELabel lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(member.getLastAccessTime())))
+                    .withDescription(AppContext.formatDateTime(member.getLastAccessTime()));
+            footer.addComponent(lastAccessTimeLbl);
+
             content.addComponent(footer);
             return layout;
         }
