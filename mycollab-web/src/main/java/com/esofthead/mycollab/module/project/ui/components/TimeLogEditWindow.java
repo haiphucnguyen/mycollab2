@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
-import com.esofthead.mycollab.vaadin.ui.FontIconLabel;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.DefaultPagedBeanTable;
@@ -144,7 +144,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
             public Object generateCell(Table source, Object itemId,
                                        Object columnId) {
                 SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
-                FontIconLabel icon = (monitorItem.getIsbillable()) ? new FontIconLabel(FontAwesome.CHECK) : new FontIconLabel(FontAwesome.TIMES);
+                ELabel icon = (monitorItem.getIsbillable()) ? new ELabel(FontAwesome.CHECK) : new ELabel(FontAwesome.TIMES);
                 icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
                 return icon;
             }
