@@ -46,7 +46,7 @@ public class NotPresentedView extends AbstractPageView {
         label.setStyleName("h2_community");
         this.addComponent(label);
 
-        Button requestFeatureBtn = new Button("Request the professional software");
+        Button requestFeatureBtn = new Button("Request the premium edition");
         requestFeatureBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         BrowserWindowOpener opener = new BrowserWindowOpener("mailto:support@mycollab.com");
         opener.extend(requestFeatureBtn);

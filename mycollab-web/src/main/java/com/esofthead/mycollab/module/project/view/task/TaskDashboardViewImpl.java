@@ -300,6 +300,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         wrapBody.addComponent(taskGroupOrderComponent);
         final ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
         int totalTasks = projectTaskService.getTotalCount(searchCriteria);
+        taskSearchPanel.setTotalCountNumber(totalTasks);
         currentPage = 0;
         int pages = totalTasks / 20;
         if (currentPage < pages) {

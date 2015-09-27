@@ -55,7 +55,7 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
             toogleBtn.setCaption("");
         } else {
             CssLayout navigatorWrapper = this.getNavigatorWrapper();
-            navigatorWrapper.setWidth("250px");
+            navigatorWrapper.setWidth("220px");
             this.showTabsCaption();
 
             toogleBtn.setIcon(FontAwesome.CARET_SQUARE_O_LEFT);
