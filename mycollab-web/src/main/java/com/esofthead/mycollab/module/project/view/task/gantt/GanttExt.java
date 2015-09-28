@@ -149,10 +149,8 @@ public class GanttExt extends Gantt {
         if (ganttItemWrapper.hasSubTasks()) {
             step.setStartDate(ganttItemWrapper.getStartDate().toDate());
             step.setEndDate(ganttItemWrapper.getEndDate().plusDays(1).toDate());
-            NotificationUtil.showWarningNotification("Can not adjust dates of parent task " + ganttItemWrapper
-                    .getStep() + "---" + step + "---" + new LocalDate(step.getStartDate()) + "---" + new LocalDate
-                    (step.getEndDate()));
-            this.markStepDirty(step);
+            EventBusFactory.getInstance().post(new GanttEvent.UpdateGanttItem(GanttExt.this, ganttItemWrapper));
+            NotificationUtil.showWarningNotification("Can not adjust dates of parent task");
         } else {
             LocalDate suggestedStartDate = new LocalDate(startDate);
             LocalDate suggestedEndDate = new LocalDate(endDate);

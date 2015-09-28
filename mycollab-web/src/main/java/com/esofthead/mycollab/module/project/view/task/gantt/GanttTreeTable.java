@@ -310,6 +310,11 @@ public class GanttTreeTable extends TreeTable {
     }
 
     private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
+        if (ganttItemWrapper.hasSubTasks()) {
+            boolean collapsed = this.isCollapsed(ganttItemWrapper);
+            this.setCollapsed(ganttItemWrapper, !collapsed);
+            this.setCollapsed(ganttItemWrapper, collapsed);
+        }
         this.markAsDirtyRecursive();
     }
 
