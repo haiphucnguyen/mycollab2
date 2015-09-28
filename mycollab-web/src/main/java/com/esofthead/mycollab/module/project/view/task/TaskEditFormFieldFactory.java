@@ -142,10 +142,16 @@ class TaskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
     private void calculateDurationBaseOnStartAndEndDates() {
         DateField startDateField = (DateField) fieldGroup.getField(Task.Field.startdate.name());
         DateField endDateField = (DateField) fieldGroup.getField(Task.Field.enddate.name());
-        Date startDate = startDateField.getValue();
-        Date endDate = endDateField.getValue();
-        if (startDate != null && endDate != null && startDate.before(endDate)) {
-            TextField durationField = (TextField) fieldGroup.getField(Task.Field.duration.name());
+        TextField durationField = (TextField) fieldGroup.getField(Task.Field.duration.name());
+        Date startDate = null;
+        Date endDate = null;
+        if (startDateField != null) {
+            startDate = startDateField.getValue();
+        }
+        if (endDateField != null) {
+            endDate = endDateField.getValue();
+        }
+        if (startDate != null && endDate != null && startDate.before(endDate) && durationField != null) {
             LocalDate startDateJoda = new LocalDate(startDate);
             LocalDate endDateJoda = new LocalDate(endDate);
             int durationInDays = BusinessDayTimeUtils.duration(startDateJoda, endDateJoda);

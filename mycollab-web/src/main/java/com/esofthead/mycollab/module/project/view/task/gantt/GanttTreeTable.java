@@ -67,11 +67,11 @@ public class GanttTreeTable extends TreeTable {
     protected List<Field> fields = new ArrayList<>();
     private boolean isStartedGanttChart = false;
 
-    private ApplicationEventListener<GanttEvent.UpdateGanttItemDates> updateTaskInfoHandler = new
-            ApplicationEventListener<GanttEvent.UpdateGanttItemDates>() {
+    private ApplicationEventListener<GanttEvent.UpdateGanttItem> updateTaskInfoHandler = new
+            ApplicationEventListener<GanttEvent.UpdateGanttItem>() {
                 @Subscribe
                 @Override
-                public void handle(GanttEvent.UpdateGanttItemDates event) {
+                public void handle(GanttEvent.UpdateGanttItem event) {
                     GanttItemWrapper item = (GanttItemWrapper) event.getData();
                     updateTaskTree(item);
                 }
@@ -299,7 +299,10 @@ public class GanttTreeTable extends TreeTable {
                 this.addTask(itemWrapper);
             }
             this.updateWholeGanttIndexes();
-            gantt.addStep(new Step());
+            Step extraStep = new Step();
+            extraStep.setStartDate(10);
+            extraStep.setEndDate(0);
+            gantt.addStep(extraStep);
         } else {
             LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
         }
@@ -509,8 +512,7 @@ public class GanttTreeTable extends TreeTable {
                             GanttTreeTable.this.setChildrenAllowed(taskWrapper, true);
                             nextItem.updateParentRelationship(taskWrapper);
                             GanttTreeTable.this.setParent(nextItem, taskWrapper);
-                            EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
-                                    (GanttTreeTable.this, nextItem));
+                            EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttTreeTable.this, nextItem));
                         }
 
                         if (taskWrapper.hasSubTasks()) {

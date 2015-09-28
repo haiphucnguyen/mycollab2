@@ -48,20 +48,19 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class NotificationButton extends PopupButton implements PopupButton.PopupVisibilityListener,
+public class NotificationComponent extends PopupButton implements PopupButton.PopupVisibilityListener,
         ApplicationEventListener<ShellEvent.NewNotification>, NotificationBroadcaster.BroadcastListener {
-    private static Logger LOG = LoggerFactory.getLogger(NotificationButton.class);
+    private static Logger LOG = LoggerFactory.getLogger(NotificationComponent.class);
     private static final long serialVersionUID = 2908372640829060184L;
 
     private final List<AbstractNotification> notificationItems;
     private final VerticalLayout notificationContainer;
 
-    public NotificationButton() {
+    public NotificationComponent() {
         super();
         notificationItems = new ArrayList<>();
         notificationContainer = new VerticalLayout();
         new Restrain(notificationContainer).setMaxWidth("500px");
-        notificationContainer.setWidth("500px");
         this.setContent(notificationContainer);
         this.setIcon(FontAwesome.BELL);
         this.setStyleName("notification-button");
@@ -162,7 +161,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
-                    NotificationButton.this.setPopupVisible(false);
+                    NotificationComponent.this.setPopupVisible(false);
                 }
             });
             actionBtn.setStyleName(UIConstants.THEME_LINK);
@@ -184,7 +183,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         UI.getCurrent().addWindow(new UpgradeConfirmWindow(notification.getVersion(), notification.getManualDownloadLink(), notification.getInstallerFile()));
-                        NotificationButton.this.setPopupVisible(false);
+                        NotificationComponent.this.setPopupVisible(false);
                     }
                 });
                 upgradeBtn.setStyleName(UIConstants.THEME_LINK);
@@ -197,7 +196,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
-                    NotificationButton.this.setPopupVisible(false);
+                    NotificationComponent.this.setPopupVisible(false);
                 }
             });
             uploadAvatarBtn.setStyleName(UIConstants.THEME_LINK);
@@ -209,7 +208,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(
                             new ShellEvent.GotoUserAccountModule(this, new String[]{"setup"}));
-                    NotificationButton.this.setPopupVisible(false);
+                    NotificationComponent.this.setPopupVisible(false);
                 }
             });
             smtpBtn.setStyleName(UIConstants.THEME_LINK);
@@ -226,7 +225,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"preview"}));
-                    NotificationButton.this.setPopupVisible(false);
+                    NotificationComponent.this.setPopupVisible(false);
                 }
             });
             actionBtn.setStyleName(UIConstants.THEME_LINK);
@@ -243,7 +242,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                     UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
                     userService.updateSelectiveWithSession(user, AppContext.getUsername());
                     notificationContainer.removeComponent(wrapper);
-                    NotificationButton.this.setPopupVisible(false);
+                    NotificationComponent.this.setPopupVisible(false);
                 }
             });
             dismissBtn.setStyleName(UIConstants.THEME_LINK);
@@ -253,7 +252,7 @@ public class NotificationButton extends PopupButton implements PopupButton.Popup
                 @Override
                 public void buttonClick(ClickEvent event) {
                     UI.getCurrent().addWindow(new AdRequestWindow(AppContext.getUser()));
-                    NotificationButton.this.setPopupVisible(false);
+                    NotificationComponent.this.setPopupVisible(false);
                 }
             });
             spreadBtn.setStyleName(UIConstants.THEME_LINK);

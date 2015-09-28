@@ -269,8 +269,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountNameLabel.addStyleName("subdomain");
         accountLayout.addComponent(accountNameLabel);
 
-        NotificationButton notificationButton = new NotificationButton();
-        accountLayout.addComponent(notificationButton);
+        NotificationComponent notificationComponent = new NotificationComponent();
+        accountLayout.addComponent(notificationComponent);
         if (AppContext.getUser().getTimezone() == null) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new TimezoneNotification()));
         }
