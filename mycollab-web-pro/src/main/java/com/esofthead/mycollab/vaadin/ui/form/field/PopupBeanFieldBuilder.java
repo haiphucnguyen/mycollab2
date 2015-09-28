@@ -120,7 +120,7 @@ public abstract class PopupBeanFieldBuilder<B> {
             layout.with(headerLbl);
             layout.with(field);
             if (field instanceof AbstractComponent) {
-                new Restrain((AbstractComponent) field).setMaxWidth("300px");
+                new Restrain((AbstractComponent) field).setMaxWidth("200px");
             }
 
             fieldGroup.bind(field, bindProperty);
