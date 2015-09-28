@@ -128,7 +128,7 @@ public abstract class ExportItemsStreamResource implements StreamResource.Stream
         if (outputForm == ReportExportType.PDF) {
             reportBuilder
                     .title(createTitleComponent(reportTitle))
-                    .noData(createTitleComponent(reportTitle), cmp.text("There is no data"))
+//                    .noData(createTitleComponent(reportTitle), cmp.text("There is no data"))
                     .setPageFormat(PageType.A3, PageOrientation.LANDSCAPE)
                     .setColumnTitleStyle(reportTemplate.getColumnTitleStyle())
                     .highlightDetailEvenRows().pageFooter(cmp.pageXofY().setStyle(reportTemplate.getBoldCenteredStyle()))

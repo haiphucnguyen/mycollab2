@@ -87,7 +87,6 @@ public abstract class SimpleGridExportItemsStreamResource<T> extends ExportItems
                 reportBuilder.addColumn(columnBuilder);
             }
         }
-
         LOG.debug("Accomplish init report");
     }
 

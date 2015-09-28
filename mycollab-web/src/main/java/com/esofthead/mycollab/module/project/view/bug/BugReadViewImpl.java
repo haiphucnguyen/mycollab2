@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -65,7 +66,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -520,7 +520,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 if (CollectionUtils.isNotEmpty(components)) {
                     ContainerViewField componentContainer = new ContainerViewField();
                     for (final Component component : beanItem.getComponents()) {
-                        Button componentLink = new Button(component.getComponentname(), new Button.ClickListener() {
+                        Button componentLink = new Button(StringUtils.trim(component.getComponentname(), 25, true), new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
 
                             @Override
@@ -529,6 +529,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                                         BugReadViewImpl.this, component.getId()));
                             }
                         });
+                        componentLink.setDescription(component.getComponentname());
                         componentContainer.addComponentField(componentLink);
                         componentLink.setStyleName(UIConstants.THEME_LINK);
                         componentLink.addStyleName("block");
@@ -542,7 +543,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 if (CollectionUtils.isNotEmpty(affectedVersions)) {
                     ContainerViewField componentContainer = new ContainerViewField();
                     for (final Version version : beanItem.getAffectedVersions()) {
-                        Button versionLink = new Button(version.getVersionname(), new Button.ClickListener() {
+                        Button versionLink = new Button(StringUtils.trim(version.getVersionname(), 25, true), new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
 
                             @Override
@@ -550,6 +551,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                                 EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
                             }
                         });
+                        versionLink.setDescription(version.getVersionname());
                         componentContainer.addComponentField(versionLink);
                         versionLink.setStyleName(UIConstants.THEME_LINK);
                         versionLink.addStyleName("block");
@@ -563,7 +565,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 if (CollectionUtils.isNotEmpty(fixedVersions)) {
                     ContainerViewField componentContainer = new ContainerViewField();
                     for (final Version version : beanItem.getFixedVersions()) {
-                        Button versionLink = new Button(version.getVersionname(), new Button.ClickListener() {
+                        Button versionLink = new Button(StringUtils.trim(version.getVersionname(), 25, true), new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
 
                             @Override
@@ -571,6 +573,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                                 EventBusFactory.getInstance().post(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
                             }
                         });
+                        versionLink.setDescription(version.getVersionname());
                         componentContainer.addComponentField(versionLink);
                         versionLink.setStyleName(UIConstants.THEME_LINK);
                         versionLink.addStyleName("block");

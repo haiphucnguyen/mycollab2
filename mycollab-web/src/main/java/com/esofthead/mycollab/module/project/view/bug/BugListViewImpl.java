@@ -33,11 +33,11 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.module.project.reporting.BugStreamResource;
 import com.esofthead.mycollab.module.project.view.bug.components.*;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -58,12 +58,15 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
 
 /**
  * @author MyCollab Ltd.
@@ -75,10 +78,6 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
     static final String DESCENDING = "Descending";
     static final String ASCENDING = "Ascending";
-
-    static final String GROUP_DUE_DATE = "Due Date";
-    static final String GROUP_START_DATE = "Start Date";
-    static final String PLAIN_LIST = "Plain";
 
     private int currentPage = 0;
 
@@ -295,9 +294,9 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         }
         wrapBody.addComponent(bugGroupOrderComponent);
         final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-        int totalTasks = bugService.getTotalCount(searchCriteria);
+        int totalBugs = bugService.getTotalCount(searchCriteria);
         currentPage = 0;
-        int pages = totalTasks / 20;
+        int pages = totalBugs / 20;
         if (currentPage < pages) {
             Button moreBtn = new Button("More", new Button.ClickListener() {
                 @Override
@@ -359,5 +358,44 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     @Override
     public AbstractPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
         throw new UnsupportedOperationException("This view doesn't support this operation");
+    }
+
+    class BugStreamResource extends ExportItemsStreamResource {
+        private Object currentValue;
+
+        public BugStreamResource(String reportTitle, ReportExportType reportExportType) {
+            super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, reportExportType, null);
+        }
+
+        @Override
+        protected void initReport() throws Exception {
+
+        }
+
+        @Override
+        protected void fillReport() throws Exception {
+            final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+            int totalBugs = bugService.getTotalCount(baseCriteria);
+            int pages = totalBugs / 20;
+            List<SimpleBug> bugsInReport = null;
+            reportBuilder.pageHeader(cmp.text("Hello world")).detail(cmp.text("AAA"));
+//            reportBuilder.detail(cmp.text("AAA"));
+            for (int i = 0; i < pages; i++) {
+                List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(baseCriteria, i + 1, 20));
+                for (SimpleBug bug : bugs) {
+                    Object property = PropertyUtils.getProperty(bug, "duedate");
+                    if (property != null) {
+                        if (currentValue == null || !currentValue.equals(property)) {
+                            currentValue = property;
+                            if (CollectionUtils.isNotEmpty(bugsInReport)) {
+
+                            }
+                        } else {
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }
