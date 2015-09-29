@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
-<installation version="1.0">
+<izpack:installation version="5.0"
+                     xmlns:izpack="http://izpack.org/schema/installation"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
 
     <!-- The resources section. The ids must be these ones if you want to
         use the LicencePanel and/or the InfoPanel. -->
     <resources>
-        <res id="LicencePanel.licence" src="txt/LICENSE.txt" />
-        <res id="InfoPanel.info" src="txt/README.md" />
-        <res id="TargetPanel.dir.windows" src="installpath.windows.txt"/>
-        <res id="TargetPanel.dir.unix" src="installpath.unix.txt"/>
-        <res id="TargetPanel.dir.mac" src="installpath.unix.txt"/>
-        <res id="TargetPanel.dir.mac_osx" src="installpath.mac_osx.txt"/>
+        <res id="HTMLLicencePanel.licence" src="txt/LICENSE.html"/>
+        <res id="HTMLInfoPanel.info" src="txt/README.html"/>
     </resources>
+
+    <variables>
+        <variable name="TargetPanel.dir.windows" value="C:/mycollab"/>
+    </variables>
+
+    <conditions>
+        <condition type="or" id="NotWindowsPlatform">
+            <condition type="ref" refid="izpack.linuxinstall" />
+            <condition type="ref" refid="izpack.macinstall" />
+            <condition type="ref" refid="izpack.solarisinstall" />
+        </condition>
+    </conditions>
 
     <!-- The info section. The meaning of the tags should be natural ... -->
     <info>
         <appname>MyCollab, the professional open source of Project Management tool</appname>
-        <appversion>5.1.3</appversion>
+        <appversion>5.1.4</appversion>
         <appsubpath>mycollab</appsubpath>
         <authors>
-            <author name="MyCollab Ltd" email="support@mycollab.com" />
+            <author name="MyCollab Ltd" email="support@mycollab.com"/>
         </authors>
         <url>https://www.mycollab.com/</url>
         <run-privileged condition="izpack.windowsinstall"/>
@@ -30,56 +41,43 @@
         <splash>flash_install_8.png</splash>
 
         <!-- <splash>images/peas_load.gif</splash> -->
-        <modifier key="useHeadingPanel" value="yes" />
-        <modifier key="layoutAnchor" value="CENTER" />
+        <modifier key="useHeadingPanel" value="yes"/>
+        <modifier key="layoutAnchor" value="CENTER"/>
     </guiprefs>
 
     <!-- The locale section. Asks here to include the English and French 
         langpacks. -->
     <locale>
-        <langpack iso3="eng" />
+        <langpack iso3="eng"/>
     </locale>
 
     <!-- The panels section. We indicate here which panels we want to use. 
         The order will be respected. -->
     <panels>
-        <panel classname="InfoPanel" />
-        <panel classname="LicencePanel" />
-        <panel classname="TargetPanel" />
-        <panel classname="PacksPanel" />
-        <panel classname="InstallPanel" />
-        <panel classname="FinishPanel" />
+        <panel classname="HTMLInfoPanel"/>
+        <panel classname="HTMLLicencePanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="FinishPanel"/>
     </panels>
 
     <!-- The packs section. We specify here our packs. -->
     <packs>
         <pack name="Base" required="yes">
             <description>The MyCollab core files</description>
-            <file src="../runner.jar" targetdir="$INSTALL_PATH" />
-            <file src="executor.jar" targetdir="$INSTALL_PATH" />
-            <file src="conf" targetdir="$INSTALL_PATH" />
-            <file src="lib" targetdir="$INSTALL_PATH" />
-            <file src="logs" targetdir="$INSTALL_PATH" />
-            <file src="scripts/mycollab.ini" targetdir="$INSTALL_PATH/bin" />
-            <fileset dir="scripts" includes="*.sh" targetdir="$INSTALL_PATH/bin">
-                <os family="unix"/>
-		        <os family="mac"/>
-            </fileset>
-            <fileset dir="scripts" includes="*.bat" targetdir="$INSTALL_PATH/bin">
-                <os family="windows" />
-            </fileset>
-            <fileset dir="txt" includes="*" targetdir="$INSTALL_PATH" />
-            <file src="webapp" targetdir="$INSTALL_PATH" />
-            <executable targetfile="$INSTALL_PATH/bin/mycollab.sh"
-                stage="never" keep="true">
-		        <os family="unix"/>
-		        <os family="mac"/>
-            </executable>
-            <executable targetfile="$INSTALL_PATH/bin/startup.sh"
-                stage="never" keep="true">
-		        <os family="unix"/>
-                <os family="mac"/>
-            </executable>
+            <file src="../runner.jar" targetdir="$INSTALL_PATH"/>
+            <file src="executor.jar" targetdir="$INSTALL_PATH"/>
+            <fileset dir="conf" targetdir="$INSTALL_PATH/conf"/>
+            <fileset dir="lib" includes="*" targetdir="$INSTALL_PATH/lib"/>
+            <fileset dir="logs" targetdir="$INSTALL_PATH/logs"/>
+            <file src="scripts/mycollab.ini" targetdir="$INSTALL_PATH/bin"/>
+            <fileset dir="scripts" includes="*.sh" targetdir="$INSTALL_PATH/bin" condition="NotWindowsPlatform"/>
+            <fileset dir="scripts" includes="*.bat" targetdir="$INSTALL_PATH/bin" condition="izpack.windowsinstall"/>
+            <fileset dir="txt" includes="*" targetdir="$INSTALL_PATH"/>
+            <fileset dir="webapp" includes="**" targetdir="$INSTALL_PATH/webapp"/>
+            <executable targetfile="$INSTALL_PATH/bin/mycollab.sh" stage="never" keep="true" condition="NotWindowsPlatform"/>
+            <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" keep="true" condition="NotWindowsPlatform"/>
         </pack>
     </packs>
-</installation>
+</izpack:installation>

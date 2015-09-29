@@ -80,7 +80,7 @@
     .v-verticallayout {
       @include margin-container(8px, 15px, 5px, 15px);
     }
-    .createdtime-lbl {
+    .meta-info {
       color: #808080;
       font-size: $font-small;
     }

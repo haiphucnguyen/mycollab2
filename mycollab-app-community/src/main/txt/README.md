@@ -48,9 +48,11 @@ Version 5.1.4
 
 **Improvements & New Features**
 
+* Gantt chart bug fixes
 * Calculating end date by start date and duration
 * Other minor improvements
 * A lot of reporting enhancements: better layout, more detail information, font awesome and more
+* New installer tool, clean release notes and license view
 
 **Bug Fixes**
 

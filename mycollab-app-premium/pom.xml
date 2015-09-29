@@ -68,12 +68,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-jetty-session-premium</artifactId>
-            <version>5.1.3</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
             <version>${vaadinVersion}</version>

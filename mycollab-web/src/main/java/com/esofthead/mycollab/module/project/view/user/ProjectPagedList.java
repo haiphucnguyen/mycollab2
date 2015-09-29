@@ -77,22 +77,21 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkIconFix.setExpandRatio(projectLink, 1.0f);
 
             Label projectMemberBtn = new ELabel(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers(),
-                    ContentMode.HTML).withDescription("Active members");
+                    ContentMode.HTML).withDescription("Active members").withStyleName("meta-info");
             MHorizontalLayout metaInfo = new MHorizontalLayout();
             metaInfo.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             metaInfo.addComponent(projectMemberBtn);
             Label createdTimeLbl = new ELabel(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(project.getCreatedtime()),
-                    ContentMode.HTML).withDescription("Created time");
-            createdTimeLbl.setStyleName("createdtime-lbl");
+                    ContentMode.HTML).withDescription("Created time").withStyleName("meta-info");
             metaInfo.addComponent(createdTimeLbl);
 
             Label billableHoursLbl = new ELabel(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours()),
-                    ContentMode.HTML).withDescription("Billable hours");
+                    ContentMode.HTML).withDescription("Billable hours").withStyleName("meta-info");
             metaInfo.addComponent(billableHoursLbl);
 
             Label nonBillableHoursLbl = new ELabel(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                     project.getTotalNonBillableHours()), ContentMode.HTML)
-                    .withDescription("Non billable hours");
+                    .withDescription("Non billable hours").withStyleName("meta-info");
             metaInfo.addComponent(nonBillableHoursLbl);
 
             linkIconFix.addComponent(metaInfo);
