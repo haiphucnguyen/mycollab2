@@ -39,6 +39,7 @@ import java.util.Map;
  */
 public class VerticalTabsheet extends CustomComponent {
     private static final long serialVersionUID = 1L;
+
     private static final String TABSHEET_STYLENAME = "vertical-tabsheet";
     private static final String TAB_STYLENAME = "tab";
     private static final String TAB_SELECTED_STYLENAME = "tab-selected";
