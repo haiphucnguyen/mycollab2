@@ -216,7 +216,7 @@
                                     <baseDir>${staging.dir}</baseDir>
                                     <mkdirs>true</mkdirs>
                                     <installFile>${staging.dir}/install.xml</installFile>
-                                    <finalName>MyCollab-Generic-${project.version}.jar</finalName>
+                                    <finalName>MyCollab-Generic-${project.version}</finalName>
                                 </configuration>
                             </execution>
                         </executions>

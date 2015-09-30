@@ -77,6 +77,9 @@ public class GanttTreeTable extends TreeTable {
                 }
             };
 
+    //The limit sub tasks should be less than 50, need to be calculated in the future when the project has many tasks
+    private int currentPageLength = 50;
+
     public GanttTreeTable(final GanttExt gantt) {
         super();
         this.gantt = gantt;
@@ -263,6 +266,7 @@ public class GanttTreeTable extends TreeTable {
 
         contextMenu.addContextMenuTableListener(tableListener);
         gantt.setVerticalScrollDelegateTarget(this);
+        this.setPageLength(currentPageLength);
     }
 
     GanttItemContainer getRawContainer() {

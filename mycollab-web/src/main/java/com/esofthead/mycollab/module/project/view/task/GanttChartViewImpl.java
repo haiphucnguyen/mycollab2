@@ -137,9 +137,7 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
 
         gantt = new GanttExt();
         taskTable = new GanttTreeTable(gantt);
-
         mainLayout.with(taskTable, gantt).expand(gantt);
-
         taskTable.loadAssignments();
     }
 
