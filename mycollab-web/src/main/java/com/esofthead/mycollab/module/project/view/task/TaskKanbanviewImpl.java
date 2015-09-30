@@ -114,10 +114,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
     public TaskKanbanviewImpl() {
         this.setSizeFull();
         this.withSpacing(true).withMargin(new MarginInfo(false, true, true, true));
-        initContent();
-    }
-
-    private void initContent() {
         searchPanel = new TaskSearchPanel();
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -266,38 +262,43 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         kanbanBlocks = new ConcurrentHashMap<>();
 
         setProjectNavigatorVisibility(false);
-        UI.getCurrent().access(new Runnable() {
+        new Thread() {
             @Override
             public void run() {
-                List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                        CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
-                for (OptionVal optionVal : optionVals) {
-                    KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
-                    kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
-                    kanbanLayout.addComponent(kanbanBlock);
-                }
-                UI.getCurrent().push();
-
-                int totalTasks = taskService.getTotalCount(searchCriteria);
-                searchPanel.setTotalCountNumber(totalTasks);
-                int pages = totalTasks / 20;
-                for (int page = 0; page < pages + 1; page++) {
-                    List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
-
-                    for (SimpleTask task : tasks) {
-                        String status = task.getStatus();
-                        KanbanBlock kanbanBlock = kanbanBlocks.get(status);
-                        if (kanbanBlock == null) {
-                            LOG.error("Can not find a kanban block for status: " + status);
-                        } else {
-                            kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                UI.getCurrent().access(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
+                                CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+                        for (OptionVal optionVal : optionVals) {
+                            KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
+                            kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
+                            kanbanLayout.addComponent(kanbanBlock);
                         }
-                    }
-                    UI.getCurrent().push();
-                }
+                        UI.getCurrent().push();
 
+                        int totalTasks = taskService.getTotalCount(searchCriteria);
+                        searchPanel.setTotalCountNumber(totalTasks);
+                        int pages = totalTasks / 20;
+                        for (int page = 0; page < pages + 1; page++) {
+                            List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
+
+                            for (SimpleTask task : tasks) {
+                                String status = task.getStatus();
+                                KanbanBlock kanbanBlock = kanbanBlocks.get(status);
+                                if (kanbanBlock == null) {
+                                    LOG.error("Can not find a kanban block for status: " + status);
+                                } else {
+                                    kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                                }
+                            }
+                            UI.getCurrent().push();
+                        }
+
+                    }
+                });
             }
-        });
+        }.start();
     }
 
     @Override

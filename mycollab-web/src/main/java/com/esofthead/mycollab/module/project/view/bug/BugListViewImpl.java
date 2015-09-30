@@ -133,6 +133,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         groupWrapLayout.addComponent(new Label("Sort:"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
+        sortCombo.setWidth("100px");
         sortCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -150,6 +151,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         groupWrapLayout.addComponent(new Label("Group by:"));
         final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
+        groupCombo.setWidth("100px");
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {

@@ -541,7 +541,8 @@
 
   /* Kanban block */
   .v-slot.v-slot-kanban-layout {
-    overflow-x: scroll;
+    overflow: auto;
+    position: relative;
   }
   .v-layout.kanban-layout {
     .kanban-block {
