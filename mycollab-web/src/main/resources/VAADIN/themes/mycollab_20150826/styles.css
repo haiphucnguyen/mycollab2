@@ -192,7 +192,7 @@ a.pending {
 }
 
 .footer-note {
-	color: gray;
+	color: #888;
 	font-size: 12px;
 	cursor: pointer;
 }
@@ -699,7 +699,7 @@ div.v-tree-node-caption div {
 	border-radius: 5px;
 	background: none;
 	padding: 0px 3px;
-	color: #919191;
+	color: #888;
 }
 
 .v-popupview.block-popupedit .v-icon {
@@ -7939,7 +7939,7 @@ a.pending {
 }
 
 .footer-note {
-	color: gray;
+	color: #888;
 	font-size: 12px;
 	cursor: pointer;
 }
@@ -8446,7 +8446,7 @@ div.v-tree-node-caption div {
 	border-radius: 5px;
 	background: none;
 	padding: 0px 3px;
-	color: #919191;
+	color: #888;
 }
 
 .v-popupview.block-popupedit .v-icon {
@@ -8884,7 +8884,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .project-status .meta-info {
-	color: #808080;
+	color: #888;
 	font-size: 12px;
 }
 
@@ -8929,7 +8929,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 
 .project-status .phase-status-btn .v-button-caption {
 	font-size: 18px;
-	font-weight: 700;
+	color: #888;
 }
 
 .project-status .phase-status-btn .v-button-caption small {
@@ -9257,13 +9257,13 @@ div.v-csslayout.followers-container .v-checkbox {
 
 .searchitems-layout .project-item-search-box .footer {
 	border-style: none;
-	color: gray;
+	color: #888;
 	font-size: 12px;
 }
 
 .footer2 {
 	border-style: none;
-	color: gray;
+	color: #888;
 	font-size: 12px;
 	display: -webkit-box;
 	display: -moz-box;
@@ -9501,7 +9501,7 @@ div.v-button.token-field:hover {
 }
 
 .bug-component .created-time {
-	color: gray;
+	color: #888;
 	font-size: 12px;
 }
 
@@ -11856,8 +11856,8 @@ td.v-tabsheet-spacertd div {
 }
 
 .message-header .time-post {
-	color: gray;
-	font-size: 11px;
+	color: #888;
+	font-size: 12px;
 }
 
 .message-header .notification {
@@ -11876,7 +11876,7 @@ td.v-tabsheet-spacertd div {
 
 .message-body p {
 	margin: 4px 0px;
-	color: gray;
+	color: #888;
 }
 
 .message .message-footer {
@@ -12100,18 +12100,18 @@ div.v-csslayout.member-block {
 }
 
 .member-block .member-email {
-	color: gray;
+	color: #888;
 	word-wrap: break-word;
 }
 
 .member-block .member-email a {
-	color: gray;
+	color: #888;
 	text-decoration: none;
 	font-size: 13px;
 }
 
 .member-role {
-	color: gray;
+	color: #888;
 	font-size: 13px;
 }
 
@@ -12632,7 +12632,7 @@ div.v-ratingstars-bar {
 }
 
 .v-label.grayLabel {
-	color: gray;
+	color: #888;
 }
 
 .cancelAccountHeader .first-line {
@@ -13623,14 +13623,14 @@ div.v-csslayout.bean-block.olive-block {
 
 .text-log-hours {
 	text-align: right;
-	color: gray;
+	color: #888;
 }
 
 .text-log-hours-total {
 	margin-top: 10px;
 	text-align: right;
 	font-weight: bold;
-	color: gray;
+	color: #888;
 }
 
 .v-window.lazyload-progress {

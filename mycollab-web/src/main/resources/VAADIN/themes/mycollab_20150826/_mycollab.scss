@@ -1803,8 +1803,8 @@
 
   .message-header {
     .time-post {
-      color: gray;
-      font-size: $font-smaller;
+      color: $meta-color;
+      font-size: $font-small;
     }
     .notification {
       color: black;
@@ -1821,7 +1821,7 @@
 
   .message-body p {
     margin: 4px 0px;
-    color: gray;
+    color: $meta-color;
   }
 
   .message .message-footer {
@@ -2087,10 +2087,10 @@
       padding-top: 3px;
     }
     .member-email {
-      color: gray;
+      color: $meta-color;
       word-wrap: break-word;
       a {
-        color: gray;
+        color: $meta-color;
         text-decoration: none;
         font-size: $font-normal;
       }
@@ -2098,7 +2098,7 @@
   }
 
   .member-role {
-    color: gray;
+    color: $meta-color;
     font-size: $font-normal;
   }
 
@@ -2647,7 +2647,7 @@
   }
 
   .v-label.grayLabel {
-    color: gray;
+    color: $meta-color;
   }
 
   /* Cancel Account Page */
@@ -3673,14 +3673,14 @@
 
   .text-log-hours {
     text-align: right;
-    color: gray;
+    color: $meta-color;
   }
 
   .text-log-hours-total {
     margin-top: 10px;
     text-align: right;
     font-weight: bold;
-    color: gray;
+    color: $meta-color;
   }
 
   /* Lazy Page */

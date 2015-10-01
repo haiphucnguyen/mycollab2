@@ -85,7 +85,7 @@
   }
 
   .footer-note {
-    color: gray;
+    color: $meta-color;
     font-size: $font-small;
     cursor:pointer;
   }
@@ -575,7 +575,7 @@
     border-radius: 5px;
     background: none;
     padding: 0px 3px;
-    color: #919191;
+    color: $meta-color;
     .v-icon {
       padding: 0px;
     }
