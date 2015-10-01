@@ -228,6 +228,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 return new Not(VerticalLocationIs.MIDDLE);
             }
         });
+        this.setWidth("100%");
         this.with(searchPanel, kanbanLayout).expand(kanbanLayout);
     }
 

@@ -406,7 +406,8 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         }
 
         private void updateComponentCount() {
-            header.setValue(String.format("%s (%d)", optionVal.getTypeval(), dragLayoutContainer.getComponentCount()));
+            header.setValue(String.format("%s (%d)", AppContext.getMessage(OptionI18nEnum.BugStatus.class, optionVal.getTypeval()),
+                    dragLayoutContainer.getComponentCount()));
         }
 
         void addNewBugComp() {

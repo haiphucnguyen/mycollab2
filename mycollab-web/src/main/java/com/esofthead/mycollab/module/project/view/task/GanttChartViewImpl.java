@@ -127,7 +127,7 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
         mainLayout = new MHorizontalLayout().withSpacing(false);
         mainLayout.addStyleName("gantt_container");
         mainLayout.setSizeFull();
-        this.with(header, mainLayout).expand(mainLayout);
+        this.with(header, mainLayout);
     }
 
     @Override
