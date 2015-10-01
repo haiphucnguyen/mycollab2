@@ -209,7 +209,7 @@
   .member-preview-form {
     border: 1px solid $border-color;
     padding: 30px;
-    background-color: #d9effa;
+    background-color: $block-background-color;
     div.v-csslayout.member-block {
       border-radius: 0px;
       border: none;
@@ -249,25 +249,6 @@
   }
 
   /* Form Container View Field */
-
-  .v-button-link.block {
-    line-height: 22px;
-    border-radius: 5px;
-    background-color: #5ca9ff;
-    padding: 0px 7px 0px 7px;
-    margin-right: 2px;
-    &:active, &:focus {
-      border-radius: 5px;
-      line-height: 22px;
-      background-color: #5ca9ff;
-      padding: 0px 7px 0px 7px;
-      margin-right: 2px;
-    }
-    .v-button-caption {
-      color: white;
-      vertical-align:sub;
-    }
-  }
 
   .bug-attached {
     background: none;

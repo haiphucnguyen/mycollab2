@@ -39,6 +39,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
+import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
 import com.esofthead.mycollab.module.project.view.bug.components.LinkIssueWindow;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper;
@@ -89,12 +90,11 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     private TagViewComponent tagViewComponent;
     private CssLayout bugWorkflowControl;
-    private BugHistoryList historyList;
     private ProjectFollowersComp<SimpleBug> bugFollowersList;
     private BugTimeLogSheet bugTimeLogList;
-    private CommentDisplay commentList;
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
+    private ProjectActivityComponent activityComponent;
 
     public BugReadViewImpl() {
         super(AppContext.getMessage(BugI18nEnum.VIEW_READ_TITLE),
@@ -247,10 +247,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected void initRelatedComponents() {
-        commentList = new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId(),
-                BugRelayEmailNotificationAction.class);
-
-        historyList = new BugHistoryList();
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, CurrentProjectVariables
+                .getProjectId(), BugFieldFormatter.instance(), BugRelayEmailNotificationAction.class);
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         bugFollowersList = new ProjectFollowersComp<>(ProjectTypeConstants.BUG, ProjectRolePermissionCollections.BUGS);
@@ -261,8 +259,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected void onPreviewItem() {
         tagViewComponent.display(ProjectTypeConstants.BUG, beanItem.getId());
-        commentList.loadComments("" + beanItem.getId());
-        historyList.loadHistory(beanItem.getId());
+        activityComponent.loadActivities("" + beanItem.getId());
         bugTimeLogList.displayTime(beanItem);
 
         bugFollowersList.displayFollowers(beanItem);
@@ -438,10 +435,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        TabSheetLazyLoadComponent tabBugDetail = new TabSheetLazyLoadComponent();
-        tabBugDetail.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
-        tabBugDetail.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
-        return tabBugDetail;
+        return activityComponent;
     }
 
     private static class FormLayoutFactory implements IFormLayoutFactory {

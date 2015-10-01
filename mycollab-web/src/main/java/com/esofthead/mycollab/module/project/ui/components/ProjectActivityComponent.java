@@ -211,12 +211,11 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                     auditLog.getPostedUserFullName());
             layout.addComponent(memberBlock);
 
-            CssLayout rowLayout = new CssLayout();
+            MVerticalLayout rowLayout = new MVerticalLayout();
             rowLayout.setStyleName("message-container");
             rowLayout.setWidth("100%");
 
-            MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(true,
-                    true, false, true)).withWidth("100%").withStyleName("message-header");
+            MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%").withStyleName("message-header");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             ELabel timePostLbl = new ELabel(AppContext.getMessage(
@@ -237,8 +236,8 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                     Span fieldBlock = new Span().appendText(AppContext.getMessage(fieldDisplayHandler.getDisplayName
                             ())).setCSSClass("block");
                     Div historyDiv = new Div().appendChild(fieldBlock).appendText(fieldDisplayHandler.getFormat()
-                            .toString(item.getOldvalue())).appendText(FontAwesome.LONG_ARROW_RIGHT.getHtml()).appendText(fieldDisplayHandler.getFormat()
-                            .toString(item.getNewvalue()));
+                            .toString(item.getOldvalue())).appendText(" " + FontAwesome.LONG_ARROW_RIGHT.getHtml() +
+                            " ").appendText(fieldDisplayHandler.getFormat().toString(item.getNewvalue()));
                     rowLayout.addComponent(new Label(historyDiv.write(), ContentMode.HTML));
                 } else {
                     System.out.println("History field: " + fieldName);
@@ -258,6 +257,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
     @Override
     public void reload() {
-
+        activityBox.removeAllComponents();
+        displayCommentList();
     }
 }

@@ -13,4 +13,8 @@ public class SimpleLogging {
     public static void error(String message) {
         LOG.error(message);
     }
+
+    public static void error(String message, Throwable e) {
+        LOG.error(message, e);
+    }
 }

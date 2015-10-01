@@ -520,4 +520,23 @@
   .v-popupbutton .v-popup-indicator:before {
     margin: 0px !important;
   }
+
+  .v-button-link.block {
+    line-height: 22px;
+    border-radius: 5px;
+    background-color: #5ca9ff;
+    padding: 0px 7px 0px 7px;
+    margin-right: 2px;
+    &:active, &:focus {
+      border-radius: 5px;
+      line-height: 22px;
+      background-color: #5ca9ff;
+      padding: 0px 7px 0px 7px;
+      margin-right: 2px;
+    }
+    .v-button-caption {
+      color: white;
+      vertical-align:sub;
+    }
+  }
 }

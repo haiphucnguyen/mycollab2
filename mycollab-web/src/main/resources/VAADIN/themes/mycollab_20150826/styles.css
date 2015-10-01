@@ -771,6 +771,15 @@ div.v-tree-node-caption div {
 	opacity: 1;
 }
 
+span.block {
+	line-height: 22px;
+	border-radius: 5px;
+	background-color: #5ca9ff;
+	padding: 3px 7px 3px 7px;
+	margin-right: 2px;
+	color: white;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -7801,6 +7810,27 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	margin: 0px !important;
 }
 
+.v-button-link.block {
+	line-height: 22px;
+	border-radius: 5px;
+	background-color: #5ca9ff;
+	padding: 0px 7px 0px 7px;
+	margin-right: 2px;
+}
+
+.v-button-link.block:active, .v-button-link.block:focus {
+	border-radius: 5px;
+	line-height: 22px;
+	background-color: #5ca9ff;
+	padding: 0px 7px 0px 7px;
+	margin-right: 2px;
+}
+
+.v-button-link.block .v-button-caption {
+	color: white;
+	vertical-align: sub;
+}
+
 .v-icon .black {
 	color: black;
 }
@@ -8518,6 +8548,15 @@ div.v-tree-node-caption div {
 	opacity: 1;
 }
 
+span.block {
+	line-height: 22px;
+	border-radius: 5px;
+	background-color: #5ca9ff;
+	padding: 3px 7px 3px 7px;
+	margin-right: 2px;
+	color: white;
+}
+
 .crm-module {
 	position: absolute;
 	top: 0;
@@ -8971,7 +9010,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .instruction-box {
-	background-color: #d9effa;
+	background-color: #e8f5fc;
 	padding: 10px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -9047,7 +9086,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 .member-preview-form {
 	border: 1px solid #CFCFCF;
 	padding: 30px;
-	background-color: #d9effa;
+	background-color: #e8f5fc;
 }
 
 .member-preview-form div.v-csslayout.member-block {
@@ -9090,27 +9129,6 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 	width: 160px;
 	padding: 5px;
 	padding-left: 0px;
-}
-
-.v-button-link.block {
-	line-height: 22px;
-	border-radius: 5px;
-	background-color: #5ca9ff;
-	padding: 0px 7px 0px 7px;
-	margin-right: 2px;
-}
-
-.v-button-link.block:active, .v-button-link.block:focus {
-	border-radius: 5px;
-	line-height: 22px;
-	background-color: #5ca9ff;
-	padding: 0px 7px 0px 7px;
-	margin-right: 2px;
-}
-
-.v-button-link.block .v-button-caption {
-	color: white;
-	vertical-align: sub;
 }
 
 .bug-attached {
@@ -9442,7 +9460,7 @@ div.v-button.token-field:hover {
 
 .milestone-box {
 	margin-top: 25px;
-	background-color: #d9effa;
+	background-color: #e8f5fc;
 	border-color: #BEBEBE;
 	border-style: solid;
 	border-width: 1px 1px 1px 6px;
@@ -11787,7 +11805,7 @@ td.v-tabsheet-spacertd div {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #d9effa;
+	background-color: #e8f5fc;
 	border: 1px solid #CFCFCF;
 	border-radius: 5px;
 	position: relative;
@@ -11820,7 +11838,7 @@ td.v-tabsheet-spacertd div {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #d9effa;
+	border-color: transparent #e8f5fc;
 	border-radius: 0px;
 }
 
@@ -12066,7 +12084,7 @@ table.legendBox .legendBoxContent .v-csslayout > div {
 
 div.v-csslayout.member-block {
 	display: inline-block;
-	background-color: #d9effa;
+	background-color: #e8f5fc;
 	margin-bottom: 15px;
 	font-size: 13px;
 	vertical-align: top;
