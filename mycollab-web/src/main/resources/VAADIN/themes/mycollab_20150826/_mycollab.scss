@@ -2963,6 +2963,7 @@
       /* IE 10 */
       flex: 1;
       /* NEW, Spec - Opera 12.1, Firefox 20+ */
+      min-width: 0;
     }
     .v-button-tab {
       border: none;

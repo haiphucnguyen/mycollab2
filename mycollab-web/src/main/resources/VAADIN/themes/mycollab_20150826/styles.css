@@ -667,10 +667,6 @@ div.v-tree-node-caption div {
 	position: relative;
 }
 
-.v-layout.kanban-layout {
-	width: 500px;
-}
-
 .v-layout.kanban-layout .kanban-block {
 	cursor: move;
 	background-color: #e2e4e6;
@@ -8413,10 +8409,6 @@ div.v-tree-node-caption div {
 	position: relative;
 }
 
-.v-layout.kanban-layout {
-	width: 500px;
-}
-
 .v-layout.kanban-layout .kanban-block {
 	cursor: move;
 	background-color: #e2e4e6;
@@ -9836,6 +9828,7 @@ div.v-button.token-field:hover {
 .gantt {
 	background: #fff;
 	overflow: hidden;
+	position: relative;
 }
 
 .gantt .timeline {
@@ -12928,6 +12921,7 @@ div.v-ratingstars-bar {
 	-webkit-flex: 1;
 	-ms-flex: 1;
 	flex: 1;
+	min-width: 0;
 }
 
 .vertical-tabsheet .v-button-tab {

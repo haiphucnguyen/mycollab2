@@ -44,10 +44,11 @@ public class VerticalTabsheet extends CustomComponent {
     private static final String TAB_STYLENAME = "tab";
     private static final String TAB_SELECTED_STYLENAME = "tab-selected";
 
-    private VerticalLayout navigatorContainer;
-    private CssLayout tabContainer;
-    protected VerticalLayout contentWrapper;
+    protected VerticalLayout navigatorContainer;
     protected CssLayout navigatorWrapper;
+
+    protected CssLayout tabContainer;
+    protected VerticalLayout contentWrapper;
 
     private Map<String, Tab> compMap = new HashMap<>();
 
