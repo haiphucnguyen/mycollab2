@@ -25,8 +25,10 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 
@@ -36,6 +38,7 @@ import java.util.Arrays;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class BugKanbanPresenter extends AbstractPresenter<BugKanbanView> {
 
     private BugService bugService;

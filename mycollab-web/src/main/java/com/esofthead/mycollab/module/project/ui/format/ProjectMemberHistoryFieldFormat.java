@@ -53,7 +53,7 @@ public class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
 
     @Override
     public String toString(String value) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
+        if (StringUtils.isBlank(value)) {
             return new Span().write();
         }
 

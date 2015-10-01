@@ -73,7 +73,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setModule(new StringSearchField(module));
 		criteria.setType(new StringSearchField(type));
-		criteria.setTypeid(new NumberSearchField(typeId));
+		criteria.setTypeid(new StringSearchField(typeId + ""));
 		int numHistories = logTable.setSearchCriteria(criteria);
 
 		Object parentComp = this.getParent();
@@ -84,8 +84,7 @@ public abstract class HistoryLogComponent extends MVerticalLayout {
 		}
 	}
 
-	public class HistoryLogRowDisplay extends
-			BeanList.RowDisplayHandler<SimpleAuditLog> {
+	public class HistoryLogRowDisplay extends BeanList.RowDisplayHandler<SimpleAuditLog> {
 		private static final long serialVersionUID = 1L;
 
 		@Override

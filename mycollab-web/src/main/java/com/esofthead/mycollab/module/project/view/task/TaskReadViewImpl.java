@@ -82,9 +82,8 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(TaskReadViewImpl.class);
 
+    private ProjectActivityComponent activityComponent;
     private TagViewComponent tagViewComponent;
-    private CommentDisplay commentList;
-    private TaskHistoryList historyList;
     private ProjectFollowersComp<SimpleTask> followerSheet;
     private DateInfoComp dateInfoComp;
     private TaskTimeLogSheet timesheetComp;
@@ -113,9 +112,9 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected void initRelatedComponents() {
-        commentList = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId(),
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, CurrentProjectVariables
+                .getProjectId(), TaskHistoryList.taskFormatter,
                 ProjectTaskRelayEmailNotificationAction.class);
-        historyList = new TaskHistoryList();
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.TASK, ProjectRolePermissionCollections.TASKS);
@@ -145,8 +144,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         }
 
         tagViewComponent.display(ProjectTypeConstants.TASK, beanItem.getId());
-        commentList.loadComments("" + beanItem.getId());
-        historyList.loadHistory(beanItem.getId());
+        activityComponent.loadActivities("" + beanItem.getId());
         followerSheet.displayFollowers(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
         dateInfoComp.displayEntryDateTime(beanItem);
@@ -229,10 +227,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        TabSheetLazyLoadComponent tabTaskDetail = new TabSheetLazyLoadComponent();
-        tabTaskDetail.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT, 0), FontAwesome.COMMENTS);
-        tabTaskDetail.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
-        return tabTaskDetail;
+        return activityComponent;
     }
 
     @Override
