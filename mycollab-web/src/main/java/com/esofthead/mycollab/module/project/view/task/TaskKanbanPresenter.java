@@ -27,8 +27,10 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -39,13 +41,11 @@ import java.util.Arrays;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
+@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class TaskKanbanPresenter extends AbstractPresenter<TaskKanbanview> {
-
-    private ProjectTaskService taskService;
 
     public TaskKanbanPresenter() {
         super(TaskKanbanview.class);
-        taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
     }
 
     @Override

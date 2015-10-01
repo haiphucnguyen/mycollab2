@@ -517,6 +517,11 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	color: white;
 }
 
+.v-buttongroup.toggle-btn-group .v-button.btn-group-default {
+	color: white;
+	font-weight: normal;
+}
+
 .feed-block-wrap {
 	background: url("icons/timeline-line.jpg") repeat-y left top transparent;
 }
@@ -8259,6 +8264,11 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	color: white;
 }
 
+.v-buttongroup.toggle-btn-group .v-button.btn-group-default {
+	color: white;
+	font-weight: normal;
+}
+
 .feed-block-wrap {
 	background: url("icons/timeline-line.jpg") repeat-y left top transparent;
 }
@@ -9613,7 +9623,7 @@ div.v-button.token-field:hover {
 
 .gantt_container {
 	border-style: solid;
-	border-width: 1px 1px 1px 0px;
+	border-width: 1px 1px 0px 0px;
 	border-color: #CFCFCF;
 }
 
@@ -9694,6 +9704,19 @@ div.v-button.token-field:hover {
 
 .gantt_container .v-table-table tr:first-child td.v-table-cell-content {
 	height: 34px;
+}
+
+.gantt_container .v-table-table tr:last-child td.v-table-cell-content {
+	border-style: solid;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 0px 0px;
+}
+
+.gantt_container .v-table-body {
+	border-style: solid;
+	border-size: 1px;
+	border-color: #CFCFCF;
+	border-width: 0px 1px 1px 1px;
 }
 
 .gantt .bar.v-widget {
@@ -10465,12 +10488,6 @@ input.v-textfield.v-datefield-textfield {
 	height: 24px;
 }
 
-.v-buttongroup.toggle-btn-group .v-button.active {
-	background-color: #1C7DCE;
-	color: white;
-	font-weight: normal;
-}
-
 .list-view .v-table-header td, .list-view .v-table-header-wrap {
 	height: 23px;
 }
@@ -10484,16 +10501,11 @@ input.v-textfield.v-datefield-textfield {
 }
 
 .folder-tree .v-table-body-wrapper.v-table-body {
-	height: 480px !important;
+	border-width: 0px 1px 1px 1px;
 }
 
 .folder-tree .v-table-body-wrapper.v-table-body  > div {
 	height: auto !important;
-}
-
-.v-table-body-wrapper.v-table-body {
-	height: 100% !important;
-	border-width: 0px 1px 1px 1px;
 }
 
 .v-table-cell-wrapper {

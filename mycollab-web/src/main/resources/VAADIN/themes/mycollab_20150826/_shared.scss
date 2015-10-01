@@ -396,6 +396,10 @@
     &:active .v-button-wrap .v-button-caption, &:focus .v-button-wrap .v-button-caption, &.selected .v-button-wrap .v-button-caption {
       color: white;
     }
+    &.btn-group-default {
+      color: white;
+      font-weight: normal;
+    }
     color: white;
   }
 

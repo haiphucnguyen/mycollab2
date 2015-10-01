@@ -303,10 +303,10 @@ public class GanttTreeTable extends TreeTable {
                 this.addTask(itemWrapper);
             }
             this.updateWholeGanttIndexes();
-            Step extraStep = new Step();
-            extraStep.setStartDate(10);
-            extraStep.setEndDate(0);
-            gantt.addStep(extraStep);
+//            Step extraStep = new Step();
+//            extraStep.setStartDate(10);
+//            extraStep.setEndDate(0);
+//            gantt.addStep(extraStep);
         } else {
             LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
         }
