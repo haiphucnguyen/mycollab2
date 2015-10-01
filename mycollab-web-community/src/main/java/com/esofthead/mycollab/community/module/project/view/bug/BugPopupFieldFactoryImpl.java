@@ -18,6 +18,7 @@ package com.esofthead.mycollab.community.module.project.view.bug;
 
 import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.bug.BugPopupFieldFactory;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -72,7 +73,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createBugStatusPopupField(SimpleBug bug) {
-        return new PopupBeanField(FontAwesome.INFO_CIRCLE, bug.getStatus());
+        return new PopupBeanField(FontAwesome.INFO_CIRCLE, AppContext.getMessage(OptionI18nEnum.BugStatus.class, bug.getStatus()));
     }
 
     @Override
