@@ -430,7 +430,7 @@
     }
 
     .feed-block {
-      background-color: $background-color;
+      background-color: $block-background-color;
       padding: 3px 10px;
       border: 1px solid $border-color;
       border-radius: 3px;
@@ -457,13 +457,13 @@
         top: 4px;
         left: -10px;
         border-width: 11px 11px 11px 0;
-        border-color: transparent $background-color;
+        border-color: transparent $block-background-color;
         border-radius: 0px;
       }
       .stream-wrapper {
         border-width: 1px 0px 0px;
         padding-bottom: 8px;
-        background-color: $background-color;
+        background-color: $block-background-color;
         &:first-child {
           border-width: 0px;
         }
@@ -551,7 +551,7 @@
   .v-layout.kanban-layout {
     .kanban-block {
       cursor: move;
-      background-color: #e2e4e6;
+      background-color: #d9f1fa;
       .header {
         font-weight: bold;
         color: black;

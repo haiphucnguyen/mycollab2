@@ -178,7 +178,7 @@ a.pending {
 }
 
 .list-row:nth-child(even) {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .list-row:nth-child(odd) {
@@ -199,7 +199,7 @@ a.pending {
 
 .panel-header {
 	border: 1px solid #CFCFCF;
-	background-color: #e8e8e8;
+	background-color: #f1f1f1;
 }
 
 .panel-header .v-label {
@@ -311,7 +311,7 @@ a.pending {
 
 div.v-button-link.buttonPaging {
 	color: #525252;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap {
@@ -552,7 +552,7 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .feed-block-wrap .feed-block {
-	background-color: whitesmoke;
+	background-color: #f7fcfe;
 	padding: 3px 10px;
 	border: 1px solid #CFCFCF;
 	border-radius: 3px;
@@ -582,14 +582,14 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	top: 4px;
 	left: -10px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent whitesmoke;
+	border-color: transparent #f7fcfe;
 	border-radius: 0px;
 }
 
 .feed-block-wrap .feed-block .stream-wrapper {
 	border-width: 1px 0px 0px;
 	padding-bottom: 8px;
-	background-color: whitesmoke;
+	background-color: #f7fcfe;
 }
 
 .feed-block-wrap .feed-block .stream-wrapper:first-child {
@@ -674,7 +674,7 @@ div.v-tree-node-caption div {
 
 .v-layout.kanban-layout .kanban-block {
 	cursor: move;
-	background-color: #e2e4e6;
+	background-color: #d9f1fa;
 }
 
 .v-layout.kanban-layout .kanban-block .header {
@@ -7974,7 +7974,7 @@ a.pending {
 }
 
 .list-row:nth-child(even) {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .list-row:nth-child(odd) {
@@ -7995,7 +7995,7 @@ a.pending {
 
 .panel-header {
 	border: 1px solid #CFCFCF;
-	background-color: #e8e8e8;
+	background-color: #f1f1f1;
 }
 
 .panel-header .v-label {
@@ -8107,7 +8107,7 @@ a.pending {
 
 div.v-button-link.buttonPaging {
 	color: #525252;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 div.v-button-link.buttonPaging .v-button-wrap {
@@ -8348,7 +8348,7 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .feed-block-wrap .feed-block {
-	background-color: whitesmoke;
+	background-color: #f7fcfe;
 	padding: 3px 10px;
 	border: 1px solid #CFCFCF;
 	border-radius: 3px;
@@ -8378,14 +8378,14 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	top: 4px;
 	left: -10px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent whitesmoke;
+	border-color: transparent #f7fcfe;
 	border-radius: 0px;
 }
 
 .feed-block-wrap .feed-block .stream-wrapper {
 	border-width: 1px 0px 0px;
 	padding-bottom: 8px;
-	background-color: whitesmoke;
+	background-color: #f7fcfe;
 }
 
 .feed-block-wrap .feed-block .stream-wrapper:first-child {
@@ -8470,7 +8470,7 @@ div.v-tree-node-caption div {
 
 .v-layout.kanban-layout .kanban-block {
 	cursor: move;
-	background-color: #e2e4e6;
+	background-color: #d9f1fa;
 }
 
 .v-layout.kanban-layout .kanban-block .header {
@@ -9024,7 +9024,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .prj-list-row:nth-child(even) {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .prj-list-row:nth-child(odd) {
@@ -9060,7 +9060,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border: 1px solid #CFCFCF;
-	background: none no-repeat left top whitesmoke;
+	background: none no-repeat left top #f9f9f9;
 	border-radius: 0px;
 }
 
@@ -9071,7 +9071,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background: none no-repeat left top #e8e8e8;
+	background: none no-repeat left top #f1f1f1;
 	border-radius: 0px;
 }
 
@@ -9423,7 +9423,7 @@ div.v-button.token-field:hover {
 }
 
 .standup-block {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 	border: 1px solid #CFCFCF;
 }
 
@@ -9467,7 +9467,7 @@ div.v-button.token-field:hover {
 
 .milestone-view-header {
 	text-align: center;
-	background: none repeat-x left top #e8e8e8;
+	background: none repeat-x left top #f1f1f1;
 	height: 30px;
 	border-bottom: 1px solid #CFCFCF;
 }
@@ -9529,7 +9529,7 @@ div.v-button.token-field:hover {
 }
 
 .tasklist .taskrow:nth-child(even) {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .tasklist .taskrow:nth-child(odd) {
@@ -9544,7 +9544,7 @@ div.v-button.token-field:hover {
 
 .bug-component {
 	margin-bottom: 5px;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .bug-component  > .v-csslayout-margin {
@@ -10252,7 +10252,7 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 }
 
 .v-panel-caption {
-	background: whitesmoke;
+	background: #f9f9f9;
 }
 
 .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
@@ -10484,7 +10484,7 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
 }
 
 .popupContent .v-window-outerheader {
-	background-color: #e8e8e8;
+	background-color: #f1f1f1;
 	padding: 0;
 }
 
@@ -10761,12 +10761,12 @@ input.v-textfield-pagedtable-pagefield {
 
 .time-tracking-summary-search-panel {
 	border: 1px solid #CFCFCF;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .advSearch .advSearchBody {
 	border: 1px solid #CFCFCF;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .advSearch .advSearchBody .v-label {
@@ -10778,7 +10778,7 @@ input.v-textfield-pagedtable-pagefield {
 	border-color: #CFCFCF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .advSearch .advSearchFooterContainer .advSearchFooter {
@@ -10794,7 +10794,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .basicSearch .basicSearchBody {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 	border: 1px solid #CFCFCF;
 	border-radius: 0;
 }
@@ -11309,7 +11309,7 @@ input.v-textfield-errorField {
 	border-style: solid;
 	border-color: #CFCFCF;
 	border-radius: 0px;
-	background: none no-repeat 0 0 #e8e8e8;
+	background: none no-repeat 0 0 #f1f1f1;
 	height: 40px;
 }
 
@@ -11672,7 +11672,7 @@ input.v-textfield-errorField {
 }
 
 .v-tabsheet-tabs {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 }
 
 .v-tabsheet-content {
@@ -11796,7 +11796,7 @@ td.v-tabsheet-spacertd div {
 }
 
 .v-table-row-odd, .v-table-striped .v-table-row-odd {
-	background: none repeat scroll 0% 0% whitesmoke;
+	background: none repeat scroll 0% 0% #f9f9f9;
 	border: 5px solid black;
 }
 
@@ -12273,7 +12273,7 @@ div.v-stylecalendar .weekdays TD {
 }
 
 .v-richtextarea .gwt-RichTextToolbar {
-	background: none no-repeat left top whitesmoke;
+	background: none no-repeat left top #f9f9f9;
 	border-bottom: 1px solid #CFCFCF;
 	padding: 3px;
 }
@@ -12796,7 +12796,7 @@ div.v-ratingstars-bar {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 	border: 1px solid #9d9d9d;
 }
 
@@ -12833,7 +12833,7 @@ div.v-ratingstars-bar {
 }
 
 .customFieldSection {
-	background-color: whitesmoke;
+	background-color: #f9f9f9;
 	border: 1px solid #9d9d9d;
 }
 
