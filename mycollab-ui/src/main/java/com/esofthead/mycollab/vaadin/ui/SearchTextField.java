@@ -21,8 +21,9 @@ import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.TextField;
-import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import static com.esofthead.mycollab.core.utils.StringUtils.isNotBlank;
 
 /**
  * @author MyCollab Ltd.
@@ -35,7 +36,7 @@ public abstract class SearchTextField extends MHorizontalLayout {
         @Override
         public void handleAction(Object sender, Object target) {
             String value = ((TextField) target).getValue();
-            if (StringUtils.isNotBlank(value)) {
+            if (isNotBlank(value)) {
                 doSearch(value);
             }
         }

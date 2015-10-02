@@ -30,6 +30,8 @@ import com.hp.gagawa.java.elements.Span;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.esofthead.mycollab.core.utils.StringUtils.isBlank;
+
 /**
  * @author MyCollab Ltd.
  * @since 4.0
@@ -39,7 +41,7 @@ public class UserHistoryFieldFormat implements HistoryFieldFormat {
 
     @Override
     public String toString(String value) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(value)) {
+        if (isBlank(value)) {
             return new Span().write();
         }
 

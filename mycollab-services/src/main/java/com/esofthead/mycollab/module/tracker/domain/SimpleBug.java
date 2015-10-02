@@ -19,11 +19,12 @@ package com.esofthead.mycollab.module.tracker.domain;
 import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.esofthead.mycollab.core.utils.StringUtils.isBlank;
 
 /**
  * @author MyCollab Ltd.
@@ -75,7 +76,7 @@ public class SimpleBug extends BugWithBLOBs {
     }
 
     public String getLoguserFullName() {
-        if (StringUtils.isBlank(loguserFullName)) {
+        if (isBlank(loguserFullName)) {
             String displayName = getLogby();
             return com.esofthead.mycollab.core.utils.StringUtils
                     .extractNameFromEmail(displayName);
@@ -88,7 +89,7 @@ public class SimpleBug extends BugWithBLOBs {
     }
 
     public String getAssignuserFullName() {
-        if (StringUtils.isBlank(assignuserFullName)) {
+        if (isBlank(assignuserFullName)) {
             String displayName = getAssignuser();
             return com.esofthead.mycollab.core.utils.StringUtils
                     .extractNameFromEmail(displayName);
@@ -194,6 +195,6 @@ public class SimpleBug extends BugWithBLOBs {
 
     public Date getDueDateRoundPlusOne() {
         Date value = getDuedate();
-        return (value !=  null) ?  DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
+        return (value != null) ? DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
     }
 }

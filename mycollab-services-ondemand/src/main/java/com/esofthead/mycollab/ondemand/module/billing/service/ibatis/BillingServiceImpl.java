@@ -162,7 +162,7 @@ public class BillingServiceImpl implements BillingService {
                 user.setFirstname("");
             }
 
-            if (org.apache.commons.lang3.StringUtils.isBlank(user.getLastname())) {
+            if (StringUtils.isBlank(user.getLastname())) {
                 user.setLastname(StringUtils.extractNameFromEmail(email));
             }
             this.userMapper.insert(user);

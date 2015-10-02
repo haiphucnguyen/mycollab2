@@ -136,7 +136,7 @@ public class SimpleProjectMember extends ProjectMember {
     }
 
     public String getDisplayName() {
-        if (org.apache.commons.lang3.StringUtils.isBlank(memberFullName)) {
+        if (StringUtils.isBlank(memberFullName)) {
             return StringUtils.extractNameFromEmail(getUsername());
         }
         return memberFullName;

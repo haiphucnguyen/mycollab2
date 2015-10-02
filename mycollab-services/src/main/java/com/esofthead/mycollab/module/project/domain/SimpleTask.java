@@ -84,7 +84,7 @@ public class SimpleTask extends Task {
     }
 
     public String getAssignUserFullName() {
-        if (org.apache.commons.lang3.StringUtils.isBlank(assignUserFullName)) {
+        if (StringUtils.isBlank(assignUserFullName)) {
             return StringUtils.extractNameFromEmail(getAssignuser());
         }
         return assignUserFullName;
@@ -95,7 +95,7 @@ public class SimpleTask extends Task {
     }
 
     public String getLogByFullName() {
-        if (org.apache.commons.lang3.StringUtils.isBlank(logByFullName)) {
+        if (StringUtils.isBlank(logByFullName)) {
             return StringUtils.extractNameFromEmail(getLogby());
         }
         return logByFullName;

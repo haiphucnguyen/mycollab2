@@ -125,7 +125,7 @@ public class FieldGroupFormatter {
                 content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
 
-            return new Div().appendText(content).write();
+            return content;
         }
     }
 
@@ -139,7 +139,7 @@ public class FieldGroupFormatter {
                 lbl.setTitle(AppContext.formatDate(formatDate));
                 return lbl.write();
             } else {
-                return new I().appendText(AppContext.getMessage(GenericI18Enum.FORM_EMPTY)).write();
+                return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
         }
     }
@@ -154,7 +154,7 @@ public class FieldGroupFormatter {
                 lbl.setTitle(AppContext.formatDateTime(formatDate));
                 return lbl.write();
             } else {
-                return new I().appendText(AppContext.getMessage(GenericI18Enum.FORM_EMPTY)).write();
+                return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
         }
     }
@@ -170,7 +170,7 @@ public class FieldGroupFormatter {
             } else {
                 content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
-            return new I().appendText(content).write();
+            return content;
         }
     }
 
@@ -185,7 +185,7 @@ public class FieldGroupFormatter {
             } else {
                 content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
-            return new I().appendText(content).write();
+            return content;
         }
     }
 
@@ -208,7 +208,7 @@ public class FieldGroupFormatter {
                 content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
 
-            return new I().appendText(content).write();
+            return content;
         }
     }
 
@@ -223,7 +223,7 @@ public class FieldGroupFormatter {
         @Override
         public String toString(String value) {
             String content = (StringUtils.isNotBlank(value)) ? AppContext.getMessage(enumCls, value) : "";
-            return new I().appendText(content).write();
+            return content;
         }
     }
 }
