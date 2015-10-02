@@ -30,9 +30,6 @@ import com.esofthead.mycollab.vaadin.ui.HistoryFieldFormat;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,12 +41,6 @@ import java.util.UUID;
  */
 public class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectMemberHistoryFieldFormat.class);
-
-    @Override
-    public Component toVaadinComponent(String value) {
-        String html = ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables.getProjectId(), value);
-        return (value != null) ? new Label(html, ContentMode.HTML) : new Label("");
-    }
 
     @Override
     public String toString(String value) {
