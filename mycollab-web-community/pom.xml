@@ -14,6 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-ui</artifactId>
+            <version>5.1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web</artifactId>
             <version>5.1.4</version>
         </dependency>

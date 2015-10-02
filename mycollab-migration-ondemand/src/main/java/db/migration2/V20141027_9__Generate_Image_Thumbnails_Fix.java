@@ -25,69 +25,66 @@ import java.util.List;
 import java.util.Map;
 
 public class V20141027_9__Generate_Image_Thumbnails_Fix implements
-		SpringJdbcMigration {
+        SpringJdbcMigration {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(V20141027_9__Generate_Image_Thumbnails_Fix.class);
+    private static final Logger LOG = LoggerFactory
+            .getLogger(V20141027_9__Generate_Image_Thumbnails_Fix.class);
 
-	@Override
-	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
-		List<Map<String, Object>> accounts = jdbcTemplate
-				.queryForList("SELECT id FROM s_account ");
-		for (Map<String, Object> row : accounts) {
-			Integer accountId = (Integer) row.get("id");
-			generateImageThumbnail(accountId, accountId + "");
-		}
-	}
+    @Override
+    public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
+        List<Map<String, Object>> accounts = jdbcTemplate
+                .queryForList("SELECT id FROM s_account ");
+        for (Map<String, Object> row : accounts) {
+            Integer accountId = (Integer) row.get("id");
+            generateImageThumbnail(accountId, accountId + "");
+        }
+    }
 
-	private void generateImageThumbnail(Integer accountId, String path) {
-		ResourceService resourceService = ApplicationContextUtil
-				.getSpringBean(ResourceService.class);
+    private void generateImageThumbnail(Integer accountId, String path) {
+        ResourceService resourceService = ApplicationContextUtil
+                .getSpringBean(ResourceService.class);
 
-		RawContentService rawContentService = ApplicationContextUtil
-				.getSpringBean(RawContentService.class);
+        RawContentService rawContentService = ApplicationContextUtil
+                .getSpringBean(RawContentService.class);
 
-		ContentJcrDao contentJcrDao = ApplicationContextUtil
-				.getSpringBean(ContentJcrDao.class);
+        ContentJcrDao contentJcrDao = ApplicationContextUtil
+                .getSpringBean(ContentJcrDao.class);
 
-		List<Resource> resources = resourceService.getResources(path);
-		if (CollectionUtils.isNotEmpty(resources)) {
-			for (Resource resource : resources) {
-				if (resource instanceof Content) {
-					Content content = (Content) resource;
-					String mimeType = MimeTypesUtil.detectMimeType(content
-							.getPath());
-					LOG.info("Check mimetype " + mimeType + " of content "
-							+ content.getPath() + "--" + content.getThumbnail()
-							+ ".");
-					if (MimeTypesUtil.isImage(mimeType)) {
-						try {
-							BufferedImage image = ImageUtil
-									.generateImageThumbnail(resourceService
-											.getContentStream(resource
-													.getPath()));
-							String thumbnailPath = String.format(
-									".thumbnail/%d/%s.%s", accountId,
-									StringUtils.generateSoftUniqueId(), "png");
-							content.setThumbnail(thumbnailPath);
-							contentJcrDao.saveContent(content, "");
+        List<Resource> resources = resourceService.getResources(path);
+        if (CollectionUtils.isNotEmpty(resources)) {
+            for (Resource resource : resources) {
+                if (resource instanceof Content) {
+                    Content content = (Content) resource;
+                    String mimeType = MimeTypesUtil.detectMimeType(content
+                            .getPath());
+                    LOG.info("Check mimetype " + mimeType + " of content "
+                            + content.getPath() + "--" + content.getThumbnail()
+                            + ".");
+                    if (MimeTypesUtil.isImage(mimeType)) {
+                        try {
+                            BufferedImage image = ImageUtil.generateImageThumbnail(resourceService
+                                    .getContentStream(resource.getPath()));
+                            String thumbnailPath = String.format(".thumbnail/%d/%s.%s", accountId,
+                                    StringUtils.generateSoftUniqueId(), "png");
+                            content.setThumbnail(thumbnailPath);
+                            contentJcrDao.saveContent(content, "");
 
-							File tmpFile = File.createTempFile("tmp", "png");
-							ImageIO.write(image, "png", new FileOutputStream(
-									tmpFile));
+                            File tmpFile = File.createTempFile("tmp", "png");
+                            ImageIO.write(image, "png", new FileOutputStream(
+                                    tmpFile));
 
-							rawContentService.saveContent(thumbnailPath,
-									new FileInputStream(tmpFile));
-						} catch (Exception e) {
-							LOG.error(
-									"Generate thumbnal is failed "
-											+ resource.getPath(), e);
-						}
-					}
-				} else if (resource instanceof Folder) {
-					generateImageThumbnail(accountId, resource.getPath());
-				}
-			}
-		}
-	}
+                            rawContentService.saveContent(thumbnailPath,
+                                    new FileInputStream(tmpFile));
+                        } catch (Exception e) {
+                            LOG.error(
+                                    "Generate thumbnal is failed "
+                                            + resource.getPath(), e);
+                        }
+                    }
+                } else if (resource instanceof Folder) {
+                    generateImageThumbnail(accountId, resource.getPath());
+                }
+            }
+        }
+    }
 }
