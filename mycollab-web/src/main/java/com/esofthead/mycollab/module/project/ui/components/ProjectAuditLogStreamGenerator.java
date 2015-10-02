@@ -18,18 +18,11 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
-import com.esofthead.mycollab.module.project.ui.format.TaskFieldFormatter;
-import com.esofthead.mycollab.module.project.view.problem.ProblemFormatter;
-import com.esofthead.mycollab.module.project.view.risk.RiskFormatter;
+import com.esofthead.mycollab.module.project.ui.format.*;
 import com.esofthead.mycollab.utils.AuditLogPrinter;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.esofthead.mycollab.module.project.view.bug.ComponentHistoryLogList.componentFormatter;
-import static com.esofthead.mycollab.module.project.view.bug.VersionHistoryLogList.versionFormatter;
-import static com.esofthead.mycollab.module.project.view.milestone.MilestoneHistoryLogList.milestoneFormatter;
 
 /**
  * @author MyCollab Ltd.
@@ -42,11 +35,11 @@ public class ProjectAuditLogStreamGenerator {
         auditPrinters = new HashMap<>();
         auditPrinters.put(ProjectTypeConstants.BUG, new AuditLogPrinter(BugFieldFormatter.instance()));
         auditPrinters.put(ProjectTypeConstants.TASK, new AuditLogPrinter(TaskFieldFormatter.instance()));
-        auditPrinters.put(ProjectTypeConstants.MILESTONE, new AuditLogPrinter(milestoneFormatter));
-        auditPrinters.put(ProjectTypeConstants.RISK, new AuditLogPrinter(RiskFormatter.instance));
-        auditPrinters.put(ProjectTypeConstants.PROBLEM, new AuditLogPrinter(ProblemFormatter.instance));
-        auditPrinters.put(ProjectTypeConstants.BUG_COMPONENT, new AuditLogPrinter(componentFormatter));
-        auditPrinters.put(ProjectTypeConstants.BUG_VERSION, new AuditLogPrinter(versionFormatter));
+        auditPrinters.put(ProjectTypeConstants.MILESTONE, new AuditLogPrinter(MilestoneFieldFormatter.instance()));
+        auditPrinters.put(ProjectTypeConstants.RISK, new AuditLogPrinter(RiskFieldFormatter.instance()));
+        auditPrinters.put(ProjectTypeConstants.PROBLEM, new AuditLogPrinter(ProblemFieldFormatter.instance()));
+        auditPrinters.put(ProjectTypeConstants.BUG_COMPONENT, new AuditLogPrinter(ComponentFieldFormatter.instance()));
+        auditPrinters.put(ProjectTypeConstants.BUG_VERSION, new AuditLogPrinter(VersionFieldFormatter.instance()));
     }
 
     public static String generatorDetailChangeOfActivity(SimpleActivityStream activityStream) {

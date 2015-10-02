@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.risk;
 
-import com.esofthead.mycollab.common.ModuleNameConstants;
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
@@ -14,6 +12,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
+import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -33,8 +32,8 @@ import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -45,8 +44,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(RiskReadViewImpl.class);
 
-    private CommentDisplay commentDisplay;
-    private RiskHistoryList historyList;
+    private ProjectActivityComponent activityComponent;
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
     private ProjectFollowersComp<SimpleRisk> followerSheet;
@@ -74,11 +72,9 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected void initRelatedComponents() {
-        commentDisplay = new CommentDisplay(ProjectTypeConstants.RISK,
-                CurrentProjectVariables.getProjectId(),
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK,
+                CurrentProjectVariables.getProjectId(), RiskFieldFormatter.instance(),
                 ProjectRiskRelayEmailNotificationAction.class);
-        commentDisplay.setWidth("100%");
-        historyList = new RiskHistoryList(ModuleNameConstants.PRJ, ProjectTypeConstants.RISK);
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
@@ -95,8 +91,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             previewLayout.setTitleStyleName("headerNameOverdue");
         }
 
-        commentDisplay.loadComments("" + beanItem.getId());
-        historyList.loadHistory(beanItem.getId());
+        activityComponent.loadActivities("" + beanItem.getId());
 
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
@@ -116,10 +111,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(commentDisplay, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
-        tabContainer.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
-        return tabContainer;
+        return activityComponent;
     }
 
     @Override
@@ -193,7 +185,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
                 Label createdLbl = new Label(AppContext
-                                .getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
+                        .getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 

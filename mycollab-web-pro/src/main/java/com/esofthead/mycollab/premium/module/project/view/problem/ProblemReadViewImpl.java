@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.premium.module.project.view.problem;
 
-import com.esofthead.mycollab.common.ModuleNameConstants;
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
@@ -14,8 +12,9 @@ import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
+import com.esofthead.mycollab.module.project.ui.format.ProblemFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
+import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -33,20 +32,15 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewComponent
 public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> implements ProblemReadView {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(ProblemReadViewImpl.class);
 
-    private CommentDisplay commentList;
-    private ProblemHistoryList historyList;
-
+    private ProjectActivityComponent activityComponent;
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
 
@@ -69,11 +63,9 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> 
 
     @Override
     protected void initRelatedComponents() {
-        commentList = new CommentDisplay(ProjectTypeConstants.PROBLEM,
-                CurrentProjectVariables.getProjectId(),
-                ProjectRiskRelayEmailNotificationAction.class);
-        commentList.setWidth("100%");
-        historyList = new ProblemHistoryList(ModuleNameConstants.PRJ, ProjectTypeConstants.PROBLEM);
+        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.PROBLEM,
+                CurrentProjectVariables.getProjectId(), ProblemFieldFormatter.instance(),
+                ProjectProblemRelayEmailNotificationAction.class);
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.PROBLEM, ProjectRolePermissionCollections.PROBLEMS);
@@ -89,8 +81,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> 
         if (beanItem.isOverdue()) {
             previewLayout.setTitleStyleName("headerNameOverdue");
         }
-        commentList.loadComments("" + beanItem.getId());
-        historyList.loadHistory(beanItem.getId());
+        activityComponent.loadActivities("" + beanItem.getId());
 
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
@@ -116,10 +107,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> 
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        final TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(commentList, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
-        tabContainer.addTab(historyList, AppContext.getMessage(GenericI18Enum.TAB_HISTORY), FontAwesome.HISTORY);
-        return tabContainer;
+        return activityComponent;
     }
 
     @Override
@@ -210,7 +198,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> 
                 layout.setColumnExpandRatio(1, 1.0f);
 
                 Label assigneeLbl = new Label(AppContext
-                                .getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
+                        .getMessage(ProjectCommonI18nEnum.ITEM_ASSIGN_PEOPLE));
                 assigneeLbl.setSizeUndefined();
                 layout.addComponent(assigneeLbl, 0, 1);
                 String assignUserName = (String) PropertyUtils.getProperty(
