@@ -25,7 +25,7 @@ import java.util.Locale;
  * @author MyCollab Ltd.
  * @since 5.0.5
  */
-public class I18nExpression  extends AbstractFieldExpression implements MValue {
+public class I18nExpression extends AbstractFieldExpression implements MValue {
     private Class keyCls;
 
     public I18nExpression(String field, Class keyCls) {
