@@ -654,4 +654,23 @@
     margin-right: 2px;
     color: white;
   }
+
+  /* Activity component style */
+  .activity-comp {
+    .header {
+      background-color: #f1f1f1;
+      border-bottom: 1px solid $border-color;
+      .v-label.title {
+        font-weight: bold;
+        font-size: $font-larger;
+      }
+    }
+    .v-select-optiongroup-sortDirection .v-select-option {
+      display: inline-block;
+    }
+    /* Some extra spacing is needed */
+    .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+      padding-right: 10px;
+    }
+  }
 }

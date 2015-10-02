@@ -1795,7 +1795,7 @@
   }
 
   .message-body {
-    padding: 5px 10px 10px;
+    padding: 5px 10px 10px 0px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1825,8 +1825,7 @@
   }
 
   .message .message-footer {
-    border-top: 1px solid $border-color;
-    padding: 7px 10px;
+    padding: 0px;
   }
 
   /* End Messages */
@@ -3098,14 +3097,6 @@
 
   .accountsettings-role .addViewBottomControls .depotComp .depotHeader {
     border-width: 1px 0px;
-  }
-
-  /* Comment Display */
-
-  .comment-display {
-    .v-verticallayout, .v-customcomponent {
-      display: block;
-    }
   }
 
   /* Label Styles */

@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Span;
+import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -47,16 +48,46 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
     private CommentService commentService;
     private AuditLogService auditLogService;
     private FieldGroupFormatter groupFormatter;
+    private boolean isAscending = true;
+    private Comparator dateComparator = new Comparator() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            try {
+                Date createTime1 = (Date) PropertyUtils.getProperty(o1, "createdtime");
+                Date createTime2 = (Date) PropertyUtils.getProperty(o2, "createdtime");
+                return createTime1.compareTo(createTime2);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    };
 
     public ProjectActivityComponent(String type, Integer extraTypeId, FieldGroupFormatter groupFormatter, Class<? extends
             SendingRelayEmailNotificationAction> emailHandler) {
-        withMargin(new MarginInfo(true, false, true, true)).withStyleName("comment-display");
+        withMargin(false).withStyleName("activity-comp");
         this.type = type;
         this.groupFormatter = groupFormatter;
-        headerLbl = new ELabel("Change history");
+        headerLbl = new ELabel("Change history").withStyleName("title");
+
+        final OptionGroup sortDirection = new OptionGroup();
+        sortDirection.addStyleName("sortDirection");
+        sortDirection.addItems("Newest", "Oldest");
+        sortDirection.setValue("Newest");
+        sortDirection.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                Object value = sortDirection.getValue();
+                isAscending = "Newest".equals(value);
+                displayCommentList();
+            }
+        });
+
+        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName("header").withWidth("100%")
+                .with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
+
         commentBox = new ProjectCommentInput(this, type, extraTypeId, emailHandler);
         activityBox = new MVerticalLayout();
-        this.with(headerLbl, commentBox, activityBox);
+        this.with(headerPanel, commentBox, activityBox);
 
         commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
         auditLogService = ApplicationContextUtil.getSpringBean(AuditLogService.class);
@@ -71,6 +102,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
     }
 
     private void displayCommentList() {
+        activityBox.removeAllComponents();
         if (type == null || typeId == null) {
             return;
         }
@@ -95,18 +127,12 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         List activities = new ArrayList(commentCount + logCount);
         activities.addAll(comments);
         activities.addAll(auditLogs);
-        Collections.sort(activities, new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                try {
-                    Date createTime1 = (Date) PropertyUtils.getProperty(o1, "createdtime");
-                    Date createTime2 = (Date) PropertyUtils.getProperty(o2, "createdtime");
-                    return createTime1.compareTo(createTime2);
-                } catch (Exception e) {
-                    return 0;
-                }
-            }
-        }.reversed());
+        if (isAscending) {
+            Collections.sort(activities, dateComparator.reversed());
+        } else {
+            Collections.sort(activities, dateComparator);
+        }
+
         for (Object activity : activities) {
             if (activity instanceof SimpleComment) {
                 activityBox.addComponent(buildCommentBlock((SimpleComment) activity));
@@ -122,18 +148,15 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
     }
 
     private Component buildCommentBlock(final SimpleComment comment) {
-        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false))
+        final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%").withStyleName("message");
 
         ProjectMemberBlock memberBlock = new ProjectMemberBlock(comment.getCreateduser(), comment.getOwnerAvatarId(), comment.getOwnerFullName());
         layout.addComponent(memberBlock);
 
-        CssLayout rowLayout = new CssLayout();
-        rowLayout.setStyleName("message-container");
-        rowLayout.setWidth("100%");
+        MVerticalLayout rowLayout = new MVerticalLayout().withWidth("100%").withStyleName("message-container");
 
-        MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(true,
-                true, false, true)).withWidth("100%").withStyleName("message-header");
+        MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%").withStyleName("message-header");
         messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         ELabel timePostLbl = new ELabel(AppContext.getMessage(
@@ -164,8 +187,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                                 public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
                                         CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
-                                        commentService.removeWithSession(comment,
-                                                AppContext.getUsername(), AppContext.getAccountId());
+                                        commentService.removeWithSession(comment, AppContext.getUsername(), AppContext.getAccountId());
                                         activityBox.removeComponent(layout);
                                     }
                                 }
@@ -185,11 +207,11 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
         List<Content> attachments = comment.getAttachments();
         if (!CollectionUtils.isEmpty(attachments)) {
-            MVerticalLayout messageFooter = new MVerticalLayout().withSpacing(false).withWidth
+            MVerticalLayout messageFooter = new MVerticalLayout().withMargin(false).withSpacing(false).withWidth
                     ("100%").withStyleName("message-footer");
             AttachmentDisplayComponent attachmentDisplay = new AttachmentDisplayComponent(attachments);
             attachmentDisplay.setWidth("100%");
-            messageFooter.with(attachmentDisplay).withAlign(attachmentDisplay, Alignment.MIDDLE_RIGHT);
+            messageFooter.with(attachmentDisplay);
             rowLayout.addComponent(messageFooter);
         }
 
@@ -204,22 +226,20 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
     private Component buildAuditBlock(SimpleAuditLog auditLog) {
         List<AuditChangeItem> changeItems = auditLog.getChangeItems();
         if (CollectionUtils.isNotEmpty(changeItems)) {
-            final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false))
+            final MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                     .withWidth("100%").withStyleName("message");
 
             ProjectMemberBlock memberBlock = new ProjectMemberBlock(auditLog.getPosteduser(), auditLog.getPostedUserAvatarId(),
                     auditLog.getPostedUserFullName());
             layout.addComponent(memberBlock);
 
-            MVerticalLayout rowLayout = new MVerticalLayout();
-            rowLayout.setStyleName("message-container");
-            rowLayout.setWidth("100%");
+            MVerticalLayout rowLayout = new MVerticalLayout().withWidth("100%").withStyleName("message-container");
 
             MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%").withStyleName("message-header");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             ELabel timePostLbl = new ELabel(AppContext.getMessage(
-                    GenericI18Enum.EXT_ADDED_COMMENT, auditLog.getPostedUserFullName(),
+                    GenericI18Enum.EXT_MODIFIED_ITEM, auditLog.getPostedUserFullName(),
                     AppContext.formatPrettyTime(auditLog.getPosteddate())), ContentMode.HTML).
                     withDescription(AppContext.formatDateTime(auditLog.getPosteddate()));
             timePostLbl.setStyleName("time-post");
@@ -257,7 +277,6 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
     @Override
     public void reload() {
-        activityBox.removeAllComponents();
         displayCommentList();
     }
 }

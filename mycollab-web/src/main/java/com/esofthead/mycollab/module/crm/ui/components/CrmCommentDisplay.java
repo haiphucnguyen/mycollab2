@@ -43,7 +43,7 @@ public class CrmCommentDisplay  extends MVerticalLayout implements ReloadableCom
     private CrmCommentInput commentBox;
 
     public CrmCommentDisplay(String type, Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
-        withMargin(new MarginInfo(true, false, true, true)).withStyleName("comment-display");
+        withMargin(new MarginInfo(true, false, true, true));
         this.type = type;
         commentBox = new CrmCommentInput(this, type, emailHandler);
         this.addComponent(commentBox);

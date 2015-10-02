@@ -780,6 +780,24 @@ span.block {
 	color: white;
 }
 
+.activity-comp .header {
+	background-color: #f1f1f1;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.activity-comp .header .v-label.title {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.activity-comp .v-select-optiongroup-sortDirection .v-select-option {
+	display: inline-block;
+}
+
+.activity-comp .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+	padding-right: 10px;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -8557,6 +8575,24 @@ span.block {
 	color: white;
 }
 
+.activity-comp .header {
+	background-color: #f1f1f1;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.activity-comp .header .v-label.title {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.activity-comp .v-select-optiongroup-sortDirection .v-select-option {
+	display: inline-block;
+}
+
+.activity-comp .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+	padding-right: 10px;
+}
+
 .crm-module {
 	position: absolute;
 	top: 0;
@@ -9010,7 +9046,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 }
 
 .instruction-box {
-	background-color: #e8f5fc;
+	background-color: #f7fcfe;
 	padding: 10px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -9086,7 +9122,7 @@ div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
 .member-preview-form {
 	border: 1px solid #CFCFCF;
 	padding: 30px;
-	background-color: #e8f5fc;
+	background-color: #f7fcfe;
 }
 
 .member-preview-form div.v-csslayout.member-block {
@@ -9460,7 +9496,7 @@ div.v-button.token-field:hover {
 
 .milestone-box {
 	margin-top: 25px;
-	background-color: #e8f5fc;
+	background-color: #f7fcfe;
 	border-color: #BEBEBE;
 	border-style: solid;
 	border-width: 1px 1px 1px 6px;
@@ -11805,7 +11841,7 @@ td.v-tabsheet-spacertd div {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #e8f5fc;
+	background-color: #f7fcfe;
 	border: 1px solid #CFCFCF;
 	border-radius: 5px;
 	position: relative;
@@ -11838,7 +11874,7 @@ td.v-tabsheet-spacertd div {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #e8f5fc;
+	border-color: transparent #f7fcfe;
 	border-radius: 0px;
 }
 
@@ -11867,7 +11903,7 @@ td.v-tabsheet-spacertd div {
 }
 
 .message-body {
-	padding: 5px 10px 10px;
+	padding: 5px 10px 10px 0px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -11898,8 +11934,7 @@ td.v-tabsheet-spacertd div {
 }
 
 .message .message-footer {
-	border-top: 1px solid #CFCFCF;
-	padding: 7px 10px;
+	padding: 0px;
 }
 
 .v-form-errormessage .gwt-HTML {
@@ -12084,7 +12119,7 @@ table.legendBox .legendBoxContent .v-csslayout > div {
 
 div.v-csslayout.member-block {
 	display: inline-block;
-	background-color: #e8f5fc;
+	background-color: #f7fcfe;
 	margin-bottom: 15px;
 	font-size: 13px;
 	vertical-align: top;
@@ -13084,10 +13119,6 @@ div.v-ratingstars-bar {
 
 .accountsettings-role .addViewBottomControls .depotComp .depotHeader {
 	border-width: 1px 0px;
-}
-
-.comment-display .v-verticallayout, .comment-display .v-customcomponent {
-	display: block;
 }
 
 .v-label.has-checkmark:before {
