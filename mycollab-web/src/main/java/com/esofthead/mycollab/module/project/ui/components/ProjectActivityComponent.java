@@ -78,7 +78,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
             public void valueChange(Property.ValueChangeEvent event) {
                 Object value = sortDirection.getValue();
                 isAscending = "Newest".equals(value);
-                displayCommentList();
+                displayActivities();
             }
         });
 
@@ -98,10 +98,10 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         if (commentBox != null) {
             commentBox.setTypeAndId(typeId);
         }
-        displayCommentList();
+        displayActivities();
     }
 
-    private void displayCommentList() {
+    private void displayActivities() {
         activityBox.removeAllComponents();
         if (type == null || typeId == null) {
             return;
@@ -277,6 +277,6 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
 
     @Override
     public void reload() {
-        displayCommentList();
+        displayActivities();
     }
 }
