@@ -25,7 +25,7 @@ import com.esofthead.mycollab.utils.FieldGroupFormatter;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
-public class VersionFieldFormatter extends FieldGroupFormatter {
+public final class VersionFieldFormatter extends FieldGroupFormatter {
     private static VersionFieldFormatter _instance = new VersionFieldFormatter();
 
     private VersionFieldFormatter() {

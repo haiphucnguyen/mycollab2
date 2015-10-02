@@ -26,7 +26,7 @@ import com.esofthead.mycollab.utils.FieldGroupFormatter;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
-public class MilestoneFieldFormatter extends FieldGroupFormatter {
+public final class MilestoneFieldFormatter extends FieldGroupFormatter {
     private static MilestoneFieldFormatter _instance = new MilestoneFieldFormatter();
 
     private MilestoneFieldFormatter() {

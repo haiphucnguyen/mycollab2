@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.HistoryFieldFormat;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
-public class TaskFieldFormatter extends FieldGroupFormatter {
+public final class TaskFieldFormatter extends FieldGroupFormatter {
     private static TaskFieldFormatter _instance = new TaskFieldFormatter();
 
     private TaskFieldFormatter() {

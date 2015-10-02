@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.HistoryFieldFormat;
+import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.I;
 import com.hp.gagawa.java.elements.Li;
 import org.apache.commons.lang3.StringUtils;
@@ -124,7 +125,7 @@ public class FieldGroupFormatter {
                 content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
             }
 
-            return new I().appendText(content).write();
+            return new Div().appendText(content).write();
         }
     }
 

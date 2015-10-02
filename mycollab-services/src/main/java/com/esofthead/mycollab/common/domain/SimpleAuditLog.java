@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.common.domain;
 
 import com.esofthead.mycollab.core.utils.JsonDeSerializer;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.google.gson.reflect.TypeToken;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,7 +53,7 @@ public class SimpleAuditLog extends AuditLog {
 
     public String getPostedUserFullName() {
         if (StringUtils.isBlank(postedUserFullName)) {
-            return com.esofthead.mycollab.core.utils.StringUtils.extractNameFromEmail(getPosteduser());
+            return StringUtils.extractNameFromEmail(getPosteduser());
         }
         return postedUserFullName;
     }

@@ -39,7 +39,7 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
+public final class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectMemberHistoryFieldFormat.class);
 
     @Override

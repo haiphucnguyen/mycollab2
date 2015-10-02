@@ -26,7 +26,7 @@ import com.esofthead.mycollab.utils.FieldGroupFormatter;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
-public class BugFieldFormatter extends FieldGroupFormatter {
+public final class BugFieldFormatter extends FieldGroupFormatter {
     private static BugFieldFormatter _instance = new BugFieldFormatter();
 
     private BugFieldFormatter() {

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.utils.FieldGroupFormatter;
  * @author MyCollab Ltd.
  * @since 4.3.3
  */
-public class RiskFieldFormatter extends FieldGroupFormatter {
+public final class RiskFieldFormatter extends FieldGroupFormatter {
     private static final RiskFieldFormatter _instance = new RiskFieldFormatter();
 
     public RiskFieldFormatter() {

@@ -25,7 +25,7 @@ import com.esofthead.mycollab.utils.FieldGroupFormatter;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
-public class ComponentFieldFormatter extends FieldGroupFormatter {
+public final class ComponentFieldFormatter extends FieldGroupFormatter {
     private static ComponentFieldFormatter _instance = new ComponentFieldFormatter();
 
     private ComponentFieldFormatter() {

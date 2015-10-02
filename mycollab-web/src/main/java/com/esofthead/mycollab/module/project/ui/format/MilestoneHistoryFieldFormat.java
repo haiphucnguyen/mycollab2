@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
+public final class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
     private static final Logger LOG = LoggerFactory.getLogger(MilestoneHistoryFieldFormat.class);
 
     @Override

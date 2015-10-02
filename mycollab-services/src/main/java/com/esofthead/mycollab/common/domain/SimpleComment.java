@@ -16,11 +16,11 @@
  */
 package com.esofthead.mycollab.common.domain;
 
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ContentJcrDao;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +42,7 @@ public class SimpleComment extends CommentWithBLOBs {
     public String getOwnerFullName() {
         if (StringUtils.isBlank(ownerFullName)) {
             String displayName = getCreateduser();
-            return com.esofthead.mycollab.core.utils.StringUtils.extractNameFromEmail(displayName);
+            return StringUtils.extractNameFromEmail(displayName);
         }
         return ownerFullName;
     }
