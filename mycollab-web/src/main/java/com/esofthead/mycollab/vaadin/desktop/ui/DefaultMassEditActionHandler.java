@@ -25,7 +25,6 @@ import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.google.common.collect.HashBiMap;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.UI;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -72,7 +71,6 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
     @SuppressWarnings("unchecked")
     @Override
     public StreamResource buildStreamResource(ReportExportType exportType) {
-        String exportFileName = exportType.getDefaultFileName();
         AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter.getView()).getPagedBeanTable();
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("siteUrl", AppContext.getSiteUrl());
@@ -80,13 +78,13 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
             return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems(getReportTitle(),
                     new RpFieldsBuilder(pagedBeanTable.getDisplayColumns()), exportType,
                     presenter.getSearchService(),
-                    presenter.searchCriteria, getReportModelClassType(), parameters), exportFileName);
+                    presenter.searchCriteria, getReportModelClassType(), parameters), exportType.getDefaultFileName());
         } else {
             return new StreamResource(new SimpleGridExportItemsStreamResource.ListData(
                     getReportTitle(), new RpFieldsBuilder(
                     pagedBeanTable.getDisplayColumns()),
                     exportType, presenter.getSelectedItems(),
-                    getReportModelClassType(), parameters), exportFileName);
+                    getReportModelClassType(), parameters), exportType.getDefaultFileName());
         }
     }
 

@@ -411,6 +411,31 @@
             </plugins>
         </pluginManagement>
     </build>
+    <repositories>
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+        <repository>
+            <id>scalaz-repo</id>
+            <url>http://dl.bintray.com/scalaz/releases/</url>
+        </repository>
+        <repository>
+            <id>repository.springsource.milestone</id>
+            <name>SpringSource Milestone Repository</name>
+            <url>http://repo.springsource.org/milestone</url>
+        </repository>
+        <repository>
+            <id>mycollab-repo</id>
+            <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/7f5d21f18084973f4b01074ae8f59bb91080fd35/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mycollab-plugin-repo</id>
+            <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/7f5d21f18084973f4b01074ae8f59bb91080fd35/</url>
+        </pluginRepository>
+    </pluginRepositories>
     <profiles>
         <profile>
             <id>sonar</id>

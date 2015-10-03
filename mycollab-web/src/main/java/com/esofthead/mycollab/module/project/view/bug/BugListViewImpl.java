@@ -37,8 +37,9 @@ import com.esofthead.mycollab.module.project.view.bug.components.*;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.RpFieldsBuilder;
+import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -58,15 +59,14 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -176,12 +176,14 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
         Button exportPdfBtn = new Button("PDF");
+        exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
         FileDownloader pdfFileDownloder = new FileDownloader(buildStreamSource(ReportExportType.PDF));
         pdfFileDownloder.extend(exportPdfBtn);
 
         popupButtonsControl.addOption(exportPdfBtn);
 
         Button exportExcelBtn = new Button("Excel");
+        exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
         FileDownloader excelFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.EXCEL));
         excelFileDownloader.extend(exportExcelBtn);
         popupButtonsControl.addOption(exportExcelBtn);
@@ -234,8 +236,16 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         floatSidebar.setContainerId("main-body");
     }
 
-    private StreamResource buildStreamSource(ReportExportType type) {
-        return new StreamResource(new BugStreamResource("Bugs", type), type.getDefaultFileName());
+    private StreamResource buildStreamSource(ReportExportType exportType) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("siteUrl", AppContext.getSiteUrl());
+        List fields = Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
+                BugTableFieldDef.status(), BugTableFieldDef.resolution(), BugTableFieldDef.logBy(),
+                BugTableFieldDef.duedate(), BugTableFieldDef.assignUser());
+        return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems("Bugs",
+                new RpFieldsBuilder(fields), exportType,
+                ApplicationContextUtil.getSpringBean(BugService.class),
+                baseCriteria, SimpleBug.class, parameters), exportType.getDefaultFileName());
     }
 
     @Override
@@ -360,44 +370,5 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     @Override
     public AbstractPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
         throw new UnsupportedOperationException("This view doesn't support this operation");
-    }
-
-    class BugStreamResource extends ExportItemsStreamResource {
-        private Object currentValue;
-
-        public BugStreamResource(String reportTitle, ReportExportType reportExportType) {
-            super(AppContext.getTimezone(), AppContext.getUserLocale(), reportTitle, reportExportType, null);
-        }
-
-        @Override
-        protected void initReport() throws Exception {
-
-        }
-
-        @Override
-        protected void fillReport() throws Exception {
-            final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-            int totalBugs = bugService.getTotalCount(baseCriteria);
-            int pages = totalBugs / 20;
-            List<SimpleBug> bugsInReport = null;
-            reportBuilder.pageHeader(cmp.text("Hello world")).detail(cmp.text("AAA"));
-//            reportBuilder.detail(cmp.text("AAA"));
-            for (int i = 0; i < pages; i++) {
-                List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(baseCriteria, i + 1, 20));
-                for (SimpleBug bug : bugs) {
-                    Object property = PropertyUtils.getProperty(bug, "duedate");
-                    if (property != null) {
-                        if (currentValue == null || !currentValue.equals(property)) {
-                            currentValue = property;
-                            if (CollectionUtils.isNotEmpty(bugsInReport)) {
-
-                            }
-                        } else {
-
-                        }
-                    }
-                }
-            }
-        }
     }
 }
