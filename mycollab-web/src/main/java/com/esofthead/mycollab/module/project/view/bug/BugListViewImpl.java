@@ -179,7 +179,6 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
         FileDownloader pdfFileDownloder = new FileDownloader(buildStreamSource(ReportExportType.PDF));
         pdfFileDownloder.extend(exportPdfBtn);
-
         popupButtonsControl.addOption(exportPdfBtn);
 
         Button exportExcelBtn = new Button("Excel");
