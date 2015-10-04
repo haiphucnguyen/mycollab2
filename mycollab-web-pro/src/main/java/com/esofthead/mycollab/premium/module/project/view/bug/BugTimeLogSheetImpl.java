@@ -20,11 +20,14 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.TimeLogEditWindow;
 import com.esofthead.mycollab.module.project.view.bug.BugTimeLogSheet;
@@ -42,6 +45,32 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @ViewComponent
 public class BugTimeLogSheetImpl extends BugTimeLogSheet {
+    private ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent> timeChangeHandler = new
+            ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent>() {
+                @Override
+                public void handle(ProjectEvent.TimeLoggingChangedEvent event) {
+                    reloadTimeInfos();
+                }
+            };
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(timeChangeHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(timeChangeHandler);
+        super.detach();
+    }
+
+    private void reloadTimeInfos() {
+        Double billableHours = loadTotalBillableHours();
+        Double nonBillableHours = loadTotalNonBillableHours();
+        displayTime(beanItem);
+    }
+
     @Override
     protected boolean hasEditPermission() {
         return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
@@ -49,22 +78,12 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
 
     @Override
     protected Double getTotalBillableHours(SimpleBug bean) {
-        ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
-        criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
-        criteria.setTypeId(new NumberSearchField(bean.getId()));
-        criteria.setIsBillable(new BooleanSearchField(true));
-        return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
+        return bean.getBillableHours();
     }
 
     @Override
     protected Double getTotalNonBillableHours(SimpleBug bean) {
-        ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
-        criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
-        criteria.setTypeId(new NumberSearchField(bean.getId()));
-        criteria.setIsBillable(new BooleanSearchField(false));
-        return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
+        return bean.getNonBillableHours();
     }
 
     @Override
@@ -73,6 +92,24 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
             return bean.getEstimateremaintime();
         }
         return 0d;
+    }
+
+    private Double loadTotalBillableHours() {
+        ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
+        criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        criteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+        criteria.setTypeId(new NumberSearchField(beanItem.getId()));
+        criteria.setIsBillable(new BooleanSearchField(true));
+        return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
+    }
+
+    private Double loadTotalNonBillableHours() {
+        ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
+        criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        criteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+        criteria.setTypeId(new NumberSearchField(beanItem.getId()));
+        criteria.setIsBillable(new BooleanSearchField(false));
+        return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 
     @Override
@@ -106,7 +143,6 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
             item.setIsbillable(isBillableHours());
-
             itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
         }
 
@@ -115,7 +151,6 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
             BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
             bean.setEstimateremaintime(getUpdateRemainTime());
             bugService.updateWithSession(bean, AppContext.getUsername());
-
         }
 
         @Override

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.reporting.spring;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.*;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
@@ -134,8 +135,29 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
                 return "";
             }
         };
-//        map.put("resolution", new I18nExpression("resolution", OptionI18nEnum.BugResolution.class));
+
+        DRIExpression<String> logUserTitleExpr = new StringExpression("loguserFullName");
+        DRIExpression<String> logUserHrefExpr = new AbstractSimpleExpression<String>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String evaluate(ReportParameters reportParameters) {
+                String logUser = reportParameters.getFieldValue("logby");
+                if (logUser != null) {
+                    String siteUrl = reportParameters.getParameterValue("siteUrl");
+                    return AccountLinkGenerator.generatePreviewFullUserLink(siteUrl, logUser);
+                }
+
+                return "";
+            }
+        };
+
+        map.put("severity", new I18nExpression("severity", OptionI18nEnum.BugSeverity.class));
+        map.put("priority", new I18nExpression("priority", OptionI18nEnum.BugPriority.class));
+        map.put("status", new I18nExpression("status", OptionI18nEnum.BugStatus.class));
+        map.put("resolution", new I18nExpression("resolution", OptionI18nEnum.BugResolution.class));
         map.put("assignuserFullName", new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
+        map.put("loguserFullName", new HyperlinkValue(logUserTitleExpr, logUserHrefExpr));
         map.put("duedate", new DateExpression("duedate"));
         return map;
     }

@@ -63,6 +63,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     private MVerticalLayout content;
     private HorizontalLayout headerPanel;
 
+    private boolean hasTimeChange = false;
     private Button addBtn;
     private Label totalSpentTimeLbl;
     private NumericTextField newTimeInputField;
@@ -84,6 +85,14 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
         this.initUI();
         this.loadTimeValue();
+        this.addCloseListener(new CloseListener() {
+            @Override
+            public void windowClose(CloseEvent e) {
+                if (hasTimeChange) {
+                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TimeLogEditWindow.this));
+                }
+            }
+        });
     }
 
     private void initUI() {
@@ -221,10 +230,10 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                             .showWarningNotification("You must enter a positive number value");
                 }
                 if (d > 0) {
+                    hasTimeChange = true;
                     saveTimeInvest();
                     loadTimeValue();
                     newTimeInputField.setValue("0.0");
-                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TimeLogEditWindow.this));
                 }
             }
 
@@ -260,8 +269,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         remainTimeInputField = new NumericTextField();
         remainTimeInputField.setWidth("80px");
         addLayout.addComponent(remainTimeInputField);
-        addLayout.setComponentAlignment(remainTimeInputField,
-                Alignment.MIDDLE_LEFT);
+        addLayout.setComponentAlignment(remainTimeInputField, Alignment.MIDDLE_LEFT);
 
         addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -276,6 +284,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                         NotificationUtil.showWarningNotification("You must enter a positive number value");
                     }
                     if (d >= 0) {
+                        hasTimeChange = true;
                         updateTimeRemain();
                         remainTimeLbl.setValue(remainTimeInputField.getValue());
                         remainTimeInputField.setValue("0.0");

@@ -40,6 +40,8 @@ public class SimpleBug extends BugWithBLOBs {
     private String projectname;
     private String projectShortName;
     private Integer numComments;
+    private Double billableHours;
+    private Double nonBillableHours;
 
     @NotBindable
     private List<Version> affectedVersions;
@@ -159,6 +161,22 @@ public class SimpleBug extends BugWithBLOBs {
 
     public boolean isCompleted() {
         return BugStatus.Verified.name().equals(getStatus()) || BugStatus.Resolved.name().equals(getStatus());
+    }
+
+    public Double getBillableHours() {
+        return billableHours;
+    }
+
+    public void setBillableHours(Double billableHours) {
+        this.billableHours = billableHours;
+    }
+
+    public Double getNonBillableHours() {
+        return nonBillableHours;
+    }
+
+    public void setNonBillableHours(Double nonBillableHours) {
+        this.nonBillableHours = nonBillableHours;
     }
 
     public boolean isOverdue() {

@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.reporting.expression;
 
+import com.esofthead.mycollab.core.SimpleLogging;
 import net.sf.dynamicreports.report.definition.ReportParameters;
 
 /**
@@ -36,7 +37,7 @@ public class StringExpression extends AbstractFieldExpression implements MValue 
         try {
             return param.getFieldValue(field);
         } catch (Exception e) {
-            e.printStackTrace();
+			SimpleLogging.error("Error while do report", e);
             return "";
         }
 	}
