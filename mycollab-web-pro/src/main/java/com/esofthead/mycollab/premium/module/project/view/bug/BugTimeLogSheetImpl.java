@@ -36,6 +36,8 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.UI;
 
 /**
@@ -48,6 +50,8 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent> timeChangeHandler = new
             ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent>() {
                 @Override
+                @Subscribe
+                @AllowConcurrentEvents
                 public void handle(ProjectEvent.TimeLoggingChangedEvent event) {
                     reloadTimeInfos();
                 }
@@ -68,6 +72,8 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private void reloadTimeInfos() {
         Double billableHours = loadTotalBillableHours();
         Double nonBillableHours = loadTotalNonBillableHours();
+        beanItem.setBillableHours(billableHours);
+        beanItem.setNonBillableHours(nonBillableHours);
         displayTime(beanItem);
     }
 

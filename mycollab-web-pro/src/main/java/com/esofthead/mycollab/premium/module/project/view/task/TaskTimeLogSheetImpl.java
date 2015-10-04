@@ -20,12 +20,15 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.TimeLogEditWindow;
@@ -33,6 +36,8 @@ import com.esofthead.mycollab.module.project.view.task.TaskTimeLogSheet;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.UI;
 
 /**
@@ -43,24 +48,62 @@ import com.vaadin.ui.UI;
 public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
     private static final long serialVersionUID = 1L;
 
+    private ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent> timeChangeHandler = new
+            ApplicationEventListener<ProjectEvent.TimeLoggingChangedEvent>() {
+                @Override
+                @Subscribe
+                @AllowConcurrentEvents
+                public void handle(ProjectEvent.TimeLoggingChangedEvent event) {
+                    reloadTimeInfos();
+                }
+            };
+
     @Override
-    protected Double getTotalBillableHours(SimpleTask bean) {
+    public void attach() {
+        EventBusFactory.getInstance().register(timeChangeHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(timeChangeHandler);
+        super.detach();
+    }
+
+    private void reloadTimeInfos() {
+        Double billableHours = loadTotalBillableHours();
+        Double nonBillableHours = loadTotalNonBillableHours();
+        beanItem.setBillableHours(billableHours);
+        beanItem.setNonBillableHours(nonBillableHours);
+        displayTime(beanItem);
+    }
+
+    private Double loadTotalBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
-        criteria.setTypeId(new NumberSearchField(bean.getId()));
+        criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
     }
 
-    @Override
-    protected Double getTotalNonBillableHours(SimpleTask bean) {
+    private Double loadTotalNonBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         criteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
-        criteria.setTypeId(new NumberSearchField(bean.getId()));
+        criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
+    }
+
+    @Override
+    protected Double getTotalBillableHours(SimpleTask bean) {
+        return beanItem.getBillableHours();
+    }
+
+    @Override
+    protected Double getTotalNonBillableHours(SimpleTask bean) {
+        return beanItem.getNonBillableHours();
     }
 
     @Override
