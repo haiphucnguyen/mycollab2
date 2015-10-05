@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web-community.
- *
- * mycollab-web-community is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web-community is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web-community.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
@@ -27,18 +11,32 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.2
+ * @since 5.1.4
  */
-public class PopupBeanField extends PopupView {
-    public PopupBeanField(final FontIcon icon, final String valueAsHtml) {
-        this(icon.getHtml() + " " + StringUtils.trim(valueAsHtml, 20, true));
+public class PopupFieldBuilder {
+    private String captionHtml;
+    private String description = "Edit";
+
+    public PopupFieldBuilder withCaptionAndIcon(FontIcon icon, String caption) {
+        captionHtml = icon.getHtml() + " " + StringUtils.trim(caption, 20, true);
+        return this;
     }
 
-    public PopupBeanField(final String valueAsHtml) {
-        super(new Content() {
+    public PopupFieldBuilder withCaption(String caption) {
+        this.captionHtml = caption;
+        return this;
+    }
+
+    public PopupFieldBuilder withDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public PopupView build() {
+        final PopupView view = new PopupView(new PopupView.Content() {
             @Override
             public String getMinimizedValueAsHTML() {
-                return valueAsHtml;
+                return captionHtml;
             }
 
             @Override
@@ -56,6 +54,8 @@ public class PopupBeanField extends PopupView {
                 return layout;
             }
         });
-        this.setStyleName("block-popupedit");
+        view.setDescription(description);
+        view.setStyleName("block-popupedit");
+        return view;
     }
 }

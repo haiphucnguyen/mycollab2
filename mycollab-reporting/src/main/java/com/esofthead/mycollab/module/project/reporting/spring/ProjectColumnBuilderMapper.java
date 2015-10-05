@@ -159,6 +159,8 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         map.put("assignuserFullName", new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
         map.put("loguserFullName", new HyperlinkValue(logUserTitleExpr, logUserHrefExpr));
         map.put("duedate", new DateExpression("duedate"));
+        map.put("billableHours", new HumanTimeExpression("billableHours"));
+        map.put("nonBillableHours", new HumanTimeExpression("nonBillableHours"));
         return map;
     }
 

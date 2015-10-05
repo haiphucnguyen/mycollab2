@@ -240,7 +240,8 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         parameters.put("siteUrl", AppContext.getSiteUrl());
         List fields = Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
                 BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
-                BugTableFieldDef.logBy(), BugTableFieldDef.duedate(), BugTableFieldDef.assignUser());
+                BugTableFieldDef.logBy(), BugTableFieldDef.duedate(), BugTableFieldDef.assignUser(),
+                BugTableFieldDef.billableHours(), BugTableFieldDef.nonBillableHours());
         return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems("Bugs",
                 new RpFieldsBuilder(fields), exportType,
                 ApplicationContextUtil.getSpringBean(BugService.class),

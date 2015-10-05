@@ -313,4 +313,14 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         return builder.build();
     }
+
+    @Override
+    public PopupView createBugNonbillableHoursPopupField(SimpleBug bug) {
+        return null;
+    }
+
+    @Override
+    public PopupView createBugBillableHoursPopupField(SimpleBug bug) {
+        return null;
+    }
 }

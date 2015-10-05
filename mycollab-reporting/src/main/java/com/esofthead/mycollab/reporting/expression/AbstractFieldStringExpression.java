@@ -24,12 +24,11 @@ import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
  * @since 4.1.2
  * 
  */
-abstract class AbstractFieldExpression extends AbstractSimpleExpression<String>
-		implements MValue {
+public abstract class AbstractFieldStringExpression extends AbstractSimpleExpression<String> implements MValue {
 	private static final long serialVersionUID = 1L;
 	protected String field;
 
-	AbstractFieldExpression(String field) {
+	AbstractFieldStringExpression(String field) {
 		this.field = field;
 	}
 }

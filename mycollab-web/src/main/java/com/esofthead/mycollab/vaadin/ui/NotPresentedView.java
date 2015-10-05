@@ -39,7 +39,7 @@ public class NotPresentedView extends AbstractPageView {
 
         final Label titleIcon = new Label(FontAwesome.EXCLAMATION_CIRCLE.getHtml(), ContentMode.HTML);
         titleIcon.setStyleName("warning-icon");
-        titleIcon.setSizeUndefined();
+        titleIcon.setWidth("60px");
         this.addComponent(titleIcon);
 
         Label label = new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
