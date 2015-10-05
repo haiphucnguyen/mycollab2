@@ -27,7 +27,7 @@ import java.util.Locale;
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
-public class DateTimeExpression extends AbstractFieldStringExpression {
+public class DateTimeExpression extends SimpleFieldExpression {
     private static final long serialVersionUID = 1L;
 
     public DateTimeExpression(String field) {

@@ -38,8 +38,9 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;
-import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
+import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -236,16 +237,22 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     private StreamResource buildStreamSource(ReportExportType exportType) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("siteUrl", AppContext.getSiteUrl());
         List fields = Arrays.asList(BugTableFieldDef.summary(), BugTableFieldDef.environment(), BugTableFieldDef.priority(),
                 BugTableFieldDef.severity(), BugTableFieldDef.status(), BugTableFieldDef.resolution(),
                 BugTableFieldDef.logBy(), BugTableFieldDef.duedate(), BugTableFieldDef.assignUser(),
                 BugTableFieldDef.billableHours(), BugTableFieldDef.nonBillableHours());
-        return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems("Bugs",
-                new RpFieldsBuilder(fields), exportType,
-                ApplicationContextUtil.getSpringBean(BugService.class),
-                baseCriteria, SimpleBug.class, parameters), exportType.getDefaultFileName());
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Bugs", new
+                RpFieldsBuilder(fields), exportType, SimpleBug.class, ApplicationContextUtil.getSpringBean(BugService.class));
+        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
+            @Override
+            protected Map<String, Object> initReportParameters() {
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("siteUrl", AppContext.getSiteUrl());
+                parameters.put(SimpleReportTemplateExecutor.CRITERIA, baseCriteria);
+                return parameters;
+            }
+        };
+        return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
     @Override

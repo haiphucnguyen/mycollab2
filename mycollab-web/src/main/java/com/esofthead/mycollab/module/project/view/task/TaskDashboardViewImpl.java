@@ -39,8 +39,9 @@ import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;
-import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
+import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
@@ -370,14 +371,21 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     private StreamResource buildStreamSource(ReportExportType exportType) {
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("siteUrl", AppContext.getSiteUrl());
-        List fields = Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.duedate(), TaskTableFieldDef
-                .percentagecomplete(), TaskTableFieldDef.startdate(), TaskTableFieldDef.assignee());
-        return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems("Tasks",
-                new RpFieldsBuilder(fields), exportType,
-                ApplicationContextUtil.getSpringBean(ProjectTaskService.class),
-                baseCriteria, SimpleTask.class, parameters), exportType.getDefaultFileName());
+        List fields = Arrays.asList(TaskTableFieldDef.taskname(), TaskTableFieldDef.status(), TaskTableFieldDef.duedate(),
+                TaskTableFieldDef.percentagecomplete(), TaskTableFieldDef.startdate(), TaskTableFieldDef.assignee(),
+                TaskTableFieldDef.billableHours(), TaskTableFieldDef.nonBillableHours());
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Tasks",
+                new RpFieldsBuilder(fields), exportType, SimpleTask.class, ApplicationContextUtil.getSpringBean(ProjectTaskService.class));
+        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
+            @Override
+            protected Map<String, Object> initReportParameters() {
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("siteUrl", AppContext.getSiteUrl());
+                parameters.put(SimpleReportTemplateExecutor.CRITERIA, baseCriteria);
+                return parameters;
+            }
+        };
+        return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
     @Override

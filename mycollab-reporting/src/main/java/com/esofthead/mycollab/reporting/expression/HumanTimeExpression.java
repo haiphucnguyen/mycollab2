@@ -7,7 +7,7 @@ import net.sf.dynamicreports.report.definition.ReportParameters;
  * @author MyCollab Ltd
  * @since 5.1.4
  */
-public class HumanTimeExpression extends AbstractFieldStringExpression {
+public class HumanTimeExpression extends SimpleFieldExpression {
     public HumanTimeExpression(String field) {
         super(field);
     }

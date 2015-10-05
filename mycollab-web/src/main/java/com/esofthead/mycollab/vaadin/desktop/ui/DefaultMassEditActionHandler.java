@@ -17,9 +17,7 @@
 package com.esofthead.mycollab.vaadin.desktop.ui;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.reporting.RpFieldsBuilder;
-import com.esofthead.mycollab.reporting.SimpleGridExportItemsStreamResource;
+import com.esofthead.mycollab.reporting.*;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.MassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.ViewItemAction;
@@ -72,20 +70,25 @@ public abstract class DefaultMassEditActionHandler implements MassItemActionHand
     @Override
     public StreamResource buildStreamResource(ReportExportType exportType) {
         AbstractPagedBeanTable pagedBeanTable = ((ListView) presenter.getView()).getPagedBeanTable();
-        Map<String, Object> parameters = new HashMap<>();
+        final Map<String, Object> parameters = new HashMap<>();
         parameters.put("siteUrl", AppContext.getSiteUrl());
+        parameters.put(SimpleReportTemplateExecutor.CRITERIA, presenter.searchCriteria);
+        ReportTemplateExecutor reportTemplateExecutor;
         if (presenter.isSelectAll) {
-            return new StreamResource(new SimpleGridExportItemsStreamResource.AllItems(getReportTitle(),
-                    new RpFieldsBuilder(pagedBeanTable.getDisplayColumns()), exportType,
-                    presenter.getSearchService(),
-                    presenter.searchCriteria, getReportModelClassType(), parameters), exportType.getDefaultFileName());
+            reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems(getReportTitle(),
+                    new RpFieldsBuilder(pagedBeanTable.getDisplayColumns()), exportType, getReportModelClassType(),
+                    presenter.getSearchService());
         } else {
-            return new StreamResource(new SimpleGridExportItemsStreamResource.ListData(
-                    getReportTitle(), new RpFieldsBuilder(
-                    pagedBeanTable.getDisplayColumns()),
-                    exportType, presenter.getSelectedItems(),
-                    getReportModelClassType(), parameters), exportType.getDefaultFileName());
+            reportTemplateExecutor = new SimpleReportTemplateExecutor.ListData(getReportTitle(),
+                    new RpFieldsBuilder(pagedBeanTable.getDisplayColumns()), exportType, presenter.getSelectedItems(),
+                    getReportModelClassType());
         }
+        return new StreamResource(new ReportStreamSource(reportTemplateExecutor) {
+            @Override
+            protected Map<String, Object> initReportParameters() {
+                return parameters;
+            }
+        }, exportType.getDefaultFileName());
     }
 
     protected abstract void onSelectExtra(String id);

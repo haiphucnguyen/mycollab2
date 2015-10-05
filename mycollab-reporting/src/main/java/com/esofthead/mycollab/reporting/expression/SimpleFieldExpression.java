@@ -16,29 +16,17 @@
  */
 package com.esofthead.mycollab.reporting.expression;
 
-import com.esofthead.mycollab.core.SimpleLogging;
-import net.sf.dynamicreports.report.definition.ReportParameters;
+import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1.2
- * 
  */
-public class StringExpression extends AbstractFieldStringExpression implements MValue {
-	private static final long serialVersionUID = 1L;
+public abstract class SimpleFieldExpression<T> extends AbstractSimpleExpression<T> implements MValue {
+    private static final long serialVersionUID = 1L;
+    protected String field;
 
-	public StringExpression(String field) {
-		super(field);
-	}
-
-	@Override
-	public String evaluate(ReportParameters param) {
-        try {
-            return param.getFieldValue(field);
-        } catch (Exception e) {
-			SimpleLogging.error("Error while do report", e);
-            return "";
-        }
-	}
+    public SimpleFieldExpression(String field) {
+        this.field = field;
+    }
 }

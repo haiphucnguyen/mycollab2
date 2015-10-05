@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.esofthead.mycollab.module.project.reporting.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrderComponent;
@@ -136,9 +135,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                 + ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
                 .getProject().getName() != null) ? CurrentProjectVariables
                 .getProject().getName() : "");
-        ExportTimeLoggingStreamResource exportStream = new ExportTimeLoggingStreamResource(title, exportType,
-                ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class), searchCriteria);
-        return new StreamResource(exportStream, exportType.getDefaultFileName());
+        //TODO: make report for time logging
+        return null;
     }
 
     private void setTimeRange() {

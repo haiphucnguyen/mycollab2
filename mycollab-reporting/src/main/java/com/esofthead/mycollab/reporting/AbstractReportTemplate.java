@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.reporting;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.reporting.expression.AbstractFieldStringExpression;
+import com.esofthead.mycollab.reporting.expression.SimpleFieldExpression;
 import com.esofthead.mycollab.reporting.expression.CompBuilderValue;
 import com.esofthead.mycollab.reporting.expression.HyperlinkValue;
 import com.esofthead.mycollab.reporting.expression.MValue;
@@ -121,8 +121,8 @@ public abstract class AbstractReportTemplate {
             return buildHyperLink((HyperlinkValue) value);
         } else if (value instanceof CompBuilderValue) {
             return buildComp((CompBuilderValue) value);
-        } else if (value instanceof AbstractFieldStringExpression) {
-            return buildText((AbstractFieldStringExpression) value);
+        } else if (value instanceof SimpleFieldExpression) {
+            return buildText((SimpleFieldExpression) value);
         } else {
             throw new MyCollabException("Do not support mvalue type " + value);
         }
