@@ -55,7 +55,7 @@ Version 5.1.4
 
 * Gantt chart bug fixes
 * Calculating end date by start date and duration
-* Toggle project menu in MS Edge is not effective
+* Toggle project menu in MS Edge, Firefox is not effective
 * Other minor UI improvements
 * A lot of reporting enhancements: better layout, more detail information, font awesome and more
 * New installer tool, clean release notes and license view
