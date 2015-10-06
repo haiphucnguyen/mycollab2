@@ -22,7 +22,6 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.reporting.ExportItemsStreamResource;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
