@@ -154,47 +154,6 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
-                        <executions>
-                            <execution>
-                                <id>create-staging-area</id>
-                                <phase>process-resources</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <copy todir="${staging.dir}">
-                                            <fileset dir="${izpack.dir.app}"/>
-                                        </copy>
-                                        <copy todir="${staging.dir}/conf">
-                                            <fileset dir="${basedir}/src/main/conf">
-                                                <exclude name="mycollab.properties"/>
-                                            </fileset>
-                                        </copy>
-                                        <copy todir="${staging.dir}/logs">
-                                            <fileset dir="${basedir}/src/main/logs"/>
-                                        </copy>
-                                        <copy todir="${staging.dir}/scripts">
-                                            <fileset dir="${basedir}/src/main/scripts"/>
-                                        </copy>
-                                        <copy todir="${staging.dir}/txt">
-                                            <fileset dir="${basedir}/src/main/txt"/>
-                                        </copy>
-                                        <copy todir="${staging.dir}/webapp">
-                                            <fileset dir="${basedir}/src/main/webapp"/>
-                                        </copy>
-                                        <copy todir="${staging.dir}/lib">
-                                            <fileset dir="${basedir}/src/main/lib"/>
-                                        </copy>
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <version>2.10</version>
                         <configuration>
@@ -280,12 +239,6 @@
                                     <outfile>${project.build.directory}/MyCollab-Installer-${project.version}.exe
                                     </outfile>
                                     <downloadUrl>http://java.com/download</downloadUrl>
-                                    <!--
-                                    <classPath>
-                                        <mainClass>com.izforge.izpack.installer.Installer</mainClass>
-                                        <preCp>anything</preCp>
-                                    </classPath>
-                                    -->
                                     <icon>src/main/windows-resources/MyCollab.ico</icon>
                                     <jre>
                                         <minVersion>1.7.0</minVersion>
@@ -308,20 +261,76 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>sh.tak.appbundler</groupId>
-                        <artifactId>appbundle-maven-plugin</artifactId>
-                        <version>1.0.4</version>
-                        <configuration>
-                            <mainClass>com.izforge.izpack.installer.Installer</mainClass>
-                        </configuration>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <id>create-staging-area</id>
+                                <phase>process-resources</phase>
                                 <goals>
-                                    <goal>bundle</goal>
+                                    <goal>run</goal>
                                 </goals>
+                                <configuration>
+                                    <target>
+                                        <copy todir="${staging.dir}">
+                                            <fileset dir="${izpack.dir.app}"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/conf">
+                                            <fileset dir="${basedir}/src/main/conf">
+                                                <exclude name="mycollab.properties"/>
+                                            </fileset>
+                                        </copy>
+                                        <copy todir="${staging.dir}/logs">
+                                            <fileset dir="${basedir}/src/main/logs"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/scripts">
+                                            <fileset dir="${basedir}/src/main/scripts"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/txt">
+                                            <fileset dir="${basedir}/src/main/txt"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/webapp">
+                                            <fileset dir="${basedir}/src/main/webapp"/>
+                                        </copy>
+                                        <copy todir="${staging.dir}/lib">
+                                            <fileset dir="${basedir}/src/main/lib"/>
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>create-macos-bundle</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <taskdef name="jarbundler"
+                                                 classname="net.sourceforge.jarbundler.JarBundler"
+                                                 classpathref="maven.plugin.classpath"/>
+                                        <jarbundler dir="target"
+                                                    name="MyCollab-MacOS-${project.version}"
+                                                    mainclass="com.izforge.izpack.installer.bootstrap.Installer"
+                                                    jar="target/MyCollab-Generic-${project.version}.jar"
+                                                    copyright="©2015, MyCollab"
+                                                    jvmversion="1.7+"
+                                                    icon="src/main/macos-resources/mycollab.icns"
+                                                    stubfile="src/main/macos-resources/universalJavaApplicationStub"
+                                                    version="${project.version}" build="${project.version} - GA"
+                                                    useJavaXKey="true" showplist="true" verbose="true"/>
+                                    </target>
+                                </configuration>
                             </execution>
                         </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.esofthead.mycollab</groupId>
+                                <artifactId>jarbundler</artifactId>
+                                <version>2.4.0</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
