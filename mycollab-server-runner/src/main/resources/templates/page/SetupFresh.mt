@@ -102,7 +102,7 @@ h3 {
                                         </tr>
                                         <tr><td><h4>You can get this info from your web host. It could be an IP
                                         address or server name. You must not include the server port in
-                                        this value</h4></td></tr>
+                                        this value. If you want to change the server port, please use <a href="https://community.mycollab.com/faq/#defaultport">this way</a></h4></td></tr>
 
                                     </tbody>
                                 </table>
@@ -387,9 +387,7 @@ function updateInfoAction(){
         return;
     }
     $('#setupBtn').html('<img src="${defaultUrls.cdn_url}icons/lazy-load-icon.gif" alt="Pulpit rock" style="height:18px;"><span style="font-size: 15px">&nbsp;&nbsp;Setting up...</span>');
-    $('#setupBtn').after('<p><h3 style=\"color:orange\">Please be patient! It may takes several minutes to set up
-    MyCollab depends on your servers performance. Whenever the install process is completed, the browser is
-    redirected automatically to the application home page</h3></p>');
+    $('#setupBtn').after('<p><h3 style=\"color:orange\">Please be patient! It may takes several minutes to set up MyCollab depends on your servers performance. Whenever the install process is completed, the browser is redirected automatically to the application home page</h3></p>');
     var urlPost = "/install";
 
     var tlsStatus = "";
