@@ -37,7 +37,7 @@ Installation
 .mycollab.com/upgrade/](http://community.mycollab.com/upgrade/) will instruct steps to make your bug easily
 
 If you want to understand more MyCollab advanced configuration settings, please visit the link [https://community
-.mycollab.com/configuration/](https://community.mycollab.com/configuration/). You will finish reading and 
+.mycollab.com/configuration/](https://community.mycollab.com/configuration/). You will finish reading and
 understanding in a matter of minutes.
 
 Last changelog
@@ -215,7 +215,7 @@ Version 5.0.8
 * Upload file in page editor throws exception
 * Add a new project page throws exception
 * Fix several bugs relate to Gantt chart
-* Display the new user information when user re-login by another account 
+* Display the new user information when user re-login by another account
 * Fix missing assets in email template
 * Some views can not display well on internet explorer browser
 * Crm menu does not refresh if user logout then login with two different accounts

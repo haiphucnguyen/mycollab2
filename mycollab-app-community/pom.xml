@@ -236,7 +236,8 @@
                                 <configuration>
                                     <headerType>gui</headerType>
                                     <jar>${project.build.directory}/MyCollab-Generic-${project.version}.jar</jar>
-                                    <outfile>${project.build.directory}/MyCollab-Installer-${project.version}.exe</outfile>
+                                    <outfile>${project.build.directory}/MyCollab-Installer-${project.version}.exe
+                                    </outfile>
                                     <downloadUrl>http://java.com/download</downloadUrl>
                                     <classPath>
                                         <mainClass>com.izforge.izpack.installer.Installer</mainClass>
@@ -312,17 +313,21 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <taskdef name="jarbundler"
-                                                 classname="net.sourceforge.jarbundler.JarBundler"
+                                        <property environment="env" />
+                                        <taskdef name="bundleapp"
+                                                 classname="com.oracle.appbundler.AppBundlerTask"
                                                  classpathref="maven.plugin.classpath"/>
-                                        <jarbundler dir="target"
-                                                    name="MyCollab-MacOS-${project.version}"
-                                                    mainclass="com.izforge.izpack.installer.Installer"
-                                                    jar="target/MyCollab-Generic-${project.version}.jar"
-                                                    copyright="©2015, MyCollab"
-                                                    icon="src/main/macos-resources/mycollab.icns"
-                                                    version="${project.version}" build="GA"
-                                                    infostring="MyCollab - the stable, rich features, and high performance platform of Project Management and CRM tools"/>
+                                        <bundleapp displayname="MyCollab"
+                                                   identifier="MyCollab Ltd"
+                                                   name="MyCollab-MacOS-${project.version}"
+                                                   mainclassname="com.izforge.izpack.installer.Installer"
+                                                   outputdirectory="target"
+                                                   copyright="©2015, MyCollab"
+                                                   icon="src/main/macos-resources/mycollab.icns"
+                                                   shortversion="${project.version}">
+                                            <runtime dir="${env.JAVA_HOME}" />
+                                            <classpath file="target/MyCollab-Generic-${project.version}.jar"/>
+                                        </bundleapp>
                                     </target>
                                 </configuration>
                             </execution>
@@ -330,8 +335,8 @@
                         <dependencies>
                             <dependency>
                                 <groupId>com.esofthead.mycollab</groupId>
-                                <artifactId>jarbundler</artifactId>
-                                <version>2.3.1</version>
+                                <artifactId>appbundler</artifactId>
+                                <version>1.0</version>
                             </dependency>
                         </dependencies>
                     </plugin>
