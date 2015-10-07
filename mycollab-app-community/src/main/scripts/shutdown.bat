@@ -4,6 +4,9 @@ rem Start Script for the MYCOLLAB Server
 rem -----------------------------------------------------------------------------
 
 if "%OS%" == "Windows_NT" setlocal
-call mycollab.bat start
+
+set "EXECUTABLE=mycollab.bat"
+
+call "%EXECUTABLE%" --stop
 
 :end
