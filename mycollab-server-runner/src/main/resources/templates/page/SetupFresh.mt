@@ -100,10 +100,7 @@ h3 {
                                         <tr>
                                             <td><input id="serverAddress"/></td>
                                         </tr>
-                                        <tr><td><h4>You can get this info from your web host. It could be an IP
-                                        address or server name. You must not include the server port in
-                                        this value. If you want to change the server port, please use <a href="https://community.mycollab.com/faq/#defaultport">this way</a></h4></td></tr>
-
+                                        <tr><td><h4>You can get this info from your web host. It could be an IP address or server name. You must not include the server port in this value. If you want to change the server port, please use <a href="https://community.mycollab.com/faq/#defaultport">this way</a></h4></td></tr>
                                     </tbody>
                                 </table>
                             </form>
