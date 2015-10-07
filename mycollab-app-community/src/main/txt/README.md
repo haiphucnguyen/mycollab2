@@ -48,7 +48,7 @@ Version 5.1.4
 
 **Library Upgrades**
 
-* Upgrade Vaadin 7.5.6
+* Upgrade Vaadin 7.5.7
 * Upgrade Hiraki CP 2.3.10, Hibernate Validator 5.2.2
 
 **Improvements & New Features**

@@ -49,7 +49,7 @@ public abstract class Storage {
         String storageSystem = ApplicationProperties.getString(ApplicationProperties.STORAGE_SYSTEM,
                 Storage.FILE_STORAGE_SYSTEM);
         if (Storage.FILE_STORAGE_SYSTEM.equals(storageSystem)) {
-            instance = new FileStorage();
+            instance = FileStorage.getInstance();
         } else if (Storage.S3_STORAGE_SYSTEM.equals(storageSystem)) {
             try {
                 Class<Storage> s3Conf = (Class<Storage>) Class.forName(S3_CONF_CLS);
