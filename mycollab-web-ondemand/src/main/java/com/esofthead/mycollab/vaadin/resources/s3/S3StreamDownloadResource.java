@@ -20,7 +20,7 @@ package com.esofthead.mycollab.vaadin.resources.s3;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.ondemand.configuration.S3Storage;
 import com.vaadin.server.DownloadStream;
@@ -77,7 +77,7 @@ public class S3StreamDownloadResource extends StreamResource {
         @Override
         public InputStream getStream() {
             String fileName = getFilename(documentPath);
-            S3Storage storageConfiguration = (S3Storage) Storage.getInstance();
+            S3Storage storageConfiguration = (S3Storage) StorageFactory.getInstance();
             fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
             AmazonS3 s3Client = storageConfiguration.newS3Client();
             try {

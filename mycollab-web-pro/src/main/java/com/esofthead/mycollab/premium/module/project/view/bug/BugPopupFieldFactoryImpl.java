@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.bug;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -66,7 +66,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = Storage.getAvatarPath(bug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getInstance().getAvatarPath(bug.getAssignUserAvatarId(), 16);
                 Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName());
                 return img.write();
             }
@@ -75,7 +75,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                 SimpleBug newBug = bugService.findById(bug.getId(), AppContext.getAccountId());
-                String avatarLink = Storage.getAvatarPath(newBug.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getInstance().getAvatarPath(newBug.getAssignUserAvatarId(), 16);
                 Img img = new Img(newBug.getAssignuserFullName(), avatarLink).setTitle(newBug.getAssignuserFullName());
                 return img.write();
             }

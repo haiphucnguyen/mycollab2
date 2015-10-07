@@ -18,7 +18,7 @@ package com.esofthead.mycollab.ondemand.module.file.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.ondemand.configuration.S3Storage;
@@ -34,7 +34,7 @@ public class S3RawContentServiceImpl implements RawContentService {
     private S3Storage storageConfiguration;
 
     public S3RawContentServiceImpl() {
-        storageConfiguration = (S3Storage) Storage.getInstance();
+        storageConfiguration = (S3Storage) StorageFactory.getInstance();
     }
 
     @Override

@@ -16,15 +16,14 @@
  */
 package com.esofthead.mycollab.ondemand.module.file.service;
 
-import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.stereotype.Service;
-
 import com.esofthead.mycollab.cache.IgnoreCacheClass;
-import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.persistence.service.IService;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 import com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl;
 import com.esofthead.mycollab.ondemand.module.file.service.impl.S3RawContentServiceImpl;
+import org.springframework.beans.factory.config.AbstractFactoryBean;
+import org.springframework.stereotype.Service;
 
 /**
  * Factory spring bean to solve resolution of MyCollab raw content service
@@ -36,13 +35,12 @@ import com.esofthead.mycollab.ondemand.module.file.service.impl.S3RawContentServ
  */
 @Service(value = "rawContentService")
 @IgnoreCacheClass
-public class RawContentServiceFactoryBean extends
-		AbstractFactoryBean<RawContentService> implements IService {
+public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContentService> implements IService {
 
 	@Override
 	protected RawContentService createInstance() throws Exception {
 		try {
-			if (Storage.isS3Storage()) {
+			if (StorageFactory.getInstance().isS3Storage()) {
 				return new S3RawContentServiceImpl();
 			} else {
 				return new FileRawContentServiceImpl();

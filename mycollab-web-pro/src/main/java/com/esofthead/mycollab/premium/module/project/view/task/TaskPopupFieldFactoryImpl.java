@@ -3,7 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view.task;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -57,7 +57,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
-                String avatarLink = Storage.getAvatarPath(task.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getInstance().getAvatarPath(task.getAssignUserAvatarId(), 16);
                 Img img = new Img(task.getAssignUserFullName(), avatarLink).setTitle(task.getAssignUserFullName());
                 return img.write();
             }
@@ -66,7 +66,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             protected String generateSmallAsHtmlAfterUpdate() {
                 ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                 SimpleTask newTask = taskService.findById(task.getId(), AppContext.getAccountId());
-                String avatarLink = Storage.getAvatarPath(newTask.getAssignUserAvatarId(), 16);
+                String avatarLink = StorageFactory.getInstance().getAvatarPath(newTask.getAssignUserAvatarId(), 16);
                 Img img = new Img(newTask.getAssignUserFullName(), avatarLink).setTitle(newTask.getAssignUserFullName());
                 return img.write();
             }

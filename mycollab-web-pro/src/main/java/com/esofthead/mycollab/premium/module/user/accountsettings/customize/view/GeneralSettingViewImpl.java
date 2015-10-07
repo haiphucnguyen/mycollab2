@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.premium.module.user.accountsettings.customize.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.configuration.Storage;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.ImageUtil;
@@ -26,9 +26,9 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.easyuploads.UploadField;
+import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-import org.vaadin.teemu.VaadinIcons;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -203,7 +203,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 "jpg and must be sizable to 32x32 pixels");
         leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
-        final Image favIconRes = new Image("", new ExternalResource(Storage.getFavIconPath(billingAccount.getId(),
+        final Image favIconRes = new Image("", new ExternalResource(StorageFactory.getInstance().getFavIconPath(billingAccount.getId(),
                 billingAccount.getFaviconpath())));
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
@@ -218,8 +218,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 if (mimeType.equals("image/jpeg")) {
                     imageData = ImageUtil.convertJpgToPngFormat(imageData);
                     if (imageData == null) {
-                        throw new UserInvalidInputException(
-                                "Do not support image format for logo");
+                        throw new UserInvalidInputException("Do not support image format for logo");
                     } else {
                         mimeType = "image/png";
                     }
@@ -231,15 +230,14 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageData));
                         String newFavIconPath = favIconService.upload(AppContext.getUsername(), image, AppContext
                                 .getAccountId());
-                        favIconRes.setSource(new ExternalResource(Storage.getFavIconPath(billingAccount.getId(),
+                        favIconRes.setSource(new ExternalResource(StorageFactory.getInstance().getFavIconPath(billingAccount.getId(),
                                 newFavIconPath)));
                         Page.getCurrent().getJavaScript().execute("window.location.reload();");
                     } catch (IOException e) {
                         throw new MyCollabException(e);
                     }
                 } else {
-                    throw new UserInvalidInputException(
-                            "Upload file does not have valid image format. The supported formats are jpg/png");
+                    throw new UserInvalidInputException("Upload file does not have valid image format. The supported formats are jpg/png");
                 }
             }
         };
@@ -252,8 +250,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         Button resetButton = new Button("Reset", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean
-                        (BillingAccountService.class);
+                BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
                 billingAccount.setFaviconpath(null);
                 billingAccountService.updateWithSession(billingAccount, AppContext.getUsername());
                 Page.getCurrent().getJavaScript().execute("window.location.reload();");
