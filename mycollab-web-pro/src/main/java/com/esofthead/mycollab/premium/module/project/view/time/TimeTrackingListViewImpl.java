@@ -6,7 +6,6 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -21,6 +20,9 @@ import com.esofthead.mycollab.module.project.ui.components.TimeTrackingDateOrder
 import com.esofthead.mycollab.module.project.ui.components.TimeTrackingUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ReportExportType;
+import com.esofthead.mycollab.reporting.ReportStreamSource;
+import com.esofthead.mycollab.reporting.RpFieldsBuilder;
+import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -43,7 +45,9 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -131,12 +135,19 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private StreamResource constructStreamResource(ReportExportType exportType) {
-        final String title = "Time of project "
-                + ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-                .getProject().getName() != null) ? CurrentProjectVariables
-                .getProject().getName() : "");
-        //TODO: make report for time logging
-        return null;
+        List fields = Arrays.asList(TimeTableFieldDef.summary);
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time Tracking", new
+                RpFieldsBuilder(fields), exportType, ItemTimeLoggingService.class, ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class));
+        ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
+            @Override
+            protected Map<String, Object> initReportParameters() {
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("siteUrl", AppContext.getSiteUrl());
+                parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
+                return parameters;
+            }
+        };
+        return new StreamResource(streamSource, exportType.getDefaultFileName());
     }
 
     private void setTimeRange() {

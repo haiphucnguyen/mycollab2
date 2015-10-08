@@ -8,14 +8,17 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.HumanTime;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -32,6 +35,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -44,6 +48,9 @@ import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd
@@ -251,6 +258,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
     private static class TaskBillableHoursPopupField extends LazyPopupView {
         private TextField timeInput = new TextField();
+        private DateField dateField;
         private SimpleTask task;
         private boolean isBillable;
 
@@ -258,7 +266,11 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             super("");
             this.task = task;
             this.isBillable = isBillable;
-            this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + task.getBillableHours());
+            if (isBillable) {
+                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + task.getBillableHours());
+            } else {
+                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + task.getNonBillableHours());
+            }
         }
 
         @Override
@@ -266,40 +278,55 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             timeInput.setValue("");
-            timeInput.setDescription("The format of duration must be [number] y " +
-                    "[number] d [number] h [number] m [number] s");
+            timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
             String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
             Label headerLbl = new Label(title, ContentMode.HTML);
             headerLbl.addStyleName("h2");
+            dateField = new DateField();
+            dateField.setValue(new GregorianCalendar().getTime());
             layout.with(headerLbl, timeInput);
+            Label dateCaption = new Label("For date");
+            dateCaption.addStyleName("h2");
+            layout.with(dateCaption, dateField);
         }
 
         @Override
         protected void doHide() {
             String timeVal = timeInput.getValue();
-            Long delta = HumanTime.eval(timeVal).getDelta();
-            if (delta > 0) {
-                ItemTimeLoggingService timeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                Double hours = delta.doubleValue() / (1000 * 60 * 60);
-                ItemTimeLogging timeLogging = new ItemTimeLogging();
-                timeLogging.setCreateduser(AppContext.getUsername());
-                timeLogging.setIsbillable(isBillable);
-                timeLogging.setLoguser(AppContext.getUsername());
-                timeLogging.setLogvalue(hours);
-                timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
-                timeLogging.setType(ProjectTypeConstants.TASK);
-                timeLogging.setTypeid(task.getId());
-                timeLogging.setSaccountid(AppContext.getAccountId());
-                timeLoggingService.saveWithSession(timeLogging, AppContext.getUsername());
+            if (StringUtils.isNotBlank(timeVal)) {
+                Long delta = HumanTime.eval(timeVal).getDelta();
+                Date date = DateTimeUtils.trimHMSOfDate(dateField.getValue());
+                if (delta > 0) {
+                    ItemTimeLoggingService timeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                    Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                    ItemTimeLogging timeLogging = new ItemTimeLogging();
+                    timeLogging.setCreateduser(AppContext.getUsername());
+                    timeLogging.setIsbillable(isBillable);
+                    timeLogging.setLoguser(AppContext.getUsername());
+                    timeLogging.setLogforday(date);
+                    timeLogging.setLogvalue(hours);
+                    timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
+                    timeLogging.setType(ProjectTypeConstants.TASK);
+                    timeLogging.setTypeid(task.getId());
+                    timeLogging.setSaccountid(AppContext.getAccountId());
+                    timeLoggingService.saveWithSession(timeLogging, AppContext.getUsername());
+                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(TaskBillableHoursPopupField.this));
 
-                // load hours again
-                ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
-                searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
-                searchCriteria.setTypeId(new NumberSearchField(task.getId()));
-                Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
-                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                    // load hours again
+                    ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+                    searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
+                    searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                    searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+                    searchCriteria.setTypeId(new NumberSearchField(task.getId()));
+                    Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                    if (isBillable) {
+                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                    } else {
+                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                    }
+                } else {
+                    NotificationUtil.showWarningNotification("Invalid value. The format of duration must be [number] d [number] h [number] m [number] s");
+                }
             }
         }
     }

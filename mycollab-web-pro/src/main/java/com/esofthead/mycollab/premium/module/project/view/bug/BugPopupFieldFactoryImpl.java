@@ -4,13 +4,24 @@ import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.HumanTime;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.view.bug.*;
@@ -25,14 +36,19 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd
@@ -316,11 +332,86 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
     public PopupView createBugNonbillableHoursPopupField(SimpleBug bug) {
-        return null;
+        return new BugBillableHoursPopupField(bug, false);
     }
 
     @Override
     public PopupView createBugBillableHoursPopupField(SimpleBug bug) {
-        return null;
+        return new BugBillableHoursPopupField(bug, true);
+    }
+
+    private static class BugBillableHoursPopupField extends LazyPopupView {
+        private TextField timeInput = new TextField();
+        private DateField dateField;
+        private SimpleBug bug;
+        private boolean isBillable;
+
+        BugBillableHoursPopupField(SimpleBug bug, boolean isBillable) {
+            super("");
+            this.bug = bug;
+            this.isBillable = isBillable;
+            if (isBillable) {
+                this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + bug.getBillableHours());
+            } else {
+                this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + bug.getNonBillableHours());
+            }
+        }
+
+        @Override
+        protected void doShow() {
+            MVerticalLayout layout = getWrapContent();
+            layout.removeAllComponents();
+            timeInput.setValue("");
+            timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
+            String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
+            Label headerLbl = new Label(title, ContentMode.HTML);
+            headerLbl.addStyleName("h2");
+            dateField = new DateField();
+            dateField.setValue(new GregorianCalendar().getTime());
+            layout.with(headerLbl, timeInput);
+            Label dateCaption = new Label("For date");
+            dateCaption.addStyleName("h2");
+            layout.with(dateCaption, dateField);
+        }
+
+        @Override
+        protected void doHide() {
+            String timeVal = timeInput.getValue();
+            if (StringUtils.isNotBlank(timeVal)) {
+                Long delta = HumanTime.eval(timeVal).getDelta();
+                Date date = DateTimeUtils.trimHMSOfDate(dateField.getValue());
+                if (delta > 0) {
+                    ItemTimeLoggingService timeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                    Double hours = delta.doubleValue() / (1000 * 60 * 60);
+                    ItemTimeLogging timeLogging = new ItemTimeLogging();
+                    timeLogging.setCreateduser(AppContext.getUsername());
+                    timeLogging.setIsbillable(isBillable);
+                    timeLogging.setLoguser(AppContext.getUsername());
+                    timeLogging.setLogforday(date);
+                    timeLogging.setLogvalue(hours);
+                    timeLogging.setProjectid(CurrentProjectVariables.getProjectId());
+                    timeLogging.setType(ProjectTypeConstants.BUG);
+                    timeLogging.setTypeid(bug.getId());
+                    timeLogging.setSaccountid(AppContext.getAccountId());
+                    timeLoggingService.saveWithSession(timeLogging, AppContext.getUsername());
+                    EventBusFactory.getInstance().post(new ProjectEvent.TimeLoggingChangedEvent(BugBillableHoursPopupField.this));
+
+                    // load hours again
+                    ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+                    searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
+                    searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                    searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+                    searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
+                    Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
+                    if (isBillable) {
+                        this.setMinimizedValueAsHTML(FontAwesome.MONEY.getHtml() + " " + calculatedHours);
+                    } else {
+                        this.setMinimizedValueAsHTML(FontAwesome.GIFT.getHtml() + " " + calculatedHours);
+                    }
+                } else {
+                    NotificationUtil.showWarningNotification("Invalid value. The format of duration must be [number] d [number] h [number] m [number] s");
+                }
+            }
+        }
     }
 }
