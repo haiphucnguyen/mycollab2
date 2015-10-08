@@ -256,8 +256,8 @@
 
         <dependency>
             <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP-java6</artifactId>
-            <version>2.3.11</version>
+            <artifactId>HikariCP</artifactId>
+            <version>2.4.1</version>
         </dependency>
 
         <dependency>
@@ -430,13 +430,13 @@
             <url>http://repo.springsource.org/milestone</url>
         </repository>
         <repository>
-            <id>mycollab-repo</id>
+            <id>mycollab-bitbucket-repo</id>
             <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/master</url>
         </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>mycollab-plugin-repo</id>
+            <id>mycollab-bitbucket-plugin-repo</id>
             <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/master</url>
         </pluginRepository>
     </pluginRepositories>
