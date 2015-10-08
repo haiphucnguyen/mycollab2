@@ -417,6 +417,10 @@
             <url>http://repo1.maven.org/maven2</url>
         </repository>
         <repository>
+            <id>mycollab-bitbucket-repo</id>
+            <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/master</url>
+        </repository>
+        <repository>
             <id>vaadin-addons</id>
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
@@ -428,10 +432,6 @@
             <id>repository.springsource.milestone</id>
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/milestone</url>
-        </repository>
-        <repository>
-            <id>mycollab-bitbucket-repo</id>
-            <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/master</url>
         </repository>
     </repositories>
     <pluginRepositories>

@@ -46,13 +46,16 @@ public class MyBatisConfigurationTest {
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(dbConfig.dataSource());
-		sqlSessionFactory
-				.setTypeAliasesPackage("com.esofthead.mycollab.common.domain.criteria;com.esofthead.mycollab.module.crm.domain.criteria;com.esofthead.mycollab.module.ecm.domain.criteria;com.esofthead.mycollab.module.file.domain.criteria;com.esofthead.mycollab.module.project.domain.criteria;com.esofthead.mycollab.module.tracker.domain.criteria;com.esofthead.mycollab.module.user.domain.criteria");
+		sqlSessionFactory.setTypeAliasesPackage("com.esofthead.mycollab.common.domain.criteria;" +
+				"com.esofthead.mycollab.module.crm.domain.criteria;" +
+				"com.esofthead.mycollab.module.ecm.domain.criteria;" +
+				"com.esofthead.mycollab.module.file.domain.criteria;" +
+				"com.esofthead.mycollab.module.project.domain.criteria;" +
+				"com.esofthead.mycollab.module.tracker.domain.criteria;" +
+				"com.esofthead.mycollab.module.user.domain.criteria");
 		sqlSessionFactory.setTypeAliasesSuperType(SearchCriteria.class);
-		sqlSessionFactory
-				.setTypeAliases(new Class[] { VelocityDriverDeclare.class });
-		sqlSessionFactory
-				.setTypeHandlersPackage("com.esofthead.mybatis.plugin.ext");
+		sqlSessionFactory.setTypeAliases(new Class[]{VelocityDriverDeclare.class});
+		sqlSessionFactory.setTypeHandlersPackage("com.esofthead.mybatis.plugin.ext");
 		sqlSessionFactory.setMapperLocations(buildBatchMapperResources(
 				"classpath:sqlMap/common/*Mapper.xml",
 				"classpath:sqlMap/common/*MapperExt.xml",
@@ -67,7 +70,8 @@ public class MyBatisConfigurationTest {
 				"classpath:sqlMap/project/*Mapper.xml",
 				"classpath:sqlMap/project/*MapperExt.xml",
 				"classpath:sqlMap/tracker/*Mapper.xml",
-				"classpath:sqlMap/tracker/*MapperExt.xml"));
+				"classpath:sqlMap/tracker/*MapperExt.xml",
+				"classpath:sqlMap/support/*Mapper.xml"));
 
 		return sqlSessionFactory.getObject();
 	}
