@@ -124,6 +124,15 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
                 presenter.go(projectView, data)
             }
         })
+
+        this.register(new ApplicationEventListener[TaskEvent.GotoCalendarView] {
+            @Subscribe override def handle(event: TaskEvent.GotoCalendarView): Unit = {
+                val data: TaskScreenData.GotoCalendarView = new TaskScreenData.GotoCalendarView
+                val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+                presenter.go(projectView, data)
+            }
+        })
+
         this.register(new ApplicationEventListener[TaskEvent.GotoGanttChart] {
             @Subscribe def handle(event: TaskEvent.GotoGanttChart) {
                 val data: TaskScreenData.GotoGanttChart = new TaskScreenData.GotoGanttChart

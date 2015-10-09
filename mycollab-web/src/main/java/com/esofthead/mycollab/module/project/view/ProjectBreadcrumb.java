@@ -648,6 +648,13 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_FILES));
     }
 
+    public void gotoCalendar() {
+        this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.CALENDAR)));
+        AppContext.addFragment(ProjectLinkGenerator.generateFileDashboardLink(project.getId()),
+                AppContext.getMessage(BreadcrumbI18nEnum.FRA_CALENDAR));
+    }
+
     public void gotoStandupList(Date onDate) {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.STANDUP)));

@@ -933,4 +933,11 @@
     color: $bug-severity-trivial-color;
   }
   /*END BUG SEVERITY STYLES*/
+
+  /* Calendar view */
+  .v-calendar.assignment-calendar {
+    .v-calendar-header-week {
+      border: none;
+    }
+  }
 }

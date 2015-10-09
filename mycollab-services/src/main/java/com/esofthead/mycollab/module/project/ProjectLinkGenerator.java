@@ -195,6 +195,10 @@ public class ProjectLinkGenerator {
         return "project/standup/list/" + UrlEncodeDecoder.encode(projectId);
     }
 
+    public static String generateProjectCalendarLink(Integer projectId) {
+        return "project/calendar/" + UrlEncodeDecoder.encode(projectId);
+    }
+
     public static String generateUsersLink(Integer projectId) {
         return "project/user/list/" + UrlEncodeDecoder.encode(projectId);
     }

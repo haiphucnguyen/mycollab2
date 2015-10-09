@@ -232,6 +232,15 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
+        Button calendarBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoCalendarView(TaskDashboardViewImpl.this));
+            }
+        });
+        calendarBtn.setDescription("Calendar View");
+        calendarBtn.setIcon(FontAwesome.CALENDAR);
+
         Button chartDisplayBtn = new Button(null, new Button.ClickListener() {
             private static final long serialVersionUID = -5707546605789537298L;
 
@@ -254,6 +263,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
+        viewButtons.addButton(calendarBtn);
         viewButtons.addButton(kanbanBtn);
         viewButtons.addButton(chartDisplayBtn);
         viewButtons.setDefaultButton(advanceDisplayBtn);
