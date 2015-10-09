@@ -403,6 +403,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         AppContext.addFragment("project/task/kanban/" + UrlEncodeDecoder.encode(project.getId()), "Kanban View");
     }
 
+    public void gotoCalendar() {
+        this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.CALENDAR)));
+        this.setLinkEnabled(true, 1);
+        AppContext.addFragment("project/task/calendar/" + UrlEncodeDecoder.encode(project.getId()), "Calendar");
+    }
+
     public void gotoTaskRead(SimpleTask task) {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
@@ -438,7 +446,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
         @Override
         public void buttonClick(ClickEvent event) {
-           EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, null));
+            EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(this, null));
         }
     }
 
@@ -646,13 +654,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FILES)));
         AppContext.addFragment(ProjectLinkGenerator.generateFileDashboardLink(project.getId()),
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_FILES));
-    }
-
-    public void gotoCalendar() {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.CALENDAR)));
-        AppContext.addFragment(ProjectLinkGenerator.generateFileDashboardLink(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_CALENDAR));
     }
 
     public void gotoStandupList(Date onDate) {

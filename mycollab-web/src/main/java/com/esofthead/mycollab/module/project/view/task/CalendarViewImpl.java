@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
@@ -20,16 +25,13 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  */
 @ViewComponent
 public class CalendarViewImpl extends AbstractPageView implements CalendarView {
-    private static final int WEEK_VIEW = 0;
     private static final int MONTH_VIEW = 1;
 
     private static final DateTimeFormatter MY_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
     private static final DateTimeFormatter DMY_FORMATTER = DateTimeFormat.forPattern("d MMMM, yyyy");
 
     private Label headerLbl;
-    private Button switchViewBtn;
     private Calendar calendar;
-    private int calendarView = WEEK_VIEW;
     private LocalDate baseDate;
 
     public CalendarViewImpl() {
@@ -55,11 +57,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
-                if (calendarView == WEEK_VIEW) {
-                    displayWeekView();
-                } else {
-                    displayMonthView();
-                }
+                displayMonthView();
             }
         });
         todayBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -68,13 +66,8 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         Button previousBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                if (calendarView == WEEK_VIEW) {
-                    baseDate = baseDate.minusDays(7);
-                    displayWeekView();
-                } else {
-                    baseDate = baseDate.minusMonths(1);
-                    displayMonthView();
-                }
+                baseDate = baseDate.minusMonths(1);
+                displayMonthView();
             }
         });
         previousBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -84,13 +77,8 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         Button nextBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                if (calendarView == WEEK_VIEW) {
-                    baseDate = baseDate.plusDays(7);
-                    displayWeekView();
-                } else {
-                    baseDate = baseDate.plusMonths(1);
-                    displayMonthView();
-                }
+                baseDate = baseDate.plusMonths(1);
+                displayMonthView();
             }
         });
         nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -103,48 +91,57 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         MHorizontalLayout rightHeaderContainer = new MHorizontalLayout();
         headerLbl = new Label();
         headerLbl.setStyleName("h2");
-        switchViewBtn = new Button("", new Button.ClickListener() {
+        rightHeaderContainer.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                if (calendarView == WEEK_VIEW) {
-                    displayMonthView();
-                } else {
-                    displayWeekView();
-                }
+                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(CalendarViewImpl.this, null));
             }
         });
-        switchViewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-        if (calendarView == WEEK_VIEW) {
-            switchViewBtn.setIcon(FontAwesome.TH);
-        } else {
-            switchViewBtn.setIcon(FontAwesome.NAVICON);
-        }
-        rightHeaderContainer.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
-        rightHeaderContainer.with(headerLbl, switchViewBtn);
+        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
+        advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
+
+        Button calendarBtn = new Button();
+        calendarBtn.setDescription("Calendar View");
+        calendarBtn.setIcon(FontAwesome.CALENDAR);
+
+        Button chartDisplayBtn = new Button(null, new Button.ClickListener() {
+            private static final long serialVersionUID = -5707546605789537298L;
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoGanttChart(CalendarViewImpl.this, null));
+            }
+        });
+        chartDisplayBtn.setDescription("Display Gantt chart");
+        chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
+
+        Button kanbanBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(CalendarViewImpl.this, null));
+            }
+        });
+        kanbanBtn.setDescription("Kanban View");
+        kanbanBtn.setIcon(FontAwesome.TH);
+
+        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        viewButtons.addButton(advanceDisplayBtn);
+        viewButtons.addButton(calendarBtn);
+        viewButtons.addButton(kanbanBtn);
+        viewButtons.addButton(chartDisplayBtn);
+        viewButtons.setDefaultButton(calendarBtn);
+
+        rightHeaderContainer.with(headerLbl, viewButtons);
         header.with(rightHeaderContainer).withAlign(rightHeaderContainer, Alignment.MIDDLE_RIGHT);
         return header;
     }
 
     private void displayMonthView() {
-        calendarView = MONTH_VIEW;
-        switchViewBtn.setIcon(FontAwesome.NAVICON);
-        switchViewBtn.setDescription("Switch to week view");
         LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
         LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
         calendar.setStartDate(firstDayOfMonth.toDate());
         calendar.setEndDate(lastDayOfMonth.toDate());
         headerLbl.setValue(baseDate.toString(MY_FORMATTER));
-    }
-
-    private void displayWeekView() {
-        calendarView = WEEK_VIEW;
-        switchViewBtn.setIcon(FontAwesome.TH);
-        switchViewBtn.setDescription("Switch to month view");
-        LocalDate firstDayOfWeek = baseDate.dayOfWeek().withMinimumValue();
-        LocalDate lastDayOfWeek = baseDate.dayOfWeek().withMaximumValue();
-        calendar.setStartDate(firstDayOfWeek.toDate());
-        calendar.setEndDate(lastDayOfWeek.toDate());
-        calendar.setFirstVisibleHourOfDay(8);
-        headerLbl.setValue(firstDayOfWeek.toString(DMY_FORMATTER) + " - " + lastDayOfWeek.toString(DMY_FORMATTER));
     }
 }
