@@ -936,8 +936,36 @@
 
   /* Calendar view */
   .v-calendar.assignment-calendar {
-    .v-calendar-header-week {
-      border: none;
+    .v-calendar-header-day {
+      font-weight: bold;
+    }
+    .v-calendar-event {
+      &.owner {
+        background-color: green;
+      }
+      &.otheruser {
+        background-color: cadetblue;
+      }
+      &.nonowner {
+        background-color: brown;
+      }
+    }
+  }
+  .v-label {
+    &.owner {
+      background-color: green;
+      color:white;
+      padding: 5px;
+    }
+    &.otheruser {
+      background-color: cadetblue;
+      color:white;
+      padding: 5px;
+    }
+    &.nonowner {
+      background-color: brown;
+      color:white;
+      padding: 5px;
     }
   }
 }

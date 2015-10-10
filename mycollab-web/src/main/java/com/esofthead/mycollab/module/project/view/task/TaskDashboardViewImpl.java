@@ -219,7 +219,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                UI.getCurrent().addWindow(new TaskAddWindow());
+                UI.getCurrent().addWindow(new TaskAddWindow(new SimpleTask()));
             }
         });
         newTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));

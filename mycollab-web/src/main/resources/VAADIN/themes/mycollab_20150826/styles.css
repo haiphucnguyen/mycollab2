@@ -9904,8 +9904,38 @@ div.v-button.token-field:hover {
 	color: #f7c7c1;
 }
 
-.v-calendar.assignment-calendar .v-calendar-header-week {
-	border: none;
+.v-calendar.assignment-calendar .v-calendar-header-day {
+	font-weight: bold;
+}
+
+.v-calendar.assignment-calendar .v-calendar-event.owner {
+	background-color: green;
+}
+
+.v-calendar.assignment-calendar .v-calendar-event.otheruser {
+	background-color: cadetblue;
+}
+
+.v-calendar.assignment-calendar .v-calendar-event.nonowner {
+	background-color: brown;
+}
+
+.v-label.owner {
+	background-color: green;
+	color: white;
+	padding: 5px;
+}
+
+.v-label.otheruser {
+	background-color: cadetblue;
+	color: white;
+	padding: 5px;
+}
+
+.v-label.nonowner {
+	background-color: brown;
+	color: white;
+	padding: 5px;
 }
 
 .gantt {

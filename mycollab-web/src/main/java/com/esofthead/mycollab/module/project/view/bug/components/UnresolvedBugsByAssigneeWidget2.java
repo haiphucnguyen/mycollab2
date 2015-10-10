@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -47,10 +48,29 @@ import java.util.List;
 public class UnresolvedBugsByAssigneeWidget2 extends Depot {
     private static final long serialVersionUID = 1L;
 
+    private Button toogleViewBtn;
+    private boolean isPlainMode = true;
     private BugSearchCriteria bugSearchCriteria;
+
+    private List<GroupItem> groupItems;
+    private int totalCount;
 
     public UnresolvedBugsByAssigneeWidget2() {
         super("", new MVerticalLayout());
+        toogleViewBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                isPlainMode = !isPlainMode;
+                if (isPlainMode) {
+                    toogleViewBtn.setIcon(FontAwesome.BAR_CHART_O);
+                } else {
+                    toogleViewBtn.setIcon(FontAwesome.LIST);
+                }
+            }
+        });
+        toogleViewBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
+        toogleViewBtn.setIcon(FontAwesome.BAR_CHART_O);
+        addHeaderElement(toogleViewBtn);
         setContentBorder(true);
         this.setMargin(new MarginInfo(false, false, true, false));
     }
@@ -59,10 +79,13 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
         bugSearchCriteria = searchCriteria;
         bodyContent.removeAllComponents();
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-        int totalCount = bugService.getTotalCount(searchCriteria);
+        totalCount = bugService.getTotalCount(searchCriteria);
         setTitle(AppContext.getMessage(BugI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE) + " (" + totalCount + ")");
+        groupItems = bugService.getAssignedDefectsSummary(searchCriteria);
+        displayPlainMode();
+    }
 
-        final List<GroupItem> groupItems = bugService.getAssignedDefectsSummary(searchCriteria);
+    private void displayPlainMode() {
         if (!groupItems.isEmpty()) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withWidth("100%");

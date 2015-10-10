@@ -27,7 +27,6 @@ import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.view.bug.IPrioritySummaryChartWidget;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -45,10 +44,6 @@ import java.util.List;
 @ViewComponent
 public class PrioritySummaryChartWidget extends PieChartWrapper<BugSearchCriteria> implements IPrioritySummaryChartWidget {
     private static final long serialVersionUID = 1L;
-
-    public PrioritySummaryChartWidget(int width, int height) {
-        super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_PRIORIY_TITLE), BugPriority.class, width, height);
-    }
 
     public PrioritySummaryChartWidget() {
         super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_PRIORIY_TITLE), BugPriority.class, 400, 280);
@@ -68,9 +63,7 @@ public class PrioritySummaryChartWidget extends PieChartWrapper<BugSearchCriteri
     protected DefaultPieDataset createDataset() {
         // create the dataset...
         final DefaultPieDataset dataset = new DefaultPieDataset();
-
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-
         List<GroupItem> groupItems = bugService.getPrioritySummary(searchCriteria);
 
         BugPriority[] bugPriorities = OptionI18nEnum.bug_priorities;
