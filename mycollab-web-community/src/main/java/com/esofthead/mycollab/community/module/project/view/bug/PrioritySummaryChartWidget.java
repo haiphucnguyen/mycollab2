@@ -86,7 +86,7 @@ public class PrioritySummaryChartWidget extends PieChartWrapper<BugSearchCriteri
     }
 
     @Override
-    protected void onClickedDescription(String key) {
+    public void clickLegendItem(String key) {
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setPriorities(new SetSearchField<>(key));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));

@@ -45,10 +45,6 @@ import java.util.List;
 public class StatusSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> implements IStatusSummaryChartWidget {
     private static final long serialVersionUID = 1L;
 
-    public StatusSummaryChartWidget(int width, int height) {
-        super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_STATUS_TITLE), BugStatus.class, width, height);
-    }
-
     public StatusSummaryChartWidget() {
         super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_STATUS_TITLE), BugStatus.class, 400, 280);
     }
@@ -91,7 +87,7 @@ public class StatusSummaryChartWidget extends PieChartWrapper<BugSearchCriteria>
     }
 
     @Override
-    protected void onClickedDescription(String key) {
+    public void clickLegendItem(String key) {
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setStatuses(new SetSearchField<>(key));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));

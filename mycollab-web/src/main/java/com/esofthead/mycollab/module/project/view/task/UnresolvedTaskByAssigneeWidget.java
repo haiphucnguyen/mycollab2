@@ -62,7 +62,7 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
                         UI.getCurrent().access(new Runnable() {
                             @Override
                             public void run() {
-                                UnresolvedTaskByAssigneeWidget.this.setSearchCriteria(searchCriteria);
+                                setSearchCriteria(searchCriteria);
                             }
                         });
                     }

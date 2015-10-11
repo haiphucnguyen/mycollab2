@@ -18,26 +18,21 @@
 package com.esofthead.mycollab.premium.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.view.bug.IBugResolutionSummaryChartWidget;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.premium.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.addon.charts.Chart;
-import com.vaadin.addon.charts.LegendItemClickEvent;
-import com.vaadin.addon.charts.LegendItemClickListener;
-import com.vaadin.addon.charts.model.*;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.addon.charts.model.DataSeries;
+import com.vaadin.addon.charts.model.DataSeriesItem;
 
 import java.util.List;
 
@@ -46,16 +41,11 @@ import java.util.List;
  * @since 1.0
  */
 @ViewComponent
-public class BugResolutionSummaryChartWidget extends CssLayout implements IBugResolutionSummaryChartWidget {
+public class BugResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> implements IBugResolutionSummaryChartWidget {
     private static final long serialVersionUID = 1L;
 
-    public BugResolutionSummaryChartWidget() {
-        this.setSizeFull();
-    }
-
     @Override
-    public void setSearchCriteria(BugSearchCriteria searchCriteria) {
-        this.removeAllComponents();
+    protected DataSeries getSeries() {
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
         final DataSeries series = new DataSeries("Resolution");
         List<GroupItem> groupItems = bugService.getResolutionDefectsSummary(searchCriteria);
@@ -74,49 +64,13 @@ public class BugResolutionSummaryChartWidget extends CssLayout implements IBugRe
                 series.add(new DataSeriesItem(AppContext.getMessage(resolution), 0));
             }
         }
-
-        Chart chart = new Chart(ChartType.PIE);
-        chart.addLegendItemClickListener(new LegendItemClickListener() {
-            @Override
-            public void onClick(LegendItemClickEvent legendItemClickEvent) {
-                DataSeriesItem dataSeries = series.get(legendItemClickEvent.getSeriesItemIndex());
-                String key = dataSeries.getName();
-                BugSearchCriteria searchCriteria = new BugSearchCriteria();
-                searchCriteria.setResolutions(new SetSearchField<>(key));
-                searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, searchCriteria));
-            }
-        });
-        Configuration conf = chart.getConfiguration();
-
-        conf.setTitle("");
-        conf.setCredits(new Credits(""));
-
-        Tooltip tooltip = new Tooltip();
-        tooltip.setPointFormat("{point.y}");
-        conf.setTooltip(tooltip);
-
-        PlotOptionsPie plotOptions = new PlotOptionsPie();
-        plotOptions.setAllowPointSelect(true);
-        plotOptions.setCursor(Cursor.POINTER);
-        plotOptions.setShowInLegend(true);
-
-        conf.setPlotOptions(plotOptions);
-
-        conf.setSeries(series);
-        chart.drawChart(conf);
-
-        this.addComponent(chart);
+        return series;
     }
 
     @Override
-    public ComponentContainer getWidget() {
-        return this;
+    public void clickLegendItem(String key) {
+        BugSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
+        cloneSearchCriteria.setResolutions(new SetSearchField<>(key));
+        EventBusFactory.getInstance().post(new BugEvent.GotoList(this, cloneSearchCriteria));
     }
-
-    @Override
-    public void addViewListener(ViewListener listener) {
-
-    }
-
 }

@@ -19,7 +19,6 @@ package com.esofthead.mycollab.community.module.crm.view.opportunity;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.community.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
@@ -40,8 +39,7 @@ import java.util.List;
  * @since 2.0
  */
 @ViewComponent
-public class OpportunityLeadSourceDashboard extends
-        PieChartWrapper<OpportunitySearchCriteria> implements
+public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunitySearchCriteria> implements
         IOpportunityLeadSourceDashboard {
     private static final long serialVersionUID = 1L;
 
@@ -65,9 +63,7 @@ public class OpportunityLeadSourceDashboard extends
     protected DefaultPieDataset createDataset() {
         final DefaultPieDataset dataset = new DefaultPieDataset();
 
-        final OpportunityService opportunityService = ApplicationContextUtil
-                .getSpringBean(OpportunityService.class);
-
+        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
         groupItems = opportunityService.getLeadSourcesSummary(searchCriteria);
 
         final String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
@@ -93,11 +89,10 @@ public class OpportunityLeadSourceDashboard extends
     }
 
     @Override
-    protected void onClickedDescription(String key) {
+    public void clickLegendItem(String key) {
         OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
         searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         searchCriteria.setLeadSources(new SetSearchField<>(key));
         EventBusFactory.getInstance().post(new OpportunityEvent.GotoList(this, searchCriteria));
     }
-
 }

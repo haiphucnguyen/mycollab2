@@ -91,7 +91,7 @@ public class ResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCrite
     }
 
     @Override
-    protected void onClickedDescription(String key) {
+    public void clickLegendItem(String key) {
         BugSearchCriteria searchCriteria = new BugSearchCriteria();
         searchCriteria.setResolutions(new SetSearchField<>(key));
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));

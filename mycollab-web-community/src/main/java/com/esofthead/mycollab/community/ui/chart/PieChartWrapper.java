@@ -98,8 +98,6 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
 
     protected abstract DefaultPieDataset createDataset();
 
-    protected abstract void onClickedDescription(String key);
-
     class JFreeChartLabelCustom implements PieSectionLabelGenerator {
         @Override
         public String generateSectionLabel(PieDataset dataset, Comparable key) {
@@ -120,8 +118,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
         }
 
         @Override
-        public AttributedString generateAttributedSectionLabel(
-                PieDataset dataset, Comparable key) {
+        public AttributedString generateAttributedSectionLabel(PieDataset dataset, Comparable key) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
@@ -159,7 +156,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    PieChartWrapper.this.onClickedDescription(key.toString());
+                    PieChartWrapper.this.clickLegendItem(key.toString());
                 }
             });
             btnLink.addStyleName(UIConstants.THEME_LINK);
