@@ -271,13 +271,8 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
-
-        rightColumn = new MVerticalLayout().withWidth("300px").withMargin(new MarginInfo(true, false, false, false));
-
+        rightColumn = new MVerticalLayout().withWidth("400px").withMargin(new MarginInfo(true, false, false, false));
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
-
-        FloatingComponent floatSidebar = FloatingComponent.floatThis(this.rightColumn);
-        floatSidebar.setContainerId("main-body");
     }
 
     @Override

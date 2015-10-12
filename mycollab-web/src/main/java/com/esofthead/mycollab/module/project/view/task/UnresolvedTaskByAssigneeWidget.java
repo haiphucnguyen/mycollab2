@@ -30,17 +30,16 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.DepotWithChart;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.google.common.eventbus.Subscribe;
 import com.rits.cloning.Cloner;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -48,10 +47,13 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.0
  */
-public class UnresolvedTaskByAssigneeWidget extends Depot {
+public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
     private static final long serialVersionUID = 1L;
 
     private TaskSearchCriteria searchCriteria;
+    private int totalCountItems;
+    private List<GroupItem> groupItems;
+
 
     private ApplicationEventListener<TaskEvent.HasTaskChange> taskChangeHandler = new
             ApplicationEventListener<TaskEvent.HasTaskChange>() {
@@ -69,12 +71,6 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
                 }
             };
 
-    public UnresolvedTaskByAssigneeWidget() {
-        super(AppContext.getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE), new MVerticalLayout());
-        this.setMargin(new MarginInfo(false, false, true, false));
-        this.setContentBorder(true);
-    }
-
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(taskChangeHandler);
@@ -89,14 +85,18 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
 
     public void setSearchCriteria(final TaskSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
-        this.bodyContent.removeAllComponents();
+
         ProjectTaskService projectTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        int totalCountItems = projectTaskService.getTotalCount(searchCriteria);
-        final List<GroupItem> groupItems = projectTaskService.getAssignedDefectsSummary(searchCriteria);
+        totalCountItems = projectTaskService.getTotalCount(searchCriteria);
+        groupItems = projectTaskService.getAssignedTasksSummary(searchCriteria);
 
-        this.setTitle(String.format("%s (%d)", AppContext
-                .getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE), totalCountItems));
+        this.setTitle(String.format("%s (%d)", AppContext.getMessage(TaskI18nEnum.WIDGET_UNRESOLVED_BY_ASSIGNEE_TITLE), totalCountItems));
+        displayPlainMode();
+    }
 
+    @Override
+    protected void displayPlainMode() {
+        this.bodyContent.removeAllComponents();
         if (!groupItems.isEmpty()) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withWidth("100%");
@@ -110,13 +110,20 @@ public class UnresolvedTaskByAssigneeWidget extends Depot {
 
                 TaskAssigneeLink userLbl = new TaskAssigneeLink(assignUser, item.getExtraValue(), assignUserFullName);
                 assigneeLayout.addComponent(userLbl);
-                ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems,
-                        totalCountItems - item.getValue(), false);
+                ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems, totalCountItems - item.getValue(), false);
                 indicator.setWidth("100%");
                 assigneeLayout.with(indicator).expand(indicator);
                 bodyContent.addComponent(assigneeLayout);
             }
         }
+    }
+
+    @Override
+    protected void displayChartMode() {
+        bodyContent.removeAllComponents();
+        ITaskAssigneeChartWidget bugAssigneeChartWidget = ViewManager.getCacheComponent(ITaskAssigneeChartWidget.class);
+        bugAssigneeChartWidget.displayChart(searchCriteria);
+        bodyContent.addComponent(bugAssigneeChartWidget);
     }
 
     class TaskAssigneeLink extends Button {
