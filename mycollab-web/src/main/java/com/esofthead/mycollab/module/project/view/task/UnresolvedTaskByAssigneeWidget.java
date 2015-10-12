@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -121,9 +122,9 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
     @Override
     protected void displayChartMode() {
         bodyContent.removeAllComponents();
-        ITaskAssigneeChartWidget bugAssigneeChartWidget = ViewManager.getCacheComponent(ITaskAssigneeChartWidget.class);
-        bugAssigneeChartWidget.displayChart(searchCriteria);
-        bodyContent.addComponent(bugAssigneeChartWidget);
+        ITaskAssigneeChartWidget taskAssigneeChartWidget = ViewManager.getCacheComponent(ITaskAssigneeChartWidget.class);
+        taskAssigneeChartWidget.displayChart(searchCriteria);
+        bodyContent.addComponent(taskAssigneeChartWidget);
     }
 
     class TaskAssigneeLink extends Button {
@@ -135,8 +136,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    Cloner cloner = new Cloner();
-                    TaskSearchCriteria criteria = cloner.deepClone(searchCriteria);
+                    TaskSearchCriteria criteria = BeanUtility.deepClone(searchCriteria);
                     criteria.setAssignUser(new StringSearchField(assignee));
                     EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, criteria));
                 }

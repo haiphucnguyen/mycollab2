@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.IInteractiveChartComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.VerticalLayout;
 import org.jfree.chart.JFreeChart;
 
 import java.util.List;

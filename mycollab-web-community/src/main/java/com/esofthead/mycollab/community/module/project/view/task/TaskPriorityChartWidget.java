@@ -1,19 +1,16 @@
 package com.esofthead.mycollab.community.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.community.ui.chart.Key;
 import com.esofthead.mycollab.community.ui.chart.PieChartWrapper;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.task.ITaskAssigneeChartWidget;
+import com.esofthead.mycollab.module.project.view.task.ITaskPriorityChartWidget;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -24,39 +21,45 @@ import java.util.List;
  * @since 5.2.0
  */
 @ViewComponent
-public class TaskAssigneeChartWidget extends PieChartWrapper<TaskSearchCriteria> implements ITaskAssigneeChartWidget {
-    public TaskAssigneeChartWidget() {
-        super(400, 280);
+public class TaskPriorityChartWidget extends PieChartWrapper<TaskSearchCriteria> implements ITaskPriorityChartWidget {
+    public TaskPriorityChartWidget() {
+        super(OptionI18nEnum.TaskPriority.class, 400, 280);
     }
 
     @Override
     protected DefaultPieDataset createDataset() {
         // create the dataset...
         final DefaultPieDataset dataset = new DefaultPieDataset();
-        if (!groupItems.isEmpty()) {
+
+        OptionI18nEnum.TaskPriority[] priorities = OptionI18nEnum.task_priorities;
+        for (OptionI18nEnum.TaskPriority priority : priorities) {
+            boolean isFound = false;
             for (GroupItem item : groupItems) {
-                String assignUser = (item.getGroupid() != null) ? item.getGroupid() : "";
-                String assignUserFullName = item.getGroupid() == null ? AppContext.getMessage(BugI18nEnum.OPT_UNDEFINED_USER) :
-                        item.getGroupname();
-                if (assignUserFullName == null || "".equals(assignUserFullName.trim())) {
-                    assignUserFullName = StringUtils.extractNameFromEmail(assignUser);
+                if (priority.name().equals(item.getGroupid())) {
+                    dataset.setValue(priority.name(), item.getValue());
+                    isFound = true;
+                    break;
                 }
-                dataset.setValue(new Key(assignUser, assignUserFullName), item.getValue());
+            }
+
+            if (!isFound) {
+                dataset.setValue(priority.name(), 0);
             }
         }
+
         return dataset;
     }
 
     @Override
     protected List<GroupItem> loadGroupItems() {
         ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        return taskService.getAssignedTasksSummary(searchCriteria);
+        return taskService.getPrioritySummary(searchCriteria);
     }
 
     @Override
     public void clickLegendItem(String key) {
         TaskSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
-        cloneSearchCriteria.setAssignUser(new StringSearchField(key));
+        cloneSearchCriteria.setPriorities(new SetSearchField<>(key));
         EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, cloneSearchCriteria));
     }
 }
