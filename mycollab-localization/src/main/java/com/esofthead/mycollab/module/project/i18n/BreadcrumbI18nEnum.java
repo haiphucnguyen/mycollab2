@@ -30,7 +30,6 @@ public enum BreadcrumbI18nEnum {
 	PAGES,
 	PROBLEMS,
 	TASKS,
-	BUGS_DASHBOARD,
 	BUGS,
 	VERSIONS,
 	COMPONENTS,

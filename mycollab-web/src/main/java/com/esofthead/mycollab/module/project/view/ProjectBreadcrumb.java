@@ -454,7 +454,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FRA_BUG_LIST)));
         AppContext.addFragment("project/bug/list/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
+                AppContext.getMessage(BreadcrumbI18nEnum.BUGS));
     }
 
     public void gotoBugAdd() {

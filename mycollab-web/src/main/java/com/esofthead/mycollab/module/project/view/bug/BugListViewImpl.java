@@ -195,7 +195,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                EventBusFactory.getInstance().post(new BugEvent.GotoAdd(BugListViewImpl.this, null));
+                UI.getCurrent().addWindow(new BugAddWindow(new SimpleBug()));
             }
         });
         newBugBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
