@@ -1,15 +1,15 @@
-package com.esofthead.mycollab.premium.module.project.view.task;
+package com.esofthead.mycollab.premium.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.task.ITaskAssigneeChartWidget;
+import com.esofthead.mycollab.module.project.view.bug.IBugAssigneeChartWidget;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.premium.ui.chart.DataSeriesItemExt;
 import com.esofthead.mycollab.premium.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -24,11 +24,11 @@ import java.util.List;
  * @since 5.2.0
  */
 @ViewComponent
-public class TaskAssigneeChartWidget extends PieChartWrapper<TaskSearchCriteria> implements ITaskAssigneeChartWidget {
+public class BugAssigneeChartWidget extends PieChartWrapper<BugSearchCriteria> implements IBugAssigneeChartWidget {
     @Override
     protected List<GroupItem> loadGroupItems() {
-        ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        return taskService.getAssignedTasksSummary(searchCriteria);
+        BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+        return bugService.getAssignedDefectsSummary(searchCriteria);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class TaskAssigneeChartWidget extends PieChartWrapper<TaskSearchCriteria>
 
     @Override
     public void clickLegendItem(String key) {
-        TaskSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
-        cloneSearchCriteria.setAssignUser(new StringSearchField(key));
-        EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, cloneSearchCriteria));
+        BugSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
+        cloneSearchCriteria.setAssignuser(new StringSearchField(key));
+        EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, cloneSearchCriteria));
     }
 }

@@ -43,8 +43,14 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends CssLayou
             @Override
             public void onClick(LegendItemClickEvent legendItemClickEvent) {
                 DataSeriesItem dataSeries = series.get(legendItemClickEvent.getSeriesItemIndex());
-                String key = dataSeries.getName();
-                clickLegendItem(key);
+                if (dataSeries instanceof DataSeriesItemExt) {
+                    String key = ((DataSeriesItemExt) dataSeries).getKey();
+                    clickLegendItem(key);
+                } else {
+                    String key = dataSeries.getName();
+                    clickLegendItem(key);
+                }
+
             }
         });
         Configuration conf = chart.getConfiguration();

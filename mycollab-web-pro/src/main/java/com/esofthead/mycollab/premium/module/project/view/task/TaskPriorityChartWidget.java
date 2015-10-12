@@ -1,15 +1,14 @@
 package com.esofthead.mycollab.premium.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.task.ITaskAssigneeChartWidget;
+import com.esofthead.mycollab.module.project.view.task.ITaskPriorityChartWidget;
 import com.esofthead.mycollab.premium.ui.chart.DataSeriesItemExt;
 import com.esofthead.mycollab.premium.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -24,25 +23,31 @@ import java.util.List;
  * @since 5.2.0
  */
 @ViewComponent
-public class TaskAssigneeChartWidget extends PieChartWrapper<TaskSearchCriteria> implements ITaskAssigneeChartWidget {
+public class TaskPriorityChartWidget extends PieChartWrapper<TaskSearchCriteria> implements ITaskPriorityChartWidget {
     @Override
     protected List<GroupItem> loadGroupItems() {
         ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        return taskService.getAssignedTasksSummary(searchCriteria);
+        return taskService.getPrioritySummary(searchCriteria);
     }
 
     @Override
     protected DataSeries buildChartSeries() {
-        final DataSeries series = new DataSeries("Assignee");
-        if (!groupItems.isEmpty()) {
+        DataSeries series = new DataSeries("Priority");
+        OptionI18nEnum.TaskPriority[] priorities = OptionI18nEnum.task_priorities;
+        for (OptionI18nEnum.TaskPriority priority : priorities) {
+            boolean isFound = false;
             for (GroupItem item : groupItems) {
-                String assignUser = (item.getGroupid() != null) ? item.getGroupid() : "";
-                String assignUserFullName = item.getGroupid() == null ? AppContext.getMessage(BugI18nEnum.OPT_UNDEFINED_USER) :
-                        item.getGroupname();
-                if (assignUserFullName == null || "".equals(assignUserFullName.trim())) {
-                    assignUserFullName = StringUtils.extractNameFromEmail(assignUser);
+                if (priority.name().equals(item.getGroupid())) {
+                    series.add(new DataSeriesItemExt(priority.name(), AppContext.getMessage(OptionI18nEnum
+                            .TaskPriority.class, priority.name()), item.getValue()));
+                    isFound = true;
+                    break;
                 }
-                series.add(new DataSeriesItemExt(assignUser, assignUserFullName, item.getValue()));
+            }
+
+            if (!isFound) {
+                series.add(new DataSeriesItemExt(priority.name(), AppContext.getMessage(OptionI18nEnum
+                        .TaskPriority.class, priority.name()), 0));
             }
         }
         return series;
@@ -51,7 +56,7 @@ public class TaskAssigneeChartWidget extends PieChartWrapper<TaskSearchCriteria>
     @Override
     public void clickLegendItem(String key) {
         TaskSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
-        cloneSearchCriteria.setAssignUser(new StringSearchField(key));
+        cloneSearchCriteria.setPriorities(new SetSearchField<>(key));
         EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, cloneSearchCriteria));
     }
 }
