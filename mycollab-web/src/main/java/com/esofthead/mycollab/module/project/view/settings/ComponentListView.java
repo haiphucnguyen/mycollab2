@@ -14,17 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
+import com.esofthead.mycollab.vaadin.desktop.ui.ListView;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
- * 
+ * @since 1.0
  */
-public interface ProjectSettingView extends PageView {
-	void showNotificationSettings(ProjectNotificationSetting notification);
+public interface ComponentListView extends
+		ListView<ComponentSearchCriteria, SimpleComponent> {
+
 }

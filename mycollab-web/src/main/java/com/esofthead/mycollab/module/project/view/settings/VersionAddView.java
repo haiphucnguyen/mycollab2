@@ -14,17 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
- * 
+ * @since 1.0
  */
-public interface ProjectSettingView extends PageView {
-	void showNotificationSettings(ProjectNotificationSetting notification);
+public interface VersionAddView extends IFormAddView<Version> {
+
+	HasEditFormHandlers<Version> getEditFormHandlers();
+
 }

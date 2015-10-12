@@ -16,15 +16,17 @@
  */
 package com.esofthead.mycollab.module.project.view.settings;
 
-import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 /**
  * 
  * @author MyCollab Ltd.
- * @since 2.0
+ * @since 1.0
  * 
  */
-public interface ProjectSettingView extends PageView {
-	void showNotificationSettings(ProjectNotificationSetting notification);
+@ViewComponent
+public class VersionContainer extends AbstractPageView {
+	private static final long serialVersionUID = 1L;
+
 }

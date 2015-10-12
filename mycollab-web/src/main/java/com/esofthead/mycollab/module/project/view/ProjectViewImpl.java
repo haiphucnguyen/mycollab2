@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.bug.TrackerPresenter;
+import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.file.FilePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
@@ -99,7 +99,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         private MessagePresenter messagePresenter;
         private MilestonePresenter milestonesPresenter;
         private TaskPresenter taskPresenter;
-        private TrackerPresenter trackerPresenter;
+        private BugPresenter bugPresenter;
         private PagePresenter pagePresenter;
         private FilePresenter filePresenter;
         private IProblemPresenter problemPresenter;
@@ -136,7 +136,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                     } else if (ProjectTypeConstants.TASK.equals(caption)) {
                         taskPresenter.go(ProjectViewImpl.this, null);
                     } else if (ProjectTypeConstants.BUG.equals(caption)) {
-                        trackerPresenter.go(ProjectViewImpl.this, null);
+                        bugPresenter.go(ProjectViewImpl.this, null);
                     } else if (ProjectTypeConstants.RISK.equals(caption)) {
                         RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
                         searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
@@ -354,8 +354,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         }
 
         private Component constructProjectBugComponent() {
-            trackerPresenter = PresenterResolver.getPresenter(TrackerPresenter.class);
-            return trackerPresenter.getView();
+            bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
+            return bugPresenter.getView();
         }
 
         private Component constructProjectFileComponent() {
