@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.XStreamJsonDeSerializer;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -89,7 +90,9 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
 
     private String groupByState;
     private String sortDirection;
+
     private TaskSearchCriteria baseCriteria;
+    private TaskSearchCriteria statisticSearchCriteria;
 
     private TaskSearchPanel taskSearchPanel;
     private MVerticalLayout wrapBody;
@@ -307,6 +310,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
             statuses.addValue(option.getTypeval());
         }
         baseCriteria.setStatuses(statuses);
+        statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
         queryAndDisplayTasks();
         displayTaskStatistic();
     }
@@ -314,11 +318,11 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     private void displayTaskStatistic() {
         rightColumn.removeAllComponents();
         UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
-        unresolvedTaskByAssigneeWidget.setSearchCriteria(baseCriteria);
+        unresolvedTaskByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
         rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
 
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
-        unresolvedTaskByPriorityWidget.setSearchCriteria(baseCriteria);
+        unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
         rightColumn.addComponent(unresolvedTaskByPriorityWidget);
     }
 

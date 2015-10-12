@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.XStreamJsonDeSerializer;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -84,6 +85,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     private String groupByState;
     private String sortDirection;
     private BugSearchCriteria baseCriteria;
+    private BugSearchCriteria statisticSearchCriteria;
 
     private BugSearchPanel searchPanel;
     private MVerticalLayout wrapBody;
@@ -98,7 +100,8 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 public void handle(BugEvent.SearchRequest event) {
                     BugSearchCriteria criteria = (BugSearchCriteria) event.getData();
                     if (criteria != null) {
-                        queryBug(criteria);
+                        baseCriteria = criteria;
+                        queryAndDisplayBugs();
                     }
                 }
             };
@@ -289,39 +292,34 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     private void queryAndDisplayBugs() {
-        queryBug(baseCriteria);
-    }
-
-    @Override
-    public void queryBug(final BugSearchCriteria searchCriteria) {
-        baseCriteria = searchCriteria;
         wrapBody.removeAllComponents();
         if (GROUP_DUE_DATE.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("duedate", sortDirection)));
+            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("duedate", sortDirection)));
             bugGroupOrderComponent = new DueDateOrderComponent();
         } else if (GROUP_START_DATE.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", sortDirection)));
+            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", sortDirection)));
             bugGroupOrderComponent = new StartDateOrderComponent();
         } else if (PLAIN_LIST.equals(groupByState)) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastUpdatedTime", sortDirection)));
+            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastUpdatedTime", sortDirection)));
             bugGroupOrderComponent = new SimpleListOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);
         }
         wrapBody.addComponent(bugGroupOrderComponent);
         final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-        int totalBugs = bugService.getTotalCount(searchCriteria);
+        int totalBugs = bugService.getTotalCount(baseCriteria);
+        searchPanel.setTotalCountNumber(totalBugs);
         currentPage = 0;
         int pages = totalBugs / 20;
         if (currentPage < pages) {
             Button moreBtn = new Button("More", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
-                    int totalTasks = bugService.getTotalCount(searchCriteria);
+                    int totalTasks = bugService.getTotalCount(baseCriteria);
                     int pages = totalTasks / 20;
                     currentPage++;
                     List<SimpleBug> otherBugs = bugService.findPagableListByCriteria(new SearchRequest<>
-                            (searchCriteria, currentPage + 1, 20));
+                            (baseCriteria, currentPage + 1, 20));
                     bugGroupOrderComponent.insertBugs(otherBugs);
                     if (currentPage == pages) {
                         wrapBody.removeComponent(wrapBody.getComponent(1));
@@ -331,9 +329,16 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
             moreBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
             wrapBody.addComponent(moreBtn);
         }
-        List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, currentPage + 1, 20));
+        List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(baseCriteria, currentPage + 1, 20));
         bugGroupOrderComponent.insertBugs(bugs);
         displayBugStatistic();
+    }
+
+    @Override
+    public void queryBug(final BugSearchCriteria searchCriteria) {
+        baseCriteria = searchCriteria;
+        statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
+        queryAndDisplayBugs();
     }
 
     @Override
