@@ -17,8 +17,6 @@
 
 package com.esofthead.mycollab.premium.module.crm.view.opportunity;
 
-import java.util.List;
-
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
@@ -26,110 +24,93 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunitySalesStageDashboard;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.addon.charts.Chart;
-import com.vaadin.addon.charts.ChartClickEvent;
-import com.vaadin.addon.charts.ChartClickListener;
-import com.vaadin.addon.charts.ChartSelectionEvent;
-import com.vaadin.addon.charts.ChartSelectionListener;
-import com.vaadin.addon.charts.LegendItemClickEvent;
-import com.vaadin.addon.charts.LegendItemClickListener;
-import com.vaadin.addon.charts.model.ChartType;
-import com.vaadin.addon.charts.model.Configuration;
-import com.vaadin.addon.charts.model.Credits;
-import com.vaadin.addon.charts.model.Cursor;
-import com.vaadin.addon.charts.model.DataSeries;
-import com.vaadin.addon.charts.model.DataSeriesItem;
-import com.vaadin.addon.charts.model.PlotOptionsPie;
-import com.vaadin.addon.charts.model.Tooltip;
+import com.vaadin.addon.charts.*;
+import com.vaadin.addon.charts.model.*;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
+import java.util.List;
+
 /**
- * 
  * @author MyCollab Ltd.
  */
 @ViewComponent
 public class OpportunitySalesStageDashboard extends CssLayout implements
-		IOpportunitySalesStageDashboard {
-	private static final long serialVersionUID = 1L;
+        IOpportunitySalesStageDashboard {
+    private static final long serialVersionUID = 1L;
 
-	public OpportunitySalesStageDashboard() {
-		this.setSizeFull();
-	}
+    public OpportunitySalesStageDashboard() {
+        this.setSizeFull();
+    }
 
-	public void setSearchCriteria(OpportunitySearchCriteria searchCriteria) {
-		this.removeAllComponents();
+    public void displayChart(OpportunitySearchCriteria searchCriteria) {
+        this.removeAllComponents();
 
-		final OpportunityService opportunityService = ApplicationContextUtil
-				.getSpringBean(OpportunityService.class);
+        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
+        final List<GroupItem> groupItems = opportunityService.getSalesStageSummary(searchCriteria);
 
-		final List<GroupItem> groupItems = opportunityService
-				.getSalesStageSummary(searchCriteria);
+        Chart chart = new Chart(ChartType.PIE);
+        Configuration conf = chart.getConfiguration();
+        conf.setTitle("Sales Stage");
+        conf.setCredits(new Credits(""));
 
-		Chart chart = new Chart(ChartType.PIE);
+        Tooltip tooltip = new Tooltip();
+        tooltip.setValueDecimals(1);
+        tooltip.setPointFormat("{series.name}: {point.percentage}%");
+        conf.setTooltip(tooltip);
 
-		Configuration conf = chart.getConfiguration();
+        PlotOptionsPie plotOptions = new PlotOptionsPie();
+        plotOptions.setAllowPointSelect(true);
+        plotOptions.setCursor(Cursor.POINTER);
+        plotOptions.setShowInLegend(true);
 
-		conf.setTitle("Sales Stage");
-		conf.setCredits(new Credits(""));
+        conf.setPlotOptions(plotOptions);
 
-		Tooltip tooltip = new Tooltip();
-		tooltip.setValueDecimals(1);
-		tooltip.setPointFormat("{series.name}: {point.percentage}%");
-		conf.setTooltip(tooltip);
+        DataSeries series = new DataSeries("Sales Stage");
 
-		PlotOptionsPie plotOptions = new PlotOptionsPie();
-		plotOptions.setAllowPointSelect(true);
-		plotOptions.setCursor(Cursor.POINTER);
-		plotOptions.setShowInLegend(true);
+        final String[] salesStages = CrmDataTypeFactory
+                .getOpportunitySalesStageList();
+        for (final String status : salesStages) {
+            boolean isFound = false;
+            for (final GroupItem item : groupItems) {
+                if (status.equals(item.getGroupid())) {
+                    series.add(new DataSeriesItem(status, item.getValue()));
+                    isFound = true;
+                    break;
+                }
+            }
 
-		conf.setPlotOptions(plotOptions);
+            if (!isFound) {
+                series.add(new DataSeriesItem(status, 0));
+            }
+        }
 
-		DataSeries series = new DataSeries("Sales Stage");
+        chart.addChartSelectionListener(new ChartSelectionListener() {
+            public void onSelection(ChartSelectionEvent e) {
+            }
+        });
+        chart.addLegendItemClickListener(new LegendItemClickListener() {
+            public void onClick(LegendItemClickEvent e) {
+            }
+        });
+        chart.addChartClickListener(new ChartClickListener() {
+            public void onClick(ChartClickEvent e) {
+            }
+        });
 
-		final String[] salesStages = CrmDataTypeFactory
-				.getOpportunitySalesStageList();
-		for (final String status : salesStages) {
-			boolean isFound = false;
-			for (final GroupItem item : groupItems) {
-				if (status.equals(item.getGroupid())) {
-					series.add(new DataSeriesItem(status, item.getValue()));
-					isFound = true;
-					break;
-				}
-			}
+        conf.setSeries(series);
+        chart.drawChart(conf);
 
-			if (!isFound) {
-				series.add(new DataSeriesItem(status, 0));
-			}
-		}
+        this.addComponent(chart);
+    }
 
-		chart.addChartSelectionListener(new ChartSelectionListener() {
-			public void onSelection(ChartSelectionEvent e) {
-			}
-		});
-		chart.addLegendItemClickListener(new LegendItemClickListener() {
-			public void onClick(LegendItemClickEvent e) {
-			}
-		});
-		chart.addChartClickListener(new ChartClickListener() {
-			public void onClick(ChartClickEvent e) {
-			}
-		});
+    @Override
+    public ComponentContainer getWidget() {
+        return this;
+    }
 
-		conf.setSeries(series);
-		chart.drawChart(conf);
+    @Override
+    public void addViewListener(ViewListener listener) {
 
-		this.addComponent(chart);
-	}
-
-	@Override
-	public ComponentContainer getWidget() {
-		return this;
-	}
-
-	@Override
-	public void addViewListener(ViewListener listener) {
-
-	}
+    }
 }

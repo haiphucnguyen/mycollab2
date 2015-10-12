@@ -58,9 +58,9 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends CssL
 
     protected abstract ComponentContainer createLegendBox();
 
-    public void setSearchCriteria(final S criteria) {
-        this.searchCriteria = criteria;
+    public void displayChart(final S criteria) {
         removeAllComponents();
+        this.searchCriteria = criteria;
 
         final JFreeChart chart = createChart();
         final JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);

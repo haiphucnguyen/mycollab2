@@ -1,12 +1,7 @@
 package com.esofthead.mycollab.premium.ui.chart;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.IInteractiveChartComponent;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.LegendItemClickEvent;
@@ -15,28 +10,41 @@ import com.vaadin.addon.charts.model.*;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
+import java.util.List;
+
 /**
  * @author MyCollab Ltd
  * @since 5.2.0
  */
 public abstract class PieChartWrapper<S extends SearchCriteria> extends CssLayout implements IInteractiveChartComponent {
     protected S searchCriteria;
+    protected List<GroupItem> groupItems;
 
     public PieChartWrapper() {
         setSizeFull();
     }
 
-    public void setSearchCriteria(S searchCriteria) {
+    public void displayChart(S searchCriteria) {
         removeAllComponents();
         this.searchCriteria = searchCriteria;
+        groupItems = loadGroupItems();
         Chart chart = createPieChart();
         this.addComponent(chart);
     }
 
-    abstract protected DataSeries getSeries();
+    public void displayChart(List<GroupItem> groupItems) {
+        removeAllComponents();
+        this.groupItems = groupItems;
+        Chart chart = createPieChart();
+        this.addComponent(chart);
+    }
+
+    abstract protected List<GroupItem> loadGroupItems();
+
+    abstract protected DataSeries buildChartSeries();
 
     protected Chart createPieChart() {
-        final DataSeries series = getSeries();
+        final DataSeries series = buildChartSeries();
         Chart chart = new Chart(ChartType.PIE);
         chart.addLegendItemClickListener(new LegendItemClickListener() {
             @Override

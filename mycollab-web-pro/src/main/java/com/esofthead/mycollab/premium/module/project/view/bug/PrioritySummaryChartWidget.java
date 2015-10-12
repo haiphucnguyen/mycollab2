@@ -44,10 +44,14 @@ public class PrioritySummaryChartWidget extends PieChartWrapper<BugSearchCriteri
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected DataSeries getSeries() {
+    protected List<GroupItem> loadGroupItems() {
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+        return bugService.getPrioritySummary(searchCriteria);
+    }
+
+    @Override
+    protected DataSeries buildChartSeries() {
         final DataSeries series = new DataSeries("Priority");
-        List<GroupItem> groupItems = bugService.getPrioritySummary(searchCriteria);
         BugPriority[] bugPriorities = OptionI18nEnum.bug_priorities;
         for (BugPriority priority : bugPriorities) {
             boolean isFound = false;

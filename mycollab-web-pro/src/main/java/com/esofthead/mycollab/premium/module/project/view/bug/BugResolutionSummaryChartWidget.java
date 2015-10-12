@@ -45,10 +45,14 @@ public class BugResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCr
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected DataSeries getSeries() {
+    protected List<GroupItem> loadGroupItems() {
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+        return bugService.getResolutionDefectsSummary(searchCriteria);
+    }
+
+    @Override
+    protected DataSeries buildChartSeries() {
         final DataSeries series = new DataSeries("Resolution");
-        List<GroupItem> groupItems = bugService.getResolutionDefectsSummary(searchCriteria);
         BugResolution[] bugResolutions = OptionI18nEnum.bug_resolutions;
         for (BugResolution resolution : bugResolutions) {
             boolean isFound = false;

@@ -65,21 +65,21 @@ public class BugChartComponent extends Depot {
             bodyContent.addComponent(prioritySummaryChartWidget);
 
             final BugSearchCriteria prioritySearchCriteria = new Cloner().deepClone(baseSearchCriteria);
-            prioritySummaryChartWidget.setSearchCriteria(prioritySearchCriteria);
+            prioritySummaryChartWidget.displayChart(prioritySearchCriteria);
         } else if ("BugsByStatus".equals(reportName)) {
             this.setTitle(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_STATUS_TITLE));
             IStatusSummaryChartWidget statusSummaryChartWidget = ViewManager.getCacheComponent(IStatusSummaryChartWidget.class);
             bodyContent.addComponent(statusSummaryChartWidget);
 
             final BugSearchCriteria statusSearchCriteria = new Cloner().deepClone(baseSearchCriteria);
-            statusSummaryChartWidget.setSearchCriteria(statusSearchCriteria);
+            statusSummaryChartWidget.displayChart(statusSearchCriteria);
         } else if ("BugByResolution".equals(reportName)) {
             this.setTitle(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE));
             IBugResolutionSummaryChartWidget resolutionSummaryWdiget = ViewManager.getCacheComponent(IBugResolutionSummaryChartWidget.class);
             bodyContent.addComponent(resolutionSummaryWdiget);
 
             final BugSearchCriteria statusSearchCriteria = new Cloner().deepClone(baseSearchCriteria);
-            resolutionSummaryWdiget.setSearchCriteria(statusSearchCriteria);
+            resolutionSummaryWdiget.displayChart(statusSearchCriteria);
         }
     }
 

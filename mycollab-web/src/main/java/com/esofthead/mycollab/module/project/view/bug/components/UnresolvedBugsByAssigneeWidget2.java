@@ -50,7 +50,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 
     private Button toogleViewBtn;
     private boolean isPlainMode = true;
-    private BugSearchCriteria bugSearchCriteria;
+    private BugSearchCriteria searchCriteria;
 
     private List<GroupItem> groupItems;
     private int totalCount;
@@ -76,7 +76,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
     }
 
     public void setSearchCriteria(final BugSearchCriteria searchCriteria) {
-        bugSearchCriteria = searchCriteria;
+        this.searchCriteria = searchCriteria;
         bodyContent.removeAllComponents();
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
         totalCount = bugService.getTotalCount(searchCriteria);
@@ -116,8 +116,8 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    bugSearchCriteria.setAssignuser(new StringSearchField(assignee));
-                    EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, bugSearchCriteria));
+                    searchCriteria.setAssignuser(new StringSearchField(assignee));
+                    EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, searchCriteria));
                 }
             });
 

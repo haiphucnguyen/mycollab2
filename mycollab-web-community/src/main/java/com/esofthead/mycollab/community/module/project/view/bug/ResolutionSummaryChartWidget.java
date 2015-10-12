@@ -45,10 +45,6 @@ import java.util.List;
 public class ResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> implements IBugResolutionSummaryChartWidget {
     private static final long serialVersionUID = 1L;
 
-    public ResolutionSummaryChartWidget(int width, int height) {
-        super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE), BugResolution.class, width, height);
-    }
-
     public ResolutionSummaryChartWidget() {
         super(AppContext.getMessage(BugI18nEnum.WIDGET_CHART_RESOLUTION_TITLE), BugResolution.class, 400, 280);
     }

@@ -66,14 +66,10 @@ public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunityS
         // create the dataset...
         final DefaultPieDataset dataset = new DefaultPieDataset();
 
-        final OpportunityService opportunityService = ApplicationContextUtil
-                .getSpringBean(OpportunityService.class);
+        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
+        final List<GroupItem> groupItems = opportunityService.getSalesStageSummary(searchCriteria);
 
-        final List<GroupItem> groupItems = opportunityService
-                .getSalesStageSummary(searchCriteria);
-
-        final String[] salesStages = CrmDataTypeFactory
-                .getOpportunitySalesStageList();
+        final String[] salesStages = CrmDataTypeFactory.getOpportunitySalesStageList();
         for (final String status : salesStages) {
             boolean isFound = false;
             for (final GroupItem item : groupItems) {

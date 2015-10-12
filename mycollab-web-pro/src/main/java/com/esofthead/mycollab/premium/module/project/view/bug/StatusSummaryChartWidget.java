@@ -40,11 +40,14 @@ public class StatusSummaryChartWidget extends PieChartWrapper<BugSearchCriteria>
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected DataSeries getSeries() {
+    protected List<GroupItem> loadGroupItems() {
         BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-        final DataSeries series = new DataSeries("Status");
+        return bugService.getStatusSummary(searchCriteria);
+    }
 
-        List<GroupItem> groupItems = bugService.getStatusSummary(searchCriteria);
+    @Override
+    protected DataSeries buildChartSeries() {
+        final DataSeries series = new DataSeries("Status");
         BugStatus[] bugStatues = OptionI18nEnum.bug_statuses;
         for (BugStatus status : bugStatues) {
             boolean isFound = false;
