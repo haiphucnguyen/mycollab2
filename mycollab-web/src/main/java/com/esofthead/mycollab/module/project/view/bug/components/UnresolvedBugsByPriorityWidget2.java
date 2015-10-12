@@ -65,7 +65,8 @@ public class UnresolvedBugsByPriorityWidget2 extends DepotWithChart {
     protected void displayChartMode() {
         this.bodyContent.removeAllComponents();
         IPrioritySummaryChartWidget prioritySummaryChartWidget = ViewManager.getCacheComponent(IPrioritySummaryChartWidget.class);
-
+        prioritySummaryChartWidget.displayChart(searchCriteria);
+        bodyContent.addComponent(prioritySummaryChartWidget);
     }
 
     @Override

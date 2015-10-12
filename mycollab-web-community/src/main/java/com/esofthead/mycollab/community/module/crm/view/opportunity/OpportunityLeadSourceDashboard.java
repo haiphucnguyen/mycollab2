@@ -39,14 +39,11 @@ import java.util.List;
  * @since 2.0
  */
 @ViewComponent
-public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunitySearchCriteria> implements
-        IOpportunityLeadSourceDashboard {
+public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunitySearchCriteria> implements IOpportunityLeadSourceDashboard {
     private static final long serialVersionUID = 1L;
 
-    private List<GroupItem> groupItems;
-
     public OpportunityLeadSourceDashboard(final int width, final int height) {
-        super("Deals By Sources", width, height);
+        super(width, height);
     }
 
     @Override
@@ -60,11 +57,14 @@ public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunityS
     }
 
     @Override
+    protected List<GroupItem> loadGroupItems() {
+        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
+        return opportunityService.getLeadSourcesSummary(searchCriteria);
+    }
+
+    @Override
     protected DefaultPieDataset createDataset() {
         final DefaultPieDataset dataset = new DefaultPieDataset();
-
-        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
-        groupItems = opportunityService.getLeadSourcesSummary(searchCriteria);
 
         final String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
         for (final String source : leadSources) {

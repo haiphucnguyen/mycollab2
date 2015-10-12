@@ -21,15 +21,18 @@ public abstract class DepotWithChart extends Depot {
                 isPlainMode = !isPlainMode;
                 if (isPlainMode) {
                     toogleViewBtn.setIcon(FontAwesome.BAR_CHART_O);
+                    toogleViewBtn.setDescription("Chart mode");
                     displayPlainMode();
                 } else {
                     toogleViewBtn.setIcon(FontAwesome.LIST);
+                    toogleViewBtn.setDescription("Simple mode");
                     displayChartMode();
                 }
             }
         });
         toogleViewBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
         toogleViewBtn.setIcon(FontAwesome.BAR_CHART_O);
+        toogleViewBtn.setDescription("Simple mode");
         addHeaderElement(toogleViewBtn);
         setContentBorder(true);
         this.setMargin(new MarginInfo(false, false, true, false));

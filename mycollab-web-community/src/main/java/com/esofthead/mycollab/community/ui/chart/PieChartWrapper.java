@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.community.ui.chart;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.CustomLayoutExt;
@@ -48,15 +49,14 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
     private static final long serialVersionUID = 1L;
 
     protected DefaultPieDataset pieDataSet;
-
     private Class<? extends Enum<?>> enumKeyCls;
 
-    public PieChartWrapper(final String title, final int width, final int height) {
-        super(title, width, height);
+    public PieChartWrapper(final int width, final int height) {
+        super(width, height);
     }
 
-    public PieChartWrapper(final String title, Class<? extends Enum<?>> emumKey, final int width, final int height) {
-        super(title, width, height);
+    public PieChartWrapper(Class<? extends Enum<?>> emumKey, final int width, final int height) {
+        super(width, height);
         this.enumKeyCls = emumKey;
     }
 
@@ -96,6 +96,16 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
         return chart;
     }
 
+    @Override
+    public ComponentContainer getWidget() {
+        return this;
+    }
+
+    @Override
+    public void addViewListener(ViewListener listener) {
+
+    }
+
     protected abstract DefaultPieDataset createDataset();
 
     class JFreeChartLabelCustom implements PieSectionLabelGenerator {
@@ -109,7 +119,12 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
                 }
 
                 if (enumKeyCls == null) {
-                    return String.format("%s (%d)", key.toString(), value);
+                    if (key instanceof Key) {
+                        return String.format("%s (%d)", StringUtils.trim(((Key) key).getDisplayName(), 20, true), value);
+                    } else {
+                        return String.format("%s (%d)", key.toString(), value);
+                    }
+
                 } else {
                     return String.format("%s (%d)", AppContext.getMessage(enumKeyCls, key.toString()), value);
                 }
@@ -146,7 +161,12 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
 
             String btnCaption;
             if (enumKeyCls == null) {
-                btnCaption = String.format("%s(%d)", key, pieDataSet.getValue(key).intValue());
+                if (key instanceof Key) {
+                    btnCaption = String.format("%s (%d)", StringUtils.trim(((Key) key).getDisplayName(), 20, true),
+                            pieDataSet.getValue(key).intValue());
+                } else {
+                    btnCaption = String.format("%s (%d)", key, pieDataSet.getValue(key).intValue());
+                }
             } else {
                 btnCaption = String.format("%s(%d)", AppContext.getMessage(enumKeyCls, key.toString()),
                         pieDataSet.getValue(key).intValue());
@@ -156,7 +176,11 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    PieChartWrapper.this.clickLegendItem(key.toString());
+                    if (key instanceof Key) {
+                        PieChartWrapper.this.clickLegendItem(((Key) key).getKey());
+                    } else {
+                        PieChartWrapper.this.clickLegendItem(key.toString());
+                    }
                 }
             });
             btnLink.addStyleName(UIConstants.THEME_LINK);

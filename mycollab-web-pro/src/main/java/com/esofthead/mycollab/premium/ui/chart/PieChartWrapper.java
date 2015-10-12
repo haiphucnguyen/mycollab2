@@ -32,13 +32,6 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends CssLayou
         this.addComponent(chart);
     }
 
-    public void displayChart(List<GroupItem> groupItems) {
-        removeAllComponents();
-        this.groupItems = groupItems;
-        Chart chart = createPieChart();
-        this.addComponent(chart);
-    }
-
     abstract protected List<GroupItem> loadGroupItems();
 
     abstract protected DataSeries buildChartSeries();

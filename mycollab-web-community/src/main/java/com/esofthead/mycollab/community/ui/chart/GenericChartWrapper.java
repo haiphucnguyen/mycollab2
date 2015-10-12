@@ -16,12 +16,15 @@
  */
 package com.esofthead.mycollab.community.ui.chart;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.IInteractiveChartComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import org.jfree.chart.JFreeChart;
+
+import java.util.List;
 
 /**
  * @param <S>
@@ -43,16 +46,17 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends CssL
             ColorConstants.LAVENDER, ColorConstants.LEMON,
             ColorConstants.BROWN, ColorConstants.LIVER, ColorConstants.LION};
 
-    protected String title;
     protected int height;
     protected int width;
     protected S searchCriteria;
+    protected List<GroupItem> groupItems;
 
-    public GenericChartWrapper(final String title, final int width, final int height) {
+    public GenericChartWrapper(final int width, final int height) {
         this.width = width;
         this.height = height;
-        this.title = title;
     }
+
+    abstract protected List<GroupItem> loadGroupItems();
 
     abstract protected JFreeChart createChart();
 
@@ -61,7 +65,11 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends CssL
     public void displayChart(final S criteria) {
         removeAllComponents();
         this.searchCriteria = criteria;
+        this.groupItems = loadGroupItems();
+        displayChart();
+    }
 
+    private void displayChart() {
         final JFreeChart chart = createChart();
         final JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);
 

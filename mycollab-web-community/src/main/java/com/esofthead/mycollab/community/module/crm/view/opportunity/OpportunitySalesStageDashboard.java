@@ -39,8 +39,7 @@ import java.util.List;
  * @since 2.0
  */
 @ViewComponent
-public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunitySearchCriteria> implements
-        IOpportunitySalesStageDashboard {
+public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunitySearchCriteria> implements IOpportunitySalesStageDashboard {
     private static final long serialVersionUID = 1L;
 
     public OpportunitySalesStageDashboard() {
@@ -48,7 +47,7 @@ public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunityS
     }
 
     public OpportunitySalesStageDashboard(final int width, final int height) {
-        super("Deals By Stages", width, height);
+        super(width, height);
     }
 
     @Override
@@ -62,12 +61,15 @@ public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunityS
     }
 
     @Override
+    protected List<GroupItem> loadGroupItems() {
+        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
+        return opportunityService.getSalesStageSummary(searchCriteria);
+    }
+
+    @Override
     protected DefaultPieDataset createDataset() {
         // create the dataset...
         final DefaultPieDataset dataset = new DefaultPieDataset();
-
-        final OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
-        final List<GroupItem> groupItems = opportunityService.getSalesStageSummary(searchCriteria);
 
         final String[] salesStages = CrmDataTypeFactory.getOpportunitySalesStageList();
         for (final String status : salesStages) {
