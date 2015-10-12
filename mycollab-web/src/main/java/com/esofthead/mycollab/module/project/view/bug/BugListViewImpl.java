@@ -59,7 +59,9 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -103,6 +105,23 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                         baseCriteria = criteria;
                         queryAndDisplayBugs();
                     }
+                }
+            };
+
+    private ApplicationEventListener<BugEvent.NewBugAdded> newBugHandler = new
+            ApplicationEventListener<BugEvent.NewBugAdded>() {
+                @Override
+                @Subscribe
+                public void handle(BugEvent.NewBugAdded event) {
+                    final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    SimpleBug bug = bugService.findById((Integer) event.getData(), AppContext.getAccountId());
+                    if (bug != null && bugGroupOrderComponent != null) {
+                        bugGroupOrderComponent.insertBugs(Arrays.asList(bug));
+                    }
+                    displayBugStatistic();
+
+                    int totalTasks = bugService.getTotalCount(baseCriteria);
+                    searchPanel.setTotalCountNumber(totalTasks);
                 }
             };
 
@@ -258,37 +277,41 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(searchHandler);
+        EventBusFactory.getInstance().register(newBugHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
         EventBusFactory.getInstance().unregister(searchHandler);
+        EventBusFactory.getInstance().unregister(newBugHandler);
         super.detach();
     }
 
     private void displayBugStatistic() {
         rightColumn.removeAllComponents();
-        // Unresolved by assignee
-        UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
-        BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-        unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
-        unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
+        BugSearchCriteria criteria = new BugSearchCriteria();
+        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        criteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
                 OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
+
+        // Unresolved by assignee
+        UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
+        BugSearchCriteria unresolvedByAssigneeSearchCriteria = BeanUtility.deepClone(criteria);
         unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
         rightColumn.addComponent(unresolvedByAssigneeWidget);
 
         // Unresolve by priority widget
-        UnresolvedBugsByPriorityWidget2 unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget2();
-        BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-        unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
-                CurrentProjectVariables.getProjectId()));
-        unresolvedByPrioritySearchCriteria
-                .setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
-                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
+        UnresolvedBugsByPriorityWidget unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget();
+        BugSearchCriteria unresolvedByPrioritySearchCriteria = BeanUtility.deepClone(criteria);
         unresolvedByPriorityWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
         rightColumn.addComponent(unresolvedByPriorityWidget);
+
+        //Unresolved by status
+        UnresolvedBugsByStatusWidget unresolvedBugsByStatusWidget = new UnresolvedBugsByStatusWidget();
+        BugSearchCriteria unresolvedByStatusSearchCriteria = BeanUtility.deepClone(criteria);
+        unresolvedBugsByStatusWidget.setSearchCriteria(unresolvedByStatusSearchCriteria);
+        rightColumn.addComponent(unresolvedBugsByStatusWidget);
     }
 
     private void queryAndDisplayBugs() {
