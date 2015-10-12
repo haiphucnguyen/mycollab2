@@ -22,7 +22,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
@@ -41,7 +43,7 @@ public class VersionMultiSelectField extends MultiSelectComp {
     private static final long serialVersionUID = 1L;
 
     public VersionMultiSelectField() {
-        super("versionname");
+        super("versionname", true);
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +55,11 @@ public class VersionMultiSelectField extends MultiSelectComp {
         VersionService versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
         List<Version> versions = versionService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
         return versions;
+    }
+
+    @Override
+    protected void requestAddNewComp() {
+        EventBusFactory.getInstance().post(new BugVersionEvent.GotoAdd(VersionMultiSelectField.this, null));
     }
 
     @SuppressWarnings("unchecked")

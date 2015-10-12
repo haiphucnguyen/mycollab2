@@ -21,7 +21,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
@@ -39,7 +41,7 @@ public class ComponentMultiSelectField extends MultiSelectComp {
     private static final long serialVersionUID = 1L;
 
     public ComponentMultiSelectField() {
-        super("componentname");
+        super("componentname", true);
     }
 
     @Override
@@ -54,6 +56,11 @@ public class ComponentMultiSelectField extends MultiSelectComp {
         List<Component> components = componentService.findPagableListByCriteria(new SearchRequest<>(
                 searchCriteria, 0, Integer.MAX_VALUE));
         return components;
+    }
+
+    @Override
+    protected void requestAddNewComp() {
+        EventBusFactory.getInstance().post(new BugComponentEvent.GotoAdd(ComponentMultiSelectField.this, null));
     }
 
     @Override
