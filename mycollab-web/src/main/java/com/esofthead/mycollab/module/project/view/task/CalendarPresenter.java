@@ -28,7 +28,7 @@ import com.vaadin.ui.ComponentContainer;
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.5
+ * @since 5.2.0
  */
 public class CalendarPresenter extends AbstractPresenter<CalendarView> {
     public CalendarPresenter() {

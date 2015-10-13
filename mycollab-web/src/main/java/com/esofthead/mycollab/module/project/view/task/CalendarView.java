@@ -20,7 +20,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.5
+ * @since 5.2.0
  */
 public interface CalendarView extends PageView {
     void display();

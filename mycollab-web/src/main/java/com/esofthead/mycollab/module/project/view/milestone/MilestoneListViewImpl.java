@@ -119,7 +119,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private HorizontalLayout createHeaderRight() {
-        HorizontalLayout layout = new HorizontalLayout();
+        MHorizontalLayout layout = new MHorizontalLayout();
 
         createBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -132,8 +132,20 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
-        layout.addComponent(createBtn);
-        layout.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
+        layout.with(createBtn);
+
+        Button kanbanBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+
+            }
+        });
+        kanbanBtn.setDescription("Kanban View");
+        kanbanBtn.setIcon(FontAwesome.TH);
+
+        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        viewButtons.addButton(kanbanBtn);
+        layout.with(viewButtons);
 
         return layout;
     }
