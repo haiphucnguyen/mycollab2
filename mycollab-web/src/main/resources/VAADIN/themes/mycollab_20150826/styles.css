@@ -9511,6 +9511,33 @@ div.v-button.token-field:hover {
 	padding-bottom: 8px;
 }
 
+.v-slot-roadmap-block {
+	padding-left: 20px;
+	border-top: 1px solid #CFCFCF;
+}
+
+.v-slot-roadmap-block .milestoneLink {
+	font-size: 18px;
+}
+
+.v-slot-roadmap-block .milestoneLink .v-button-caption {
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.v-slot-roadmap-block .block {
+	font-size: 11px;
+	line-height: 22px;
+	border-radius: 5px;
+	background-color: #d3e8ff;
+	padding: 0px 5px;
+}
+
+.v-slot-roadmap-block:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
 .tasklist {
 	margin-top: 10px;
 	border: solid #CFCFCF 1px;

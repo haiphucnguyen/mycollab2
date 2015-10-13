@@ -48,6 +48,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
@@ -134,17 +135,23 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         layout.with(createBtn);
 
-        Button kanbanBtn = new Button(null, new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent clickEvent) {
-
-            }
-        });
+        Button kanbanBtn = new Button();
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 
+        Button roadmapBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new MilestoneEvent.GotoRoadmap(MilestoneListViewImpl.this));
+            }
+        });
+        roadmapBtn.setDescription("Roadmap");
+        roadmapBtn.setIcon(VaadinIcons.CUBE);
+
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        viewButtons.addButton(roadmapBtn);
         viewButtons.addButton(kanbanBtn);
+        viewButtons.setDefaultButton(kanbanBtn);
         layout.with(viewButtons);
 
         return layout;
