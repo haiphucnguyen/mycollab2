@@ -53,7 +53,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
-import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.server.FileDownloader;
@@ -324,6 +323,10 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
         unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
         rightColumn.addComponent(unresolvedTaskByPriorityWidget);
+
+        UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
+        unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
+        rightColumn.addComponent(unresolvedTaskByStatusWidget);
     }
 
     @Override

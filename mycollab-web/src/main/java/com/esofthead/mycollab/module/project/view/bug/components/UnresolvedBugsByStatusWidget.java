@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonI18nComp;
 import com.esofthead.mycollab.vaadin.ui.DepotWithChart;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -61,6 +62,7 @@ public class UnresolvedBugsByStatusWidget extends DepotWithChart {
                         MHorizontalLayout statusLayout = new MHorizontalLayout().withWidth("100%");
                         ButtonI18nComp statusLink = new ButtonI18nComp(status.name(), status, listener);
                         statusLink.setWidth("110px");
+                        statusLink.setIcon(FontAwesome.FLAG);
                         statusLink.setStyleName(UIConstants.THEME_LINK);
 
                         ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount - item.getValue(), false);
@@ -74,6 +76,7 @@ public class UnresolvedBugsByStatusWidget extends DepotWithChart {
                     MHorizontalLayout statusLayout = new MHorizontalLayout().withWidth("100%");
                     Button statusLink = new ButtonI18nComp(status.name(), status, listener);
                     statusLink.setWidth("110px");
+                    statusLink.setIcon(FontAwesome.FLAG);
                     statusLink.setStyleName(UIConstants.THEME_LINK);
                     ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount, false);
                     indicator.setWidth("100%");
