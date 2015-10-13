@@ -152,13 +152,15 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                     (milestone.getOwnerFullName(), 20, true)));
             metaBlock.addComponent(new ELabel(userDiv.write(), ContentMode.HTML).withStyleName("block"));
             metaBlock.addComponent(new ELabel("Start: " + AppContext.formatDate(milestone.getStartdate()))
-                    .withStyleName("block"));
+                    .withStyleName("block").withDescription("Start date"));
             metaBlock.addComponent(new ELabel("End: " + AppContext.formatDate(milestone.getEnddate())).withStyleName
-                    ("block"));
+                    ("block").withDescription("End date"));
             metaBlock.addComponent(new ELabel(FontAwesome.MONEY.getHtml() + " " + (milestone.getTotalBugBillableHours() + milestone
-                    .getTotalTaskBillableHours()), ContentMode.HTML).withStyleName("block"));
+                    .getTotalTaskBillableHours()), ContentMode.HTML).withStyleName("block").withDescription
+                    ("Billable hours"));
             metaBlock.addComponent(new ELabel(FontAwesome.GIFT.getHtml() + " " + (milestone.getTotalBugNonBillableHours() + milestone
-                    .getTotalTaskNonBillableHours()), ContentMode.HTML).withStyleName("block"));
+                    .getTotalTaskNonBillableHours()), ContentMode.HTML).withStyleName("block").withDescription("Non " +
+                    "billable hours"));
             this.add(metaBlock);
 
             ELabel descriptionLbl = new ELabel(StringUtils.formatRichText(milestone.getDescription()), ContentMode
