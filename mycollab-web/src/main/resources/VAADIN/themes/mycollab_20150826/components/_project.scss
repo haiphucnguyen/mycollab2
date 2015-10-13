@@ -547,25 +547,17 @@
   .v-slot-roadmap-block {
     padding-left: 20px;
     border-top: 1px solid $border-color;
-    .milestoneLink {
-      font-size: $font-x-large;
-      .v-button-caption {
-        width: 100%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+    .meta {
+      font-size: $font-small;
+      color: $meta-color;
     }
-    .block {
+    .v-label.block {
       font-size: $font-smaller;
       line-height: 22px;
       border-radius: 5px;
-      background-color: #d3e8ff;
+      background-color: #cbf4bd;
       padding: 0px 5px;
     }
-  }
-
-  .v-slot-roadmap-block:nth-child(even) {
-    background-color: #f9f9f9;
   }
 
   /* End Milestone View */

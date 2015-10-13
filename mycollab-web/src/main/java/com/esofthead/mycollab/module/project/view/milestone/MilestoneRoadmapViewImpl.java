@@ -1,41 +1,48 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.vaadin.teemu.VaadinIcons;
-import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd
@@ -63,10 +70,13 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                     public void run() {
                         baseCriteria = new MilestoneSearchCriteria();
                         baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                        baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("startdate",
+                                SearchCriteria.DESC), new SearchCriteria.OrderField("enddate", SearchCriteria.DESC)));
                         List<SimpleMilestone> milestones = milestoneService.findPagableListByCriteria(new SearchRequest<>(baseCriteria, 0, Integer.MAX_VALUE));
                         for (SimpleMilestone milestone : milestones) {
                             MilestoneRoadmapViewImpl.this.addComponent(new MilestoneBlock(milestone));
                         }
+                        UI.getCurrent().push();
                     }
                 });
             }
@@ -74,8 +84,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     }
 
     private void initUI() {
-        ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.MILESTONE,
-                AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
+        ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.MILESTONE, "Roadmap");
 
         MHorizontalLayout header = new MHorizontalLayout()
                 .withStyleName("hdr-view").withWidth("100%").withMargin(true)
@@ -123,24 +132,25 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     }
 
     private static class MilestoneBlock extends MVerticalLayout {
+        private boolean showIssues = false;
+        private MVerticalLayout issueLayout;
+
         MilestoneBlock(final SimpleMilestone milestone) {
             this.setStyleName("roadmap-block");
-            MButton milestoneLink = new MButton(milestone.getName()).withStyleName(UIConstants.THEME_LINK)
-                    .withListener(new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new MilestoneEvent.GotoRead(MilestoneBlock.this, milestone));
-                        }
-                    });
-            milestoneLink.setIcon(VaadinIcons.CALENDAR_BRIEFCASE);
-            milestoneLink.addStyleName("milestoneLink");
-            milestoneLink.setWidth("100%");
-            this.addComponent(milestoneLink);
+            Div milestoneDiv = new Div().appendText(VaadinIcons.CALENDAR_BRIEFCASE.getHtml() + " ").appendChild(new A
+                    (ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()))
+                    .appendText(milestone.getName())).appendText(" (" + AppContext.getMessage(com.esofthead.mycollab
+                    .module.project.i18n.OptionI18nEnum.MilestoneStatus.class, milestone
+                    .getStatus()) + ")");
+            ELabel milestoneLbl = new ELabel(milestoneDiv.write(), ContentMode.HTML).withStyleName("h2");
+            this.addComponent(milestoneLbl);
 
             MHorizontalLayout metaBlock = new MHorizontalLayout();
-            metaBlock.addComponent(new ELabel(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + ": " +
-                    new Img("", StorageFactory.getInstance().getAvatarPath(milestone.getOwnerAvatarId(), 16)).write() + " "
-                    + StringUtils.trim(milestone.getOwnerFullName(), 20, true), ContentMode.HTML).withStyleName("block"));
+            Div userDiv = new Div().appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(milestone
+                    .getOwnerAvatarId(), 16))).appendChild(new A(ProjectLinkBuilder.generateProjectMemberFullLink
+                    (milestone.getProjectid(), milestone.getOwner())).appendText(" " + StringUtils.trim
+                    (milestone.getOwnerFullName(), 20, true)));
+            metaBlock.addComponent(new ELabel(userDiv.write(), ContentMode.HTML).withStyleName("block"));
             metaBlock.addComponent(new ELabel("Start: " + AppContext.formatDate(milestone.getStartdate()))
                     .withStyleName("block"));
             metaBlock.addComponent(new ELabel("End: " + AppContext.formatDate(milestone.getEnddate())).withStyleName
@@ -151,22 +161,72 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                     .getTotalTaskNonBillableHours()), ContentMode.HTML).withStyleName("block"));
             this.add(metaBlock);
 
-            ELabel descriptionLbl = new ELabel(StringUtils.formatRichText(milestone.getDescription()), ContentMode.HTML);
+            ELabel descriptionLbl = new ELabel(StringUtils.formatRichText(milestone.getDescription()), ContentMode
+                    .HTML).withStyleName("meta");
             this.addComponent(descriptionLbl);
 
             MHorizontalLayout progressLayout = new MHorizontalLayout();
             int openAssignments = milestone.getNumOpenBugs() + milestone.getNumOpenTasks();
             int totalAssignments = milestone.getNumBugs() + milestone.getNumTasks();
-            ProgressBarIndicator progressBarIndicator = new ProgressBarIndicator(totalAssignments, (totalAssignments - openAssignments), false);
-            Button viewIssuesBtn = new Button("View issues", new Button.ClickListener() {
+            ELabel progressInfoLbl;
+            if (totalAssignments > 0) {
+                progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
+                        (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
+                                * 100 / totalAssignments)).withStyleName("meta");
+            } else {
+                progressInfoLbl = new ELabel("No issue").withStyleName("meta");
+            }
+
+            final Button viewIssuesBtn = new Button("View issues");
+            Button.ClickListener viewIssuesListener = new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-
+                    showIssues = !showIssues;
+                    if (showIssues) {
+                        issueLayout.setVisible(true);
+                        viewIssuesBtn.setCaption("Hide issues");
+                        ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+                        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                        searchCriteria.setTypes(new SetSearchField<>(ProjectTypeConstants.BUG, ProjectTypeConstants.TASK));
+                        searchCriteria.setMilestoneId(new NumberSearchField(milestone.getId()));
+                        ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean
+                                (ProjectGenericTaskService.class);
+                        List<ProjectGenericTask> genericTasks = genericTaskService.findPagableListByCriteria(new
+                                SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+                        for (ProjectGenericTask genericTask : genericTasks) {
+                            Div issueDiv = new Div();
+                            issueDiv.appendText(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml() + " ");
+                            String uid = UUID.randomUUID().toString();
+                            A taskLink = new A().setId("tag" + uid);
+                            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+                                    genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
+                            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, genericTask.getType(), genericTask.getTypeId() + ""));
+                            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+                            taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
+                            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
+                            Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
+                            issueLayout.addComponent(issueLbl);
+                            if (genericTask.isClosed()) {
+                                issueLbl.addStyleName("completed");
+                            } else if (genericTask.isOverdue()) {
+                                issueLbl.addStyleName("overdue");
+                            }
+                        }
+                    } else {
+                        viewIssuesBtn.setCaption("View issues");
+                        issueLayout.removeAllComponents();
+                        issueLayout.setVisible(false);
+                    }
                 }
-            });
+            };
+            viewIssuesBtn.addClickListener(viewIssuesListener);
             viewIssuesBtn.setStyleName(UIConstants.THEME_LINK);
-            progressLayout.withWidth("800px").with(progressBarIndicator, viewIssuesBtn);
+            viewIssuesBtn.addStyleName("block");
+            progressLayout.with(progressInfoLbl, viewIssuesBtn);
             this.addComponent(progressLayout);
+            issueLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
+            issueLayout.setVisible(false);
+            this.addComponent(issueLayout);
         }
     }
 }

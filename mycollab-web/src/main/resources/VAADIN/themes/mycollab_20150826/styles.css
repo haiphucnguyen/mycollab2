@@ -9516,26 +9516,17 @@ div.v-button.token-field:hover {
 	border-top: 1px solid #CFCFCF;
 }
 
-.v-slot-roadmap-block .milestoneLink {
-	font-size: 18px;
+.v-slot-roadmap-block .meta {
+	font-size: 12px;
+	color: #888;
 }
 
-.v-slot-roadmap-block .milestoneLink .v-button-caption {
-	width: 100%;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-.v-slot-roadmap-block .block {
+.v-slot-roadmap-block .v-label.block {
 	font-size: 11px;
 	line-height: 22px;
 	border-radius: 5px;
-	background-color: #d3e8ff;
+	background-color: #cbf4bd;
 	padding: 0px 5px;
-}
-
-.v-slot-roadmap-block:nth-child(even) {
-	background-color: #f9f9f9;
 }
 
 .tasklist {
