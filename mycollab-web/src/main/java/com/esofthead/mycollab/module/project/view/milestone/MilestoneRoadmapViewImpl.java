@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -29,6 +30,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -55,7 +57,26 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
     private MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
     private MilestoneSearchCriteria baseCriteria;
 
-    public MilestoneRoadmapViewImpl() {
+    private ApplicationEventListener<MilestoneEvent.NewMilestoneAdded> newMilestoneHandler = new
+            ApplicationEventListener<MilestoneEvent.NewMilestoneAdded>() {
+                @Override
+                @Subscribe
+                public void handle(MilestoneEvent.NewMilestoneAdded event) {
+                    MilestoneRoadmapViewImpl.this.removeAllComponents();
+                    displayView();
+                }
+            };
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(newMilestoneHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(newMilestoneHandler);
+        super.detach();
     }
 
     @Override
@@ -101,7 +122,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
 
             @Override
             public void buttonClick(final Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneRoadmapViewImpl.this, null));
+                UI.getCurrent().addWindow(new MilestoneAddWindow(new SimpleMilestone()));
             }
         });
         createBtn.setIcon(FontAwesome.PLUS);

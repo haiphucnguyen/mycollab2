@@ -17,6 +17,9 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -42,6 +45,7 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.CustomLayoutExt;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -73,6 +77,33 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     private Button createBtn;
 
     private List<SimpleMilestone> milestones;
+
+    private ApplicationEventListener<MilestoneEvent.NewMilestoneAdded> newMilestoneHandler = new
+            ApplicationEventListener<MilestoneEvent.NewMilestoneAdded>() {
+                @Override
+                @Subscribe
+                public void handle(MilestoneEvent.NewMilestoneAdded event) {
+                    MilestoneListViewImpl.this.removeAllComponents();
+                    MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
+                    searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    List<SimpleMilestone> milestoneList = milestoneService.findPagableListByCriteria(new
+                            SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
+                    displayMilestones(milestoneList);
+                }
+            };
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(newMilestoneHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(newMilestoneHandler);
+        super.detach();
+    }
 
     @Override
     protected void displayView() {
@@ -127,7 +158,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this, null));
+                UI.getCurrent().addWindow(new MilestoneAddWindow(new SimpleMilestone()));
             }
         });
         createBtn.setIcon(FontAwesome.PLUS);

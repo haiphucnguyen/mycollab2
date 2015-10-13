@@ -34,4 +34,5 @@ object MilestoneEvent {
 
     class GotoRoadmap(source: AnyRef) extends ApplicationEvent(source, null) {}
 
+    class NewMilestoneAdded(source: AnyRef, data: Integer) extends ApplicationEvent(source, data) {}
 }
