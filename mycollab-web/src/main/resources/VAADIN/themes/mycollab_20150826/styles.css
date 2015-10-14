@@ -10902,47 +10902,62 @@ input.v-textfield-errorField {
 	-webkit-border-radius: 16px;
 }
 
-.login-header {
-	margin: 0px;
+#login-header {
+	margin: 0px auto 30px;
 	width: 100%;
-	background-color: #1a8fcb;
 	text-align: center;
+	font-size: 27px;
+	height: 60px;
+	background-color: #1a8fcb;
 }
 
-.login-header .app-logo {
+#login-header #logo-here {
+	background: url('icons/login-logo.png') no-repeat 0 0 transparent;
 	margin: 5px 0px 5px 100px;
 	height: 50px;
 	width: 218px;
 	float: left;
 }
 
-.login-header .social-links {
+#login-header #social-links {
 	float: right;
 	margin-right: 150px;
+	height: 100%;
 }
 
-.loginFormContainer {
+#login-header #social-links a {
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	margin-right: 3px;
+}
+
+#login-header #social-links a img {
+	vertical-align: bottom;
+	border-style: none;
+}
+
+#loginFormContainer {
 	width: 676px;
-	margin: 30px auto;
+	margin: 0px auto;
 	background-color: white;
 	border: 1px solid #c8c8c8;
 	padding: 0px 0px 30px;
 	display: table;
 }
 
-.loginFormContainer .form-header {
-	font-size: 38px;
-	color: #225580;
-	padding: 20px 0px;
-	text-align: center;
-}
-
-.loginFormContainer .form-subheader {
-	font-size: 20px;
-}
-
 .forgotPwdForm #loginFormContainer {
 	padding: 30px 40px;
+}
+
+#loginFormContainer #form-header {
+	font-size: 38px;
+	line-height: 23px;
+	color: #225580;
+	padding: 40px 0px 20px;
+	text-transform: uppercase;
+	text-align: center;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 
 .forgotPwdForm #loginFormContainer #form-header {
@@ -10985,6 +11000,18 @@ input.v-textfield-errorField {
 	background: url('icons/ico-lock.png') no-repeat center center transparent;
 }
 
+.customSignUpForm #loginForm {
+	margin-top: 0px;
+	height: 405px;
+}
+
+.customSignUpForm #policy {
+	text-align: left;
+	font-size: 12px;
+	display: block;
+	padding: 0px 20px;
+}
+
 #loginForm {
 	width: 100%;
 	float: left;
@@ -11019,6 +11046,11 @@ input.v-textfield-errorField {
 #loginForm .v-captionwrapper .v-caption .v-captiontext {
 	font-size: 16px;
 	color: #777;
+}
+
+.customSignUpForm #loginForm input.v-textfield {
+	font-size: 15px !important;
+	height: 20px;
 }
 
 .customLoginForm #loginForm input.v-textfield, .forgotPwdForm #loginForm input.v-textfield {
@@ -11122,6 +11154,44 @@ input.v-textfield-errorField {
 
 #loginForm #forgotLink .v-button {
 	margin-left: 8px;
+}
+
+.customSignUpForm #loginFormContainer #newToUs {
+	padding: 20px 0px 0px;
+}
+
+#loginFormContainer #newToUs {
+	float: left;
+	display: block;
+	width: 100%;
+	padding: 0px 0px 10px;
+	text-align: center;
+	color: #54707c;
+}
+
+#loginFormContainer #newToUs #signupLink .v-button {
+	background: none;
+	border: none;
+	float: right;
+	margin-right: 10px;
+	margin-bottom: 20px;
+}
+
+#loginFormContainer #newToUs #signupLink span {
+	float: right;
+	padding-right: 15px;
+	text-decoration: none;
+}
+
+#loginFormContainer #newToUs #signupLink .v-button-wrap {
+	color: #287ECE;
+	background: none;
+	border: none;
+	padding: 0px;
+}
+
+#loginFormContainer #newToUs #signupLink .v-button-wrap .v-button-caption {
+	text-decoration: none;
 }
 
 #loginForm .customErrorMsg {
