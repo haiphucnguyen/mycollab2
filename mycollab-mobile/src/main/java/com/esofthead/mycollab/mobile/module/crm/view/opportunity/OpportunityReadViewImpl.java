@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-mobile.
- * <p/>
+ *
  * mycollab-mobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p/>
+ *
  * mycollab-mobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * <p/>
+ *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,7 +37,6 @@ import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.IRelatedListHandlers;
 import com.vaadin.ui.Alignment;
@@ -47,15 +46,12 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 4.1
- *
  */
 
 @ViewComponent
-public class OpportunityReadViewImpl extends
-        AbstractPreviewItemComp<SimpleOpportunity> implements
+public class OpportunityReadViewImpl extends AbstractPreviewItemComp<SimpleOpportunity> implements
         OpportunityReadView {
     private static final long serialVersionUID = 1588189344759887006L;
     private NotesList associateNotes;
@@ -70,23 +66,17 @@ public class OpportunityReadViewImpl extends
 
     @Override
     protected void initRelatedComponents() {
-        associateActivities = new ActivityRelatedItemView(
-                CrmTypeConstants.OPPORTUNITY);
+        associateActivities = new ActivityRelatedItemView(CrmTypeConstants.OPPORTUNITY);
 
-        associateNotes = new NotesList(
-                AppContext.getMessage(CrmCommonI18nEnum.M_TITLE_RELATED_NOTES));
-
+        associateNotes = new NotesList(AppContext.getMessage(CrmCommonI18nEnum.M_TITLE_RELATED_NOTES));
         associateLeads = new OpportunityRelatedLeadView();
-
         associateContacts = new OpportunityRelatedContactView();
-
     }
 
     @Override
     protected void afterPreviewItem() {
         associateActivities.displayActivity(beanItem.getId());
-        associateNotes
-                .showNotes(CrmTypeConstants.OPPORTUNITY, beanItem.getId());
+        associateNotes.showNotes(CrmTypeConstants.OPPORTUNITY, beanItem.getId());
         associateLeads.displayLeads(beanItem);
         associateContacts.displayContacts(beanItem);
     }
@@ -103,8 +93,7 @@ public class OpportunityReadViewImpl extends
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.OPPORTUNITY,
-                OpportunityDefaultDynaFormLayoutFactory.getForm());
+        return new DynaFormLayout(CrmTypeConstants.OPPORTUNITY, OpportunityDefaultDynaFormLayoutFactory.getForm());
     }
 
     @Override
@@ -114,8 +103,7 @@ public class OpportunityReadViewImpl extends
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new CrmPreviewFormControlsGenerator<>(previewForm)
-                .createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
+        return new CrmPreviewFormControlsGenerator<>(previewForm).createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
     }
 
     @Override
@@ -136,11 +124,8 @@ public class OpportunityReadViewImpl extends
 
             @Override
             public void buttonClick(ClickEvent arg0) {
-                EventBusFactory
-                        .getInstance()
-                        .post(new OpportunityEvent.GoToRelatedItems(
-                                this,
-                                new CrmRelatedItemsScreenData(associateContacts)));
+                EventBusFactory.getInstance()
+                        .post(new OpportunityEvent.GoToRelatedItems(this, new CrmRelatedItemsScreenData(associateContacts)));
             }
         });
         toolbarLayout.addComponent(relatedContacts);
@@ -156,9 +141,7 @@ public class OpportunityReadViewImpl extends
 
             @Override
             public void buttonClick(ClickEvent arg0) {
-                EventBusFactory.getInstance().post(
-                        new OpportunityEvent.GoToRelatedItems(this,
-                                new CrmRelatedItemsScreenData(associateLeads)));
+                EventBusFactory.getInstance().post(new OpportunityEvent.GoToRelatedItems(this, new CrmRelatedItemsScreenData(associateLeads)));
             }
         });
         toolbarLayout.addComponent(relatedLeads);
@@ -174,9 +157,8 @@ public class OpportunityReadViewImpl extends
 
             @Override
             public void buttonClick(ClickEvent arg0) {
-                EventBusFactory.getInstance().post(
-                        new OpportunityEvent.GoToRelatedItems(this,
-                                new CrmRelatedItemsScreenData(associateNotes)));
+                EventBusFactory.getInstance().post(new OpportunityEvent.GoToRelatedItems(this,
+                        new CrmRelatedItemsScreenData(associateNotes)));
             }
         });
         toolbarLayout.addComponent(relatedNotes);
@@ -193,10 +175,8 @@ public class OpportunityReadViewImpl extends
 
             @Override
             public void buttonClick(ClickEvent arg0) {
-                EventBusFactory.getInstance().post(
-                        new OpportunityEvent.GoToRelatedItems(this,
-                                new CrmRelatedItemsScreenData(
-                                        associateActivities)));
+                EventBusFactory.getInstance().post(new OpportunityEvent.GoToRelatedItems(this,
+                        new CrmRelatedItemsScreenData(associateActivities)));
             }
         });
         toolbarLayout.addComponent(relatedActivities);
