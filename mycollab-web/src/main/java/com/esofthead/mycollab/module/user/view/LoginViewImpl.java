@@ -20,20 +20,22 @@ import com.esofthead.mycollab.common.i18n.ShellI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.jetty.ServerInstance;
-import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
+import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewEvent;
+import com.esofthead.mycollab.vaadin.ui.AssetResource;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -43,96 +45,91 @@ import com.vaadin.ui.Button.ClickEvent;
 public class LoginViewImpl extends AbstractPageView implements LoginView {
     private static final long serialVersionUID = 1L;
 
+    private TextField usernameField;
+    private PasswordField passwordField;
+    private CheckBox rememberMe;
+
     public LoginViewImpl() {
+        this.withSpacing(true);
         this.setSizeFull();
-        this.addComponent(new LoginForm());
-    }
+        MHorizontalLayout headerContainer = new MHorizontalLayout().withWidth("100%").withStyleName("login-header");
+        Image appLogo = new Image(null, new AssetResource("icons/login-logo.png"));
+        appLogo.setStyleName("app-logo");
+        MHorizontalLayout socialLinks = new MHorizontalLayout().withStyleName("social-links");
+        socialLinks.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+        Link facebookLink = new Link("", new AssetResource("icons/email/footer-facebook.png"));
+        facebookLink.setIcon(new AssetResource("icons/email/footer-facebook.png"));
+        facebookLink.setTargetName("_blank");
+        socialLinks.with(facebookLink);
+        headerContainer.with(appLogo, socialLinks);
 
-    class LoginForm extends CustomComponent {
-        private static final long serialVersionUID = 1L;
+        with(headerContainer);
 
-        private final TextField usernameField;
-        private final PasswordField passwordField;
-        private final CheckBox rememberMe;
+        MVerticalLayout formContainer = new MVerticalLayout().withStyleName("loginFormContainer");
+        formContainer.setWidthUndefined();
+        ELabel formHeaderLbl = new ELabel("Welcome back!").withStyleName("form-header");
+        formContainer.with(formHeaderLbl).withAlign(formHeaderLbl, Alignment.TOP_CENTER);
 
-        public LoginForm() {
-            final CustomLayout custom = CustomLayoutExt.createLayout("loginForm");
-            custom.addStyleName("customLoginForm");
-            usernameField = new TextField(AppContext.getMessage(ShellI18nEnum.FORM_EMAIL));
+        ELabel signinHeaderLbl = new ELabel("Sign in to MyCollab").withStyleName("form-subheader");
+        formContainer.with(signinHeaderLbl).withAlign(signinHeaderLbl, Alignment.TOP_CENTER);
 
-            custom.addComponent(usernameField, "usernameField");
+        usernameField = new TextField(AppContext.getMessage(ShellI18nEnum.FORM_EMAIL));
+        passwordField = new PasswordField(AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD));
+        StringLengthValidator passwordValidator = new StringLengthValidator(
+                "Password length must be greater than 6", 6, Integer.MAX_VALUE, false);
+        passwordField.addValidator(passwordValidator);
+        passwordField.addShortcutListener(new ShortcutListener("Signin", ShortcutAction.KeyCode.ENTER, null) {
+            private static final long serialVersionUID = 5094514575531426118L;
 
-            passwordField = new PasswordField(AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD));
-            StringLengthValidator passwordValidator = new StringLengthValidator(
-                    "Password length must be greater than 6", 6, Integer.MAX_VALUE, false);
-            passwordField.addValidator(passwordValidator);
-            passwordField.addShortcutListener(new ShortcutListener("Signin", ShortcutAction.KeyCode.ENTER, null) {
-                private static final long serialVersionUID = 5094514575531426118L;
-
-                @Override
-                public void handleAction(Object sender, Object target) {
-                    if (target == passwordField) {
-                        try {
-                            custom.removeComponent("customErrorMsg");
-                            LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this,
-                                    new PlainLogin(usernameField.getValue(),
-                                    passwordField.getValue(), rememberMe.getValue())));
-                        } catch (MyCollabException e) {
-                            custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
-
-                        } catch (Exception e) {
-                            throw new MyCollabException(e);
-                        }
-                    }
-                }
-            });
-
-            custom.addComponent(passwordField, "passwordField");
-
-            rememberMe = new CheckBox(AppContext.getMessage(ShellI18nEnum.OPT_REMEMBER_PASSWORD), false);
-            custom.addComponent(rememberMe, "rememberMe");
-
-            Button loginBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_LOG_IN), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
+            @Override
+            public void handleAction(Object sender, Object target) {
+                if (target == passwordField) {
                     try {
-                        custom.removeComponent("customErrorMsg");
-
-                        LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new PlainLogin(
-                                usernameField.getValue(), passwordField.getValue(), rememberMe.getValue())));
-                    } catch (MyCollabException e) {
-                        custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
+                        LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this,
+                                new UserEvent.PlainLogin(usernameField.getValue(),
+                                        passwordField.getValue(), rememberMe.getValue())));
                     } catch (Exception e) {
                         throw new MyCollabException(e);
                     }
                 }
-            });
-
-            loginBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
-            custom.addComponent(loginBtn, "loginButton");
-
-            Button forgotPasswordBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_FORGOT_PASSWORD),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            EventBusFactory.getInstance().post(new ShellEvent.GotoForgotPasswordPage(this, null));
-                        }
-                    });
-            forgotPasswordBtn.setStyleName(UIConstants.THEME_LINK);
-            custom.addComponent(forgotPasswordBtn, "forgotLink");
-
-            if (ServerInstance.getInstance().isFirstTimeRunner()) {
-                LoginForm.this.setComponentError(new UserError(
-                        "For the first time using MyCollab, the default email/password is admin@mycollab.com/admin123. You should change email/password when you access MyCollab successfully."));
-                ServerInstance.getInstance().setIsFirstTimeRunner(false);
             }
+        });
+        rememberMe = new CheckBox(AppContext.getMessage(ShellI18nEnum.OPT_REMEMBER_PASSWORD), false);
+        Button loginBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_LOG_IN), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-            this.setCompositionRoot(custom);
-            this.setHeight("100%");
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                try {
+                    LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
+                            usernameField.getValue(), passwordField.getValue(), rememberMe.getValue())));
+                } catch (Exception e) {
+                    throw new MyCollabException(e);
+                }
+            }
+        });
+        loginBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+
+        formContainer.with(usernameField, passwordField, loginBtn);
+
+        Button forgotPasswordBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_FORGOT_PASSWORD),
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        EventBusFactory.getInstance().post(new ShellEvent.GotoForgotPasswordPage(this, null));
+                    }
+                });
+        forgotPasswordBtn.setStyleName(UIConstants.THEME_LINK);
+
+        if (ServerInstance.getInstance().isFirstTimeRunner()) {
+            setComponentError(new UserError(
+                    "For the first time using MyCollab, the default email/password is admin@mycollab.com/admin123. You should change email/password when you access MyCollab successfully."));
+            ServerInstance.getInstance().setIsFirstTimeRunner(false);
         }
+
+        VerticalLayout spaceLayout = new VerticalLayout();
+        with(formContainer, spaceLayout).withAlign(formContainer, Alignment.TOP_CENTER).expand(spaceLayout);
     }
 }

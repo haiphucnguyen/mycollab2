@@ -775,58 +775,43 @@
     -webkit-border-radius: 16px;
   }
 
-  #login-header {
-    margin: 0px auto 30px;
+  .login-header {
+    margin: 0px;
     width: 100%;
-    text-align: center;
-    font-size: 27px;
-    height: 60px;
     background-color: #1a8fcb;
-    #logo-here {
-      background: url('icons/login-logo.png') no-repeat 0 0 transparent;
+    text-align: center;
+    .app-logo {
       margin: 5px 0px 5px 100px;
       height: 50px;
       width: 218px;
       float: left;
     }
-    #social-links {
+    .social-links {
       float: right;
       margin-right: 150px;
-      height: 100%;
-      a {
-        display: inline-block;
-        vertical-align: middle;
-        height: 100%;
-        margin-right: 3px;
-        img {
-          vertical-align: bottom;
-          border-style: none;
-        }
-      }
     }
   }
 
-  #loginFormContainer {
+  .loginFormContainer {
     width: 676px;
-    margin: 0px auto;
+    margin: 30px auto;
     background-color: white;
     border: 1px solid #c8c8c8;
     padding: 0px 0px 30px;
     display:table;
+    .form-header {
+      font-size: 38px;
+      color: rgb(34, 85, 128);
+      padding: 20px 0px;
+      text-align: center;
+    }
+    .form-subheader {
+      font-size: 20px;
+    }
   }
 
   .forgotPwdForm #loginFormContainer {
     padding: 30px 40px;
-  }
-
-  #loginFormContainer #form-header {
-    font-size: 38px;
-    line-height: 23px;
-    color: rgb(34, 85, 128);
-    padding: 40px 0px 20px;
-    text-transform: uppercase;
-    text-align: center;
-    font-family: $font-family;
   }
 
   .forgotPwdForm #loginFormContainer {
@@ -870,19 +855,6 @@
     background: url('icons/ico-lock.png') no-repeat center center transparent;
   }
 
-  .customSignUpForm {
-    #loginForm {
-      margin-top: 0px;
-      height: 405px;
-    }
-    #policy {
-      text-align: left;
-      font-size: $font-small;
-      display: block;
-      padding: 0px 20px;
-    }
-  }
-
   #loginForm {
     width: 100%;
     float: left;
@@ -916,11 +888,6 @@
         color: #777;
       }
     }
-  }
-
-  .customSignUpForm #loginForm input.v-textfield {
-    font-size: 15px !important;
-    height: 20px;
   }
 
   .customLoginForm #loginForm input.v-textfield, .forgotPwdForm #loginForm input.v-textfield {
@@ -1019,42 +986,6 @@
 
   #loginForm #forgotLink .v-button {
     margin-left: 8px;
-  }
-
-  .customSignUpForm #loginFormContainer #newToUs {
-    padding: 20px 0px 0px;
-  }
-
-  #loginFormContainer #newToUs {
-    float: left;
-    display: block;
-    width: 100%;
-    padding: 0px 0px 10px;
-    text-align: center;
-    color: rgb(84, 112, 124);
-    #signupLink {
-      .v-button {
-        background: none;
-        border: none;
-        float: right;
-        margin-right: 10px;
-        margin-bottom: 20px;
-      }
-      span {
-        float: right;
-        padding-right: 15px;
-        text-decoration: none;
-      }
-      .v-button-wrap {
-        color: #287ECE;
-        background: none;
-        border: none;
-        padding: 0px;
-        .v-button-caption {
-          text-decoration: none;
-        }
-      }
-    }
   }
 
   #loginForm .customErrorMsg {
