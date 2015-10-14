@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -18,6 +18,8 @@ package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.common.i18n.ShellI18nEnum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.ExceptionUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.jetty.ServerInstance;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -51,12 +53,13 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
     class LoginForm extends CustomComponent {
         private static final long serialVersionUID = 1L;
 
+        private CustomLayout custom;
         private final TextField usernameField;
         private final PasswordField passwordField;
         private final CheckBox rememberMe;
 
         public LoginForm() {
-            final CustomLayout custom = CustomLayoutExt.createLayout("loginForm");
+            custom = CustomLayoutExt.createLayout("loginForm");
             custom.addStyleName("customLoginForm");
             usernameField = new TextField(AppContext.getMessage(ShellI18nEnum.FORM_EMAIL));
 
@@ -66,26 +69,6 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
             StringLengthValidator passwordValidator = new StringLengthValidator(
                     "Password length must be greater than 6", 6, Integer.MAX_VALUE, false);
             passwordField.addValidator(passwordValidator);
-            passwordField.addShortcutListener(new ShortcutListener("Signin", ShortcutAction.KeyCode.ENTER, null) {
-                private static final long serialVersionUID = 5094514575531426118L;
-
-                @Override
-                public void handleAction(Object sender, Object target) {
-                    if (target == passwordField) {
-                        try {
-                            custom.removeComponent("customErrorMsg");
-                            LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this,
-                                    new UserEvent.PlainLogin(usernameField.getValue(),
-                                            passwordField.getValue(), rememberMe.getValue())));
-                        } catch (MyCollabException e) {
-                            custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
-
-                        } catch (Exception e) {
-                            throw new MyCollabException(e);
-                        }
-                    }
-                }
-            });
 
             custom.addComponent(passwordField, "passwordField");
 
@@ -97,20 +80,12 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    try {
-                        custom.removeComponent("customErrorMsg");
-
-                        LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
-                                usernameField.getValue(), passwordField.getValue(), rememberMe.getValue())));
-                    } catch (MyCollabException e) {
-                        custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
-                    } catch (Exception e) {
-                        throw new MyCollabException(e);
-                    }
+                    doLogin();
                 }
             });
 
             loginBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            loginBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
             custom.addComponent(loginBtn, "loginButton");
 
             Button forgotPasswordBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_FORGOT_PASSWORD),
@@ -133,6 +108,23 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
 
             this.setCompositionRoot(custom);
             this.setHeight("100%");
+        }
+
+        private void doLogin() {
+            try {
+                custom.removeComponent("customErrorMsg");
+                LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
+                        usernameField.getValue(), passwordField.getValue(), rememberMe.getValue())));
+            } catch (MyCollabException e) {
+                custom.addComponent(new Label(e.getMessage()), "customErrorMsg");
+            } catch (Exception e) {
+                UserInvalidInputException userInvalidException = ExceptionUtils.getExceptionType(e, UserInvalidInputException.class);
+                if (userInvalidException != null) {
+                    custom.addComponent(new Label(userInvalidException.getMessage()), "customErrorMsg");
+                } else {
+                    throw new MyCollabException(e);
+                }
+            }
         }
     }
 }

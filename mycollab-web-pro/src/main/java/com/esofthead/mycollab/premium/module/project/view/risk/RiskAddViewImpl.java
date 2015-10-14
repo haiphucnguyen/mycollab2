@@ -8,10 +8,7 @@ import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.ComponentContainer;
 
@@ -25,8 +22,7 @@ import java.util.Map;
  * 
  */
 @ViewComponent
-public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
-		RiskAddView {
+public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements RiskAddView {
 	private static final long serialVersionUID = 1L;
 
 	private static Map<Integer, String> valueCaptions = new HashMap<>(5);
@@ -72,8 +68,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements
 
 	@Override
 	protected IFormLayoutFactory initFormLayoutFactory() {
-		return new DynaFormLayout(ProjectTypeConstants.RISK,
-				RiskDefaultFormLayoutFactory.getForm());
+		return new DynaFormLayout(ProjectTypeConstants.RISK, RiskDefaultFormLayoutFactory.getForm());
 	}
 
 	@Override

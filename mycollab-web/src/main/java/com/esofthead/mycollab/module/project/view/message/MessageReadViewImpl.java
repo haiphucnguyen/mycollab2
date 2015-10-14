@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -104,7 +104,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
         return message;
     }
 
-    class FormLayoutFactory implements IFormLayoutFactory {
+    class FormLayoutFactory extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -207,8 +207,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
                 attachmentField.addComponent(lbAttachment);
 
                 Component attachmentDisplayComp = ProjectAttachmentDisplayComponentFactory
-                        .getAttachmentDisplayComponent(message.getProjectid(),
-                                ProjectTypeConstants.MESSAGE, message.getId());
+                        .getAttachmentDisplayComponent(message.getProjectid(), ProjectTypeConstants.MESSAGE, message.getId());
 
                 MVerticalLayout messageFooter = new MVerticalLayout().withWidth("100%").withStyleName("message-footer")
                         .with(attachmentField, attachmentDisplayComp);
@@ -236,7 +235,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
         }
 
         @Override
-        public void attachField(Object propertyId, Field<?> field) {
+        protected void onAttachField(Object propertyId, Field<?> field) {
 
         }
     }

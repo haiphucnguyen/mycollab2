@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -17,7 +17,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 1.0
  * 
  */
-public abstract class StandupReportFormLayoutFactory implements IFormLayoutFactory {
+public abstract class StandupReportFormLayoutFactory extends AbstractFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
 	private StandupCustomField whatTodayField;
@@ -95,7 +95,7 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 	}
 
 	@Override
-	public void attachField(final Object propertyId, final Field<?> field) {
+	protected void onAttachField(final Object propertyId, final Field<?> field) {
 		if (propertyId.equals("whatlastday")) {
 			this.whatYesterdayField.setContentComp(field);
 		} else if (propertyId.equals("whattoday")) {

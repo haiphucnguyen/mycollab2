@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-mobile.
- *
+ * <p/>
  * mycollab-mobile is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-mobile is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,85 +22,82 @@ import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
+ * @param <B>
  * @author MyCollab Ltd.
  * @since 3.0
- * 
- * @param <B>
  */
 public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected B beanItem;
-	protected AdvancedPreviewBeanForm<B> previewForm;
+    protected B beanItem;
+    protected AdvancedPreviewBeanForm<B> previewForm;
 
-	private NavigationBarQuickMenu editBtn;
+    private NavigationBarQuickMenu editBtn;
 
-	public AbstractPreviewItemComp() {
+    public AbstractPreviewItemComp() {
+        previewForm = initPreviewForm();
+        previewForm.setStyleName("readview-layout");
+        this.setContent(previewForm);
 
-		previewForm = initPreviewForm();
-		previewForm.setStyleName("readview-layout");
-		this.setContent(previewForm);
+        editBtn = new NavigationBarQuickMenu();
+        editBtn.setButtonCaption(null);
+        editBtn.setStyleName("edit-btn");
+        editBtn.setContent(createButtonControls());
+        this.setRightComponent(editBtn);
 
-		editBtn = new NavigationBarQuickMenu();
-		editBtn.setButtonCaption(null);
-		editBtn.setStyleName("edit-btn");
-		editBtn.setContent(createButtonControls());
-		this.setRightComponent(editBtn);
+        initRelatedComponents();
 
-		initRelatedComponents();
+        ComponentContainer toolbarContent = createBottomPanel();
+        if (toolbarContent != null) {
+            toolbarContent.addStyleName("related-items");
+            toolbarContent.setHeight("100%");
+            toolbarContent.setWidthUndefined();
 
-		ComponentContainer toolbarContent = createBottomPanel();
-		if (toolbarContent != null) {
-			toolbarContent.addStyleName("related-items");
-			toolbarContent.setHeight("100%");
-			toolbarContent.setWidthUndefined();
+            MobileViewToolbar toolbar = new MobileViewToolbar();
+            toolbar.setComponent(toolbarContent);
+            this.setToolbar(toolbar);
+        }
+    }
 
-			MobileViewToolbar toolbar = new MobileViewToolbar();
-			toolbar.setComponent(toolbarContent);
-			this.setToolbar(toolbar);
-		}
-	}
+    public void previewItem(final B item) {
+        this.beanItem = item;
+        this.setCaption(initFormTitle());
 
-	public void previewItem(final B item) {
-		this.beanItem = item;
-		this.setCaption(initFormTitle());
+        previewForm.setFormLayoutFactory(initFormLayoutFactory());
+        previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
 
-		previewForm.setFormLayoutFactory(initFormLayoutFactory());
-		previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+    }
 
-	}
+    public B getItem() {
+        return beanItem;
+    }
 
-	public B getItem() {
-		return beanItem;
-	}
+    public AdvancedPreviewBeanForm<B> getPreviewForm() {
+        return previewForm;
+    }
 
-	public AdvancedPreviewBeanForm<B> getPreviewForm() {
-		return previewForm;
-	}
+    @Override
+    protected void onBecomingVisible() {
+        super.onBecomingVisible();
+        if (beanItem != null)
+            previewForm.setBean(beanItem);
+        afterPreviewItem();
+    }
 
-	@Override
-	protected void onBecomingVisible() {
-		super.onBecomingVisible();
-		if (beanItem != null)
-			previewForm.setBean(beanItem);
-		afterPreviewItem();
-	}
+    abstract protected void afterPreviewItem();
 
-	abstract protected void afterPreviewItem();
+    abstract protected String initFormTitle();
 
-	abstract protected String initFormTitle();
+    abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
 
-	abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
+    abstract protected void initRelatedComponents();
 
-	abstract protected void initRelatedComponents();
+    abstract protected IFormLayoutFactory initFormLayoutFactory();
 
-	abstract protected IFormLayoutFactory initFormLayoutFactory();
+    abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
 
-	abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
+    abstract protected ComponentContainer createButtonControls();
 
-	abstract protected ComponentContainer createButtonControls();
-
-	abstract protected ComponentContainer createBottomPanel();
+    abstract protected ComponentContainer createBottomPanel();
 
 }

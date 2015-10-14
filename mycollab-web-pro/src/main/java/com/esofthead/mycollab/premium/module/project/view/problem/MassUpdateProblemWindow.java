@@ -20,10 +20,8 @@ import com.vaadin.ui.VerticalLayout;
 public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
     private static final long serialVersionUID = 1L;
 
-    public MassUpdateProblemWindow(final String title,
-                                   final ProblemListPresenter presenter) {
-        super(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM), new Problem(),
-                presenter);
+    public MassUpdateProblemWindow(final String title, final ProblemListPresenter presenter) {
+        super(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM), new Problem(), presenter);
     }
 
     @Override
@@ -37,8 +35,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
         return new ProblemEditFormFieldFactory(updateForm, false);
     }
 
-    private class MassUpdateProblemFormLayoutFactory implements
-            IFormLayoutFactory {
+    private class MassUpdateProblemFormLayoutFactory extends AbstractFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         private GridFormLayoutHelper informationLayout;
@@ -59,26 +56,17 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
         // Raised By, Assign To, Date Due, Status, Probability
         @Override
-        public void attachField(final Object propertyId, final Field<?> field) {
+        protected void onAttachField(final Object propertyId, final Field<?> field) {
             if (propertyId.equals("raisedbyuser")) {
-                this.informationLayout.addComponent(field,
-                        AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY),
-                        0, 0);
+                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY), 0, 0);
             } else if (propertyId.equals("assigntouser")) {
-                this.informationLayout.addComponent(field, AppContext
-                        .getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
+                this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
             } else if (propertyId.equals("datedue")) {
-                this.informationLayout.addComponent(field,
-                        AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE),
-                        0, 1);
+                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE), 0, 1);
             } else if (propertyId.equals("priority")) {
-                this.informationLayout.addComponent(field,
-                        AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY),
-                        1, 1);
+                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY), 1, 1);
             } else if (propertyId.equals("status")) {
-                this.informationLayout.addComponent(field,
-                        AppContext.getMessage(ProblemI18nEnum.FORM_STATUS), 0,
-                        2);
+                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_STATUS), 0, 2);
             }
         }
     }

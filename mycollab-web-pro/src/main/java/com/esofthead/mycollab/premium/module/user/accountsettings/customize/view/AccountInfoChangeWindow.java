@@ -35,11 +35,10 @@ class AccountInfoChangeWindow extends Window {
         this.setWidth("600px");
 
         billingAccount = (SimpleBillingAccount) AppContext.getBillingAccount().copy();
-
         content = new MVerticalLayout().withMargin(false);
         this.setContent(content);
         editForm = new AdvancedEditBeanForm<>();
-        editForm.setFormLayoutFactory(new IFormLayoutFactory() {
+        editForm.setFormLayoutFactory(new AbstractFormLayoutFactory() {
 
             private GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
@@ -49,7 +48,7 @@ class AccountInfoChangeWindow extends Window {
             }
 
             @Override
-            public void attachField(Object propertyId, Field<?> field) {
+            protected void onAttachField(Object propertyId, Field<?> field) {
                 if (BillingAccount.Field.sitename.equalTo(propertyId)) {
                     gridFormLayoutHelper.addComponent(field, "Site Name", 0, 0);
                 } else if (BillingAccount.Field.subdomain.equalTo(propertyId)) {
@@ -72,8 +71,7 @@ class AccountInfoChangeWindow extends Window {
                         cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(billingAccount.getDefaulttimezone()));
                     } else {
                         if (AppContext.getUser().getTimezone() != null) {
-                            cboTimezone.setTimeZone(TimezoneMapper
-                                    .getTimezoneExt(AppContext.getUser().getTimezone()));
+                            cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(AppContext.getUser().getTimezone()));
                         }
                     }
                     return cboTimezone;

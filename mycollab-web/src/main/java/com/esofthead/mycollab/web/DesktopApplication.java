@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -56,6 +56,8 @@ import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.Collection;
 
+import static com.esofthead.mycollab.core.utils.ExceptionUtils.getExceptionType;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -76,6 +78,8 @@ public class DesktopApplication extends MyCollabUI {
     protected void init(final VaadinRequest request) {
         GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
+
+        getPushConfiguration().setParameter("timeout", "-1");
 
         LOG.debug("Register default error handler");
 
@@ -276,16 +280,6 @@ public class DesktopApplication extends MyCollabUI {
 
     public void unsetRememberPassword() {
         BrowserCookie.setCookie(DesktopApplication.NAME_COOKIE, "");
-    }
-
-    private static <T> T getExceptionType(Throwable e, Class<T> exceptionType) {
-        if (exceptionType.isAssignableFrom(e.getClass())) {
-            return (T) e;
-        } else if (e.getCause() != null) {
-            return getExceptionType(e.getCause(), exceptionType);
-        } else {
-            return null;
-        }
     }
 
     private class ShellErrorHandler {
