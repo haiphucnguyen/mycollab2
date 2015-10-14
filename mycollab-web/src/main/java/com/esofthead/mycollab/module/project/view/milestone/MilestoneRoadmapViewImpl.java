@@ -43,6 +43,7 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -183,21 +184,12 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             this.addComponent(milestoneLbl);
 
             MHorizontalLayout metaBlock = new MHorizontalLayout();
-            Div userDiv = new Div().appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(milestone
-                    .getOwnerAvatarId(), 16))).appendChild(new A(ProjectLinkBuilder.generateProjectMemberFullLink
-                    (milestone.getProjectid(), milestone.getOwner())).appendText(" " + StringUtils.trim
-                    (milestone.getOwnerFullName(), 20, true)));
-            metaBlock.addComponent(new ELabel(userDiv.write(), ContentMode.HTML).withStyleName("block"));
-            metaBlock.addComponent(new ELabel("Start: " + AppContext.formatDate(milestone.getStartdate()))
-                    .withStyleName("block").withDescription("Start date"));
-            metaBlock.addComponent(new ELabel("End: " + AppContext.formatDate(milestone.getEnddate())).withStyleName
-                    ("block").withDescription("End date"));
-            metaBlock.addComponent(new ELabel(FontAwesome.MONEY.getHtml() + " " + (milestone.getTotalBugBillableHours() + milestone
-                    .getTotalTaskBillableHours()), ContentMode.HTML).withStyleName("block").withDescription
-                    ("Billable hours"));
-            metaBlock.addComponent(new ELabel(FontAwesome.GIFT.getHtml() + " " + (milestone.getTotalBugNonBillableHours() + milestone
-                    .getTotalTaskNonBillableHours()), ContentMode.HTML).withStyleName("block").withDescription("Non " +
-                    "billable hours"));
+            MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
+            metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createStartDatePopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createEndDatePopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createBillableHoursPopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createNonBillableHoursPopupField(milestone));
             this.add(metaBlock);
 
             ELabel descriptionLbl = new ELabel(StringUtils.formatRichText(milestone.getDescription()), ContentMode
@@ -234,7 +226,6 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
                         for (ProjectGenericTask genericTask : genericTasks) {
                             Div issueDiv = new Div();
-                            issueDiv.appendText(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml() + " ");
                             String uid = UUID.randomUUID().toString();
                             A taskLink = new A().setId("tag" + uid);
                             taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
@@ -244,12 +235,19 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                             taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
                             issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
                             Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
-                            issueLayout.addComponent(issueLbl);
                             if (genericTask.isClosed()) {
                                 issueLbl.addStyleName("completed");
                             } else if (genericTask.isOverdue()) {
                                 issueLbl.addStyleName("overdue");
                             }
+                            MHorizontalLayout rowComp = new MHorizontalLayout();
+                            rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML));
+                            String avatarLink = StorageFactory.getInstance().getAvatarPath(milestone.getOwnerAvatarId(), 16);
+                            Img img = new Img(milestone.getOwnerFullName(), avatarLink).setTitle(milestone.getOwnerFullName());
+                            rowComp.with(new ELabel(img.write(), ContentMode.HTML));
+                            rowComp.with(issueLbl);
+                            issueLayout.addComponent(rowComp);
+
                         }
                     } else {
                         viewIssuesBtn.setCaption("View issues");

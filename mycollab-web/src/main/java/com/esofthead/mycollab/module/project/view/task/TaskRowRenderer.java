@@ -77,7 +77,7 @@ class TaskRowRenderer extends MHorizontalLayout {
             taskLinkLbl.removeStyleName("completed overdue");
         }
         taskLinkLbl.addStyleName("wordWrap");
-        HorizontalLayout headerLayout = new HorizontalLayout();
+        MHorizontalLayout headerLayout = new MHorizontalLayout();
         PopupView priorityField = popupFieldFactory.createTaskPriorityPopupField(task);
         PopupView assigneeField = popupFieldFactory.createTaskAssigneePopupField(task);
         headerLayout.addComponent(priorityField);
@@ -85,8 +85,7 @@ class TaskRowRenderer extends MHorizontalLayout {
         headerLayout.addComponent(taskLinkLbl);
         wrapTaskInfoLayout.addComponent(headerLayout);
 
-        MHorizontalLayout footer = new MHorizontalLayout().withSpacing(false);
-        footer.addStyleName(UIConstants.FOOTER_NOTE);
+        MHorizontalLayout footer = new MHorizontalLayout();
 
         PopupView commentField = popupFieldFactory.createTaskCommentsPopupField(task);
         footer.addComponent(commentField);

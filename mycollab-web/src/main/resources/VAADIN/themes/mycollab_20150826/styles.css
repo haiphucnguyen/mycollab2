@@ -29,7 +29,7 @@
 	}
 
 .v-vaadin-version:after {
-	content: "7.5.7";
+	content: "7.5.6";
 }
 
 .v-generated-body {
@@ -697,8 +697,9 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background: none;
-	padding: 0px 3px;
+	background-color: #e4f1ff;
+	line-height: 22px;
+	padding: 0px 5px;
 	color: #888;
 }
 
@@ -8493,8 +8494,9 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background: none;
-	padding: 0px 3px;
+	background-color: #e4f1ff;
+	line-height: 22px;
+	padding: 0px 5px;
 	color: #888;
 }
 
@@ -9519,14 +9521,6 @@ div.v-button.token-field:hover {
 .v-slot-roadmap-block .meta {
 	font-size: 12px;
 	color: #888;
-}
-
-.v-slot-roadmap-block .v-label.block {
-	font-size: 11px;
-	line-height: 22px;
-	border-radius: 5px;
-	background-color: #cbf4bd;
-	padding: 0px 5px;
 }
 
 .tasklist {

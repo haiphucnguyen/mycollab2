@@ -75,7 +75,7 @@ public class BugRowRenderer extends MHorizontalLayout {
 
         bugLinkLbl.addStyleName("wordWrap");
         BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
-        HorizontalLayout headerLayout = new HorizontalLayout();
+        MHorizontalLayout headerLayout = new MHorizontalLayout();
         PopupView priorityField = popupFieldFactory.createBugPriorityPopupField(bug);
         PopupView assigneeField = popupFieldFactory.createBugAssigneePopupField(bug);
         headerLayout.addComponent(priorityField);
