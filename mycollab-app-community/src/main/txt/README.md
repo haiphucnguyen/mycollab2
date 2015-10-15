@@ -57,6 +57,8 @@ Version 5.2.0
 
 **Bug Fixes**
 
+* Word-wrap title for long text of several views
+
 Version 5.1.4
 -----------------------------
 

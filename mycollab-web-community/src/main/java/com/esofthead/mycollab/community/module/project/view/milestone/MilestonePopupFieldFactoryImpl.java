@@ -13,6 +13,7 @@ import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.PopupView;
+import org.vaadin.teemu.VaadinIcons;
 
 /**
  * @author MyCollab Ltd
@@ -32,12 +33,12 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
     public PopupView createStartDatePopupField(SimpleMilestone milestone) {
         if (milestone.getStartdate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(FontAwesome.CLOCK_O.getHtml() + " Undefined");
+            divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
             divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
-            return new PopupFieldBuilder().withCaption(divHint.write()).withDescription("Deadline").build();
+            return new PopupFieldBuilder().withCaption(divHint.write()).withDescription("Start date").build();
         } else {
-            return new PopupFieldBuilder().withCaption(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
-                    AppContext.formatPrettyTime(milestone.getStartdate()))).withDescription("Start date").build();
+            return new PopupFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(),
+                    AppContext.formatDate(milestone.getStartdate()))).withDescription("Start date").build();
         }
     }
 
@@ -45,12 +46,12 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
     public PopupView createEndDatePopupField(SimpleMilestone milestone) {
         if (milestone.getEnddate() == null) {
             Div divHint = new Div().setCSSClass("nonValue");
-            divHint.appendText(FontAwesome.CLOCK_O.getHtml() + " Undefined");
+            divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
             divHint.appendChild(new Span().appendText(" Click to edit").setCSSClass("hide"));
-            return new PopupFieldBuilder().withCaption(divHint.write()).withDescription("Deadline").build();
+            return new PopupFieldBuilder().withCaption(divHint.write()).withDescription("End date").build();
         } else {
-            return new PopupFieldBuilder().withCaption(String.format(" %s %s", FontAwesome.CLOCK_O.getHtml(),
-                    AppContext.formatPrettyTime(milestone.getEnddate()))).withDescription("End date").build();
+            return new PopupFieldBuilder().withCaption(String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(),
+                    AppContext.formatDate(milestone.getEnddate()))).withDescription("End date").build();
         }
     }
 

@@ -19,13 +19,21 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.common.domain.SaveSearchResultWithBLOBs;
 import com.esofthead.mycollab.common.domain.criteria.SaveSearchResultCriteria;
 import com.esofthead.mycollab.common.service.SaveSearchResultService;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.XStreamJsonDeSerializer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.data.Property;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
+import org.apache.commons.collections.CollectionUtils;
 
+import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -49,5 +57,57 @@ public class SavedFilterComboBox extends ComboBox {
             this.addItem(searchResult);
             this.setItemCaption(searchResult, searchResult.getQueryname());
         }
+
+        this.addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent event) {
+                SaveSearchResultWithBLOBs item = (SaveSearchResultWithBLOBs) getValue();
+                if (item != null) {
+                    List fieldInfos = (List) XStreamJsonDeSerializer.fromJson(item.getQuerytext());
+                    // @HACK: === the library serialize with extra list
+                    // wrapper
+                    if (CollectionUtils.isEmpty(fieldInfos)) {
+                        throw new UserInvalidInputException("There is no field in search criterion");
+                    }
+                    fieldInfos = (List<SearchFieldInfo>) fieldInfos.get(0);
+                    if (fieldInfos.size() > 0) {
+                        fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, fieldInfos));
+                    }
+                }
+            }
+        });
+    }
+
+    public void addQuerySelectListener(QuerySelectListener listener) {
+        addListener(QuerySelectEvent.class, listener, QUERY_SELECT);
+    }
+
+    private static final Method QUERY_SELECT;
+
+    static {
+        try {
+            QUERY_SELECT = QuerySelectListener.class.getDeclaredMethod("querySelect",
+                    new Class[]{QuerySelectEvent.class});
+        } catch (final java.lang.NoSuchMethodException e) {
+            // This should never happen
+            throw new java.lang.RuntimeException("Internal error finding methods in AbstractField");
+        }
+    }
+
+    public static class QuerySelectEvent extends Component.Event {
+        private List<SearchFieldInfo> searchFieldInfos;
+
+        public QuerySelectEvent(Component source, List<SearchFieldInfo> searchFieldInfos) {
+            super(source);
+            this.searchFieldInfos = searchFieldInfos;
+        }
+
+        public List<SearchFieldInfo> getSearchFieldInfos() {
+            return searchFieldInfos;
+        }
+    }
+
+    public interface QuerySelectListener extends Serializable {
+        void querySelect(QuerySelectEvent querySelectEvent);
     }
 }

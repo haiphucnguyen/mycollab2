@@ -56,6 +56,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.teemu.VaadinIcons;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -241,11 +242,14 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                                 issueLbl.addStyleName("overdue");
                             }
                             MHorizontalLayout rowComp = new MHorizontalLayout();
+                            rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
                             rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML));
                             String avatarLink = StorageFactory.getInstance().getAvatarPath(milestone.getOwnerAvatarId(), 16);
                             Img img = new Img(milestone.getOwnerFullName(), avatarLink).setTitle(milestone.getOwnerFullName());
                             rowComp.with(new ELabel(img.write(), ContentMode.HTML));
-                            rowComp.with(issueLbl);
+
+                            MCssLayout issueWrapper = new MCssLayout(issueLbl);
+                            rowComp.with(issueWrapper);
                             issueLayout.addComponent(rowComp);
 
                         }
