@@ -332,6 +332,11 @@
         border:none;
       }
     }
+
+    .v-label.section-header {
+      padding: 5px 0px 5px 10px;
+      font-weight: bold;
+    }
   }
 
   .v-checkbox input[type="checkbox"]:focus {
