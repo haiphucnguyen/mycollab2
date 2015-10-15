@@ -65,7 +65,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
                     view.initView(project);
                 } else {
                     NotificationUtil.showMessagePermissionAlert();
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{"dashboard"}));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, new String[]{}));
                 }
             }
         }
