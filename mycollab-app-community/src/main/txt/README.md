@@ -46,7 +46,9 @@ Last changelog
 Version 5.2.0
 -----------------------------
 
-* Upgrade Gson 2.4, HirakiCP 2.4.1
+**Library Upgrades**
+
+* Upgrade Gson 2.4, HirakiCP 2.4.1 and more
 
 **Improvements & New Features**
 

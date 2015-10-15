@@ -14,15 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.ui.components;
+package com.esofthead.mycollab.premium.module.project.ui.components;
 
 import com.esofthead.mycollab.common.TableViewField;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.vaadin.ui.Label;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.util.List;
 
@@ -30,10 +29,12 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.1
  */
-public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDisplayComp {
+public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayComp {
     private static final long serialVersionUID = 1L;
 
-    public TimeTrackingProjectOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
+    private static final FastDateFormat DATE_FORMAT = FastDateFormat.getInstance("EEEE, dd MMMM yyyy");
+
+    public TimeTrackingDateOrderComponent(List<TableViewField> fields, TableClickListener tableClickListener) {
         super(fields, tableClickListener);
         this.setWidth("100%");
     }
@@ -41,18 +42,15 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
     @Override
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
-            SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
-
-            LabelLink link = new LabelLink(firstItem.getProjectName(), ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid()));
-            link.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
-            link.addStyleName("h2");
-            addComponent(link);
+            Label label = new Label(DATE_FORMAT.format(timeLoggingEntries.get(0).getLogforday()));
+            label.addStyleName("h2");
+            addComponent(label);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }
     }
 
     @Override
     String getGroupCriteria(SimpleItemTimeLogging timeEntry) {
-        return timeEntry.getProjectShortName();
+        return DateTimeUtils.formatDate(timeEntry.getLogforday(), "yyyy/MM/dd");
     }
 }
