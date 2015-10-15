@@ -132,6 +132,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 UI.getCurrent().addWindow(new AddNewColumnWindow(TaskKanbanviewImpl.this, ProjectTypeConstants.TASK));
             }
         });
+        addNewColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         addNewColumnBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         groupWrapLayout.addComponent(addNewColumnBtn);
 
@@ -332,7 +333,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     AppContext.getSiteUrl(), AppContext.getTimezone()));
             root.with(taskBtn);
 
-            MHorizontalLayout footer = new MHorizontalLayout().withStyleName("footer2").withSpacing(false);
+            MHorizontalLayout footer = new MHorizontalLayout().withStyleName("footer2");
             TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
 
             PopupView commentField = popupFieldFactory.createTaskCommentsPopupField(task);
