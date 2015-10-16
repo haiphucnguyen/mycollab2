@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.view
 
 import com.esofthead.mycollab.common.UrlTokenizer
 import com.esofthead.mycollab.eventmanager.EventBusFactory
-import com.esofthead.mycollab.module.project.events.{FollowingTicketEvent, ProjectEvent, TimeTrackingEvent}
+import com.esofthead.mycollab.module.project.events.{FollowingTicketEvent, ProjectEvent, TimeTrackingEvent, CalendarEvent}
 import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver
 import com.esofthead.mycollab.module.project.view.file.ProjectFileUrlResolver
@@ -64,6 +64,7 @@ class ProjectUrlResolver extends UrlResolver {
         this.addSubResolver("component", new ComponentUrlResolver)
         this.addSubResolver("version", new VersionUrlResolver)
         this.addSubResolver("roadmap", new RoadmapUrlResolver)
+        this.addSubResolver("calendar", new CalendarUrlResolver)
         return this
     }
 
@@ -129,4 +130,11 @@ class ProjectUrlResolver extends UrlResolver {
         }
     }
 
+    private class CalendarUrlResolver extends ProjectUrlResolver {
+        protected override def handlePage(params: String*) {
+            val prjService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
+            val prjKeys: java.util.List[Integer] = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
+            EventBusFactory.getInstance.post(new CalendarEvent.GotoCalendarView(this, prjKeys))
+        }
+    }
 }

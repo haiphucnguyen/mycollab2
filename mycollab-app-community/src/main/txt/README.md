@@ -43,6 +43,13 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.1
+-----------------------------
+
+**Library Upgrades**
+
+* Spring framework 4.2.2.RELEASE and others
+
 Version 5.2.0
 -----------------------------
 

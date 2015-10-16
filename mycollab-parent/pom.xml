@@ -11,7 +11,7 @@
         <maven>3.0.4</maven>
     </prerequisites>
     <properties>
-        <springVersion>4.2.1.RELEASE</springVersion>
+        <springVersion>4.2.2.RELEASE</springVersion>
         <aspectjVersion>1.8.6</aspectjVersion>
         <javaVersion>1.7</javaVersion>
         <slf4jVersion>1.7.12</slf4jVersion>
@@ -241,17 +241,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.6.2</version>
+            <version>2.6.3</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.6.2</version>
+            <version>2.6.3</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.6.2</version>
+            <version>2.6.3</version>
         </dependency>
 
         <dependency>
