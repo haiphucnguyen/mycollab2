@@ -336,11 +336,11 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             MHorizontalLayout footer = new MHorizontalLayout().withStyleName("footer2");
             TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
 
-            PopupView commentField = popupFieldFactory.createTaskCommentsPopupField(task);
+            PopupView commentField = popupFieldFactory.createCommentsPopupField(task);
             footer.addComponent(commentField);
 
             if (task.getDeadlineRoundPlusOne() != null) {
-                PopupView field = popupFieldFactory.createTaskDeadlinePopupField(task);
+                PopupView field = popupFieldFactory.createDeadlinePopupField(task);
                 String deadline = String.format("%s: %s", AppContext.getMessage(TaskI18nEnum.FORM_DEADLINE),
                         AppContext.formatDate(task.getDeadlineRoundPlusOne()));
                 field.setDescription(deadline);

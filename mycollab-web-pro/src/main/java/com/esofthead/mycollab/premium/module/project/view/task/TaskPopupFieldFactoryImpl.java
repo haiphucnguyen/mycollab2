@@ -60,7 +60,7 @@ import java.util.GregorianCalendar;
 public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
     @Override
-    public PopupView createTaskAssigneePopupField(final SimpleTask task) {
+    public PopupView createAssigneePopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -91,7 +91,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     }
 
     @Override
-    public PopupView createTaskPriorityPopupField(final SimpleTask task) {
+    public PopupView createPriorityPopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -111,7 +111,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     }
 
     @Override
-    public PopupView createTaskStatusPopupField(final SimpleTask task) {
+    public PopupView createStatusPopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -132,7 +132,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     }
 
     @Override
-    public PopupView createTaskMilestonePopupField(final SimpleTask task) {
+    public PopupView createMilestonePopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -157,7 +157,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     }
 
     @Override
-    public PopupView createTaskPercentagePopupField(final SimpleTask task) {
+    public PopupView createPercentagePopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -180,7 +180,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     }
 
     @Override
-    public PopupView createTaskDeadlinePopupField(final SimpleTask task) {
+    public PopupView createDeadlinePopupField(final SimpleTask task) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -202,21 +202,65 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
     }
 
     @Override
-    public PopupView createTaskCommentsPopupField(SimpleTask task) {
+    public PopupView createStartDatePopupField(final SimpleTask task) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                if (task.getStartdate() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), AppContext.formatDate(task.getStartdate()));
+                }
+
+            }
+        };
+        builder.withBean(task).withBindProperty("startdate").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_START_DATE))
+                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getStartdate())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+        return builder.build();
+    }
+
+    @Override
+    public PopupView createEndDatePopupField(final SimpleTask task) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                if (task.getEnddate() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), AppContext.formatDate(task.getEnddate()));
+                }
+
+            }
+        };
+        builder.withBean(task).withBindProperty("enddate").withCaption(AppContext.getMessage(TaskI18nEnum.FORM_END_DATE))
+                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(ProjectTaskService.class)).withValue(task.getEnddate())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+        return builder.build();
+    }
+
+    @Override
+    public PopupView createCommentsPopupField(SimpleTask task) {
         TaskCommentsPopupView view = new TaskCommentsPopupView(task);
         view.setDescription("Click to edit");
         return view;
     }
 
     @Override
-    public PopupView createTaskBillableHoursPopupField(SimpleTask task) {
+    public PopupView createBillableHoursPopupField(SimpleTask task) {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, true);
         view.setDescription("Billable hours");
         return view;
     }
 
     @Override
-    public PopupView createTaskNonBillableHoursPopupField(SimpleTask task) {
+    public PopupView createNonBillableHoursPopupField(SimpleTask task) {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, false);
         view.setDescription("Non billable hours");
         return view;
