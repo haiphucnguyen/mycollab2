@@ -1,12 +1,9 @@
 package com.esofthead.mycollab.premium.module.project.view;
 
 import com.esofthead.mycollab.core.arguments.*;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
 import com.esofthead.mycollab.module.project.view.task.calendar.GenericTaskEvent;
 import com.esofthead.mycollab.premium.module.project.view.task.AgreegateGenericCalendarProvider;
@@ -16,6 +13,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
@@ -41,18 +39,22 @@ import java.util.List;
 @ViewComponent
 public class CalendarDashboardViewImpl extends AbstractPageView implements ICalendarDashboardView {
     private static final DateTimeFormatter MY_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
+    private static final DateTimeFormatter DMY_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
 
     private Label headerLbl, billableHoursLbl, nonBillableHoursLbl, assignMeLbl, assignOtherLbl, nonAssigneeLbl;
     private Calendar calendar;
     private LocalDate baseDate;
     private List<Integer> projectKeys;
+    private boolean isMonthView = true;
 
     public CalendarDashboardViewImpl() {
         baseDate = new LocalDate();
+        this.withMargin(true);
     }
 
     @Override
     public void display() {
+        this.removeAllComponents();
         ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
         projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         calendar = new Calendar();
@@ -62,49 +64,33 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                    SimpleTask task = calendarEvent.getAssignment();
-                    UI.getCurrent().addWindow(new TaskWithProjectAddWindow(task));
-                }
+                GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
+                SimpleTask task = calendarEvent.getAssignment();
+                UI.getCurrent().addWindow(new TaskWithProjectAddWindow(task));
             }
         });
 
         calendar.setHandler(new CalendarComponentEvents.DateClickHandler() {
             @Override
             public void dateClick(CalendarComponentEvents.DateClickEvent dateClickEvent) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    SimpleTask task = new SimpleTask();
-                    task.setStartdate(dateClickEvent.getDate());
-                    task.setEnddate(dateClickEvent.getDate());
-                    UI.getCurrent().addWindow(new TaskWithProjectAddWindow(task));
-                }
+                SimpleTask task = new SimpleTask();
+                task.setStartdate(dateClickEvent.getDate());
+                task.setEnddate(dateClickEvent.getDate());
+                UI.getCurrent().addWindow(new TaskWithProjectAddWindow(task));
             }
         });
 
         calendar.setHandler(new BasicEventMoveHandler() {
             @Override
             public void eventMove(CalendarComponentEvents.MoveEvent event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    super.eventMove(event);
-                    GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                    SimpleTask task = calendarEvent.getAssignment();
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                    taskService.updateWithSession(task, AppContext.getUsername());
-                }
+
             }
         });
 
         calendar.setHandler(new BasicEventResizeHandler() {
             @Override
             public void eventResize(CalendarComponentEvents.EventResize event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    super.eventResize(event);
-                    GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                    SimpleTask task = calendarEvent.getAssignment();
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                    taskService.updateWithSession(task, AppContext.getUsername());
-                }
+               
             }
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
@@ -133,7 +119,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
-                displayMonthView();
+                displayCalendar();
             }
         });
         todayBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -142,8 +128,13 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         Button previousBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = baseDate.minusMonths(1);
-                displayMonthView();
+                if (isMonthView) {
+                    baseDate = baseDate.minusMonths(1);
+                } else {
+                    baseDate = baseDate.minusWeeks(1);
+                }
+
+                displayCalendar();
             }
         });
         previousBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -153,8 +144,12 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         Button nextBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = baseDate.plusMonths(1);
-                displayMonthView();
+                if (isMonthView) {
+                    baseDate = baseDate.plusMonths(1);
+                } else {
+                    baseDate = baseDate.plusWeeks(1);
+                }
+                displayCalendar();
             }
         });
         nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
@@ -169,17 +164,61 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         headerLbl.setStyleName("h1");
         titleWrapper.addComponent(headerLbl);
 
+        final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
+        final Button weekViewBtn = new Button("Week");
+        weekViewBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                displayWeekView();
+                viewButtons.setDefaultButton(weekViewBtn);
+            }
+        });
+        final Button monthViewBtn = new Button("Month");
+        monthViewBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                displayMonthView();
+                viewButtons.setDefaultButton(monthViewBtn);
+            }
+        });
+        viewButtons.addButton(weekViewBtn);
+        viewButtons.addButton(monthViewBtn);
+        viewButtons.setDefaultButton(monthViewBtn);
 
-        header.with(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER);
+        header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign
+                (viewButtons, Alignment.MIDDLE_RIGHT);
         return header;
     }
 
     private void displayMonthView() {
+        isMonthView = true;
         LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
         LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
-        calendar.setStartDate(firstDayOfMonth.toDate());
-        calendar.setEndDate(lastDayOfMonth.toDate());
         headerLbl.setValue(baseDate.toString(MY_FORMATTER));
+        displayCalendarView(firstDayOfMonth, lastDayOfMonth);
+    }
+
+    private void displayWeekView() {
+        isMonthView = false;
+        LocalDate firstDayOfWeek = baseDate.dayOfWeek().withMinimumValue();
+        LocalDate lastDayOfWeek = baseDate.dayOfWeek().withMaximumValue();
+        headerLbl.setValue(firstDayOfWeek.toString(DMY_FORMATTER) + " - " + lastDayOfWeek.toString(DMY_FORMATTER));
+        displayCalendarView(firstDayOfWeek, lastDayOfWeek);
+        calendar.setFirstVisibleHourOfDay(0);
+        calendar.setLastVisibleHourOfDay(0);
+    }
+
+    private void displayCalendar() {
+        if (isMonthView) {
+            displayMonthView();
+        } else {
+            displayWeekView();
+        }
+    }
+
+    private void displayCalendarView(LocalDate start, LocalDate end) {
+        calendar.setStartDate(start.toDate());
+        calendar.setEndDate(end.toDate());
         final AgreegateGenericCalendarProvider provider = new AgreegateGenericCalendarProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
@@ -194,16 +233,13 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             }
         });
         TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         CollectionValueSearchField projectIdsInList = new CollectionValueSearchField(SearchField.AND,
                 "m_prj_task.projectid IN", projectKeys);
         searchCriteria.addExtraField(projectIdsInList);
         CompositionSearchField compoField = new CompositionSearchField(SearchField.AND);
-        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.startdate BETWEEN ",
-                firstDayOfMonth.toDate(), lastDayOfMonth.toDate()));
-        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.enddate BETWEEN ",
-                firstDayOfMonth.toDate(), lastDayOfMonth.toDate()));
+        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.startdate BETWEEN ", start.toDate(), end.toDate()));
+        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.enddate BETWEEN ", start.toDate(), end.toDate()));
         searchCriteria.addExtraField(compoField);
 
         provider.loadEvents(searchCriteria);

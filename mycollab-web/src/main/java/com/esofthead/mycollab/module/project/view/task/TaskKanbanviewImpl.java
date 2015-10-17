@@ -62,6 +62,7 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -278,17 +279,18 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         int pages = totalTasks / 20;
                         for (int page = 0; page < pages + 1; page++) {
                             List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
-
-                            for (SimpleTask task : tasks) {
-                                String status = task.getStatus();
-                                KanbanBlock kanbanBlock = kanbanBlocks.get(status);
-                                if (kanbanBlock == null) {
-                                    LOG.error("Can not find a kanban block for status: " + status);
-                                } else {
-                                    kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                            if (CollectionUtils.isNotEmpty(tasks)) {
+                                for (SimpleTask task : tasks) {
+                                    String status = task.getStatus();
+                                    KanbanBlock kanbanBlock = kanbanBlocks.get(status);
+                                    if (kanbanBlock == null) {
+                                        LOG.error("Can not find a kanban block for status: " + status);
+                                    } else {
+                                        kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
+                                    }
                                 }
+                                UI.getCurrent().push();
                             }
-                            UI.getCurrent().push();
                         }
 
                     }

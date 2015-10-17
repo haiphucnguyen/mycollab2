@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractPresenter;
 import com.vaadin.ui.Alignment;
@@ -20,5 +21,7 @@ public class CalendarDashboardPresenter extends AbstractPresenter<ICalendarDashb
         prjContainer.removeAllComponents();
         prjContainer.with(view).withAlign(view, Alignment.TOP_CENTER);
         view.display();
+
+        AppContext.addFragment("project/calendar", "Calendar");
     }
 }
