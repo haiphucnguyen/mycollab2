@@ -1,13 +1,18 @@
 package com.esofthead.mycollab.premium.module.project.view;
 
 import com.esofthead.mycollab.core.arguments.*;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
 import com.esofthead.mycollab.module.project.view.task.calendar.GenericTaskEvent;
+import com.esofthead.mycollab.premium.module.project.ui.components.EntityWithProjectAddHandler;
 import com.esofthead.mycollab.premium.module.project.view.task.AgreegateGenericCalendarProvider;
-import com.esofthead.mycollab.premium.module.project.view.task.TaskWithProjectAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -15,6 +20,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -47,9 +53,39 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private List<Integer> projectKeys;
     private boolean isMonthView = true;
 
+    private ApplicationEventListener<TaskEvent.NewTaskAdded> taskChangeHandler = new ApplicationEventListener<TaskEvent.NewTaskAdded>() {
+        @Override
+        @Subscribe
+        public void handle(TaskEvent.NewTaskAdded event) {
+            Integer taskId = (Integer) event.getData();
+            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+            SimpleTask task = taskService.findById(taskId, AppContext.getAccountId());
+            GenericTaskEvent taskEvent = new GenericTaskEvent(task);
+            AgreegateGenericCalendarProvider provider = (AgreegateGenericCalendarProvider) calendar.getEventProvider();
+            if (provider.containsEvent(taskEvent)) {
+                provider.removeEvent(taskEvent);
+                provider.addEvent(taskEvent);
+            } else {
+                provider.addEvent(taskEvent);
+            }
+        }
+    };
+
     public CalendarDashboardViewImpl() {
         baseDate = new LocalDate();
         this.withMargin(true);
+    }
+
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(taskChangeHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(taskChangeHandler);
+        super.detach();
     }
 
     @Override
@@ -66,7 +102,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
                 SimpleTask task = calendarEvent.getAssignment();
-                UI.getCurrent().addWindow(new TaskWithProjectAddWindow(task));
+                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
             }
         });
 
@@ -76,7 +112,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 SimpleTask task = new SimpleTask();
                 task.setStartdate(dateClickEvent.getDate());
                 task.setEnddate(dateClickEvent.getDate());
-                UI.getCurrent().addWindow(new TaskWithProjectAddWindow(task));
+                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
             }
         });
 
@@ -90,7 +126,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setHandler(new BasicEventResizeHandler() {
             @Override
             public void eventResize(CalendarComponentEvents.EventResize event) {
-               
+
             }
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
@@ -164,6 +200,13 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         headerLbl.setStyleName("h1");
         titleWrapper.addComponent(headerLbl);
 
+        Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask()));
+            }
+        });
+        newTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         final Button weekViewBtn = new Button("Week");
         weekViewBtn.addClickListener(new Button.ClickListener() {
@@ -185,8 +228,8 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         viewButtons.addButton(monthViewBtn);
         viewButtons.setDefaultButton(monthViewBtn);
 
-        header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign
-                (viewButtons, Alignment.MIDDLE_RIGHT);
+        header.with(titleWrapper, newTaskBtn, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
+                .withAlign(newTaskBtn, Alignment.MIDDLE_RIGHT).withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
         return header;
     }
 

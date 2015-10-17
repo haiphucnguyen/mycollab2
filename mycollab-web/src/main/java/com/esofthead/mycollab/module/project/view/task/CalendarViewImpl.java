@@ -120,6 +120,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                     SimpleTask task = new SimpleTask();
                     task.setStartdate(dateClickEvent.getDate());
                     task.setEnddate(dateClickEvent.getDate());
+                    task.setProjectid(CurrentProjectVariables.getProjectId());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 }
             }

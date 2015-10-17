@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -42,8 +41,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-class TaskAddWindow extends Window {
-    TaskAddWindow(SimpleTask task) {
+public class TaskAddWindow extends Window {
+    public TaskAddWindow(SimpleTask task) {
         if (task.getId() == null) {
             setCaption("New task");
         } else {
@@ -56,7 +55,6 @@ class TaskAddWindow extends Window {
         EditForm editForm = new EditForm();
         task.setLogby(AppContext.getUsername());
         task.setSaccountid(AppContext.getAccountId());
-        task.setProjectid(CurrentProjectVariables.getProjectId());
         editForm.setBean(task);
         this.setContent(editForm);
     }
@@ -110,7 +108,7 @@ class TaskAddWindow extends Window {
                             AttachmentUploadField uploadField = ((TaskEditFormFieldFactory) EditForm.this
                                     .getFieldFactory()).getAttachmentUploadField();
                             String attachPath = AttachmentUtils.getProjectEntityAttachmentPath(
-                                    AppContext.getAccountId(), CurrentProjectVariables.getProjectId(),
+                                    AppContext.getAccountId(), bean.getProjectid(),
                                     ProjectTypeConstants.TASK, "" + taskId);
                             uploadField.saveContentsToRepo(attachPath);
                             EventBusFactory.getInstance().post(new TaskEvent.NewTaskAdded(TaskAddWindow.this, taskId));

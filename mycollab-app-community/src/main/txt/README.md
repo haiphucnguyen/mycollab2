@@ -53,6 +53,7 @@ Version 5.2.1
 **Bug Fixes**
 
 * Wrong user avatar of assignments in project roadmap view
+* Validate date constraints of entity is wrong in several cases
 
 Version 5.2.0
 -----------------------------
