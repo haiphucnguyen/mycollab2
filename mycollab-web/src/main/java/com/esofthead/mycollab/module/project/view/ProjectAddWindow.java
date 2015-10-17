@@ -30,24 +30,25 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
+import com.vaadin.event.ShortcutAction;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import org.vaadin.teemu.wizards.Wizard;
-import org.vaadin.teemu.wizards.WizardStep;
-import org.vaadin.teemu.wizards.event.*;
+import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class ProjectAddWindow extends Window implements WizardProgressListener {
+public class ProjectAddWindow extends Window {
     private static final long serialVersionUID = 1L;
 
     private Project project;
+    private AdvancedEditBeanForm<Project> editForm;
 
     public ProjectAddWindow() {
-        setCaption(AppContext.getMessage(ProjectI18nEnum.VIEW_NEW_TITLE));
         this.setWidth("900px");
         this.center();
         this.setResizable(false);
@@ -57,39 +58,125 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         setContent(contentLayout);
 
         project = new Project();
+        editForm = new AdvancedEditBeanForm<>();
+        contentLayout.addComponent(editForm);
+        setCaption(AppContext.getMessage(ProjectI18nEnum.VIEW_NEW_TITLE));
 
-        Wizard wizard = new Wizard();
-        wizard.addListener(this);
-        wizard.addStep(new GeneralInfoStep());
-        wizard.addStep(new BillingAccountStep());
-        wizard.addStep(new InviteMoreMembersStep());
-        contentLayout.with(wizard).withAlign(wizard, Alignment.TOP_CENTER);
+        editForm.setFormLayoutFactory(new FormLayoutFactory());
+        editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+        editForm.setBean(project);
     }
 
-    @Override
-    public void activeStepChanged(WizardStepActivationEvent wizardStepActivationEvent) {
+    private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Project> {
+        private static final long serialVersionUID = 1L;
 
+        public EditFormFieldFactory(GenericBeanForm<Project> form) {
+            super(form);
+        }
+
+        @Override
+        protected Field<?> onCreateField(final Object propertyId) {
+            if (propertyId.equals("description")) {
+                return new RichTextEditField();
+            } else if (propertyId.equals("projectstatus")) {
+                ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
+                projectCombo.setRequired(true);
+                projectCombo.setRequiredError("Project status must be not null");
+                if (project.getProjectstatus() == null) {
+                    project.setProjectstatus(StatusI18nEnum.Open.name());
+                }
+                return projectCombo;
+            } else if (propertyId.equals("shortname")) {
+                TextField tf = new TextField();
+                tf.setNullRepresentation("");
+                tf.setRequired(true);
+                tf.setRequiredError("Project short name must be not null");
+                return tf;
+            } else if (propertyId.equals("name")) {
+                TextField tf = new TextField();
+                tf.setNullRepresentation("");
+                tf.setRequired(true);
+                tf.setRequiredError("Project name must be not null");
+                return tf;
+            }
+
+            return null;
+        }
     }
 
-    @Override
-    public void stepSetChanged(WizardStepSetChangedEvent wizardStepSetChangedEvent) {
+    class FormLayoutFactory extends AbstractFormLayoutFactory {
+        private static final long serialVersionUID = 1L;
 
-    }
+        private GridFormLayoutHelper informationLayout;
 
-    @Override
-    public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
-        project.setSaccountid(AppContext.getAccountId());
-        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-        projectService.saveWithSession(project, AppContext.getUsername());
+        @Override
+        public ComponentContainer getLayout() {
+            VerticalLayout projectAddLayout = new VerticalLayout();
 
-        EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
-                new PageActionChain(new ProjectScreenData.Goto(project.getId()))));
-        ProjectAddWindow.this.close();
-    }
+            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
+            projectAddLayout.addComponent(informationLayout.getLayout());
 
-    @Override
-    public void wizardCancelled(WizardCancelledEvent wizardCancelledEvent) {
-        this.close();
+            MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(true).withStyleName("addNewControl");
+
+            Button closeBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLOSE), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    ProjectAddWindow.this.close();
+                }
+
+            });
+            closeBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+            buttonControls.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
+
+            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    if (editForm.validateForm()) {
+                        project.setSaccountid(AppContext.getAccountId());
+                        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+
+                        projectService.saveWithSession(project, AppContext.getUsername());
+
+                        EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
+                                new PageActionChain(new ProjectScreenData.Goto(project.getId()))));
+                        ProjectAddWindow.this.close();
+                    }
+                }
+
+            });
+            saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.setIcon(FontAwesome.SAVE);
+            saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
+            buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_RIGHT);
+
+            projectAddLayout.addComponent(buttonControls);
+            projectAddLayout.setComponentAlignment(buttonControls, Alignment.MIDDLE_RIGHT);
+            return projectAddLayout;
+        }
+
+        @Override
+        protected void onAttachField(Object propertyId, Field<?> field) {
+            if (propertyId.equals("name")) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
+            } else if (propertyId.equals("homepage")) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
+            } else if (propertyId.equals("shortname")) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
+            } else if (propertyId.equals("projectstatus")) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 1, 1);
+            } else if (propertyId.equals("planstartdate")) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 2);
+            } else if (propertyId.equals("planenddate")) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 1, 2);
+            } else if (propertyId.equals("description")) {
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 3, 2, "100%");
+            }
+
+        }
     }
 
     private static class ProjectStatusComboBox extends I18nValueComboBox {
@@ -97,150 +184,6 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
         public ProjectStatusComboBox() {
             super(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
-        }
-    }
-
-    private class GeneralInfoStep implements WizardStep {
-        private AdvancedEditBeanForm<Project> editForm;
-
-        GeneralInfoStep() {
-            editForm = new AdvancedEditBeanForm<>();
-            editForm.setFormLayoutFactory(new FormLayoutFactory());
-            editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
-            editForm.setBean(project);
-        }
-
-        @Override
-        public String getCaption() {
-            return "General";
-        }
-
-        @Override
-        public Component getContent() {
-            return editForm;
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return false;
-        }
-
-        private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Project> {
-            private static final long serialVersionUID = 1L;
-
-            public EditFormFieldFactory(GenericBeanForm<Project> form) {
-                super(form);
-            }
-
-            @Override
-            protected Field<?> onCreateField(final Object propertyId) {
-                if (propertyId.equals("description")) {
-                    return new RichTextEditField();
-                } else if (propertyId.equals("projectstatus")) {
-                    ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
-                    projectCombo.setRequired(true);
-                    projectCombo.setRequiredError("Project status must be not null");
-                    if (project.getProjectstatus() == null) {
-                        project.setProjectstatus(StatusI18nEnum.Open.name());
-                    }
-                    return projectCombo;
-                } else if (propertyId.equals("shortname")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Project short name must be not null");
-                    return tf;
-                } else if (propertyId.equals("name")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Project name must be not null");
-                    return tf;
-                }
-
-                return null;
-            }
-        }
-
-        class FormLayoutFactory extends AbstractFormLayoutFactory {
-            private static final long serialVersionUID = 1L;
-
-            private GridFormLayoutHelper informationLayout;
-
-            @Override
-            public ComponentContainer getLayout() {
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
-                return informationLayout.getLayout();
-            }
-
-            @Override
-            protected void onAttachField(Object propertyId, Field<?> field) {
-                if (propertyId.equals("name")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
-                } else if (propertyId.equals("homepage")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
-                } else if (propertyId.equals("shortname")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
-                } else if (propertyId.equals("projectstatus")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 1, 1);
-                } else if (propertyId.equals("planstartdate")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 2);
-                } else if (propertyId.equals("planenddate")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 1, 2);
-                } else if (propertyId.equals("description")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 3, 2, "100%");
-                }
-
-            }
-        }
-    }
-
-    private static class BillingAccountStep implements WizardStep {
-        @Override
-        public String getCaption() {
-            return "Account & Billing";
-        }
-
-        @Override
-        public Component getContent() {
-            return new MVerticalLayout().with(new Label("A"));
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return true;
-        }
-    }
-
-    private static class InviteMoreMembersStep implements WizardStep {
-        @Override
-        public String getCaption() {
-            return "Invite members";
-        }
-
-        @Override
-        public Component getContent() {
-            return new MVerticalLayout().with(new Label("A"));
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return true;
         }
     }
 }
