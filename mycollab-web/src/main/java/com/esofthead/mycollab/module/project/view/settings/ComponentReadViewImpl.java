@@ -282,15 +282,15 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
                         itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG, bug.getId() + ""));
                         itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
                         itemLink.appendText(String.format("[#%d] - %s", bug.getBugkey(), bug.getSummary()));
+                        bugDiv.appendChild(itemLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
 
-                        Label issueLbl = new Label(itemLink.write(), ContentMode.HTML);
+                        Label issueLbl = new Label(bugDiv.write(), ContentMode.HTML);
                         if (bug.isCompleted()) {
                             issueLbl.addStyleName("completed");
                         } else if (bug.isOverdue()) {
                             issueLbl.addStyleName("overdue");
                         }
 
-                        bugDiv.appendChild(itemLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
                         MHorizontalLayout rowComp = new MHorizontalLayout();
                         rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
                         rowComp.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(), ContentMode.HTML));

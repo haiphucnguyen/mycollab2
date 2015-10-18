@@ -805,6 +805,28 @@ span.block {
 	padding-right: 10px;
 }
 
+.wizard .wizard-progress-bar {
+	padding: 5px 0px;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.wizard .wizard-progress-bar .v-progressbar-indicator {
+	background: none;
+	background-color: #C2DFFF;
+}
+
+.wizard .v-panel-captionwrap {
+	display: none;
+}
+
+.wizard .v-panel-content {
+	border: none;
+}
+
+.wizard .v-panel-deco {
+	display: none;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -8605,6 +8627,28 @@ span.block {
 
 .activity-comp .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
 	padding-right: 10px;
+}
+
+.wizard .wizard-progress-bar {
+	padding: 5px 0px;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.wizard .wizard-progress-bar .v-progressbar-indicator {
+	background: none;
+	background-color: #C2DFFF;
+}
+
+.wizard .v-panel-captionwrap {
+	display: none;
+}
+
+.wizard .v-panel-content {
+	border: none;
+}
+
+.wizard .v-panel-deco {
+	display: none;
 }
 
 .crm-module {

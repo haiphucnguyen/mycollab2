@@ -680,4 +680,25 @@
       padding-right: 10px;
     }
   }
+
+  /*Wizard style*/
+  .wizard {
+    .wizard-progress-bar {
+      padding: 5px 0px;
+      border-bottom: 1px solid $border-color;
+      .v-progressbar-indicator {
+        background: none;
+        background-color: #C2DFFF;
+      }
+    }
+    .v-panel-captionwrap {
+      display:none;
+    }
+    .v-panel-content {
+      border: none;
+    }
+    .v-panel-deco {
+      display:none;
+    }
+  }
 }
