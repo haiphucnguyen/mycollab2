@@ -9687,62 +9687,6 @@ div.v-button.token-field:hover {
 	padding-bottom: 0px;
 }
 
-.bug-list .taskadd-popup .colored-gridlayout {
-	border: none;
-}
-
-.bug-list .colored-gridlayout {
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
-.bug-list-footer {
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
-}
-
-.bug-list-footer.v-margin-top {
-	padding-top: 5px;
-}
-
-.bug-list-footer.v-margin-right {
-	padding-right: 5px;
-}
-
-.bug-list-footer.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.bug-list-footer.v-margin-left {
-	padding-left: 5px;
-}
-
-.v-tabsheet-content .bug-list .bug-list-footer {
-	border-width: 1px 0px 0px;
-}
-
-.v-tabsheet-content .depotComp.bug-list .bug-list-footer {
-	border-width: 0px 1px 1px;
-}
-
-.v-tabsheet-content .bug-list .v-table-header-wrap, .v-tabsheet-content .bug-list .v-table-body-wrapper {
-	border-width: 1px 0px 0px;
-}
-
-.v-tabsheet-content .depotComp.bug-list .v-table-header-wrap {
-	border-width: 1px 1px 0px;
-}
-
-.v-tabsheet-content .depotComp.bug-list .v-table-body-wrapper {
-	border-width: 1px;
-}
-
-.v-tabsheet-content .bug-list .v-csslayout-comp-header {
-	padding: 5px;
-}
-
 .gantt_container {
 	border-style: solid;
 	border-width: 1px 1px 0px 0px;
@@ -10293,18 +10237,9 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 	border-color: #43533E;
 }
 
-.v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button {
-	background-color: #64825A;
-	border-color: #43533E;
-}
-
 .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
 	background-color: #64825A;
 	border-color: #43533E;
-}
-
-.v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-	background-position: left top;
 }
 
 .v-datefield-calendarpanel-weekdays strong {
@@ -10396,11 +10331,6 @@ div.v-table-focus-slot-left, div.v-table-focus-slot-right {
 }
 
 div.v-table-focus-slot-left, div.v-table-focus-slot-right {
-	border-color: #CFCFCF;
-}
-
-.v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
-	background-color: #C9C9C9;
 	border-color: #CFCFCF;
 }
 
@@ -10628,18 +10558,6 @@ input.v-textfield.v-datefield-textfield {
 	-moz-border-radius-bottomright: 0;
 	border-radius: 2px 0px 0px 2px;
 	height: 24px;
-}
-
-.list-view .v-table-header td, .list-view .v-table-header-wrap {
-	height: 23px;
-}
-
-.list-view .v-table-header .v-table-resizer {
-	height: 23px;
-}
-
-.list-view .v-table-header .v-table-caption-container {
-	padding-top: 2px;
 }
 
 .folder-tree .v-table-body-wrapper.v-table-body {
@@ -11371,10 +11289,6 @@ input.v-textfield-errorField {
 	white-space: normal;
 }
 
-.depotComp.bug-list .h2 {
-	color: black;
-}
-
 .depotComp .header-elements.v-margin-top {
 	padding-top: 3px;
 }
@@ -11389,6 +11303,10 @@ input.v-textfield-errorField {
 
 .depotComp .header-elements.v-margin-left {
 	padding-left: 8px;
+}
+
+.depotComp .v-customcomponent, .depotComp .v-verticallayout {
+	display: block;
 }
 
 .depotComp.collapsed .depotContent {
@@ -11409,16 +11327,6 @@ input.v-textfield-errorField {
 
 .depotComp .depotContent .v-table-header-wrap {
 	border-top: none;
-}
-
-.filter-bug-table {
-	border-color: #CFCFCF;
-	border-style: solid;
-	border-width: 1px 0px 0px;
-}
-
-.depotComp .v-customcomponent, .depotComp .v-verticallayout {
-	display: block;
 }
 
 .depotContent.bordered {
@@ -11446,29 +11354,6 @@ input.v-textfield-errorField {
 
 .addViewLayout .depotContent .v-button-link {
 	margin-bottom: 5px;
-}
-
-.bug-list .widget-footer {
-	background-color: #FFF;
-	border-color: #CFCFCF;
-	border-style: solid;
-	border-width: 0px 1px 1px 1px;
-}
-
-.bug-list .widget-footer.v-margin-top {
-	padding-top: 5px;
-}
-
-.bug-list .widget-footer.v-margin-right {
-	padding-right: 5px;
-}
-
-.bug-list .widget-footer.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.bug-list .widget-footer.v-margin-left {
-	padding-left: 5px;
 }
 
 .activityTabs {
@@ -11625,10 +11510,30 @@ td.v-tabsheet-spacertd div {
 }
 
 .v-table-header-wrap {
+	height: 30px;
 	background: none no-repeat 0 0 #EEEEEE;
 	border-radius: 0px;
 	border-width: 0 1px 1px 1px;
-	border-bottom: 1px solid #CFCFCF;
+}
+
+.v-table-header-wrap .v-table-header > div > table {
+	height: 30px;
+}
+
+.v-table-header-wrap .v-table-header > div > table td .v-table-resizer {
+	height: 30px;
+}
+
+.v-table-header-wrap .v-table-header > div > table td .v-table-caption-container {
+	padding-top: 5px;
+}
+
+.v-table-header-wrap .v-table-caption-container {
+	text-shadow: none;
+	color: #3f3f3f;
+	font-weight: bold;
+	font-size: 13px;
+	cursor: pointer;
 }
 
 .readViewBottomControls .v-table-header-wrap, .full-border-table .v-table .v-table-header-wrap {
@@ -11637,14 +11542,6 @@ td.v-tabsheet-spacertd div {
 
 .activity-realated-content .v-table-header-wrap {
 	border-top-width: 1px;
-}
-
-.v-table-header-wrap .v-table-caption-container {
-	text-shadow: none;
-	color: #3f3f3f;
-	font-weight: bold;
-	font-size: 11px;
-	cursor: pointer;
 }
 
 .v-table-table {

@@ -112,18 +112,9 @@
     }
   }
 
-  .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button {
-    background-color: #64825A;
-    border-color: #43533E;
-  }
-
   .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
     background-color: #64825A;
     border-color: #43533E;
-  }
-
-  .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-window-wrap, .v-popupview-popup, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu, .v-slider-handle, .v-tabsheet-tabitem-selected .v-caption, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-progressindicator-indicator, .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-    background-position: left top;
   }
 
   .v-datefield-calendarpanel-weekdays strong {
@@ -232,11 +223,6 @@
     &.v-table-focus-slot-left, &.v-table-focus-slot-right {
       border-color: $border-color;
     }
-  }
-
-  .v-button, .v-datefield-button, .v-datefield-calendarpanel-header button, td.v-datefield-calendarpanel-month, .v-datefield-calendarpanel-weekdays strong, .v-slider-handle, .v-table-header-wrap, .v-table-generated-row, .v-table-header-drag, .v-filterselect-prevpage-off, .v-filterselect-nextpage-off, .v-filterselect-prevpage, .v-filterselect-nextpage, .v-filterselect-select-button, .v-splitpanel-hsplitter, .v-splitpanel-vsplitter, .v-splitpanel-hsplitter-locked, .v-splitpanel-vsplitter-locked {
-    background-color: #C9C9C9;
-    border-color: $border-color;
   }
 
   .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
@@ -473,20 +459,6 @@
     -moz-border-radius-bottomright: 0;
     border-radius: 2px 0px 0px 2px;
     height: 24px;
-  }
-
-  .list-view {
-    .v-table-header td, .v-table-header-wrap {
-      height: 23px;
-    }
-    .v-table-header {
-      .v-table-resizer {
-        height: 23px;
-      }
-      .v-table-caption-container {
-        padding-top: 2px;
-      }
-    }
   }
 
   .folder-tree .v-table-body-wrapper.v-table-body {
@@ -1177,11 +1149,11 @@
   }
 
   .depotComp {
-    &.bug-list .h2 {
-      color: black;
-    }
     .header-elements {
       @include margin-container(3px, 8px, 3px, 8px);
+    }
+    .v-customcomponent, .v-verticallayout {
+      display: block;
     }
     &.collapsed .depotContent {
       padding: 0px;
@@ -1198,18 +1170,6 @@
       .v-table-header-wrap {
         border-top: none;
       }
-    }
-  }
-
-  .filter-bug-table {
-    border-color: $border-color;
-    border-style: solid;
-    border-width: 1px 0px 0px;
-  }
-
-  .depotComp {
-    .v-customcomponent, .v-verticallayout {
-      display: block;
     }
   }
 
@@ -1234,14 +1194,6 @@
 
   .addViewLayout .depotContent .v-button-link {
     margin-bottom: 5px;
-  }
-
-  .bug-list .widget-footer {
-    background-color: #FFF;
-    border-color: $border-color;
-    border-style: solid;
-    border-width: 0px 1px 1px 1px;
-    @include margin-container(5px, 5px, 5px, 5px);
   }
 
   /* End Depot */
@@ -1405,12 +1357,27 @@
   /* End Email Form*/
 
   /* New Table */
-
   .v-table-header-wrap {
+    height: 30px;
     background: none no-repeat 0 0 #EEEEEE;
     border-radius: 0px;
     border-width: 0 1px 1px 1px;
-    border-bottom: 1px solid $border-color;
+    .v-table-header > div > table {
+      height: 30px;
+      td .v-table-resizer {
+        height: 30px;
+      }
+      td .v-table-caption-container {
+        padding-top: 5px;
+      }
+    }
+    .v-table-caption-container {
+      text-shadow: none;
+      color: rgb(63, 63, 63);
+      font-weight: bold;
+      font-size: $font-normal;
+      cursor: pointer;
+    }
   }
 
   .readViewBottomControls .v-table-header-wrap, .full-border-table .v-table .v-table-header-wrap {
@@ -1419,14 +1386,6 @@
 
   .activity-realated-content .v-table-header-wrap {
     border-top-width: 1px;
-  }
-
-  .v-table-header-wrap .v-table-caption-container {
-    text-shadow: none;
-    color: rgb(63, 63, 63);
-    font-weight: bold;
-    font-size: $font-smaller;
-    cursor: pointer;
   }
 
   .v-table-table {

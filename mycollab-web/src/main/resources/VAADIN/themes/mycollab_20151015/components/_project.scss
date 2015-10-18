@@ -628,48 +628,6 @@
     }
   }
 
-  .bug-list .taskadd-popup .colored-gridlayout {
-    border: none;
-  }
-
-  .bug-list .colored-gridlayout {
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-  }
-
-  .bug-list-footer {
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $border-color;
-    @include margin-container(5px, 5px, 5px, 5px);
-  }
-
-  .v-tabsheet-content {
-    .bug-list .bug-list-footer {
-      border-width: 1px 0px 0px;
-    }
-    .depotComp.bug-list .bug-list-footer {
-      border-width: 0px 1px 1px;
-    }
-    .bug-list {
-      .v-table-header-wrap, .v-table-body-wrapper {
-        border-width: 1px 0px 0px;
-      }
-    }
-    .depotComp.bug-list {
-      .v-table-header-wrap {
-        border-width: 1px 1px 0px;
-      }
-      .v-table-body-wrapper {
-        border-width: 1px;
-      }
-    }
-    .bug-list .v-csslayout-comp-header {
-      padding: 5px;
-    }
-  }
-
   /* GANTT */
 
   .gantt_container {
