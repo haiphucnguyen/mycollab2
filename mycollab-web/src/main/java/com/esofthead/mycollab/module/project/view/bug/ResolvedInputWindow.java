@@ -94,7 +94,7 @@ public class ResolvedInputWindow extends Window {
                 this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
                 layout.addComponent(this.informationLayout.getLayout());
 
-                final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(true);
+                final MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, false, false));
                 layout.addComponent(controlsBtn);
 
                 Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {

@@ -157,9 +157,9 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
-                if (propertyId.equals("description")) {
+                if (Project.Field.description.equalTo(propertyId)) {
                     return new RichTextEditField();
-                } else if (propertyId.equals("projectstatus")) {
+                } else if (Project.Field.projectstatus.equalTo(propertyId)) {
                     ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
                     projectCombo.setRequired(true);
                     projectCombo.setRequiredError("Project status must be not null");
@@ -167,13 +167,13 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
                         project.setProjectstatus(StatusI18nEnum.Open.name());
                     }
                     return projectCombo;
-                } else if (propertyId.equals("shortname")) {
+                } else if (Project.Field.shortname.equalTo(propertyId)) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
                     tf.setRequiredError("Project short name must be not null");
                     return tf;
-                } else if (propertyId.equals("name")) {
+                } else if (Project.Field.name.equalTo(propertyId)) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
@@ -198,19 +198,19 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
             @Override
             protected void onAttachField(Object propertyId, Field<?> field) {
-                if (propertyId.equals("name")) {
+                if (Project.Field.name.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
-                } else if (propertyId.equals("homepage")) {
+                } else if (Project.Field.homepage.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
-                } else if (propertyId.equals("shortname")) {
+                } else if (Project.Field.shortname.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
-                } else if (propertyId.equals("projectstatus")) {
+                } else if (Project.Field.projectstatus.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 1, 1);
-                } else if (propertyId.equals("planstartdate")) {
+                } else if (Project.Field.planstartdate.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 2);
-                } else if (propertyId.equals("planenddate")) {
+                } else if (Project.Field.planenddate.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 1, 2);
-                } else if (propertyId.equals("description")) {
+                } else if (Project.Field.description.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 3, 2, "100%");
                 }
 
@@ -255,26 +255,22 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
             @Override
             public ComponentContainer getLayout() {
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
                 return informationLayout.getLayout();
             }
 
             @Override
             protected void onAttachField(Object propertyId, Field<?> field) {
-                if (propertyId.equals("name")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
-                } else if (propertyId.equals("homepage")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
-                } else if (propertyId.equals("shortname")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
-                } else if (propertyId.equals("projectstatus")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 1, 1);
-                } else if (propertyId.equals("planstartdate")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 2);
-                } else if (propertyId.equals("planenddate")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 1, 2);
-                } else if (propertyId.equals("description")) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 3, 2, "100%");
+                if (Project.Field.account.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0, 2, "100%");
+                } else if (Project.Field.currencyid.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY), 0, 1);
+                } else if (Project.Field.targetbudget.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET), 1, 1);
+                } else if (Project.Field.defaultbillingrate.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE), 0, 2);
+                } else if (Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE), 1, 2);
                 }
 
             }

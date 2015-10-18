@@ -93,7 +93,7 @@ class AssignBugWindow extends Window {
                 this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
 
                 layout.addComponent(this.informationLayout.getLayout());
-                MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, true, false));
+                MHorizontalLayout controlsBtn = new MHorizontalLayout().withMargin(new MarginInfo(true, true, false, false));
 
                 layout.addComponent(controlsBtn);
 
@@ -142,7 +142,7 @@ class AssignBugWindow extends Window {
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-                controlsBtn.with(approveBtn, cancelBtn);
+                controlsBtn.with(cancelBtn, approveBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

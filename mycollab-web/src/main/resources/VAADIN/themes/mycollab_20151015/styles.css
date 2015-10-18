@@ -10576,7 +10576,8 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
 }
 
 .v-window-modalitycurtain {
-	background-color: #ffffff;
+	background-color: #666;
+	opacity: 0.8;
 }
 
 .popupContent .v-window-contents {
@@ -10611,23 +10612,8 @@ body div > input.v-filterselect-input[type="text"] {
 	font-size: 12px !important;
 }
 
-.loginView {
-	overflow: auto;
-}
-
 .v-table-body-noselection {
 	height: 100% !important;
-}
-
-.v-table tr.v-selected {
-	background-image: url("icons/grad-light-top2.png");
-	background-position: left top;
-	background-repeat: repeat-x;
-}
-
-select.v-select-select {
-	background: none no-repeat left top #FFF;
-	border: 1px solid #CFCFCF;
 }
 
 .v-table-table th, .v-table-table td {

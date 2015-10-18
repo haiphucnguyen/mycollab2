@@ -44,8 +44,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends
-        AbstractPageView implements ListView<S, B> {
+public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends AbstractPageView implements ListView<S, B> {
     private static final long serialVersionUID = 1L;
 
     protected MVerticalLayout contentLayout;
