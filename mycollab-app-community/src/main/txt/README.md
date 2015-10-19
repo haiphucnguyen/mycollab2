@@ -50,6 +50,10 @@ Version 5.2.1
 
 * Spring framework 4.2.2.RELEASE and others
 
+**Improvements & New Features**
+
+* Do minor UI improvements
+
 **Bug Fixes**
 
 * Wrong user avatar of assignments in project roadmap view

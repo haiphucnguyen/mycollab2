@@ -3296,11 +3296,14 @@
       }
     }
   }
+  .v-window.lazyload-progress {
+    box-shadow: none;
+  }
 
   /* experimental sidebar */
 
   .sidebar-wrap {
-    border-left: 1px solid #C8C8C8;
+    border-left: 1px solid $border-color;
     background-color: floralwhite;
   }
 
@@ -3383,12 +3386,6 @@
     text-align: right;
     font-weight: bold;
     color: $meta-color;
-  }
-
-  /* Lazy Page */
-
-  .v-window.lazyload-progress {
-    box-shadow: none;
   }
 
   /* Attachment Block */

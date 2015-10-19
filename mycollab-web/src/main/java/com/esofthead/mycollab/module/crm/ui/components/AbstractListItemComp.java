@@ -64,10 +64,10 @@ public abstract class AbstractListItemComp<S extends SearchCriteria, B> extends 
         with(searchPanel);
 
         contentLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
-        this.tableItem = createBeanTable();
-        contentLayout.with(buildControlsLayout(), tableItem).expand(tableItem);
         with(contentLayout).expand(contentLayout);
-        buildControlsLayout();
+        tableItem = createBeanTable();
+        contentLayout.with(buildControlsLayout(), tableItem).expand(tableItem);
+        tableItem.setHeightUndefined();
     }
 
     private ComponentContainer buildControlsLayout() {
