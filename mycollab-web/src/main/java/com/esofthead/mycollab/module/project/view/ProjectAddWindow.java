@@ -33,10 +33,15 @@ import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.Set;
 
 /**
  * @author MyCollab Ltd.
@@ -46,7 +51,9 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
     private static final long serialVersionUID = 1L;
 
     private Project project;
-    ProjectAddWizard wizard;
+    private ProjectAddWizard wizard;
+    private GeneralInfoStep infoStep;
+    private BillingAccountStep billingAccountStep;
 
     public ProjectAddWindow() {
         setCaption(AppContext.getMessage(ProjectI18nEnum.VIEW_NEW_TITLE));
@@ -62,14 +69,21 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
         wizard = new ProjectAddWizard();
         wizard.addListener(this);
-        wizard.addStep(new GeneralInfoStep());
-        wizard.addStep(new BillingAccountStep());
+        infoStep = new GeneralInfoStep();
+        billingAccountStep = new BillingAccountStep();
+        wizard.addStep(infoStep);
+        wizard.addStep(billingAccountStep);
         contentLayout.with(wizard).withAlign(wizard, Alignment.TOP_CENTER);
     }
 
     @Override
     public void activeStepChanged(WizardStepActivationEvent wizardStepActivationEvent) {
         wizard.getFinishButton().setEnabled(true);
+        if (wizard.isActive(infoStep)) {
+            billingAccountStep.commit();
+        } else {
+            infoStep.commit();
+        }
     }
 
     @Override
@@ -77,15 +91,35 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         wizard.getFinishButton().setEnabled(true);
     }
 
+
     @Override
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
-        project.setSaccountid(AppContext.getAccountId());
-        ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-        projectService.saveWithSession(project, AppContext.getUsername());
+        boolean isInfoValid = infoStep.commit();
 
-        EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
-                new PageActionChain(new ProjectScreenData.Goto(project.getId()))));
-        ProjectAddWindow.this.close();
+        boolean isBillingValid = wizard.isActive(billingAccountStep) && billingAccountStep.commit();
+
+        if (!isInfoValid || !isBillingValid) {
+            return;
+        }
+
+        Validator validator = ApplicationContextUtil.getValidator();
+        Set<ConstraintViolation<Project>> violations = validator.validate(project);
+        if (CollectionUtils.isNotEmpty(violations)) {
+            StringBuilder errorMsg = new StringBuilder();
+
+            for (ConstraintViolation violation : violations) {
+                errorMsg.append(violation.getMessage()).append("<br/>");
+            }
+            NotificationUtil.showErrorNotification(errorMsg.toString());
+        } else {
+            project.setSaccountid(AppContext.getAccountId());
+            ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+            projectService.saveWithSession(project, AppContext.getUsername());
+
+            EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
+                    new PageActionChain(new ProjectScreenData.Goto(project.getId()))));
+            ProjectAddWindow.this.close();
+        }
     }
 
     @Override
@@ -118,14 +152,25 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         }
     }
 
-    private class GeneralInfoStep implements WizardStep {
+    private interface FormWizardStep extends WizardStep {
+        boolean commit();
+    }
+
+    private class GeneralInfoStep implements FormWizardStep {
         private AdvancedEditBeanForm<Project> editForm;
+        private EditFormFieldFactory editFormFieldFactory;
 
         GeneralInfoStep() {
             editForm = new AdvancedEditBeanForm<>();
             editForm.setFormLayoutFactory(new FormLayoutFactory());
-            editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+            editFormFieldFactory = new EditFormFieldFactory(editForm);
+            editForm.setBeanFormFieldFactory(editFormFieldFactory);
             editForm.setBean(project);
+        }
+
+        @Override
+        public boolean commit() {
+            return editFormFieldFactory.commit();
         }
 
         @Override
@@ -218,14 +263,21 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         }
     }
 
-    private class BillingAccountStep implements WizardStep {
+    private class BillingAccountStep implements FormWizardStep {
         private AdvancedEditBeanForm<Project> editForm;
+        private EditFormFieldFactory editFormFieldFactory;
 
         BillingAccountStep() {
             editForm = new AdvancedEditBeanForm<>();
             editForm.setFormLayoutFactory(new FormLayoutFactory());
-            editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+            editFormFieldFactory = new EditFormFieldFactory(editForm);
+            editForm.setBeanFormFieldFactory(editFormFieldFactory);
             editForm.setBean(project);
+        }
+
+        @Override
+        public boolean commit() {
+            return editFormFieldFactory.commit();
         }
 
         @Override

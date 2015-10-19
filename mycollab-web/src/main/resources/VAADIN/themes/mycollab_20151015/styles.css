@@ -10688,6 +10688,10 @@ input.v-widget.v-textfield[type="text"], .v-filterselect {
 	background-color: #FFF;
 }
 
+.popupContent .v-window-contents  > div {
+	overflow: hidden;
+}
+
 .popupContent .v-window-outerheader {
 	background-color: #f1f1f1;
 	padding: 0;

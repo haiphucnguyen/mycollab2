@@ -63,7 +63,7 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
 
         if (isValidateForm) {
             this.fieldGroup.addCommitHandler(this);
-            validation = ApplicationContextUtil.getSpringBean("validator", LocalValidatorFactoryBean.class);
+            validation = ApplicationContextUtil.getValidator();
         }
     }
 
@@ -103,10 +103,11 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
     }
 
     @Override
-    public void commit() {
+    public boolean commit() {
         try {
             fieldGroup.commit();
             attachForm.setValid(true);
+            return true;
         } catch (CommitException e) {
             attachForm.setValid(false);
             Map<Field<?>, InvalidValueException> invalidFields = e.getInvalidFields();
@@ -118,8 +119,10 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
                     entry.getKey().addStyleName("errorField");
                 }
                 NotificationUtil.showErrorNotification(errorMsg.toString());
+                return false;
             } else {
                 NotificationUtil.showErrorNotification(e.getCause().getMessage());
+                return false;
             }
         } catch (Exception e) {
             throw new MyCollabException(e);
@@ -160,8 +163,7 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
                 errorMsg.append(violation.getMessage()).append("<br/>");
                 Path propertyPath = violation.getPropertyPath();
                 if (propertyPath != null && !propertyPath.toString().equals("")) {
-                    fieldGroup.getField(propertyPath.toString())
-                            .addStyleName("errorField");
+                    fieldGroup.getField(propertyPath.toString()).addStyleName("errorField");
                 } else {
                     Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
                     if (validateAnno instanceof DateComparision) {

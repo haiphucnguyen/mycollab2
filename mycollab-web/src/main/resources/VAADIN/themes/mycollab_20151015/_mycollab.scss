@@ -413,6 +413,9 @@
   .popupContent {
     .v-window-contents {
       background-color: #FFF;
+      > div {
+        overflow: hidden;
+      }
     }
     .v-window-outerheader {
       background-color: $panel-background-color;
