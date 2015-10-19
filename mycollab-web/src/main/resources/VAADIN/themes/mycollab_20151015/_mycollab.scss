@@ -2025,7 +2025,7 @@
     padding: 7px;
     border-width: 0 1px 1px 1px;
     border-style: solid;
-    border-color: #CBCBCB;
+    border-color: $border-color;;
     background-color: #F5F5F5;
   }
 
@@ -2973,15 +2973,6 @@
   }
 
   /*Navigation Buttons styles */
-
-  .v-buttongroup.navigation-btns .v-button-wrap, .v-ie .v-buttongroup.navigation-btns .v-button-wrap {
-    padding: 7px 10px 6px;
-  }
-
-  .v-buttongroup.navigation-btns .v-button-caption {
-    font-size: $font-larger;
-    font-weight: bold;
-  }
 
   /* Bean Block List */
 

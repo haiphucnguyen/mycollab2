@@ -182,7 +182,6 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         });
         todayBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         ButtonGroup navigationBtns = new ButtonGroup();
-        navigationBtns.setStyleName("navigation-btns");
         Button previousBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

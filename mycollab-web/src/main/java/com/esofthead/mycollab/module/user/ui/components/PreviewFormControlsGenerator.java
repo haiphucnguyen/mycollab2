@@ -172,7 +172,6 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
 
             if ((buttonEnableFlags & NAVIGATOR_BTN_PRESENTED) == NAVIGATOR_BTN_PRESENTED) {
                 ButtonGroup navigationBtns = new ButtonGroup();
-                navigationBtns.setStyleName("navigation-btns");
                 Button previousItem = new Button("<", new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 

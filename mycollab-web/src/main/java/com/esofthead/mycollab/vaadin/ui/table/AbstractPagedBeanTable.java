@@ -69,7 +69,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     protected int totalCount;
 
     protected Table tableItem;
-    protected CssLayout controlBarWrapper;
+    protected HorizontalLayout controlBarWrapper;
 
     protected Set<SelectableItemHandler<B>> selectableHandlers;
     protected Set<PagableHandler> pagableHandlers;
@@ -117,8 +117,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         this.defaultSelectedColumns = displayColumns;
         this.requiredColumn = requiredColumn;
         this.type = type;
-
-        this.setStyleName("list-view");
     }
 
     public void setDisplayColumns(List<TableViewField> viewFields) {
@@ -255,14 +253,10 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         }
     }
 
-    private CssLayout createControls() {
-        this.controlBarWrapper = new CssLayout();
+    private ComponentContainer createPagingControls() {
+        controlBarWrapper = new HorizontalLayout();
+        controlBarWrapper.setWidth("100%");
         this.controlBarWrapper.setStyleName("listControl");
-        this.controlBarWrapper.setWidth("100%");
-
-        final HorizontalLayout controlBar = new HorizontalLayout();
-        controlBar.setWidth("100%");
-        this.controlBarWrapper.addComponent(controlBar);
 
         pageManagement = new MHorizontalLayout();
 
@@ -367,8 +361,8 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         }
 
         pageManagement.setWidth(null);
-        controlBar.addComponent(pageManagement);
-        controlBar.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
+        controlBarWrapper.addComponent(pageManagement);
+        controlBarWrapper.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
 
         return this.controlBarWrapper;
     }
@@ -389,7 +383,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
             if (this.controlBarWrapper != null) {
                 this.removeComponent(this.controlBarWrapper);
             }
-            this.addComponent(this.createControls());
+            this.addComponent(this.createPagingControls());
         } else {
             if (this.getComponentCount() == 2) {
                 this.removeComponent(this.getComponent(1));
@@ -465,7 +459,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         } else {
             this.addComponent(tableItem, 0);
         }
-
+        this.setExpandRatio(tableItem, 1);
     }
 
     public Table getTable() {

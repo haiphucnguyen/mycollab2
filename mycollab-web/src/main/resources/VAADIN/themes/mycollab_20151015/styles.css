@@ -453,10 +453,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
-.v-buttongroup .v-button-left {
-	border-radius: 2px 0px 0px 2px;
-}
-
 .v-buttongroup .v-button.v-button-left .v-button-wrap, .v-buttongroup .v-button.v-button-middle .v-button-wrap, .v-buttongroup .v-button.v-button-left.v-disabled .v-button-wrap, .v-buttongroup .v-button.v-button-middle.v-disabled .v-button-wrap, .v-buttongroup .v-button.v-button-left.v-disabled:active .v-button-wrap, .v-buttongroup .v-button.v-button-middle.v-disabled:active .v-button-wrap, .v-buttongroup .v-button.v-button-left.v-disabled:focus .v-button-wrap {
 	background-position: left top;
 	background-image: none;
@@ -464,7 +460,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .v-buttongroup .v-button.v-button-middle {
 	border-radius: 0px;
-	width: 100%;
 }
 
 .v-buttongroup .v-button.v-button-middle.v-disabled:focus .v-button-wrap {
@@ -473,7 +468,17 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .v-buttongroup .v-button.v-button-middle .v-button-wrap {
-	border-left: 1px solid #8F8F8F;
+	border-left: 1px solid #CFCFCF;
+	border-radius: 0px;
+}
+
+.v-buttongroup .v-button.v-button-left {
+	border-radius: 2px 0px 0px 2px;
+	border-right: none;
+}
+
+.v-buttongroup .v-button.v-button-left .v-button-wrap {
+	border-radius: 0px;
 }
 
 .v-buttongroup .v-button.v-button-right {
@@ -482,7 +487,7 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .v-buttongroup .v-button.v-button-right .v-button-wrap {
-	border-left: 1px solid #8F8F8F;
+	border-left: 1px solid #CFCFCF;
 	border-radius: 0px;
 }
 
@@ -8277,10 +8282,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 	box-shadow: none;
 }
 
-.v-buttongroup .v-button-left {
-	border-radius: 2px 0px 0px 2px;
-}
-
 .v-buttongroup .v-button.v-button-left .v-button-wrap, .v-buttongroup .v-button.v-button-middle .v-button-wrap, .v-buttongroup .v-button.v-button-left.v-disabled .v-button-wrap, .v-buttongroup .v-button.v-button-middle.v-disabled .v-button-wrap, .v-buttongroup .v-button.v-button-left.v-disabled:active .v-button-wrap, .v-buttongroup .v-button.v-button-middle.v-disabled:active .v-button-wrap, .v-buttongroup .v-button.v-button-left.v-disabled:focus .v-button-wrap {
 	background-position: left top;
 	background-image: none;
@@ -8288,7 +8289,6 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .v-buttongroup .v-button.v-button-middle {
 	border-radius: 0px;
-	width: 100%;
 }
 
 .v-buttongroup .v-button.v-button-middle.v-disabled:focus .v-button-wrap {
@@ -8297,7 +8297,17 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .v-buttongroup .v-button.v-button-middle .v-button-wrap {
-	border-left: 1px solid #8F8F8F;
+	border-left: 1px solid #CFCFCF;
+	border-radius: 0px;
+}
+
+.v-buttongroup .v-button.v-button-left {
+	border-radius: 2px 0px 0px 2px;
+	border-right: none;
+}
+
+.v-buttongroup .v-button.v-button-left .v-button-wrap {
+	border-radius: 0px;
 }
 
 .v-buttongroup .v-button.v-button-right {
@@ -8306,7 +8316,7 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 }
 
 .v-buttongroup .v-button.v-button-right .v-button-wrap {
-	border-left: 1px solid #8F8F8F;
+	border-left: 1px solid #CFCFCF;
 	border-radius: 0px;
 }
 
@@ -12107,7 +12117,7 @@ div.v-ratingstars-bar {
 	padding: 7px;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
-	border-color: #CBCBCB;
+	border-color: #CFCFCF;
 	background-color: #F5F5F5;
 }
 
@@ -13019,15 +13029,6 @@ img.icon-btn {
 
 .page-controls .v-button .v-button-caption {
 	font-size: 13px;
-}
-
-.v-buttongroup.navigation-btns .v-button-wrap, .v-ie .v-buttongroup.navigation-btns .v-button-wrap {
-	padding: 7px 10px 6px;
-}
-
-.v-buttongroup.navigation-btns .v-button-caption {
-	font-size: 16px;
-	font-weight: bold;
 }
 
 div.v-csslayout.bean-block {

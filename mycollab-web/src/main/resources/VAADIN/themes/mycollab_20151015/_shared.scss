@@ -346,9 +346,6 @@
 
   /* Toogle button groups*/
   .v-buttongroup {
-    .v-button-left {
-      border-radius: 2px 0px 0px 2px;
-    }
     .v-button {
       &.v-button-left .v-button-wrap, &.v-button-middle .v-button-wrap, &.v-button-left.v-disabled .v-button-wrap, &.v-button-middle.v-disabled .v-button-wrap, &.v-button-left.v-disabled:active .v-button-wrap, &.v-button-middle.v-disabled:active .v-button-wrap, &.v-button-left.v-disabled:focus .v-button-wrap {
         background-position: left top;
@@ -360,16 +357,23 @@
           background-image: none;
         }
         border-radius: 0px;
-        width: 100%;
         .v-button-wrap {
-          border-left: 1px solid #8F8F8F;
+          border-left: 1px solid $border-color;
+          border-radius: 0px;
+        }
+      }
+      &.v-button-left {
+        border-radius: 2px 0px 0px 2px;
+        border-right: none;
+        .v-button-wrap {
+          border-radius: 0px;
         }
       }
       &.v-button-right {
         border-radius: 0px 2px 2px 0px;
         border-left: none;
         .v-button-wrap {
-          border-left: 1px solid #8F8F8F;
+          border-left: 1px solid $border-color;
           border-radius: 0px;
         }
       }
