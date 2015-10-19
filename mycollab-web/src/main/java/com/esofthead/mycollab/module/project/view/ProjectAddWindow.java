@@ -64,7 +64,6 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         wizard.addListener(this);
         wizard.addStep(new GeneralInfoStep());
         wizard.addStep(new BillingAccountStep());
-        wizard.addStep(new InviteMoreMembersStep());
         contentLayout.with(wizard).withAlign(wizard, Alignment.TOP_CENTER);
     }
 
@@ -294,28 +293,6 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
                 }
                 return null;
             }
-        }
-    }
-
-    private static class InviteMoreMembersStep implements WizardStep {
-        @Override
-        public String getCaption() {
-            return "Invite members";
-        }
-
-        @Override
-        public Component getContent() {
-            return new MVerticalLayout().with(new Label("A"));
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return true;
         }
     }
 }
