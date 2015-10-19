@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
@@ -262,7 +263,8 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             @Override
             protected void onAttachField(Object propertyId, Field<?> field) {
                 if (Project.Field.account.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0, 2, "100%");
+                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME), 0, 0, 2,
+                            "100%");
                 } else if (Project.Field.currencyid.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY), 0, 1);
                 } else if (Project.Field.targetbudget.equalTo(propertyId)) {
@@ -285,6 +287,11 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
+                if (Project.Field.currencyid.equalTo(propertyId)) {
+                    return new CurrencyComboBoxField();
+                } else if (Project.Field.account.equalTo(propertyId)) {
+                    return new AccountSelectionField();
+                }
                 return null;
             }
         }
