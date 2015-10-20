@@ -156,7 +156,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         return new ProjectMemberFormFieldFactory(previewForm);
     }
 
-    protected class ProjectMemberReadLayoutFactory extends AbstractFormLayoutFactory {
+    protected class ProjectMemberReadLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 8833593761607165873L;
 
         @Override
@@ -257,7 +257,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         }
 
         @Override
-        protected void onAttachField(Object propertyId, Field<?> field) {
+        public void attachField(Object propertyId, Field<?> field) {
 
         }
 

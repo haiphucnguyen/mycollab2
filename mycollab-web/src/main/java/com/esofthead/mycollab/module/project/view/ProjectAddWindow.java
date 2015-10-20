@@ -68,11 +68,12 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         project = new Project();
 
         wizard = new ProjectAddWizard();
-        wizard.addListener(this);
         infoStep = new GeneralInfoStep();
         billingAccountStep = new BillingAccountStep();
         wizard.addStep(infoStep);
         wizard.addStep(billingAccountStep);
+        wizard.getFinishButton().setEnabled(true);
+        wizard.addListener(this);
         contentLayout.with(wizard).withAlign(wizard, Alignment.TOP_CENTER);
     }
 
@@ -96,7 +97,10 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
         boolean isInfoValid = infoStep.commit();
 
-        boolean isBillingValid = wizard.isActive(billingAccountStep) && billingAccountStep.commit();
+        boolean isBillingValid = true;
+        if (wizard.isActive(billingAccountStep)) {
+            isBillingValid = billingAccountStep.commit();
+        }
 
         if (!isInfoValid || !isBillingValid) {
             return;
@@ -230,7 +234,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             }
         }
 
-        class FormLayoutFactory extends AbstractFormLayoutFactory {
+        class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
             private GridFormLayoutHelper informationLayout;
@@ -242,7 +246,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             }
 
             @Override
-            protected void onAttachField(Object propertyId, Field<?> field) {
+            public void attachField(Object propertyId, Field<?> field) {
                 if (Project.Field.name.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
                 } else if (Project.Field.homepage.equalTo(propertyId)) {
@@ -300,7 +304,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             return true;
         }
 
-        class FormLayoutFactory extends AbstractFormLayoutFactory {
+        class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
             private GridFormLayoutHelper informationLayout;
@@ -312,7 +316,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             }
 
             @Override
-            protected void onAttachField(Object propertyId, Field<?> field) {
+            public void attachField(Object propertyId, Field<?> field) {
                 if (Project.Field.account.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME), 0, 0, 2,
                             "100%");

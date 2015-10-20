@@ -49,7 +49,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
         return new AccountEditFormFieldFactory<>(updateForm, false);
     }
 
-    private class MassUpdateAccountFormLayoutFactory extends AbstractFormLayoutFactory {
+    private class MassUpdateAccountFormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         private GridFormLayoutHelper informationLayout;
@@ -81,7 +81,7 @@ public class MassUpdateAccountWindow extends MassUpdateWindow<Account> {
         }
 
         @Override
-        protected void onAttachField(final Object propertyId, final Field<?> field) {
+        public void attachField(Object propertyId, final Field<?> field) {
             if (propertyId.equals("industry")) {
                 this.informationLayout.addComponent(field, AppContext.getMessage(AccountI18nEnum.FORM_INDUSTRY), 0, 0);
             } else if (propertyId.equals("type")) {

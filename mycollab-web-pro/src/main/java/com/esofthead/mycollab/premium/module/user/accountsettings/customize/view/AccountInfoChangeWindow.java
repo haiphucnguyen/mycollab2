@@ -38,7 +38,7 @@ class AccountInfoChangeWindow extends Window {
         content = new MVerticalLayout().withMargin(false);
         this.setContent(content);
         editForm = new AdvancedEditBeanForm<>();
-        editForm.setFormLayoutFactory(new AbstractFormLayoutFactory() {
+        editForm.setFormLayoutFactory(new IFormLayoutFactory() {
 
             private GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
@@ -48,7 +48,7 @@ class AccountInfoChangeWindow extends Window {
             }
 
             @Override
-            protected void onAttachField(Object propertyId, Field<?> field) {
+            public void attachField(Object propertyId, Field<?> field) {
                 if (BillingAccount.Field.sitename.equalTo(propertyId)) {
                     gridFormLayoutHelper.addComponent(field, "Site Name", 0, 0);
                 } else if (BillingAccount.Field.subdomain.equalTo(propertyId)) {

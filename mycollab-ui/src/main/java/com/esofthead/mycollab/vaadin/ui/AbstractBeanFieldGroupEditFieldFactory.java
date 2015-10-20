@@ -29,7 +29,6 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 import org.joda.time.DateTimeZone;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Path;
@@ -70,35 +69,66 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
     @Override
     public void setBean(B bean) {
         fieldGroup.setItemDataSource(new BeanItem<>(bean));
-
-        Class<?> beanClass = bean.getClass();
-        java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
-        for (java.lang.reflect.Field field : fields) {
-            Field<?> formField = onCreateField(field.getName());
-            if (formField == null) {
-                if (field.getAnnotation(NotBindable.class) != null) {
-                    continue;
+        IFormLayoutFactory layoutFactory = attachForm.getLayoutFactory();
+        if (layoutFactory instanceof IWrappedFormLayoutFactory) {
+            layoutFactory = ((IWrappedFormLayoutFactory) layoutFactory).getWrappedFactory();
+        }
+        if (layoutFactory instanceof IDynaFormLayout) {
+            IDynaFormLayout dynaFormLayout = (IDynaFormLayout) layoutFactory;
+            Set<String> bindFields = dynaFormLayout.bindFields();
+            for (String bindField : bindFields) {
+                Field<?> formField = onCreateField(bindField);
+                if (formField == null) {
+                    formField = fieldGroup.buildAndBind(bindField);
                 } else {
-                    formField = fieldGroup.buildAndBind(field.getName());
+                    if (formField instanceof DummyCustomField) {
+                        continue;
+                    } else if (!(formField instanceof CompoundCustomField)) {
+                        fieldGroup.bind(formField, bindField);
+                    }
                 }
-            } else {
-                if (formField instanceof DummyCustomField) {
-                    continue;
-                } else if (!(formField instanceof CompoundCustomField)) {
-                    fieldGroup.bind(formField, field.getName());
-                }
-            }
 
-            if (formField instanceof AbstractTextField) {
-                ((AbstractTextField) formField).setNullRepresentation("");
-            } else if (formField instanceof RichTextArea) {
-                ((RichTextArea) formField).setNullRepresentation("");
-            } else if (formField instanceof DateField) {
-                ((DateField) formField).setTimeZone(DateTimeZone.UTC.toTimeZone());
-                ((DateField) formField).setDateFormat(AppContext.getUserDateFormat().getShortDateFormat());
+                if (formField instanceof AbstractTextField) {
+                    ((AbstractTextField) formField).setNullRepresentation("");
+                } else if (formField instanceof RichTextArea) {
+                    ((RichTextArea) formField).setNullRepresentation("");
+                } else if (formField instanceof DateField) {
+                    ((DateField) formField).setTimeZone(DateTimeZone.UTC.toTimeZone());
+                    ((DateField) formField).setDateFormat(AppContext.getUserDateFormat().getShortDateFormat());
+                }
+                postCreateField(bindField, formField);
+                attachForm.attachField(bindField, formField);
             }
-            postCreateField(field.getName(), formField);
-            attachForm.attachField(field.getName(), formField);
+        } else {
+            Class<?> beanClass = bean.getClass();
+            java.lang.reflect.Field[] fields = ClassUtils.getAllFields(beanClass);
+            for (java.lang.reflect.Field field : fields) {
+                Field<?> formField = onCreateField(field.getName());
+                if (formField == null) {
+                    if (field.getAnnotation(NotBindable.class) != null) {
+                        continue;
+                    } else {
+                        formField = fieldGroup.buildAndBind(field.getName());
+                    }
+                } else {
+                    if (formField instanceof DummyCustomField) {
+                        continue;
+                    } else if (!(formField instanceof CompoundCustomField)) {
+                        fieldGroup.bind(formField, field.getName());
+                    }
+                }
+
+                if (formField instanceof AbstractTextField) {
+                    ((AbstractTextField) formField).setNullRepresentation("");
+                } else if (formField instanceof RichTextArea) {
+                    ((RichTextArea) formField).setNullRepresentation("");
+                } else if (formField instanceof DateField) {
+                    ((DateField) formField).setTimeZone(DateTimeZone.UTC.toTimeZone());
+                    ((DateField) formField).setDateFormat(AppContext.getUserDateFormat().getShortDateFormat());
+                }
+                postCreateField(field.getName(), formField);
+                attachForm.attachField(field.getName(), formField);
+            }
         }
     }
 

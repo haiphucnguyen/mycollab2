@@ -23,7 +23,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.*;
@@ -32,7 +32,7 @@ import com.vaadin.ui.*;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class ProjectFormLayoutFactory extends AbstractFormLayoutFactory {
+public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
     private static final long serialVersionUID = 1L;
 
     private final String title;
@@ -66,7 +66,7 @@ public abstract class ProjectFormLayoutFactory extends AbstractFormLayoutFactory
     }
 
     @Override
-    protected void onAttachField(final Object propertyId, final Field<?> field) {
+    public void attachField(Object propertyId, final Field<?> field) {
         this.projectInformationLayout.attachField(propertyId, field);
     }
 
@@ -74,7 +74,7 @@ public abstract class ProjectFormLayoutFactory extends AbstractFormLayoutFactory
 
     protected abstract Layout createBottomPanel();
 
-    public static class ProjectInformationLayout extends AbstractFormLayoutFactory {
+    public static class ProjectInformationLayout implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
         private GridFormLayoutHelper informationLayout;
         private GridFormLayoutHelper financialLayout;
@@ -111,7 +111,7 @@ public abstract class ProjectFormLayoutFactory extends AbstractFormLayoutFactory
         }
 
         @Override
-        protected void onAttachField(final Object propertyId, final Field<?> field) {
+        public void attachField(Object propertyId, final Field<?> field) {
             if (propertyId.equals("name")) {
                 informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
             } else if (propertyId.equals("homepage")) {

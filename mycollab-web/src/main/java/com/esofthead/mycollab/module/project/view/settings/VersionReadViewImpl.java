@@ -32,7 +32,6 @@ import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.DynaFormLayout;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.esofthead.mycollab.module.project.ui.format.VersionFieldFormatter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -157,8 +156,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
     protected ComponentContainer createButtonControls() {
         ProjectPreviewFormControlsGenerator<Version> versionPreviewForm = new ProjectPreviewFormControlsGenerator<>(
                 previewForm);
-        HorizontalLayout topPanel = versionPreviewForm
-                .createButtonControls(ProjectRolePermissionCollections.VERSIONS);
+        HorizontalLayout topPanel = versionPreviewForm.createButtonControls(ProjectRolePermissionCollections.VERSIONS);
 
         quickActionStatusBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

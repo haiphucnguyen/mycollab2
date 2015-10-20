@@ -35,7 +35,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
         return new ProblemEditFormFieldFactory(updateForm, false);
     }
 
-    private class MassUpdateProblemFormLayoutFactory extends AbstractFormLayoutFactory {
+    private class MassUpdateProblemFormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         private GridFormLayoutHelper informationLayout;
@@ -56,7 +56,7 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
         // Raised By, Assign To, Date Due, Status, Probability
         @Override
-        protected void onAttachField(final Object propertyId, final Field<?> field) {
+        public void attachField(Object propertyId, final Field<?> field) {
             if (propertyId.equals("raisedbyuser")) {
                 this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY), 0, 0);
             } else if (propertyId.equals("assigntouser")) {

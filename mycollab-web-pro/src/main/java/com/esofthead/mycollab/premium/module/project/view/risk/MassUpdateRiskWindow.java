@@ -37,7 +37,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
         return new RiskEditFormFieldFactory(updateForm);
     }
 
-    private class MassUpdateRiskFormLayoutFactory extends AbstractFormLayoutFactory {
+    private class MassUpdateRiskFormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         private GridFormLayoutHelper informationLayout;
@@ -60,7 +60,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
 
         // Raised By, Assign To, Date Due, Status, Consequence, Probability
         @Override
-        protected void onAttachField(Object propertyId, Field<?> field) {
+        public void attachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("raisedbyuser")) {
                 this.informationLayout.addComponent(field,
                         AppContext.getMessage(RiskI18nEnum.FORM_RAISED_BY), 0,

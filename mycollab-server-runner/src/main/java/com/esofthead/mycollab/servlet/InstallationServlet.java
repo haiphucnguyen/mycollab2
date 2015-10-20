@@ -96,8 +96,7 @@ public class InstallationServlet extends HttpServlet {
         boolean isStartTls = Boolean.parseBoolean(tls);
         boolean isSsl = Boolean.parseBoolean(ssl);
         try {
-            InstallUtils.checkSMTPConfig(smtpHost, mailServerPort, smtpUserName,
-                    smtpPassword, true, isStartTls, isSsl);
+            InstallUtils.checkSMTPConfig(smtpHost, mailServerPort, smtpUserName, smtpPassword, true, isStartTls, isSsl);
         } catch (UserInvalidInputException e) {
             LOG.warn("Cannot authenticate mail server successfully. Make sure your inputs are correct.");
         }

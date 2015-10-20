@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.form.field.AttachmentUploadField;
@@ -68,7 +68,7 @@ public class TaskAddWindow extends Window {
             super.setBean(item);
         }
 
-        class FormLayoutFactory extends AbstractFormLayoutFactory {
+        class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper informationLayout;
 
@@ -134,7 +134,7 @@ public class TaskAddWindow extends Window {
             }
 
             @Override
-            protected void onAttachField(Object propertyId, Field<?> field) {
+            public void attachField(Object propertyId, Field<?> field) {
                 if (Task.Field.taskname.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_TASK_NAME), 0, 0, 2, "100%");
                 } else if (Task.Field.startdate.equalTo(propertyId)) {
