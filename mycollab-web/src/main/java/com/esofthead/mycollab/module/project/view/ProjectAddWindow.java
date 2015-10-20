@@ -35,7 +35,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextEditField;
-import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -277,7 +276,7 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
         BillingAccountStep() {
             editForm = new AdvancedEditBeanForm<>();
-            editForm.setFormLayoutFactory(new FormLayoutFactory());
+            editForm.setFormLayoutFactory(buildFormLayout());
             editFormFieldFactory = new EditFormFieldFactory(editForm);
             editForm.setBeanFormFieldFactory(editFormFieldFactory);
             editForm.setBean(project);
@@ -285,7 +284,24 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
         private IDynaFormLayout buildFormLayout() {
             DynaForm defaultForm = new DynaForm();
+            DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
 
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.account).displayName(AppContext
+                    .getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME)).fieldIndex(0).colSpan(true).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.currencyid).displayName
+                    (AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY)).fieldIndex(1).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.targetbudget).displayName
+                    (AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET)).fieldIndex(2).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.defaultbillingrate).displayName
+                    (AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE)).fieldIndex(3).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.defaultovertimebillingrate)
+                    .displayName(AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE)).fieldIndex(4).build());
+
+            defaultForm.addSection(mainSection);
             return new DynaFormLayout(defaultForm);
         }
 
@@ -312,35 +328,6 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         @Override
         public boolean onBack() {
             return true;
-        }
-
-        class FormLayoutFactory implements IFormLayoutFactory {
-            private static final long serialVersionUID = 1L;
-
-            private GridFormLayoutHelper informationLayout;
-
-            @Override
-            public ComponentContainer getLayout() {
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
-                return informationLayout.getLayout();
-            }
-
-            @Override
-            public void attachField(Object propertyId, Field<?> field) {
-                if (Project.Field.account.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACCOUNT_NAME), 0, 0, 2,
-                            "100%");
-                } else if (Project.Field.currencyid.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY), 0, 1);
-                } else if (Project.Field.targetbudget.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET), 1, 1);
-                } else if (Project.Field.defaultbillingrate.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE), 0, 2);
-                } else if (Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE), 1, 2);
-                }
-
-            }
         }
 
         private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Project> {
