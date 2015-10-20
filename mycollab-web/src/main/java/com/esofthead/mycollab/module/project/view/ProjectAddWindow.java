@@ -19,6 +19,11 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
+import com.esofthead.mycollab.form.view.builder.TextAreaDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.type.DynaForm;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -166,10 +171,41 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
 
         GeneralInfoStep() {
             editForm = new AdvancedEditBeanForm<>();
-            editForm.setFormLayoutFactory(new FormLayoutFactory());
+            editForm.setFormLayoutFactory(buildFormLayout());
             editFormFieldFactory = new EditFormFieldFactory(editForm);
             editForm.setBeanFormFieldFactory(editFormFieldFactory);
             editForm.setBean(project);
+        }
+
+        private IDynaFormLayout buildFormLayout() {
+            DynaForm defaultForm = new DynaForm();
+            DynaSection mainSection = new DynaSectionBuilder().layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.name).displayName(AppContext
+                    .getMessage(ProjectI18nEnum.FORM_NAME)).fieldIndex(0).mandatory(true).required(true)
+                    .build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.homepage).displayName(AppContext
+                    .getMessage(ProjectI18nEnum.FORM_HOME_PAGE)).fieldIndex(1).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.shortname).displayName(AppContext
+                    .getMessage(ProjectI18nEnum.FORM_SHORT_NAME)).fieldIndex(2).mandatory(true).required(true).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.planstartdate).displayName
+                    (AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE)).fieldIndex(3).build());
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.projectstatus).displayName
+                    (AppContext.getMessage(ProjectI18nEnum.FORM_STATUS)).fieldIndex(4).build());
+
+
+            mainSection.addField(new TextDynaFieldBuilder().fieldName(Project.Field.planenddate).displayName
+                    (AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE)).fieldIndex(5).build());
+
+            mainSection.addField(new TextAreaDynaFieldBuilder().fieldName(Project.Field.description).displayName
+                    (AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION)).fieldIndex(6).colSpan(true).build());
+            defaultForm.addSection(mainSection);
+
+            return new DynaFormLayout(defaultForm);
         }
 
         @Override
@@ -233,38 +269,6 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
                 return null;
             }
         }
-
-        class FormLayoutFactory implements IFormLayoutFactory {
-            private static final long serialVersionUID = 1L;
-
-            private GridFormLayoutHelper informationLayout;
-
-            @Override
-            public ComponentContainer getLayout() {
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
-                return informationLayout.getLayout();
-            }
-
-            @Override
-            public void attachField(Object propertyId, Field<?> field) {
-                if (Project.Field.name.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 0);
-                } else if (Project.Field.homepage.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_HOME_PAGE), 1, 0);
-                } else if (Project.Field.shortname.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
-                } else if (Project.Field.projectstatus.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 1, 1);
-                } else if (Project.Field.planstartdate.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 2);
-                } else if (Project.Field.planenddate.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 1, 2);
-                } else if (Project.Field.description.equalTo(propertyId)) {
-                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 3, 2, "100%");
-                }
-
-            }
-        }
     }
 
     private class BillingAccountStep implements FormWizardStep {
@@ -277,6 +281,12 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
             editFormFieldFactory = new EditFormFieldFactory(editForm);
             editForm.setBeanFormFieldFactory(editFormFieldFactory);
             editForm.setBean(project);
+        }
+
+        private IDynaFormLayout buildFormLayout() {
+            DynaForm defaultForm = new DynaForm();
+
+            return new DynaFormLayout(defaultForm);
         }
 
         @Override
