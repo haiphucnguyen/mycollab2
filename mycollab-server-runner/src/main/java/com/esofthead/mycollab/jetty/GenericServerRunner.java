@@ -45,6 +45,7 @@ import javax.sql.DataSource;
 import java.awt.*;
 import java.io.File;
 import java.io.OutputStream;
+import java.net.BindException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
@@ -178,6 +179,15 @@ public abstract class GenericServerRunner {
     }
 
     private void execute() throws Exception {
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                if (e instanceof BindException) {
+
+                }
+                LOG.error("There is uncatch exception", e);
+            }
+        });
         server = new Server(port);
         contexts = new ContextHandlerCollection();
 
@@ -224,13 +234,6 @@ public abstract class GenericServerRunner {
         if (!alreadySetup) {
             openDefaultWebBrowserForInstallation();
         }
-
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                LOG.error("There is uncatch exception", e);
-            }
-        });
 
         server.join();
     }
