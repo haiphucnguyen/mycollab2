@@ -218,7 +218,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                                 UI.getCurrent().push();
                             }
                         }
-
                     }
                 });
             }
