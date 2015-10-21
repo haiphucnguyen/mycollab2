@@ -18,11 +18,14 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -66,7 +69,6 @@ import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -299,7 +301,8 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                                     String status = task.getStatus();
                                     KanbanBlock kanbanBlock = kanbanBlocks.get(status);
                                     if (kanbanBlock == null) {
-                                        LOG.error("Can not find a kanban block for status: " + status);
+                                        LOG.error("Can not find a kanban block for status: " + status + " for task: "
+                                                + BeanUtility.printBeanObj(task));
                                     } else {
                                         kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
                                     }
@@ -460,6 +463,11 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             headerLayout.addComponent(controlsBtn);
             headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
+            String typeval = optionVal.getTypeval();
+            boolean canExecute = !typeval.equals(StatusI18nEnum.Closed.name()) && !typeval.equals(StatusI18nEnum.Archived.name())
+                    && !typeval.equals(StatusI18nEnum.Open.name()) && !typeval.equals(StatusI18nEnum.Pending.name());
+            canExecute = canExecute && CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS);
+
             OptionPopupContent popupContent = new OptionPopupContent();
             Button renameColumnBtn = new Button("Rename column", new Button.ClickListener() {
                 @Override
@@ -469,7 +477,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
             });
             renameColumnBtn.setIcon(FontAwesome.PENCIL);
-            renameColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+            renameColumnBtn.setEnabled(canExecute);
             popupContent.addOption(renameColumnBtn);
 
             Button deleteColumnBtn = new Button("Delete column", new Button.ClickListener() {
@@ -500,7 +508,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 }
             });
             deleteColumnBtn.setIcon(FontAwesome.TRASH_O);
-            deleteColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+            deleteColumnBtn.setEnabled(canExecute);
             popupContent.addOption(deleteColumnBtn);
 
             popupContent.addSeparator();
@@ -630,10 +638,23 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
-                        optionVal.setTypeval(columnNameField.getValue());
-                        optionValService.updateWithSession(optionVal, AppContext.getUsername());
-                        KanbanBlock.this.updateComponentCount();
+                        if (StringUtils.isNotBlank(columnNameField.getValue())) {
+                            OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
+                            if (optionValService.isExistedOptionVal(ProjectTypeConstants.TASK, columnNameField.getValue(),
+                                    optionVal.getExtraid(), AppContext.getAccountId())) {
+                                NotificationUtil.showErrorNotification(String.format("There is already the column " +
+                                        "name '%s' in the board", columnNameField.getValue()));
+                            } else {
+                                taskService.massUpdateStatuses(optionVal.getTypeval(), columnNameField.getValue(), optionVal.getExtraid(),
+                                        AppContext.getAccountId());
+                                optionVal.setTypeval(columnNameField.getValue());
+                                optionValService.updateWithSession(optionVal, AppContext.getUsername());
+                                KanbanBlock.this.updateComponentCount();
+                            }
+                        } else {
+                            NotificationUtil.showErrorNotification("Column name must be not null");
+                        }
+
                         RenameColumnWindow.this.close();
                     }
                 });

@@ -52,7 +52,10 @@ Version 5.2.1
 
 **Improvements & New Features**
 
+* Allow user rename or delete column in the task kanban board
 * Do minor UI improvements
+* Validate the file permission in the installation script
+* Add shutdown script to allow admin can shutdown MyCollab properly
 
 **Bug Fixes**
 
