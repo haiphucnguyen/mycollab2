@@ -211,6 +211,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         headerLbl = new Label();
         headerLbl.setStyleName("h1");
         titleWrapper.addComponent(headerLbl);
+        
         Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

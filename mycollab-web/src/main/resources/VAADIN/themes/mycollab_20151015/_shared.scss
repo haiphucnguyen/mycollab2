@@ -364,14 +364,13 @@
       }
       &.v-button-left {
         border-radius: 2px 0px 0px 2px;
-        border-right: none;
         .v-button-wrap {
+          border-right: none;
           border-radius: 0px;
         }
       }
       &.v-button-right {
         border-radius: 0px 2px 2px 0px;
-        border-left: none;
         .v-button-wrap {
           border-left: 1px solid $border-color;
           border-radius: 0px;

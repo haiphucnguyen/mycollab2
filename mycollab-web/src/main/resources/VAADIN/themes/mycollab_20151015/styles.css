@@ -474,16 +474,15 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .v-buttongroup .v-button.v-button-left {
 	border-radius: 2px 0px 0px 2px;
-	border-right: none;
 }
 
 .v-buttongroup .v-button.v-button-left .v-button-wrap {
+	border-right: none;
 	border-radius: 0px;
 }
 
 .v-buttongroup .v-button.v-button-right {
 	border-radius: 0px 2px 2px 0px;
-	border-left: none;
 }
 
 .v-buttongroup .v-button.v-button-right .v-button-wrap {
@@ -8385,16 +8384,15 @@ div.v-button-link.current, div.v-button-link.buttonPaging:hover {
 
 .v-buttongroup .v-button.v-button-left {
 	border-radius: 2px 0px 0px 2px;
-	border-right: none;
 }
 
 .v-buttongroup .v-button.v-button-left .v-button-wrap {
+	border-right: none;
 	border-radius: 0px;
 }
 
 .v-buttongroup .v-button.v-button-right {
 	border-radius: 0px 2px 2px 0px;
-	border-left: none;
 }
 
 .v-buttongroup .v-button.v-button-right .v-button-wrap {
