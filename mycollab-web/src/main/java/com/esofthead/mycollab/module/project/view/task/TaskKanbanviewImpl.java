@@ -28,22 +28,22 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
 import com.esofthead.mycollab.module.project.view.kanban.DeleteColumnWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -52,6 +52,8 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -61,6 +63,7 @@ import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.dd.HorizontalDropLocation;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDHorizontalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
@@ -339,22 +342,28 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             root.addStyleName("kanban-item");
             this.setCompositionRoot(root);
 
-            String taskname = String.format("[%s-%s] %s", task.getProjectShortname(), task.getTaskkey(), task.getTaskname());
-            ButtonLink taskBtn = new ButtonLink(taskname, new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    EventBusFactory.getInstance().post(new TaskEvent.GotoRead(KanbanTaskBlockItem.this, task.getId()));
-                }
-            });
-            String taskPriority = (task.getPriority() != null) ? task.getPriority() : OptionI18nEnum.TaskPriority.Medium.name();
-            taskBtn.setIcon(ProjectAssetsManager.getTaskPriority(taskPriority));
-            taskBtn.addStyleName("task-" + taskPriority.toLowerCase());
-            taskBtn.setDescription(ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task,
-                    AppContext.getSiteUrl(), AppContext.getTimezone()));
-            root.with(taskBtn);
+            TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
+
+            MHorizontalLayout headerLayout = new MHorizontalLayout();
+
+            Label taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
+            if (task.isCompleted()) {
+                taskLinkLbl.addStyleName("completed");
+                taskLinkLbl.removeStyleName("overdue pending");
+            } else if (task.isOverdue()) {
+                taskLinkLbl.addStyleName("overdue");
+                taskLinkLbl.removeStyleName("completed pending");
+            } else if (task.isPending()) {
+                taskLinkLbl.addStyleName("pending");
+                taskLinkLbl.removeStyleName("completed overdue");
+            }
+            taskLinkLbl.addStyleName("wordWrap");
+            PopupView priorityField = popupFieldFactory.createPriorityPopupField(task);
+            headerLayout.with(priorityField, taskLinkLbl).expand(taskLinkLbl);
+
+            root.with(headerLayout);
 
             MHorizontalLayout footer = new MHorizontalLayout().withStyleName("footer2");
-            TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
 
             PopupView commentField = popupFieldFactory.createCommentsPopupField(task);
             footer.addComponent(commentField);
@@ -367,11 +376,24 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 footer.addComponent(field);
             }
 
-            if (task.getAssignuser() != null) {
-                footer.add(UserAvatarControlFactory.createUserAvatarEmbeddedButton(task.getAssignUserAvatarId(), 16));
-            }
+            PopupView assigneeField = popupFieldFactory.createAssigneePopupField(task);
+            footer.addComponent(assigneeField);
 
             root.addComponent(footer);
+        }
+
+        private String buildTaskLink() {
+            String uid = UUID.randomUUID().toString();
+
+            String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
+            A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
+                    CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
+
+            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
+            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+
+            Div resultDiv = new DivLessFormatter().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+            return resultDiv.write();
         }
     }
 

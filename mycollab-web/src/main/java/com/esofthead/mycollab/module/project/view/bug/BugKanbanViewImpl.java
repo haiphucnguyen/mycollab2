@@ -371,6 +371,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                     addNewBugComp();
                 }
             });
+            addBtn.setIcon(FontAwesome.PLUS);
             addBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
@@ -381,6 +382,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                     addNewBugComp();
                 }
             });
+            addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
             addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
             addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
