@@ -38,6 +38,7 @@ public class AgreegateGenericCalendarProvider extends BasicEventProvider {
             }
             addEvent(new GenericTaskEvent(assignment));
         }
+        fireEventSetChange();
     }
 
     public Double getTotalBillableHours() {
