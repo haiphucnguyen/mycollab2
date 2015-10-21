@@ -39,6 +39,8 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
+import com.esofthead.mycollab.module.project.view.kanban.DeleteColumnWindow;
+import com.esofthead.mycollab.module.project.view.kanban.RenameColumnWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -133,9 +135,21 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 UI.getCurrent().addWindow(new AddNewColumnWindow(TaskKanbanviewImpl.this, ProjectTypeConstants.TASK));
             }
         });
+        addNewColumnBtn.setIcon(FontAwesome.PLUS);
         addNewColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         addNewColumnBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         groupWrapLayout.addComponent(addNewColumnBtn);
+
+        Button deleteColumBtn = new Button("Delete columns", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                UI.getCurrent().addWindow(new DeleteColumnWindow(TaskKanbanviewImpl.this, ProjectTypeConstants.TASK));
+            }
+        });
+        deleteColumBtn.setIcon(FontAwesome.TRASH_O);
+        deleteColumBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+        deleteColumBtn.setStyleName(UIConstants.THEME_RED_LINK);
+        groupWrapLayout.addComponent(deleteColumBtn);
 
         Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
             @Override
@@ -446,12 +460,35 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
             OptionPopupContent popupContent = new OptionPopupContent();
+            Button renameColumnBtn = new Button("Rename column", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    UI.getCurrent().addWindow(new RenameColumnWindow(TaskKanbanviewImpl.this, ProjectTypeConstants.TASK));
+                }
+            });
+            renameColumnBtn.setIcon(FontAwesome.PENCIL);
+            renameColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+            popupContent.addOption(renameColumnBtn);
+
+            Button deleteColumnBtn = new Button("Delete column", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+
+                }
+            });
+            deleteColumnBtn.setIcon(FontAwesome.TRASH_O);
+            deleteColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+            popupContent.addOption(deleteColumnBtn);
+
+            popupContent.addSeparator();
+
             Button addBtn = new Button("Add a task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     addNewTaskComp();
                 }
             });
+            addBtn.setIcon(FontAwesome.PLUS);
             addBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
@@ -462,6 +499,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     addNewTaskComp();
                 }
             });
+            addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
             addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
