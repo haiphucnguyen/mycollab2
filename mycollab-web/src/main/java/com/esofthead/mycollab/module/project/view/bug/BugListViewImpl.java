@@ -212,6 +212,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         groupWrapLayout.addComponent(newBugBtn);
 
         Button advanceDisplayBtn = new Button();
+        advanceDisplayBtn.setWidth("50px");
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription("Detail");
 
@@ -221,6 +222,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 displayKanbanView();
             }
         });
+        kanbanBtn.setWidth("50px");
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 

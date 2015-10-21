@@ -189,6 +189,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 displayMonthView();
             }
         });
+        previousBtn.setWidth("40px");
         previousBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         previousBtn.setIcon(FontAwesome.CHEVRON_LEFT);
         navigationBtns.addButton(previousBtn);
@@ -200,6 +201,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 displayMonthView();
             }
         });
+        nextBtn.setWidth("40px");
         nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         nextBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
         navigationBtns.addButton(nextBtn);
@@ -218,10 +220,12 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(CalendarViewImpl.this, null));
             }
         });
+        advanceDisplayBtn.setWidth("50px");
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
         Button calendarBtn = new Button();
+        calendarBtn.setWidth("50px");
         calendarBtn.setDescription("Calendar View");
         calendarBtn.setIcon(FontAwesome.CALENDAR);
 
@@ -233,6 +237,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoGanttChart(CalendarViewImpl.this, null));
             }
         });
+        chartDisplayBtn.setWidth("50px");
         chartDisplayBtn.setDescription("Display Gantt chart");
         chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
 
@@ -242,6 +247,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(CalendarViewImpl.this, null));
             }
         });
+        kanbanBtn.setWidth("50px");
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 

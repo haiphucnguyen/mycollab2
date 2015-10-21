@@ -163,6 +163,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(TaskKanbanviewImpl.this, null));
             }
         });
+        advanceDisplayBtn.setWidth("50px");
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
@@ -172,6 +173,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 EventBusFactory.getInstance().post(new TaskEvent.GotoCalendarView(TaskKanbanviewImpl.this));
             }
         });
+        calendarBtn.setWidth("50px");
         calendarBtn.setDescription("Calendar View");
         calendarBtn.setIcon(FontAwesome.CALENDAR);
 
@@ -181,10 +183,12 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 EventBusFactory.getInstance().post(new TaskEvent.GotoGanttChart(this, null));
             }
         });
+        chartDisplayBtn.setWidth("50px");
         chartDisplayBtn.setDescription("Display Gantt chart");
         chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
 
         Button kanbanBtn = new Button();
+        kanbanBtn.setWidth("50px");
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 

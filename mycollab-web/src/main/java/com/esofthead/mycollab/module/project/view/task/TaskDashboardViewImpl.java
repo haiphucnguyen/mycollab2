@@ -220,6 +220,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         groupWrapLayout.addComponent(newTaskBtn);
 
         Button advanceDisplayBtn = new Button();
+        advanceDisplayBtn.setWidth("50px");
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription(AppContext.getMessage(TaskGroupI18nEnum.ADVANCED_VIEW_TOOLTIP));
 
@@ -229,6 +230,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                 EventBusFactory.getInstance().post(new TaskEvent.GotoCalendarView(TaskDashboardViewImpl.this));
             }
         });
+        calendarBtn.setWidth("50px");
         calendarBtn.setDescription("Calendar View");
         calendarBtn.setIcon(FontAwesome.CALENDAR);
 
@@ -240,6 +242,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                 displayGanttChartView();
             }
         });
+        chartDisplayBtn.setWidth("50px");
         chartDisplayBtn.setDescription("Display Gantt chart");
         chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
 
@@ -249,6 +252,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
                 displayKanbanView();
             }
         });
+        kanbanBtn.setWidth("50px");
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 

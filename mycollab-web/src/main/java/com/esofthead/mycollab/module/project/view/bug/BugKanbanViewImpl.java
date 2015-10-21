@@ -130,10 +130,12 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 EventBusFactory.getInstance().post(new BugEvent.GotoList(BugKanbanViewImpl.this, null));
             }
         });
+        advanceDisplayBtn.setWidth("50px");
         advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
         advanceDisplayBtn.setDescription("Detail");
 
         Button kanbanBtn = new Button();
+        kanbanBtn.setWidth("50px");
         kanbanBtn.setDescription("Kanban View");
         kanbanBtn.setIcon(FontAwesome.TH);
 

@@ -50,8 +50,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private ProjectFollowersComp<SimpleRisk> followerSheet;
 
     public RiskReadViewImpl() {
-        super(AppContext.getMessage(RiskI18nEnum.FORM_READ_TITLE),
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
+        super(AppContext.getMessage(RiskI18nEnum.FORM_READ_TITLE), ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
     }
 
     @Override
@@ -61,8 +60,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected ComponentContainer createButtonControls() {
-        return new ProjectPreviewFormControlsGenerator<>(previewForm)
-                .createButtonControls(ProjectRolePermissionCollections.RISKS);
+        return new ProjectPreviewFormControlsGenerator<>(previewForm).createButtonControls(ProjectRolePermissionCollections.RISKS);
     }
 
     @Override
