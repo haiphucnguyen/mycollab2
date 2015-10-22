@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.vaadin.mvp;
 
+import com.esofthead.mycollab.web.DesktopApplication;
 import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
@@ -40,7 +41,7 @@ public abstract class AbstractLazyPageView extends AbstractPageView implements L
             new Thread() {
                 @Override
                 public void run() {
-                    final UI currentUI = UI.getCurrent();
+                    final DesktopApplication currentUI = (DesktopApplication) UI.getCurrent();
                     currentUI.access(new Runnable() {
                         @Override
                         public void run() {

@@ -443,6 +443,11 @@
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/milestone</url>
         </repository>
+        <repository>
+            <id>vaadin-prereleases</id>
+            <name>Vaadin Pre-releases</name>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
