@@ -67,27 +67,27 @@ public class DateParam extends ColumnParam {
         }
     }
 
-    public BetweenValuesSearchField buildDateValBetween(String oper, Date value1, Date value2) {
+    private BetweenValuesSearchField buildDateValBetween(String oper, Date value1, Date value2) {
         return new BetweenValuesSearchField(oper, String.format("DATE(%s.%s) BETWEEN", table, column), value1, value2);
     }
 
-    public BetweenValuesSearchField buildDateValNotBetween(String oper, Date value1, Date value2) {
+    private BetweenValuesSearchField buildDateValNotBetween(String oper, Date value1, Date value2) {
         return new BetweenValuesSearchField(oper, String.format("DATE(%s.%s) NOT BETWEEN", table, column), value1, value2);
     }
 
-    public OneValueSearchField buildDateIsEqual(String oper, Date value) {
+    private OneValueSearchField buildDateIsEqual(String oper, Date value) {
         return new OneValueSearchField(oper, String.format("DATE(%s.%s) = ", table, column), value);
     }
 
-    public OneValueSearchField buildDateIsNotEqual(String oper, Date value) {
+    private OneValueSearchField buildDateIsNotEqual(String oper, Date value) {
         return new OneValueSearchField(oper, String.format("DATE(%s.%s) <> ", table, column), value);
     }
 
-    public OneValueSearchField buildDateIsGreaterThan(String oper, Date value) {
+    private OneValueSearchField buildDateIsGreaterThan(String oper, Date value) {
         return new OneValueSearchField(oper, String.format("DATE(%s.%s) >= ", table, column), value);
     }
 
-    public OneValueSearchField buildDateIsLessThan(String oper, Date value) {
+    private OneValueSearchField buildDateIsLessThan(String oper, Date value) {
         return new OneValueSearchField(oper, String.format("DATE(%s.%s) <= ", table, column), value);
     }
 }

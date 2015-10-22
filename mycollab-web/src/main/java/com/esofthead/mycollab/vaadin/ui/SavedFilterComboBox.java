@@ -85,6 +85,13 @@ public class SavedFilterComboBox extends CustomField<String> {
         }
     }
 
+    public void addSharedSearchQueryInfo(SearchQueryInfo searchQueryInfo) {
+        if (sharedQueries == null) {
+            sharedQueries = new ArrayList<>();
+        }
+        sharedQueries.add(searchQueryInfo);
+    }
+
     @Override
     protected Component initContent() {
         componentsText = new TextField();
@@ -120,18 +127,18 @@ public class SavedFilterComboBox extends CustomField<String> {
 
     private void initContentPopup() {
         popupContent.removeOptions();
+        popupContent.addSection("Created by users");
+        for (final SearchQueryInfo queryInfo : savedQueries) {
+            Button queryOption = new QueryInfoOption(queryInfo);
+            popupContent.addOption(queryOption);
+        }
+
         if (CollectionUtils.isNotEmpty(sharedQueries)) {
             popupContent.addSection("Shared to me");
             for (final SearchQueryInfo queryInfo : sharedQueries) {
                 Button queryOption = new QueryInfoOption(queryInfo);
                 popupContent.addOption(queryOption);
             }
-        }
-
-        popupContent.addSection("Created by users");
-        for (final SearchQueryInfo queryInfo : savedQueries) {
-            Button queryOption = new QueryInfoOption(queryInfo);
-            popupContent.addOption(queryOption);
         }
     }
 

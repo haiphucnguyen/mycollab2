@@ -21,7 +21,9 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -87,27 +89,38 @@ public class SearchFieldInfo implements Serializable {
             S obj = cls.newInstance();
             for (SearchFieldInfo info : fieldInfos) {
                 Param param = info.getParam();
+                SearchField searchField;
                 if (param instanceof StringParam) {
                     StringParam wrapParam = (StringParam) param;
-                    SearchField searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
+                    searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
                             (String) info.getValue());
                     obj.addExtraField(searchField);
                 } else if (param instanceof NumberParam) {
                     NumberParam wrapParam = (NumberParam) param;
-                    SearchField searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
+                    searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
                             Double.parseDouble((String) info.getValue()));
                     obj.addExtraField(searchField);
                 } else if (param instanceof CompositionStringParam) {
                     CompositionStringParam wrapParam = (CompositionStringParam) param;
-                    SearchField searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), (String) info.getValue());
+                    searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
+                            (String) info.getValue());
                     obj.addExtraField(searchField);
                 } else if (param instanceof StringListParam) {
                     StringListParam listParam = (StringListParam) param;
-                    SearchField searchField;
                     if (info.getCompareOper().equals(StringListParam.IN)) {
                         searchField = listParam.buildStringParamInList(info.getPrefixOper(), (Collection<String>) info.getValue());
                     } else {
                         searchField = listParam.buildStringParamNotInList(info.getPrefixOper(), (Collection<String>) info.getValue());
+                    }
+                    obj.addExtraField(searchField);
+                } else if (param instanceof DateParam) {
+                    DateParam dateParam = (DateParam) param;
+                    if (info.getValue().getClass().isArray()) {
+                        Date val1 = (Date) Array.get(info.getValue(), 0);
+                        Date val2 = (Date) Array.get(info.getValue(), 1);
+                        searchField = dateParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), val1, val2);
+                    } else {
+                        searchField = dateParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), (Date) info.getValue());
                     }
                     obj.addExtraField(searchField);
                 } else {

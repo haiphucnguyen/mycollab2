@@ -684,7 +684,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                         fillSearchFieldInfoAndInvokeSearchRequest(fieldInfos);
 
                         if (filterBox.getComponentCount() <= 3) {
-                            Button updateBtn = new Button("Update");
+                            Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL));
                             updateBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
                             updateBtn.setIcon(FontAwesome.REFRESH);
                             updateBtn.addClickListener(new Button.ClickListener() {
