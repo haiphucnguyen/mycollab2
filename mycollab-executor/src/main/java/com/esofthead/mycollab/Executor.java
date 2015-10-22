@@ -3,12 +3,22 @@ package com.esofthead.mycollab;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.StartedProcess;
+import org.zeroturnaround.process.JavaProcess;
+import org.zeroturnaround.process.Processes;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -93,54 +103,85 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-        final ServerSocket serverSocket = new ServerSocket(0);
-        final int listenPort = serverSocket.getLocalPort();
-        LOG.info("Open server port: " + listenPort);
+        boolean isStop = false;
+
+        String stopKeyVal = "";
 
         int processRunningPort = 8080;
+        int listenPortVal = 0;
         try {
             for (int i = 0; i < args.length; i++) {
                 if ("--port".equals(args[i])) {
                     processRunningPort = Integer.parseInt(args[++i]);
+                } else if ("--stop".equals(args[i])) {
+                    isStop = true;
+                } else if ("--stop-key".equals(args[i])) {
+                    stopKeyVal = args[++i];
+                } else if ("--process-port".equals(args[i])) {
+                    listenPortVal = Integer.parseInt(args[++i]);
                 }
             }
         } catch (Exception e) {
             LOG.error("Error in parsing arguments", e);
         }
-        final CoreProcess process = new CoreProcess(processRunningPort, listenPort);
 
-        final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
-        Runnable serverTask = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        try (Socket socket = serverSocket.accept();
-                             InputStream inputStream = socket.getInputStream();
-                             DataInputStream dataInputStream = new DataInputStream(inputStream)) {
-                            String request = dataInputStream.readUTF();
-                            if (request.startsWith("RELOAD")) {
-                                String filePath = request.substring("RELOAD:".length());
-                                LOG.info(String.format("Update MyCollab with file %s", filePath));
-                                File upgradeFile = new File(filePath);
-                                if (upgradeFile.exists()) {
-                                    process.stop();
-                                    unpackFile(upgradeFile);
-                                    process.start();
-                                } else {
-                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
-                                            upgradeFile.getAbsolutePath());
+        final int listenPort = listenPortVal;
+        final String stopKey = stopKeyVal;
+
+        if (!isStop) {
+            LOG.info("Start MyCollab server process");
+            final ServerSocket serverSocket = new ServerSocket(listenPort);
+            final MyCollabProcessRunner process = new MyCollabProcessRunner(processRunningPort, listenPort, stopKey);
+            final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
+            Runnable serverTask = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (true) {
+                            try (Socket socket = serverSocket.accept();
+                                 InputStream inputStream = socket.getInputStream();
+                                 DataInputStream dataInputStream = new DataInputStream(inputStream)) {
+                                String request = dataInputStream.readUTF();
+                                if (request.startsWith("RELOAD")) {
+                                    String filePath = request.substring("RELOAD:".length());
+                                    LOG.info(String.format("Update MyCollab with file %s", filePath));
+                                    File upgradeFile = new File(filePath);
+                                    if (upgradeFile.exists()) {
+                                        process.stop();
+                                        unpackFile(upgradeFile);
+                                        process.start();
+                                    } else {
+                                        LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
+                                                upgradeFile.getAbsolutePath());
+                                    }
+                                } else if (request.startsWith("STOP")) {
+                                    String key = request.substring("STOP:".length());
+                                    LOG.info(String.format("Request to terminate MyCollab server with key %s", key));
+                                    if (stopKey.equals(key)) {
+                                        process.stop();
+                                        System.exit(-1);
+                                    }
                                 }
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
+                }
+            };
+            clientProcessingPool.submit(serverTask);
+            process.start();
+        } else {
+            LOG.info("Kill MyCollab server process");
+            try (Socket socket = new Socket("localhost", listenPort);
+                 OutputStream outputStream = socket.getOutputStream();
+                 DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
+                dataOutputStream.writeUTF("STOP:" + stopKey);
+            } catch (Exception e) {
+                LOG.error("Error while send RELOAD request to the host process", e);
             }
-        };
-        clientProcessingPool.submit(serverTask);
-        process.start();
+            System.exit(-1);
+        }
     }
 }

@@ -23,17 +23,19 @@ import java.util.concurrent.TimeoutException;
  * @author MyCollab Ltd.
  * @since 5.0.7
  */
-class CoreProcess {
-    private static Logger LOG = LoggerFactory.getLogger(CoreProcess.class);
+class MyCollabProcessRunner {
+    private static Logger LOG = LoggerFactory.getLogger(MyCollabProcessRunner.class);
 
     private int processRunningPort;
     private int clientListenPort;
+    private String stopKey;
     private JavaProcess wrappedJavaProccess;
     private Thread mainThread;
 
-    CoreProcess(int processRunningPort, int clientListenPort) {
+    MyCollabProcessRunner(int processRunningPort, int clientListenPort, String stopKey) {
         this.processRunningPort = processRunningPort;
         this.clientListenPort = clientListenPort;
+        this.stopKey = stopKey;
     }
 
     void start() throws IOException, ExecutionException, InterruptedException {
@@ -58,7 +60,11 @@ class CoreProcess {
                         javaOptions.addAll(Arrays.asList(optArr));
                     }
                     javaOptions.addAll(Arrays.asList("-jar", "runner.jar", "--port", processRunningPort + "", "--cport", clientListenPort + ""));
-
+                    StringBuilder strBuilder = new StringBuilder();
+                    for (String option : javaOptions) {
+                        strBuilder.append(option).append(" ");
+                    }
+                    LOG.info("MyCollab options: " + strBuilder.toString());
                     StartedProcess javaProcess = new ProcessExecutor().command(javaOptions.toArray(new String[javaOptions.size()]))
                             .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
 
