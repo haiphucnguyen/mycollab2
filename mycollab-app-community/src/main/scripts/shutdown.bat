@@ -5,8 +5,6 @@ rem ----------------------------------------------------------------------------
 
 if "%OS%" == "Windows_NT" setlocal
 
-set "EXECUTABLE=mycollab.bat"
-
 call mycollab.bat --stop
 
 :end

@@ -299,7 +299,7 @@
                                     </target>
                                 </configuration>
                             </execution>
-<!--
+
                             <execution>
                                 <id>create-macos-bundle</id>
                                 <phase>install</phase>
@@ -312,7 +312,7 @@
                                                  classname="net.sourceforge.jarbundler.JarBundler"
                                                  classpathref="maven.plugin.classpath"/>
                                         <jarbundler dir="target"
-                                                    name="MyCollab-MacOS2-${project.version}"
+                                                    name="MyCollab-MacOS-${project.version}"
                                                     mainclass="com.izforge.izpack.installer.bootstrap.Installer"
                                                     jar="target/MyCollab-Generic-${project.version}.jar"
                                                     copyright="©2015, MyCollab"
@@ -325,7 +325,6 @@
                                     </target>
                                 </configuration>
                             </execution>
-                            -->
                         </executions>
                         <dependencies>
                             <dependency>

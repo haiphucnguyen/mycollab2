@@ -72,8 +72,7 @@ public class DateParam extends ColumnParam {
     }
 
     public BetweenValuesSearchField buildDateValNotBetween(String oper, Date value1, Date value2) {
-        return new BetweenValuesSearchField(oper, String.format(
-                "DATE(%s.%s) NOT BETWEEN", table, column), value1, value2);
+        return new BetweenValuesSearchField(oper, String.format("DATE(%s.%s) NOT BETWEEN", table, column), value1, value2);
     }
 
     public OneValueSearchField buildDateIsEqual(String oper, Date value) {
