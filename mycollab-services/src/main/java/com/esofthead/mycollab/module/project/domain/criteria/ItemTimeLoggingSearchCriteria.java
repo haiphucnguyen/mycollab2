@@ -37,15 +37,10 @@ public class ItemTimeLoggingSearchCriteria extends SearchCriteria {
 	private static final long serialVersionUID = 1L;
 
 	private SetSearchField<Integer> projectIds;
-
 	private SetSearchField<String> logUsers;
-
 	private RangeDateSearchField rangeDate;
-
 	private StringSearchField type;
-
 	private NumberSearchField typeId;
-
 	private BooleanSearchField isBillable;
 
 	public static RangeDateSearchField getCurrentRangeDateOfWeekSearchField() {

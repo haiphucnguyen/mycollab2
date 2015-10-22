@@ -16,58 +16,49 @@
  */
 package com.esofthead.mycollab.module.project.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.arguments.*;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public class StandupReportSearchCriteria extends SearchCriteria {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private NumberSearchField projectId;
+    private NumberSearchField projectId;
+    private StringSearchField logBy;
+    private RangeDateSearchField reportDateRange;
+    private DateSearchField onDate;
 
-	private StringSearchField logBy;
+    public NumberSearchField getProjectId() {
+        return projectId;
+    }
 
-	private RangeDateSearchField reportDateRange;
+    public void setProjectId(NumberSearchField projectId) {
+        this.projectId = projectId;
+    }
 
-	private DateSearchField onDate;
+    public StringSearchField getLogBy() {
+        return logBy;
+    }
 
-	public NumberSearchField getProjectId() {
-		return projectId;
-	}
+    public void setLogBy(StringSearchField logBy) {
+        this.logBy = logBy;
+    }
 
-	public void setProjectId(NumberSearchField projectId) {
-		this.projectId = projectId;
-	}
+    public RangeDateSearchField getReportDateRange() {
+        return reportDateRange;
+    }
 
-	public StringSearchField getLogBy() {
-		return logBy;
-	}
+    public void setReportDateRange(RangeDateSearchField reportDateRange) {
+        this.reportDateRange = reportDateRange;
+    }
 
-	public void setLogBy(StringSearchField logBy) {
-		this.logBy = logBy;
-	}
+    public DateSearchField getOnDate() {
+        return onDate;
+    }
 
-	public RangeDateSearchField getReportDateRange() {
-		return reportDateRange;
-	}
-
-	public void setReportDateRange(RangeDateSearchField reportDateRange) {
-		this.reportDateRange = reportDateRange;
-	}
-
-	public DateSearchField getOnDate() {
-		return onDate;
-	}
-
-	public void setOnDate(DateSearchField onDate) {
-		this.onDate = onDate;
-	}
+    public void setOnDate(DateSearchField onDate) {
+        this.onDate = onDate;
+    }
 }
