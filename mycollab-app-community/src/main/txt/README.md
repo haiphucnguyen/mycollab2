@@ -52,6 +52,7 @@ Version 5.2.1
 
 **Improvements & New Features**
 
+* Predefined query for tasks, bugs
 * Allow user rename or delete column in the task kanban board
 * Do minor UI improvements
 * Validate the file permission in the installation script
