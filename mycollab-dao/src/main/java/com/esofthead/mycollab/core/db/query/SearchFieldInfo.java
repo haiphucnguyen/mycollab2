@@ -91,6 +91,14 @@ public class SearchFieldInfo implements Serializable {
         return this;
     }
 
+    public VariableInjecter getVariableInjecter() {
+        return variableInjecter;
+    }
+
+    public void setVariableInjecter(VariableInjecter variableInjecter) {
+        this.variableInjecter = variableInjecter;
+    }
+
     public Object eval() {
         return variableInjecter.eval();
     }
