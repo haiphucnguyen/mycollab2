@@ -43,7 +43,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class SavedFilterComboBox extends CustomField<String> {
+public abstract class SavedFilterComboBox extends CustomField<String> {
     private static Logger LOG = LoggerFactory.getLogger(SavedFilterComboBox.class);
 
     private TextField componentsText;

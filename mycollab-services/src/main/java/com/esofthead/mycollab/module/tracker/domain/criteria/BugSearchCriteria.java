@@ -43,12 +43,15 @@ public class BugSearchCriteria extends SearchCriteria {
     public static final Param p_createdtime = new DateParam("bug-createdtime",
             GenericI18Enum.FORM_CREATED_TIME, "m_tracker_bug", "createdTime");
 
-    public static final Param p_lastupdatedtime = new DateParam(
+    public static final DateParam p_lastupdatedtime = new DateParam(
             "bug-lastupdatedtime", GenericI18Enum.FORM_LAST_UPDATED_TIME,
             "m_tracker_bug", "lastUpdatedTime");
 
-    public static final Param p_resolveddate = new DateParam("bug-resolveddate",
+    public static final DateParam p_resolveddate = new DateParam("bug-resolveddate",
             BugI18nEnum.FORM_RESOLVED_DATE, "m_tracker_bug", "resolveddate");
+
+    public static final DateParam p_createddate = new DateParam("bug-createddate",
+            BugI18nEnum.FORM_CREATED_TIME, "m_tracker_bug", "createdTime");
 
     public static final Param p_duedate = new DateParam("bug-duedate",
             BugI18nEnum.FORM_DUE_DATE, "m_tracker_bug", "duedate");
@@ -80,8 +83,11 @@ public class BugSearchCriteria extends SearchCriteria {
     public static final Param p_components = new BugTypeCustomSql("bug_components",
             BugI18nEnum.FORM_COMPONENTS, "Component");
 
-    public static final Param p_assignee = new PropertyListParam("bug-assignuser",
+    public static final PropertyListParam p_assignee = new PropertyListParam("bug-assignuser",
             GenericI18Enum.FORM_ASSIGNEE, "m_tracker_bug", "assignuser");
+
+    public static final PropertyListParam p_projectIds = new PropertyListParam("bug-projectid", null, "m_tracker_bug",
+            "projectid");
 
     private static class BugTypeCustomSql extends CustomSqlParam {
 

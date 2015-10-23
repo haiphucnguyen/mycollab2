@@ -1,12 +1,15 @@
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.bug.components;
 
-import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.db.query.PropertyListParam;
 import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.db.query.SearchQueryInfo;
 import com.esofthead.mycollab.core.db.query.VariableInjecter;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.query.CurrentProjectIdInjecter;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.SavedFilterComboBox;
 import org.joda.time.LocalDate;
@@ -18,31 +21,32 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 5.2.1
  */
-public class TaskSavedFilterComboBox extends SavedFilterComboBox {
-    public TaskSavedFilterComboBox() {
-        super(ProjectTypeConstants.TASK);
+public class BugSavedFilterComboBox extends SavedFilterComboBox {
+    public BugSavedFilterComboBox() {
+        super(ProjectTypeConstants.BUG);
 
-        SearchQueryInfo allTasksQuery = new SearchQueryInfo("All Tasks", SearchFieldInfo.inCollection
-                (TaskSearchCriteria.p_projectIds, new CurrentProjectIdInjecter()));
+        SearchQueryInfo allBugsQuery = new SearchQueryInfo("All Bugs", SearchFieldInfo.inCollection
+                (BugSearchCriteria.p_projectIds, new CurrentProjectIdInjecter()));
 
-        SearchQueryInfo allOpenTaskQuery = new SearchQueryInfo("All Open Task", SearchFieldInfo.inCollection(
-                TaskSearchCriteria.p_status, new VariableInjecter() {
+        SearchQueryInfo allOpenBugsQuery = new SearchQueryInfo("All Open Bugs", new SearchFieldInfo(SearchField.AND,
+                new PropertyListParam("bug-status", BugI18nEnum.FORM_STATUS, "m_tracker_bug", "status"), PropertyListParam.BELONG_TO, new
+                VariableInjecter() {
                     @Override
                     public Object eval() {
-                        return Arrays.asList(OptionI18nEnum.StatusI18nEnum.Open.name());
+                        return Arrays.asList(BugStatus.InProgress.name(), BugStatus.Open.name(), BugStatus.ReOpened.name());
                     }
                 }));
 
-        SearchQueryInfo myTasksQuery = new SearchQueryInfo("My Tasks", SearchFieldInfo.inCollection
-                (TaskSearchCriteria.p_assignee, new VariableInjecter() {
+        SearchQueryInfo myBugsQuery = new SearchQueryInfo("My Bugs", SearchFieldInfo.inCollection
+                (BugSearchCriteria.p_assignee, new VariableInjecter() {
                     @Override
                     public Object eval() {
                         return Arrays.asList(AppContext.getUsername());
                     }
                 }));
 
-        SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo("New This Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_createtime, new VariableInjecter() {
+        SearchQueryInfo newBugsThisWeekQuery = new SearchQueryInfo("New This Week", SearchFieldInfo.inDateRange
+                (BugSearchCriteria.p_createddate, new VariableInjecter() {
                     @Override
                     public Object eval() {
                         LocalDate date = new LocalDate(new Date());
@@ -52,8 +56,8 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
-        SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo("Update This Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
+        SearchQueryInfo updateBugsThisWeekQuery = new SearchQueryInfo("Update This Week", SearchFieldInfo.inDateRange
+                (BugSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
                     @Override
                     public Object eval() {
                         LocalDate date = new LocalDate(new Date());
@@ -63,20 +67,8 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
-        SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo("New Last Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_createtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        date = date.minusWeeks(-1);
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
-
-        SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo("Update Last Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
+        SearchQueryInfo newBugsLastWeekQuery = new SearchQueryInfo("New Last Week", SearchFieldInfo.inDateRange
+                (BugSearchCriteria.p_createddate, new VariableInjecter() {
                     @Override
                     public Object eval() {
                         LocalDate date = new LocalDate(new Date());
@@ -87,12 +79,24 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
-        this.addSharedSearchQueryInfo(allTasksQuery);
-        this.addSharedSearchQueryInfo(allOpenTaskQuery);
-        this.addSharedSearchQueryInfo(myTasksQuery);
-        this.addSharedSearchQueryInfo(newTasksThisWeekQuery);
-        this.addSharedSearchQueryInfo(updateTasksThisWeekQuery);
-        this.addSharedSearchQueryInfo(newTasksLastWeekQuery);
-        this.addSharedSearchQueryInfo(updateTasksLastWeekQuery);
+        SearchQueryInfo updateBugsLastWeekQuery = new SearchQueryInfo("Update Last Week", SearchFieldInfo.inDateRange
+                (BugSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
+                    @Override
+                    public Object eval() {
+                        LocalDate date = new LocalDate(new Date());
+                        date = date.minusWeeks(-1);
+                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
+                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
+                        return new Date[]{minDate.toDate(), maxDate.toDate()};
+                    }
+                }));
+
+        this.addSharedSearchQueryInfo(allBugsQuery);
+        this.addSharedSearchQueryInfo(allOpenBugsQuery);
+        this.addSharedSearchQueryInfo(myBugsQuery);
+        this.addSharedSearchQueryInfo(newBugsThisWeekQuery);
+        this.addSharedSearchQueryInfo(updateBugsThisWeekQuery);
+        this.addSharedSearchQueryInfo(newBugsLastWeekQuery);
+        this.addSharedSearchQueryInfo(updateBugsLastWeekQuery);
     }
 }
