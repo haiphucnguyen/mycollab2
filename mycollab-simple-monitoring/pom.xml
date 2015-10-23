@@ -6,9 +6,9 @@
     <artifactId>mycollab-simple-monitoring</artifactId>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
-        <artifactId>mycollab-parent-community</artifactId>
+        <artifactId>mycollab-parent-ondemand</artifactId>
         <version>5.2.1</version>
-        <relativePath>../mycollab-parent-community/pom.xml</relativePath>
+        <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
