@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.configuration;
 
-import com.esofthead.mycollab.core.DeploymentMode;
 import org.apache.commons.lang3.LocaleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,12 +60,15 @@ public class SiteConfiguration {
 
     private Locale defaultLocale;
     private List<Locale> supportedLanguages;
+    private String pullMethod;
 
     public static void loadConfiguration() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         int serverPort = Integer.parseInt(System.getProperty(ApplicationProperties.MYCOLLAB_PORT, "8080"));
         ApplicationProperties.loadProps();
         instance = new SiteConfiguration();
+
+        instance.pullMethod = ApplicationProperties.getString(ApplicationProperties.PULL_METHOD, "push");
 
         instance.sentErrorEmail = ApplicationProperties.getString(ERROR_SENDTO, "support@mycollab.com");
         instance.siteName = ApplicationProperties.getString(SITE_NAME, "MyCollab");
@@ -256,5 +258,13 @@ public class SiteConfiguration {
             locales.add(locale);
         }
         return locales;
+    }
+
+    public enum DeploymentMode {
+        site, premium, standalone
+    }
+
+    public enum PULL_METHOD {
+        push, pull
     }
 }
