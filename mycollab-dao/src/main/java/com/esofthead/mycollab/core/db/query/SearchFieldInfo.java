@@ -36,16 +36,32 @@ public class SearchFieldInfo implements Serializable {
     private String prefixOper;
     private Param param;
     private String compareOper;
-    private Object value;
+    private VariableInjecter variableInjecter;
 
     public SearchFieldInfo() {
+    }
+
+    public SearchFieldInfo(Param param, String compareOper, Object value) {
+        this(SearchField.AND, param, compareOper, value);
     }
 
     public SearchFieldInfo(String prefixOper, Param param, String compareOper, Object value) {
         this.prefixOper = prefixOper;
         this.param = param;
         this.compareOper = compareOper;
-        this.value = value;
+        if (value instanceof VariableInjecter) {
+            this.variableInjecter = (VariableInjecter) value;
+        } else {
+            variableInjecter = new ConstantValueInjecter(value);
+        }
+    }
+
+    public static SearchFieldInfo inCollection(PropertyListParam param, Object value) {
+        return new SearchFieldInfo(SearchField.AND, param, PropertyListParam.BELONG_TO, value);
+    }
+
+    public static SearchFieldInfo inDateRange(DateParam param, Object value) {
+        return new SearchFieldInfo(SearchField.AND, param, DateParam.BETWEEN, value);
     }
 
     public String getPrefixOper() {
@@ -66,15 +82,6 @@ public class SearchFieldInfo implements Serializable {
         return this;
     }
 
-    public Object getValue() {
-        return value;
-    }
-
-    public SearchFieldInfo setValue(Object value) {
-        this.value = value;
-        return this;
-    }
-
     public String getCompareOper() {
         return compareOper;
     }
@@ -82,6 +89,10 @@ public class SearchFieldInfo implements Serializable {
     public SearchFieldInfo setCompareOper(String compareOper) {
         this.compareOper = compareOper;
         return this;
+    }
+
+    public Object eval() {
+        return variableInjecter.eval();
     }
 
     public static <S extends SearchCriteria> S buildSearchCriteria(Class<S> cls, List<SearchFieldInfo> fieldInfos) {
@@ -93,34 +104,48 @@ public class SearchFieldInfo implements Serializable {
                 if (param instanceof StringParam) {
                     StringParam wrapParam = (StringParam) param;
                     searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
-                            (String) info.getValue());
+                            (String) info.eval());
                     obj.addExtraField(searchField);
                 } else if (param instanceof NumberParam) {
                     NumberParam wrapParam = (NumberParam) param;
                     searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
-                            Double.parseDouble((String) info.getValue()));
+                            Double.parseDouble((String) info.eval()));
                     obj.addExtraField(searchField);
                 } else if (param instanceof CompositionStringParam) {
                     CompositionStringParam wrapParam = (CompositionStringParam) param;
                     searchField = wrapParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(),
-                            (String) info.getValue());
+                            (String) info.eval());
                     obj.addExtraField(searchField);
                 } else if (param instanceof StringListParam) {
                     StringListParam listParam = (StringListParam) param;
                     if (info.getCompareOper().equals(StringListParam.IN)) {
-                        searchField = listParam.buildStringParamInList(info.getPrefixOper(), (Collection<String>) info.getValue());
+                        searchField = listParam.buildStringParamInList(info.getPrefixOper(), (Collection<String>) info.eval());
                     } else {
-                        searchField = listParam.buildStringParamNotInList(info.getPrefixOper(), (Collection<String>) info.getValue());
+                        searchField = listParam.buildStringParamNotInList(info.getPrefixOper(), (Collection<String>) info.eval());
                     }
                     obj.addExtraField(searchField);
                 } else if (param instanceof DateParam) {
                     DateParam dateParam = (DateParam) param;
-                    if (info.getValue().getClass().isArray()) {
-                        Date val1 = (Date) Array.get(info.getValue(), 0);
-                        Date val2 = (Date) Array.get(info.getValue(), 1);
+                    Object value = info.eval();
+                    if (value.getClass().isArray()) {
+                        Date val1 = (Date) Array.get(value, 0);
+                        Date val2 = (Date) Array.get(value, 1);
                         searchField = dateParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), val1, val2);
                     } else {
-                        searchField = dateParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), (Date) info.getValue());
+                        searchField = dateParam.buildSearchField(info.getPrefixOper(), info.getCompareOper(), (Date) value);
+                    }
+                    obj.addExtraField(searchField);
+                } else if (param instanceof PropertyListParam) {
+                    PropertyListParam listParam = (PropertyListParam) param;
+                    switch (info.getCompareOper()) {
+                        case PropertyListParam.BELONG_TO:
+                            searchField = listParam.buildPropertyParamInList(info.getPrefixOper(), (Collection) info.eval());
+                            break;
+                        case PropertyListParam.NOT_BELONG_TO:
+                            searchField = listParam.buildPropertyParamNotInList(info.getPrefixOper(), (Collection) info.eval());
+                            break;
+                        default:
+                            throw new MyCollabException("Not support yet");
                     }
                     obj.addExtraField(searchField);
                 } else {

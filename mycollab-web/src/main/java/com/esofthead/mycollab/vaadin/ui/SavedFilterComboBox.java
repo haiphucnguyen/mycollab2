@@ -119,8 +119,8 @@ public class SavedFilterComboBox extends CustomField<String> {
         componentPopupSelection.setWidth("25px");
         componentPopupSelection.setDirection(Alignment.TOP_LEFT);
 
-        MHorizontalLayout multiSelectComp = new MHorizontalLayout().withSpacing(false).with(componentsText, componentPopupSelection)
-                .expand(componentsText);
+        MHorizontalLayout multiSelectComp = new MHorizontalLayout().withSpacing(false).with(componentsText,
+                componentPopupSelection).expand(componentsText);
         content.with(multiSelectComp);
         return content;
     }
@@ -142,6 +142,12 @@ public class SavedFilterComboBox extends CustomField<String> {
         }
     }
 
+    private void updateQueryNameField(String value) {
+        componentsText.setReadOnly(false);
+        componentsText.setValue(value);
+        componentsText.setReadOnly(true);
+    }
+
     private class QueryInfoOption extends Button {
         QueryInfoOption(final SearchQueryInfo queryInfo) {
             super("      " + queryInfo.getQueryName(), new ClickListener() {
@@ -149,6 +155,7 @@ public class SavedFilterComboBox extends CustomField<String> {
                 public void buttonClick(ClickEvent event) {
                     SavedFilterComboBox.this.fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, queryInfo
                             .getSearchFieldInfos()));
+                    updateQueryNameField(queryInfo.getQueryName());
                     componentPopupSelection.setPopupVisible(false);
                 }
             });
@@ -170,7 +177,7 @@ public class SavedFilterComboBox extends CustomField<String> {
     static {
         try {
             QUERY_SELECT = QuerySelectListener.class.getDeclaredMethod("querySelect", new Class[]{QuerySelectEvent.class});
-        } catch (final java.lang.NoSuchMethodException e) {
+        } catch (final NoSuchMethodException e) {
             // This should never happen
             throw new java.lang.RuntimeException("Internal error finding methods in AbstractField");
         }
