@@ -2,9 +2,11 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
@@ -152,7 +154,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
             attachTaskBtn.addStyleName("task-attached");
             attachTaskBtn.setWidth("300px");
-            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(selectionTask.getType(), 
+            attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(selectionTask.getType(),
                     selectionTask.getTypeId()).getContent());
             taskLayout.addComponent(attachTaskBtn);
             selectionTask.getTypeId();
@@ -201,7 +203,6 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
         itemTimeLoggingService.updateWithSession(timeLogging, AppContext.getUsername());
-
-        parentView.refresh();
+        EventBusFactory.getInstance().post(new TimeTrackingEvent.TimeLoggingEntryChange(TimeTrackingEditViewWindow.this));
     }
 }

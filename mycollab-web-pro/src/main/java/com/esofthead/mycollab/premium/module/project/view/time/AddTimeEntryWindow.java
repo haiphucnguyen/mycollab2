@@ -6,11 +6,13 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TimeTrackingEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
@@ -61,7 +63,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
         selectedDate = new GregorianCalendar().getTime();
 
-        MVerticalLayout content = new MVerticalLayout().withSpacing(true).withMargin(true);
+        MVerticalLayout content = new MVerticalLayout();
 
         GridLayout grid = new GridLayout(3, 2);
         grid.setMargin(new MarginInfo(false, false, true, false));
@@ -111,6 +113,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
         timeInputTable.addItem(new Double[]{0d, 0d, 0d, 0d, 0d, 0d, 0d}, "timeEntry");
         timeInputTable.setEditable(true);
+        timeInputTable.setHeight("80px");
         updateTimeTableHeader();
         content.addComponent(timeInputTable);
 
@@ -120,7 +123,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         descArea = new RichTextArea();
         descArea.setWidth("100%");
         content.addComponent(descArea);
-        HorizontalLayout footer = new HorizontalLayout();
+        MHorizontalLayout footer = new MHorizontalLayout();
         taskLayout = new MHorizontalLayout();
         taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         createLinkTaskButton();
@@ -154,7 +157,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         controlsLayout.with(cancelBtn, saveBtn);
 
         footer.addComponent(controlsLayout);
-        footer.setSizeFull();
+        footer.setWidth("100%");
         footer.setComponentAlignment(controlsLayout, Alignment.TOP_RIGHT);
         content.addComponent(footer);
         this.setContent(content);
@@ -304,11 +307,10 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             timeLoggings.add(timeLogging);
         }
 
-        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings,
-                AppContext.getAccountId());
+        itemTimeLoggingService.batchSaveTimeLogging(timeLoggings, AppContext.getAccountId());
 
         updateProjectTimeLogging();
-        parentView.refresh();
+        EventBusFactory.getInstance().post(new TimeTrackingEvent.TimeLoggingEntryChange(AddTimeEntryWindow.this));
     }
 
     private void updateProjectTimeLogging() {

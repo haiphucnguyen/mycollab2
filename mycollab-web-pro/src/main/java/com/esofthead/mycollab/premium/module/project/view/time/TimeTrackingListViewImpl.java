@@ -4,14 +4,12 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.ProblemEvent;
-import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.*;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
@@ -24,6 +22,7 @@ import com.esofthead.mycollab.reporting.RpFieldsBuilder;
 import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -63,6 +62,14 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     private VerticalLayout timeTrackingWrapper;
     private SplitButton exportButtonControl;
     private final Label lbTimeRange;
+
+    private ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange> timeEntryChangeHandler = new
+            ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange>() {
+                @Override
+                public void handle(TimeTrackingEvent.TimeLoggingEntryChange event) {
+                    refresh();
+                }
+            };
 
     public TimeTrackingListViewImpl() {
         this.setMargin(new MarginInfo(false, true, false, true));
@@ -133,6 +140,18 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         this.addComponent(timeTrackingWrapper);
     }
 
+    @Override
+    public void attach() {
+        EventBusFactory.getInstance().register(timeEntryChangeHandler);
+        super.attach();
+    }
+
+    @Override
+    public void detach() {
+        EventBusFactory.getInstance().unregister(timeEntryChangeHandler);
+        super.detach();
+    }
+
     private StreamResource constructStreamResource(ReportExportType exportType) {
         List fields = Arrays.asList(TimeTableFieldDef.summary);
         SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time Tracking", new
@@ -182,40 +201,30 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         refresh();
     }
 
-    @Override
-    public void refresh() {
-        this.setTimeRange();
-        queryTimeLoggings(searchCriteria);
-    }
 
-    private void queryTimeLoggings(final ItemTimeLoggingSearchCriteria searchCriteria) {
+    private void refresh() {
+        this.setTimeRange();
         timeTrackingWrapper.removeAllComponents();
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());
         timeTrackingWrapper.addComponent(timeDisplayComp);
 
-        new Thread() {
+        AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                        int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
-                        int pages = totalCount / 20;
-                        for (int page = 0; page < pages + 1; page++) {
-                            List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
-                                    SearchRequest<>(searchCriteria, page + 1, 20));
-                            for (SimpleItemTimeLogging item : itemTimeLoggings) {
-                                timeDisplayComp.insertItem(item);
-                            }
-                        }
-                        timeDisplayComp.flush();
-                        UI.getCurrent().push();
+                ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
+                int pages = totalCount / 20;
+                for (int page = 0; page < pages + 1; page++) {
+                    List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
+                            SearchRequest<>(searchCriteria, page + 1, 20));
+                    for (SimpleItemTimeLogging item : itemTimeLoggings) {
+                        timeDisplayComp.insertItem(item);
                     }
-                });
+                }
+                timeDisplayComp.flush();
             }
-        }.start();
+        });
     }
 
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {

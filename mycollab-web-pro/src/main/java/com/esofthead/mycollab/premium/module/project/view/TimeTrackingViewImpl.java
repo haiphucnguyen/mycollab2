@@ -28,6 +28,7 @@ import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -396,28 +397,22 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp();
         timeTrackingWrapper.addComponent(timeDisplayComp);
-        new Thread() {
+        AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
-                        int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
-                        int pages = totalCount / 20;
-                        for (int page = 0; page < pages + 1; page++) {
-                            List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
-                                    SearchRequest<>(searchCriteria, page + 1, 20));
-                            for (SimpleItemTimeLogging item : itemTimeLoggings) {
-                                timeDisplayComp.insertItem(item);
-                            }
-                        }
-                        timeDisplayComp.flush();
-                        UI.getCurrent().push();
+                ItemTimeLoggingService itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+                int totalCount = itemTimeLoggingService.getTotalCount(searchCriteria);
+                int pages = totalCount / 20;
+                for (int page = 0; page < pages + 1; page++) {
+                    List<SimpleItemTimeLogging> itemTimeLoggings = itemTimeLoggingService.findPagableListByCriteria(new
+                            SearchRequest<>(searchCriteria, page + 1, 20));
+                    for (SimpleItemTimeLogging item : itemTimeLoggings) {
+                        timeDisplayComp.insertItem(item);
                     }
-                });
+                }
+                timeDisplayComp.flush();
             }
-        }.start();
+        });
     }
 
     private IPagedBeanTable.TableClickListener tableClickListener = new IPagedBeanTable.TableClickListener() {

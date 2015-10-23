@@ -18,6 +18,7 @@ package com.esofthead.mycollab.web;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.*;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.SubDomainNotExistException;
@@ -78,7 +79,10 @@ public class DesktopApplication extends MyCollabUI {
         googleAnalyticsService.registerUI(this);
 
         LOG.debug("Register default error handler");
-        this.getPushConfiguration().setPushMode(PushMode.MANUAL);
+
+        if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
+            getPushConfiguration().setPushMode(PushMode.MANUAL);
+        }
 
         VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
             private static final long serialVersionUID = 1L;

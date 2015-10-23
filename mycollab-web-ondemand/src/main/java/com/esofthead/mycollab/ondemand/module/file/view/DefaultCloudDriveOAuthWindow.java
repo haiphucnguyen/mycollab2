@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.file.CloudDriveInfo;
 import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
@@ -62,13 +63,12 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
             public void handle(CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo event) {
                 cloudDriveInfo = (CloudDriveInfo) event.getData();
                 LOG.debug("Receive cloud drive info: " + BeanUtility.printBeanObj(cloudDriveInfo));
-                ui.access(new Runnable() {
+                AsyncInvoker.access(new AsyncInvoker.PageCommand() {
                     @Override
                     public void run() {
                         DefaultCloudDriveOAuthWindow.this.setHeight("210px");
                         messageBox.removeAllComponents();
                         messageBox.addComponent(new Label("Access token is retrieved"));
-                        ui.push();
                     }
                 });
             }
