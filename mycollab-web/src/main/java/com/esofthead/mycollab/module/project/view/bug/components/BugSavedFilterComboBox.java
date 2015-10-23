@@ -12,10 +12,8 @@ import com.esofthead.mycollab.module.project.query.CurrentProjectIdInjecter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.SavedFilterComboBox;
-import org.joda.time.LocalDate;
 
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd
@@ -46,50 +44,16 @@ public class BugSavedFilterComboBox extends SavedFilterComboBox {
                 }));
 
         SearchQueryInfo newBugsThisWeekQuery = new SearchQueryInfo("New This Week", SearchFieldInfo.inDateRange
-                (BugSearchCriteria.p_createddate, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (BugSearchCriteria.p_createddate, VariableInjecter.THIS_WEEK));
 
         SearchQueryInfo updateBugsThisWeekQuery = new SearchQueryInfo("Update This Week", SearchFieldInfo.inDateRange
-                (BugSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (BugSearchCriteria.p_lastupdatedtime, VariableInjecter.THIS_WEEK));
 
         SearchQueryInfo newBugsLastWeekQuery = new SearchQueryInfo("New Last Week", SearchFieldInfo.inDateRange
-                (BugSearchCriteria.p_createddate, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        date = date.minusWeeks(-1);
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (BugSearchCriteria.p_createddate, VariableInjecter.LAST_WEEK));
 
         SearchQueryInfo updateBugsLastWeekQuery = new SearchQueryInfo("Update Last Week", SearchFieldInfo.inDateRange
-                (BugSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        date = date.minusWeeks(-1);
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (BugSearchCriteria.p_lastupdatedtime, VariableInjecter.LAST_WEEK));
 
         this.addSharedSearchQueryInfo(allBugsQuery);
         this.addSharedSearchQueryInfo(allOpenBugsQuery);

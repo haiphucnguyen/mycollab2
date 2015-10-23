@@ -3,7 +3,6 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -15,10 +14,10 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
+import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.premium.module.project.ui.components.AbstractTimeTrackingDisplayComp;
 import com.esofthead.mycollab.premium.module.project.ui.components.TimeTrackingDateOrderComponent;
 import com.esofthead.mycollab.premium.module.project.ui.components.TimeTrackingUserOrderComponent;
-import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;
@@ -151,10 +150,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private void setTimeRange() {
-        final RangeDateSearchField rangeField = searchCriteria.getRangeDate();
-
-        final String fromDate = AppContext.formatDate(rangeField.getFrom());
-        final String toDate = AppContext.formatDate(rangeField.getTo());
+        final String fromDate = AppContext.formatDate(searchPanel.getFromDate());
+        final String toDate = AppContext.formatDate(searchPanel.getToDate());
 
         searchCriteria.setIsBillable(new BooleanSearchField(true));
         Double billableHour = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);

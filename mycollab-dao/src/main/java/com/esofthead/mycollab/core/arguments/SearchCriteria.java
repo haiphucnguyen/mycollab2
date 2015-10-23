@@ -56,6 +56,9 @@ public abstract class SearchCriteria implements Serializable {
     }
 
     public SearchCriteria addExtraField(SearchField extraField) {
+        if (extraField == null) {
+            return this;
+        }
         if (extraFields == null) {
             extraFields = new ArrayList<>();
         }

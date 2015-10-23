@@ -4,6 +4,8 @@ import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.*;
+import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.DateRangeInjecter;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
@@ -349,9 +351,10 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("projectName", sortDirection)));
         }
 
-        Date fromDate = fromDateField.getValue();
-        Date toDate = toDateField.getValue();
-        searchCriteria.setRangeDate(new RangeDateSearchField(fromDate, toDate));
+        final Date fromDate = fromDateField.getValue();
+        final Date toDate = toDateField.getValue();
+        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates, new
+                DateRangeInjecter(fromDate, toDate)));
 
         Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
         if (CollectionUtils.isNotEmpty(selectedUsers)) {

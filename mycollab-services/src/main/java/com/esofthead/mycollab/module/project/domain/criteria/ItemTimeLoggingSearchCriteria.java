@@ -16,87 +16,60 @@
  */
 package com.esofthead.mycollab.module.project.domain.criteria;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.arguments.*;
+import com.esofthead.mycollab.core.db.query.DateParam;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public class ItemTimeLoggingSearchCriteria extends SearchCriteria {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private SetSearchField<Integer> projectIds;
-	private SetSearchField<String> logUsers;
-	private RangeDateSearchField rangeDate;
-	private StringSearchField type;
-	private NumberSearchField typeId;
-	private BooleanSearchField isBillable;
+    private SetSearchField<Integer> projectIds;
+    private SetSearchField<String> logUsers;
+    private StringSearchField type;
+    private NumberSearchField typeId;
+    private BooleanSearchField isBillable;
+    public static final DateParam p_logDates = new DateParam("time-logdate", null, "m_prj_time_logging", "logForDay");
 
-	public static RangeDateSearchField getCurrentRangeDateOfWeekSearchField() {
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+    public SetSearchField<Integer> getProjectIds() {
+        return projectIds;
+    }
 
-		Date fDate = c.getTime();
-		Date tDate = DateTimeUtils.subtractOrAddDayDuration(fDate, 7);
-		return new RangeDateSearchField(fDate, tDate);
-	}
+    public void setProjectIds(SetSearchField<Integer> projectIds) {
+        this.projectIds = projectIds;
+    }
 
-	public SetSearchField<Integer> getProjectIds() {
-		return projectIds;
-	}
+    public SetSearchField<String> getLogUsers() {
+        return logUsers;
+    }
 
-	public void setProjectIds(SetSearchField<Integer> projectIds) {
-		this.projectIds = projectIds;
-	}
+    public void setLogUsers(SetSearchField<String> logUsers) {
+        this.logUsers = logUsers;
+    }
 
-	public SetSearchField<String> getLogUsers() {
-		return logUsers;
-	}
+    public void setType(StringSearchField type) {
+        this.type = type;
+    }
 
-	public void setLogUsers(SetSearchField<String> logUsers) {
-		this.logUsers = logUsers;
-	}
+    public StringSearchField getType() {
+        return type;
+    }
 
-	public RangeDateSearchField getRangeDate() {
-		return rangeDate;
-	}
+    public void setTypeId(NumberSearchField typeId) {
+        this.typeId = typeId;
+    }
 
-	public void setRangeDate(RangeDateSearchField rangeDate) {
-		this.rangeDate = rangeDate;
-	}
+    public NumberSearchField getTypeId() {
+        return typeId;
+    }
 
-	public void setType(StringSearchField type) {
-		this.type = type;
-	}
+    public BooleanSearchField getIsBillable() {
+        return isBillable;
+    }
 
-	public StringSearchField getType() {
-		return type;
-	}
-
-	public void setTypeId(NumberSearchField typeId) {
-		this.typeId = typeId;
-	}
-
-	public NumberSearchField getTypeId() {
-		return typeId;
-	}
-
-	public BooleanSearchField getIsBillable() {
-		return isBillable;
-	}
-
-	public void setIsBillable(BooleanSearchField isBillable) {
-		this.isBillable = isBillable;
-	}
+    public void setIsBillable(BooleanSearchField isBillable) {
+        this.isBillable = isBillable;
+    }
 }

@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.arguments.BetweenValuesSearchField;
 import com.esofthead.mycollab.core.arguments.OneValueSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 
 /**
@@ -39,6 +40,19 @@ public class DateParam extends ColumnParam {
 
     public DateParam(String id, Enum displayName, String table, String column) {
         super(id, displayName, table, column);
+    }
+
+    public static SearchField inRangeDate(DateParam dateParam, VariableInjecter variableInjecter) {
+        Object value = variableInjecter.eval();
+        if (value != null) {
+            if (value.getClass().isArray()) {
+                return dateParam.buildSearchField(SearchField.AND, BETWEEN, (Date) Array.get(value, 0), (Date) Array.get(value, 1));
+            } else {
+                return dateParam.buildSearchField(SearchField.AND, BETWEEN, (Date) value);
+            }
+        } else {
+            return null;
+        }
     }
 
     public SearchField buildSearchField(String prefixOper, String compareOper, Date dateValue1, Date dateValue2) {

@@ -2,17 +2,18 @@ package com.esofthead.mycollab.premium.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.Order;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.DateRangeInjecter;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.esofthead.mycollab.premium.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
+import com.esofthead.mycollab.premium.module.project.ui.components.ItemOrderComboBox;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
@@ -43,6 +44,14 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     protected SearchLayout<ItemTimeLoggingSearchCriteria> createBasicSearchLayout() {
         layout = new TimeLoggingBasicSearchLayout();
         return layout;
+    }
+
+    public Date getFromDate() {
+        return layout.dateStart.getValue();
+    }
+
+    public Date getToDate() {
+        return layout.dateEnd.getValue();
     }
 
     @Override
@@ -203,7 +212,10 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         protected SearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setRangeDate(getRangeSearchValue());
+            Date fDate = dateStart.getValue();
+            Date tDate = dateEnd.getValue();
+            searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates, new
+                    DateRangeInjecter(fDate, tDate)));
             Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
                 searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
@@ -224,16 +236,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             return searchCriteria;
         }
 
-        private RangeDateSearchField getRangeSearchValue() {
-            Date fDate = dateStart.getValue();
-            Date tDate = dateEnd.getValue();
-
-            if (fDate == null || tDate == null)
-                return null;
-
-            return new RangeDateSearchField(fDate, tDate);
-        }
-
         private void setDateFormat(String dateFormat) {
             dateStart.setDateFormat(dateFormat);
             dateEnd.setDateFormat(dateFormat);
@@ -241,7 +243,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
         private void setDefaultValue() {
             Calendar c = Calendar.getInstance();
-            c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
             Date fDate = c.getTime();
             Date tDate = DateTimeUtils.subtractOrAddDayDuration(fDate, 7);

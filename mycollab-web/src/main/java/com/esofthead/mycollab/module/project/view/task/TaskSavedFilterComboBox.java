@@ -9,10 +9,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.query.CurrentProjectIdInjecter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.SavedFilterComboBox;
-import org.joda.time.LocalDate;
 
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * @author MyCollab Ltd
@@ -42,50 +40,16 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                 }));
 
         SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo("New This Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_createtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (TaskSearchCriteria.p_createtime, VariableInjecter.THIS_WEEK));
 
         SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo("Update This Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (TaskSearchCriteria.p_lastupdatedtime, VariableInjecter.THIS_WEEK));
 
         SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo("New Last Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_createtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        date = date.minusWeeks(-1);
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (TaskSearchCriteria.p_createtime, VariableInjecter.LAST_WEEK));
 
         SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo("Update Last Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_lastupdatedtime, new VariableInjecter() {
-                    @Override
-                    public Object eval() {
-                        LocalDate date = new LocalDate(new Date());
-                        date = date.minusWeeks(-1);
-                        LocalDate minDate = date.dayOfWeek().withMinimumValue();
-                        LocalDate maxDate = date.dayOfWeek().withMaximumValue();
-                        return new Date[]{minDate.toDate(), maxDate.toDate()};
-                    }
-                }));
+                (TaskSearchCriteria.p_lastupdatedtime, VariableInjecter.LAST_WEEK));
 
         this.addSharedSearchQueryInfo(allTasksQuery);
         this.addSharedSearchQueryInfo(allOpenTaskQuery);

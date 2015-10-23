@@ -3,7 +3,8 @@ package com.esofthead.mycollab.premium.module.project.view.standup;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.db.query.DateParam;
+import com.esofthead.mycollab.core.db.query.VariableInjecter;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -33,12 +34,14 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.joda.time.LocalDate;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Calendar;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -76,17 +79,6 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         contentWrap.addComponent(standupMissingComp);
 
         this.addComponent(contentWrap);
-    }
-
-    private RangeDateSearchField getRangeDateSearchField(final Date date) {
-        GregorianCalendar cal1 = new GregorianCalendar();
-        cal1.setTime(date);
-        cal1.set(Calendar.DAY_OF_MONTH, 1);
-
-        GregorianCalendar cal2 = new GregorianCalendar();
-        cal2.setTime(date);
-        cal2.set(Calendar.DAY_OF_MONTH, cal2.getActualMaximum(Calendar.DAY_OF_MONTH));
-        return new RangeDateSearchField(cal1.getTime(), cal2.getTime());
     }
 
     @SuppressWarnings("serial")
@@ -162,7 +154,15 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
     private void getListReport() {
         StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setReportDateRange(this.getRangeDateSearchField(this.standupCalendar.getStyleCalendar().getShowingDate()));
+        criteria.addExtraField(DateParam.inRangeDate(StandupReportSearchCriteria.p_fordays, new VariableInjecter() {
+            @Override
+            public Object eval() {
+                LocalDate date = new LocalDate(standupCalendar.getStyleCalendar().getShowingDate());
+                LocalDate minDate = date.dayOfMonth().withMinimumValue();
+                LocalDate maxDate = date.dayOfMonth().withMaximumValue();
+                return new Date[]{minDate.toDate(), maxDate.toDate()};
+            }
+        }));
         StandupReportService reportService = ApplicationContextUtil.getSpringBean(StandupReportService.class);
         List<GroupItem> reportsCount = reportService.getReportsCount(criteria);
 
