@@ -78,5 +78,11 @@ public class AsyncInvoker {
 
         public void cleanUp() {
         }
+
+        public void push() {
+            if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
+                currentUI.push();
+            }
+        }
     }
 }
