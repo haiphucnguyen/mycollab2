@@ -25,7 +25,7 @@ public class CheckVersionController {
         props.put("releaseNotes", "http://community.mycollab.com/release-notes/");
 
         if (version != null && MyCollabVersion.isEditionNewer(MyCollabVersion.getVersion(), version)) {
-            props.put("autoDownload", String.format("https://sourceforge" +
+            props.put("autoDownload", String.format("http://sourceforge" +
                     ".net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download", MyCollabVersion.getVersion()));
         }
 
