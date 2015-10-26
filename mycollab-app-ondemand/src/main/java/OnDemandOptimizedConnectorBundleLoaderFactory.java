@@ -17,13 +17,13 @@ public class OnDemandOptimizedConnectorBundleLoaderFactory extends ConnectorBund
         eagerConnectors.add(com.vaadin.client.ui.customlayout.CustomLayoutConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.textfield.TextFieldConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.passwordfield.PasswordFieldConnector.class.getName());
+        eagerConnectors.add(com.vaadin.client.extensions.javascriptmanager.JavaScriptManagerConnector.class.getName());
+        eagerConnectors.add(com.ejt.vaadin.loginform.shared.LoginFormConnector.class.getName());
+        eagerConnectors.add(com.vaadin.client.ui.checkbox.CheckBoxConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.orderedlayout.VerticalLayoutConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.button.ButtonConnector.class.getName());
-        eagerConnectors.add(com.vaadin.client.ui.customcomponent.CustomComponentConnector.class.getName());
         eagerConnectors.add(com.vaadin.client.JavaScriptExtension.class.getName());
         eagerConnectors.add(com.vaadin.client.ui.csslayout.CssLayoutConnector.class.getName());
-        eagerConnectors.add(com.vaadin.client.extensions.javascriptmanager.JavaScriptManagerConnector.class.getName());
-        eagerConnectors.add(com.vaadin.client.ui.checkbox.CheckBoxConnector.class.getName());
     }
 
     @Override
