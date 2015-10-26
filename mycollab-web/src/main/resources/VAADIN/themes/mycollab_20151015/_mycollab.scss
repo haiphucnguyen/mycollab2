@@ -1170,9 +1170,6 @@
       &.empty {
         border-bottom: 1px solid $border-color;
       }
-      .v-table-header-wrap {
-        border-top: none;
-      }
     }
   }
 
@@ -1355,16 +1352,14 @@
     }
   }
 
-  /* End Activity Stream Channel  }
-
-  /* End Email Form*/
+  /* End Activity Stream Channel*/
 
   /* New Table */
   .v-table-header-wrap {
     height: 30px;
     background: none no-repeat 0 0 #EEEEEE;
     border-radius: 0px;
-    border-width: 0 1px 1px 1px;
+    border-width: 0px 1px 1px 1px;
     .v-table-header > div > table {
       height: 30px;
       td .v-table-resizer {

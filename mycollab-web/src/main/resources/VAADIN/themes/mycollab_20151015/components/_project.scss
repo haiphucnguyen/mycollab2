@@ -634,6 +634,9 @@
     border-style: solid;
     border-width: 1px 1px 0px 0px;
     border-color: $border-color;
+    .v-table-header-wrap {
+      border-bottom: 1px solid $border-color;
+    }
     > div > div .v-treetable {
       .v-table-footer-wrap {
         height: 0px;
