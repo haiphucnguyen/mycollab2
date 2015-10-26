@@ -73,10 +73,12 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                 try {
                     downloadMyCollabThread.join();
                     File installerFile = downloadMyCollabThread.tmpFile;
-                    latestFileDownloadedPath = installerFile.getAbsolutePath();
-                    NotificationBroadcaster.removeGlobalNotification(NewUpdateAvailableNotification.class);
-                    NotificationBroadcaster.broadcast(new NewUpdateAvailableNotification(version, autoDownloadLink, manualDownloadLink,
-                            latestFileDownloadedPath));
+                    if (installerFile.exists() && installerFile.isFile() && installerFile.length() > 0) {
+                        latestFileDownloadedPath = installerFile.getAbsolutePath();
+                        NotificationBroadcaster.removeGlobalNotification(NewUpdateAvailableNotification.class);
+                        NotificationBroadcaster.broadcast(new NewUpdateAvailableNotification(version, autoDownloadLink, manualDownloadLink,
+                                latestFileDownloadedPath));
+                    }
                 } catch (Exception e) {
                     LOG.error("Exception", e);
                 } finally {
@@ -130,7 +132,6 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                 }
                 if (inputStream != null) {
                     int loadedBytes = 0;
-                    int totalBytes = inputStream.available();
                     // opens an output stream to save into file
                     try (FileOutputStream outputStream = new FileOutputStream(tmpFile)) {
                         int bytesRead;
@@ -138,11 +139,7 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                         while (((bytesRead = inputStream.read(buffer)) != -1)) {
                             outputStream.write(buffer, 0, bytesRead);
                             loadedBytes += bytesRead;
-                            if (totalBytes > 0) {
-                                LOG.info("  Progress: " + (loadedBytes / totalBytes) * 100);
-                            } else {
-                                LOG.info("  Progress: " + loadedBytes);
-                            }
+                            LOG.info("  Progress: " + loadedBytes/1024);
                         }
                         outputStream.close();
                         inputStream.close();
