@@ -43,6 +43,17 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.2
+-----------------------------
+
+**Library Upgrades**
+
+* Joda 2.9
+
+**Improvements & New Features**
+
+**Bug Fixes**
+
 Version 5.2.1
 -----------------------------
 
