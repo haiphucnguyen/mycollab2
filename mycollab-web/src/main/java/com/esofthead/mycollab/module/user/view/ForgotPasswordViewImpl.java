@@ -45,8 +45,7 @@ import com.vaadin.ui.TextField;
  * @since 1.0
  */
 @ViewComponent
-public class ForgotPasswordViewImpl extends AbstractPageView implements
-        ForgotPasswordView {
+public class ForgotPasswordViewImpl extends AbstractPageView implements ForgotPasswordView {
     private static final long serialVersionUID = 1L;
 
     public ForgotPasswordViewImpl() {

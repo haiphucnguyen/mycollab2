@@ -35,6 +35,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -138,10 +139,10 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
                 }
 
                 GridFormLayoutHelper crmFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(
-                        2, RolePermissionCollections.CRM_PERMISSIONS_ARR.length);
+                        2, RolePermissionCollections.CRM_PERMISSIONS_ARR.size());
 
-                for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
-                    PermissionDefItem permissionDefItem = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
+                for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.size(); i++) {
+                    PermissionDefItem permissionDefItem = RolePermissionCollections.CRM_PERMISSIONS_ARR.get(i);
                     KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
                             .createPermissionSelection(permissionDefItem
                                     .getPermissionCls());
@@ -169,16 +170,14 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
             }
         }
 
-        private Depot constructGridLayout(String depotTitle,
-                                          PermissionMap perMap, PermissionDefItem[] defItems) {
-            GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.length);
+        private Depot constructGridLayout(String depotTitle, PermissionMap perMap, List<PermissionDefItem> defItems) {
+            GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
             Depot component = new Depot(depotTitle, formHelper.getLayout());
 
-            for (int i = 0; i < defItems.length; i++) {
-                PermissionDefItem permissionDefItem = defItems[i];
+            for (int i = 0; i < defItems.size(); i++) {
+                PermissionDefItem permissionDefItem = defItems.get(i);
                 KeyCaptionComboBox permissionBox = PermissionComboBoxFactory
-                        .createPermissionSelection(permissionDefItem
-                                .getPermissionCls());
+                        .createPermissionSelection(permissionDefItem.getPermissionCls());
                 Integer flag = perMap.getPermissionFlag(permissionDefItem.getKey());
                 permissionBox.setValue(flag);
                 permissionControlsMap.put(permissionDefItem.getKey(), permissionBox);

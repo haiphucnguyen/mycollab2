@@ -15,19 +15,19 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>5.1.4</version>
+            <version>5.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-migration</artifactId>
-            <version>5.1.4</version>
+            <version>5.2.1</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
-            <version>5.1.4</version>
+            <version>5.2.1</version>
         </dependency>
 
         <dependency><!-- Use this dependency in your licensed application -->

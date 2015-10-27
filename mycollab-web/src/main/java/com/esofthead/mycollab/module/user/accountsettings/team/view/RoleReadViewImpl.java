@@ -36,8 +36,9 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
+import java.util.List;
+
 /**
- *
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -83,13 +84,13 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
         this.role = role;
         this.previewForm.setFormLayoutFactory(new FormLayoutFactory());
         this.previewForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<Role>(previewForm) {
-                    private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    protected Field<?> onCreateField(Object propertyId) {
-                        return null;
-                    }
-                });
+            @Override
+            protected Field<?> onCreateField(Object propertyId) {
+                return null;
+            }
+        });
         this.previewForm.setBean(role);
     }
 
@@ -113,16 +114,15 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
         }
     }
 
-    protected Depot constructPermissionSectionView(String depotTitle,
-                                                   PermissionMap permissionMap, PermissionDefItem[] defItems) {
-        GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2,
-                defItems.length);
+    protected Depot constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
+                                                   List<PermissionDefItem> defItems) {
+        GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
         Depot component = new Depot(depotTitle, formHelper.getLayout());
 
-        for (int i = 0; i < defItems.length; i++) {
-            PermissionDefItem permissionDefItem = defItems[i];
+        for (int i = 0; i < defItems.size(); i++) {
+            PermissionDefItem permissionDefItem = defItems.get(i);
             formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
-                            permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
+                    permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
         }
         return component;
     }
@@ -148,16 +148,13 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
             PermissionMap permissionMap = role.getPermissionMap();
 
-            permissionsPanel.addComponent(constructPermissionSectionView(
-                    "Project", permissionMap,
+            permissionsPanel.addComponent(constructPermissionSectionView("Project", permissionMap,
                     RolePermissionCollections.PROJECT_PERMISSION_ARR));
 
-            permissionsPanel.addComponent(constructPermissionSectionView(
-                    "Customer Management", permissionMap,
+            permissionsPanel.addComponent(constructPermissionSectionView("Customer Management", permissionMap,
                     RolePermissionCollections.CRM_PERMISSIONS_ARR));
 
-            permissionsPanel.addComponent(constructPermissionSectionView(
-                    "Document", permissionMap,
+            permissionsPanel.addComponent(constructPermissionSectionView("Document", permissionMap,
                     RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
             permissionsPanel.addComponent(constructPermissionSectionView(

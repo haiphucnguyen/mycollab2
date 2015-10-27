@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-parent-premium</name>
     <artifactId>mycollab-parent-premium</artifactId>
@@ -11,45 +11,7 @@
         <version>5.2.1</version>
         <relativePath>../mycollab-parent/pom.xml</relativePath>
     </parent>
-    <!--
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.github.wvengen</groupId>
-                <artifactId>proguard-maven-plugin</artifactId>
-                <version>2.0.9</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>net.sf.proguard</groupId>
-                        <artifactId>proguard-base</artifactId>
-                        <version>5.2</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>proguard</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <proguardVersion>5.2</proguardVersion>
-                    <attach>true</attach>
-                    <obfuscate>true</obfuscate>
-                    <options>
-                        <option>-keep public class package.ParameterObject{ public *;}</option>
-                        <option>-keep public class package.Implementation{public static void
-                            process(package.ParameterObject);}
-                        </option>
-                        <option>-optimizationpasses 4</option>
-                    </options>
-                    <libs>
-                        <lib>${java.home}/lib/rt.jar</lib>
-                    </libs>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    -->
+    <properties>
+        <proguardVersion>5.2</proguardVersion>
+    </properties>
 </project>
