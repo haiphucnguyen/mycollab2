@@ -39,8 +39,7 @@ public class EmailValidationServlet extends HttpServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmailValidationServlet.class);
 
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String smtpUserName = request.getParameter("smtpUserName");
         String smtpPassword = request.getParameter("smtpPassword");
         String smtpHost = request.getParameter("smtpHost");
