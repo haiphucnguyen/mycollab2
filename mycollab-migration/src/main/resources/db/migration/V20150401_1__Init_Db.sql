@@ -40,6 +40,14 @@ CREATE TABLE `m_audit_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_audit_log`
+--
+
+LOCK TABLES `m_audit_log` WRITE;
+/*!40000 ALTER TABLE `m_audit_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_audit_log` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_comment`
@@ -54,20 +62,28 @@ CREATE TABLE `m_comment` (
   `createdUser` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdTime` datetime NOT NULL,
   `type` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `typeId` int(11) DEFAULT NULL,
+  `typeId` text CHARACTER SET utf8mb4,
   `sAccountId` int(11) DEFAULT NULL,
   `extraTypeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_comment_1` (`sAccountId`),
   KEY `INDEX_m_comment_2` (`extraTypeId`) USING BTREE,
-  KEY `INDEX_m_comment_3` (`typeId`),
   KEY `INDEX_m_comment_4` (`type`) USING BTREE,
   KEY `FK_m_comment_2_idx` (`createdUser`),
-  CONSTRAINT `FK_m_comment_2` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_comment_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `INDEX_m_comment_3` (`typeId`(100)),
+  CONSTRAINT `FK_m_comment_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_comment_2` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_comment`
+--
+
+LOCK TABLES `m_comment` WRITE;
+/*!40000 ALTER TABLE `m_comment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_comment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_account`
@@ -105,6 +121,7 @@ CREATE TABLE `m_crm_account` (
   `lastUpdatedTime` datetime DEFAULT NULL,
   `billingCountry` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shippingCountry` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatarId` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_account_7` (`sAccountId`),
   KEY `FK_m_crm_account_6` (`createdUser`),
@@ -115,6 +132,14 @@ CREATE TABLE `m_crm_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_account`
+--
+
+LOCK TABLES `m_crm_account` WRITE;
+/*!40000 ALTER TABLE `m_crm_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_account` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_accounts_leads`
@@ -128,6 +153,7 @@ CREATE TABLE `m_crm_accounts_leads` (
   `accountId` int(10) unsigned NOT NULL,
   `leadId` int(10) unsigned NOT NULL,
   `createTime` datetime NOT NULL,
+  `isConvertRel` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_accounts_leads_1` (`accountId`),
   KEY `FK_m_crm_accounts_leads_2` (`leadId`),
@@ -136,6 +162,14 @@ CREATE TABLE `m_crm_accounts_leads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_accounts_leads`
+--
+
+LOCK TABLES `m_crm_accounts_leads` WRITE;
+/*!40000 ALTER TABLE `m_crm_accounts_leads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_accounts_leads` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_call`
@@ -175,6 +209,14 @@ CREATE TABLE `m_crm_call` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_call`
+--
+
+LOCK TABLES `m_crm_call` WRITE;
+/*!40000 ALTER TABLE `m_crm_call` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_call` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_campaign`
@@ -204,6 +246,7 @@ CREATE TABLE `m_crm_campaign` (
   `type` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `assignUser` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lastUpdatedTime` datetime DEFAULT NULL,
+  `avatarId` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_campaign_6` (`sAccountId`),
   KEY `FK_m_crm_campaign_2` (`currencyId`),
@@ -216,6 +259,14 @@ CREATE TABLE `m_crm_campaign` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_campaign`
+--
+
+LOCK TABLES `m_crm_campaign` WRITE;
+/*!40000 ALTER TABLE `m_crm_campaign` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_campaign` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_campaigns_accounts`
@@ -237,6 +288,14 @@ CREATE TABLE `m_crm_campaigns_accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_campaigns_accounts`
+--
+
+LOCK TABLES `m_crm_campaigns_accounts` WRITE;
+/*!40000 ALTER TABLE `m_crm_campaigns_accounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_campaigns_accounts` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_campaigns_contacts`
@@ -258,6 +317,14 @@ CREATE TABLE `m_crm_campaigns_contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_campaigns_contacts`
+--
+
+LOCK TABLES `m_crm_campaigns_contacts` WRITE;
+/*!40000 ALTER TABLE `m_crm_campaigns_contacts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_campaigns_contacts` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_campaigns_leads`
@@ -279,6 +346,14 @@ CREATE TABLE `m_crm_campaigns_leads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_campaigns_leads`
+--
+
+LOCK TABLES `m_crm_campaigns_leads` WRITE;
+/*!40000 ALTER TABLE `m_crm_campaigns_leads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_campaigns_leads` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_case`
@@ -317,6 +392,14 @@ CREATE TABLE `m_crm_case` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_case`
+--
+
+LOCK TABLES `m_crm_case` WRITE;
+/*!40000 ALTER TABLE `m_crm_case` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_case` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_contact`
@@ -361,6 +444,7 @@ CREATE TABLE `m_crm_contact` (
   `otherCountry` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lastUpdatedTime` datetime DEFAULT NULL,
   `accountId` int(10) unsigned DEFAULT NULL,
+  `avatarId` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_contact_3` (`campaignId`),
   KEY `FK_m_crm_contact_7` (`sAccountId`),
@@ -375,6 +459,14 @@ CREATE TABLE `m_crm_contact` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_contact`
+--
+
+LOCK TABLES `m_crm_contact` WRITE;
+/*!40000 ALTER TABLE `m_crm_contact` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_contact` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_contacts_cases`
@@ -396,6 +488,43 @@ CREATE TABLE `m_crm_contacts_cases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_contacts_cases`
+--
+
+LOCK TABLES `m_crm_contacts_cases` WRITE;
+/*!40000 ALTER TABLE `m_crm_contacts_cases` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_contacts_cases` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `m_crm_contacts_leads`
+--
+
+DROP TABLE IF EXISTS `m_crm_contacts_leads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `m_crm_contacts_leads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `contactId` int(10) unsigned NOT NULL,
+  `leadId` int(10) unsigned NOT NULL,
+  `isConvertRel` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_m_crm_contacts_leads_1_idx` (`contactId`),
+  KEY `FK_m_crm_contacts_leads_2_idx` (`leadId`),
+  CONSTRAINT `FK_m_crm_contacts_leads_1` FOREIGN KEY (`contactId`) REFERENCES `m_crm_contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_crm_contacts_leads_2` FOREIGN KEY (`leadId`) REFERENCES `m_crm_lead` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `m_crm_contacts_leads`
+--
+
+LOCK TABLES `m_crm_contacts_leads` WRITE;
+/*!40000 ALTER TABLE `m_crm_contacts_leads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_contacts_leads` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_contacts_opportunities`
@@ -409,6 +538,7 @@ CREATE TABLE `m_crm_contacts_opportunities` (
   `contactId` int(10) unsigned NOT NULL,
   `opportunityId` int(10) unsigned NOT NULL,
   `createdTime` datetime NOT NULL,
+  `decisionRole` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_contacts_opportunities_1` (`contactId`),
   KEY `FK_m_crm_contacts_opportunities_2` (`opportunityId`),
@@ -417,6 +547,14 @@ CREATE TABLE `m_crm_contacts_opportunities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_contacts_opportunities`
+--
+
+LOCK TABLES `m_crm_contacts_opportunities` WRITE;
+/*!40000 ALTER TABLE `m_crm_contacts_opportunities` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_contacts_opportunities` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_contract`
@@ -461,6 +599,14 @@ CREATE TABLE `m_crm_contract` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_contract`
+--
+
+LOCK TABLES `m_crm_contract` WRITE;
+/*!40000 ALTER TABLE `m_crm_contract` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_contract` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_customer`
@@ -495,6 +641,14 @@ CREATE TABLE `m_crm_customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_customer`
+--
+
+LOCK TABLES `m_crm_customer` WRITE;
+/*!40000 ALTER TABLE `m_crm_customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_customer` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_lead`
@@ -543,6 +697,7 @@ CREATE TABLE `m_crm_lead` (
   `industry` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lastUpdatedTime` datetime DEFAULT NULL,
   `noEmployees` int(11) DEFAULT NULL,
+  `avatarId` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_lead_2` (`campaignId`),
   KEY `FK_m_crm_lead_6` (`sAccountId`),
@@ -555,6 +710,14 @@ CREATE TABLE `m_crm_lead` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_lead`
+--
+
+LOCK TABLES `m_crm_lead` WRITE;
+/*!40000 ALTER TABLE `m_crm_lead` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_lead` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_meeting`
@@ -586,6 +749,7 @@ CREATE TABLE `m_crm_meeting` (
   `isClosed` bit(1) DEFAULT NULL,
   `isNotified` bit(1) DEFAULT NULL,
   `isNotifiedPrior` int(11) DEFAULT NULL,
+  `recurrenceInfo` text COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_meeting_2` (`sAccountId`),
   KEY `FK_m_crm_meeting_1` (`createdUser`),
@@ -594,6 +758,14 @@ CREATE TABLE `m_crm_meeting` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_meeting`
+--
+
+LOCK TABLES `m_crm_meeting` WRITE;
+/*!40000 ALTER TABLE `m_crm_meeting` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_meeting` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_meeting_invitees`
@@ -615,6 +787,14 @@ CREATE TABLE `m_crm_meeting_invitees` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_meeting_invitees`
+--
+
+LOCK TABLES `m_crm_meeting_invitees` WRITE;
+/*!40000 ALTER TABLE `m_crm_meeting_invitees` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_meeting_invitees` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_note`
@@ -641,6 +821,14 @@ CREATE TABLE `m_crm_note` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_note`
+--
+
+LOCK TABLES `m_crm_note` WRITE;
+/*!40000 ALTER TABLE `m_crm_note` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_note` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_notifications`
@@ -652,7 +840,6 @@ DROP TABLE IF EXISTS `m_crm_notifications`;
 CREATE TABLE `m_crm_notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `projectId` int(10) unsigned NOT NULL,
   `sAccountId` int(11) NOT NULL,
   `level` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
@@ -663,27 +850,14 @@ CREATE TABLE `m_crm_notifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
--- Table structure for table `m_crm_opportunities_contacts`
+-- Dumping data for table `m_crm_notifications`
 --
 
-DROP TABLE IF EXISTS `m_crm_opportunities_contacts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `m_crm_opportunities_contacts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `opportunityId` int(10) unsigned NOT NULL,
-  `contactId` int(10) unsigned NOT NULL,
-  `createdTime` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_m_crm_opportunities_contacts_2` (`contactId`),
-  KEY `FK_m_crm_opportunities_contacts_1` (`opportunityId`),
-  CONSTRAINT `FK_m_crm_opportunities_contacts_1` FOREIGN KEY (`opportunityId`) REFERENCES `m_crm_opportunity` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_crm_opportunities_contacts_2` FOREIGN KEY (`contactId`) REFERENCES `m_crm_contact` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
+LOCK TABLES `m_crm_notifications` WRITE;
+/*!40000 ALTER TABLE `m_crm_notifications` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_notifications` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_opportunities_leads`
@@ -697,6 +871,7 @@ CREATE TABLE `m_crm_opportunities_leads` (
   `opportunityId` int(10) unsigned NOT NULL,
   `leadId` int(10) unsigned NOT NULL,
   `createdTime` datetime NOT NULL,
+  `isConvertRel` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_opportunities_leads_2` (`leadId`),
   KEY `FK_m_crm_opportunities_leads_1` (`opportunityId`),
@@ -705,6 +880,14 @@ CREATE TABLE `m_crm_opportunities_leads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_opportunities_leads`
+--
+
+LOCK TABLES `m_crm_opportunities_leads` WRITE;
+/*!40000 ALTER TABLE `m_crm_opportunities_leads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_opportunities_leads` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_opportunity`
@@ -733,6 +916,7 @@ CREATE TABLE `m_crm_opportunity` (
   `opportunityType` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `salesStage` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `lastUpdatedTime` datetime DEFAULT NULL,
+  `avatarId` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_opportunity_2` (`campaignid`),
   KEY `FK_m_crm_opportunity_6` (`sAccountId`),
@@ -747,6 +931,14 @@ CREATE TABLE `m_crm_opportunity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_opportunity`
+--
+
+LOCK TABLES `m_crm_opportunity` WRITE;
+/*!40000 ALTER TABLE `m_crm_opportunity` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_opportunity` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_product`
@@ -799,6 +991,14 @@ CREATE TABLE `m_crm_product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_product`
+--
+
+LOCK TABLES `m_crm_product` WRITE;
+/*!40000 ALTER TABLE `m_crm_product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_product` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_product_catalog`
@@ -838,6 +1038,14 @@ CREATE TABLE `m_crm_product_catalog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_product_catalog`
+--
+
+LOCK TABLES `m_crm_product_catalog` WRITE;
+/*!40000 ALTER TABLE `m_crm_product_catalog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_product_catalog` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_quote`
@@ -895,6 +1103,15 @@ CREATE TABLE `m_crm_quote` (
   CONSTRAINT `FK_m_crm_quote_9` FOREIGN KEY (`assignUser`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `m_crm_quote`
+--
+
+LOCK TABLES `m_crm_quote` WRITE;
+/*!40000 ALTER TABLE `m_crm_quote` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_quote` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_quote_group_product`
@@ -976,7 +1193,14 @@ CREATE TABLE `m_crm_target` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `m_crm_target`
+--
 
+LOCK TABLES `m_crm_target` WRITE;
+/*!40000 ALTER TABLE `m_crm_target` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_crm_target` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `m_crm_target_list`
@@ -1278,7 +1502,7 @@ DROP TABLE IF EXISTS `m_monitor_item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `m_monitor_item` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monitor_date` datetime NOT NULL,
   `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `typeid` int(10) unsigned NOT NULL,
@@ -1302,6 +1526,41 @@ LOCK TABLES `m_monitor_item` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `m_prj_customize_view`
+--
+
+DROP TABLE IF EXISTS `m_prj_customize_view`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `m_prj_customize_view` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `projectId` int(10) unsigned NOT NULL,
+  `displayMessage` bit(1) NOT NULL,
+  `displayMilestone` bit(1) NOT NULL,
+  `displayTask` bit(1) NOT NULL,
+  `displayBug` bit(1) NOT NULL,
+  `displayStandup` bit(1) NOT NULL,
+  `displayProblem` bit(1) NOT NULL,
+  `displayRisk` bit(1) NOT NULL,
+  `displayTimeLogging` bit(1) NOT NULL,
+  `displayPage` bit(1) NOT NULL,
+  `displayFile` bit(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_m_prj_customize_view_1_idx` (`projectId`),
+  CONSTRAINT `FK_m_prj_customize_view_1` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `m_prj_customize_view`
+--
+
+LOCK TABLES `m_prj_customize_view` WRITE;
+/*!40000 ALTER TABLE `m_prj_customize_view` DISABLE KEYS */;
+/*!40000 ALTER TABLE `m_prj_customize_view` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `m_prj_member`
 --
 
@@ -1317,6 +1576,8 @@ CREATE TABLE `m_prj_member` (
   `isAdmin` bit(1) NOT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sAccountId` int(11) NOT NULL,
+  `billingRate` double DEFAULT NULL,
+  `overtimeBillingRate` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_member_2` (`projectId`),
   KEY `FK_m_prj_member_1` (`username`),
@@ -1355,6 +1616,7 @@ CREATE TABLE `m_prj_message` (
   `lastUpdatedTime` datetime DEFAULT NULL,
   `sAccountId` int(11) NOT NULL,
   `isStick` bit(1) DEFAULT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_message_2` (`projectid`),
   KEY `FK_m_prj_message_3` (`sAccountId`),
@@ -1394,13 +1656,17 @@ CREATE TABLE `m_prj_milestone` (
   `lastUpdatedTime` datetime DEFAULT NULL,
   `sAccountId` int(11) NOT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createduser` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `PK_m_prj_milestone_2` (`projectid`),
   KEY `PK_m_prj_milestone_1` (`owner`),
   KEY `PK_m_prj_milestone_3_idx` (`sAccountId`),
+  KEY `PK_m_prj_milestone_4_idx` (`createduser`),
   CONSTRAINT `PK_m_prj_milestone_1` FOREIGN KEY (`owner`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `PK_m_prj_milestone_2` FOREIGN KEY (`projectid`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PK_m_prj_milestone_3` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PK_m_prj_milestone_3` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PK_m_prj_milestone_4` FOREIGN KEY (`createduser`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1475,6 +1741,7 @@ CREATE TABLE `m_prj_problem` (
   `type` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `typeid` int(11) DEFAULT NULL,
   `sAccountId` int(11) NOT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_risk_3` (`sAccountId`),
   KEY `FK_m_prj_risk_1` (`raisedbyuser`),
@@ -1527,6 +1794,7 @@ CREATE TABLE `m_prj_project` (
   `sAccountId` int(11) NOT NULL,
   `createdTime` datetime DEFAULT NULL,
   `lastUpdatedTime` datetime DEFAULT NULL,
+  `avatarId` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_project_project_1` (`account`),
   KEY `FK_m_prj_project_4` (`sAccountId`),
@@ -1576,6 +1844,7 @@ CREATE TABLE `m_prj_risk` (
   `type` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `typeid` int(11) DEFAULT NULL,
   `sAccountId` int(11) NOT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_risk1_1` (`projectid`),
   KEY `FK_m_prj_risk1_4` (`sAccountId`),
@@ -1726,17 +1995,20 @@ CREATE TABLE `m_prj_task` (
   `taskkey` int(11) DEFAULT NULL,
   `originalEstimate` double DEFAULT NULL,
   `remainEstimate` double DEFAULT NULL,
+  `parentTaskId` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_task_1` (`projectid`),
   KEY `FK_m_prj_task_2` (`tasklistid`),
   KEY `FK_m_prj_task_4` (`sAccountId`),
   KEY `FK_m_prj_task_3` (`assignUser`),
   KEY `FK_m_prj_task_5` (`logBy`),
+  KEY `FK_m_prj_task_6_idx` (`parentTaskId`),
   CONSTRAINT `FK_m_prj_task_1` FOREIGN KEY (`projectid`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_m_prj_task_2` FOREIGN KEY (`tasklistid`) REFERENCES `m_prj_task_list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_m_prj_task_3` FOREIGN KEY (`assignUser`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `FK_m_prj_task_4` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_m_prj_task_5` FOREIGN KEY (`logBy`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `FK_m_prj_task_5` FOREIGN KEY (`logBy`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_m_prj_task_6` FOREIGN KEY (`parentTaskId`) REFERENCES `m_prj_task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1763,20 +2035,24 @@ CREATE TABLE `m_prj_task_list` (
   `projectid` int(10) unsigned NOT NULL,
   `createdTime` datetime DEFAULT NULL,
   `lastUpdatedTime` datetime DEFAULT NULL,
-  `sAccountId` int(11) DEFAULT NULL,
+  `sAccountId` int(11) NOT NULL,
   `milestoneId` int(11) DEFAULT NULL,
   `owner` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `groupIndex` int(11) DEFAULT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createduser` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `PK_m_prj_task_list_2` (`milestoneId`),
   KEY `PK_m_prj_task_list_1` (`projectid`),
   KEY `PK_m_prj_task_list_3` (`owner`),
   KEY `PK_m_prj_task_list_4_idx` (`sAccountId`),
+  KEY `PK_m_prj_task_list_5_idx` (`createduser`),
   CONSTRAINT `PK_m_prj_task_list_1` FOREIGN KEY (`projectid`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `PK_m_prj_task_list_2` FOREIGN KEY (`milestoneId`) REFERENCES `m_prj_milestone` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `PK_m_prj_task_list_3` FOREIGN KEY (`owner`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `PK_m_prj_task_list_4` FOREIGN KEY (`sAccountId`) REFERENCES `s_user_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PK_m_prj_task_list_4` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PK_m_prj_task_list_5` FOREIGN KEY (`createduser`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1799,14 +2075,17 @@ DROP TABLE IF EXISTS `m_prj_time_logging`;
 CREATE TABLE `m_prj_time_logging` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `projectId` int(10) unsigned NOT NULL,
-  `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `typeid` int(11) NOT NULL,
+  `type` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `typeid` int(11) DEFAULT NULL,
   `note` text COLLATE utf8mb4_unicode_ci,
   `logValue` double NOT NULL,
   `loguser` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdTime` datetime NOT NULL,
   `lastUpdatedTime` datetime NOT NULL,
   `sAccountId` int(11) NOT NULL,
+  `logForDay` datetime NOT NULL,
+  `isBillable` bit(1) NOT NULL,
+  `createdUser` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_prj_time_logging_1` (`projectId`),
   KEY `FK_m_prj_time_logging_2_idx` (`sAccountId`),
@@ -1947,6 +2226,7 @@ CREATE TABLE `m_tracker_component` (
   `lastUpdatedTime` datetime DEFAULT NULL,
   `createdTime` datetime DEFAULT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_tracker_component_1` (`projectid`),
   KEY `FK_m_tracker_component_4` (`sAccountId`),
@@ -2076,6 +2356,7 @@ CREATE TABLE `m_tracker_version` (
   `lastUpdatedTime` datetime DEFAULT NULL,
   `createdTime` datetime DEFAULT NULL,
   `status` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prjKey` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_tracker_version_1` (`projectid`),
   KEY `FK_m_tracker_version_3` (`sAccountId`),
@@ -2113,6 +2394,7 @@ CREATE TABLE `s_account` (
   `pricingEffectFrom` datetime DEFAULT NULL,
   `pricingEffectTo` datetime DEFAULT NULL,
   `subdomain` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reminderStatus` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `subdomain_UNIQUE` (`subdomain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2139,9 +2421,12 @@ CREATE TABLE `s_account_settings` (
   `sAccountId` int(11) NOT NULL,
   `logoPath` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `defaultTimezone` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `defaultThemeId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_s_account_settings_1` (`sAccountId`),
-  CONSTRAINT `FK_s_account_settings_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_s_account_settings_2_idx` (`defaultThemeId`),
+  CONSTRAINT `FK_s_account_settings_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_s_account_settings_2` FOREIGN KEY (`defaultThemeId`) REFERENCES `s_account_theme` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2155,6 +2440,61 @@ LOCK TABLES `s_account_settings` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `s_account_theme`
+--
+
+DROP TABLE IF EXISTS `s_account_theme`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `s_account_theme` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `logoPath` varchar(255) DEFAULT NULL,
+  `topMenuBg` varchar(6) DEFAULT NULL,
+  `topMenuBgSelected` varchar(6) DEFAULT NULL,
+  `topMenuText` varchar(6) DEFAULT NULL,
+  `topMenuTextSelected` varchar(6) DEFAULT NULL,
+  `tabsheetBg` varchar(6) DEFAULT NULL,
+  `tabsheetBgSelected` varchar(6) DEFAULT NULL,
+  `tabsheetText` varchar(6) DEFAULT NULL,
+  `tabsheetTextSelected` varchar(6) DEFAULT NULL,
+  `vTabsheetBg` varchar(6) DEFAULT NULL,
+  `vTabsheetBgSelected` varchar(6) DEFAULT NULL,
+  `vTabsheetText` varchar(6) DEFAULT NULL,
+  `vTabsheetTextSelected` varchar(6) DEFAULT NULL,
+  `hTopMenuBg` varchar(6) DEFAULT NULL,
+  `hTopMenuBgSelected` varchar(6) DEFAULT NULL,
+  `hTopMenuText` varchar(6) DEFAULT NULL,
+  `hTopMenuTextSelected` varchar(6) DEFAULT NULL,
+  `actionBtn` varchar(6) DEFAULT NULL,
+  `actionBtnText` varchar(6) DEFAULT NULL,
+  `optionBtn` varchar(6) DEFAULT NULL,
+  `optionBtnText` varchar(6) DEFAULT NULL,
+  `clearBtn` varchar(6) DEFAULT NULL,
+  `clearBtnText` varchar(6) DEFAULT NULL,
+  `controlBtn` varchar(6) DEFAULT NULL,
+  `controlBtnText` varchar(6) DEFAULT NULL,
+  `dangerBtn` varchar(6) DEFAULT NULL,
+  `dangerBtnText` varchar(6) DEFAULT NULL,
+  `toggleBtn` varchar(6) DEFAULT NULL,
+  `toggleBtnSelected` varchar(6) DEFAULT NULL,
+  `toggleBtnText` varchar(6) DEFAULT NULL,
+  `toggleBtnTextSelected` varchar(6) DEFAULT NULL,
+  `isDefault` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_account_theme`
+--
+
+LOCK TABLES `s_account_theme` WRITE;
+/*!40000 ALTER TABLE `s_account_theme` DISABLE KEYS */;
+INSERT INTO `s_account_theme` VALUES (1,NULL,'575757','E4E4E4','FFFFFF','575757','F7F7F7','1C7DCE','525252','FFFFFF','7B7B7B','FFFFFF','FFFFFF','525252','47749D','FFFFFF','FFFFFF','535353','17D61B','FFFFFF','8B8B8B','FFFFFF','FAFAFA','525252','C06B11','FFFFFF','F64A46','FFFFFF','7B7B7B','1C7DCE','FFFFFF','FFFFFF','');
+/*!40000 ALTER TABLE `s_account_theme` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `s_activitystream`
 --
 
@@ -2165,20 +2505,19 @@ CREATE TABLE `s_activitystream` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sAccountId` int(11) NOT NULL,
   `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `typeId` int(11) NOT NULL,
+  `typeId` text CHARACTER SET utf8mb4 NOT NULL,
   `createdTime` datetime DEFAULT NULL,
   `action` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdUser` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `module` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nameField` text COLLATE utf8mb4_unicode_ci,
   `extraTypeId` int(10) unsigned DEFAULT NULL,
-  `createdUserDisplayName` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_m_crm_activitystream_1` (`sAccountId`),
   KEY `FK_m_crm_activitystream_2_idx` (`createdUser`),
   KEY `FK_m_crm_activitystream_3` (`module`) USING BTREE,
   KEY `FK_m_crm_activitystream_4` (`type`) USING BTREE,
-  KEY `FK_m_crm_activitystream_5` (`typeId`) USING BTREE,
+  KEY `FK_m_crm_activitystream_5` (`typeId`(100)),
   CONSTRAINT `FK_m_crm_activitystream_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_m_crm_activitystream_2` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2215,6 +2554,14 @@ CREATE TABLE `s_billing_plan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_billing_plan`
+--
+
+LOCK TABLES `s_billing_plan` WRITE;
+/*!40000 ALTER TABLE `s_billing_plan` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_billing_plan` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_country`
@@ -2231,6 +2578,14 @@ CREATE TABLE `s_country` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_country`
+--
+
+LOCK TABLES `s_country` WRITE;
+/*!40000 ALTER TABLE `s_country` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_country` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_currency`
@@ -2247,9 +2602,18 @@ CREATE TABLE `s_currency` (
   `conversionrate` double DEFAULT NULL,
   `fullname` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=233 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_currency`
+--
+
+LOCK TABLES `s_currency` WRITE;
+/*!40000 ALTER TABLE `s_currency` DISABLE KEYS */;
+INSERT INTO `s_currency` VALUES (118,'ALL','1','Lek',NULL,'Albania Lek'),(119,'AFN','2','؋',NULL,'Afghanistan Afghani'),(120,'ARS','3','$',NULL,'Argentina Peso'),(121,'AWG','4','ƒ',NULL,'Aruba Guilder'),(122,'AUD','5','$',NULL,'Australia Dollar'),(123,'AZN','6','ман',NULL,'Azerbaijan New Manat'),(124,'BSD','7','$',NULL,'Bahamas Dollar'),(125,'BBD','8','$',NULL,'Barbados Dollar'),(126,'BYR','9','p.',NULL,'Belarus Ruble'),(127,'BZD','10','BZ$',NULL,'Belize Dollar'),(128,'BMD','11','$',NULL,'Bermuda Dollar'),(129,'BOB','12','$b',NULL,'Bolivia Boliviano'),(130,'BAM','13','KM',NULL,'Bosnia and Herzegovina Convertible Marka'),(131,'BWP','14','P',NULL,'Botswana Pula'),(132,'BGN','15','лв',NULL,'Bulgaria Lev'),(133,'BRL','16','R$',NULL,'Brazil Real'),(134,'BND','17','$',NULL,'Brunei Darussalam Dollar'),(135,'KHR','18','៛',NULL,'Cambodia Riel'),(136,'CAD','19','$',NULL,'Canada Dollar'),(137,'KYD','20','$',NULL,'Cayman Islands Dollar'),(138,'CLP','21','$',NULL,'Chile Peso'),(139,'CNY','22','¥',NULL,'China Yuan Renminbi'),(140,'COP','23','$',NULL,'Colombia Peso'),(141,'CRC','24','₡',NULL,'Costa Rica Colon'),(142,'HRK','25','kn',NULL,'Croatia Kuna'),(143,'CUP','26','₱',NULL,'Cuba Peso'),(144,'CZK','27','Kč',NULL,'Czech Republic Koruna'),(145,'DKK','28','kr',NULL,'Denmark Krone'),(146,'DOP','29','RD$',NULL,'Dominican Republic Peso'),(147,'XCD','30','$',NULL,'East Caribbean Dollar'),(148,'EGP','31','£',NULL,'Egypt Pound'),(149,'SVC','32','$',NULL,'El Salvador Colon'),(150,'EEK','33','kr',NULL,'Estonia Kroon'),(151,'EUR','34','€',NULL,'Euro Member Countries'),(152,'FKP','35','£',NULL,'Falkland Islands (Malvinas) Pound'),(153,'FJD','36','$',NULL,'Fiji Dollar'),(154,'GHC','37','¢',NULL,'Ghana Cedis'),(155,'GIP','38','£',NULL,'Gibraltar Pound'),(156,'GTQ','39','Q',NULL,'Guatemala Quetzal'),(157,'GGP','40','£',NULL,'Guernsey Pound'),(158,'GYD','41','$',NULL,'Guyana Dollar'),(159,'HNL','42','L',NULL,'Honduras Lempira'),(160,'HKD','43','$',NULL,'Hong Kong Dollar'),(161,'HUF','44','Ft',NULL,'Hungary Forint'),(162,'ISK','45','kr',NULL,'Iceland Krona'),(163,'INR','46','',NULL,'India Rupee'),(164,'IDR','47','Rp',NULL,'Indonesia Rupiah'),(165,'IRR','48','﷼',NULL,'Iran Rial'),(166,'IMP','49','£',NULL,'Isle of Man Pound'),(167,'ILS','50','₪',NULL,'Israel Shekel'),(168,'JMD','51','J$',NULL,'Jamaica Dollar'),(169,'JPY','52','¥',NULL,'Japan Yen'),(170,'JEP','53','£',NULL,'Jersey Pound'),(171,'KZT','54','лв',NULL,'Kazakhstan Tenge'),(172,'KPW','55','₩',NULL,'Korea (North) Won'),(173,'KRW','56','₩',NULL,'Korea (South) Won'),(174,'KGS','57','лв',NULL,'Kyrgyzstan Som'),(175,'LAK','58','₭',NULL,'Laos Kip'),(176,'LVL','59','Ls',NULL,'Latvia Lat'),(177,'LBP','60','£',NULL,'Lebanon Pound'),(178,'LRD','61','$',NULL,'Liberia Dollar'),(179,'LTL','62','Lt',NULL,'Lithuania Litas'),(180,'MKD','63','ден',NULL,'Macedonia Denar'),(181,'MYR','64','RM',NULL,'Malaysia Ringgit'),(182,'MUR','65','₨',NULL,'Mauritius Rupee'),(183,'MXN','66','$',NULL,'Mexico Peso'),(184,'MNT','67','₮',NULL,'Mongolia Tughrik'),(185,'MZN','68','MT',NULL,'Mozambique Metical'),(186,'NAD','69','$',NULL,'Namibia Dollar'),(187,'NPR','70','₨',NULL,'Nepal Rupee'),(188,'ANG','71','ƒ',NULL,'Netherlands Antilles Guilder'),(189,'NZD','72','$',NULL,'New Zealand Dollar'),(190,'NIO','73','C$',NULL,'Nicaragua Cordoba'),(191,'NGN','74','₦',NULL,'Nigeria Naira'),(192,'KPW','75','₩',NULL,'Korea (North) Won'),(193,'NOK','76','kr',NULL,'Norway Krone'),(194,'OMR','77','﷼',NULL,'Oman Rial'),(195,'PKR','78','₨',NULL,'Pakistan Rupee'),(196,'PAB','79','B/',NULL,'Panama Balboa'),(197,'PYG','80','Gs',NULL,'Paraguay Guarani'),(198,'PEN','81','S/.',NULL,'Peru Nuevo Sol  '),(199,'PHP','82','₱',NULL,'Philippines Peso'),(200,'PLN','83','zł',NULL,'Poland Zloty'),(201,'QAR','84','﷼',NULL,'Qatar Riyal'),(202,'RON','85','lei',NULL,'Romania New Leu'),(203,'RUB','86','руб',NULL,'Russia Ruble'),(204,'SHP','87','£',NULL,'Saint Helena Pound'),(205,'SAR','88','﷼',NULL,'Saudi Arabia Riyal'),(206,'RSD','89','Дин.',NULL,'Serbia Dinar'),(207,'SCR','90','₨',NULL,'Seychelles Rupee'),(208,'SGD','91','$',NULL,'Singapore Dollar'),(209,'SBD','92','$',NULL,'Solomon Islands Dollar'),(210,'SOS','93','S',NULL,'Somalia Shilling'),(211,'ZAR','94','R',NULL,'South Africa Rand'),(212,'KRW','95','₩',NULL,'Korea (South) Won'),(213,'LKR','96','₨',NULL,'Sri Lanka Rupee'),(214,'SEK','97','kr',NULL,'Sweden Krona'),(215,'CHF','98','CHF',NULL,'Switzerland Franc'),(216,'SRD','99','$',NULL,'Suriname Dollar'),(217,'SYP','100','£',NULL,'Syria Pound'),(218,'TWD','101','NT$',NULL,'Taiwan New Dollar'),(219,'THB','102','฿',NULL,'Thailand Baht'),(220,'TTD','103','TT$',NULL,'Trinidad and Tobago Dollar'),(221,'TRY','104','',NULL,'Turkey Lira'),(222,'TRL','105','₤',NULL,'Turkey Lira'),(223,'TVD','106','$',NULL,'Tuvalu Dollar'),(224,'UAH','107','₴',NULL,'Ukraine Hryvna'),(225,'GBP','108','£',NULL,'United Kingdom Pound'),(226,'USD','109','$',NULL,'United States Dollar'),(227,'UYU','110','$U',NULL,'Uruguay Peso'),(228,'UZS','111','лв',NULL,'Uzbekistan Som'),(229,'VEF','112','Bs',NULL,'Venezuela Bolivar'),(230,'VND','113','₫',NULL,'Viet Nam Dong'),(231,'YER','114','﷼',NULL,'Yemen Rial'),(232,'ZWD','115','Z$',NULL,'Zimbabwe Dollar');
+/*!40000 ALTER TABLE `s_currency` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_customer_feedback`
@@ -2270,6 +2634,47 @@ CREATE TABLE `s_customer_feedback` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_customer_feedback`
+--
+
+LOCK TABLES `s_customer_feedback` WRITE;
+/*!40000 ALTER TABLE `s_customer_feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_customer_feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `s_favorite`
+--
+
+DROP TABLE IF EXISTS `s_favorite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `s_favorite` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `typeid` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastUpdatedTime` datetime NOT NULL,
+  `createdTime` datetime NOT NULL,
+  `extraTypeId` int(11) DEFAULT NULL,
+  `createdUser` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sAccountId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_s_favorite_1_idx` (`createdUser`),
+  KEY `FK_s_favorite_2_idx` (`sAccountId`),
+  CONSTRAINT `FK_s_favorite_1` FOREIGN KEY (`createdUser`) REFERENCES `s_user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_s_favorite_2` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_favorite`
+--
+
+LOCK TABLES `s_favorite` WRITE;
+/*!40000 ALTER TABLE `s_favorite` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_favorite` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_relay_email_notification`
@@ -2282,16 +2687,28 @@ CREATE TABLE `s_relay_email_notification` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `sAccountId` int(11) NOT NULL,
   `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `typeid` int(10) unsigned NOT NULL,
+  `typeid` text CHARACTER SET utf8mb4 NOT NULL,
   `action` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `changeBy` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `changeComment` text COLLATE utf8mb4_unicode_ci,
   `extraTypeId` int(11) DEFAULT NULL,
   `emailHandlerBean` varchar(400) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_s_relay_email_notification_1_idx` (`sAccountId`),
+  KEY `FK_s_relay_email_notification_2` (`typeid`(100)),
+  KEY `FK_s_relay_email_notification_3` (`type`),
+  CONSTRAINT `FK_s_relay_email_notification_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_relay_email_notification`
+--
+
+LOCK TABLES `s_relay_email_notification` WRITE;
+/*!40000 ALTER TABLE `s_relay_email_notification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_relay_email_notification` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_relay_mail`
@@ -2315,6 +2732,14 @@ CREATE TABLE `s_relay_mail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_relay_mail`
+--
+
+LOCK TABLES `s_relay_mail` WRITE;
+/*!40000 ALTER TABLE `s_relay_mail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_relay_mail` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_report_bug_issue`
@@ -2339,6 +2764,14 @@ CREATE TABLE `s_report_bug_issue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_report_bug_issue`
+--
+
+LOCK TABLES `s_report_bug_issue` WRITE;
+/*!40000 ALTER TABLE `s_report_bug_issue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_report_bug_issue` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_role_permission`
@@ -2357,6 +2790,14 @@ CREATE TABLE `s_role_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_role_permission`
+--
+
+LOCK TABLES `s_role_permission` WRITE;
+/*!40000 ALTER TABLE `s_role_permission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_role_permission` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_roles`
@@ -2376,6 +2817,15 @@ CREATE TABLE `s_roles` (
   CONSTRAINT `FK_s_roles_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_roles`
+--
+
+LOCK TABLES `s_roles` WRITE;
+/*!40000 ALTER TABLE `s_roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_roles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_save_search_result`
@@ -2402,6 +2852,15 @@ CREATE TABLE `s_save_search_result` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `s_save_search_result`
+--
+
+LOCK TABLES `s_save_search_result` WRITE;
+/*!40000 ALTER TABLE `s_save_search_result` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_save_search_result` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `s_table_customize_view`
 --
 
@@ -2424,6 +2883,45 @@ CREATE TABLE `s_table_customize_view` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `s_table_customize_view`
+--
+
+LOCK TABLES `s_table_customize_view` WRITE;
+/*!40000 ALTER TABLE `s_table_customize_view` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_table_customize_view` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `s_tag`
+--
+
+DROP TABLE IF EXISTS `s_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `s_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `typeid` varchar(100) NOT NULL,
+  `sAccountId` int(11) NOT NULL,
+  `extraTypeId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_s_tag_relationship_1_idx` (`name`),
+  KEY `FK_s_tag_1_idx` (`sAccountId`),
+  CONSTRAINT `FK_s_tag_1` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_tag`
+--
+
+LOCK TABLES `s_tag` WRITE;
+/*!40000 ALTER TABLE `s_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_tag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `s_user`
 --
 
@@ -2437,7 +2935,7 @@ CREATE TABLE `s_user` (
   `lastname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dateofbirth` datetime DEFAULT NULL,
-  `password` text COLLATE utf8mb4_unicode_ci,
+  `password` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registeredTime` datetime DEFAULT NULL,
@@ -2458,6 +2956,14 @@ CREATE TABLE `s_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_user`
+--
+
+LOCK TABLES `s_user` WRITE;
+/*!40000 ALTER TABLE `s_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_user` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_user_account`
@@ -2487,6 +2993,15 @@ CREATE TABLE `s_user_account` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `s_user_account`
+--
+
+LOCK TABLES `s_user_account` WRITE;
+/*!40000 ALTER TABLE `s_user_account` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_user_account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `s_user_account_invitation`
 --
 
@@ -2510,6 +3025,15 @@ CREATE TABLE `s_user_account_invitation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `s_user_account_invitation`
+--
+
+LOCK TABLES `s_user_account_invitation` WRITE;
+/*!40000 ALTER TABLE `s_user_account_invitation` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_user_account_invitation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `s_user_information`
 --
 
@@ -2524,6 +3048,15 @@ CREATE TABLE `s_user_information` (
   UNIQUE KEY `FK_hr_employee_2` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `s_user_information`
+--
+
+LOCK TABLES `s_user_information` WRITE;
+/*!40000 ALTER TABLE `s_user_information` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_user_information` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_user_permission`
@@ -2544,6 +3077,14 @@ CREATE TABLE `s_user_permission` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_user_permission`
+--
+
+LOCK TABLES `s_user_permission` WRITE;
+/*!40000 ALTER TABLE `s_user_permission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_user_permission` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `s_user_preference`
@@ -2596,7 +3137,14 @@ CREATE TABLE `s_user_tracking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `s_user_tracking`
+--
 
+LOCK TABLES `s_user_tracking` WRITE;
+/*!40000 ALTER TABLE `s_user_tracking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `s_user_tracking` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2607,4 +3155,4 @@ CREATE TABLE `s_user_tracking` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-12  2:00:24
+-- Dump completed on 2015-10-27 21:47:22

@@ -37,8 +37,8 @@ import com.esofthead.mycollab.security.PermissionMap;
  * @since 1.0
  * 
  */
-public class V20131101_3__Insert_Default_Values implements SpringJdbcMigration {
-	private static final Logger LOG = LoggerFactory.getLogger(V20131101_3__Insert_Default_Values.class);
+public class V20150401_2__Insert_Default_Values implements SpringJdbcMigration {
+	private static final Logger LOG = LoggerFactory.getLogger(V20150401_2__Insert_Default_Values.class);
 
 	public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
 		LOG.info("Set up initial values");
