@@ -49,7 +49,7 @@ public class DateSearchField extends SearchField {
         this.operation = oper;
         this.comparison = comparision;
         this.value = DateTimeUtils.trimHMSOfDate(DateTimeUtils
-                .convertTimeFromSystemTimezoneToUTC(dateVal.getTime()));
+                .convertTimeFromSystemTimezoneToUTC(dateVal));
     }
 
     public Date getValue() {

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.core.utils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,11 +155,9 @@ public class DateTimeUtils {
         }
     }
 
-    public static Date convertTimeFromSystemTimezoneToUTC(long timeInMillis) {
-        DateTime dt = new DateTime();
-        dt = dt.withMillis(-DateTimeZone.getDefault().getOffset(timeInMillis) + timeInMillis);
-        dt = dt.withZone(utcZone);
-        return dt.toDate();
+    public static Date convertTimeFromSystemTimezoneToUTC(Date date) {
+        LocalDateTime dateTime = new LocalDateTime(date);
+        return dateTime.toDateTime(DateTimeZone.UTC).toDate();
     }
 
     /**
@@ -189,12 +188,6 @@ public class DateTimeUtils {
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         Date end = calendar.getTime();
         return new Date[]{begin, end};
-    }
-
-    public static int compareByDate(Date date1, Date date2) {
-        Date newDate1 = trimHMSOfDate(date1);
-        Date newDate2 = trimHMSOfDate(date2);
-        return newDate1.compareTo(newDate2);
     }
 
     public static LocalDate min(LocalDate... values) {

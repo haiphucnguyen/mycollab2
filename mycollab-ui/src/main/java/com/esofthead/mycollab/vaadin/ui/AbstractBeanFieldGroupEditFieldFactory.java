@@ -93,7 +93,7 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
                 } else if (formField instanceof RichTextArea) {
                     ((RichTextArea) formField).setNullRepresentation("");
                 } else if (formField instanceof DateField) {
-                    ((DateField) formField).setTimeZone(DateTimeZone.UTC.toTimeZone());
+                    ((DateField) formField).setTimeZone(AppContext.getTimezone());
                     ((DateField) formField).setDateFormat(AppContext.getUserDateFormat().getShortDateFormat());
                 }
                 postCreateField(bindField, formField);
@@ -123,7 +123,7 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
                 } else if (formField instanceof RichTextArea) {
                     ((RichTextArea) formField).setNullRepresentation("");
                 } else if (formField instanceof DateField) {
-                    ((DateField) formField).setTimeZone(DateTimeZone.UTC.toTimeZone());
+                    ((DateField) formField).setTimeZone(AppContext.getTimezone());
                     ((DateField) formField).setDateFormat(AppContext.getUserDateFormat().getShortDateFormat());
                 }
                 postCreateField(field.getName(), formField);

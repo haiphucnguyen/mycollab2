@@ -9,7 +9,7 @@ CREATE TABLE `s_timeline_tracking` (
   `typeval` VARCHAR(45) NOT NULL,
   `extratypeid` INT(11) UNSIGNED NULL,
   `sAccountId` INT(11) NOT NULL,
-  `forDay` DATETIME NOT NULL,
+  `forDay` DATE NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_s_timeline_tracking_1_idx` (`sAccountId` ASC),
   CONSTRAINT `FK_s_timeline_tracking_1`
@@ -17,3 +17,5 @@ CREATE TABLE `s_timeline_tracking` (
     REFERENCES `s_account` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+
+ALTER TABLE `m_prj_standup` CHANGE COLUMN `forday` `forday` DATE NOT NULL ;
