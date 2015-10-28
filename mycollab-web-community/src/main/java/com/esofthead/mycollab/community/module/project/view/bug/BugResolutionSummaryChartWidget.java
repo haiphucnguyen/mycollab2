@@ -38,10 +38,10 @@ import java.util.List;
  * @since 1.0
  */
 @ViewComponent
-public class ResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> implements IBugResolutionSummaryChartWidget {
+public class BugResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> implements IBugResolutionSummaryChartWidget {
     private static final long serialVersionUID = 1L;
 
-    public ResolutionSummaryChartWidget() {
+    public BugResolutionSummaryChartWidget() {
         super(BugResolution.class, 350, 280);
     }
 

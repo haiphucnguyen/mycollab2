@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.common.dao.TimelineTrackingMapperExt">
+    <sql id="querySearchCriteria">
+        <![CDATA[
+        #set($searchCriteria = $_parameter.searchCriteria)
+
+        #selectExpr($searchCriteria.extraFields)
+        ]]>
+    </sql>
+
+    <select id="findTimelineItems" parameterType="TimelineTrackingSearchCriteria"
+            resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
+        #repeat(${groupVals} $groupVal "UNION" "" "")
+            (SELECT s_timeline_tracking.fieldval AS groupid,
+                (SELECT COUNT(*) FROM s_timeline_tracking AS temp_tbl WHERE temp_tbl.fieldval=s_timeline_tracking.fieldval) AS value,
+                DATE_FORMAT(s_timeline_tracking.forDay,"%Y-%m-%d") as groupname
+            FROM s_timeline_tracking
+            #trimext("WHERE" "AND|OR")
+                s_timeline_tracking.fieldval = @{groupVal}
+                <include refid="querySearchCriteria" />
+            #end
+        #end
+    </select>
+</mapper>

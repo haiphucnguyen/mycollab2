@@ -16,61 +16,33 @@
  */
 package com.esofthead.mycollab.community.ui.chart;
 
-import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.IInteractiveChartComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.VerticalLayout;
 import org.jfree.chart.JFreeChart;
 
-import java.util.List;
-
 /**
- * @param <S>
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class GenericChartWrapper<S extends SearchCriteria> extends CssLayout implements
-        IInteractiveChartComponent {
+public abstract class GenericChartWrapper extends CssLayout implements IInteractiveChartComponent {
     private static final long serialVersionUID = 1L;
-
-    protected static final String[] CHART_COLOR_STR = {ColorConstants.BLUE,
-            ColorConstants.GREEN, ColorConstants.ORANGE, ColorConstants.BLACK,
-            ColorConstants.DARK_ORANGE, ColorConstants.LIGHT_BLUE,
-            ColorConstants.GRAY, ColorConstants.BRIGHT_TURQUOISE,
-            ColorConstants.LIGHT_GRAY, ColorConstants.CHERRY,
-            ColorConstants.CONGO_PINK, ColorConstants.COFFFE,
-            ColorConstants.COPPER, ColorConstants.RED,
-            ColorConstants.LIGHTER_GREEN, ColorConstants.INDIAN_RED,
-            ColorConstants.LAVENDER, ColorConstants.LEMON,
-            ColorConstants.BROWN, ColorConstants.LIVER, ColorConstants.LION};
 
     protected int height;
     protected int width;
-    protected S searchCriteria;
-    protected List<GroupItem> groupItems;
+
 
     public GenericChartWrapper(final int width, final int height) {
         this.width = width;
         this.height = height;
     }
 
-    abstract protected List<GroupItem> loadGroupItems();
-
     abstract protected JFreeChart createChart();
 
     protected abstract ComponentContainer createLegendBox();
 
-    public void displayChart(final S criteria) {
-        removeAllComponents();
-        this.searchCriteria = criteria;
-        this.groupItems = loadGroupItems();
-        displayChart();
-    }
-
-    private void displayChart() {
+    final protected void displayChart() {
         final JFreeChart chart = createChart();
         final JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);
 

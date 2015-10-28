@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.community.ui.chart;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.CustomLayoutExt;
+import com.google.common.collect.ImmutableList;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -45,10 +47,23 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericChartWrapper<S> {
+public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericChartWrapper {
     private static final long serialVersionUID = 1L;
 
+    protected static final List<String> CHART_COLOR_STR = ImmutableList.copyOf(new String[]{ColorConstants.BLUE,
+            ColorConstants.GREEN, ColorConstants.ORANGE, ColorConstants.BLACK,
+            ColorConstants.DARK_ORANGE, ColorConstants.LIGHT_BLUE,
+            ColorConstants.GRAY, ColorConstants.BRIGHT_TURQUOISE,
+            ColorConstants.LIGHT_GRAY, ColorConstants.CHERRY,
+            ColorConstants.CONGO_PINK, ColorConstants.COFFFE,
+            ColorConstants.COPPER, ColorConstants.RED,
+            ColorConstants.LIGHTER_GREEN, ColorConstants.INDIAN_RED,
+            ColorConstants.LAVENDER, ColorConstants.LEMON,
+            ColorConstants.BROWN, ColorConstants.LIVER, ColorConstants.LION});
+
     protected DefaultPieDataset pieDataSet;
+    protected S searchCriteria;
+    protected List<GroupItem> groupItems;
     private Class<? extends Enum<?>> enumKeyCls;
 
     public PieChartWrapper(final int width, final int height) {
@@ -59,6 +74,15 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
         super(width, height);
         this.enumKeyCls = emumKey;
     }
+
+    public void displayChart(final S criteria) {
+        removeAllComponents();
+        this.searchCriteria = criteria;
+        this.groupItems = loadGroupItems();
+        displayChart();
+    }
+
+    abstract protected List<GroupItem> loadGroupItems();
 
     @Override
     protected JFreeChart createChart() {
@@ -89,8 +113,8 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
         final List keys = pieDataSet.getKeys();
         for (int i = 0; i < keys.size(); i++) {
             final Comparable key = (Comparable) keys.get(i);
-            plot.setSectionPaint(key, Color.decode("0x" + GenericChartWrapper.CHART_COLOR_STR[i
-                    % GenericChartWrapper.CHART_COLOR_STR.length]));
+            int colorIndex = i % CHART_COLOR_STR.size();
+            plot.setSectionPaint(key, Color.decode("0x" + CHART_COLOR_STR.get(colorIndex)));
         }
         // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;
@@ -154,8 +178,9 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
             layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
             final Comparable key = (Comparable) keys.get(i);
+            int colorIndex = i % CHART_COLOR_STR.size();
             final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
-                    + GenericChartWrapper.CHART_COLOR_STR[i % GenericChartWrapper.CHART_COLOR_STR.length] + "\" />";
+                    + CHART_COLOR_STR.get(colorIndex) + "\" />";
             final Label lblCircle = new Label(color);
             lblCircle.setContentMode(ContentMode.HTML);
 
