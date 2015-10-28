@@ -52,6 +52,9 @@ Version 5.2.2
 
 **Improvements & New Features**
 
+* Project template is supported
+* Add timeline tracking chart
+
 **Bug Fixes**
 
 Version 5.2.1
