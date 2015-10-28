@@ -21,4 +21,5 @@ package com.esofthead.mycollab.common.dao;
  * @since 5.2.2
  */
 public interface TimelineTrackingMapperExt {
+
 }

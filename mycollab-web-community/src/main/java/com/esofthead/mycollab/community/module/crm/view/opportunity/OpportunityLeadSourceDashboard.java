@@ -42,8 +42,8 @@ import java.util.List;
 public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunitySearchCriteria> implements IOpportunityLeadSourceDashboard {
     private static final long serialVersionUID = 1L;
 
-    public OpportunityLeadSourceDashboard(final int width, final int height) {
-        super(width, height);
+    public OpportunityLeadSourceDashboard() {
+        super(400, 265);
     }
 
     @Override

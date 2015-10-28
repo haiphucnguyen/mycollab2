@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.notification.*;
+import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.AbstractNotification;
 import com.esofthead.mycollab.core.NewUpdateAvailableNotification;
 import com.esofthead.mycollab.core.NotificationBroadcaster;
@@ -143,8 +144,17 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
 
             UI currentUI = getUI();
             if (currentUI != null) {
-                no.show(currentUI.getPage());
-                currentUI.push();
+                if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
+                    no.show(currentUI.getPage());
+                    currentUI.push();
+                } else {
+                    try {
+                        UI.getCurrent().setPollInterval(1000);
+                        no.show(currentUI.getPage());
+                    } finally {
+                        UI.getCurrent().setPollInterval(-1);
+                    }
+                }
             }
         }
     }
@@ -209,8 +219,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
             Button smtpBtn = new Button("Setup", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    EventBusFactory.getInstance().post(
-                            new ShellEvent.GotoUserAccountModule(this, new String[]{"setup"}));
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoUserAccountModule(this, new String[]{"setup"}));
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
