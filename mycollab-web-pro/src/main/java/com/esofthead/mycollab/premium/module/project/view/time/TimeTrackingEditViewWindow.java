@@ -31,7 +31,6 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
     private CheckBox isBillableCheckBox;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
-    private TimeTrackingListView parentView;
     private ProjectGenericTask selectionTask;
     private MHorizontalLayout taskLayout;
     private DateFieldExt dateField;
@@ -43,7 +42,6 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
-        this.parentView = view;
 
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
@@ -157,7 +155,6 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             attachTaskBtn.setDescription(new ProjectGenericTaskTooltipGenerator(selectionTask.getType(),
                     selectionTask.getTypeId()).getContent());
             taskLayout.addComponent(attachTaskBtn);
-            selectionTask.getTypeId();
         }
     }
 

@@ -48,7 +48,6 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private Table timeInputTable;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
-    private TimeTrackingListView parentView;
     private ProjectGenericTask selectionTask;
     private MHorizontalLayout taskLayout;
 
@@ -58,7 +57,6 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
         this.setModal(true);
         this.setResizable(false);
-        this.parentView = view;
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
         selectedDate = new GregorianCalendar().getTime();

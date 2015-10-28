@@ -137,7 +137,8 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
             super("Getting started instructions");
             this.setResizable(false);
             this.setModal(true);
-            contentLayout = new MVerticalLayout().withWidth("600px");
+            this.setWidth("600px");
+            contentLayout = new MVerticalLayout();
             this.setContent(contentLayout);
             center();
             displayInfo(user);
