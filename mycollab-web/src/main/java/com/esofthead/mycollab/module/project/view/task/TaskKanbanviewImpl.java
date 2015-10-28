@@ -45,6 +45,7 @@ import com.esofthead.mycollab.module.project.view.kanban.DeleteColumnWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -283,56 +284,49 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         kanbanBlocks = new ConcurrentHashMap<>();
 
         setProjectNavigatorVisibility(false);
-        new Thread() {
+        AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
-                                CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
-                        for (OptionVal optionVal : optionVals) {
-                            KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
-                            kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
-                            kanbanLayout.addComponent(kanbanBlock);
-                        }
-                        UI.getCurrent().push();
+                List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
+                        CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+                for (OptionVal optionVal : optionVals) {
+                    KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
+                    kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
+                    kanbanLayout.addComponent(kanbanBlock);
+                }
+                this.push();
 
-                        int totalTasks = taskService.getTotalCount(searchCriteria);
-                        searchPanel.setTotalCountNumber(totalTasks);
-                        int pages = totalTasks / 20;
-                        for (int page = 0; page < pages + 1; page++) {
-                            List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
-                            if (CollectionUtils.isNotEmpty(tasks)) {
-                                for (SimpleTask task : tasks) {
-                                    String status = task.getStatus();
-                                    KanbanBlock kanbanBlock = kanbanBlocks.get(status);
-                                    if (kanbanBlock == null) {
-                                        LOG.error("Can not find a kanban block for status: " + status + " for task: "
-                                                + BeanUtility.printBeanObj(task));
-                                    } else {
-                                        kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
-                                    }
-                                }
-                                UI.getCurrent().push();
+                int totalTasks = taskService.getTotalCount(searchCriteria);
+                searchPanel.setTotalCountNumber(totalTasks);
+                int pages = totalTasks / 20;
+                for (int page = 0; page < pages + 1; page++) {
+                    List<SimpleTask> tasks = taskService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
+                    if (CollectionUtils.isNotEmpty(tasks)) {
+                        for (SimpleTask task : tasks) {
+                            String status = task.getStatus();
+                            KanbanBlock kanbanBlock = kanbanBlocks.get(status);
+                            if (kanbanBlock == null) {
+                                LOG.error("Can not find a kanban block for status: " + status + " for task: "
+                                        + BeanUtility.printBeanObj(task));
+                            } else {
+                                kanbanBlock.addBlockItem(new KanbanTaskBlockItem(task));
                             }
                         }
-
+                        this.push();
                     }
-                });
+                }
             }
-        }.start();
+        });
     }
 
     @Override
     public void addColumn(final OptionVal option) {
-        UI.getCurrent().access(new Runnable() {
+        AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
                 KanbanBlock kanbanBlock = new KanbanBlock(option);
                 kanbanBlocks.put(option.getTypeval(), kanbanBlock);
                 kanbanLayout.addComponent(kanbanBlock);
-                UI.getCurrent().push();
             }
         });
     }

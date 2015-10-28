@@ -41,6 +41,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -182,47 +183,42 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         kanbanBlocks = new ConcurrentHashMap<>();
 
         setProjectNavigatorVisibility(false);
-        new Thread() {
+        AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                UI.getCurrent().access(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<OptionVal> optionVals = new ArrayList();
-                        for (OptionI18nEnum.BugStatus bugStatus : OptionI18nEnum.bug_statuses) {
-                            OptionVal option = new OptionVal();
-                            option.setTypeval(bugStatus.name());
-                            option.setType(ProjectTypeConstants.BUG);
-                            optionVals.add(option);
-                        }
-                        for (OptionVal optionVal : optionVals) {
-                            KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
-                            kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
-                            kanbanLayout.addComponent(kanbanBlock);
-                        }
-                        UI.getCurrent().push();
+                List<OptionVal> optionVals = new ArrayList();
+                for (OptionI18nEnum.BugStatus bugStatus : OptionI18nEnum.bug_statuses) {
+                    OptionVal option = new OptionVal();
+                    option.setTypeval(bugStatus.name());
+                    option.setType(ProjectTypeConstants.BUG);
+                    optionVals.add(option);
+                }
+                for (OptionVal optionVal : optionVals) {
+                    KanbanBlock kanbanBlock = new KanbanBlock(optionVal);
+                    kanbanBlocks.put(optionVal.getTypeval(), kanbanBlock);
+                    kanbanLayout.addComponent(kanbanBlock);
+                }
+                this.push();
 
-                        int totalTasks = bugService.getTotalCount(searchCriteria);
-                        int pages = totalTasks / 20;
-                        for (int page = 0; page < pages + 1; page++) {
-                            List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
-                            if (CollectionUtils.isNotEmpty(bugs)) {
-                                for (SimpleBug bug : bugs) {
-                                    String status = bug.getStatus();
-                                    KanbanBlock kanbanBlock = kanbanBlocks.get(status);
-                                    if (kanbanBlock == null) {
-                                        LOG.error("Can not find a kanban block for status: " + status);
-                                    } else {
-                                        kanbanBlock.addBlockItem(new KanbanBugBlockItem(bug));
-                                    }
-                                }
-                                UI.getCurrent().push();
+                int totalTasks = bugService.getTotalCount(searchCriteria);
+                int pages = totalTasks / 20;
+                for (int page = 0; page < pages + 1; page++) {
+                    List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, page + 1, 20));
+                    if (CollectionUtils.isNotEmpty(bugs)) {
+                        for (SimpleBug bug : bugs) {
+                            String status = bug.getStatus();
+                            KanbanBlock kanbanBlock = kanbanBlocks.get(status);
+                            if (kanbanBlock == null) {
+                                LOG.error("Can not find a kanban block for status: " + status);
+                            } else {
+                                kanbanBlock.addBlockItem(new KanbanBugBlockItem(bug));
                             }
                         }
+                        this.push();
                     }
-                });
+                }
             }
-        }.start();
+        });
     }
 
     private class KanbanBugBlockItem extends CustomComponent {
