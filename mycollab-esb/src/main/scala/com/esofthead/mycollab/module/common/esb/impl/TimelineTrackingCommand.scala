@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component
         val criteria = ex.createCriteria();
         val now = new LocalDate()
         criteria.andFordayEqualTo(now.toDate).andTypeEqualTo(event.typevar).andTypeidEqualTo(event.typeId).
-            andSaccountidEqualTo(event.accountId)
+            andFieldgroupEqualTo(event.fieldgroup).andSaccountidEqualTo(event.accountId)
         if (event.extratypeid != null) {
             criteria.andExtratypeidEqualTo(event.extratypeid)
         }
@@ -32,15 +32,16 @@ import org.springframework.stereotype.Component
             val timeline = new TimelineTracking
             timeline.setType(event.typevar)
             timeline.setTypeid(event.typeId)
-            timeline.setTypeval(event.typeval)
+            timeline.setFieldgroup(event.fieldgroup)
+            timeline.setFieldval(event.fieldVal)
             timeline.setExtratypeid(event.extratypeid)
             timeline.setSaccountid(event.accountId)
             timeline.setForday(now.toDate)
             timelineMapper.insert(timeline)
         } else {
             val timeline = items.get(0);
-            if (event.typeval != timeline.getTypeval) {
-                timeline.setTypeval(event.typeval)
+            if (event.fieldVal != timeline.getFieldval) {
+                timeline.setFieldval(event.fieldVal)
                 timelineMapper.updateByPrimaryKey(timeline)
             }
         }

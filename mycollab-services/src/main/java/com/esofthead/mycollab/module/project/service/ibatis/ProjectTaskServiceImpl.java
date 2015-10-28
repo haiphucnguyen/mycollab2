@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.event.TimelineTrackingUpdateEvent;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfoMap;
@@ -129,10 +130,12 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 Integer key = taskMapperExt.getMaxKey(record.getProjectid());
                 record.setTaskkey((key == null) ? 1 : (key + 1));
 
-                int result = super.saveWithSession(record, username);
+                int taskId = super.saveWithSession(record, username);
                 asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class, ProjectGenericTaskService.class,
                         ProjectActivityStreamService.class, ProjectMemberService.class, MilestoneService.class}));
-                return result;
+                asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, taskId, "status",
+                        record.getStatus(), record.getProjectid(), record.getSaccountid()));
+                return taskId;
             } else {
                 throw new MyCollabException("Timeout operation.");
             }
@@ -152,6 +155,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
                 MilestoneService.class, ItemTimeLoggingService.class}));
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.getId(), "status",
+                record.getStatus(), record.getProjectid(), record.getSaccountid()));
         return result;
     }
 
@@ -170,6 +175,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
                 MilestoneService.class, ItemTimeLoggingService.class}));
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.getId(), "status",
+                record.getStatus(), record.getProjectid(), record.getSaccountid()));
         return result;
     }
 

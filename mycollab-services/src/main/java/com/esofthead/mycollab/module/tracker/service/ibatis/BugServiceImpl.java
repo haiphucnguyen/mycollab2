@@ -107,7 +107,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
                 asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                         ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService.class}));
 
-                asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, bugId, record.getStatus(),
+                asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, bugId, "status", record.getStatus(),
                         record.getProjectid(), record.getSaccountid()));
                 return bugId;
             } else {
@@ -126,7 +126,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService.class,
                 ItemTimeLoggingService.class}));
-        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), record.getStatus(),
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), "status", record.getStatus(),
                 record.getProjectid(), record.getSaccountid()));
         return super.updateWithSession(record, username);
     }
@@ -136,7 +136,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService.class,
                 ItemTimeLoggingService.class}));
-        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), record.getStatus(),
+        asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), "status", record.getStatus(),
                 record.getProjectid(), record.getSaccountid()));
         return super.updateSelectiveWithSession(record, username);
     }
