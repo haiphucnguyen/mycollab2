@@ -45,8 +45,7 @@ import org.springframework.stereotype.Component
                 RegisterStatusConstants.SENT_VERIFICATION_EMAIL)
         } catch {
             case e: Exception => {
-                userService.updateUserAccountStatus(event.inviterUsername, event.accountId,
-                    RegisterStatusConstants.VERIFICATING)
+                userService.updateUserAccountStatus(event.inviterUsername, event.accountId, RegisterStatusConstants.VERIFICATING)
             }
         }
     }

@@ -55,7 +55,6 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
         this.setMargin(new MarginInfo(false, true, false, true));
         this.editForm = new EditForm();
         this.addComponent(this.editForm);
-        this.addStyleName("accountsettings-role");
     }
 
     @Override
@@ -109,8 +108,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
             }
 
             protected String initFormHeader() {
-                return role.getId() == null ?
-                        AppContext.getMessage(RoleI18nEnum.VIEW_NEW_TITLE) :
+                return role.getId() == null ? AppContext.getMessage(RoleI18nEnum.VIEW_NEW_TITLE) :
                         AppContext.getMessage(RoleI18nEnum.VIEW_EDIT_TITLE);
             }
 
@@ -119,17 +117,12 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
             }
 
             private Layout createButtonControls() {
-                return new EditFormControlsGenerator<>(
-                        RoleAddViewImpl.EditForm.this).createButtonControls();
+                return new EditFormControlsGenerator<>(RoleAddViewImpl.EditForm.this).createButtonControls();
             }
 
             @Override
             protected Layout createBottomPanel() {
                 final VerticalLayout permissionsPanel = new VerticalLayout();
-                final Label organizationHeader = new Label(
-                        AppContext.getMessage(RoleI18nEnum.FORM_PERMISSION_HEADER));
-                organizationHeader.setStyleName(UIConstants.H2_STYLE2);
-                permissionsPanel.addComponent(organizationHeader);
 
                 PermissionMap perMap;
                 if (role instanceof SimpleRole) {
@@ -170,9 +163,13 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
             }
         }
 
-        private Depot constructGridLayout(String depotTitle, PermissionMap perMap, List<PermissionDefItem> defItems) {
+        private ComponentContainer constructGridLayout(String depotTitle, PermissionMap perMap, List<PermissionDefItem> defItems) {
             GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
-            Depot component = new Depot(depotTitle, formHelper.getLayout());
+            VerticalLayout permissionsPanel = new VerticalLayout();
+            Label permissionTitle = new Label(depotTitle);
+            permissionTitle.addStyleName("h2");
+            permissionsPanel.addComponent(permissionTitle);
+            permissionsPanel.addComponent(formHelper.getLayout());
 
             for (int i = 0; i < defItems.size(); i++) {
                 PermissionDefItem permissionDefItem = defItems.get(i);
@@ -184,7 +181,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
                 formHelper.addComponent(permissionBox, permissionDefItem.getCaption(), 0, i);
             }
 
-            return component;
+            return permissionsPanel;
         }
 
         protected PermissionMap getPermissionMap() {

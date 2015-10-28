@@ -27,7 +27,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
@@ -114,17 +113,21 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
         }
     }
 
-    protected Depot constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
-                                                   List<PermissionDefItem> defItems) {
+    protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
+                                                                List<PermissionDefItem> defItems) {
         GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
-        Depot component = new Depot(depotTitle, formHelper.getLayout());
+        VerticalLayout permissionsPanel = new VerticalLayout();
+        Label permissionTitle = new Label(depotTitle);
+        permissionTitle.addStyleName("h2");
+        permissionsPanel.addComponent(permissionTitle);
 
         for (int i = 0; i < defItems.size(); i++) {
             PermissionDefItem permissionDefItem = defItems.get(i);
             formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
                     permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
         }
-        return component;
+        permissionsPanel.addComponent(formHelper.getLayout());
+        return permissionsPanel;
     }
 
     @Override
@@ -142,9 +145,6 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
         @Override
         protected Layout createBottomPanel() {
             VerticalLayout permissionsPanel = new VerticalLayout();
-            Label organizationHeader = new Label("Permissions");
-            organizationHeader.setStyleName("h2");
-            permissionsPanel.addComponent(organizationHeader);
 
             PermissionMap permissionMap = role.getPermissionMap();
 
@@ -157,8 +157,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
             permissionsPanel.addComponent(constructPermissionSectionView("Document", permissionMap,
                     RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
 
-            permissionsPanel.addComponent(constructPermissionSectionView(
-                    "Account Management", permissionMap,
+            permissionsPanel.addComponent(constructPermissionSectionView("Account Management", permissionMap,
                     RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
 
             return permissionsPanel;

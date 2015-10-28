@@ -13052,10 +13052,6 @@ div.v-ratingstars-bar {
 	display: inline-block;
 }
 
-.accountsettings-role .addViewBottomControls .depotComp .depotHeader {
-	border-width: 1px 0px;
-}
-
 .v-label.has-checkmark:before {
 	padding-left: 18px;
 	font-size: 16px;
