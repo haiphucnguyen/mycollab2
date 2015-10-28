@@ -11413,14 +11413,6 @@ input.v-textfield-errorField {
 	border-color: #CFCFCF;
 }
 
-.addViewLayout .addViewBottomControls .more-info {
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.addViewLayout .addViewBottomControls .depotComp.collapsed .header-wrapper {
-	border-width: 0px 0px 1px 0px;
-}
-
 .crmContainer .container-wrap .tab-content, .accountViewContainer .container-wrap .tab-content {
 	border-width: 1px 0px 0px 1px;
 	padding: 0px;

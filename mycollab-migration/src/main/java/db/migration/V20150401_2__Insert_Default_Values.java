@@ -155,16 +155,13 @@ public class V20150401_2__Insert_Default_Values implements SpringJdbcMigration {
 				.usingGeneratedKeyColumns("id");
 
 		SqlParameterSource adminRolePermissionParameters = new MapSqlParameterSource()
-				.addValue("roleid", adminRoleId).addValue(
-						"roleVal",
-						PermissionMap.buildAdminPermissionCollection()
-								.toJsonString());
+				.addValue("roleid", adminRoleId).addValue("roleVal",
+						PermissionMap.buildAdminPermissionCollection().toJsonString());
 		rolePermissionJdbcInsert.execute(adminRolePermissionParameters);
 
 		LOG.debug("Associate permission with employee role");
 		SqlParameterSource employeeRolePermissionParameters = new MapSqlParameterSource()
-				.addValue("roleid", employeeRoleId).addValue(
-						"roleVal",
+				.addValue("roleid", employeeRoleId).addValue("roleVal",
 						PermissionMap.buildEmployeePermissionCollection()
 								.toJsonString());
 		rolePermissionJdbcInsert.execute(employeeRolePermissionParameters);

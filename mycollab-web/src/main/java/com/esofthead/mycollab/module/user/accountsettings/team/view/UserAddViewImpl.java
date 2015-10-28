@@ -16,13 +16,17 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory.UserInformationLayout;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
+import com.esofthead.mycollab.security.*;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -37,6 +41,9 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -72,6 +79,10 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         }
     }
 
+    private void displayRolePermission(Integer roleId) {
+        editUserForm.displayRolePermission(roleId);
+    }
+
 
     @Override
     public HasEditFormHandlers<SimpleUser> getEditFormHandlers() {
@@ -92,12 +103,34 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             this.setBeanFormFieldFactory(new AdvancedEditFormFieldFactory(editUserForm));
             super.setBean(newDataSource);
         }
+
+        private void displayRolePermission(Integer roleId) {
+            if (this.getLayoutFactory() instanceof BasicFormLayoutFactory) {
+                ((BasicFormLayoutFactory) getLayoutFactory()).displayRolePermission(roleId);
+            }
+        }
+    }
+
+    private static String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
+        final Integer perVal = permissionMap.get(permissionItem);
+        if (perVal == null) {
+            return "Undefined";
+        } else {
+            if (PermissionChecker.isAccessPermission(perVal)) {
+                return AppContext.getMessage(AccessPermissionFlag.toKey(perVal));
+            } else if (PermissionChecker.isBooleanPermission(perVal)) {
+                return AppContext.getMessage(BooleanPermissionFlag.toKey(perVal));
+            } else {
+                throw new MyCollabException("Do not support permission value " + perVal);
+            }
+        }
     }
 
     private class BasicFormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = 1L;
 
         private GridFormLayoutHelper basicInformationLayout;
+        private VerticalLayout rolePermissionLayout;
 
         @Override
         public ComponentContainer getLayout() {
@@ -123,20 +156,67 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         }
 
         private Layout createBottomPanel() {
-            MHorizontalLayout controlPanel = new MHorizontalLayout().withMargin(true).withStyleName("more-info").withHeight
-                    ("40px").withWidth("100%");
-            Button moreInfoBtn = new Button("More information...",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            MVerticalLayout bottomPanel = new MVerticalLayout().withSpacing(false).withMargin(false);
+            Button moreInfoBtn = new Button("More information...", new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            editUserForm.displayAdvancedForm(user);
-                        }
-                    });
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    editUserForm.displayAdvancedForm(user);
+                }
+            });
             moreInfoBtn.addStyleName(UIConstants.THEME_LINK);
-            controlPanel.with(moreInfoBtn).withAlign(moreInfoBtn, Alignment.MIDDLE_LEFT);
-            return controlPanel;
+            MHorizontalLayout linkWrap = new MHorizontalLayout().withMargin(true).with(moreInfoBtn);
+            bottomPanel.with(linkWrap).withAlign(linkWrap, Alignment.MIDDLE_LEFT);
+
+            rolePermissionLayout = new VerticalLayout();
+            bottomPanel.addComponent(rolePermissionLayout);
+            return bottomPanel;
+        }
+
+        private void displayRolePermission(Integer roleId) {
+            rolePermissionLayout.removeAllComponents();
+            PermissionMap permissionMap = null;
+            if (roleId != null && roleId > 0) {
+                RoleService roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
+                SimpleRole role = roleService.findById(roleId, AppContext.getAccountId());
+                if (role != null) {
+                    permissionMap = role.getPermissionMap();
+                }
+            } else {
+                permissionMap = PermissionMap.buildAdminPermissionCollection();
+            }
+
+            if (permissionMap != null) {
+                rolePermissionLayout.addComponent(constructPermissionSectionView("Project", permissionMap,
+                        RolePermissionCollections.PROJECT_PERMISSION_ARR));
+
+                rolePermissionLayout.addComponent(constructPermissionSectionView("Customer Management", permissionMap,
+                        RolePermissionCollections.CRM_PERMISSIONS_ARR));
+
+                rolePermissionLayout.addComponent(constructPermissionSectionView("Document", permissionMap,
+                        RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
+
+                rolePermissionLayout.addComponent(constructPermissionSectionView("Account Management", permissionMap,
+                        RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
+            }
+        }
+
+        protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
+                                                                    List<PermissionDefItem> defItems) {
+            GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
+            VerticalLayout permissionsPanel = new VerticalLayout();
+            Label permissionTitle = new Label(depotTitle);
+            permissionTitle.addStyleName("h2");
+            permissionsPanel.addComponent(permissionTitle);
+
+            for (int i = 0; i < defItems.size(); i++) {
+                PermissionDefItem permissionDefItem = defItems.get(i);
+                formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
+                        permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
+            }
+            permissionsPanel.addComponent(formHelper.getLayout());
+            return permissionsPanel;
         }
 
         @Override
@@ -262,11 +342,13 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public void valueChange(
-                        final Property.ValueChangeEvent event) {
-                    getValue();
+                public void valueChange(final Property.ValueChangeEvent event) {
+                    Integer roleId = (Integer) roleBox.getValue();
+                    displayRolePermission(roleId);
                 }
             });
+            Integer val = (Integer)roleBox.getValue();
+            displayRolePermission(val);
         }
 
         @Override
