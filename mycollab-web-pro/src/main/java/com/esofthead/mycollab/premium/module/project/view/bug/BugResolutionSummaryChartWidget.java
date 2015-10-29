@@ -72,7 +72,7 @@ public class BugResolutionSummaryChartWidget extends PieChartWrapper<BugSearchCr
     }
 
     @Override
-    public void clickLegendItem(String key) {
+    protected void clickLegendItem(String key) {
         BugSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
         cloneSearchCriteria.setResolutions(new SetSearchField<>(key));
         EventBusFactory.getInstance().post(new BugEvent.GotoList(this, cloneSearchCriteria));

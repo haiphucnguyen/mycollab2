@@ -16,12 +16,20 @@
  */
 package com.esofthead.mycollab.common.service;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.TimelineTracking;
+import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
+import com.esofthead.mycollab.core.cache.CacheKey;
+import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.2
  */
 public interface TimelineTrackingService extends ICrudService<Integer, TimelineTracking> {
+    @Cacheable
+    List<GroupItem> findTimelineItems(List<String> groupVals, @CacheKey TimelineTrackingSearchCriteria criteria);
 }

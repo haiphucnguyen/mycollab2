@@ -49,7 +49,7 @@ public class BugAssigneeChartWidget extends PieChartWrapper<BugSearchCriteria> i
     }
 
     @Override
-    public void clickLegendItem(String key) {
+    protected void clickLegendItem(String key) {
         BugSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
         cloneSearchCriteria.setAssignuser(new StringSearchField(key));
         EventBusFactory.getInstance().post(new BugEvent.SearchRequest(this, cloneSearchCriteria));

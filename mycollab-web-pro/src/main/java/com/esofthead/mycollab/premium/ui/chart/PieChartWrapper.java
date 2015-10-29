@@ -2,7 +2,7 @@ package com.esofthead.mycollab.premium.ui.chart;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.IInteractiveChartComponent;
+import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.LegendItemClickEvent;
 import com.vaadin.addon.charts.LegendItemClickListener;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-public abstract class PieChartWrapper<S extends SearchCriteria> extends CssLayout implements IInteractiveChartComponent {
+public abstract class PieChartWrapper<S extends SearchCriteria> extends CssLayout implements PageView {
     protected S searchCriteria;
     protected List<GroupItem> groupItems;
 
@@ -73,6 +73,8 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends CssLayou
         chart.drawChart(conf);
         return chart;
     }
+
+    abstract protected void clickLegendItem(String key);
 
     @Override
     public ComponentContainer getWidget() {

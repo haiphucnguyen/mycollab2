@@ -17,23 +17,38 @@
 package com.esofthead.mycollab.common.service.ibatis;
 
 import com.esofthead.mycollab.common.dao.TimelineTrackingMapper;
+import com.esofthead.mycollab.common.dao.TimelineTrackingMapperExt;
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.TimelineTracking;
+import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.common.service.TimelineTrackingService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.2
  */
+@Service
 public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, TimelineTracking> implements TimelineTrackingService {
 
     @Autowired
     private TimelineTrackingMapper timelineTrackingMapper;
 
+    @Autowired
+    private TimelineTrackingMapperExt timelineTrackingMapperExt;
+
     @Override
     public ICrudGenericDAO<Integer, TimelineTracking> getCrudMapper() {
         return timelineTrackingMapper;
+    }
+
+    @Override
+    public List<GroupItem> findTimelineItems(List<String> groupVals, TimelineTrackingSearchCriteria criteria) {
+        return timelineTrackingMapperExt.findTimelineItems(groupVals, criteria);
     }
 }

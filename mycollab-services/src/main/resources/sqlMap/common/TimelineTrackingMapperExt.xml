@@ -5,6 +5,10 @@
         <![CDATA[
         #set($searchCriteria = $_parameter.searchCriteria)
 
+        #ifnotnull($searchCriteria.saccountid)
+            ${searchCriteria.saccountid.operation} s_timeline_tracking.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
+        #end
+
         #selectExpr($searchCriteria.extraFields)
         ]]>
     </sql>
@@ -19,7 +23,7 @@
             #trimext("WHERE" "AND|OR")
                 s_timeline_tracking.fieldval = @{groupVal}
                 <include refid="querySearchCriteria" />
-            #end
+            #end)
         #end
     </select>
 </mapper>

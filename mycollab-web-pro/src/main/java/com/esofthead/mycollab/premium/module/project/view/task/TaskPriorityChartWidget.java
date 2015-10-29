@@ -54,7 +54,7 @@ public class TaskPriorityChartWidget extends PieChartWrapper<TaskSearchCriteria>
     }
 
     @Override
-    public void clickLegendItem(String key) {
+    protected void clickLegendItem(String key) {
         TaskSearchCriteria cloneSearchCriteria = BeanUtility.deepClone(searchCriteria);
         cloneSearchCriteria.setPriorities(new SetSearchField<>(key));
         EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(this, cloneSearchCriteria));

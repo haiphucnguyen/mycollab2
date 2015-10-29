@@ -202,9 +202,9 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
                 @Override
                 public void buttonClick(final ClickEvent event) {
                     if (key instanceof Key) {
-                        PieChartWrapper.this.clickLegendItem(((Key) key).getKey());
+                        clickLegendItem(((Key) key).getKey());
                     } else {
-                        PieChartWrapper.this.clickLegendItem(key.toString());
+                        clickLegendItem(key.toString());
                     }
                 }
             });
@@ -216,4 +216,6 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
         boxWrapper.addComponent(mainLayout, "legendBoxContent");
         return boxWrapper;
     }
+
+    abstract protected void clickLegendItem(String key);
 }
