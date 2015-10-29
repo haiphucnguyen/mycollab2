@@ -49,9 +49,9 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         VerticalLayout leftPanel = new VerticalLayout();
 
         ProjectActivityStreamComponent activityPanel = new ProjectActivityStreamComponent();
-        IBugStatusTrendChartWidget bugStatusTrendChartWidget = ViewManager.getCacheComponent
-                (IBugStatusTrendChartWidget.class);
-        leftPanel.addComponent(bugStatusTrendChartWidget);
+//        IBugStatusTrendChartWidget bugStatusTrendChartWidget = ViewManager.getCacheComponent
+//                (IBugStatusTrendChartWidget.class);
+//        leftPanel.addComponent(bugStatusTrendChartWidget);
         leftPanel.addComponent(activityPanel);
 
 //        TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
