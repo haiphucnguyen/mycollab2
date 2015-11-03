@@ -41,11 +41,11 @@ public class BugStatusTrendChartWidget extends GenericChartWrapper implements IB
     @Override
     public void display(TimelineTrackingSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
-        List<GroupItem> gropuItems = timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus
-                .InProgress.name(), OptionI18nEnum
-                .BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum.BugStatus.Resolved
-                .name(), OptionI18nEnum.BugStatus.Verified.name()), searchCriteria);
-        displayChart();
+//        List<GroupItem> gropuItems = timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus
+//                .InProgress.name(), OptionI18nEnum
+//                .BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum.BugStatus.Resolved
+//                .name(), OptionI18nEnum.BugStatus.Verified.name()), searchCriteria);
+//        displayChart();
     }
 
     @Override

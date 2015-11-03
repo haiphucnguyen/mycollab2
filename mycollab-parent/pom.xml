@@ -111,7 +111,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>4.4.3</version>
+            <version>4.4.4</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
@@ -217,7 +217,7 @@
         <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
-            <version>3.1</version>
+            <version>3.2.0</version>
         </dependency>
 
         <dependency>

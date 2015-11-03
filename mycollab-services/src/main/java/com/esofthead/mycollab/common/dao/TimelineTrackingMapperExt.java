@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,5 +28,6 @@ import java.util.List;
  * @since 5.2.2
  */
 public interface TimelineTrackingMapperExt {
-    List<GroupItem> findTimelineItems(@Param("groupVals") List<String> groupVals, @Param("searchCriteria") TimelineTrackingSearchCriteria criteria);
+    List<GroupItem> findTimelineItems(@Param("groupVals") List<String> groupVals, @Param("dates") List<Date> dates,
+                                      @Param("searchCriteria") TimelineTrackingSearchCriteria criteria);
 }

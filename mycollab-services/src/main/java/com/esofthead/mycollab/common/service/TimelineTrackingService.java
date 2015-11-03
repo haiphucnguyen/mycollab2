@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.cache.Cacheable;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,5 +32,5 @@ import java.util.List;
  */
 public interface TimelineTrackingService extends ICrudService<Integer, TimelineTracking> {
     @Cacheable
-    List<GroupItem> findTimelineItems(List<String> groupVals, @CacheKey TimelineTrackingSearchCriteria criteria);
+    List<GroupItem> findTimelineItems(List<String> groupVals, Date start, Date end, @CacheKey TimelineTrackingSearchCriteria criteria);
 }

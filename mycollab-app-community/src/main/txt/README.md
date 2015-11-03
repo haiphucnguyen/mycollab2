@@ -49,10 +49,10 @@ Version 5.2.2
 **Library Upgrades**
 
 * Joda 2.9
+* Http component 4.4.4, other libraries
 
 **Improvements & New Features**
 
-* Project template is supported
 * Add timeline tracking chart
 * Minor UI updates
 

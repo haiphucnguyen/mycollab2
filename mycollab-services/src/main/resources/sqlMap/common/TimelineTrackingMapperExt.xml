@@ -15,15 +15,21 @@
 
     <select id="findTimelineItems" parameterType="TimelineTrackingSearchCriteria"
             resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
-        #repeat(${groupVals} $groupVal "UNION" "" "")
-            (SELECT s_timeline_tracking.fieldval AS groupid,
-                (SELECT COUNT(*) FROM s_timeline_tracking AS temp_tbl WHERE temp_tbl.fieldval=s_timeline_tracking.fieldval) AS value,
+        <![CDATA[
+        #repeat(${_parameter.groupVals} $groupVal "UNION" "" "")
+            #repeat(${_parameter.dates} $date "UNION" "" "")
+                SELECT s_timeline_tracking.fieldval AS groupid,
+                    (SELECT COUNT(*) FROM s_timeline_tracking AS temp_tbl WHERE
+                           temp_tbl.fieldval=s_timeline_tracking.fieldval
+                           AND temp_tbl.forDay <= @{date}) AS value,
                 DATE_FORMAT(s_timeline_tracking.forDay,"%Y-%m-%d") as groupname
-            FROM s_timeline_tracking
-            #trimext("WHERE" "AND|OR")
-                s_timeline_tracking.fieldval = @{groupVal}
-                <include refid="querySearchCriteria" />
-            #end)
+                FROM s_timeline_tracking
+                ]]>
+                #trimext("WHERE" "AND|OR")
+                    s_timeline_tracking.fieldval = @{groupVal}
+                    <include refid="querySearchCriteria" />
+                #end
+            #end
         #end
     </select>
 </mapper>

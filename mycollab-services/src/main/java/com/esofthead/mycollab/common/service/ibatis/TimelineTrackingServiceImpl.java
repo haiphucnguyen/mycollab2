@@ -22,11 +22,18 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.TimelineTracking;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.common.service.TimelineTrackingService;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,7 +55,19 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
     }
 
     @Override
-    public List<GroupItem> findTimelineItems(List<String> groupVals, TimelineTrackingSearchCriteria criteria) {
-        return timelineTrackingMapperExt.findTimelineItems(groupVals, criteria);
+    public List<GroupItem> findTimelineItems(List<String> groupVals, Date start, Date end, TimelineTrackingSearchCriteria criteria) {
+        DateTime startDate = new DateTime(start);
+        DateTime endDate = new DateTime(end);
+        if (startDate.isAfter(endDate)) {
+            throw new UserInvalidInputException("Start date must be greater than end date");
+        }
+        Duration period = new Duration(startDate, endDate);
+        List<Date> dates = new ArrayList<>();
+        long days = period.getStandardDays();
+        for (int i = 0; i < days; i++) {
+            dates.add(startDate.plusDays(i).toDate());
+        }
+
+        return timelineTrackingMapperExt.findTimelineItems(groupVals, dates, criteria);
     }
 }

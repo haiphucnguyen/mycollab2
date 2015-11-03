@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.common.service;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -26,7 +29,10 @@ public class TimelineTrackingServiceTest extends IntergrationServiceTest {
     public void testFindTimeline() {
         TimelineTrackingSearchCriteria criteria = new TimelineTrackingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(1));
-        timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum
-                .BugStatus.Resolved.name()), criteria);
+        List<GroupItem> timelineItems = timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum
+                        .BugStatus.Resolved.name()), new GregorianCalendar(2015, 9, 1).getTime(), new
+                        GregorianCalendar(2015, 9, 2).getTime(),
+                criteria);
+        System.out.println("A: " + timelineItems);
     }
 }
