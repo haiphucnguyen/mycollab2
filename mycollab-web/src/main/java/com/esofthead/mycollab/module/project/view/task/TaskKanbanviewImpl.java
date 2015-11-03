@@ -42,6 +42,8 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.kanban.AddNewColumnWindow;
 import com.esofthead.mycollab.module.project.view.kanban.DeleteColumnWindow;
+import com.esofthead.mycollab.module.project.view.task.components.TaskSavedFilterComboBox;
+import com.esofthead.mycollab.module.project.view.task.components.TaskSearchPanel;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;

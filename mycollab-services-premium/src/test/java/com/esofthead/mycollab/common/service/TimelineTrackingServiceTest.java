@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -29,7 +30,7 @@ public class TimelineTrackingServiceTest extends IntergrationServiceTest {
     public void testFindTimeline() {
         TimelineTrackingSearchCriteria criteria = new TimelineTrackingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(1));
-        List<GroupItem> timelineItems = timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum
+        Map<String, List<GroupItem>> timelineItems = timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum
                         .BugStatus.Resolved.name()), new GregorianCalendar(2015, 9, 1).getTime(), new
                         GregorianCalendar(2015, 9, 31).getTime(),
                 criteria);

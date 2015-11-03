@@ -25,6 +25,7 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -32,5 +33,5 @@ import java.util.List;
  */
 public interface TimelineTrackingService extends ICrudService<Integer, TimelineTracking> {
     @Cacheable
-    List<GroupItem> findTimelineItems(List<String> groupVals, Date start, Date end, @CacheKey TimelineTrackingSearchCriteria criteria);
+    Map<String, List<GroupItem>> findTimelineItems(List<String> groupVals, Date start, Date end, @CacheKey TimelineTrackingSearchCriteria criteria);
 }

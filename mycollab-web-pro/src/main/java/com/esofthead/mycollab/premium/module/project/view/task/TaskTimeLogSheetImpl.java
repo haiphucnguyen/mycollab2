@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.TimeLogEditWindow;
-import com.esofthead.mycollab.module.project.view.task.TaskTimeLogSheet;
+import com.esofthead.mycollab.module.project.view.task.components.TaskTimeLogSheet;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;

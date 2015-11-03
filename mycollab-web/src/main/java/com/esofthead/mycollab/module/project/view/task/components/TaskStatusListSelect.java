@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
@@ -23,7 +23,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.MixValueComboBox;
+import com.vaadin.ui.ListSelect;
 
 import java.util.List;
 
@@ -31,14 +31,24 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-public class TaskStatusComboBox extends MixValueComboBox {
-    public TaskStatusComboBox() {
-        super(OptionI18nEnum.StatusI18nEnum.class);
+public class TaskStatusListSelect extends ListSelect {
+    public TaskStatusListSelect() {
+        this.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
+        this.setNullSelectionAllowed(false);
+        this.setMultiSelect(true);
+        this.setRows(4);
+    }
+
+    @Override
+    public void attach() {
         OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
         List<OptionVal> options = optionValService.findOptionVals(ProjectTypeConstants.TASK, CurrentProjectVariables
                 .getProjectId(), AppContext.getAccountId());
         for (OptionVal option : options) {
-            addEntry(option.getTypeval());
+            this.addItem(option.getTypeval());
+            this.setItemCaption(option.getTypeval(), AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, option
+                    .getTypeval()));
         }
+        super.attach();
     }
 }

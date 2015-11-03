@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 
@@ -30,7 +30,7 @@ public class SimpleListOrderComponent extends TaskGroupOrderComponent {
     }
 
     @Override
-    void insertTasks(List<SimpleTask> tasks) {
+    public void insertTasks(List<SimpleTask> tasks) {
         for (SimpleTask task : tasks) {
             this.addComponent(new TaskRowRenderer(task));
         }

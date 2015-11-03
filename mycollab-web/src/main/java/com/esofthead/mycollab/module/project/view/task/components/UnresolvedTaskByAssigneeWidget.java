@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.task.ITaskAssigneeChartWidget;
 import com.esofthead.mycollab.module.user.CommonTooltipGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;

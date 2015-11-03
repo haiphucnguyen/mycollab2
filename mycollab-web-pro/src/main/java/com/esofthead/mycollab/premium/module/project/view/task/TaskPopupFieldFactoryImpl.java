@@ -28,8 +28,8 @@ import com.esofthead.mycollab.module.project.ui.components.TaskCompleteStatusSel
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
-import com.esofthead.mycollab.module.project.view.task.TaskPriorityComboBox;
-import com.esofthead.mycollab.module.project.view.task.TaskStatusComboBox;
+import com.esofthead.mycollab.module.project.view.task.components.TaskPriorityComboBox;
+import com.esofthead.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;

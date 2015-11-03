@@ -14,18 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.vaadin.ui.CssLayout;
-
-import java.util.List;
+import com.esofthead.mycollab.module.project.ui.components.TimeLogComp;
+import com.esofthead.mycollab.vaadin.mvp.CacheableComponent;
 
 /**
  * @author MyCollab Ltd
- * @since 5.1.1
+ * @since 5.1.4
  */
-abstract class TaskGroupOrderComponent extends CssLayout {
-
-    abstract void insertTasks(List<SimpleTask> tasks);
+public abstract class TaskTimeLogSheet extends TimeLogComp<SimpleTask> implements CacheableComponent {
 }

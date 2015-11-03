@@ -30,7 +30,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.community.ui.chart;
+package com.esofthead.mycollab.ui.chart;
 
 /**
  * 

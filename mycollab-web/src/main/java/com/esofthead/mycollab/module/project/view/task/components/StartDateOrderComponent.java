@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.core.utils.SortedArrayMap;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -39,7 +39,7 @@ public class StartDateOrderComponent extends TaskGroupOrderComponent {
     private GroupComponent unspecifiedTasks;
 
     @Override
-    void insertTasks(List<SimpleTask> tasks) {
+    public void insertTasks(List<SimpleTask> tasks) {
         for (SimpleTask task : tasks) {
             if (task.getStartdate() != null) {
                 Date startDate = task.getStartdate();

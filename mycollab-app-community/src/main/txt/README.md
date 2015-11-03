@@ -49,6 +49,7 @@ Version 5.2.2
 **Library Upgrades**
 
 * Joda 2.9
+* Quartz 2.2.2
 * Http component 4.4.4, other libraries
 
 **Improvements & New Features**

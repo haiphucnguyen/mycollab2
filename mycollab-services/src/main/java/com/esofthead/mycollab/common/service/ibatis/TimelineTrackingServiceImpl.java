@@ -30,9 +30,7 @@ import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -53,7 +51,7 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
     }
 
     @Override
-    public List<GroupItem> findTimelineItems(List<String> groupVals, Date start, Date end, TimelineTrackingSearchCriteria criteria) {
+    public Map<String, List<GroupItem>> findTimelineItems(List<String> groupVals, Date start, Date end, TimelineTrackingSearchCriteria criteria) {
         DateTime startDate = new DateTime(start);
         DateTime endDate = new DateTime(end);
         if (startDate.isAfter(endDate)) {
@@ -66,10 +64,10 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
             dates.add(startDate.plusDays(i).toDate());
         }
 
-        List<GroupItem> items = new ArrayList<>();
+        Map<String, List<GroupItem>> items = new HashMap<>();
         for (String groupVal : groupVals) {
             List<GroupItem> timelineItems = timelineTrackingMapperExt.findTimelineItems(groupVal, dates, criteria);
-            items.addAll(timelineItems);
+            items.put(groupVal, timelineItems);
         }
 
         return items;

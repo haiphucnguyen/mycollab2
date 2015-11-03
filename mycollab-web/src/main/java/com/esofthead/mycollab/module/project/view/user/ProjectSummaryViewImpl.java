@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
-import com.esofthead.mycollab.module.project.view.bug.IBugStatusTrendChartWidget;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -49,14 +48,7 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         VerticalLayout leftPanel = new VerticalLayout();
 
         ProjectActivityStreamComponent activityPanel = new ProjectActivityStreamComponent();
-        IBugStatusTrendChartWidget bugStatusTrendChartWidget = ViewManager.getCacheComponent
-                (IBugStatusTrendChartWidget.class);
-        leftPanel.addComponent(bugStatusTrendChartWidget);
         leftPanel.addComponent(activityPanel);
-
-        TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
-
-        bugStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
 
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true))
                 .withWidth("500px");

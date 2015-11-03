@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -275,6 +276,13 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
     private void displayBugStatistic() {
         rightColumn.removeAllComponents();
+
+        BugStatusTrendChartWidget bugStatusTrendChartWidget = new BugStatusTrendChartWidget();
+        rightColumn.addComponent(bugStatusTrendChartWidget);
+        TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
+        timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        bugStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
+
         BugSearchCriteria criteria = new BugSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         criteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),

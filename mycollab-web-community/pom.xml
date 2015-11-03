@@ -23,11 +23,5 @@
             <artifactId>mycollab-web</artifactId>
             <version>5.2.1</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.jfree</groupId>
-            <artifactId>jfreesvg</artifactId>
-            <version>3.0</version>
-        </dependency>
     </dependencies>
 </project>

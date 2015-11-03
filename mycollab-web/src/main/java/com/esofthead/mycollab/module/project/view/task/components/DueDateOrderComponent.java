@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.core.utils.SortedArrayMap;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.google.common.collect.Ordering;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -30,8 +29,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * @author MyCollab Ltd
@@ -42,7 +39,7 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
     private GroupComponent unspecifiedTasks;
 
     @Override
-    void insertTasks(List<SimpleTask> tasks) {
+    public void insertTasks(List<SimpleTask> tasks) {
         for (SimpleTask task : tasks) {
             if (task.getDeadline() != null) {
                 Date dueDate = task.getDeadline();

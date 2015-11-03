@@ -29,7 +29,6 @@ import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityLeadSource
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.vaadin.ui.ComponentContainer;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.util.List;
@@ -44,16 +43,6 @@ public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunityS
 
     public OpportunityLeadSourceDashboard() {
         super(400, 265);
-    }
-
-    @Override
-    public ComponentContainer getWidget() {
-        return this;
-    }
-
-    @Override
-    public void addViewListener(ViewListener listener) {
-
     }
 
     @Override

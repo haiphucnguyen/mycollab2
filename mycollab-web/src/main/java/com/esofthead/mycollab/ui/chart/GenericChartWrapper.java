@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web-community.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.community.ui.chart;
+package com.esofthead.mycollab.ui.chart;
 
 import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.google.common.collect.ImmutableList;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import org.jfree.chart.JFreeChart;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -28,6 +31,17 @@ import org.jfree.chart.JFreeChart;
  */
 public abstract class GenericChartWrapper extends CssLayout implements PageView {
     private static final long serialVersionUID = 1L;
+
+    protected static final List<String> CHART_COLOR_STR = ImmutableList.copyOf(new String[]{ColorConstants.BLUE,
+            ColorConstants.GREEN, ColorConstants.ORANGE, ColorConstants.BLACK,
+            ColorConstants.DARK_ORANGE, ColorConstants.LIGHT_BLUE,
+            ColorConstants.GRAY, ColorConstants.BRIGHT_TURQUOISE,
+            ColorConstants.LIGHT_GRAY, ColorConstants.CHERRY,
+            ColorConstants.CONGO_PINK, ColorConstants.COFFFE,
+            ColorConstants.COPPER, ColorConstants.RED,
+            ColorConstants.LIGHTER_GREEN, ColorConstants.INDIAN_RED,
+            ColorConstants.LAVENDER, ColorConstants.LEMON,
+            ColorConstants.BROWN, ColorConstants.LIVER, ColorConstants.LION});
 
     private int height;
     private int width;
@@ -42,6 +56,7 @@ public abstract class GenericChartWrapper extends CssLayout implements PageView 
     protected abstract ComponentContainer createLegendBox();
 
     final protected void displayChart() {
+        removeAllComponents();
         final JFreeChart chart = createChart();
         final JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);
 
@@ -59,5 +74,15 @@ public abstract class GenericChartWrapper extends CssLayout implements PageView 
         if (legendBox != null) {
             this.addComponent(legendBox);
         }
+    }
+
+    @Override
+    public final ComponentContainer getWidget() {
+        return this;
+    }
+
+    @Override
+    public final <E> void addViewListener(ViewListener<E> listener) {
+
     }
 }

@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.task.components.*;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.ReportStreamSource;
 import com.esofthead.mycollab.reporting.RpFieldsBuilder;

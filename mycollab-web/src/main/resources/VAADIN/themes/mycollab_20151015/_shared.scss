@@ -767,4 +767,16 @@
               transform: scale3D(0, 0, 1);
     }
   }
+
+  /* Panel */
+  .v-panel-caption {
+    background: $background-color;
+    border: 1px solid $border-color;
+  }
+
+  .v-panel-content {
+    border-style: solid;
+    border-width: 0px 1px 0px 1px;
+    border-color: $border-color;
+  }
 }

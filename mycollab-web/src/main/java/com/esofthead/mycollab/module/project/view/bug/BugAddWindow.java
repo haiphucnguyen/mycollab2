@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -137,6 +138,7 @@ public class BugAddWindow extends Window {
                         }
                     }
                 });
+                updateBtn.setIcon(FontAwesome.SAVE);
                 updateBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {

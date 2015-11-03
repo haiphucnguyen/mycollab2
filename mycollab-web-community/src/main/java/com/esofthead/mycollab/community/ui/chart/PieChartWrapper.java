@@ -19,10 +19,10 @@ package com.esofthead.mycollab.community.ui.chart;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.CustomLayoutExt;
-import com.google.common.collect.ImmutableList;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -49,17 +49,6 @@ import java.util.List;
  */
 public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericChartWrapper {
     private static final long serialVersionUID = 1L;
-
-    protected static final List<String> CHART_COLOR_STR = ImmutableList.copyOf(new String[]{ColorConstants.BLUE,
-            ColorConstants.GREEN, ColorConstants.ORANGE, ColorConstants.BLACK,
-            ColorConstants.DARK_ORANGE, ColorConstants.LIGHT_BLUE,
-            ColorConstants.GRAY, ColorConstants.BRIGHT_TURQUOISE,
-            ColorConstants.LIGHT_GRAY, ColorConstants.CHERRY,
-            ColorConstants.CONGO_PINK, ColorConstants.COFFFE,
-            ColorConstants.COPPER, ColorConstants.RED,
-            ColorConstants.LIGHTER_GREEN, ColorConstants.INDIAN_RED,
-            ColorConstants.LAVENDER, ColorConstants.LEMON,
-            ColorConstants.BROWN, ColorConstants.LIVER, ColorConstants.LION});
 
     protected DefaultPieDataset pieDataSet;
     protected S searchCriteria;
@@ -118,16 +107,6 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
         }
         // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;
-    }
-
-    @Override
-    public ComponentContainer getWidget() {
-        return this;
-    }
-
-    @Override
-    public void addViewListener(ViewListener listener) {
-
     }
 
     protected abstract DefaultPieDataset createDataset();

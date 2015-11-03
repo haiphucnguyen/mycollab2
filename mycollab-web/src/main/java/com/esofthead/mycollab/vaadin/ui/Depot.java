@@ -135,4 +135,8 @@ public class Depot extends VerticalLayout {
             this.headerContent.removeStyleName("colored-header");
         }
     }
+
+    public ComponentContainer getContent() {
+        return bodyContent;
+    }
 }

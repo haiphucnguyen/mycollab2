@@ -42,6 +42,7 @@ import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDispla
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.ui.format.TaskFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.module.project.view.task.components.TaskTimeLogSheet;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -52,7 +53,7 @@ import java.util.UUID;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-class TaskRowRenderer extends MVerticalLayout {
+ class TaskRowRenderer extends MVerticalLayout {
     private Label taskLinkLbl;
     private SimpleTask task;
 
