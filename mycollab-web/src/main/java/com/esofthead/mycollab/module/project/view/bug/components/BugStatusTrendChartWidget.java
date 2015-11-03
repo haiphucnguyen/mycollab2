@@ -46,7 +46,7 @@ public class BugStatusTrendChartWidget extends Depot {
     private static final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd").withZone(DateTimeZone.UTC);
 
     public BugStatusTrendChartWidget() {
-        super("Issues trend in 30 days", new MVerticalLayout());
+        super("Trend in 30 days", new MVerticalLayout());
         setContentBorder(true);
     }
 
