@@ -27,8 +27,6 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.LocalDate;
-import org.joda.time.Period;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,10 +62,16 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
         Duration period = new Duration(startDate, endDate);
         List<Date> dates = new ArrayList<>();
         long days = period.getStandardDays();
-        for (int i = 0; i < days; i++) {
+        for (int i = 0; i <= days; i++) {
             dates.add(startDate.plusDays(i).toDate());
         }
 
-        return timelineTrackingMapperExt.findTimelineItems(groupVals, dates, criteria);
+        List<GroupItem> items = new ArrayList<>();
+        for (String groupVal : groupVals) {
+            List<GroupItem> timelineItems = timelineTrackingMapperExt.findTimelineItems(groupVal, dates, criteria);
+            items.addAll(timelineItems);
+        }
+
+        return items;
     }
 }

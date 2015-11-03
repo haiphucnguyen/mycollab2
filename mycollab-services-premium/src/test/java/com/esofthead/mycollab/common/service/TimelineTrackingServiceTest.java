@@ -31,7 +31,7 @@ public class TimelineTrackingServiceTest extends IntergrationServiceTest {
         criteria.setSaccountid(new NumberSearchField(1));
         List<GroupItem> timelineItems = timelineTrackingService.findTimelineItems(Arrays.asList(OptionI18nEnum.BugStatus.ReOpened.name(), OptionI18nEnum
                         .BugStatus.Resolved.name()), new GregorianCalendar(2015, 9, 1).getTime(), new
-                        GregorianCalendar(2015, 9, 2).getTime(),
+                        GregorianCalendar(2015, 9, 31).getTime(),
                 criteria);
         System.out.println("A: " + timelineItems);
     }

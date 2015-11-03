@@ -28,6 +28,6 @@ import java.util.List;
  * @since 5.2.2
  */
 public interface TimelineTrackingMapperExt {
-    List<GroupItem> findTimelineItems(@Param("groupVals") List<String> groupVals, @Param("dates") List<Date> dates,
+    List<GroupItem> findTimelineItems(@Param("groupVal") String groupVal, @Param("dates") List<Date> dates,
                                       @Param("searchCriteria") TimelineTrackingSearchCriteria criteria);
 }
