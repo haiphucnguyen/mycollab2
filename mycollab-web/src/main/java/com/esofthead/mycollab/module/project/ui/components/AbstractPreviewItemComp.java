@@ -180,7 +180,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
     private boolean isFavorite() {
         try {
-            return favoriteItemService.isUserFavorite(AppContext.getUsername(), getType(), PropertyUtils.getProperty(beanItem, "id").toString());
+            return favoriteItemService.isUserFavorite(AppContext.getUsername(), getType(),
+                    PropertyUtils.getProperty(beanItem, "id").toString());
         } catch (Exception e) {
             LOG.error("Error while check favorite", e);
             return false;

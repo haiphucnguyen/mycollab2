@@ -36,6 +36,7 @@ public class GenericBeanForm<B> extends CssLayout {
 
     public GenericBeanForm() {
         super();
+        this.setWidth("100%");
     }
 
     public void setFormLayoutFactory(IFormLayoutFactory layoutFactory) {
