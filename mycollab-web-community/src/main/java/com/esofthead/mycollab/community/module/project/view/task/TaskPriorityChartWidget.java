@@ -39,7 +39,7 @@ import java.util.List;
 @ViewComponent
 public class TaskPriorityChartWidget extends PieChartWrapper<TaskSearchCriteria> implements ITaskPriorityChartWidget {
     public TaskPriorityChartWidget() {
-        super(OptionI18nEnum.TaskPriority.class, 353800, 280);
+        super(OptionI18nEnum.TaskPriority.class, 350, 280);
     }
 
     @Override

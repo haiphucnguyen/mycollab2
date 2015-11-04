@@ -65,7 +65,7 @@ public class BugStatusTrendChartWidget extends Depot {
         private TimeSeriesCollection dataset;
 
         public BugStatusChartWrapper() {
-            super(380, 280);
+            super(350, 280);
             timelineTrackingService = ApplicationContextUtil.getSpringBean(TimelineTrackingService.class);
         }
 
