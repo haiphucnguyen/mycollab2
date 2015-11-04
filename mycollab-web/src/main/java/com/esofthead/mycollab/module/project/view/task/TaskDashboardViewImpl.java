@@ -45,11 +45,13 @@ import com.esofthead.mycollab.reporting.RpFieldsBuilder;
 import com.esofthead.mycollab.reporting.SimpleReportTemplateExecutor;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
@@ -74,7 +76,7 @@ import java.util.Map;
  * @since 1.0
  */
 @ViewComponent
-public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskDashboardView {
+public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashboardView {
     private static final long serialVersionUID = 1L;
 
     static final String DESCENDING = "Descending";
@@ -273,6 +275,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
         rightColumn = new MVerticalLayout().withWidth("350px").withMargin(new MarginInfo(true, false, false, false));
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
+        this.with(taskSearchPanel, mainLayout);
     }
 
     @Override
@@ -289,13 +292,7 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
         super.detach();
     }
 
-    private void constructUI() {
-        this.with(taskSearchPanel, mainLayout);
-    }
-
-    @Override
-    protected void displayView() {
-        constructUI();
+    public void displayView() {
         baseCriteria = new TaskSearchCriteria();
         baseCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
@@ -313,24 +310,29 @@ public class TaskDashboardViewImpl extends AbstractLazyPageView implements TaskD
     }
 
     private void displayTaskStatistic() {
-        rightColumn.removeAllComponents();
-        TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
-        TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
-        timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
-        rightColumn.addComponent(taskStatusTrendChartWidget);
+        AsyncInvoker.access(new AsyncInvoker.PageCommand() {
+            @Override
+            public void run() {
+                rightColumn.removeAllComponents();
+                TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
+                TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
+                timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+                taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
+                rightColumn.addComponent(taskStatusTrendChartWidget);
 
-        UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
-        unresolvedTaskByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
-        rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
+                UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
+                unresolvedTaskByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
+                rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
 
-        UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
-        unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
-        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
+                UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
+                unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
+                rightColumn.addComponent(unresolvedTaskByPriorityWidget);
 
-        UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
-        unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
-        rightColumn.addComponent(unresolvedTaskByStatusWidget);
+                UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
+                unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
+                rightColumn.addComponent(unresolvedTaskByStatusWidget);
+            }
+        });
     }
 
     @Override
