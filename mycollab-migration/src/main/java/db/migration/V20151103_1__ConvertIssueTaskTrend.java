@@ -18,6 +18,7 @@ public class V20151103_1__ConvertIssueTaskTrend implements SpringJdbcMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
         jdbcTemplate.update("delete from s_timeline_tracking");
+        jdbcTemplate.execute("ALTER TABLE `s_timeline_tracking` ADD COLUMN `flag` TINYINT(2) NOT NULL DEFAULT 1;");
         createTimelineOfBugs(jdbcTemplate);
         createTimelineOfTasks(jdbcTemplate);
     }
@@ -42,8 +43,8 @@ public class V20151103_1__ConvertIssueTaskTrend implements SpringJdbcMigration {
             Integer sAccountId = (Integer) row.get("sAccountId");
 
             jdbcTemplate.update("insert s_timeline_tracking(type, typeid, fieldval, extratypeid, sAccountId, forDay, " +
-                            "fieldgroup) values (?,?,?,?,?,?,?)",
-                    ProjectTypeConstants.BUG, id, status, projectid, sAccountId, lastUpdatedTime.toDate(), "status");
+                            "fieldgroup, flag) values (?,?,?,?,?,?,?, ?)",
+                    ProjectTypeConstants.BUG, id, status, projectid, sAccountId, lastUpdatedTime.toDate(), "status", 1);
         }
     }
 
@@ -67,8 +68,8 @@ public class V20151103_1__ConvertIssueTaskTrend implements SpringJdbcMigration {
             Integer sAccountId = (Integer) row.get("sAccountId");
 
             jdbcTemplate.update("insert s_timeline_tracking(type, typeid, fieldval, extratypeid, sAccountId, forDay, " +
-                            "fieldgroup) values (?,?,?,?,?,?,?)",
-                    ProjectTypeConstants.TASK, id, status, projectid, sAccountId, lastUpdatedTime.toDate(), "status");
+                            "fieldgroup, flag) values (?,?,?,?,?,?,?,?)",
+                    ProjectTypeConstants.TASK, id, status, projectid, sAccountId, lastUpdatedTime.toDate(), "status", 1);
         }
     }
 

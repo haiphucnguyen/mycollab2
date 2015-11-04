@@ -61,7 +61,7 @@
             resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
             #repeat(${_parameter.dates} $date "UNION" "" "")
                 SELECT s_timeline_tracking.fieldval AS groupid,
-                    (SELECT COUNT(*) FROM s_timeline_tracking AS temp_tbl WHERE
+                    (SELECT COALESCE(SUM(temp_tbl.flag), 0) FROM s_timeline_tracking AS temp_tbl WHERE
                            temp_tbl.fieldval = s_timeline_tracking.fieldval
                            AND temp_tbl.forDay &lt;= @{date}
                            <include refid="queryTempSearchCriteria"/>) AS value,
