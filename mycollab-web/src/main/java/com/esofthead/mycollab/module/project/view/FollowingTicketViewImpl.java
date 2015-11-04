@@ -134,7 +134,6 @@ public class FollowingTicketViewImpl extends AbstractPageView implements Followi
         contentWrapper.addComponent(searchPanel);
 
         this.ticketTable = new FollowingTicketTableDisplay();
-        this.ticketTable.addStyleName("full-border-table");
         this.ticketTable.setMargin(new MarginInfo(true, false, false, false));
         contentWrapper.addComponent(this.ticketTable);
     }

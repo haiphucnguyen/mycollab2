@@ -51,8 +51,6 @@ public class UIConstants {
     public static final String MULTI_SELECT_BG = "multiselect";
     public static final String WORD_WRAP = "wordWrap";
     public static final String TEXT_ELLIPSIS = "text-ellipsis";
-    public static final String TEXT_BLUE = "bluetxt";
-    public static final String LABEL_CHECKED = "has-checkmark";
     public static final String BTN_ACTIVE = "btn-group-default";
     public static final String TEXT_LOG_HOURS = "text-log-hours";
     public static final String TEXT_LOG_HOURS_TOTAL = "text-log-hours-total";
