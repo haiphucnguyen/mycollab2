@@ -23,6 +23,7 @@ import com.esofthead.mycollab.common.event.TimelineTrackingUpdateEvent;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfoMap;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
+import com.esofthead.mycollab.common.service.TimelineTrackingService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -105,7 +106,8 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
                 }
                 Integer bugId = super.saveWithSession(record, username);
                 asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
-                        ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService.class}));
+                        ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService
+                        .class, TimelineTrackingService.class}));
 
                 asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, bugId, "status", record.getStatus(),
                         record.getProjectid(), record.getSaccountid()));
@@ -125,7 +127,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
     public Integer updateWithSession(BugWithBLOBs record, String username) {
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService.class,
-                ItemTimeLoggingService.class}));
+                ItemTimeLoggingService.class, TimelineTrackingService.class}));
         asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), "status", record.getStatus(),
                 record.getProjectid(), record.getSaccountid()));
         return super.updateWithSession(record, username);
@@ -135,7 +137,7 @@ public class BugServiceImpl extends DefaultService<Integer, BugWithBLOBs, BugSea
     public Integer updateSelectiveWithSession(BugWithBLOBs record, String username) {
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectMemberService.class, ProjectActivityStreamService.class,
-                ItemTimeLoggingService.class}));
+                ItemTimeLoggingService.class, TimelineTrackingService.class}));
         asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.BUG, record.getId(), "status", record.getStatus(),
                 record.getProjectid(), record.getSaccountid()));
         return super.updateSelectiveWithSession(record, username);
