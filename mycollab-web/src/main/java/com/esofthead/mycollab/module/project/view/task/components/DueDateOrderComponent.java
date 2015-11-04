@@ -99,6 +99,7 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
         private void initComponent() {
             this.setMargin(new MarginInfo(true, false, true, false));
             wrapBody = new CssLayout();
+            wrapBody.setWidth("100%");
             wrapBody.setStyleName("tasklist");
             headerLbl = new Label();
             headerLbl.addStyleName("h2");

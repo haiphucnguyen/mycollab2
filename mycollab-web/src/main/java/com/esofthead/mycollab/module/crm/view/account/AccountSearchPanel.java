@@ -89,7 +89,7 @@ public class AccountSearchPanel extends DefaultGenericSearchPanel<AccountSearchC
 
         @Override
         public ComponentContainer constructHeader() {
-            return constructHeader();
+            return AccountSearchPanel.this.constructHeader();
         }
 
         @Override
