@@ -44,17 +44,16 @@ public class DateInfoComp extends MVerticalLayout {
 
     public void displayEntryDateTime(ValuedBean bean) {
         this.removeAllComponents();
-        this.withMargin(new MarginInfo(false, false, false, true));
+        this.withSpacing(false).withMargin(new MarginInfo(false, false, false, true));
         Label dateInfoHeader = new Label(FontAwesome.CALENDAR.getHtml() + " " +
                 AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_DATES), ContentMode.HTML);
         dateInfoHeader.setStyleName("info-hdr");
         this.addComponent(dateInfoHeader);
 
-        MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true))
+        MVerticalLayout layout = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, false, true))
                 .withWidth("100%");
         try {
-            Date createdDate = (Date) PropertyUtils.getProperty(bean,
-                    "createdtime");
+            Date createdDate = (Date) PropertyUtils.getProperty(bean, "createdtime");
             ELabel createdDateLbl = new ELabel(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_DATE,
                     DateTimeUtils.getPrettyDateValue(createdDate, AppContext.getUserLocale()))).withDescription(
                     AppContext.formatDateTime(createdDate));

@@ -46,7 +46,7 @@ public abstract class TimeLogComp<B extends ValuedBean> extends MVerticalLayout 
 
     protected TimeLogComp() {
         this.itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
-        this.withMargin(new MarginInfo(false, false, false, true));
+        this.withMargin(new MarginInfo(false, false, false, true)).withSpacing(false);
 
         HorizontalLayout header = new MHorizontalLayout();
 
@@ -71,7 +71,8 @@ public abstract class TimeLogComp<B extends ValuedBean> extends MVerticalLayout 
 
         this.addComponent(header);
 
-        MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(false, false, false, true));
+        MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withSpacing(false).withMargin(new MarginInfo
+                (false, false, false, true));
 
         billableHoursLbl = new Label();
         nonBillableHoursLbl = new Label();

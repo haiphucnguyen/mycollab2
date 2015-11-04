@@ -60,7 +60,6 @@ import java.util.List;
  */
 public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(ProjectFollowersComp.class);
 
     protected MonitorItemService monitorItemService;
@@ -74,6 +73,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 
     public ProjectFollowersComp(String type, String permissionItem) {
         super();
+        withSpacing(false).withMargin(new MarginInfo(false, false, false, true));
         monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
         this.type = type;
         this.permissionItem = permissionItem;
@@ -82,9 +82,8 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
     public void displayFollowers(final V bean) {
         this.bean = bean;
         this.removeAllComponents();
-        this.withMargin(new MarginInfo(false, false, false, true));
 
-        MHorizontalLayout header = new MHorizontalLayout();
+        MHorizontalLayout header = new MHorizontalLayout().withSpacing(false);
         Label followerHeader = new Label(FontAwesome.EYE.getHtml() + " " +
                 AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS), ContentMode.HTML);
         followerHeader.setStyleName("info-hdr");
