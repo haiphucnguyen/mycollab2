@@ -90,7 +90,7 @@ public class ThemeManager {
             extraStyles.append(".v-progressbar.medium .v-progressbar-indicator { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
 
-            extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { background-color: #"
+            extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
 
             extraStyles.append(".sidebar-menu .v-button:hover {background-color: #" + accountTheme
@@ -119,8 +119,7 @@ public class ThemeManager {
         }
 
         if (accountTheme.getTabsheetbgselected() != null) {
-            extraStyles.append(".project-info { background-color: #"
-                    + accountTheme.getTabsheetbgselected() + "; }");
+            extraStyles.append(".project-info { background-color: #" + accountTheme.getTabsheetbgselected() + "; }");
 
 
             extraStyles.append(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
@@ -317,7 +316,7 @@ public class ThemeManager {
         }
 
         if (accountTheme.getVtabsheetbgselected() != null) {
-            demoExtraStyles.append(".example-block .vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap { background-color: #"
+            demoExtraStyles.append(".example-block .vertical-tabsheet .v-button-tab.tab-selected { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
         }
 

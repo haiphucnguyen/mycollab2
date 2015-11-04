@@ -153,10 +153,11 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
     private CustomLayout createTopMenu() {
         headerLayout = CustomLayoutExt.createLayout("topNavigation");
         headerLayout.setStyleName("topNavigation");
-        headerLayout.setHeight("40px");
+        headerLayout.setHeight("45px");
         headerLayout.setWidth("100%");
 
         final PopupButton modulePopup = new PopupButton("");
+        modulePopup.setHeightUndefined();
         modulePopup.setDirection(Alignment.BOTTOM_LEFT);
         modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppContext.getBillingAccount().getLogopath(), 150));
         OptionPopupContent modulePopupContent = new OptionPopupContent().withWidth("160px");
@@ -202,10 +203,10 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         });
         modulePopupContent.addOption(peopleBtn);
 
-        headerLayout.addComponent(modulePopup, "mainLogo");
+        headerLayout.addComponent(new MHorizontalLayout().with(modulePopup).withAlign(modulePopup, Alignment.MIDDLE_LEFT), "mainLogo");
 
         MHorizontalLayout accountLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false));
-        accountLayout.setHeight("40px");
+        accountLayout.setHeight("45px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.site) {

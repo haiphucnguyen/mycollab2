@@ -4,111 +4,11 @@
   }
 
   .v-button {
-    &:focus {
-      background-color: #52684B;
+    height: 29px;
+    box-shadow: none;
+    &:focus:after {
+      box-shadow:none;
     }
-    &:active .v-button-wrap {
-      border-color: #43533E;
-    }
-  }
-
-  .v-button-down .v-button-wrap {
-    border-color: #43533E;
-  }
-
-  .v-disabled.v-button {
-    &:focus .v-button-wrap, &:active .v-button-wrap {
-      background-position: left top;
-    }
-  }
-
-  .v-disabled.v-button-default {
-    border-color: #495972;
-    &:focus, &:active {
-      border-color: #495972;
-    }
-  }
-
-  .v-button-default:focus {
-    background-color: #566C8F;
-  }
-
-  .v-button-default:active .v-button-wrap {
-    border-color: #566C8F;
-  }
-
-  .v-button-default {
-    border-color: #495972;
-    background-color: #6482B3;
-    color: #F4F4F5;
-  }
-
-  .v-disabled.v-button-default {
-    background-color: #6482B3;
-    color: #F4F4F5;
-    &:focus {
-      background-color: #6482B3;
-      color: rgb(244, 244, 245);
-    }
-  }
-
-  .v-button-default:active {
-    background-color: #6482B3;
-    color: #F4F4F5;
-  }
-
-  div.v-button-down:active {
-    background-color: #818181;
-  }
-
-  .v-button:focus {
-    background-color: #A1A1A1;
-  }
-
-  .v-button-down .v-button-wrap {
-    border-color: $border-color;
-  }
-
-  .v-button-default {
-    border-color: #2E5A84;
-  }
-
-  .v-disabled.v-button-default {
-    border-color: #2E5A84;
-    &:focus {
-      border-color: #2E5A84;
-    }
-  }
-
-  .v-button-default:active {
-    border-color: #2E5A84;
-  }
-
-  .v-button-default:focus {
-    background-color: #2D6BA5;
-  }
-
-  .v-button-default:active .v-button-wrap {
-    border-color: #2D6BA5;
-  }
-
-  .v-button-default {
-    background-color: #287ECE;
-    color: #F7F8F9;
-  }
-
-  .v-disabled.v-button-default {
-    background-color: #287ECE;
-    color: #F7F8F9;
-    &:focus {
-      background-color: #287ECE;
-      color: #F7F8F9;
-    }
-  }
-
-  .v-button-default:active {
-    background-color: #287ECE;
-    color: #F7F8F9;
   }
 
   .v-button, .v-button-caption {
@@ -116,7 +16,6 @@
   }
 
   .v-button .v-icon, .v-nativebutton .v-icon {
-    vertical-align: top;
     margin-left: 0px;
   }
 
@@ -133,8 +32,8 @@
     margin: 0px;
     padding: 0px;
     text-align: left;
+    text-decoration: none;
     &:focus, &:active {
-      color: #006dac;
       background-color: transparent;
       border-radius: 0px;
       margin: 0px;
@@ -159,11 +58,6 @@
       color: black;
       text-decoration: line-through;
     }
-    .v-button-wrap {
-      display: inline-block;
-      vertical-align: top;
-      border: 0;
-    }
     &.v-button-wordWrap {
       width: 100%;
       .v-button-caption {
@@ -184,24 +78,6 @@
     }
   }
 
-  .v-button {
-    vertical-align: top;
-  }
-
-  .v-button {
-    box-shadow: none;
-  }
-
-  .v-button-wrap {
-    text-overflow: clip;
-    height: auto;
-    background-image: none;
-  }
-
-  .v-button-caption {
-    vertical-align: top;
-  }
-
   .v-disabled.v-button-link {
     color: #006dac;
     margin: 0px;
@@ -212,17 +88,6 @@
   }
 
   body.v-ie .v-pressed.v-button-link {
-    margin: 0px;
-  }
-
-  div.v-button-borderless {
-    margin: 0px;
-    &:focus {
-      margin: 0px;
-    }
-  }
-
-  body.v-ie .v-pressed.v-button-borderless {
     margin: 0px;
   }
 
@@ -254,13 +119,10 @@
   }
 
   .v-button {
-    background-color: #F9F9F9;
     border-width: 0px;
     border-style: solid;
-    border-color: #6a6a6a;
-    border-radius: 2px;
-    background-image: none;
     padding: 0;
+    background-image: none;
   }
 
   .v-ie .v-button {
@@ -275,12 +137,6 @@
   }
 
   .v-button {
-    &:hover .v-button-wrap {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-    &.link:hover .v-button-wrap, .v-button-wrap {
-      background-color: transparent;
-    }
     &.v-button-blankbtn {
       background-color: #FAFAFA;
       border-color: #C8C8C8;
@@ -503,6 +359,7 @@
   div.v-button.button-icon-only, div.v-button.button-icon-only:active, div.v-button.button-icon-only:focus,
      div.v-button.button-icon-only.v-pressed {
     background-color:transparent;
+    height: auto;
     .v-button-wrap {
       padding: 0px;
       &:hover {

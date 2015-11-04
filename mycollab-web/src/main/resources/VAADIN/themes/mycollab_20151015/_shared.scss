@@ -154,7 +154,7 @@
 
   .v-progressbar-wrapper {
     height: 18px;
-    background: none no-repeat 0 0 #f9f9f9;
+    background: none no-repeat 0 0 $background-color;
     border: 1px solid $border-color;
   }
 
@@ -317,20 +317,21 @@
     border: solid 1px $border-color;
     box-shadow: 0 0 14px rgba(0,0,0,0.4);
     .action-wrap {
+      width: 100%;
       .v-button-action {
         background-color:transparent;
         text-align:left;
         .v-button-wrap {
           margin: 0px;
           text-align: left;
-          &:hover {
-            background-color: transparent;
-          }
         }
       }
       .v-disabled.v-button-action {
         border:none;
       }
+    }
+    .action-wrap:hover .v-button-action{
+      color: white;
     }
 
     .v-label.section-header {
@@ -624,20 +625,6 @@
   /* New project button */
   .v-button.add-btn-popup {
     background: transparent;
-    .v-button-wrap {
-      display: table;
-      .v-icon {
-        font-size: 18px;
-      }
-      .v-button-caption, .v-icon {
-        display:table-cell;
-        vertical-align:middle;
-      }
-    }
-
-    &:focus {
-      background: none;
-    }
     &.selected, &:hover {
       border-radius: 2px;
       .v-button-wrap {

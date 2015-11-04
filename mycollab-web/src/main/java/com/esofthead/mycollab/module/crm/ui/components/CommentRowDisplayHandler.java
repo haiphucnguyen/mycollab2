@@ -105,7 +105,6 @@ public class CommentRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleC
         rowLayout.addComponent(messageHeader);
 
         Label messageContent = new SafeHtmlLabel(comment.getComment());
-        messageContent.setStyleName("message-body");
         rowLayout.addComponent(messageContent);
 
         List<Content> attachments = comment.getAttachments();

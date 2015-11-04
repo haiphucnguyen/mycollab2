@@ -191,7 +191,6 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
             rowLayout.addComponent(messageHeader);
 
             SafeHtmlLabel messageContent = new SafeHtmlLabel(message.getMessage());
-            messageContent.setStyleName("message-body");
             rowLayout.addComponent(messageContent);
 
             ResourceService attachmentService = ApplicationContextUtil.getSpringBean(ResourceService.class);

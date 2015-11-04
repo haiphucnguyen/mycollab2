@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -38,8 +39,8 @@ import java.util.UUID;
 public class ProjectMemberBlock extends MVerticalLayout {
     public ProjectMemberBlock(String username, String userAvatarId, String displayName) {
         withMargin(false).withWidth("80px");
-        MButton button = new MButton(UserAvatarControlFactory.createAvatarResource(userAvatarId, 48)).
-                withStyleName(UIConstants.THEME_LINK);
+
+        Image userAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 48, displayName);
 
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
@@ -49,6 +50,6 @@ public class ProjectMemberBlock extends MVerticalLayout {
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         Label userLbl = new Label(div.write(), ContentMode.HTML);
-        with(button, userLbl);
+        with(userAvatar, userLbl);
     }
 }

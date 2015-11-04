@@ -94,7 +94,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         headerLbl.setDescription(project.getDescription());
         headerLbl.addStyleName("header");
         MVerticalLayout headerLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
-        headerLayout.with(headerLbl);
 
         MHorizontalLayout footer = new MHorizontalLayout();
         footer.addStyleName("desc");
@@ -123,7 +122,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 ContentMode.HTML).withDescription("Non billable hours");
         footer.addComponent(nonBillableHoursLbl);
 
-        headerLayout.with(footer);
+        headerLayout.with(headerLbl, footer);
         this.with(headerLayout).expand(headerLayout);
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(false);
@@ -336,8 +335,8 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             controlsBtn.setContent(popupButtonsControl);
             controlsBtn.setWidthUndefined();
 
-            topPanel.with(searchField, controlsBtn).withAlign(searchField, Alignment.MIDDLE_RIGHT).withAlign(controlsBtn,
-                    Alignment.MIDDLE_RIGHT);
+            topPanel.with(searchField, controlsBtn).withAlign(searchField, Alignment.TOP_RIGHT).withAlign(controlsBtn,
+                    Alignment.TOP_RIGHT);
         }
     }
 

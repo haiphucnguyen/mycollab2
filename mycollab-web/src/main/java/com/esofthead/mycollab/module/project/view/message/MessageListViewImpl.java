@@ -158,7 +158,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                     false, false)).withStyleName("message-header");
             VerticalLayout leftHeader = new VerticalLayout();
-            leftHeader.addComponent(new ELabel(labelLink.write(), ContentMode.HTML).withStyleName("h2"));
+            leftHeader.addComponent(new ELabel(labelLink.write(), ContentMode.HTML));
             ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
@@ -202,20 +202,17 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             rowLayout.addComponent(messageHeader);
 
             SafeHtmlLabel messageContent = new SafeHtmlLabel(message.getMessage());
-            messageContent.setStyleName("message-body");
             rowLayout.addComponent(messageContent);
 
             MHorizontalLayout notification = new MHorizontalLayout().withStyleName("notification");
             notification.setSizeUndefined();
             if (message.getCommentsCount() > 0) {
                 MHorizontalLayout commentNotification = new MHorizontalLayout();
-                Label commentCountLbl = new Label(Integer.toString(message.getCommentsCount()));
+                Label commentCountLbl = new Label(Integer.toString(message.getCommentsCount()) + " " + FontAwesome.COMMENTS
+                        .getHtml(), ContentMode.HTML);
                 commentCountLbl.setStyleName("comment-count");
                 commentCountLbl.setSizeUndefined();
                 commentNotification.addComponent(commentCountLbl);
-                final Button commentIcon = new Button(FontAwesome.COMMENTS);
-                commentIcon.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-                commentNotification.addComponent(commentIcon);
                 notification.addComponent(commentNotification);
             }
             ResourceService attachmentService = ApplicationContextUtil.getSpringBean(ResourceService.class);
