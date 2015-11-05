@@ -86,20 +86,6 @@ $v-layout-spacing-vertical: 5px;
     }
   }
 
-  .v-table-header-wrap, .v-table-body, .v-table-resizer {
-    border-color: $my-border-color;
-  }
-
-  div {
-    &.v-table-focus-slot-left, &.v-table-focus-slot-right {
-      border-color: $my-border-color;
-    }
-  }
-
-  .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-    border-color: $my-border-color;
-  }
-
   /* Background border color */
 
   /* Alternate colors */
@@ -199,44 +185,6 @@ $v-layout-spacing-vertical: 5px;
     opacity: 0.8;
   }
 
-  .popupContent {
-    .v-window-contents {
-      background-color: #FFF;
-      > div {
-        overflow: hidden;
-      }
-    }
-    .v-window-outerheader {
-      background-color: $my-panel-background-color;
-      padding: 0;
-      .v-window-header {
-        padding: 12px 30px 12px 10px;
-        font-size: $font-large;
-        color: #525252;
-      }
-    }
-  }
-
-  .v-window-closebox {
-    width: 16px;
-    height: 16px;
-    background-position: 0 0;
-    margin: 7px;
-    &::before {
-      content: 'f00d';
-    }
-  }
-
-  .v-table-body-noselection {
-    height: 100% !important;
-  }
-
-  .v-table-table {
-    th, td {
-      height: 30px;
-    }
-  }
-
   input.v-textfield.v-datefield-textfield {
     border-right: none;
     -webkit-border-top-right-radius: 0;
@@ -245,39 +193,6 @@ $v-layout-spacing-vertical: 5px;
     -moz-border-radius-bottomright: 0;
     border-radius: 2px 0px 0px 2px;
     height: 24px;
-  }
-
-  .folder-tree .v-table-body-wrapper.v-table-body {
-    border-width: 0px 1px 1px 1px;
-    > div {
-      height: auto !important;
-    }
-  }
-
-  .v-table-cell-wrapper {
-    white-space: normal;
-  }
-
-  .v-table-caption-container, .v-table-header-drag {
-    padding-top: 0px;
-    line-height: 18px;
-  }
-
-  .v-table-cell-wrapper .v-button-link.v-button-wordWrap {
-    .v-button-wrap {
-      display: table;
-    }
-    .v-button-caption {
-      display: table-cell;
-    }
-  }
-
-  .v-button .v-button-caption {
-    line-height: 16px;
-  }
-
-  .pagedtable .v-table-header td:last-child .v-table-resizer {
-    border-right-width: 0px;
   }
 
   input.v-textfield-pagedtable-pagefield {
@@ -1002,13 +917,6 @@ $v-layout-spacing-vertical: 5px;
 
   /* End Activity Tabs */
 
-  /* Tabsheet Styles */
-
-  .v-table-cell-wrapper {
-    white-space: normal;
-    padding: 4px 0px;
-  }
-
   .v-tabsheet-tabs {
     background-color: $my-background-color;
   }
@@ -1082,57 +990,8 @@ $v-layout-spacing-vertical: 5px;
 
   /* End Activity Stream Channel*/
 
-  /* New Table */
-  .v-table-header-wrap {
-    height: 30px;
-    background: none no-repeat 0 0 #EEEEEE;
-    border-radius: 0px;
-    border-width: 0px 1px 1px 1px;
-    .v-table-header > div > table {
-      height: 30px;
-      td .v-table-resizer {
-        height: 30px;
-      }
-      td .v-table-caption-container {
-        padding-top: 5px;
-      }
-    }
-    .v-table-caption-container {
-      text-shadow: none;
-      color: rgb(63, 63, 63);
-      font-weight: bold;
-      font-size: $font-normal;
-      cursor: pointer;
-    }
-  }
-
-  .readViewBottomControls .v-table-header-wrap {
-    border-width: 1px;
-  }
-
   .activity-realated-content .v-table-header-wrap {
     border-top-width: 1px;
-  }
-
-  .v-table-table {
-    width: 100%;
-  }
-
-  .v-table-cell-content {
-    vertical-align: top;
-  }
-
-  .v-table-row {
-    background: none repeat scroll 0% 0% #FFF;
-  }
-
-  .v-table-row-odd, .v-table-striped .v-table-row-odd {
-    background: none repeat scroll 0% 0% $my-background-color;
-    border: 5px solid black;
-  }
-
-  .v-table-row-spacer {
-    background: none no-repeat 0 0 #FFF;
   }
 
   /* End New Table */
@@ -1276,37 +1135,6 @@ $v-layout-spacing-vertical: 5px;
   }
 
   /* Popup Window */
-
-  .v-window {
-    background-color: white;
-    border-radius: 2px;
-  }
-
-  .v-window-outerheader {
-    border-bottom: 1px solid $my-border-color;
-    border-radius: 1px;
-    min-height: 23px;
-  }
-
-  div.v-window-header {
-    font-weight: bold;
-    color: #444;
-    text-shadow: none;
-    padding: 3px 0px 0px;
-    text-align: left;
-  }
-
-  .v-window-header .v-icon {
-    padding-right: 3px;
-  }
-
-  .v-window .v-table-header-wrap {
-    border-top: 1px solid $my-border-color;
-    .v-table-caption-container {
-      color: black;
-      text-shadow: 0px 1px 0px #DFDFDF;
-    }
-  }
 
   /* End Popup Window */
 
@@ -1747,10 +1575,6 @@ $v-layout-spacing-vertical: 5px;
   .v-label.h3-dropbox {
     font-size: $font-normal;
     padding: 0px;
-  }
-
-  .v-table-cell-wrapper .v-popupbutton.link .v-popup-indicator {
-    width: 0px !important;
   }
 
   /* NoSubDomainWindow */

@@ -55,8 +55,7 @@ import java.util.GregorianCalendar;
  * @since 1.0
  */
 @ViewComponent
-public class VersionListViewImpl extends AbstractPageView implements
-        VersionListView {
+public class VersionListViewImpl extends AbstractPageView implements VersionListView {
     private static final long serialVersionUID = 1L;
 
     private final VersionSearchPanel versionSearchPanel;

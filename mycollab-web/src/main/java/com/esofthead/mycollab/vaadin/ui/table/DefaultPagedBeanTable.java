@@ -19,6 +19,7 @@ package com.esofthead.mycollab.vaadin.ui.table;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
 
@@ -48,6 +49,8 @@ public class DefaultPagedBeanTable<SearchService extends ISearchableService<S>, 
                                  TableViewField requiredColumn, List<TableViewField> displayColumns) {
         super(type, viewId, requiredColumn, displayColumns);
         this.searchService = searchService;
+        this.addStyleName(ValoTheme.TABLE_SMALL);
+        this.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
     }
 
     @Override
