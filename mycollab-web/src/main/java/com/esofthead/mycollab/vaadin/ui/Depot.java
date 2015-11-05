@@ -45,7 +45,7 @@ public class Depot extends VerticalLayout {
     }
 
     public Depot(Label titleLbl, AbstractOrderedLayout headerElement, ComponentContainer component) {
-        this.setStyleName("depotComp");
+        this.addStyleName("depotComp");
         this.setMargin(false);
         header = new MHorizontalLayout().withHeight("34px").withStyleName("depotHeader");
         bodyContent = component;

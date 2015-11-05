@@ -131,14 +131,14 @@ public class TaskStatusTrendChartWidget extends Depot {
         @Override
         protected final ComponentContainer createLegendBox() {
             final CssLayout mainLayout = new CssLayout();
-            mainLayout.setStyleName("legendBoxContent");
+            mainLayout.addStyleName("legendBoxContent");
             final List series = dataset.getSeries();
 
             for (int i = 0; i < series.size(); i++) {
                 final TimeSeries key = (TimeSeries) series.get(i);
                 int colorIndex = i % CHART_COLOR_STR.size();
                 final Button btnLink = new Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
-                btnLink.addStyleName(UIConstants.THEME_LINK);
+//                btnLink.addStyleName(UIConstants.THEME_LINK);
                 Div div = new DivLessFormatter().appendChild(new Div().setStyle("width:13px;height:13px;" +
                         "background: #" + CHART_COLOR_STR.get(colorIndex)));
                 MHorizontalLayout wrapper = new MHorizontalLayout().withSpacing(false).with(new Label(div.write(), ContentMode.HTML), btnLink);
