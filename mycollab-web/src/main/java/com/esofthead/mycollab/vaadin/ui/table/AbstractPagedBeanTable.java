@@ -37,6 +37,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -400,7 +401,9 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
     private void createTable() {
         tableItem = new Table();
         tableItem.setWidth("100%");
-        tableItem.addStyleName("striped");
+        tableItem.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
+        tableItem.addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
+        tableItem.addStyleName(ValoTheme.TABLE_SMALL);
         tableItem.setSortEnabled(false);
 
         // set column generator
@@ -448,7 +451,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         tableItem.setPageLength(0);
         tableItem.setContainerDataSource(container);
         displayTableColumns();
-        tableItem.setWidth("100%");
 
         if (this.getComponentCount() > 0) {
             final Component component0 = this.getComponent(0);

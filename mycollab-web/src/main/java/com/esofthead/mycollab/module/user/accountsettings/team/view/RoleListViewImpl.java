@@ -45,7 +45,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import java.util.Arrays;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 1.0
  */
@@ -66,7 +65,6 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
         this.searchPanel = new RoleSearchPanel();
         this.listLayout = new VerticalLayout();
         this.with(this.searchPanel, this.listLayout);
-
         this.generateDisplayTable();
     }
 
@@ -85,9 +83,7 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
             public void itemClick(final TableClickEvent event) {
                 final Role role = (Role) event.getData();
                 if ("rolename".equals(event.getFieldName())) {
-                    EventBusFactory.getInstance().post(
-                            new RoleEvent.GotoRead(RoleListViewImpl.this, role
-                                    .getId()));
+                    EventBusFactory.getInstance().post(new RoleEvent.GotoRead(RoleListViewImpl.this, role.getId()));
                 }
             }
         });

@@ -18278,15 +18278,6 @@ div.v-ratingstars-bar {
 	padding-right: 5px;
 }
 
-.v-select-optiongroup {
-	spacing: true;
-}
-
-.v-select-optiongroup .v-select-option {
-	white-space: pre-wrap;
-	line-height: 27px;
-}
-
 .stream-wrapper {
 	background-color: #F5F5F5;
 	padding: 5px;

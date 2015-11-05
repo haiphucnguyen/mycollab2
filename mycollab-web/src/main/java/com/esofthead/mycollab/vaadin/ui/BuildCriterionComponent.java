@@ -36,6 +36,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -102,7 +103,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         filterBox.removeAllComponents();
 
         filterComboBox = new SavedSearchResultComboBox();
-        filterComboBox.setWidth("125px");
         filterBox.addComponent(filterComboBox);
 
         Button saveSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_NEW_FILTER), new Button.ClickListener() {
@@ -122,7 +122,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         filterBox.removeAllComponents();
 
         final TextField queryTextField = new TextField();
-        queryTextField.setWidth("125px");
         filterBox.addComponent(queryTextField);
 
         Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
@@ -242,17 +241,17 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
             if (index == 1) {
                 Label placeHolder = new Label("&nbsp;", ContentMode.HTML);
-                placeHolder.setWidth("60px");
+                placeHolder.setWidth("90px");
                 this.addComponent(placeHolder, 1, 0);
             } else {
                 operatorSelectionBox = new ValueComboBox(false, SearchField.AND, SearchField.OR);
-                operatorSelectionBox.setWidth("60px");
+                operatorSelectionBox.setWidth("90px");
                 this.addComponent(operatorSelectionBox, 1, 0);
             }
 
             buildFieldSelectionBox();
 
-            valueBox = new MVerticalLayout().withMargin(false).withWidth("200px");
+            valueBox = new MVerticalLayout().withMargin(false).withWidth("300px");
 
             deleteBtn = new Button("", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -288,7 +287,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
         @SuppressWarnings({"rawtypes", "unchecked"})
         private void fillSearchFieldInfo(SearchFieldInfo searchFieldInfo) {
-            String width = "200px";
+            String width = "300px";
             if (operatorSelectionBox != null) {
                 operatorSelectionBox.setValue(searchFieldInfo.getPrefixOper());
             }
@@ -370,7 +369,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         private void buildFieldSelectionBox() {
             fieldSelectionBox = new ComboBox();
             fieldSelectionBox.setImmediate(true);
-            fieldSelectionBox.setWidth("125px");
+            fieldSelectionBox.setWidth("200px");
             fieldSelectionBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
             for (Param field : paramFields) {
                 fieldSelectionBox.addItem(field);
@@ -406,14 +405,13 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                             compareSelectionBox.loadData(ConcatStringParam.OPTIONS);
                         }
 
-                        displayAssociateInputField((Param) fieldSelectionBox
-                                .getValue());
+                        displayAssociateInputField((Param) fieldSelectionBox.getValue());
                     }
                 }
             });
 
             compareSelectionBox = new ValueComboBox(false, "");
-            compareSelectionBox.setWidth("120px");
+            compareSelectionBox.setWidth("150px");
             compareSelectionBox.setImmediate(true);
             compareSelectionBox.addValueChangeListener(new ValueChangeListener() {
                 private static final long serialVersionUID = 1L;
@@ -426,7 +424,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         }
 
         private void displayAssociateInputField(Param field) {
-            String width = "200px";
+            String width = "300px";
             String compareItem = (String) compareSelectionBox.getValue();
             valueBox.removeAllComponents();
 

@@ -49,8 +49,6 @@ public class DefaultPagedBeanTable<SearchService extends ISearchableService<S>, 
                                  TableViewField requiredColumn, List<TableViewField> displayColumns) {
         super(type, viewId, requiredColumn, displayColumns);
         this.searchService = searchService;
-        this.addStyleName(ValoTheme.TABLE_SMALL);
-        this.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
     }
 
     @Override
