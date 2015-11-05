@@ -7,6 +7,7 @@ $v-layout-margin-right: 12px;
 $v-layout-margin-bottom: 12px;
 $v-layout-spacing-horizontal: 5px;
 $v-layout-spacing-vertical: 5px;
+$v-font-size: 14px;
 
 @import "../valo/valo";
 @import "global";
@@ -154,30 +155,6 @@ $v-layout-spacing-vertical: 5px;
       vertical-align: top;
       margin-right: 3px;
     }
-  }
-
-  input.v-textfield, textarea.v-textarea, .v-filterselect {
-    background: none no-repeat left top #FFF;
-    border-color: $my-border-color;
-  }
-
-  .v-ie {
-    input.v-textfield, textarea.v-textarea, .v-filterselect {
-      background-color: #FFF;
-      border-color: $my-border-color;
-    }
-  }
-
-  input.v-widget.v-textfield[type="text"], .v-filterselect {
-    height: 25px;
-  }
-
-  .v-widget {
-    font-size: $font-normal;
-  }
-
-  .v-label-h1 {
-    font-size: $font-x-large;
   }
 
   .v-window-modalitycurtain {

@@ -44,7 +44,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.ComponentContainer;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
@@ -143,7 +142,7 @@ public class VersionListViewImpl extends AbstractPageView implements VersionList
 
     @Override
     public HasSearchHandlers<VersionSearchCriteria> getSearchHandlers() {
-        return this.versionSearchPanel;
+        return versionSearchPanel;
     }
 
     private ComponentContainer constructTableActionControls() {

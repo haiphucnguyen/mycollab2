@@ -403,7 +403,6 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
         tableItem.setWidth("100%");
         tableItem.addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
         tableItem.addStyleName(ValoTheme.TABLE_NO_HORIZONTAL_LINES);
-        tableItem.addStyleName(ValoTheme.TABLE_SMALL);
         tableItem.setSortEnabled(false);
 
         // set column generator
