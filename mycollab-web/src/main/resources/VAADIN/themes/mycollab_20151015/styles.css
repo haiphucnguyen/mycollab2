@@ -2559,11 +2559,11 @@ a.v-disabled {
 }
 
 .v-tooltip {
-	background-color: #323232;
-	background-color: rgba(50, 50, 50, 0.9);
+	background-color: #fdfdee;
+	background-color: #FDFDEE;
 	-webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-	color: white;
+	color: black;
 	padding: 4px 8px;
 	border-radius: 3px;
 	max-width: 35em;
@@ -10660,11 +10660,11 @@ tbody.v-drag-element tr {
 }
 
 .v-slider-feedback {
-	background-color: #323232;
-	background-color: rgba(50, 50, 50, 0.9);
+	background-color: #fdfdee;
+	background-color: #FDFDEE;
 	-webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-	color: white;
+	color: black;
 	padding: 4px 8px;
 	border-radius: 3px;
 	max-width: 35em;
@@ -14084,6 +14084,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	border: 1px solid #CFCFCF;
 	outline-color: #CFCFCF;
 	outline: none;
+	max-width: 70em;
 }
 
 .v-tooltip-text tr {
@@ -15814,6 +15815,7 @@ div.v-button.token-field:hover {
 	margin-top: 10px;
 	border: solid #CFCFCF 1px;
 	background-color: #FFF;
+	width: 100%;
 }
 
 .tasklist .taskrow {

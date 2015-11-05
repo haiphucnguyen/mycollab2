@@ -33,7 +33,7 @@ public class TooltipBuilder {
         div = new Div();
         div.setStyle("font: 12px Arial, Verdana, Helvetica, sans-serif !important;line-height: normal;");
         table = new Table();
-        table.setStyle("padding-left:10px; width:550px; color: white; font-size:11px;");
+        table.setStyle("padding-left:10px; width:550px; color: black; font-size:11px;");
         div.appendChild(table);
     }
 
