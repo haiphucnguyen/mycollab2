@@ -2324,6 +2324,10 @@ span.block {
 	border-color: #CFCFCF;
 }
 
+.v-filterselect-suggestpopup .gwt-MenuItem-selected {
+	background-image: none;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -13726,12 +13730,8 @@ div.v-button-down:active {
 	margin: 0px;
 }
 
-.v-button.v-button-link:focus .v-button-caption, .v-button.v-button-link:active .v-button-caption {
-	border: none;
-	margin: 0px;
-}
-
 .v-button.v-button-link .v-button-caption {
+	margin: 0px;
 	text-decoration: none;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
@@ -13887,10 +13887,6 @@ body.v-ie .v-pressed.v-button-link {
 	background-color: transparent;
 }
 
-div.v-button.bold  > .v-button-wrap, div.v-button.bold:active > .v-button-wrap, div.v-button.bold:focus > .v-button-wrap {
-	font-weight: bold;
-}
-
 .v-button-wordWrap .v-button-wrap img {
 	vertical-align: bottom;
 }
@@ -13945,11 +13941,6 @@ div.v-button.bold  > .v-button-wrap, div.v-button.bold:active > .v-button-wrap, 
 	padding-right: 3px;
 }
 
-.v-ie .splitbutton .v-popupbutton .v-button-wrap {
-	padding-left: 3px;
-	padding-right: 3px;
-}
-
 div.v-button-nonPopupIndicator div.v-popup-indicator {
 	display: none;
 }
@@ -13975,41 +13966,6 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .v-splitbutton .v-popupbutton.greenbtn:active, .v-splitbutton .v-popupbutton.greenbtn:focus, .v-splitbutton .v-popupbutton.graybtn:active, .v-splitbutton .v-popupbutton.graybtn:focus {
 	padding: 3px 7px 3px 2px;
-}
-
-.v-popupbutton .v-button-wrap * {
-	float: none;
-}
-
-div .v-popupbutton .v-popup-indicator {
-	background-position: -7px -10px !important;
-	width: 18px;
-}
-
-.v-popupbutton .v-button-caption:before {
-	content: "";
-	display: inline-block;
-}
-
-.v-ie .v-popupbutton .v-button-wrap, .v-ie .v-popupbutton:active .v-button-wrap, .v-ie .v-popupbutton:focus .v-button-wrap {
-	padding: 6px 3px;
-}
-
-.v-popupbutton .v-button-wrap, .v-popupbutton:active .v-button-wrap {
-	padding: 6px 3px;
-}
-
-.v-popupbutton.h2 .v-button-wrap .v-button-caption {
-	font-size: 14px;
-	font-weight: bold;
-	color: #222222;
-}
-
-.v-popupbutton-popup.v-popupbutton-popup-select-bg {
-	background-color: #FFF;
-	border: 1px solid #A8A8A8;
-	border-radius: 0px;
-	padding: 0px;
 }
 
 .v-button.small-padding.v-pressed .v-button-wrap, .v-button.small-padding .v-button-wrap {
@@ -14047,10 +14003,6 @@ div.v-button.button-icon-only .v-button-wrap .v-icon.FontAwesome, div.v-button.b
 
 div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-button.button-icon-only:active .v-button-wrap .v-popup-indicator::before, div.v-button.button-icon-only:focus .v-button-wrap .v-popup-indicator::before, div.v-button.button-icon-only.v-pressed .v-button-wrap .v-popup-indicator::before {
 	content: "";
-}
-
-.v-popupbutton .v-popup-indicator:before {
-	margin: 0px !important;
 }
 
 .v-button-link.block {
@@ -14891,6 +14843,10 @@ span.block {
 	border-color: #CFCFCF;
 }
 
+.v-filterselect-suggestpopup .gwt-MenuItem-selected {
+	background-image: none;
+}
+
 .crm-module {
 	position: absolute;
 	top: 0;
@@ -15640,22 +15596,10 @@ div.v-csslayout.followers-container .v-checkbox {
 }
 
 .v-button.multiselect {
-	height: 25px;
-	width: 22px;
 	background: none no-repeat 0px 0px transparent;
-	border-radius: 0px 2px 2px 0px;
-	border-width: 1px 1px 1px 0px;
-	border-color: #CFCFCF;
-	position: relative;
-}
-
-.v-button.multiselect .v-button-wrap, .v-button.multiselect:active .v-button-wrap, .v-button.multiselect:hover .v-button-wrap {
-	padding: 0px;
-	margin: 0px;
-	border-width: 0px;
-	height: 100%;
-	border-radius: 0px;
-	background-color: transparent;
+	border-radius: 0px 4px 4px 0px;
+	border: 1px solid #CFCFCF;
+	width: $unit-size;
 }
 
 .v-label.standup-row-content {
@@ -16445,7 +16389,7 @@ button::-moz-focus-inner {
 }
 
 input.noBorderRight {
-	border-radius: 2px 0px 0px 2px;
+	border-radius: 4px 0px 0px 4px;
 }
 
 input:focus {
@@ -17115,14 +17059,6 @@ input.v-textfield-errorField {
 	padding-top: 2px;
 }
 
-.addViewLayout .v-label-h2 {
-	text-shadow: #F0F0F0 0 1px 0;
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
-	color: #454545;
-}
-
 .preview .addViewLayout .addViewBody {
 	padding: 0px;
 }
@@ -17146,16 +17082,15 @@ input.v-textfield-errorField {
 	padding-top: 20px;
 }
 
-.depotComp .v-csslayout-header-wrapper {
-	padding: 7px 10px;
-}
-
 .depotComp .depotHeader {
-	border-width: 1px;
-	border-style: solid;
-	border-color: #CFCFCF;
+	width: 100%;
+	border: 1px solid #CFCFCF;
 	border-radius: 0px;
 	background: none no-repeat 0 0 #f1f1f1;
+}
+
+.depotComp .depot-title {
+	padding: 7px 10px;
 }
 
 .depotComp .depot-title::before {
@@ -17168,20 +17103,6 @@ input.v-textfield-errorField {
 	content: "\f0da";
 	font-family: FontAwesome;
 	font-size: 16px;
-}
-
-.depotHeader .h2 {
-	border: 0px;
-	color: #313131;
-	text-shadow: none;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 16px;
-	cursor: pointer;
-	padding: 0px 0px 0px 5px;
-	word-break: normal;
-	word-wrap: break-word;
-	white-space: normal;
 }
 
 .depotComp .header-elements.v-margin-top {
@@ -17565,38 +17486,15 @@ div.v-csslayout.main-body {
 	line-height: 16px;
 }
 
-.v-label.bold {
-	font-weight: bold;
-}
-
 .photo-cropbox {
 	padding-top: 10px;
 	border-top: 1px solid #8f8f8f;
 }
 
-.legendBoxContent .v-button .v-button-caption {
-	line-height: 25px;
-}
-
-table.legendBox {
-	border-spacing: 0px;
-	border-collapse: collapse;
-	width: 100%;
-	border: 1px solid #CFCFCF;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-table.legendBox .legendBoxContent {
+.legendBoxContent {
 	padding: 0px;
 	background: #F5F5F5;
-}
-
-table.legendBox .legendBoxContent .v-csslayout > div {
-	display: inline-block;
-	zoom: 1;
-	*display: inline;
+	border: 1px solid #CFCFCF;
 }
 
 .chart-wrapper {

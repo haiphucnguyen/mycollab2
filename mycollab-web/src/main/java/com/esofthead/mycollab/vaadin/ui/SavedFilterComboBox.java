@@ -100,6 +100,8 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         componentsText.addStyleName("noBorderRight");
         componentsText.setWidth("100%");
         componentPopupSelection = new PopupButton();
+        componentPopupSelection.addStyleName(UIConstants.MULTI_SELECT_BG);
+        componentPopupSelection.setDirection(Alignment.TOP_LEFT);
         componentPopupSelection.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -115,9 +117,6 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
         MHorizontalLayout content = new MHorizontalLayout().withSpacing(true).with(componentsText)
                 .withAlign(componentsText, Alignment.MIDDLE_LEFT);
 
-        componentPopupSelection.addStyleName(UIConstants.MULTI_SELECT_BG);
-        componentPopupSelection.setWidth("25px");
-        componentPopupSelection.setDirection(Alignment.TOP_LEFT);
 
         MHorizontalLayout multiSelectComp = new MHorizontalLayout().withSpacing(false).with(componentsText,
                 componentPopupSelection).expand(componentsText);

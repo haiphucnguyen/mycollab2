@@ -22,7 +22,6 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -143,15 +142,12 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
 
     @Override
     protected final ComponentContainer createLegendBox() {
-        final CustomLayout boxWrapper = CustomLayoutExt.createLayout("legendBox");
         final CssLayout mainLayout = new CssLayout();
-
         mainLayout.setSizeUndefined();
         final List keys = pieDataSet.getKeys();
 
         for (int i = 0; i < keys.size(); i++) {
-            final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).
-                    withMargin(new MarginInfo(false, false, false, true));
+            MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).withMargin(new MarginInfo(false, false, false, true));
             layout.addStyleName("inline-block");
             layout.setSizeUndefined();
             layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
@@ -191,9 +187,8 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
             layout.with(lblCircle, btnLink);
             mainLayout.addComponent(layout);
         }
-        boxWrapper.setWidth("100%");
-        boxWrapper.addComponent(mainLayout, "legendBoxContent");
-        return boxWrapper;
+        mainLayout.setWidth("100%");
+        return mainLayout;
     }
 
     abstract protected void clickLegendItem(String key);

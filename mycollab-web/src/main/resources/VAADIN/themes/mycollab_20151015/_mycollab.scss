@@ -9,6 +9,8 @@ $v-layout-spacing-horizontal: 5px;
 $v-layout-spacing-vertical: 5px;
 $v-font-size: 13px;
 $v-tooltip-background-color:#FDFDEE;
+$v-textfield-background-color--readonly: $v-textfield-background-color;
+
 
 @import "../valo/valo";
 @import "global";
@@ -97,7 +99,7 @@ $v-tooltip-background-color:#FDFDEE;
 
   input {
     &.noBorderRight {
-      border-radius: 2px 0px 0px 2px;
+      border-radius: $v-border-radius 0px 0px $v-border-radius;
     }
     &:focus {
       background-color: #FFF;
@@ -713,13 +715,6 @@ $v-tooltip-background-color:#FDFDEE;
       line-height: 20px !important;
       padding-top: 2px;
     }
-    .v-label-h2 {
-      text-shadow: #F0F0F0 0 1px 0;
-      padding: 8px 0px 8px 18px;
-      font-size: $font-normal;
-      border-bottom: 1px solid $my-border-color;
-      color: rgb(69, 69, 69);
-    }
   }
 
   .preview .addViewLayout {
@@ -752,18 +747,15 @@ $v-tooltip-background-color:#FDFDEE;
     &.v-margin-top {
       padding-top: 20px;
     }
-    .v-csslayout-header-wrapper {
-      padding: 7px 10px;
-    }
     .depotHeader {
-      border-width: 1px;
-      border-style: solid;
-      border-color: $my-border-color;
+      width: 100%;
+      border: 1px solid $my-border-color;
       border-radius: 0px;
       background: none no-repeat 0 0 $my-panel-background-color;
     }
 
     .depot-title {
+      padding: 7px 10px;
       &::before {
         content:'\f0d7';
         font-family: FontAwesome;
@@ -775,20 +767,6 @@ $v-tooltip-background-color:#FDFDEE;
       font-family:FontAwesome;
       font-size:16px;
     }
-  }
-
-  .depotHeader .h2 {
-    border: 0px;
-    color: #313131;
-    text-shadow: none;
-    font-size: $font-large;
-    font-weight: bold;
-    line-height: 16px;
-    cursor: pointer;
-    padding: 0px 0px 0px 5px;
-    word-break: normal;
-    word-wrap: break-word;
-    white-space: normal;
   }
 
   .depotComp {
@@ -1183,13 +1161,6 @@ $v-tooltip-background-color:#FDFDEE;
 
   /* End Footer */
 
-  /* Bold Label & Button */
-
-  .v-label.bold {
-    font-weight: bold;
-  }
-
-  /* End Bold Label & Button */
 
   /* Photo Cropbox */
 
@@ -1202,27 +1173,10 @@ $v-tooltip-background-color:#FDFDEE;
 
   /* Pie Chart Legend Box */
 
-  .legendBoxContent .v-button .v-button-caption {
-    line-height: 25px;
-  }
-
-  table.legendBox {
-    border-spacing: 0px;
-    border-collapse: collapse;
-    width: 100%;
+  .legendBoxContent {
+    padding: 0px;
+    background: #F5F5F5;
     border: 1px solid $my-border-color;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    .legendBoxContent {
-      padding: 0px;
-      background: #F5F5F5;
-      .v-csslayout > div {
-        display: inline-block;
-        zoom: 1;
-        *display: inline;
-      }
-    }
   }
 
   .chart-wrapper {

@@ -726,4 +726,9 @@
     border-width: 0px 1px 0px 1px;
     border-color: $my-border-color;
   }
+
+  /*Remove default background of combobox*/
+  .v-filterselect-suggestpopup .gwt-MenuItem-selected {
+     background-image: none;
+  }
 }

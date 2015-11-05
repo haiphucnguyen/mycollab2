@@ -127,9 +127,7 @@ public class BugStatusTrendChartWidget extends Depot {
 
         @Override
         protected final ComponentContainer createLegendBox() {
-            final CustomLayout boxWrapper = CustomLayoutExt.createLayout("legendBox");
             final CssLayout mainLayout = new CssLayout();
-
             mainLayout.setSizeUndefined();
             final List series = dataset.getSeries();
 
@@ -146,14 +144,13 @@ public class BugStatusTrendChartWidget extends Depot {
                         + CHART_COLOR_STR.get(colorIndex) + "\" />";
                 final Label lblCircle = new Label(color);
                 lblCircle.setContentMode(ContentMode.HTML);
-                final Button btnLink = new com.vaadin.ui.Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
+                final Button btnLink = new Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
                 btnLink.addStyleName(UIConstants.THEME_LINK);
                 layout.with(lblCircle, btnLink);
                 mainLayout.addComponent(layout);
             }
-            boxWrapper.setWidth("100%");
-            boxWrapper.addComponent(mainLayout, "legendBoxContent");
-            return boxWrapper;
+            mainLayout.setWidth("100%");
+            return mainLayout;
         }
 
         void display(TimelineTrackingSearchCriteria searchCriteria) {

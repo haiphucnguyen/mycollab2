@@ -37,12 +37,9 @@
       background-color: transparent;
       border-radius: 0px;
       margin: 0px;
-      .v-button-caption {
-        border: none;
-        margin: 0px;
-      }
     }
     .v-button-caption {
+      margin: 0px;
       text-decoration: none;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -200,12 +197,6 @@
 
   /* End Background has SELECT icon */
 
-  div.v-button.bold {
-    > .v-button-wrap, &:active > .v-button-wrap, &:focus > .v-button-wrap {
-      font-weight: bold;
-    }
-  }
-
   /* fix Image's alignment in button with word wrap style */
 
   .v-button-wordWrap .v-button-wrap img {
@@ -262,11 +253,6 @@
     }
   }
 
-  .v-ie .splitbutton .v-popupbutton .v-button-wrap {
-    padding-left: 3px;
-    padding-right: 3px;
-  }
-
   div.v-button-nonPopupIndicator div.v-popup-indicator {
     display: none;
   }
@@ -296,49 +282,6 @@
         padding: 3px 7px 3px 2px;
       }
     }
-  }
-
-  .v-popupbutton .v-button-wrap * {
-    float: none;
-  }
-
-  div .v-popupbutton {
-    .v-popup-indicator {
-      background-position: -7px -10px !important;
-      width: 18px;
-    }
-  }
-
-  .v-popupbutton .v-button-caption:before {
-    content: "";
-    display: inline-block;
-  }
-
-  .v-ie {
-    .v-popupbutton {
-      .v-button-wrap, &:active .v-button-wrap, &:focus .v-button-wrap {
-        padding: 6px 3px;
-      }
-    }
-  }
-
-  .v-popupbutton {
-    .v-button-wrap, &:active .v-button-wrap {
-      padding: 6px 3px;
-    }
-  }
-
-  .v-popupbutton.h2 .v-button-wrap .v-button-caption {
-    font-size: $font-large;
-    font-weight: bold;
-    color: rgb(34, 34, 34);
-  }
-
-  .v-popupbutton-popup.v-popupbutton-popup-select-bg {
-    background-color: #FFF;
-    border: 1px solid #A8A8A8;
-    border-radius: 0px;
-    padding: 0px;
   }
 
   .v-button.small-padding {
@@ -372,10 +315,6 @@
         content: "";
       }
     }
-  }
-
-  .v-popupbutton .v-popup-indicator:before {
-    margin: 0px !important;
   }
 
   .v-button-link.block {

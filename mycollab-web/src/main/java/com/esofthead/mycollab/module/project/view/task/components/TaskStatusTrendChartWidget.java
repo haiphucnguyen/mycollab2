@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCrite
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.common.service.TimelineTrackingService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
@@ -30,13 +31,11 @@ import com.esofthead.mycollab.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.CustomLayoutExt;
-import com.vaadin.shared.ui.MarginInfo;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -131,33 +130,22 @@ public class TaskStatusTrendChartWidget extends Depot {
 
         @Override
         protected final ComponentContainer createLegendBox() {
-            final CustomLayout boxWrapper = CustomLayoutExt.createLayout("legendBox");
             final CssLayout mainLayout = new CssLayout();
-
-            mainLayout.setSizeUndefined();
+            mainLayout.setStyleName("legendBoxContent");
             final List series = dataset.getSeries();
 
             for (int i = 0; i < series.size(); i++) {
-                final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).
-                        withMargin(new MarginInfo(false, false, false, true));
-                layout.addStyleName("inline-block");
-                layout.setSizeUndefined();
-                layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-
                 final TimeSeries key = (TimeSeries) series.get(i);
                 int colorIndex = i % CHART_COLOR_STR.size();
-                final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
-                        + CHART_COLOR_STR.get(colorIndex) + "\" />";
-                final com.vaadin.ui.Label lblCircle = new com.vaadin.ui.Label(color);
-                lblCircle.setContentMode(ContentMode.HTML);
-                final com.vaadin.ui.Button btnLink = new com.vaadin.ui.Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
+                final Button btnLink = new Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
                 btnLink.addStyleName(UIConstants.THEME_LINK);
-                layout.with(lblCircle, btnLink);
-                mainLayout.addComponent(layout);
+                Div div = new DivLessFormatter().appendChild(new Div().setStyle("width:13px;height:13px;" +
+                        "background: #" + CHART_COLOR_STR.get(colorIndex)));
+                MHorizontalLayout wrapper = new MHorizontalLayout().withSpacing(false).with(new Label(div.write(), ContentMode.HTML), btnLink);
+                wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+                mainLayout.addComponent(wrapper);
             }
-            boxWrapper.setWidth("100%");
-            boxWrapper.addComponent(mainLayout, "legendBoxContent");
-            return boxWrapper;
+            return mainLayout;
         }
 
         void display(TimelineTrackingSearchCriteria searchCriteria) {
@@ -170,7 +158,7 @@ public class TaskStatusTrendChartWidget extends Depot {
             List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                     CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
             List<String> options = new ArrayList<>();
-            for (OptionVal optionVal: optionVals) {
+            for (OptionVal optionVal : optionVals) {
                 options.add(optionVal.getTypeval());
             }
             groupItems = timelineTrackingService.findTimelineItems(options,
