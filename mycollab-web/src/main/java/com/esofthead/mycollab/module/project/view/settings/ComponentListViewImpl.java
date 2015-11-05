@@ -43,7 +43,6 @@ import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.ComponentContainer;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
@@ -69,14 +68,14 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
         this.componentSearchPanel = new ComponentSearchPanel();
         this.addComponent(this.componentSearchPanel);
 
-        this.componentListLayout = new VerticalLayout();
-        this.addComponent(this.componentListLayout);
+        componentListLayout = new VerticalLayout();
+        this.addComponent(componentListLayout);
 
         this.generateDisplayTable();
     }
 
     private void generateDisplayTable() {
-        this.tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ComponentService.class),
+        tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ComponentService.class),
                 SimpleComponent.class, new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH),
                 Arrays.asList(
                         new TableViewField(ComponentI18nEnum.FORM_NAME, "componentname",
@@ -86,7 +85,7 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION,
                                 "description", 500)));
 
-        this.tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
+        tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -99,8 +98,7 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
 
                     @Override
                     public void valueChange(ValueChangeEvent event) {
-                        ComponentListViewImpl.this.tableItem
-                                .fireSelectItemEvent(component);
+                        tableItem.fireSelectItemEvent(component);
 
                     }
                 });
@@ -110,7 +108,7 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
             }
         });
 
-        this.tableItem.addGeneratedColumn("componentname", new Table.ColumnGenerator() {
+        tableItem.addGeneratedColumn("componentname", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -128,24 +126,21 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
             }
         });
 
-        this.tableItem.addGeneratedColumn("userLeadFullName",
-                new Table.ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("userLeadFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public com.vaadin.ui.Component generateCell(
-                            final Table source, final Object itemId,
-                            final Object columnId) {
-                        SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
-                        return new ProjectUserLink(bugComponent.getUserlead(),
-                                bugComponent.getUserLeadAvatarId(), bugComponent.getUserLeadFullName());
+            @Override
+            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
+                SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+                return new ProjectUserLink(bugComponent.getUserlead(),
+                        bugComponent.getUserLeadAvatarId(), bugComponent.getUserLeadFullName());
 
-                    }
-                });
+            }
+        });
 
-        this.tableItem.setWidth("100%");
-        this.componentListLayout.addComponent(this.constructTableActionControls());
-        this.componentListLayout.addComponent(this.tableItem);
+        tableItem.setWidth("100%");
+        componentListLayout.addComponent(constructTableActionControls());
+        componentListLayout.addComponent(tableItem);
     }
 
     @Override
@@ -161,10 +156,10 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
         layoutWrapper.addStyleName(UIConstants.TABLE_ACTION_CONTROLS);
         layoutWrapper.addComponent(layout);
 
-        this.selectOptionButton = new SelectionOptionButton(this.tableItem);
+        this.selectOptionButton = new SelectionOptionButton(tableItem);
         layout.addComponent(this.selectOptionButton);
 
-        this.tableActionControls = new DefaultMassItemActionHandlerContainer();
+        tableActionControls = new DefaultMassItemActionHandlerContainer();
         if (CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.COMPONENTS)) {
             tableActionControls.addDeleteActionItem();
         }
@@ -174,21 +169,21 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
         tableActionControls.addDownloadExcelActionItem();
         tableActionControls.addDownloadCsvActionItem();
 
-        layout.with(this.tableActionControls, selectedItemsNumberLabel)
+        layout.with(tableActionControls, selectedItemsNumberLabel)
                 .withAlign(selectedItemsNumberLabel, Alignment.MIDDLE_CENTER);
         return layoutWrapper;
     }
 
     @Override
     public void enableActionControls(final int numOfSelectedItems) {
-        this.tableActionControls.setVisible(true);
+        tableActionControls.setVisible(true);
         this.selectedItemsNumberLabel.setValue(AppContext.getMessage(
                 GenericI18Enum.TABLE_SELECTED_ITEM_TITLE, numOfSelectedItems));
     }
 
     @Override
     public void disableActionControls() {
-        this.tableActionControls.setVisible(false);
+        tableActionControls.setVisible(false);
         this.selectOptionButton.setSelectedCheckbox(false);
         this.selectedItemsNumberLabel.setValue("");
     }
@@ -200,16 +195,16 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
 
     @Override
     public HasMassItemActionHandler getPopupActionHandlers() {
-        return this.tableActionControls;
+        return tableActionControls;
     }
 
     @Override
     public HasSelectableItemHandlers<SimpleComponent> getSelectableItemHandlers() {
-        return this.tableItem;
+        return tableItem;
     }
 
     @Override
     public AbstractPagedBeanTable<ComponentSearchCriteria, SimpleComponent> getPagedBeanTable() {
-        return this.tableItem;
+        return tableItem;
     }
 }
