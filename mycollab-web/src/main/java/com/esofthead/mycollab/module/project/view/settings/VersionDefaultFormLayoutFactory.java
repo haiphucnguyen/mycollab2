@@ -46,14 +46,12 @@ public class VersionDefaultFormLayoutFactory {
 
         mainSection.addField(new TextDynaFieldBuilder()
                 .fieldName(Version.Field.description)
-                .displayName(
-                        AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(1).build());
 
         mainSection.addField(new TextDynaFieldBuilder()
                 .fieldName(Version.Field.duedate)
-                .displayName(
-                        AppContext.getMessage(VersionI18nEnum.FORM_DUE_DATE))
+                .displayName(AppContext.getMessage(VersionI18nEnum.FORM_DUE_DATE))
                 .fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.id).displayName(AppContext

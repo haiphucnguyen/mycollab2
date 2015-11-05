@@ -7,7 +7,7 @@ $v-layout-margin-right: 12px;
 $v-layout-margin-bottom: 12px;
 $v-layout-spacing-horizontal: 5px;
 $v-layout-spacing-vertical: 5px;
-$v-font-size: 14px;
+$v-font-size: 13px;
 
 @import "../valo/valo";
 @import "global";
@@ -75,17 +75,6 @@ $v-font-size: 14px;
   /* Application background */
 
   /* Base border color */
-
-  .v-datefield-calendarpanel-header td, .v-slider-base, .v-tabsheet-scrollerNext {
-    border-color: $my-border-color;
-  }
-
-  .v-tabsheet-scrollerNext-disabled {
-    border-color: $my-border-color;
-    &:active {
-      border-color: $my-border-color;
-    }
-  }
 
   /* Background border color */
 
@@ -162,16 +151,6 @@ $v-font-size: 14px;
     opacity: 0.8;
   }
 
-  input.v-textfield.v-datefield-textfield {
-    border-right: none;
-    -webkit-border-top-right-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    -moz-border-radius-topright: 0;
-    -moz-border-radius-bottomright: 0;
-    border-radius: 2px 0px 0px 2px;
-    height: 24px;
-  }
-
   input.v-textfield-pagedtable-pagefield {
     margin-top: 1px;
   }
@@ -183,14 +162,6 @@ $v-font-size: 14px;
     &.noBorderRight {
       border-right-style: none;
     }
-  }
-
-  .v-datefield-button {
-    padding: 3px 0 4px;
-    border-radius: 0px;
-    border: 1px solid $my-border-color;
-    height: 24px;
-    background: url(icons/16/crm/date_btn.png) no-repeat 50%;
   }
 
   /* Top Menu */

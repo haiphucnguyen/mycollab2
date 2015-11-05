@@ -133,7 +133,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
 
                 @Override
                 public void buttonClick(final Button.ClickEvent event) {
-                    VersionBasicSearchLayout.this.nameField.setValue("");
+                    nameField.setValue("");
                 }
             });
             cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
@@ -146,7 +146,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
         protected SearchCriteria fillUpSearchCriteria() {
             searchCriteria = new VersionSearchCriteria();
             searchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
-            searchCriteria.setVersionname(new StringSearchField(this.nameField.getValue().trim()));
+            searchCriteria.setVersionname(new StringSearchField(nameField.getValue().trim()));
             return searchCriteria;
         }
     }
