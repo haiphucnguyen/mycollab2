@@ -73,7 +73,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 
     public ProjectFollowersComp(String type, String permissionItem) {
         super();
-        withSpacing(false).withMargin(new MarginInfo(false, false, false, true));
+        this.withMargin(new MarginInfo(false, false, false, true));
         monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
         this.type = type;
         this.permissionItem = permissionItem;
@@ -83,7 +83,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
         this.bean = bean;
         this.removeAllComponents();
 
-        MHorizontalLayout header = new MHorizontalLayout().withSpacing(false);
+        MHorizontalLayout header = new MHorizontalLayout();
         Label followerHeader = new Label(FontAwesome.EYE.getHtml() + " " +
                 AppContext.getMessage(FollowerI18nEnum.OPT_SUB_INFO_WATCHERS), ContentMode.HTML);
         followerHeader.setStyleName("info-hdr");

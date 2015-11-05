@@ -17,7 +17,7 @@
   }
 
   .colored-gridlayout {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
     .gridform-caption, .gridform-field {
       @include margin-container(8px, 18px, 8px, 18px);
     }
@@ -34,7 +34,7 @@
     }
     .gridform-caption {
       background-color: #F9F9F9;
-      border-left: 1px solid $border-color;
+      border-left: 1px solid $my-border-color;
       border-right: 1px solid #c8c8c8;
       &.first-col {
         border-left: none;
@@ -52,29 +52,17 @@
     padding: 0px;
   }
 
-  .v-filterselect-suggestpopup .gwt-MenuItem {
-    padding: 5px;
-  }
-
-  .v-filterselect-suggestpopup .gwt-MenuItem-selected {
-    width:100%;
-  }
-
   .v-filterselect-suggestmenu table {
     width:100%;
   }
 
-  .historylog-component .bean-list {
-    border-top: 1px solid $border-color;
-  }
-
   .list-row {
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 10px;
     &:nth-child(even) {
-      background-color: $background-color;
+      background-color: $my-background-color;
     }
     &:nth-child(odd) {
       background-color: #FFF;
@@ -85,14 +73,14 @@
   }
 
   .footer-note {
-    color: $meta-color;
+    color: $my-meta-color;
     font-size: $font-small;
     cursor:pointer;
   }
 
   .panel-header {
-    border: 1px solid $border-color;
-    background-color: $panel-background-color;
+    border: 1px solid $my-border-color;
+    background-color: $my-panel-background-color;
     .v-label {
       font-size: $font-large;
       font-weight: bold;
@@ -100,7 +88,7 @@
   }
 
   .panel-body {
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     border-top:0;
   }
 
@@ -154,8 +142,8 @@
 
   .v-progressbar-wrapper {
     height: 18px;
-    background: none no-repeat 0 0 $background-color;
-    border: 1px solid $border-color;
+    background: none no-repeat 0 0 $my-background-color;
+    border: 1px solid $my-border-color;
   }
 
   .v-progressbar-indicator {
@@ -164,7 +152,7 @@
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     margin: -1px;
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
   }
 
   .v-progressbar.medium {
@@ -188,7 +176,7 @@
     padding: 2px;
     border-width: 0px 1px 1px 1px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-radius: 0px 0px 3px 3px;
     background: none no-repeat 0 0 #ffffff;
   }
@@ -197,7 +185,7 @@
     padding: 4px;
     border-width: 1px 0px 0px 0px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-radius: 0px;
     background: none no-repeat 0 0 #ffffff;
   }
@@ -205,7 +193,7 @@
   div.v-button-link {
     &.buttonPaging {
       color: #525252;
-      background-color: $background-color;
+      background-color: $my-background-color;
       .v-button-wrap {
         width: 17px;
         padding: 4px 0px 3px;
@@ -213,11 +201,11 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
-        border: 1px solid $border-color;
+        border: 1px solid $my-border-color;
       }
       &:active .v-button-wrap, &:focus .v-button-wrap {
         padding: 4px 0px 3px;
-        border: 1px solid $border-color;
+        border: 1px solid $my-border-color;
       }
       .v-button-wrap .v-button-caption {
         text-align: center;
@@ -274,7 +262,7 @@
   }
 
   .v-horizontallayout.searchfield {
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -314,7 +302,7 @@
   .optionPopupContent {
     background-color: #ffffff;
     margin:-5px;
-    border: solid 1px $border-color;
+    border: solid 1px $my-border-color;
     box-shadow: 0 0 14px rgba(0,0,0,0.4);
     .action-wrap {
       width: 100%;
@@ -359,21 +347,21 @@
         }
         border-radius: 0px;
         .v-button-wrap {
-          border-left: 1px solid $border-color;
+          border-left: 1px solid $my-border-color;
           border-radius: 0px;
         }
       }
       &.v-button-left {
-        border-radius: 2px 0px 0px 2px;
+        border-radius: $v-border-radius 0px 0px $v-border-radius;
         .v-button-wrap {
           border-right: none;
           border-radius: 0px;
         }
       }
       &.v-button-right {
-        border-radius: 0px 2px 2px 0px;
+        border-radius: 0px $v-border-radius $v-border-radius 0px;
         .v-button-wrap {
-          border-left: 1px solid $border-color;
+          border-left: 1px solid $my-border-color;
           border-radius: 0px;
         }
       }
@@ -439,9 +427,9 @@
     }
 
     .feed-block {
-      background-color: $block-background-color;
+      background-color: $my-block-background-color;
       padding: 3px 10px;
-      border: 1px solid $border-color;
+      border: 1px solid $my-border-color;
       border-radius: 3px;
       position: relative;
       overflow: visible;
@@ -454,7 +442,7 @@
         top: 4px;
         left: -12px;
         border-width: 11px 11px 11px 0;
-        border-color: transparent $border-color;
+        border-color: transparent $my-border-color;
         border-radius: 0px;
       }
       &:after {
@@ -466,13 +454,13 @@
         top: 4px;
         left: -10px;
         border-width: 11px 11px 11px 0;
-        border-color: transparent $block-background-color;
+        border-color: transparent $my-block-background-color;
         border-radius: 0px;
       }
       .stream-wrapper {
         border-width: 1px 0px 0px;
         padding-bottom: 8px;
-        background-color: $block-background-color;
+        background-color: $my-block-background-color;
         &:first-child {
           border-width: 0px;
         }
@@ -512,30 +500,12 @@
     position: relative;
   }
 
-  .v-filterselect .v-icon + input.v-filterselect-input[type="text"] {
-    margin-left: -16px;
-    padding-left: 18px;
-  }
-
   /* Selection */
-  .v-filterselect-button {
-    background: none !important;
-    opacity: 1 !important;
-    margin-right: -16px !important;
-    width: 16px;
-  }
-  .v-filterselect-button::before {
-	font-size: 11px;
-	font-family: FontAwesome;
-	content: '\f078';
-	vertical-align: 2px;
-	margin: 0 0 0 0px;
-	opacity: 0.5;
-  }
+
 
   /* Popup Button */
   div.v-popupbutton-popup {
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     border-radius: 0px;
     box-shadow: none;
     .popupContent {
@@ -545,7 +515,7 @@
 
   div.v-window {
     box-shadow: none;
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
   }
 
   div.v-tree-node-caption div {
@@ -585,7 +555,7 @@
     background-color: #e4f1ff;
     line-height: 22px;
     padding: 0px 5px;
-    color: $meta-color;
+    color: $my-meta-color;
     .v-icon {
       padding: 0px;
     }
@@ -656,7 +626,7 @@
     .header {
       padding: 3px 10px;
       background-color: #f1f1f1;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       .v-label.title {
         font-weight: bold;
         font-size: $font-normal;
@@ -675,7 +645,7 @@
   .wizard {
     .wizard-progress-bar {
       padding: 5px 0px;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       .v-progressbar-indicator {
         background: none;
         background-color: #C2DFFF;
@@ -757,13 +727,13 @@
 
   /* Panel */
   .v-panel-caption {
-    background: $background-color;
-    border: 1px solid $border-color;
+    background: $my-background-color;
+    border: 1px solid $my-border-color;
   }
 
   .v-panel-content {
     border-style: solid;
     border-width: 0px 1px 0px 1px;
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 }

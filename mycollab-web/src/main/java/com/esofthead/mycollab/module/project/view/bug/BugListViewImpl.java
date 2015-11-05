@@ -58,6 +58,7 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -140,7 +141,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         groupWrapLayout.addComponent(new Label("Sort:"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
-        sortCombo.setWidth("100px");
+        sortCombo.addStyleName(ValoTheme.COMBOBOX_TINY);
         sortCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -158,7 +159,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         groupWrapLayout.addComponent(new Label("Group by:"));
         final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
-        groupCombo.setWidth("100px");
+        groupCombo.addStyleName(ValoTheme.COMBOBOX_TINY);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {

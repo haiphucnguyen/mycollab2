@@ -22,7 +22,7 @@
     .container-wrap.main-content {
       .top-panel {
         background-color: #FFF;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $my-border-color;
         padding: 10px 30px;
       }
     }
@@ -44,19 +44,19 @@
     .contentWrapper {
       border-style: solid;
       border-width: 1px 0px 0px 0px;
-      border-color: $border-color;
+      border-color: $my-border-color;
     }
     .projectblock {
       padding: 0px;
       background-color: #FFF;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-width: 0px 1px 1px;
       border-style: solid;
       &:hover {
         @include hover-effect();
       }
       .projectlink-wrapper, .projectlink-wrapper-archived {
-        border-right: 1px solid $border-color;
+        border-right: 1px solid $my-border-color;
 
         padding: 10px 15px 8px;
       }
@@ -80,14 +80,14 @@
       @include margin-container(8px, 15px, 5px, 15px);
     }
     .meta-info {
-      color: $meta-color;
+      color: $my-meta-color;
       font-size: $font-small;
     }
     .status-lbl {
-      color: $meta-color;
+      color: $my-meta-color;
     }
     .v-slot-phase-status-lbl:after {
-      border-top: 3px double $border-color;
+      border-top: 3px double $my-border-color;
       display: block;
       height: 1px;
       content: " ";
@@ -117,7 +117,7 @@
       background: none;
       .v-button-caption {
         font-size: $font-x-large;
-        color: $meta-color;
+        color: $my-meta-color;
         small {
           font-weight: 400;
           font-size: $font-small;
@@ -129,12 +129,12 @@
 
   .prj-list-row {
     background-color: #FFF;
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 0px;
     &:nth-child(even) {
-      background-color: $background-color;
+      background-color: $my-background-color;
     }
     &:nth-child(odd) {
       background-color: #FFF;
@@ -152,14 +152,14 @@
     width: 60px;
     border-right-style: solid;
     border-right-width: 1px;
-    border-right-color: $border-color;
+    border-right-color: $my-border-color;
     background-color:lavenderblush;
     font-weight:bold;
     font-size:$font-large;
   }
 
   .instruction-box {
-    background-color: $block-background-color;
+    background-color: $my-block-background-color;
     padding: 10px;
     -moz-border-radius: 15px;
     border-radius: 15px;
@@ -170,19 +170,19 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border: 1px solid $border-color;
-    background: none no-repeat left top $background-color;
+    border: 1px solid $my-border-color;
+    background: none no-repeat left top $my-background-color;
     border-radius: 0px;
   }
 
   .projectinfo-header, .message-toppanel-header {
     font-size: $font-normal;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
     padding-bottom: 3px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background: none no-repeat left top $panel-background-color;
+    background: none no-repeat left top $my-panel-background-color;
     border-radius: 0px;
   }
 
@@ -207,9 +207,9 @@
   }
 
   .member-preview-form {
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     padding: 30px;
-    background-color: $block-background-color;
+    background-color: $my-block-background-color;
     div.v-csslayout.member-block {
       border-radius: 0px;
       border: none;
@@ -322,11 +322,11 @@
     &:after {
       content: "";
       width: 100%;
-      border-bottom: 1px solid $separator-color;
+      border-bottom: 1px solid $my-separator-color;
       display: block;
     }
     .page-item-block {
-      border-top: 1px solid $separator-color;
+      border-top: 1px solid $my-separator-color;
       padding: 6px 24px 6px 0px;
       .h3 .v-button-caption {
         font-size: $font-large;
@@ -365,15 +365,15 @@
   /* Page Read View */
 
   .page-read-layout {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
   }
 
   .searchitems-layout {
     .project-item-search-box {
-      border-bottom: 1px solid $separator-color;
+      border-bottom: 1px solid $my-separator-color;
       .footer {
         border-style:none;
-        color: $meta-color;
+        color: $my-meta-color;
         font-size: $font-small;
       }
     }
@@ -381,7 +381,7 @@
 
   .footer2 {
     border-style:none;
-    color: $meta-color;
+    color: $my-meta-color;
     font-size: $font-small;
     @include flex-compatible;
   }
@@ -390,7 +390,7 @@
     border-style: solid;
     border-top-style: none;
     border-width: 1px;
-    border-color: $border-color;
+    border-color: $my-border-color;
     .tagbutton {
       margin: 2px;
       &.selected {
@@ -408,7 +408,7 @@
     background: none no-repeat 0px 0px transparent;
     border-radius: 0px 2px 2px 0px;
     border-width: 1px 1px 1px 0px;
-    border-color: $border-color;
+    border-color: $my-border-color;
     position: relative;
     .v-button-wrap, &:active .v-button-wrap, &:hover .v-button-wrap {
       padding: 0px;
@@ -473,10 +473,10 @@
   }
 
   .standup-block {
-    background-color: $background-color;
-    border: 1px solid $border-color;
+    background-color: $my-background-color;
+    border: 1px solid $my-border-color;
     .report-content {
-      border-left: 1px solid $border-color;
+      border-left: 1px solid $my-border-color;
       background-color: #FFF;
       @include margin-container(20px, 20px, 20px, 20px);
       .v-label.h2 {
@@ -499,14 +499,14 @@
     height: 100%;
     border-width: 1px 0px 0px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   .milestone-view-header {
     text-align: center;
-    background: none repeat-x left top $panel-background-color;
+    background: none repeat-x left top $my-panel-background-color;
     height: 30px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
     .v-label {
       font-size: $font-normal;
       font-weight: bold;
@@ -532,7 +532,7 @@
 
   .milestone-box {
     margin-top: 25px;
-    background-color: $block-background-color;
+    background-color: $my-block-background-color;
     border-color: #BEBEBE;
     border-style: solid;
     border-width: 1px 1px 1px 6px;
@@ -546,10 +546,10 @@
 
   .v-slot-roadmap-block {
     padding-left: 20px;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid $my-border-color;
     .meta {
       font-size: $font-small;
-      color: $meta-color;
+      color: $my-meta-color;
     }
   }
 
@@ -557,19 +557,19 @@
 
   .tasklist {
     margin-top: 10px;
-    border: solid $border-color 1px;
+    border: solid $my-border-color 1px;
     background-color:#FFF;
 
     .taskrow {
       padding: 10px;
       border-style: solid;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-width: 0px 0px 1px 0px;
       &:last-child {
         border-style: none;
       }
       &:nth-child(even) {
-        background-color: $background-color;
+        background-color: $my-background-color;
       }
       &:nth-child(odd) {
         background-color: #FFF;
@@ -583,7 +583,7 @@
 
   .bug-component {
     margin-bottom: 5px;
-    background-color: $background-color;
+    background-color: $my-background-color;
     > .v-csslayout-margin {
       border: 1px solid rgba(0, 0, 0, 0.25);
       padding-left: 5px;
@@ -592,7 +592,7 @@
       font-weight: bold;
     }
     .created-time {
-      color: $meta-color;
+      color: $my-meta-color;
       font-size: $font-small;
     }
   }
@@ -601,17 +601,17 @@
 
   .taskgroup-header {
     padding: 7px 10px 7px 18px;
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     background-color: rgb(228, 228, 228);
   }
 
   .taskadd-popup {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
     .popup-header {
       @include margin-container(8px, 0px, 8px, 18px);
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       background-color: floralwhite;
     }
     .popup-footer {
@@ -621,7 +621,7 @@
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       .v-tabsheet-content {
         padding-bottom: 0px;
       }
@@ -633,9 +633,9 @@
   .gantt_container {
     border-style: solid;
     border-width: 1px 1px 0px 0px;
-    border-color: $border-color;
+    border-color: $my-border-color;
     .v-table-header-wrap {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
     }
     > div > div .v-treetable {
       .v-table-footer-wrap {
@@ -701,11 +701,11 @@
         box-shadow: none;
       }
       input.v-widget.v-textfield.v-textfield-focus[type="text"], input.v-widget.v-textfield[type="text"]:hover {
-        border: solid 1px $border-color;
+        border: solid 1px $my-border-color;
         background-color:white;
       }
       border-style: solid;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-width: 0px 1px 1px 0px;
     }
     .v-table-table tr:first-child td.v-table-cell-content {
@@ -713,13 +713,13 @@
     }
     .v-table-table tr:last-child td.v-table-cell-content {
        border-style: solid;
-       border-color: $border-color;
+       border-color: $my-border-color;
        border-width: 0px 1px 0px 0px;
     }
     .v-table-body {
       border-style: solid;
       border-size: 1px;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-width: 0px 1px 1px 1px;
     }
   }

@@ -4,7 +4,7 @@
 @include mycollab-shared;
 
 .stickytooltip {
-  border: 1px solid $border-color;
+  border: 1px solid $my-border-color;
   display: none;
   position: absolute;
   display: none;
@@ -29,5 +29,5 @@ table {
 
 .v-sa .mycollab .v-tooltip {
   outline:none;
-  border-color: $border-color;
+  border-color: $my-border-color;
 }

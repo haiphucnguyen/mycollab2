@@ -18,7 +18,7 @@
 
   .accountViewContainer {
     .addview-layout-body {
-      border: 1px solid $border-color;
+      border: 1px solid $my-border-color;
     }
     .addViewLayout {
       background: none;
@@ -27,7 +27,7 @@
     }
     .container-wrap.main-content .top-panel {
       background-color: #FFF;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       padding: 10px 30px;
     }
   }

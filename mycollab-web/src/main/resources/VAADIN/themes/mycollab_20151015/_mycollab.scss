@@ -1,11 +1,14 @@
+@import "variables";
+
 $v-font-family: Arial, Verdana, Helvetica, sans-serif;
 $v-layout-margin-top: 12px;
 $v-layout-margin-left: 12px;
 $v-layout-margin-right: 12px;
 $v-layout-margin-bottom: 12px;
+$v-layout-spacing-horizontal: 5px;
+$v-layout-spacing-vertical: 5px;
 
 @import "../valo/valo";
-@import "variables";
 @import "global";
 @import "shared";
 
@@ -70,36 +73,31 @@ $v-layout-margin-bottom: 12px;
 
   /* Application background */
 
-  .v-window, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-menubar-submenu {
-    background-color: white;
-    border-radius: 3px;
-  }
-
   /* Base border color */
 
   .v-datefield-calendarpanel-header td, .v-slider-base, .v-tabsheet-scrollerNext {
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   .v-tabsheet-scrollerNext-disabled {
-    border-color: $border-color;
+    border-color: $my-border-color;
     &:active {
-      border-color: $border-color;
+      border-color: $my-border-color;
     }
   }
 
   .v-table-header-wrap, .v-table-body, .v-table-resizer {
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   div {
     &.v-table-focus-slot-left, &.v-table-focus-slot-right {
-      border-color: $border-color;
+      border-color: $my-border-color;
     }
   }
 
   .v-tabsheet-scroller, .v-csslayout-toolbar, .v-menubar {
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   /* Background border color */
@@ -126,27 +124,13 @@ $v-layout-margin-bottom: 12px;
     }
     &:focus {
       background-color: #FFF;
-      border-color: $border-color;
+      border-color: $my-border-color;
     }
   }
 
   textarea:focus {
     background-color: #FFF;
-    border-color: $border-color;
-  }
-
-  /* IE img border fix */
-
-  .v-ie img {
-    border: none;
-  }
-
-  .v-richtextarea {
-    border: 1px solid $border-color;
-  }
-
-  .v-textarea {
-    overflow: auto;
+    border-color: $my-border-color;
   }
 
   .v-label {
@@ -188,13 +172,13 @@ $v-layout-margin-bottom: 12px;
 
   input.v-textfield, textarea.v-textarea, .v-filterselect {
     background: none no-repeat left top #FFF;
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   .v-ie {
     input.v-textfield, textarea.v-textarea, .v-filterselect {
       background-color: #FFF;
-      border-color: $border-color;
+      border-color: $my-border-color;
     }
   }
 
@@ -223,7 +207,7 @@ $v-layout-margin-bottom: 12px;
       }
     }
     .v-window-outerheader {
-      background-color: $panel-background-color;
+      background-color: $my-panel-background-color;
       padding: 0;
       .v-window-header {
         padding: 12px 30px 12px 10px;
@@ -241,12 +225,6 @@ $v-layout-margin-bottom: 12px;
     &::before {
       content: 'f00d';
     }
-  }
-
-  body div > input.v-filterselect-input[type="text"] {
-    height: 16px;
-    line-height: 12px !important;
-    font-size: 12px !important;
   }
 
   .v-table-body-noselection {
@@ -308,7 +286,7 @@ $v-layout-margin-bottom: 12px;
 
   .v-textfield {
     &.v-readonly {
-      border: 1px solid $border-color;
+      border: 1px solid $my-border-color;
     }
     &.noBorderRight {
       border-right-style: none;
@@ -318,7 +296,7 @@ $v-layout-margin-bottom: 12px;
   .v-datefield-button {
     padding: 3px 0 4px;
     border-radius: 0px;
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     height: 24px;
     background: url(icons/16/crm/date_btn.png) no-repeat 50%;
   }
@@ -460,24 +438,24 @@ $v-layout-margin-bottom: 12px;
   }
 
   .time-tracking-summary-search-panel {
-    border: 1px solid $border-color;
-    background-color: $background-color;
+    border: 1px solid $my-border-color;
+    background-color: $my-background-color;
   }
 
   .advSearch {
     .advSearchBody {
-      border: 1px solid $border-color;
-      background-color: $background-color;
+      border: 1px solid $my-border-color;
+      background-color: $my-background-color;
       .v-label {
         text-align: right;
       }
     }
     .advSearchFooterContainer {
       padding: 10px 0px 10px;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-width: 0px 1px 1px;
       border-style: solid;
-      background-color: $background-color;
+      background-color: $my-background-color;
       .advSearchFooter {
         text-align: center;
         div:first-child {
@@ -496,8 +474,8 @@ $v-layout-margin-bottom: 12px;
   /* Basic Search Template */
 
   .basicSearch .basicSearchBody {
-    background-color: $background-color;
-    border: 1px solid $border-color;
+    background-color: $my-background-color;
+    border: 1px solid $my-border-color;
     border-radius: 0;
     > .v-horizontallayout {
       .v-horizontallayout-margin {
@@ -601,7 +579,7 @@ $v-layout-margin-bottom: 12px;
       line-height: normal;
       color: rgb(80, 127, 140);
       padding: 0px 0px 5px;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       text-align: left;
     }
     #form-intro-text {
@@ -812,7 +790,7 @@ $v-layout-margin-bottom: 12px;
   .addViewLayout {
     .addViewBody {
       background-color: #FFF;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-style: solid;
       border-width: 1px 1px 0px;
     }
@@ -820,7 +798,7 @@ $v-layout-margin-bottom: 12px;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       .addNewControl {
         border-bottom: none;
       }
@@ -875,7 +853,7 @@ $v-layout-margin-bottom: 12px;
       text-shadow: #F0F0F0 0 1px 0;
       padding: 8px 0px 8px 18px;
       font-size: $font-normal;
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       color: rgb(69, 69, 69);
     }
   }
@@ -892,7 +870,7 @@ $v-layout-margin-bottom: 12px;
   .addViewLayout .addViewBottomControls {
     border-width: 0px 1px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   /* End Add View Styles */
@@ -916,9 +894,9 @@ $v-layout-margin-bottom: 12px;
     .depotHeader {
       border-width: 1px;
       border-style: solid;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-radius: 0px;
-      background: none no-repeat 0 0 $panel-background-color;
+      background: none no-repeat 0 0 $my-panel-background-color;
     }
 
     .depot-title {
@@ -966,13 +944,13 @@ $v-layout-margin-bottom: 12px;
       box-sizing: border-box;
       display: block;
       &.empty {
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $my-border-color;
       }
     }
   }
 
   .depotContent.bordered {
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-style: solid;
     border-width: 0px 1px 1px 1px;
     background-color: #FFF;
@@ -1032,7 +1010,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .v-tabsheet-tabs {
-    background-color: $background-color;
+    background-color: $my-background-color;
   }
 
   .v-tabsheet-content {
@@ -1041,7 +1019,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   td.v-tabsheet-spacertd div {
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   .v-tabsheet-tabitem {
@@ -1069,7 +1047,7 @@ $v-layout-margin-bottom: 12px;
     padding: 0px;
     border-width: 0px 1px 1px 0px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
   }
 
   .v-tabsheet-tabitemcell {
@@ -1149,7 +1127,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .v-table-row-odd, .v-table-striped .v-table-row-odd {
-    background: none repeat scroll 0% 0% $background-color;
+    background: none repeat scroll 0% 0% $my-background-color;
     border: 5px solid black;
   }
 
@@ -1186,7 +1164,7 @@ $v-layout-margin-bottom: 12px;
       background: none no-repeat left top #FFF;
       border-width: 0px 1px 1px;
       border-style: solid;
-      border-color: $border-color;
+      border-color: $my-border-color;
     }
     .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
       display: inline-block;
@@ -1203,8 +1181,8 @@ $v-layout-margin-bottom: 12px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: $block-background-color;
-    border: 1px solid $border-color;
+    background-color: $my-block-background-color;
+    border: 1px solid $my-border-color;
     border-radius: 5px;
     position: relative;
     overflow: visible;
@@ -1220,7 +1198,7 @@ $v-layout-margin-bottom: 12px;
       left: -11px;
       /* value = - border-left-width - border-right-width */
       border-width: 11px 11px 11px 0;
-      border-color: transparent $border-color;
+      border-color: transparent $my-border-color;
       border-radius: 0px;
     }
     &:after {
@@ -1232,7 +1210,7 @@ $v-layout-margin-bottom: 12px;
       top: 10px;
       left: -10px;
       border-width: 10px 10px 10px 0;
-      border-color: transparent $block-background-color;
+      border-color: transparent $my-block-background-color;
       border-radius: 0px;
     }
   }
@@ -1263,7 +1241,7 @@ $v-layout-margin-bottom: 12px;
 
   .message-header {
     .time-post {
-      color: $meta-color;
+      color: $my-meta-color;
       font-size: $font-small;
     }
     .notification {
@@ -1281,7 +1259,7 @@ $v-layout-margin-bottom: 12px;
 
   .message-body p {
     margin: 4px 0px;
-    color: $meta-color;
+    color: $my-meta-color;
   }
 
   .message .message-footer {
@@ -1305,7 +1283,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .v-window-outerheader {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
     border-radius: 1px;
     min-height: 23px;
   }
@@ -1323,7 +1301,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .v-window .v-table-header-wrap {
-    border-top: 1px solid $border-color;
+    border-top: 1px solid $my-border-color;
     .v-table-caption-container {
       color: black;
       text-shadow: 0px 1px 0px #DFDFDF;
@@ -1367,14 +1345,14 @@ $v-layout-margin-bottom: 12px;
   /* Border Box 2 */
 
   .border-box2 {
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
   }
 
   .v-horizontallayout.border-box2-no-margin {
     background-color: #F5F5F5;
     border-radius: 5px;
     padding: 0px;
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1401,7 +1379,7 @@ $v-layout-margin-bottom: 12px;
 
   .footer {
     width: 100%;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid $my-border-color;
     padding: 5px 5px;
     background-color: #FFF;
     display: block;
@@ -1455,7 +1433,7 @@ $v-layout-margin-bottom: 12px;
     border-spacing: 0px;
     border-collapse: collapse;
     width: 100%;
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1472,7 +1450,7 @@ $v-layout-margin-bottom: 12px;
 
   .chart-wrapper {
     border-width: 0px 1px 1px 1px;
-    border-color: $border-color;
+    border-color: $my-border-color;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1485,7 +1463,7 @@ $v-layout-margin-bottom: 12px;
 
   div.v-csslayout.member-block {
     display: inline-block;
-    background-color: $block-background-color;
+    background-color: $my-block-background-color;
     margin-bottom: 15px;
     font-size: $font-normal;
     vertical-align: top;
@@ -1518,10 +1496,10 @@ $v-layout-margin-bottom: 12px;
       padding-top: 3px;
     }
     .member-email {
-      color: $meta-color;
+      color: $my-meta-color;
       word-wrap: break-word;
       a {
-        color: $meta-color;
+        color: $my-meta-color;
         text-decoration: none;
         font-size: $font-normal;
       }
@@ -1529,7 +1507,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .member-role {
-    color: $meta-color;
+    color: $my-meta-color;
     font-size: $font-normal;
   }
 
@@ -1635,7 +1613,7 @@ $v-layout-margin-bottom: 12px;
     background-color: #E9E9E9;
     -moz-border-radius: 15px;
     border-radius: 5px;
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-width: 1px 1px 2px 1px;
     border-style: solid;
     -moz-box-sizing: border-box;
@@ -1650,29 +1628,7 @@ $v-layout-margin-bottom: 12px;
   /* Richtext Editor */
 
   .v-richtextarea .gwt-RichTextToolbar {
-    background: none no-repeat left top $background-color;
-    border-bottom: 1px solid $border-color;
-    padding: 3px;
-    .gwt-ToggleButton, .gwt-PushButton {
-      background: none;
-    }
-    .gwt-ListBox {
-      margin-right: 3px;
-      background: url('../../themes/base/common/img/sprites.png') no-repeat right -8px #FFF;
-      border: 1px solid $border-color;
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      text-indent: 0.01px;
-      text-overflow: "";
-      padding: 3px 5px;
-      outline: 0px;
-    }
-  }
-
-  /* Mac OS native select fix */
-
-  .v-mac .v-richtextarea .gwt-RichTextToolbar .gwt-ListBox:first-child {
-    margin-left: 2px;
+    background: none no-repeat left top $my-background-color;
   }
 
   /* End Richtext Editor */
@@ -1737,18 +1693,18 @@ $v-layout-margin-bottom: 12px;
     padding: 7px;
     border-width: 0 1px 1px 1px;
     border-style: solid;
-    border-color: $border-color;;
+    border-color: $my-border-color;;
     background-color: #F5F5F5;
   }
 
   .v-label.separator {
-    border-right: 1px solid $border-color;
+    border-right: 1px solid $my-border-color;
   }
 
   .v-label-hr {
     display: block;
     > hr {
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-style: solid;
       border-width: 0px 0px 1px;
       -moz-box-sizing: border-box;
@@ -1820,7 +1776,7 @@ $v-layout-margin-bottom: 12px;
     }
     .warning-message {
       float: left;
-      border-left: 1px dotted $border-color;
+      border-left: 1px dotted $my-border-color;
       height: 97px;
       width: 412px;
       text-align: center;
@@ -1843,7 +1799,7 @@ $v-layout-margin-bottom: 12px;
   .billing-setting {
     border-width: 1px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
     border-radius: 3px;
     background-color: #F5F5F5;
     .faq-layout {
@@ -1857,7 +1813,7 @@ $v-layout-margin-bottom: 12px;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
-      border-left: 2px dotted $border-color;
+      border-left: 2px dotted $my-border-color;
       .faq-header {
         font-weight: bold;
       }
@@ -2070,7 +2026,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .v-label.grayLabel {
-    color: $meta-color;
+    color: $my-meta-color;
   }
 
   /* Cancel Account Page */
@@ -2151,7 +2107,7 @@ $v-layout-margin-bottom: 12px;
     padding: 5px;
     border-width: 0px 1px 1px;
     border-style: solid;
-    border-color: $border-color;
+    border-color: $my-border-color;
     > .v-csslayout-margin {
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -2180,7 +2136,7 @@ $v-layout-margin-bottom: 12px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-color: $background-color;
+    background-color: $my-background-color;
     border: 1px solid rgb(157, 157, 157);
     .headerTitle {
       font-weight: bold;
@@ -2214,7 +2170,7 @@ $v-layout-margin-bottom: 12px;
   /* Custom Field Settings Section */
 
   .customFieldSection {
-    background-color: $background-color;
+    background-color: $my-background-color;
     border: 1px solid rgb(157, 157, 157);
     .header-wrapper {
       background-color: rgb(225, 225, 225);
@@ -2405,7 +2361,7 @@ $v-layout-margin-bottom: 12px;
   .h2-style2 {
     padding: 8px 0px 8px 18px;
     font-size: $font-normal;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
     color: rgb(69, 69, 69);
     font-weight: bold;
   }
@@ -2418,11 +2374,11 @@ $v-layout-margin-bottom: 12px;
           > .v-tabsheet-tabitem {
             border-width: 0px 1px 0px 0px;
             border-style: solid;
-            border-color: $border-color;
+            border-color: $my-border-color;
             position: relative;
             .v-caption {
               padding: 8px 17px 9px;
-              border-bottom: 1px solid $border-color;
+              border-bottom: 1px solid $my-border-color;
               .v-captiontext {
                 font-size: $font-normal;
                 text-shadow: none;
@@ -2475,7 +2431,7 @@ $v-layout-margin-bottom: 12px;
   }
 
   .contactopp-list-header {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
     > .v-expand > .v-slot:first-child .v-label {
       border-left: none;
       padding-left: 0px;
@@ -2483,7 +2439,7 @@ $v-layout-margin-bottom: 12px;
     .v-label {
       font-weight: bold;
       padding: 4px 0px 4px 12px;
-      border-left: 1px solid $border-color;
+      border-left: 1px solid $my-border-color;
     }
   }
 
@@ -2491,7 +2447,7 @@ $v-layout-margin-bottom: 12px;
     &.no-child {
       border-bottom: none;
     }
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $my-border-color;
   }
 
   .contactrole-row {
@@ -2670,7 +2626,7 @@ $v-layout-margin-bottom: 12px;
       }
     }
     .stylecalendar-ext {
-      border-top: 1px solid $border-color;
+      border-top: 1px solid $my-border-color;
       &.v-margin-top {
         padding-top: 10px;
       }
@@ -2718,7 +2674,7 @@ $v-layout-margin-bottom: 12px;
 
   .intro-text-wrap {
     .v-label {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid $my-border-color;
       padding-bottom: 13px;
     }
     &.v-margin-top {
@@ -2735,7 +2691,7 @@ $v-layout-margin-bottom: 12px;
   /* Opportunity Contact Role Edit */
 
   .oppcontact-role-edit .addview-layout-body {
-    border: 1px solid $border-color;
+    border: 1px solid $my-border-color;
   }
 
   /* Bean Block Different Styles */
@@ -2905,7 +2861,7 @@ $v-layout-margin-bottom: 12px;
   .accountViewContainer .theme-customize-view .addview-layout-body {
     border-top: none;
     .h2 {
-      border-top: 1px solid $border-color;
+      border-top: 1px solid $my-border-color;
     }
   }
 
@@ -2934,7 +2890,7 @@ $v-layout-margin-bottom: 12px;
   /* experimental sidebar */
 
   .sidebar-wrap {
-    border-left: 1px solid $border-color;
+    border-left: 1px solid $my-border-color;
     background-color: floralwhite;
   }
 
@@ -2957,11 +2913,11 @@ $v-layout-margin-bottom: 12px;
       background-color: rgb(241, 241, 241);
       font-size: $font-large;
       color: rgb(49, 49, 49);
-      border: 1px solid $border-color;
+      border: 1px solid $my-border-color;
     }
     .block-body {
       border-width: 0px 1px 1px;
-      border-color: $border-color;
+      border-color: $my-border-color;
       border-style: solid;
     }
   }
@@ -3003,14 +2959,14 @@ $v-layout-margin-bottom: 12px;
 
   .text-log-hours {
     text-align: right;
-    color: $meta-color;
+    color: $my-meta-color;
   }
 
   .text-log-hours-total {
     margin-top: 10px;
     text-align: right;
     font-weight: bold;
-    color: $meta-color;
+    color: $my-meta-color;
   }
 
   /* Attachment Block */

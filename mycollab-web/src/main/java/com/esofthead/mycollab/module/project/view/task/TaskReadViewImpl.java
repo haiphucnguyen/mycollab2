@@ -492,7 +492,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
         void displayEntryPeople(ValuedBean bean) {
             this.removeAllComponents();
-            this.withSpacing(false).withMargin(new MarginInfo(false, false, false, true));
+            this.withMargin(new MarginInfo(false, false, false, true));
 
             Label peopleInfoHeader = new Label(FontAwesome.USER.getHtml() + " " +
                     AppContext.getMessage(ProjectCommonI18nEnum.SUB_INFO_PEOPLE), ContentMode.HTML);
@@ -500,7 +500,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             this.addComponent(peopleInfoHeader);
 
             GridLayout layout = new GridLayout(2, 2);
-            layout.setSpacing(false);
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
