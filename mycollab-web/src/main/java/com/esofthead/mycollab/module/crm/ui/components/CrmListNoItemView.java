@@ -55,7 +55,7 @@ public abstract class CrmListNoItemView extends AbstractPageView {
         MHorizontalLayout links = new MHorizontalLayout();
 
         links.addComponent(btCreateContact);
-        btCreateContact.addStyleName(UIConstants.THEME_GREEN_LINK);
+        btCreateContact.addStyleName(UIConstants.BUTTON_ACTION);
 
 		/*
          * Label or = new Label("Or"); or.setStyleName("h2");

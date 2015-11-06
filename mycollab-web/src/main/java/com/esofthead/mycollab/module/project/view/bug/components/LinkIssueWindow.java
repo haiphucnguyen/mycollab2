@@ -129,7 +129,7 @@ public class LinkIssueWindow extends Window {
                         }
                     }
                 });
-                saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 saveBtn.setIcon(FontAwesome.SAVE);
                 saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 

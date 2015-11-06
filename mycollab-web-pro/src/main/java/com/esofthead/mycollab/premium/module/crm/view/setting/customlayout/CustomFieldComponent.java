@@ -81,7 +81,7 @@ public class CustomFieldComponent extends CssLayout {
                         .getValue());
             }
         });
-        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         panelContentLayout.addComponent(saveBtn);
         ((VerticalLayout) fieldEditPanel.getContent()).setComponentAlignment(

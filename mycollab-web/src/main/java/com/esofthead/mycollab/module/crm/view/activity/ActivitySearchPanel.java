@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
@@ -57,7 +56,7 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
         controlsBtn.setSizeUndefined();
         controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CALL)
                 || AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
-        controlsBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        controlsBtn.addStyleName(UIConstants.BUTTON_ACTION);
         controlsBtn.setIcon(FontAwesome.PLUS);
         controlsBtn.setCaption("New Task");
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
@@ -111,12 +110,12 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
                         EventBusFactory.getInstance().post(new ActivityEvent.GotoCalendar(this, null));
                     }
                 });
-        calendarViewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        calendarViewBtn.addStyleName(UIConstants.BUTTON_ACTION);
         viewSwitcher.addButton(calendarViewBtn);
 
         Button activityListBtn = new Button("Activities");
         activityListBtn.setStyleName("selected");
-        activityListBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        activityListBtn.addStyleName(UIConstants.BUTTON_ACTION);
         viewSwitcher.addButton(activityListBtn);
 
         addHeaderRight(viewSwitcher);
@@ -157,7 +156,7 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             searchBtn.addClickListener(new Button.ClickListener() {

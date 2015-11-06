@@ -36,7 +36,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -91,7 +90,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 searchContainer.addComponent(newCriteriaBar);
             }
         });
-        addCriteriaBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        addCriteriaBtn.setStyleName(UIConstants.BUTTON_ACTION);
         addCriteriaBtn.setIcon(FontAwesome.PLUS);
 
         controlsBtn.with(addCriteriaBtn);
@@ -113,7 +112,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 buildSaveFilterBox();
             }
         });
-        saveSearchBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveSearchBtn.addStyleName(UIConstants.BUTTON_ACTION);
         saveSearchBtn.setIcon(FontAwesome.PLUS);
         filterBox.addComponent(saveSearchBtn);
     }
@@ -133,7 +132,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                 saveSearchCriteria(queryText);
             }
         });
-        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         filterBox.addComponent(saveBtn);
 
@@ -682,7 +681,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
 
                         if (filterBox.getComponentCount() <= 3) {
                             Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL));
-                            updateBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                            updateBtn.setStyleName(UIConstants.BUTTON_ACTION);
                             updateBtn.setIcon(FontAwesome.REFRESH);
                             updateBtn.addClickListener(new Button.ClickListener() {
                                 private static final long serialVersionUID = 1L;

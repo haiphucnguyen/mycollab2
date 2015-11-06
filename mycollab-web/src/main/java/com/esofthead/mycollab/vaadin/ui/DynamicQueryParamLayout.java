@@ -75,7 +75,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
                 callSearchAction();
             }
         });
-        searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
         searchBtn.setIcon(FontAwesome.SEARCH);
 
         buttonControls.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_CENTER);

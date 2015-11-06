@@ -193,7 +193,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                         UI.getCurrent().addWindow(new GroupPageAddWindow());
                     }
                 });
-        newGroupBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        newGroupBtn.setStyleName(UIConstants.BUTTON_ACTION);
         newGroupBtn.setIcon(FontAwesome.PLUS);
         newGroupBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
         headerLayout.with(newGroupBtn).withAlign(newGroupBtn, Alignment.MIDDLE_RIGHT);
@@ -207,7 +207,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                         EventBusFactory.getInstance().post(new PageEvent.GotoAdd(this, null));
                     }
                 });
-        newPageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        newPageBtn.setStyleName(UIConstants.BUTTON_ACTION);
         newPageBtn.setIcon(FontAwesome.PLUS);
         newPageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 

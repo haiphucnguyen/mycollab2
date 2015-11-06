@@ -120,7 +120,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
                         }
                     }
                 });
-        updateBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        updateBtn.addStyleName(UIConstants.BUTTON_ACTION);
         updateBtn.setIcon(FontAwesome.REFRESH);
         body.addComponent(updateBtn);
         body.setComponentAlignment(updateBtn, Alignment.BOTTOM_LEFT);

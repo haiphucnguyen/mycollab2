@@ -70,7 +70,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
                     }
                 });
         createCaseBtn.setIcon(FontAwesome.PLUS);
-        createCaseBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createCaseBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createCaseBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CASE));
         this.addHeaderRight(createCaseBtn);
     }
@@ -157,7 +157,7 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             searchBtn.addClickListener(new Button.ClickListener() {

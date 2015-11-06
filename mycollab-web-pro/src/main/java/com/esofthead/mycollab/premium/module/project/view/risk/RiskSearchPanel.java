@@ -53,7 +53,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
                         EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
                     }
                 });
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
         this.addHeaderRight(createBtn);
@@ -103,7 +103,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 

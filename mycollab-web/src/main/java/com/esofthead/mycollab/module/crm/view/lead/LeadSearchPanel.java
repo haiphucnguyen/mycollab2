@@ -73,7 +73,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
                     }
                 });
         createLeadBtn.setIcon(FontAwesome.PLUS);
-        createLeadBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createLeadBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createLeadBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
         this.addHeaderRight(createLeadBtn);
     }
@@ -124,7 +124,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
             layout.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             searchBtn.addClickListener(new Button.ClickListener() {

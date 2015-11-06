@@ -107,7 +107,7 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 

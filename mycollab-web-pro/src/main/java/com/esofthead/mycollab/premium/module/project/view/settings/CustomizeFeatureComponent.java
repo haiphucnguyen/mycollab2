@@ -170,7 +170,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 					}
 				});
 		updateFeaturesBtn.setEnabled(CurrentProjectVariables.isAdmin());
-		updateFeaturesBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		updateFeaturesBtn.setStyleName(UIConstants.BUTTON_ACTION);
 		updateFeaturesBtn.setIcon(FontAwesome.REFRESH);
 		body.addComponent(updateFeaturesBtn);
 		this.addToBody(body);

@@ -102,7 +102,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
         BrowserWindowOpener windowOpenner = oauthWindowOpener();
         windowOpenner.extend(btnLogin);
 
-        btnLogin.addStyleName(UIConstants.THEME_GREEN_LINK);
+        btnLogin.addStyleName(UIConstants.BUTTON_ACTION);
         messageBox.addComponent(btnLogin);
         messageBox.setComponentAlignment(btnLogin, Alignment.MIDDLE_CENTER);
 
@@ -160,7 +160,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
                 DefaultCloudDriveOAuthWindow.this.close();
             }
         });
-        doneBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        doneBtn.addStyleName(UIConstants.BUTTON_ACTION);
         controllGroupBtn.addComponent(doneBtn);
 
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {

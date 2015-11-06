@@ -98,7 +98,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                     }
                 });
                 addBtn.setIcon(FontAwesome.PLUS);
-                addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                addBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 addBtn.setEnabled(canWrite);
                 editButtons.addComponent(addBtn);
             }
@@ -115,7 +115,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                     }
                 });
                 editBtn.setIcon(FontAwesome.EDIT);
-                editBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                editBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 editBtn.setEnabled(canWrite);
                 editButtons.addComponent(editBtn);
             }
@@ -147,7 +147,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                     }
                 });
                 assignBtn.setIcon(FontAwesome.SHARE);
-                assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                assignBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 editButtons.addComponent(assignBtn, 0);
                 assignBtn.setEnabled(canWrite);
             }
@@ -190,7 +190,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 previousItem.setIcon(FontAwesome.CHEVRON_LEFT);
                 previousItem.setCaptionAsHtml(true);
                 previousItem.setWidth("40px");
-                previousItem.setStyleName(UIConstants.THEME_GREEN_LINK);
+                previousItem.setStyleName(UIConstants.BUTTON_ACTION);
                 previousItem.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_PREVIOUS_ITEM));
                 previousItem.setEnabled(canRead);
                 navigationBtns.addButton(previousItem);
@@ -206,7 +206,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 });
                 nextItemBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
                 nextItemBtn.setWidth("40px");
-                nextItemBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                nextItemBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 nextItemBtn.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
                 nextItemBtn.setEnabled(canRead);
 

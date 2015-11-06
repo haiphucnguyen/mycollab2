@@ -146,7 +146,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
         addNewColumnBtn.setIcon(FontAwesome.PLUS);
         addNewColumnBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
-        addNewColumnBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        addNewColumnBtn.setStyleName(UIConstants.BUTTON_ACTION);
         groupWrapLayout.addComponent(addNewColumnBtn);
 
         Button deleteColumBtn = new Button("Delete columns", new Button.ClickListener() {
@@ -556,7 +556,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
             addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-            addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
             root.with(headerLayout, dragLayoutContainer, addNewBtn);
         }
 
@@ -609,7 +609,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         }
                     }
                 });
-                saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override
@@ -681,7 +681,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                     }
                 });
                 saveBtn.setIcon(FontAwesome.SAVE);
-                saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
                 MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(false, true, true, false))
                         .with(cancelBtn, saveBtn);

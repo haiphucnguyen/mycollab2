@@ -135,7 +135,7 @@ public class LogoEditWindow extends Window {
 
             }
         });
-        acceptBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        acceptBtn.setStyleName(UIConstants.BUTTON_ACTION);
         controlBtns.with(acceptBtn);
 
         previewBoxRight.with(controlBtns).withAlign(controlBtns, Alignment.TOP_LEFT);

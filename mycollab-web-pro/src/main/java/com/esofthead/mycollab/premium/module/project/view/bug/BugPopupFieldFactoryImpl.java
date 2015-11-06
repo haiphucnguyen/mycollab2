@@ -16,7 +16,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -181,7 +180,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         refreshBugItem();
                     }
                 });
-                startProgressBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                startProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 startProgressBtn.setEnabled(hasPermission);
 
                 Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
@@ -191,7 +190,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new ResolvedInputWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                resolveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 resolveBtn.setEnabled(hasPermission);
 
                 Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
@@ -201,7 +200,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new WontFixExplainWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                wontFixBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                wontFixBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 wontFixBtn.setEnabled(hasPermission);
                 content.with(startProgressBtn, resolveBtn, wontFixBtn);
             } else if (OptionI18nEnum.BugStatus.InProgress.name().equals(beanItem.getStatus())) {
@@ -215,7 +214,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         refreshBugItem();
                     }
                 });
-                stopProgressBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                stopProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 stopProgressBtn.setEnabled(hasPermission);
 
                 Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
@@ -225,7 +224,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new ResolvedInputWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                resolveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 resolveBtn.setEnabled(hasPermission);
                 content.with(stopProgressBtn, resolveBtn);
             } else if (OptionI18nEnum.BugStatus.Verified.name().equals(beanItem.getStatus())) {
@@ -236,7 +235,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new ReOpenWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 reopenBtn.setEnabled(hasPermission);
                 content.with(reopenBtn);
             } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
@@ -247,7 +246,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new ReOpenWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 reopenBtn.setEnabled(hasPermission);
 
                 Button approveNCloseBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), new Button.ClickListener() {
@@ -257,7 +256,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new ApproveInputWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                approveNCloseBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                approveNCloseBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 approveNCloseBtn.setEnabled(hasPermission);
                 content.with(reopenBtn, approveNCloseBtn);
             } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
@@ -267,7 +266,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                         UI.getCurrent().addWindow(new ReOpenWindow(BugStatusPopupView.this, beanItem));
                     }
                 });
-                reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 reopenBtn.setEnabled(hasPermission);
                 content.with(reopenBtn);
             }

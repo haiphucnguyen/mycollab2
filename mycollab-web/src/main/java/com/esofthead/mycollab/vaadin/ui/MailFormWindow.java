@@ -250,7 +250,7 @@ public class MailFormWindow extends Window {
 			}
 		});
         sendBtn.setIcon(FontAwesome.SEND);
-		sendBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+		sendBtn.setStyleName(UIConstants.BUTTON_ACTION);
 		controlsLayout.addComponent(sendBtn);
 		controlsLayout.setComponentAlignment(sendBtn, Alignment.MIDDLE_RIGHT);
 		mainLayout.addComponent(controlsLayout, 0, 2);

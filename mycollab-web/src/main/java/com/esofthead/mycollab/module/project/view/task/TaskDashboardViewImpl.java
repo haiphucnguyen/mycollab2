@@ -37,7 +37,6 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskGroupI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.bug.components.BugStatusTrendChartWidget;
 import com.esofthead.mycollab.module.project.view.task.components.*;
 import com.esofthead.mycollab.reporting.ReportExportType;
 import com.esofthead.mycollab.reporting.ReportStreamSource;
@@ -50,7 +49,6 @@ import com.esofthead.mycollab.vaadin.events.HasMassItemActionHandler;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -63,7 +61,6 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -189,7 +186,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                 exportSplitBtn.setPopupVisible(true);
             }
         });
-        exportSplitBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        exportSplitBtn.addStyleName(UIConstants.BUTTON_ACTION);
         OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
         Button exportPdfBtn = new Button("PDF");
@@ -222,7 +219,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         newTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         newTaskBtn.setIcon(FontAwesome.PLUS);
         newTaskBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
-        newTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
         groupWrapLayout.addComponent(newTaskBtn);
 
         Button advanceDisplayBtn = new Button();
@@ -376,7 +373,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                     }
                 }
             });
-            moreBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            moreBtn.addStyleName(UIConstants.BUTTON_ACTION);
             wrapBody.addComponent(moreBtn);
         }
         List<SimpleTask> tasks = projectTaskService.findPagableListByCriteria(new SearchRequest<>(baseCriteria, currentPage + 1, 20));

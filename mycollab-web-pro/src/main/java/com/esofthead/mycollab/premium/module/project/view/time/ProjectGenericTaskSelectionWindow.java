@@ -76,7 +76,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
 
         final Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
         searchBtn.setIcon(FontAwesome.SEARCH);
-        searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
         searchBtn.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -86,7 +86,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
                 callSearchAction();
             }
         });
-        searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
         basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
         final Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));

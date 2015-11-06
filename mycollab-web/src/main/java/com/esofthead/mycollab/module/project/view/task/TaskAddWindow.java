@@ -117,7 +117,7 @@ public class TaskAddWindow extends Window {
                     }
                 });
                 saveBtn.setIcon(FontAwesome.SAVE);
-                saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override

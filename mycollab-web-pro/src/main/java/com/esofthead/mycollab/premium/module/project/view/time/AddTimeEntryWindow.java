@@ -149,7 +149,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
                 AddTimeEntryWindow.this.close();
             }
         });
-        saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         controlsLayout.with(cancelBtn, saveBtn);
@@ -206,7 +206,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
                 getUI().addWindow(selectionTaskWindow);
             }
         });
-        attachTaskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        attachTaskBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         taskLayout.addComponent(attachTaskBtn);
     }

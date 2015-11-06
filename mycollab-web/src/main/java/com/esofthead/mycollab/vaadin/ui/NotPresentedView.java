@@ -49,7 +49,7 @@ public class NotPresentedView extends AbstractPageView {
         this.with(label).withAlign(label, Alignment.MIDDLE_CENTER);
 
         Button requestFeatureBtn = new Button("Buy the premium edition");
-        requestFeatureBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        requestFeatureBtn.setStyleName(UIConstants.BUTTON_ACTION);
         BrowserWindowOpener opener = new BrowserWindowOpener("mailto:support@mycollab.com");
         opener.extend(requestFeatureBtn);
         this.addComponent(requestFeatureBtn);

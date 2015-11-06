@@ -74,7 +74,7 @@ public class EntityWithProjectAddHandler {
                     }
                 }
             });
-            nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
             buttonControls.with(cancelBtn, nextBtn);
             this.with(layoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         }

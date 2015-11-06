@@ -62,7 +62,7 @@ public class PopupFieldBuilder {
                 Label infoLbl =  new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
 
                 Button requestFeatureBtn = new Button("Request the premium edition");
-                requestFeatureBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                requestFeatureBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 BrowserWindowOpener opener = new BrowserWindowOpener("mailto:support@mycollab.com");
                 opener.extend(requestFeatureBtn);
 

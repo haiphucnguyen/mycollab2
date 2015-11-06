@@ -56,8 +56,8 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
         private CustomLayout custom;
         private CheckBox rememberMe;
 
-        public LoginFormContainer() {
-
+        LoginFormContainer() {
+            this.setSizeFull();
         }
 
         @Override
@@ -73,7 +73,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
             rememberMe = new CheckBox(AppContext.getMessage(ShellI18nEnum.OPT_REMEMBER_PASSWORD), false);
             custom.addComponent(rememberMe, "rememberMe");
 
-            loginBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            loginBtn.setStyleName(UIConstants.BUTTON_ACTION);
             loginBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
             custom.addComponent(loginBtn, "loginButton");
 

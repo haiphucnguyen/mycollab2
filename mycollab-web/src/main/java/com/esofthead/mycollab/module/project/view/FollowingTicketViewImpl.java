@@ -95,7 +95,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements Followi
             }
         });
 
-        backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        backBtn.addStyleName(UIConstants.BUTTON_ACTION);
         backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
         controlBtns.with(backBtn).withAlign(backBtn, Alignment.MIDDLE_LEFT);

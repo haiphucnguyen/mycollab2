@@ -74,7 +74,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
             }
         });
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         this.addHeaderRight(createBtn);
     }
@@ -114,7 +114,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
             basicSearchBody.with(nameField);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             searchBtn.addClickListener(new Button.ClickListener() {

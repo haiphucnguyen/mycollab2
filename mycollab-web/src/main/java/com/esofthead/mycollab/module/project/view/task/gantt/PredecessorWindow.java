@@ -104,7 +104,7 @@ class PredecessorWindow extends Window {
                 PredecessorWindow.this.close();
             }
         });
-        saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
         buttonControls.with(cancelBtn, saveBtn);
     }
 

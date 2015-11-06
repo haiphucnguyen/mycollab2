@@ -137,7 +137,7 @@ public abstract class CustomizedTableWindow extends Window {
                 customViewStoreService.saveOrUpdateViewLayoutDef(viewDef);
             }
         });
-        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonControls.addComponent(saveBtn);
 

@@ -180,7 +180,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
             }
         });
 
-        quickActionStatusBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        quickActionStatusBtn.setStyleName(UIConstants.BUTTON_ACTION);
         versionPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
         if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS)) {

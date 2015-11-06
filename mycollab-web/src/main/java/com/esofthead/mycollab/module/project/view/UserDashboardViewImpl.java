@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.i18n.FollowerI18nEnum;
 import com.esofthead.mycollab.common.service.MonitorItemService;
-import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -28,7 +27,6 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -195,7 +193,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
                 displayView();
             }
         });
-        backDashboard.setStyleName(UIConstants.THEME_GREEN_LINK);
+        backDashboard.setStyleName(UIConstants.BUTTON_ACTION);
         headerComp.with(headerLbl, backDashboard);
         layout.with(headerComp);
 
@@ -297,7 +295,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
                     UI.getCurrent().addWindow(new ProjectAddWindow());
                 }
             });
-            createNewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            createNewBtn.setStyleName(UIConstants.BUTTON_ACTION);
             btnControls.with(skipBtn, createNewBtn);
             content.with(btnControls).withAlign(btnControls, Alignment.MIDDLE_RIGHT);
         }

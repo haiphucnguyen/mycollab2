@@ -103,7 +103,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                         }
                     });
             addBtn.setIcon(FontAwesome.PLUS);
-            addBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            addBtn.setStyleName(UIConstants.BUTTON_ACTION);
             addBtn.setEnabled(canWrite);
             layout.addComponent(addBtn);
         }
@@ -121,7 +121,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                         }
                     });
             editBtn.setIcon(FontAwesome.EDIT);
-            editBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            editBtn.setStyleName(UIConstants.BUTTON_ACTION);
             editBtn.setEnabled(canWrite);
             layout.addComponent(editBtn);
         }
@@ -181,7 +181,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                 }
             });
             previousItem.setWidth("40px");
-            previousItem.setStyleName(UIConstants.THEME_GREEN_LINK);
+            previousItem.setStyleName(UIConstants.BUTTON_ACTION);
             previousItem.setIcon(FontAwesome.CHEVRON_LEFT);
             previousItem.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_PREVIOUS_ITEM));
             navigationBtns.addButton(previousItem);
@@ -197,7 +197,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                 }
             });
             nextItemBtn.setWidth("40px");
-            nextItemBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            nextItemBtn.setStyleName(UIConstants.BUTTON_ACTION);
             nextItemBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
             nextItemBtn.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
             navigationBtns.addButton(nextItemBtn);

@@ -230,7 +230,7 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
         });
         customizeViewBtn.setIcon(FontAwesome.ADJUST);
         customizeViewBtn.setDescription("Layout Options");
-        customizeViewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        customizeViewBtn.setStyleName(UIConstants.BUTTON_ACTION);
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;

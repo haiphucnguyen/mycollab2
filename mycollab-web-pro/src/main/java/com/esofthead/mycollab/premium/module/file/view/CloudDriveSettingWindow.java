@@ -56,7 +56,7 @@ public class CloudDriveSettingWindow extends Window {
                 UI.getCurrent().addWindow(dropboxWindow);
             }
         });
-        connectAccountBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        connectAccountBtn.addStyleName(UIConstants.BUTTON_ACTION);
         mainLayout.addComponent(connectAccountBtn);
 
         bodyLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("100%");
@@ -117,7 +117,7 @@ public class CloudDriveSettingWindow extends Window {
                 titleLayout.with(foldernameLbl).expand(foldernameLbl);
 
                 final PopupButton popupBtn = new PopupButton();
-                popupBtn.setStyleName(UIConstants.THEME_BLANK_LINK);
+                popupBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
                 final OptionPopupContent popupOptionActionLayout = new OptionPopupContent().withWidth("100px");
 
@@ -218,7 +218,7 @@ public class CloudDriveSettingWindow extends Window {
                     }
                 }
             });
-            saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
 
             Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {

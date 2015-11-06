@@ -59,7 +59,7 @@ public class CreateSectionWindow extends Window {
                         CreateSectionWindow.this.close();
                     }
                 });
-        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
 
 

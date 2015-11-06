@@ -209,7 +209,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         dateChooser = new PopupButton(AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
         dateChooser.setContent(this.standupCalendar);
-        dateChooser.setStyleName(UIConstants.THEME_BLANK_LINK);
+        dateChooser.setStyleName(UIConstants.BUTTON_ACTION);
 
         headerLeft.with(titleLbl, dateChooser);
 
@@ -224,7 +224,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
             }
         });
-        addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
+        addNewReport.setStyleName(UIConstants.BUTTON_ACTION);
         addNewReport.setIcon(FontAwesome.PLUS);
         addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());
 

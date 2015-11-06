@@ -116,7 +116,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             }
         });
         saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         controlsLayout.with(cancelBtn, saveBtn);
 
@@ -170,7 +170,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
                 TimeTrackingEditViewWindow.this.getUI().addWindow(selectionTaskWindow);
             }
         });
-        attachTaskBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        attachTaskBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         taskLayout.addComponent(attachTaskBtn);
     }

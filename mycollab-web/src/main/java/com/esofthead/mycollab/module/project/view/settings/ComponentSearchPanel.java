@@ -74,7 +74,7 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
             }
         });
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         this.addHeaderRight(createBtn);
     }
@@ -118,7 +118,7 @@ public class ComponentSearchPanel extends DefaultGenericSearchPanel<ComponentSea
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
             searchBtn.addClickListener(new Button.ClickListener() {
 

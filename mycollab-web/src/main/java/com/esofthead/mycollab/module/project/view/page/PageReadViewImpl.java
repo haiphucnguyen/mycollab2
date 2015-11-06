@@ -161,7 +161,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                 ProjectRolePermissionCollections.PAGES);
 
         Button exportPdfBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EXPORT_PDF), FontAwesome.EXTERNAL_LINK);
-        exportPdfBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        exportPdfBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
         FileDownloader fileDownloader = new FileDownloader(getPDFStream());
         fileDownloader.extend(exportPdfBtn);

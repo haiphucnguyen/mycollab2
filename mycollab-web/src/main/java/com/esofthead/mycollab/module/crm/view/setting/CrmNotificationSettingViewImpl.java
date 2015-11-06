@@ -136,7 +136,7 @@ public class CrmNotificationSettingViewImpl extends AbstractPageView implements
                         }
                     }
                 });
-        updateBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        updateBtn.addStyleName(UIConstants.BUTTON_ACTION);
         updateBtn.setIcon(FontAwesome.REFRESH);
         body.with(updateBtn).withAlign(updateBtn, Alignment.BOTTOM_LEFT);
 

@@ -60,7 +60,7 @@ class DefaultMassItemActionHandlerContainer extends MHorizontalLayout with HasMa
             optionBtn.addStyleName(UIConstants.THEME_RED_LINK)
         }
         else {
-            optionBtn.addStyleName(UIConstants.THEME_GREEN_LINK)
+            optionBtn.addStyleName(UIConstants.BUTTON_ACTION)
         }
         optionBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING)
         optionBtn.setDescription(description)
@@ -116,7 +116,7 @@ class DefaultMassItemActionHandlerContainer extends MHorizontalLayout with HasMa
             downloadFileName))
         fileDownloader.extend(optionBtn)
         optionBtn.setIcon(resource)
-        optionBtn.addStyleName(UIConstants.THEME_GREEN_LINK)
+        optionBtn.addStyleName(UIConstants.BUTTON_ACTION)
         optionBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING)
         optionBtn.setDescription(description)
         group.addButton(optionBtn)

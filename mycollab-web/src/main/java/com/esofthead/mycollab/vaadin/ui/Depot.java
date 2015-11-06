@@ -63,7 +63,8 @@ public class Depot extends VerticalLayout {
         this.addComponent(header);
 
         headerLbl = titleLbl;
-        headerLbl.setStyleName(ValoTheme.LABEL_H2);
+        headerLbl.setStyleName(ValoTheme.LABEL_BOLD);
+        headerLbl.addStyleName(ValoTheme.LABEL_H3);
         final MHorizontalLayout headerLeft = new MHorizontalLayout(headerLbl).withStyleName("depot-title");
         headerLeft.setSizeFull();
         headerLeft.addLayoutClickListener(new LayoutClickListener() {

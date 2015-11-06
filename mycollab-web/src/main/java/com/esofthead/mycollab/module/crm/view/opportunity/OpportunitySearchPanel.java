@@ -79,7 +79,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
                     }
                 });
         createAccountBtn.setIcon(FontAwesome.PLUS);
-        createAccountBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createAccountBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
         addHeaderRight(createAccountBtn);
     }
@@ -131,7 +131,7 @@ public class OpportunitySearchPanel extends DefaultGenericSearchPanel<Opportunit
             layout.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             searchBtn.addClickListener(new Button.ClickListener() {

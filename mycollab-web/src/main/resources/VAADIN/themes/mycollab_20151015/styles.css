@@ -13740,20 +13740,6 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 	background-image: none;
 }
 
-.v-button.v-button-blankbtn {
-	background-color: #FAFAFA;
-	border-color: #C8C8C8;
-	border-width: 1px;
-	font-weight: normal;
-}
-
-.v-button-blankbtn:focus {
-	background-color: #FAFAFA;
-	border-color: #C8C8C8;
-	border-width: 1px;
-	font-weight: normal;
-}
-
 .v-button.v-button-graybtn, .v-button-graybtn:focus {
 	background-color: #8B8B8B;
 	color: white;

@@ -127,7 +127,7 @@ public class ApproveInputWindow extends Window {
                         }
                     }
                 });
-                approveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                approveBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 approveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {

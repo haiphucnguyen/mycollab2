@@ -107,7 +107,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
             searchBtn.addClickListener(new Button.ClickListener() {
                 @Override
@@ -115,7 +115,7 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
                     callSearchAction();
                 }
             });
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
 
             Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));

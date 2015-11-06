@@ -138,7 +138,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
                         ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, count));
             }
         });
-        searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
         searchBtn.setIcon(FontAwesome.SEARCH);
 
         MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, false))

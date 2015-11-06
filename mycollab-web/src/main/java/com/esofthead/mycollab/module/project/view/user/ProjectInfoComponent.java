@@ -140,7 +140,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
                 }
             });
-            activeProjectBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            activeProjectBtn.setStyleName(UIConstants.BUTTON_ACTION);
             topPanel.with(activeProjectBtn).withAlign(activeProjectBtn, Alignment.MIDDLE_RIGHT);
         } else {
             SearchTextField searchField = new SearchTextField() {

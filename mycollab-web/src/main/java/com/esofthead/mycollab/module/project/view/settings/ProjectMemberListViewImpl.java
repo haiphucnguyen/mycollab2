@@ -78,7 +78,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
             }
         });
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.SEND);
 
         viewHeader.addComponent(createBtn);

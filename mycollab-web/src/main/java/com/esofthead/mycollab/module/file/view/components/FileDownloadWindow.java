@@ -27,7 +27,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resources.StreamDownloadResourceUtil;
 import com.esofthead.mycollab.vaadin.resources.file.FileAssetsUtil;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
@@ -117,7 +116,7 @@ public class FileDownloadWindow extends Window {
         FileDownloader fileDownloader = new FileDownloader(downloadResource);
         fileDownloader.extend(downloadBtn);
         downloadBtn.setIcon(FontAwesome.DOWNLOAD);
-        downloadBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        downloadBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         buttonControls.with(downloadBtn).withAlign(downloadBtn, Alignment.MIDDLE_CENTER);
 

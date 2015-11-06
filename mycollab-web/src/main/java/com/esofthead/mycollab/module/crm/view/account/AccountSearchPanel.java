@@ -66,7 +66,7 @@ public class AccountSearchPanel extends DefaultGenericSearchPanel<AccountSearchC
                 EventBusFactory.getInstance().post(new AccountEvent.GotoAdd(this, null));
             }
         });
-        createAccountBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createAccountBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createAccountBtn.setIcon(FontAwesome.PLUS);
         createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         this.addHeaderRight(createAccountBtn);
@@ -142,7 +142,7 @@ public class AccountSearchPanel extends DefaultGenericSearchPanel<AccountSearchC
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
             searchBtn.addClickListener(new Button.ClickListener() {
                 @Override

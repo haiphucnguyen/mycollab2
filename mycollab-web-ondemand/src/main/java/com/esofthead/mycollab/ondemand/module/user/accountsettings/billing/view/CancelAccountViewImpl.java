@@ -140,7 +140,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
                 EventBusFactory.getInstance().post(new AccountBillingEvent.GotoSummary(CancelAccountViewImpl.this, null));
             }
         });
-        cancelBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        cancelBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         MHorizontalLayout formControls = new MHorizontalLayout().withMargin(true);
         formControls.setSizeUndefined();

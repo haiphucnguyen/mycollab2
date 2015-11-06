@@ -180,7 +180,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 displayMonthView();
             }
         });
-        todayBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        todayBtn.setStyleName(UIConstants.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
         Button previousBtn = new Button("", new Button.ClickListener() {
             @Override
@@ -190,7 +190,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             }
         });
         previousBtn.setWidth("40px");
-        previousBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        previousBtn.setStyleName(UIConstants.BUTTON_ACTION);
         previousBtn.setIcon(FontAwesome.CHEVRON_LEFT);
         navigationBtns.addButton(previousBtn);
 
@@ -202,7 +202,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             }
         });
         nextBtn.setWidth("40px");
-        nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
         nextBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
         navigationBtns.addButton(nextBtn);
 

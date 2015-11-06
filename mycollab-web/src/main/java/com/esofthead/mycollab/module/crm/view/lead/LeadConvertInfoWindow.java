@@ -105,7 +105,7 @@ public class LeadConvertInfoWindow extends Window {
                 EventBusFactory.getInstance().post(new LeadEvent.GotoRead(LeadConvertInfoWindow.this, lead.getId()));
             }
         });
-        convertButton.setStyleName(UIConstants.THEME_GREEN_LINK);
+        convertButton.setStyleName(UIConstants.BUTTON_ACTION);
         layout.addComponent(convertButton);
         layout.setComponentAlignment(convertButton, Alignment.MIDDLE_CENTER);
 

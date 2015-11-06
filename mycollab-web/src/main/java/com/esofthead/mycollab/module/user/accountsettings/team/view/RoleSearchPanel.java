@@ -67,7 +67,7 @@ public class RoleSearchPanel extends DefaultGenericSearchPanel<RoleSearchCriteri
                         EventBusFactory.getInstance().post(new RoleEvent.GotoAdd(this, null));
                     }
                 });
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.ACCOUNT_ROLE));
         this.addHeaderRight(createBtn);
@@ -106,7 +106,7 @@ public class RoleSearchPanel extends DefaultGenericSearchPanel<RoleSearchCriteri
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
             searchBtn.setIcon(FontAwesome.SEARCH);
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 

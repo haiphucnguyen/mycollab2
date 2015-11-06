@@ -74,7 +74,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
                     }
                 });
         createCampaignBtn.setIcon(FontAwesome.PLUS);
-        createCampaignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createCampaignBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createCampaignBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
         addHeaderRight(createCampaignBtn);
     }
@@ -125,7 +125,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
             searchBtn.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;

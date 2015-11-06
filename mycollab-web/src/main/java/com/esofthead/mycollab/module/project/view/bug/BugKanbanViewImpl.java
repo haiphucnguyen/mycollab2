@@ -383,7 +383,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
             addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-            addNewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
             root.with(headerLayout, dragLayoutContainer, addNewBtn);
         }
 
@@ -428,7 +428,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                         }
                     }
                 });
-                saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
                     @Override

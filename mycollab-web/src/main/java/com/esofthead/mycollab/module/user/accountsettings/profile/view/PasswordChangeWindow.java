@@ -100,7 +100,7 @@ public class PasswordChangeWindow extends Window {
                 PasswordChangeWindow.this.changePassword();
             }
         });
-        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
 
         hlayoutControls.with(cancelBtn, saveBtn);

@@ -50,7 +50,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
                         EventBusFactory.getInstance().post(new ProblemEvent.GotoAdd(this, null));
                     }
                 });
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROBLEMS));
         this.addHeaderRight(createBtn);
@@ -96,7 +96,7 @@ public class ProblemSearchPanel extends DefaultGenericSearchPanel<ProblemSearchC
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             searchBtn.addClickListener(new Button.ClickListener() {

@@ -158,7 +158,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 displayCalendar();
             }
         });
-        todayBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        todayBtn.setStyleName(UIConstants.BUTTON_ACTION);
         ButtonGroup navigationBtns = new ButtonGroup();
         Button previousBtn = new Button("", new Button.ClickListener() {
             @Override
@@ -172,7 +172,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 displayCalendar();
             }
         });
-        previousBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        previousBtn.setStyleName(UIConstants.BUTTON_ACTION);
         previousBtn.setIcon(FontAwesome.CHEVRON_LEFT);
         navigationBtns.addButton(previousBtn);
 
@@ -187,7 +187,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 displayCalendar();
             }
         });
-        nextBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
         nextBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
         navigationBtns.addButton(nextBtn);
 
@@ -205,7 +205,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(new SimpleTask()));
             }
         });
-        newTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
         final ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         final Button weekViewBtn = new Button("Week");
         weekViewBtn.addClickListener(new Button.ClickListener() {

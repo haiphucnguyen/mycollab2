@@ -116,7 +116,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     displayWorkflowControl();
                 }
             });
-            startProgressBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            startProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(startProgressBtn);
 
             Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
@@ -127,7 +127,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new ResolvedInputWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            resolveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(resolveBtn);
 
             Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
@@ -138,7 +138,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new WontFixExplainWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            wontFixBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            wontFixBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(wontFixBtn);
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.InProgress.name().equals(beanItem.getStatus())) {
@@ -155,7 +155,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     displayWorkflowControl();
                 }
             });
-            stopProgressBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            stopProgressBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(stopProgressBtn);
 
             Button resolveBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_RESOLVED), new Button.ClickListener() {
@@ -166,7 +166,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new ResolvedInputWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            resolveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            resolveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(resolveBtn);
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.Verified.name().equals(beanItem.getStatus())) {
@@ -180,7 +180,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new ReOpenWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(reopenBtn);
 
             bugWorkflowControl.addComponent(navButton);
@@ -195,7 +195,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new ReOpenWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            reopenBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(reopenBtn);
 
             Button approveNCloseBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_APPROVE_CLOSE), new Button.ClickListener() {
@@ -206,7 +206,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new ApproveInputWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            approveNCloseBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            approveNCloseBtn.addStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(approveNCloseBtn);
             bugWorkflowControl.addComponent(navButton);
         } else if (BugStatus.Resolved.name().equals(beanItem.getStatus())) {
@@ -220,7 +220,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     UI.getCurrent().addWindow(new ReOpenWindow(BugReadViewImpl.this, beanItem));
                 }
             });
-            reopenBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            reopenBtn.setStyleName(UIConstants.BUTTON_ACTION);
             navButton.addButton(reopenBtn);
 
             bugWorkflowControl.addComponent(navButton);
@@ -417,7 +417,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         assignBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         assignBtn.setIcon(FontAwesome.SHARE);
 
-        assignBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        assignBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
         bugWorkflowControl = new CssLayout();
 

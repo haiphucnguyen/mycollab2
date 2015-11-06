@@ -58,7 +58,6 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -178,7 +177,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 exportSplitBtn.setPopupVisible(true);
             }
         });
-        exportSplitBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        exportSplitBtn.addStyleName(UIConstants.BUTTON_ACTION);
         OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
         Button exportPdfBtn = new Button("PDF");
@@ -207,7 +206,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         newBugBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         newBugBtn.setIcon(FontAwesome.PLUS);
         newBugBtn.setDescription(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG));
-        newBugBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        newBugBtn.setStyleName(UIConstants.BUTTON_ACTION);
         groupWrapLayout.addComponent(newBugBtn);
 
         Button advanceDisplayBtn = new Button();
@@ -347,7 +346,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                     }
                 }
             });
-            moreBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            moreBtn.addStyleName(UIConstants.BUTTON_ACTION);
             wrapBody.addComponent(moreBtn);
         }
         List<SimpleBug> bugs = bugService.findPagableListByCriteria(new SearchRequest<>(baseCriteria, currentPage + 1, 20));

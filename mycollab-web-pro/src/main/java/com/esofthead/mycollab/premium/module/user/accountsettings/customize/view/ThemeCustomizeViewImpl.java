@@ -78,7 +78,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
             }
         });
         saveBtn.setIcon(FontAwesome.SAVE);
-        saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
 
         Button resetToDefaultBtn = new Button(AppContext.getMessage(SettingCommonI18nEnum.BUTTON_RESET_DEFAULT), new Button.ClickListener() {
@@ -443,7 +443,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(actionBtnPanel, 0, 0);
 
         Button exampleActionBtn = new Button("Button");
-        exampleActionBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        exampleActionBtn.setStyleName(UIConstants.BUTTON_ACTION);
         actionBtnPanel.addComponent(exampleActionBtn);
 
         HorizontalLayout actionBtnColorPane = new HorizontalLayout();

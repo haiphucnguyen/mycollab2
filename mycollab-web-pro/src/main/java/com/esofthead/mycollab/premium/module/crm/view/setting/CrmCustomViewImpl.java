@@ -103,7 +103,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
                     }
                 });
-        createCustomFieldBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        createCustomFieldBtn.addStyleName(UIConstants.BUTTON_ACTION);
         createCustomFieldBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createCustomFieldBtn);
         controlLayout.setComponentAlignment(createCustomFieldBtn,
@@ -121,7 +121,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
                     }
                 });
-        createSectionBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        createSectionBtn.addStyleName(UIConstants.BUTTON_ACTION);
         createSectionBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createSectionBtn);
         controlLayout.setComponentAlignment(createSectionBtn,
@@ -156,7 +156,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
                                 moduleName, rebuildForm);
                     }
                 });
-        saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonsLayout.addComponent(saveBtn);
 

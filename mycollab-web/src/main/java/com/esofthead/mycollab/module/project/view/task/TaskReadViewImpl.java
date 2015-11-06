@@ -210,7 +210,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             }
         });
 
-        quickActionStatusBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        quickActionStatusBtn.setStyleName(UIConstants.BUTTON_ACTION);
         taskPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
         if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
@@ -388,7 +388,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
 
                 }
             });
-            addNewTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            addNewTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
             addNewTaskBtn.setIcon(FontAwesome.PLUS);
             addNewTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 

@@ -198,7 +198,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
             }
         });
 
-        quickActionStatusBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        quickActionStatusBtn.setStyleName(UIConstants.BUTTON_ACTION);
         componentPreviewForm.insertToControlBlock(quickActionStatusBtn);
 
         if (!CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {

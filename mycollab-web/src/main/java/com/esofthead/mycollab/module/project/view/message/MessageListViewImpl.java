@@ -278,7 +278,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                     doSearch();
                 }
             });
-            searchBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
             searchBtn.setIcon(FontAwesome.SEARCH);
 
             basicSearchBody.with(nameField, searchBtn).withAlign(nameField, Alignment.MIDDLE_LEFT);
@@ -384,7 +384,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                     }
                 }
             });
-            saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
 
             controls.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
@@ -408,7 +408,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                             }
                         });
                 createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
-                createMessageBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+                createMessageBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 createMessageBtn.setIcon(FontAwesome.PLUS);
                 createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
 

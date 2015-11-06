@@ -69,7 +69,7 @@ public class ActivityRelatedItemListComp extends
             newTaskBtn.setIcon(FontAwesome.PLUS);
             newTaskBtn.setEnabled(AppContext
                     .canWrite(RolePermissionCollections.CRM_TASK));
-            newTaskBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
             buttonLayout.addComponent(newTaskBtn);
 
             final Button newCallBtn = new Button("New Call",
@@ -84,7 +84,7 @@ public class ActivityRelatedItemListComp extends
             newCallBtn.setIcon(FontAwesome.PLUS);
             newCallBtn.setEnabled(AppContext
                     .canWrite(RolePermissionCollections.CRM_CALL));
-            newCallBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            newCallBtn.addStyleName(UIConstants.BUTTON_ACTION);
             buttonLayout.addComponent(newCallBtn);
 
             final Button newMeetingBtn = new Button("New Meeting",
@@ -99,7 +99,7 @@ public class ActivityRelatedItemListComp extends
             newMeetingBtn.setIcon(FontAwesome.PLUS);
             newMeetingBtn.setEnabled(AppContext
                     .canWrite(RolePermissionCollections.CRM_MEETING));
-            newMeetingBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            newMeetingBtn.addStyleName(UIConstants.BUTTON_ACTION);
             buttonLayout.addComponent(newMeetingBtn);
 
             this.addComponent(buttonLayout);

@@ -276,7 +276,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
                             }
                         });
 
-                btnSave.setStyleName(UIConstants.THEME_GREEN_LINK);
+                btnSave.setStyleName(UIConstants.BUTTON_ACTION);
                 btnSave.setIcon(FontAwesome.PLUS);
 
                 headerPanel.addComponent(btnSave);

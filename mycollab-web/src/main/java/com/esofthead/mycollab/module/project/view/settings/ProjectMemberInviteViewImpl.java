@@ -117,7 +117,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements Pro
 
             }
         });
-        inviteBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        inviteBtn.setStyleName(UIConstants.BUTTON_ACTION);
         inviteBtn.setIcon(FontAwesome.SEND);
 
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {

@@ -197,7 +197,7 @@ public abstract class EntityImportWindow<E> extends Window {
                     }
                 }
             });
-            nextBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            nextBtn.addStyleName(UIConstants.BUTTON_ACTION);
             controlGroupBtn.with(nextBtn).withAlign(nextBtn,
                     Alignment.MIDDLE_CENTER);
 
@@ -323,7 +323,7 @@ public abstract class EntityImportWindow<E> extends Window {
             uploadFieldVerticalLayout.addComponent(new Label("Select File"));
 
             uploadField = new SingleFileUploadField();
-            uploadField.addStyleName(UIConstants.THEME_GREEN_LINK);
+            uploadField.addStyleName(UIConstants.BUTTON_ACTION);
             uploadField.addListener(new ValueChangeListener() {
                 private static final long serialVersionUID = 1L;
 
@@ -515,7 +515,7 @@ public abstract class EntityImportWindow<E> extends Window {
                         }
                     });
 
-            saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             controlGroupBtn.addComponent(saveBtn);
 
             Button previousBtn = new Button("Previous", new ClickListener() {
@@ -530,7 +530,7 @@ public abstract class EntityImportWindow<E> extends Window {
                     EntityImportWindow.this.center();
                 }
             });
-            previousBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            previousBtn.addStyleName(UIConstants.BUTTON_ACTION);
             controlGroupBtn.addComponent(previousBtn);
 
             Button btnClose = new Button("Close", new ClickListener() {
@@ -542,7 +542,7 @@ public abstract class EntityImportWindow<E> extends Window {
                     reloadWhenBackToListView();
                 }
             });
-            btnClose.addStyleName(UIConstants.THEME_GREEN_LINK);
+            btnClose.addStyleName(UIConstants.BUTTON_ACTION);
             controlGroupBtn.addComponent(btnClose);
             bodyLayout.addComponent(columnMappingCrmLayout);
             this.addComponent(bodyLayout);

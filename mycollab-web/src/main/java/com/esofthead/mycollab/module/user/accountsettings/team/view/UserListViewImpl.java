@@ -75,7 +75,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             }
         });
         createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
 
         header.with(createBtn).withAlign(createBtn, Alignment.MIDDLE_RIGHT);

@@ -83,7 +83,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
 
         this.addStyleName("activityCalendar");
         calendarActionBtn = new PopupButton(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE));
-        calendarActionBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        calendarActionBtn.setStyleName(UIConstants.BUTTON_ACTION);
         initContent();
     }
 
@@ -229,7 +229,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
 
         Button calendarViewBtn = new Button("Calendar");
         calendarViewBtn.setStyleName("selected");
-        calendarViewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        calendarViewBtn.addStyleName(UIConstants.BUTTON_ACTION);
         viewSwitcher.addButton(calendarViewBtn);
 
         Button activityListBtn = new Button("Activities", new Button.ClickListener() {
@@ -242,7 +242,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 EventBusFactory.getInstance().post(new ActivityEvent.GotoTodoList(this, null));
             }
         });
-        activityListBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+        activityListBtn.addStyleName(UIConstants.BUTTON_ACTION);
         viewSwitcher.addButton(activityListBtn);
 
         actionPanel.addComponent(viewSwitcher);
@@ -785,7 +785,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                                 }
                             });
                     saveBtn.setIcon(FontAwesome.SAVE);
-                    saveBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+                    saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
                     layout.addComponent(saveBtn);
                     layout.setComponentAlignment(saveBtn,
                             Alignment.MIDDLE_CENTER);

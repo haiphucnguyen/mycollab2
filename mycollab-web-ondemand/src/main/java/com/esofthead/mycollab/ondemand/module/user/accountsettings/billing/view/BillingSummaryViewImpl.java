@@ -197,7 +197,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
                                     new UpdateBillingPlanWindow(plan));
                         }
                     });
-            selectThisPlan.addStyleName(UIConstants.THEME_GREEN_LINK);
+            selectThisPlan.addStyleName(UIConstants.BUTTON_ACTION);
             singlePlan.addComponent(selectThisPlan);
 
             plansList.addComponent(singlePlan);
@@ -340,7 +340,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
                     UpdateBillingPlanWindow.this.close();
                 }
             });
-            saveBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
             controlBtns.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_CENTER);
 

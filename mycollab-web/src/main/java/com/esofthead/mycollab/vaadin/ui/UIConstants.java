@@ -33,9 +33,8 @@ public class UIConstants {
     public static final String CUSTOM_FIELD_SECTION = "customFieldSection";
     public static final String POPUP_WITHOUT_INDICATOR = "nonPopupIndicator";
     public static final String TABLE_ACTION_CONTROLS = "table-actionctls";
-    public static final String THEME_GREEN_LINK = "greenbtn";
+    public static final String BUTTON_ACTION = "greenbtn";
     public static final String THEME_GRAY_LINK = "graybtn";
-    public static final String THEME_BLANK_LINK = "blankbtn";
     public static final String THEME_RED_LINK = "redbtn";
     public static final String BUTTON_LINK = "link";
     public static final String THEME_NO_BORDER = "no-border";

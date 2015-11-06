@@ -169,7 +169,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                     EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(TimeTrackingViewImpl.this, null));
                 }
             });
-            backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            backBtn.addStyleName(UIConstants.BUTTON_ACTION);
             backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
             controlBtns.addComponent(backBtn);
@@ -289,7 +289,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                     searchTimeReporting();
                 }
             });
-            queryBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+            queryBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
             selectionLayout.addComponent(queryBtn, 8, 0);
 
@@ -319,7 +319,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                             TimeTrackingViewImpl.this, null));
                 }
             });
-            backBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
+            backBtn.addStyleName(UIConstants.BUTTON_ACTION);
             backBtn.setIcon(FontAwesome.ARROW_LEFT);
 
             MVerticalLayout contentWrapper = new MVerticalLayout();

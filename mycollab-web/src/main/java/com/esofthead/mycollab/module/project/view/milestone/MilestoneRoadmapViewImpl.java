@@ -134,7 +134,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             }
         });
         createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
         layout.with(createBtn);
 
