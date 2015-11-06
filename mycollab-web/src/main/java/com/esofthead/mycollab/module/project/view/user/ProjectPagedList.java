@@ -152,6 +152,8 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
 
             Button closePhaseBtn = new Button(String.format("%d <small>%s</small>", project.getNumClosedPhase(),
                     AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Closed)));
+            closePhaseBtn.addStyleName(UIConstants.BUTTON_BLOCK);
+            closePhaseBtn.addStyleName(ValoTheme.BUTTON_SMALL);
             closePhaseBtn.setHtmlContentAllowed(true);
             phaseStatus.addComponent(closePhaseBtn);
 
@@ -159,12 +161,16 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                     "%d <small>%s</small>", project.getNumInProgressPhase(),
                     AppContext.getMessage(OptionI18nEnum.MilestoneStatus.InProgress)));
             inProgressPhaseBtn.setHtmlContentAllowed(true);
+            inProgressPhaseBtn.addStyleName(UIConstants.BUTTON_BLOCK);
+            inProgressPhaseBtn.addStyleName(ValoTheme.BUTTON_SMALL);
             phaseStatus.addComponent(inProgressPhaseBtn);
 
             Button futurePhaseBtn = new Button(String.format(
                     "%d <small>%s</small>", project.getNumFuturePhase(),
                     AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Future)));
             futurePhaseBtn.setHtmlContentAllowed(true);
+            futurePhaseBtn.addStyleName(UIConstants.BUTTON_BLOCK);
+            futurePhaseBtn.addStyleName(ValoTheme.BUTTON_SMALL);
             phaseStatus.addComponent(futurePhaseBtn);
 
             phaseStatusLayout.addComponent(phaseStatus);

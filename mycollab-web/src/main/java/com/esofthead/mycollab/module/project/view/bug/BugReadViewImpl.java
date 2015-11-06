@@ -65,6 +65,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -525,8 +526,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         });
                         componentLink.setDescription(component.getComponentname());
                         componentContainer.addComponentField(componentLink);
-                        componentLink.setStyleName(UIConstants.BUTTON_LINK);
-                        componentLink.addStyleName("block");
+                        componentLink.setStyleName(ValoTheme.BUTTON_SMALL);
+                        componentLink.addStyleName(UIConstants.BUTTON_BLOCK);
                     }
                     return componentContainer;
                 } else {
@@ -547,8 +548,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         });
                         versionLink.setDescription(version.getVersionname());
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName(UIConstants.BUTTON_LINK);
-                        versionLink.addStyleName("block");
+                        versionLink.setStyleName(ValoTheme.BUTTON_SMALL);
+                        versionLink.addStyleName(UIConstants.BUTTON_BLOCK);
                     }
                     return componentContainer;
                 } else {
@@ -569,8 +570,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         });
                         versionLink.setDescription(version.getVersionname());
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName(UIConstants.BUTTON_LINK);
-                        versionLink.addStyleName("block");
+                        versionLink.setStyleName(ValoTheme.BUTTON_SMALL);
+                        versionLink.addStyleName(UIConstants.BUTTON_BLOCK);
                     }
                     return componentContainer;
                 } else {

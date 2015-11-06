@@ -48,20 +48,26 @@
     background-image: none;
   }
 
-  .v-button.v-button-graybtn, .v-button-graybtn:focus {
+  .v-button.v-button-graybtn {
     background-color: #8B8B8B;
     color: white;
     font-weight: normal;
   }
 
-  .v-button.v-button-redbtn, .v-button-redbtn:focus {
+  .v-button.v-button-redbtn {
     background-color: #F64A46;
     color: white;
     font-weight: normal;
   }
 
-  .v-button.v-button-greenbtn, .v-button-greenbtn:focus {
+  .v-button.v-button-greenbtn {
     background-color: #3A97FF;
+    color: white;
+    font-weight: normal;
+  }
+
+  .v-button.v-button-block {
+    background-color: #7ebbff;
     color: white;
     font-weight: normal;
   }
