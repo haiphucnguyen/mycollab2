@@ -157,7 +157,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
                 SimpleRisk item = tableItem.getBeanByIndex(itemId);
                 RatingStars tinyRs = new RatingStars();
                 tinyRs.setValue(item.getLevel());
-                tinyRs.setStyleName("tiny");
+                tinyRs.addStyleName("tiny");
                 tinyRs.setReadOnly(true);
                 return tinyRs;
             }
@@ -218,7 +218,7 @@ public class RiskListViewImpl extends AbstractPageView implements RiskListView {
         });
         customizeViewBtn.setIcon(FontAwesome.ADJUST);
         customizeViewBtn.setDescription("Layout Options");
-        customizeViewBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
+        customizeViewBtn.addStyleName(UIConstants.THEME_GREEN_LINK);
         layout.with(customizeViewBtn).withAlign(customizeViewBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;

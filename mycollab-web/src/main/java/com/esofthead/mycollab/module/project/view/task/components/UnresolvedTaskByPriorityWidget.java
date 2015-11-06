@@ -37,6 +37,7 @@ import com.esofthead.mycollab.vaadin.ui.DepotWithChart;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
@@ -105,10 +106,11 @@ public class UnresolvedTaskByPriorityWidget extends DepotWithChart {
                     if (priority.name().equals(item.getGroupid())) {
                         isFound = true;
                         MHorizontalLayout priorityLayout = new MHorizontalLayout().withWidth("100%");
+                        priorityLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                         ButtonI18nComp priorityLink = new ButtonI18nComp(priority.name(), priority, listener);
                         priorityLink.setIcon(ProjectAssetsManager.getTaskPriority(priority.name()));
                         priorityLink.setWidth("110px");
-                        priorityLink.setStyleName(UIConstants.THEME_LINK);
+                        priorityLink.addStyleName(UIConstants.BUTTON_LINK);
                         priorityLink.addStyleName("task-" + priority.name().toLowerCase());
 
                         priorityLayout.addComponent(priorityLink);
@@ -125,7 +127,7 @@ public class UnresolvedTaskByPriorityWidget extends DepotWithChart {
                     ButtonI18nComp priorityLink = new ButtonI18nComp(priority.name(), priority, listener);
                     priorityLink.setIcon(ProjectAssetsManager.getTaskPriority(priority.name()));
                     priorityLink.setWidth("110px");
-                    priorityLink.setStyleName(UIConstants.THEME_LINK);
+                    priorityLink.addStyleName(UIConstants.BUTTON_LINK);
                     priorityLink.addStyleName("task-" + priority.name().toLowerCase());
                     priorityLayout.addComponent(priorityLink);
                     ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount, false);

@@ -158,7 +158,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                             }
                         });
                 cloneBtn.setIcon(FontAwesome.ROAD);
-                cloneBtn.setStyleName(UIConstants.THEME_LINK);
+                cloneBtn.setStyleName(UIConstants.BUTTON_LINK);
                 cloneBtn.setEnabled(canWrite);
                 popupButtonsControl.addOption(cloneBtn);
             }

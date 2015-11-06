@@ -65,7 +65,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
                 UI.getCurrent().addWindow(new AccountInfoChangeWindow());
             }
         });
-        editBtn.setStyleName(UIConstants.THEME_LINK);
+        editBtn.setStyleName(UIConstants.BUTTON_LINK);
 
         generalSettingHeader.with(headerLbl, editBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(editBtn,
                 Alignment.MIDDLE_LEFT);

@@ -120,7 +120,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                         public void buttonClick(Button.ClickEvent event) {
                             //TODO: task nevigate event
                         }
-                    }, false);
+                    });
             taskLblWrap.addComponent(taskStatusBtn);
             taskLblWrap.setComponentAlignment(taskStatusBtn, Alignment.TOP_RIGHT);
             taskStatus.addComponent(taskLblWrap);
@@ -147,7 +147,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
                 public void buttonClick(Button.ClickEvent event) {
                     //TODO: task nevigate event
                 }
-            }, false);
+            });
             bugLblWrap.addComponent(bugStatusBtn);
             bugLblWrap.setComponentAlignment(bugStatusBtn, Alignment.TOP_RIGHT);
             bugStatus.addComponent(bugLblWrap);

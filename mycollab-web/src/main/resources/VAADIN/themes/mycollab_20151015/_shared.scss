@@ -148,11 +148,12 @@
 
   .v-progressbar-indicator {
     height: 18px;
-    border-radius: 2px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
+    border-radius: $v-border-radius;
+    -webkit-border-radius: $v-border-radius;
+    -moz-border-radius: $v-border-radius;
     margin: -1px;
     border: 1px solid $my-border-color;
+    background-image: none;
   }
 
   .v-progressbar.medium {

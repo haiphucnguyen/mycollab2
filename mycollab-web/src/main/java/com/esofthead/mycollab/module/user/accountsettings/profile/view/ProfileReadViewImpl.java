@@ -116,16 +116,15 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         usernameLbl.setStyleName("h1");
         userWrapper.addComponent(usernameLbl);
 
-        Button btnChangeBasicInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button btnChangeBasicInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        UI.getCurrent().addWindow(new BasicInfoChangeWindow(formItem.getBean()));
-                    }
-                });
-        btnChangeBasicInfo.setStyleName(UIConstants.THEME_LINK);
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                UI.getCurrent().addWindow(new BasicInfoChangeWindow(formItem.getBean()));
+            }
+        });
+        btnChangeBasicInfo.setStyleName(UIConstants.BUTTON_LINK);
 
         HorizontalLayout btnChangeBasicInfoWrapper = new HorizontalLayout();
         btnChangeBasicInfoWrapper.setWidth("40px");
@@ -146,19 +145,17 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                 AppContext.getMessage(LangI18Enum.class, user.getLanguage()))));
 
         MHorizontalLayout passwordWrapper = new MHorizontalLayout();
-        passwordWrapper.addComponent(new Label(AppContext
-                .getMessage(ShellI18nEnum.FORM_PASSWORD) + ": ***********"));
+        passwordWrapper.addComponent(new Label(AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD) + ": ***********"));
 
-        Button btnChangePassword = new Button("Change",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button btnChangePassword = new Button("Change", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        UI.getCurrent().addWindow(new PasswordChangeWindow(formItem.getBean()));
-                    }
-                });
-        btnChangePassword.setStyleName(UIConstants.THEME_LINK);
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                UI.getCurrent().addWindow(new PasswordChangeWindow(formItem.getBean()));
+            }
+        });
+        btnChangePassword.setStyleName(UIConstants.BUTTON_LINK);
         passwordWrapper.with(btnChangePassword).withAlign(btnChangePassword, Alignment.MIDDLE_LEFT);
         basicLayout.with(passwordWrapper).withAlign(passwordWrapper, Alignment.MIDDLE_LEFT);
 
@@ -194,16 +191,15 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                 Label contactInformationHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
                 contactInformationHeaderLbl.addStyleName("h1");
 
-                Button btnChangeContactInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+                Button btnChangeContactInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                UI.getCurrent().addWindow(new ContactInfoChangeWindow(formItem.getBean()));
-                            }
-                        });
-                btnChangeContactInfo.addStyleName(UIConstants.THEME_LINK);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        UI.getCurrent().addWindow(new ContactInfoChangeWindow(formItem.getBean()));
+                    }
+                });
+                btnChangeContactInfo.addStyleName(UIConstants.BUTTON_LINK);
                 contactInformationHeader.with(contactInformationHeaderLbl, btnChangeContactInfo);
 
                 layout.addComponent(contactInformationHeader);
@@ -224,16 +220,15 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                 advanceSeparator.setAttribute("style", separatorStyle);
                 layout.addComponent(new Label(advanceSeparator.write(), ContentMode.HTML));
 
-                Button btnChangeAdvanceInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+                Button btnChangeAdvanceInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                UI.getCurrent().addWindow(new AdvancedInfoChangeWindow(formItem.getBean()));
-                            }
-                        });
-                btnChangeAdvanceInfo.addStyleName(UIConstants.THEME_LINK);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        UI.getCurrent().addWindow(new AdvancedInfoChangeWindow(formItem.getBean()));
+                    }
+                });
+                btnChangeAdvanceInfo.addStyleName(UIConstants.BUTTON_LINK);
                 advanceInfoHeader.with(btnChangeAdvanceInfo).withAlign(btnChangeAdvanceInfo, Alignment.MIDDLE_LEFT);
                 layout.addComponent(advancedInfoLayout.getLayout());
                 return layout;

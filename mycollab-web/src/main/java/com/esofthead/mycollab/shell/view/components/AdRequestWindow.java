@@ -70,7 +70,7 @@ public class AdRequestWindow extends Window {
                 UI.getCurrent().addWindow(new TestimonialWindow());
             }
         });
-        testimonialBtn.setStyleName(UIConstants.THEME_LINK);
+        testimonialBtn.setStyleName(UIConstants.BUTTON_LINK);
         testimonialBtn.setIcon(FontAwesome.KEYBOARD_O);
 
         shareControls.with(rateSourceforge, tweetUs, linkedIn, testimonialBtn);

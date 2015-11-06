@@ -98,7 +98,7 @@ public class ForgotPasswordViewImpl extends AbstractPageView implements ForgotPa
             customLayout.addComponent(sendEmail, "loginButton");
 
             Button memoBackBtn = new Button(AppContext.getMessage(ShellI18nEnum.BUTTON_IGNORE_RESET_PASSWORD));
-            memoBackBtn.setStyleName(UIConstants.THEME_LINK);
+            memoBackBtn.setStyleName(UIConstants.BUTTON_LINK);
             memoBackBtn.addClickListener(new ClickListener() {
                 private static final long serialVersionUID = 1L;
 

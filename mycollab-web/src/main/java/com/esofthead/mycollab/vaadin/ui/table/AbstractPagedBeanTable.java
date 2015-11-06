@@ -32,7 +32,6 @@ import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -272,7 +271,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
                 public void buttonClick(final ClickEvent event) {
                     AbstractPagedBeanTable.this.pageChange(1);
                 }
-            }, false);
+            });
             firstLink.addStyleName("buttonPaging");
             pageManagement.addComponent(firstLink);
         }
@@ -290,7 +289,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
                 public void buttonClick(final ClickEvent event) {
                     pageChange(currentPage - 2);
                 }
-            }, false);
+            });
             previous2.addStyleName("buttonPaging");
             pageManagement.addComponent(previous2);
         }
@@ -302,7 +301,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
                 public void buttonClick(ClickEvent event) {
                     pageChange(currentPage - 1);
                 }
-            }, false);
+            });
             previous1.addStyleName("buttonPaging");
             pageManagement.addComponent(previous1);
         }
@@ -314,7 +313,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
             public void buttonClick(final ClickEvent event) {
                 pageChange(currentPage);
             }
-        }, false);
+        });
         current.addStyleName("buttonPaging");
         current.addStyleName("current");
 
@@ -328,7 +327,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
                 public void buttonClick(final ClickEvent event) {
                     pageChange(currentPage + 1);
                 }
-            }, false);
+            });
             next1.addStyleName("buttonPaging");
             pageManagement.addComponent(next1);
         }
@@ -340,7 +339,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
                 public void buttonClick(final ClickEvent event) {
                     pageChange(currentPage + 2);
                 }
-            }, false);
+            });
             next2.addStyleName("buttonPaging");
             pageManagement.addComponent(next2);
         }
@@ -357,7 +356,7 @@ public abstract class AbstractPagedBeanTable<S extends SearchCriteria, B> extend
                 public void buttonClick(final ClickEvent event) {
                     pageChange(AbstractPagedBeanTable.this.totalPage);
                 }
-            }, false);
+            });
             last.addStyleName("buttonPaging");
             pageManagement.addComponent(last);
         }

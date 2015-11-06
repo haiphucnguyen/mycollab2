@@ -358,7 +358,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             headerLayout.setExpandRatio(header, 1.0f);
 
             PopupButton controlsBtn = new PopupButton();
-            controlsBtn.addStyleName(UIConstants.THEME_LINK);
+            controlsBtn.addStyleName(UIConstants.BUTTON_LINK);
             headerLayout.addComponent(controlsBtn);
             headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

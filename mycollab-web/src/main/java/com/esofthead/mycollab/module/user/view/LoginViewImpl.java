@@ -86,7 +86,7 @@ public class LoginViewImpl extends AbstractPageView implements LoginView {
                             EventBusFactory.getInstance().post(new ShellEvent.GotoForgotPasswordPage(this, null));
                         }
                     });
-            forgotPasswordBtn.setStyleName(UIConstants.THEME_LINK);
+            forgotPasswordBtn.setStyleName(UIConstants.BUTTON_LINK);
             custom.addComponent(forgotPasswordBtn, "forgotLink");
 
             if (ServerInstance.getInstance().isFirstTimeRunner()) {

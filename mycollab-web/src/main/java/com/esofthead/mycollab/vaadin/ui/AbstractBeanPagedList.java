@@ -79,8 +79,8 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
         controlBar.setWidth("100%");
         this.controlBarWrapper.addComponent(controlBar);
 
-        this.pageManagement = new MHorizontalLayout();
-        this.pageManagement.setWidth(null);
+        pageManagement = new MHorizontalLayout();
+        pageManagement.setWidth(null);
 
         // defined layout here ---------------------------
 
@@ -92,14 +92,14 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
                 public void buttonClick(final ClickEvent event) {
                     pageChange(1);
                 }
-            }, false);
+            });
             firstLink.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(firstLink);
+            pageManagement.addComponent(firstLink);
         }
         if (this.currentPage >= 5) {
             final Label ss1 = new Label("...");
             ss1.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(ss1);
+            pageManagement.addComponent(ss1);
         }
         if (this.currentPage > 3) {
             Button previous2 = new ButtonLink("" + (this.currentPage - 2), new ClickListener() {
@@ -109,9 +109,9 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
                 public void buttonClick(final ClickEvent event) {
                     pageChange(currentPage - 2);
                 }
-            }, false);
+            });
             previous2.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(previous2);
+            pageManagement.addComponent(previous2);
         }
         if (this.currentPage > 2) {
             final Button previous1 = new ButtonLink("" + (this.currentPage - 1), new ClickListener() {
@@ -121,37 +121,35 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
                 public void buttonClick(final ClickEvent event) {
                     pageChange(currentPage - 1);
                 }
-            }, false);
+            });
             previous1.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(previous1);
+            pageManagement.addComponent(previous1);
         }
         // Here add current ButtonLinkLegacy
-        final Button current = new ButtonLink("" + this.currentPage,
-                new ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        final Button current = new ButtonLink("" + this.currentPage, new ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        pageChange(currentPage);
-                    }
-                }, false);
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                pageChange(currentPage);
+            }
+        });
         current.addStyleName("buttonPaging");
         current.addStyleName("current");
 
-        this.pageManagement.addComponent(current);
+        pageManagement.addComponent(current);
         final int range = this.totalPage - this.currentPage;
         if (range >= 1) {
-            final Button next1 = new ButtonLink("" + (this.currentPage + 1),
-                    new ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            final Button next1 = new ButtonLink("" + (this.currentPage + 1), new ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            pageChange(currentPage + 1);
-                        }
-                    }, false);
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    pageChange(currentPage + 1);
+                }
+            });
             next1.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(next1);
+            pageManagement.addComponent(next1);
         }
         if (range >= 2) {
             Button next2 = new ButtonLink("" + (this.currentPage + 2), new ClickListener() {
@@ -161,14 +159,14 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
                 public void buttonClick(final ClickEvent event) {
                     pageChange(currentPage + 2);
                 }
-            }, false);
+            });
             next2.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(next2);
+            pageManagement.addComponent(next2);
         }
         if (range >= 4) {
             Label ss2 = new Label("...");
             ss2.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(ss2);
+            pageManagement.addComponent(ss2);
         }
         if (range >= 3) {
             Button last = new ButtonLink("" + this.totalPage, new ClickListener() {
@@ -178,13 +176,13 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
                 public void buttonClick(final ClickEvent event) {
                     pageChange(totalPage);
                 }
-            }, false);
+            });
             last.addStyleName("buttonPaging");
-            this.pageManagement.addComponent(last);
+            pageManagement.addComponent(last);
         }
 
-        controlBar.addComponent(this.pageManagement);
-        controlBar.setComponentAlignment(this.pageManagement, Alignment.MIDDLE_RIGHT);
+        controlBar.addComponent(pageManagement);
+        controlBar.setComponentAlignment(pageManagement, Alignment.MIDDLE_RIGHT);
 
         return this.controlBarWrapper;
     }

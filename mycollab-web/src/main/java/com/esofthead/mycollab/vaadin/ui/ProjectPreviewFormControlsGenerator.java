@@ -164,7 +164,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                     }
                 });
                 cloneBtn.setIcon(FontAwesome.ROAD);
-                cloneBtn.setStyleName(UIConstants.THEME_LINK);
+                cloneBtn.setStyleName(UIConstants.BUTTON_LINK);
                 cloneBtn.setEnabled(canWrite);
                 popupButtonsControl.addOption(cloneBtn);
             }
@@ -227,7 +227,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
     }
 
     public void addOptionButton(Button button) {
-        button.setStyleName(UIConstants.THEME_LINK);
+        button.setStyleName(UIConstants.BUTTON_LINK);
         button.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 2710916670115028630L;
 

@@ -38,7 +38,7 @@ public class UserBlock extends MVerticalLayout {
     public UserBlock(String username, String userAvatarId, String displayName) {
         withMargin(false).withWidth("80px");
         MButton button = new MButton(UserAvatarControlFactory.createAvatarResource(userAvatarId, 48)).
-                withStyleName(UIConstants.THEME_LINK);
+                withStyleName(UIConstants.BUTTON_LINK);
 
         String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();

@@ -113,7 +113,7 @@ public abstract class CustomizedTableWindow extends Window {
 
             }
         });
-        restoreLink.setStyleName(UIConstants.THEME_LINK);
+        restoreLink.setStyleName(UIConstants.BUTTON_LINK);
         contentLayout.addComponent(restoreLink);
         contentLayout.setComponentAlignment(restoreLink, Alignment.MIDDLE_RIGHT);
 

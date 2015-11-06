@@ -307,7 +307,7 @@ public class ContactRoleEditViewImpl extends AbstractPageView implements
 						}
 					});
 			accountLink.setIcon(CrmAssetsManager.getAsset(CrmTypeConstants.ACCOUNT));
-			accountLink.setStyleName(UIConstants.THEME_LINK);
+			accountLink.setStyleName(UIConstants.BUTTON_LINK);
 			accountLink.setWidth("250px");
 			this.addComponent(accountLink);
 

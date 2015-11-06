@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.view.page;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.page.domain.Folder;
@@ -280,7 +279,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                     }
                 });
         editBtn.setIcon(FontAwesome.EDIT);
-        editBtn.setStyleName(UIConstants.THEME_LINK);
+        editBtn.setStyleName(UIConstants.BUTTON_LINK);
         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
         controlBtns.addComponent(editBtn);
 
@@ -314,7 +313,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PAGES));
         deleteBtn.setIcon(FontAwesome.TRASH_O);
-        deleteBtn.setStyleName(UIConstants.THEME_LINK);
+        deleteBtn.setStyleName(UIConstants.BUTTON_LINK);
         controlBtns.addComponent(deleteBtn);
 
         block.addComponent(controlBtns);
@@ -370,7 +369,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
         editBtn.setIcon(FontAwesome.EDIT);
-        editBtn.setStyleName(UIConstants.THEME_LINK);
+        editBtn.setStyleName(UIConstants.BUTTON_LINK);
         controlBtns.addComponent(editBtn);
 
         Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
@@ -403,7 +402,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
                 });
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PAGES));
         deleteBtn.setIcon(FontAwesome.TRASH_O);
-        deleteBtn.setStyleName(UIConstants.THEME_LINK);
+        deleteBtn.setStyleName(UIConstants.BUTTON_LINK);
         controlBtns.addComponent(deleteBtn);
 
         block.addComponent(controlBtns);

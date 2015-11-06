@@ -203,7 +203,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                     waitingNotLayout.addComponent(statusEmail);
                 }
             });
-            resendInvitationLink.setStyleName(UIConstants.THEME_LINK);
+            resendInvitationLink.setStyleName(UIConstants.BUTTON_LINK);
             resendInvitationLink.addStyleName("member-email");
             waitingNotLayout.addComponent(resendInvitationLink);
             memberInfo.addComponent(waitingNotLayout);

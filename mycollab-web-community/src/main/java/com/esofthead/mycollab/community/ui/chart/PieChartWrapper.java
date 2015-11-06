@@ -143,6 +143,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
     @Override
     protected final ComponentContainer createLegendBox() {
         final CssLayout mainLayout = new CssLayout();
+        mainLayout.addStyleName("legendBoxContent");
         mainLayout.setSizeUndefined();
         final List keys = pieDataSet.getKeys();
 
@@ -154,7 +155,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
 
             final Comparable key = (Comparable) keys.get(i);
             int colorIndex = i % CHART_COLOR_STR.size();
-            final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
+            final String color = "<div style = \" width:13px;height:13px;background: #"
                     + CHART_COLOR_STR.get(colorIndex) + "\" />";
             final Label lblCircle = new Label(color);
             lblCircle.setContentMode(ContentMode.HTML);
@@ -171,7 +172,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
                 btnCaption = String.format("%s(%d)", AppContext.getMessage(enumKeyCls, key.toString()),
                         pieDataSet.getValue(key).intValue());
             }
-            final Button btnLink = new Button(btnCaption, new Button.ClickListener() {
+            final Button btnLink = new Button(StringUtils.trim(btnCaption, 25, true), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -183,7 +184,8 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends GenericC
                     }
                 }
             });
-            btnLink.addStyleName(UIConstants.THEME_LINK);
+            btnLink.setDescription(btnCaption);
+            btnLink.addStyleName(UIConstants.BUTTON_LINK);
             layout.with(lblCircle, btnLink);
             mainLayout.addComponent(layout);
         }

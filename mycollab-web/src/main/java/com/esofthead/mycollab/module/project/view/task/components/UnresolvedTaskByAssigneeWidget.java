@@ -96,7 +96,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
 
     @Override
     protected void displayPlainMode() {
-        this.bodyContent.removeAllComponents();
+        bodyContent.removeAllComponents();
         if (!groupItems.isEmpty()) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withWidth("100%");
@@ -141,7 +141,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
                 }
             });
 
-            this.setStyleName(UIConstants.THEME_LINK);
+            this.setStyleName(UIConstants.BUTTON_LINK);
             this.setWidth("110px");
             this.addStyleName(UIConstants.TEXT_ELLIPSIS);
             this.setIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16));

@@ -47,7 +47,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
             VerticalLayout formLayout = new VerticalLayout();
 
             Label organizationHeader = new Label("Risk Information");
-            organizationHeader.setStyleName(UIConstants.H2_STYLE2);
+            organizationHeader.addStyleName(UIConstants.H2_STYLE2);
             formLayout.addComponent(organizationHeader);
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);

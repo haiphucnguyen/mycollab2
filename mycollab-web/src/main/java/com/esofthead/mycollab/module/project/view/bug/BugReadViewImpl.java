@@ -304,7 +304,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                     String bugLinkValue = buildItemValue(relatedBug);
                     Button statusLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
-                    statusLink.setStyleName(UIConstants.THEME_LINK);
+                    statusLink.setStyleName(UIConstants.BUTTON_LINK);
                     statusLink.addStyleName("block");
                     Label bugLink = new Label(bugLinkValue, ContentMode.HTML);
                     bugContainer.with(bugLink);
@@ -525,7 +525,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         });
                         componentLink.setDescription(component.getComponentname());
                         componentContainer.addComponentField(componentLink);
-                        componentLink.setStyleName(UIConstants.THEME_LINK);
+                        componentLink.setStyleName(UIConstants.BUTTON_LINK);
                         componentLink.addStyleName("block");
                     }
                     return componentContainer;
@@ -547,7 +547,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         });
                         versionLink.setDescription(version.getVersionname());
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName(UIConstants.THEME_LINK);
+                        versionLink.setStyleName(UIConstants.BUTTON_LINK);
                         versionLink.addStyleName("block");
                     }
                     return componentContainer;
@@ -569,7 +569,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         });
                         versionLink.setDescription(version.getVersionname());
                         componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName(UIConstants.THEME_LINK);
+                        versionLink.setStyleName(UIConstants.BUTTON_LINK);
                         versionLink.addStyleName("block");
                     }
                     return componentContainer;

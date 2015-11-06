@@ -65,6 +65,7 @@ public abstract class GenericChartWrapper extends CssLayout implements PageView 
     public GenericChartWrapper(final int width, final int height) {
         this.width = width;
         this.height = height;
+        this.setWidth("100%");
     }
 
     abstract protected JFreeChart createChart();

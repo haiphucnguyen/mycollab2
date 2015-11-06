@@ -22,7 +22,7 @@ import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCrite
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.common.service.TimelineTrackingService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
@@ -31,7 +31,7 @@ import com.esofthead.mycollab.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.hp.gagawa.java.elements.Div;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button;
@@ -65,7 +65,7 @@ public class TaskStatusTrendChartWidget extends Depot {
     private static final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd").withZone(DateTimeZone.UTC);
 
     public TaskStatusTrendChartWidget() {
-        super("Trend in 30 days", new MVerticalLayout());
+        super("Trend in 30 days", new MVerticalLayout().withWidth("100%"));
         setContentBorder(true);
     }
 
@@ -131,20 +131,29 @@ public class TaskStatusTrendChartWidget extends Depot {
         @Override
         protected final ComponentContainer createLegendBox() {
             final CssLayout mainLayout = new CssLayout();
+            mainLayout.setWidth("100%");
             mainLayout.addStyleName("legendBoxContent");
             final List series = dataset.getSeries();
 
             for (int i = 0; i < series.size(); i++) {
+                final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).
+                        withMargin(new MarginInfo(false, false, false, true));
+                layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+
                 final TimeSeries key = (TimeSeries) series.get(i);
                 int colorIndex = i % CHART_COLOR_STR.size();
-                final Button btnLink = new Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
-//                btnLink.addStyleName(UIConstants.THEME_LINK);
-                Div div = new DivLessFormatter().appendChild(new Div().setStyle("width:13px;height:13px;" +
-                        "background: #" + CHART_COLOR_STR.get(colorIndex)));
-                MHorizontalLayout wrapper = new MHorizontalLayout().withSpacing(false).with(new Label(div.write(), ContentMode.HTML), btnLink);
-                wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-                mainLayout.addComponent(wrapper);
+                final String color = "<div style = \" width:13px;height:13px;background: #"
+                        + CHART_COLOR_STR.get(colorIndex) + "\" />";
+                final Label lblCircle = new Label(color);
+                lblCircle.setContentMode(ContentMode.HTML);
+                String captionBtn = AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey());
+                final Button btnLink = new Button(StringUtils.trim(captionBtn, 30, true));
+                btnLink.setDescription(captionBtn);
+                btnLink.addStyleName(UIConstants.BUTTON_LINK);
+                layout.with(lblCircle, btnLink);
+                mainLayout.addComponent(layout);
             }
+
             return mainLayout;
         }
 

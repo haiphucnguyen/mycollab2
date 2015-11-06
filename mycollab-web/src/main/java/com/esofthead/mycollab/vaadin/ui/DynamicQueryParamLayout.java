@@ -101,7 +101,7 @@ public abstract class DynamicQueryParamLayout<S extends SearchCriteria> extends 
                         .moveToBasicSearchLayout();
             }
         });
-        basicSearchBtn.setStyleName(UIConstants.THEME_LINK);
+        basicSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
         buttonControls.with(basicSearchBtn).withAlign(basicSearchBtn, Alignment.MIDDLE_CENTER);
         return buttonControls;
     }

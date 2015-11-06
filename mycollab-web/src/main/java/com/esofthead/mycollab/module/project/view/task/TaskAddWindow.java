@@ -90,7 +90,7 @@ public class TaskAddWindow extends Window {
                         close();
                     }
                 });
-                updateAllBtn.addStyleName(UIConstants.THEME_LINK);
+                updateAllBtn.addStyleName(UIConstants.BUTTON_LINK);
 
                 Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
                     @Override

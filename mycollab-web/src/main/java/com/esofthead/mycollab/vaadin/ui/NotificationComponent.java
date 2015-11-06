@@ -177,7 +177,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            actionBtn.setStyleName(UIConstants.THEME_LINK);
+            actionBtn.setStyleName(UIConstants.BUTTON_LINK);
             actionBtn.addStyleName("block");
             wrapper.with(cssWrapper, actionBtn).expand(cssWrapper);
         } else if (item instanceof NewUpdateAvailableNotification) {
@@ -199,7 +199,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                         NotificationComponent.this.setPopupVisible(false);
                     }
                 });
-                upgradeBtn.setStyleName(UIConstants.THEME_LINK);
+                upgradeBtn.setStyleName(UIConstants.BUTTON_LINK);
                 upgradeBtn.addStyleName("block");
                 wrapper.addComponent(upgradeBtn);
             }
@@ -212,7 +212,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            uploadAvatarBtn.setStyleName(UIConstants.THEME_LINK);
+            uploadAvatarBtn.setStyleName(UIConstants.BUTTON_LINK);
             uploadAvatarBtn.addStyleName("block");
             wrapper.add(uploadAvatarBtn);
         } else if (item instanceof SmtpSetupNotification) {
@@ -223,7 +223,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            smtpBtn.setStyleName(UIConstants.THEME_LINK);
+            smtpBtn.setStyleName(UIConstants.BUTTON_LINK);
             smtpBtn.addStyleName("block");
             Label lbl = new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml() + " Your members can not receive any mail " +
                     "notification without a proper SMTP setting", ContentMode.HTML);
@@ -239,7 +239,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            actionBtn.setStyleName(UIConstants.THEME_LINK);
+            actionBtn.setStyleName(UIConstants.BUTTON_LINK);
             actionBtn.addStyleName("block");
             wrapper.addComponent(actionBtn);
         } else if (item instanceof RequestPreviewNotification) {
@@ -256,7 +256,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            dismissBtn.setStyleName(UIConstants.THEME_LINK);
+            dismissBtn.setStyleName(UIConstants.BUTTON_LINK);
             dismissBtn.addStyleName("block");
             wrapper.addComponent(dismissBtn);
             Button spreadBtn = new Button("I will", new ClickListener() {
@@ -266,7 +266,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            spreadBtn.setStyleName(UIConstants.THEME_LINK);
+            spreadBtn.setStyleName(UIConstants.BUTTON_LINK);
             spreadBtn.addStyleName("block");
             wrapper.addComponent(spreadBtn);
         } else {

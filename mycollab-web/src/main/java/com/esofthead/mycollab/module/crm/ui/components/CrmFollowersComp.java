@@ -98,7 +98,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
 
                         }
                     });
-            editBtn.setStyleName(UIConstants.THEME_LINK);
+            editBtn.setStyleName(UIConstants.BUTTON_LINK);
             header.addComponent(editBtn);
         }
 
@@ -108,7 +108,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
         currentUserFollow = isUserWatching(bean);
 
         final Button toogleWatching = new Button("");
-        toogleWatching.setStyleName(UIConstants.THEME_LINK);
+        toogleWatching.setStyleName(UIConstants.BUTTON_LINK);
         toogleWatching.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -158,7 +158,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
 
                     }
                 });
-        followersBtn.setStyleName(UIConstants.THEME_LINK);
+        followersBtn.setStyleName(UIConstants.BUTTON_LINK);
         layout.addComponent(followersBtn);
     }
 

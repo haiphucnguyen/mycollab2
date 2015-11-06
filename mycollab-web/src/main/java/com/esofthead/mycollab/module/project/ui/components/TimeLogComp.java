@@ -64,7 +64,7 @@ public abstract class TimeLogComp<B extends ValuedBean> extends MVerticalLayout 
                     showEditTimeWindow(beanItem);
                 }
             });
-            editBtn.setStyleName(UIConstants.THEME_LINK);
+            editBtn.setStyleName(UIConstants.BUTTON_LINK);
             editBtn.addStyleName("info-hdr");
             header.addComponent(editBtn);
         }

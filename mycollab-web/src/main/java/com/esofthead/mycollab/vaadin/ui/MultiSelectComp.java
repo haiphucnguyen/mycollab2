@@ -100,7 +100,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
                     requestAddNewComp();
                 }
             });
-            newBtn.setStyleName(UIConstants.THEME_LINK);
+            newBtn.setStyleName(UIConstants.BUTTON_LINK);
             newBtn.setWidthUndefined();
             content.with(newBtn);
         }

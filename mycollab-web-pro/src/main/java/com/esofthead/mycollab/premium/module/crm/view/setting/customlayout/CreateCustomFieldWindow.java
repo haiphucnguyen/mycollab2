@@ -173,7 +173,7 @@ public class CreateCustomFieldWindow extends Window {
 
                 }
             });
-            typeLink.addStyleName(UIConstants.THEME_LINK);
+            typeLink.addStyleName(UIConstants.BUTTON_LINK);
             fieldSelectionTable.addItem(new Object[]{new Embedded("", (Resource) rowItems[0]), typeLink}, rowItems[1]);
         }
 

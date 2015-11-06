@@ -151,7 +151,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
-            controlsBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
+//            controlsBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 
             OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("150px");
 

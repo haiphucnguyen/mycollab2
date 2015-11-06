@@ -125,7 +125,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             }
         });
 
-        connectDropboxBtn.addStyleName(UIConstants.THEME_LINK);
+        connectDropboxBtn.addStyleName(UIConstants.BUTTON_LINK);
         connectDropboxBtn.setIcon(FontAwesome.DROPBOX);
         filterBtnLayout.addOption(connectDropboxBtn);
 

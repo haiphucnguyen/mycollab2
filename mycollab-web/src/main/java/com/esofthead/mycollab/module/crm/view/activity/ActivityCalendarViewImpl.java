@@ -137,7 +137,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 initLabelCaption();
             }
         });
-        monthViewBtn.setStyleName(UIConstants.THEME_LINK);
+        monthViewBtn.setStyleName(UIConstants.BUTTON_LINK);
         popupLayout.addComponent(monthViewBtn);
 
         weekViewBtn = new Button("Weekly", new Button.ClickListener() {
@@ -151,7 +151,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 datePicker.selectWeek(new Date());
             }
         });
-        weekViewBtn.setStyleName(UIConstants.THEME_LINK);
+        weekViewBtn.setStyleName(UIConstants.BUTTON_LINK);
         popupLayout.addComponent(weekViewBtn);
 
         dailyViewBtn = new Button("Daily", new Button.ClickListener() {
@@ -166,7 +166,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 calendarComponent.switchToDateView(currentDate);
             }
         });
-        dailyViewBtn.setStyleName(UIConstants.THEME_LINK);
+        dailyViewBtn.setStyleName(UIConstants.BUTTON_LINK);
         popupLayout.addComponent(dailyViewBtn);
 
         toggleViewBtn.setContent(popupLayout);

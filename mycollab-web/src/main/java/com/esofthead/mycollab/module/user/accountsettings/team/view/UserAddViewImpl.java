@@ -165,7 +165,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     editUserForm.displayAdvancedForm(user);
                 }
             });
-            moreInfoBtn.addStyleName(UIConstants.THEME_LINK);
+            moreInfoBtn.addStyleName(UIConstants.BUTTON_LINK);
             MHorizontalLayout linkWrap = new MHorizontalLayout().withMargin(true).with(moreInfoBtn);
             bottomPanel.with(linkWrap).withAlign(linkWrap, Alignment.MIDDLE_LEFT);
 

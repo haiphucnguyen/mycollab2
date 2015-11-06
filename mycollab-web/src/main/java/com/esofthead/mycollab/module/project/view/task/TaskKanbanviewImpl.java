@@ -481,7 +481,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             headerLayout.setExpandRatio(header, 1.0f);
 
             final PopupButton controlsBtn = new PopupButton();
-            controlsBtn.addStyleName(UIConstants.THEME_LINK);
+            controlsBtn.addStyleName(UIConstants.BUTTON_LINK);
             headerLayout.addComponent(controlsBtn);
             headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

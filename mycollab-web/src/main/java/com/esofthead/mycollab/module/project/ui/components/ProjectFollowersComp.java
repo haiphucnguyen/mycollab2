@@ -99,7 +99,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 
                 }
             });
-            editBtn.setStyleName(UIConstants.THEME_LINK);
+            editBtn.setStyleName(UIConstants.BUTTON_LINK);
             editBtn.addStyleName("info-hdr");
             header.addComponent(editBtn);
         }
@@ -112,7 +112,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
         currentUserFollow = isUserWatching(bean);
 
         final Button toogleWatching = new Button("");
-        toogleWatching.setStyleName(UIConstants.THEME_LINK);
+        toogleWatching.setStyleName(UIConstants.BUTTON_LINK);
         toogleWatching.addStyleName("info-hdr");
         toogleWatching.addClickListener(new ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -154,7 +154,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
                 }
             }
         });
-        followersBtn.setStyleName(UIConstants.THEME_LINK);
+        followersBtn.setStyleName(UIConstants.BUTTON_LINK);
         layout.addComponent(followersBtn);
     }
 

@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -40,6 +41,7 @@ import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import org.vaadin.viritin.button.MButton;
@@ -116,10 +118,13 @@ public class UnresolvedTaskByStatusWidget extends DepotWithChart {
                         if (optionVal.getTypeval().equals(item.getGroupid())) {
                             isFound = true;
                             MHorizontalLayout statusLayout = new MHorizontalLayout().withWidth("100%");
+                            statusLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+                            String statusCaption = AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, optionVal.getTypeval());
                             MButton statusLink = new ButtonI18nComp(optionVal.getTypeval())
-                                    .withCaption(AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, optionVal.getTypeval()))
-                                    .withDescription(AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, optionVal.getTypeval()))
-                                    .withListener(listener).withStyleName(UIConstants.THEME_LINK).withIcon(FontAwesome.FLAG);
+                                    .withCaption(StringUtils.trim(statusCaption, 25, true))
+                                    .withDescription(statusCaption)
+                                    .withListener(listener).withStyleName(UIConstants.BUTTON_LINK).withIcon(FontAwesome.FLAG);
+//                            statusLink.addStyleName(UIConstants.TEXT_ELLIPSIS);
                             statusLink.setWidth("110px");
 
                             statusLayout.addComponent(statusLink);
@@ -133,9 +138,12 @@ public class UnresolvedTaskByStatusWidget extends DepotWithChart {
                 }
                 if (!isFound) {
                     MHorizontalLayout statusLayout = new MHorizontalLayout().withWidth("100%");
+                    statusLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+                    String statusCaption = AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, optionVal.getTypeval());
                     MButton statusLink = new ButtonI18nComp(optionVal.getTypeval())
-                            .withCaption(AppContext.getMessage(OptionI18nEnum.StatusI18nEnum.class, optionVal.getTypeval()))
-                            .withListener(listener).withStyleName(UIConstants.THEME_LINK).withIcon(FontAwesome.FLAG);
+                            .withCaption(StringUtils.trim(statusCaption, 25, true)).withDescription(statusCaption)
+                            .withListener(listener).withStyleName(UIConstants.BUTTON_LINK).withIcon(FontAwesome.FLAG);
+                    statusLink.addStyleName(UIConstants.TEXT_ELLIPSIS);
                     statusLink.setWidth("110px");
                     statusLayout.addComponent(statusLink);
                     ProgressBarIndicator indicator = new ProgressBarIndicator(totalCount, totalCount, false);

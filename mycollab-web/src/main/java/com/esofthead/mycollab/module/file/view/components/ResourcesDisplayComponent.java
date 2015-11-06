@@ -489,7 +489,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     }
                 }
             });
-            resourceLinkBtn.addStyleName(UIConstants.THEME_LINK);
+            resourceLinkBtn.addStyleName(UIConstants.BUTTON_LINK);
             resourceLinkBtn.addStyleName("h3");
             informationLayout.addComponent(resourceLinkBtn);
 
@@ -878,7 +878,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         }
 
         private void createPageControls() {
-            this.navigator.removeAllComponents();
+            navigator.removeAllComponents();
             if (this.currentPage > 1) {
                 final Button firstLink = new ButtonLink("1", new ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -887,14 +887,14 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     public void buttonClick(final ClickEvent event) {
                         pageChange(1);
                     }
-                }, false);
+                });
                 firstLink.addStyleName("buttonPaging");
-                this.navigator.addComponent(firstLink);
+                navigator.addComponent(firstLink);
             }
             if (this.currentPage >= 5) {
                 final Label ss1 = new Label("...");
                 ss1.addStyleName("buttonPaging");
-                this.navigator.addComponent(ss1);
+                navigator.addComponent(ss1);
             }
             if (this.currentPage > 3) {
                 final Button previous2 = new ButtonLink("" + (this.currentPage - 2), new ClickListener() {
@@ -904,9 +904,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     public void buttonClick(final ClickEvent event) {
                         pageChange(currentPage - 2);
                     }
-                }, false);
+                });
                 previous2.addStyleName("buttonPaging");
-                this.navigator.addComponent(previous2);
+                navigator.addComponent(previous2);
             }
             if (this.currentPage > 2) {
                 final Button previous1 = new ButtonLink("" + (this.currentPage - 1), new ClickListener() {
@@ -916,9 +916,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     public void buttonClick(final ClickEvent event) {
                         pageChange(currentPage - 1);
                     }
-                }, false);
+                });
                 previous1.addStyleName("buttonPaging");
-                this.navigator.addComponent(previous1);
+                navigator.addComponent(previous1);
             }
             // Here add current ButtonLinkLegacy
             currentBtn = new ButtonLink("" + this.currentPage, new ClickListener() {
@@ -928,11 +928,11 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 public void buttonClick(final ClickEvent event) {
                     // pageChange(currentPage);
                 }
-            }, false);
+            });
             currentBtn.addStyleName("buttonPaging");
             currentBtn.addStyleName("current");
 
-            this.navigator.addComponent(currentBtn);
+            navigator.addComponent(currentBtn);
             final int range = this.totalPage - this.currentPage;
             if (range >= 1) {
                 final Button next1 = new ButtonLink(
@@ -943,46 +943,43 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     public void buttonClick(final ClickEvent event) {
                         pageChange(currentPage + 1);
                     }
-                }, false);
+                });
                 next1.addStyleName("buttonPaging");
-                this.navigator.addComponent(next1);
+                navigator.addComponent(next1);
             }
             if (range >= 2) {
-                final Button next2 = new ButtonLink(
-                        "" + (this.currentPage + 2), new ClickListener() {
+                final Button next2 = new ButtonLink("" + (this.currentPage + 2), new ClickListener() {
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void buttonClick(final ClickEvent event) {
                         pageChange(currentPage + 2);
                     }
-                }, false);
+                });
                 next2.addStyleName("buttonPaging");
-                this.navigator.addComponent(next2);
+                navigator.addComponent(next2);
             }
             if (range >= 4) {
                 final Label ss2 = new Label("...");
                 ss2.addStyleName("buttonPaging");
-                this.navigator.addComponent(ss2);
+                navigator.addComponent(ss2);
             }
             if (range >= 3) {
-                final Button last = new ButtonLink("" + this.totalPage,
-                        new ClickListener() {
-                            private static final long serialVersionUID = 1L;
+                final Button last = new ButtonLink("" + this.totalPage, new ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                pageChange(totalPage);
-                            }
-                        }, false);
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        pageChange(totalPage);
+                    }
+                });
                 last.addStyleName("buttonPaging");
-                this.navigator.addComponent(last);
+                navigator.addComponent(last);
             }
 
 
             controlBar.addComponent(navigator);
-            controlBar.setComponentAlignment(navigator,
-                    Alignment.MIDDLE_RIGHT);
+            controlBar.setComponentAlignment(navigator, Alignment.MIDDLE_RIGHT);
             this.addComponent(controlBarWrapper);
         }
 
@@ -991,13 +988,11 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             resourcesContainer.removeAllComponents();
             int index = currentPage - 1;
             int start = (index == 0) ? index : index * pageItemNum;
-            int end = ((start + pageItemNum) > lstResource.size()) ? lstResource
-                    .size() : start + pageItemNum;
+            int end = ((start + pageItemNum) > lstResource.size()) ? lstResource.size() : start + pageItemNum;
 
             for (int i = start; i < end; i++) {
                 Resource res = lstResource.get(i);
-                ComponentContainer resContainer = resourcesContainer
-                        .buildResourceRowComp(res);
+                ComponentContainer resContainer = resourcesContainer.buildResourceRowComp(res);
                 if (resContainer != null) {
                     resourcesContainer.addComponent(resContainer);
                     resourcesContainer.addComponent(new Hr());

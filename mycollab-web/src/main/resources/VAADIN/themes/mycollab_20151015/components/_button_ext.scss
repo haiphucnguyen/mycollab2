@@ -1,135 +1,50 @@
 @mixin mycollab-button {
-  div.v-button-down:active {
-    background-color: #43533E;
-  }
 
   .v-button {
-    height: 29px;
     box-shadow: none;
+    border: none;
+    padding: 0;
+    background-image: none;
     &:focus:after {
       box-shadow:none;
     }
-  }
-
-  .v-button, .v-button-caption {
-    text-shadow: none;
-  }
-
-  .v-button .v-icon, .v-nativebutton .v-icon {
-    margin-left: 0px;
-  }
-
-  .v-disabled.v-button-link {
-    color: #6482B3;
-    margin: 0px;
-    &:focus {
-      color: #6482B3;
-      margin: 0px;
+    .v-icon {
+      margin-left: 0px;
     }
-  }
-
-  .v-button.v-button-link {
-    margin: 0px;
-    padding: 0px;
-    text-align: left;
-    text-decoration: none;
-    &:focus, &:active {
-      background-color: transparent;
-      border-radius: 0px;
-      margin: 0px;
-    }
-    .v-button-caption {
-      margin: 0px;
+    &.link {
+      text-align: left;
       text-decoration: none;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-    &.pending .v-button-caption {
-      color: #108e2a;
-    }
-    &.overdue .v-button-caption {
-      color: red;
-    }
-    &.completed .v-button-caption {
-      color: black;
-      text-decoration: line-through;
-    }
-    &.v-button-wordWrap {
-      width: 100%;
+      &:focus, &:active {
+        background-color: transparent;
+        border-radius: 0px;
+      }
       .v-button-caption {
-        display: table-cell;
-        white-space: normal;
-        word-wrap: break-word;
-        word-break: normal;
-        width: 100%;
-        height: 100%;
+        text-decoration: none;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      .v-icon {
+        margin-left: 0;
       }
     }
-    &.v-button-wordWrap .v-button-wrap {
-      width: 100%;
-      display: table-row;
-    }
-    .v-icon {
-      margin-left: 0;
-    }
   }
 
-  .v-disabled.v-button-link {
-    color: #006dac;
-    margin: 0px;
-    &:focus {
-      color: #006dac;
-      margin: 0px;
-    }
+  /* Ellipsis Button Link */
+  .v-button-link.text-ellipsis .v-button-wrap {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  body.v-ie .v-pressed.v-button-link {
-    margin: 0px;
-  }
-
-  .v-ie .v-button-wrap, .v-button-wrap, .v-disabled:active .v-button-wrap, .v-button:active .v-button-wrap {
+  .v-button-wrap {
     border-left: none;
     border-right: none;
     border-bottom: none;
     padding: 6px 15px;
     margin: 0px;
-    background-image: none;
-  }
-
-  .v-ie {
-    .v-pressed.v-button .v-button-wrap {
-      border-left: none;
-      border-right: none;
-      border-bottom: none;
-      padding: 6px 15px;
-      margin: 0px;
-      background-image: none;
-    }
-    .v-button-wrap {
-      border-top: 1px solid transparent;
-    }
-  }
-
-  .v-button-wrap, .v-disabled:active .v-button-wrap, .v-button:active .v-button-wrap {
-    border-top: 1px solid transparent;
-  }
-
-  .v-button {
-    border-width: 0px;
-    border-style: solid;
-    padding: 0;
-    background-image: none;
-  }
-
-  .v-ie .v-button {
-    background-image: none;
-    &:active, &:focus {
-      background-image: none;
-    }
-  }
-
-  .v-button:active, div.v-button-down {
     background-image: none;
   }
 
@@ -197,12 +112,6 @@
 
   /* End Background has SELECT icon */
 
-  /* fix Image's alignment in button with word wrap style */
-
-  .v-button-wordWrap .v-button-wrap img {
-    vertical-align: bottom;
-  }
-
   /* .v-buttongroup .v-button.v-button-right */
 
   .v-button-selected-style {
@@ -210,32 +119,22 @@
     border-color: #ABABAB;
   }
 
-  /* Ellipsis Button Link */
-
-  .v-button-link.text-ellipsis .v-button-wrap {
-    display: block;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .splitbutton .parent-button {
     border-right-width: 0px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     &.blankbtn .v-button-wrap {
-      border-right-color: #B3B3B3;
+      border-right-color: $my-border-color;
     }
     .v-button-wrap {
-      border-right: 1px solid #F9F9F9;
+      border-right: 1px solid $my-border-color;
       padding-right: 6px;
       padding-left: 6px;
     }
   }
 
   .v-ie .splitbutton .parent-button .v-button-wrap {
-    border-right: 1px solid #F9F9F9;
+    border-right: 1px solid $my-border-color;
     padding-right: 6px;
     padding-left: 8px;
   }
@@ -265,13 +164,6 @@
       margin: 0px;
       border-radius: 3px 0px 0px 3px;
       padding: 3px 3px 3px 8px;
-    }
-  }
-
-  .v-ie .v-splitbutton {
-    .greenbtn, .graybtn {
-      padding: 3px 3px 3px 8px;
-      box-sizing: border-box;
     }
   }
 

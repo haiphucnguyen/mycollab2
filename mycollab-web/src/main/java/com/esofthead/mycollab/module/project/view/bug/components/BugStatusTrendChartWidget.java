@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.common.service.TimelineTrackingService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -27,7 +28,6 @@ import com.esofthead.mycollab.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -128,28 +128,28 @@ public class BugStatusTrendChartWidget extends Depot {
         @Override
         protected final ComponentContainer createLegendBox() {
             final CssLayout mainLayout = new CssLayout();
-            mainLayout.setSizeUndefined();
+            mainLayout.addStyleName("legendBoxContent");
             final List series = dataset.getSeries();
 
             for (int i = 0; i < series.size(); i++) {
                 final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).
                         withMargin(new MarginInfo(false, false, false, true));
-                layout.addStyleName("inline-block");
-                layout.setSizeUndefined();
                 layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
                 final TimeSeries key = (TimeSeries) series.get(i);
                 int colorIndex = i % CHART_COLOR_STR.size();
-                final String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
+                final String color = "<div style = \" width:13px;height:13px;background: #"
                         + CHART_COLOR_STR.get(colorIndex) + "\" />";
                 final Label lblCircle = new Label(color);
                 lblCircle.setContentMode(ContentMode.HTML);
-                final Button btnLink = new Button(AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey()));
-                btnLink.addStyleName(UIConstants.THEME_LINK);
+                String captionBtn = AppContext.getMessage(OptionI18nEnum.BugStatus.class, (String) key.getKey());
+                final Button btnLink = new Button(StringUtils.trim(captionBtn, 25, true));
+                btnLink.setDescription(captionBtn);
+                btnLink.addStyleName(UIConstants.BUTTON_LINK);
                 layout.with(lblCircle, btnLink);
                 mainLayout.addComponent(layout);
             }
-            mainLayout.setWidth("100%");
+
             return mainLayout;
         }
 

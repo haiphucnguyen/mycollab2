@@ -98,7 +98,7 @@ public class QuickEditGanttItemWindow extends Window {
                         close();
                     }
                 });
-                updateAllBtn.addStyleName(UIConstants.THEME_LINK);
+                updateAllBtn.addStyleName(UIConstants.BUTTON_LINK);
 
                 Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
                     @Override

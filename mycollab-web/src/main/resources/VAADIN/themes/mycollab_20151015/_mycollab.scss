@@ -8,11 +8,13 @@ $v-layout-margin-bottom: 12px;
 $v-layout-spacing-horizontal: 5px;
 $v-layout-spacing-vertical: 5px;
 $v-font-size: 13px;
+$v-unit-size: 29px;
 $v-tooltip-background-color:#FDFDEE;
 $v-textfield-background-color--readonly: $v-textfield-background-color;
 
 
 @import "../valo/valo";
+
 @import "global";
 @import "shared";
 
@@ -134,15 +136,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .v-label {
     word-wrap: break-word;
-    &.h2 {
-      font-size: $font-large;
-      padding: 0px;
-    }
-    &.h2_community {
-      font-size: $font-larger;
-      padding-top: 10px;
-      text-align: center;
-    }
     &.link img {
       vertical-align: top;
       margin-right: 3px;
@@ -748,6 +741,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       padding-top: 20px;
     }
     .depotHeader {
+      cursor: pointer;
       width: 100%;
       border: 1px solid $my-border-color;
       border-radius: 0px;
@@ -755,7 +749,8 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     }
 
     .depot-title {
-      padding: 7px 10px;
+      padding: 0px 10px;
+      display: inline-flex;
       &::before {
         content:'\f0d7';
         font-family: FontAwesome;

@@ -64,7 +64,8 @@ public class Depot extends VerticalLayout {
 
         headerLbl = titleLbl;
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
-        final MCssLayout headerLeft = new MCssLayout(headerLbl).withStyleName("depot-title");
+        final MHorizontalLayout headerLeft = new MHorizontalLayout(headerLbl).withStyleName("depot-title");
+        headerLeft.setSizeFull();
         headerLeft.addLayoutClickListener(new LayoutClickListener() {
             private static final long serialVersionUID = 1L;
 

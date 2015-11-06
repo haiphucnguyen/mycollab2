@@ -215,17 +215,15 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         header.with(headerLeft).withAlign(headerLeft, Alignment.TOP_LEFT);
 
-        Button addNewReport = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button addNewReport = new Button(AppContext.getMessage(StandupI18nEnum.BUTTON_ADD_REPORT_LABEL), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(
-                                new StandUpEvent.GotoAdd(StandupListViewImpl.class, null));
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new StandUpEvent.GotoAdd(StandupListViewImpl.class, null));
 
-                    }
-                });
+            }
+        });
         addNewReport.setStyleName(UIConstants.THEME_GREEN_LINK);
         addNewReport.setIcon(FontAwesome.PLUS);
         addNewReport.setEnabled(!CurrentProjectVariables.isProjectArchived());

@@ -19,7 +19,6 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.TagService;
-import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -80,7 +79,7 @@ public class TagViewComponent extends CssLayout {
                 TagViewComponent.this.addComponent(createSaveTagComp());
             }
         });
-        addTagBtn.setStyleName(UIConstants.THEME_LINK);
+        addTagBtn.setStyleName(UIConstants.BUTTON_LINK);
         return addTagBtn;
     }
 
@@ -167,7 +166,7 @@ public class TagViewComponent extends CssLayout {
 //                    EventBusFactory.getInstance().post(new ProjectEvent.GotoTagListView(TagBlock.this, tag));
                 }
             });
-            tagLink.setStyleName(UIConstants.THEME_LINK);
+            tagLink.setStyleName(UIConstants.BUTTON_LINK);
             this.addComponent(tagLink);
             Button deleteBtn = new Button(FontAwesome.TIMES);
             deleteBtn.addClickListener(new Button.ClickListener() {

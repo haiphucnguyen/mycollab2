@@ -234,7 +234,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
 
-        this.rightColumn = new MVerticalLayout().withWidth("350px").withMargin(new MarginInfo(true, false, true,
+        this.rightColumn = new MVerticalLayout().withWidth("370px").withMargin(new MarginInfo(true, false, true,
                 false));
 
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);

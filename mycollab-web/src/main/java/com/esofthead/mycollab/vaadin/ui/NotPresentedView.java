@@ -25,6 +25,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * @author MyCollab Ltd.
@@ -39,14 +40,15 @@ public class NotPresentedView extends AbstractPageView {
 
         final Label titleIcon = new Label(FontAwesome.EXCLAMATION_CIRCLE.getHtml(), ContentMode.HTML);
         titleIcon.setStyleName("warning-icon");
-        titleIcon.setWidth("60px");
-        this.addComponent(titleIcon);
+        titleIcon.setWidthUndefined();
+        this.with(titleIcon);
 
         Label label = new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
-        label.setStyleName("h2_community");
-        this.addComponent(label);
+        label.setWidthUndefined();
+        label.addStyleName(ValoTheme.LABEL_H2);
+        this.with(label).withAlign(label, Alignment.MIDDLE_CENTER);
 
-        Button requestFeatureBtn = new Button("Request the premium edition");
+        Button requestFeatureBtn = new Button("Buy the premium edition");
         requestFeatureBtn.setStyleName(UIConstants.THEME_GREEN_LINK);
         BrowserWindowOpener opener = new BrowserWindowOpener("mailto:support@mycollab.com");
         opener.extend(requestFeatureBtn);

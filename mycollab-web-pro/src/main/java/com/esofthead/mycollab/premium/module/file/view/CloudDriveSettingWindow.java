@@ -174,7 +174,7 @@ public class CloudDriveSettingWindow extends Window {
                         }
                     }
                 });
-                deleteBtn.addStyleName(UIConstants.THEME_LINK);
+                deleteBtn.addStyleName(UIConstants.BUTTON_LINK);
                 popupOptionActionLayout.addOption(deleteBtn);
                 popupBtn.setContent(popupOptionActionLayout);
                 titleLayout.addComponent(popupBtn);
