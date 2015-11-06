@@ -23,6 +23,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 @import "components/button_ext";
 @import "components/tooltip";
 @import "components/icons";
+@import "components/form";
 @import "components/crm";
 @import "components/document";
 @import "components/project";
@@ -48,6 +49,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   @include mycollab-breadcrumb;
   @include mycollab-button;
   @include mycollab-icons;
+  @include mycollab-form;
   @include mycollab-tooltip;
   @include mycollab-shared;
   @include mycollab-crm;
@@ -2549,13 +2551,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   }
 
   /* gridlayout without border fixes */
-
-  .addview-layout-body .v-gridlayout.no-border {
-    border: none;
-    .v-gridlayout-slot > div {
-      border: none;
-    }
-  }
 
   .example-block {
     position: relative;

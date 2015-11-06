@@ -40,7 +40,6 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -138,7 +137,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
                 }
             });
             deleteBtn.setIcon(FontAwesome.TRASH_O);
-            deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
+            deleteBtn.addStyleName(UIConstants.BUTTON_DANGER);
             deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MESSAGES));
 
             stickyCheck = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK), message.getIsstick());

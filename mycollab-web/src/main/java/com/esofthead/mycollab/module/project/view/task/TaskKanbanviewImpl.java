@@ -157,7 +157,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
         deleteColumBtn.setIcon(FontAwesome.TRASH_O);
         deleteColumBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
-        deleteColumBtn.setStyleName(UIConstants.THEME_RED_LINK);
+        deleteColumBtn.setStyleName(UIConstants.BUTTON_DANGER);
 //        groupWrapLayout.addComponent(deleteColumBtn);
 
         Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
@@ -555,7 +555,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             });
             addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
-            addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
             addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
             root.with(headerLayout, dragLayoutContainer, addNewBtn);
         }

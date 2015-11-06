@@ -261,7 +261,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
         });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
-        deleteBtn.addStyleName(UIConstants.THEME_RED_LINK);
+        deleteBtn.addStyleName(UIConstants.BUTTON_DANGER);
         deleteBtn.setDescription("Delete resource");
         deleteBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 

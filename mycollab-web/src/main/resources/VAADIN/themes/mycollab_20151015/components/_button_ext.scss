@@ -60,12 +60,6 @@
     font-weight: normal;
   }
 
-  .v-button {
-    &.v-button-redbtn:active .v-button-wrap {
-      border-top-color: #BD0C09;
-    }
-  }
-
   .v-button.v-button-greenbtn, .v-button-greenbtn:focus {
     background-color: #3A97FF;
     color: white;
@@ -73,28 +67,6 @@
   }
 
   /* End round border button */
-
-  /* Background has SELECT icon */
-
-  .v-button.select-bg {
-    height: 25px;
-    width: 22px;
-    background: none no-repeat 0px 0px transparent;
-    border-radius: 0px 2px 2px 0px;
-    border-width: 1px 1px 1px 0px;
-    border-color: $my-border-color;
-    position: relative;
-    .v-button-wrap, &:active .v-button-wrap, &:hover .v-button-wrap {
-      padding: 0px;
-      margin: 0px;
-      border-width: 0px;
-      height: 100%;
-      border-radius: 0px;
-      background-color: transparent;
-    }
-  }
-
-  /* End Background has SELECT icon */
 
   /* .v-buttongroup .v-button.v-button-right */
 
@@ -107,20 +79,11 @@
     border-right-width: 0px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    &.blankbtn .v-button-wrap {
-      border-right-color: $my-border-color;
-    }
     .v-button-wrap {
       border-right: 1px solid $my-border-color;
       padding-right: 6px;
       padding-left: 6px;
     }
-  }
-
-  .v-ie .splitbutton .parent-button .v-button-wrap {
-    border-right: 1px solid $my-border-color;
-    padding-right: 6px;
-    padding-left: 8px;
   }
 
   .splitbutton .v-popupbutton {

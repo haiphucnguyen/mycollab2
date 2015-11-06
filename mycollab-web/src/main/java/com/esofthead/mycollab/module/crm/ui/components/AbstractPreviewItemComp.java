@@ -72,7 +72,6 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractCssPageView {
         previewLayout.setMargin(new MarginInfo(false, true, true, true));
 
         previewContent = new VerticalLayout();
-        previewContent.setStyleName("preview-form-wrap");
         previewContent.setWidth("100%");
 
         previewForm = initPreviewForm();

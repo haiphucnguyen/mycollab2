@@ -1554,60 +1554,6 @@ a.pending {
 	color: #108e2a;
 }
 
-.colored-gridlayout {
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 18px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 18px;
-}
-
-.colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 18px;
-}
-
-.colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
-	padding: 0px;
-}
-
-.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
-	padding: 0px;
-}
-
-.colored-gridlayout .gridform-caption {
-	background-color: #F9F9F9;
-	border-left: 1px solid #CFCFCF;
-	border-right: 1px solid #c8c8c8;
-}
-
-.colored-gridlayout .gridform-caption.first-col {
-	border-left: none;
-}
-
-.colored-gridlayout  > div > div {
-	border-top: 1px solid #c8c8c8;
-}
-
-.colored-gridlayout  > div > div.first-row {
-	border-top: none;
-}
-
-.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg > .v-csslayout-margin {
-	padding: 0px;
-}
-
 .v-filterselect-suggestmenu table {
 	width: 100%;
 }
@@ -2189,25 +2135,6 @@ span.block {
 	padding: 3px 7px 3px 7px;
 	margin-right: 2px;
 	color: white;
-}
-
-.activity-comp .header {
-	padding: 3px 10px;
-	background-color: #f1f1f1;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.activity-comp .header .v-label.title {
-	font-weight: bold;
-	font-size: 13px;
-}
-
-.activity-comp .v-select-optiongroup-sortDirection .v-select-option {
-	display: inline-block;
-}
-
-.activity-comp .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
-	padding-right: 10px;
 }
 
 .wizard .wizard-progress-bar {
@@ -13752,33 +13679,10 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 	font-weight: normal;
 }
 
-.v-button.v-button-redbtn:active .v-button-wrap {
-	border-top-color: #BD0C09;
-}
-
 .v-button.v-button-greenbtn, .v-button-greenbtn:focus {
 	background-color: #3A97FF;
 	color: white;
 	font-weight: normal;
-}
-
-.v-button.select-bg {
-	height: 25px;
-	width: 22px;
-	background: none no-repeat 0px 0px transparent;
-	border-radius: 0px 2px 2px 0px;
-	border-width: 1px 1px 1px 0px;
-	border-color: #CFCFCF;
-	position: relative;
-}
-
-.v-button.select-bg .v-button-wrap, .v-button.select-bg:active .v-button-wrap, .v-button.select-bg:hover .v-button-wrap {
-	padding: 0px;
-	margin: 0px;
-	border-width: 0px;
-	height: 100%;
-	border-radius: 0px;
-	background-color: transparent;
 }
 
 .v-button-selected-style {
@@ -13792,20 +13696,10 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 	border-bottom-right-radius: 0;
 }
 
-.splitbutton .parent-button.blankbtn .v-button-wrap {
-	border-right-color: #CFCFCF;
-}
-
 .splitbutton .parent-button .v-button-wrap {
 	border-right: 1px solid #CFCFCF;
 	padding-right: 6px;
 	padding-left: 6px;
-}
-
-.v-ie .splitbutton .parent-button .v-button-wrap {
-	border-right: 1px solid #CFCFCF;
-	padding-right: 6px;
-	padding-left: 8px;
 }
 
 .splitbutton .v-popupbutton {
@@ -13907,13 +13801,69 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	color: black;
 }
 
+.form .section {
+	padding: 25px 5px 5px 0px;
+	font-size: 16px;
+	color: #298eff;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.colored-gridlayout .gridform-caption, .colored-gridlayout .gridform-field {
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
+	padding-right: 18px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 8px;
+}
+
+.colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left {
+	padding-left: 18px;
+}
+
+.colored-gridlayout .gridform-field {
+	min-height: 46px;
+}
+
+.colored-gridlayout .gridform-caption {
+	min-height: 46px;
+}
+
+.colored-gridlayout .gridform-caption .v-label {
+	text-align: right;
+	color: gray;
+}
+
+.activity-comp .section {
+	padding: 25px 5px 5px 0px;
+	font-size: 16px;
+	color: #298eff;
+	border-bottom: 1px solid #CFCFCF;
+}
+
+.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
+	display: inline-block;
+}
+
+.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+	padding-right: 10px;
+	font-size: 13px;
+}
+
 .v-tooltip, .v-sa .v-tooltip {
 	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
 	line-height: normal;
 	border: 1px solid #CFCFCF;
 	outline-color: #CFCFCF;
 	outline: none;
-	max-width: 70em;
+	max-width: 80em;
 }
 
 .v-tooltip-text tr {
@@ -13948,60 +13898,6 @@ a.overdue {
 
 a.pending {
 	color: #108e2a;
-}
-
-.colored-gridlayout {
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 18px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 18px;
-}
-
-.colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 18px;
-}
-
-.colored-gridlayout .gridform-field .v-horizontallayout .v-horizontallayout-margin {
-	padding: 0px;
-}
-
-.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
-	padding: 0px;
-}
-
-.colored-gridlayout .gridform-caption {
-	background-color: #F9F9F9;
-	border-left: 1px solid #CFCFCF;
-	border-right: 1px solid #c8c8c8;
-}
-
-.colored-gridlayout .gridform-caption.first-col {
-	border-left: none;
-}
-
-.colored-gridlayout  > div > div {
-	border-top: 1px solid #c8c8c8;
-}
-
-.colored-gridlayout  > div > div.first-row {
-	border-top: none;
-}
-
-.colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg > .v-csslayout-margin {
-	padding: 0px;
 }
 
 .v-filterselect-suggestmenu table {
@@ -14587,25 +14483,6 @@ span.block {
 	color: white;
 }
 
-.activity-comp .header {
-	padding: 3px 10px;
-	background-color: #f1f1f1;
-	border-bottom: 1px solid #CFCFCF;
-}
-
-.activity-comp .header .v-label.title {
-	font-weight: bold;
-	font-size: 13px;
-}
-
-.activity-comp .v-select-optiongroup-sortDirection .v-select-option {
-	display: inline-block;
-}
-
-.activity-comp .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
-	padding-right: 10px;
-}
-
 .wizard .wizard-progress-bar {
 	padding: 5px 0px;
 	border-bottom: 1px solid #CFCFCF;
@@ -14827,24 +14704,8 @@ span.block {
 	padding-right: 30px;
 }
 
-.readview-layout .colored-gridlayout .gridform-field.v-margin-top, .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
-}
-
-.readview-layout .colored-gridlayout .gridform-field.v-margin-bottom, .readview-layout .readViewLayout .colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.readview-layout .preview-form-wrap {
-	border: solid 1px #CFCFCF;
-}
-
 .lead-convert-window {
 	padding-bottom: 5px;
-}
-
-.lead-convert-window .colored-gridlayout > div > div.first-row {
-	border-top: 1px solid #C8C8C8;
 }
 
 .lead-convert-window .v-checkbox input[type="checkbox"] {
@@ -14855,10 +14716,6 @@ span.block {
 	background-color: #FFFFFF;
 	padding: 0px;
 	border-radius: 0;
-}
-
-.addview-layout .addview-layout-body {
-	border: solid 1px #CFCFCF;
 }
 
 .control-buttons.v-margin-top {
@@ -14881,81 +14738,11 @@ div .addview-layout-body {
 	border: none;
 }
 
-div .addview-layout-body .v-label.h2 {
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
-	color: #454545;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	background-color: #EEEEEE;
-	width: 100%;
-}
-
 div .addview-layout-body .control-buttons {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border-bottom: 1px solid #CFCFCF;
-}
-
-div .addview-layout-body .colored-gridlayout {
-	border-bottom: 1px solid #CFCFCF;
-	width: 100% !important;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-top {
-	padding-top: 5px;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-right {
-	padding-right: 5px;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-caption.v-margin-left {
-	padding-left: 18px;
-}
-
-div .addview-layout-body .gridform-caption {
-	border-left: 1px solid #CFCFCF;
-	border-right: 1px solid #CFCFCF;
-}
-
-div .addview-layout-body .gridform-caption.first-col {
-	border-left: none;
-}
-
-div .addview-layout-body .colored-gridlayout .v-gridlayout-slot > div {
-	border-top: 1px solid #CFCFCF;
-}
-
-div .addview-layout-body .colored-gridlayout .v-gridlayout-slot > div.first-row {
-	border-top: none;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-field {
-	width: 100%;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-top {
-	padding-top: 5px;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-right {
-	padding-right: 8px;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-div .addview-layout-body .v-horizontallayout-gridform-field.v-margin-left {
-	padding-left: 10px;
 }
 
 .v-horizontallayout.border-box2-no-margin.file-topcontrols {
@@ -18692,14 +18479,6 @@ div.v-csslayout.bean-block.olive-block {
 
 .v-colorpicker-popup .v-button .v-button-wrap, .v-colorpicker-popup .v-button:active .v-button-wrap {
 	padding: 3px 10px;
-}
-
-.addview-layout-body .v-gridlayout.no-border {
-	border: none;
-}
-
-.addview-layout-body .v-gridlayout.no-border .v-gridlayout-slot > div {
-	border: none;
 }
 
 .example-block {

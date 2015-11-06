@@ -90,7 +90,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
                     EventBusFactory.getInstance().post(new AccountBillingEvent.CancelAccount(BillingSummaryViewImpl.this, null));
                 }
             });
-            cancelBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            cancelBtn.setStyleName(UIConstants.BUTTON_DANGER);
             faqLayout.addComponent(cancelBtn);
         }
 
@@ -309,7 +309,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
                 }
             });
 
-            cancelBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            cancelBtn.setStyleName(UIConstants.BUTTON_DANGER);
             controlBtns.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
             final Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OK), new Button.ClickListener() {

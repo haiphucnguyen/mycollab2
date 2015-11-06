@@ -1,0 +1,45 @@
+@mixin section-header() {
+  padding: 25px 5px 5px 0px;
+  font-size: $font-larger;
+  color: #298eff;
+  border-bottom: 1px solid $my-border-color;
+}
+
+@mixin mycollab-form {
+  .form {
+    .section {
+      @include section-header();
+    }
+  }
+
+  .colored-gridlayout {
+    .gridform-caption, .gridform-field {
+      @include margin-container(8px, 18px, 8px, 18px);
+      border-bottom: 1px solid $my-border-color;
+    }
+    .gridform-field {
+      min-height: 46px;
+    }
+    .gridform-caption {
+      min-height: 46px;
+      .v-label {
+        text-align: right;
+        color: gray;
+      }
+    }
+  }
+
+  /* Activity component style */
+  .activity-comp {
+    .section {
+      @include section-header();
+      .v-select-optiongroup-sortDirection .v-select-option {
+        display: inline-block;
+        &.v-radiobutton{
+          padding-right: 10px;
+          font-size: $font-normal;
+        }
+      }
+    }
+  }
+}

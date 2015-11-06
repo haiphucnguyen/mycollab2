@@ -57,7 +57,7 @@ class DefaultMassItemActionHandlerContainer extends MHorizontalLayout with HasMa
         })
         optionBtn.setIcon(resource)
         if ("delete" == groupId) {
-            optionBtn.addStyleName(UIConstants.THEME_RED_LINK)
+            optionBtn.addStyleName(UIConstants.BUTTON_DANGER)
         }
         else {
             optionBtn.addStyleName(UIConstants.BUTTON_ACTION)

@@ -179,7 +179,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
                     updateLinkTask(null);
                 }
             });
-            detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            detachTaskBtn.setStyleName(UIConstants.BUTTON_DANGER);
             taskLayout.addComponent(detachTaskBtn);
 
             Label attachTaskBtn = new Label(StringUtils.trim(taskName, 60, true));

@@ -22,6 +22,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -102,7 +103,7 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
             wrapBody.setWidth("100%");
             wrapBody.setStyleName("tasklist");
             headerLbl = new Label();
-            headerLbl.addStyleName("h2");
+            headerLbl.addStyleName(ValoTheme.LABEL_H3);
             this.addComponent(headerLbl);
             this.addComponent(wrapBody);
         }

@@ -140,7 +140,7 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                             }
                         });
                 deleteBtn.setIcon(FontAwesome.TRASH_O);
-                deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
+                deleteBtn.setStyleName(UIConstants.BUTTON_DANGER);
                 deleteBtn.setEnabled(canAccess);
                 editButtons.addComponent(deleteBtn);
             }

@@ -130,7 +130,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
                 UI.getCurrent().getPage().setLocation("https://www.mycollab.com");
             }
         });
-        submitBtn.addStyleName(UIConstants.THEME_RED_LINK);
+        submitBtn.addStyleName(UIConstants.BUTTON_DANGER);
 
         Button cancelBtn = new Button("Never mind, go back", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

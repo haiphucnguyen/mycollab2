@@ -85,7 +85,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         withMargin(false).withStyleName("activity-comp");
         this.type = type;
         this.groupFormatter = groupFormatter;
-        headerLbl = new ELabel("Change history").withStyleName("title");
+        headerLbl = new ELabel("Change history");
 
         final OptionGroup sortDirection = new OptionGroup();
         sortDirection.addStyleName("sortDirection");
@@ -101,7 +101,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
         });
 
         MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
-                .withStyleName("header").withWidth("100%")
+                .withStyleName("section").withWidth("100%")
                 .with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
 
         commentBox = new CrmCommentInput(this, type, emailHandler);

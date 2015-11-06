@@ -144,7 +144,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
                     updateLinkTask(null);
                 }
             });
-            detachTaskBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            detachTaskBtn.setStyleName(UIConstants.BUTTON_DANGER);
             detachTaskBtn.setIcon(FontAwesome.UNLINK);
             taskLayout.addComponent(detachTaskBtn);
 

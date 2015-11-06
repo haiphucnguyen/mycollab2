@@ -715,7 +715,7 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
                                     contructComboBox();
                                 }
                             });
-                            deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
+                            deleteBtn.setStyleName(UIConstants.BUTTON_DANGER);
                             deleteBtn.setIcon(FontAwesome.TRASH_O);
 
                             filterBox.addComponent(deleteBtn, 1);

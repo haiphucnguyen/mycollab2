@@ -382,7 +382,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             });
             addNewBtn.setIcon(FontAwesome.PLUS);
             addNewBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-            addNewBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
             addNewBtn.addStyleName(UIConstants.BUTTON_ACTION);
             root.with(headerLayout, dragLayoutContainer, addNewBtn);
         }

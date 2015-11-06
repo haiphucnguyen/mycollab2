@@ -138,7 +138,7 @@ public class CrmPreviewFormControlsGenerator<T> {
                         }
                     });
             deleteBtn.setIcon(FontAwesome.TRASH_O);
-            deleteBtn.setStyleName(UIConstants.THEME_RED_LINK);
+            deleteBtn.setStyleName(UIConstants.BUTTON_DANGER);
             layout.addComponent(deleteBtn);
             deleteBtn.setEnabled(canAccess);
         }

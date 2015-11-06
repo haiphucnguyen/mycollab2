@@ -78,9 +78,9 @@ public class TooltipBuilder {
 
         public static Td buildCellLink(String href, String imageLink, String name) {
             String cutNameVal = StringUtils.trimHtmlTags(name);
-            return new Td().setStyle(
-                    "width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
-                    .appendChild(new Img("", imageLink)).appendChild(DivLessFormatter.EMPTY_SPACE()).appendChild(new A().setHref(href).appendText(cutNameVal));
+            return new Td().setStyle("width:200px;word-wrap: break-word; white-space: normal;vertical-align: top; word-break: break-all;")
+                    .appendChild(new Img("", imageLink)).appendChild(DivLessFormatter.EMPTY_SPACE())
+                    .appendChild(new A().setHref(href).appendText(cutNameVal));
         }
     }
 }

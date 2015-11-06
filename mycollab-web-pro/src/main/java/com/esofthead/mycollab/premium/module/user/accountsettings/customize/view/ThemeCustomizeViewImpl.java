@@ -89,7 +89,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
                 EventBusFactory.getInstance().post(new SettingEvent.ResetTheme(ThemeCustomizeViewImpl.this, null));
             }
         });
-        resetToDefaultBtn.setStyleName(UIConstants.THEME_RED_LINK);
+        resetToDefaultBtn.setStyleName(UIConstants.BUTTON_DANGER);
         resetToDefaultBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         controlButton.with(resetToDefaultBtn, saveBtn);
 
@@ -533,7 +533,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(dangerBtnPanel, 2, 0);
 
         Button exampleDangerBtn = new Button("Button");
-        exampleDangerBtn.setStyleName(UIConstants.THEME_RED_LINK);
+        exampleDangerBtn.setStyleName(UIConstants.BUTTON_DANGER);
         dangerBtnPanel.addComponent(exampleDangerBtn);
 
         HorizontalLayout dangerBtnColorPane = new HorizontalLayout();

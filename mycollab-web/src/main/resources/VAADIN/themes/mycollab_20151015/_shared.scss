@@ -16,42 +16,6 @@
     }
   }
 
-  .colored-gridlayout {
-    border-bottom: 1px solid $my-border-color;
-    .gridform-caption, .gridform-field {
-      @include margin-container(8px, 18px, 8px, 18px);
-    }
-    .gridform-field {
-      &.v-margin-left {
-        padding-left: 18px;
-      }
-      .v-horizontallayout .v-horizontallayout-margin {
-        padding: 0px;
-      }
-    }
-    .v-gridlayout-margin .gridform-field .v-csslayout > .v-csslayout-margin {
-      padding: 0px;
-    }
-    .gridform-caption {
-      background-color: #F9F9F9;
-      border-left: 1px solid $my-border-color;
-      border-right: 1px solid #c8c8c8;
-      &.first-col {
-        border-left: none;
-      }
-    }
-    > div > div {
-      border-top: 1px solid #c8c8c8;
-      &.first-row {
-        border-top: none;
-      }
-    }
-  }
-
-  .colored-gridlayout .v-gridlayout-margin .gridform-field .v-csslayout.select-bg > .v-csslayout-margin {
-    padding: 0px;
-  }
-
   .v-filterselect-suggestmenu table {
     width:100%;
   }
@@ -610,26 +574,6 @@
     padding: 3px 7px 3px 7px;
     margin-right: 2px;
     color: white;
-  }
-
-  /* Activity component style */
-  .activity-comp {
-    .header {
-      padding: 3px 10px;
-      background-color: #f1f1f1;
-      border-bottom: 1px solid $my-border-color;
-      .v-label.title {
-        font-weight: bold;
-        font-size: $font-normal;
-      }
-    }
-    .v-select-optiongroup-sortDirection .v-select-option {
-      display: inline-block;
-    }
-    /* Some extra spacing is needed */
-    .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
-      padding-right: 10px;
-    }
   }
 
   /*Wizard style*/
