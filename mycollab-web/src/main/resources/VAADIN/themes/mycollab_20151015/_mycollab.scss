@@ -2256,7 +2256,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   /* search content */
 
   .content-wrapper {
-    padding: 0px 30px 10px;
+    padding: 0px 30px;
     width: 100%;
   }
 
@@ -2596,13 +2596,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     box-shadow: none;
   }
 
-  /* experimental sidebar */
-
-  .sidebar-wrap {
-    border-left: 1px solid $my-border-color;
-    background-color: floralwhite;
-  }
-
   .readview-body-wrap .readview-sidebar .info-hdr {
     font-weight: bold;
     padding-top: 10px;
@@ -2741,6 +2734,12 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     -ms-flex-direction: row;
     flex-direction: row;
     -webkit-box-orient: horizontal;
+  }
+
+  .sidebar-wrap {
+    border-left: 1px solid $my-border-color;
+    border-right: 1px solid $my-border-color;
+    background-color: floralwhite;
   }
 
   .rightsidebar-layout {

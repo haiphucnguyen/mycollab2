@@ -16,6 +16,11 @@
     }
   }
 
+  .meta-info {
+    color: $my-meta-color;
+    font-size: $font-small;
+  }
+
   .v-filterselect-suggestmenu table {
     width:100%;
   }

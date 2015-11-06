@@ -79,9 +79,6 @@
     .v-verticallayout {
       @include margin-container(8px, 15px, 5px, 15px);
     }
-    .meta-info {
-      @include meta-info();
-    }
   }
 
   .prj-list-row {

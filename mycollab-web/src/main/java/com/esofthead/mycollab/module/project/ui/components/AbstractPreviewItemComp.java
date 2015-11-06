@@ -40,21 +40,18 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implements PageView {
     private static final long serialVersionUID = 1L;
-
     private static Logger LOG = LoggerFactory.getLogger(AbstractPreviewItemComp.class);
 
     protected B beanItem;
-    protected AdvancedPreviewBeanForm<B> previewForm;
-    protected ReadViewLayout previewLayout;
-
-    protected ComponentContainer header;
-
-    private MVerticalLayout sidebarContent;
-    private MVerticalLayout bodyContent;
-
-    private Button favoriteBtn;
     private FavoriteItemService favoriteItemService = ApplicationContextUtil.getSpringBean(FavoriteItemService.class);
     private boolean isDisplaySideBar = true;
+
+    protected AdvancedPreviewBeanForm<B> previewForm;
+    protected ReadViewLayout previewLayout;
+    protected ComponentContainer header;
+    private MVerticalLayout sidebarContent;
+    private MVerticalLayout bodyContent;
+    private Button favoriteBtn;
 
     public AbstractPreviewItemComp(String headerText, Resource iconResource) {
         this(headerText, iconResource, null);

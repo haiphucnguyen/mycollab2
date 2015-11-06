@@ -46,8 +46,3 @@ $font-largest: 36px;
   display: -webkit-flex;     /* NEW - Chrome */
   display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
 }
-
-@mixin meta-info() {
-  color: $my-meta-color;
-  font-size: $font-small;
-}

@@ -84,7 +84,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
         withMargin(false).withStyleName("activity-comp");
         this.type = type;
         this.groupFormatter = groupFormatter;
-        headerLbl = new ELabel("Change history").withStyleName("title");
+        headerLbl = new ELabel("Change history");
 
         final OptionGroup sortDirection = new OptionGroup();
         sortDirection.addStyleName("sortDirection");
@@ -99,7 +99,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
             }
         });
 
-        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName("header").withWidth("100%")
+        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName("section").withWidth("100%")
                 .with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
 
         commentBox = new ProjectCommentInput(this, type, extraTypeId, emailHandler);
@@ -180,7 +180,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                 GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 AppContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML).
                 withDescription(AppContext.formatDateTime(comment.getCreatedtime()));
-        timePostLbl.setStyleName("time-post");
+        timePostLbl.setStyleName("meta-info");
 
         if (hasDeletePermission(comment)) {
             Button msgDeleteBtn = new Button();

@@ -1554,6 +1554,11 @@ a.pending {
 	color: #108e2a;
 }
 
+.meta-info {
+	color: #888;
+	font-size: 12px;
+}
+
 .v-filterselect-suggestmenu table {
 	width: 100%;
 }
@@ -13810,7 +13815,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 
 .colored-gridlayout .gridform-caption .v-label {
 	text-align: right;
-	color: gray;
+	color: #999;
 }
 
 .activity-comp .section {
@@ -13870,6 +13875,11 @@ a.overdue {
 
 a.pending {
 	color: #108e2a;
+}
+
+.meta-info {
+	color: #888;
+	font-size: 12px;
 }
 
 .v-filterselect-suggestmenu table {
@@ -14618,12 +14628,10 @@ span.block {
 .readViewLayout {
 	background-color: #FFF;
 	border-radius: 0px;
-	border: 1px solid #CFCFCF;
 }
 
 .readViewLayout .readViewHeader {
-	padding: 10px 5px 10px 18px;
-	background: none repeat-x left top #EEEEEE;
+	padding: 0px;
 	border-radius: 0px;
 	border-bottom: 1px solid #CFCFCF;
 }
@@ -14636,14 +14644,6 @@ span.block {
 .readViewLayout .readViewHeader .headerNameOverdue {
 	font-size: 18px;
 	color: red;
-}
-
-.readViewLayout .v-label.h2 {
-	text-shadow: #F0F0F0 0 1px 0;
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #CFCFCF;
-	color: #454545;
 }
 
 .readViewBottomControls .v-verticallayout {
@@ -14830,11 +14830,6 @@ div .addview-layout-body .control-buttons {
 
 .project-status .v-verticallayout.v-margin-left {
 	padding-left: 15px;
-}
-
-.project-status .meta-info {
-	color: #888;
-	font-size: 12px;
 }
 
 .prj-list-row {
@@ -18133,7 +18128,7 @@ img.icon-btn {
 }
 
 .content-wrapper {
-	padding: 0px 30px 10px;
+	padding: 0px 30px;
 	width: 100%;
 }
 
@@ -18480,11 +18475,6 @@ div.v-csslayout.bean-block.olive-block {
 	box-shadow: none;
 }
 
-.sidebar-wrap {
-	border-left: 1px solid #CFCFCF;
-	background-color: floralwhite;
-}
-
 .readview-body-wrap .readview-sidebar .info-hdr {
 	font-weight: bold;
 	padding-top: 10px;
@@ -18625,6 +18615,12 @@ div.v-csslayout.rightsidebar-layout {
 	-ms-flex-direction: row;
 	flex-direction: row;
 	-webkit-box-orient: horizontal;
+}
+
+.sidebar-wrap {
+	border-left: 1px solid #CFCFCF;
+	border-right: 1px solid #CFCFCF;
+	background-color: floralwhite;
 }
 
 .rightsidebar-layout .sidebar-wrap {
