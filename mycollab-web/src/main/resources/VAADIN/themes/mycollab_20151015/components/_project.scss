@@ -80,50 +80,7 @@
       @include margin-container(8px, 15px, 5px, 15px);
     }
     .meta-info {
-      color: $my-meta-color;
-      font-size: $font-small;
-    }
-    .status-lbl {
-      color: $my-meta-color;
-    }
-    .v-slot-phase-status-lbl:after {
-      border-top: 3px double $my-border-color;
-      display: block;
-      height: 1px;
-      content: " ";
-      width: 300px;
-      position: absolute;
-      left: 50px;
-      top: 17px;
-      z-index: 0;
-    }
-    .phase-status-lbl {
-      position: relative;
-      z-index: 1;
-      padding-right: 5px;
-    }
-    .phase-status-layout {
-      padding-top: 5px;
-    }
-    .phase-status-btn {
-      .v-button-wrap, &:hover .v-button-wrap {
-        padding: 0px;
-        border: none;
-        background: none;
-        border: none;
-      }
-      padding: 0px;
-      border: none;
-      background: none;
-      .v-button-caption {
-        font-size: $font-x-large;
-        color: $my-meta-color;
-        small {
-          font-weight: 400;
-          font-size: $font-small;
-          display: block;
-        }
-      }
+      @include meta-info();
     }
   }
 

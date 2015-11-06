@@ -17,23 +17,18 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.core.utils.NumberUtils;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
-import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -72,7 +67,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkIconFix.setWidth("100%");
             final LabelLink projectLink = new LabelLink(String.format("[%s] %s", project.getShortname(), project.getName()),
                     ProjectLinkBuilder.generateProjectFullLink(project.getId()));
-            projectLink.addStyleName("h2");
+            projectLink.addStyleName(ValoTheme.LABEL_H3);
             linkIconFix.addComponent(projectLink);
             linkIconFix.setExpandRatio(projectLink, 1.0f);
 
@@ -100,27 +95,20 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkWrapper.addComponent(linkIconFix);
             projectLayout.addComponent(linkWrapper);
 
-            final MVerticalLayout projectStatusLayout = new MVerticalLayout().withWidth("180px");
-            projectStatusLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+            final MVerticalLayout projectStatusLayout = new MVerticalLayout().withWidth("180px").withFullHeight();
+            projectStatusLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
             final VerticalLayout taskStatus = new VerticalLayout();
             taskStatus.setWidth("100%");
             taskStatus.setSpacing(true);
             HorizontalLayout taskLblWrap = new HorizontalLayout();
             taskLblWrap.setWidth("100%");
-            Label taskStatusLbl = new Label("Tasks");
-            taskStatusLbl.setStyleName("status-lbl");
+            ELabel taskStatusLbl = new ELabel("Tasks").withStyleName("meta-info");
             taskLblWrap.addComponent(taskStatusLbl);
 
-            final ButtonLink taskStatusBtn = new ButtonLink((project.getNumTasks() - project.getNumOpenTasks()) + "/" + project.getNumTasks(),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            //TODO: task nevigate event
-                        }
-                    });
+            final ELabel taskStatusBtn = new ELabel((project.getNumTasks() - project.getNumOpenTasks()) + "/" +
+                    project.getNumTasks()).withStyleName("meta-info");
+            taskStatusBtn.setWidthUndefined();
             taskLblWrap.addComponent(taskStatusBtn);
             taskLblWrap.setComponentAlignment(taskStatusBtn, Alignment.TOP_RIGHT);
             taskStatus.addComponent(taskLblWrap);
@@ -137,17 +125,10 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             bugStatus.setSpacing(true);
             HorizontalLayout bugLblWrap = new HorizontalLayout();
             bugLblWrap.setWidth("100%");
-            Label bugLbl = new Label("Bugs");
-            bugLbl.setStyleName("status-lbl");
+            ELabel bugLbl = new ELabel("Bugs").withStyleName("meta-info");
             bugLblWrap.addComponent(bugLbl);
-            ButtonLink bugStatusBtn = new ButtonLink((project.getNumBugs() - project.getNumOpenBugs()) + "/" + project.getNumBugs(), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    //TODO: task nevigate event
-                }
-            });
+            ELabel bugStatusBtn = new ELabel((project.getNumBugs() - project.getNumOpenBugs()) + "/" + project.getNumBugs()).withStyleName("meta-info");
+            bugStatusBtn.setWidthUndefined();
             bugLblWrap.addComponent(bugStatusBtn);
             bugLblWrap.setComponentAlignment(bugStatusBtn, Alignment.TOP_RIGHT);
             bugStatus.addComponent(bugLblWrap);
@@ -158,47 +139,32 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             bugStatus.setComponentAlignment(bugProgressBar, Alignment.TOP_LEFT);
             projectStatusLayout.addComponent(bugStatus);
 
-            MVerticalLayout phaseStatusLayout = new MVerticalLayout().withMargin(false).withWidth("100%").withStyleName("phase-status-layout");
-
+            MVerticalLayout phaseStatusLayout = new MVerticalLayout().withMargin(false).withWidth("100%");
 
             Label phaseLbl = new Label("Phases");
-            phaseLbl.setStyleName("status-lbl");
-            phaseLbl.addStyleName("phase-status-lbl");
+            phaseLbl.setStyleName("meta-info");
             phaseLbl.setSizeUndefined();
             phaseStatusLayout.addComponent(phaseLbl);
 
             HorizontalLayout phaseStatus = new HorizontalLayout();
             phaseStatus.setWidth("100%");
             phaseStatus.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-            Button.ClickListener goToPhaseListener = new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this,
-                            new PageActionChain(new ProjectScreenData.Goto(project.getId()), new MilestoneScreenData.Search(null))));
-                }
-            };
             Button closePhaseBtn = new Button(String.format("%d <small>%s</small>", project.getNumClosedPhase(),
-                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Closed)), goToPhaseListener);
+                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Closed)));
             closePhaseBtn.setHtmlContentAllowed(true);
-            closePhaseBtn.setStyleName("phase-status-btn");
             phaseStatus.addComponent(closePhaseBtn);
 
             Button inProgressPhaseBtn = new Button(String.format(
                     "%d <small>%s</small>", project.getNumInProgressPhase(),
-                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.InProgress)),
-                    goToPhaseListener);
+                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.InProgress)));
             inProgressPhaseBtn.setHtmlContentAllowed(true);
-            inProgressPhaseBtn.setStyleName("phase-status-btn");
             phaseStatus.addComponent(inProgressPhaseBtn);
 
             Button futurePhaseBtn = new Button(String.format(
                     "%d <small>%s</small>", project.getNumFuturePhase(),
-                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Future)),
-                    goToPhaseListener);
+                    AppContext.getMessage(OptionI18nEnum.MilestoneStatus.Future)));
             futurePhaseBtn.setHtmlContentAllowed(true);
-            futurePhaseBtn.setStyleName("phase-status-btn");
             phaseStatus.addComponent(futurePhaseBtn);
 
             phaseStatusLayout.addComponent(phaseStatus);

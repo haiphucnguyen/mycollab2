@@ -45,6 +45,7 @@
   .panel-header {
     border: 1px solid $my-border-color;
     background-color: $my-panel-background-color;
+    height: 40px !important;
     .v-label {
       font-size: $font-large;
       font-weight: bold;
@@ -155,38 +156,19 @@
     background: none no-repeat 0 0 #ffffff;
   }
 
-  div.v-button-link {
-    &.buttonPaging {
-      color: #525252;
-      background-color: $my-background-color;
-      .v-button-wrap {
-        width: 17px;
-        padding: 4px 0px 3px;
-        text-align: center;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        border: 1px solid $my-border-color;
-      }
-      &:active .v-button-wrap, &:focus .v-button-wrap {
-        padding: 4px 0px 3px;
-        border: 1px solid $my-border-color;
-      }
-      .v-button-wrap .v-button-caption {
-        text-align: center;
-        padding: 0px;
-      }
+  .v-button.buttonPaging {
+    background-color: $my-background-color;
+    .v-button-wrap {
+      width: 17px;
+      padding: 0px 5px;
+      text-align: center;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
     }
-    &.current, &.buttonPaging:hover {
-      background-color: #548BCE;
+    &.current, &:hover {
       color: white;
     }
-  }
-
-  .v-label h2 {
-    font-size: $font-large;
-    font-weight: bold;
-    padding: 0px;
   }
 
   .v-vertical {

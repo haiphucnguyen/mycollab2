@@ -52,6 +52,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -143,7 +144,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
         headerContent.addStyleName("projectfeed-hdr-content");
 
         Label headerLabel = new Label(AppContext.getUser().getDisplayName());
-        headerLabel.setStyleName("h1");
+        headerLabel.setStyleName(ValoTheme.LABEL_H2);
         headerLabel.addStyleName(UIConstants.WORD_WRAP);
 
         MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true,

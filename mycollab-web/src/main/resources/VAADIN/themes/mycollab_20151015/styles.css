@@ -1588,6 +1588,7 @@ a.pending {
 .panel-header {
 	border: 1px solid #CFCFCF;
 	background-color: #f1f1f1;
+	height: 40px !important;
 }
 
 .panel-header .v-label {
@@ -1698,40 +1699,21 @@ a.pending {
 	background: none no-repeat 0 0 #ffffff;
 }
 
-div.v-button-link.buttonPaging {
-	color: #525252;
+.v-button.buttonPaging {
 	background-color: #f9f9f9;
 }
 
-div.v-button-link.buttonPaging .v-button-wrap {
+.v-button.buttonPaging .v-button-wrap {
 	width: 17px;
-	padding: 4px 0px 3px;
+	padding: 0px 5px;
 	text-align: center;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #CFCFCF;
 }
 
-div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
-	padding: 4px 0px 3px;
-	border: 1px solid #CFCFCF;
-}
-
-div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
-	text-align: center;
-	padding: 0px;
-}
-
-div.v-button-link.current, div.v-button-link.buttonPaging:hover {
-	background-color: #548BCE;
+.v-button.buttonPaging.current, .v-button.buttonPaging:hover {
 	color: white;
-}
-
-.v-label h2 {
-	font-size: 14px;
-	font-weight: bold;
-	padding: 0px;
 }
 
 .v-vertical.case-noitem {
@@ -13918,6 +13900,7 @@ a.pending {
 .panel-header {
 	border: 1px solid #CFCFCF;
 	background-color: #f1f1f1;
+	height: 40px !important;
 }
 
 .panel-header .v-label {
@@ -14028,40 +14011,21 @@ a.pending {
 	background: none no-repeat 0 0 #ffffff;
 }
 
-div.v-button-link.buttonPaging {
-	color: #525252;
+.v-button.buttonPaging {
 	background-color: #f9f9f9;
 }
 
-div.v-button-link.buttonPaging .v-button-wrap {
+.v-button.buttonPaging .v-button-wrap {
 	width: 17px;
-	padding: 4px 0px 3px;
+	padding: 0px 5px;
 	text-align: center;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #CFCFCF;
 }
 
-div.v-button-link.buttonPaging:active .v-button-wrap, div.v-button-link.buttonPaging:focus .v-button-wrap {
-	padding: 4px 0px 3px;
-	border: 1px solid #CFCFCF;
-}
-
-div.v-button-link.buttonPaging .v-button-wrap .v-button-caption {
-	text-align: center;
-	padding: 0px;
-}
-
-div.v-button-link.current, div.v-button-link.buttonPaging:hover {
-	background-color: #548BCE;
+.v-button.buttonPaging.current, .v-button.buttonPaging:hover {
 	color: white;
-}
-
-.v-label h2 {
-	font-size: 14px;
-	font-weight: bold;
-	padding: 0px;
 }
 
 .v-vertical.case-noitem {
@@ -14865,56 +14829,6 @@ div .addview-layout-body .control-buttons {
 .project-status .meta-info {
 	color: #888;
 	font-size: 12px;
-}
-
-.project-status .status-lbl {
-	color: #888;
-}
-
-.project-status .v-slot-phase-status-lbl:after {
-	border-top: 3px double #CFCFCF;
-	display: block;
-	height: 1px;
-	content: " ";
-	width: 300px;
-	position: absolute;
-	left: 50px;
-	top: 17px;
-	z-index: 0;
-}
-
-.project-status .phase-status-lbl {
-	position: relative;
-	z-index: 1;
-	padding-right: 5px;
-}
-
-.project-status .phase-status-layout {
-	padding-top: 5px;
-}
-
-.project-status .phase-status-btn {
-	padding: 0px;
-	border: none;
-	background: none;
-}
-
-.project-status .phase-status-btn .v-button-wrap, .project-status .phase-status-btn:hover .v-button-wrap {
-	padding: 0px;
-	border: none;
-	background: none;
-	border: none;
-}
-
-.project-status .phase-status-btn .v-button-caption {
-	font-size: 18px;
-	color: #888;
-}
-
-.project-status .phase-status-btn .v-button-caption small {
-	font-weight: 400;
-	font-size: 12px;
-	display: block;
 }
 
 .prj-list-row {

@@ -192,8 +192,8 @@ public class ThemeManager {
                     + "; border-color: #" + getBorderColor(accountTheme.getActionbtn()) + "; }");
 
             //Button paging
-            extraStyles.append("div.v-button-link.buttonPaging.current, div.v-button-link" +
-                    ".buttonPaging:hover { background-color:#" + accountTheme.getActionbtn() + "; }");
+            extraStyles.append(".v-button.buttonPaging.current, .v-button.buttonPaging:hover { background-color:#" +
+                    accountTheme.getActionbtn() + "; }");
 
             //Selection background of selected item
             extraStyles.append(".v-filterselect-suggestpopup .gwt-MenuItem-selected { background-color:#" +
@@ -230,8 +230,8 @@ public class ThemeManager {
                     " {" + "color: #" + accountTheme.getActionbtntext() + "};");
 
             //Button paging
-            extraStyles.append("div.v-button-link.buttonPaging.current, div.v-button-link" +
-                    ".buttonPaging:hover { color:#" + accountTheme.getActionbtntext() + "; }");
+            extraStyles.append(".v-button.buttonPaging.current, .v-button.buttonPaging:hover { color:#" + accountTheme
+                    .getActionbtntext() + "; }");
 
             //Selection text color of selected item
             extraStyles.append(".v-filterselect-suggestpopup .gwt-MenuItem-selected { color:#" +
