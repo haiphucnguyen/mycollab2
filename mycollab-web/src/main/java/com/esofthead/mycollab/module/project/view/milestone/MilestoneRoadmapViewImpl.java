@@ -55,6 +55,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -171,7 +172,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                     .appendText(milestone.getName())).appendText(" (" + AppContext.getMessage(com.esofthead.mycollab
                     .module.project.i18n.OptionI18nEnum.MilestoneStatus.class, milestone
                     .getStatus()) + ")");
-            ELabel milestoneLbl = new ELabel(milestoneDiv.write(), ContentMode.HTML).withStyleName("h2");
+            ELabel milestoneLbl = new ELabel(milestoneDiv.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
             this.addComponent(milestoneLbl);
 
             MHorizontalLayout metaBlock = new MHorizontalLayout();
@@ -188,6 +189,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             this.addComponent(descriptionLbl);
 
             MHorizontalLayout progressLayout = new MHorizontalLayout();
+            progressLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
             int openAssignments = milestone.getNumOpenBugs() + milestone.getNumOpenTasks();
             int totalAssignments = milestone.getNumBugs() + milestone.getNumTasks();
             ELabel progressInfoLbl;
@@ -252,8 +254,8 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                 }
             };
             viewIssuesBtn.addClickListener(viewIssuesListener);
-            viewIssuesBtn.setStyleName(UIConstants.BUTTON_LINK);
-            viewIssuesBtn.addStyleName("block");
+            viewIssuesBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            viewIssuesBtn.addStyleName(ValoTheme.BUTTON_SMALL);
             progressLayout.with(progressInfoLbl, viewIssuesBtn);
             this.addComponent(progressLayout);
             issueLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));

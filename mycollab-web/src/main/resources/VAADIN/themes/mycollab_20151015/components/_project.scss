@@ -403,10 +403,10 @@
   }
 
   .v-button.multiselect {
-    background: none no-repeat 0px 0px transparent;
-    border-radius: 0px $v-border-radius $v-border-radius 0px;
-    border: 1px solid $my-border-color;
-    width: $unit-size;
+    @include valo-combobox-button-style();
+    .v-button-wrap {
+      display: none;
+    }
   }
 
   /* Stand Up List View */

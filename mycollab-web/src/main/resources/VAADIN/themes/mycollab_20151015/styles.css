@@ -2256,6 +2256,11 @@ span.block {
 	background-image: none;
 }
 
+.v-window-header {
+	font-size: 16px;
+	color: #298eff;
+}
+
 .stickytooltip {
 	border: 1px solid #CFCFCF;
 	display: none;
@@ -13776,27 +13781,6 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	content: "";
 }
 
-.v-button-link.block {
-	line-height: 22px;
-	border-radius: 5px;
-	background-color: #5ca9ff;
-	padding: 0px 7px 0px 7px;
-	margin-right: 2px;
-}
-
-.v-button-link.block:active, .v-button-link.block:focus {
-	border-radius: 5px;
-	line-height: 22px;
-	background-color: #5ca9ff;
-	padding: 0px 7px 0px 7px;
-	margin-right: 2px;
-}
-
-.v-button-link.block .v-button-caption {
-	color: white;
-	vertical-align: sub;
-}
-
 .v-icon .black {
 	color: black;
 }
@@ -14602,6 +14586,11 @@ span.block {
 	background-image: none;
 }
 
+.v-window-header {
+	font-size: 16px;
+	color: #298eff;
+}
+
 .crm-module {
 	position: absolute;
 	top: 0;
@@ -15261,10 +15250,54 @@ div.v-csslayout.followers-container .v-checkbox {
 }
 
 .v-button.multiselect {
-	background: none no-repeat 0px 0px transparent;
-	border-radius: 0px 4px 4px 0px;
-	border: 1px solid #CFCFCF;
-	width: $unit-size;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	cursor: pointer;
+	position: absolute;
+	width: 29px;
+	top: 1px;
+	right: 1px;
+	bottom: 1px;
+	border-left: 1px solid #e4e4e4;
+	color: #a3a3a3;
+	border-radius: 0 3px 3px 0;
+}
+
+.v-ie8 .v-button.multiselect {
+	background-color: white;
+}
+
+.v-button.multiselect:before {
+	font-family: FontAwesome;
+	content: "\f078";
+	-webkit-transition: color 140ms;
+	-moz-transition: color 140ms;
+	transition: color 140ms;
+	position: absolute;
+	width: 29px;
+	text-align: center;
+	top: 50%;
+	line-height: 1;
+	margin-top: -0.47em;
+}
+
+.v-button.multiselect:hover:before {
+	color: #474747;
+}
+
+.v-button.multiselect:active:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	border-radius: inherit;
+	background-color: rgba(128, 128, 128, 0.2);
+}
+
+.v-button.multiselect .v-button-wrap {
+	display: none;
 }
 
 .v-label.standup-row-content {

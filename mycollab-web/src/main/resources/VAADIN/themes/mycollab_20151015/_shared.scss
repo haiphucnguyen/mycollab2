@@ -676,4 +676,10 @@
   .v-filterselect-suggestpopup .gwt-MenuItem-selected {
      background-image: none;
   }
+
+  /*Change the font, color of window header title*/
+  .v-window-header {
+    font-size: $font-larger;
+    color: $my-title-color;
+  }
 }
