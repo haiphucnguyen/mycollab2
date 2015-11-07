@@ -109,7 +109,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         CustomLayout footer = CustomLayoutExt.createLayout("footer");
         footer.setStyleName("footer");
         footer.setWidth("100%");
-        footer.setHeightUndefined();
+        footer.setHeight("25px");
 
         Link companyLink = new Link("MyCollab", new ExternalResource("https://www.mycollab.com"));
         companyLink.setTargetName("_blank");

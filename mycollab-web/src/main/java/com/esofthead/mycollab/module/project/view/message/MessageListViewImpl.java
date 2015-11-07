@@ -50,9 +50,11 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.csslayout.CssLayoutServerRpc;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.MultiFileUploadExt;
@@ -157,11 +159,12 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
             MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                     false, false)).withStyleName("message-header");
-            VerticalLayout leftHeader = new VerticalLayout();
-            leftHeader.addComponent(new ELabel(labelLink.write(), ContentMode.HTML));
+            messageHeader.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+            CssLayout leftHeader = new CssLayout();
+            leftHeader.addComponent(new ELabel(labelLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3
+                    + " " + ValoTheme.LABEL_NO_MARGIN));
             ELabel timePostLbl = new ELabel().prettyDateTime(message.getPosteddate());
-            timePostLbl.setSizeUndefined();
-            timePostLbl.setStyleName("time-post");
+            timePostLbl.setStyleName("meta-info");
 
             Button deleteBtn = new Button("", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;

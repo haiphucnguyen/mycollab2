@@ -95,10 +95,7 @@
   .splitbutton .v-popupbutton {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    &:active {
-      padding: 0px;
-      margin:0px;
-    }
+    padding: 0px 10px 0px 5px;
     .v-button-wrap {
       padding-left: 3px;
       padding-right: 3px;
@@ -107,26 +104,6 @@
 
   div.v-button-nonPopupIndicator div.v-popup-indicator {
     display: none;
-  }
-
-  .v-splitbutton {
-    .v-popupbutton.greenbtn .v-button-wrap, div.v-disabled.v-popupbutton.greenbtn .v-button-wrap, .v-popupbutton.graybtn .v-button-wrap, div.v-disabled.v-popupbutton.graybtn .v-button-wrap {
-      padding: 0px;
-    }
-    .greenbtn, .graybtn {
-      margin: 0px;
-      border-radius: 3px 0px 0px 3px;
-      padding: 3px 3px 3px 8px;
-    }
-  }
-
-  .v-splitbutton .v-popupbutton {
-    &.greenbtn, &.graybtn {
-      padding: 3px 7px 3px 2px;
-      &:active, &:focus {
-        padding: 3px 7px 3px 2px;
-      }
-    }
   }
 
   .v-button.small-padding {

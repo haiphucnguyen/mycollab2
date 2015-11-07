@@ -14,7 +14,7 @@
 
   .colored-gridlayout {
     .gridform-caption, .gridform-field {
-      @include margin-container(8px, 18px, 8px, 18px);
+      @include margin-container(14px, 8px, 8px, 0px);
       border-bottom: 1px solid $my-border-color;
     }
     .gridform-field {

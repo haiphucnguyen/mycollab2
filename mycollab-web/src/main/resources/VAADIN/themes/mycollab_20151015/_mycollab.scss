@@ -1023,10 +1023,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   }
 
   .message-header {
-    .time-post {
-      color: $my-meta-color;
-      font-size: $font-small;
-    }
     .notification {
       color: black;
       font-size: $font-normal;
@@ -1133,27 +1129,10 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     width: 100%;
     border-top: 1px solid $my-border-color;
     padding: 5px 5px;
-    background-color: #FFF;
     display: block;
-    .v-link a span {
+    .v-link a {
       text-decoration: none;
     }
-  }
-
-  .footer-left {
-    float: left;
-    padding-left: 30px;
-    color: #313131;
-    background-color: #FFF;
-  }
-
-  .footer-right {
-    float: right;
-    padding-right: 30px;
-    .v-link {
-      line-height: 16px;
-    }
-    background-color: #FFF;
   }
 
   /* End Footer */

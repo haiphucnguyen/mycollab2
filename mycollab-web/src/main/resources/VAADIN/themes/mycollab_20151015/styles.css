@@ -13703,11 +13703,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 .splitbutton .v-popupbutton {
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
-}
-
-.splitbutton .v-popupbutton:active {
-	padding: 0px;
-	margin: 0px;
+	padding: 0px 10px 0px 5px;
 }
 
 .splitbutton .v-popupbutton .v-button-wrap {
@@ -13717,24 +13713,6 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 
 div.v-button-nonPopupIndicator div.v-popup-indicator {
 	display: none;
-}
-
-.v-splitbutton .v-popupbutton.greenbtn .v-button-wrap, .v-splitbutton div.v-disabled.v-popupbutton.greenbtn .v-button-wrap, .v-splitbutton .v-popupbutton.graybtn .v-button-wrap, .v-splitbutton div.v-disabled.v-popupbutton.graybtn .v-button-wrap {
-	padding: 0px;
-}
-
-.v-splitbutton .greenbtn, .v-splitbutton .graybtn {
-	margin: 0px;
-	border-radius: 3px 0px 0px 3px;
-	padding: 3px 3px 3px 8px;
-}
-
-.v-splitbutton .v-popupbutton.greenbtn, .v-splitbutton .v-popupbutton.graybtn {
-	padding: 3px 7px 3px 2px;
-}
-
-.v-splitbutton .v-popupbutton.greenbtn:active, .v-splitbutton .v-popupbutton.greenbtn:focus, .v-splitbutton .v-popupbutton.graybtn:active, .v-splitbutton .v-popupbutton.graybtn:focus {
-	padding: 3px 7px 3px 2px;
 }
 
 .v-button.small-padding.v-pressed .v-button-wrap, .v-button.small-padding .v-button-wrap {
@@ -13790,11 +13768,11 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 }
 
 .colored-gridlayout .gridform-caption.v-margin-top, .colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 8px;
+	padding-top: 14px;
 }
 
 .colored-gridlayout .gridform-caption.v-margin-right, .colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 18px;
+	padding-right: 8px;
 }
 
 .colored-gridlayout .gridform-caption.v-margin-bottom, .colored-gridlayout .gridform-field.v-margin-bottom {
@@ -13802,7 +13780,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 }
 
 .colored-gridlayout .gridform-caption.v-margin-left, .colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 18px;
+	padding-left: 0px;
 }
 
 .colored-gridlayout .gridform-field {
@@ -16978,11 +16956,6 @@ td.v-tabsheet-spacertd div {
 	padding-right: 10px;
 }
 
-.message-header .time-post {
-	color: #888;
-	font-size: 12px;
-}
-
 .message-header .notification {
 	color: black;
 	font-size: 13px;
@@ -17065,29 +17038,11 @@ div.v-csslayout.main-body {
 	width: 100%;
 	border-top: 1px solid #CFCFCF;
 	padding: 5px 5px;
-	background-color: #FFF;
 	display: block;
 }
 
-.footer .v-link a span {
+.footer .v-link a {
 	text-decoration: none;
-}
-
-.footer-left {
-	float: left;
-	padding-left: 30px;
-	color: #313131;
-	background-color: #FFF;
-}
-
-.footer-right {
-	float: right;
-	padding-right: 30px;
-	background-color: #FFF;
-}
-
-.footer-right .v-link {
-	line-height: 16px;
 }
 
 .photo-cropbox {
