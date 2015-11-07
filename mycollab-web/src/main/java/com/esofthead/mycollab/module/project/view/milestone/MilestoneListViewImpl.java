@@ -305,7 +305,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES));
-        filterBtnLayout.addOption(deleteBtn);
+        filterBtnLayout.addDangerOption(deleteBtn);
 
         taskSettingPopupBtn.setIcon(FontAwesome.COG);
         taskSettingPopupBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);

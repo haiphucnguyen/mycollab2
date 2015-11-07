@@ -170,10 +170,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
           padding: 3px 12px;
           &.v-button-left, &.v-button-middle, &.v-button-right {
             background: none;
-            .v-button-wrap, .v-button-wrap:hover {
-              border: none;
-              background: none;
-            }
+            border: none;
           }
           &:focus {
             background: none;

@@ -86,14 +86,10 @@
   }
 
   .splitbutton .parent-button {
-    border-right-width: 0px;
+    border-right: 1px solid $my-border-color;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    .v-button-wrap {
-      border-right: 1px solid $my-border-color;
-      padding-right: 6px;
-      padding-left: 6px;
-    }
+    padding: 0px 5px;
   }
 
   .splitbutton .v-popupbutton {

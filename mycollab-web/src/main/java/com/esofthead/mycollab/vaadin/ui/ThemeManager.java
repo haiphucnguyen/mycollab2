@@ -125,7 +125,7 @@ public class ThemeManager {
             extraStyles.append(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
                     + accountTheme.getTabsheetbgselected() + "; }");
 
-            //Set style of popup content
+            //Set style of popup content action
             extraStyles.append(".optionPopupContent .action-wrap .v-button-action { color: #" + accountTheme
                     .getTabsheetbgselected() + "; }");
 
@@ -177,7 +177,7 @@ public class ThemeManager {
 
         if (accountTheme.getActionbtn() != null) {
             extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { background-color: #" + accountTheme.getActionbtn()
-                    + "; border-color: #" + getBorderColor(accountTheme.getActionbtn()) + "; }");
+                    + "; }");
 
             extraStyles.append(".v-button.add-project-btn {background-color: #" + accountTheme
                     .getActionbtn() + ";}");
@@ -250,8 +250,7 @@ public class ThemeManager {
 
         if (accountTheme.getOptionbtn() != null) {
             extraStyles.append(".v-button.v-button-graybtn, .v-button-graybtn:focus { background-color: #"
-                    + accountTheme.getOptionbtn() + "; border-color: #" + getBorderColor(accountTheme.getOptionbtn())
-                    + "; }");
+                    + accountTheme.getOptionbtn() + ";}");
 
             //Set toogle button group background
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button { background-color: #" +
@@ -269,8 +268,14 @@ public class ThemeManager {
 
         if (accountTheme.getDangerbtn() != null) {
             extraStyles.append(".v-button.v-button-redbtn, .v-button-redbtn:focus { background-color: #"
-                    + accountTheme.getDangerbtn() + "; border-color: #"
-                    + getBorderColor(accountTheme.getDangerbtn()) + "; }");
+                    + accountTheme.getDangerbtn() + "; }");
+
+            //Set style of popup content action
+            extraStyles.append(".optionPopupContent .action-wrap.danger .v-button-action { color: #" + accountTheme
+                    .getDangerbtn() + "; }");
+
+            extraStyles.append(".optionPopupContent .action-wrap.danger:hover {" +
+                    "background-color: #" + accountTheme.getDangerbtn() + "};");
         }
 
         if (accountTheme.getDangerbtntext() != null) {

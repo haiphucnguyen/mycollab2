@@ -151,7 +151,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
 
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
-//            controlsBtn.addStyleName(UIConstants.THEME_BLANK_LINK);
 
             OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("150px");
 
@@ -329,7 +328,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 });
                 deleteProjectBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROJECT));
                 deleteProjectBtn.setIcon(FontAwesome.TRASH_O);
-                popupButtonsControl.addOption(deleteProjectBtn);
+                popupButtonsControl.addDangerOption(deleteProjectBtn);
             }
 
             controlsBtn.setContent(popupButtonsControl);

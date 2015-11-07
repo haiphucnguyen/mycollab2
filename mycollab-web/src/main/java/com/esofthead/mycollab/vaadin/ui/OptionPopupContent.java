@@ -43,8 +43,17 @@ public class OptionPopupContent extends CustomComponent {
     public void addOption(Component btn) {
         CssLayout wrap = new CssLayout();
         btn.setWidth("100%");
-        btn.setStyleName("action");
+        btn.addStyleName("action");
         wrap.addStyleName("action-wrap");
+        wrap.addComponent(btn);
+        ((ComponentContainer) this.getCompositionRoot()).addComponent(wrap);
+    }
+
+    public void addDangerOption(Component btn) {
+        CssLayout wrap = new CssLayout();
+        btn.setWidth("100%");
+        btn.addStyleName("action");
+        wrap.addStyleName("action-wrap danger");
         wrap.addComponent(btn);
         ((ComponentContainer) this.getCompositionRoot()).addComponent(wrap);
     }

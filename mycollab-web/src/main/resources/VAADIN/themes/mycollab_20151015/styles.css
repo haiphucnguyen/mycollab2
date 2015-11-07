@@ -13604,15 +13604,10 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .splitbutton .parent-button {
-	border-right-width: 0px;
+	border-right: 1px solid #c5c5c5;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-}
-
-.splitbutton .parent-button .v-button-wrap {
-	border-right: 1px solid #c5c5c5;
-	padding-right: 6px;
-	padding-left: 6px;
+	padding: 0px 5px;
 }
 
 .splitbutton .v-popupbutton {
@@ -15883,11 +15878,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-left, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-middle, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-right {
 	background: none;
-}
-
-.topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-left .v-button-wrap, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-left .v-button-wrap:hover, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-middle .v-button-wrap, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-middle .v-button-wrap:hover, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-right .v-button-wrap, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.v-button-right .v-button-wrap:hover {
 	border: none;
-	background: none;
 }
 
 .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:focus {
