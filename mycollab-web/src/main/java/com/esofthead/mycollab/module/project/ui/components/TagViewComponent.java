@@ -97,8 +97,7 @@ public class TagViewComponent extends CssLayout {
             }
         });
 
-        Button addBtn = new Button("Add");
-        addBtn.addClickListener(new Button.ClickListener() {
+        Button addBtn = new Button("Add", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 String tagName = (field.getValue() == null) ? tagQuery : field.getValue().toString().trim();
@@ -124,6 +123,7 @@ public class TagViewComponent extends CssLayout {
                 tagQuery = "";
             }
         });
+        addBtn.setStyleName(UIConstants.BUTTON_ACTION);
         layout.with(field, addBtn);
         return layout;
     }

@@ -687,37 +687,19 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     }
   }
 
-  .addViewHeader {
-    padding: 12px 0px;
-    .addViewHeaderLeft {
-      float: left;
-    }
-    .addViewHeaderRight {
-      float: right;
-      min-height: 24px;
-    }
-  }
-
   .addViewLayout {
-    .addViewHeader .headerName {
-      font-size: $font-x-large;
-      font-weight: bold;
-      color: #525252;
+    .addViewHeader {
+      padding: 12px 0px;
+      .headerName {
+        font-size: $font-x-large;
+        font-weight: bold;
+      }
     }
     .addViewTitle .titleName {
       font-size: $font-normal;
       font-weight: bold;
       line-height: 20px !important;
       padding-top: 2px;
-    }
-  }
-
-  .preview .addViewLayout {
-    .addViewBody {
-      padding: 0px;
-    }
-    .addViewBottomControls {
-      margin-bottom: 0px;
     }
   }
 
@@ -748,22 +730,28 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       border: 1px solid $my-border-color;
       border-radius: 0px;
       background: none no-repeat 0 0 $my-panel-background-color;
-    }
-
-    .depot-title {
-      padding: 0px 10px;
-      display: inline-flex;
-      &::before {
-        content:'\f0d7';
-        font-family: FontAwesome;
-        font-size:16px;
+      .depot-title {
+        padding: 0px 10px;
+        display: inline-flex;
+        > .v-expand {
+          margin-left: 5px;
+        }
       }
     }
-    &.collapsed .depot-title::before {
-      content:'\f0da';
-      font-family:FontAwesome;
-      font-size:16px;
-    }
+  }
+
+  .depot-title::before {
+    content:'\f0d7';
+    font-family:FontAwesome;
+    font-size:16px;
+    margin-top: 5px;
+  }
+
+  .collapsed .depot-title::before {
+    content:'\f0da';
+    font-family:FontAwesome;
+    font-size:16px;
+    margin-top: 5px;
   }
 
   .depotComp {
@@ -785,25 +773,12 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       &.empty {
         border-bottom: 1px solid $my-border-color;
       }
-    }
-  }
-
-  .depotContent.bordered {
-    border-color: $my-border-color;
-    border-style: solid;
-    border-width: 0px 1px 1px 1px;
-    background-color: #FFF;
-    &.v-margin-top {
-      padding-top: 5px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 5px;
-    }
-    &.v-margin-left {
-      padding-left: 5px;
+      &.bordered {
+        border-color: $my-border-color;
+        border-style: solid;
+        border-width: 0px 1px 1px 1px;
+        @include margin-container(5px, 5px, 5px, 5px);
+      }
     }
   }
 

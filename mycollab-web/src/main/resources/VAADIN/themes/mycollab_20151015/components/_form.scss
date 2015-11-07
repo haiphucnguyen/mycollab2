@@ -1,5 +1,5 @@
 @mixin section-header() {
-  padding: 25px 5px 5px 0px;
+  padding: 25px 5px 5px 5px;
   font-size: $font-larger;
   color: $my-title-color;
   border-bottom: 1px solid $my-border-color;
@@ -12,7 +12,7 @@
     }
   }
 
-  .colored-gridlayout {
+  .v-gridlayout.colored-gridlayout {
     .gridform-caption, .gridform-field {
       @include margin-container(14px, 8px, 8px, 0px);
       border-bottom: 1px solid $my-border-color;
@@ -38,6 +38,7 @@
         &.v-radiobutton{
           padding-right: 10px;
           font-size: $font-normal;
+          color: black;
         }
       }
     }

@@ -1,4 +1,13 @@
 @mixin mycollab-breadcrumb {
+  .xbreadcrumbs LI {
+    background: none !important;
+    &::after {
+      content: "\f0dd";
+      font-family: FontAwesome;
+      color: white;
+      font-size: 15px;
+    }
+  }
   .xbreadcrumbs {
     background-color: transparent !important;
     > .v-slot:first-child > li {
