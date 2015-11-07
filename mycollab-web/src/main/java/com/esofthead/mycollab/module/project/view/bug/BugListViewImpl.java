@@ -156,7 +156,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new Label("Group by:"));
-        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
+        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, GROUP_CREATED_DATE, PLAIN_LIST);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -317,11 +317,14 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
             baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("duedate", sortDirection)));
             bugGroupOrderComponent = new DueDateOrderComponent();
         } else if (GROUP_START_DATE.equals(groupByState)) {
-            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", sortDirection)));
+            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("m_tracker_bug.startdate", sortDirection)));
             bugGroupOrderComponent = new StartDateOrderComponent();
         } else if (PLAIN_LIST.equals(groupByState)) {
             baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastUpdatedTime", sortDirection)));
             bugGroupOrderComponent = new SimpleListOrderComponent();
+        } else if (GROUP_CREATED_DATE.equals(groupByState)) {
+            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", sortDirection)));
+            bugGroupOrderComponent = new CreatedDateOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);
         }

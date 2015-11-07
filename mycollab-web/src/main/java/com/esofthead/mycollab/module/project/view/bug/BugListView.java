@@ -28,6 +28,7 @@ public interface BugListView extends ListView<BugSearchCriteria, SimpleBug> {
 
     String GROUP_DUE_DATE = "Due Date";
     String GROUP_START_DATE = "Start Date";
+    String GROUP_CREATED_DATE = "Created Date";
     String PLAIN_LIST = "Plain";
 
     void queryBug(BugSearchCriteria searchCriteria);

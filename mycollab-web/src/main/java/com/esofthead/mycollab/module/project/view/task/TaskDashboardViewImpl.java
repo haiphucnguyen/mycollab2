@@ -82,6 +82,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
     static final String GROUP_DUE_DATE = "Due Date";
     static final String GROUP_START_DATE = "Start Date";
+    static final String GROUP_CREATED_DATE = "Created Date";
     static final String PLAIN_LIST = "Plain";
 
     private int currentPage = 0;
@@ -165,7 +166,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new Label("Group by:"));
-        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, PLAIN_LIST);
+        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, GROUP_CREATED_DATE, PLAIN_LIST);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -350,6 +351,9 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         } else if (PLAIN_LIST.equals(groupByState)) {
             baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastupdatedtime", sortDirection)));
             taskGroupOrderComponent = new SimpleListOrderComponent();
+        } else if (GROUP_CREATED_DATE.equals(groupByState)) {
+            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdtime", sortDirection)));
+            taskGroupOrderComponent = new CreatedDateOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);
         }
