@@ -45,7 +45,7 @@ public class ThemeManager {
         }
 
         StringBuilder extraStyles = new StringBuilder();
-		/* Top Menu */
+        /* Top Menu */
         if (accountTheme.getTopmenubg() != null) {
             extraStyles.append(".topNavigation { background-color: #" + accountTheme.getTopmenubg() + "; }");
         }
@@ -189,7 +189,7 @@ public class ThemeManager {
                     "background-color: #" + accountTheme.getActionbtn() + "};");
 
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.active { background-color: #" + accountTheme.getActionbtn()
-                    + "; border-color: #" + getBorderColor(accountTheme.getActionbtn()) + "; }");
+                    + "; }");
 
             //Button paging
             extraStyles.append(".v-button.buttonPaging.current, .v-button.buttonPaging:hover { background-color:#" +
@@ -255,7 +255,7 @@ public class ThemeManager {
 
             //Set toogle button group background
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button { background-color: #" +
-                    accountTheme.getOptionbtn() + "; border-color: #" + getBorderColor(accountTheme.getOptionbtn()) + ";}");
+                    accountTheme.getOptionbtn() + ";}");
         }
 
         if (accountTheme.getOptionbtntext() != null) {
@@ -269,8 +269,8 @@ public class ThemeManager {
 
         if (accountTheme.getDangerbtn() != null) {
             extraStyles.append(".v-button.v-button-redbtn, .v-button-redbtn:focus { background-color: #"
-                            + accountTheme.getDangerbtn() + "; border-color: #"
-                            + getBorderColor(accountTheme.getDangerbtn()) + "; }");
+                    + accountTheme.getDangerbtn() + "; border-color: #"
+                    + getBorderColor(accountTheme.getDangerbtn()) + "; }");
         }
 
         if (accountTheme.getDangerbtntext() != null) {
@@ -344,7 +344,7 @@ public class ThemeManager {
 
         if (accountTheme.getTabsheettext() != null) {
             demoExtraStyles.append(".example-block .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption .v-captiontext { color: #"
-                            + accountTheme.getTabsheettext() + "; }");
+                    + accountTheme.getTabsheettext() + "; }");
         }
 
         if (accountTheme.getTabsheettextselected() != null) {
@@ -394,7 +394,7 @@ public class ThemeManager {
 
         if (accountTheme.getDangerbtntext() != null) {
             demoExtraStyles.append(".example-block .v-button.v-button-redbtn, .example-block .v-button-redbtn:focus { color: #"
-                            + accountTheme.getDangerbtntext() + "; }");
+                    + accountTheme.getDangerbtntext() + "; }");
         }
 
         if (demoExtraStyles.length() > 0) {

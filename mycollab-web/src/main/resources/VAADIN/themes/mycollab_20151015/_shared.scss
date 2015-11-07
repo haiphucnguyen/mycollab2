@@ -266,73 +266,6 @@
     box-shadow: none;
   }
 
-  /* Toogle button groups*/
-  .v-buttongroup {
-    .v-button {
-      &.v-button-left .v-button-wrap, &.v-button-middle .v-button-wrap, &.v-button-left.v-disabled .v-button-wrap, &.v-button-middle.v-disabled .v-button-wrap, &.v-button-left.v-disabled:active .v-button-wrap, &.v-button-middle.v-disabled:active .v-button-wrap, &.v-button-left.v-disabled:focus .v-button-wrap {
-        background-position: left top;
-        background-image: none;
-      }
-      &.v-button-middle {
-        &.v-disabled:focus .v-button-wrap {
-          background-position: left top;
-          background-image: none;
-        }
-        border-radius: 0px;
-        .v-button-wrap {
-          border-left: 1px solid $my-border-color;
-          border-radius: 0px;
-        }
-      }
-      &.v-button-left {
-        border-radius: $v-border-radius 0px 0px $v-border-radius;
-        .v-button-wrap {
-          border-right: none;
-          border-radius: 0px;
-        }
-      }
-      &.v-button-right {
-        border-radius: 0px $v-border-radius $v-border-radius 0px;
-        .v-button-wrap {
-          border-left: 1px solid $my-border-color;
-          border-radius: 0px;
-        }
-      }
-      &:focus .v-button-wrap {
-        background: none;
-      }
-    }
-  }
-
-  .v-buttongroup.toggle-btn-group .v-button {
-    &.selected {
-      background-color: #287ECE;
-      &:active, &:focus {
-        background-color: #287ECE;
-      }
-    }
-    &.v-button-left, &.v-button-middle, &.v-button-right {
-      border: none;
-    }
-    .v-button-wrap {
-      background: none;
-    }
-    &.selected .v-button-wrap {
-      background: none;
-    }
-    .v-button-wrap img {
-      margin: 0px;
-    }
-    &:active .v-button-wrap .v-button-caption, &:focus .v-button-wrap .v-button-caption, &.selected .v-button-wrap .v-button-caption {
-      color: white;
-    }
-    &.btn-group-default {
-      color: white;
-      font-weight: normal;
-    }
-    color: white;
-  }
-
   /* Activity Stream */
   .feed-block-wrap {
     &.v-margin-bottom {
@@ -649,5 +582,10 @@
   .v-window-header {
     font-size: $font-larger;
     color: $my-title-color;
+  }
+
+  /* Readonly text field has white background as well*/
+  .v-textfield.v-readonly {
+    background-color: white;
   }
 }

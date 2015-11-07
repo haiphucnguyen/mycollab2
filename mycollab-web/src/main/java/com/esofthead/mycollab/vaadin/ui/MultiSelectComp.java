@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,7 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
             }
         });
 
-        popupContent = new VerticalLayout();
+        popupContent = new MVerticalLayout();
         componentPopupSelection.setContent(popupContent);
     }
 
@@ -126,7 +127,6 @@ public abstract class MultiSelectComp<T> extends CustomField<T> {
     private void initContentPopup() {
         popupContent.removeAllComponents();
         for (final T item : items) {
-
             final ItemSelectionComp<T> chkItem = buildItem(item);
 
             if (selectedItems != null) {
