@@ -1,13 +1,4 @@
 @mixin mycollab-breadcrumb {
-  .xbreadcrumbs LI {
-    background: none !important;
-    &::after {
-      content: "\f0dd";
-      font-family: FontAwesome;
-      color: white;
-      font-size: 15px;
-    }
-  }
   .xbreadcrumbs {
     background-color: transparent !important;
     > .v-slot:first-child > li {
@@ -29,9 +20,12 @@
     }
   }
 
-  .xbreadcrumbbutton .v-button-caption {
-    font-size: 13px !important;
-    color: #333333;
+  .xbreadcrumbbutton {
+    height: 20px;
+    .v-button-caption {
+      font-size: 13px !important;
+      color: #333333 !important;
+    }
   }
 
   .v-button-xbreadcrumbbutton-home span.v-button-caption {

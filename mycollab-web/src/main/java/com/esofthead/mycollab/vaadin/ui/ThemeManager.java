@@ -93,7 +93,7 @@ public class ThemeManager {
             extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
 
-            extraStyles.append(".sidebar-menu .v-button:hover {background-color: #" + accountTheme
+            extraStyles.append(".vertical-tabsheet .v-button-tab:hover {background-color: #" + accountTheme
                     .getVtabsheetbgselected() + ";}");
         }
 

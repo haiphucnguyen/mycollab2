@@ -12,7 +12,6 @@ $v-unit-size: 29px;
 $v-tooltip-background-color:#FDFDEE;
 $v-textfield-background-color--readonly: $v-textfield-background-color;
 
-
 @import "../valo/valo";
 
 @import "global";
@@ -105,15 +104,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     &.noBorderRight {
       border-radius: $v-border-radius 0px 0px $v-border-radius;
     }
-    &:focus {
-      background-color: #FFF;
-      border-color: $my-border-color;
-    }
-  }
-
-  textarea:focus {
-    background-color: #FFF;
-    border-color: $my-border-color;
   }
 
   .v-label {
@@ -673,11 +663,10 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .addViewTitle {
     padding: 10px 5px 10px 5px;
-    border-bottom: 1px solid $my-border-color;
+    border-bottom: 1px solid $my-separator-color;
     font-size: $font-larger;
     .v-label {
       font-size: $font-larger;
-      color: #303030;
     }
   }
 
@@ -1955,15 +1944,13 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       border-radius: 0px;
       -webkit-box-shadow: none;
       text-align: left;
-      .v-button-wrap, &:active .v-button-wrap, &:focus .v-button-wrap {
+      .v-button-wrap {
         background: none no-repeat 0 0 transparent;
         background-image: none;
         border-radius: 0px;
         text-align: left;
         margin-left: 10px;
         border: none;
-      }
-      .v-button-wrap {
         .v-icon {
           margin-right: 8px;
           font-size: $font-x-large;
@@ -2689,8 +2676,8 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   }
 
   .sidebar-wrap {
-    border-left: 1px solid $my-border-color;
-    border-right: 1px solid $my-border-color;
+    border-left: 1px solid $my-separator-color;
+    border-right: 1px solid $my-separator-color;
     background-color: floralwhite;
   }
 

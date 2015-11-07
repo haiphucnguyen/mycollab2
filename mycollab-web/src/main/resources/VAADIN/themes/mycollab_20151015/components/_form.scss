@@ -2,7 +2,7 @@
   padding: 25px 5px 5px 5px;
   font-size: $font-larger;
   color: $my-title-color;
-  border-bottom: 1px solid $my-border-color;
+  border-bottom: 1px solid $my-separator-color;
 }
 
 @mixin mycollab-form {
@@ -15,7 +15,7 @@
   .v-gridlayout.colored-gridlayout {
     .gridform-caption, .gridform-field {
       @include margin-container(14px, 8px, 8px, 0px);
-      border-bottom: 1px solid $my-border-color;
+      border-bottom: 1px solid $my-separator-color;
     }
     .gridform-field {
       min-height: 46px;
