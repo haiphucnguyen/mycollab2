@@ -14574,7 +14574,6 @@ span.block {
 
 .crmContainer .navigator-wrap .basic-info .info-hdr {
 	font-size: 13px;
-	font-weight: bold;
 }
 
 .crmContainer.preview-comp {
@@ -18395,8 +18394,7 @@ div.v-csslayout.bean-block.olive-block {
 }
 
 .readview-body-wrap .readview-sidebar .info-hdr {
-	font-weight: bold;
-	padding-top: 10px;
+	margin-top: 10px;
 }
 
 .feature-select-box {

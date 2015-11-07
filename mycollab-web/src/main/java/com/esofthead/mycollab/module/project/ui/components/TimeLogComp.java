@@ -26,10 +26,12 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -48,11 +50,11 @@ public abstract class TimeLogComp<B extends ValuedBean> extends MVerticalLayout 
         this.itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
         this.withMargin(new MarginInfo(false, false, false, true));
 
-        HorizontalLayout header = new MHorizontalLayout();
+        HorizontalLayout header = new MHorizontalLayout().withStyleName("info-hdr");
+        header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         Label dateInfoHeader = new Label(FontAwesome.CLOCK_O.getHtml() + " " +
                 AppContext.getMessage(TimeTrackingI18nEnum.SUB_INFO_TIME), ContentMode.HTML);
-        dateInfoHeader.setStyleName("info-hdr");
         header.addComponent(dateInfoHeader);
 
         if (hasEditPermission()) {
@@ -65,7 +67,6 @@ public abstract class TimeLogComp<B extends ValuedBean> extends MVerticalLayout 
                 }
             });
             editBtn.setStyleName(UIConstants.BUTTON_LINK);
-            editBtn.addStyleName("info-hdr");
             header.addComponent(editBtn);
         }
 
