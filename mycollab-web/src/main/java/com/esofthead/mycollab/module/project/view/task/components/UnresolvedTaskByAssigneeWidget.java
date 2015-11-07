@@ -38,8 +38,11 @@ import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
@@ -100,6 +103,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
         if (!groupItems.isEmpty()) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withWidth("100%");
+                assigneeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
                 String assignUser = item.getGroupid();
                 String assignUserFullName = item.getGroupid() == null ? "" : item.getGroupname();
@@ -108,8 +112,8 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
                     assignUserFullName = StringUtils.extractNameFromEmail(item.getGroupid());
                 }
 
-                TaskAssigneeLink userLbl = new TaskAssigneeLink(assignUser, item.getExtraValue(), assignUserFullName);
-                assigneeLayout.addComponent(userLbl);
+                TaskAssigneeLink taskAssigneeLink = new TaskAssigneeLink(assignUser, item.getExtraValue(), assignUserFullName);
+                assigneeLayout.addComponent(new MCssLayout(taskAssigneeLink).withWidth("110px"));
                 ProgressBarIndicator indicator = new ProgressBarIndicator(totalCountItems, totalCountItems - item.getValue(), false);
                 indicator.setWidth("100%");
                 assigneeLayout.with(indicator).expand(indicator);
@@ -141,8 +145,8 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
                 }
             });
 
+            this.setWidth("100%");
             this.setStyleName(UIConstants.BUTTON_LINK);
-            this.setWidth("110px");
             this.addStyleName(UIConstants.TEXT_ELLIPSIS);
             this.setIcon(UserAvatarControlFactory.createAvatarResource(assigneeAvatarId, 16));
             UserService service = ApplicationContextUtil.getSpringBean(UserService.class);

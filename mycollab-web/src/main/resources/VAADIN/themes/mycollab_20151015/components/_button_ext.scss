@@ -32,11 +32,10 @@
 
   /* Ellipsis Button Link */
   .v-button-link.text-ellipsis .v-button-wrap {
-    display: block;
-    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width: 100%;
   }
 
   .v-button-wrap {
