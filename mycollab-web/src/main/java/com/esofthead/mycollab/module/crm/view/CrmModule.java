@@ -103,6 +103,14 @@ public class CrmModule extends AbstractPageView implements IDesktopModule {
                         }
                     });
 
+            serviceMenu.addService(CrmTypeConstants.CAMPAIGN, AppContext.getMessage(CrmCommonI18nEnum
+                    .TOOLBAR_CAMPAIGNS_HEADER), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    EventBusFactory.getInstance().post(new CampaignEvent.GotoList(this, null));
+                }
+            });
+
             serviceMenu.addService(CrmTypeConstants.OPPORTUNITY, AppContext.getMessage(CrmCommonI18nEnum
                     .TOOLBAR_OPPORTUNTIES_HEADER), new Button.ClickListener() {
                 @Override

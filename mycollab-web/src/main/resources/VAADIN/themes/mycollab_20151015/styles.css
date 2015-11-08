@@ -2147,7 +2147,10 @@ span.block {
 
 .v-window-header {
 	font-size: 16px;
-	color: #298eff;
+}
+
+.v-window-header .v-icon {
+	margin-right: 10px;
 }
 
 .v-textfield.v-readonly {
@@ -14416,7 +14419,10 @@ span.block {
 
 .v-window-header {
 	font-size: 16px;
-	color: #298eff;
+}
+
+.v-window-header .v-icon {
+	margin-right: 10px;
 }
 
 .v-textfield.v-readonly {
@@ -17029,7 +17035,7 @@ div.v-ratingstars-bar {
 
 .table-actionctls {
 	padding: 7px;
-	border-width: 0 1px 1px 1px;
+	border-width: 0px 1px;
 	border-style: solid;
 	border-color: #c5c5c5;
 	background-color: #F5F5F5;
@@ -17666,14 +17672,6 @@ div.v-ratingstars-bar {
 
 .bean-list .v-verticallayout {
 	display: block;
-}
-
-.h2-style2 {
-	padding: 8px 0px 8px 18px;
-	font-size: 13px;
-	border-bottom: 1px solid #c5c5c5;
-	color: #454545;
-	font-weight: bold;
 }
 
 .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem {

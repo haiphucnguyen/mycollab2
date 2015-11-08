@@ -26,7 +26,6 @@ public class UIConstants {
     public static final String DEFAULT_CONTROL_WIDTH = "250px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH = "180px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_HEIGHT = "180px";
-    public static final String H2_STYLE2 = "h2-style2";
     public static final String HEADER_VIEW = "hdr-view";
     public static final String HEADER_TEXT = "hdr-text";
     public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
@@ -62,6 +61,7 @@ public class UIConstants {
     public static final String BUTTON_ICON_ONLY = "button-icon-only";
 
     public static final String LABEL_META_INFO = "meta-info";
+    public static final String BLOCK_SECTION = "section";
 
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;

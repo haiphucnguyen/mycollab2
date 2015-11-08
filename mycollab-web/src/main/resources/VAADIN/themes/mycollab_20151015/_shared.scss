@@ -581,7 +581,9 @@
   /*Change the font, color of window header title*/
   .v-window-header {
     font-size: $font-larger;
-    color: $my-title-color;
+    .v-icon {
+      margin-right: 10px;
+    }
   }
 
   /* Readonly text field has white background as well*/

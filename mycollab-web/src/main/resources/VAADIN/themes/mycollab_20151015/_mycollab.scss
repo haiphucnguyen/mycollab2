@@ -1358,7 +1358,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .table-actionctls {
     padding: 7px;
-    border-width: 0 1px 1px 1px;
+    border-width: 0px 1px;
     border-style: solid;
     border-color: $my-border-color;;
     background-color: #F5F5F5;
@@ -2008,15 +2008,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .bean-list .v-verticallayout {
     display: block;
-  }
-
-  /* H2 Style 2 */
-  .h2-style2 {
-    padding: 8px 0px 8px 18px;
-    font-size: $font-normal;
-    border-bottom: 1px solid $my-border-color;
-    color: rgb(69, 69, 69);
-    font-weight: bold;
   }
 
   /* Tabsheet style 3 */

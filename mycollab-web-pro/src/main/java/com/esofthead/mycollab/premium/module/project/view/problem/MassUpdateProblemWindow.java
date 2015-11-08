@@ -6,12 +6,13 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.FormContainer;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.MassUpdateWindow;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -42,14 +43,9 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
 
         @Override
         public ComponentContainer getLayout() {
-            final VerticalLayout formLayout = new VerticalLayout();
-
-            final Label organizationHeader = new Label("Problem Information");
-            organizationHeader.setStyleName(UIConstants.H2_STYLE2);
-            formLayout.addComponent(organizationHeader);
-
-            this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
-            formLayout.addComponent(this.informationLayout.getLayout());
+            final FormContainer formLayout = new FormContainer();
+            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 6);
+            formLayout.addSection("Problem Information", informationLayout.getLayout());
             formLayout.addComponent(buildButtonControls());
             return formLayout;
         }
@@ -58,15 +54,15 @@ public class MassUpdateProblemWindow extends MassUpdateWindow<Problem> {
         @Override
         public void attachField(Object propertyId, final Field<?> field) {
             if (propertyId.equals("raisedbyuser")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY), 0, 0);
+                informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_RAISED_BY), 0, 0);
             } else if (propertyId.equals("assigntouser")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
+                informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 1, 0);
             } else if (propertyId.equals("datedue")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE), 0, 1);
+                informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_DATE_DUE), 0, 1);
             } else if (propertyId.equals("priority")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY), 1, 1);
+                informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_PRIORITY), 1, 1);
             } else if (propertyId.equals("status")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_STATUS), 0, 2);
+                informationLayout.addComponent(field, AppContext.getMessage(ProblemI18nEnum.FORM_STATUS), 0, 2);
             }
         }
     }
