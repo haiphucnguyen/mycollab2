@@ -601,7 +601,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 }
             });
             deleteBtn.setIcon(FontAwesome.TRASH_O);
-            filterBtnLayout.addOption(deleteBtn);
+            filterBtnLayout.addDangerOption(deleteBtn);
 
             filterBtnLayout.setWidth("100px");
             resourceSettingPopupBtn.setIcon(FontAwesome.ELLIPSIS_H);

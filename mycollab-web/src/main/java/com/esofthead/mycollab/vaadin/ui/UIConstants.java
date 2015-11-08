@@ -61,6 +61,8 @@ public class UIConstants {
     public static final String BUTTON_SMALL_PADDING = "small-padding";
     public static final String BUTTON_ICON_ONLY = "button-icon-only";
 
+    public static final String LABEL_META_INFO = "meta-info";
+
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
     public static final int TABLE_S_LABEL_WIDTH = 80;

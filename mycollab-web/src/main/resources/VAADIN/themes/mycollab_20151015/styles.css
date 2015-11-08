@@ -14935,44 +14935,8 @@ div.v-csslayout.followers-container .v-checkbox {
 	padding: 6px 24px 6px 0px;
 }
 
-.pages-list-layout .page-item-block .h3 .v-button-caption {
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 24px;
-}
-
-.pages-list-layout .page-item-block .control-btns {
-	padding-top: 5px;
-}
-
-.pages-list-layout .page-item-block .control-btns .link .v-button-wrap .v-icon {
-	vertical-align: middle;
-}
-
-.pages-list-layout .page-item-block .control-btns .link .v-button-caption {
-	vertical-align: middle;
-	color: #8a8a8a;
-}
-
-.pages-list-layout .page-item-block .control-btns .link:hover .v-button-caption {
-	color: #444444;
-}
-
-.pages-list-layout .page-item-block .last-update-info {
-	padding-top: 3px;
-	color: #8a8a8a;
-	text-decoration: none;
-	font-size: 12px;
-}
-
-.pages-list-layout .page-item-block .last-update-info a {
-	color: #8a8a8a;
-	text-decoration: none;
-	font-size: 12px;
-}
-
 .page-read-layout {
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e8e8e8;
 }
 
 .searchitems-layout .project-item-search-box {

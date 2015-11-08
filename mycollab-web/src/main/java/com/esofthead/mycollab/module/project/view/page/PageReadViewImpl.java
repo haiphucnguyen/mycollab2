@@ -33,9 +33,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
+import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
-import com.esofthead.mycollab.schedule.email.project.ProjectPageRelayEmailNotificationAction;
+import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
+import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -81,7 +82,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
     private static final Logger LOG = LoggerFactory.getLogger(PageReadViewImpl.class);
 
-    private CommentDisplay commentListComp;
+    private ProjectActivityComponent commentListComp;
     private PageVersionSelectionBox pageVersionsSelection;
 
     private PageVersion selectedVersion;
@@ -102,7 +103,8 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
         ((MHorizontalLayout) header).addComponent(headerLbl, 0);
         ((MHorizontalLayout) header).addComponent(pageVersionsSelection, 1);
-        ((MHorizontalLayout) header).withWidth("100%").withStyleName("hdr-view").expand(pageVersionsSelection).alignAll(Alignment.MIDDLE_LEFT);
+        ((MHorizontalLayout) header).withWidth("100%").withStyleName("hdr-view").expand(pageVersionsSelection)
+                .alignAll(Alignment.MIDDLE_LEFT);
     }
 
     @Override
@@ -112,8 +114,8 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
     @Override
     protected void initRelatedComponents() {
-        commentListComp = new CommentDisplay(ProjectTypeConstants.PAGE,
-                CurrentProjectVariables.getProjectId(), ProjectPageRelayEmailNotificationAction.class);
+        commentListComp = new ProjectActivityComponent(ProjectTypeConstants.PAGE, CurrentProjectVariables
+                .getProjectId(), BugFieldFormatter.instance(), BugRelayEmailNotificationAction.class);
         commentListComp.setWidth("100%");
         commentListComp.setMargin(true);
     }
@@ -121,7 +123,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     @Override
     protected void onPreviewItem() {
         ((PagePreviewFormLayout) previewLayout).displayPageInfo(beanItem);
-        commentListComp.loadComments(beanItem.getPath());
+        commentListComp.loadActivities(beanItem.getPath());
         pageVersionsSelection.displayVersions(beanItem.getPath());
     }
 
@@ -200,9 +202,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        TabSheetLazyLoadComponent tabContainer = new TabSheetLazyLoadComponent();
-        tabContainer.addTab(this.commentListComp, AppContext.getMessage(GenericI18Enum.TAB_COMMENT), FontAwesome.COMMENTS);
-        return tabContainer;
+        return commentListComp;
     }
 
     @Override

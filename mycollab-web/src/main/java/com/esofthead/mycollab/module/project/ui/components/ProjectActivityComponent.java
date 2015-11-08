@@ -180,7 +180,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                 GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 AppContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML).
                 withDescription(AppContext.formatDateTime(comment.getCreatedtime()));
-        timePostLbl.setStyleName("meta-info");
+        timePostLbl.setStyleName(UIConstants.LABEL_META_INFO);
 
         if (hasDeletePermission(comment)) {
             Button msgDeleteBtn = new Button();

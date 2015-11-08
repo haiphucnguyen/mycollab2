@@ -270,7 +270,6 @@
   }
 
   /* Pages List View */
-
   .pages-list-layout {
     padding-top: 12px;
     &:after {
@@ -282,44 +281,13 @@
     .page-item-block {
       border-top: 1px solid $my-separator-color;
       padding: 6px 24px 6px 0px;
-      .h3 .v-button-caption {
-        font-size: $font-large;
-        font-weight: bold;
-        line-height: 24px;
-      }
-      .control-btns {
-        padding-top: 5px;
-        .link {
-          .v-button-wrap .v-icon {
-            vertical-align: middle;
-          }
-          .v-button-caption {
-            vertical-align: middle;
-            color: rgb(138, 138, 138);
-          }
-          &:hover .v-button-caption {
-            color: rgb(68, 68, 68);
-          }
-        }
-      }
-      .last-update-info {
-        padding-top: 3px;
-        color: rgb(138, 138, 138);
-        text-decoration: none;
-        font-size: $font-small;
-        a {
-          color: rgb(138, 138, 138);
-          text-decoration: none;
-          font-size: $font-small;
-        }
-      }
     }
   }
 
   /* Page Read View */
 
   .page-read-layout {
-    border-bottom: 1px solid $my-border-color;
+    border-bottom: 1px solid $my-separator-color;
   }
 
   .searchitems-layout {

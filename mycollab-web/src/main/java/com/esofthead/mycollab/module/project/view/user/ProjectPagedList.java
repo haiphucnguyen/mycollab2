@@ -72,21 +72,21 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             linkIconFix.setExpandRatio(projectLink, 1.0f);
 
             Label projectMemberBtn = new ELabel(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers(),
-                    ContentMode.HTML).withDescription("Active members").withStyleName("meta-info");
+                    ContentMode.HTML).withDescription("Active members").withStyleName(UIConstants.LABEL_META_INFO);
             MHorizontalLayout metaInfo = new MHorizontalLayout();
             metaInfo.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             metaInfo.addComponent(projectMemberBtn);
             Label createdTimeLbl = new ELabel(FontAwesome.CLOCK_O.getHtml() + " " + AppContext.formatPrettyTime(project.getCreatedtime()),
-                    ContentMode.HTML).withDescription("Created time").withStyleName("meta-info");
+                    ContentMode.HTML).withDescription("Created time").withStyleName(UIConstants.LABEL_META_INFO);
             metaInfo.addComponent(createdTimeLbl);
 
             Label billableHoursLbl = new ELabel(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours()),
-                    ContentMode.HTML).withDescription("Billable hours").withStyleName("meta-info");
+                    ContentMode.HTML).withDescription("Billable hours").withStyleName(UIConstants.LABEL_META_INFO);
             metaInfo.addComponent(billableHoursLbl);
 
             Label nonBillableHoursLbl = new ELabel(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
                     project.getTotalNonBillableHours()), ContentMode.HTML)
-                    .withDescription("Non billable hours").withStyleName("meta-info");
+                    .withDescription("Non billable hours").withStyleName(UIConstants.LABEL_META_INFO);
             metaInfo.addComponent(nonBillableHoursLbl);
 
             linkIconFix.addComponent(metaInfo);
@@ -103,11 +103,11 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             taskStatus.setSpacing(true);
             HorizontalLayout taskLblWrap = new HorizontalLayout();
             taskLblWrap.setWidth("100%");
-            ELabel taskStatusLbl = new ELabel("Tasks").withStyleName("meta-info");
+            ELabel taskStatusLbl = new ELabel("Tasks").withStyleName(UIConstants.LABEL_META_INFO);
             taskLblWrap.addComponent(taskStatusLbl);
 
             final ELabel taskStatusBtn = new ELabel((project.getNumTasks() - project.getNumOpenTasks()) + "/" +
-                    project.getNumTasks()).withStyleName("meta-info");
+                    project.getNumTasks()).withStyleName(UIConstants.LABEL_META_INFO);
             taskStatusBtn.setWidthUndefined();
             taskLblWrap.addComponent(taskStatusBtn);
             taskLblWrap.setComponentAlignment(taskStatusBtn, Alignment.TOP_RIGHT);
@@ -125,9 +125,9 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             bugStatus.setSpacing(true);
             HorizontalLayout bugLblWrap = new HorizontalLayout();
             bugLblWrap.setWidth("100%");
-            ELabel bugLbl = new ELabel("Bugs").withStyleName("meta-info");
+            ELabel bugLbl = new ELabel("Bugs").withStyleName(UIConstants.LABEL_META_INFO);
             bugLblWrap.addComponent(bugLbl);
-            ELabel bugStatusBtn = new ELabel((project.getNumBugs() - project.getNumOpenBugs()) + "/" + project.getNumBugs()).withStyleName("meta-info");
+            ELabel bugStatusBtn = new ELabel((project.getNumBugs() - project.getNumOpenBugs()) + "/" + project.getNumBugs()).withStyleName(UIConstants.LABEL_META_INFO);
             bugStatusBtn.setWidthUndefined();
             bugLblWrap.addComponent(bugStatusBtn);
             bugLblWrap.setComponentAlignment(bugStatusBtn, Alignment.TOP_RIGHT);
@@ -142,7 +142,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             MVerticalLayout phaseStatusLayout = new MVerticalLayout().withMargin(false).withWidth("100%");
 
             Label phaseLbl = new Label("Phases");
-            phaseLbl.setStyleName("meta-info");
+            phaseLbl.setStyleName(UIConstants.LABEL_META_INFO);
             phaseLbl.setSizeUndefined();
             phaseStatusLayout.addComponent(phaseLbl);
 
