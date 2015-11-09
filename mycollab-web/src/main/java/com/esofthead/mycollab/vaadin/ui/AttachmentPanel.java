@@ -1,29 +1,24 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.resources.file.FileAssetsUtil;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
@@ -87,12 +82,12 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         });
         removeBtn.setIcon(FontAwesome.TRASH_O);
         removeBtn.setStyleName(UIConstants.BUTTON_ICON_ONLY);
-
-        Div fileDiv = new Div().setStyle("display:flex").appendText(FileAssetsUtil.getFileIconResource(fileName).getHtml())
-                .appendChild(DivLessFormatter.EMPTY_SPACE()).appendText(fileName).appendText("&nbsp;-&nbsp;")
-                .appendChild(new Div().appendText(FileUtils.getVolumeDisplay(file.length())).setCSSClass("footer2"));
-        Label fileLbl = new Label(fileDiv.write(), ContentMode.HTML);
-        fileAttachmentLayout.with(fileLbl, removeBtn).expand(fileLbl);
+        removeBtn.setWidthUndefined();
+        Label fileLbl = new Label(fileName, ContentMode.HTML);
+        fileLbl.setWidthUndefined();
+        fileAttachmentLayout.with(new ELabel(FileAssetsUtil.getFileIconResource(fileName).getHtml(), ContentMode
+                .HTML).withWidth("-1px"), fileLbl, new ELabel(" - " + FileUtils.getVolumeDisplay(file.length()))
+                .withStyleName(UIConstants.LABEL_META_INFO).withWidth("-1px"), removeBtn).expand(fileLbl);
         this.addComponent(fileAttachmentLayout);
     }
 

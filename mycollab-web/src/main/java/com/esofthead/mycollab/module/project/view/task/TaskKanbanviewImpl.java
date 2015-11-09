@@ -347,13 +347,13 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 taskLinkLbl.addStyleName("pending");
                 taskLinkLbl.removeStyleName("completed overdue");
             }
-            taskLinkLbl.addStyleName("wordWrap");
+            taskLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
             PopupView priorityField = popupFieldFactory.createPriorityPopupField(task);
             headerLayout.with(priorityField, taskLinkLbl).expand(taskLinkLbl);
 
             root.with(headerLayout);
 
-            MHorizontalLayout footer = new MHorizontalLayout().withStyleName("footer2");
+            MHorizontalLayout footer = new MHorizontalLayout();
 
             PopupView commentField = popupFieldFactory.createCommentsPopupField(task);
             footer.addComponent(commentField);

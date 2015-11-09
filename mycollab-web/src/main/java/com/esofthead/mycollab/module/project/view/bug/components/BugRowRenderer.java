@@ -78,7 +78,7 @@ public class BugRowRenderer extends MVerticalLayout {
             bugLinkLbl.removeStyleName("completed pending");
         }
 
-        bugLinkLbl.addStyleName("wordWrap");
+        bugLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
         BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
                 true, false, false));

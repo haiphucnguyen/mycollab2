@@ -424,7 +424,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             } else if (subTask.isPending()) {
                 taskLink.addStyleName("pending");
             }
-            taskLink.addStyleName("wordWrap");
+            taskLink.addStyleName(UIConstants.LABEL_WORD_WRAP);
             layout.with(checkBox, taskLink).expand(taskLink);
 
             checkBox.addValueChangeListener(new ValueChangeListener() {

@@ -34,9 +34,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -85,7 +83,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         Label userName = new Label(user.getDisplayName()
                 + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( %s )", nickName))));
         userName.setStyleName("h1");
-        userName.addStyleName(UIConstants.WORD_WRAP);
+        userName.addStyleName(UIConstants.LABEL_WORD_WRAP);
         userWrapper.addComponent(userName);
 
         basicLayout.addComponent(userWrapper);

@@ -255,7 +255,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
         LabelLink milestoneLink = new LabelLink(milestone.getName(),
                 ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
-        milestoneLink.addStyleName(UIConstants.WORD_WRAP);
+        milestoneLink.addStyleName(UIConstants.LABEL_WORD_WRAP);
         milestoneLink.addStyleName("milestone-name");
         milestoneLink.setWidth("100%");
 

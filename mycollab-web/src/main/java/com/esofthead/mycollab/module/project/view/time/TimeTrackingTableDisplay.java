@@ -98,7 +98,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                             } else {
                                 Label timeTrackingLink = new Label(buildItemValue(itemLogging), ContentMode.HTML);
                                 timeTrackingLink.addStyleName(UIConstants.BUTTON_LINK);
-                                timeTrackingLink.addStyleName(UIConstants.WORD_WRAP);
+                                timeTrackingLink.addStyleName(UIConstants.LABEL_WORD_WRAP);
                                 timeTrackingLink.setWidth("100%");
 
                                 if (ProjectTypeConstants.BUG.equals(type)) {

@@ -55,7 +55,7 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 
 		final Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
 		roadblockLbl.addStyleName(ValoTheme.LABEL_H3);
-		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
+		roadblockLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
 		this.whatProblemField = new StandupCustomField();
 		layoutField.addComponent(this.whatProblemField);

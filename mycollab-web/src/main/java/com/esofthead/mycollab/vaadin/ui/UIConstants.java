@@ -46,9 +46,8 @@ public class UIConstants {
     public static final String STANDUP_ROW_CONTENT = "standup-row-content";
     public static final String MILESTONE_BOX = "milestone-box";
     public static final String PHOTO_CROPBOX = "photo-cropbox";
-    public static final String FOOTER_NOTE = "footer-note";
     public static final String MULTI_SELECT_BG = "multiselect";
-    public static final String WORD_WRAP = "wordWrap";
+    public static final String LABEL_WORD_WRAP = "wordWrap";
     public static final String TEXT_ELLIPSIS = "text-ellipsis";
     public static final String BTN_ACTIVE = "btn-group-default";
     public static final String TEXT_LOG_HOURS = "text-log-hours";
@@ -61,7 +60,6 @@ public class UIConstants {
     public static final String BUTTON_ICON_ONLY = "button-icon-only";
 
     public static final String LABEL_META_INFO = "meta-info";
-    public static final String BLOCK_SECTION = "section";
 
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;

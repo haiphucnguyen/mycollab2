@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -50,7 +47,6 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.csslayout.CssLayoutServerRpc;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -126,8 +122,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
         int totalCount = messageService.getTotalCount(searchCriteria);
 
         this.isEmpty = !(totalCount > 0);
-
-        this.topMessagePanel.createBasicLayout();
+        topMessagePanel.createBasicLayout();
         this.addComponent(topMessagePanel);
 
         if (this.isEmpty) {
@@ -304,19 +299,19 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
         public TopMessagePanel() {
             this.withWidth("100%").withStyleName("message-toppanel");
-            this.messagePanelBody = new MHorizontalLayout().withSpacing(false).withStyleName("message-toppanel-body")
+            messagePanelBody = new MHorizontalLayout().withSpacing(false).withStyleName("message-toppanel-body")
                     .withWidth("100%");
-            this.messagePanelBody.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+            messagePanelBody.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-            this.messageSearchPanel = new MessageSearchPanel();
-            this.messageSearchPanel.setWidth("400px");
-            this.addComponent(this.messagePanelBody);
+            messageSearchPanel = new MessageSearchPanel();
+            messageSearchPanel.setWidth("400px");
+            this.addComponent(messagePanelBody);
 
             this.createBasicLayout();
         }
 
         private void createAddMessageLayout() {
-            this.messagePanelBody.removeAllComponents();
+            messagePanelBody.removeAllComponents();
             MVerticalLayout addMessageWrapper = new MVerticalLayout().withWidth("700px");
 
             final RichTextArea ckEditorTextField = new RichTextArea();
@@ -345,8 +340,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             uploadExt.addComponent(attachments);
             controls.with(uploadExt).withAlign(uploadExt, Alignment.TOP_LEFT).expand(uploadExt);
 
-            final CheckBox chkIsStick = new CheckBox(
-                    AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));
+            final CheckBox chkIsStick = new CheckBox(AppContext.getMessage(MessageI18nEnum.FORM_IS_STICK));
             controls.with(chkIsStick).withAlign(chkIsStick, Alignment.TOP_RIGHT);
 
             Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
@@ -393,36 +387,35 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             controls.with(saveBtn).withAlign(saveBtn, Alignment.TOP_RIGHT);
 
             addMessageWrapper.with(controls).withAlign(controls, Alignment.MIDDLE_CENTER);
-            this.messagePanelBody.addComponent(addMessageWrapper);
+            messagePanelBody.addComponent(addMessageWrapper);
         }
 
         public void createBasicLayout() {
-            this.messagePanelBody.removeAllComponents();
-            this.messagePanelBody.addComponent(this.messageSearchPanel);
+            messagePanelBody.removeAllComponents();
+            messagePanelBody.addComponent(messageSearchPanel);
 
-            if (!MessageListViewImpl.this.isEmpty) {
-                Button createMessageBtn = new Button(AppContext.getMessage(MessageI18nEnum.BUTTON_NEW_MESSAGE),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+            if (!isEmpty) {
+                Button createMessageBtn = new Button(AppContext.getMessage(MessageI18nEnum.BUTTON_NEW_MESSAGE), new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(final ClickEvent event) {
-                                TopMessagePanel.this.createAddMessageLayout();
-                            }
-                        });
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        TopMessagePanel.this.createAddMessageLayout();
+                    }
+                });
                 createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
                 createMessageBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 createMessageBtn.setIcon(FontAwesome.PLUS);
                 createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
-                this.messagePanelBody.addComponent(createMessageBtn);
-                this.messagePanelBody.setComponentAlignment(createMessageBtn, Alignment.MIDDLE_RIGHT);
+                messagePanelBody.addComponent(createMessageBtn);
+                messagePanelBody.setComponentAlignment(createMessageBtn, Alignment.MIDDLE_RIGHT);
             }
 
         }
 
         public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {
-            return this.messageSearchPanel;
+            return messageSearchPanel;
         }
     }
 

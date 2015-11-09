@@ -81,7 +81,7 @@ import java.util.UUID;
             taskLinkLbl.addStyleName("pending");
             taskLinkLbl.removeStyleName("completed overdue");
         }
-        taskLinkLbl.addStyleName("wordWrap");
+        taskLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
                 true, false, false));
 

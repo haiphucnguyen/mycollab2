@@ -145,7 +145,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
 
         Label headerLabel = new Label(AppContext.getUser().getDisplayName());
         headerLabel.setStyleName(ValoTheme.LABEL_H2);
-        headerLabel.addStyleName(UIConstants.WORD_WRAP);
+        headerLabel.addStyleName(UIConstants.LABEL_WORD_WRAP);
 
         MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true,
                 false)).withWidth("100%");
