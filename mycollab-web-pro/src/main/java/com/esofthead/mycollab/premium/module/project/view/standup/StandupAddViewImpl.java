@@ -30,15 +30,15 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
 
 	public StandupAddViewImpl() {
 		super();
-		this.editForm = new AdvancedEditBeanForm<>();
-		this.addComponent(this.editForm);
+		editForm = new AdvancedEditBeanForm<>();
+		this.addComponent(editForm);
 	}
 
 	@Override
 	public void editItem(final StandupReportWithBLOBs standupReport) {
-		this.editForm.setFormLayoutFactory(new FormLayoutFactory());
-		this.editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
-		this.editForm.setBean(standupReport);
+		editForm.setFormLayoutFactory(new FormLayoutFactory());
+		editForm.setBeanFormFieldFactory(new EditFormFieldFactory(editForm));
+		editForm.setBean(standupReport);
 	}
 
 	private static class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<StandupReportWithBLOBs> {
@@ -63,8 +63,7 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
 		private static final long serialVersionUID = 1L;
 
 		public FormLayoutFactory() {
-			super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE,
-					AppContext.formatDate(new GregorianCalendar().getTime())));
+			super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, AppContext.formatDate(new GregorianCalendar().getTime())));
 		}
 
 		private Layout createButtonControls() {
@@ -79,7 +78,7 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
 
 	@Override
 	public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
-		return this.editForm;
+		return editForm;
 	}
 
 }

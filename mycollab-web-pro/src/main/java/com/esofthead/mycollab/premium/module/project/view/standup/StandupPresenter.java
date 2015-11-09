@@ -41,8 +41,6 @@ public class StandupPresenter extends AbstractPresenter<IStandupContainer> imple
             presenter = PresenterResolver.getPresenter(StandupListPresenter.class);
         } else if (data instanceof StandupScreenData.Add || data instanceof StandupScreenData.Edit) {
             presenter = PresenterResolver.getPresenter(StandupAddPresenter.class);
-        } else if (data instanceof StandupScreenData.Read) {
-            presenter = PresenterResolver.getPresenter(StandupReadPresenter.class);
         } else {
             throw new MyCollabException(String.format("Do not support screen data: %s", data));
         }

@@ -84,72 +84,55 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     @SuppressWarnings("serial")
     private void addCalendarEvent() {
-        this.standupCalendar.getStyleCalendar().addValueChangeListener(
-                new ValueChangeListener() {
-                    @Override
-                    public void valueChange(final ValueChangeEvent event) {
-                        Date selectedDate = (Date) event.getProperty().getValue();
-                        StandupListViewImpl.this.displayReport(selectedDate);
-                        StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext.formatDate(selectedDate));
-                        StandupListViewImpl.this.dateChooser.setCaption(AppContext.formatDate(selectedDate));
-                        StandupListViewImpl.this.dateChooser.setPopupVisible(false);
+        standupCalendar.getStyleCalendar().addValueChangeListener(new ValueChangeListener() {
+            @Override
+            public void valueChange(final ValueChangeEvent event) {
+                Date selectedDate = (Date) event.getProperty().getValue();
+                displayReport(selectedDate);
+                standupCalendar.setLabelTime(AppContext.formatDate(selectedDate));
+                dateChooser.setCaption(AppContext.formatDate(selectedDate));
+                dateChooser.setPopupVisible(false);
 
-                        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-                        breadCrumb.gotoStandupList(selectedDate);
-                    }
-                });
+                ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+                breadCrumb.gotoStandupList(selectedDate);
+            }
+        });
 
-        this.standupCalendar.getBtnShowNextYear().addClickListener(
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        StandupListViewImpl.this.standupCalendar
-                                .getStyleCalendar().showNextYear();
-                        StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
-                                .formatDate(StandupListViewImpl.this.standupCalendar
-                                        .getStyleCalendar().getShowingDate()));
-                        StandupListViewImpl.this.getListReport();
-                    }
-                });
+        standupCalendar.getBtnShowNextYear().addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                standupCalendar.getStyleCalendar().showNextYear();
+                standupCalendar.setLabelTime(AppContext.formatDate(standupCalendar.getStyleCalendar().getShowingDate()));
+                getListReport();
+            }
+        });
 
-        this.standupCalendar.getBtnShowNextMonth().addClickListener(
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        StandupListViewImpl.this.standupCalendar
-                                .getStyleCalendar().showNextMonth();
-                        StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
-                                .formatDate(StandupListViewImpl.this.standupCalendar
-                                        .getStyleCalendar().getShowingDate()));
-                        StandupListViewImpl.this.getListReport();
-                    }
-                });
+        standupCalendar.getBtnShowNextMonth().addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                standupCalendar.getStyleCalendar().showNextMonth();
+                standupCalendar.setLabelTime(AppContext.formatDate(standupCalendar.getStyleCalendar().getShowingDate()));
+                getListReport();
+            }
+        });
 
-        this.standupCalendar.getBtnShowPreviousMonth().addClickListener(
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        StandupListViewImpl.this.standupCalendar
-                                .getStyleCalendar().showPreviousMonth();
-                        StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
-                                .formatDate(StandupListViewImpl.this.standupCalendar
-                                        .getStyleCalendar().getShowingDate()));
-                        StandupListViewImpl.this.getListReport();
-                    }
-                });
+        standupCalendar.getBtnShowPreviousMonth().addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                standupCalendar.getStyleCalendar().showPreviousMonth();
+                standupCalendar.setLabelTime(AppContext.formatDate(standupCalendar.getStyleCalendar().getShowingDate()));
+                getListReport();
+            }
+        });
 
-        this.standupCalendar.getBtnShowPreviousYear().addClickListener(
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        StandupListViewImpl.this.standupCalendar
-                                .getStyleCalendar().showPreviousYear();
-                        StandupListViewImpl.this.standupCalendar.setLabelTime(AppContext
-                                .formatDate(StandupListViewImpl.this.standupCalendar
-                                        .getStyleCalendar().getShowingDate()));
-                        StandupListViewImpl.this.getListReport();
-                    }
-                });
+        standupCalendar.getBtnShowPreviousYear().addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                standupCalendar.getStyleCalendar().showPreviousYear();
+                standupCalendar.setLabelTime(AppContext.formatDate(standupCalendar.getStyleCalendar().getShowingDate()));
+                getListReport();
+            }
+        });
     }
 
     private void getListReport() {
@@ -183,17 +166,13 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     @Override
     public void setSearchCriteria(StandupReportSearchCriteria searchCriteria) {
-        this.reportInDay.setSearchCriteria(searchCriteria);
+        reportInDay.setSearchCriteria(searchCriteria);
 
         if (searchCriteria.getOnDate() != null) {
-            this.dateChooser.setCaption(AppContext.formatDate(searchCriteria
-                    .getOnDate().getValue()));
-            this.standupCalendar.getStyleCalendar().setShowingDate(
-                    searchCriteria.getOnDate().getValue());
-            this.standupCalendar.setLabelTime(AppContext
-                    .formatDate(searchCriteria.getOnDate().getValue()));
-            this.standupMissingComp.search(searchCriteria.getOnDate()
-                    .getValue());
+            dateChooser.setCaption(AppContext.formatDate(searchCriteria.getOnDate().getValue()));
+            standupCalendar.getStyleCalendar().setShowingDate(searchCriteria.getOnDate().getValue());
+            standupCalendar.setLabelTime(AppContext.formatDate(searchCriteria.getOnDate().getValue()));
+            standupMissingComp.search(searchCriteria.getOnDate().getValue());
         }
     }
 
@@ -209,7 +188,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         titleLbl.addStyleName("hdr-text");
 
         dateChooser = new PopupButton(AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
-        dateChooser.setContent(this.standupCalendar);
+        dateChooser.setContent(standupCalendar);
         dateChooser.setStyleName(UIConstants.BUTTON_ACTION);
 
         headerLeft.with(titleLbl, dateChooser);
@@ -222,7 +201,6 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             @Override
             public void buttonClick(final ClickEvent event) {
                 EventBusFactory.getInstance().post(new StandUpEvent.GotoAdd(StandupListViewImpl.class, null));
-
             }
         });
         addNewReport.setStyleName(UIConstants.BUTTON_ACTION);
@@ -257,8 +235,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withStyleName("user-info");
             userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-            userInfo.addComponent(UserAvatarControlFactory
-                    .createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
+            userInfo.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
             Label memberLink = new Label(buildMemberLink(report), ContentMode.HTML);
             userInfo.with(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
             this.addComponent(userInfo);

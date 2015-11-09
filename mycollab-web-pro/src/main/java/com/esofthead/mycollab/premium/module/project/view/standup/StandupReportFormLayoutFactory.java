@@ -22,26 +22,21 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 	private static final long serialVersionUID = 1L;
 
 	private StandupCustomField whatTodayField;
-
 	private StandupCustomField whatYesterdayField;
-
 	private StandupCustomField whatProblemField;
 
 	private final String title;
 
 	public StandupReportFormLayoutFactory(final String title) {
 		this.title = title;
-
 	}
 
 	@Override
 	public ComponentContainer getLayout() {
 		AddViewLayout reportAddLayout = new AddViewLayout(this.title, ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
-
 		reportAddLayout.addHeaderRight(this.createTopPanel());
 
 		MHorizontalLayout mainLayout = new MHorizontalLayout().withWidth("100%");
-
 		final VerticalLayout layoutField = new VerticalLayout();
 		layoutField.addStyleName("standup-edit-layout");
 		layoutField.setMargin(new MarginInfo(false, false, true, true));
@@ -73,19 +68,12 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 		instructionLayout.setSpacing(true);
 
 		final Label instruct1Lbl = new Label(AppContext.getMessage(StandupI18nEnum.HINT1_MSG));
-
-		instruct1Lbl.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl);
 
 		final Label instruct1Lbl2 = new Label(AppContext.getMessage(StandupI18nEnum.HINT2_MG));
-		instruct1Lbl2.addStyleName(UIConstants.WORD_WRAP);
 		instructionLayout.addComponent(instruct1Lbl2);
 
 		instructionLayout.setWidth("300px");
-		instructionLayout.setHeight("300px");
-
-		instruct1Lbl.setWidth("85%");
-		instruct1Lbl2.setWidth("85%");
 
 		mainLayout.addComponent(instructionLayout);
 		mainLayout.setExpandRatio(instructionLayout, 1.0f);
