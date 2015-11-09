@@ -13781,17 +13781,17 @@ td.v-tabsheet-spacertd div {
 	max-height: 80em;
 }
 
-.v-tooltip-text tr {
+.v-tooltip .v-tooltip-text {
+	max-height: 80em;
+	overflow: hidden;
+}
+
+.v-tooltip .v-tooltip-text tr {
 	line-height: 1.5;
 }
 
-.v-tooltip-text a {
+.v-tooltip .v-tooltip-text a {
 	vertical-align: top;
-}
-
-.v-tooltip-text {
-	height: 100%;
-	overflow: hidden;
 }
 
 a {
