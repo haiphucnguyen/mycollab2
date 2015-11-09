@@ -1515,14 +1515,6 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
-.v-ie8 .gantt .month.even, .v-ie8 .gantt .day.even {
-	background-color: #ddd;
-}
-
-.v-ie9 .gantt .gantt-container {
-	filter: none;
-}
-
 @font-face {
 	font-family: "Vaadin-Icons";
 	src: url('fonts/Vaadin-Icons.eot');
@@ -13720,7 +13712,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	color: white;
 }
 
-.v-upload-immediate .v-button {
+.userInfoContainer .v-upload-immediate .v-button {
 	color: white;
 }
 
@@ -15244,7 +15236,7 @@ div.v-button.token-field:hover {
 
 .gantt_container {
 	border-style: solid;
-	border-width: 1px 1px 0px 0px;
+	border-width: 0px 1px 0px 0px;
 	border-color: #c5c5c5;
 }
 
@@ -15268,6 +15260,10 @@ div.v-button.token-field:hover {
 	background: none;
 }
 
+.gantt_container .v-treetable-node-open::before {
+	content: none;
+}
+
 .gantt_container .v-treetable-node-open::after {
 	float: right;
 	content: "\f147";
@@ -15279,6 +15275,10 @@ div.v-button.token-field:hover {
 
 .gantt_container .v-treetable-node-closed {
 	background: none;
+}
+
+.gantt_container .v-treetable-node-closed::before {
+	content: none;
 }
 
 .gantt_container .v-treetable-node-closed::after {

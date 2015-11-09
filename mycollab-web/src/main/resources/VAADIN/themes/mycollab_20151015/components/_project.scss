@@ -505,7 +505,7 @@
   /* GANTT */
   .gantt_container {
     border-style: solid;
-    border-width: 1px 1px 0px 0px;
+    border-width: 0px 1px 0px 0px;
     border-color: $my-border-color;
     .v-table-header-wrap {
       border-bottom: 1px solid $my-border-color;
@@ -528,6 +528,9 @@
 
     .v-treetable-node-open {
       background: none;
+      &::before {
+        content: none;
+      }
       &::after {
         float:right;
         content:"\f147";
@@ -539,6 +542,9 @@
     }
     .v-treetable-node-closed {
       background: none;
+      &::before {
+        content: none;
+      }
       &::after {
         float:right;
         content:"\f196";
