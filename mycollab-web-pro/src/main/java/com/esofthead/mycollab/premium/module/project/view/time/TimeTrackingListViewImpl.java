@@ -79,16 +79,16 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
         itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-        this.searchPanel = new ItemTimeLoggingSearchPanel();
-        this.searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
+        searchPanel = new ItemTimeLoggingSearchPanel();
+        searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
             @Override
             public void onSearch(ItemTimeLoggingSearchCriteria criteria) {
                 setSearchCriteria(criteria);
             }
         });
 
-        this.addComponent(this.searchPanel);
-        this.searchPanel.addClickListener(new Button.ClickListener() {
+        this.addComponent(searchPanel);
+        searchPanel.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -103,8 +103,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         headerWrapper.addComponent(headerLayout);
 
         lbTimeRange = new Label("", ContentMode.HTML);
-        lbTimeRange.addStyleName(ValoTheme.LABEL_H2);
-        headerLayout.with(lbTimeRange).withAlign(lbTimeRange, Alignment.MIDDLE_LEFT).expand(lbTimeRange);
+        lbTimeRange.addStyleName(ValoTheme.LABEL_H3);
 
         Button exportBtn = new Button("Export", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -115,7 +114,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             }
         });
         exportButtonControl = new SplitButton(exportBtn);
-        exportButtonControl.setStyleName(UIConstants.THEME_GRAY_LINK);
+        exportButtonControl.setWidthUndefined();
+        exportButtonControl.addStyleName(UIConstants.BUTTON_ACTION);
         exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
 
         OptionPopupContent popupButtonsControl = new OptionPopupContent();
@@ -133,7 +133,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
         popupButtonsControl.addOption(exportExcelBtn);
 
-        headerLayout.with(exportButtonControl).withAlign(exportButtonControl, Alignment.MIDDLE_RIGHT);
+        headerLayout.with(lbTimeRange, exportButtonControl).expand(lbTimeRange).withAlign(exportButtonControl, Alignment.MIDDLE_RIGHT);
         this.addComponent(headerWrapper);
 
         timeTrackingWrapper = new VerticalLayout();
