@@ -586,14 +586,20 @@
       border-style: solid;
       border-color: $my-border-color;
       border-width: 0px 1px 1px 0px;
+      padding-left: 12px;
     }
     .v-table-table tr:first-child td.v-table-cell-content {
       height: 34px;
     }
-    .v-table-table tr:last-child td.v-table-cell-content {
+    .v-table-table tr td.v-table-cell-content:last-child {
        border-style: solid;
        border-color: $my-border-color;
-       border-width: 0px 1px 0px 0px;
+       border-width: 0px 0px 1px 0px;
+    }
+    .v-table-table tr:last-child td.v-table-cell-content {
+      border-style: solid;
+      border-color: $my-border-color;
+      border-bottom: 0px;
     }
     .v-table-body {
       border-style: solid;

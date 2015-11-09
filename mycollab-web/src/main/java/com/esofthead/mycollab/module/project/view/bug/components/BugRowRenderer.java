@@ -87,7 +87,6 @@ public class BugRowRenderer extends MVerticalLayout {
         headerLayout.with(bugSettingPopupBtn, priorityField, assigneeField, bugLinkLbl).expand(bugLinkLbl);
 
         MHorizontalLayout footer = new MHorizontalLayout();
-        footer.addStyleName(UIConstants.FOOTER_NOTE);
 
         PopupView commentsField = popupFieldFactory.createBugCommentsPopupField(bug);
         footer.addComponent(commentsField);

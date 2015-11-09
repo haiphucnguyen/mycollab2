@@ -104,7 +104,6 @@ public class ProjectMembersWidget extends MVerticalLayout {
             layout.with(content).expand(content);
 
             CssLayout footer = new CssLayout();
-            footer.setStyleName(UIConstants.FOOTER_NOTE);
 
             String roleVal;
             if (member.isAdmin()) {

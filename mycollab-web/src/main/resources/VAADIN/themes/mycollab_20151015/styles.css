@@ -1576,12 +1576,6 @@ a.pending {
 	box-shadow: inset 5px 0px 0px 0px #3A97FF;
 }
 
-.footer-note {
-	color: #888;
-	font-size: 12px;
-	cursor: pointer;
-}
-
 .panel-header {
 	border: 1px solid #c5c5c5;
 	background-color: #f1f1f1;
@@ -13841,12 +13835,6 @@ a.pending {
 	box-shadow: inset 5px 0px 0px 0px #3A97FF;
 }
 
-.footer-note {
-	color: #888;
-	font-size: 12px;
-	cursor: pointer;
-}
-
 .panel-header {
 	border: 1px solid #c5c5c5;
 	background-color: #f1f1f1;
@@ -15303,6 +15291,7 @@ div.v-button.token-field:hover {
 	border-style: solid;
 	border-color: #c5c5c5;
 	border-width: 0px 1px 1px 0px;
+	padding-left: 12px;
 }
 
 .gantt_container .v-table-table tr td.v-table-cell-content .v-disabled {
@@ -15331,10 +15320,16 @@ div.v-button.token-field:hover {
 	height: 34px;
 }
 
+.gantt_container .v-table-table tr td.v-table-cell-content:last-child {
+	border-style: solid;
+	border-color: #c5c5c5;
+	border-width: 0px 0px 1px 0px;
+}
+
 .gantt_container .v-table-table tr:last-child td.v-table-cell-content {
 	border-style: solid;
 	border-color: #c5c5c5;
-	border-width: 0px 1px 0px 0px;
+	border-bottom: 0px;
 }
 
 .gantt_container .v-table-body {
@@ -16729,7 +16724,7 @@ div.v-csslayout.main-body {
 	display: block;
 }
 
-.footer .v-link a {
+.footer .v-link {
 	text-decoration: none;
 }
 
