@@ -1,8 +1,10 @@
 @mixin section-header() {
   padding: 25px 5px 5px 5px;
-  font-size: $font-larger;
   color: $my-title-color;
   border-bottom: 1px solid $my-separator-color;
+  .v-label {
+    font-size: $font-larger;
+  }
 }
 
 @mixin mycollab-form {

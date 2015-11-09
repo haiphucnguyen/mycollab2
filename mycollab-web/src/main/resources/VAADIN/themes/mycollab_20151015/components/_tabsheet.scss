@@ -1,0 +1,46 @@
+@mixin mycollab-tabsheet {
+  .v-tabsheet-tabs {
+    background-color: $my-background-color;
+  }
+
+  .v-tabsheet-content {
+    background-color: #FFF;
+    border: none;
+  }
+
+  td.v-tabsheet-spacertd div {
+    border-color: my-separator-color;
+  }
+
+  .v-tabsheet-tabitem {
+    .v-caption {
+      border-color: $my-separator-color;
+      line-height: 25px;
+      border: none;
+      border-radius: 0px;
+      padding: 3px 17px 4px;
+      margin: 0px;
+      font-weight: bold;
+    }
+    &.v-tabsheet-tabitem-selected {
+      .v-caption {
+        border: none;
+        border-radius: 0px;
+        background-image: none;
+      }
+      background-color: #FFF;
+      border-radius: 0px;
+      border-bottom-color: #FFF;
+    }
+    background: none repeat-x left top transparent;
+    border-radius: 0px;
+    padding: 0px;
+    border-width: 0px 1px 1px 0px;
+    border-style: solid;
+    border-color: $my-separator-color;
+  }
+
+  .v-tabsheet-deco {
+    border: none;
+  }
+}

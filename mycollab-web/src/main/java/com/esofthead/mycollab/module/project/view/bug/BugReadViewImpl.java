@@ -305,8 +305,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                     String bugLinkValue = buildItemValue(relatedBug);
                     Button statusLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
-                    statusLink.setStyleName(UIConstants.BUTTON_LINK);
-                    statusLink.addStyleName("block");
+                    statusLink.setStyleName(UIConstants.BUTTON_BLOCK);
                     Label bugLink = new Label(bugLinkValue, ContentMode.HTML);
                     bugContainer.with(bugLink);
                     Button removeBtn = new Button("", new Button.ClickListener() {

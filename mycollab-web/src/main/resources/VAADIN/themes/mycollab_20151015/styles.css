@@ -1760,8 +1760,6 @@ a.pending {
 
 .v-label.headerName {
 	font-size: 18px;
-	font-weight: bold;
-	color: #303030;
 }
 
 .v-label.icon-48px .v-icon {
@@ -13472,7 +13470,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 
 .accountViewContainer .container-wrap.main-content .top-panel {
 	background-color: #FFF;
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e8e8e8;
 	padding: 10px 30px;
 }
 
@@ -13683,8 +13681,8 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 }
 
 .multiselect.v-popupbutton .v-button-wrap {
-	padding-left: 3px;
-	padding-right: 3px;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 .multiselect.v-popupbutton .v-button-wrap .v-popup-indicator::before {
@@ -13722,65 +13720,60 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	color: white;
 }
 
+.v-upload-immediate .v-button {
+	color: white;
+}
+
 .v-icon .black {
 	color: black;
 }
 
-.form .section {
-	padding: 25px 5px 5px 5px;
-	font-size: 16px;
-	color: #298eff;
-	border-bottom: 1px solid #e8e8e8;
+.v-tabsheet-tabs {
+	background-color: #f9f9f9;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption, .v-gridlayout.colored-gridlayout .gridform-field {
-	border-bottom: 1px solid #e8e8e8;
+.v-tabsheet-content {
+	background-color: #FFF;
+	border: none;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-top, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 14px;
+td.v-tabsheet-spacertd div {
+	border-color: my-separator-color;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-right, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-right {
-	padding-right: 8px;
+.v-tabsheet-tabitem {
+	background: none repeat-x left top transparent;
+	border-radius: 0px;
+	padding: 0px;
+	border-width: 0px 1px 1px 0px;
+	border-style: solid;
+	border-color: #e8e8e8;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-bottom, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
+.v-tabsheet-tabitem .v-caption {
+	border-color: #e8e8e8;
+	line-height: 25px;
+	border: none;
+	border-radius: 0px;
+	padding: 3px 17px 4px;
+	margin: 0px;
+	font-weight: bold;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-left, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-left {
-	padding-left: 0px;
+.v-tabsheet-tabitem.v-tabsheet-tabitem-selected {
+	background-color: #FFF;
+	border-radius: 0px;
+	border-bottom-color: #FFF;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-field {
-	min-height: 46px;
+.v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption {
+	border: none;
+	border-radius: 0px;
+	background-image: none;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption {
-	min-height: 46px;
-}
-
-.v-gridlayout.colored-gridlayout .gridform-caption .v-label {
-	text-align: right;
-	color: #999;
-}
-
-.activity-comp .section {
-	padding: 25px 5px 5px 5px;
-	font-size: 16px;
-	color: #298eff;
-	border-bottom: 1px solid #e8e8e8;
-}
-
-.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
-	display: inline-block;
-}
-
-.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
-	padding-right: 10px;
-	font-size: 13px;
-	color: black;
+.v-tabsheet-deco {
+	border: none;
 }
 
 .v-tooltip, .v-sa .v-tooltip {
@@ -14032,8 +14025,6 @@ a.pending {
 
 .v-label.headerName {
 	font-size: 18px;
-	font-weight: bold;
-	color: #303030;
 }
 
 .v-label.icon-48px .v-icon {
@@ -14429,6 +14420,69 @@ span.block {
 	background-color: white;
 }
 
+.form .section {
+	padding: 25px 5px 5px 5px;
+	color: #298eff;
+	border-bottom: 1px solid #e8e8e8;
+}
+
+.form .section .v-label {
+	font-size: 16px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption, .v-gridlayout.colored-gridlayout .gridform-field {
+	border-bottom: 1px solid #e8e8e8;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-top, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 14px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-right, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-right {
+	padding-right: 8px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-bottom, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 8px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-left, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-left {
+	padding-left: 0px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-field {
+	min-height: 46px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption {
+	min-height: 46px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption .v-label {
+	text-align: right;
+	color: #999;
+}
+
+.activity-comp .section {
+	padding: 25px 5px 5px 5px;
+	color: #298eff;
+	border-bottom: 1px solid #e8e8e8;
+}
+
+.activity-comp .section .v-label {
+	font-size: 16px;
+}
+
+.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
+	display: inline-block;
+}
+
+.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+	padding-right: 10px;
+	font-size: 13px;
+	color: black;
+}
+
 .crm-module {
 	position: absolute;
 	top: 0;
@@ -14495,7 +14549,6 @@ span.block {
 
 .readViewLayout .readViewHeader .headerName {
 	font-size: 18px;
-	color: #303030;
 }
 
 .readViewLayout .readViewHeader .headerNameOverdue {
@@ -15187,66 +15240,6 @@ div.v-button.token-field:hover {
 .bug-component .created-time {
 	color: #888;
 	font-size: 12px;
-}
-
-.taskgroup-header {
-	padding: 7px 10px 7px 18px;
-	border: 1px solid #c5c5c5;
-	background-color: #e4e4e4;
-}
-
-.taskadd-popup {
-	border-width: 0px 1px 1px 1px;
-	border-style: solid;
-	border-color: #c5c5c5;
-}
-
-.taskadd-popup .popup-header {
-	border-bottom: 1px solid #c5c5c5;
-	background-color: floralwhite;
-}
-
-.taskadd-popup .popup-header.v-margin-top {
-	padding-top: 8px;
-}
-
-.taskadd-popup .popup-header.v-margin-right {
-	padding-right: 0px;
-}
-
-.taskadd-popup .popup-header.v-margin-bottom {
-	padding-bottom: 8px;
-}
-
-.taskadd-popup .popup-header.v-margin-left {
-	padding-left: 18px;
-}
-
-.taskadd-popup .popup-footer.v-margin-top {
-	padding-top: 5px;
-}
-
-.taskadd-popup .popup-footer.v-margin-right {
-	padding-right: 5px;
-}
-
-.taskadd-popup .popup-footer.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.taskadd-popup .popup-footer.v-margin-left {
-	padding-left: 15px;
-}
-
-.taskadd-popup .v-tabsheet {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	border-bottom: 1px solid #c5c5c5;
-}
-
-.taskadd-popup .v-tabsheet .v-tabsheet-content {
-	padding-bottom: 0px;
 }
 
 .gantt_container {
@@ -16393,7 +16386,6 @@ input.v-textfield-errorField {
 
 .addViewLayout .addViewHeader .headerName {
 	font-size: 18px;
-	font-weight: bold;
 }
 
 .addViewLayout .addViewTitle .titleName {
@@ -16530,65 +16522,6 @@ input.v-textfield-errorField {
 	border-top: 1px solid #AAA;
 	border-bottom: 0px;
 	color: #222;
-}
-
-.v-tabsheet-tabs {
-	background-color: #f9f9f9;
-}
-
-.v-tabsheet-content {
-	background-color: #FFF;
-	border: none;
-}
-
-td.v-tabsheet-spacertd div {
-	border-color: #c5c5c5;
-}
-
-.v-tabsheet-tabitem {
-	background: none repeat-x left top transparent;
-	border-radius: 0px;
-	padding: 0px;
-	border-width: 0px 1px 1px 0px;
-	border-style: solid;
-	border-color: #c5c5c5;
-}
-
-.v-tabsheet-tabitem .v-caption {
-	border-color: #8F8F8F;
-	line-height: 25px;
-	border: none;
-	border-radius: 0px;
-	padding: 3px 17px 4px;
-	margin: 0px;
-	font-weight: bold;
-}
-
-.v-tabsheet-tabitem.v-tabsheet-tabitem-selected {
-	background-color: #FFF;
-	border-radius: 0px;
-	border-bottom-color: #FFF;
-}
-
-.v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption {
-	border: none;
-	border-radius: 0px;
-	background-image: none;
-}
-
-.v-tabsheet-tabitemcell {
-	padding-top: 0px;
-	vertical-align: top;
-}
-
-.v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
-	background: url("icons/selected-tab-left-2.png") no-repeat 0 0 transparent;
-	padding-top: 0px;
-	vertical-align: top;
-}
-
-.v-tabsheet-deco {
-	border: none;
 }
 
 .project {
@@ -17671,59 +17604,6 @@ div.v-ratingstars-bar {
 	display: block;
 }
 
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem {
-	border-width: 0px 1px 0px 0px;
-	border-style: solid;
-	border-color: #c5c5c5;
-	position: relative;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem .v-caption {
-	padding: 8px 17px 9px;
-	border-bottom: 1px solid #c5c5c5;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem .v-caption .v-captiontext {
-	font-size: 13px;
-	text-shadow: none;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
-	background: none repeat-x scroll left bottom #1c7dce;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem-selected .v-caption:after, .tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr  > .v-tabsheet-tabitemcell  > .v-tabsheet-tabitem:hover .v-caption:after {
-	content: "";
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
-	height: 8px;
-	background: url(icons/tab-selected-indicator.png) no-repeat center bottom transparent;
-	cursor: pointer;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr > .v-tabsheet-spacertd {
-	background: url(icons/tab-space-bg.jpg) repeat-x left bottom #FFF;
-}
-
-.tab-style3  > .v-tabsheet-tabcontainer > .v-tabsheet-tabs  > tbody > tr > .v-tabsheet-spacertd div {
-	border-bottom: none;
-}
-
-.tab-style3  > .v-tabsheet-content {
-	background: none;
-}
-
-.tab-style3  > .v-tabsheet-content  > .v-tabsheet-tabsheetpanel {
-	padding-top: 12px;
-}
-
-.v-ie .v-tabsheet-content > .v-tabsheet-tabsheetpanel > div > .v-verticallayout:after {
-	content: "";
-	display: inline-block;
-}
-
 .contactopp-list-header > .v-expand > .v-spacing {
 	width: 12px;
 }
@@ -18188,20 +18068,6 @@ div.v-csslayout.bean-block.olive-block {
 
 .feature-select-box {
 	background-color: #EEE;
-}
-
-.block-widget .block-header {
-	padding: 7px 10px;
-	background-color: #f1f1f1;
-	font-size: 14px;
-	color: #313131;
-	border: 1px solid #c5c5c5;
-}
-
-.block-widget .block-body {
-	border-width: 0px 1px 1px;
-	border-color: #c5c5c5;
-	border-style: solid;
 }
 
 .version-selection-box {

@@ -42,7 +42,6 @@ public class SettingContainer extends AbstractPageView implements ISettingContai
 
     public SettingContainer() {
         this.settingTab = new TabSheetDecorator();
-        this.settingTab.setStyleName(UIConstants.THEME_TAB_STYLE3);
         this.addComponent(settingTab);
         this.setWidth("100%");
         this.buildComponents();

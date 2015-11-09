@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -59,7 +59,7 @@ class BasicInfoChangeWindow extends Window {
 
     public BasicInfoChangeWindow(final User user) {
         this.user = user;
-        this.setWidth("450px");
+        this.setWidth("600px");
         this.setResizable(false);
         this.setModal(true);
         this.initUI();
@@ -72,22 +72,16 @@ class BasicInfoChangeWindow extends Window {
 
         final GridFormLayoutHelper passInfo = GridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
 
-        passInfo.addComponent(txtFirstName,
-                AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
-        passInfo.addComponent(txtLastName,
-                AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
+        passInfo.addComponent(txtFirstName, AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
+        passInfo.addComponent(txtLastName, AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
         this.txtLastName.setRequired(true);
-        passInfo.addComponent(txtEmail,
-                AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 2);
+        passInfo.addComponent(txtEmail, AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 2);
         this.txtEmail.setRequired(true);
-        passInfo.addComponent(birthdayField,
-                AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 3);
+        passInfo.addComponent(birthdayField, AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 3);
         this.birthdayField.setDate(this.user.getDateofbirth());
 
-        passInfo.addComponent(timeZoneField,
-                AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 4);
-        this.timeZoneField.setTimeZone(TimezoneMapper.getTimezoneExt(this.user
-                .getTimezone()));
+        passInfo.addComponent(timeZoneField, AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 4);
+        this.timeZoneField.setTimeZone(TimezoneMapper.getTimezoneExt(this.user.getTimezone()));
 
         passInfo.addComponent(languageBox,
                 AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE), 0, 5);

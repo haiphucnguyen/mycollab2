@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -177,8 +177,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            actionBtn.setStyleName(UIConstants.BUTTON_LINK);
-            actionBtn.addStyleName("block");
+            actionBtn.setStyleName(UIConstants.BUTTON_BLOCK);
             wrapper.with(cssWrapper, actionBtn).expand(cssWrapper);
         } else if (item instanceof NewUpdateAvailableNotification) {
             final NewUpdateAvailableNotification notification = (NewUpdateAvailableNotification) item;
@@ -199,8 +198,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                         NotificationComponent.this.setPopupVisible(false);
                     }
                 });
-                upgradeBtn.setStyleName(UIConstants.BUTTON_LINK);
-                upgradeBtn.addStyleName("block");
+                upgradeBtn.addStyleName(UIConstants.BUTTON_BLOCK);
                 wrapper.addComponent(upgradeBtn);
             }
         } else if (item instanceof RequestUploadAvatarNotification) {
@@ -212,8 +210,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            uploadAvatarBtn.setStyleName(UIConstants.BUTTON_LINK);
-            uploadAvatarBtn.addStyleName("block");
+            uploadAvatarBtn.setStyleName(UIConstants.BUTTON_BLOCK);
             wrapper.add(uploadAvatarBtn);
         } else if (item instanceof SmtpSetupNotification) {
             Button smtpBtn = new Button("Setup", new Button.ClickListener() {
@@ -223,8 +220,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            smtpBtn.setStyleName(UIConstants.BUTTON_LINK);
-            smtpBtn.addStyleName("block");
+            smtpBtn.setStyleName(UIConstants.BUTTON_BLOCK);
             Label lbl = new Label(FontAwesome.EXCLAMATION_TRIANGLE.getHtml() + " Your members can not receive any mail " +
                     "notification without a proper SMTP setting", ContentMode.HTML);
             MCssLayout lblWrapper = new MCssLayout(lbl);
@@ -239,8 +235,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            actionBtn.setStyleName(UIConstants.BUTTON_LINK);
-            actionBtn.addStyleName("block");
+            actionBtn.setStyleName(UIConstants.BUTTON_BLOCK);
             wrapper.addComponent(actionBtn);
         } else if (item instanceof RequestPreviewNotification) {
             wrapper.addComponent(new Label(FontAwesome.THUMBS_O_UP.getHtml() + " Help us to spread the world",
@@ -256,8 +251,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            dismissBtn.setStyleName(UIConstants.BUTTON_LINK);
-            dismissBtn.addStyleName("block");
+            dismissBtn.setStyleName(UIConstants.BUTTON_BLOCK);
             wrapper.addComponent(dismissBtn);
             Button spreadBtn = new Button("I will", new ClickListener() {
                 @Override
@@ -266,8 +260,7 @@ public class NotificationComponent extends PopupButton implements PopupButton.Po
                     NotificationComponent.this.setPopupVisible(false);
                 }
             });
-            spreadBtn.setStyleName(UIConstants.BUTTON_LINK);
-            spreadBtn.addStyleName("block");
+            spreadBtn.setStyleName(UIConstants.BUTTON_BLOCK);
             wrapper.addComponent(spreadBtn);
         } else {
             LOG.error("Do not render notification " + item);

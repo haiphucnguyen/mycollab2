@@ -23,6 +23,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 @import "components/tooltip";
 @import "components/icons";
 @import "components/form";
+@import "components/tabsheet";
 @import "components/crm";
 @import "components/document";
 @import "components/project";
@@ -48,9 +49,10 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   @include mycollab-breadcrumb;
   @include mycollab-button;
   @include mycollab-icons;
-  @include mycollab-form;
+  @include mycollab-tabsheet;
   @include mycollab-tooltip;
   @include mycollab-shared;
+  @include mycollab-form;
   @include mycollab-crm;
   @include mycollab-document;
   @include mycollab-project;
@@ -153,7 +155,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   }
 
   /* Top Menu */
-
   .topNavigation {
     height: 45px;
     .serviceMenuContainer {
@@ -672,7 +673,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       padding: 12px 0px;
       .headerName {
         font-size: $font-x-large;
-        font-weight: bold;
       }
     }
     .addViewTitle .titleName {
@@ -682,11 +682,9 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       padding-top: 2px;
     }
   }
-
   /* End Add View Styles */
 
   /* End Account Settings */
-
   .crmContainer .container-wrap .tab-content, .accountViewContainer .container-wrap .tab-content {
     border-width: 1px 0px 0px 1px;
     padding: 0px;
@@ -787,65 +785,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       }
     }
   }
-
   /* End Activity Tabs */
-
-  .v-tabsheet-tabs {
-    background-color: $my-background-color;
-  }
-
-  .v-tabsheet-content {
-    background-color: #FFF;
-    border: none;
-  }
-
-  td.v-tabsheet-spacertd div {
-    border-color: $my-border-color;
-  }
-
-  .v-tabsheet-tabitem {
-    .v-caption {
-      border-color: #8F8F8F;
-      line-height: 25px;
-      border: none;
-      border-radius: 0px;
-      padding: 3px 17px 4px;
-      margin: 0px;
-      font-weight: bold;
-    }
-    &.v-tabsheet-tabitem-selected {
-      .v-caption {
-        border: none;
-        border-radius: 0px;
-        background-image: none;
-      }
-      background-color: #FFF;
-      border-radius: 0px;
-      border-bottom-color: #FFF;
-    }
-    background: none repeat-x left top transparent;
-    border-radius: 0px;
-    padding: 0px;
-    border-width: 0px 1px 1px 0px;
-    border-style: solid;
-    border-color: $my-border-color;
-  }
-
-  .v-tabsheet-tabitemcell {
-    &.v-tabsheet-tabitemcell-selected {
-      background: url("icons/selected-tab-left-2.png") no-repeat 0 0 transparent;
-      padding-top: 0px;
-      vertical-align: top;
-    }
-    padding-top: 0px;
-    vertical-align: top;
-  }
-
-  .v-tabsheet-deco {
-    border: none;
-  }
-
-  /* End Tabsheet Styles */
 
   .project {
     padding-top: 3px;
@@ -2004,60 +1944,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     display: block;
   }
 
-  /* Tabsheet style 3 */
-  .tab-style3 {
-    > .v-tabsheet-tabcontainer > .v-tabsheet-tabs {
-      > tbody > tr {
-        > .v-tabsheet-tabitemcell {
-          > .v-tabsheet-tabitem {
-            border-width: 0px 1px 0px 0px;
-            border-style: solid;
-            border-color: $my-border-color;
-            position: relative;
-            .v-caption {
-              padding: 8px 17px 9px;
-              border-bottom: 1px solid $my-border-color;
-              .v-captiontext {
-                font-size: $font-normal;
-                text-shadow: none;
-              }
-            }
-          }
-          &.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem {
-            background: none repeat-x scroll left bottom #1c7dce;
-          }
-          > .v-tabsheet-tabitem-selected .v-caption:after, > .v-tabsheet-tabitem:hover .v-caption:after {
-            content: "";
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            height: 8px;
-            background: url(icons/tab-selected-indicator.png) no-repeat center bottom transparent;
-            cursor: pointer;
-          }
-        }
-      }
-      > tbody > tr > .v-tabsheet-spacertd {
-        background: url(icons/tab-space-bg.jpg) repeat-x left bottom #FFF;
-        div {
-          border-bottom: none;
-        }
-      }
-    }
-    > .v-tabsheet-content {
-      background: none;
-      > .v-tabsheet-tabsheetpanel {
-        padding-top: 12px;
-      }
-    }
-  }
-
-  .v-ie .v-tabsheet-content > .v-tabsheet-tabsheetpanel > div > .v-verticallayout:after {
-    content: "";
-    display: inline-block;
-  }
-
   /* Contact Role Edit */
 
   .contactopp-list-header > .v-expand > .v-spacing {
@@ -2528,25 +2414,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     background-color: #EEE;
   }
 
-  /* Block Widget */
-
-  .block-widget {
-    .block-header {
-      padding: 7px 10px;
-      background-color: rgb(241, 241, 241);
-      font-size: $font-large;
-      color: rgb(49, 49, 49);
-      border: 1px solid $my-border-color;
-    }
-    .block-body {
-      border-width: 0px 1px 1px;
-      border-color: $my-border-color;
-      border-style: solid;
-    }
-  }
-
   /* Version Selection Box */
-
   .version-selection-box {
     border: none;
     padding-left: 0px;

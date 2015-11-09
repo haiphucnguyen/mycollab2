@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -109,7 +109,6 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         User user = formItem.getBean();
 
         MVerticalLayout basicLayout = new MVerticalLayout().withMargin(false);
-
         HorizontalLayout userWrapper = new HorizontalLayout();
 
         Label usernameLbl = new Label(AppContext.getUser().getDisplayName());
@@ -175,21 +174,19 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         private class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
-            private GridFormLayoutHelper contactLayout = new GridFormLayoutHelper(1, 5, "100%", "120px");
-            private GridFormLayoutHelper advancedInfoLayout = new GridFormLayoutHelper(1, 3, "100%", "120px");
+            private GridFormLayoutHelper contactLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5);
+            private GridFormLayoutHelper advancedInfoLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
             @Override
             public ComponentContainer getLayout() {
                 contactLayout.getLayout().setSpacing(true);
                 advancedInfoLayout.getLayout().setSpacing(true);
-                MVerticalLayout layout = new MVerticalLayout().withMargin(false);
+                FormContainer layout = new FormContainer();
                 layout.addComponent(avatarAndPass);
 
-                String separatorStyle = "width: 100%; height: 1px; background-color: #CFCFCF; margin-top: 0px; margin-bottom: 10px";
                 MHorizontalLayout contactInformationHeader = new MHorizontalLayout();
                 contactInformationHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                 Label contactInformationHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
-                contactInformationHeaderLbl.addStyleName("h1");
 
                 Button btnChangeContactInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -200,25 +197,12 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                     }
                 });
                 btnChangeContactInfo.addStyleName(UIConstants.BUTTON_LINK);
-                contactInformationHeader.with(contactInformationHeaderLbl, btnChangeContactInfo);
+                contactInformationHeader.with(contactInformationHeaderLbl, btnChangeContactInfo).alignAll(Alignment.MIDDLE_LEFT);
 
-                layout.addComponent(contactInformationHeader);
-                Div contactSeparator = new Div();
-                contactSeparator.setAttribute("style", separatorStyle);
-                layout.addComponent(new Label(contactSeparator.write(), ContentMode.HTML));
-
-                layout.with(contactLayout.getLayout(), new Label());
+                layout.addSection(new CssLayout(contactInformationHeader), contactLayout.getLayout());
 
                 MHorizontalLayout advanceInfoHeader = new MHorizontalLayout();
                 Label advanceInfoHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION));
-                advanceInfoHeaderLbl.addStyleName("h1");
-                advanceInfoHeader.addComponent(advanceInfoHeaderLbl);
-                advanceInfoHeader.setComponentAlignment(advanceInfoHeaderLbl, Alignment.BOTTOM_LEFT);
-
-                layout.addComponent(advanceInfoHeader);
-                Div advanceSeparator = new Div();
-                advanceSeparator.setAttribute("style", separatorStyle);
-                layout.addComponent(new Label(advanceSeparator.write(), ContentMode.HTML));
 
                 Button btnChangeAdvanceInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -229,8 +213,8 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
                     }
                 });
                 btnChangeAdvanceInfo.addStyleName(UIConstants.BUTTON_LINK);
-                advanceInfoHeader.with(btnChangeAdvanceInfo).withAlign(btnChangeAdvanceInfo, Alignment.MIDDLE_LEFT);
-                layout.addComponent(advancedInfoLayout.getLayout());
+                advanceInfoHeader.with(advanceInfoHeaderLbl, btnChangeAdvanceInfo);
+                layout.addSection(new CssLayout(advanceInfoHeader), advancedInfoLayout.getLayout());
                 return layout;
             }
 

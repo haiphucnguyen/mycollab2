@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -105,16 +105,14 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         basicLayout.addComponent(roleWrapper);
 
         basicLayout.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY)
-                + ": "
-                + AppContext.formatDate(user.getDateofbirth())));
+                + ": " + AppContext.formatDate(user.getDateofbirth())));
         basicLayout.addComponent(new MHorizontalLayout()
                 .add(new Label(AppContext.getMessage(UserI18nEnum.FORM_EMAIL) + ": ")).add(
                         new LabelLink(user.getEmail(), "mailto:" + user.getEmail())));
         basicLayout.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE)
                 + ": " + TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName()));
-        basicLayout
-                .addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE)
-                        + ": " + AppContext.getMessage(LangI18Enum.class, user.getLanguage())));
+        basicLayout.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE)
+                + ": " + AppContext.getMessage(LangI18Enum.class, user.getLanguage())));
 
         avatarAndPass.with(basicLayout).withAlign(basicLayout, Alignment.TOP_LEFT).expand(basicLayout);
 
@@ -122,7 +120,8 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         CssLayout avatarAndPAssWrapper = new CssLayout();
         avatarAndPass.setWidthUndefined();
         avatarAndPAssWrapper.addComponent(avatarAndPass);
-        header.with(avatarAndPass, controlButtons).withAlign(avatarAndPass, Alignment.TOP_LEFT).withAlign(controlButtons, Alignment.TOP_RIGHT);
+        header.with(avatarAndPass, controlButtons).withAlign(avatarAndPass, Alignment.TOP_LEFT)
+                .withAlign(controlButtons, Alignment.TOP_RIGHT);
     }
 
     private Layout createTopPanel() {
@@ -163,13 +162,11 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         @Override
         public void setBean(User newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<User>(
-                    PreviewForm.this) {
+            this.setBeanFormFieldFactory(new AbstractBeanFieldGroupViewFieldFactory<User>(PreviewForm.this) {
                 private static final long serialVersionUID = 1L;
 
                 @Override
                 protected Field<?> onCreateField(Object propertyId) {
-
                     if (propertyId.equals("email")) {
                         return new EmailViewField(user.getEmail());
                     } else if (propertyId.equals("roleid")) {
@@ -204,33 +201,14 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         private class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
-            private GridFormLayoutHelper contactLayout = new GridFormLayoutHelper(1, 5, "100%", "120px");
-            private GridFormLayoutHelper advancedInfoLayout = new GridFormLayoutHelper(1, 3, "100%", "120px");
+            private GridFormLayoutHelper contactLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5);
+            private GridFormLayoutHelper advancedInfoLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
             @Override
             public ComponentContainer getLayout() {
-                MVerticalLayout layout = new MVerticalLayout().withSpacing(false).withMargin(false);
-
-                Label contactInformationHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
-                contactInformationHeaderLbl.addStyleName("h1");
-                layout.addComponent(contactInformationHeaderLbl);
-
-                String separatorStyle = "width: 100%; height: 1px; background-color: #CFCFCF; margin-top: 3px; margin-bottom: 10px";
-                Div contactSeparator = new Div();
-                contactSeparator.setAttribute("style", separatorStyle);
-                layout.addComponent(new Label(contactSeparator.write(), ContentMode.HTML));
-
-                layout.with(contactLayout.getLayout(), new Label());
-
-                Label advanceInfoHeaderLbl = new Label(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION));
-                advanceInfoHeaderLbl.addStyleName("h1");
-                layout.addComponent(advanceInfoHeaderLbl);
-
-                Div advancSeparator = new Div();
-                advancSeparator.setAttribute("style", separatorStyle);
-                layout.addComponent(new Label(advancSeparator.write(), ContentMode.HTML));
-                layout.addComponent(advancedInfoLayout.getLayout());
-
+                FormContainer layout = new FormContainer();
+                layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION), contactLayout.getLayout());
+                layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION), advancedInfoLayout.getLayout());
                 return layout;
             }
 

@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MCssLayout;
 
 /**
@@ -17,7 +14,13 @@ public class FormContainer extends VerticalLayout {
     }
 
     public void addSection(String sectionName, ComponentContainer container) {
-        this.addComponent(new MCssLayout(new Label(sectionName)).withStyleName("section").withWidth("100%"));
+        this.addSection(new MCssLayout(new Label(sectionName)), container);
+    }
+
+    public void addSection(Component sectionHeader, ComponentContainer container) {
+        sectionHeader.addStyleName("section");
+        sectionHeader.setWidth("100%");
+        this.addComponent(sectionHeader);
         this.addComponent(container);
     }
 }

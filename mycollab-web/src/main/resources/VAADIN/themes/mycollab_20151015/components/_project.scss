@@ -502,39 +502,7 @@
     }
   }
 
-  /* Task Group */
-
-  .taskgroup-header {
-    padding: 7px 10px 7px 18px;
-    border: 1px solid $my-border-color;
-    background-color: rgb(228, 228, 228);
-  }
-
-  .taskadd-popup {
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: $my-border-color;
-    .popup-header {
-      @include margin-container(8px, 0px, 8px, 18px);
-      border-bottom: 1px solid $my-border-color;
-      background-color: floralwhite;
-    }
-    .popup-footer {
-      @include margin-container(5px, 5px, 5px, 15px);
-    }
-    .v-tabsheet {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      border-bottom: 1px solid $my-border-color;
-      .v-tabsheet-content {
-        padding-bottom: 0px;
-      }
-    }
-  }
-
   /* GANTT */
-
   .gantt_container {
     border-style: solid;
     border-width: 1px 1px 0px 0px;

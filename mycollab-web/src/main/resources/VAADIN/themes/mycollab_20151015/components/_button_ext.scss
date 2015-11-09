@@ -154,8 +154,8 @@
     border-color: $my-border-color;
     background-color: white;
     .v-button-wrap {
-      padding-left: 3px;
-      padding-right: 3px;
+      padding-left: 0px;
+      padding-right: 0px;
       .v-popup-indicator::before {
         font-size: 1em !important;
         vertical-align: middle !important;
@@ -192,6 +192,11 @@
     &.btn-group-default {
       color: white;
     }
+    color: white;
+  }
+
+  /* Upload button style */
+  .v-upload-immediate .v-button {
     color: white;
   }
 }
