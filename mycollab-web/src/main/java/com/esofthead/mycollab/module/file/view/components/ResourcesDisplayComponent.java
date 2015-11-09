@@ -183,6 +183,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         });
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        createBtn.setWidth("90px");
         createBtn.setDescription("Create new folder");
         createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
         navButton.addButton(createBtn);
@@ -196,6 +197,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 UI.getCurrent().addWindow(multiUploadWindow);
             }
         });
+        uploadBtn.setWidth("90px");
         uploadBtn.setIcon(FontAwesome.UPLOAD);
         uploadBtn.addStyleName(UIConstants.BUTTON_ACTION);
         uploadBtn.setDescription("Upload");
@@ -223,6 +225,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         OnDemandFileDownloader downloaderExt = new OnDemandFileDownloader(streamSource);
         downloaderExt.extend(downloadBtn);
 
+        downloadBtn.setWidth("110px");
         downloadBtn.setIcon(FontAwesome.DOWNLOAD);
         downloadBtn.addStyleName(UIConstants.BUTTON_ACTION);
         downloadBtn.setEnabled(AppContext.canRead(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
@@ -242,6 +245,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 }
             }
         });
+        moveToBtn.setWidth("90px");
         moveToBtn.setIcon(FontAwesome.ARROWS);
         moveToBtn.addStyleName(UIConstants.BUTTON_ACTION);
         moveToBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
@@ -261,6 +265,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 }
             }
         });
+        deleteBtn.setWidth("90px");
         deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.addStyleName(UIConstants.BUTTON_DANGER);
         deleteBtn.setDescription("Delete resource");
@@ -270,7 +275,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         groupBtns.addComponent(navButton);
 
         mainBodyLayout.addComponent(groupBtns);
-
         resourcesContainer = new ResourcesContainer();
 
         mainBodyLayout.addComponent(resourcesContainer);
@@ -415,7 +419,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             if (resource.getName().startsWith(".")) {
                 return null;
             }
-            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withHeight("50px");
+            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withHeight("60px");
             layout.addStyleName("resourceItem");
 
             final CheckBox checkbox = new CheckBox();
@@ -466,7 +470,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 resourceIcon = new ELabel(FileAssetsUtil.getFileIconResource(resource.getName()));
                 resourceIcon.addStyleName("icon-38px");
             }
-
             resIconWrapper.addComponent(resourceIcon);
 
             layout.addComponent(resIconWrapper);
@@ -602,7 +605,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             deleteBtn.setIcon(FontAwesome.TRASH_O);
             filterBtnLayout.addDangerOption(deleteBtn);
 
-            filterBtnLayout.setWidth("100px");
+            filterBtnLayout.setWidth("90px");
             resourceSettingPopupBtn.setIcon(FontAwesome.ELLIPSIS_H);
             resourceSettingPopupBtn.addStyleName(UIConstants.BUTTON_ACTION);
             resourceSettingPopupBtn.setContent(filterBtnLayout);
