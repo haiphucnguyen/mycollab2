@@ -3,12 +3,14 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class BlockWidget extends CssLayout {
+public class BlockWidget extends MVerticalLayout {
     private static final long serialVersionUID = -8503014399083980294L;
 
     private Label titleLbl;
@@ -16,9 +18,11 @@ public class BlockWidget extends CssLayout {
 
     public BlockWidget(String title) {
         titleLbl = new Label();
+        titleLbl.addStyleName(ValoTheme.LABEL_H2);
         super.addComponent(titleLbl);
 
         bodyLayout = new CssLayout();
+        bodyLayout.setWidth("100%");
         super.addComponent(bodyLayout);
         this.setTitle(title);
     }

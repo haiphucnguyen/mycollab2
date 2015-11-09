@@ -66,7 +66,7 @@ public class TaskStatusComponent extends MVerticalLayout {
     public TaskStatusComponent() {
         withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
 
-        MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).withMargin(new MarginInfo(false, true,
+        MHorizontalLayout header = new MHorizontalLayout().withSpacing(true).withMargin(new MarginInfo(false, true,
                 false, true)).withHeight("34px");
         header.addStyleName("panel-header");
 

@@ -29,7 +29,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
     public ProjectNotificationSettingViewComponent(final ProjectNotificationSetting bean) {
         super(AppContext.getMessage(ProjectSettingI18nEnum.VIEW_TITLE));
 
-        MVerticalLayout bodyWrapper = new MVerticalLayout();
+        MVerticalLayout bodyWrapper = new MVerticalLayout().withWidth("100%");
         bodyWrapper.setSizeFull();
 
         HorizontalLayout notificationLabelWrapper = new HorizontalLayout();
@@ -67,8 +67,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
         optionGroup.setItemCaption(NotificationType.Full.name(), AppContext
                 .getMessage(ProjectSettingI18nEnum.OPT_MAXIMUM_SETTING));
 
-        optionGroup.setHeight("100%");
-        optionGroup.setWidthUndefined();
+        optionGroup.setWidth("100%");
 
         body.with(optionGroup).withAlign(optionGroup, Alignment.MIDDLE_LEFT);
 

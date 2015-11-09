@@ -293,18 +293,18 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
                         MHorizontalLayout rowComp = new MHorizontalLayout();
                         rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                        rowComp.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(), ContentMode.HTML));
+                        rowComp.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(),
+                                ContentMode.HTML).withWidth("-1px"));
 
                         String bugPriority = bug.getPriority();
                         Span priorityLink = new Span().appendText(ProjectAssetsManager.getBugPriorityHtml(bugPriority)).setTitle(bugPriority);
-                        rowComp.with(new ELabel(priorityLink.write(), ContentMode.HTML));
+                        rowComp.with(new ELabel(priorityLink.write(), ContentMode.HTML).withWidth("-1px"));
 
                         String avatarLink = StorageFactory.getInstance().getAvatarPath(bug.getAssignUserAvatarId(), 16);
                         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName());
                         rowComp.with(new ELabel(img.write(), ContentMode.HTML));
 
-                        MCssLayout issueWrapper = new MCssLayout(issueLbl);
-                        rowComp.with(issueWrapper);
+                        rowComp.with(issueLbl).expand(issueLbl);
                         issueLayout.add(rowComp);
                     }
                 }

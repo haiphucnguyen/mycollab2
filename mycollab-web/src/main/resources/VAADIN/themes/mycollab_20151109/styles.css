@@ -2150,6 +2150,15 @@ span.block {
 	background-image: none;
 }
 
+.v-select-optiongroup.v-has-width label {
+	line-height: 1.5;
+}
+
+.v-table-cell-content {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .stickytooltip {
 	border: 1px solid #c5c5c5;
 	display: none;
@@ -14417,6 +14426,15 @@ span.block {
 .v-select select {
 	background-color: white;
 	background-image: none;
+}
+
+.v-select-optiongroup.v-has-width label {
+	line-height: 1.5;
+}
+
+.v-table-cell-content {
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .form .section {
