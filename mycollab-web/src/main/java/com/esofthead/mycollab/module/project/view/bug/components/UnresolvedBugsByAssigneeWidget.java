@@ -96,7 +96,7 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
         private static final long serialVersionUID = 1L;
 
         public BugAssigneeLink(final String assignee, final String assigneeAvatarId, final String assigneeFullName) {
-            super(assigneeFullName, new Button.ClickListener() {
+            super(StringUtils.trim(assigneeFullName, 25, true), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
