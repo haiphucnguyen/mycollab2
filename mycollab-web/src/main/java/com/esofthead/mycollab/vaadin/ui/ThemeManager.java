@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -84,12 +81,6 @@ public class ThemeManager {
         }
 
         if (accountTheme.getVtabsheetbgselected() != null) {
-            extraStyles.append(".v-progressbar-indicator { background-color: #"
-                    + accountTheme.getVtabsheetbgselected() + "; }");
-
-            extraStyles.append(".v-progressbar.medium .v-progressbar-indicator { background-color: #"
-                    + accountTheme.getVtabsheetbgselected() + "; }");
-
             extraStyles.append(".vertical-tabsheet .v-button-tab.tab-selected { background-color: #"
                     + accountTheme.getVtabsheetbgselected() + "; }");
 
@@ -111,13 +102,6 @@ public class ThemeManager {
                     .getVtabsheettextselected() + "!important;}");
         }
 
-		/* Tabsheet */
-        if (accountTheme.getTabsheetbg() != null) {
-            extraStyles.append(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > " +
-                    ".v-tabsheet-tabitem { background-color: #"
-                    + accountTheme.getTabsheetbg() + "; }");
-        }
-
         if (accountTheme.getTabsheetbgselected() != null) {
             extraStyles.append(".project-info { background-color: #" + accountTheme.getTabsheetbgselected() + "; }");
 
@@ -136,14 +120,6 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-link { color: #" + accountTheme
                     .getTabsheetbgselected() + "; }");
 
-            extraStyles.append(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr >" +
-                    " .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem { " +
-                    "background-color: #" + accountTheme.getTabsheetbgselected() + "; }");
-
-            extraStyles.append(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > " +
-                    ".v-tabsheet-tabitemcell > .v-tabsheet-tabitem:hover {background-color: #" +
-                    accountTheme.getTabsheetbgselected() + ";}");
-
             //Set milestone header background
             extraStyles.append(".milestone-view-header {background-color: #" + accountTheme.getTabsheetbgselected() + ";}");
 
@@ -152,19 +128,7 @@ public class ThemeManager {
                     .getTabsheetbgselected() + ";}");
         }
 
-        if (accountTheme.getTabsheettext() != null) {
-            extraStyles.append(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem { color: #"
-                    + accountTheme.getTabsheettext() + "; }");
-        }
-
         if (accountTheme.getTabsheettextselected() != null) {
-            extraStyles.append(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected { color: #"
-                    + accountTheme.getTabsheettextselected() + "; }");
-
-            extraStyles.append(".tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > " +
-                    ".v-tabsheet-tabitemcell > .v-tabsheet-tabitem:hover {color: #" +
-                    accountTheme.getTabsheettextselected() + ";}");
-
             //Set milestone header text color
             extraStyles.append(".milestone-view-header {color: #" + accountTheme.getTabsheettextselected() + ";}");
 
@@ -291,7 +255,7 @@ public class ThemeManager {
 
     public static void loadDemoTheme(AccountTheme accountTheme) {
         StringBuilder demoExtraStyles = new StringBuilder();
-		/* Top Menu */
+        /* Top Menu */
 
         if (accountTheme.getTopmenubg() != null) {
             demoExtraStyles.append(".example-block .topNavigation { background-color: #"
@@ -333,28 +297,6 @@ public class ThemeManager {
         if (accountTheme.getVtabsheettextselected() != null) {
             demoExtraStyles.append(".example-block .vertical-tabsheet .v-button-tab.tab-selected > .v-button-wrap > .v-button-caption { color: #"
                     + accountTheme.getVtabsheettextselected() + "; }");
-        }
-
-		/* Tabsheet */
-
-        if (accountTheme.getTabsheetbg() != null) {
-            demoExtraStyles.append(".example-block .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem { background-color: #"
-                    + accountTheme.getTabsheetbg() + "; }");
-        }
-
-        if (accountTheme.getTabsheetbgselected() != null) {
-            demoExtraStyles.append(".example-block .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected > .v-tabsheet-tabitem { background-color: #"
-                    + accountTheme.getTabsheetbgselected() + "; }");
-        }
-
-        if (accountTheme.getTabsheettext() != null) {
-            demoExtraStyles.append(".example-block .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem .v-caption .v-captiontext { color: #"
-                    + accountTheme.getTabsheettext() + "; }");
-        }
-
-        if (accountTheme.getTabsheettextselected() != null) {
-            demoExtraStyles.append(".example-block .tab-style3 > .v-tabsheet-tabcontainer > .v-tabsheet-tabs > tbody > tr > .v-tabsheet-tabitemcell > .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption .v-captiontext { color: #"
-                    + accountTheme.getTabsheettextselected() + "; }");
         }
 
 		/* Action Buttons */

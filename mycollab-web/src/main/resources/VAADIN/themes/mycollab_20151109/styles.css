@@ -1632,6 +1632,7 @@ a.pending {
 	margin: -1px;
 	border: 1px solid #c5c5c5;
 	background-image: none;
+	background-color: #d9effa;
 }
 
 .v-progressbar.medium {
@@ -1943,7 +1944,7 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #e4f1ff;
+	background-color: #d9effa;
 	line-height: 22px;
 	padding: 0px 5px;
 	color: #888;
@@ -1954,7 +1955,7 @@ div.v-tree-node-caption div {
 }
 
 .v-popupview.block-popupedit:hover {
-	background-color: #5ca9ff;
+	background-color: #42b0e7;
 	color: white;
 }
 
@@ -13910,6 +13911,7 @@ a.pending {
 	margin: -1px;
 	border: 1px solid #c5c5c5;
 	background-image: none;
+	background-color: #d9effa;
 }
 
 .v-progressbar.medium {
@@ -14221,7 +14223,7 @@ div.v-tree-node-caption div {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	background-color: #e4f1ff;
+	background-color: #d9effa;
 	line-height: 22px;
 	padding: 0px 5px;
 	color: #888;
@@ -14232,7 +14234,7 @@ div.v-tree-node-caption div {
 }
 
 .v-popupview.block-popupedit:hover {
-	background-color: #5ca9ff;
+	background-color: #42b0e7;
 	color: white;
 }
 

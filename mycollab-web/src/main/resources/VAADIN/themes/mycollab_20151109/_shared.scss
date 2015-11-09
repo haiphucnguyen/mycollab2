@@ -99,6 +99,7 @@
     margin: -1px;
     border: 1px solid $my-border-color;
     background-image: none;
+    background-color: #d9effa;
   }
 
   .v-progressbar.medium {
@@ -400,7 +401,7 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    background-color: #e4f1ff;
+    background-color: #d9effa;
     line-height: 22px;
     padding: 0px 5px;
     color: $my-meta-color;
@@ -408,7 +409,7 @@
       padding: 0px;
     }
     &:hover {
-      background-color:#5ca9ff;
+      background-color:#42b0e7;
       color: white;
     }
 
