@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,6 +30,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extends GenericSearchPanel<S> {
     private static final long serialVersionUID = 1L;
 
+    private MHorizontalLayout header;
     private ComponentContainer headerText;
     private MHorizontalLayout rightComponent;
 
@@ -46,18 +47,21 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
     abstract protected void buildExtraControls();
 
     protected ComponentContainer constructHeader() {
-        headerText = buildSearchTitle();
-        rightComponent = new MHorizontalLayout();
+        if (header == null) {
+            headerText = buildSearchTitle();
+            rightComponent = new MHorizontalLayout();
 
-        MHorizontalLayout header = new MHorizontalLayout()
-                .withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
-                .withMargin(new MarginInfo(true, false, true, false));
+            header = new MHorizontalLayout().withStyleName(UIConstants.HEADER_VIEW).withWidth("100%")
+                    .withMargin(new MarginInfo(true, false, true, false));
 
-        header.with(headerText, rightComponent).withAlign(headerText, Alignment.MIDDLE_LEFT)
-                .withAlign(rightComponent, Alignment.MIDDLE_RIGHT).expand(headerText);
+            header.with(headerText, rightComponent).withAlign(headerText, Alignment.MIDDLE_LEFT)
+                    .withAlign(rightComponent, Alignment.MIDDLE_RIGHT).expand(headerText);
 
-        buildExtraControls();
-        return header;
+            buildExtraControls();
+            return header;
+        } else {
+            return header;
+        }
     }
 
     public void setTotalCountNumber(int countNumber) {

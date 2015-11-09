@@ -78,8 +78,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
                 .MIDDLE_CENTER).withAlign(inviteMemberBtn, Alignment.MIDDLE_CENTER).expand(titleLbl);
         header.addStyleName("panel-header");
 
-        memberList = new DefaultBeanPagedList<>(
-                ApplicationContextUtil.getSpringBean(ProjectMemberService.class),
+        memberList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectMemberService.class),
                 new MemberRowDisplayHandler());
         this.with(header, memberList);
     }
@@ -111,7 +110,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
             } else {
                 roleVal = member.getRoleName();
             }
-            ELabel memberRole = new ELabel(roleVal, ContentMode.HTML).withDescription("Role");
+            ELabel memberRole = new ELabel(roleVal, ContentMode.HTML).withDescription("Role").withStyleName(UIConstants.LABEL_META_INFO);
             footer.addComponent(memberRole);
 
             String memberWorksInfo = ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " + new Span
@@ -122,7 +121,7 @@ public class ProjectMembersWidget extends MVerticalLayout {
                     member.getTotalBillableLogTime())).setTitle("Billable hours") + "  " + FontAwesome.GIFT.getHtml() +
                     " " + new Span().appendText("" + NumberUtils.roundDouble(2, member.getTotalNonBillableLogTime())).setTitle("Non billable hours");
 
-            Label memberWorkStatus = new Label(memberWorksInfo, ContentMode.HTML);
+            ELabel memberWorkStatus = new ELabel(memberWorksInfo, ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO);
             footer.addComponent(memberWorkStatus);
 
             content.addComponent(footer);

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -52,6 +52,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -311,8 +312,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                             EventBusFactory.getInstance().post(new FileEvent.ResourceRemovedEvent
                                                     (ResourcesDisplayComponent.this, res));
                                         }
-                                        resourceService.removeResource(res.getPath(),
-                                                AppContext.getUsername(), AppContext.getAccountId());
+                                        resourceService.removeResource(res.getPath(), AppContext.getUsername(),
+                                                AppContext.getAccountId());
                                     }
                                 }
 
@@ -360,8 +361,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             this.addComponent(new Hr());
 
             if (currentFolder instanceof ExternalFolder) {
-                resources = externalResourceService.getResources(
-                        ((ExternalFolder) currentFolder).getExternalDrive(),
+                resources = externalResourceService.getResources(((ExternalFolder) currentFolder).getExternalDrive(),
                         currentFolder.getPath());
             } else {
                 resources = resourceService.getResources(currentFolder.getPath());
@@ -415,7 +415,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             if (resource.getName().startsWith(".")) {
                 return null;
             }
-            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withHeight("44px");
+            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withHeight("50px");
             layout.addStyleName("resourceItem");
 
             final CheckBox checkbox = new CheckBox();
@@ -490,7 +490,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 }
             });
             resourceLinkBtn.addStyleName(UIConstants.BUTTON_LINK);
-            resourceLinkBtn.addStyleName("h3");
             informationLayout.addComponent(resourceLinkBtn);
 
             MHorizontalLayout moreInfoAboutResLayout = new MHorizontalLayout();
@@ -502,18 +501,18 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             if (StringUtils.isEmpty(resource.getCreatedUser())) {
                 UserLink usernameLbl = new UserLink(AppContext.getUsername(), AppContext.getUserAvatarId(),
                         AppContext.getUser().getDisplayName());
-                usernameLbl.addStyleName("grayLabel");
+                usernameLbl.addStyleName(UIConstants.LABEL_META_INFO);
                 moreInfoAboutResLayout.addComponent(usernameLbl);
             } else {
                 UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
                 SimpleUser user = userService.findUserByUserNameInAccount(resource.getCreatedUser(), AppContext.getAccountId());
                 if (user != null) {
                     UserLink userLink = new UserLink(user.getUsername(), user.getAvatarid(), user.getDisplayName());
-                    userLink.addStyleName("grayLabel");
+                    userLink.addStyleName(UIConstants.LABEL_META_INFO);
                     moreInfoAboutResLayout.addComponent(userLink);
                 } else {
                     Label usernameLbl = new Label(resource.getCreatedBy());
-                    usernameLbl.addStyleName("grayLabel");
+                    usernameLbl.addStyleName(UIConstants.LABEL_META_INFO);
                     moreInfoAboutResLayout.addComponent(usernameLbl);
                 }
             }
@@ -525,18 +524,18 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             if (resource.getCreated() != null) {
                 Label createdTimeLbl = new Label((AppContext.formatPrettyTime(resource.getCreated().getTime())));
                 createdTimeLbl.setDescription(AppContext.formatDateTime(resource.getCreated().getTime()));
-                createdTimeLbl.addStyleName("grayLabel");
+                createdTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
                 moreInfoAboutResLayout.addComponent(createdTimeLbl);
             } else {
                 Label createdTimeLbl = new Label("Undefined");
-                createdTimeLbl.addStyleName("grayLabel");
+                createdTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
                 moreInfoAboutResLayout.addComponent(createdTimeLbl);
             }
 
             if (resource instanceof Content) {
                 moreInfoAboutResLayout.addComponent(new Separator());
                 Label lbl = new Label(FileUtils.getVolumeDisplay(resource.getSize()));
-                lbl.addStyleName("grayLabel");
+                lbl.addStyleName(UIConstants.LABEL_META_INFO);
                 moreInfoAboutResLayout.addComponent(lbl);
             }
             informationLayout.addComponent(moreInfoAboutResLayout);
@@ -663,9 +662,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                     String newPath = parentOldPath + newNameValue;
 
                     if (renameResource.isExternalResource()) {
-                        externalResourceService.rename(
-                                ((ExternalFolder) renameResource).getExternalDrive(), oldPath,
-                                newPath);
+                        externalResourceService.rename(((ExternalFolder) renameResource).getExternalDrive(), oldPath, newPath);
                     } else {
                         resourceService.rename(oldPath, newPath, AppContext.getUsername());
                     }
@@ -715,43 +712,40 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             layoutHelper.addComponent(folderName, "Folder Name", 0, 0);
             contentLayout.addComponent(layoutHelper.getLayout());
             MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
-            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            String folderVal = folderName.getValue();
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    String folderVal = folderName.getValue();
 
-                            if (StringUtils.isNotBlank(folderVal)) {
-                                FileUtils.assertValidFolderName(folderVal);
-                                String baseFolderPath = baseFolder.getPath();
+                    if (StringUtils.isNotBlank(folderVal)) {
+                        FileUtils.assertValidFolderName(folderVal);
+                        String baseFolderPath = baseFolder.getPath();
 
-                                if (baseFolder instanceof ExternalFolder) {
-                                    String path = baseFolder.getPath() + "/" + folderVal;
-                                    externalResourceService.createNewFolder(
-                                            ((ExternalFolder) baseFolder).getExternalDrive(), path);
-                                } else {
-                                    resourceService.createNewFolder(baseFolderPath, folderVal, AppContext.getUsername());
-                                }
-                                resourcesContainer.constructBody(baseFolder);
-                                AddNewFolderWindow.this.close();
-                            }
+                        if (baseFolder instanceof ExternalFolder) {
+                            String path = baseFolder.getPath() + "/" + folderVal;
+                            externalResourceService.createNewFolder(((ExternalFolder) baseFolder).getExternalDrive(), path);
+                        } else {
+                            resourceService.createNewFolder(baseFolderPath, folderVal, AppContext.getUsername());
                         }
-                    });
+                        resourcesContainer.constructBody(baseFolder);
+                        AddNewFolderWindow.this.close();
+                    }
+                }
+            });
             saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
             controlsLayout.addComponent(saveBtn);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            AddNewFolderWindow.this.close();
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    AddNewFolderWindow.this.close();
+                }
+            });
             cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
             controlsLayout.addComponent(cancelBtn);
             controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
@@ -789,55 +783,53 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
             MHorizontalLayout controlsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
 
-            final Button uploadBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPLOAD),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            final Button uploadBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPLOAD), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            List<File> attachments = attachmentPanel.files();
-                            if (CollectionUtils.isNotEmpty(attachments)) {
-                                for (File attachment : attachments) {
-                                    try {
-                                        if (!FileUtils.isValidFileName(attachment.getName())) {
-                                            NotificationUtil.showWarningNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
-                                            return;
-                                        }
-                                        Content content = new Content(String.format("%s/%s", baseFolder.getPath(), attachment.getName()));
-                                        content.setSize(attachment.length());
-                                        FileInputStream fileInputStream = new FileInputStream(attachment);
-
-                                        if (baseFolder instanceof ExternalFolder) {
-                                            externalResourceService.saveContent(((ExternalFolder) baseFolder)
-                                                    .getExternalDrive(), content, fileInputStream);
-                                        } else
-                                            resourceService.saveContent(content, AppContext.getUsername(),
-                                                    fileInputStream, AppContext.getAccountId());
-                                    } catch (IOException e) {
-                                        throw new MyCollabException(e);
-                                    }
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    List<File> attachments = attachmentPanel.files();
+                    if (CollectionUtils.isNotEmpty(attachments)) {
+                        for (File attachment : attachments) {
+                            try {
+                                if (!FileUtils.isValidFileName(attachment.getName())) {
+                                    NotificationUtil.showWarningNotification("Please upload valid file-name except any follow characters : <>:&/\\|?*&");
+                                    return;
                                 }
-                                resourcesContainer.constructBody(baseFolder);
-                                MultiUploadContentWindow.this.close();
-                                NotificationUtil.showNotification("Congrats", "Upload successfully.");
-                            } else {
-                                NotificationUtil.showWarningNotification("It seems you did not attach file yet!");
+                                Content content = new Content(String.format("%s/%s", baseFolder.getPath(), attachment.getName()));
+                                content.setSize(attachment.length());
+                                FileInputStream fileInputStream = new FileInputStream(attachment);
+
+                                if (baseFolder instanceof ExternalFolder) {
+                                    externalResourceService.saveContent(((ExternalFolder) baseFolder)
+                                            .getExternalDrive(), content, fileInputStream);
+                                } else
+                                    resourceService.saveContent(content, AppContext.getUsername(),
+                                            fileInputStream, AppContext.getAccountId());
+                            } catch (IOException e) {
+                                throw new MyCollabException(e);
                             }
                         }
-                    });
+                        resourcesContainer.constructBody(baseFolder);
+                        MultiUploadContentWindow.this.close();
+                        NotificationUtil.showNotification("Congrats", "Upload successfully.");
+                    } else {
+                        NotificationUtil.showWarningNotification("It seems you did not attach file yet!");
+                    }
+                }
+            });
             uploadBtn.addStyleName(UIConstants.BUTTON_ACTION);
             uploadBtn.setIcon(FontAwesome.UPLOAD);
             controlsLayout.addComponent(uploadBtn);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            MultiUploadContentWindow.this.close();
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    MultiUploadContentWindow.this.close();
+                }
+            });
             cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
             controlsLayout.addComponent(cancelBtn);
             controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);

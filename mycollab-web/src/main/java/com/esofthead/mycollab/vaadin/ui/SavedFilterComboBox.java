@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -47,6 +47,7 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
     private static Logger LOG = LoggerFactory.getLogger(SavedFilterComboBox.class);
 
     protected TextField componentsText;
+    protected String selectedQueryName = "";
     private PopupButton componentPopupSelection;
     private OptionPopupContent popupContent;
     private List<SearchQueryInfo> sharedQueries;
@@ -95,7 +96,8 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
     public void selectQueryInfo(String queryId) {
         for (SearchQueryInfo queryInfo : sharedQueries) {
             if (queryId.equals(queryInfo.getQueryId())) {
-                updateQueryNameField(queryInfo.getQueryName());
+                selectedQueryName = queryInfo.getQueryName();
+                updateQueryNameField(selectedQueryName);
                 SavedFilterComboBox.this.fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, queryInfo
                         .getSearchFieldInfos()));
                 componentPopupSelection.setPopupVisible(false);
@@ -163,7 +165,8 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
             super("      " + queryInfo.getQueryName(), new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    updateQueryNameField(queryInfo.getQueryName());
+                    selectedQueryName = queryInfo.getQueryName();
+                    updateQueryNameField(selectedQueryName);
                     SavedFilterComboBox.this.fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, queryInfo
                             .getSearchFieldInfos()));
                     componentPopupSelection.setPopupVisible(false);

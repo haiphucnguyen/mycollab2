@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -124,20 +124,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        groupWrapLayout.addComponent(new Label("Filter:"));
-        final TaskSavedFilterComboBox savedFilterComboBox = new TaskSavedFilterComboBox();
-        savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
-            @Override
-            public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
-                TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
-                        fieldInfos);
-                criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskKanbanviewImpl.this, criteria));
-            }
-        });
-        groupWrapLayout.addComponent(savedFilterComboBox);
-
         Button addNewColumnBtn = new Button("Add a new column", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -158,7 +144,6 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         deleteColumBtn.setIcon(FontAwesome.TRASH_O);
         deleteColumBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         deleteColumBtn.setStyleName(UIConstants.BUTTON_DANGER);
-//        groupWrapLayout.addComponent(deleteColumBtn);
 
         Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
             @Override
@@ -278,6 +263,11 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         if (view != null) {
             view.setNavigatorVisibility(visibility);
         }
+    }
+
+    @Override
+    public void display() {
+        searchPanel.selectQueryInfo(TaskSavedFilterComboBox.ALL_TASKS);
     }
 
     @Override
@@ -509,7 +499,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                         NotificationUtil.showErrorNotification("Can not delete column because it has tasks");
                     } else {
                         ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                        AppContext.getSiteName()),
+                                AppContext.getSiteName()),
                                 AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_MULTIPLE_ITEMS_MESSAGE),
                                 AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                                 AppContext.getMessage(GenericI18Enum.BUTTON_NO),
@@ -531,7 +521,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             });
             deleteColumnBtn.setIcon(FontAwesome.TRASH_O);
             deleteColumnBtn.setEnabled(canExecute);
-            popupContent.addOption(deleteColumnBtn);
+            popupContent.addDangerOption(deleteColumnBtn);
 
             popupContent.addSeparator();
 

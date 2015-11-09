@@ -1290,13 +1290,13 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   }
 
   .v-label.separator {
-    border-right: 1px solid $my-border-color;
+    border-right: 1px solid $my-separator-color;
   }
 
   .v-label-hr {
     display: block;
     > hr {
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-style: solid;
       border-width: 0px 0px 1px;
       -moz-box-sizing: border-box;
@@ -1611,10 +1611,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     h1, p {
       color:white;
     }
-  }
-
-  .v-label.grayLabel {
-    color: $my-meta-color;
   }
 
   /* Cancel Account Page */
