@@ -172,13 +172,13 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
                 member.getUsername()), ContentMode.HTML);
-        memberEmailLabel.addStyleName("member-email");
+        memberEmailLabel.addStyleName(UIConstants.LABEL_META_INFO);
         memberEmailLabel.setWidth("100%");
         memberInfo.addComponent(memberEmailLabel);
 
         ELabel memberSinceLabel = new ELabel(String.format("Member since: %s", AppContext.formatPrettyTime(member.getJoindate())))
                 .withDescription(AppContext.formatDateTime(member.getJoindate()));
-        memberSinceLabel.addStyleName("member-email");
+        memberSinceLabel.addStyleName(UIConstants.LABEL_META_INFO);
         memberSinceLabel.setWidth("100%");
         memberInfo.addComponent(memberSinceLabel);
 
@@ -199,7 +199,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                     projectMemberMapper.updateByPrimaryKeySelective(member);
                     waitingNotLayout.removeAllComponents();
                     Label statusEmail = new Label(AppContext.getMessage(ProjectMemberI18nEnum.SENDING_EMAIL_INVITATION));
-                    statusEmail.addStyleName("member-email");
+                    statusEmail.addStyleName(UIConstants.LABEL_META_INFO);
                     waitingNotLayout.addComponent(statusEmail);
                 }
             });
@@ -210,7 +210,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         } else if (RegisterStatusConstants.ACTIVE.equals(member.getStatus())) {
             ELabel lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(member.getLastAccessTime())))
                     .withDescription(AppContext.formatDateTime(member.getLastAccessTime()));
-            lastAccessTimeLbl.addStyleName("member-email");
+            lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
             memberInfo.addComponent(lastAccessTimeLbl);
         } else if (RegisterStatusConstants.VERIFICATING.equals(member.getStatus())) {
             Label infoStatus = new Label(AppContext.getMessage(ProjectMemberI18nEnum.SENDING_EMAIL_INVITATION));
@@ -227,7 +227,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                 " " + new Span().appendText("" + NumberUtils.roundDouble(2, member.getTotalNonBillableLogTime())).setTitle("Non billable hours");
 
         Label memberWorkStatus = new Label(memberWorksInfo, ContentMode.HTML);
-        memberWorkStatus.addStyleName("member-email");
+        memberWorkStatus.addStyleName(UIConstants.LABEL_META_INFO);
         memberInfo.addComponent(memberWorkStatus);
         memberInfo.setWidth("100%");
 

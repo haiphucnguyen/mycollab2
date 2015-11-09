@@ -16788,17 +16788,6 @@ div.v-csslayout.member-block {
 	padding-top: 3px;
 }
 
-.member-block .member-email {
-	color: #888;
-	word-wrap: break-word;
-}
-
-.member-block .member-email a {
-	color: #888;
-	text-decoration: none;
-	font-size: 13px;
-}
-
 .member-role {
 	color: #888;
 	font-size: 13px;

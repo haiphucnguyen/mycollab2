@@ -190,20 +190,20 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
             Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", beanItem.getUsername(),
                     beanItem.getUsername()), ContentMode.HTML);
-            memberEmailLabel.addStyleName("member-email");
+            memberEmailLabel.addStyleName(UIConstants.LABEL_META_INFO);
             memberEmailLabel.setWidth("100%");
             memberInfo.addComponent(memberEmailLabel);
 
             ELabel memberSinceLabel = new ELabel(String.format("Member since: %s", AppContext.formatPrettyTime(beanItem.getJoindate())))
                     .withDescription(AppContext.formatDateTime(beanItem.getJoindate()));
-            memberSinceLabel.addStyleName("member-email");
+            memberSinceLabel.addStyleName(UIConstants.LABEL_META_INFO);
             memberSinceLabel.setWidth("100%");
             memberInfo.addComponent(memberSinceLabel);
 
             if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(beanItem.getStatus())) {
                 final VerticalLayout waitingNotLayout = new VerticalLayout();
                 Label infoStatus = new Label(AppContext.getMessage(ProjectMemberI18nEnum.WAITING_ACCEPT_INVITATION));
-                infoStatus.addStyleName("member-email");
+                infoStatus.addStyleName(UIConstants.LABEL_META_INFO);
                 waitingNotLayout.addComponent(infoStatus);
 
                 ButtonLink resendInvitationLink = new ButtonLink("Resend Invitation", new Button.ClickListener() {
@@ -216,22 +216,22 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                         projectMemberMapper.updateByPrimaryKeySelective(beanItem);
                         waitingNotLayout.removeAllComponents();
                         Label statusEmail = new Label(AppContext.getMessage(ProjectMemberI18nEnum.SENDING_EMAIL_INVITATION));
-                        statusEmail.addStyleName("member-email");
+                        statusEmail.addStyleName(UIConstants.LABEL_META_INFO);
                         waitingNotLayout.addComponent(statusEmail);
                     }
                 });
                 resendInvitationLink.setStyleName(UIConstants.BUTTON_LINK);
-                resendInvitationLink.addStyleName("member-email");
+                resendInvitationLink.addStyleName(UIConstants.LABEL_META_INFO);
                 waitingNotLayout.addComponent(resendInvitationLink);
                 memberInfo.addComponent(waitingNotLayout);
             } else if (RegisterStatusConstants.ACTIVE.equals(beanItem.getStatus())) {
                 Label lastAccessTimeLbl = new ELabel(String.format("Logged in %s", AppContext.formatPrettyTime(beanItem.getLastAccessTime())))
                         .withDescription(AppContext.formatDateTime(beanItem.getLastAccessTime()));
-                lastAccessTimeLbl.addStyleName("member-email");
+                lastAccessTimeLbl.addStyleName(UIConstants.LABEL_META_INFO);
                 memberInfo.addComponent(lastAccessTimeLbl);
             } else if (RegisterStatusConstants.VERIFICATING.equals(beanItem.getStatus())) {
                 Label infoStatus = new Label(AppContext.getMessage(ProjectMemberI18nEnum.WAITING_ACCEPT_INVITATION));
-                infoStatus.addStyleName("member-email");
+                infoStatus.addStyleName(UIConstants.LABEL_META_INFO);
                 memberInfo.addComponent(infoStatus);
             }
 
@@ -244,7 +244,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                     " " + new Span().appendText("" + NumberUtils.roundDouble(2, beanItem.getTotalNonBillableLogTime())).setTitle("Non billable hours");
 
             Label memberWorkStatus = new Label(memberWorksInfo, ContentMode.HTML);
-            memberWorkStatus.addStyleName("member-email");
+            memberWorkStatus.addStyleName(UIConstants.LABEL_META_INFO);
             memberInfo.addComponent(memberWorkStatus);
             memberInfo.setWidth("100%");
 
