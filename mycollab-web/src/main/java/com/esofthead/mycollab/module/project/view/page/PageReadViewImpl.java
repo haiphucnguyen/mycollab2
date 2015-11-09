@@ -293,13 +293,16 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             this.setCompositionRoot(content);
         }
 
+        public PageVersionSelectionBox(Component compositionRoot) {
+            super(compositionRoot);
+        }
+
         void displayVersions(String path) {
             List<PageVersion> pageVersions = pageService.getPageVersions(path);
             if (pageVersions.size() > 0) {
                 final ComboBox pageSelection = new ComboBox();
                 content.addComponent(pageSelection);
                 pageSelection.setNullSelectionAllowed(false);
-                pageSelection.setStyleName("version-selection-box");
                 pageSelection.setTextInputAllowed(false);
 
                 pageSelection.addValueChangeListener(new ValueChangeListener() {
