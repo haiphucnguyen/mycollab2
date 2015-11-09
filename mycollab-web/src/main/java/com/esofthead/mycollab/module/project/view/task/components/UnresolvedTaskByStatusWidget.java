@@ -124,7 +124,6 @@ public class UnresolvedTaskByStatusWidget extends DepotWithChart {
                                     .withCaption(StringUtils.trim(statusCaption, 25, true))
                                     .withDescription(statusCaption)
                                     .withListener(listener).withStyleName(UIConstants.BUTTON_LINK).withIcon(FontAwesome.FLAG);
-//                            statusLink.addStyleName(UIConstants.TEXT_ELLIPSIS);
                             statusLink.setWidth("110px");
 
                             statusLayout.addComponent(statusLink);

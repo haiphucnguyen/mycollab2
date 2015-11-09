@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,7 +22,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -82,6 +81,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     private String groupByState;
     private String sortDirection;
     private BugSearchCriteria baseCriteria;
+    private BugSearchCriteria statisticSearchCriteria;
 
     private BugSearchPanel searchPanel;
     private MVerticalLayout wrapBody;
@@ -271,26 +271,21 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                 bugStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
                 rightColumn.addComponent(bugStatusTrendChartWidget);
 
-                BugSearchCriteria criteria = new BugSearchCriteria();
-                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                criteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
-                        OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
-
                 // Unresolved by assignee
                 UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
-                BugSearchCriteria unresolvedByAssigneeSearchCriteria = BeanUtility.deepClone(criteria);
+                BugSearchCriteria unresolvedByAssigneeSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
                 unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
                 rightColumn.addComponent(unresolvedByAssigneeWidget);
 
                 // Unresolve by priority widget
                 UnresolvedBugsByPriorityWidget unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget();
-                BugSearchCriteria unresolvedByPrioritySearchCriteria = BeanUtility.deepClone(criteria);
+                BugSearchCriteria unresolvedByPrioritySearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
                 unresolvedByPriorityWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
                 rightColumn.addComponent(unresolvedByPriorityWidget);
 
                 //Unresolved by status
                 UnresolvedBugsByStatusWidget unresolvedBugsByStatusWidget = new UnresolvedBugsByStatusWidget();
-                BugSearchCriteria unresolvedByStatusSearchCriteria = BeanUtility.deepClone(criteria);
+                BugSearchCriteria unresolvedByStatusSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
                 unresolvedBugsByStatusWidget.setSearchCriteria(unresolvedByStatusSearchCriteria);
                 rightColumn.addComponent(unresolvedBugsByStatusWidget);
             }
@@ -344,15 +339,18 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     @Override
+    public void displayView() {
+        baseCriteria = new BugSearchCriteria();
+        baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        baseCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
+                OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
+        statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
+        searchPanel.selectQueryInfo(BugSavedFilterComboBox.OPEN_BUGS);
+    }
+
+    @Override
     public void queryBug(final BugSearchCriteria searchCriteria) {
-        if (searchCriteria != null) {
-            baseCriteria = searchCriteria;
-        } else {
-            baseCriteria = new BugSearchCriteria();
-            baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-            baseCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
-                    OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
-        }
+        baseCriteria = searchCriteria;
         queryAndDisplayBugs();
     }
 

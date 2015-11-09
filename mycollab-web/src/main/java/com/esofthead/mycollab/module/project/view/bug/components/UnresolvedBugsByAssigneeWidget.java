@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.DepotWithChart;
 import com.esofthead.mycollab.vaadin.ui.ProgressBarIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -66,7 +67,7 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
         if (!groupItems.isEmpty()) {
             for (GroupItem item : groupItems) {
                 MHorizontalLayout assigneeLayout = new MHorizontalLayout().withWidth("100%");
-
+                assigneeLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                 String assignUser = item.getGroupid();
                 String assignUserFullName = item.getGroupid() == null ? AppContext.getMessage(BugI18nEnum.OPT_UNDEFINED_USER) :
                         item.getGroupname();
@@ -80,7 +81,6 @@ public class UnresolvedBugsByAssigneeWidget extends DepotWithChart {
                 assigneeLayout.with(indicator).expand(indicator);
                 bodyContent.addComponent(assigneeLayout);
             }
-
         }
     }
 

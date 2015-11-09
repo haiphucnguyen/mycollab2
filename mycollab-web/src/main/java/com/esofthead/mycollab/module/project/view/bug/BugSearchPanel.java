@@ -92,6 +92,10 @@ public class BugSearchPanel extends DefaultGenericSearchPanel<BugSearchCriteria>
     protected void buildExtraControls() {
     }
 
+    public void selectQueryInfo(String queryId) {
+        savedFilterComboBox.selectQueryInfo(queryId);
+    }
+
     @Override
     protected SearchLayout<BugSearchCriteria> createBasicSearchLayout() {
         return new BugBasicSearchLayout();
