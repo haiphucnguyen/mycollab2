@@ -15511,17 +15511,17 @@ div.v-button.token-field:hover {
 	font-weight: bold;
 }
 
-.v-calendar.assignment-calendar .v-calendar-event.owner {
+.v-calendar.assignment-calendar .v-calendar-event.owner, .v-calendar.assignment-calendar .v-calendar-event-owner-all-day {
 	background-color: green;
 	color: white;
 }
 
-.v-calendar.assignment-calendar .v-calendar-event.otheruser {
+.v-calendar.assignment-calendar .v-calendar-event.otheruser, .v-calendar.assignment-calendar .v-calendar-event-otheruser-all-day {
 	background-color: cadetblue;
 	color: white;
 }
 
-.v-calendar.assignment-calendar .v-calendar-event.nonowner {
+.v-calendar.assignment-calendar .v-calendar-event.nonowner, .v-calendar.assignment-calendar .v-calendar-event-nonowner-all-day {
 	background-color: brown;
 	color: white;
 }

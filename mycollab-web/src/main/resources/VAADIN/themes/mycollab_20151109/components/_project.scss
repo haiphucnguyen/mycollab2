@@ -796,19 +796,17 @@
     .v-calendar-header-day {
       font-weight: bold;
     }
-    .v-calendar-event {
-      &.owner {
-        background-color: green;
-        color: white;
-      }
-      &.otheruser {
-        background-color: cadetblue;
-        color: white;
-      }
-      &.nonowner {
-        background-color: brown;
-        color: white;
-      }
+    .v-calendar-event.owner, .v-calendar-event-owner-all-day {
+      background-color: green;
+      color: white;
+    }
+    .v-calendar-event.otheruser, .v-calendar-event-otheruser-all-day {
+      background-color: cadetblue;
+      color: white;
+    }
+    .v-calendar-event.nonowner, .v-calendar-event-nonowner-all-day {
+      background-color: brown;
+      color: white;
     }
   }
   .v-label {
