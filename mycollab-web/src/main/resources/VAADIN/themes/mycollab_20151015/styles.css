@@ -2020,15 +2020,19 @@ span.block {
 	background-color: #C2DFFF;
 }
 
-.wizard .v-panel-captionwrap {
-	display: none;
-}
-
-.wizard .v-panel-content {
+.wizard .v-panel {
 	border: none;
 }
 
-.wizard .v-panel-deco {
+.wizard .v-panel .v-panel-captionwrap {
+	display: none;
+}
+
+.wizard .v-panel .v-panel-content {
+	border: none;
+}
+
+.wizard .v-panel .v-panel-deco {
 	display: none;
 }
 
@@ -14285,15 +14289,19 @@ span.block {
 	background-color: #C2DFFF;
 }
 
-.wizard .v-panel-captionwrap {
-	display: none;
-}
-
-.wizard .v-panel-content {
+.wizard .v-panel {
 	border: none;
 }
 
-.wizard .v-panel-deco {
+.wizard .v-panel .v-panel-captionwrap {
+	display: none;
+}
+
+.wizard .v-panel .v-panel-content {
+	border: none;
+}
+
+.wizard .v-panel .v-panel-deco {
 	display: none;
 }
 

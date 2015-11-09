@@ -479,14 +479,17 @@
         background-color: #C2DFFF;
       }
     }
-    .v-panel-captionwrap {
-      display:none;
-    }
-    .v-panel-content {
+    .v-panel {
       border: none;
-    }
-    .v-panel-deco {
-      display:none;
+      .v-panel-captionwrap {
+        display:none;
+      }
+      .v-panel-content {
+        border: none;
+      }
+      .v-panel-deco {
+        display:none;
+      }
     }
   }
 

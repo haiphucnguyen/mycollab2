@@ -67,14 +67,14 @@ public class UserSettingViewImpl extends AbstractPageView implements UserSetting
         this.rolePresenter = PresenterResolver.getPresenter(ProjectRolePresenter.class);
         this.myProjectTab.addTab(this.rolePresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum.VIEW_ROLES));
 
-        this.settingPresenter = PresenterResolver.getPresenter(ProjectSettingPresenter.class);
-        this.myProjectTab.addTab(this.settingPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS));
-
         this.componentPresenter = PresenterResolver.getPresenter(ComponentPresenter.class);
         this.myProjectTab.addTab(this.componentPresenter.getView(), AppContext.getMessage(BugI18nEnum.TAB_COMPONENT));
 
         this.versionPresenter = PresenterResolver.getPresenter(VersionPresenter.class);
         this.myProjectTab.addTab(this.versionPresenter.getView(), AppContext.getMessage(BugI18nEnum.TAB_VERSION));
+
+        this.settingPresenter = PresenterResolver.getPresenter(ProjectSettingPresenter.class);
+        this.myProjectTab.addTab(this.settingPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum.VIEW_SETTINGS));
 
         this.myProjectTab.addSelectedTabChangeListener(new SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
