@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -68,11 +68,8 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
         contentWrapper.setStyleName("content-wrapper");
 
         previewLayout = new DefaultReadViewLayout("");
-
         contentWrapper.addComponent(previewLayout);
-
         previewLayout.addBody(previewForm);
-
         this.addComponent(contentWrapper);
     }
 
@@ -86,14 +83,11 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
     }
 
     protected ComponentContainer createBottomPanel() {
-        VerticalLayout permissionsPanel = new VerticalLayout();
-        Label organizationHeader = new Label(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS));
-        organizationHeader.addStyleName("h2");
-        permissionsPanel.addComponent(organizationHeader);
+        FormContainer permissionsPanel = new FormContainer();
 
         projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2,
                 ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
-        permissionsPanel.addComponent(projectFormHelper.getLayout());
+        permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), projectFormHelper.getLayout());
 
         return permissionsPanel;
     }
@@ -105,8 +99,7 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
         for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
             String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
             Enum permissionKey = RolePermissionI18nEnum.valueOf(permissionPath);
-            projectFormHelper.addComponent(
-                    new Label(AppContext.getPermissionCaptionValue(permissionMap, permissionKey.name())),
+            projectFormHelper.addComponent(new Label(AppContext.getPermissionCaptionValue(permissionMap, permissionKey.name())),
                     AppContext.getMessage(permissionKey), 0, i);
         }
 

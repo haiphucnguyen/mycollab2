@@ -47,6 +47,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -191,7 +192,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         previewForm.removeAllComponents();
 
         Label header = new Label("Conversion Details");
-        header.addStyleName("h2");
+        header.addStyleName(ValoTheme.LABEL_H2);
         previewForm.addComponent(header);
 
         GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3);

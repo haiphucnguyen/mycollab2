@@ -26,6 +26,9 @@ import java.util.List;
  * @since 5.1.1
  */
 abstract public class TaskGroupOrderComponent extends CssLayout {
+    public TaskGroupOrderComponent() {
+        this.setWidth("100%");
+    }
 
     abstract public void insertTasks(List<SimpleTask> tasks);
 }

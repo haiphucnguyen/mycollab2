@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -70,30 +70,18 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public ComponentContainer getLayout() {
-            VerticalLayout layout = new VerticalLayout();
-            Label organizationHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
-            organizationHeader.setStyleName("h2");
-            layout.addComponent(organizationHeader);
-
+            FormContainer layout = new FormContainer();
             basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 7);
-
-            layout.addComponent(basicInformationLayout.getLayout());
-
-            Label contactHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION));
-            contactHeader.setStyleName("h2");
-            layout.addComponent(contactHeader);
+            layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION),
+                    basicInformationLayout.getLayout());
 
             contactInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
-
-            layout.addComponent(contactInformationLayout.getLayout());
-
-            Label advancedHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION));
-            advancedHeader.setStyleName("h2");
-            layout.addComponent(advancedHeader);
+            layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_CONTACT_INFORMATION),
+                    contactInformationLayout.getLayout());
 
             advancedInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
-
-            layout.addComponent(advancedInformationLayout.getLayout());
+            layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_ADVANCED_INFORMATION),
+                    advancedInformationLayout.getLayout());
             return layout;
         }
 

@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -138,12 +138,9 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     user.getDisplayName();
             AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
 
-            Label organizationHeader = new Label(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION));
-            organizationHeader.setStyleName("h2");
-            VerticalLayout layout = new VerticalLayout();
-            layout.addComponent(organizationHeader);
+            FormContainer layout = new FormContainer();
             basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
-            layout.addComponent(basicInformationLayout.getLayout());
+            layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION), basicInformationLayout.getLayout());
 
             formAddLayout.addHeaderRight(createButtonControls());
             formAddLayout.addBody(layout);
@@ -205,17 +202,14 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
                                                                     List<PermissionDefItem> defItems) {
             GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
-            VerticalLayout permissionsPanel = new VerticalLayout();
-            Label permissionTitle = new Label(depotTitle);
-            permissionTitle.addStyleName("h2");
-            permissionsPanel.addComponent(permissionTitle);
+            FormContainer permissionsPanel = new FormContainer();
 
             for (int i = 0; i < defItems.size(); i++) {
                 PermissionDefItem permissionDefItem = defItems.get(i);
                 formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
                         permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
             }
-            permissionsPanel.addComponent(formHelper.getLayout());
+            permissionsPanel.addSection(depotTitle, formHelper.getLayout());
             return permissionsPanel;
         }
 
@@ -347,7 +341,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                     displayRolePermission(roleId);
                 }
             });
-            Integer val = (Integer)roleBox.getValue();
+            Integer val = (Integer) roleBox.getValue();
             displayRolePermission(val);
         }
 

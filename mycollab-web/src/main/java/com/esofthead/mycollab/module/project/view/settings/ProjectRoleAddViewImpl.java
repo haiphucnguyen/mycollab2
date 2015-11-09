@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -104,11 +104,7 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        final VerticalLayout permissionsPanel = new VerticalLayout();
-        final Label organizationHeader = new Label(
-                AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS));
-        organizationHeader.setStyleName("h2");
-        permissionsPanel.addComponent(organizationHeader);
+        final FormContainer permissionsPanel = new FormContainer();
 
         PermissionMap perMap;
         if (beanItem instanceof SimpleProjectRole) {
@@ -128,11 +124,9 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
             permissionBox.setValue(flag);
             permissionControlsMap.put(permissionPath, permissionBox);
             permissionFormHelper.addComponent(permissionBox,
-                    AppContext.getMessage(RolePermissionI18nEnum
-                            .valueOf(permissionPath)), 0, i);
+                    AppContext.getMessage(RolePermissionI18nEnum.valueOf(permissionPath)), 0, i);
         }
-
-        permissionsPanel.addComponent(permissionFormHelper.getLayout());
+        permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), permissionFormHelper.getLayout());
 
         return permissionsPanel;
     }

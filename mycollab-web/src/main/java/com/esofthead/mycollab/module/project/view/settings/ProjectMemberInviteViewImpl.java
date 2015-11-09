@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,6 +34,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.FormContainer;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -139,15 +140,11 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements Pro
     }
 
     private Layout createBottomPanel() {
-        VerticalLayout permissionsPanel = new VerticalLayout();
-        Label organizationHeader = new Label(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS));
-        organizationHeader.setStyleName("h2");
-        permissionsPanel.addComponent(organizationHeader);
+        FormContainer permissionsPanel = new FormContainer();
 
         projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2,
                 ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
-        permissionsPanel.addComponent(projectFormHelper.getLayout());
-
+        permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), projectFormHelper.getLayout());
         roleId = (Integer) roleComboBox.getValue();
         displayRolePermission(roleId);
 

@@ -50,6 +50,7 @@ import com.vaadin.ui.components.calendar.handler.BasicBackwardHandler;
 import com.vaadin.ui.components.calendar.handler.BasicDateClickHandler;
 import com.vaadin.ui.components.calendar.handler.BasicForwardHandler;
 import com.vaadin.ui.components.calendar.handler.BasicWeekClickHandler;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -113,7 +114,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
 
         dateHdr = new Label();
         dateHdr.setSizeUndefined();
-        dateHdr.setStyleName("h2");
+        dateHdr.setStyleName(ValoTheme.LABEL_H3);
         mainContent.addComponent(this.dateHdr);
         mainContent.setComponentAlignment(this.dateHdr, Alignment.MIDDLE_CENTER);
 

@@ -16403,12 +16403,6 @@ input.v-textfield-errorField {
 	padding-top: 2px;
 }
 
-.addViewLayout .addViewBottomControls {
-	border-width: 0px 1px;
-	border-style: solid;
-	border-color: #c5c5c5;
-}
-
 .crmContainer .container-wrap .tab-content, .accountViewContainer .container-wrap .tab-content {
 	border-width: 1px 0px 0px 1px;
 	padding: 0px;

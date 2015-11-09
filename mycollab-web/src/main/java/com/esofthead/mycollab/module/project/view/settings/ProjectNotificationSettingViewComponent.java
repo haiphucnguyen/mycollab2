@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,6 +32,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -53,9 +54,8 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
 
         notificationLabelWrapper.setStyleName("notification-label");
 
-        Label notificationLabel = new Label(
-                AppContext.getMessage(ProjectSettingI18nEnum.EXT_LEVEL));
-        notificationLabel.addStyleName("h2");
+        Label notificationLabel = new Label(AppContext.getMessage(ProjectSettingI18nEnum.EXT_LEVEL));
+        notificationLabel.addStyleName(ValoTheme.LABEL_H3);
 
         notificationLabel.setHeightUndefined();
         notificationLabelWrapper.addComponent(notificationLabel);
@@ -94,32 +94,28 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
             optionGroup.select(levelVal);
         }
 
-        Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button updateBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_UPDATE_LABEL), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        try {
-                            bean.setLevel((String) optionGroup.getValue());
-                            ProjectNotificationSettingService projectNotificationSettingService = ApplicationContextUtil
-                                    .getSpringBean(ProjectNotificationSettingService.class);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                try {
+                    bean.setLevel((String) optionGroup.getValue());
+                    ProjectNotificationSettingService projectNotificationSettingService = ApplicationContextUtil
+                            .getSpringBean(ProjectNotificationSettingService.class);
 
-                            if (bean.getId() == null) {
-                                projectNotificationSettingService
-                                        .saveWithSession(bean,
-                                                AppContext.getUsername());
-                            } else {
-                                projectNotificationSettingService.updateWithSession(bean,
-                                        AppContext.getUsername());
-                            }
-                            NotificationUtil.showNotification("Congrats", AppContext
-                                    .getMessage(ProjectSettingI18nEnum.DIALOG_UPDATE_SUCCESS));
-                        } catch (Exception e) {
-                            throw new MyCollabException(e);
-                        }
+                    if (bean.getId() == null) {
+                        projectNotificationSettingService.saveWithSession(bean, AppContext.getUsername());
+                    } else {
+                        projectNotificationSettingService.updateWithSession(bean, AppContext.getUsername());
                     }
-                });
+                    NotificationUtil.showNotification("Congrats", AppContext
+                            .getMessage(ProjectSettingI18nEnum.DIALOG_UPDATE_SUCCESS));
+                } catch (Exception e) {
+                    throw new MyCollabException(e);
+                }
+            }
+        });
         updateBtn.addStyleName(UIConstants.BUTTON_ACTION);
         updateBtn.setIcon(FontAwesome.REFRESH);
         body.addComponent(updateBtn);
@@ -127,6 +123,5 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
 
         bodyWrapper.addComponent(body);
         this.addComponent(bodyWrapper);
-
     }
 }

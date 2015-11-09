@@ -1,16 +1,16 @@
 /**
  * This file is part of mycollab-web.
- *
+ * <p/>
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,6 +27,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.FormContainer;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.server.FontAwesome;
@@ -116,17 +117,14 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
     protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
                                                                 List<PermissionDefItem> defItems) {
         GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
-        VerticalLayout permissionsPanel = new VerticalLayout();
-        Label permissionTitle = new Label(depotTitle);
-        permissionTitle.addStyleName("h2");
-        permissionsPanel.addComponent(permissionTitle);
+        FormContainer permissionsPanel = new FormContainer();
 
         for (int i = 0; i < defItems.size(); i++) {
             PermissionDefItem permissionDefItem = defItems.get(i);
             formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
                     permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
         }
-        permissionsPanel.addComponent(formHelper.getLayout());
+        permissionsPanel.addSection(depotTitle, formHelper.getLayout());
         return permissionsPanel;
     }
 
