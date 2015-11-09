@@ -582,4 +582,10 @@
   .v-textfield.v-readonly {
     background-color: white;
   }
+
+  /* Override the select background */
+  .v-select select {
+    background-color: white;
+    background-image: none;
+  }
 }

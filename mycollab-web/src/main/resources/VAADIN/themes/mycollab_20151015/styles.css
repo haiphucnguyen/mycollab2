@@ -2141,6 +2141,11 @@ span.block {
 	background-color: white;
 }
 
+.v-select select {
+	background-color: white;
+	background-image: none;
+}
+
 .stickytooltip {
 	border: 1px solid #c5c5c5;
 	display: none;
@@ -14401,6 +14406,11 @@ span.block {
 	background-color: white;
 }
 
+.v-select select {
+	background-color: white;
+	background-image: none;
+}
+
 .form .section {
 	padding: 25px 5px 5px 5px;
 	color: #298eff;
@@ -18013,16 +18023,21 @@ div.v-csslayout.bean-block.olive-block {
 	border-top: 1px solid #c5c5c5;
 }
 
-.lazyload-progress .popupContent .v-window-contents {
-	background-color: transparent;
-}
-
 .v-shadow-window {
 	display: none;
 }
 
+.lazyload-progress .popupContent .v-window-contents {
+	background-color: transparent;
+}
+
+.lazyload-progress .popupContent .v-window-contents .v-scrollable:before {
+	content: none;
+}
+
 .v-window.lazyload-progress {
 	background-color: transparent;
+	box-shadow: none;
 	border: none;
 }
 
@@ -18032,10 +18047,6 @@ div.v-csslayout.bean-block.olive-block {
 
 .v-window.lazyload-progress .v-window-wrap .v-window-outerheader {
 	display: none;
-}
-
-.v-window.lazyload-progress {
-	box-shadow: none;
 }
 
 .readview-body-wrap .readview-sidebar .info-hdr {

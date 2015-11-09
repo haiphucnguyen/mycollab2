@@ -2364,16 +2364,20 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     }
   }
 
-  .lazyload-progress .popupContent .v-window-contents {
-    background-color: transparent;
-  }
-
   .v-shadow-window {
     display: none;
   }
 
+  .lazyload-progress .popupContent .v-window-contents {
+    background-color: transparent;
+    .v-scrollable:before {
+      content: none;
+    }
+  }
+
   .v-window.lazyload-progress {
     background-color: transparent;
+    box-shadow: none;
     border: none;
     .v-window-wrap {
       background: none;
@@ -2381,9 +2385,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
         display: none;
       }
     }
-  }
-  .v-window.lazyload-progress {
-    box-shadow: none;
   }
 
   .readview-body-wrap .readview-sidebar .info-hdr {
