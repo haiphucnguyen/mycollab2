@@ -24,6 +24,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -40,7 +41,7 @@ public abstract class ProjectListNoItemView extends MVerticalLayout implements P
         image.setSizeUndefined();
 
         Label title = new Label(viewTitle());
-        title.addStyleName("h2");
+        title.addStyleName(ValoTheme.LABEL_H2);
         title.setSizeUndefined();
 
         Label body = new Label(String.format("<div style=\"text-align:center\">%s</div>", viewHint()), ContentMode.HTML);

@@ -43,6 +43,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -143,7 +144,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
             Label layoutHeader = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() +
                     " Time Tracking", ContentMode.HTML);
-            layoutHeader.addStyleName("h2");
+            layoutHeader.addStyleName(ValoTheme.LABEL_H2);
 
             CssLayout headerWrapper = new CssLayout();
             headerWrapper.addComponent(layoutHeader);
@@ -294,14 +295,13 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             selectionLayout.addComponent(queryBtn, 8, 0);
 
             totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs", ContentMode.HTML);
-            totalHoursLoggingLabel.addStyleName("h2");
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
-                    false)).withWidth("100%");
+            totalHoursLoggingLabel.addStyleName(ValoTheme.LABEL_H2);
+            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
+                    .withWidth("100%");
             loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
 
-            timeTrackingWrapper = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(true, false,
-                    true, false));
+            timeTrackingWrapper = new MVerticalLayout().withWidth("100%").withMargin(new MarginInfo(true, false, true, false));
             contentWrapper.addComponent(this.timeTrackingWrapper);
 
             Calendar date = new GregorianCalendar();

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -107,7 +108,7 @@ public class CloudDriveSettingWindow extends Window {
 
             if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
                 Label lbl = new Label("Dropbox");
-                lbl.addStyleName("h2");
+                lbl.addStyleName(ValoTheme.LABEL_H3);
                 lbl.setWidth("100px");
                 titleLayout.addComponent(lbl);
 

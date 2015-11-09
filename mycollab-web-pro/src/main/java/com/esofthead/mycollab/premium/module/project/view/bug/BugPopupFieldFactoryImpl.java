@@ -44,6 +44,7 @@ import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
@@ -364,12 +365,12 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
             String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
             Label headerLbl = new Label(title, ContentMode.HTML);
-            headerLbl.addStyleName("h2");
+            headerLbl.addStyleName(ValoTheme.LABEL_H3);
             dateField = new DateField();
             dateField.setValue(new GregorianCalendar().getTime());
             layout.with(headerLbl, timeInput);
             Label dateCaption = new Label("For date");
-            dateCaption.addStyleName("h2");
+            dateCaption.addStyleName(ValoTheme.LABEL_H3);
             layout.with(dateCaption, dateField);
         }
 

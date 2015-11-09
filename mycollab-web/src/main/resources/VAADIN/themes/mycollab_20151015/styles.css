@@ -15486,14 +15486,17 @@ div.v-button.token-field:hover {
 
 .v-calendar.assignment-calendar .v-calendar-event.owner {
 	background-color: green;
+	color: white;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.otheruser {
 	background-color: cadetblue;
+	color: white;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.nonowner {
 	background-color: brown;
+	color: white;
 }
 
 .v-label.owner {

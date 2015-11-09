@@ -18,6 +18,7 @@ package com.esofthead.mycollab.premium.module.crm.view.setting.customlayout;
 
 import java.util.List;
 
+import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +60,7 @@ class DeleteSectionComp extends GenericSectionComp {
 		headerWrapper.setWidth("100%");
 
 		Label headerTitleLbl = new Label(section.getHeader());
-		headerTitleLbl.setStyleName("h2");
+		headerTitleLbl.setStyleName(ValoTheme.LABEL_H3);
 
 		HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");

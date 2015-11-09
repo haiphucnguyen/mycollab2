@@ -38,14 +38,22 @@ import java.util.List;
  * @since 5.2.1
  */
 public class TaskSavedFilterComboBox extends SavedFilterComboBox {
+    public static final String ALL_TASKS = "ALL_TASKS";
+    public static final String OPEN_TASKS = "OPEN_TASKS";
+    public static final String MY_TASKS = "MY_TASKS";
+    public static final String NEW_TASKS_THIS_WEEK = "NEW_TASKS_THIS_WEEK";
+    public static final String UPDATE_TASKS_THIS_WEEK = "UPDATE_TASKS_THIS_WEEK";
+    public static final String NEW_TASKS_LAST_WEEK = "NEW_TASKS_LAST_WEEK";
+    public static final String UPDATE_TASKS_LAST_WEEK = "UPDATE_TASKS_LAST_WEEK";
+
     public TaskSavedFilterComboBox() {
         super(ProjectTypeConstants.TASK);
 
-        SearchQueryInfo allTasksQuery = new SearchQueryInfo("All Tasks", SearchFieldInfo.inCollection
+        SearchQueryInfo allTasksQuery = new SearchQueryInfo(ALL_TASKS, "All Tasks", SearchFieldInfo.inCollection
                 (TaskSearchCriteria.p_projectIds, new CurrentProjectIdInjecter()));
 
-        SearchQueryInfo allOpenTaskQuery = new SearchQueryInfo("All Open Task", SearchFieldInfo.inCollection(
-                TaskSearchCriteria.p_status, new VariableInjecter() {
+        SearchQueryInfo allOpenTaskQuery = new SearchQueryInfo(OPEN_TASKS, "All Open Task", SearchFieldInfo
+                .inCollection(TaskSearchCriteria.p_status, new VariableInjecter() {
                     @Override
                     public Object eval() {
                         OptionValService optionValService = ApplicationContextUtil.getSpringBean(OptionValService.class);
@@ -59,7 +67,7 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
-        SearchQueryInfo myTasksQuery = new SearchQueryInfo("My Tasks", SearchFieldInfo.inCollection
+        SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TASKS, "My Tasks", SearchFieldInfo.inCollection
                 (TaskSearchCriteria.p_assignee, new VariableInjecter() {
                     @Override
                     public Object eval() {
@@ -67,17 +75,17 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
-        SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo("New This Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_createtime, VariableInjecter.THIS_WEEK));
+        SearchQueryInfo newTasksThisWeekQuery = new SearchQueryInfo(NEW_TASKS_THIS_WEEK, "New This Week",
+                SearchFieldInfo.inDateRange(TaskSearchCriteria.p_createtime, VariableInjecter.THIS_WEEK));
 
-        SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo("Update This Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_lastupdatedtime, VariableInjecter.THIS_WEEK));
+        SearchQueryInfo updateTasksThisWeekQuery = new SearchQueryInfo(UPDATE_TASKS_THIS_WEEK, "Update This Week",
+                SearchFieldInfo.inDateRange(TaskSearchCriteria.p_lastupdatedtime, VariableInjecter.THIS_WEEK));
 
-        SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo("New Last Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_createtime, VariableInjecter.LAST_WEEK));
+        SearchQueryInfo newTasksLastWeekQuery = new SearchQueryInfo(NEW_TASKS_LAST_WEEK, "New Last Week",
+                SearchFieldInfo.inDateRange(TaskSearchCriteria.p_createtime, VariableInjecter.LAST_WEEK));
 
-        SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo("Update Last Week", SearchFieldInfo.inDateRange
-                (TaskSearchCriteria.p_lastupdatedtime, VariableInjecter.LAST_WEEK));
+        SearchQueryInfo updateTasksLastWeekQuery = new SearchQueryInfo(UPDATE_TASKS_LAST_WEEK, "Update Last Week",
+                SearchFieldInfo.inDateRange(TaskSearchCriteria.p_lastupdatedtime, VariableInjecter.LAST_WEEK));
 
         this.addSharedSearchQueryInfo(allTasksQuery);
         this.addSharedSearchQueryInfo(allOpenTaskQuery);
@@ -86,5 +94,12 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
         this.addSharedSearchQueryInfo(updateTasksThisWeekQuery);
         this.addSharedSearchQueryInfo(newTasksLastWeekQuery);
         this.addSharedSearchQueryInfo(updateTasksLastWeekQuery);
+    }
+
+    public void setTotalCountNumber(int countNumber) {
+        String value = componentsText.getValue();
+        componentsText.setReadOnly(false);
+        componentsText.setValue(value + " (" + countNumber + ")");
+        componentsText.setReadOnly(true);
     }
 }

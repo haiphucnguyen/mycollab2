@@ -13,6 +13,7 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -116,7 +117,7 @@ public abstract class PopupBeanFieldBuilder<B> {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             Label headerLbl = new Label(caption, ContentMode.HTML);
-            headerLbl.addStyleName("h2");
+            headerLbl.addStyleName(ValoTheme.LABEL_H3);
             layout.with(headerLbl);
             layout.with(field);
             if (field instanceof AbstractComponent) {

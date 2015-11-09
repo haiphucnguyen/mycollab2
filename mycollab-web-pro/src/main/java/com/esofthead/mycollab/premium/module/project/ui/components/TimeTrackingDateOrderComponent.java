@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class TimeTrackingDateOrderComponent extends AbstractTimeTrackingDisplayC
     protected void displayGroupItems(List<SimpleItemTimeLogging> timeLoggingEntries) {
         if (timeLoggingEntries.size() > 0) {
             Label label = new Label(DATE_FORMAT.format(timeLoggingEntries.get(0).getLogforday()));
-            label.addStyleName("h2");
+            label.addStyleName(ValoTheme.LABEL_H3);
             addComponent(label);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }

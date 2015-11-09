@@ -62,10 +62,8 @@ public class BugListPresenter extends ProjectGenericListPresenter<BugListView, B
             trackerContainer.removeAllComponents();
             trackerContainer.addComponent(view.getWidget());
 
-            searchCriteria = (BugSearchCriteria) data.getParams();
-
             this.displayListView(container, data);
-            doSearch(searchCriteria);
+            view.queryBug(null);
 
             ProjectBreadcrumb breadcrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadcrumb.gotoBugList();

@@ -231,7 +231,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
             MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, true)).withWidth("100%");
             Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(projectItem.getProjectShortName(), projectItem
                     .getProjectId(), projectItem.getSummary(), projectItem.getType(), projectItem.getTypeId()), ContentMode.HTML);
-            link.setStyleName("h2");
+            link.setStyleName(ValoTheme.LABEL_H2);
 
             String desc = (StringUtils.isBlank(projectItem.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : projectItem
                     .getDescription();

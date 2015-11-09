@@ -39,6 +39,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -102,7 +103,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         headerWrapper.addComponent(headerLayout);
 
         lbTimeRange = new Label("", ContentMode.HTML);
-        lbTimeRange.addStyleName("h2");
+        lbTimeRange.addStyleName(ValoTheme.LABEL_H2);
         headerLayout.with(lbTimeRange).withAlign(lbTimeRange, Alignment.MIDDLE_LEFT).expand(lbTimeRange);
 
         Button exportBtn = new Button("Export", new Button.ClickListener() {

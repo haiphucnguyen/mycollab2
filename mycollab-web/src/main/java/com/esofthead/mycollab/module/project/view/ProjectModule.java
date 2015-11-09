@@ -36,6 +36,7 @@ import com.esofthead.mycollab.web.IDesktopModule;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -119,7 +120,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         final ProjectPagedList projectList = new ProjectPagedList();
         projectList.addStyleName("contentWrapper");
         final Label titleLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
-        titleLbl.setStyleName("h2");
+        titleLbl.setStyleName(ValoTheme.LABEL_H2);
         MVerticalLayout contentLayout = new MVerticalLayout().withWidth("500px");
 
         final TextField searchField = new TextField();

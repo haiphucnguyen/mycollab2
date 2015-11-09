@@ -125,19 +125,6 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        groupWrapLayout.addComponent(new Label("Filter:"));
-        final BugSavedFilterComboBox savedFilterComboBox = new BugSavedFilterComboBox();
-        savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
-            @Override
-            public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
-                BugSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(BugSearchCriteria.class, fieldInfos);
-                criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new BugEvent.SearchRequest(BugListViewImpl.this, criteria));
-            }
-        });
-        groupWrapLayout.addComponent(savedFilterComboBox);
-
         groupWrapLayout.addComponent(new Label("Sort:"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
         sortCombo.addValueChangeListener(new Property.ValueChangeListener() {
@@ -233,8 +220,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
 
-        this.rightColumn = new MVerticalLayout().withWidth("370px").withMargin(new MarginInfo(true, false, true,
-                false));
+        rightColumn = new MVerticalLayout().withWidth("370px").withMargin(new MarginInfo(true, false, true, false));
 
         mainLayout.with(wrapBody, rightColumn).expand(wrapBody);
         this.with(searchPanel, mainLayout);
@@ -359,7 +345,14 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
     @Override
     public void queryBug(final BugSearchCriteria searchCriteria) {
-        baseCriteria = searchCriteria;
+        if (searchCriteria != null) {
+            baseCriteria = searchCriteria;
+        } else {
+            baseCriteria = new BugSearchCriteria();
+            baseCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+            baseCriteria.setStatuses(new SetSearchField<>(OptionI18nEnum.BugStatus.InProgress.name(),
+                    OptionI18nEnum.BugStatus.Open.name(), OptionI18nEnum.BugStatus.ReOpened.name()));
+        }
         queryAndDisplayBugs();
     }
 

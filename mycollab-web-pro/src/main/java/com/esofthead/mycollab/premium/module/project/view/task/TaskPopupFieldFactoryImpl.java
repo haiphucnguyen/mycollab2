@@ -46,6 +46,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -325,12 +326,12 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
             String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
             Label headerLbl = new Label(title, ContentMode.HTML);
-            headerLbl.addStyleName("h2");
+            headerLbl.addStyleName(ValoTheme.LABEL_H3);
             dateField = new DateField();
             dateField.setValue(new GregorianCalendar().getTime());
             layout.with(headerLbl, timeInput);
             Label dateCaption = new Label("For date");
-            dateCaption.addStyleName("h2");
+            dateCaption.addStyleName(ValoTheme.LABEL_H3);
             layout.with(dateCaption, dateField);
         }
 

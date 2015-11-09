@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -46,19 +47,19 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 		layoutField.setMargin(new MarginInfo(false, false, true, true));
 		layoutField.setWidth("100%");
 		final Label whatYesterdayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
-		whatYesterdayLbl.setStyleName("h2");
+		whatYesterdayLbl.setStyleName(ValoTheme.LABEL_H3);
 		layoutField.addComponent(whatYesterdayLbl);
 		this.whatYesterdayField = new StandupCustomField();
 		layoutField.addComponent(this.whatYesterdayField);
 
 		final Label whatTodayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
-		whatTodayLbl.setStyleName("h2");
+		whatTodayLbl.setStyleName(ValoTheme.LABEL_H3);
 		layoutField.addComponent(whatTodayLbl);
 		this.whatTodayField = new StandupCustomField();
 		layoutField.addComponent(this.whatTodayField);
 
 		final Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
-		roadblockLbl.addStyleName("h2");
+		roadblockLbl.addStyleName(ValoTheme.LABEL_H3);
 		roadblockLbl.addStyleName(UIConstants.WORD_WRAP);
 		layoutField.addComponent(roadblockLbl);
 		this.whatProblemField = new StandupCustomField();

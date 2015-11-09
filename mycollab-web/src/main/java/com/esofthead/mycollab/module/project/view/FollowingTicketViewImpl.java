@@ -45,6 +45,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -70,7 +71,7 @@ public class FollowingTicketViewImpl extends AbstractPageView implements Followi
         MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
 
         Label layoutHeader = new Label(FontAwesome.EYE.getHtml() + " My Following Tickets", ContentMode.HTML);
-        layoutHeader.addStyleName("h2");
+        layoutHeader.addStyleName(ValoTheme.LABEL_H2);
         header.with(layoutHeader).withAlign(layoutHeader, Alignment.MIDDLE_LEFT).expand(layoutHeader);
 
         headerWrapper.addComponent(header);

@@ -35,6 +35,7 @@ import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.easyuploads.SingleFileUploadField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -377,7 +378,7 @@ public abstract class EntityImportWindow<E> extends Window {
 
             final HorizontalLayout titleHorizontal = new HorizontalLayout();
             Label title = new Label("Step 3:");
-            title.addStyleName("h2");
+            title.addStyleName(ValoTheme.LABEL_H3);
             titleHorizontal.addComponent(title);
             bodyLayout.addComponent(titleHorizontal);
 
@@ -385,11 +386,10 @@ public abstract class EntityImportWindow<E> extends Window {
                     .withMargin(true);
 
             Label infoLabel = new Label("Map the columns to Module fields");
-            infoLabel.addStyleName("h3");
+            infoLabel.addStyleName(ValoTheme.LABEL_H4);
             columnMappingCrmLayout.addComponent(infoLabel);
             try {
-                gridCrmMapping = new GridFormLayoutHelper(2, (new CSVReader(
-                        new FileReader(uploadFile))).readNext().length + 2,
+                gridCrmMapping = new GridFormLayoutHelper(2, (new CSVReader(new FileReader(uploadFile))).readNext().length + 2,
                         "100%", "200px");
             } catch (Exception e) {
                 throw new MyCollabException(e);

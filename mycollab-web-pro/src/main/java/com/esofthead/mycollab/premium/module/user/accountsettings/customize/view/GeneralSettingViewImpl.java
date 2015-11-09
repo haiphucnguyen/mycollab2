@@ -25,6 +25,7 @@ import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -96,9 +97,8 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         MHorizontalLayout layout = new MHorizontalLayout();
         MVerticalLayout leftPanel = new MVerticalLayout().withMargin(false);
         Label logoHeaderLbl = new Label("Logo");
-        logoHeaderLbl.addStyleName("h2");
-        Label logoDesc = new Label("Logos are used in site menu and email notifications. Image type must be png or " +
-                "jpg format");
+        logoHeaderLbl.addStyleName(ValoTheme.LABEL_H3);
+        Label logoDesc = new Label("Logos are used in site menu and email notifications. Image type must be png or jpg format");
         leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
 
@@ -198,7 +198,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
         MVerticalLayout leftPanel = new MVerticalLayout().withMargin(false);
         Label logoHeaderLbl = new Label("Favicon");
-        logoHeaderLbl.addStyleName("h2");
+        logoHeaderLbl.addStyleName(ValoTheme.LABEL_H3);
         Label logoDesc = new Label("Favicon appears in web browsers bar, bookmarks. The icon should be format png, " +
                 "jpg and must be sizable to 32x32 pixels");
         leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");

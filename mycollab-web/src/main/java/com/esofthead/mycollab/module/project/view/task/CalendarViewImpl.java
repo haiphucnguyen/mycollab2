@@ -42,6 +42,7 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents;
 import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
 import com.vaadin.ui.components.calendar.handler.BasicEventMoveHandler;
 import com.vaadin.ui.components.calendar.handler.BasicEventResizeHandler;
+import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -100,8 +101,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
     public void display() {
         calendar = new Calendar();
         calendar.addStyleName("assignment-calendar");
-        calendar.setWidth("100%");
-        calendar.setHeight("100%");
+        calendar.setSizeFull();
         calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
@@ -211,7 +211,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
 
         CssLayout titleWrapper = new CssLayout();
         headerLbl = new Label();
-        headerLbl.setStyleName("h1");
+        headerLbl.setStyleName(ValoTheme.LABEL_H2);
         titleWrapper.addComponent(headerLbl);
 
         Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {

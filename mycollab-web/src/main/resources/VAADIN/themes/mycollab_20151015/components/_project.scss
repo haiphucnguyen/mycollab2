@@ -817,12 +817,15 @@
     .v-calendar-event {
       &.owner {
         background-color: green;
+        color: white;
       }
       &.otheruser {
         background-color: cadetblue;
+        color: white;
       }
       &.nonowner {
         background-color: brown;
+        color: white;
       }
     }
   }

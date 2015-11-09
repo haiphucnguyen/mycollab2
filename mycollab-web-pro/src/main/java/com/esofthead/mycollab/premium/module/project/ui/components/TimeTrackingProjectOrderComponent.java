@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.LabelLink;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
 
             LabelLink link = new LabelLink(firstItem.getProjectName(), ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid()));
             link.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
-            link.addStyleName("h2");
+            link.addStyleName(ValoTheme.LABEL_H3);
             addComponent(link);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }

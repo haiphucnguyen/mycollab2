@@ -51,9 +51,9 @@ import com.vaadin.ui.components.calendar.handler.BasicDateClickHandler;
 import com.vaadin.ui.components.calendar.handler.BasicForwardHandler;
 import com.vaadin.ui.components.calendar.handler.BasicWeekClickHandler;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import java.text.DateFormatSymbols;
 import java.util.Date;
@@ -111,18 +111,16 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
 
         mainContent.addComponent(actionPanel);
 
-        this.dateHdr = new Label();
-        this.dateHdr.setSizeUndefined();
-        this.dateHdr.setStyleName("h2");
+        dateHdr = new Label();
+        dateHdr.setSizeUndefined();
+        dateHdr.setStyleName("h2");
         mainContent.addComponent(this.dateHdr);
-        mainContent
-                .setComponentAlignment(this.dateHdr, Alignment.MIDDLE_CENTER);
+        mainContent.setComponentAlignment(this.dateHdr, Alignment.MIDDLE_CENTER);
 
         toggleViewBtn = new PopupButton("Monthly");
         toggleViewBtn.setWidth("200px");
         toggleViewBtn.addStyleName("calendar-view-switcher");
-        MVerticalLayout popupLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true))
-                .withWidth("190px");
+        MVerticalLayout popupLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true)).withWidth("190px");
 
         monthViewBtn = new Button("Monthly", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -175,16 +173,14 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         toggleBtnWrap.addComponent(toggleViewBtn);
 
         rightColumn.addComponent(toggleBtnWrap);
-        rightColumn.setComponentAlignment(toggleBtnWrap,
-                Alignment.MIDDLE_CENTER);
+        rightColumn.setComponentAlignment(toggleBtnWrap, Alignment.MIDDLE_CENTER);
 
         rightColumn.addComponent(this.datePicker);
         initLabelCaption();
         addCalendarEvent();
 
         actionPanel.addComponent(calendarActionBtn);
-        actionPanel.setComponentAlignment(calendarActionBtn,
-                Alignment.MIDDLE_RIGHT);
+        actionPanel.setComponentAlignment(calendarActionBtn, Alignment.MIDDLE_RIGHT);
 
         OptionPopupContent actionBtnLayout = new OptionPopupContent().withWidth("150px");
 
@@ -196,14 +192,11 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
                 calendarActionBtn.setPopupVisible(false);
                 String caption = event.getButton().getCaption();
                 if (caption.equals("New Task")) {
-                    EventBusFactory.getInstance().post(
-                            new ActivityEvent.TaskAdd(this, null));
+                    EventBusFactory.getInstance().post(new ActivityEvent.TaskAdd(this, null));
                 } else if (caption.equals("New Call")) {
-                    EventBusFactory.getInstance().post(
-                            new ActivityEvent.CallAdd(this, null));
+                    EventBusFactory.getInstance().post(new ActivityEvent.CallAdd(this, null));
                 } else if (caption.equals("New Meeting")) {
-                    EventBusFactory.getInstance().post(
-                            new ActivityEvent.MeetingAdd(this, null));
+                    EventBusFactory.getInstance().post(new ActivityEvent.MeetingAdd(this, null));
                 }
             }
         };
@@ -291,13 +284,11 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         futureWapper.addStyleName("eventLblfuture");
         Label futureLabel = new Label("Future");
         futureWapper.addComponent(futureLabel);
-        futureWapper
-                .setComponentAlignment(futureLabel, Alignment.MIDDLE_CENTER);
+        futureWapper.setComponentAlignment(futureLabel, Alignment.MIDDLE_CENTER);
         noteInfoLayout.addComponent(futureWapper);
 
         mainContent.addComponent(noteInfoLayout);
-        mainContent.setComponentAlignment(noteInfoLayout,
-                Alignment.MIDDLE_CENTER);
+        mainContent.setComponentAlignment(noteInfoLayout, Alignment.MIDDLE_CENTER);
     }
 
     private void updateLabelCaption(Date date) {

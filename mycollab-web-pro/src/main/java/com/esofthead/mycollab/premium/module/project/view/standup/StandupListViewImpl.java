@@ -34,6 +34,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.LocalDate;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -265,7 +266,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content");
 
             Label whatYesterdayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
-            whatYesterdayLbl.setStyleName("h2");
+            whatYesterdayLbl.setStyleName(ValoTheme.LABEL_H3);
             reportContent.addComponent(whatYesterdayLbl);
             Label whatYesterdayField = new SafeHtmlLabel(report.getWhatlastday());
             whatYesterdayField.setSizeUndefined();
@@ -273,7 +274,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             reportContent.addComponent(whatYesterdayField);
 
             Label whatTodayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
-            whatTodayLbl.setStyleName("h2");
+            whatTodayLbl.setStyleName(ValoTheme.LABEL_H3);
             reportContent.addComponent(whatTodayLbl);
             Label whatTodayField = new SafeHtmlLabel(report.getWhattoday());
             whatTodayField.setSizeUndefined();
@@ -281,7 +282,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             reportContent.addComponent(whatTodayField);
 
             Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
-            roadblockLbl.setStyleName("h2");
+            roadblockLbl.setStyleName(ValoTheme.LABEL_H3);
             reportContent.addComponent(roadblockLbl);
             Label whatProblemField = new SafeHtmlLabel(report.getWhatproblem());
             whatProblemField.setSizeUndefined();

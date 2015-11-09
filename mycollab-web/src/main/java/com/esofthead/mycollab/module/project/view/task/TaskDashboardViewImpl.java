@@ -24,7 +24,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -131,22 +130,9 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     public TaskDashboardViewImpl() {
         this.withMargin(new MarginInfo(false, true, true, true));
         taskSearchPanel = new TaskSearchPanel();
+
         MHorizontalLayout groupWrapLayout = new MHorizontalLayout();
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-
-        groupWrapLayout.addComponent(new Label("Filter:"));
-        final TaskSavedFilterComboBox savedFilterComboBox = new TaskSavedFilterComboBox();
-        savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
-            @Override
-            public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
-                TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
-                        fieldInfos);
-                criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskDashboardViewImpl.this, criteria));
-            }
-        });
-        groupWrapLayout.addComponent(savedFilterComboBox);
 
         groupWrapLayout.addComponent(new Label("Sort:"));
         final ComboBox sortCombo = new ValueComboBox(false, DESCENDING, ASCENDING);
@@ -302,8 +288,8 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         }
         baseCriteria.setStatuses(statuses);
         statisticSearchCriteria = BeanUtility.deepClone(baseCriteria);
-        queryAndDisplayTasks();
-        displayTaskStatistic();
+
+        taskSearchPanel.selectQueryInfo(TaskSavedFilterComboBox.OPEN_TASKS);
     }
 
     private void displayTaskStatistic() {

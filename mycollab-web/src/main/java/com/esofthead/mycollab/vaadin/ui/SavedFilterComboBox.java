@@ -46,7 +46,7 @@ import java.util.List;
 public abstract class SavedFilterComboBox extends CustomField<String> {
     private static Logger LOG = LoggerFactory.getLogger(SavedFilterComboBox.class);
 
-    private TextField componentsText;
+    protected TextField componentsText;
     private PopupButton componentPopupSelection;
     private OptionPopupContent popupContent;
     private List<SearchQueryInfo> sharedQueries;
@@ -90,6 +90,17 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
             sharedQueries = new ArrayList<>();
         }
         sharedQueries.add(searchQueryInfo);
+    }
+
+    public void selectQueryInfo(String queryId) {
+        for (SearchQueryInfo queryInfo : sharedQueries) {
+            if (queryId.equals(queryInfo.getQueryId())) {
+                updateQueryNameField(queryInfo.getQueryName());
+                SavedFilterComboBox.this.fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, queryInfo
+                        .getSearchFieldInfos()));
+                componentPopupSelection.setPopupVisible(false);
+            }
+        }
     }
 
     @Override
@@ -152,9 +163,9 @@ public abstract class SavedFilterComboBox extends CustomField<String> {
             super("      " + queryInfo.getQueryName(), new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
+                    updateQueryNameField(queryInfo.getQueryName());
                     SavedFilterComboBox.this.fireEvent(new QuerySelectEvent(SavedFilterComboBox.this, queryInfo
                             .getSearchFieldInfos()));
-                    updateQueryNameField(queryInfo.getQueryName());
                     componentPopupSelection.setPopupVisible(false);
                 }
             });

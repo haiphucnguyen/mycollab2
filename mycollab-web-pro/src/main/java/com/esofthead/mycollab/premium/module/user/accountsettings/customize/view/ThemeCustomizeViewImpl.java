@@ -19,6 +19,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -101,7 +102,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         VerticalLayout blockLayout = new VerticalLayout();
         Label blockHeader = new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU));
         blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName("h2");
+        blockHeader.addStyleName(ValoTheme.LABEL_H3);
         blockLayout.addComponent(blockHeader);
         blockLayout.setSpacing(true);
 
@@ -221,7 +222,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         VerticalLayout blockLayout = new VerticalLayout();
         Label blockHeader = new Label("Tab Sheet");
         blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName("h2");
+        blockHeader.addStyleName(ValoTheme.LABEL_H3);
         blockLayout.addComponent(blockHeader);
         blockLayout.setSpacing(true);
 
@@ -317,7 +318,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         VerticalLayout blockLayout = new VerticalLayout();
         Label blockHeader = new Label("Vertical Menu");
         blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName("h2");
+        blockHeader.addStyleName(ValoTheme.LABEL_H3);
         blockLayout.addComponent(blockHeader);
         blockLayout.setSpacing(true);
 
@@ -422,7 +423,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         MVerticalLayout blockLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
         Label blockHeader = new Label("Buttons");
         blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName("h2");
+        blockHeader.addStyleName(ValoTheme.LABEL_H3);
         blockLayout.addComponent(blockHeader);
 
         VerticalLayout blockBody = new VerticalLayout();

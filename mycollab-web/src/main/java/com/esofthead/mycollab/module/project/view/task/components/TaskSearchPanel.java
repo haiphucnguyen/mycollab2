@@ -20,21 +20,28 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.Param;
+import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneListSelect;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.DynamicQueryParamLayout;
-import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
+import com.esofthead.mycollab.vaadin.ui.SavedFilterComboBox;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -44,6 +51,8 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
     private static final long serialVersionUID = 1L;
     protected TaskSearchCriteria searchCriteria;
 
+    private TaskSavedFilterComboBox savedFilterComboBox;
+
     private static Param[] paramFields = new Param[]{
             TaskSearchCriteria.p_assignee, TaskSearchCriteria.p_createtime,
             TaskSearchCriteria.p_duedate, TaskSearchCriteria.p_lastupdatedtime,
@@ -52,8 +61,28 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
             TaskSearchCriteria.p_milestoneId, TaskSearchCriteria.p_taskkey};
 
     @Override
-    protected HeaderWithFontAwesome buildSearchTitle() {
-        return new ProjectViewHeader(ProjectTypeConstants.TASK, "Tasks");
+    protected ComponentContainer buildSearchTitle() {
+        savedFilterComboBox = new TaskSavedFilterComboBox();
+        savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
+            @Override
+            public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
+                List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
+                TaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(TaskSearchCriteria.class,
+                        fieldInfos);
+                criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+                EventBusFactory.getInstance().post(new TaskEvent.SearchRequest(TaskSearchPanel.this, criteria));
+            }
+        });
+        Label taskIcon = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml(), ContentMode.HTML);
+        taskIcon.addStyleName(ValoTheme.LABEL_H2);
+        taskIcon.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        taskIcon.setWidthUndefined();
+        return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
+    }
+
+    @Override
+    public void setTotalCountNumber(int countNumber) {
+        savedFilterComboBox.setTotalCountNumber(countNumber);
     }
 
     @Override
@@ -74,6 +103,10 @@ public class TaskSearchPanel extends DefaultGenericSearchPanel<TaskSearchCriteri
         if (getCompositionRoot() instanceof TaskBasicSearchLayout) {
             ((TaskBasicSearchLayout) getCompositionRoot()).setNameField(name);
         }
+    }
+
+    public void selectQueryInfo(String queryId) {
+        savedFilterComboBox.selectQueryInfo(queryId);
     }
 
     private class TaskBasicSearchLayout extends BasicSearchLayout<TaskSearchCriteria> {

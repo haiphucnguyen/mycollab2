@@ -30,7 +30,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extends GenericSearchPanel<S> {
     private static final long serialVersionUID = 1L;
 
-    private HeaderWithFontAwesome headerText;
+    private ComponentContainer headerText;
     private MHorizontalLayout rightComponent;
 
     public DefaultGenericSearchPanel() {
@@ -41,7 +41,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
 
     abstract protected SearchLayout<S> createAdvancedSearchLayout();
 
-    abstract protected HeaderWithFontAwesome buildSearchTitle();
+    abstract protected ComponentContainer buildSearchTitle();
 
     abstract protected void buildExtraControls();
 
@@ -61,7 +61,9 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
     }
 
     public void setTotalCountNumber(int countNumber) {
-        headerText.appendToTitle(String.format("(%d Total)", countNumber));
+        if (headerText instanceof HeaderWithFontAwesome) {
+            ((HeaderWithFontAwesome) headerText).appendToTitle(String.format("(%d Total)", countNumber));
+        }
     }
 
     protected void moveToBasicSearchLayout() {

@@ -27,6 +27,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import fi.jasoft.dragdroplayouts.DDGridLayout;
 import fi.jasoft.dragdroplayouts.DDGridLayout.GridLayoutTargetDetails;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -57,7 +58,7 @@ class ActiveSectionComp extends GenericSectionComp {
 		headerWrapper.setWidth("100%");
 
 		Label headerTitleLbl = new Label(originSection.getHeader());
-		headerTitleLbl.setStyleName("h2");
+		headerTitleLbl.setStyleName(ValoTheme.LABEL_H3);
 
 		HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
