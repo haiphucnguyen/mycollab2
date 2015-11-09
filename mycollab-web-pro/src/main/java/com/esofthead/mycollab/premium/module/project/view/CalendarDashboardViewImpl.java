@@ -29,6 +29,7 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents;
 import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
 import com.vaadin.ui.components.calendar.handler.BasicEventMoveHandler;
 import com.vaadin.ui.components.calendar.handler.BasicEventResizeHandler;
+import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -196,7 +197,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
         CssLayout titleWrapper = new CssLayout();
         headerLbl = new Label();
-        headerLbl.setStyleName("h1");
+        headerLbl.setStyleName(ValoTheme.LABEL_H2);
         titleWrapper.addComponent(headerLbl);
 
         Button newTaskBtn = new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
@@ -267,7 +268,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {
                 assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
                 assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
-                nonAssigneeLbl.setValue("Not be assigned (" + provider.getNotAssignNum() + ")");
+                nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
                 billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " Billable hours: " + provider
                         .getTotalBillableHours());
                 nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider

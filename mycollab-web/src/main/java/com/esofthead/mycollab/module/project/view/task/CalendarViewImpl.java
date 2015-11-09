@@ -275,7 +275,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {
                 assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
                 assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
-                nonAssigneeLbl.setValue("Not be assigned (" + provider.getNotAssignNum() + ")");
+                nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
                 billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " Billable hours: " + provider
                         .getTotalBillableHours());
                 nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider

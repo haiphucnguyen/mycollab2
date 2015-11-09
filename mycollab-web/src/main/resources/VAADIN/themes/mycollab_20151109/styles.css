@@ -15324,6 +15324,8 @@ div.v-button.token-field:hover {
 }
 
 .gantt_container .v-table-table tr td.v-table-cell-content {
+	padding-top: 0px;
+	padding-bottom: 0px;
 	height: 34px;
 	border-style: solid;
 	border-color: #c5c5c5;

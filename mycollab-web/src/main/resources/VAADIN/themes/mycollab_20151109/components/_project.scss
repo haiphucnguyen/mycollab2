@@ -564,6 +564,8 @@
     }
 
     .v-table-table tr td.v-table-cell-content {
+      padding-top: 0px;
+      padding-bottom: 0px;
       height: 34px;
       .v-disabled {
         opacity: 1.0 !important;
