@@ -30,7 +30,7 @@
   }
 
   .list-row {
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     border-width: 0px 1px 1px;
     border-style: solid;
     padding: 10px;
@@ -46,7 +46,7 @@
   }
 
   .panel-header {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     background-color: $my-panel-background-color;
     height: 40px !important;
     .v-label {
@@ -56,7 +56,7 @@
   }
 
   .panel-body {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     border-top:0;
   }
 
@@ -127,7 +127,7 @@
     padding: 2px;
     border-width: 0px 1px 1px 1px;
     border-style: solid;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     border-radius: 0px 0px 3px 3px;
     background: none no-repeat 0 0 #ffffff;
   }
@@ -292,7 +292,7 @@
     .feed-block {
       background-color: $my-block-background-color;
       padding: 3px 10px;
-      border: 1px solid $my-border-color;
+      border: 1px solid $my-separator-color;
       border-radius: 3px;
       position: relative;
       overflow: visible;
@@ -305,7 +305,7 @@
         top: 4px;
         left: -12px;
         border-width: 11px 11px 11px 0;
-        border-color: transparent $my-border-color;
+        border-color: transparent $my-separator-color;
         border-radius: 0px;
       }
       &:after {
@@ -322,6 +322,7 @@
       }
       .stream-wrapper {
         border-width: 1px 0px 0px;
+        border-color: $my-separator-color;
         padding-bottom: 8px;
         background-color: $my-block-background-color;
         &:first-child {
@@ -352,7 +353,6 @@
       color: black;
     }
   }
-
   /* Selection */
 
 
@@ -474,7 +474,7 @@
   .wizard {
     .wizard-progress-bar {
       padding: 5px 0px;
-      border-bottom: 1px solid $my-border-color;
+      border-bottom: 1px solid $my-separator-color;
       .v-progressbar-indicator {
         background: none;
         background-color: #C2DFFF;
@@ -600,5 +600,9 @@
   .v-table-cell-content {
     padding-top: 5px;
     padding-bottom: 5px;
+  }
+
+  .v-table-header-wrap, .v-table-body {
+    border: 1px solid $my-separator-color;
   }
 }

@@ -282,13 +282,13 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   /* Advanced Search Template */
 
   .time-tracking-summary-search-panel {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     background-color: $my-background-color;
   }
 
   .advSearch {
     .advSearchBody {
-      border: 1px solid $my-border-color;
+      border: 1px solid $my-separator-color;
       background-color: $my-background-color;
       .v-label {
         text-align: right;
@@ -296,7 +296,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     }
     .advSearchFooterContainer {
       padding: 10px 0px 10px;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-width: 0px 1px 1px;
       border-style: solid;
       background-color: $my-background-color;
@@ -319,7 +319,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .basicSearch .basicSearchBody {
     background-color: $my-background-color;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     border-radius: 0;
     > .v-horizontallayout {
       .v-horizontallayout-margin {
@@ -694,7 +694,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     .depotHeader {
       cursor: pointer;
       width: 100%;
-      border: 1px solid $my-border-color;
+      border: 1px solid $my-separator-color;
       border-radius: 0px;
       background: none no-repeat 0 0 $my-panel-background-color;
       .depot-title {
@@ -741,7 +741,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
         border-bottom: 1px solid $my-border-color;
       }
       &.bordered {
-        border-color: $my-border-color;
+        border-color: $my-separator-color;
         border-style: solid;
         border-width: 0px 1px 1px 1px;
         @include margin-container(5px, 5px, 5px, 5px);
@@ -801,135 +801,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   .activity-realated-content .v-table-header-wrap {
     border-top-width: 1px;
   }
-
   /* End New Table */
-
-  /* Messages */
-
-  .message-toppanel {
-    border-radius: 3px 3px 0px 0px;
-  }
-
-  .message-toppanel-body {
-    &.v-margin-top {
-      padding-top: 7px;
-    }
-    &.v-margin-right {
-      padding-right: 5px;
-    }
-    &.v-margin-bottom {
-      padding-bottom: 7px;
-    }
-    &.v-margin-left {
-      padding-left: 18px;
-    }
-  }
-
-  .message-list {
-    .beanlist-content {
-      padding: 5px 15px;
-      background: none no-repeat left top #FFF;
-      border-width: 0px 1px 1px;
-      border-style: solid;
-      border-color: $my-border-color;
-    }
-    .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
-      display: inline-block;
-      zoom: 1;
-      *display: inline;
-      position: relative;
-    }
-  }
-
-  .message .message-container {
-    .v-verticallayout {
-      display: block;
-    }
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background-color: $my-block-background-color;
-    border: 1px solid $my-border-color;
-    border-radius: 5px;
-    position: relative;
-    overflow: visible;
-    &:before {
-      content: "";
-      position: absolute;
-      border-style: solid;
-      /* reduce the damage in FF3.0 */
-      display: block;
-      width: 0;
-      top: 9px;
-      /* controls vertical position */
-      left: -11px;
-      /* value = - border-left-width - border-right-width */
-      border-width: 11px 11px 11px 0;
-      border-color: transparent $my-border-color;
-      border-radius: 0px;
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      border-style: solid;
-      display: block;
-      width: 0;
-      top: 10px;
-      left: -10px;
-      border-width: 10px 10px 10px 0;
-      border-color: transparent $my-block-background-color;
-      border-radius: 0px;
-    }
-  }
-
-  .message {
-    &.important-message .message-container {
-      border-color: #ff9339;
-      &:before {
-        border-color: transparent #ff9339;
-      }
-    }
-  }
-
-  .message-header {
-    .post-owner {
-      color: #525252;
-    }
-    &.v-margin-top {
-      padding-top: 10px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-  }
-
-  .message-header {
-    .notification {
-      color: black;
-      font-size: $font-normal;
-    }
-    .comment-count {
-      padding-right: 3px;
-    }
-    .attachment-count {
-      padding-right: 3px;
-      padding-left: 5px;
-    }
-  }
-
-  .message-body p {
-    margin: 4px 0px;
-    color: $my-meta-color;
-  }
-
-  .message .message-footer {
-    padding: 0px;
-  }
-
-  /* End Messages */
 
   /* Error Message */
 
@@ -1032,16 +904,15 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   /* End Photo Cropbox */
 
   /* Pie Chart Legend Box */
-
   .legendBoxContent {
     padding: 10px;
     background: #F5F5F5;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
   }
 
   .chart-wrapper {
     border-width: 0px 1px 1px 1px;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -1064,17 +935,17 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     border-radius: 3px;
     border-style: solid;
     padding: 5px 5px 10px 10px;
-    border-color: #bebebe;
+    border-color: $my-separator-color;
   }
 
   .member-block {
     .member-name {
       font-size: $font-large;
-      border-bottom: 1px solid #CFCFCF !important;
+      border-bottom: 1px solid $my-separator-color !important;
       padding-bottom: 5px;
       &:focus {
         font-size: $font-large;
-        border-bottom: 1px solid #CFCFCF !important;
+        border-bottom: 1px solid $my-separator-color !important;
         padding-bottom: 5px;
       }
     }
@@ -1280,7 +1151,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     padding: 7px;
     border-width: 0px 1px;
     border-style: solid;
-    border-color: $my-border-color;;
+    border-color: $my-separator-color;;
     background-color: #F5F5F5;
   }
 
@@ -1382,7 +1253,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   .billing-setting {
     border-width: 1px;
     border-style: solid;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     border-radius: 3px;
     background-color: #F5F5F5;
     .faq-layout {
@@ -1396,7 +1267,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
-      border-left: 2px dotted $my-border-color;
+      border-left: 2px dotted $my-separator-color;
       .faq-header {
         font-weight: bold;
       }
@@ -1446,14 +1317,14 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   .prig-bottom {
     width: 100%;
     margin-top: 20px;
-    border: solid 1px #ABABAB;
+    border: solid 1px $my-separator;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
 
   .prig-bottom-cnt {
-    border-top: solid 15px #228BC9;
+    border-top: solid 15px $my-separator-color;
     padding-left: 30px;
     padding-top: 20px;
   }
@@ -1504,7 +1375,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border-color: #C8C8C8;
+    border-color: $my-separator-color;
     border-style: solid;
     border-width: 1px 0px 0px 1px;
     background-color: #F5F5F5;
@@ -1526,7 +1397,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       box-sizing: border-box;
       color: rgb(25, 115, 154);
       text-transform: uppercase;
-      border-bottom: 1px solid #C8C8C8;
+      border-bottom: 1px solid $my-separator-color;
       background-color: white;
       text-align: center;
     }
@@ -1972,11 +1843,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
 
   /* New View's Styles */
-  .hdr-view .table-actionctls {
-    padding: 0;
-    border: 0;
-    background: none;
-  }
 
   .hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
     background-color: #FFF;

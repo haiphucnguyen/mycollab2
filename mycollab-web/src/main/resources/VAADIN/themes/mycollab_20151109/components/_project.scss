@@ -38,7 +38,6 @@
   }
 
   /* My Project List */
-
   .v-popupbutton-popup-myprojectlist, .myprojectlist {
     background-color: white;
     .contentWrapper {
@@ -49,15 +48,14 @@
     .projectblock {
       padding: 0px;
       background-color: #FFF;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-width: 0px 1px 1px;
       border-style: solid;
       &:hover {
         @include hover-effect();
       }
       .projectlink-wrapper, .projectlink-wrapper-archived {
-        border-right: 1px solid $my-border-color;
-
+        border-right: 1px solid $my-separator-color;
         padding: 10px 15px 8px;
       }
       .projectlink-wrapper {
@@ -81,37 +79,6 @@
     }
   }
 
-  .prj-list-row {
-    background-color: #FFF;
-    border-color: $my-border-color;
-    border-width: 0px 1px 1px;
-    border-style: solid;
-    padding: 0px;
-    &:nth-child(even) {
-      background-color: $my-background-color;
-    }
-    &:nth-child(odd) {
-      background-color: #FFF;
-    }
-    &:hover {
-      @include hover-effect();
-    }
-  }
-
-
-
-  /* End Milestone Box */
-
-  .widget-short-prj-name {
-    width: 60px;
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-right-color: $my-border-color;
-    background-color:lavenderblush;
-    font-weight:bold;
-    font-size:$font-large;
-  }
-
   .instruction-box {
     background-color: $my-block-background-color;
     padding: 10px;
@@ -120,11 +87,122 @@
     margin-top: 15px;
   }
 
+  /* Messages */
+  .message-toppanel-body {
+    @include margin-container(7px, 5px, 7px, 18px);
+  }
+
+  .message-list {
+    .beanlist-content {
+      padding: 5px 15px;
+      background: none no-repeat left top #FFF;
+      border-width: 0px 1px 1px;
+      border-style: solid;
+      border-color: $my-border-color;
+    }
+    .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
+      display: inline-block;
+      zoom: 1;
+      *display: inline;
+      position: relative;
+    }
+  }
+
+  .message .message-container {
+    .v-verticallayout {
+      display: block;
+    }
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: $my-block-background-color;
+    border: 1px solid $my-separator-color;
+    border-radius: 5px;
+    position: relative;
+    overflow: visible;
+    &:before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      /* reduce the damage in FF3.0 */
+      display: block;
+      width: 0;
+      top: 9px;
+      /* controls vertical position */
+      left: -11px;
+      /* value = - border-left-width - border-right-width */
+      border-width: 11px 11px 11px 0;
+      border-color: transparent $my-separator-color;
+      border-radius: 0px;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      display: block;
+      width: 0;
+      top: 10px;
+      left: -10px;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent $my-block-background-color;
+      border-radius: 0px;
+    }
+  }
+
+  .message {
+    &.important-message .message-container {
+      border-color: #ff9339;
+      &:before {
+        border-color: transparent #ff9339;
+      }
+    }
+  }
+
+  .message-header {
+    .post-owner {
+      color: #525252;
+    }
+    &.v-margin-top {
+      padding-top: 10px;
+    }
+    &.v-margin-left {
+      padding-left: 10px;
+    }
+    &.v-margin-right {
+      padding-right: 10px;
+    }
+  }
+
+  .message-header {
+    .notification {
+      color: black;
+      font-size: $font-normal;
+    }
+    .comment-count {
+      padding-right: 3px;
+    }
+    .attachment-count {
+      padding-right: 3px;
+      padding-left: 5px;
+    }
+  }
+
+  .message-body p {
+    margin: 4px 0px;
+    color: $my-meta-color;
+  }
+
+  .message .message-footer {
+    padding: 0px;
+  }
+
+  /* End Messages */
+
   .message-toppanel {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     background: none no-repeat left top $my-background-color;
     border-radius: 0px;
   }
@@ -161,7 +239,7 @@
   }
 
   .member-preview-form {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     padding: 30px;
     background-color: $my-block-background-color;
     div.v-csslayout.member-block {
@@ -432,9 +510,10 @@
   .milestone-box {
     margin-top: 25px;
     background-color: $my-block-background-color;
-    border-color: #BEBEBE;
+    border-color: $my-separator-color;
     border-style: solid;
-    border-width: 1px 1px 1px 6px;
+    border-width: 1px 1px 1px 0px;
+    box-shadow: -6px 0px 0 #e3d4c7;
     padding: 12px 20px;
     .milestone-name {
       font-size: $font-large;
@@ -456,14 +535,14 @@
 
   .tasklist {
     margin-top: 10px;
-    border: solid $my-border-color 1px;
+    border: solid $my-separator-color 1px;
     background-color:#FFF;
     width: 100%;
 
     .taskrow {
       padding: 10px;
       border-style: solid;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-width: 0px 0px 1px 0px;
       &:last-child {
         border-style: none;
@@ -501,9 +580,9 @@
   .gantt_container {
     border-style: solid;
     border-width: 0px 1px 0px 0px;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     .v-table-header-wrap {
-      border-bottom: 1px solid $my-border-color;
+      border-bottom: 1px solid $my-separator-color;
     }
     > div > div .v-treetable {
       .v-table-footer-wrap {
@@ -581,7 +660,7 @@
         background-color:white;
       }
       border-style: solid;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-width: 0px 1px 1px 0px;
       padding-left: 12px;
     }
@@ -590,18 +669,18 @@
     }
     .v-table-table tr td.v-table-cell-content:last-child {
        border-style: solid;
-       border-color: $my-border-color;
+       border-color: $my-separator-color;
        border-width: 0px 0px 1px 0px;
     }
     .v-table-table tr:last-child td.v-table-cell-content {
       border-style: solid;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-bottom: 0px;
     }
     .v-table-body {
       border-style: solid;
       border-size: 1px;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
       border-width: 0px 1px 1px 1px;
     }
   }
