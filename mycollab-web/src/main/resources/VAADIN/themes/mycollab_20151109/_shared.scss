@@ -371,10 +371,6 @@
     border: 1px solid $my-border-color;
   }
 
-  div.v-tree-node-caption div {
-    white-space: normal;
-  }
-
   /* Kanban block */
   .v-slot.v-slot-kanban-layout {
     overflow: auto;

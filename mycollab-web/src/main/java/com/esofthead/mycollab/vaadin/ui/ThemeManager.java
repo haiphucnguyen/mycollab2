@@ -83,7 +83,7 @@ public class ThemeManager {
 
             extraStyles.append(".projectfeed-hdr-wrapper { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
-            
+
             extraStyles.append(".milestone-view-header {background-color: " + ColorUtils.brighterColor("#"
                     + accountTheme.getVtabsheetbg()) + ";}");
 
@@ -151,11 +151,6 @@ public class ThemeManager {
 
             extraStyles.append(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme.getActionbtn() + ";}");
 
-            // Add style for tree selected
-            extraStyles.append("div.v-tree-node-selected {background-color:#" + accountTheme.getActionbtn() + ";}");
-
-            extraStyles.append("div.v-tree-node-selected span {background-color:#" + accountTheme.getActionbtn() + ";}");
-
             // Button group default button
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.btn-group-default {background-color:#" + accountTheme
                     .getActionbtn() + ";}");
@@ -178,9 +173,6 @@ public class ThemeManager {
 
             //Date label of activity stream
             extraStyles.append(".feed-block-wrap .date-lbl { color:#" + accountTheme.getActionbtntext() + ";}");
-
-            //Style for tree
-            extraStyles.append("div.v-tree-node-selected span {color:#" + accountTheme.getActionbtntext() + ";}");
         }
 
 		/* Option Buttons */

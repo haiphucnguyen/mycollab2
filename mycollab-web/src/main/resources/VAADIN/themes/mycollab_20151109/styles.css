@@ -1914,10 +1914,6 @@ div.v-window {
 	border: 1px solid #c5c5c5;
 }
 
-div.v-tree-node-caption div {
-	white-space: normal;
-}
-
 .v-slot.v-slot-kanban-layout {
 	overflow: auto;
 	position: relative;
@@ -14195,10 +14191,6 @@ div.v-popupbutton-popup .popupContent {
 div.v-window {
 	box-shadow: none;
 	border: 1px solid #c5c5c5;
-}
-
-div.v-tree-node-caption div {
-	white-space: normal;
 }
 
 .v-slot.v-slot-kanban-layout {
