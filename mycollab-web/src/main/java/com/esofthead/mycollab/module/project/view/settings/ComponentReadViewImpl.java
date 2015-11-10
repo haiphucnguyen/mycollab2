@@ -110,8 +110,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.BUG_COMPONENT,
-                ComponentDefaultFormLayoutFactory.getForm(),
+        return new DynaFormLayout(ProjectTypeConstants.BUG_COMPONENT, ComponentDefaultFormLayoutFactory.getForm(),
                 Component.Field.componentname.name());
     }
 
@@ -157,8 +156,8 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
             @Override
             protected Field<?> onCreateField(final Object propertyId) {
                 if (Component.Field.userlead.equalTo(propertyId)) {
-                    return new ProjectUserFormLinkField(beanItem.getUserlead(),
-                            beanItem.getUserLeadAvatarId(), beanItem.getUserLeadFullName());
+                    return new ProjectUserFormLinkField(beanItem.getUserlead(), beanItem.getUserLeadAvatarId(),
+                            beanItem.getUserLeadFullName());
                 } else if (Component.Field.id.equalTo(propertyId)) {
                     ContainerViewField containerField = new ContainerViewField();
                     containerField.addComponentField(new BugsComp());
@@ -171,10 +170,8 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
 
     @Override
     protected ComponentContainer createButtonControls() {
-        ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm = new
-                ProjectPreviewFormControlsGenerator<>(previewForm);
-        HorizontalLayout topPanel = componentPreviewForm
-                .createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
+        ProjectPreviewFormControlsGenerator<SimpleComponent> componentPreviewForm = new ProjectPreviewFormControlsGenerator<>(previewForm);
+        HorizontalLayout topPanel = componentPreviewForm.createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
         quickActionStatusBtn = new Button("", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 

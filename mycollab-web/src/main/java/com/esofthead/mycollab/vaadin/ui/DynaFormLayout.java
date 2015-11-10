@@ -66,8 +66,7 @@ public class DynaFormLayout implements IDynaFormLayout {
 
     @Override
     public ComponentContainer getLayout() {
-        VerticalLayout layout = new VerticalLayout();
-        layout.setStyleName("form");
+        FormContainer layout = new FormContainer();
         int sectionCount = dynaForm.getSectionCount();
         sectionMappings = new HashMap<>();
 
@@ -117,8 +116,7 @@ public class DynaFormLayout implements IDynaFormLayout {
                             if (columnIndex > 0) {
                                 gridLayout.appendRow();
                             }
-                            gridLayout.buildCell(dynaField.getDisplayName(), 0, gridLayout.getRows() - 1, 2, "100%",
-                                    Alignment.TOP_LEFT);
+                            gridLayout.buildCell(dynaField.getDisplayName(), 0, gridLayout.getRows() - 1, 2, "100%", Alignment.TOP_LEFT);
                             columnIndex = 0;
                             if (j < section.getFieldCount() - 1) {
                                 gridLayout.appendRow();

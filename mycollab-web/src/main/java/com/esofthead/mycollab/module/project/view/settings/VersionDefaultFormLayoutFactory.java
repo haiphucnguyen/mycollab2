@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,27 +33,22 @@ public class VersionDefaultFormLayoutFactory {
 
     static {
         defaultForm = new DynaForm();
-        DynaSection mainSection = new DynaSectionBuilder().layoutType(
-                LayoutType.ONE_COLUMN).build();
+        DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN).build();
 
-        mainSection.addField(new TextDynaFieldBuilder()
-                .fieldName(Version.Field.versionname)
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.versionname)
                 .displayName(AppContext.getMessage(VersionI18nEnum.FORM_NAME))
                 .required(true).mandatory(true).fieldIndex(0).build());
 
-        mainSection.addField(new TextDynaFieldBuilder()
-                .fieldName(Version.Field.description)
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.description)
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(1).build());
 
-        mainSection.addField(new TextDynaFieldBuilder()
-                .fieldName(Version.Field.duedate)
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.duedate)
                 .displayName(AppContext.getMessage(VersionI18nEnum.FORM_DUE_DATE))
                 .fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Version.Field.id).displayName(AppContext
-                .getMessage(VersionI18nEnum.FORM_BUGS)).fieldIndex(3)
-                .build());
+                .getMessage(VersionI18nEnum.FORM_BUGS)).fieldIndex(3).build());
 
         defaultForm.addSection(mainSection);
     }

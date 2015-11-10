@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,34 +32,22 @@ public class ComponentDefaultFormLayoutFactory {
 
     static {
         defaultForm = new DynaForm();
-        DynaSection mainSection = new DynaSectionBuilder().layoutType(
-                LayoutType.ONE_COLUMN).build();
+        DynaSection mainSection = new DynaSectionBuilder().layoutType(LayoutType.ONE_COLUMN).build();
 
-        mainSection
-                .addField(new TextDynaFieldBuilder()
-                        .fieldName(Component.Field.componentname)
-                        .displayName(
-                                AppContext
-                                        .getMessage(ComponentI18nEnum.FORM_NAME))
-                        .required(true).mandatory(true).fieldIndex(0).build());
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Component.Field.componentname)
+                .displayName(AppContext.getMessage(ComponentI18nEnum.FORM_NAME))
+                .required(true).mandatory(true).fieldIndex(0).build());
 
-        mainSection.addField(new TextDynaFieldBuilder()
-                .fieldName(Component.Field.description)
-                .displayName(
-                        AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Component.Field.description)
+                .displayName(AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION))
                 .fieldIndex(1).build());
 
-        mainSection
-                .addField(new TextDynaFieldBuilder()
-                        .fieldName(Component.Field.userlead)
-                        .displayName(
-                                AppContext
-                                        .getMessage(ComponentI18nEnum.FORM_LEAD))
-                        .fieldIndex(2).build());
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Component.Field.userlead)
+                .displayName(AppContext.getMessage(ComponentI18nEnum.FORM_LEAD))
+                .fieldIndex(2).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Component.Field.id).displayName(AppContext
-                .getMessage(ComponentI18nEnum.FORM_BUGS)).fieldIndex(3)
-                .build());
+                .getMessage(ComponentI18nEnum.FORM_BUGS)).fieldIndex(3).build());
 
         defaultForm.addSection(mainSection);
     }

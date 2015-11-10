@@ -2,7 +2,7 @@
   a {
     text-decoration:none;
     &:visited, &:link {
-        color: #006DAC;
+        color: $my-link-color;
     }
     &.completed {
       color: black;
@@ -17,7 +17,7 @@
   }
 
   .v-button.v-button-link, .v-button.v-button-link:hover {
-    color: #006DAC;
+    color: $my-link-color;
   }
 
   .meta-info {
@@ -379,7 +379,7 @@
   .v-layout.kanban-layout {
     .kanban-block {
       cursor: move;
-      background-color: #d9f1fa;
+      background-color: #fcead6;
       .header {
         font-weight: bold;
         color: black;

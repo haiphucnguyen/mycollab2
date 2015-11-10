@@ -57,7 +57,7 @@
         ]]>
     </sql>
 
-    <select id="findTimelineItems" parameterType="TimelineTrackingSearchCriteria"
+    <select id="findTimelineItems" parameterType="map"
             resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
             #repeat(${_parameter.dates} $date "UNION" "" "")
                 SELECT s_timeline_tracking.fieldval AS groupid,

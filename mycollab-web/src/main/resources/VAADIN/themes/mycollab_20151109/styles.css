@@ -1923,7 +1923,7 @@ div.v-window {
 
 .v-layout.kanban-layout .kanban-block {
 	cursor: move;
-	background-color: #d9f1fa;
+	background-color: #fcead6;
 }
 
 .v-layout.kanban-layout .kanban-block .header {
@@ -14208,7 +14208,7 @@ div.v-window {
 
 .v-layout.kanban-layout .kanban-block {
 	cursor: move;
-	background-color: #d9f1fa;
+	background-color: #fcead6;
 }
 
 .v-layout.kanban-layout .kanban-block .header {
@@ -14453,7 +14453,7 @@ span.block {
 
 .form .section {
 	padding: 25px 5px 5px 5px;
-	color: #298eff;
+	color: #006DAC;
 	border-bottom: 1px solid #e5e5e5;
 }
 
@@ -14496,7 +14496,7 @@ span.block {
 
 .activity-comp .section {
 	padding: 25px 5px 5px 5px;
-	color: #298eff;
+	color: #006DAC;
 	border-bottom: 1px solid #e5e5e5;
 }
 
@@ -17566,22 +17566,6 @@ div.v-ratingstars-bar {
 .v-radiobutton label {
 	vertical-align: middle;
 	line-height: normal;
-}
-
-.gridform-caption.v-margin-top, .gridform-field.v-margin-top {
-	padding-top: 0px;
-}
-
-.gridform-caption.v-margin-right, .gridform-field.v-margin-right {
-	padding-right: 0px;
-}
-
-.gridform-caption.v-margin-bottom, .gridform-field.v-margin-bottom {
-	padding-bottom: 0px;
-}
-
-.gridform-caption.v-margin-left, .gridform-field.v-margin-left {
-	padding-left: 5px;
 }
 
 .bean-list .v-verticallayout {
