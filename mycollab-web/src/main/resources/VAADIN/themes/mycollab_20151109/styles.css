@@ -14547,12 +14547,12 @@ span.block {
 }
 
 .crmContainer .navigator-wrap .basic-info {
-	color: #000;
+	color: #f7f7f7;
 }
 
 .crmContainer .navigator-wrap .basic-info:after {
 	content: "";
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e5e5e5;
 	width: 221px;
 	position: relative;
 	height: 15px;
@@ -14561,6 +14561,10 @@ span.block {
 
 .crmContainer .navigator-wrap .basic-info .info-hdr {
 	font-size: 13px;
+}
+
+.crmContainer .navigator-wrap .basic-info .v-label a, .crmContainer .navigator-wrap .basic-info .v-button.v-button-link {
+	color: #f7f7f7;
 }
 
 .crmContainer.preview-comp {
@@ -15489,7 +15493,7 @@ div.v-button.token-field:hover {
 
 .project-info .desc .v-label, .project-info .desc .v-label a {
 	font-size: 12px;
-	color: white;
+	color: #f7f7f7;
 }
 
 .task-urgent .v-icon, .v-filterselect-item-task-urgent .v-icon {

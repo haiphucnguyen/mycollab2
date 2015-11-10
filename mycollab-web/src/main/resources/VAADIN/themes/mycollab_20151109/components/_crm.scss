@@ -25,10 +25,10 @@
       display:inline-block;
     }
     .navigator-wrap .basic-info {
-      color: #000;
+      color: #f7f7f7;
       &:after {
         content: "";
-        border-bottom: 1px solid $my-border-color;
+        border-bottom: 1px solid $my-separator-color;
         width: 221px;
         position: relative;
         height: 15px;
@@ -36,6 +36,9 @@
       }
       .info-hdr {
         font-size: $font-normal;
+      }
+      .v-label a, .v-button.v-button-link {
+        color: #f7f7f7;
       }
     }
     &.preview-comp {
