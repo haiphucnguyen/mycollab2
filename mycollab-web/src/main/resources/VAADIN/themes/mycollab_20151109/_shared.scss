@@ -16,6 +16,10 @@
     }
   }
 
+  .v-button.v-button-link, .v-button.v-button-link:hover {
+    color: #006DAC;
+  }
+
   .meta-info {
     color: $my-meta-color;
     font-size: $font-small;

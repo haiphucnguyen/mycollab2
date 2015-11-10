@@ -1546,6 +1546,10 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-button.v-button-link, .v-button.v-button-link:hover {
+	color: #006DAC;
+}
+
 .meta-info {
 	color: #888;
 	font-size: 12px;
@@ -13825,6 +13829,10 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-button.v-button-link, .v-button.v-button-link:hover {
+	color: #006DAC;
+}
+
 .meta-info {
 	color: #888;
 	font-size: 12px;
@@ -15149,16 +15157,11 @@ div.v-button.token-field:hover {
 .milestone-view-table {
 	width: 100%;
 	height: 100%;
-	border-width: 1px 0px 0px;
-	border-style: solid;
-	border-color: #c5c5c5;
 }
 
 .milestone-view-header {
 	text-align: center;
-	background: none repeat-x left top #f1f1f1;
 	height: 30px;
-	border-bottom: 1px solid #c5c5c5;
 }
 
 .milestone-view-header .v-label {
@@ -15202,7 +15205,7 @@ div.v-button.token-field:hover {
 
 .v-slot-roadmap-block {
 	padding-left: 20px;
-	border-top: 1px solid #c5c5c5;
+	border-top: 1px solid #e8e8e8;
 }
 
 .v-slot-roadmap-block .meta {

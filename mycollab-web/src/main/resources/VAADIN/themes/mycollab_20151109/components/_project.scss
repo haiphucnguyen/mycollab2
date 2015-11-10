@@ -401,16 +401,11 @@
   .milestone-view-table {
     width: 100%;
     height: 100%;
-    border-width: 1px 0px 0px;
-    border-style: solid;
-    border-color: $my-border-color;
   }
 
   .milestone-view-header {
     text-align: center;
-    background: none repeat-x left top $my-panel-background-color;
     height: 30px;
-    border-bottom: 1px solid $my-border-color;
     .v-label {
       font-size: $font-normal;
       font-weight: bold;
@@ -450,7 +445,7 @@
 
   .v-slot-roadmap-block {
     padding-left: 20px;
-    border-top: 1px solid $my-border-color;
+    border-top: 1px solid $my-separator-color;
     .meta {
       font-size: $font-small;
       color: $my-meta-color;

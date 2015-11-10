@@ -14,6 +14,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.ColorUtils;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -36,8 +37,7 @@ public class ThemeManager {
             if (accountTheme == null) {
                 throw new UserInvalidInputException("Can not load theme for this account. You may get bad experience " +
                         "while using MyCollab. Please contact your site admoinistrator to solve this issue or fill a " +
-                        "support request to MyCollab team" +
-                        " ");
+                        "support request to MyCollab team");
             }
         }
 
@@ -78,6 +78,17 @@ public class ThemeManager {
         if (accountTheme.getVtabsheetbg() != null) {
             extraStyles.append(".vertical-tabsheet .navigator-wrap { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
+
+            extraStyles.append(".project-info { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
+
+            extraStyles.append(".projectfeed-hdr-wrapper { background-color: #"
+                    + accountTheme.getVtabsheetbg() + "; }");
+            
+            extraStyles.append(".milestone-view-header {background-color: " + ColorUtils.brighterColor("#"
+                    + accountTheme.getVtabsheetbg()) + ";}");
+
+            extraStyles.append(".v-label.volumeUsageInfo { border-top: 25px solid #" + accountTheme
+                    .getVtabsheetbg() + ";}");
         }
 
         if (accountTheme.getVtabsheetbgselected() != null) {
@@ -100,41 +111,13 @@ public class ThemeManager {
             //Color while hover on sidebar menu
             extraStyles.append(".vertical-tabsheet .v-button-tab .v-button-wrap:hover {color: #" + accountTheme
                     .getVtabsheettextselected() + "!important;}");
-        }
 
-        if (accountTheme.getTabsheetbgselected() != null) {
-            extraStyles.append(".project-info { background-color: #" + accountTheme.getTabsheetbgselected() + "; }");
-
-
-            extraStyles.append(".h-sidebar-menu, .projectfeed-hdr-wrapper { background-color: #"
-                    + accountTheme.getTabsheetbgselected() + "; }");
-
-            //Set style of popup content action
-            extraStyles.append(".optionPopupContent .action-wrap .v-button-action { color: #" + accountTheme
-                    .getTabsheetbgselected() + "; }");
-
-            //Set link style
-            extraStyles.append(".v-app a { color: #" + accountTheme.getTabsheetbgselected() + "; }");
-
-            // Set button link
-            extraStyles.append(".v-button.v-button-link { color: #" + accountTheme
-                    .getTabsheetbgselected() + "; }");
-
-            //Set milestone header background
-            extraStyles.append(".milestone-view-header {background-color: #" + accountTheme.getTabsheetbgselected() + ";}");
-
-            //Volume display bar in file manager
-            extraStyles.append(".v-label.volumeUsageInfo { border-top: 25px solid #" + accountTheme
-                    .getTabsheetbgselected() + ";}");
-        }
-
-        if (accountTheme.getTabsheettextselected() != null) {
             //Set milestone header text color
-            extraStyles.append(".milestone-view-header {color: #" + accountTheme.getTabsheettextselected() + ";}");
+            extraStyles.append(".milestone-view-header {color: #" + accountTheme.getVtabsheettextselected() + ";}");
 
             //Volume text display bar in file manager
             extraStyles.append(".v-label.volumeUsageInfo div { color: #" + accountTheme
-                    .getTabsheettextselected() + ";}");
+                    .getVtabsheettextselected() + ";}");
         }
 
 		/* Action Buttons */
@@ -143,11 +126,9 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { background-color: #" + accountTheme.getActionbtn()
                     + "; }");
 
-            extraStyles.append(".v-button.add-project-btn {background-color: #" + accountTheme
-                    .getActionbtn() + ";}");
+            extraStyles.append(".v-button.add-project-btn {background-color: #" + accountTheme.getActionbtn() + ";}");
 
-            extraStyles.append(".upload-field .v-upload-immediate .v-button {background-color: #" +
-                    accountTheme.getActionbtn() + ";}");
+            extraStyles.append(".upload-field .v-upload-immediate .v-button {background-color: #" + accountTheme.getActionbtn() + ";}");
 
             extraStyles.append(".optionPopupContent .action-wrap:hover {" +
                     "background-color: #" + accountTheme.getActionbtn() + "};");
@@ -171,11 +152,9 @@ public class ThemeManager {
             extraStyles.append(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme.getActionbtn() + ";}");
 
             // Add style for tree selected
-            extraStyles.append("div.v-tree-node-selected {background-color:#" + accountTheme
-                    .getActionbtn() + ";}");
+            extraStyles.append("div.v-tree-node-selected {background-color:#" + accountTheme.getActionbtn() + ";}");
 
-            extraStyles.append("div.v-tree-node-selected span {background-color:#" + accountTheme
-                    .getActionbtn() + ";}");
+            extraStyles.append("div.v-tree-node-selected span {background-color:#" + accountTheme.getActionbtn() + ";}");
 
             // Button group default button
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.btn-group-default {background-color:#" + accountTheme
@@ -201,8 +180,7 @@ public class ThemeManager {
             extraStyles.append(".feed-block-wrap .date-lbl { color:#" + accountTheme.getActionbtntext() + ";}");
 
             //Style for tree
-            extraStyles.append("div.v-tree-node-selected span {color:#" + accountTheme
-                    .getActionbtntext() + ";}");
+            extraStyles.append("div.v-tree-node-selected span {color:#" + accountTheme.getActionbtntext() + ";}");
         }
 
 		/* Option Buttons */
@@ -273,7 +251,6 @@ public class ThemeManager {
         }
 
 		/* Vertical Tabsheet */
-
         if (accountTheme.getVtabsheetbg() != null) {
             demoExtraStyles.append(".example-block .navigator-wrap { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
@@ -297,7 +274,7 @@ public class ThemeManager {
 		/* Action Buttons */
         if (accountTheme.getActionbtn() != null) {
             demoExtraStyles.append(".example-block .v-button.v-button-greenbtn, .example-block .v-button-greenbtn:focus { background-color: #"
-                    + accountTheme.getActionbtn() + "; border-color: #" + getBorderColor(accountTheme.getActionbtn()) + "; }");
+                    + accountTheme.getActionbtn() + "; }");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -309,7 +286,7 @@ public class ThemeManager {
 
         if (accountTheme.getOptionbtn() != null) {
             demoExtraStyles.append(".example-block .v-button.v-button-graybtn, .example-block .v-button-graybtn:focus { background-color: #"
-                    + accountTheme.getOptionbtn() + "; border-color: #" + getBorderColor(accountTheme.getOptionbtn()) + "; }");
+                    + accountTheme.getOptionbtn() + "; }");
         }
 
         if (accountTheme.getOptionbtntext() != null) {
@@ -318,13 +295,9 @@ public class ThemeManager {
         }
 
 		/* Danger Buttons */
-
         if (accountTheme.getDangerbtn() != null) {
             demoExtraStyles.append(".example-block .v-button.v-button-redbtn, .example-block .v-button-redbtn:focus { background-color: #"
-                    + accountTheme.getDangerbtn()
-                    + "; border-color: #"
-                    + getBorderColor(accountTheme.getDangerbtn())
-                    + "; }");
+                    + accountTheme.getDangerbtn() + "; }");
         }
 
         if (accountTheme.getDangerbtntext() != null) {
@@ -335,20 +308,5 @@ public class ThemeManager {
         if (demoExtraStyles.length() > 0) {
             Page.getCurrent().getStyles().add(demoExtraStyles.toString());
         }
-
     }
-
-    private static String getBorderColor(String bgColor) {
-        String rgb = "";
-        Long c;
-        for (int i = 0; i < 3; i++) {
-            c = Long.valueOf(bgColor.substring(i * 2, i * 2 + 2), 16);
-            c = Math.round(Math.min(Math.max(0, c - c * 0.2), 255));
-            String strVal = Long.toHexString(c);
-            rgb += ("00" + strVal).substring(strVal.length());
-        }
-
-        return rgb;
-    }
-
 }
