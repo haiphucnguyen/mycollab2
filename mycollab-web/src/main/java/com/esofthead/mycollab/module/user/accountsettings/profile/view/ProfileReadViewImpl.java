@@ -38,6 +38,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -112,7 +113,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         HorizontalLayout userWrapper = new HorizontalLayout();
 
         Label usernameLbl = new Label(AppContext.getUser().getDisplayName());
-        usernameLbl.setStyleName("h1");
+        usernameLbl.setStyleName(ValoTheme.LABEL_H1);
         userWrapper.addComponent(usernameLbl);
 
         Button btnChangeBasicInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {

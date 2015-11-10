@@ -223,18 +223,15 @@ public abstract class EntityImportWindow<E> extends Window {
             bodyLayoutWapper.addStyleName(UIConstants.BORDER_BOX_2);
             bodyLayoutWapper.setWidth("100%");
 
-            final MHorizontalLayout bodyLayout = new MHorizontalLayout()
-                    .withSpacing(true).withMargin(true);
+            final MHorizontalLayout bodyLayout = new MHorizontalLayout().withMargin(true);
 
             Label title = new Label("Step 2:");
             title.addStyleName("h3");
             bodyLayout.with(title).withAlign(title, Alignment.TOP_LEFT);
 
-            MVerticalLayout informationLayout = new MVerticalLayout()
-                    .withSpacing(true).withWidth("100%");
+            MVerticalLayout informationLayout = new MVerticalLayout().withWidth("100%");
 
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(1, 4,
-                    "100%", "200px", Alignment.TOP_LEFT);
+            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(1, 4, "100%", "200px", Alignment.TOP_LEFT);
 
             gridLayout.getLayout().setSpacing(true);
             gridLayout.getLayout().setMargin(false);
@@ -243,14 +240,12 @@ public abstract class EntityImportWindow<E> extends Window {
             informationLayout.addComponent(new Label("Specify Format"));
 
             @SuppressWarnings("rawtypes")
-            BeanItemContainer<String> fileformatType = new BeanItemContainer(
-                    String.class, Arrays.asList(fileType));
+            BeanItemContainer<String> fileformatType = new BeanItemContainer(String.class, Arrays.asList(fileType));
 
             fileformatComboBox = new ComboBox();
             fileformatComboBox.setContainerDataSource(fileformatType);
             fileformatComboBox.setNullSelectionAllowed(false);
-            fileformatComboBox
-                    .setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
+            fileformatComboBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
             fileformatComboBox.setValue("VCard");
             if (isSupportCSV && isSupportVCard)
                 fileformatComboBox.setEnabled(true);

@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -82,7 +83,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         String nickName = user.getNickname();
         Label userName = new Label(user.getDisplayName()
                 + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( %s )", nickName))));
-        userName.setStyleName("h1");
+        userName.setStyleName(ValoTheme.LABEL_H1);
         userName.addStyleName(UIConstants.LABEL_WORD_WRAP);
         userWrapper.addComponent(userName);
 
@@ -93,8 +94,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         if (Boolean.TRUE.equals(user.getIsAccountOwner())) {
             role = new DefaultViewField("Account Owner");
         } else {
-            role = new LinkViewField(user.getRoleName(),
-                    AccountLinkBuilder.generatePreviewFullRoleLink(user.getRoleid()));
+            role = new LinkViewField(user.getRoleName(), AccountLinkBuilder.generatePreviewFullRoleLink(user.getRoleid()));
         }
         MHorizontalLayout roleWrapper = new MHorizontalLayout();
         roleWrapper.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_ROLE) + ": "));

@@ -15,17 +15,15 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
+import com.esofthead.mycollab.vaadin.ui.FormContainer;
 import com.esofthead.mycollab.vaadin.ui.ServiceMenu;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.CustomLayoutExt;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -55,10 +53,11 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         removeAllComponents();
 
         billingAccount = AppContext.getBillingAccount();
-        MHorizontalLayout generalSettingHeader = new MHorizontalLayout();
+        FormContainer formContainer = new FormContainer();
+        this.addComponent(formContainer);
 
+        MHorizontalLayout generalSettingHeader = new MHorizontalLayout();
         Label headerLbl = new Label("General Settings for your site");
-        headerLbl.setStyleName("h1");
 
         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
             @Override
@@ -68,40 +67,29 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         });
         editBtn.setStyleName(UIConstants.BUTTON_LINK);
 
-        generalSettingHeader.with(headerLbl, editBtn).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(editBtn,
-                Alignment.MIDDLE_LEFT);
+        generalSettingHeader.with(headerLbl, editBtn).alignAll(Alignment.MIDDLE_LEFT);
 
-        String separatorStyle = "width: 100%; height: 1px; background-color: #CFCFCF; margin-top: 0px; margin-bottom: 10px";
-        Label divLabel1 = new Label(new Div().setStyle(separatorStyle).write(), ContentMode.HTML);
 
-        GridFormLayoutHelper gridFormLayoutHelper = new GridFormLayoutHelper(1, 3, "100%", "160px");
-        gridFormLayoutHelper.getLayout().setSpacing(true);
+        GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
         gridFormLayoutHelper.addComponent(new Label(billingAccount.getSitename()), "Site Name", 0, 0);
         gridFormLayoutHelper.addComponent(new Label(String.format("https://%s.mycollab.com", billingAccount
                 .getSubdomain())), "Site Address", 0, 1);
         gridFormLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(
                 billingAccount.getDefaulttimezone()).getDisplayName()), "Default Time Zone", 0, 2);
-        this.with(generalSettingHeader, divLabel1, gridFormLayoutHelper.getLayout());
-
-        headerLbl = new Label("Logos");
-        headerLbl.setStyleName("h1");
-        MHorizontalLayout logoHeader = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false)).with(headerLbl);
-        Label divLabel2 = new Label(new Div().setStyle(separatorStyle).write(), ContentMode.HTML);
-        this.with(logoHeader, divLabel2);
+        formContainer.addSection(new CssLayout(generalSettingHeader), gridFormLayoutHelper.getLayout());
 
         buildLogoPanel();
         buildShortcutIconPanel();
     }
 
     private void buildLogoPanel() {
-        MHorizontalLayout layout = new MHorizontalLayout();
+        FormContainer formContainer = new FormContainer();
+        MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withMargin(true);
         MVerticalLayout leftPanel = new MVerticalLayout().withMargin(false);
-        Label logoHeaderLbl = new Label("Logo");
-        logoHeaderLbl.addStyleName(ValoTheme.LABEL_H3);
         Label logoDesc = new Label("Logos are used in site menu and email notifications. Image type must be png or jpg format");
-        leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
-        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
+        leftPanel.with(logoDesc).withWidth("250px");
 
+        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
         CustomLayout previewLayout = CustomLayoutExt.createLayout("topNavigation");
         previewLayout.setStyleName("example-block");
         previewLayout.setHeight("40px");
@@ -128,21 +116,15 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
             }
         };
 
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                VaadinIcons.MONEY, clickListener);
-
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM), VaadinIcons.MONEY, clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT), VaadinIcons.TASKS, clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), VaadinIcons.SUITCASE, clickListener);
         serviceMenu.selectService(0);
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                VaadinIcons.TASKS, clickListener);
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                VaadinIcons.SUITCASE, clickListener);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout();
-        buttonControls.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
+        MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
+        buttonControls.setDefaultComponentAlignment(Alignment.TOP_LEFT);
         final UploadField logoUploadField = new UploadField() {
             private static final long serialVersionUID = 1L;
 
@@ -186,27 +168,25 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
         });
         resetButton.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
         resetButton.setStyleName(UIConstants.THEME_GRAY_LINK);
-
         buttonControls.with(logoUploadField, resetButton);
-
         rightPanel.with(previewLayout, buttonControls);
-        layout.with(leftPanel, rightPanel);
-        this.with(layout);
+        layout.with(leftPanel, rightPanel).expand(rightPanel);
+        formContainer.addSection("Logo", layout);
+        this.with(formContainer);
     }
 
     private void buildShortcutIconPanel() {
-        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
+        FormContainer formContainer = new FormContainer();
+        MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true));
         MVerticalLayout leftPanel = new MVerticalLayout().withMargin(false);
-        Label logoHeaderLbl = new Label("Favicon");
-        logoHeaderLbl.addStyleName(ValoTheme.LABEL_H3);
         Label logoDesc = new Label("Favicon appears in web browsers bar, bookmarks. The icon should be format png, " +
                 "jpg and must be sizable to 32x32 pixels");
-        leftPanel.with(logoHeaderLbl, logoDesc).withWidth("250px");
+        leftPanel.with(logoDesc).withWidth("250px");
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false);
         final Image favIconRes = new Image("", new ExternalResource(StorageFactory.getInstance().getFavIconPath(billingAccount.getId(),
                 billingAccount.getFaviconpath())));
 
-        MHorizontalLayout buttonControls = new MHorizontalLayout();
+        MHorizontalLayout buttonControls = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false));
         buttonControls.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
         final UploadField favIconUploadField = new UploadField() {
             private static final long serialVersionUID = 1L;
@@ -261,7 +241,8 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
 
         buttonControls.with(favIconUploadField, resetButton);
         rightPanel.with(favIconRes, buttonControls);
-        layout.with(leftPanel, rightPanel);
-        this.with(layout);
+        layout.with(leftPanel, rightPanel).expand(rightPanel);
+        formContainer.addSection("Favicon", layout);
+        this.with(formContainer);
     }
 }

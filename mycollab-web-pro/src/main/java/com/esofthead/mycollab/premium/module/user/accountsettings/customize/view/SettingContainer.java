@@ -41,7 +41,7 @@ public class SettingContainer extends AbstractPageView implements ISettingContai
     private String selectedTabId = "";
 
     public SettingContainer() {
-        this.settingTab = new TabSheetDecorator();
+        settingTab = new TabSheetDecorator();
         this.addComponent(settingTab);
         this.setWidth("100%");
         this.buildComponents();
@@ -50,12 +50,12 @@ public class SettingContainer extends AbstractPageView implements ISettingContai
     private void buildComponents() {
         generalSettingPresenter = PresenterResolver.getPresenter(GeneralSettingPresenter.class);
 
-        this.settingTab.addTab(this.generalSettingPresenter.getView(), "General Settings");
+        settingTab.addTab(this.generalSettingPresenter.getView(), "General Settings");
 
         themeCustomizePresenter = PresenterResolver.getPresenter(ThemeCustomizePresenter.class);
-        this.settingTab.addTab(this.themeCustomizePresenter.getView(), "Theme");
+        settingTab.addTab(this.themeCustomizePresenter.getView(), "Theme");
 
-        this.settingTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
+        settingTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;
 
             @Override

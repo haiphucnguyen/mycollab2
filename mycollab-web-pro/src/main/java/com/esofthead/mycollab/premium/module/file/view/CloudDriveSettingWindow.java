@@ -210,7 +210,7 @@ public class CloudDriveSettingWindow extends Window {
                             externalDriveService.updateWithSession(drive, AppContext.getUsername());
 
                             foldernameLbl = new Label(folderName);
-                            foldernameLbl.addStyleName("h3");
+                            foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
                             ExternalFolder res = (ExternalFolder) externalResourceService.getCurrentResourceByPath(drive, "/");
                             // TODO: reload external drives
                         }
