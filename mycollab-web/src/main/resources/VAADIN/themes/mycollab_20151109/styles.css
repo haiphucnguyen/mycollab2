@@ -1677,6 +1677,7 @@ a.pending {
 
 .v-button.buttonPaging {
 	background-color: #f9f9f9;
+	border: 1px solid #c5c5c5;
 }
 
 .v-button.buttonPaging .v-button-wrap {
@@ -13961,6 +13962,7 @@ a.pending {
 
 .v-button.buttonPaging {
 	background-color: #f9f9f9;
+	border: 1px solid #c5c5c5;
 }
 
 .v-button.buttonPaging .v-button-wrap {
@@ -14713,14 +14715,14 @@ div .addview-layout-body .control-buttons {
 .v-popupbutton-popup-myprojectlist .contentWrapper, .myprojectlist .contentWrapper {
 	border-style: solid;
 	border-width: 1px 0px 0px 0px;
-	border-color: #c5c5c5;
+	border-color: #e5e5e5;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock, .myprojectlist .projectblock {
 	padding: 0px;
 	background-color: #FFF;
 	border-color: #e5e5e5;
-	border-width: 0px 1px 1px;
+	border-width: 0px 1px 1px 0px;
 	border-style: solid;
 }
 
