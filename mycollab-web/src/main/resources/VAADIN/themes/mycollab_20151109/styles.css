@@ -18037,19 +18037,6 @@ div.v-csslayout.bean-block.olive-block {
 	padding: 10px 0px;
 }
 
-.theme-customize-view .v-upload .v-button {
-	border-width: 1px;
-	border-color: #C8C8C8;
-}
-
-.accountViewContainer .theme-customize-view .addview-layout-body {
-	border-top: none;
-}
-
-.accountViewContainer .theme-customize-view .addview-layout-body .h2 {
-	border-top: 1px solid #c5c5c5;
-}
-
 .v-shadow-window {
 	display: none;
 }

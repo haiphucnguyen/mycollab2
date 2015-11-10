@@ -2345,20 +2345,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     padding: 10px 0px;
   }
 
-  /* Theme Customize View */
-
-  .theme-customize-view .v-upload .v-button {
-    border-width: 1px;
-    border-color: #C8C8C8;
-  }
-
-  .accountViewContainer .theme-customize-view .addview-layout-body {
-    border-top: none;
-    .h2 {
-      border-top: 1px solid $my-border-color;
-    }
-  }
-
   .v-shadow-window {
     display: none;
   }

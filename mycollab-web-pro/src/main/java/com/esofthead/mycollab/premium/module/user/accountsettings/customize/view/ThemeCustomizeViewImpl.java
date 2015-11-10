@@ -14,7 +14,10 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.colorpicker.Color;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
@@ -35,40 +38,29 @@ import java.util.Iterator;
 public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCustomizeView {
     private static final long serialVersionUID = 1181278209875228643L;
 
-    private AddViewLayout2 mainLayout;
     private AccountTheme accountTheme;
 
     public ThemeCustomizeViewImpl() {
         super();
-        this.setMargin(new MarginInfo(false, true, true, true));
-    }
-
-    private AddViewLayout2 initUI() {
-        AddViewLayout2 mainLayout = new AddViewLayout2("Theme Customization", SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING));
-        mainLayout.setWidth("100%");
-        mainLayout.addStyleName("theme-customize-view");
-        return mainLayout;
+        this.setMargin(true);
     }
 
     @Override
     public void customizeTheme(AccountTheme theme) {
         this.removeAllComponents();
-        mainLayout = initUI();
-        this.addComponent(mainLayout);
         accountTheme = theme;
         ThemeManager.loadDemoTheme(accountTheme);
-        mainLayout.getBody().removeAllComponents();
 
-        VerticalLayout mainBody = new VerticalLayout();
-        mainBody.setSpacing(true);
+        MVerticalLayout mainBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, true));
 
         // Add customizable blocks
-        mainBody.addComponent(constructTopMenuCustomizeBlock());
-        mainBody.addComponent(constructTabsheetCustomizeBlock());
-        mainBody.addComponent(constructVTabsheetCustomizeBlock());
-        mainBody.addComponent(constructButtonCustomizeBlock());
+        mainBody.with(constructTopMenuCustomizeBlock(), constructVTabsheetCustomizeBlock(), constructButtonCustomizeBlock());
 
-        MHorizontalLayout controlButton = new MHorizontalLayout();
+        MHorizontalLayout controlButtons = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true,
+                true, false, true));
+
+        Label viewTitle = new ELabel(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
+                "Theme Customization", ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2);
 
         Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             private static final long serialVersionUID = -6901103392231786935L;
@@ -92,32 +84,24 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         });
         resetToDefaultBtn.setStyleName(UIConstants.BUTTON_DANGER);
         resetToDefaultBtn.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        controlButton.with(resetToDefaultBtn, saveBtn);
+        controlButtons.with(viewTitle, resetToDefaultBtn, saveBtn).expand(viewTitle);
 
-        mainLayout.addBody(mainBody);
-        mainLayout.addControlButtons(controlButton);
+        this.with(controlButtons, mainBody);
     }
 
     private Component constructTopMenuCustomizeBlock() {
-        VerticalLayout blockLayout = new VerticalLayout();
-        Label blockHeader = new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU));
-        blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName(ValoTheme.LABEL_H3);
-        blockLayout.addComponent(blockHeader);
-        blockLayout.setSpacing(true);
+        FormContainer blockLayout = new FormContainer();
 
-        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).withWidth("100%");
-        blockLayout.addComponent(blockBody);
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withWidth("100%");
+        blockLayout.addSection(AppContext.getMessage(SettingCommonI18nEnum.FORM_TOP_MENU), blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
-        propertyLayout.setStyleName(UIConstants.THEME_NO_BORDER);
         propertyLayout.setColumnExpandRatio(0, 1.0f);
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
 
-        CustomColorPickerArea topMenuBg = new CustomColorPickerArea(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB),
-                accountTheme.getTopmenubg());
+        CustomColorPickerArea topMenuBg = new CustomColorPickerArea(accountTheme.getTopmenubg());
         topMenuBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3462278784149813444L;
 
@@ -130,8 +114,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU)), 0, 0);
         propertyLayout.addComponent(topMenuBg, 1, 0);
 
-        CustomColorPickerArea topMenuText = new CustomColorPickerArea(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_TAB_TEXT),
-                accountTheme.getTopmenutext());
+        CustomColorPickerArea topMenuText = new CustomColorPickerArea(accountTheme.getTopmenutext());
         topMenuText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -1370026552930193996L;
 
@@ -144,7 +127,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label(AppContext.getMessage(SettingCommonI18nEnum.FORM_NORMAL_MENU_TEXT)), 0, 1);
         propertyLayout.addComponent(topMenuText, 1, 1);
 
-        CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea("Selected Tab", accountTheme.getTopmenubgselected());
+        CustomColorPickerArea topMenuBgSelected = new CustomColorPickerArea(accountTheme.getTopmenubgselected());
         topMenuBgSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -7897981001643385884L;
 
@@ -157,8 +140,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
         propertyLayout.addComponent(topMenuBgSelected, 1, 2);
 
-        CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(
-                "Selected Tab Text", accountTheme.getTopmenutextselected());
+        CustomColorPickerArea topMenuTextSelected = new CustomColorPickerArea(accountTheme.getTopmenutextselected());
         topMenuTextSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -5381166604049121169L;
 
@@ -199,16 +181,10 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
             }
         };
 
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM),
-                VaadinIcons.MONEY, clickListener);
-
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_CRM), VaadinIcons.MONEY, clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT), VaadinIcons.TASKS, clickListener);
+        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT), VaadinIcons.SUITCASE, clickListener);
         serviceMenu.selectService(0);
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT),
-                VaadinIcons.TASKS, clickListener);
-
-        serviceMenu.addService(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT),
-                VaadinIcons.SUITCASE, clickListener);
 
         previewLayout.addComponent(serviceMenu, "serviceMenu");
         blockBody.addComponent(previewLayout);
@@ -219,15 +195,10 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
     }
 
     private Component constructTabsheetCustomizeBlock() {
-        VerticalLayout blockLayout = new VerticalLayout();
-        Label blockHeader = new Label("Tab Sheet");
-        blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName(ValoTheme.LABEL_H3);
-        blockLayout.addComponent(blockHeader);
-        blockLayout.setSpacing(true);
+        FormContainer blockLayout = new FormContainer();
 
         MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).withWidth("100%");
-        blockLayout.addComponent(blockBody);
+        blockLayout.addSection("Tab Sheet", blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
@@ -236,8 +207,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
 
-        CustomColorPickerArea tabsheetBg = new CustomColorPickerArea(
-                "Normal Tab", accountTheme.getTabsheetbg());
+        CustomColorPickerArea tabsheetBg = new CustomColorPickerArea(accountTheme.getTabsheetbg());
         tabsheetBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -675674373089622451L;
 
@@ -250,8 +220,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Normal Tab"), 0, 0);
         propertyLayout.addComponent(tabsheetBg, 1, 0);
 
-        CustomColorPickerArea tabsheetText = new CustomColorPickerArea(
-                "Normal Tab Text", accountTheme.getTabsheettext());
+        CustomColorPickerArea tabsheetText = new CustomColorPickerArea(accountTheme.getTabsheettext());
         tabsheetText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 3487570137637191332L;
 
@@ -264,8 +233,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Normal Tab Text"), 0, 1);
         propertyLayout.addComponent(tabsheetText, 1, 1);
 
-        CustomColorPickerArea tabsheetBgSelected = new CustomColorPickerArea(
-                "Selected Tab", accountTheme.getTabsheetbgselected());
+        CustomColorPickerArea tabsheetBgSelected = new CustomColorPickerArea(accountTheme.getTabsheetbgselected());
         tabsheetBgSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -2435453092194064504L;
 
@@ -278,8 +246,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Selected Tab"), 0, 2);
         propertyLayout.addComponent(tabsheetBgSelected, 1, 2);
 
-        CustomColorPickerArea tabsheetTextSelected = new CustomColorPickerArea(
-                "Selected Tab Text", accountTheme.getTabsheettextselected());
+        CustomColorPickerArea tabsheetTextSelected = new CustomColorPickerArea(accountTheme.getTabsheettextselected());
         tabsheetTextSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 3190273972739835060L;
 
@@ -315,26 +282,18 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
     }
 
     private Component constructVTabsheetCustomizeBlock() {
-        VerticalLayout blockLayout = new VerticalLayout();
-        Label blockHeader = new Label("Vertical Menu");
-        blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName(ValoTheme.LABEL_H3);
-        blockLayout.addComponent(blockHeader);
-        blockLayout.setSpacing(true);
+        FormContainer blockLayout = new FormContainer();
+        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(true).withWidth("100%");
 
-        MHorizontalLayout blockBody = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
-                .withWidth("100%");
-
-        blockLayout.addComponent(blockBody);
+        blockLayout.addSection("Vertical Menu", blockBody);
 
         GridLayout propertyLayout = new GridLayout(2, 4);
         propertyLayout.setSpacing(true);
-        propertyLayout.setStyleName(UIConstants.THEME_NO_BORDER);
         propertyLayout.setColumnExpandRatio(0, 1.0f);
         propertyLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
         propertyLayout.setWidth("250px");
 
-        CustomColorPickerArea vTabsheetBg = new CustomColorPickerArea("Normal Menu", accountTheme.getVtabsheetbg());
+        CustomColorPickerArea vTabsheetBg = new CustomColorPickerArea(accountTheme.getVtabsheetbg());
         vTabsheetBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -675674373089622451L;
 
@@ -347,7 +306,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Normal Menu"), 0, 0);
         propertyLayout.addComponent(vTabsheetBg, 1, 0);
 
-        CustomColorPickerArea vTabsheetText = new CustomColorPickerArea("Normal Menu Text", accountTheme.getVtabsheettext());
+        CustomColorPickerArea vTabsheetText = new CustomColorPickerArea(accountTheme.getVtabsheettext());
         vTabsheetText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 3487570137637191332L;
 
@@ -361,8 +320,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Normal Menu Text"), 0, 1);
         propertyLayout.addComponent(vTabsheetText, 1, 1);
 
-        CustomColorPickerArea vTabsheetBgSelected = new CustomColorPickerArea(
-                "Selected Menu", accountTheme.getVtabsheetbgselected());
+        CustomColorPickerArea vTabsheetBgSelected = new CustomColorPickerArea(accountTheme.getVtabsheetbgselected());
         vTabsheetBgSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -2435453092194064504L;
 
@@ -376,8 +334,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(new Label("Selected Menu"), 0, 2);
         propertyLayout.addComponent(vTabsheetBgSelected, 1, 2);
 
-        CustomColorPickerArea vTabsheetTextSelected = new CustomColorPickerArea(
-                "Selected Menu Text", accountTheme.getVtabsheettextselected());
+        CustomColorPickerArea vTabsheetTextSelected = new CustomColorPickerArea(accountTheme.getVtabsheettextselected());
         vTabsheetTextSelected.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 3190273972739835060L;
 
@@ -420,15 +377,10 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
     }
 
     private Component constructButtonCustomizeBlock() {
-        MVerticalLayout blockLayout = new MVerticalLayout().withMargin(new MarginInfo(false, false, true, false));
-        Label blockHeader = new Label("Buttons");
-        blockHeader.setStyleName("block-hdr");
-        blockHeader.addStyleName(ValoTheme.LABEL_H3);
-        blockLayout.addComponent(blockHeader);
+        FormContainer blockLayout = new FormContainer();
 
-        VerticalLayout blockBody = new VerticalLayout();
-        blockBody.setMargin(new MarginInfo(false, true, false, true));
-        blockLayout.addComponent(blockBody);
+        MVerticalLayout blockBody = new MVerticalLayout();
+        blockLayout.addSection("Buttons", blockBody);
 
         GridLayout propertyLayout = new GridLayout(3, 1);
         propertyLayout.setStyleName("example-block");
@@ -453,8 +405,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         actionBtnColorPane.setSpacing(true);
         actionBtnPanel.addComponent(actionBtnColorPane);
 
-        CustomColorPickerArea actionBtnBg = new CustomColorPickerArea(
-                "Button Background", accountTheme.getActionbtn());
+        CustomColorPickerArea actionBtnBg = new CustomColorPickerArea(accountTheme.getActionbtn());
         actionBtnBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3852566371241071966L;
 
@@ -468,8 +419,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         });
         actionBtnColorPane.addComponent(actionBtnBg);
 
-        CustomColorPickerArea actionBtnText = new CustomColorPickerArea(
-                "Button Text", accountTheme.getActionbtntext());
+        CustomColorPickerArea actionBtnText = new CustomColorPickerArea(accountTheme.getActionbtntext());
         actionBtnText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 7947045019055649130L;
 
@@ -501,7 +451,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         optionBtnColorPane.setSpacing(true);
         optionBtnPanel.addComponent(optionBtnColorPane);
 
-        CustomColorPickerArea optionBtnBg = new CustomColorPickerArea("Button Background", accountTheme.getOptionbtn());
+        CustomColorPickerArea optionBtnBg = new CustomColorPickerArea(accountTheme.getOptionbtn());
         optionBtnBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3852566371241071966L;
 
@@ -514,7 +464,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         });
         optionBtnColorPane.addComponent(optionBtnBg);
 
-        CustomColorPickerArea optionBtnText = new CustomColorPickerArea("Button Text", accountTheme.getOptionbtntext());
+        CustomColorPickerArea optionBtnText = new CustomColorPickerArea(accountTheme.getOptionbtntext());
         optionBtnText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 7947045019055649130L;
 
@@ -543,7 +493,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         dangerBtnColorPane.setSpacing(true);
         dangerBtnPanel.addComponent(dangerBtnColorPane);
 
-        CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea("Button Background", accountTheme.getDangerbtn());
+        CustomColorPickerArea dangerBtnBg = new CustomColorPickerArea(accountTheme.getDangerbtn());
         dangerBtnBg.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = -3852566371241071966L;
 
@@ -556,7 +506,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         });
         dangerBtnColorPane.addComponent(dangerBtnBg);
 
-        CustomColorPickerArea dangerBtnText = new CustomColorPickerArea("Button Text", accountTheme.getDangerbtntext());
+        CustomColorPickerArea dangerBtnText = new CustomColorPickerArea(accountTheme.getDangerbtntext());
         dangerBtnText.addColorChangeListener(new ColorChangeListener() {
             private static final long serialVersionUID = 7947045019055649130L;
 
@@ -570,5 +520,21 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         dangerBtnColorPane.addComponent(dangerBtnText);
 
         return blockLayout;
+    }
+
+    private static class CustomColorPickerArea extends ColorPickerArea {
+        private static final long serialVersionUID = -8631349584720412229L;
+
+        public CustomColorPickerArea(String initialColor) {
+            super();
+            if (initialColor != null) {
+                this.setColor(new Color(Integer.parseInt(initialColor, 16)));
+            }
+
+            this.setWidth("55px");
+            this.setPopupStyle(PopupStyle.POPUP_NORMAL);
+            this.setPosition(Page.getCurrent().getBrowserWindowWidth() / 2 - 248 / 2, Page
+                    .getCurrent().getBrowserWindowHeight() / 2 - 508 / 2);
+        }
     }
 }
