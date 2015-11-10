@@ -160,19 +160,15 @@ public class ThemeManager {
                     accountTheme.getActionbtn() + "; }");
 
             //Selection background of selected item
-            extraStyles.append(".v-filterselect-suggestpopup .gwt-MenuItem-selected { background-color:#" +
-                    accountTheme.getActionbtn() + "; }");
+            extraStyles.append(".v-filterselect-suggestpopup .gwt-MenuItem-selected { background-color:#" + accountTheme.getActionbtn() + "; }");
 
             //Year block of activity stream
-            extraStyles.append(".v-label.year-lbl { box-shadow: 0 0 0 5px #" + accountTheme
-                    .getActionbtn() + ";}");
+            extraStyles.append(".v-label.year-lbl { box-shadow: 0 0 0 5px #" + accountTheme.getActionbtn() + ";}");
 
             //Date label of activity stream
-            extraStyles.append(".feed-block-wrap .date-lbl { background-color:#" + accountTheme
-                    .getActionbtn() + ";}");
+            extraStyles.append(".feed-block-wrap .date-lbl { background-color:#" + accountTheme.getActionbtn() + ";}");
 
-            extraStyles.append(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme
-                    .getActionbtn() + ";}");
+            extraStyles.append(".feed-block-wrap .date-lbl::after{ border-left-color:#" + accountTheme.getActionbtn() + ";}");
 
             // Add style for tree selected
             extraStyles.append("div.v-tree-node-selected {background-color:#" + accountTheme
@@ -202,8 +198,7 @@ public class ThemeManager {
                     accountTheme.getActionbtntext() + "; }");
 
             //Date label of activity stream
-            extraStyles.append(".feed-block-wrap .date-lbl { color:#" + accountTheme
-                    .getActionbtntext() + ";}");
+            extraStyles.append(".feed-block-wrap .date-lbl { color:#" + accountTheme.getActionbtntext() + ";}");
 
             //Style for tree
             extraStyles.append("div.v-tree-node-selected span {color:#" + accountTheme
@@ -300,13 +295,9 @@ public class ThemeManager {
         }
 
 		/* Action Buttons */
-
         if (accountTheme.getActionbtn() != null) {
             demoExtraStyles.append(".example-block .v-button.v-button-greenbtn, .example-block .v-button-greenbtn:focus { background-color: #"
-                    + accountTheme.getActionbtn()
-                    + "; border-color: #"
-                    + getBorderColor(accountTheme.getActionbtn())
-                    + "; }");
+                    + accountTheme.getActionbtn() + "; border-color: #" + getBorderColor(accountTheme.getActionbtn()) + "; }");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -318,10 +309,7 @@ public class ThemeManager {
 
         if (accountTheme.getOptionbtn() != null) {
             demoExtraStyles.append(".example-block .v-button.v-button-graybtn, .example-block .v-button-graybtn:focus { background-color: #"
-                    + accountTheme.getOptionbtn()
-                    + "; border-color: #"
-                    + getBorderColor(accountTheme.getOptionbtn())
-                    + "; }");
+                    + accountTheme.getOptionbtn() + "; border-color: #" + getBorderColor(accountTheme.getOptionbtn()) + "; }");
         }
 
         if (accountTheme.getOptionbtntext() != null) {
