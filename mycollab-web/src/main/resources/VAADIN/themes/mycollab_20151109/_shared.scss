@@ -288,7 +288,6 @@
     	border-width: 8px;
     	margin-top: -8px;
     }
-
     .feed-block {
       background-color: $my-block-background-color;
       padding: 3px 10px;
@@ -296,7 +295,7 @@
       border-radius: 3px;
       position: relative;
       overflow: visible;
-      &:before {
+      &::before {
         content: "";
         position: absolute;
         border-style: solid;
@@ -308,7 +307,7 @@
         border-color: transparent $my-separator-color;
         border-radius: 0px;
       }
-      &:after {
+      &::after {
         content: "";
         position: absolute;
         border-style: solid;

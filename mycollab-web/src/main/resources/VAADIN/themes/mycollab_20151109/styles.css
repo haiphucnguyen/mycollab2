@@ -1560,7 +1560,7 @@ a.pending {
 }
 
 .list-row {
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	padding: 10px;
@@ -1581,7 +1581,7 @@ a.pending {
 }
 
 .panel-header {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	background-color: #f1f1f1;
 	height: 40px !important;
 }
@@ -1592,7 +1592,7 @@ a.pending {
 }
 
 .panel-body {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-top: 0;
 }
 
@@ -1661,7 +1661,7 @@ a.pending {
 	padding: 2px;
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-radius: 0px 0px 3px 3px;
 	background: none no-repeat 0 0 #ffffff;
 }
@@ -1834,13 +1834,13 @@ a.pending {
 .feed-block-wrap .feed-block {
 	background-color: #f7fcfe;
 	padding: 3px 10px;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-radius: 3px;
 	position: relative;
 	overflow: visible;
 }
 
-.feed-block-wrap .feed-block:before {
+.feed-block-wrap .feed-block::before {
 	content: "";
 	position: absolute;
 	border-style: solid;
@@ -1849,11 +1849,11 @@ a.pending {
 	top: 4px;
 	left: -12px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent #e8e8e8;
+	border-color: transparent #e5e5e5;
 	border-radius: 0px;
 }
 
-.feed-block-wrap .feed-block:after {
+.feed-block-wrap .feed-block::after {
 	content: "";
 	position: absolute;
 	border-style: solid;
@@ -1868,7 +1868,7 @@ a.pending {
 
 .feed-block-wrap .feed-block .stream-wrapper {
 	border-width: 1px 0px 0px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	padding-bottom: 8px;
 	background-color: #f7fcfe;
 }
@@ -2014,7 +2014,7 @@ span.block {
 
 .wizard .wizard-progress-bar {
 	padding: 5px 0px;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .wizard .wizard-progress-bar .v-progressbar-indicator {
@@ -2162,7 +2162,7 @@ span.block {
 }
 
 .v-table-header-wrap, .v-table-body {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 }
 
 .stickytooltip {
@@ -13480,7 +13480,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 
 .accountViewContainer .container-wrap.main-content .top-panel {
 	background-color: #FFF;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 	padding: 10px 30px;
 }
 
@@ -13757,11 +13757,11 @@ td.v-tabsheet-spacertd div {
 	padding: 0px;
 	border-width: 0px 1px 1px 0px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 }
 
 .v-tabsheet-tabitem .v-caption {
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	line-height: 25px;
 	border: none;
 	border-radius: 0px;
@@ -13844,7 +13844,7 @@ a.pending {
 }
 
 .list-row {
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	padding: 10px;
@@ -13865,7 +13865,7 @@ a.pending {
 }
 
 .panel-header {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	background-color: #f1f1f1;
 	height: 40px !important;
 }
@@ -13876,7 +13876,7 @@ a.pending {
 }
 
 .panel-body {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-top: 0;
 }
 
@@ -13945,7 +13945,7 @@ a.pending {
 	padding: 2px;
 	border-width: 0px 1px 1px 1px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-radius: 0px 0px 3px 3px;
 	background: none no-repeat 0 0 #ffffff;
 }
@@ -14118,13 +14118,13 @@ a.pending {
 .feed-block-wrap .feed-block {
 	background-color: #f7fcfe;
 	padding: 3px 10px;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-radius: 3px;
 	position: relative;
 	overflow: visible;
 }
 
-.feed-block-wrap .feed-block:before {
+.feed-block-wrap .feed-block::before {
 	content: "";
 	position: absolute;
 	border-style: solid;
@@ -14133,11 +14133,11 @@ a.pending {
 	top: 4px;
 	left: -12px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent #e8e8e8;
+	border-color: transparent #e5e5e5;
 	border-radius: 0px;
 }
 
-.feed-block-wrap .feed-block:after {
+.feed-block-wrap .feed-block::after {
 	content: "";
 	position: absolute;
 	border-style: solid;
@@ -14152,7 +14152,7 @@ a.pending {
 
 .feed-block-wrap .feed-block .stream-wrapper {
 	border-width: 1px 0px 0px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	padding-bottom: 8px;
 	background-color: #f7fcfe;
 }
@@ -14298,7 +14298,7 @@ span.block {
 
 .wizard .wizard-progress-bar {
 	padding: 5px 0px;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .wizard .wizard-progress-bar .v-progressbar-indicator {
@@ -14446,13 +14446,13 @@ span.block {
 }
 
 .v-table-header-wrap, .v-table-body {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 }
 
 .form .section {
 	padding: 25px 5px 5px 5px;
 	color: #298eff;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .form .section .v-label {
@@ -14460,7 +14460,7 @@ span.block {
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption, .v-gridlayout.colored-gridlayout .gridform-field {
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption.v-margin-top, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-top {
@@ -14495,7 +14495,7 @@ span.block {
 .activity-comp .section {
 	padding: 25px 5px 5px 5px;
 	color: #298eff;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .activity-comp .section .v-label {
@@ -14573,7 +14573,7 @@ span.block {
 .readViewLayout .readViewHeader {
 	padding: 0px 0px 0px 5px;
 	border-radius: 0px;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .readViewLayout .readViewHeader .headerName {
@@ -14690,7 +14690,7 @@ div .addview-layout-body .control-buttons {
 
 .projectDashboardView .container-wrap.main-content .top-panel {
 	background-color: #FFF;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 	padding: 10px 30px;
 }
 
@@ -14719,7 +14719,7 @@ div .addview-layout-body .control-buttons {
 .v-popupbutton-popup-myprojectlist .projectblock, .myprojectlist .projectblock {
 	padding: 0px;
 	background-color: #FFF;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 }
@@ -14731,7 +14731,7 @@ div .addview-layout-body .control-buttons {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
-	border-right: 1px solid #e8e8e8;
+	border-right: 1px solid #e5e5e5;
 	padding: 10px 15px 8px;
 }
 
@@ -14815,7 +14815,7 @@ div .addview-layout-body .control-buttons {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	background-color: #f7fcfe;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-radius: 5px;
 	position: relative;
 	overflow: visible;
@@ -14834,7 +14834,7 @@ div .addview-layout-body .control-buttons {
 	top: 9px;
 	left: -11px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent #e8e8e8;
+	border-color: transparent #e5e5e5;
 	border-radius: 0px;
 }
 
@@ -14902,7 +14902,7 @@ div .addview-layout-body .control-buttons {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	background: none no-repeat left top #f9f9f9;
 	border-radius: 0px;
 }
@@ -14965,7 +14965,7 @@ div .addview-layout-body .control-buttons {
 }
 
 .member-preview-form {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	padding: 30px;
 	background-color: #f7fcfe;
 }
@@ -15101,21 +15101,21 @@ div.v-csslayout.followers-container .v-checkbox {
 .pages-list-layout:after {
 	content: "";
 	width: 100%;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 	display: block;
 }
 
 .pages-list-layout .page-item-block {
-	border-top: 1px solid #e8e8e8;
+	border-top: 1px solid #e5e5e5;
 	padding: 6px 24px 6px 0px;
 }
 
 .page-read-layout {
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .searchitems-layout .project-item-search-box {
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .searchitems-layout .project-item-search-box .footer {
@@ -15280,7 +15280,7 @@ div.v-button.token-field:hover {
 .milestone-box {
 	margin-top: 25px;
 	background-color: #f7fcfe;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-style: solid;
 	border-width: 1px 1px 1px 0px;
 	box-shadow: -6px 0px 0 #e3d4c7;
@@ -15295,7 +15295,7 @@ div.v-button.token-field:hover {
 
 .v-slot-roadmap-block {
 	padding-left: 20px;
-	border-top: 1px solid #e8e8e8;
+	border-top: 1px solid #e5e5e5;
 }
 
 .v-slot-roadmap-block .meta {
@@ -15305,7 +15305,7 @@ div.v-button.token-field:hover {
 
 .tasklist {
 	margin-top: 10px;
-	border: solid #e8e8e8 1px;
+	border: solid #e5e5e5 1px;
 	background-color: #FFF;
 	width: 100%;
 }
@@ -15313,7 +15313,7 @@ div.v-button.token-field:hover {
 .tasklist .taskrow {
 	padding: 10px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 0px 1px 0px;
 }
 
@@ -15357,11 +15357,11 @@ div.v-button.token-field:hover {
 .gantt_container {
 	border-style: solid;
 	border-width: 0px 1px 0px 0px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 }
 
 .gantt_container .v-table-header-wrap {
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .gantt_container  > div > div .v-treetable .v-table-footer-wrap {
@@ -15423,7 +15423,7 @@ div.v-button.token-field:hover {
 	padding-bottom: 0px;
 	height: 34px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 1px 1px 0px;
 	padding-left: 12px;
 }
@@ -15456,20 +15456,20 @@ div.v-button.token-field:hover {
 
 .gantt_container .v-table-table tr td.v-table-cell-content:last-child {
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 0px 1px 0px;
 }
 
 .gantt_container .v-table-table tr:last-child td.v-table-cell-content {
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-bottom: 0px;
 }
 
 .gantt_container .v-table-body {
 	border-style: solid;
 	border-size: 1px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 1px 1px 1px;
 }
 
@@ -16091,12 +16091,12 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .time-tracking-summary-search-panel {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	background-color: #f9f9f9;
 }
 
 .advSearch .advSearchBody {
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	background-color: #f9f9f9;
 }
 
@@ -16106,7 +16106,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .advSearch .advSearchFooterContainer {
 	padding: 10px 0px 10px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-width: 0px 1px 1px;
 	border-style: solid;
 	background-color: #f9f9f9;
@@ -16126,7 +16126,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .basicSearch .basicSearchBody {
 	background-color: #f9f9f9;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-radius: 0;
 }
 
@@ -16496,7 +16496,7 @@ input.v-textfield-errorField {
 
 .addViewTitle {
 	padding: 10px 5px 10px 5px;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 	font-size: 16px;
 }
 
@@ -16531,7 +16531,7 @@ input.v-textfield-errorField {
 .depotComp .depotHeader {
 	cursor: pointer;
 	width: 100%;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 	border-radius: 0px;
 	background: none no-repeat 0 0 #f1f1f1;
 }
@@ -16596,7 +16596,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp .depotContent.bordered {
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-style: solid;
 	border-width: 0px 1px 1px 1px;
 }
@@ -16742,12 +16742,12 @@ div.v-csslayout.main-body {
 .legendBoxContent {
 	padding: 10px;
 	background: #F5F5F5;
-	border: 1px solid #e8e8e8;
+	border: 1px solid #e5e5e5;
 }
 
 .chart-wrapper {
 	border-width: 0px 1px 1px 1px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -16766,18 +16766,18 @@ div.v-csslayout.member-block {
 	border-radius: 3px;
 	border-style: solid;
 	padding: 5px 5px 10px 10px;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 }
 
 .member-block .member-name {
 	font-size: 14px;
-	border-bottom: 1px solid #e8e8e8 !important;
+	border-bottom: 1px solid #e5e5e5 !important;
 	padding-bottom: 5px;
 }
 
 .member-block .member-name:focus {
 	font-size: 14px;
-	border-bottom: 1px solid #e8e8e8 !important;
+	border-bottom: 1px solid #e5e5e5 !important;
 	padding-bottom: 5px;
 }
 
@@ -16957,12 +16957,12 @@ div.v-ratingstars-bar {
 	padding: 7px;
 	border-width: 0px 1px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	background-color: #F5F5F5;
 }
 
 .v-label.separator {
-	border-right: 1px solid #e8e8e8;
+	border-right: 1px solid #e5e5e5;
 }
 
 .v-label-hr {
@@ -16970,7 +16970,7 @@ div.v-ratingstars-bar {
 }
 
 .v-label-hr  > hr {
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-style: solid;
 	border-width: 0px 0px 1px;
 	-moz-box-sizing: border-box;
@@ -17057,7 +17057,7 @@ div.v-ratingstars-bar {
 .billing-setting {
 	border-width: 1px;
 	border-style: solid;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-radius: 3px;
 	background-color: #F5F5F5;
 }
@@ -17067,7 +17067,7 @@ div.v-ratingstars-bar {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-left: 2px dotted #e8e8e8;
+	border-left: 2px dotted #e5e5e5;
 }
 
 .billing-setting .faq-layout.v-margin-left {
@@ -17138,7 +17138,7 @@ div.v-ratingstars-bar {
 }
 
 .prig-bottom-cnt {
-	border-top: solid 15px #e8e8e8;
+	border-top: solid 15px #e5e5e5;
 	padding-left: 30px;
 	padding-top: 20px;
 }
@@ -17186,7 +17186,7 @@ div.v-ratingstars-bar {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-color: #e8e8e8;
+	border-color: #e5e5e5;
 	border-style: solid;
 	border-width: 1px 0px 0px 1px;
 	background-color: #F5F5F5;
@@ -17208,7 +17208,7 @@ div.v-ratingstars-bar {
 	box-sizing: border-box;
 	color: #19739a;
 	text-transform: uppercase;
-	border-bottom: 1px solid #e8e8e8;
+	border-bottom: 1px solid #e5e5e5;
 	background-color: white;
 	text-align: center;
 }
@@ -18053,8 +18053,8 @@ div.v-csslayout.rightsidebar-layout {
 }
 
 .sidebar-wrap {
-	border-left: 1px solid #e8e8e8;
-	border-right: 1px solid #e8e8e8;
+	border-left: 1px solid #e5e5e5;
+	border-right: 1px solid #e5e5e5;
 	background-color: floralwhite;
 }
 
