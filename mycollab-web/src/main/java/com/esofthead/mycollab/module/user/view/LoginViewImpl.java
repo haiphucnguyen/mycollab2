@@ -35,6 +35,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * @author MyCollab Ltd.

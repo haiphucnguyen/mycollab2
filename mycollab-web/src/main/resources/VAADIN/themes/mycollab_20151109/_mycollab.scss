@@ -497,15 +497,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   #loginForm {
     input.v-textfield {
       width: 410px;
-      background: #FFF;
-      border-color: #BBB;
-      border-radius: 0px;
-      padding: 0px 3px;
-      line-height: 35px !important;
-      color: #4a4a4a;
-      &.v-textfield-focus {
-        border-color: #7ba0cc;
-      }
     }
     .formFooter {
       width: 410px;
@@ -519,33 +510,31 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     }
   }
 
-  .forgotPwdForm #loginForm #submitLogin {
-    margin-top: 0px;
-    text-align: left;
-  }
-
   #loginForm {
+    #newToUs {
+      float: left;
+      display: block;
+      width: 100%;
+      padding: 0px 0px 10px;
+      text-align: center;
+      color: $my-meta-color;
+    }
     .rememberMe .v-checkbox {
       width: 410px;
-      margin: 0 auto;
-      color: rgb(119, 119, 119);
+      margin: 0px;
+      color: $my-meta-color;
       label {
-        font-size: $font-large;
-      }
-      input {
-        margin-left: 0px;
+        font-size: $font-normal;
       }
     }
     #submitLogin {
       .v-button {
         border: none;
-      }
-      .v-button-wrap {
-        height: 30px;
-        .v-button-caption {
-          font-size: 17px;
-          line-height: 30px;
-          margin: 0 15px;
+        .v-button-wrap {
+          height: 30px;
+          .v-button-caption {
+            font-size: 17px;
+          }
         }
       }
     }
@@ -567,44 +556,39 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       #forgotLink {
         float: left;
         width: 50%;
-        color: #006dac;
+      }
+    }
+    .customErrorMsg {
+      float: left;
+      display: block;
+      width: 100%;
+      padding-bottom: 5px;
+      .v-label {
+        &:before {
+          content: "*\0020";
+        }
+        color: red;
+        font-size: $font-normal;
+        padding-left: 20px;
       }
     }
   }
 
-  .forgotPwdForm #loginForm #forgotLink {
-    margin-top: 20px;
-    display: inline-block;
-    margin-left: 0px;
-    color: #006dac;
+  .forgotPwdForm #loginForm {
+    #forgotLink {
+      margin-top: 20px;
+      display: inline-block;
+      margin-left: 0px;
+      color: #006dac;
+    }
+    #submitLogin {
+      margin-top: 0px;
+      text-align: left;
+    }
   }
 
   #loginForm #forgotLink .v-button {
     margin-left: 8px;
-  }
-
-  #loginFormContainer #newToUs {
-    float: left;
-    display: block;
-    width: 100%;
-    padding: 0px 0px 10px;
-    text-align: center;
-    color: rgb(84, 112, 124);
-  }
-
-  #loginForm .customErrorMsg {
-    float: left;
-    display: block;
-    width: 100%;
-    padding-bottom: 5px;
-    .v-label {
-      &:before {
-        content: "*\0020";
-      }
-      color: red;
-      font-size: $font-normal;
-      padding-left: 20px;
-    }
   }
 
   #login-footer #support-links {

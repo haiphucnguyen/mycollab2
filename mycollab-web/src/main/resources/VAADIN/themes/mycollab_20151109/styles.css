@@ -13593,6 +13593,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 .v-button.v-button-greenbtn {
 	color: white;
 	font-weight: normal;
+	background-color: #1a8fcb;
 }
 
 .v-button.v-button-block {
@@ -14728,6 +14729,7 @@ div .addview-layout-body .control-buttons {
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
 	border-right: 1px solid #e5e5e5;
+	border-left: 1px solid #e5e5e5;
 	padding: 10px 15px 8px;
 }
 
@@ -14953,11 +14955,11 @@ div .addview-layout-body .control-buttons {
 
 .projectfeed-hdr-wrapper .h1 {
 	padding: 0px;
-	color: white;
+	color: #f7f7f7;
 }
 
 .projectfeed-hdr-wrapper .h2, .projectfeed-hdr-wrapper .v-button-link .v-button-caption, .projectfeed-hdr-wrapper .v-button-link .v-icon, .projectfeed-hdr-wrapper .v-label, .projectfeed-hdr-wrapper .v-label a {
-	color: white;
+	color: #f7f7f7;
 }
 
 .member-preview-form {
@@ -16310,16 +16312,6 @@ input.v-textfield-errorField {
 
 #loginForm input.v-textfield {
 	width: 410px;
-	background: #FFF;
-	border-color: #BBB;
-	border-radius: 0px;
-	padding: 0px 3px;
-	line-height: 35px !important;
-	color: #4a4a4a;
-}
-
-#loginForm input.v-textfield.v-textfield-focus {
-	border-color: #7ba0cc;
 }
 
 #loginForm .formFooter {
@@ -16334,37 +16326,35 @@ input.v-textfield-errorField {
 	text-align: center;
 }
 
-.forgotPwdForm #loginForm #submitLogin {
-	margin-top: 0px;
-	text-align: left;
+#loginForm #newToUs {
+	float: left;
+	display: block;
+	width: 100%;
+	padding: 0px 0px 10px;
+	text-align: center;
+	color: #888;
 }
 
 #loginForm .rememberMe .v-checkbox {
 	width: 410px;
-	margin: 0 auto;
-	color: #777777;
+	margin: 0px;
+	color: #888;
 }
 
 #loginForm .rememberMe .v-checkbox label {
-	font-size: 14px;
-}
-
-#loginForm .rememberMe .v-checkbox input {
-	margin-left: 0px;
+	font-size: 13px;
 }
 
 #loginForm #submitLogin .v-button {
 	border: none;
 }
 
-#loginForm #submitLogin .v-button-wrap {
+#loginForm #submitLogin .v-button .v-button-wrap {
 	height: 30px;
 }
 
-#loginForm #submitLogin .v-button-wrap .v-button-caption {
+#loginForm #submitLogin .v-button .v-button-wrap .v-button-caption {
 	font-size: 17px;
-	line-height: 30px;
-	margin: 0 15px;
 }
 
 #loginForm .formFooterLinks {
@@ -16388,27 +16378,6 @@ input.v-textfield-errorField {
 #loginForm .formFooterLinks #forgotLink {
 	float: left;
 	width: 50%;
-	color: #006dac;
-}
-
-.forgotPwdForm #loginForm #forgotLink {
-	margin-top: 20px;
-	display: inline-block;
-	margin-left: 0px;
-	color: #006dac;
-}
-
-#loginForm #forgotLink .v-button {
-	margin-left: 8px;
-}
-
-#loginFormContainer #newToUs {
-	float: left;
-	display: block;
-	width: 100%;
-	padding: 0px 0px 10px;
-	text-align: center;
-	color: #54707c;
 }
 
 #loginForm .customErrorMsg {
@@ -16426,6 +16395,22 @@ input.v-textfield-errorField {
 
 #loginForm .customErrorMsg .v-label:before {
 	content: "*\0020";
+}
+
+.forgotPwdForm #loginForm #forgotLink {
+	margin-top: 20px;
+	display: inline-block;
+	margin-left: 0px;
+	color: #006dac;
+}
+
+.forgotPwdForm #loginForm #submitLogin {
+	margin-top: 0px;
+	text-align: left;
+}
+
+#loginForm #forgotLink .v-button {
+	margin-left: 8px;
 }
 
 #login-footer #support-links {

@@ -56,6 +56,7 @@
       }
       .projectlink-wrapper, .projectlink-wrapper-archived {
         border-right: 1px solid $my-separator-color;
+        border-left: 1px solid $my-separator-color;
         padding: 10px 15px 8px;
       }
       .projectlink-wrapper {
@@ -231,10 +232,10 @@
     padding: 15px 30px;
     .h1 {
       padding: 0px;
-      color: white;
+      color: $my-white-color;
     }
     .h2, .v-button-link .v-button-caption, .v-button-link .v-icon, .v-label, .v-label a  {
-      color: white;
+      color: $my-white-color;
     }
   }
 
