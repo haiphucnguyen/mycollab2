@@ -59,9 +59,9 @@ public class PopupFieldBuilder {
             public Component getPopupComponent() {
                 MVerticalLayout layout = new MVerticalLayout();
                 layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-                Label infoLbl =  new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
+                Label infoLbl = new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
 
-                Button requestFeatureBtn = new Button("Request the premium edition");
+                Button requestFeatureBtn = new Button("Buy the premium edition");
                 requestFeatureBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 BrowserWindowOpener opener = new BrowserWindowOpener("mailto:support@mycollab.com");
                 opener.extend(requestFeatureBtn);

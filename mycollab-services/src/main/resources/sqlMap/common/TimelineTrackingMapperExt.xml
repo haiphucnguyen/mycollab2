@@ -58,20 +58,20 @@
     </sql>
 
     <select id="findTimelineItems" parameterType="map"
-            resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
-            #repeat(${_parameter.dates} $date "UNION" "" "")
+            resultType="map" lang="velocity">
+            #repeat(${_parameter.groupVals} $groupVal "UNION" "" "")
+              #repeat(${_parameter.dates} $date "UNION" "" "")
                 SELECT s_timeline_tracking.fieldval AS groupid,
-                    (SELECT COALESCE(SUM(temp_tbl.flag), 0) FROM s_timeline_tracking AS temp_tbl WHERE
-                           temp_tbl.fieldval = s_timeline_tracking.fieldval
-                           AND temp_tbl.forDay &lt;= @{date}
-                           <include refid="queryTempSearchCriteria"/>) AS value,
-                DATE_FORMAT(@{date},"%Y-%m-%d") as groupname
+                  (SELECT COALESCE(SUM(temp_tbl.flag), 0) FROM s_timeline_tracking AS temp_tbl WHERE
+                    temp_tbl.fieldval = s_timeline_tracking.fieldval AND temp_tbl.forDay &lt;= @{date}
+                  <include refid="queryTempSearchCriteria"/>) AS value,
+                  DATE_FORMAT(@{date},"%Y-%m-%d") as groupname
                 FROM s_timeline_tracking
-
                 #trimext("WHERE" "AND|OR")
-                    s_timeline_tracking.fieldval = @{_parameter.groupVal}
+                  s_timeline_tracking.fieldval = '${groupVal}'
                     <include refid="querySearchCriteria"/>
-                #end
+                  #end
+              #end
             #end
     </select>
 </mapper>

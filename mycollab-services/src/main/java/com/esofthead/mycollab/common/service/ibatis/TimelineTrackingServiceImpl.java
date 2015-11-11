@@ -31,6 +31,7 @@ import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -66,17 +67,33 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
         long days = period.getStandardDays();
 
         //Will try to get from cache values from the end date to (startdate - 1)
-        for (int i = 0; i <= days-1; i++) {
+        for (int i = 0; i <= days; i++) {
             dates.add(startDate.plusDays(i).toDate());
         }
+        Map<String, List<GroupItem>> cacheItems = new HashMap<>();
+//        for (String groupVal : groupVals) {
+//            List<GroupItem> timelineItems = timelineTrackingCachingMapperExt.findTimelineItems(groupVal, dates, criteria);
+//            cacheItems.put(groupVal, timelineItems);
+//        }
 
-
+        List<Map> timelineItems = timelineTrackingMapperExt.findTimelineItems(groupVals, dates, criteria);
         Map<String, List<GroupItem>> items = new HashMap<>();
-        for (String groupVal : groupVals) {
-            List<GroupItem> timelineItems = timelineTrackingMapperExt.findTimelineItems(groupVal, dates, criteria);
-            items.put(groupVal, timelineItems);
+        for (Map map : timelineItems) {
+            String groupVal = (String) map.get("groupid");
+            GroupItem item = new GroupItem();
+            item.setValue(((BigDecimal) map.get("value")).intValue());
+            item.setGroupid((String) map.get("groupid"));
+            item.setGroupname((String) map.get("groupname"));
+            Object obj = items.get(groupVal);
+            if (obj == null) {
+                List<GroupItem> itemLst = new ArrayList<>();
+                itemLst.add(item);
+                items.put(groupVal, itemLst);
+            } else {
+                List<GroupItem> itemLst = (List<GroupItem>) obj;
+                itemLst.add(item);
+            }
         }
-
         return items;
     }
 }
