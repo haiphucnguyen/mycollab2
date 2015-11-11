@@ -200,7 +200,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
     .subdomain {
       font-size: $font-normal;
-      color: white;
+      color: $my-white-color;
       padding: 0 6px 0 3px;
       font-weight: bold;
     }
@@ -225,14 +225,14 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
           }
           .v-popup-indicator::before {
             content:'\f0dd';
-            color:white;
+            color:$my-white-color;
             font-size: 15px;
             opacity: 1;
           }
         }
       }
       .v-button.notification-button, .v-button.notification-button.v-pressed {
-        background-color: white;
+        background-color: $my-white-color;
         border-radius: 5px;
         .v-button-caption {
           color: #c31616;
@@ -967,14 +967,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   /* Style calendar */
 
-  .v-horizontallayout.calendarHeader {
-    background-color: #3A3A3A;
-  }
-
-  .v-label.calendarDateLabel {
-    color: white;
-  }
-
   div.v-stylecalendar {
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
@@ -982,7 +974,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     -webkit-border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border: 0px solid #d9d8cb;
+    border: 0px solid $my-separator-color;
     background-color: white;
   }
 
@@ -1032,7 +1024,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     .red {
       background-color: #0C7AD3;
       background-repeat: repeat-x;
-      color: white;
+      color: $my-white-color;
     }
   }
 
@@ -1438,7 +1430,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       border: none;
       font-size: $font-x-large;
       padding: 7px 10px;
-      color: white;
+      color: $my-white-color;
     }
     &.v-Notification-warning {
       h1, p {
@@ -1460,7 +1452,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     background-color: darkslategray;
     box-shadow: none;
     h1, p {
-      color:white;
+      color:$my-white-color;
     }
   }
 
@@ -1500,7 +1492,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .trialEndingNotification {
     background-color: rgb(232, 160, 82);
-    color: white;
+    color: $my-white-color;
     padding: 0px 10px;
     display: inline-block;
     vertical-align: middle;
@@ -1513,7 +1505,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       width: 0px;
     }
     a {
-      color: white;
+      color: $my-white-color;
       display: block;
     }
     .informBlock {

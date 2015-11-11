@@ -426,7 +426,7 @@
   div.v-csslayout.member-token{
     cursor: text;
     .v-textfield {
-      border: 0px solid white;
+      border: 0px solid $my-separator-color;
       &:focus {
         @include box-shadow(none);
       }
@@ -871,31 +871,31 @@
     }
     .v-calendar-event.owner, .v-calendar-event-owner-all-day {
       background-color: green;
-      color: white;
+      color: $my-white-color;
     }
     .v-calendar-event.otheruser, .v-calendar-event-otheruser-all-day {
       background-color: cadetblue;
-      color: white;
+      color: $my-white-color;
     }
     .v-calendar-event.nonowner, .v-calendar-event-nonowner-all-day {
       background-color: brown;
-      color: white;
+      color: $my-white-color;
     }
   }
   .v-label {
     &.owner {
       background-color: green;
-      color:white;
+      color:$my-white-color;
       padding: 5px;
     }
     &.otheruser {
       background-color: cadetblue;
-      color:white;
+      color:$my-white-color;
       padding: 5px;
     }
     &.nonowner {
       background-color: brown;
-      color:white;
+      color:$my-white-color;
       padding: 5px;
     }
   }

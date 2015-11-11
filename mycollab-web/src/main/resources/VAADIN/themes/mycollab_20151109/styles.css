@@ -1689,7 +1689,7 @@ a.pending {
 }
 
 .v-button.buttonPaging.current, .v-button.buttonPaging:hover {
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-vertical.case-noitem {
@@ -1789,7 +1789,7 @@ a.pending {
 }
 
 .optionPopupContent .action-wrap:hover .v-button-action {
-	color: white;
+	color: #f7f7f7;
 }
 
 .optionPopupContent .v-label.section-header {
@@ -1958,7 +1958,7 @@ div.v-window {
 
 .v-popupview.block-popupedit:hover {
 	background-color: #33aae5;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-popupview.block-popupedit .nonValue .hide {
@@ -2009,7 +2009,7 @@ span.block {
 	border-radius: 5px;
 	padding: 3px 7px 3px 7px;
 	margin-right: 2px;
-	color: white;
+	color: #f7f7f7;
 }
 
 .wizard .wizard-progress-bar {
@@ -13593,7 +13593,6 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 .v-button.v-button-greenbtn {
 	color: white;
 	font-weight: normal;
-	background-color: #1a8fcb;
 }
 
 .v-button.v-button-block {
@@ -13966,7 +13965,7 @@ a.pending {
 }
 
 .v-button.buttonPaging.current, .v-button.buttonPaging:hover {
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-vertical.case-noitem {
@@ -14066,7 +14065,7 @@ a.pending {
 }
 
 .optionPopupContent .action-wrap:hover .v-button-action {
-	color: white;
+	color: #f7f7f7;
 }
 
 .optionPopupContent .v-label.section-header {
@@ -14235,7 +14234,7 @@ div.v-window {
 
 .v-popupview.block-popupedit:hover {
 	background-color: #33aae5;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-popupview.block-popupedit .nonValue .hide {
@@ -14286,7 +14285,7 @@ span.block {
 	border-radius: 5px;
 	padding: 3px 7px 3px 7px;
 	margin-right: 2px;
-	color: white;
+	color: #f7f7f7;
 }
 
 .wizard .wizard-progress-bar {
@@ -15175,7 +15174,7 @@ div.v-csslayout.member-token {
 }
 
 div.v-csslayout.member-token .v-textfield {
-	border: 0px solid white;
+	border: 0px solid #e5e5e5;
 }
 
 div.v-csslayout.member-token .v-textfield:focus {
@@ -15603,34 +15602,34 @@ div.v-button.token-field:hover {
 
 .v-calendar.assignment-calendar .v-calendar-event.owner, .v-calendar.assignment-calendar .v-calendar-event-owner-all-day {
 	background-color: green;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.otheruser, .v-calendar.assignment-calendar .v-calendar-event-otheruser-all-day {
 	background-color: cadetblue;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.nonowner, .v-calendar.assignment-calendar .v-calendar-event-nonowner-all-day {
 	background-color: brown;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-label.owner {
 	background-color: green;
-	color: white;
+	color: #f7f7f7;
 	padding: 5px;
 }
 
 .v-label.otheruser {
 	background-color: cadetblue;
-	color: white;
+	color: #f7f7f7;
 	padding: 5px;
 }
 
 .v-label.nonowner {
 	background-color: brown;
-	color: white;
+	color: #f7f7f7;
 	padding: 5px;
 }
 
@@ -15997,7 +15996,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .subdomain {
 	font-size: 13px;
-	color: white;
+	color: #f7f7f7;
 	padding: 0 6px 0 3px;
 	font-weight: bold;
 }
@@ -16031,13 +16030,13 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-popup-indicator::before, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-popup-indicator::before {
 	content: "\f0dd";
-	color: white;
+	color: #f7f7f7;
 	font-size: 15px;
 	opacity: 1;
 }
 
 .topNavigation .accountMenuContainer .v-button.notification-button, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed {
-	background-color: white;
+	background-color: #f7f7f7;
 	border-radius: 5px;
 }
 
@@ -16787,14 +16786,6 @@ div.v-csslayout.member-block {
 	text-decoration: line-through;
 }
 
-.v-horizontallayout.calendarHeader {
-	background-color: #3A3A3A;
-}
-
-.v-label.calendarDateLabel {
-	color: white;
-}
-
 div.v-stylecalendar {
 	-moz-border-radius-topleft: 5px;
 	-moz-border-radius-topright: 5px;
@@ -16802,7 +16793,7 @@ div.v-stylecalendar {
 	-webkit-border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	border: 0px solid #d9d8cb;
+	border: 0px solid #e5e5e5;
 	background-color: white;
 }
 
@@ -16854,7 +16845,7 @@ div.v-stylecalendar .weekdays TD {
 .v-stylecalendar .red {
 	background-color: #0C7AD3;
 	background-repeat: repeat-x;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-label.numberTotal {
@@ -17237,7 +17228,7 @@ div.v-ratingstars-bar {
 	border: none;
 	font-size: 18px;
 	padding: 7px 10px;
-	color: white;
+	color: #f7f7f7;
 }
 
 .v-Notification.v-Notification-warning h1, .v-Notification.v-Notification-warning p {
@@ -17260,7 +17251,7 @@ div.v-ratingstars-bar {
 }
 
 .v-Notification.humanized h1, .v-Notification.humanized p {
-	color: white;
+	color: #f7f7f7;
 }
 
 .cancelAccountHeader .first-line {
@@ -17295,7 +17286,7 @@ div.v-ratingstars-bar {
 
 .trialEndingNotification {
 	background-color: #e8a052;
-	color: white;
+	color: #f7f7f7;
 	padding: 0px 10px;
 	display: inline-block;
 	vertical-align: middle;
@@ -17311,7 +17302,7 @@ div.v-ratingstars-bar {
 }
 
 .trialEndingNotification a {
-	color: white;
+	color: #f7f7f7;
 	display: block;
 }
 
