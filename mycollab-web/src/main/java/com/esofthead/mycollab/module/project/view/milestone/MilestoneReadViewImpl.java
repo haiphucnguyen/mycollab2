@@ -309,10 +309,9 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
                                 String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
                                 Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
                                         .getAssignUserFullName());
-                                rowComp.with(new ELabel(img.write(), ContentMode.HTML));
 
                                 MCssLayout issueWrapper = new MCssLayout(issueLbl);
-                                rowComp.with(issueWrapper);
+                                rowComp.with(new ELabel(img.write(), ContentMode.HTML), issueWrapper).expand(issueWrapper);
                                 assignmentsLayout.add(rowComp);
                             }
                             this.push();

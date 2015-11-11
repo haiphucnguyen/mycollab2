@@ -14,7 +14,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
-import com.esofthead.mycollab.core.utils.ColorUtils;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -84,9 +83,6 @@ public class ThemeManager {
             extraStyles.append(".projectfeed-hdr-wrapper { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
 
-            extraStyles.append(".milestone-view-header {background-color: " + ColorUtils.brighterColor("#"
-                    + accountTheme.getVtabsheetbg()) + ";}");
-
             extraStyles.append(".v-label.volumeUsageInfo { border-top: 25px solid #" + accountTheme
                     .getVtabsheetbg() + ";}");
         }
@@ -97,11 +93,19 @@ public class ThemeManager {
 
             extraStyles.append(".vertical-tabsheet .v-button-tab:hover {background-color: #" + accountTheme
                     .getVtabsheetbgselected() + ";}");
+
+            extraStyles.append(".milestone-view-header {background-color: #" + accountTheme.getVtabsheetbgselected() + ";}");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
             extraStyles.append(".vertical-tabsheet .v-button-tab > .v-button-wrap { color: #"
                     + accountTheme.getVtabsheettext() + "; }");
+
+            extraStyles.append(".project-info .header { color: #" + accountTheme.getVtabsheettext() + "; }");
+
+            extraStyles.append(".project-info .desc .v-label { color: #" + accountTheme.getVtabsheettext() + "; }");
+
+            extraStyles.append(".project-info .desc .v-label a { color: #" + accountTheme.getVtabsheettext() + "; }");
         }
 
         if (accountTheme.getVtabsheettextselected() != null) {

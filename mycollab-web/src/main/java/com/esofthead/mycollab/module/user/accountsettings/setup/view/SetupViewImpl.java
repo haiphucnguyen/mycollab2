@@ -104,7 +104,6 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
 
             });
             closeBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-            buttonControls.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
 
             final Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -140,7 +139,7 @@ public class SetupViewImpl extends AbstractPageView implements SetupView {
             saveBtn.setStyleName(UIConstants.BUTTON_ACTION);
             saveBtn.setIcon(FontAwesome.SAVE);
             saveBtn.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-            buttonControls.with(saveBtn).withAlign(saveBtn, Alignment.MIDDLE_RIGHT);
+            buttonControls.with(saveBtn, closeBtn).alignAll(Alignment.MIDDLE_RIGHT);
             return buttonControls;
         }
 

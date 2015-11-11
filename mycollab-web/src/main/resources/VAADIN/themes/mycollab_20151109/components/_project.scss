@@ -693,7 +693,6 @@
   .project-info {
     .header {
       font-size: $font-xx-large;
-      color: white;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -701,7 +700,6 @@
     .desc {
       .v-label, .v-label a {
         font-size: $font-small;
-        color: #f7f7f7;
       }
     }
   }

@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-ui.
- *
  * mycollab-ui is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-ui is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,7 +25,6 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitHandler;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
-import org.joda.time.DateTimeZone;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Path;
@@ -207,6 +203,13 @@ public abstract class AbstractBeanFieldGroupEditFieldFactory<B> implements IBean
 
             }
             throw new CommitException(errorMsg.toString());
+        }
+    }
+
+    @Override
+    public void setBuffered(boolean isBuffered) {
+        if (fieldGroup != null) {
+            fieldGroup.setBuffered(isBuffered);
         }
     }
 

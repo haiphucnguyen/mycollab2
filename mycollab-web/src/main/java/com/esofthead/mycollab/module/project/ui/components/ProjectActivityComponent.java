@@ -258,7 +258,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                     GenericI18Enum.EXT_MODIFIED_ITEM, auditLog.getPostedUserFullName(),
                     AppContext.formatPrettyTime(auditLog.getPosteddate())), ContentMode.HTML).
                     withDescription(AppContext.formatDateTime(auditLog.getPosteddate()));
-            timePostLbl.setStyleName("time-post");
+            timePostLbl.setStyleName(UIConstants.LABEL_META_INFO);
             messageHeader.with(timePostLbl).expand(timePostLbl);
 
             rowLayout.addComponent(messageHeader);

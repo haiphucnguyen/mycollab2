@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.2.1</version>
+        <version>5.2.2</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-pro</artifactId>
-            <version>5.2.1</version>
+            <version>5.2.2</version>
         </dependency>
     </dependencies>
 </project>

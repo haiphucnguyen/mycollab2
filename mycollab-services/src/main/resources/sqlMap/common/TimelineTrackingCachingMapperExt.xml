@@ -6,12 +6,44 @@
         ]]>
     </sql>
 
+    <sql id="querySearchCriteria">
+        <![CDATA[
+
+        #set($searchCriteria = $_parameter.searchCriteria)
+
+        #ifnotnull($searchCriteria.saccountid)
+            ${searchCriteria.saccountid.operation} s_timeline_tracking_cache.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
+        #end
+
+        #ifnotnull($searchCriteria.type)
+            ${searchCriteria.type.operation} s_timeline_tracking_cache.type = @{searchCriteria.type.value}
+        #end
+
+        #ifnotnull($searchCriteria.fieldgroup)
+            ${searchCriteria.fieldgroup.operation} s_timeline_tracking_cache.fieldgroup = @{searchCriteria.fieldgroup.value}
+        #end
+
+        #ifnotnull($searchCriteria.extraTypeIds)
+            ${searchCriteria.extraTypeIds.operation} s_timeline_tracking_cache.extratypeid IN
+            #repeat(${searchCriteria.extraTypeIds.values} $extraTypeId "," "(" ")")
+                @{extraTypeId}
+            #end
+        #end
+
+        #selectExpr($searchCriteria.extraFields)
+        ]]>
+    </sql>
+
     <select id="findTimelineItems" parameterType="map"
             resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
         #repeat(${_parameter.dates} $date "UNION" "" "")
             SELECT s_timeline_tracking_cache.fieldval AS groupid, s_timeline_tracking_cache.count AS value,
                 DATE_FORMAT(@{date},"%Y-%m-%d") as groupname
             FROM s_timeline_tracking_cache
+            #trimext("WHERE" "AND|OR")
+                s_timeline_tracking_cache.fieldval = @{_parameter.groupVal}
+                <include refid="querySearchCriteria"/>
+            #end
         #end
     </select>
 </mapper>

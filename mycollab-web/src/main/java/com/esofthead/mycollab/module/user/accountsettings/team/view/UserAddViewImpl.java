@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -92,6 +89,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
     private class EditUserForm extends AdvancedEditBeanForm<SimpleUser> {
         private static final long serialVersionUID = 1L;
 
+
         public void displayBasicForm(SimpleUser newDataSource) {
             this.setFormLayoutFactory(new BasicFormLayoutFactory());
             this.setBeanFormFieldFactory(new BasicEditFormFieldFactory(editUserForm));
@@ -109,6 +107,205 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 ((BasicFormLayoutFactory) getLayoutFactory()).displayRolePermission(roleId);
             }
         }
+
+        private class BasicFormLayoutFactory implements IFormLayoutFactory {
+            private static final long serialVersionUID = 1L;
+
+            private GridFormLayoutHelper basicInformationLayout;
+            private VerticalLayout rolePermissionLayout;
+
+            @Override
+            public ComponentContainer getLayout() {
+                String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) :
+                        user.getDisplayName();
+                AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
+
+                FormContainer layout = new FormContainer();
+                basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
+                layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION), basicInformationLayout.getLayout());
+
+                formAddLayout.addHeaderRight(createButtonControls());
+                formAddLayout.addBody(layout);
+                formAddLayout.addBottomControls(createBottomPanel());
+                return formAddLayout;
+            }
+
+            private Layout createButtonControls() {
+                return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
+            }
+
+            private Layout createBottomPanel() {
+                MVerticalLayout bottomPanel = new MVerticalLayout().withSpacing(false).withMargin(false);
+                Button moreInfoBtn = new Button("More information...", new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        EditUserForm.this.setFormBuffered(false);
+                        editUserForm.displayAdvancedForm(user);
+                        EditUserForm.this.setFormBuffered(true);
+                    }
+                });
+                moreInfoBtn.addStyleName(UIConstants.BUTTON_LINK);
+                MHorizontalLayout linkWrap = new MHorizontalLayout().withMargin(true).with(moreInfoBtn);
+                bottomPanel.with(linkWrap).withAlign(linkWrap, Alignment.MIDDLE_LEFT);
+
+                rolePermissionLayout = new VerticalLayout();
+                bottomPanel.addComponent(rolePermissionLayout);
+                return bottomPanel;
+            }
+
+            private void displayRolePermission(Integer roleId) {
+                rolePermissionLayout.removeAllComponents();
+                PermissionMap permissionMap = null;
+                if (roleId != null && roleId > 0) {
+                    RoleService roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
+                    SimpleRole role = roleService.findById(roleId, AppContext.getAccountId());
+                    if (role != null) {
+                        permissionMap = role.getPermissionMap();
+                    }
+                } else {
+                    permissionMap = PermissionMap.buildAdminPermissionCollection();
+                }
+
+                if (permissionMap != null) {
+                    rolePermissionLayout.addComponent(constructPermissionSectionView("Project", permissionMap,
+                            RolePermissionCollections.PROJECT_PERMISSION_ARR));
+
+                    rolePermissionLayout.addComponent(constructPermissionSectionView("Customer Management", permissionMap,
+                            RolePermissionCollections.CRM_PERMISSIONS_ARR));
+
+                    rolePermissionLayout.addComponent(constructPermissionSectionView("Document", permissionMap,
+                            RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
+
+                    rolePermissionLayout.addComponent(constructPermissionSectionView("Account Management", permissionMap,
+                            RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
+                }
+            }
+
+            protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
+                                                                        List<PermissionDefItem> defItems) {
+                GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
+                FormContainer permissionsPanel = new FormContainer();
+
+                for (int i = 0; i < defItems.size(); i++) {
+                    PermissionDefItem permissionDefItem = defItems.get(i);
+                    formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
+                            permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
+                }
+                permissionsPanel.addSection(depotTitle, formHelper.getLayout());
+                return permissionsPanel;
+            }
+
+            @Override
+            public void attachField(Object propertyId, Field<?> field) {
+                if (User.Field.email.equalTo(propertyId)) {
+                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 1, 0);
+                } else if (SimpleUser.Field.roleid.equalTo(propertyId)) {
+                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 1);
+                } else if (User.Field.firstname.equalTo(propertyId)) {
+                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
+                } else if (User.Field.lastname.equalTo(propertyId)) {
+                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
+                }
+            }
+
+        }
+
+        private class BasicEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {
+            private static final long serialVersionUID = 1L;
+
+            BasicEditFormFieldFactory(GenericBeanForm<SimpleUser> form) {
+                super(form);
+            }
+
+            @Override
+            protected Field<?> onCreateField(Object propertyId) {
+                if (SimpleUser.Field.roleid.equalTo(propertyId)) {
+                    return new AdminRoleSelectionField();
+                } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) ||
+                        User.Field.lastname.equalTo(propertyId)) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("This field must be not null");
+                    return tf;
+                }
+
+                return null;
+            }
+        }
+
+        private class AdvancedFormLayoutFactory implements IFormLayoutFactory {
+            private static final long serialVersionUID = 1L;
+            private UserInformationLayout userInformationLayout;
+
+            @Override
+            public ComponentContainer getLayout() {
+                String title = (user.getUsername() == null) ?
+                        AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
+                AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
+                formAddLayout.addHeaderRight(createButtonControls());
+                userInformationLayout = new UserInformationLayout();
+                formAddLayout.addBody(userInformationLayout.getLayout());
+                return formAddLayout;
+            }
+
+            private Layout createButtonControls() {
+                return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
+            }
+
+            @Override
+            public void attachField(Object propertyId, Field<?> field) {
+                userInformationLayout.attachField(propertyId, field);
+            }
+        }
+
+        private class AdvancedEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {
+            private static final long serialVersionUID = 1L;
+
+            AdvancedEditFormFieldFactory(GenericBeanForm<SimpleUser> form) {
+                super(form);
+            }
+
+            @Override
+            protected Field<?> onCreateField(Object propertyId) {
+                if (SimpleUser.Field.roleid.equalTo(propertyId)) {
+                    return new AdminRoleSelectionField();
+                } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId)
+                        || User.Field.lastname.equalTo(propertyId)) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("This field must be not null");
+                    return tf;
+                } else if (propertyId.equals("dateofbirth")) {
+                    return new DateComboboxSelectionField();
+                } else if (propertyId.equals("timezone")) {
+                    TimeZoneSelectionField cboTimezone = new TimeZoneSelectionField(false);
+                    if (user.getTimezone() != null) {
+                        cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(user.getTimezone()));
+                    } else {
+                        if (AppContext.getUser().getTimezone() != null) {
+                            cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(AppContext.getUser().getTimezone()));
+                        }
+                    }
+                    return cboTimezone;
+                } else if (propertyId.equals("country")) {
+                    final CountryComboBox cboCountry = new CountryComboBox();
+                    cboCountry.addValueChangeListener(new Property.ValueChangeListener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void valueChange(final Property.ValueChangeEvent event) {
+                            user.setCountry((String) cboCountry.getValue());
+                        }
+                    });
+                    return cboCountry;
+                }
+                return null;
+            }
+        }
     }
 
     private static String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
@@ -123,205 +320,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             } else {
                 throw new MyCollabException("Do not support permission value " + perVal);
             }
-        }
-    }
-
-    private class BasicFormLayoutFactory implements IFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
-
-        private GridFormLayoutHelper basicInformationLayout;
-        private VerticalLayout rolePermissionLayout;
-
-        @Override
-        public ComponentContainer getLayout() {
-            String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) :
-                    user.getDisplayName();
-            AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
-
-            FormContainer layout = new FormContainer();
-            basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
-            layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION), basicInformationLayout.getLayout());
-
-            formAddLayout.addHeaderRight(createButtonControls());
-            formAddLayout.addBody(layout);
-            formAddLayout.addBottomControls(createBottomPanel());
-            return formAddLayout;
-        }
-
-        private Layout createButtonControls() {
-            return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
-        }
-
-        private Layout createBottomPanel() {
-            MVerticalLayout bottomPanel = new MVerticalLayout().withSpacing(false).withMargin(false);
-            Button moreInfoBtn = new Button("More information...", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    editUserForm.displayAdvancedForm(user);
-                }
-            });
-            moreInfoBtn.addStyleName(UIConstants.BUTTON_LINK);
-            MHorizontalLayout linkWrap = new MHorizontalLayout().withMargin(true).with(moreInfoBtn);
-            bottomPanel.with(linkWrap).withAlign(linkWrap, Alignment.MIDDLE_LEFT);
-
-            rolePermissionLayout = new VerticalLayout();
-            bottomPanel.addComponent(rolePermissionLayout);
-            return bottomPanel;
-        }
-
-        private void displayRolePermission(Integer roleId) {
-            rolePermissionLayout.removeAllComponents();
-            PermissionMap permissionMap = null;
-            if (roleId != null && roleId > 0) {
-                RoleService roleService = ApplicationContextUtil.getSpringBean(RoleService.class);
-                SimpleRole role = roleService.findById(roleId, AppContext.getAccountId());
-                if (role != null) {
-                    permissionMap = role.getPermissionMap();
-                }
-            } else {
-                permissionMap = PermissionMap.buildAdminPermissionCollection();
-            }
-
-            if (permissionMap != null) {
-                rolePermissionLayout.addComponent(constructPermissionSectionView("Project", permissionMap,
-                        RolePermissionCollections.PROJECT_PERMISSION_ARR));
-
-                rolePermissionLayout.addComponent(constructPermissionSectionView("Customer Management", permissionMap,
-                        RolePermissionCollections.CRM_PERMISSIONS_ARR));
-
-                rolePermissionLayout.addComponent(constructPermissionSectionView("Document", permissionMap,
-                        RolePermissionCollections.DOCUMENT_PERMISSION_ARR));
-
-                rolePermissionLayout.addComponent(constructPermissionSectionView("Account Management", permissionMap,
-                        RolePermissionCollections.ACCOUNT_PERMISSION_ARR));
-            }
-        }
-
-        protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
-                                                                    List<PermissionDefItem> defItems) {
-            GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
-            FormContainer permissionsPanel = new FormContainer();
-
-            for (int i = 0; i < defItems.size(); i++) {
-                PermissionDefItem permissionDefItem = defItems.get(i);
-                formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
-                        permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
-            }
-            permissionsPanel.addSection(depotTitle, formHelper.getLayout());
-            return permissionsPanel;
-        }
-
-        @Override
-        public void attachField(Object propertyId, Field<?> field) {
-            if (User.Field.email.equalTo(propertyId)) {
-                basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 1, 0);
-            } else if (SimpleUser.Field.roleid.equalTo(propertyId)) {
-                basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 1);
-            } else if (User.Field.firstname.equalTo(propertyId)) {
-                basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
-            } else if (User.Field.lastname.equalTo(propertyId)) {
-                basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
-            }
-        }
-
-    }
-
-    private class BasicEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {
-        private static final long serialVersionUID = 1L;
-
-        public BasicEditFormFieldFactory(GenericBeanForm<SimpleUser> form) {
-            super(form);
-        }
-
-        @Override
-        protected Field<?> onCreateField(Object propertyId) {
-            if (SimpleUser.Field.roleid.equalTo(propertyId)) {
-                return new AdminRoleSelectionField();
-            } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) ||
-                    User.Field.lastname.equalTo(propertyId)) {
-                TextField tf = new TextField();
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("This field must be not null");
-                return tf;
-            }
-
-            return null;
-        }
-
-    }
-
-    private class AdvancedFormLayoutFactory implements IFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
-        private UserInformationLayout userInformationLayout;
-
-        @Override
-        public ComponentContainer getLayout() {
-            String title = (user.getUsername() == null) ?
-                    AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
-            AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
-            formAddLayout.addHeaderRight(createButtonControls());
-            userInformationLayout = new UserInformationLayout();
-            formAddLayout.addBody(userInformationLayout.getLayout());
-            return formAddLayout;
-        }
-
-        private Layout createButtonControls() {
-            return new EditFormControlsGenerator<>(editUserForm).createButtonControls();
-        }
-
-        @Override
-        public void attachField(Object propertyId, Field<?> field) {
-            userInformationLayout.attachField(propertyId, field);
-        }
-    }
-
-    private class AdvancedEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {
-        private static final long serialVersionUID = 1L;
-
-        public AdvancedEditFormFieldFactory(GenericBeanForm<SimpleUser> form) {
-            super(form);
-        }
-
-        @Override
-        protected Field<?> onCreateField(Object propertyId) {
-            if (SimpleUser.Field.roleid.equalTo(propertyId)) {
-                return new AdminRoleSelectionField();
-            } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId)
-                    || User.Field.lastname.equalTo(propertyId)) {
-                TextField tf = new TextField();
-                tf.setNullRepresentation("");
-                tf.setRequired(true);
-                tf.setRequiredError("This field must be not null");
-                return tf;
-            } else if (propertyId.equals("dateofbirth")) {
-                return new DateComboboxSelectionField();
-            } else if (propertyId.equals("timezone")) {
-                TimeZoneSelectionField cboTimezone = new TimeZoneSelectionField(false);
-                if (user.getTimezone() != null) {
-                    cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(user.getTimezone()));
-                } else {
-                    if (AppContext.getUser().getTimezone() != null) {
-                        cboTimezone.setTimeZone(TimezoneMapper.getTimezoneExt(AppContext.getUser().getTimezone()));
-                    }
-                }
-                return cboTimezone;
-            } else if (propertyId.equals("country")) {
-                final CountryComboBox cboCountry = new CountryComboBox();
-                cboCountry.addValueChangeListener(new Property.ValueChangeListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void valueChange(
-                            final Property.ValueChangeEvent event) {
-                        user.setCountry((String) cboCountry.getValue());
-                    }
-                });
-                return cboCountry;
-            }
-            return null;
         }
     }
 

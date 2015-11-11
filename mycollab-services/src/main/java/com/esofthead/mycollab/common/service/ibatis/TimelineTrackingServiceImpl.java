@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.common.service.ibatis;
 
+import com.esofthead.mycollab.common.dao.TimelineTrackingCachingMapperExt;
 import com.esofthead.mycollab.common.dao.TimelineTrackingMapper;
 import com.esofthead.mycollab.common.dao.TimelineTrackingMapperExt;
 import com.esofthead.mycollab.common.domain.GroupItem;
@@ -45,6 +46,9 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
     @Autowired
     private TimelineTrackingMapperExt timelineTrackingMapperExt;
 
+    @Autowired
+    private TimelineTrackingCachingMapperExt timelineTrackingCachingMapperExt;
+
     @Override
     public ICrudGenericDAO<Integer, TimelineTracking> getCrudMapper() {
         return timelineTrackingMapper;
@@ -60,9 +64,12 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
         Duration period = new Duration(startDate, endDate);
         List<Date> dates = new ArrayList<>();
         long days = period.getStandardDays();
-        for (int i = 0; i <= days; i++) {
+
+        //Will try to get from cache values from the end date to (startdate - 1)
+        for (int i = 0; i <= days-1; i++) {
             dates.add(startDate.plusDays(i).toDate());
         }
+
 
         Map<String, List<GroupItem>> items = new HashMap<>();
         for (String groupVal : groupVals) {

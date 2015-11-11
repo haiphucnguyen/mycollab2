@@ -2026,17 +2026,9 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     .v-label {
       border-bottom: 1px solid $my-border-color;
       padding-bottom: 13px;
-      color: white;
+      color: $my-white-color;
     }
-    &.v-margin-top {
-      padding-top: 13px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
+    @include margin-container(13px, 10px, 0px, 10px);
   }
 
   /* Opportunity Contact Role Edit */

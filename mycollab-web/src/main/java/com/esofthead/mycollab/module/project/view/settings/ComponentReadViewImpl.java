@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,7 +30,10 @@ import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.*;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
+import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
+import com.esofthead.mycollab.module.project.ui.components.ProjectMemberLink;
 import com.esofthead.mycollab.module.project.ui.format.ComponentFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -287,21 +287,20 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
                         } else if (bug.isOverdue()) {
                             issueLbl.addStyleName("overdue");
                         }
+                        CssLayout issueWrapper = new CssLayout(issueLbl);
 
                         MHorizontalLayout rowComp = new MHorizontalLayout();
                         rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                        rowComp.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(),
-                                ContentMode.HTML).withWidth("-1px"));
 
                         String bugPriority = bug.getPriority();
                         Span priorityLink = new Span().appendText(ProjectAssetsManager.getBugPriorityHtml(bugPriority)).setTitle(bugPriority);
-                        rowComp.with(new ELabel(priorityLink.write(), ContentMode.HTML).withWidth("-1px"));
 
                         String avatarLink = StorageFactory.getInstance().getAvatarPath(bug.getAssignUserAvatarId(), 16);
                         Img img = new Img(bug.getAssignuserFullName(), avatarLink).setTitle(bug.getAssignuserFullName());
-                        rowComp.with(new ELabel(img.write(), ContentMode.HTML));
 
-                        rowComp.with(issueLbl).expand(issueLbl);
+                        rowComp.with(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml(), ContentMode.HTML).withWidth("-1px"),
+                                new ELabel(priorityLink.write(), ContentMode.HTML).withWidth("-1px"),
+                                new ELabel(img.write(), ContentMode.HTML).withWidth("-1px"), issueWrapper).expand(issueWrapper);
                         issueLayout.add(rowComp);
                     }
                 }

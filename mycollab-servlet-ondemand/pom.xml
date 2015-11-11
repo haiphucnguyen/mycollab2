@@ -7,28 +7,33 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>mycollab-parent-ondemand</artifactId>
-        <version>5.2.1</version>
+        <version>5.2.2</version>
         <relativePath>../mycollab-parent-ondemand/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-core</artifactId>
+            <version>5.2.2</version>
+        </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.2.1</version>
+            <version>5.2.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services-ondemand</artifactId>
-            <version>5.2.1</version>
+            <version>5.2.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>5.2.1</version>
+            <version>5.2.2</version>
             <scope>test</scope>
         </dependency>
 

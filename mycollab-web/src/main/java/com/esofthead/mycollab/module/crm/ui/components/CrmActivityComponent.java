@@ -1,16 +1,13 @@
 /**
  * This file is part of mycollab-web.
- *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -50,7 +47,10 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -95,7 +95,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
                 Object value = sortDirection.getValue();
-                isAscending = "Newest".equals(value);
+                isAscending = "Newest" .equals(value);
                 displayActivities();
             }
         });
@@ -182,7 +182,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
                 GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 AppContext.formatPrettyTime(comment.getCreatedtime())), ContentMode.HTML).
                 withDescription(AppContext.formatDateTime(comment.getCreatedtime()));
-        timePostLbl.setStyleName("time-post");
+        timePostLbl.setStyleName(UIConstants.LABEL_META_INFO);
 
         if (hasDeletePermission(comment)) {
             Button msgDeleteBtn = new Button();
@@ -260,7 +260,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
                     GenericI18Enum.EXT_MODIFIED_ITEM, auditLog.getPostedUserFullName(),
                     AppContext.formatPrettyTime(auditLog.getPosteddate())), ContentMode.HTML).
                     withDescription(AppContext.formatDateTime(auditLog.getPosteddate()));
-            timePostLbl.setStyleName("time-post");
+            timePostLbl.setStyleName(UIConstants.LABEL_META_INFO);
             messageHeader.with(timePostLbl).expand(timePostLbl);
 
             rowLayout.addComponent(messageHeader);

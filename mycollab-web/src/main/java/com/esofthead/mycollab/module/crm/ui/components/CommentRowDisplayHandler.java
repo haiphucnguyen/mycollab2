@@ -63,7 +63,7 @@ public class CommentRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleC
                 formatDateTime(comment.getCreatedtime()));
 
         timePostLbl.setSizeUndefined();
-        timePostLbl.setStyleName("time-post");
+        timePostLbl.setStyleName(UIConstants.LABEL_META_INFO);
         messageHeader.with(timePostLbl).expand(timePostLbl);
 
         // Message delete button
