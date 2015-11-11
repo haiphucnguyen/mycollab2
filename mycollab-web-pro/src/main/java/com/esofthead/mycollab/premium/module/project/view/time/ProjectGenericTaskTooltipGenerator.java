@@ -8,9 +8,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.service.ProblemService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
@@ -35,7 +33,7 @@ class ProjectGenericTaskTooltipGenerator {
 	public ProjectGenericTaskTooltipGenerator(String type, int typeid) {
 		html = "";
 		int sAccountId = AppContext.getAccountId();
-		TimeZone timeZone = AppContext.getTimezone();
+		TimeZone timeZone = AppContext.getUserTimezone();
 		String siteURL = AppContext.getSiteUrl();
 
 		if (ProjectTypeConstants.BUG.equals(type)) {

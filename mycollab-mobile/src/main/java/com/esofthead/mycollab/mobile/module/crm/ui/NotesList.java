@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Note;
@@ -212,7 +211,7 @@ public class NotesList extends AbstractMobilePageView {
             username.setWidth("100%");
 
 
-            Label timePostLbl = new Label(DateTimeUtils.getPrettyDateValue(note.getCreatedtime(), AppContext.getUserLocale()));
+            Label timePostLbl = new Label(AppContext.formatPrettyTime(note.getCreatedtime()));
             timePostLbl.setSizeUndefined();
             timePostLbl.setStyleName("time-post");
             messageHeader.with(username, timePostLbl).expand(username);

@@ -99,7 +99,7 @@ public class CampaignTableDisplay
                                 .getId()));
                 b.setDescription(CrmTooltipGenerator.generateTooltipCampaign(
                         AppContext.getUserLocale(), campaign,
-                        AppContext.getSiteUrl(), AppContext.getTimezone()));
+                        AppContext.getSiteUrl(), AppContext.getUserTimezone()));
                 b.setStyleName(UIConstants.BUTTON_LINK);
 
                 if ("Complete".equals(campaign.getStatus())) {

@@ -1,13 +1,16 @@
 /**
  * This file is part of mycollab-web.
+ *
  * mycollab-web is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
+ *
  * mycollab-web is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -15,6 +18,10 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
+import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
+import com.esofthead.mycollab.form.view.builder.type.DynaForm;
+import com.esofthead.mycollab.form.view.builder.type.DynaSection;
 import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory.UserInformationLayout;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -108,24 +115,20 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             }
         }
 
-        private class BasicFormLayoutFactory implements IFormLayoutFactory {
+        private class BasicFormLayoutFactory implements IWrappedFormLayoutFactory {
             private static final long serialVersionUID = 1L;
 
-            private GridFormLayoutHelper basicInformationLayout;
+            private IFormLayoutFactory formLayoutFactory;
             private VerticalLayout rolePermissionLayout;
 
             @Override
             public ComponentContainer getLayout() {
-                String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) :
-                        user.getDisplayName();
+                String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
                 AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
 
-                FormContainer layout = new FormContainer();
-                basicInformationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
-                layout.addSection(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION), basicInformationLayout.getLayout());
-
+                formLayoutFactory = buildFormLayout();
                 formAddLayout.addHeaderRight(createButtonControls());
-                formAddLayout.addBody(layout);
+                formAddLayout.addBody(formLayoutFactory.getLayout());
                 formAddLayout.addBottomControls(createBottomPanel());
                 return formAddLayout;
             }
@@ -197,19 +200,31 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
                 return permissionsPanel;
             }
 
-            @Override
-            public void attachField(Object propertyId, Field<?> field) {
-                if (User.Field.email.equalTo(propertyId)) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 1, 0);
-                } else if (SimpleUser.Field.roleid.equalTo(propertyId)) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_ROLE), 1, 1);
-                } else if (User.Field.firstname.equalTo(propertyId)) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_FIRST_NAME), 0, 0);
-                } else if (User.Field.lastname.equalTo(propertyId)) {
-                    basicInformationLayout.addComponent(field, AppContext.getMessage(UserI18nEnum.FORM_LAST_NAME), 0, 1);
-                }
+            private DynaFormLayout buildFormLayout() {
+                DynaForm defaultForm = new DynaForm();
+                DynaSection mainSection = new DynaSectionBuilder().header(AppContext.getMessage(UserI18nEnum.SECTION_BASIC_INFORMATION))
+                        .layoutType(DynaSection.LayoutType.TWO_COLUMN).build();
+                mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.firstname).displayName(AppContext
+                        .getMessage(UserI18nEnum.FORM_FIRST_NAME)).fieldIndex(0).build());
+                mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.email).displayName(AppContext
+                        .getMessage(UserI18nEnum.FORM_EMAIL)).fieldIndex(1).build());
+                mainSection.addField(new TextDynaFieldBuilder().fieldName(User.Field.lastname).displayName(AppContext
+                        .getMessage(UserI18nEnum.FORM_LAST_NAME)).fieldIndex(2).build());
+                mainSection.addField(new TextDynaFieldBuilder().fieldName(SimpleUser.Field.roleid).displayName(AppContext
+                        .getMessage(UserI18nEnum.FORM_ROLE)).fieldIndex(3).build());
+                defaultForm.addSection(mainSection);
+                return new DynaFormLayout(defaultForm);
             }
 
+            @Override
+            public void attachField(Object propertyId, Field<?> field) {
+                formLayoutFactory.attachField(propertyId, field);
+            }
+
+            @Override
+            public IFormLayoutFactory getWrappedFactory() {
+                return formLayoutFactory;
+            }
         }
 
         private class BasicEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleUser> {

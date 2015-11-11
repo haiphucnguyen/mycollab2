@@ -32,7 +32,7 @@ public class GenericTaskDetailMapper {
 
     public GenericTaskDetailMapper(String type, int typeId) {
         int sAccountId = AppContext.getAccountId();
-        TimeZone timeZone = AppContext.getTimezone();
+        TimeZone timeZone = AppContext.getUserTimezone();
 
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = ApplicationContextUtil.getSpringBean(BugService.class);

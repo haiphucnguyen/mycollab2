@@ -60,6 +60,7 @@ Version 5.2.2
 **Bug Fixes**
 
 * Fix several issues of push events in the corporate networks
+* Advanced user layout does not keep values of the simple user layout
 
 Version 5.2.1
 -----------------------------

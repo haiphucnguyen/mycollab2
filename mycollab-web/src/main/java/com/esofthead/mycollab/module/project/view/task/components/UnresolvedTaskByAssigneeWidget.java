@@ -41,7 +41,6 @@ import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -152,7 +151,7 @@ public class UnresolvedTaskByAssigneeWidget extends DepotWithChart {
             UserService service = ApplicationContextUtil.getSpringBean(UserService.class);
             SimpleUser user = service.findUserByUserNameInAccount(assignee, AppContext.getAccountId());
             this.setDescription(CommonTooltipGenerator.generateTooltipUser(AppContext.getUserLocale(), user,
-                    AppContext.getSiteUrl(), AppContext.getTimezone()));
+                    AppContext.getSiteUrl(), AppContext.getUserTimezone()));
         }
     }
 }

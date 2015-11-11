@@ -40,8 +40,8 @@ import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.security.AccessPermissionFlag;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
+import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
@@ -255,7 +255,7 @@ public class AppContext implements Serializable {
             @Subscribe
             @Override
             public void handle(UserProfileChangeEvent event) {
-                if ("avatarid".equals(event.getFieldChange())) {
+                if ("avatarid" .equals(event.getFieldChange())) {
                     session.setAvatarid((String) event.getData());
                 }
             }
@@ -421,7 +421,7 @@ public class AppContext implements Serializable {
         return (perVal == null) ? getMessage(SecurityI18nEnum.NO_ACCESS) : AppContext.getMessage(AccessPermissionFlag.toKey(perVal));
     }
 
-    public static TimeZone getTimezone() {
+    public static TimeZone getUserTimezone() {
         try {
             return (TimeZone) MyCollabSession.getVariable(USER_TIMEZONE);
         } catch (Exception e) {
@@ -460,6 +460,10 @@ public class AppContext implements Serializable {
         }
     }
 
+    public static String formatPrettyTime(Date date) {
+        return DateTimeUtils.getPrettyDateValue(date, getUserTimezone(), getUserLocale());
+    }
+
     public static String formatDayMonth(Date date) {
         return DateTimeUtils.formatDate(date, AppContext.getUserDateFormat().getDayMonthFormat());
     }
@@ -491,10 +495,6 @@ public class AppContext implements Serializable {
             }
         }
         return output;
-    }
-
-    public static String formatPrettyTime(Date date) {
-        return DateTimeUtils.getPrettyDateValue(date, getUserLocale());
     }
 
     /**

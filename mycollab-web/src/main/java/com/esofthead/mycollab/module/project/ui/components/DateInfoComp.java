@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -55,7 +54,7 @@ public class DateInfoComp extends MVerticalLayout {
         try {
             Date createdDate = (Date) PropertyUtils.getProperty(bean, "createdtime");
             ELabel createdDateLbl = new ELabel(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_DATE,
-                    DateTimeUtils.getPrettyDateValue(createdDate, AppContext.getUserLocale()))).withDescription(
+                    AppContext.formatPrettyTime(createdDate))).withDescription(
                     AppContext.formatDateTime(createdDate));
 
             layout.addComponent(createdDateLbl);

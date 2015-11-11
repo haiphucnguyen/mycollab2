@@ -120,7 +120,7 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
                     b.addStyleName(UIConstants.LINK_COMPLETED);
                 }
                 b.setDescription(ProjectTooltipGenerator.generateToolTipComponent(AppContext.getUserLocale(),
-                        bugComponent, AppContext.getSiteUrl(), AppContext.getTimezone()));
+                        bugComponent, AppContext.getSiteUrl(), AppContext.getUserTimezone()));
                 return b;
 
             }
