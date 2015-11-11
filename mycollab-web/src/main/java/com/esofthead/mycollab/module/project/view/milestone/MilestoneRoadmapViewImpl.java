@@ -196,9 +196,9 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             if (totalAssignments > 0) {
                 progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
                         (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
-                                * 100 / totalAssignments)).withStyleName("meta");
+                                * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
             } else {
-                progressInfoLbl = new ELabel("No issue").withStyleName("meta");
+                progressInfoLbl = new ELabel("No issue").withStyleName(UIConstants.LABEL_META_INFO);
             }
 
             final Button viewIssuesBtn = new Button("View issues");

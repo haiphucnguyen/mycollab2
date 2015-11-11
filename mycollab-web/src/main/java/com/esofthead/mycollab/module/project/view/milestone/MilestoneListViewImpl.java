@@ -312,6 +312,18 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         milestoneHeader.addComponent(taskSettingPopupBtn);
         layout.addComponent(milestoneHeader);
 
+        int openAssignments = milestone.getNumOpenBugs() + milestone.getNumOpenTasks();
+        int totalAssignments = milestone.getNumBugs() + milestone.getNumTasks();
+        ELabel progressInfoLbl;
+        if (totalAssignments > 0) {
+            progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
+                    (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
+                            * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
+        } else {
+            progressInfoLbl = new ELabel("No issue").withStyleName(UIConstants.LABEL_META_INFO);
+        }
+        layout.addComponent(progressInfoLbl);
+
         CssLayout metaBlock = new CssLayout();
         MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
         metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone, false));

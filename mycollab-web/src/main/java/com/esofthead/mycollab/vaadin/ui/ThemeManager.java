@@ -97,8 +97,6 @@ public class ThemeManager {
 
             extraStyles.append(".vertical-tabsheet .v-button-tab:hover {background-color: #" + accountTheme
                     .getVtabsheetbgselected() + ";}");
-
-            extraStyles.append(".milestone-view-header {background-color: #" + accountTheme.getVtabsheetbgselected() + ";}");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
@@ -119,9 +117,6 @@ public class ThemeManager {
             //Color while hover on sidebar menu
             extraStyles.append(".vertical-tabsheet .v-button-tab .v-button-wrap:hover {color: #" + accountTheme
                     .getVtabsheettextselected() + "!important;}");
-
-            //Set milestone header text color
-            extraStyles.append(".milestone-view-header {color: #" + accountTheme.getVtabsheettextselected() + ";}");
 
             //Volume text display bar in file manager
             extraStyles.append(".v-label.volumeUsageInfo div { color: #" + accountTheme

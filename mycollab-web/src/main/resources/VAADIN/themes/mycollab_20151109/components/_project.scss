@@ -489,9 +489,13 @@
   .milestone-view-header {
     text-align: center;
     height: 30px;
+    border-top: 1px solid $my-separator-color;
+    border-bottom: 1px solid $my-separator-color;
+    background-color: $my-panel-background-color;
     .v-label {
       font-size: $font-normal;
       font-weight: bold;
+      color: black;
     }
   }
 
@@ -525,10 +529,6 @@
   .v-slot-roadmap-block {
     padding-left: 20px;
     border-top: 1px solid $my-separator-color;
-    .meta {
-      font-size: $font-small;
-      color: $my-meta-color;
-    }
   }
 
   /* End Milestone View */

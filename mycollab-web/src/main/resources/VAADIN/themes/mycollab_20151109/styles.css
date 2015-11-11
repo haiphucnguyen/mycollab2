@@ -15253,11 +15253,15 @@ div.v-button.token-field:hover {
 .milestone-view-header {
 	text-align: center;
 	height: 30px;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: #f1f1f1;
 }
 
 .milestone-view-header .v-label {
 	font-size: 13px;
 	font-weight: bold;
+	color: black;
 }
 
 .milestone-view-body {
@@ -15292,11 +15296,6 @@ div.v-button.token-field:hover {
 .v-slot-roadmap-block {
 	padding-left: 20px;
 	border-top: 1px solid #e5e5e5;
-}
-
-.v-slot-roadmap-block .meta {
-	font-size: 12px;
-	color: #888;
 }
 
 .tasklist {
