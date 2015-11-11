@@ -244,7 +244,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
 
             root.addComponent(headerLayout);
 
-            MHorizontalLayout footer = new MHorizontalLayout();
+            CssLayout footer = new CssLayout();
 
             // Build footer
             PopupView commentField = popupFieldFactory.createBugCommentsPopupField(bug);

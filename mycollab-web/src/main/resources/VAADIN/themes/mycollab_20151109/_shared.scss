@@ -403,6 +403,7 @@
     background-color: #cae9f8;
     line-height: 22px;
     padding: 0px 5px;
+    margin: 3px 3px 0px 0px;
     color: $my-meta-color;
     .v-icon {
       padding: 0px;
@@ -475,7 +476,7 @@
       border-bottom: 1px solid $my-separator-color;
       .v-progressbar-indicator {
         background: none;
-        background-color: #C2DFFF;
+        background-color: #fdde86;
       }
     }
     .v-panel {

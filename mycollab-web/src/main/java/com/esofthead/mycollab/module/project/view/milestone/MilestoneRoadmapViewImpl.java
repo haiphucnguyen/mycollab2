@@ -175,9 +175,9 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             ELabel milestoneLbl = new ELabel(milestoneDiv.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
             this.addComponent(milestoneLbl);
 
-            MHorizontalLayout metaBlock = new MHorizontalLayout();
+            CssLayout metaBlock = new CssLayout();
             MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
-            metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone, true));
             metaBlock.addComponent(popupFieldFactory.createStartDatePopupField(milestone));
             metaBlock.addComponent(popupFieldFactory.createEndDatePopupField(milestone));
             metaBlock.addComponent(popupFieldFactory.createBillableHoursPopupField(milestone));

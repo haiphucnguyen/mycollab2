@@ -34,12 +34,15 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 @ViewComponent
 public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactory {
     @Override
-    public PopupView createMilestoneAssigneePopupField(final SimpleMilestone milestone) {
+    public PopupView createMilestoneAssigneePopupField(final SimpleMilestone milestone, final boolean isDisplayName) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
                 String avatarLink = StorageFactory.getInstance().getAvatarPath(milestone.getOwnerAvatarId(), 16);
-                Img img = new Img(milestone.getOwnerFullName(), avatarLink).setTitle(milestone.getOwnerFullName());
+                Img img = new Img(milestone.getOwnerFullName(), avatarLink);
+                if (isDisplayName) {
+                    img.setTitle(milestone.getOwnerFullName());
+                }
                 return img.write();
             }
 
@@ -48,7 +51,10 @@ public class MilestonePopupFieldFactoryImpl implements MilestonePopupFieldFactor
                 MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
                 SimpleMilestone newMilestone = milestoneService.findById(milestone.getId(), AppContext.getAccountId());
                 String avatarLink = StorageFactory.getInstance().getAvatarPath(newMilestone.getOwnerAvatarId(), 16);
-                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink).setTitle(newMilestone.getOwnerFullName());
+                Img img = new Img(newMilestone.getOwnerFullName(), avatarLink);
+                if (isDisplayName) {
+                    img.setTitle(newMilestone.getOwnerFullName());
+                }
                 return img.write();
             }
 

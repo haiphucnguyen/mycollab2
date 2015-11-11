@@ -518,13 +518,8 @@
     border-color: $my-separator-color;
     border-style: solid;
     border-width: 1px 1px 1px 0px;
-    box-shadow: -6px 0px 0 #e3d4c7;
+    box-shadow: -6px 0px 0 #fdde86;
     padding: 12px 20px;
-    .milestone-name {
-      font-size: $font-large;
-      border-bottom: 1px dashed #BEBEBE !important;
-      padding-bottom: 8px;
-    }
   }
 
   .v-slot-roadmap-block {

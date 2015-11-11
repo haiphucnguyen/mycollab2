@@ -1832,7 +1832,7 @@ a.pending {
 }
 
 .feed-block-wrap .feed-block {
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 	padding: 3px 10px;
 	border: 1px solid #e5e5e5;
 	border-radius: 3px;
@@ -1862,7 +1862,7 @@ a.pending {
 	top: 4px;
 	left: -10px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent #f7fcfe;
+	border-color: transparent #f9f9f9;
 	border-radius: 0px;
 }
 
@@ -1870,7 +1870,7 @@ a.pending {
 	border-width: 1px 0px 0px;
 	border-color: #e5e5e5;
 	padding-bottom: 8px;
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 }
 
 .feed-block-wrap .feed-block .stream-wrapper:first-child {
@@ -1948,6 +1948,7 @@ div.v-window {
 	background-color: #cae9f8;
 	line-height: 22px;
 	padding: 0px 5px;
+	margin: 3px 3px 0px 0px;
 	color: #888;
 }
 
@@ -2018,7 +2019,7 @@ span.block {
 
 .wizard .wizard-progress-bar .v-progressbar-indicator {
 	background: none;
-	background-color: #C2DFFF;
+	background-color: #fdde86;
 }
 
 .wizard .v-panel {
@@ -14107,7 +14108,7 @@ a.pending {
 }
 
 .feed-block-wrap .feed-block {
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 	padding: 3px 10px;
 	border: 1px solid #e5e5e5;
 	border-radius: 3px;
@@ -14137,7 +14138,7 @@ a.pending {
 	top: 4px;
 	left: -10px;
 	border-width: 11px 11px 11px 0;
-	border-color: transparent #f7fcfe;
+	border-color: transparent #f9f9f9;
 	border-radius: 0px;
 }
 
@@ -14145,7 +14146,7 @@ a.pending {
 	border-width: 1px 0px 0px;
 	border-color: #e5e5e5;
 	padding-bottom: 8px;
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 }
 
 .feed-block-wrap .feed-block .stream-wrapper:first-child {
@@ -14223,6 +14224,7 @@ div.v-window {
 	background-color: #cae9f8;
 	line-height: 22px;
 	padding: 0px 5px;
+	margin: 3px 3px 0px 0px;
 	color: #888;
 }
 
@@ -14293,7 +14295,7 @@ span.block {
 
 .wizard .wizard-progress-bar .v-progressbar-indicator {
 	background: none;
-	background-color: #C2DFFF;
+	background-color: #fdde86;
 }
 
 .wizard .v-panel {
@@ -14766,7 +14768,7 @@ div .addview-layout-body .control-buttons {
 }
 
 .instruction-box {
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 	padding: 10px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -14808,7 +14810,7 @@ div .addview-layout-body .control-buttons {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 	border: 1px solid #e5e5e5;
 	border-radius: 5px;
 	position: relative;
@@ -14841,7 +14843,7 @@ div .addview-layout-body .control-buttons {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #f7fcfe;
+	border-color: transparent #f9f9f9;
 	border-radius: 0px;
 }
 
@@ -14961,7 +14963,7 @@ div .addview-layout-body .control-buttons {
 .member-preview-form {
 	border: 1px solid #e5e5e5;
 	padding: 30px;
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 }
 
 .member-preview-form div.v-csslayout.member-block {
@@ -15279,18 +15281,12 @@ div.v-button.token-field:hover {
 
 .milestone-box {
 	margin-top: 25px;
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 	border-color: #e5e5e5;
 	border-style: solid;
 	border-width: 1px 1px 1px 0px;
-	box-shadow: -6px 0px 0 #e3d4c7;
+	box-shadow: -6px 0px 0 #fdde86;
 	padding: 12px 20px;
-}
-
-.milestone-box .milestone-name {
-	font-size: 14px;
-	border-bottom: 1px dashed #BEBEBE !important;
-	padding-bottom: 8px;
 }
 
 .v-slot-roadmap-block {
@@ -16755,7 +16751,7 @@ div.v-csslayout.main-body {
 
 div.v-csslayout.member-block {
 	display: inline-block;
-	background-color: #f7fcfe;
+	background-color: #f9f9f9;
 	margin-bottom: 15px;
 	font-size: 13px;
 	vertical-align: top;

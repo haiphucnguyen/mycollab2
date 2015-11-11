@@ -86,7 +86,7 @@ public class BugRowRenderer extends MVerticalLayout {
         PopupView assigneeField = popupFieldFactory.createBugAssigneePopupField(bug);
         headerLayout.with(bugSettingPopupBtn, priorityField, assigneeField, bugLinkLbl).expand(bugLinkLbl);
 
-        MHorizontalLayout footer = new MHorizontalLayout();
+        CssLayout footer = new CssLayout();
 
         PopupView commentsField = popupFieldFactory.createBugCommentsPopupField(bug);
         footer.addComponent(commentsField);

@@ -353,7 +353,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
             root.with(headerLayout);
 
-            MHorizontalLayout footer = new MHorizontalLayout();
+            CssLayout footer = new CssLayout();
 
             PopupView commentField = popupFieldFactory.createCommentsPopupField(task);
             footer.addComponent(commentField);

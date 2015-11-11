@@ -90,7 +90,7 @@ import java.util.UUID;
         PopupView assigneeField = popupFieldFactory.createAssigneePopupField(task);
         headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, taskLinkLbl).expand(taskLinkLbl);
 
-        MHorizontalLayout footer = new MHorizontalLayout();
+        CssLayout footer = new CssLayout();
 
         PopupView commentField = popupFieldFactory.createCommentsPopupField(task);
         footer.addComponent(commentField);
