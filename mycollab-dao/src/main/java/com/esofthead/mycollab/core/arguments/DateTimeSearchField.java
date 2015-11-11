@@ -39,7 +39,7 @@ public class DateTimeSearchField extends SearchField {
 
     public DateTimeSearchField(String oper, String comparision, Date value) {
         this.operation = oper;
-        this.value = DateTimeUtils.convertTimeFromSystemTimezoneToUTC(value);
+        this.value = DateTimeUtils.convertDateTimeToUTC(value);
         this.comparision = comparision;
     }
 

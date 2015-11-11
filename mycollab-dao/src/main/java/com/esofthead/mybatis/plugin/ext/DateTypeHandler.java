@@ -173,7 +173,7 @@ public class DateTypeHandler extends BaseTypeHandler<Date> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, Date parameter, JdbcType jdbcType) throws SQLException {
-        Date date = DateTimeUtils.convertTimeFromSystemTimezoneToUTC(parameter);
+        Date date = DateTimeUtils.convertDateTimeToUTC(parameter);
         ps.setTimestamp(i, new Timestamp(date.getTime()));
     }
 

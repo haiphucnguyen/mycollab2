@@ -61,6 +61,7 @@ Version 5.2.2
 
 * Fix several issues of push events in the corporate networks
 * Advanced user layout does not keep values of the simple user layout
+* Pretty time text is wrong with several timezones
 
 Version 5.2.1
 -----------------------------

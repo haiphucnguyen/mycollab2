@@ -78,7 +78,7 @@ public class V20150401_2__Insert_Default_Values implements SpringJdbcMigration {
                 .withTableName("s_user").usingColumns("username", "firstname",
                         "lastname", "email", "status", "registeredTime",
                         "password", "timezone");
-        Date nowDate = DateTimeUtils.convertTimeFromSystemTimezoneToUTC(new GregorianCalendar().getTime());
+        Date nowDate = DateTimeUtils.convertDateTimeToUTC(new GregorianCalendar().getTime());
         String timezoneDbId = TimezoneMapper.getTimezoneDbId(TimeZone.getDefault());
 
         Map<String, Object> userParameters = new HashMap<>();

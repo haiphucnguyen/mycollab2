@@ -145,10 +145,6 @@ public class AppContext implements Serializable {
         }
     }
 
-    public SimpleUser getUserOfContext() {
-        return session;
-    }
-
     /**
      * Keep user session in server sessions
      *
@@ -196,8 +192,7 @@ public class AppContext implements Serializable {
             return (key != null) ? getInstance().messageHelper.getMessage(key,
                     objects) : "";
         } catch (Exception e) {
-            return LocalizationHelper.getMessage(
-                    LocalizationHelper.defaultLocale, key, objects);
+            return LocalizationHelper.getMessage(LocalizationHelper.defaultLocale, key, objects);
         }
     }
 
@@ -236,8 +231,7 @@ public class AppContext implements Serializable {
         BillingAccount account = billingService.getAccountByDomain(domain);
 
         if (account == null) {
-            throw new SubDomainNotExistException(AppContext.getMessage(
-                    ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
+            throw new SubDomainNotExistException(AppContext.getMessage(ErrorI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
         } else {
             if (StringUtils.isBlank(account.getSitename())) {
                 siteName = SiteConfiguration.getDefaultSiteName();
@@ -461,7 +455,7 @@ public class AppContext implements Serializable {
     }
 
     public static String formatPrettyTime(Date date) {
-        return DateTimeUtils.getPrettyDateValue(date, getUserTimezone(), getUserLocale());
+        return DateTimeUtils.getPrettyDateValue(date, getUserLocale());
     }
 
     public static String formatDayMonth(Date date) {
@@ -503,8 +497,7 @@ public class AppContext implements Serializable {
      */
     public static void addFragment(String fragment, String windowTitle) {
         Page.getCurrent().setUriFragment(fragment, false);
-        Page.getCurrent().setTitle(
-                String.format("%s [%s]", StringUtils.trim(windowTitle, 150), AppContext.getSiteName()));
+        Page.getCurrent().setTitle(String.format("%s [%s]", StringUtils.trim(windowTitle, 150), AppContext.getSiteName()));
         googleAnalyticsService.trackPageView(fragment);
     }
 }
