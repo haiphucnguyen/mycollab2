@@ -152,7 +152,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             final PopupButton controlsBtn = new PopupButton();
             controlsBtn.setIcon(FontAwesome.ELLIPSIS_H);
 
-            OptionPopupContent popupButtonsControl = new OptionPopupContent().withWidth("150px");
+            OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
             Button createPhaseBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE), new Button.ClickListener() {
                 @Override

@@ -53,7 +53,7 @@ import java.util.UUID;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
- class TaskRowRenderer extends MVerticalLayout {
+class TaskRowRenderer extends MVerticalLayout {
     private Label taskLinkLbl;
     private SimpleTask task;
 
@@ -293,7 +293,7 @@ import java.util.UUID;
         });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
-        filterBtnLayout.addOption(deleteBtn);
+        filterBtnLayout.addDangerOption(deleteBtn);
         return filterBtnLayout;
     }
 }

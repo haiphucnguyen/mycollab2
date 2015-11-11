@@ -231,24 +231,22 @@
 
   .optionPopupContent {
     background-color: #ffffff;
-    margin:-5px;
     border: solid 1px $my-border-color;
     box-shadow: 0 0 14px rgba(0,0,0,0.4);
+    max-width: 400px;
     .action-wrap {
       width: 100%;
       .v-button-action {
         background-color:transparent;
         text-align:left;
-        .v-button-wrap {
-          margin: 0px;
-          text-align: left;
-        }
+        margin: 3px 0px;
+        @include text-ellipsis;
       }
       .v-disabled.v-button-action {
         border:none;
       }
     }
-    .action-wrap:hover .v-button-action{
+    .action-wrap:hover .v-button-action {
       color: $my-white-color;
     }
 
@@ -401,10 +399,10 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     background-color: #cae9f8;
-    line-height: 22px;
     padding: 0px 5px;
     margin: 3px 3px 0px 0px;
     color: $my-meta-color;
+    font-size: $font-small;
     .v-icon {
       padding: 0px;
     }

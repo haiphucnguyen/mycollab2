@@ -36,11 +36,8 @@
   }
 
   /* Ellipsis Button Link */
-  .v-button-link.text-ellipsis .v-button-wrap {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
+  .v-button.text-ellipsis {
+    @include text-ellipsis;
   }
 
   .v-button-wrap {

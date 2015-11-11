@@ -98,7 +98,6 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
             basicSearchBody.with(nameField).withAlign(nameField, Alignment.MIDDLE_CENTER);
 
             this.myItemCheckbox = new CheckBox(AppContext.getMessage(GenericI18Enum.SEARCH_MYITEMS_CHECKBOX));
-            this.myItemCheckbox.setWidth("75px");
             basicSearchBody.with(myItemCheckbox).withAlign(myItemCheckbox, Alignment.MIDDLE_CENTER);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
@@ -126,8 +125,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
-                    new Button.ClickListener() {
+            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -185,9 +183,9 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("risk-assignuser".equals(fieldId)) {
+            if ("risk-assignuser" .equals(fieldId)) {
                 return new ProjectMemberListSelect();
-            } else if ("risk-raiseduser".equals(fieldId)) {
+            } else if ("risk-raiseduser" .equals(fieldId)) {
                 return new ProjectMemberListSelect();
             }
             return null;

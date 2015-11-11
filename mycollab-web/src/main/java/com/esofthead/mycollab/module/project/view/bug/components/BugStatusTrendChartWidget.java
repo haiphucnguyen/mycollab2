@@ -129,6 +129,7 @@ public class BugStatusTrendChartWidget extends Depot {
         protected final ComponentContainer createLegendBox() {
             final CssLayout mainLayout = new CssLayout();
             mainLayout.addStyleName("legendBoxContent");
+            mainLayout.setWidth("100%");
             final List series = dataset.getSeries();
 
             for (int i = 0; i < series.size(); i++) {

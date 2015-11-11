@@ -27,7 +27,6 @@ public class OptionPopupContent extends CustomComponent {
     public OptionPopupContent() {
         VerticalLayout root = new VerticalLayout();
         root.setStyleName(UIConstants.OPTION_POPUP_CONTENT);
-        root.setWidth("200px");
         this.setCompositionRoot(root);
     }
 
@@ -40,9 +39,10 @@ public class OptionPopupContent extends CustomComponent {
         ((ComponentContainer) this.getCompositionRoot()).removeAllComponents();
     }
 
-    public void addOption(Component btn) {
+    public void addOption(Button btn) {
         CssLayout wrap = new CssLayout();
         btn.setWidth("100%");
+        btn.setDescription(btn.getCaption());
         btn.addStyleName("action");
         wrap.addStyleName("action-wrap");
         wrap.addComponent(btn);

@@ -11,10 +11,10 @@ $my-white-color: #f7f7f7;
 
 $font-family: Arial, Verdana, Helvetica, sans-serif;
 
-$font-smaller: 11px;
-$font-small: 12px;
-$font-normal: 13px;
-$font-large: 14px;
+$font-smaller: 12px;
+$font-small: 13px;
+$font-normal: 14px;
+$font-large: 15px;
 $font-larger: 16px;
 $font-x-large: 18px;
 $font-xx-large: 24px;
@@ -24,6 +24,12 @@ $font-largest: 36px;
   -webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
   -moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
   box-shadow: inset 5px 0px 0px 0px #3A97FF;
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @mixin margin-container($top, $right, $bottom, $left) {

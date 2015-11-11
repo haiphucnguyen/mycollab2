@@ -25,7 +25,8 @@
       display:inline-block;
     }
     .navigator-wrap .basic-info {
-      color: #f7f7f7;
+      color: $my-white-color;
+      font-size: $font-small;
       &:after {
         content: "";
         border-bottom: 1px solid $my-separator-color;
@@ -38,7 +39,7 @@
         font-size: $font-normal;
       }
       .v-label a, .v-button.v-button-link {
-        color: #f7f7f7;
+        color: $my-white-color;
       }
     }
     &.preview-comp {

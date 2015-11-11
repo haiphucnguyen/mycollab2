@@ -175,7 +175,7 @@ public class BugRowRenderer extends MVerticalLayout {
         });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
-        filterBtnLayout.addOption(deleteBtn);
+        filterBtnLayout.addDangerOption(deleteBtn);
         return filterBtnLayout;
     }
 }

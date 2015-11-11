@@ -7,7 +7,7 @@ $v-layout-margin-right: 12px;
 $v-layout-margin-bottom: 12px;
 $v-layout-spacing-horizontal: 5px;
 $v-layout-spacing-vertical: 5px;
-$v-font-size: 13px;
+$v-font-size: 14px;
 $v-unit-size: 29px;
 $v-tooltip-background-color:#FDFDEE;
 $v-textfield-background-color--readonly: $v-textfield-background-color;
@@ -2001,9 +2001,10 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .intro-text-wrap {
     .v-label {
-      border-bottom: 1px solid $my-border-color;
+      border-bottom: 1px solid $my-separator-color;
       padding-bottom: 13px;
       color: $my-white-color;
+      font-size: $font-small;
     }
     @include margin-container(13px, 10px, 0px, 10px);
   }
@@ -2011,7 +2012,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   /* Opportunity Contact Role Edit */
 
   .oppcontact-role-edit .addview-layout-body {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
   }
 
   /* Bean Block Different Styles */
@@ -2207,22 +2208,17 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   div.v-csslayout.rightsidebar-layout {
     @include flex-compatible;
+    font-size: $font-small;
     /* NEW, Spec - Opera 12.1, Firefox 20+ */
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
     flex-direction: row;
     -webkit-box-orient: horizontal;
-  }
-
-  .sidebar-wrap {
-    border-left: 1px solid $my-separator-color;
-    border-right: 1px solid $my-separator-color;
-    background-color: floralwhite;
-  }
-
-  .rightsidebar-layout {
     .sidebar-wrap {
       display: inline-block;
+      border-left: 1px solid $my-separator-color;
+      border-right: 1px solid $my-separator-color;
+      background-color: floralwhite;
     }
     .content-wrap {
       -webkit-box-flex: 1;
@@ -2240,6 +2236,4 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       display: inline-block;
     }
   }
-
-  /* End Gantt Chart */
 }
