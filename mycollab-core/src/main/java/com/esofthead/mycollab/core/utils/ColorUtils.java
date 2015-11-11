@@ -9,7 +9,7 @@ import java.awt.*;
 public class ColorUtils {
     public static final String brighterColor(String hexValue) {
         Color color = Color.decode(hexValue);
-        Color brighter = lighter(color, 0.2);
+        Color brighter = lighter(color, 0.1);
         return toHexString(brighter);
     }
 

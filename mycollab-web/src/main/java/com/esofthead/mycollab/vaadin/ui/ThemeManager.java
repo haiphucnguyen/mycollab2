@@ -14,6 +14,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.ColorUtils;
 import com.esofthead.mycollab.module.user.domain.AccountTheme;
 import com.esofthead.mycollab.module.user.service.AccountThemeService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -158,6 +159,10 @@ public class ThemeManager {
             // Button group default button
             extraStyles.append(".v-buttongroup.toggle-btn-group .v-button.btn-group-default {background-color:#" + accountTheme
                     .getActionbtn() + ";}");
+
+            extraStyles.append(".v-button.v-button-block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
+
+            extraStyles.append("span.block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
         }
 
         if (accountTheme.getActionbtntext() != null) {

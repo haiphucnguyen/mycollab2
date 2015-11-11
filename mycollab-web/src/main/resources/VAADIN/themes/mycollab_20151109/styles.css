@@ -2007,7 +2007,6 @@ div.v-window {
 span.block {
 	line-height: 22px;
 	border-radius: 5px;
-	background-color: #5ca9ff;
 	padding: 3px 7px 3px 7px;
 	margin-right: 2px;
 	color: white;
@@ -13582,27 +13581,24 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .v-button.v-button-graybtn {
-	background-color: #8B8B8B;
 	color: white;
 	font-weight: normal;
 }
 
 .v-button.v-button-redbtn {
-	background-color: #F64A46;
 	color: white;
 	font-weight: normal;
 }
 
 .v-button.v-button-greenbtn {
-	background-color: #3A97FF;
 	color: white;
 	font-weight: normal;
 }
 
 .v-button.v-button-block {
-	background-color: #7ebbff;
 	color: white;
 	font-weight: normal;
+	margin: 0px 3px;
 }
 
 .v-button-selected-style {
@@ -14287,7 +14283,6 @@ div.v-window {
 span.block {
 	line-height: 22px;
 	border-radius: 5px;
-	background-color: #5ca9ff;
 	padding: 3px 7px 3px 7px;
 	margin-right: 2px;
 	color: white;
