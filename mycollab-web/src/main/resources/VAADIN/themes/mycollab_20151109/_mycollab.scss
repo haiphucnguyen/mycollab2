@@ -871,6 +871,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   /* Main body */
   .v-csslayout.main-view {
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: #FFF;
     position: relative;
   }

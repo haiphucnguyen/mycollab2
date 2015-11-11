@@ -182,6 +182,10 @@ public class ThemeManager {
 
             //Date label of activity stream
             extraStyles.append(".feed-block-wrap .date-lbl { color:#" + accountTheme.getActionbtntext() + ";}");
+
+            extraStyles.append(".v-button.v-button-block {color:#" + accountTheme.getActionbtntext() + ";}");
+
+            extraStyles.append("span.block {color:#" + accountTheme.getActionbtntext() + ";}");
         }
 
 		/* Option Buttons */
