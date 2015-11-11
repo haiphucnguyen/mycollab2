@@ -541,21 +541,25 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     .formFooterLinks {
       float: left;
       width: 100%;
-      margin-top: 25px;
+      margin-top: 20px;
       #createAccountLink {
         float: left;
         width: 50%;
+        height:29px;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         border-right: 1px solid #006DAC;
-        padding-right: 9px;
+        padding-right: 15px;
+        padding-top: 4px;
         text-align: right;
-        line-height: 18px;
       }
       #forgotLink {
         float: left;
         width: 50%;
+        .v-button-wrap {
+          padding: 6px;
+        }
       }
     }
     .customErrorMsg {
@@ -2208,7 +2212,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   div.v-csslayout.rightsidebar-layout {
     @include flex-compatible;
-    font-size: $font-small;
     /* NEW, Spec - Opera 12.1, Firefox 20+ */
     -webkit-flex-direction: row;
     -ms-flex-direction: row;
@@ -2216,6 +2219,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     -webkit-box-orient: horizontal;
     .sidebar-wrap {
       display: inline-block;
+      font-size: $font-small;
       border-left: 1px solid $my-separator-color;
       border-right: 1px solid $my-separator-color;
       background-color: floralwhite;

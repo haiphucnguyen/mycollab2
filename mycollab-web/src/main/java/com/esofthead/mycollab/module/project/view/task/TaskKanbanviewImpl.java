@@ -375,7 +375,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         private String buildTaskLink() {
             String uid = UUID.randomUUID().toString();
 
-            String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
+            String linkName = String.format("[#%d] - %s", task.getTaskkey(), StringUtils.trim(task.getTaskname(), 70, true));
             A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
                     CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
 

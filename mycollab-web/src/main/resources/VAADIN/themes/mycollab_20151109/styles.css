@@ -13591,6 +13591,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 .v-button.v-button-greenbtn {
 	color: white;
 	font-weight: normal;
+	background-color: #1a8fcb;
 }
 
 .v-button.v-button-block {
@@ -16357,24 +16358,29 @@ input.v-textfield-errorField {
 #loginForm .formFooterLinks {
 	float: left;
 	width: 100%;
-	margin-top: 25px;
+	margin-top: 20px;
 }
 
 #loginForm .formFooterLinks #createAccountLink {
 	float: left;
 	width: 50%;
+	height: 29px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border-right: 1px solid #006DAC;
-	padding-right: 9px;
+	padding-right: 15px;
+	padding-top: 4px;
 	text-align: right;
-	line-height: 18px;
 }
 
 #loginForm .formFooterLinks #forgotLink {
 	float: left;
 	width: 50%;
+}
+
+#loginForm .formFooterLinks #forgotLink .v-button-wrap {
+	padding: 6px;
 }
 
 #loginForm .customErrorMsg {
@@ -18003,7 +18009,6 @@ div.v-csslayout.rightsidebar-layout {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	font-size: 13px;
 	-webkit-flex-direction: row;
 	-ms-flex-direction: row;
 	flex-direction: row;
@@ -18012,6 +18017,7 @@ div.v-csslayout.rightsidebar-layout {
 
 div.v-csslayout.rightsidebar-layout .sidebar-wrap {
 	display: inline-block;
+	font-size: 13px;
 	border-left: 1px solid #e5e5e5;
 	border-right: 1px solid #e5e5e5;
 	background-color: floralwhite;
