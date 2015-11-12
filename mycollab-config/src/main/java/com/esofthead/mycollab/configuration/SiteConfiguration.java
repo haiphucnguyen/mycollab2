@@ -103,16 +103,11 @@ public class SiteConfiguration {
         String host = ApplicationProperties.getString(MAIL_SMTPHOST);
         String user = ApplicationProperties.getString(MAIL_USERNAME);
         String password = ApplicationProperties.getString(MAIL_PASSWORD);
-        Integer port = Integer.parseInt(ApplicationProperties.getString(
-                MAIL_PORT, "-1"));
-        Boolean isTls = Boolean.parseBoolean(ApplicationProperties.getString(
-                MAIL_IS_TLS, "false"));
-        Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(
-                MAIL_IS_SSL, "false"));
-        instance.emailConfiguration = new EmailConfiguration(host, user,
-                password, port, isTls, isSsl);
-        instance.noreplyEmail = ApplicationProperties.getString(MAIL_NOREPLY,
-                "noreply@mycollab.com");
+        Integer port = Integer.parseInt(ApplicationProperties.getString(MAIL_PORT, "25"));
+        Boolean isTls = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_TLS, "false"));
+        Boolean isSsl = Boolean.parseBoolean(ApplicationProperties.getString(MAIL_IS_SSL, "false"));
+        instance.emailConfiguration = new EmailConfiguration(host, user, password, port, isTls, isSsl);
+        instance.noreplyEmail = ApplicationProperties.getString(MAIL_NOREPLY, "noreply@mycollab.com");
 
         // load database configuration
         String driverClass = ApplicationProperties.getString(DB_DRIVER_CLASS);
@@ -122,7 +117,7 @@ public class SiteConfiguration {
         instance.databaseConfiguration = new DatabaseConfiguration(driverClass, dbUrl, dbUser, dbPassword);
 
         instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL);
-        if (!"".equals(instance.resourceDownloadUrl)) {
+        if (!"" .equals(instance.resourceDownloadUrl)) {
             instance.resourceDownloadUrl = String.format(instance.resourceDownloadUrl,
                     instance.serverAddress, instance.serverPort);
         } else {
