@@ -871,7 +871,7 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   /* Footer */
 
   .footer {
-    border-top: 1px solid $my-border-color;
+    border-top: 1px solid $my-separator-color;
     .v-link, div {
       text-decoration: none;
       font-size:$font-small;

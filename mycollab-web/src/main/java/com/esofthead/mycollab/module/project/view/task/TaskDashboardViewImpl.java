@@ -293,27 +293,27 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     }
 
     private void displayTaskStatistic() {
+        rightColumn.removeAllComponents();
+        final TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
+        rightColumn.addComponent(taskStatusTrendChartWidget);
+        UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
+        unresolvedTaskByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
+        rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
+
+        UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
+        unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
+        rightColumn.addComponent(unresolvedTaskByPriorityWidget);
+
+        UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
+        unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
+        rightColumn.addComponent(unresolvedTaskByStatusWidget);
+
         AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                rightColumn.removeAllComponents();
-                TaskStatusTrendChartWidget taskStatusTrendChartWidget = new TaskStatusTrendChartWidget();
                 TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
                 timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 taskStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
-                rightColumn.addComponent(taskStatusTrendChartWidget);
-
-                UnresolvedTaskByAssigneeWidget unresolvedTaskByAssigneeWidget = new UnresolvedTaskByAssigneeWidget();
-                unresolvedTaskByAssigneeWidget.setSearchCriteria(statisticSearchCriteria);
-                rightColumn.addComponent(unresolvedTaskByAssigneeWidget);
-
-                UnresolvedTaskByPriorityWidget unresolvedTaskByPriorityWidget = new UnresolvedTaskByPriorityWidget();
-                unresolvedTaskByPriorityWidget.setSearchCriteria(statisticSearchCriteria);
-                rightColumn.addComponent(unresolvedTaskByPriorityWidget);
-
-                UnresolvedTaskByStatusWidget unresolvedTaskByStatusWidget = new UnresolvedTaskByStatusWidget();
-                unresolvedTaskByStatusWidget.setSearchCriteria(statisticSearchCriteria);
-                rightColumn.addComponent(unresolvedTaskByStatusWidget);
             }
         });
     }

@@ -260,34 +260,33 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     }
 
     private void displayBugStatistic() {
+        rightColumn.removeAllComponents();
+        final BugStatusTrendChartWidget bugStatusTrendChartWidget = new BugStatusTrendChartWidget();
+        rightColumn.addComponent(bugStatusTrendChartWidget);
+        // Unresolved by assignee
+        UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
+        BugSearchCriteria unresolvedByAssigneeSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
+        unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+        rightColumn.addComponent(unresolvedByAssigneeWidget);
+
+        // Unresolve by priority widget
+        UnresolvedBugsByPriorityWidget unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget();
+        BugSearchCriteria unresolvedByPrioritySearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
+        unresolvedByPriorityWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+        rightColumn.addComponent(unresolvedByPriorityWidget);
+
+        //Unresolved by status
+        UnresolvedBugsByStatusWidget unresolvedBugsByStatusWidget = new UnresolvedBugsByStatusWidget();
+        BugSearchCriteria unresolvedByStatusSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
+        unresolvedBugsByStatusWidget.setSearchCriteria(unresolvedByStatusSearchCriteria);
+        rightColumn.addComponent(unresolvedBugsByStatusWidget);
+        
         AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {
-                rightColumn.removeAllComponents();
-
-                BugStatusTrendChartWidget bugStatusTrendChartWidget = new BugStatusTrendChartWidget();
                 TimelineTrackingSearchCriteria timelineTrackingSearchCriteria = new TimelineTrackingSearchCriteria();
                 timelineTrackingSearchCriteria.setExtraTypeIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                 bugStatusTrendChartWidget.display(timelineTrackingSearchCriteria);
-                rightColumn.addComponent(bugStatusTrendChartWidget);
-
-                // Unresolved by assignee
-                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
-                BugSearchCriteria unresolvedByAssigneeSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
-                unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-                rightColumn.addComponent(unresolvedByAssigneeWidget);
-
-                // Unresolve by priority widget
-                UnresolvedBugsByPriorityWidget unresolvedByPriorityWidget = new UnresolvedBugsByPriorityWidget();
-                BugSearchCriteria unresolvedByPrioritySearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
-                unresolvedByPriorityWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-                rightColumn.addComponent(unresolvedByPriorityWidget);
-
-                //Unresolved by status
-                UnresolvedBugsByStatusWidget unresolvedBugsByStatusWidget = new UnresolvedBugsByStatusWidget();
-                BugSearchCriteria unresolvedByStatusSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
-                unresolvedBugsByStatusWidget.setSearchCriteria(unresolvedByStatusSearchCriteria);
-                rightColumn.addComponent(unresolvedBugsByStatusWidget);
             }
         });
     }
