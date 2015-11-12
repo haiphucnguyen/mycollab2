@@ -63,14 +63,14 @@ public class ProjectMembersWidget extends MVerticalLayout {
     public ProjectMembersWidget() {
         withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
 
-        MButton inviteMemberBtn = new MButton("+").withStyleName("add-project-btn").withListener(new Button.ClickListener() {
+        MButton inviteMemberBtn = new MButton("").withListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoInviteMembers(this, null));
             }
         });
-        inviteMemberBtn.setWidth("20px");
-        inviteMemberBtn.setHeight("20px");
+        inviteMemberBtn.setIcon(FontAwesome.PLUS);
+        inviteMemberBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
         titleLbl = new Label();
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true,

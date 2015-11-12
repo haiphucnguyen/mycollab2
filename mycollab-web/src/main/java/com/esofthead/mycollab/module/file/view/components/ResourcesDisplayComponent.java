@@ -605,7 +605,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             deleteBtn.setIcon(FontAwesome.TRASH_O);
             filterBtnLayout.addDangerOption(deleteBtn);
 
-            filterBtnLayout.setWidth("90px");
             resourceSettingPopupBtn.setIcon(FontAwesome.ELLIPSIS_H);
             resourceSettingPopupBtn.addStyleName(UIConstants.BUTTON_ACTION);
             resourceSettingPopupBtn.setContent(filterBtnLayout);

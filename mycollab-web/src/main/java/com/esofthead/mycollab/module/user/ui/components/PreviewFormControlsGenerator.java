@@ -182,7 +182,6 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                     }
                 });
                 previousItem.setIcon(FontAwesome.CHEVRON_LEFT);
-                previousItem.setWidth("40px");
                 previousItem.setStyleName(UIConstants.BUTTON_ACTION);
                 previousItem.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_PREVIOUS_ITEM));
                 previousItem.setEnabled(canRead);
@@ -198,7 +197,6 @@ public class PreviewFormControlsGenerator<T> implements Serializable {
                     }
                 });
                 nextItemBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
-                nextItemBtn.setWidth("40px");
                 nextItemBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 nextItemBtn.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
                 nextItemBtn.setEnabled(canRead);

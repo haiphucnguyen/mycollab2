@@ -233,7 +233,7 @@
     background-color: #ffffff;
     border: solid 1px $my-border-color;
     box-shadow: 0 0 14px rgba(0,0,0,0.4);
-    max-width: 400px;
+    max-width: 800px;
     .action-wrap {
       width: 100%;
       .v-button-action {
@@ -460,11 +460,11 @@
 
   /* Block  - applied in history*/
   span.block {
-    line-height: 22px;
     border-radius: 5px;
-    padding: 3px 7px 3px 7px;
-    margin-right: 2px;
+    padding: 3px 5px;
+    margin-right: 5px;
     color: $my-white-color;
+    font-size: $font-small;
   }
 
   /*Wizard style*/

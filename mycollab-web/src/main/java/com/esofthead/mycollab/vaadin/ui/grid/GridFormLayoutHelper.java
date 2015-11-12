@@ -67,6 +67,7 @@ public class GridFormLayoutHelper implements Serializable {
         GridFormLayoutHelper helper = new GridFormLayoutHelper(columns, rows, "100%", "167px", Alignment.TOP_LEFT);
         helper.getLayout().setWidth("100%");
         helper.getLayout().addStyleName("colored-gridlayout");
+        helper.getLayout().setMargin(false);
         return helper;
     }
 

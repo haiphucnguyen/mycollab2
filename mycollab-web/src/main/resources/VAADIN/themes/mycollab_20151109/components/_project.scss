@@ -281,33 +281,6 @@
     }
   }
 
-  /* Form Container View Field */
-
-  .bug-attached {
-    background: none;
-    padding: 0px 7px 1px;
-    margin-right: 2px;
-    color: #3333EC;
-    pointer: none;
-  }
-  /* End Form Container View Field */
-
-  .v-button.add-project-btn {
-    border: none;
-    border-radius: 10px;
-    background-color: #17D61B;
-    .v-button-wrap, &:active .v-button-wrap {
-      padding: 0px;
-      text-align:center;
-    }
-    .v-button-wrap .v-button-caption {
-      font-size: $font-larger;
-      line-height: 20px;
-      font-weight: bold;
-      color: #FFF;
-    }
-  }
-
   div.v-csslayout.followers-container {
     @include flex-compatible;
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */

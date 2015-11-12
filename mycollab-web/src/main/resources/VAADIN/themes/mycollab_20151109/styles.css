@@ -1767,7 +1767,7 @@ a.pending {
 	background-color: #ffffff;
 	border: solid 1px #c5c5c5;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
-	max-width: 400px;
+	max-width: 800px;
 }
 
 .optionPopupContent .action-wrap {
@@ -2004,11 +2004,11 @@ div.v-window {
 }
 
 span.block {
-	line-height: 22px;
 	border-radius: 5px;
-	padding: 3px 7px 3px 7px;
-	margin-right: 2px;
+	padding: 3px 5px;
+	margin-right: 5px;
 	color: #f7f7f7;
+	font-size: 13px;
 }
 
 .wizard .wizard-progress-bar {
@@ -14042,7 +14042,7 @@ a.pending {
 	background-color: #ffffff;
 	border: solid 1px #c5c5c5;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
-	max-width: 400px;
+	max-width: 800px;
 }
 
 .optionPopupContent .action-wrap {
@@ -14279,11 +14279,11 @@ div.v-window {
 }
 
 span.block {
-	line-height: 22px;
 	border-radius: 5px;
-	padding: 3px 7px 3px 7px;
-	margin-right: 2px;
+	padding: 3px 5px;
+	margin-right: 5px;
 	color: #f7f7f7;
+	font-size: 13px;
 }
 
 .wizard .wizard-progress-bar {
@@ -15006,32 +15006,6 @@ div .addview-layout-body .control-buttons {
 	width: 160px;
 	padding: 5px;
 	padding-left: 0px;
-}
-
-.bug-attached {
-	background: none;
-	padding: 0px 7px 1px;
-	margin-right: 2px;
-	color: #3333EC;
-	pointer: none;
-}
-
-.v-button.add-project-btn {
-	border: none;
-	border-radius: 10px;
-	background-color: #17D61B;
-}
-
-.v-button.add-project-btn .v-button-wrap, .v-button.add-project-btn:active .v-button-wrap {
-	padding: 0px;
-	text-align: center;
-}
-
-.v-button.add-project-btn .v-button-wrap .v-button-caption {
-	font-size: 16px;
-	line-height: 20px;
-	font-weight: bold;
-	color: #FFF;
 }
 
 div.v-csslayout.followers-container {

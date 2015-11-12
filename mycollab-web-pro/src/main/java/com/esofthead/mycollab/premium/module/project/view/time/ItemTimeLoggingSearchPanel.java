@@ -24,6 +24,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -97,8 +98,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
         private ProjectMemberListSelect userField;
         private ComboBox groupField, orderField;
-        private MHorizontalLayout buttonControls;
-        private VerticalLayout bodyWrap;
+        private MVerticalLayout bodyWrap;
 
         @SuppressWarnings("unchecked")
         public TimeLoggingBasicSearchLayout() {
@@ -112,9 +112,8 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
         @Override
         public ComponentContainer constructBody() {
-            bodyWrap = new VerticalLayout();
-
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1, "300px", "50px");
+            bodyWrap = new MVerticalLayout();
+            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1, "100%", "70px");
             gridLayout.getLayout().setWidth("100%");
             gridLayout.getLayout().setSpacing(true);
             gridLayout.getLayout().setMargin(true);
@@ -140,7 +139,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                     callSearchAction();
                 }
             });
-            this.groupField.setWidth("100px");
 
             this.orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(new Property.ValueChangeListener() {
@@ -149,15 +147,12 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                     callSearchAction();
                 }
             });
-            this.orderField.setWidth("100px");
 
             Label dateStartLb = new Label("From:");
             Label dateEndLb = new Label("To:");
 
             Label groupLb = new Label("Group:");
-            groupLb.setWidth("40px");
             Label sortLb = new Label("Sort:");
-            sortLb.setWidth("40px");
 
             grid.addComponent(dateStartLb, 0, 0);
             grid.addComponent(dateEndLb, 2, 0);
@@ -171,11 +166,11 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
 
             gridLayout.addComponent(grid, null, 0, 0);
 
-            this.userField = new ProjectMemberListSelect();
+            userField = new ProjectMemberListSelect();
             gridLayout.addComponent(userField, "User", 1, 0);
-            this.userField.setWidth(nameFieldWidth);
+            userField.setWidth(nameFieldWidth);
 
-            buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
+            MHorizontalLayout buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), new Button.ClickListener() {
                 @Override
@@ -197,12 +192,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
             buttonControls.with(searchBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
-
-            Label spaceLbl = new Label();
-            buttonControls.with(spaceLbl).expand(spaceLbl);
-
-            gridLayout.addComponent(buttonControls, null, 2, 0);
-            bodyWrap.addComponent(gridLayout.getLayout());
+            bodyWrap.with(gridLayout.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
 
             return bodyWrap;
         }
@@ -214,9 +204,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             Date fDate = dateStart.getValue();
             Date tDate = dateEnd.getValue();
-            searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates, new
-                    DateRangeInjecter(fDate, tDate)));
-            Collection<String> selectedUsers = (Collection<String>) this.userField.getValue();
+            searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
+                    new DateRangeInjecter(fDate, tDate)));
+            Collection<String> selectedUsers = (Collection<String>) userField.getValue();
             if (CollectionUtils.isNotEmpty(selectedUsers)) {
                 searchCriteria.setLogUsers(new SetSearchField(selectedUsers));
             }
@@ -228,9 +218,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 sortDirection = SearchCriteria.DESC;
             }
 
-            if ("Date".equals(groupField.getValue())) {
+            if ("Date" .equals(groupField.getValue())) {
                 searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("logForDay", sortDirection)));
-            } else if ("User".equals(groupField.getValue())) {
+            } else if ("User" .equals(groupField.getValue())) {
                 searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("loguser", sortDirection)));
             }
             return searchCriteria;

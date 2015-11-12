@@ -51,15 +51,11 @@ import com.vaadin.ui.UI;
 
 /**
  * @author MyCollab Ltd.
- *
  * @since 4.4.0
- *
  */
 
 @ViewComponent
-public class CrmContainerViewImpl extends AbstractMobileTabPageView implements
-		CrmContainerView {
-
+public class CrmContainerViewImpl extends AbstractMobileTabPageView implements CrmContainerView {
 	private static final long serialVersionUID = 5251742381187041492L;
 
 	private AccountListPresenter accountPresenter;
@@ -71,8 +67,7 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements
 	private CaseListPresenter casePresenter;
 
 	public CrmContainerViewImpl() {
-		((MobileNavigationManager) UI.getCurrent().getContent())
-				.setNavigationMenu(null);
+		((MobileNavigationManager) UI.getCurrent().getContent()).setNavigationMenu(null);
 		buildComponents();
 	}
 

@@ -42,10 +42,7 @@ public class TextDetailFieldInfoPanel extends
 			List<DynaSection> activeSections) {
 		super(candidateFieldName, activeSections);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3,
-				"100%", "120px", Alignment.TOP_LEFT);
-		layoutHelper.getLayout().setSpacing(true);
-		layoutHelper.getLayout().setMargin(false);
+		GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 		layoutHelper.getLayout().setWidth("100%");
 		layoutHelper.addComponent(labelField, "Label", 0, 0);
 		sectionList = new SectionSelectList(activeSections);

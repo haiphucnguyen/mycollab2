@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -632,10 +631,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
                 final TextField columnNameField = new TextField();
                 columnNameField.setValue(optionVal.getTypeval());
-                GridFormLayoutHelper gridFormLayoutHelper = new GridFormLayoutHelper(1, 1, "100%", "150px", Alignment.TOP_LEFT);
-                gridFormLayoutHelper.getLayout().setWidth("100%");
-                gridFormLayoutHelper.getLayout().addStyleName("colored-gridlayout");
-                gridFormLayoutHelper.getLayout().setMargin(false);
+                GridFormLayoutHelper gridFormLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 1);
                 gridFormLayoutHelper.addComponent(columnNameField, "Column name", 0, 0);
 
                 Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {

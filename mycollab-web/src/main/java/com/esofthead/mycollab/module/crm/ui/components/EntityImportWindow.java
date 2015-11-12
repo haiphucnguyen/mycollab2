@@ -231,10 +231,7 @@ public abstract class EntityImportWindow<E> extends Window {
 
             MVerticalLayout informationLayout = new MVerticalLayout().withWidth("100%");
 
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(1, 4, "100%", "200px", Alignment.TOP_LEFT);
-
-            gridLayout.getLayout().setSpacing(true);
-            gridLayout.getLayout().setMargin(false);
+            GridFormLayoutHelper gridLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
             gridLayout.getLayout().setWidth("100%");
 
             informationLayout.addComponent(new Label("Specify Format"));

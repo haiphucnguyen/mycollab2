@@ -76,7 +76,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         standupCalendar.addStyleName("standup-calendar");
 
         standupMissingComp = new StandupMissingComp();
-        standupMissingComp.setWidth("250px");
+        standupMissingComp.setWidth("300px");
         contentWrap.addComponent(standupMissingComp);
 
         this.addComponent(contentWrap);

@@ -129,8 +129,6 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { background-color: #" + accountTheme.getActionbtn()
                     + "; }");
 
-            extraStyles.append(".v-button.add-project-btn {background-color: #" + accountTheme.getActionbtn() + ";}");
-
             extraStyles.append(".upload-field .v-upload-immediate .v-button {background-color: #" + accountTheme.getActionbtn() + ";}");
 
             extraStyles.append(".optionPopupContent .action-wrap:hover {" +

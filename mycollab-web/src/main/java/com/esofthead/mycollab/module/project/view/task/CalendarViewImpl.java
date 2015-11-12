@@ -189,7 +189,6 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 displayMonthView();
             }
         });
-        previousBtn.setWidth("40px");
         previousBtn.setStyleName(UIConstants.BUTTON_ACTION);
         previousBtn.setIcon(FontAwesome.CHEVRON_LEFT);
         navigationBtns.addButton(previousBtn);
@@ -201,7 +200,6 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 displayMonthView();
             }
         });
-        nextBtn.setWidth("40px");
         nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
         nextBtn.setIcon(FontAwesome.CHEVRON_RIGHT);
         navigationBtns.addButton(nextBtn);

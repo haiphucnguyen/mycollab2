@@ -33,9 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.UrlLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.UrlSocialNetworkLinkViewField;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.ValoTheme;
@@ -127,7 +125,6 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         btnChangeBasicInfo.setStyleName(UIConstants.BUTTON_LINK);
 
         HorizontalLayout btnChangeBasicInfoWrapper = new HorizontalLayout();
-        btnChangeBasicInfoWrapper.setWidth("40px");
         btnChangeBasicInfoWrapper.addComponent(btnChangeBasicInfo);
         btnChangeBasicInfoWrapper.setComponentAlignment(btnChangeBasicInfo, Alignment.MIDDLE_RIGHT);
         userWrapper.addComponent(btnChangeBasicInfoWrapper);
