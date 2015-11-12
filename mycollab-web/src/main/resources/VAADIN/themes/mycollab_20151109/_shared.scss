@@ -612,6 +612,7 @@
     .v-context-menu {
       .v-context-submenu {
         @include flex-compatible;
+        max-width:400px;
         padding: 7px;
         &:hover {
           background-color: red;

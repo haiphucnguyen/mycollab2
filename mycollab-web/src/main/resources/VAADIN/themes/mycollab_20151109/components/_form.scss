@@ -16,18 +16,23 @@
 
   .v-gridlayout.colored-gridlayout {
     .gridform-caption, .gridform-field {
-      @include margin-container(14px, 8px, 8px, 0px);
+      @include margin-container(8px, 8px, 4px, 0px);
       border-bottom: 1px solid $my-separator-color;
     }
     .gridform-field {
-      min-height: 46px;
+      min-height: 39px;
     }
     .gridform-caption {
-      min-height: 46px;
+      min-height: 39px;
       .v-label {
         text-align: right;
         color: #999;
       }
+    }
+  }
+  .v-gridlayout.borderless {
+    .gridform-caption, .gridform-field {
+      border: none;
     }
   }
 

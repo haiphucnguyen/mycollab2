@@ -2177,6 +2177,7 @@ span.block {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
+	max-width: 400px;
 	padding: 7px;
 }
 
@@ -14470,6 +14471,7 @@ span.block {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
+	max-width: 400px;
 	padding: 7px;
 }
 
@@ -14497,7 +14499,7 @@ span.block {
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption.v-margin-top, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-top {
-	padding-top: 14px;
+	padding-top: 8px;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption.v-margin-right, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-right {
@@ -14505,7 +14507,7 @@ span.block {
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption.v-margin-bottom, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-bottom {
-	padding-bottom: 8px;
+	padding-bottom: 4px;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption.v-margin-left, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-left {
@@ -14513,16 +14515,20 @@ span.block {
 }
 
 .v-gridlayout.colored-gridlayout .gridform-field {
-	min-height: 46px;
+	min-height: 39px;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption {
-	min-height: 46px;
+	min-height: 39px;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption .v-label {
 	text-align: right;
 	color: #999;
+}
+
+.v-gridlayout.borderless .gridform-caption, .v-gridlayout.borderless .gridform-field {
+	border: none;
 }
 
 .activity-comp .section {

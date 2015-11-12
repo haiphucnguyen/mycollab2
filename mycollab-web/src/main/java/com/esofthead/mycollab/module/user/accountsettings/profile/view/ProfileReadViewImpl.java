@@ -131,18 +131,15 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         basicLayout.addComponent(userWrapper);
         basicLayout.setComponentAlignment(userWrapper, Alignment.MIDDLE_LEFT);
 
-        basicLayout.addComponent(new Label(String.format("%s: %s", AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY),
-                AppContext.formatDate(user.getDateofbirth()))));
-        basicLayout.addComponent(new MHorizontalLayout(new Label(AppContext
-                .getMessage(UserI18nEnum.FORM_EMAIL) + ": "), new LabelLink(
-                user.getEmail(), String.format("mailto:%s", user.getEmail()))));
-        basicLayout.addComponent(new Label(String.format("%s: %s", AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE),
-                TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName())));
-        basicLayout.addComponent(new Label(String.format("%s: %s", AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE),
-                AppContext.getMessage(LangI18Enum.class, user.getLanguage()))));
-
-        MHorizontalLayout passwordWrapper = new MHorizontalLayout();
-        passwordWrapper.addComponent(new Label(AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD) + ": ***********"));
+        GridFormLayoutHelper userFormLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5).withCaptionWidth("80px");
+        userFormLayout.getLayout().addStyleName(UIConstants.GRIDFORM_BORDERLESS);
+        userFormLayout.addComponent(new Label(AppContext.formatDate(user.getDateofbirth())),
+                AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 0);
+        userFormLayout.addComponent(new Label(user.getEmail()), AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 1);
+        userFormLayout.addComponent(new Label(TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName()),
+                AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 2);
+        userFormLayout.addComponent(new Label(AppContext.getMessage(LangI18Enum.class, user.getLanguage())),
+                AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE), 0, 3);
 
         Button btnChangePassword = new Button("Change", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -153,8 +150,9 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
             }
         });
         btnChangePassword.setStyleName(UIConstants.BUTTON_LINK);
-        passwordWrapper.with(btnChangePassword).withAlign(btnChangePassword, Alignment.MIDDLE_LEFT);
-        basicLayout.with(passwordWrapper).withAlign(passwordWrapper, Alignment.MIDDLE_LEFT);
+        userFormLayout.addComponent(new MHorizontalLayout(new Label("***********"), btnChangePassword),
+                AppContext.getMessage(ShellI18nEnum.FORM_PASSWORD), 0, 4);
+        basicLayout.addComponent(userFormLayout.getLayout());
 
         avatarAndPass.with(basicLayout).expand(basicLayout);
     }

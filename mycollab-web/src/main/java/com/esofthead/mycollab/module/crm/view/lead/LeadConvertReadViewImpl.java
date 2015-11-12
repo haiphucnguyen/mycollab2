@@ -195,10 +195,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         header.addStyleName(ValoTheme.LABEL_H2);
         previewForm.addComponent(header);
 
-        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 3);
-        layoutHelper.getLayout().setWidth("100%");
-        layoutHelper.getLayout().setMargin(false);
-        layoutHelper.getLayout().addStyleName("colored-gridlayout");
+        GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
         LOG.debug("Display associate account");
         AccountService accountService = ApplicationContextUtil
@@ -242,8 +239,7 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
         }
 
         LOG.debug("Display associate opportunity");
-        OpportunityService opportunityService = ApplicationContextUtil
-                .getSpringBean(OpportunityService.class);
+        OpportunityService opportunityService = ApplicationContextUtil.getSpringBean(OpportunityService.class);
         final SimpleOpportunity opportunity = opportunityService.findOpportunityAssoWithConvertedLead(lead.getId(),
                 AppContext.getAccountId());
         if (opportunity != null) {

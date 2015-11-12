@@ -62,6 +62,10 @@ public class UIConstants {
 
     public static final String PROGRESS_BAR_MEDIUM = "medium";
 
+    public static final String GRIDFORM_STANDARD = "colored-gridlayout";
+    public static final String GRIDFORM_BORDERLESS = "borderless";
+
+
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
     public static final int TABLE_S_LABEL_WIDTH = 80;

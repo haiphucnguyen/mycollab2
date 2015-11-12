@@ -34,7 +34,11 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
+import com.hp.gagawa.java.Node;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.StringUtils;
@@ -79,10 +83,9 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
         MVerticalLayout basicLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
-        HorizontalLayout userWrapper = new HorizontalLayout();
+        CssLayout userWrapper = new CssLayout();
         String nickName = user.getNickname();
-        Label userName = new Label(user.getDisplayName()
-                + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( %s )", nickName))));
+        Label userName = new Label(user.getDisplayName() + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( %s )", nickName))));
         userName.setStyleName(ValoTheme.LABEL_H1);
         userName.addStyleName(UIConstants.LABEL_WORD_WRAP);
         userWrapper.addComponent(userName);
@@ -90,27 +93,25 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
         basicLayout.addComponent(userWrapper);
         basicLayout.setComponentAlignment(userWrapper, Alignment.MIDDLE_LEFT);
 
-        Component role;
+        GridFormLayoutHelper formLayoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 5).withCaptionWidth("80px");
+        formLayoutHelper.getLayout().addStyleName(UIConstants.GRIDFORM_BORDERLESS);
+        basicLayout.addComponent(formLayoutHelper.getLayout());
+
+        Node roleDiv;
         if (Boolean.TRUE.equals(user.getIsAccountOwner())) {
-            role = new DefaultViewField("Account Owner");
+            roleDiv = new Div().appendText("Account Owner");
         } else {
-            role = new LinkViewField(user.getRoleName(), AccountLinkBuilder.generatePreviewFullRoleLink(user.getRoleid()));
+            roleDiv = new A(AccountLinkBuilder.generatePreviewFullRoleLink(user.getRoleid())).appendText(user.getRoleName());
         }
-        MHorizontalLayout roleWrapper = new MHorizontalLayout();
-        roleWrapper.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_ROLE) + ": "));
-        roleWrapper.addComponent(role);
 
-        basicLayout.addComponent(roleWrapper);
-
-        basicLayout.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY)
-                + ": " + AppContext.formatDate(user.getDateofbirth())));
-        basicLayout.addComponent(new MHorizontalLayout()
-                .add(new Label(AppContext.getMessage(UserI18nEnum.FORM_EMAIL) + ": ")).add(
-                        new LabelLink(user.getEmail(), "mailto:" + user.getEmail())));
-        basicLayout.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE)
-                + ": " + TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName()));
-        basicLayout.addComponent(new Label(AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE)
-                + ": " + AppContext.getMessage(LangI18Enum.class, user.getLanguage())));
+        formLayoutHelper.addComponent(new Label(roleDiv.write(), ContentMode.HTML), AppContext.getMessage(UserI18nEnum.FORM_ROLE), 0, 0);
+        formLayoutHelper.addComponent(new Label(AppContext.formatDate(user.getDateofbirth())), AppContext.getMessage(UserI18nEnum.FORM_BIRTHDAY), 0, 1);
+        formLayoutHelper.addComponent(new Label(new A("mailto:" + user.getEmail()).appendText(user.getEmail()).write(),
+                ContentMode.HTML), AppContext.getMessage(UserI18nEnum.FORM_EMAIL), 0, 2);
+        formLayoutHelper.addComponent(new Label(TimezoneMapper.getTimezoneExt(user.getTimezone()).getDisplayName()),
+                AppContext.getMessage(UserI18nEnum.FORM_TIMEZONE), 0, 3);
+        formLayoutHelper.addComponent(new Label(AppContext.getMessage(LangI18Enum.class, user.getLanguage())),
+                AppContext.getMessage(UserI18nEnum.FORM_LANGUAGE), 0, 4);
 
         avatarAndPass.with(basicLayout).withAlign(basicLayout, Alignment.TOP_LEFT).expand(basicLayout);
 
