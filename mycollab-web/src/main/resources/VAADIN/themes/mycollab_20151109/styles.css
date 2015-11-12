@@ -15473,6 +15473,7 @@ div.v-button.token-field:hover {
 	border-size: 1px;
 	border-color: #e5e5e5;
 	border-width: 0px 1px 1px 1px;
+	background-color: white;
 }
 
 .gantt .bar.v-widget {
@@ -15705,6 +15706,7 @@ div.v-button.token-field:hover {
 	float: left;
 	overflow: hidden;
 	height: 15px;
+	font-size: 12px;
 	-ms-flex-pack: justify;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;

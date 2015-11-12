@@ -134,7 +134,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
                 int taskId = super.saveWithSession(record, username);
                 asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class, ProjectGenericTaskService.class,
                         ProjectActivityStreamService.class, ProjectMemberService.class, MilestoneService.class,
-                        TimelineTrackingService.class}));
+                        TimelineTrackingService.class, GanttAssignmentService.class}));
                 asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, taskId, "status",
                         record.getStatus(), record.getProjectid(), record.getSaccountid()));
                 return taskId;
@@ -156,7 +156,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         int result = super.updateWithSession(record, username);
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
-                MilestoneService.class, ItemTimeLoggingService.class, TimelineTrackingService.class}));
+                MilestoneService.class, ItemTimeLoggingService.class, TimelineTrackingService.class,
+                GanttAssignmentService.class}));
         asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.getId(), "status",
                 record.getStatus(), record.getProjectid(), record.getSaccountid()));
         return result;
@@ -176,7 +177,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         int result = super.updateSelectiveWithSession(record, username);
         asyncEventBus.post(new CleanCacheEvent(record.getSaccountid(), new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
-                MilestoneService.class, ItemTimeLoggingService.class, TimelineTrackingService.class}));
+                MilestoneService.class, ItemTimeLoggingService.class, TimelineTrackingService.class,
+                GanttAssignmentService.class}));
         asyncEventBus.post(new TimelineTrackingUpdateEvent(ProjectTypeConstants.TASK, record.getId(), "status",
                 record.getStatus(), record.getProjectid(), record.getSaccountid()));
         return result;
@@ -187,7 +189,7 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
         super.massRemoveWithSession(items, username, accountId);
         asyncEventBus.post(new CleanCacheEvent(accountId, new Class[]{ProjectService.class,
                 ProjectGenericTaskService.class, ProjectActivityStreamService.class, ProjectMemberService.class,
-                MilestoneService.class, ItemTimeLoggingService.class}));
+                MilestoneService.class, ItemTimeLoggingService.class, GanttAssignmentService.class}));
         DeleteProjectTaskEvent event = new DeleteProjectTaskEvent(items.toArray(new Task[items.size()]),
                 username, accountId);
         asyncEventBus.post(event);
