@@ -16715,14 +16715,12 @@ div.v-csslayout.main-body {
 }
 
 .footer {
-	width: 100%;
 	border-top: 1px solid #c5c5c5;
-	padding: 5px 5px;
-	display: block;
 }
 
-.footer .v-link {
+.footer .v-link, .footer div {
 	text-decoration: none;
+	font-size: 13px;
 }
 
 .photo-cropbox {

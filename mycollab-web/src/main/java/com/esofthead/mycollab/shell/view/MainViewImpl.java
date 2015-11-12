@@ -42,6 +42,8 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.esofthead.mycollab.web.IDesktopModule;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.server.BrowserWindowOpener;
@@ -54,6 +56,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.button.MButton;
@@ -105,48 +108,50 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         }
     }
 
-    private CustomLayout createFooter() {
-        CustomLayout footer = CustomLayoutExt.createLayout("footer");
+    private ComponentContainer createFooter() {
+        MHorizontalLayout footer = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false, true, false, true));
         footer.setStyleName("footer");
-        footer.setWidth("100%");
         footer.setHeight("25px");
 
-        Link companyLink = new Link("MyCollab", new ExternalResource("https://www.mycollab.com"));
-        companyLink.setTargetName("_blank");
+        Div companyInfoDiv = new Div().appendText("Powered by ").appendChild(new A("https://www.mycollab.com",
+                "_blank").appendText("MyCollab")).appendText(" &copy; " + new LocalDate().getYear());
+        ELabel companyInfoLbl = new ELabel(companyInfoDiv.write(), ContentMode.HTML).withWidth("-1px");
+        footer.with(companyInfoLbl).withAlign(companyInfoLbl, Alignment.MIDDLE_LEFT);
 
-        footer.addComponent(companyLink, "company-url");
-
-        Calendar currentCal = Calendar.getInstance();
-        Label currentYear = new Label(String.valueOf(currentCal.get(Calendar.YEAR)));
-        currentYear.setSizeUndefined();
-        footer.addComponent(currentYear, "current-year");
-
-        MHorizontalLayout footerRight = new MHorizontalLayout();
-
-        Link blogLink = new Link("Blog", new ExternalResource("https://www.mycollab.com/blog"));
-        blogLink.setIcon(FontAwesome.RSS);
-        blogLink.setTargetName("_blank");
-
-        Link sendFeedback = new Link("Feedback", new ExternalResource("http://support.mycollab.com"));
-        sendFeedback.setIcon(FontAwesome.REPLY_ALL);
-        sendFeedback.setTargetName("_blank");
+        Div socialLinksDiv = new Div().appendText(FontAwesome.RSS.getHtml())
+                .appendChild(new A("https://www.mycollab.com/blog", "_blank").appendText(" Blog"))
+                .appendText("  " + FontAwesome.REPLY_ALL.getHtml())
+                .appendChild(new A("http://support.mycollab.com", "_blank").appendText(" Support"));
 
         if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.standalone) {
-            Link rateUsLink = new Link("Rate us!", new ExternalResource("http://sourceforge.net/projects/mycollab/reviews/new"));
-            rateUsLink.setTargetName("_blank");
-            rateUsLink.setIcon(FontAwesome.THUMBS_O_UP);
-            footerRight.with(rateUsLink);
+            socialLinksDiv.appendText("  " + FontAwesome.THUMBS_O_UP.getHtml())
+                    .appendChild(new A("http://sourceforge.net/projects/mycollab/reviews/new", "_blank").appendText("" +
+                            " Rate us"));
         }
 
-        Link fbPage = new Link("FB Page", new ExternalResource("https://www.facebook.com/mycollab2"));
-        fbPage.setTargetName("_blank");
-        fbPage.setIcon(FontAwesome.FACEBOOK);
+        socialLinksDiv.appendText("  " + FontAwesome.FACEBOOK.getHtml())
+                .appendChild(new A("https://www.facebook.com/mycollab2", "_blank").appendText(" FB page"));
+        socialLinksDiv.appendText("  " + FontAwesome.TWITTER.getHtml())
+                .appendChild(new A("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project " +
+                        "activities, accounts and it works great @mycollabdotcom &source=webclient", "_blank")
+                        .appendText(" Tweet"));
 
-        Link tweetUs = new Link("Tweet", new ExternalResource("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom &source=webclient"));
-        tweetUs.setTargetName("_blank");
-        tweetUs.setIcon(FontAwesome.TWITTER);
-        footerRight.with(fbPage, tweetUs, blogLink, sendFeedback);
-        footer.addComponent(footerRight, "footer-right");
+        ELabel socialsLbl = new ELabel(socialLinksDiv.write(), ContentMode.HTML).withWidth("-1px");
+        footer.with(socialsLbl).withAlign(socialsLbl, Alignment.MIDDLE_RIGHT);
+//        footer.addComponent(currentYear, "current-year");
+//
+//        MHorizontalLayout footerRight = new MHorizontalLayout();
+//
+//
+//        Link fbPage = new Link("FB Page", new ExternalResource("https://www.facebook.com/mycollab2"));
+//        fbPage.setTargetName("_blank");
+//        fbPage.setIcon(FontAwesome.FACEBOOK);
+//
+//        Link tweetUs = new Link("Tweet", new ExternalResource("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom &source=webclient"));
+//        tweetUs.setTargetName("_blank");
+//        tweetUs.setIcon(FontAwesome.TWITTER);
+//        footerRight.with(fbPage, tweetUs, blogLink, sendFeedback);
+//        footer.addComponent(footerRight, "footer-right");
         return footer;
     }
 
