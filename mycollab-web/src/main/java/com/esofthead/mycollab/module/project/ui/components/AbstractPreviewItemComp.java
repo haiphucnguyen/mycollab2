@@ -26,8 +26,8 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,9 +66,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public AbstractPreviewItemComp(String headerText, Resource iconResource, ReadViewLayout layout) {
-        Label headerLbl = new Label("", ContentMode.HTML);
+        ELabel headerLbl = ELabel.header("");
         headerLbl.setSizeUndefined();
-        headerLbl.setStyleName("hdr-text");
 
         this.previewLayout = layout;
 

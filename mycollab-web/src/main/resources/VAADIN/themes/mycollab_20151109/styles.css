@@ -1749,10 +1749,6 @@ a.pending {
 	margin-right: 5px;
 }
 
-.v-label.headerName {
-	font-size: 18px;
-}
-
 .v-label.icon-48px .v-icon {
 	font-size: 48px;
 	color: #525252;
@@ -14043,10 +14039,6 @@ a.pending {
 	margin-right: 5px;
 }
 
-.v-label.headerName {
-	font-size: 18px;
-}
-
 .v-label.icon-48px .v-icon {
 	font-size: 48px;
 	color: #525252;
@@ -14615,22 +14607,9 @@ span.block {
 }
 
 .readViewLayout .readViewHeader {
-	padding: 0px 0px 0px 5px;
+	padding: 0px 0px 5px 5px;
 	border-radius: 0px;
 	border-bottom: 1px solid #e5e5e5;
-}
-
-.readViewLayout .readViewHeader .headerName {
-	font-size: 18px;
-}
-
-.readViewLayout .readViewHeader .headerNameOverdue {
-	font-size: 18px;
-	color: red;
-}
-
-.readViewBottomControls .v-verticallayout {
-	display: block;
 }
 
 .readview-layout {
@@ -15147,17 +15126,6 @@ div.v-csslayout.followers-container .v-checkbox {
 	border-style: none;
 	color: #888;
 	font-size: 13px;
-}
-
-.footer2 {
-	border-style: none;
-	color: #888;
-	font-size: 13px;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
 }
 
 .v-csslayout.tagcloud {
@@ -16500,31 +16468,6 @@ input.v-textfield-errorField {
 	padding: 0px;
 }
 
-.addViewTitle {
-	padding: 10px 5px 10px 5px;
-	border-bottom: 1px solid #e5e5e5;
-	font-size: 16px;
-}
-
-.addViewTitle .v-label {
-	font-size: 16px;
-}
-
-.addViewLayout .addViewHeader {
-	padding: 12px 0px;
-}
-
-.addViewLayout .addViewHeader .headerName {
-	font-size: 18px;
-}
-
-.addViewLayout .addViewTitle .titleName {
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 20px !important;
-	padding-top: 2px;
-}
-
 .crmContainer .container-wrap .tab-content, .accountViewContainer .container-wrap .tab-content {
 	border-width: 1px 0px 0px 1px;
 	padding: 0px;
@@ -17632,24 +17575,6 @@ div.v-ratingstars-bar {
 
 .hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
 	padding-left: 30px;
-}
-
-.hdr-view .hdr-text {
-	font-size: 18px;
-	color: #525252;
-	font-weight: bold;
-}
-
-.hdr-view .hdr-text-overdue {
-	font-size: 16px;
-	color: red;
-	font-weight: bold;
-}
-
-.hdr-view .hdr-text-overdue span {
-	font-size: 16px;
-	color: red;
-	font-weight: bold;
 }
 
 .v-caption.v-caption-header-text {

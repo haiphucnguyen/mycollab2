@@ -642,29 +642,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     }
   }
 
-  .addViewTitle {
-    padding: 10px 5px 10px 5px;
-    border-bottom: 1px solid $my-separator-color;
-    font-size: $font-larger;
-    .v-label {
-      font-size: $font-larger;
-    }
-  }
-
-  .addViewLayout {
-    .addViewHeader {
-      padding: 12px 0px;
-      .headerName {
-        font-size: $font-x-large;
-      }
-    }
-    .addViewTitle .titleName {
-      font-size: $font-normal;
-      font-weight: bold;
-      line-height: 20px !important;
-      padding-top: 2px;
-    }
-  }
   /* End Add View Styles */
 
   /* End Account Settings */
@@ -1825,24 +1802,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
     padding-left: 30px;
-  }
-
-  .hdr-view {
-    .hdr-text {
-      font-size: $font-x-large;
-      color: #525252;
-      font-weight: bold;
-    }
-    .hdr-text-overdue {
-      font-size: $font-larger;
-      color: red;
-      font-weight: bold;
-      span {
-        font-size: $font-larger;
-        color: red;
-        font-weight: bold;
-      }
-    }
   }
 
   .v-caption.v-caption-header-text {

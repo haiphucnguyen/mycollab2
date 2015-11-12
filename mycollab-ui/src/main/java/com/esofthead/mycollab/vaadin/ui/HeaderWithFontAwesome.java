@@ -20,6 +20,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * @author MyCollab Ltd.
@@ -34,7 +35,8 @@ public class HeaderWithFontAwesome extends CssLayout {
         super();
         wrappedLbl = new Label();
         wrappedLbl.setContentMode(ContentMode.HTML);
-        wrappedLbl.setStyleName("hdr-text");
+        wrappedLbl.setStyleName(ValoTheme.LABEL_H2);
+        wrappedLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         this.iconFont = iconFont;
         updateTitle(title);
         this.addComponent(wrappedLbl);

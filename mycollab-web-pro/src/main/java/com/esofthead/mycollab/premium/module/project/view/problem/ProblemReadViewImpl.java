@@ -79,7 +79,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> 
         }
 
         if (beanItem.isOverdue()) {
-            previewLayout.setTitleStyleName("headerNameOverdue");
+            previewLayout.addTitleStyleName(UIConstants.LABEL_OVERDUE);
         }
         activityComponent.loadActivities("" + beanItem.getId());
 

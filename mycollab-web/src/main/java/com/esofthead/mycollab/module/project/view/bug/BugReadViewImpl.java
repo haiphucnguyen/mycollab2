@@ -64,7 +64,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -280,20 +279,18 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private static class BugPreviewFormLayout extends ReadViewLayout {
-        private Label titleLbl;
+        private ELabel titleLbl;
 
         void displayBugHeader(final SimpleBug bug) {
             MVerticalLayout header = new MVerticalLayout().withWidth("100%").withMargin(false);
-            titleLbl = new Label(bug.getSummary());
-            titleLbl.setStyleName("headerName");
+            titleLbl = ELabel.header(bug.getSummary());
             header.with(titleLbl).expand(titleLbl);
             this.addHeader(header);
 
-            this.clearTitleStyleName();
             if (bug.isCompleted()) {
                 this.addTitleStyleName(UIConstants.LINK_COMPLETED);
             } else if (bug.isOverdue()) {
-                this.setTitleStyleName("headerNameOverdue");
+                this.addTitleStyleName(UIConstants.LABEL_OVERDUE);
             }
 
             BugRelationService bugRelationService = ApplicationContextUtil.getSpringBean(BugRelationService.class);
@@ -312,7 +309,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         @Override
                         public void buttonClick(ClickEvent clickEvent) {
                             ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                            AppContext.getSiteName()),
+                                    AppContext.getSiteName()),
                                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                     AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                                     AppContext.getMessage(GenericI18Enum.BUTTON_NO), new ConfirmDialog.Listener() {
@@ -336,18 +333,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         }
 
         @Override
-        public void clearTitleStyleName() {
-            titleLbl.setStyleName("headerName");
-        }
-
-        @Override
         public void addTitleStyleName(String styleName) {
             titleLbl.addStyleName(styleName);
-        }
-
-        @Override
-        public void setTitleStyleName(String styleName) {
-            titleLbl.setStyleName(styleName);
         }
 
         @Override

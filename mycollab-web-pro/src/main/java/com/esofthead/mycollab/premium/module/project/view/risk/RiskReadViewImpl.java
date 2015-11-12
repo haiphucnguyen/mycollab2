@@ -11,7 +11,10 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.*;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
+import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
+import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
@@ -86,7 +89,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         }
 
         if (beanItem.isOverdue()) {
-            previewLayout.setTitleStyleName("headerNameOverdue");
+            previewLayout.addTitleStyleName(UIConstants.LABEL_OVERDUE);
         }
 
         activityComponent.loadActivities("" + beanItem.getId());

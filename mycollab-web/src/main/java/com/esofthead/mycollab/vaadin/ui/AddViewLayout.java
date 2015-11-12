@@ -21,6 +21,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -31,7 +32,6 @@ public class AddViewLayout extends CustomLayoutExt {
     private static final long serialVersionUID = 1L;
 
     private Resource viewIcon;
-
     private Label titleLbl;
     private final MHorizontalLayout header;
 
@@ -44,7 +44,7 @@ public class AddViewLayout extends CustomLayoutExt {
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         titleLbl = new Label("", ContentMode.HTML);
-        titleLbl.setStyleName("headerName");
+        titleLbl.setStyleName(ValoTheme.LABEL_H2);
 
         if (!(viewIcon instanceof FontAwesome)) {
             Image icon = new Image(null);
@@ -73,19 +73,6 @@ public class AddViewLayout extends CustomLayoutExt {
         titleLbl.addStyleName(styleName);
     }
 
-    public void setTitleStyleName(final String styleName) {
-        titleLbl.setStyleName(styleName);
-    }
-
-    public void removeTitleStyleName(final String styleName) {
-        titleLbl.removeStyleName(styleName);
-    }
-
-	/*
-     * public void addTopControls(final ComponentContainer topControls) {
-	 * this.addComponent(topControls, "addViewTopControls"); }
-	 */
-
     public void setHeader(final String viewTitle) {
         if (viewIcon instanceof FontAwesome) {
             String title = ((FontAwesome) viewIcon).getHtml() + " " + viewTitle;
@@ -100,7 +87,7 @@ public class AddViewLayout extends CustomLayoutExt {
             CssLayout titleWrap = new CssLayout();
             titleWrap.setStyleName("addViewTitle");
             titleWrap.setWidth("100%");
-            titleWrap.addComponent(new Label(title));
+            titleWrap.addComponent(ELabel.header(title));
             addComponent(titleWrap, "addViewTitle");
         } else {
             removeComponent("addViewTitle");

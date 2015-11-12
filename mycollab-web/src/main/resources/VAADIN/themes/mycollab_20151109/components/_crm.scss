@@ -49,27 +49,15 @@
 
 
 
-/* New ReadViewLayout */
-
+  /* New ReadViewLayout */
   .readViewLayout {
     background-color: #FFF;
     border-radius: 0px;
     .readViewHeader {
-      padding: 0px 0px 0px 5px;
+      padding: 0px 0px 5px 5px;
       border-radius: 0px;
       border-bottom: 1px solid $my-separator-color;
-      .headerName {
-        font-size: $font-x-large;
-      }
-      .headerNameOverdue {
-        font-size: $font-x-large;
-        color: red;
-      }
     }
-  }
-
-  .readViewBottomControls .v-verticallayout {
-    display: block;
   }
 
   .readview-layout {

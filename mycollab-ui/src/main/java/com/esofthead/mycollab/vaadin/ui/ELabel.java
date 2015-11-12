@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.Date;
 
@@ -69,5 +70,11 @@ public class ELabel extends Label {
         this.setValue(AppContext.formatPrettyTime(date));
         this.setDescription(AppContext.formatDateTime(date));
         return this;
+    }
+
+    public static final ELabel header(String value) {
+        ELabel label = new ELabel(value, ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2);
+        label.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        return label;
     }
 }

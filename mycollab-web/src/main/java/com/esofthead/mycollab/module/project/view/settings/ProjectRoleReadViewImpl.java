@@ -41,18 +41,14 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
     private SimpleProjectRole beanItem;
     private AdvancedPreviewBeanForm<SimpleProjectRole> previewForm;
     private ReadViewLayout previewLayout;
-    private Label headerText;
+    private HeaderWithFontAwesome headerText;
     private MHorizontalLayout header;
 
     private GridFormLayoutHelper projectFormHelper;
 
     public ProjectRoleReadViewImpl() {
-        this.headerText = new Label();
-        headerText.setCaption(AppContext.getMessage(ProjectRoleI18nEnum.FORM_READ_TITLE));
-        headerText.setIcon(FontAwesome.USERS);
-        headerText.addStyleName("headerName");
-
-        this.headerText.setSizeUndefined();
+        headerText = new HeaderWithFontAwesome(FontAwesome.USERS, AppContext.getMessage(ProjectRoleI18nEnum.FORM_READ_TITLE));
+        headerText.setSizeUndefined();
         this.addComponent(constructHeader());
 
         previewForm = initPreviewForm();
@@ -77,15 +73,13 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
     }
 
     protected ComponentContainer createButtonControls() {
-        return (new ProjectPreviewFormControlsGenerator<>(previewForm))
-                .createButtonControls(ProjectRolePermissionCollections.ROLES);
+        return (new ProjectPreviewFormControlsGenerator<>(previewForm)).createButtonControls(ProjectRolePermissionCollections.ROLES);
     }
 
     protected ComponentContainer createBottomPanel() {
         FormContainer permissionsPanel = new FormContainer();
 
-        projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2,
-                ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
+        projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
         permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS), projectFormHelper.getLayout());
 
         return permissionsPanel;
@@ -142,7 +136,6 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
 
     private ComponentContainer constructHeader() {
         header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%").withMargin(true);
-        headerText.setStyleName("header-text");
         header.with(headerText).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
         return header;
     }

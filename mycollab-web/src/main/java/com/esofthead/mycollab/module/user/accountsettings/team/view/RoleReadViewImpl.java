@@ -34,6 +34,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
@@ -59,7 +60,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         Label headerText = new Label(FontAwesome.USERS.getHtml() + " Detail Role", ContentMode.HTML);
-        headerText.setStyleName(UIConstants.HEADER_TEXT);
+        headerText.setStyleName(ValoTheme.LABEL_H2);
 
         header.with(headerText).expand(headerText);
 

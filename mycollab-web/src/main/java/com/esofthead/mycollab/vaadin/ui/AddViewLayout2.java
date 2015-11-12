@@ -21,6 +21,7 @@ import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -53,7 +54,6 @@ public class AddViewLayout2 extends VerticalLayout {
         }
 
         titleLbl = new Label("", ContentMode.HTML);
-        titleLbl.setStyleName(UIConstants.HEADER_TEXT);
         header.with(titleLbl).expand(titleLbl);
 
         if (title == null) {
@@ -70,12 +70,13 @@ public class AddViewLayout2 extends VerticalLayout {
         this.addComponent(body);
     }
 
-    public void resetTitleStyle() {
-        titleLbl.setStyleName(UIConstants.HEADER_TEXT);
+    public void addTitleStyleName(String style) {
+        titleLbl.addStyleName(style);
     }
 
-    public void setTitleStyleName(String style) {
-        titleLbl.setStyleName(style);
+    public void initTitleStyleName() {
+        titleLbl.setStyleName(ValoTheme.LABEL_H2);
+        titleLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
     }
 
     public void addBody(ComponentContainer bodyContainer) {

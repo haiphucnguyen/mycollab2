@@ -27,7 +27,6 @@ public class UIConstants {
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH = "180px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_HEIGHT = "180px";
     public static final String HEADER_VIEW = "hdr-view";
-    public static final String HEADER_TEXT = "hdr-text";
     public static final String CUSTOM_FIELD_COMPONENT = "customFieldComponent";
     public static final String CUSTOM_FIELD_SECTION = "customFieldSection";
     public static final String POPUP_WITHOUT_INDICATOR = "nonPopupIndicator";
@@ -59,6 +58,7 @@ public class UIConstants {
     public static final String BUTTON_ICON_ONLY = "button-icon-only";
 
     public static final String LABEL_META_INFO = "meta-info";
+    public static final String LABEL_OVERDUE = "overdue";
 
     public static final String PROGRESS_BAR_MEDIUM = "medium";
 

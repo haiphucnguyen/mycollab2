@@ -40,7 +40,6 @@ import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -85,9 +84,8 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
         CssLayout userWrapper = new CssLayout();
         String nickName = user.getNickname();
-        Label userName = new Label(user.getDisplayName() + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( %s )", nickName))));
-        userName.setStyleName(ValoTheme.LABEL_H1);
-        userName.addStyleName(UIConstants.LABEL_WORD_WRAP);
+        ELabel userName = ELabel.header(user.getDisplayName() + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( " +
+                "%s )", nickName))));
         userWrapper.addComponent(userName);
 
         basicLayout.addComponent(userWrapper);

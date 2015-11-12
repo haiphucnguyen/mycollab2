@@ -57,6 +57,7 @@ import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -99,7 +100,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
         ProjectViewHeader headerLbl = new ProjectViewHeader(ProjectTypeConstants.PAGE, AppContext.getMessage(Page18InEnum.VIEW_READ_TITLE));
         headerLbl.setWidthUndefined();
-        headerLbl.setStyleName(UIConstants.HEADER_TEXT);
+        headerLbl.setStyleName(ValoTheme.LABEL_H2);
 
         ((MHorizontalLayout) header).addComponent(headerLbl, 0);
         ((MHorizontalLayout) header).addComponent(pageVersionsSelection, 1);
@@ -250,10 +251,9 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private static class PagePreviewFormLayout extends ReadViewLayout {
         void displayPageInfo(Page beanItem) {
             MVerticalLayout header = new MVerticalLayout().withMargin(false);
-            Label titleLbl = new Label(beanItem.getSubject());
-            titleLbl.setStyleName("headerName");
+            ELabel titleLbl = ELabel.header(beanItem.getSubject());
             header.with(titleLbl);
-            Div footer = new Div().setStyle("width:100%").setCSSClass("footer2");
+            Div footer = new Div().setStyle("width:100%").setCSSClass(UIConstants.LABEL_META_INFO);
             Span lastUpdatedTimeTxt = new Span().appendText(AppContext.getMessage(DayI18nEnum.LAST_UPDATED_ON,
                     AppContext.formatPrettyTime(beanItem.getLastUpdatedTime().getTime())))
                     .setTitle(AppContext.formatDateTime(beanItem.getLastUpdatedTime().getTime()));

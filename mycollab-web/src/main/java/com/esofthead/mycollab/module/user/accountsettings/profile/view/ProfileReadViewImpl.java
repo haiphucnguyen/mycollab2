@@ -36,7 +36,6 @@ import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -110,8 +109,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         MVerticalLayout basicLayout = new MVerticalLayout().withMargin(false);
         HorizontalLayout userWrapper = new HorizontalLayout();
 
-        Label usernameLbl = new Label(AppContext.getUser().getDisplayName());
-        usernameLbl.setStyleName(ValoTheme.LABEL_H1);
+        ELabel usernameLbl = ELabel.header(AppContext.getUser().getDisplayName());
         userWrapper.addComponent(usernameLbl);
 
         Button btnChangeBasicInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {

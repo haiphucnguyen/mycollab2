@@ -206,7 +206,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
         newPageBtn.setIcon(FontAwesome.PLUS);
         newPageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PAGES));
 
-        headerText.setStyleName(UIConstants.HEADER_TEXT);
+        headerText.setStyleName(ValoTheme.LABEL_H2);
         headerLayout.with(newPageBtn).withAlign(newPageBtn, Alignment.MIDDLE_RIGHT);
     }
 

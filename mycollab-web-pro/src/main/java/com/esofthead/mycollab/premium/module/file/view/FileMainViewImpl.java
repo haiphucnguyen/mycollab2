@@ -28,6 +28,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -67,7 +68,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
                 .withWidth("100%");
         Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() + " Files", ContentMode.HTML);
-        searchTitle.setStyleName("headerName");
+        searchTitle.setStyleName(ValoTheme.LABEL_H2);
         layout.with(searchTitle).expand(searchTitle);
         return layout;
     }

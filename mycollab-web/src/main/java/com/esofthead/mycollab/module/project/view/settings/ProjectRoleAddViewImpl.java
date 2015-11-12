@@ -41,7 +41,6 @@ import java.util.Map;
  */
 @ViewComponent
 public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> implements ProjectRoleAddView {
-
     private static final long serialVersionUID = 1L;
     private final Map<String, AccessPermissionComboBox> permissionControlsMap = new HashMap<>();
 
@@ -141,5 +140,4 @@ public class ProjectRoleAddViewImpl extends AbstractEditItemComp<ProjectRole> im
         }
         return permissionMap;
     }
-
 }

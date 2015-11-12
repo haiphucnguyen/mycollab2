@@ -65,7 +65,6 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.MEMBER,
                 AppContext.getMessage(ProjectMemberI18nEnum.VIEW_LIST_TITLE));
-        headerText.setStyleName("hdr-text");
 
         viewHeader.with(headerText).expand(headerText);
 

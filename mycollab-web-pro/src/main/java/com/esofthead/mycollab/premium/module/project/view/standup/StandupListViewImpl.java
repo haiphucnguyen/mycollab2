@@ -185,7 +185,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
         ProjectViewHeader titleLbl = new ProjectViewHeader(ProjectTypeConstants.STANDUP,
                 AppContext.getMessage(StandupI18nEnum.VIEW_LIST_TITLE));
-        titleLbl.addStyleName("hdr-text");
+        titleLbl.addStyleName(ValoTheme.LABEL_H2);
 
         dateChooser = new PopupButton(AppContext.getMessage(StandupI18nEnum.CHOOSE_REPORT_DATE));
         dateChooser.setContent(standupCalendar);

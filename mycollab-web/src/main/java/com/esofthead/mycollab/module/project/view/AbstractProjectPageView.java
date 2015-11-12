@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -48,7 +49,7 @@ public class AbstractProjectPageView extends AbstractPageView {
     }
 
     private ComponentContainer constructHeader() {
-        headerText.setStyleName("hdr-text");
+        headerText.setStyleName(ValoTheme.LABEL_H2);
         header = new MHorizontalLayout().with(headerText).withStyleName("hdr-view").withWidth("100%").withMargin(true);
         return header;
     }

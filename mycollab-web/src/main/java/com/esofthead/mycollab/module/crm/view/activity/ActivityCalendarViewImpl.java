@@ -66,8 +66,7 @@ import java.util.Locale;
  * @since 2.0
  */
 @ViewComponent
-public class ActivityCalendarViewImpl extends AbstractCssPageView implements
-        ActivityCalendarView {
+public class ActivityCalendarViewImpl extends AbstractCssPageView implements ActivityCalendarView {
     private static final long serialVersionUID = 1L;
     private final PopupButton calendarActionBtn;
     private CalendarDisplay calendarComponent;
@@ -107,7 +106,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements
         actionPanel.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         Component headerText = new CrmViewHeader(CrmTypeConstants.ACTIVITY, "Calendar");
-        headerText.setStyleName(UIConstants.HEADER_TEXT);
+        headerText.setStyleName(ValoTheme.LABEL_H2);
         actionPanel.with(headerText).expand(headerText);
 
         mainContent.addComponent(actionPanel);

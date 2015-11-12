@@ -45,8 +45,12 @@ import com.vaadin.data.Property;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -75,8 +79,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
                 .withWidth("100%").withSpacing(false)
                 .withMargin(new MarginInfo(true, false, true, false));
         headerTitle.addStyleName(UIConstants.HEADER_VIEW);
-        headerTitle.with(headerLbl)
-                .withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
+        headerTitle.with(headerLbl).withAlign(headerLbl, Alignment.MIDDLE_LEFT).expand(headerLbl);
 
         headerBox.addComponent(headerTitle);
 
@@ -88,44 +91,38 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         controlLayout.addComponent(moduleLbl);
         controlLayout.setComponentAlignment(moduleLbl, Alignment.MIDDLE_LEFT);
         controlLayout.addComponent(moduleComboBox);
-        controlLayout.setComponentAlignment(moduleComboBox,
-                Alignment.MIDDLE_LEFT);
+        controlLayout.setComponentAlignment(moduleComboBox, Alignment.MIDDLE_LEFT);
 
-        Button createCustomFieldBtn = new Button("New Custom Field",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createCustomFieldBtn = new Button("New Custom Field", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(
-                                CrmCustomViewImpl.this);
-                        UI.getCurrent().addWindow(createCustomFieldWindow);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                CreateCustomFieldWindow createCustomFieldWindow = new CreateCustomFieldWindow(CrmCustomViewImpl.this);
+                UI.getCurrent().addWindow(createCustomFieldWindow);
 
-                    }
-                });
+            }
+        });
         createCustomFieldBtn.addStyleName(UIConstants.BUTTON_ACTION);
         createCustomFieldBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createCustomFieldBtn);
         controlLayout.setComponentAlignment(createCustomFieldBtn,
                 Alignment.MIDDLE_LEFT);
 
-        Button createSectionBtn = new Button("New Section",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createSectionBtn = new Button("New Section", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        CreateSectionWindow createSectionWindow = new CreateSectionWindow(
-                                CrmCustomViewImpl.this);
-                        UI.getCurrent().addWindow(createSectionWindow);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                CreateSectionWindow createSectionWindow = new CreateSectionWindow(CrmCustomViewImpl.this);
+                UI.getCurrent().addWindow(createSectionWindow);
 
-                    }
-                });
+            }
+        });
         createSectionBtn.addStyleName(UIConstants.BUTTON_ACTION);
         createSectionBtn.setIcon(FontAwesome.PLUS);
         controlLayout.addComponent(createSectionBtn);
-        controlLayout.setComponentAlignment(createSectionBtn,
-                Alignment.MIDDLE_LEFT);
+        controlLayout.setComponentAlignment(createSectionBtn, Alignment.MIDDLE_LEFT);
         headerTitle.addComponent(controlLayout);
 
         MVerticalLayout headerContent = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
@@ -142,56 +139,47 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
         MHorizontalLayout buttonsLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false));
 
-        Button saveBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        DynaForm rebuildForm = layoutComp.rebuildForm();
-                        MasterFormService formService = ApplicationContextUtil
-                                .getSpringBean(MasterFormService.class);
-                        formService.saveCustomForm(AppContext.getAccountId(),
-                                moduleName, rebuildForm);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                DynaForm rebuildForm = layoutComp.rebuildForm();
+                MasterFormService formService = ApplicationContextUtil.getSpringBean(MasterFormService.class);
+                formService.saveCustomForm(AppContext.getAccountId(), moduleName, rebuildForm);
+            }
+        });
         saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
         saveBtn.setIcon(FontAwesome.SAVE);
         buttonsLayout.addComponent(saveBtn);
 
-        Button cancelBtn = new Button(
-                AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        display(moduleName);
-                    }
-                });
+            @Override
+            public void buttonClick(ClickEvent event) {
+                display(moduleName);
+            }
+        });
         cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
         buttonsLayout.addComponent(cancelBtn);
 
         headerContent.addComponent(buttonsLayout);
-        headerContent.setComponentAlignment(buttonsLayout,
-                Alignment.MIDDLE_CENTER);
+        headerContent.setComponentAlignment(buttonsLayout, Alignment.MIDDLE_CENTER);
     }
 
     @Override
     public void display(String moduleName) {
         this.moduleName = moduleName;
         headerLbl.setValue(FontAwesome.MAGIC.getHtml() + " " + moduleName + ": Edit Page Layout (Beta)");
-        headerLbl.setStyleName(UIConstants.HEADER_TEXT);
+        headerLbl.setStyleName(ValoTheme.LABEL_H2);
         moduleComboBox.select(moduleName);
         layoutComp.displayLayoutCustom(getDynaForm(moduleName));
     }
 
     private static DynaForm getDynaForm(String moduleName) {
-        MasterFormService formService = ApplicationContextUtil
-                .getSpringBean(MasterFormService.class);
-        DynaForm form = formService.findCustomForm(AppContext.getAccountId(),
-                moduleName);
+        MasterFormService formService = ApplicationContextUtil.getSpringBean(MasterFormService.class);
+        DynaForm form = formService.findCustomForm(AppContext.getAccountId(), moduleName);
 
         if (form == null) {
             if (CrmTypeConstants.ACCOUNT.equals(moduleName)) {
@@ -246,8 +234,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
 
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
-                    String module = (String) ModuleSelectionComboBox.this
-                            .getValue();
+                    String module = (String) ModuleSelectionComboBox.this.getValue();
                     display(module);
                 }
             });

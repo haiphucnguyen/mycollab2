@@ -358,13 +358,6 @@
     }
   }
 
-  .footer2 {
-    border-style:none;
-    color: $my-meta-color;
-    font-size: $font-small;
-    @include flex-compatible;
-  }
-
   .v-csslayout.tagcloud {
     border-style: solid;
     border-top-style: none;
