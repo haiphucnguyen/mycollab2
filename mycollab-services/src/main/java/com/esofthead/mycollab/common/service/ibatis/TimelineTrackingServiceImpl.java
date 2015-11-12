@@ -26,7 +26,6 @@ import com.esofthead.mycollab.common.service.TimelineTrackingService;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +93,6 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
                 List<GroupItem> itemLst = (List<GroupItem>) obj;
                 itemLst.add(item);
             }
-            System.out.println("Item: " + BeanUtility.printBeanObj(item));
         }
         return items;
     }
