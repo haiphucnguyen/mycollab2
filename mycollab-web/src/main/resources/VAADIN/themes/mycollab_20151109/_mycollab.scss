@@ -2174,6 +2174,8 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
     -ms-flex-direction: row;
     flex-direction: row;
     -webkit-box-orient: horizontal;
+    margin-top: 10px;
+    border-top: 1px solid $my-separator-color;
     .sidebar-wrap {
       display: inline-block;
       font-size: $font-small;

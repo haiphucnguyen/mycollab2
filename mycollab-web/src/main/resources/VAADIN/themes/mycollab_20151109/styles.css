@@ -17961,6 +17961,8 @@ div.v-csslayout.rightsidebar-layout {
 	-ms-flex-direction: row;
 	flex-direction: row;
 	-webkit-box-orient: horizontal;
+	margin-top: 10px;
+	border-top: 1px solid #e5e5e5;
 }
 
 div.v-csslayout.rightsidebar-layout .sidebar-wrap {
