@@ -280,7 +280,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         BugSearchCriteria unresolvedByStatusSearchCriteria = BeanUtility.deepClone(statisticSearchCriteria);
         unresolvedBugsByStatusWidget.setSearchCriteria(unresolvedByStatusSearchCriteria);
         rightColumn.addComponent(unresolvedBugsByStatusWidget);
-        
+
         AsyncInvoker.access(new AsyncInvoker.PageCommand() {
             @Override
             public void run() {

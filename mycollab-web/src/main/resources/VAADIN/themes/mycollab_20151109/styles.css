@@ -2180,6 +2180,11 @@ span.block {
 	padding: 7px;
 }
 
+.v-context-menu-container .v-context-menu .v-context-submenu:hover {
+	background-color: red;
+	color: #f7f7f7;
+}
+
 .v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
 	padding-left: 6px;
 }
@@ -14466,6 +14471,11 @@ span.block {
 	display: -webkit-flex;
 	display: flex;
 	padding: 7px;
+}
+
+.v-context-menu-container .v-context-menu .v-context-submenu:hover {
+	background-color: red;
+	color: #f7f7f7;
 }
 
 .v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {

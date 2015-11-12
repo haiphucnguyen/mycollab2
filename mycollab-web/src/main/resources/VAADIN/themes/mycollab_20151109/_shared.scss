@@ -613,6 +613,10 @@
       .v-context-submenu {
         @include flex-compatible;
         padding: 7px;
+        &:hover {
+          background-color: red;
+          color: $my-white-color;
+        }
         .v-context-menu-item-basic-text {
           padding-left: 6px;
         }
