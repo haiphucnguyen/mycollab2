@@ -160,7 +160,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         modulePopup.setHeightUndefined();
         modulePopup.setDirection(Alignment.BOTTOM_LEFT);
         modulePopup.setIcon(AccountAssetsResolver.createLogoResource(AppContext.getBillingAccount().getLogopath(), 150));
-        OptionPopupContent modulePopupContent = new OptionPopupContent().withWidth("160px");
+        OptionPopupContent modulePopupContent = new OptionPopupContent();
         modulePopup.setContent(modulePopupContent);
 
         MButton projectModuleBtn = new MButton().withCaption(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT))
@@ -213,7 +213,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             // display trial box if user in trial mode
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
-                if ("Free".equals(billingAccount.getBillingPlan().getBillingtype())) {
+                if ("Free" .equals(billingAccount.getBillingPlan().getBillingtype())) {
                     Label informLbl = new Label("<div class='informBlock'>FREE CHARGE<br>UPGRADE</div><div class='informBlock'>&gt;&gt;</div>", ContentMode.HTML);
                     informLbl.addStyleName("trialEndingNotification");
                     informLbl.setHeight("100%");
@@ -281,9 +281,8 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     new RequestUploadAvatarNotification()));
         }
 
-        if ("admin@mycollab.com".equals(AppContext.getUsername())) {
-            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this,
-                    new ChangeDefaultUsernameNotification()));
+        if ("admin@mycollab.com" .equals(AppContext.getUsername())) {
+            EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new ChangeDefaultUsernameNotification()));
         }
 
         if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.standalone) {
@@ -305,7 +304,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountMenu.setIcon(userAvatarRes);
         accountMenu.setDescription(AppContext.getUserDisplayName());
 
-        OptionPopupContent accountPopupContent = new OptionPopupContent().withWidth("160px");
+        OptionPopupContent accountPopupContent = new OptionPopupContent();
 
         Button myProfileBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_PROFILE), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

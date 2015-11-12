@@ -3,31 +3,7 @@
 
 @include mycollab-shared;
 
-.stickytooltip {
-  border: 1px solid $my-border-color;
-  display: none;
-  position: absolute;
-  display: none;
-  background-color: $v-tooltip-background-color;
-  //Keep tooltip overlay vaadin windows dialog
-  z-index: 10001;
-  font: $font-smaller $font-family !important;
-  line-height: normal;
-  tr {
-    line-height: 1.5;
-  }
-}
-
-.stickytooltip a, .v-tooltip-text a {
-  vertical-align: top;
-}
-
 table {
   table-layout:auto;
   word-break: break-through;
-}
-
-.v-sa .mycollab .v-tooltip {
-  outline:none;
-  border-color: $my-border-color;
 }

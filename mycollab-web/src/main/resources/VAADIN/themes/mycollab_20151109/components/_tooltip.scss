@@ -1,12 +1,10 @@
 @mixin mycollab-tooltip {
   .v-tooltip, .v-sa .v-tooltip  {
     font: $font-small $font-family !important;
-    line-height: normal;
     border: 1px solid $my-border-color;
-    outline-color: $my-border-color;
-    outline:none;
     max-width: 80em;
     max-height: 80em;
+    @include my-box-shadow;
   }
 
   .v-tooltip .v-tooltip-text {
@@ -18,5 +16,24 @@
     a {
       vertical-align: top;
     }
+  }
+
+  .stickytooltip {
+    border: 1px solid $my-border-color;
+    display: none;
+    position: absolute;
+    display: none;
+    background-color: $v-tooltip-background-color;
+    @include my-box-shadow;
+    //Keep tooltip overlay vaadin windows dialog
+    z-index: 10001;
+    font: $font-small $font-family !important;
+    tr {
+      line-height: 1.5;
+    }
+  }
+
+  .stickytooltip a, .v-tooltip-text a {
+    vertical-align: top;
   }
 }

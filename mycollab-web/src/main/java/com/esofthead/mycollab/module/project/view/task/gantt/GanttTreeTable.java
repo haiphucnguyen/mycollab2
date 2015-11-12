@@ -446,7 +446,6 @@ public class GanttTreeTable extends TreeTable {
     }
 
     private class GanttContextMenu extends ContextMenu {
-
         void displayContextMenu(final GanttItemWrapper taskWrapper) {
             this.removeAllItems();
             ContextMenuItem detailMenuItem = this.addItem("Detail", FontAwesome.BARS);

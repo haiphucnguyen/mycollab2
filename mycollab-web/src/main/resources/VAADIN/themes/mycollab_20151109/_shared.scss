@@ -41,7 +41,7 @@
       background-color: #FFF;
     }
     &:hover {
-      @include hover-effect();
+      @include hover-effect;
     }
   }
 
@@ -232,7 +232,7 @@
   .optionPopupContent {
     background-color: #ffffff;
     border: solid 1px $my-border-color;
-    box-shadow: 0 0 14px rgba(0,0,0,0.4);
+    @include my-box-shadow;
     max-width: 800px;
     .action-wrap {
       width: 100%;
@@ -359,7 +359,7 @@
     border-radius: 0px;
     box-shadow: none;
     .popupContent {
-      padding: 1px 0px 2px 0px;
+      padding: 0px;
     }
   }
 
@@ -601,5 +601,22 @@
 
   .v-table-header-wrap, .v-table-body {
     border: 1px solid $my-separator-color;
+  }
+
+  /* Context menu style */
+  .v-context-menu-container {
+    background-color: #ffffff;
+    border: 1px solid $my-border-color;
+    max-width:400px;
+    @include my-box-shadow;
+    .v-context-menu {
+      .v-context-submenu {
+        @include flex-compatible;
+        padding: 7px;
+        .v-context-menu-item-basic-text {
+          padding-left: 6px;
+        }
+      }
+    }
   }
 }

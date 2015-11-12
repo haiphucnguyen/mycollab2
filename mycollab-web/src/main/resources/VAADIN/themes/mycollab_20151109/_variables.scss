@@ -20,7 +20,7 @@ $font-x-large: 18px;
 $font-xx-large: 24px;
 $font-largest: 36px;
 
-@mixin hover-effect() {
+@mixin hover-effect {
   -webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
   -moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
   box-shadow: inset 5px 0px 0px 0px #3A97FF;
@@ -53,4 +53,8 @@ $font-largest: 36px;
   display: -ms-flexbox;      /* TWEENER - IE 10 */
   display: -webkit-flex;     /* NEW - Chrome */
   display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin my-box-shadow {
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.4)
 }

@@ -1906,7 +1906,7 @@ div.v-popupbutton-popup {
 }
 
 div.v-popupbutton-popup .popupContent {
-	padding: 1px 0px 2px 0px;
+	padding: 0px;
 }
 
 div.v-window {
@@ -2164,33 +2164,29 @@ span.block {
 	border: 1px solid #e5e5e5;
 }
 
-.stickytooltip {
+.v-context-menu-container {
+	background-color: #ffffff;
 	border: 1px solid #c5c5c5;
-	display: none;
-	position: absolute;
-	display: none;
-	background-color: #FDFDEE;
-	z-index: 10001;
-	font: 12px Arial, Verdana, Helvetica, sans-serif !important;
-	line-height: normal;
+	max-width: 400px;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
 
-.stickytooltip tr {
-	line-height: 1.5;
+.v-context-menu-container .v-context-menu .v-context-submenu {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 7px;
 }
 
-.stickytooltip a, .v-tooltip-text a {
-	vertical-align: top;
+.v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
+	padding-left: 6px;
 }
 
 table {
 	table-layout: auto;
 	word-break: break-through;
-}
-
-.v-sa .mycollab .v-tooltip {
-	outline: none;
-	border-color: #c5c5c5;
 }
 
 .v-app, .v-app-loading {
@@ -13779,12 +13775,10 @@ td.v-tabsheet-spacertd div {
 
 .v-tooltip, .v-sa .v-tooltip {
 	font: 13px Arial, Verdana, Helvetica, sans-serif !important;
-	line-height: normal;
 	border: 1px solid #c5c5c5;
-	outline-color: #c5c5c5;
-	outline: none;
 	max-width: 80em;
 	max-height: 80em;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
 
 .v-tooltip .v-tooltip-text {
@@ -13797,6 +13791,25 @@ td.v-tabsheet-spacertd div {
 }
 
 .v-tooltip .v-tooltip-text a {
+	vertical-align: top;
+}
+
+.stickytooltip {
+	border: 1px solid #c5c5c5;
+	display: none;
+	position: absolute;
+	display: none;
+	background-color: #FDFDEE;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
+	z-index: 10001;
+	font: 13px Arial, Verdana, Helvetica, sans-serif !important;
+}
+
+.stickytooltip tr {
+	line-height: 1.5;
+}
+
+.stickytooltip a, .v-tooltip-text a {
 	vertical-align: top;
 }
 
@@ -14181,7 +14194,7 @@ div.v-popupbutton-popup {
 }
 
 div.v-popupbutton-popup .popupContent {
-	padding: 1px 0px 2px 0px;
+	padding: 0px;
 }
 
 div.v-window {
@@ -14437,6 +14450,26 @@ span.block {
 
 .v-table-header-wrap, .v-table-body {
 	border: 1px solid #e5e5e5;
+}
+
+.v-context-menu-container {
+	background-color: #ffffff;
+	border: 1px solid #c5c5c5;
+	max-width: 400px;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
+}
+
+.v-context-menu-container .v-context-menu .v-context-submenu {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	padding: 7px;
+}
+
+.v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
+	padding-left: 6px;
 }
 
 .form .section {

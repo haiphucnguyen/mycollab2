@@ -52,7 +52,7 @@
       border-width: 0px 1px 1px 0px;
       border-style: solid;
       &:hover {
-        @include hover-effect();
+        @include hover-effect;
       }
       .projectlink-wrapper, .projectlink-wrapper-archived {
         border-right: 1px solid $my-separator-color;
@@ -62,13 +62,13 @@
       .projectlink-wrapper {
         background-color: lavenderblush;
         &:hover {
-          @include hover-effect();
+          @include hover-effect;
         }
       }
       .projectlink-wrapper-archived {
         background-color: darkgray;
         &:hover {
-          @include hover-effect();
+          @include hover-effect;
         }
       }
     }
@@ -529,7 +529,7 @@
       }
 
       &:hover {
-        @include hover-effect();
+        @include hover-effect;
       }
     }
   }

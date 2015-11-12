@@ -113,24 +113,21 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         @Override
         public ComponentContainer constructBody() {
             bodyWrap = new MVerticalLayout();
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 1, "100%", "70px");
-            gridLayout.getLayout().setWidth("100%");
-            gridLayout.getLayout().setSpacing(true);
-            gridLayout.getLayout().setMargin(true);
+            GridLayout gridLayout = new GridLayout(6, 2);
+            gridLayout.setWidth("100%");
+            gridLayout.setSpacing(true);
+            gridLayout.setMargin(true);
 
-            String nameFieldWidth = "300px";
+            Date[] boundWeekDays = DateTimeUtils.getBounceDateofWeek(new Date());
+            dateStart = new DateFieldExt();
+            dateStart.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            dateStart.setResolution(Resolution.DAY);
+            dateStart.setValue(boundWeekDays[0]);
+            dateEnd = new DateFieldExt();
+            dateEnd.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            dateEnd.setResolution(Resolution.DAY);
+            dateEnd.setValue(boundWeekDays[1]);
 
-            GridLayout grid = new GridLayout(4, 2);
-            grid.setWidth(nameFieldWidth);
-            grid.setSpacing(true);
-
-            this.dateStart = new DateFieldExt();
-            this.dateEnd = new DateFieldExt();
-
-            setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-
-            setDateWidth(100);
-            setDefaultValue();
 
             this.groupField = new ValueComboBox(false, "Date", "User");
             groupField.addValueChangeListener(new Property.ValueChangeListener() {
@@ -154,21 +151,19 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             Label groupLb = new Label("Group:");
             Label sortLb = new Label("Sort:");
 
-            grid.addComponent(dateStartLb, 0, 0);
-            grid.addComponent(dateEndLb, 2, 0);
-            grid.addComponent(groupLb, 0, 1);
-            grid.addComponent(sortLb, 2, 1);
+            gridLayout.addComponent(dateStartLb, 0, 0);
+            gridLayout.addComponent(this.dateStart, 1, 0);
+            gridLayout.addComponent(dateEndLb, 2, 0);
+            gridLayout.addComponent(dateEnd, 3, 0);
+            gridLayout.addComponent(new Label("User:"), 4, 0);
 
-            grid.addComponent(this.dateStart, 1, 0);
-            grid.addComponent(this.dateEnd, 3, 0);
-            grid.addComponent(this.groupField, 1, 1);
-            grid.addComponent(this.orderField, 3, 1);
-
-            gridLayout.addComponent(grid, null, 0, 0);
+            gridLayout.addComponent(groupLb, 0, 1);
+            gridLayout.addComponent(groupField, 1, 1);
+            gridLayout.addComponent(sortLb, 2, 1);
+            gridLayout.addComponent(orderField, 3, 1);
 
             userField = new ProjectMemberListSelect();
-            gridLayout.addComponent(userField, "User", 1, 0);
-            userField.setWidth(nameFieldWidth);
+            gridLayout.addComponent(userField, 5, 0, 5, 1);
 
             MHorizontalLayout buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
 
@@ -186,13 +181,12 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 @Override
                 public void buttonClick(final ClickEvent event) {
                     userField.setValue(null);
-                    setDefaultValue();
                 }
             });
             clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
 
             buttonControls.with(searchBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
-            bodyWrap.with(gridLayout.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
+            bodyWrap.with(gridLayout, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);
 
             return bodyWrap;
         }
@@ -224,29 +218,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("loguser", sortDirection)));
             }
             return searchCriteria;
-        }
-
-        private void setDateFormat(String dateFormat) {
-            dateStart.setDateFormat(dateFormat);
-            dateEnd.setDateFormat(dateFormat);
-        }
-
-        private void setDefaultValue() {
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-
-            Date fDate = c.getTime();
-            Date tDate = DateTimeUtils.subtractOrAddDayDuration(fDate, 7);
-
-            dateStart.setValue(fDate);
-            dateEnd.setValue(tDate);
-        }
-
-        private void setDateWidth(float width) {
-            dateStart.setWidth(width, Unit.PIXELS);
-            dateEnd.setWidth(width, Unit.PIXELS);
-            dateStart.setResolution(Resolution.DAY);
-            dateEnd.setResolution(Resolution.DAY);
         }
     }
 }

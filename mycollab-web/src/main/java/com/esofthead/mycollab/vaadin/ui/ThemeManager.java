@@ -159,6 +159,9 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
 
             extraStyles.append("span.block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
+
+            extraStyles.append(".v-context-menu-container .v-context-menu .v-context-submenu:hover " +
+                    "{background-color:#" + accountTheme.getActionbtn() + ";}");
         }
 
         if (accountTheme.getActionbtntext() != null) {
@@ -182,6 +185,9 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-block {color:#" + accountTheme.getActionbtntext() + ";}");
 
             extraStyles.append("span.block {color:#" + accountTheme.getActionbtntext() + ";}");
+
+            extraStyles.append(".v-context-menu-container .v-context-menu .v-context-submenu:hover " +
+                    "{color:#" + accountTheme.getActionbtntext() + ";}");
         }
 
 		/* Option Buttons */
