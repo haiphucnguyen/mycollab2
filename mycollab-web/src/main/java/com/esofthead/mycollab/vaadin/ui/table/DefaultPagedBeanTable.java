@@ -19,7 +19,6 @@ package com.esofthead.mycollab.vaadin.ui.table;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
 

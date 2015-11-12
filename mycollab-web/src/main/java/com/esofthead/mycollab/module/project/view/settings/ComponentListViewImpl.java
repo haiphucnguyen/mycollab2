@@ -78,12 +78,10 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
         tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ComponentService.class),
                 SimpleComponent.class, new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH),
                 Arrays.asList(
-                        new TableViewField(ComponentI18nEnum.FORM_NAME, "componentname",
-                                UIConstants.TABLE_EX_LABEL_WIDTH),
-                        new TableViewField(ComponentI18nEnum.FORM_LEAD, "userLeadFullName",
-                                UIConstants.TABLE_X_LABEL_WIDTH),
-                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION,
-                                "description", 500)));
+                        new TableViewField(ComponentI18nEnum.FORM_NAME, "componentname", UIConstants.TABLE_EX_LABEL_WIDTH),
+                        new TableViewField(ComponentI18nEnum.FORM_LEAD, "userLeadFullName", UIConstants.TABLE_X_LABEL_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 500),
+                        new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", UIConstants.TABLE_EX_LABEL_WIDTH)));
 
         tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -134,6 +132,17 @@ public class ComponentListViewImpl extends AbstractPageView implements Component
                 SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
                 return new ProjectUserLink(bugComponent.getUserlead(),
                         bugComponent.getUserLeadAvatarId(), bugComponent.getUserLeadFullName());
+
+            }
+        });
+
+        tableItem.addGeneratedColumn("id", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
+                SimpleComponent bugComponent = tableItem.getBeanByIndex(itemId);
+                return new ProgressBarIndicator(bugComponent.getNumBugs(), bugComponent.getNumOpenBugs(), false);
 
             }
         });

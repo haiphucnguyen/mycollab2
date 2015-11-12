@@ -78,7 +78,8 @@ public class VersionListViewImpl extends AbstractPageView implements VersionList
                 new TableViewField(null, "selected", UIConstants.TABLE_CONTROL_WIDTH),
                 Arrays.asList(new TableViewField(VersionI18nEnum.FORM_NAME, "versionname", UIConstants.TABLE_EX_LABEL_WIDTH),
                         new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", 500),
-                        new TableViewField(VersionI18nEnum.FORM_DUE_DATE, "duedate", UIConstants.TABLE_DATE_TIME_WIDTH)));
+                        new TableViewField(VersionI18nEnum.FORM_DUE_DATE, "duedate", UIConstants.TABLE_DATE_TIME_WIDTH),
+                        new TableViewField(GenericI18Enum.FORM_PROGRESS, "id", UIConstants.TABLE_EX_LABEL_WIDTH)));
 
         tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -131,6 +132,17 @@ public class VersionListViewImpl extends AbstractPageView implements VersionList
             public Component generateCell(final Table source, final Object itemId, final Object columnId) {
                 final Version bugVersion = tableItem.getBeanByIndex(itemId);
                 return new ELabel().prettyDate(bugVersion.getDuedate());
+            }
+        });
+
+        tableItem.addGeneratedColumn("id", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(final Table source, final Object itemId, final Object columnId) {
+                SimpleVersion version = tableItem.getBeanByIndex(itemId);
+                return new ProgressBarIndicator(version.getNumBugs(), version.getNumOpenBugs(), false);
+
             }
         });
 

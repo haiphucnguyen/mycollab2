@@ -38,7 +38,6 @@ public class UIConstants {
     public static final String BUTTON_DANGER = "redbtn";
     public static final String BUTTON_LINK = "link";
     public static final String THEME_NO_BORDER = "no-border";
-    public static final String THEME_TAB_STYLE3 = "tab-style3";
     public static final String LABEL_CLICKABLE = "clickable-label";
     public static final String LINK_COMPLETED = "completed";
     public static final String LINK_OVERDUE = "overdue";
@@ -60,6 +59,8 @@ public class UIConstants {
     public static final String BUTTON_ICON_ONLY = "button-icon-only";
 
     public static final String LABEL_META_INFO = "meta-info";
+
+    public static final String PROGRESS_BAR_MEDIUM = "medium";
 
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;

@@ -134,7 +134,7 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             bugStatus.addComponent(bugLblWrap);
             float bugValue = (project.getNumBugs() != 0) ? ((float) (project.getNumBugs() - project.getNumOpenBugs()) / project.getNumBugs()) : 0;
             ProgressBar bugProgressBar = new ProgressBar(bugValue);
-            bugProgressBar.setStyleName("medium");
+            bugProgressBar.setStyleName(UIConstants.PROGRESS_BAR_MEDIUM);
             bugStatus.addComponent(bugProgressBar);
             bugStatus.setComponentAlignment(bugProgressBar, Alignment.TOP_LEFT);
             projectStatusLayout.addComponent(bugStatus);
