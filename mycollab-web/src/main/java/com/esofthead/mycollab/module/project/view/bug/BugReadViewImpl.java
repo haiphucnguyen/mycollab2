@@ -297,15 +297,13 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             List<SimpleRelatedBug> relatedBugs = bugRelationService.findRelatedBugs(bug.getId());
             if (relatedBugs != null && relatedBugs.size() > 0) {
                 for (final SimpleRelatedBug relatedBug : relatedBugs) {
-                    Label spacingLbl = new Label("&nbsp;&nbsp;&nbsp;&nbsp;", ContentMode.HTML);
-                    MHorizontalLayout bugContainer = new MHorizontalLayout().with(spacingLbl).withAlign(spacingLbl, Alignment.MIDDLE_LEFT);
+                    MHorizontalLayout bugContainer = new MHorizontalLayout().withWidth("100%");
                     bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                     String bugLinkValue = buildItemValue(relatedBug);
                     Button statusLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
                     statusLink.setStyleName(UIConstants.BUTTON_BLOCK);
-                    Label bugLink = new Label(bugLinkValue, ContentMode.HTML);
-                    bugContainer.with(bugLink);
-                    Button removeBtn = new Button("", new Button.ClickListener() {
+                    ELabel bugLink = new ELabel(bugLinkValue, ContentMode.HTML).withWidthUndefined();
+                    Button removeBtn = new Button("Remove", new Button.ClickListener() {
                         @Override
                         public void buttonClick(ClickEvent clickEvent) {
                             ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
@@ -325,8 +323,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                         }
                     });
                     removeBtn.setIcon(FontAwesome.TRASH_O);
-                    removeBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-                    bugContainer.with(statusLink, bugLink, removeBtn);
+                    removeBtn.addStyleName(UIConstants.BUTTON_DANGER);
+                    bugContainer.with(statusLink, removeBtn, bugLink).expand(bugLink).alignAll(Alignment.TOP_LEFT);
                     header.with(bugContainer);
                 }
             }

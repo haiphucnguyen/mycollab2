@@ -50,6 +50,10 @@ public class ELabel extends Label {
         return this;
     }
 
+    public ELabel withWidthUndefined() {
+        return withWidth("-1px");
+    }
+
     public ELabel withWidth(String width) {
         this.setWidth(width);
         return this;
