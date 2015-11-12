@@ -85,7 +85,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
 
         MVerticalLayout innerLayout = new MVerticalLayout();
 
-        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4, "100%", "200px");
+        GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
 
         layoutHelper.addComponentNoWrapper(new TextField(), "Why are you leaving us?", 0, 0);
 

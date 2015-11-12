@@ -381,13 +381,10 @@ public abstract class EntityImportWindow<E> extends Window {
             infoLabel.addStyleName(ValoTheme.LABEL_H4);
             columnMappingCrmLayout.addComponent(infoLabel);
             try {
-                gridCrmMapping = new GridFormLayoutHelper(2, (new CSVReader(new FileReader(uploadFile))).readNext().length + 2,
-                        "100%", "200px");
+                gridCrmMapping = GridFormLayoutHelper.defaultFormLayoutHelper(2, (new CSVReader(new FileReader(uploadFile))).readNext().length + 2);
             } catch (Exception e) {
                 throw new MyCollabException(e);
             }
-            gridCrmMapping.getLayout().setMargin(true);
-            gridCrmMapping.getLayout().setSpacing(true);
 
             Label header = new Label("Header");
             header.addStyleName("h3");
@@ -398,20 +395,15 @@ public abstract class EntityImportWindow<E> extends Window {
             if (checkboxChecked)
                 gridCrmMapping.addComponent(new Label(), "Header", 0, 0);
             else {
-                gridCrmMapping
-                        .addComponent(new Label(), "First Row Data", 0, 0);
+                gridCrmMapping.addComponent(new Label(), "First Row Data", 0, 0);
             }
             gridCrmMapping.addComponent(new Label(), "CRM Fields", 1, 0);
             columnMappingCrmLayout.addComponent(gridCrmMapping.getLayout());
 
-            MHorizontalLayout controlGroupBtn = new MHorizontalLayout()
-                    .withMargin(new MarginInfo(false, false, false, false));
+            MHorizontalLayout controlGroupBtn = new MHorizontalLayout().withMargin(new MarginInfo(false, false, false, false));
+            columnMappingCrmLayout.with(controlGroupBtn).withAlign(controlGroupBtn, Alignment.MIDDLE_CENTER);
 
-            columnMappingCrmLayout.with(controlGroupBtn).withAlign(
-                    controlGroupBtn, Alignment.MIDDLE_CENTER);
-
-            Button saveBtn = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
+            Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE),
                     new ClickListener() {
                         private static final long serialVersionUID = 1L;
 
