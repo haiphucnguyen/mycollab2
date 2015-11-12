@@ -2088,6 +2088,9 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
 
   .readview-body-wrap .readview-sidebar .info-hdr {
     margin-top: 10px;
+    .v-button-wrap {
+      padding: 6px;
+    }
   }
 
   /* Feature Select Box */

@@ -83,10 +83,8 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
 
     @Override
     protected ComponentContainer createButtonControls() {
-        CrmPreviewFormControlsGenerator<SimpleLead> controlsButton = new CrmPreviewFormControlsGenerator<>(
-                previewForm);
-        return controlsButton.createButtonControls(BACK_BTN_PRESENTED
-                | NAVIGATOR_BTN_PRESENTED, RolePermissionCollections.CRM_LEAD);
+        CrmPreviewFormControlsGenerator<SimpleLead> controlsButton = new CrmPreviewFormControlsGenerator<>(previewForm);
+        return controlsButton.createButtonControls(BACK_BTN_PRESENTED | NAVIGATOR_BTN_PRESENTED, RolePermissionCollections.CRM_LEAD);
     }
 
     @Override
@@ -98,8 +96,8 @@ public class LeadConvertReadViewImpl extends AbstractPreviewItemComp<SimpleLead>
     public void previewItem(SimpleLead item) {
         this.beanItem = item;
         previewLayout.setTitle(initFormTitle());
+        previewLayout.initTitleStyleName();
         displayConvertLeadInfo(item);
-
         onPreviewItem();
     }
 

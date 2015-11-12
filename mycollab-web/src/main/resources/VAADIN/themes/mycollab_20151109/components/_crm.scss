@@ -37,6 +37,9 @@
       }
       .info-hdr {
         font-size: $font-normal;
+        .v-button-wrap {
+          padding: 6px;
+        }
       }
       .v-label a, .v-button.v-button-link {
         color: $my-white-color;

@@ -14593,6 +14593,10 @@ span.block {
 	font-size: 14px;
 }
 
+.crmContainer .navigator-wrap .basic-info .info-hdr .v-button-wrap {
+	padding: 6px;
+}
+
 .crmContainer .navigator-wrap .basic-info .v-label a, .crmContainer .navigator-wrap .basic-info .v-button.v-button-link {
 	color: #f7f7f7;
 }
@@ -17871,6 +17875,10 @@ div.v-csslayout.bean-block.olive-block {
 
 .readview-body-wrap .readview-sidebar .info-hdr {
 	margin-top: 10px;
+}
+
+.readview-body-wrap .readview-sidebar .info-hdr .v-button-wrap {
+	padding: 6px;
 }
 
 .feature-select-box {
