@@ -27,6 +27,8 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
@@ -75,7 +77,7 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
                                                           TimelineTrackingSearchCriteria criteria) {
         try {
             DateTime startDate = new DateTime(start);
-            DateTime endDate = new DateTime(end);
+            final DateTime endDate = new DateTime(end);
             if (startDate.isAfter(endDate)) {
                 throw new UserInvalidInputException("Start date must be greater than end date");
             }
@@ -126,18 +128,28 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
                     final Integer sAccountId = (Integer) criteria.getSaccountid().getValue();
                     final String fieldgroup = criteria.getFieldgroup().getValue();
                     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+                    final DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+                    final List<Map> filterCollections = new ArrayList<>(Collections2.filter(timelineItems, new
+                            Predicate<Map>() {
+                                @Override
+                                public boolean apply(Map input) {
+                                    String dateStr = (String) input.get("groupname");
+                                    DateTime dt = formatter.parseDateTime(dateStr);
+                                    return !dt.equals(endDate);
+                                }
+                            }));
                     jdbcTemplate.batchUpdate("INSERT INTO `s_timeline_tracking_cache`(type, fieldval,extratypeid,sAccountId," +
                             "forDay, fieldgroup,count) VALUES(?,?,?,?,?,?,?)", new BatchPreparedStatementSetter() {
                         @Override
                         public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                            Map item = timelineItems.get(i);
+                            Map item = filterCollections.get(i);
                             preparedStatement.setString(1, type);
                             String fieldVal = (String) item.get("groupid");
                             preparedStatement.setString(2, fieldVal);
                             preparedStatement.setInt(3, extraTypeId);
                             preparedStatement.setInt(4, sAccountId);
                             String dateStr = (String) item.get("groupname");
-                            DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
                             DateTime dt = formatter.parseDateTime(dateStr);
                             preparedStatement.setDate(5, new java.sql.Date(dt.toDate().getTime()));
                             preparedStatement.setString(6, fieldgroup);
@@ -147,7 +159,7 @@ public class TimelineTrackingServiceImpl extends DefaultCrudService<Integer, Tim
 
                         @Override
                         public int getBatchSize() {
-                            return timelineItems.size();
+                            return filterCollections.size();
                         }
                     });
                 }
