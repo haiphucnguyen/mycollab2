@@ -46,8 +46,8 @@
                 s_timeline_tracking_cache.forDay = @{date}
                 <include refid="querySearchCriteria"/>
             #end
-            ORDER BY s_timeline_tracking_cache.forDay ASC
           #end
         #end
+        ORDER BY groupname ASC
     </select>
 </mapper>

@@ -16,18 +16,18 @@
  */
 package com.esofthead.mycollab.common.dao;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd
  * @since 5.2.2
  */
 public interface TimelineTrackingCachingMapperExt {
-    List<Map> findTimelineItems(@Param("groupVals") List<String> groupVals, @Param("dates") List<Date> dates,
-                                @Param("searchCriteria") TimelineTrackingSearchCriteria criteria);
+    List<GroupItem> findTimelineItems(@Param("groupVals") List<String> groupVals, @Param("dates") List<Date> dates,
+                                      @Param("searchCriteria") TimelineTrackingSearchCriteria criteria);
 }

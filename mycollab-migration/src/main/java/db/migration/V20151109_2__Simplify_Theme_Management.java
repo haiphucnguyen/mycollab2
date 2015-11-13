@@ -19,5 +19,7 @@ public class V20151109_2__Simplify_Theme_Management implements SpringJdbcMigrati
         jdbcTemplate.update("UPDATE s_account_theme SET vTabsheetBg=?,vTabsheetBgSelected=?,vTabsheetText=?," +
                 "vTabsheetTextSelected=?, topMenuBg=?, topMenuText=?,actionBtn=? WHERE isDefault=? ", new
                 Object[]{"24a3e3", "1a8fcb", "f7f7f7", "FFFFFF", "1884bc", "f7f7f7", "1a8fcb", 1});
+        jdbcTemplate.execute("ALTER TABLE `s_timeline_tracking_cache` \n" +
+                "CHANGE COLUMN `id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ;");
     }
 }

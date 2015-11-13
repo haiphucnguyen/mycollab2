@@ -205,7 +205,7 @@ public class AppContext implements Serializable {
             Enum key = Enum.valueOf(enumCls, option);
             return getMessage(key, objects);
         } catch (Exception e) {
-            LOG.debug("Can not find resource key " + option + " and enum class " + enumCls.getName(), e);
+//            LOG.debug("Can not find resource key " + option + " and enum class " + enumCls.getName(), e);
             return option;
         }
     }

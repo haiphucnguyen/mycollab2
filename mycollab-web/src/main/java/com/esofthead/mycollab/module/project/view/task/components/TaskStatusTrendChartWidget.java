@@ -91,41 +91,47 @@ public class TaskStatusTrendChartWidget extends Depot {
         @Override
         protected JFreeChart createChart() {
             dataset = new TimeSeriesCollection();
-            Set<String> statuses = groupItems.keySet();
-            for (String status : statuses) {
-                TimeSeries series = new TimeSeries(status);
-                List<GroupItem> groupItems = this.groupItems.get(status);
-                for (GroupItem item : groupItems) {
-                    series.add(new Day(formatter.parseDateTime(item.getGroupname()).toDate()), item.getValue());
+            if (groupItems != null) {
+                Set<String> statuses = groupItems.keySet();
+                for (String status : statuses) {
+                    TimeSeries series = new TimeSeries(status);
+                    List<GroupItem> groupItems = this.groupItems.get(status);
+                    for (GroupItem item : groupItems) {
+                        series.add(new Day(formatter.parseDateTime(item.getGroupname()).toDate()), item.getValue());
+                    }
+                    dataset.addSeries(series);
                 }
-                dataset.addSeries(series);
-            }
 
-            JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", dataset,
-                    false, true, false);
-            chart.setBackgroundPaint(Color.white);
+                JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", dataset,
+                        false, true, false);
+                chart.setBackgroundPaint(Color.white);
 
-            XYPlot plot = (XYPlot) chart.getPlot();
-            plot.setBackgroundPaint(Color.white);
-            plot.setDomainGridlinePaint(Color.lightGray);
-            plot.setRangeGridlinePaint(Color.cyan);
-            plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-            plot.setDomainCrosshairVisible(true);
-            plot.setRangeCrosshairVisible(true);
-            XYItemRenderer r = plot.getRenderer();
-            if (r instanceof XYLineAndShapeRenderer) {
-                XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
-                renderer.setBaseShapesVisible(true);
-                renderer.setBaseShapesFilled(true);
-                renderer.setDrawSeriesLineAsPath(true);
-                for (int i = 0; i < statuses.size(); i++) {
-                    int colorIndex = i % CHART_COLOR_STR.size();
-                    renderer.setSeriesPaint(i, Color.decode("0x" + CHART_COLOR_STR.get(colorIndex)));
+                XYPlot plot = (XYPlot) chart.getPlot();
+                plot.setBackgroundPaint(Color.white);
+                plot.setDomainGridlinePaint(Color.lightGray);
+                plot.setRangeGridlinePaint(Color.cyan);
+                plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+                plot.setDomainCrosshairVisible(true);
+                plot.setRangeCrosshairVisible(true);
+                XYItemRenderer r = plot.getRenderer();
+                if (r instanceof XYLineAndShapeRenderer) {
+                    XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
+                    renderer.setBaseShapesVisible(true);
+                    renderer.setBaseShapesFilled(true);
+                    renderer.setDrawSeriesLineAsPath(true);
+                    for (int i = 0; i < statuses.size(); i++) {
+                        int colorIndex = i % CHART_COLOR_STR.size();
+                        renderer.setSeriesPaint(i, Color.decode("0x" + CHART_COLOR_STR.get(colorIndex)));
+                    }
                 }
+                NumberAxis valueAxis = (NumberAxis) plot.getRangeAxis();
+                valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+                return chart;
+            } else {
+                JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", new TimeSeriesCollection(),
+                        false, true, false);
+                return chart;
             }
-            NumberAxis valueAxis = (NumberAxis) plot.getRangeAxis();
-            valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-            return chart;
         }
 
         @Override
