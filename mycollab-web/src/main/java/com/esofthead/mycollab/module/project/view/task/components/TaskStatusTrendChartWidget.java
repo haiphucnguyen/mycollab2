@@ -167,8 +167,9 @@ public class TaskStatusTrendChartWidget extends Depot {
             List<OptionVal> optionVals = optionValService.findOptionVals(ProjectTypeConstants.TASK,
                     CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
             List<String> options = new ArrayList<>();
-//
-            options.add("Hello");
+            for (OptionVal optionVal : optionVals) {
+                options.add(optionVal.getTypeval());
+            }
             groupItems = timelineTrackingService.findTimelineItems(options,
                     startDate.toDate(), endDate.toDate(), searchCriteria);
             displayChart();

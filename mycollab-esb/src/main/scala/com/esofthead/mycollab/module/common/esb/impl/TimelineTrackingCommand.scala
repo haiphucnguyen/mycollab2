@@ -67,24 +67,15 @@ import org.springframework.stereotype.Component
                     criteria.andExtratypeidEqualTo(event.extratypeid)
                 }
                 val items = timelineMapper.selectByExample(ex)
-                if (items == null || items.size() == 0) {
-                    val timeline = new TimelineTracking
-                    timeline.setType(event.typevar)
-                    timeline.setTypeid(event.typeId)
-                    timeline.setFieldgroup(event.fieldgroup)
-                    timeline.setFieldval(event.fieldVal)
-                    timeline.setExtratypeid(event.extratypeid)
-                    timeline.setSaccountid(event.accountId)
-                    timeline.setForday(now.toDate)
-                    timeline.setFlag(Byte.box(1))
-                    timelineMapper.insert(timeline)
-                } else {
+                var isNew = true;
+                if (items != null && items.size() > 0) {
                     val timeline = items.get(0)
                     val forDay = new LocalDate(timeline.getForday)
                     if (now.isEqual(forDay)) {
                         if (event.fieldVal != timeline.getFieldval) {
                             timeline.setFieldval(event.fieldVal)
                             timelineMapper.updateByPrimaryKey(timeline)
+                            isNew = false;
                         }
                     } else {
                         val minusTimeline = new TimelineTracking
@@ -98,7 +89,18 @@ import org.springframework.stereotype.Component
                         minusTimeline.setFlag(Byte.box(-1))
                         timelineMapper.insert(minusTimeline)
                     }
-
+                }
+                if (isNew) {
+                    val timeline = new TimelineTracking
+                    timeline.setType(event.typevar)
+                    timeline.setTypeid(event.typeId)
+                    timeline.setFieldgroup(event.fieldgroup)
+                    timeline.setFieldval(event.fieldVal)
+                    timeline.setExtratypeid(event.extratypeid)
+                    timeline.setSaccountid(event.accountId)
+                    timeline.setForday(now.toDate)
+                    timeline.setFlag(Byte.box(1))
+                    timelineMapper.insert(timeline)
                 }
             }
         } finally {
