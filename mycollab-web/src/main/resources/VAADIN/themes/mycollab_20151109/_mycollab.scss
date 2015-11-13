@@ -671,6 +671,10 @@ $v-line-height--header:1.5em;
         display: inline-flex;
         > .v-expand {
           margin-left: 5px;
+          .v-label {
+            font-size: $font-normal;
+            margin-top: 5px;
+          }
         }
       }
     }

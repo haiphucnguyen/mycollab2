@@ -143,8 +143,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
         MVerticalLayout headerContent = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true));
         headerContent.addStyleName("projectfeed-hdr-content");
 
-        Label headerLabel = new Label(AppContext.getUser().getDisplayName());
-        headerLabel.setStyleName(ValoTheme.LABEL_H2);
+        ELabel headerLabel = ELabel.h2(AppContext.getUser().getDisplayName());
         headerLabel.addStyleName(UIConstants.LABEL_WORD_WRAP);
 
         MHorizontalLayout headerContentTop = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true,

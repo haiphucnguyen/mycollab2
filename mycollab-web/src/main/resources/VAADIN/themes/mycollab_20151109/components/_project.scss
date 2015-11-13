@@ -629,20 +629,6 @@
   }
   /* END GANTT */
 
-  .project-info {
-    .header {
-      font-size: $font-xx-large;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .desc {
-      .v-label, .v-label a {
-        font-size: $font-small;
-      }
-    }
-  }
-
   /* TASK PRIORITY STYLES */
   $task-urgent-color: #d32d1a;
   $task-high-color: #e95948;

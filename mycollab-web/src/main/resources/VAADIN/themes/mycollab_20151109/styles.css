@@ -14467,7 +14467,7 @@ span.block {
 }
 
 .form .section .v-label {
-	font-size: 16px;
+	font-size: 1.2em;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption, .v-gridlayout.colored-gridlayout .gridform-field {
@@ -14514,7 +14514,7 @@ span.block {
 }
 
 .activity-comp .section .v-label {
-	font-size: 16px;
+	font-size: 1.2em;
 }
 
 .activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
@@ -15420,17 +15420,6 @@ div.v-button.token-field:hover {
 
 .gantt .bar.v-widget {
 	cursor: pointer;
-}
-
-.project-info .header {
-	font-size: 24px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.project-info .desc .v-label, .project-info .desc .v-label a {
-	font-size: 13px;
 }
 
 .task-urgent .v-icon, .v-filterselect-item-task-urgent .v-icon {
@@ -16451,6 +16440,11 @@ input.v-textfield-errorField {
 
 .depotComp .depotHeader .depot-title  > .v-expand {
 	margin-left: 5px;
+}
+
+.depotComp .depotHeader .depot-title  > .v-expand .v-label {
+	font-size: 14px;
+	margin-top: 5px;
 }
 
 .depot-title::before {
