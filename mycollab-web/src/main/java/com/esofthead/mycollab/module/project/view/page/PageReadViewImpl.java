@@ -57,7 +57,6 @@ import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -98,10 +97,9 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private void constructHeader() {
         pageVersionsSelection = new PageVersionSelectionBox();
 
-        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH2(ProjectTypeConstants.PAGE, AppContext.getMessage(Page18InEnum
-                .VIEW_READ_TITLE));
+        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH3(ProjectTypeConstants.PAGE, AppContext.getMessage
+                (Page18InEnum.VIEW_READ_TITLE));
         headerLbl.setWidthUndefined();
-        headerLbl.setStyleName(ValoTheme.LABEL_H2);
 
         ((MHorizontalLayout) header).addComponent(headerLbl, 0);
         ((MHorizontalLayout) header).addComponent(pageVersionsSelection, 1);

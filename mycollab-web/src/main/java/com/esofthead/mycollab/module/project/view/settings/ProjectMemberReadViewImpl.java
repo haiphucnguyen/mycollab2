@@ -76,8 +76,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
     public ProjectMemberReadViewImpl() {
         super(AppContext.getMessage(ProjectMemberI18nEnum.VIEW_READ_TITLE), FontAwesome.USER);
 
-        contentWrapper.addStyleName("member-preview");
-
         previewForm = initPreviewForm();
         previewForm.setWidth("100%");
         previewForm.setStyleName("member-preview-form");
