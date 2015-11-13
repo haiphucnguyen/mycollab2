@@ -60,7 +60,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
     public UserReadViewImpl() {
         super();
-        this.setMargin(new MarginInfo(false, true, false, true));
+        this.setMargin(new MarginInfo(false, true, true, true));
         this.addStyleName("userInfoContainer");
 
         header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
@@ -84,7 +84,7 @@ public class UserReadViewImpl extends AbstractPageView implements UserReadView {
 
         CssLayout userWrapper = new CssLayout();
         String nickName = user.getNickname();
-        ELabel userName = ELabel.header(user.getDisplayName() + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( " +
+        ELabel userName = ELabel.h2(user.getDisplayName() + (StringUtils.isEmpty(nickName) ? "" : (String.format(" ( " +
                 "%s )", nickName))));
         userWrapper.addComponent(userName);
 

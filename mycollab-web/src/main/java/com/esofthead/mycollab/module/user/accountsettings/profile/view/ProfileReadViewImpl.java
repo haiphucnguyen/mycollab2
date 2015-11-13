@@ -109,7 +109,7 @@ public class ProfileReadViewImpl extends AbstractPageView implements ProfileRead
         MVerticalLayout basicLayout = new MVerticalLayout().withMargin(false);
         HorizontalLayout userWrapper = new HorizontalLayout();
 
-        ELabel usernameLbl = ELabel.header(AppContext.getUser().getDisplayName());
+        ELabel usernameLbl = ELabel.h2(AppContext.getUser().getDisplayName());
         userWrapper.addComponent(usernameLbl);
 
         Button btnChangeBasicInfo = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {

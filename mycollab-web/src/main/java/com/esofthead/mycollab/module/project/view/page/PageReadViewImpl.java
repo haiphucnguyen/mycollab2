@@ -33,8 +33,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
+import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
 import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -98,7 +98,8 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private void constructHeader() {
         pageVersionsSelection = new PageVersionSelectionBox();
 
-        ProjectViewHeader headerLbl = new ProjectViewHeader(ProjectTypeConstants.PAGE, AppContext.getMessage(Page18InEnum.VIEW_READ_TITLE));
+        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH2(ProjectTypeConstants.PAGE, AppContext.getMessage(Page18InEnum
+                .VIEW_READ_TITLE));
         headerLbl.setWidthUndefined();
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
 
@@ -251,7 +252,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private static class PagePreviewFormLayout extends ReadViewLayout {
         void displayPageInfo(Page beanItem) {
             MVerticalLayout header = new MVerticalLayout().withMargin(false);
-            ELabel titleLbl = ELabel.header(beanItem.getSubject());
+            ELabel titleLbl = ELabel.h2(beanItem.getSubject());
             header.with(titleLbl);
             Div footer = new Div().setStyle("width:100%").setCSSClass(UIConstants.LABEL_META_INFO);
             Span lastUpdatedTimeTxt = new Span().appendText(AppContext.getMessage(DayI18nEnum.LAST_UPDATED_ON,

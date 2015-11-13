@@ -62,7 +62,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
     public UserAddViewImpl() {
         super();
-        withMargin(new MarginInfo(false, true, false, true));
+        withMargin(new MarginInfo(false, true, true, true));
         editUserForm = new EditUserForm();
     }
 

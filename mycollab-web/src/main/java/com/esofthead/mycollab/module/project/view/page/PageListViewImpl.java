@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.PageEvent;
 import com.esofthead.mycollab.module.project.i18n.Page18InEnum;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
+import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -117,7 +117,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
     }
 
     private void initHeader() {
-        ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.PAGE,
+        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.PAGE,
                 AppContext.getMessage(Page18InEnum.VIEW_LIST_TITLE));
 
         headerLayout.with(headerText).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);

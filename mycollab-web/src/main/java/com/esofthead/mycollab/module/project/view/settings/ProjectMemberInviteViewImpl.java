@@ -41,8 +41,11 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextArea;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -133,7 +136,7 @@ public class ProjectMemberInviteViewImpl extends AbstractPageView implements Pro
             }
         });
         cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
-        controlButtons.with(cancelBtn, inviteBtn);
+        controlButtons.with(inviteBtn, cancelBtn);
 
         controlButtons.setSizeUndefined();
         return controlButtons;

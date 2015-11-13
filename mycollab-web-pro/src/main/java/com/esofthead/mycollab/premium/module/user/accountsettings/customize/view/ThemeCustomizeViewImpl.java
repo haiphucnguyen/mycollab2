@@ -17,12 +17,10 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.colorpicker.Color;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeEvent;
 import com.vaadin.ui.components.colorpicker.ColorChangeListener;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -59,8 +57,8 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         MHorizontalLayout controlButtons = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true,
                 true, false, true));
 
-        Label viewTitle = new ELabel(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
-                "Theme Customization", ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2);
+        ELabel viewTitle = ELabel.h2(SettingAssetsManager.getAsset(SettingUIConstants.GENERAL_SETTING).getHtml() + " " +
+                "Theme Customization");
 
         Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             private static final long serialVersionUID = -6901103392231786935L;

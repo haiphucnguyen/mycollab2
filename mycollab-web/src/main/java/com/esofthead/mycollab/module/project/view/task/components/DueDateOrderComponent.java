@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.core.utils.SortedArrayMap;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -102,8 +103,7 @@ public class DueDateOrderComponent extends TaskGroupOrderComponent {
             wrapBody = new CssLayout();
             wrapBody.setWidth("100%");
             wrapBody.setStyleName("tasklist");
-            headerLbl = new Label();
-            headerLbl.addStyleName(ValoTheme.LABEL_H3);
+            headerLbl = ELabel.h3("");
             this.addComponent(headerLbl);
             this.addComponent(wrapBody);
         }

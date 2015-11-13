@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
-import com.esofthead.mycollab.module.crm.ui.components.CrmViewHeader;
+import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -55,20 +55,19 @@ public class CaseSearchPanel extends DefaultGenericSearchPanel<CaseSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new CrmViewHeader(CrmTypeConstants.CASE, AppContext.getMessage(CaseI18nEnum.VIEW_LIST_TITLE));
+        return ComponentUtils.header(CrmTypeConstants.CASE, AppContext.getMessage(CaseI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
     protected void buildExtraControls() {
-        Button createCaseBtn = new Button(AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createCaseBtn = new Button(AppContext.getMessage(CaseI18nEnum.BUTTON_NEW_CASE), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new CaseEvent.GotoAdd(this, null));
+            }
+        });
         createCaseBtn.setIcon(FontAwesome.PLUS);
         createCaseBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createCaseBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CASE));

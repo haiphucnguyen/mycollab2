@@ -114,7 +114,7 @@ public class CloudDriveSettingWindow extends Window {
 
                 // ----construct title --------------
                 foldernameLbl = new Label(drive.getFoldername());
-                foldernameLbl.addStyleName("h3-dropbox");
+                foldernameLbl.addStyleName(ValoTheme.LABEL_H3);
                 titleLayout.with(foldernameLbl).expand(foldernameLbl);
 
                 final PopupButton popupBtn = new PopupButton();

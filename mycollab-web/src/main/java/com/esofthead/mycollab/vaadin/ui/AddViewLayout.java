@@ -19,7 +19,7 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -40,11 +40,11 @@ public class AddViewLayout extends CustomLayoutExt {
 
         this.viewIcon = viewIcon;
 
-        header = new MHorizontalLayout().withWidth("100%");
+        header = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true, true, true, false));
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        titleLbl = new Label("", ContentMode.HTML);
-        titleLbl.setStyleName(ValoTheme.LABEL_H2);
+        titleLbl = ELabel.h3("");
+        titleLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
 
         if (!(viewIcon instanceof FontAwesome)) {
             Image icon = new Image(null);
@@ -85,9 +85,8 @@ public class AddViewLayout extends CustomLayoutExt {
     public void setTitle(final String title) {
         if (title != null) {
             CssLayout titleWrap = new CssLayout();
-            titleWrap.setStyleName("addViewTitle");
             titleWrap.setWidth("100%");
-            titleWrap.addComponent(ELabel.header(title));
+            titleWrap.addComponent(ELabel.h2(title));
             addComponent(titleWrap, "addViewTitle");
         } else {
             removeComponent("addViewTitle");

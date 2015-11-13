@@ -178,7 +178,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
 
         MVerticalLayout rowLayout = new MVerticalLayout().withWidth("100%").withStyleName("message-container");
 
-        MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%").withStyleName("message-header");
+        MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%");
         messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         ELabel timePostLbl = new ELabel(AppContext.getMessage(
@@ -256,7 +256,7 @@ public class CrmActivityComponent extends MVerticalLayout implements ReloadableC
 
             MVerticalLayout rowLayout = new MVerticalLayout().withWidth("100%").withStyleName("message-container");
 
-            MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%").withStyleName("message-header");
+            MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
             ELabel timePostLbl = new ELabel(AppContext.getMessage(

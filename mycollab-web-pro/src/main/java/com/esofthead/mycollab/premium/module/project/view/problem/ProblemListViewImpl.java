@@ -27,8 +27,8 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
 
@@ -60,8 +60,7 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
     }
 
     private void generateDisplayTable() {
-        tableItem = new DefaultPagedBeanTable<>(
-                ApplicationContextUtil.getSpringBean(ProblemService.class),
+        tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ProblemService.class),
                 SimpleProblem.class, ProblemListView.VIEW_DEF_ID,
                 ProblemTableFieldDef.selected(), Arrays.asList(
                 ProblemTableFieldDef.name(),
@@ -73,8 +72,7 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Object generateCell(final Table source, final Object itemId,
-                                       final Object columnId) {
+            public Object generateCell(final Table source, final Object itemId, final Object columnId) {
                 final SimpleProblem problem = tableItem.getBeanByIndex(itemId);
                 CheckBoxDecor cb = new CheckBoxDecor("", problem.isSelected());
                 cb.setImmediate(true);
@@ -99,8 +97,7 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
             public com.vaadin.ui.Component generateCell(final Table source,
                                                         final Object itemId, final Object columnId) {
                 SimpleProblem problem = tableItem.getBeanByIndex(itemId);
-                LabelLink b = new LabelLink(problem.getIssuename(),
-                        ProjectLinkBuilder.generateProblemPreviewFullLink(
+                LabelLink b = new LabelLink(problem.getIssuename(), ProjectLinkBuilder.generateProblemPreviewFullLink(
                                 problem.getProjectid(), problem.getId()));
 
                 if ("Closed".equals(problem.getStatus())) {
@@ -110,46 +107,35 @@ public class ProblemListViewImpl extends AbstractPageView implements ProblemList
                         b.addStyleName(UIConstants.LINK_OVERDUE);
                     }
                 }
-                b.setDescription(ProjectTooltipGenerator
-                        .generateToolTipProblem(AppContext.getUserLocale(),
-                                problem, AppContext.getSiteUrl(),
-                                AppContext.getUserTimezone()));
+                b.setDescription(ProjectTooltipGenerator.generateToolTipProblem(AppContext.getUserLocale(),
+                        problem, AppContext.getSiteUrl(), AppContext.getUserTimezone()));
                 return b;
 
             }
         });
 
-        tableItem.addGeneratedColumn("assignedUserFullName",
-                new Table.ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("assignedUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public com.vaadin.ui.Component generateCell(
-                            Table source, Object itemId,
-                            Object columnId) {
-                        SimpleProblem problem = tableItem.getBeanByIndex(itemId);
-                        return new ProjectUserLink(problem.getAssigntouser(),
-                                problem.getAssignUserAvatarId(), problem
-                                .getAssignedUserFullName());
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
+                SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                return new ProjectUserLink(problem.getAssigntouser(), problem.getAssignUserAvatarId(),
+                        problem.getAssignedUserFullName());
 
-                    }
-                });
+            }
+        });
 
-        tableItem.addGeneratedColumn("raisedByUserFullName",
-                new Table.ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("raisedByUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public com.vaadin.ui.Component generateCell(
-                            Table source, Object itemId,
-                            Object columnId) {
-                        SimpleProblem problem = tableItem.getBeanByIndex(itemId);
-                        return new ProjectUserLink(problem.getAssigntouser(),
-                                problem.getRaisedByUserAvatarId(), problem
-                                .getRaisedByUserFullName());
-
-                    }
-                });
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
+                SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                return new ProjectUserLink(problem.getAssigntouser(), problem.getRaisedByUserAvatarId(),
+                        problem.getRaisedByUserFullName());
+            }
+        });
 
         tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;

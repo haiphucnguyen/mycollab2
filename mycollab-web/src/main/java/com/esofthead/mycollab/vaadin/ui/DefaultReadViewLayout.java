@@ -33,7 +33,7 @@ public class DefaultReadViewLayout extends ReadViewLayout {
 
     private ComponentContainer buildHeader(String title) {
         MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
-        titleLbl = ELabel.header(title);
+        titleLbl = ELabel.h2(title);
         header.with(titleLbl).expand(titleLbl);
         return header;
     }

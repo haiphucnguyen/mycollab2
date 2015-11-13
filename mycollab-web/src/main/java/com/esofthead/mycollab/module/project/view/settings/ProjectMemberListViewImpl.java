@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
+import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -63,7 +63,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                 .withWidth("100%").withStyleName("hdr-view");
         viewHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.MEMBER,
+        HeaderWithFontAwesome headerText = ComponentUtils.headerH2(ProjectTypeConstants.MEMBER,
                 AppContext.getMessage(ProjectMemberI18nEnum.VIEW_LIST_TITLE));
 
         viewHeader.with(headerText).expand(headerText);

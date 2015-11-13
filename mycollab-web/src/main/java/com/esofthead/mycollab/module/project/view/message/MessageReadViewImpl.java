@@ -27,9 +27,9 @@ import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
+import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMemberBlock;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
 import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -158,7 +158,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
                 }
             });
 
-            ProjectViewHeader headerText = new ProjectViewHeader(ProjectTypeConstants.MESSAGE, message.getTitle());
+            HeaderWithFontAwesome headerText = ComponentUtils.headerH3(ProjectTypeConstants.MESSAGE, message.getTitle());
             header.with(headerText, stickyCheck, deleteBtn).withAlign(headerText, Alignment.MIDDLE_LEFT)
                     .withAlign(stickyCheck, Alignment.MIDDLE_RIGHT).withAlign(deleteBtn, Alignment.MIDDLE_RIGHT).expand(headerText);
 
@@ -175,11 +175,10 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
 
             MVerticalLayout rowLayout = new MVerticalLayout().withMargin(true).withWidth("100%").withStyleName("message-container");
 
-            MHorizontalLayout messageHeader = new MHorizontalLayout().withStyleName("message-header").withWidth("100%");
+            MHorizontalLayout messageHeader = new MHorizontalLayout().withWidth("100%");
             messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-            ELabel timePostLbl = new ELabel(AppContext.getMessage(
-                    MessageI18nEnum.USER_COMMENT_ADD, message.getFullPostedUserName(),
+            ELabel timePostLbl = new ELabel(AppContext.getMessage(MessageI18nEnum.USER_COMMENT_ADD, message.getFullPostedUserName(),
                     AppContext.formatPrettyTime(message.getPosteddate())), ContentMode.HTML).withDescription
                     (AppContext.formatDateTime(message.getPosteddate()));
             timePostLbl.setSizeUndefined();

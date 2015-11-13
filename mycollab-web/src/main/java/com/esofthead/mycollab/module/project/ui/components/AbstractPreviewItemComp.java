@@ -27,7 +27,6 @@ import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,7 +65,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public AbstractPreviewItemComp(String headerText, Resource iconResource, ReadViewLayout layout) {
-        ELabel headerLbl = ELabel.header("");
+        ELabel headerLbl = ELabel.h3("");
         headerLbl.setSizeUndefined();
 
         this.previewLayout = layout;

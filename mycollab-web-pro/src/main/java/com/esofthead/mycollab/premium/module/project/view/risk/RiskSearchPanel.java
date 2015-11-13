@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
+import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
@@ -39,7 +39,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new ProjectViewHeader(ProjectTypeConstants.RISK, AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
+        return ComponentUtils.headerH2(ProjectTypeConstants.RISK, AppContext.getMessage(RiskI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
@@ -126,13 +126,13 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
             Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            RiskSearchPanel.this.moveToAdvancedSearchLayout();
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    RiskSearchPanel.this.moveToAdvancedSearchLayout();
+                }
+            });
             advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
             basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
 
@@ -183,9 +183,9 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("risk-assignuser" .equals(fieldId)) {
+            if ("risk-assignuser".equals(fieldId)) {
                 return new ProjectMemberListSelect();
-            } else if ("risk-raiseduser" .equals(fieldId)) {
+            } else if ("risk-raiseduser".equals(fieldId)) {
                 return new ProjectMemberListSelect();
             }
             return null;

@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -34,22 +35,16 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 public abstract class ProjectListNoItemView extends MVerticalLayout implements PageView {
     public ProjectListNoItemView() {
-        this.withMargin(false).withStyleName("case-noitem");
-        this.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        this.withMargin(true);
 
-        Label image = new Label(viewIcon().getHtml(), ContentMode.HTML);
-        image.setSizeUndefined();
+        ELabel image = new ELabel(viewIcon().getHtml(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H1).withWidthUndefined();
+        image.addStyleName(ValoTheme.LABEL_NO_MARGIN);
 
-        Label title = new Label(viewTitle());
-        title.addStyleName(ValoTheme.LABEL_H2);
-        title.setSizeUndefined();
+        ELabel title = ELabel.h2(viewTitle()).withWidthUndefined();
 
-        Label body = new Label(String.format("<div style=\"text-align:center\">%s</div>", viewHint()), ContentMode.HTML);
-        body.setWidth("500px");
-
+        ELabel body = new ELabel(viewHint(), ContentMode.HTML).withWidthUndefined();
         MHorizontalLayout links = createControlButtons();
-
-        this.with(image, title, body, links);
+        this.with(image, title, body, links).alignAll(Alignment.TOP_CENTER);
     }
 
     protected MHorizontalLayout createControlButtons() {

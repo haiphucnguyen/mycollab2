@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.ui.CrmAssetsManager;
-import com.esofthead.mycollab.module.crm.ui.components.CrmViewHeader;
+import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityEventProvider.CrmEvent;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -105,8 +105,7 @@ public class ActivityCalendarViewImpl extends AbstractCssPageView implements Act
                 .withWidth("100%").withStyleName(UIConstants.HEADER_VIEW);
         actionPanel.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        Component headerText = new CrmViewHeader(CrmTypeConstants.ACTIVITY, "Calendar");
-        headerText.setStyleName(ValoTheme.LABEL_H2);
+        Component headerText = ComponentUtils.header(CrmTypeConstants.ACTIVITY, "Calendar");
         actionPanel.with(headerText).expand(headerText);
 
         mainContent.addComponent(actionPanel);

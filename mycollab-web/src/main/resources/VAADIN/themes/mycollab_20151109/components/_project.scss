@@ -152,39 +152,10 @@
 
   .message {
     &.important-message .message-container {
-      border-color: #ff9339;
+      border-color: $my-separator-color;
       &:before {
-        border-color: transparent #ff9339;
+        border-color: transparent $my-separator-color;
       }
-    }
-  }
-
-  .message-header {
-    .post-owner {
-      color: #525252;
-    }
-    &.v-margin-top {
-      padding-top: 10px;
-    }
-    &.v-margin-left {
-      padding-left: 10px;
-    }
-    &.v-margin-right {
-      padding-right: 10px;
-    }
-  }
-
-  .message-header {
-    .notification {
-      color: black;
-      font-size: $font-normal;
-    }
-    .comment-count {
-      padding-right: 3px;
-    }
-    .attachment-count {
-      padding-right: 3px;
-      padding-left: 5px;
     }
   }
 
@@ -501,8 +472,8 @@
   /* End Milestone View */
 
   .tasklist {
-    margin-top: 10px;
-    border: solid $my-separator-color 1px;
+    margin-top: 7px;
+    border: 1px solid $my-separator-color;
     background-color:#FFF;
     width: 100%;
 

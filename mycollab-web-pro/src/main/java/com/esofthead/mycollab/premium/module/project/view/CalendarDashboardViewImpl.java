@@ -3,6 +3,7 @@ package com.esofthead.mycollab.premium.module.project.view;
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -103,17 +105,19 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
                 SimpleTask task = calendarEvent.getAssignment();
-                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
+//                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
+                String link = ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(), task.getProjectShortname());
+                Page.getCurrent().updateLocation(link, true);
             }
         });
 
         calendar.setHandler(new CalendarComponentEvents.DateClickHandler() {
             @Override
             public void dateClick(CalendarComponentEvents.DateClickEvent dateClickEvent) {
-                SimpleTask task = new SimpleTask();
-                task.setStartdate(dateClickEvent.getDate());
-                task.setEnddate(dateClickEvent.getDate());
-                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
+//                SimpleTask task = new SimpleTask();
+//                task.setStartdate(dateClickEvent.getDate());
+//                task.setEnddate(dateClickEvent.getDate());
+//                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
             }
         });
 
@@ -228,8 +232,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         viewButtons.addButton(monthViewBtn);
         viewButtons.setDefaultButton(monthViewBtn);
 
-        header.with(titleWrapper, newTaskBtn, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
-                .withAlign(newTaskBtn, Alignment.MIDDLE_RIGHT).withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
+//        header.with(titleWrapper, newTaskBtn, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
+//                .withAlign(newTaskBtn, Alignment.MIDDLE_RIGHT).withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
+        header.with(titleWrapper, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
+                .withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
         return header;
     }
 

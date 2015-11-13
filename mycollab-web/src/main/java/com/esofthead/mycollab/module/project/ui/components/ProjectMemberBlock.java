@@ -27,6 +27,7 @@ import com.hp.gagawa.java.elements.A;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -50,6 +51,7 @@ public class ProjectMemberBlock extends MVerticalLayout {
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         Label userLbl = new Label(div.write(), ContentMode.HTML);
+        userLbl.addStyleName(ValoTheme.LABEL_SMALL);
         with(userAvatar, userLbl);
     }
 }

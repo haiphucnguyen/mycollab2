@@ -76,8 +76,14 @@ public class ELabel extends Label {
         return this;
     }
 
-    public static final ELabel header(String value) {
+    public static final ELabel h2(String value) {
         ELabel label = new ELabel(value, ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2);
+        label.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        return label;
+    }
+
+    public static final ELabel h3(String value) {
+        ELabel label = new ELabel(value, ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
         label.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         return label;
     }

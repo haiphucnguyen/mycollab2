@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.esofthead.mycollab.module.crm.ui.components.CrmViewHeader;
+import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -59,19 +59,18 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new CrmViewHeader(CrmTypeConstants.LEAD, AppContext.getMessage(LeadI18nEnum.VIEW_LIST_TITLE));
+        return ComponentUtils.header(CrmTypeConstants.LEAD, AppContext.getMessage(LeadI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
     protected void buildExtraControls() {
-        Button createLeadBtn = new Button(AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD),
-                new Button.ClickListener() {
+        Button createLeadBtn = new Button(AppContext.getMessage(LeadI18nEnum.BUTTON_NEW_LEAD), new Button.ClickListener() {
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new LeadEvent.GotoAdd(this, null));
+            }
+        });
         createLeadBtn.setIcon(FontAwesome.PLUS);
         createLeadBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createLeadBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
@@ -198,7 +197,7 @@ public class LeadSearchPanel extends DefaultGenericSearchPanel<LeadSearchCriteri
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("lead-assignuser".equals(fieldId)) {
+            if ("lead-assignuser" .equals(fieldId)) {
                 return new ActiveUserListSelect();
             }
             return null;

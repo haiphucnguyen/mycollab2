@@ -52,8 +52,7 @@ public class CommentRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleC
 
         MVerticalLayout rowLayout = new MVerticalLayout().withWidth("100%").withStyleName("message-container");
 
-        MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(false).withWidth("100%").withStyleName
-                ("message-header");
+        MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(false).withWidth("100%");
         messageHeader.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         ELabel timePostLbl = new ELabel(AppContext.getMessage(

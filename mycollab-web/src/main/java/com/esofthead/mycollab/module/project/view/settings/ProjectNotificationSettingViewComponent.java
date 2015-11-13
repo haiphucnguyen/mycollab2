@@ -25,14 +25,17 @@ import com.esofthead.mycollab.module.project.service.ProjectNotificationSettingS
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BlockWidget;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.OptionGroup;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -54,8 +57,7 @@ public class ProjectNotificationSettingViewComponent extends BlockWidget {
 
         notificationLabelWrapper.setStyleName("notification-label");
 
-        Label notificationLabel = new Label(AppContext.getMessage(ProjectSettingI18nEnum.EXT_LEVEL));
-        notificationLabel.addStyleName(ValoTheme.LABEL_H3);
+        ELabel notificationLabel = ELabel.h3(AppContext.getMessage(ProjectSettingI18nEnum.EXT_LEVEL));
 
         notificationLabel.setHeightUndefined();
         notificationLabelWrapper.addComponent(notificationLabel);

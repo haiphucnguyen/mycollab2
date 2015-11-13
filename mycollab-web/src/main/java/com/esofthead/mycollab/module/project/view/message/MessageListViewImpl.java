@@ -156,7 +156,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                     .getId()), new Text(message.getTitle()));
 
             MHorizontalLayout messageHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
-                    false, false)).withStyleName("message-header");
+                    false, false));
             messageHeader.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             CssLayout leftHeader = new CssLayout();
             leftHeader.addComponent(new ELabel(labelLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3
@@ -211,7 +211,6 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
                 MHorizontalLayout commentNotification = new MHorizontalLayout();
                 Label commentCountLbl = new Label(Integer.toString(message.getCommentsCount()) + " " + FontAwesome.COMMENTS
                         .getHtml(), ContentMode.HTML);
-                commentCountLbl.setStyleName("comment-count");
                 commentCountLbl.setSizeUndefined();
                 commentNotification.addComponent(commentCountLbl);
                 notification.addComponent(commentNotification);
@@ -223,7 +222,6 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
             if (CollectionUtils.isNotEmpty(attachments)) {
                 HorizontalLayout attachmentNotification = new HorizontalLayout();
                 Label attachmentCountLbl = new Label(Integer.toString(attachments.size()));
-                attachmentCountLbl.setStyleName("attachment-count");
                 attachmentCountLbl.setSizeUndefined();
                 attachmentNotification.addComponent(attachmentCountLbl);
                 Button attachmentIcon = new Button(FontAwesome.PAPERCLIP);

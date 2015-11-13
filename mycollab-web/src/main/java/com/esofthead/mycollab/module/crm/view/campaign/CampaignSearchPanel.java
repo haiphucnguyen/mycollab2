@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
-import com.esofthead.mycollab.module.crm.ui.components.CrmViewHeader;
+import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -58,21 +58,20 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new CrmViewHeader(CrmTypeConstants.CAMPAIGN, AppContext.getMessage(CampaignI18nEnum.VIEW_LIST_TITLE));
+        return ComponentUtils.header(CrmTypeConstants.CAMPAIGN, AppContext.getMessage(CampaignI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
     protected void buildExtraControls() {
-        Button createCampaignBtn = new Button(AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createCampaignBtn = new Button(AppContext.getMessage(CampaignI18nEnum.BUTTON_NEW_CAMPAIGN), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null));
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new CampaignEvent.GotoAdd(this, null));
 
-                    }
-                });
+            }
+        });
         createCampaignBtn.setIcon(FontAwesome.PLUS);
         createCampaignBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createCampaignBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
@@ -149,15 +148,14 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            CampaignSearchPanel.this.moveToAdvancedSearchLayout();
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    CampaignSearchPanel.this.moveToAdvancedSearchLayout();
+                }
+            });
             advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
             basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
             return basicSearchBody;
@@ -205,7 +203,7 @@ public class CampaignSearchPanel extends DefaultGenericSearchPanel<CampaignSearc
 
         @Override
         protected Component buildSelectionComp(String fieldId) {
-            if ("campaign-assignuser".equals(fieldId)) {
+            if ("campaign-assignuser" .equals(fieldId)) {
                 return new ActiveUserListSelect();
             }
             return null;

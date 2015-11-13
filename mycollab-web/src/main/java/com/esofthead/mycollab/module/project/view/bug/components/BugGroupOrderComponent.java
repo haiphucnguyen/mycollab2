@@ -29,5 +29,6 @@ public abstract class BugGroupOrderComponent extends CssLayout {
     public BugGroupOrderComponent() {
         this.setWidth("100%");
     }
+
     abstract public void insertBugs(List<SimpleBug> tasks);
 }

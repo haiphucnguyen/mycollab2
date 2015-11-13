@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.VersionI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.ProjectViewHeader;
+import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DefaultGenericSearchPanel;
@@ -60,7 +60,7 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new ProjectViewHeader(ProjectTypeConstants.BUG_VERSION, AppContext.getMessage(VersionI18nEnum.VIEW_LIST_TITLE));
+        return ComponentUtils.headerH2(ProjectTypeConstants.BUG_VERSION, AppContext.getMessage(VersionI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
@@ -102,10 +102,10 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
             Label nameLbl = new Label("Name:");
             basicSearchBody.with(nameLbl);
 
-            this.nameField = new TextField();
-            this.nameField.setInputPrompt("Query by version name");
-            this.nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            this.nameField.addShortcutListener(new ShortcutListener("VersionSearchName", ShortcutAction.KeyCode.ENTER, null) {
+            nameField = new TextField();
+            nameField.setInputPrompt("Query by version name");
+            nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            nameField.addShortcutListener(new ShortcutListener("VersionSearchName", ShortcutAction.KeyCode.ENTER, null) {
                 @Override
                 public void handleAction(Object o, Object o1) {
                     callSearchAction();
@@ -113,26 +113,19 @@ public class VersionSearchPanel extends DefaultGenericSearchPanel<VersionSearchC
             });
             basicSearchBody.with(nameField);
 
-            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH));
-            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
-            searchBtn.setIcon(FontAwesome.SEARCH);
-
-            searchBtn.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
+            Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), new Button.ClickListener() {
                 @Override
-                public void buttonClick(final Button.ClickEvent event) {
+                public void buttonClick(Button.ClickEvent event) {
                     callSearchAction();
                 }
             });
+            searchBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            searchBtn.setIcon(FontAwesome.SEARCH);
             basicSearchBody.with(searchBtn);
 
-            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR));
-            cancelBtn.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
+            Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLEAR), new Button.ClickListener() {
                 @Override
-                public void buttonClick(final Button.ClickEvent event) {
+                public void buttonClick(Button.ClickEvent event) {
                     nameField.setValue("");
                 }
             });

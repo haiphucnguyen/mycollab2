@@ -53,20 +53,19 @@ public class RoleSearchPanel extends DefaultGenericSearchPanel<RoleSearchCriteri
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new HeaderWithFontAwesome(FontAwesome.USERS, AppContext.getMessage(RoleI18nEnum.VIEW_LIST_TITLE));
+        return HeaderWithFontAwesome.h2(FontAwesome.USERS, AppContext.getMessage(RoleI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
     protected void buildExtraControls() {
-        Button createBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final Button.ClickEvent event) {
-                        EventBusFactory.getInstance().post(new RoleEvent.GotoAdd(this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(final Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(new RoleEvent.GotoAdd(this, null));
+            }
+        });
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.ACCOUNT_ROLE));

@@ -18,11 +18,11 @@ package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.core.utils.SortedArrayMap;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -35,7 +35,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.2
  */
-public class CreatedDateOrderComponent  extends TaskGroupOrderComponent {
+public class CreatedDateOrderComponent extends TaskGroupOrderComponent {
     private SortedArrayMap<DateTime, GroupComponent> createdDateAvailables = new SortedArrayMap<>();
     private GroupComponent unspecifiedTasks;
 
@@ -78,9 +78,9 @@ public class CreatedDateOrderComponent  extends TaskGroupOrderComponent {
         GroupComponent(DateTime startDate) {
             initComponent();
             DateTime maxValue = startDate.dayOfWeek().withMaximumValue();
-            DateTimeFormatter fomatter = DateTimeFormat.forPattern("E, dd MMM yyyy");
-            String monDayStr = fomatter.print(startDate);
-            String sundayStr = fomatter.print(maxValue);
+            DateTimeFormatter formatter = DateTimeFormat.forPattern("E, dd MMM yyyy");
+            String monDayStr = formatter.print(startDate);
+            String sundayStr = formatter.print(maxValue);
             headerLbl.setValue(String.format("%s - %s", monDayStr, sundayStr));
         }
 
@@ -93,8 +93,7 @@ public class CreatedDateOrderComponent  extends TaskGroupOrderComponent {
             this.setMargin(new MarginInfo(true, false, true, false));
             wrapBody = new CssLayout();
             wrapBody.setStyleName("tasklist");
-            headerLbl = new Label();
-            headerLbl.addStyleName(ValoTheme.LABEL_H3);
+            headerLbl = ELabel.h3("");
             this.addComponent(headerLbl);
             this.addComponent(wrapBody);
         }

@@ -12,6 +12,9 @@ $v-unit-size: 29px;
 $v-tooltip-background-color:#FDFDEE;
 $v-textfield-background-color--readonly: $v-textfield-background-color;
 
+$v-font-size--small: $font-small;
+$v-line-height--header:1.5em;
+
 @import "../valo/valo";
 
 @import "global";
@@ -622,12 +625,13 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
   .addViewLayout {
     .addViewBody {
       background-color: #FFF;
+      margin-top: 10px;
     }
     .addViewTopControls {
       -moz-box-sizing: border-box;
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
-      border-bottom: 1px solid $my-border-color;
+      border-bottom: 1px solid $my-separator-color;
       .addNewControl {
         border-bottom: none;
       }
@@ -1149,18 +1153,6 @@ $v-textfield-background-color--readonly: $v-textfield-background-color;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
     }
-  }
-
-  /* H3 Label */
-
-  .v-label-h3 {
-    font-size: $font-normal;
-    font-weight: bold;
-  }
-
-  .v-label.h3-dropbox {
-    font-size: $font-normal;
-    padding: 0px;
   }
 
   /* NoSubDomainWindow */

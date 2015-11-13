@@ -23,6 +23,8 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
+import com.esofthead.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -81,7 +83,9 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
 
-        header.with(createBtn).withAlign(createBtn, Alignment.MIDDLE_RIGHT);
+        HeaderWithFontAwesome headerLbl = HeaderWithFontAwesome.h2(FontAwesome.USERS, "Users");
+
+        header.with(headerLbl, createBtn).expand(headerLbl).withAlign(createBtn, Alignment.MIDDLE_RIGHT);
         this.addComponent(header);
 
         CssLayout contentLayout = new CssLayout();

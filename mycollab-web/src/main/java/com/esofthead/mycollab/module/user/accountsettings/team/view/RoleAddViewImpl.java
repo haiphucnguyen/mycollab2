@@ -52,7 +52,7 @@ public class RoleAddViewImpl extends AbstractPageView implements RoleAddView {
     public RoleAddViewImpl() {
         super();
 
-        this.setMargin(new MarginInfo(false, true, false, true));
+        this.setMargin(new MarginInfo(false, true, true, true));
         this.editForm = new EditForm();
         this.addComponent(this.editForm);
     }

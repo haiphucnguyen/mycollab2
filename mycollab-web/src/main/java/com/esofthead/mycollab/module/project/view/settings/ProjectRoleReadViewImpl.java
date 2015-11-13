@@ -47,7 +47,8 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
     private GridFormLayoutHelper projectFormHelper;
 
     public ProjectRoleReadViewImpl() {
-        headerText = new HeaderWithFontAwesome(FontAwesome.USERS, AppContext.getMessage(ProjectRoleI18nEnum.FORM_READ_TITLE));
+        headerText = HeaderWithFontAwesome.h3(FontAwesome.USERS, AppContext.getMessage(ProjectRoleI18nEnum
+                .FORM_READ_TITLE));
         headerText.setSizeUndefined();
         this.addComponent(constructHeader());
 

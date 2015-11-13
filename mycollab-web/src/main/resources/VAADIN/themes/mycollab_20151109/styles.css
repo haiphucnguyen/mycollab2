@@ -1692,14 +1692,6 @@ a.pending {
 	color: #f7f7f7;
 }
 
-.v-vertical.case-noitem {
-	box-sizing: content-box;
-}
-
-.v-vertical.case-noitem .v-icon {
-	font-size: 64px;
-}
-
 .warning-icon .v-icon {
 	font-size: 48px;
 	color: red;
@@ -2971,7 +2963,7 @@ a.v-disabled {
 	padding: 0 11px;
 	
 	
-	font-size: 12px;
+	font-size: 13px;
 	
 	border-radius: 4px;
 }
@@ -3212,7 +3204,7 @@ a.v-disabled {
 	position: relative;
 	line-height: 13px;
 	white-space: nowrap;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-checkbox-small.v-has-width label {
@@ -4184,7 +4176,7 @@ a.v-disabled {
 }
 
 .v-filterselect-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-filterselect-large {
@@ -5381,7 +5373,7 @@ a.v-disabled {
 }
 
 .v-grid-editor-footer {
-	font-size: 12px;
+	font-size: 13px;
 	padding: 0 3px;
 	background: #fafafa;
 	-webkit-animation: valo-grid-editor-footer-animate-in 200ms 120ms backwards;
@@ -5676,7 +5668,7 @@ a.v-disabled {
 }
 
 .v-textfield-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-textfield-large {
@@ -5887,7 +5879,7 @@ a.v-disabled {
 	width: 25px;
 	line-height: 23px;
 	text-align: center;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-caption-inline-icon.v-caption-small img.v-icon {
@@ -6157,7 +6149,7 @@ a.v-disabled {
 	height: auto;
 	resize: none;
 	white-space: pre-wrap;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-ie8 .v-textarea-small, .v-ie9 .v-textarea-small {
@@ -7139,7 +7131,7 @@ td.v-datefield-calendarpanel-time .v-label {
 }
 
 .v-datefield-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-datefield-large {
@@ -7944,7 +7936,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 	padding: 0;
 	text-align: left;
 	line-height: 23px;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-menubar-small:after {
@@ -8190,7 +8182,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-select-optiongroup-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-select-optiongroup-small .v-checkbox {
@@ -8822,7 +8814,7 @@ td.v-inline-datefield-calendarpanel-time .v-label {
 }
 
 .v-link-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-link-large {
@@ -9928,11 +9920,11 @@ tbody.v-drag-element tr {
 }
 
 .v-table-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-table-small.v-treetable .v-table-cell-wrapper {
-	min-height: 12px;
+	min-height: 13px;
 }
 
 .v-treetable [class*="caption-container"], .v-treetable [class*="footer-container"], .v-treetable [class*="cell-wrapper"] {
@@ -11918,7 +11910,7 @@ tbody.v-drag-element tr {
 }
 
 h1, .v-label-h1, h2, .v-label-h2, h3, .v-label-h3 {
-	line-height: 1.1;
+	line-height: 1.5em;
 	font-weight: 200;
 	color: #141414;
 }
@@ -11948,9 +11940,9 @@ h3, .v-label-h3 {
 }
 
 h4, .v-label-h4 {
-	line-height: 1.1;
+	line-height: 1.5em;
 	font-weight: 500;
-	font-size: 12px;
+	font-size: 13px;
 	color: #414141;
 	text-transform: uppercase;
 	letter-spacing: 0;
@@ -11983,7 +11975,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 }
 
 .v-label-small {
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .v-label-tiny {
@@ -13982,14 +13974,6 @@ a.pending {
 	color: #f7f7f7;
 }
 
-.v-vertical.case-noitem {
-	box-sizing: content-box;
-}
-
-.v-vertical.case-noitem .v-icon {
-	font-size: 64px;
-}
-
 .warning-icon .v-icon {
 	font-size: 48px;
 	color: red;
@@ -14880,41 +14864,11 @@ div .addview-layout-body .control-buttons {
 }
 
 .message.important-message .message-container {
-	border-color: #ff9339;
+	border-color: #e5e5e5;
 }
 
 .message.important-message .message-container:before {
-	border-color: transparent #ff9339;
-}
-
-.message-header .post-owner {
-	color: #525252;
-}
-
-.message-header.v-margin-top {
-	padding-top: 10px;
-}
-
-.message-header.v-margin-left {
-	padding-left: 10px;
-}
-
-.message-header.v-margin-right {
-	padding-right: 10px;
-}
-
-.message-header .notification {
-	color: black;
-	font-size: 14px;
-}
-
-.message-header .comment-count {
-	padding-right: 3px;
-}
-
-.message-header .attachment-count {
-	padding-right: 3px;
-	padding-left: 5px;
+	border-color: transparent #e5e5e5;
 }
 
 .message-body p {
@@ -15294,8 +15248,8 @@ div.v-button.token-field:hover {
 }
 
 .tasklist {
-	margin-top: 10px;
-	border: solid #e5e5e5 1px;
+	margin-top: 7px;
+	border: 1px solid #e5e5e5;
 	background-color: #FFF;
 	width: 100%;
 }
@@ -16439,13 +16393,14 @@ input.v-textfield-errorField {
 
 .addViewLayout .addViewBody {
 	background-color: #FFF;
+	margin-top: 10px;
 }
 
 .addViewLayout .addViewTopControls {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .addViewLayout .addViewTopControls .addNewControl {
@@ -16941,16 +16896,6 @@ div.v-ratingstars-bar {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-.v-label-h3 {
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.v-label.h3-dropbox {
-	font-size: 14px;
-	padding: 0px;
 }
 
 .nosubdomain-window {

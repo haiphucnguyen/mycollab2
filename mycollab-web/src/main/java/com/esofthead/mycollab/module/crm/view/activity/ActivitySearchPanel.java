@@ -23,15 +23,15 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
-import com.esofthead.mycollab.module.crm.ui.components.CrmViewHeader;
+import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -47,7 +47,7 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
 
     @Override
     protected HeaderWithFontAwesome buildSearchTitle() {
-        return new CrmViewHeader(CrmTypeConstants.ACTIVITY, "Events");
+        return ComponentUtils.header(CrmTypeConstants.ACTIVITY, "Events");
     }
 
     @Override
@@ -60,14 +60,14 @@ public class ActivitySearchPanel extends DefaultGenericSearchPanel<ActivitySearc
         controlsBtn.setIcon(FontAwesome.PLUS);
         controlsBtn.setCaption("New Task");
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
-                    private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void splitButtonClick(
-                            final SplitButton.SplitButtonClickEvent event) {
-                        EventBusFactory.getInstance().post(new ActivityEvent.TaskAdd(this, null));
-                    }
-                });
+            @Override
+            public void splitButtonClick(
+                    final SplitButton.SplitButtonClickEvent event) {
+                EventBusFactory.getInstance().post(new ActivityEvent.TaskAdd(this, null));
+            }
+        });
 
         OptionPopupContent btnControlsLayout = new OptionPopupContent();
         controlsBtn.setContent(btnControlsLayout);
