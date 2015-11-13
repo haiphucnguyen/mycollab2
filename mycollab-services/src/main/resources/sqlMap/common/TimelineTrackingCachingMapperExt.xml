@@ -36,14 +36,18 @@
 
     <select id="findTimelineItems" parameterType="map"
             resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" lang="velocity">
-        #repeat(${_parameter.dates} $date "UNION" "" "")
+        #repeat(${_parameter.groupVals} $groupVal "UNION" "" "")
+          #repeat(${_parameter.dates} $date "UNION" "" "")
             SELECT s_timeline_tracking_cache.fieldval AS groupid, s_timeline_tracking_cache.count AS value,
-                DATE_FORMAT(@{date},"%Y-%m-%d") as groupname
+              DATE_FORMAT(@{date},"%Y-%m-%d") as groupname
             FROM s_timeline_tracking_cache
             #trimext("WHERE" "AND|OR")
-                s_timeline_tracking_cache.fieldval = @{_parameter.groupVal}
+                s_timeline_tracking_cache.fieldval = '${groupVal}' AND
+                s_timeline_tracking_cache.forDay = @{date}
                 <include refid="querySearchCriteria"/>
             #end
+            ORDER BY s_timeline_tracking_cache.forDay ASC
+          #end
         #end
     </select>
 </mapper>

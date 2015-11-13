@@ -298,7 +298,8 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
                                 taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
                                 taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
                                 issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
-                                Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
+                                Label issueLbl = new ELabel(issueDiv.write(), ContentMode.HTML).withWidth("100%")
+                                        .withStyleName(UIConstants.LABEL_WORD_WRAP);
                                 if (genericTask.isClosed()) {
                                     issueLbl.addStyleName("completed");
                                 } else if (genericTask.isOverdue()) {
@@ -312,7 +313,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
                                         .getAssignUserFullName());
 
                                 MCssLayout issueWrapper = new MCssLayout(issueLbl);
-                                rowComp.with(new ELabel(img.write(), ContentMode.HTML), issueWrapper).expand(issueWrapper);
+                                rowComp.with(new ELabel(img.write(), ContentMode.HTML), issueWrapper);
                                 assignmentsLayout.add(rowComp);
                             }
                             this.push();
