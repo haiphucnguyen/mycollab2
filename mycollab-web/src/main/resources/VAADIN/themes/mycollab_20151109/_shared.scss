@@ -235,7 +235,7 @@
 
     .v-label.section-header {
       padding: 5px 0px 5px 10px;
-      font-weight: bold;
+      font-weight: $my-font-weight-bold;
     }
   }
 
@@ -361,7 +361,7 @@
       cursor: move;
       background-color: #fdde86;
       .header {
-        font-weight: bold;
+        font-weight: $my-font-weight-bold;
         color: black;
         font-size: $font-large;
       }

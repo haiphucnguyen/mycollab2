@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.configuration;
 
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import org.apache.commons.lang3.LocaleUtils;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
@@ -39,7 +40,6 @@ public class SiteConfiguration {
 
     private static SiteConfiguration instance;
 
-    private DeploymentMode deploymentMode;
     private String sentErrorEmail;
     private String siteName;
     private String serverAddress;
@@ -79,11 +79,6 @@ public class SiteConfiguration {
 
         instance.serverPort = serverPort;
 
-        // load Deployment Mode
-        String runningMode = ApplicationProperties.getString(RUNNING_MODE, "standalone");
-        instance.deploymentMode = DeploymentMode.valueOf(runningMode);
-        LOG.debug("Site is running under {} mode", instance.deploymentMode);
-
         String pullMethodValue = ApplicationProperties.getString(ApplicationProperties.PULL_METHOD, "push");
         instance.pullMethod = PullMethod.valueOf(pullMethodValue);
 
@@ -117,7 +112,7 @@ public class SiteConfiguration {
         instance.databaseConfiguration = new DatabaseConfiguration(driverClass, dbUrl, dbUser, dbPassword);
 
         instance.resourceDownloadUrl = ApplicationProperties.getString(RESOURCE_DOWNLOAD_URL);
-        if (!"" .equals(instance.resourceDownloadUrl)) {
+        if (!"".equals(instance.resourceDownloadUrl)) {
             instance.resourceDownloadUrl = String.format(instance.resourceDownloadUrl,
                     instance.serverAddress, instance.serverPort);
         } else {
@@ -188,10 +183,6 @@ public class SiteConfiguration {
         return getInstance().siteName;
     }
 
-    public static DeploymentMode getDeploymentMode() {
-        return getInstance().deploymentMode;
-    }
-
     public static PullMethod getPullMethod() {
         return getInstance().pullMethod;
     }
@@ -210,13 +201,24 @@ public class SiteConfiguration {
 
     public static String getSiteUrl(String subDomain) {
         String siteUrl;
-        if (getInstance().deploymentMode == DeploymentMode.site) {
+        IDeploymentMode modeService = ApplicationContextUtil.getSpringBean(IDeploymentMode.class);
+        if (modeService.isDemandEdition()) {
             siteUrl = String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL), subDomain);
         } else {
             siteUrl = String.format(ApplicationProperties.getString(ApplicationProperties.APP_URL),
                     instance.serverAddress, instance.serverPort);
         }
         return siteUrl;
+    }
+
+    public static boolean isDemandEdition() {
+        IDeploymentMode modeService = ApplicationContextUtil.getSpringBean(IDeploymentMode.class);
+        return modeService.isDemandEdition();
+    }
+
+    public static boolean isCommunityEdition() {
+        IDeploymentMode modeService = ApplicationContextUtil.getSpringBean(IDeploymentMode.class);
+        return modeService.isCommunityEdition();
     }
 
     public static String getDropboxCallbackUrl() {
@@ -260,10 +262,6 @@ public class SiteConfiguration {
             locales.add(locale);
         }
         return locales;
-    }
-
-    public enum DeploymentMode {
-        site, premium, standalone
     }
 
     public enum PullMethod {

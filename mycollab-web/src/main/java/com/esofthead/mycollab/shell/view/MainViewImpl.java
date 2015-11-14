@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.web.AdWindow;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.esofthead.mycollab.web.IDesktopModule;
 import com.hp.gagawa.java.elements.A;
@@ -123,7 +124,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                 .appendText("  " + FontAwesome.REPLY_ALL.getHtml())
                 .appendChild(new A("http://support.mycollab.com", "_blank").appendText(" Support"));
 
-        if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.standalone) {
+        if (SiteConfiguration.isCommunityEdition()) {
             socialLinksDiv.appendText("  " + FontAwesome.THUMBS_O_UP.getHtml())
                     .appendChild(new A("http://sourceforge.net/projects/mycollab/reviews/new", "_blank").appendText("" +
                             " Rate us"));
@@ -138,20 +139,6 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
 
         ELabel socialsLbl = new ELabel(socialLinksDiv.write(), ContentMode.HTML).withWidth("-1px");
         footer.with(socialsLbl).withAlign(socialsLbl, Alignment.MIDDLE_RIGHT);
-//        footer.addComponent(currentYear, "current-year");
-//
-//        MHorizontalLayout footerRight = new MHorizontalLayout();
-//
-//
-//        Link fbPage = new Link("FB Page", new ExternalResource("https://www.facebook.com/mycollab2"));
-//        fbPage.setTargetName("_blank");
-//        fbPage.setIcon(FontAwesome.FACEBOOK);
-//
-//        Link tweetUs = new Link("Tweet", new ExternalResource("https://twitter.com/intent/tweet?text=I am using MyCollab to manage all project activities, accounts and it works great @mycollabdotcom &source=webclient"));
-//        tweetUs.setTargetName("_blank");
-//        tweetUs.setIcon(FontAwesome.TWITTER);
-//        footerRight.with(fbPage, tweetUs, blogLink, sendFeedback);
-//        footer.addComponent(footerRight, "footer-right");
         return footer;
     }
 
@@ -214,11 +201,11 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountLayout.setHeight("45px");
         accountLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
-        if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.site) {
+        if (SiteConfiguration.isDemandEdition()) {
             // display trial box if user in trial mode
             SimpleBillingAccount billingAccount = AppContext.getBillingAccount();
             if (AccountStatusConstants.TRIAL.equals(billingAccount.getStatus())) {
-                if ("Free" .equals(billingAccount.getBillingPlan().getBillingtype())) {
+                if ("Free".equals(billingAccount.getBillingPlan().getBillingtype())) {
                     Label informLbl = new Label("<div class='informBlock'>FREE CHARGE<br>UPGRADE</div><div class='informBlock'>&gt;&gt;</div>", ContentMode.HTML);
                     informLbl.addStyleName("trialEndingNotification");
                     informLbl.setHeight("100%");
@@ -275,6 +262,18 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountNameLabel.addStyleName("subdomain");
         accountLayout.addComponent(accountNameLabel);
 
+        if (SiteConfiguration.isCommunityEdition()) {
+            Button buyPremiumBtn = new Button(null, new ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    UI.getCurrent().addWindow(new AdWindow());
+                }
+            });
+            buyPremiumBtn.setIcon(FontAwesome.SHOPPING_CART);
+            buyPremiumBtn.addStyleName("ad");
+            accountLayout.addComponent(buyPremiumBtn);
+        }
+
         NotificationComponent notificationComponent = new NotificationComponent();
         accountLayout.addComponent(notificationComponent);
         if (AppContext.getUser().getTimezone() == null) {
@@ -286,11 +285,11 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
                     new RequestUploadAvatarNotification()));
         }
 
-        if ("admin@mycollab.com" .equals(AppContext.getUsername())) {
+        if ("admin@mycollab.com".equals(AppContext.getUsername())) {
             EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new ChangeDefaultUsernameNotification()));
         }
 
-        if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.standalone) {
+        if (!SiteConfiguration.isDemandEdition()) {
             ExtMailService mailService = ApplicationContextUtil.getSpringBean(ExtMailService.class);
             if (!mailService.isMailSetupValid()) {
                 EventBusFactory.getInstance().post(new ShellEvent.NewNotification(this, new SmtpSetupNotification()));
@@ -356,7 +355,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountPopupContent.addOption(themeCustomizeBtn);
 
 
-        if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.standalone) {
+        if (!SiteConfiguration.isDemandEdition()) {
             Button setupBtn = new Button(AppContext.getMessage(AdminI18nEnum.VIEW_SETUP), new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
@@ -388,7 +387,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         accountPopupContent.addOption(myAccountBtn);
 
-        if (SiteConfiguration.getDeploymentMode() == SiteConfiguration.DeploymentMode.standalone) {
+        if (!SiteConfiguration.isDemandEdition()) {
             accountPopupContent.addSeparator();
             Button aboutBtn = new Button("About MyCollab", new ClickListener() {
                 @Override

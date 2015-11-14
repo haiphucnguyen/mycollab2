@@ -432,7 +432,7 @@
     background-color: $my-panel-background-color;
     .v-label {
       font-size: $font-normal;
-      font-weight: bold;
+      font-weight: $my-font-weight-bold;
       color: black;
     }
   }
@@ -506,7 +506,7 @@
       padding-left: 5px;
     }
     .bug-name {
-      font-weight: bold;
+      font-weight: $my-font-weight-bold;
     }
     .created-time {
       color: $my-meta-color;
@@ -791,7 +791,7 @@
   /* Calendar view */
   .v-calendar.assignment-calendar {
     .v-calendar-header-day {
-      font-weight: bold;
+      font-weight: $my-font-weight-bold;
     }
     .v-calendar-event.owner, .v-calendar-event-owner-all-day {
       background-color: green;

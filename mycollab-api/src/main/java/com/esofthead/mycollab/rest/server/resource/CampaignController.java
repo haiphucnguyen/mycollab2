@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class CampaignController {
-    @RequestMapping(method = RequestMethod.GET, path = "/")
-    public String getLatestVersion() {
+    @RequestMapping(method = RequestMethod.GET, path = "/linktobuy")
+    public String getLinkToBuy() {
+        return "https://www.mycollab.com/contact";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/storeweb")
+    public String getStoreWeb() {
         return "";
     }
 }

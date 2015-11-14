@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -251,10 +252,12 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         layout.addStyleName(UIConstants.MILESTONE_BOX);
         layout.setWidth("100%");
 
-        LabelLink milestoneLink = new LabelLink(milestone.getName(),
+        LabelLink milestoneLink = new LabelLink(StringUtils.trim(milestone.getName(), 50, true),
                 ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
+        milestoneLink.setDescription(milestone.getName());
         milestoneLink.addStyleName(UIConstants.LABEL_WORD_WRAP);
         milestoneLink.addStyleName(ValoTheme.LABEL_H3);
+        milestoneLink.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         milestoneLink.setWidth("100%");
 
         MHorizontalLayout milestoneHeader = new MHorizontalLayout().withWidth("100%").with(milestoneLink).expand(milestoneLink);

@@ -2,8 +2,8 @@
   .v-tooltip, .v-sa .v-tooltip  {
     font: $font-small $font-family !important;
     border: 1px solid $my-border-color;
-    max-width: 80em;
-    max-height: 80em;
+    max-width: 60em;
+    max-height: 60em;
     @include my-box-shadow;
   }
 

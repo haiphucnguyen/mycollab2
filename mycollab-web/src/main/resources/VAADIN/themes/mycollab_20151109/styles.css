@@ -1776,7 +1776,7 @@ a.pending {
 
 .optionPopupContent .v-label.section-header {
 	padding: 5px 0px 5px 10px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .v-checkbox input[type="checkbox"]:focus {
@@ -1908,7 +1908,7 @@ div.v-window {
 }
 
 .v-layout.kanban-layout .kanban-block .header {
-	font-weight: bold;
+	font-weight: 600;
 	color: black;
 	font-size: 15px;
 }
@@ -13743,7 +13743,7 @@ td.v-tabsheet-spacertd div {
 	border-radius: 0px;
 	padding: 3px 17px 4px;
 	margin: 0px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .v-tabsheet-tabitem.v-tabsheet-tabitem-selected {
@@ -13765,8 +13765,8 @@ td.v-tabsheet-spacertd div {
 .v-tooltip, .v-sa .v-tooltip {
 	font: 13px Arial, Verdana, Helvetica, sans-serif !important;
 	border: 1px solid #c5c5c5;
-	max-width: 80em;
-	max-height: 80em;
+	max-width: 60em;
+	max-height: 60em;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
 
@@ -14053,7 +14053,7 @@ a.pending {
 
 .optionPopupContent .v-label.section-header {
 	padding: 5px 0px 5px 10px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .v-checkbox input[type="checkbox"]:focus {
@@ -14185,7 +14185,7 @@ div.v-window {
 }
 
 .v-layout.kanban-layout .kanban-block .header {
-	font-weight: bold;
+	font-weight: 600;
 	color: black;
 	font-size: 15px;
 }
@@ -15199,7 +15199,7 @@ div.v-button.token-field:hover {
 
 .milestone-view-header .v-label {
 	font-size: 14px;
-	font-weight: bold;
+	font-weight: 600;
 	color: black;
 }
 
@@ -15280,7 +15280,7 @@ div.v-button.token-field:hover {
 }
 
 .bug-component .bug-name {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .bug-component .created-time {
@@ -15525,7 +15525,7 @@ div.v-button.token-field:hover {
 }
 
 .v-calendar.assignment-calendar .v-calendar-header-day {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.owner, .v-calendar.assignment-calendar .v-calendar-event-owner-all-day {
@@ -15908,26 +15908,23 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .v-button {
-	border-radius: 0px;
-	box-shadow: initial;
-	-webkit-box-shadow: initial;
-	-moz-box-shadow: initial;
-	font-weight: bold;
+	border-radius: 4px;
+	font-weight: 600;
 }
 
 .topNavigation .v-button .v-button-wrap {
-	border-radius: 0px;
-	box-shadow: initial;
-	-webkit-box-shadow: initial;
-	-moz-box-shadow: initial;
 	padding: 2px 5px 2px 5px;
+}
+
+.topNavigation .v-button.ad .v-icon {
+	color: green;
 }
 
 .topNavigation .subdomain {
 	font-size: 14px;
 	color: #f7f7f7;
 	padding: 0 6px 0 3px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .topNavigation .navSeparator {
@@ -15954,7 +15951,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-button-caption, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-button-caption {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-popup-indicator::before, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-popup-indicator::before {
@@ -16673,7 +16670,7 @@ div.v-csslayout.member-block {
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption, .member-block div a {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .member-block .member-role {
@@ -16764,7 +16761,7 @@ div.v-stylecalendar .weekdays TD {
 .v-label.numberTotal {
 	font-size: 16px;
 	color: #000000;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .boxTotal {
@@ -16913,7 +16910,7 @@ div.v-ratingstars-bar {
 	width: 412px;
 	text-align: center;
 	font-size: 16px;
-	font-weight: bold;
+	font-weight: 600;
 	color: #636363;
 }
 
@@ -16952,7 +16949,7 @@ div.v-ratingstars-bar {
 }
 
 .billing-setting .faq-layout .faq-header {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .current-plan-information {
@@ -16965,7 +16962,7 @@ div.v-ratingstars-bar {
 
 .current-plan-information .intro-text {
 	color: black;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .current-plan-information .current-price-lbl {
@@ -16976,7 +16973,7 @@ div.v-ratingstars-bar {
 .current-plan-information .current-price {
 	color: #ed0407;
 	font-size: 24px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .current-plan-information #currentPlanInfo {
@@ -16997,7 +16994,7 @@ div.v-ratingstars-bar {
 }
 
 .current-plan-information #currentPlanInfo .infoTitle {
-	font-weight: bold;
+	font-weight: 600;
 	color: #19739a;
 }
 
@@ -17035,7 +17032,7 @@ div.v-ratingstars-bar {
 }
 
 .pri-bott-block h2 {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .pri-bott-block p {
@@ -17098,7 +17095,7 @@ div.v-ratingstars-bar {
 }
 
 .billing-plan .billing-user, .billing-plan .billing-storage, .billing-plan .billing-project, .billing-plan .billing-bug-feature, .billing-plan .billing-standup-feature, .billing-plan .billing-timetrack-feature {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .billing-plan .greenbtn, .billing-plan .graybtn {
@@ -17114,7 +17111,7 @@ div.v-ratingstars-bar {
 	color: #19739a;
 	text-transform: uppercase;
 	font-size: 13px;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .v-verticallayout .driveEditting {
@@ -17259,7 +17256,7 @@ div.v-ratingstars-bar {
 }
 
 .CrmCustomViewHeader .headerTitle {
-	font-weight: bold;
+	font-weight: 600;
 	color: #454545;
 	background-color: #e1e1e1;
 	border-bottom: 1px solid #9d9d9d;
@@ -17422,7 +17419,7 @@ div.v-ratingstars-bar {
 }
 
 .vertical-tabsheet .v-button-tab.tab-selected {
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .v-radiobutton input[type="radio"] {
@@ -17457,7 +17454,7 @@ div.v-ratingstars-bar {
 }
 
 .contactopp-list-header .v-label {
-	font-weight: bold;
+	font-weight: 600;
 	padding: 4px 0px 4px 12px;
 	border-left: 1px solid #c5c5c5;
 }
@@ -17504,16 +17501,6 @@ div.v-ratingstars-bar {
 
 .hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
 	padding-left: 30px;
-}
-
-.v-caption.v-caption-header-text {
-	font-size: 16px;
-	color: #525252;
-	font-weight: bold;
-}
-
-.view-content {
-	padding: 12px 0px;
 }
 
 .basicSearchHeader .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view {
@@ -17618,7 +17605,7 @@ div.v-csslayout.bean-block {
 
 .activityCalendar .calendarHeader .calendarDateLabel {
 	font-size: 15px;
-	font-weight: bold;
+	font-weight: 600;
 	text-align: center;
 }
 
@@ -17818,7 +17805,7 @@ div.v-csslayout.bean-block.olive-block {
 .text-log-hours-total {
 	margin-top: 10px;
 	text-align: right;
-	font-weight: bold;
+	font-weight: 600;
 	color: #888;
 }
 
@@ -17853,7 +17840,7 @@ div.v-csslayout.bean-block.olive-block {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	color: #FFF;
-	font-weight: bold;
+	font-weight: 600;
 }
 
 .attachment-block .attachment-control {

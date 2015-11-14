@@ -86,7 +86,6 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         contentLayout = new CssLayout();
         contentLayout.setWidth("100%");
-        contentLayout.setStyleName("view-content");
 
         this.addComponent(contentLayout);
     }

@@ -174,9 +174,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 
     private boolean isUserWatching(V bean) {
         try {
-            return monitorItemService.isUserWatchingItem(
-                    AppContext.getUsername(), type,
-                    (int) PropertyUtils.getProperty(bean, "id"));
+            return monitorItemService.isUserWatchingItem(AppContext.getUsername(), type, (int) PropertyUtils.getProperty(bean, "id"));
         } catch (IllegalAccessException | InvocationTargetException
                 | NoSuchMethodException e) {
             return false;
@@ -186,8 +184,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
     private int getTotalFollowers(V bean) {
         try {
             MonitorSearchCriteria criteria = new MonitorSearchCriteria();
-            criteria.setTypeId(new NumberSearchField((Number) PropertyUtils
-                    .getProperty(bean, "id")));
+            criteria.setTypeId(new NumberSearchField((Number) PropertyUtils.getProperty(bean, "id")));
             criteria.setType(new StringSearchField(type));
             return monitorItemService.getTotalCount(criteria);
         } catch (IllegalAccessException | InvocationTargetException
@@ -219,8 +216,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             criteria.setType(new StringSearchField(type));
             criteria.setUser(new StringSearchField(username));
             monitorItemService.removeByCriteria(criteria, AppContext.getAccountId());
-        } catch (IllegalAccessException | InvocationTargetException
-                | NoSuchMethodException e) {
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOG.error("Error", e);
         }
     }
