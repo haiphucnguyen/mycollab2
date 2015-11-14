@@ -20,7 +20,6 @@ import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
@@ -36,33 +35,21 @@ public class Depot extends VerticalLayout {
     protected AbstractOrderedLayout headerContent;
     protected ComponentContainer bodyContent;
 
-    public Depot(String title, ComponentContainer component) {
-        this(title, null, component);
-    }
-
-    public Depot(String title, AbstractOrderedLayout headerElement, ComponentContainer component) {
-        this(new Label(title), headerElement, component);
-    }
-
-    public Depot(Label titleLbl, AbstractOrderedLayout headerElement, ComponentContainer component) {
+    public Depot(String title, ComponentContainer content) {
         this.addStyleName("depotComp");
         this.setMargin(false);
         header = new MHorizontalLayout().withHeight("34px").withStyleName("depotHeader");
-        bodyContent = component;
-        if (headerElement != null) {
-            headerContent = headerElement;
-        } else {
-            headerContent = new MHorizontalLayout().withMargin(true);
-            headerContent.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-            headerContent.setVisible(false);
-        }
+        bodyContent = content;
+        headerContent = new MHorizontalLayout().withMargin(true).withFullHeight();
+        headerContent.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        headerContent.setVisible(false);
 
         headerContent.setStyleName("header-elements");
         headerContent.setWidthUndefined();
 
         this.addComponent(header);
 
-        headerLbl = titleLbl;
+        headerLbl = new Label(title);
         headerLbl.setStyleName(ValoTheme.LABEL_BOLD);
         final MHorizontalLayout headerLeft = new MHorizontalLayout(headerLbl).withStyleName("depot-title");
         headerLeft.setSizeFull();

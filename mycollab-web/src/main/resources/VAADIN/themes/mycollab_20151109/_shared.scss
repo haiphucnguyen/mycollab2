@@ -430,7 +430,7 @@
   .v-button.add-btn-popup {
     background: transparent;
     &.selected, &:hover {
-      border-radius: 2px;
+      border-radius: $v-border-radius;
       .v-button-wrap {
         background:none;
       }

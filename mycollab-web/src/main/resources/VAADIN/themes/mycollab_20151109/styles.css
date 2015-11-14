@@ -1978,7 +1978,7 @@ div.v-window {
 }
 
 .v-button.add-btn-popup.selected, .v-button.add-btn-popup:hover {
-	border-radius: 2px;
+	border-radius: 4px;
 }
 
 .v-button.add-btn-popup.selected .v-button-wrap, .v-button.add-btn-popup:hover .v-button-wrap {
@@ -13625,7 +13625,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button.small-padding.v-pressed .v-button-wrap, .v-button.small-padding .v-button-wrap {
-	padding: 4px 6px;
+	padding: 2px 2px;
 }
 
 .v-button.small-padding.v-pressed .v-button-wrap .v-icon, .v-button.small-padding .v-button-wrap .v-icon {
@@ -14260,7 +14260,7 @@ div.v-window {
 }
 
 .v-button.add-btn-popup.selected, .v-button.add-btn-popup:hover {
-	border-radius: 2px;
+	border-radius: 4px;
 }
 
 .v-button.add-btn-popup.selected .v-button-wrap, .v-button.add-btn-popup:hover .v-button-wrap {
@@ -15914,7 +15914,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.selected, .topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover {
-	border-radius: 2px;
+	border-radius: 4px;
 }
 
 .topNavigation .v-button {
@@ -15943,8 +15943,8 @@ input.v-textfield-pagedtable-pagefield {
 .topNavigation .navSeparator {
 	display: block;
 	float: left;
-	border-left: solid 1px #FFF;
-	border-right: solid 1px #FFF;
+	border-left: solid 1px #f7f7f7;
+	border-right: solid 1px #f7f7f7;
 	height: 20px;
 	width: 0;
 	margin: 10px 0px 0px;
