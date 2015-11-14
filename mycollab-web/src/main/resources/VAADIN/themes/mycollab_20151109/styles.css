@@ -1586,11 +1586,6 @@ a.pending {
 	height: 40px !important;
 }
 
-.panel-header .v-label {
-	font-size: 15px;
-	font-weight: bold;
-}
-
 .panel-body {
 	border: 1px solid #e5e5e5;
 	border-top: 0;
@@ -13868,11 +13863,6 @@ a.pending {
 	height: 40px !important;
 }
 
-.panel-header .v-label {
-	font-size: 15px;
-	font-weight: bold;
-}
-
 .panel-body {
 	border: 1px solid #e5e5e5;
 	border-top: 0;
@@ -17368,10 +17358,6 @@ div.v-ratingstars-bar {
 
 .deleteSection {
 	position: fixed;
-}
-
-.createCustomFieldWindow .panel-header {
-	font-weight: bold;
 }
 
 .v-required-field-indicator {

@@ -284,17 +284,15 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         }
     }
 
-    private class UserAssignmentWidget extends MVerticalLayout {
+    private class UserAssignmentWidget extends Depot {
         private static final long serialVersionUID = 1L;
 
         private ProjectGenericTaskSearchCriteria searchCriteria;
-
-        private Label titleLbl;
         private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
         public UserAssignmentWidget() {
-            withSpacing(false).withMargin(false).withWidth("400px");
-            titleLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, 0));
+            super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, 0), new CssLayout());
+            this.setWidth("400px");
 
             final CheckBox overdueSelection = new CheckBox("Overdue");
             overdueSelection.addValueChangeListener(new Property.ValueChangeListener() {
@@ -324,15 +322,12 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 }
             });
 
-            MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).
-                    withHeight("34px").with(titleLbl, overdueSelection, isOpenSelection).
-                    withAlign(titleLbl, Alignment.MIDDLE_LEFT).withAlign(overdueSelection, Alignment.MIDDLE_RIGHT).
-                    withAlign(isOpenSelection, Alignment.MIDDLE_RIGHT).expand(titleLbl);
-            header.addStyleName("panel-header");
+            addHeaderElement(overdueSelection);
+            addHeaderElement(isOpenSelection);
 
             taskList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
                     new TaskRowDisplayHandler(), 10);
-            this.with(header, taskList);
+            bodyContent.addComponent(taskList);
         }
 
         private void showOpenAssignments() {
@@ -345,7 +340,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
         private void updateSearchResult() {
             taskList.setSearchCriteria(searchCriteria);
-            titleLbl.setValue(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, taskList.getTotalCount()));
+            setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, taskList.getTotalCount()));
         }
     }
 

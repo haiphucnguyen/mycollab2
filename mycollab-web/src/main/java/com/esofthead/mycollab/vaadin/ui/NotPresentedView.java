@@ -40,12 +40,11 @@ public class NotPresentedView extends AbstractPageView {
 
         final Label titleIcon = new Label(FontAwesome.EXCLAMATION_CIRCLE.getHtml(), ContentMode.HTML);
         titleIcon.setStyleName("warning-icon");
+        titleIcon.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         titleIcon.setWidthUndefined();
         this.with(titleIcon);
 
-        Label label = new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION));
-        label.setWidthUndefined();
-        label.addStyleName(ValoTheme.LABEL_H2);
+        Label label = ELabel.h2(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION)).withWidthUndefined();
         this.with(label).withAlign(label, Alignment.MIDDLE_CENTER);
 
         Button requestFeatureBtn = new Button("Buy the premium edition");
