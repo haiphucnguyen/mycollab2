@@ -19,6 +19,8 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -26,6 +28,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.web.client.RestTemplate;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -49,8 +53,21 @@ public class NotPresentedView extends AbstractPageView {
 
         Button requestFeatureBtn = new Button("Buy the premium edition");
         requestFeatureBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        BrowserWindowOpener opener = new BrowserWindowOpener("mailto:support@mycollab.com");
+        BrowserWindowOpener opener = new BrowserWindowOpener("https://www.mycollab.com/contact/");
         opener.extend(requestFeatureBtn);
         this.addComponent(requestFeatureBtn);
+
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            String result = restTemplate.getForObject("http://127.0.0.1:7070/api/storeweb", String.class);
+            Label webPage = new Label(result, ContentMode.HTML);
+            webPage.setHeight("600px");
+            this.with(new MVerticalLayout(webPage).withMargin(false).withAlign(webPage, Alignment.TOP_CENTER));
+        } catch (Exception e) {
+            Div informDiv = new Div().appendText("Can not load the store page. You can check the online edition at ")
+                    .appendChild(new A("https://www.mycollab.com/pricing/download/", "_blank").appendText("here"));
+            ELabel webPage = new ELabel(informDiv.write(), ContentMode.HTML).withWidthUndefined();
+            this.with(new MVerticalLayout(webPage).withAlign(webPage, Alignment.TOP_CENTER));
+        }
     }
 }
