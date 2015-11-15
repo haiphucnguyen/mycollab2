@@ -27,21 +27,8 @@ import com.esofthead.mycollab.mobile.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.mobile.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileTabPageView;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.ActivitySearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.ActivityI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.CampaignI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.CaseI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.CrmCommonI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.LeadI18nEnum;
-import com.esofthead.mycollab.module.crm.i18n.OpportunityI18nEnum;
+import com.esofthead.mycollab.module.crm.domain.criteria.*;
+import com.esofthead.mycollab.module.crm.i18n.*;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -72,30 +59,19 @@ public class CrmContainerViewImpl extends AbstractMobileTabPageView implements C
 	}
 
 	private void buildComponents() {
-		this.addTab(
-				getAccountTab(),
-				"<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
-						+ IconConstants.CRM_ACCOUNT
+		this.addTab(getAccountTab(), "<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\"" + IconConstants.CRM_ACCOUNT
 						+ "\"></span><div class=\"screen-reader-text\">"
-						+ AppContext
-								.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER)
+						+ AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER)
 						+ "</div>");
-		this.addTab(
-				getContactTab(),
-				"<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
-						+ IconConstants.CRM_CONTACT
+		this.addTab(getContactTab(), "<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\"" + IconConstants.CRM_CONTACT
 						+ "\"></span><div class=\"screen-reader-text\">"
-						+ AppContext
-								.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER)
+						+ AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER)
 						+ "</div>");
 
-		this.addTab(
-				getCampaignTab(),
-				"<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
+		this.addTab(getCampaignTab(), "<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
 						+ IconConstants.CRM_CAMPAIGN
 						+ "\"></span><div class=\"screen-reader-text\">"
-						+ AppContext
-								.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER)
+						+ AppContext.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER)
 						+ "</div>");
 		this.addTab(
 				getLeadTab(),

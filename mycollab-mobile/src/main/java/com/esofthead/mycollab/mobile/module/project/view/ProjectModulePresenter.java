@@ -52,8 +52,7 @@ public class ProjectModulePresenter extends AbstractMobilePresenter<ProjectModul
                     public void onSuccess(String value) {
                         if (value != null) {
                             String[] loginParams = value.split("\\$");
-                            EventBusFactory.getInstance()
-                                    .post(new ProjectEvent.PlainLogin(this, new String[]{loginParams[0],
+                            EventBusFactory.getInstance().post(new ProjectEvent.PlainLogin(this, new String[]{loginParams[0],
                                             PasswordEncryptHelper.decryptText(loginParams[1]), String.valueOf(false)}));
 
                         } else {
@@ -67,5 +66,4 @@ public class ProjectModulePresenter extends AbstractMobilePresenter<ProjectModul
                     }
                 });
     }
-
 }
