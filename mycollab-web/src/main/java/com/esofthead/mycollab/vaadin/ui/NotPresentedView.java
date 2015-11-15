@@ -21,11 +21,9 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
-import com.vaadin.server.BrowserWindowOpener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.web.client.RestTemplate;
@@ -50,12 +48,6 @@ public class NotPresentedView extends AbstractPageView {
 
         Label label = ELabel.h2(AppContext.getMessage(GenericI18Enum.NOTIFICATION_FEATURE_NOT_AVAILABLE_IN_VERSION)).withWidthUndefined();
         this.with(label).withAlign(label, Alignment.MIDDLE_CENTER);
-
-        Button requestFeatureBtn = new Button("Buy the premium edition");
-        requestFeatureBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        BrowserWindowOpener opener = new BrowserWindowOpener("https://www.mycollab.com/contact/");
-        opener.extend(requestFeatureBtn);
-        this.addComponent(requestFeatureBtn);
 
         RestTemplate restTemplate = new RestTemplate();
         try {
