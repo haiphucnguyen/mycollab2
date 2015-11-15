@@ -44,7 +44,6 @@ import com.vaadin.ui.UI;
  * @since 4.4.0
  */
 public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
-
     private static final long serialVersionUID = -2509768926569804614L;
 
     public ProjectViewPresenter() {

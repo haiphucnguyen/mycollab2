@@ -98,11 +98,14 @@ public class DesktopApplication extends MyCollabUI {
         initialUrl = this.getPage().getUriFragment();
         currentContext = new AppContext();
         postSetupApp(request);
+
         try {
             currentContext.initDomain(initialSubDomain);
-        } catch (SubDomainNotExistException e) {
             this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
             return;
+        } catch (SubDomainNotExistException e) {
+            this.setContent(new NoSubDomainExistedWindow(initialSubDomain));
+//            return;
         }
 
         EventBusFactory.getInstance().register(new ShellErrorHandler());

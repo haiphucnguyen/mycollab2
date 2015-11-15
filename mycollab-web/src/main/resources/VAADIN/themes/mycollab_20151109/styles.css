@@ -16879,51 +16879,6 @@ div.v-ratingstars-bar {
 	box-sizing: border-box;
 }
 
-.nosubdomain-window {
-	height: 227px;
-}
-
-.nosubdomain-window .window-left, .nosubdomain-window .window-right {
-	width: 46px;
-	height: 227px;
-	float: left;
-}
-
-.nosubdomain-window .warning-icon {
-	background: url('icons/warning_symbol.png') no-repeat left top transparent;
-	width: 111px;
-	height: 97px;
-	float: left;
-}
-
-.nosubdomain-window .window-content {
-	float: left;
-	background: url('icons/no_subdomain_bg.png') repeat-x left top transparent;
-	height: 227px;
-	padding-top: 50px;
-}
-
-.nosubdomain-window .warning-message {
-	float: left;
-	border-left: 1px dotted #c5c5c5;
-	height: 97px;
-	width: 412px;
-	text-align: center;
-	font-size: 16px;
-	font-weight: 600;
-	color: #636363;
-}
-
-.nosubdomain-window .window-left {
-	float: left;
-	background: url('icons/no_subdomain_left.png') no-repeat left top transparent;
-}
-
-.nosubdomain-window .window-right {
-	float: left;
-	background: url('icons/no_subdomain_right.png') no-repeat left top transparent;
-}
-
 .billing-setting {
 	border-width: 1px;
 	border-style: solid;

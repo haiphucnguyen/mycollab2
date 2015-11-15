@@ -1158,47 +1158,6 @@ $v-line-height--header:1.5em;
     }
   }
 
-  /* NoSubDomainWindow */
-
-  .nosubdomain-window {
-    height: 227px;
-    .window-left, .window-right {
-      width: 46px;
-      height: 227px;
-      float: left;
-    }
-    .warning-icon {
-      background: url('icons/warning_symbol.png') no-repeat left top transparent;
-      width: 111px;
-      height: 97px;
-      float: left;
-    }
-    .window-content {
-      float: left;
-      background: url('icons/no_subdomain_bg.png') repeat-x left top transparent;
-      height: 227px;
-      padding-top: 50px;
-    }
-    .warning-message {
-      float: left;
-      border-left: 1px dotted $my-border-color;
-      height: 97px;
-      width: 412px;
-      text-align: center;
-      font-size: $font-larger;
-      font-weight: $my-font-weight-bold;
-      color: rgb(99, 99, 99);
-    }
-    .window-left {
-      float: left;
-      background: url('icons/no_subdomain_left.png') no-repeat left top transparent;
-    }
-    .window-right {
-      float: left;
-      background: url('icons/no_subdomain_right.png') no-repeat left top transparent;
-    }
-  }
-
   /* Billing Plan Setting */
 
   .billing-setting {
