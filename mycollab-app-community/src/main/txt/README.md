@@ -56,6 +56,7 @@ Version 5.2.2
 
 * Add timeline tracking chart
 * Major UI updates includes animations, consistent UI controls and colors
+* Detect more potential issues of installation and give the solutions to users
 
 **Bug Fixes**
 

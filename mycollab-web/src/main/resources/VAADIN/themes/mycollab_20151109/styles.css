@@ -2215,7 +2215,7 @@ table {
 	width: 50%;
 	opacity: 1;
 	height: 3px;
-	background-color: #197de1;
+	background-color: #e37e70;
 	pointer-events: none;
 	-webkit-transition: none;
 	-moz-transition: none;
@@ -15990,6 +15990,10 @@ input.v-textfield-pagedtable-pagefield {
 	margin: 2px 15px 1px 0px;
 	padding: 0px 15px 0px 0px;
 	display: block;
+}
+
+.v-popupbutton-popup-notification-button .popupContent {
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
 
 .v-popupbutton-popup-notification-button .popupContent .notification-type {

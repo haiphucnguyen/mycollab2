@@ -9,6 +9,7 @@ $v-layout-spacing-horizontal: 5px;
 $v-layout-spacing-vertical: 5px;
 $v-font-size: 14px;
 $v-unit-size: 29px;
+$v-loading-indicator-color: #e37e70;
 $v-tooltip-background-color:#FDFDEE;
 $v-textfield-background-color--readonly: $v-textfield-background-color;
 
@@ -263,6 +264,7 @@ $v-line-height--header:1.5em;
   }
 
   .v-popupbutton-popup-notification-button .popupContent {
+    @include my-box-shadow;
     .notification-type {
       padding: 10px;
       &.notification-type-warning .v-icon {
