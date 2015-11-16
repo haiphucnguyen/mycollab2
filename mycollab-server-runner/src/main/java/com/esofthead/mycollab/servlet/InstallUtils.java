@@ -52,13 +52,13 @@ public class InstallUtils {
             email.setHostName(host);
             email.setSmtpPort(port);
             email.setAuthenticator(new DefaultAuthenticator(username, password));
-            if ("true".equals(isStartTls)) {
+            if (isStartTls) {
                 email.setStartTLSEnabled(true);
             } else {
                 email.setStartTLSEnabled(false);
             }
 
-            if ("true".equals(isSSL)) {
+            if (isSSL) {
                 email.setSSLOnConnect(true);
             } else {
                 email.setSSLOnConnect(false);
