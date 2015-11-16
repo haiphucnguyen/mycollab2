@@ -37,7 +37,7 @@ public class AdWindow extends Window {
         this.setResizable(false);
         RestTemplate restTemplate = new RestTemplate();
         try {
-            String result = restTemplate.getForObject("http://127.0.0.1:7070/api/storeweb", String.class);
+            String result = restTemplate.getForObject("https://api.mycollab.com/api/storeweb", String.class);
             Label webPage = new Label(result, ContentMode.HTML);
             webPage.setHeight("600px");
             this.setContent(new MVerticalLayout(webPage).withAlign(webPage, Alignment.TOP_CENTER));
