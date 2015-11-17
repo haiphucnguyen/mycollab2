@@ -43,6 +43,13 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.3
+-----------------------------
+**Library Upgrades**
+
+* Joda 2.9.1, Hiraki CP 2.4.2, SLF4J 1.7.13
+* Spring framework 4.2.3.RELEASE
+
 Version 5.2.2
 -----------------------------
 

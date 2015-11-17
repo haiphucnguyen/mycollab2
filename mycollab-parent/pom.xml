@@ -11,10 +11,10 @@
         <maven>3.0.4</maven>
     </prerequisites>
     <properties>
-        <springVersion>4.2.2.RELEASE</springVersion>
+        <springVersion>4.2.3.RELEASE</springVersion>
         <aspectjVersion>1.8.6</aspectjVersion>
         <javaVersion>1.7</javaVersion>
-        <slf4jVersion>1.7.12</slf4jVersion>
+        <slf4jVersion>1.7.13</slf4jVersion>
         <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>7.5.6</vaadinVersion>
         <jettyVersion>9.2.13.v20150730</jettyVersion>
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>2.9</version>
+            <version>2.9.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -257,7 +257,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>2.4.1</version>
+            <version>2.4.2</version>
         </dependency>
 
         <dependency>

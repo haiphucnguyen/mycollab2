@@ -22,8 +22,9 @@ rem   JAVA_HOME       Must point at your Java Development Kit installation.
 rem                   Required to run the with the "debug" argument.
 rem ---------------------------------------------------------------------------
 
-set MYCOLLAB_OPTS=-Xms1024m -Xmx1024m -XX:NewSize=256m -XX:MaxPermSize=256m -XX:+DisableExplicitGC
 set MYCOLLAB_PORT=8080
+set PROCESS_PORT=12345
+set STOP_KEY=mycollab
 set _RUNJAVA=java
 
 rem Suppress Terminate batch job on CTRL+C
@@ -44,14 +45,12 @@ del /Q "%TEMP%\%~nx0.run" >NUL 2>&1
 rem Guess MYCOLLAB_HOME if not defined
 set "CURRENT_DIR=%cd%"
 if not "%MYCOLLAB_HOME%" == "" goto gotHome
-set "MYCOLLAB_HOME=%CURRENT_DIR%"
-if exist "%MYCOLLAB_HOME%\mycollab.bat" goto okHome
 cd ..
 set "MYCOLLAB_HOME=%cd%"
 cd "%CURRENT_DIR%"
 :gotHome
 
-if exist "%MYCOLLAB_HOME%\mycollab.bat" goto okHome
+if exist "%MYCOLLAB_HOME%\bin\mycollab.bat" goto okHome
 echo The MYCOLLAB_HOME environment variable is not defined correctly
 echo This environment variable is needed to run this program
 goto end
@@ -62,10 +61,11 @@ rem ----- Execute The Requested Command ---------------------------------------
 echo Using MYCOLLAB_HOME:   "%MYCOLLAB_HOME%"
 
 set _EXECJAVA=%_RUNJAVA%
+set ACTION=--port %MYCOLLAB_PORT% --process-port %PROCESS_PORT% --stop-key %STOP_KEY%
 
 
-if ""%1"" == ""start"" goto doStart
-if ""%1"" == ""stop"" goto doStop
+if ""%1"" == ""--start"" goto doStart
+if ""%1"" == ""--stop"" goto doStop
 
 echo Usage:  mycollab ( commands ... )
 echo commands:
@@ -75,7 +75,6 @@ goto end
 
 :doStart
 shift
-set ACTION=--stop-port 8079 --stop-key esoftheadsecretkey
 if not "%OS%" == "Windows_NT" goto noTitle
 if "%TITLE%" == "" set TITLE=MyCollab
 set _EXECJAVA=start "%TITLE%" %_RUNJAVA%
@@ -88,22 +87,13 @@ goto execCmd
 
 :doStop
 shift
-set ACTION=--port $MYCOLLAB_PORT --stop-port 8079 --stop-key esoftheadsecretkey --stop
 goto execCmd
 
-
 :execCmd
-rem Get remaining unshifted command line arguments and save them in the
-set CMD_LINE_ARGS=
-:setArgs
-if ""%1""=="""" goto doneSetArgs
-set CMD_LINE_ARGS=%CMD_LINE_ARGS% %1
-shift
-goto setArgs
-:doneSetArgs
 
 rem Execute Java with the applicable properties
-%_EXECJAVA% %MYCOLLAB_OPTS% -jar runner.jar  %ACTION%
+cd ..
+%_EXECJAVA% -jar executor.jar  %ACTION% %*
 goto end
 
 :end
