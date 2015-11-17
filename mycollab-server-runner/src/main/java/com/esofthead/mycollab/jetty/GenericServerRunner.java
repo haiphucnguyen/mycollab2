@@ -242,8 +242,8 @@ public abstract class GenericServerRunner {
         String fileSeparator = System.getProperty("file.separator");
         String osExprClassFolder, osExprJarFile;
         if ("/".equals(fileSeparator)) {
-            osExprClassFolder = ".+/mycollab-\\S+/target/classes$";
-            osExprJarFile = ".+/mycollab-\\S+.jar$";
+            osExprClassFolder = ".*mycollab-\\S+/target/classes$";
+            osExprJarFile = ".*mycollab-\\S+.jar$";
         } else {
             osExprClassFolder = ".+\\\\mycollab-\\S+\\\\target\\\\classes$";
             osExprJarFile = ".+\\\\mycollab-\\S+.jar$";
@@ -257,6 +257,7 @@ public abstract class GenericServerRunner {
                 try {
                     LOG.info("Load jar file in path " + classpath);
                     appContext.getMetaData().addWebInfJar(new PathResource(new File(classpath).toURI().toURL()));
+                    appContext.getMetaData().getWebInfClassesDirs().add(new PathResource(new File(classpath).toURI().toURL()));
                 } catch (Exception e) {
                     LOG.error("Exception to resolve classpath: " + classpath, e);
                 }
@@ -264,17 +265,13 @@ public abstract class GenericServerRunner {
         }
 
         File libFolder = new File(System.getProperty("user.dir"), "lib");
-        LOG.info("User dir: " + System.getProperty("user.dir"));
         if (libFolder.isDirectory()) {
             File[] files = libFolder.listFiles();
             if (files != null) {
                 for (File file : files) {
                     if (file.getName().matches("mycollab-\\S+.jar$")) {
                         LOG.info("Load jar file to classpath " + file.getAbsolutePath());
-
                         appContext.getMetaData().getWebInfClassesDirs().add(new FileResource(file.toURI()));
-
-
                     }
                 }
             }

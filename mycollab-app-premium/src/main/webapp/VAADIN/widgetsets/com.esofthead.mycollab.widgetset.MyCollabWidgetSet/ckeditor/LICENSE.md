@@ -41,6 +41,10 @@ The following libraries are included in CKEditor under the MIT license (see Appe
 * PicoModal (included in `samples/js/sf.js`) - Copyright (c) 2012 James Frasca.
 * CodeMirror (included in the samples) - Copyright (C) 2014 by Marijn Haverbeke <marijnh@gmail.com> and others.
 
+Parts of code taken from the following libraries are included in CKEditor under the MIT license (see Appendix D):
+
+* jQuery (inspired the domReady function, ckeditor_base.js) - Copyright (c) 2011 John Resig, http://jquery.com/
+
 The following libraries are included in CKEditor under the SIL Open Font License, Version 1.1 (see Appendix E):
 
 * Font Awesome (included in the toolbar configurator) - Copyright (C) 2012 by Dave Gandy.
@@ -608,7 +612,7 @@ Whether this is true is especially significant if the work can be
 linked without the Library, or if the work is itself a library.  The
 threshold for this to be true is not precisely defined by law.
 
-  If such an object file uses only numerical fieldBuilder, data
+  If such an object file uses only numerical parameters, data
 structure layouts and accessors, and small macros and small inline
 functions (ten lines or less in length), then the use of the object
 file is unrestricted, regardless of whether it is legally a derivative

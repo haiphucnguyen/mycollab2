@@ -207,6 +207,16 @@
             <groupId>cglib</groupId>
             <artifactId>cglib</artifactId>
             <version>3.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.ant</groupId>
+                    <artifactId>ant</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.ant</groupId>
+                    <artifactId>ant-launcher</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

@@ -45,12 +45,13 @@ class MyCollabProcessRunner {
                 try {
                     File workingDir = new File(System.getProperty("user.dir"));
                     File iniFile = new File(workingDir, "bin/mycollab.ini");
-                    LOG.info("Load config variables at " + iniFile.getAbsolutePath());
+                    LOG.info("Load config variables at " + iniFile.getAbsolutePath() + "--" + iniFile.exists());
                     String options = "";
                     if (iniFile.exists()) {
                         Properties properties = new Properties();
                         properties.load(new FileInputStream(iniFile));
                         options = properties.getProperty("MYCOLLAB_OPTS", "");
+                        LOG.info("Options in config file: " + options);
                     }
 
                     List<String> javaOptions = new ArrayList<>();
@@ -58,8 +59,11 @@ class MyCollabProcessRunner {
                     if (!"".equals(options)) {
                         String[] optArr = options.split(" ");
                         javaOptions.addAll(Arrays.asList(optArr));
+                        LOG.info("Add options: " + optArr);
                     }
-                    javaOptions.addAll(Arrays.asList("-jar", "runner.jar", "--port", processRunningPort + "", "--cport", clientListenPort + ""));
+
+                    javaOptions.addAll(Arrays.asList("-jar", "mycollab-runner.jar", "--port", processRunningPort + "",
+                            "--cport", clientListenPort + ""));
                     StringBuilder strBuilder = new StringBuilder();
                     for (String option : javaOptions) {
                         strBuilder.append(option).append(" ");
