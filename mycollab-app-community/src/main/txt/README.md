@@ -50,6 +50,12 @@ Version 5.2.3
 * Joda 2.9.1, Hiraki CP 2.4.2, SLF4J 1.7.13
 * Spring framework 4.2.3.RELEASE
 
+**Improvements & New Features**
+
+**Bug Fixes**
+
+* Upgrade process still keeps the old version value of class path items
+
 Version 5.2.2
 -----------------------------
 

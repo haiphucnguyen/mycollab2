@@ -67,7 +67,7 @@
     <packs>
         <pack name="Base" required="yes">
             <description>The MyCollab core files</description>
-            <file src="../mycollab-runner.jar" targetdir="$INSTALL_PATH"/>
+            <file src="runner.jar" targetdir="$INSTALL_PATH"/>
             <file src="executor.jar" targetdir="$INSTALL_PATH"/>
             <fileset dir="conf" targetdir="$INSTALL_PATH/conf"/>
             <fileset dir="lib" includes="*" targetdir="$INSTALL_PATH/lib"/>

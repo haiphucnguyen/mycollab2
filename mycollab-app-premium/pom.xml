@@ -65,6 +65,12 @@
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
             <version>5.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-client-compiler</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -76,6 +82,29 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>make-a-jar</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>runner</finalName>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.esofthead.mycollab.jetty.DefaultServerRunner</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -91,43 +120,15 @@
                                 <includes>
                                     <include>com.esofthead.mycollab:*</include>
                                 </includes>
+                                <excludes>
+                                    <exclude>com.esofthead.mycollab:mycollab-app-premium</exclude>
+                                </excludes>
                             </artifactSet>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <manifestEntries>
-                                        <Main-Class>com.esofthead.mycollab.jetty.PremiumServerRunner</Main-Class>
-                                    </manifestEntries>
-                                </transformer>
-                            </transformers>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                    <execution>
-                        <id>make-a-jar</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <addClasspath>true</addClasspath>
-                                    <classpathPrefix>lib/</classpathPrefix>
-                                    <useUniqueVersions>false</useUniqueVersions>
-                                    <mainClass>com.esofthead.mycollab.jetty.PremiumServerRunner</mainClass>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
 
             <plugin>
                 <groupId>com.github.wvengen</groupId>
@@ -151,7 +152,7 @@
                 <configuration>
                     <proguardVersion>${proguardVersion}</proguardVersion>
                     <obfuscate>true</obfuscate>
-                    <outjar>mycollab-runner.jar</outjar>
+                    <outjar>mycollab-runner-${project.version}.jar</outjar>
                     <proguardInclude>${basedir}/proguard.conf</proguardInclude>
                     <libs>
                         <lib>${java.home}/lib/rt.jar</lib>
@@ -223,8 +224,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy file="${project.build.directory}/mycollab-runner.jar"
-                                      tofile="${installer.staging.dir}/mycollab-runner.jar"/>
+                                <copy file="${project.build.directory}/runner.jar"
+                                      tofile="${installer.staging.dir}/runner.jar"/>
                                 <copy todir="${installer.staging.dir}">
                                     <fileset dir="${izpack.dir.app}"/>
                                 </copy>
@@ -248,44 +249,12 @@
                                 <copy todir="${installer.staging.dir}/lib">
                                     <fileset dir="${basedir}/src/main/lib"/>
                                 </copy>
+                                <copy file="${project.build.directory}/mycollab-runner-${project.version}.jar"
+                                      tofile="${installer.staging.dir}/lib/mycollab-runner-${project.version}.jar"/>
                             </target>
                         </configuration>
                     </execution>
-
-                    <execution>
-                        <id>create-macos-bundle</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <taskdef name="jarbundler"
-                                         classname="net.sourceforge.jarbundler.JarBundler"
-                                         classpathref="maven.plugin.classpath"/>
-                                <jarbundler dir="target"
-                                            name="MyCollab-MacOS-${project.version}"
-                                            mainclass="com.izforge.izpack.installer.bootstrap.Installer"
-                                            jar="target/MyCollab-Generic-${project.version}.jar"
-                                            copyright="©2015, MyCollab"
-                                            bundleid="com.esofthead.mycollab"
-                                            jvmversion="1.7+"
-                                            icon="src/main/installer-resources/macos/mycollab.icns"
-                                            stubfile="src/main/macos-resources/universalJavaApplicationStub"
-                                            version="${project.version}" build="${project.version} - GA"
-                                            useJavaXKey="true" showplist="true" verbose="true"/>
-                            </target>
-                        </configuration>
-                    </execution>
-
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.esofthead.mycollab</groupId>
-                        <artifactId>jarbundler</artifactId>
-                        <version>2.4.0</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.izpack</groupId>
@@ -293,7 +262,7 @@
                 <version>${installer.izpackVersion}</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>izpack</goal>
                         </goals>
@@ -314,7 +283,7 @@
                 <executions>
                     <execution>
                         <id>l4j-clui</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>launch4j</goal>
                         </goals>
@@ -344,6 +313,45 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>create-macos-bundle</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <taskdef name="jarbundler"
+                                         classname="net.sourceforge.jarbundler.JarBundler"
+                                         classpathref="maven.plugin.classpath"/>
+                                <jarbundler dir="target"
+                                            name="MyCollab-MacOS-${project.version}"
+                                            mainclass="com.izforge.izpack.installer.bootstrap.Installer"
+                                            jar="target/MyCollab-Generic-${project.version}.jar"
+                                            copyright="©2015, MyCollab"
+                                            bundleid="com.esofthead.mycollab"
+                                            jvmversion="1.7+"
+                                            icon="src/main/installer-resources/macos/mycollab.icns"
+                                            stubfile="src/main/macos-resources/universalJavaApplicationStub"
+                                            version="${project.version}" build="${project.version} - GA"
+                                            useJavaXKey="true" showplist="true" verbose="true"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.esofthead.mycollab</groupId>
+                        <artifactId>jarbundler</artifactId>
+                        <version>2.4.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -391,17 +399,17 @@
                         <configuration>
                             <extraJvmArgs>-Xmx1024M -Xss2048k</extraJvmArgs>
                             <!-- <runTarget>mobilemail</runTarget> -->
-                            <!-- We are doing "inplace" but into subdir VAADIN/widgetsets. 
+                            <!-- We are doing "inplace" but into subdir VAADIN/widgetsets.
                                 This way compatible with Vaadin eclipse plugin. -->
                             <webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
                             </webappDirectory>
                             <hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
                             </hostedWebapp>
-                            <!-- Most Vaadin apps don't need this stuff, 
+                            <!-- Most Vaadin apps don't need this stuff,
                                 guide that to target -->
                             <persistentunitcachedir>${project.build.directory}</persistentunitcachedir>
                             <deploy>${project.build.directory}/gwt-deploy</deploy>
-                            <!-- Compile report is not typically needed either, 
+                            <!-- Compile report is not typically needed either,
                                 saves hunreds of mb disk -->
                             <compileReport>false</compileReport>
                             <noServer>true</noServer>
@@ -415,7 +423,7 @@
                         <executions>
                             <execution>
                                 <configuration>
-                                    <!-- if you don't specify any modules, 
+                                    <!-- if you don't specify any modules,
                                         the plugin will find them -->
                                     <modules>
                                         <module>com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet</module>

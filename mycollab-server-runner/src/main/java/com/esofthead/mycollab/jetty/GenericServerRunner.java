@@ -44,13 +44,8 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.awt.*;
 import java.io.File;
-import java.io.OutputStream;
-import java.net.BindException;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.net.URI;
 import java.util.Properties;
-import java.util.TimeZone;
 
 /**
  * Generic MyCollab embedded server
@@ -275,6 +270,11 @@ public abstract class GenericServerRunner {
                     }
                 }
             }
+        }
+
+        File runnerJarFile = new File(System.getProperty("user.dir"), "runner.jar");
+        if (runnerJarFile.exists()) {
+            appContext.getMetaData().getWebInfClassesDirs().add(new FileResource(runnerJarFile.toURI()));
         }
 
         // Register a mock DataSource scoped to the webapp

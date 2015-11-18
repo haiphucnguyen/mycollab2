@@ -9,6 +9,7 @@ import org.zeroturnaround.process.ProcessUtil;
 import org.zeroturnaround.process.Processes;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,8 +63,26 @@ class MyCollabProcessRunner {
                         LOG.info("Add options: " + optArr);
                     }
 
-                    javaOptions.addAll(Arrays.asList("-jar", "mycollab-runner.jar", "--port", processRunningPort + "",
-                            "--cport", clientListenPort + ""));
+                    File libDir = new File(System.getProperty("user.dir"), "lib");
+                    if (!libDir.exists() || libDir.isFile()) {
+                        LOG.error("Can not find the library folder at " + libDir.getAbsolutePath());
+                        System.exit(-1);
+                    }
+                    StringBuilder classPaths = new StringBuilder("runner.jar");
+                    File[] jarFiles = libDir.listFiles(new FileFilter() {
+                        @Override
+                        public boolean accept(File pathname) {
+                            return pathname.isFile() && pathname.getName().endsWith("jar");
+                        }
+                    });
+                    for (int i = 0; i < jarFiles.length; i++) {
+                        File subFile = jarFiles[i];
+                        classPaths.append(System.getProperty("path.separator"));
+                        classPaths.append("./lib/" + subFile.getName());
+                    }
+
+                    javaOptions.addAll(Arrays.asList("-cp", classPaths.toString(), "com.esofthead.mycollab.jetty.DefaultServerRunner", "--port",
+                            processRunningPort + "", "--cport", clientListenPort + ""));
                     StringBuilder strBuilder = new StringBuilder();
                     for (String option : javaOptions) {
                         strBuilder.append(option).append(" ");

@@ -6,7 +6,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class PremiumServerRunner extends GenericServerRunner {
+public class DefaultServerRunner extends GenericServerRunner {
 
     @Override
     public WebAppContext buildContext(String baseDir) {
@@ -21,7 +21,7 @@ public class PremiumServerRunner extends GenericServerRunner {
     }
 
     public static void main(String[] args) throws Exception {
-        new PremiumServerRunner().run(args);
+        new DefaultServerRunner().run(args);
     }
 
 }
