@@ -30,12 +30,14 @@ public class DefaultViewField extends CustomField<String> {
     private static final long serialVersionUID = 1L;
 
     private Label label;
+    private String value;
 
     public DefaultViewField(final String value) {
         this(value, ContentMode.TEXT);
     }
 
     public DefaultViewField(final String value, final ContentMode contentMode) {
+        this.value = value;
         label = new Label();
         label.setWidth("100%");
         label.setContentMode(contentMode);
@@ -46,6 +48,11 @@ public class DefaultViewField extends CustomField<String> {
         } else {
             label.setValue("");
         }
+    }
+
+    @Override
+    public String getValue() {
+        return value;
     }
 
     @Override

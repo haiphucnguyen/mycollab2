@@ -20,13 +20,26 @@
       border-bottom: 1px solid $my-separator-color;
     }
     .gridform-field {
-      min-height: 39px;
+      min-height: 43px;
+      .v-csslayout {
+        width: 95%;
+        .editable-field {
+          display: flex;
+          min-height: 21px;
+          &:hover::after {
+            float:top;
+            content:"\f044";
+            color:$my-meta-color;
+            font-family: FontAwesome;
+          }
+        }
+      }
     }
     .gridform-caption {
       min-height: 39px;
       .v-label {
         text-align: right;
-        color: #999;
+        color: $my-meta-color;
       }
     }
   }

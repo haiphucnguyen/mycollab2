@@ -44,6 +44,11 @@ public class RichTextViewField extends CustomField {
     }
 
     @Override
+    public Object getValue() {
+        return value;
+    }
+
+    @Override
     protected Component initContent() {
         if (isBlank(value)) {
             Label lbl = new Label("&nbsp;");
