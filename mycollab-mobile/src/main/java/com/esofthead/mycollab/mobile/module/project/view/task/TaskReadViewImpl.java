@@ -24,8 +24,6 @@ import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListDisplay
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.*;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
@@ -43,7 +41,9 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.form.field.ContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
@@ -258,7 +258,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                     final Embedded iconEmbedded = new Embedded(null, iconPriority);
                     final Label lbPriority = new Label(AppContext.getMessage(TaskPriority.class, beanItem.getPriority()));
 
-                    final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+                    final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
                     containerField.addComponentField(iconEmbedded);
                     containerField.getLayout().setComponentAlignment(iconEmbedded, Alignment.MIDDLE_LEFT);
                     lbPriority.setWidthUndefined();
@@ -267,7 +267,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                     return containerField;
                 }
             } else if (propertyId.equals("notes")) {
-                return new FormDetectAndDisplayUrlViewField(beanItem.getNotes());
+                return new RichTextViewField(beanItem.getNotes());
             }
             return null;
         }

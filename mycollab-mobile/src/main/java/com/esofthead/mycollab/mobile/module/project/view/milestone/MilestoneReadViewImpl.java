@@ -24,8 +24,6 @@ import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDateViewField;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -39,7 +37,9 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -204,13 +204,13 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (propertyId.equals("startdate")) {
-                return new FormDateViewField(beanItem.getStartdate());
+                return new DateViewField(beanItem.getStartdate());
             } else if (propertyId.equals("enddate")) {
-                return new FormDateViewField(beanItem.getEnddate());
+                return new DateViewField(beanItem.getEnddate());
             } else if (propertyId.equals("owner")) {
                 return new DefaultViewField(beanItem.getOwnerFullName());
             } else if (propertyId.equals("description")) {
-                return new FormDetectAndDisplayUrlViewField(beanItem.getDescription());
+                return new RichTextViewField(beanItem.getDescription());
             } else if (propertyId.equals("numOpenTasks")) {
                 return new DefaultViewField(beanItem.getNumOpenTasks() + "/" + beanItem.getNumTasks());
             } else if (propertyId.equals("numOpenBugs")) {

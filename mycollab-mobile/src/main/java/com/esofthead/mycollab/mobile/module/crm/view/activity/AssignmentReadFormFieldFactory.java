@@ -18,9 +18,9 @@ package com.esofthead.mycollab.mobile.module.crm.view.activity;
 
 import com.esofthead.mycollab.mobile.module.crm.ui.RelatedReadItemField;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.DateFieldWithUserTimeZone;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateTimeViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.vaadin.ui.Field;
 
@@ -42,11 +42,11 @@ class AssignmentReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFact
         } else if (propertyId.equals("startdate")) {
             if (attachForm.getBean().getStartdate() == null)
                 return null;
-            return new DateFieldWithUserTimeZone(attachForm.getBean().getStartdate(), "DATETIME_FIELD");
+            return new DateTimeViewField(attachForm.getBean().getStartdate());
         } else if (propertyId.equals("duedate")) {
             if (attachForm.getBean().getDuedate() == null)
                 return null;
-            return new DateFieldWithUserTimeZone(attachForm.getBean().getDuedate(), "DATETIME_FIELD");
+            return new DateTimeViewField(attachForm.getBean().getDuedate());
         } else if (propertyId.equals("contactid")) {
             return new DefaultViewField(attachForm.getBean().getContactName());
         } else if (propertyId.equals("typeid")) {

@@ -18,9 +18,9 @@ package com.esofthead.mycollab.mobile.module.crm.view.activity;
 
 import com.esofthead.mycollab.mobile.module.crm.ui.RelatedReadItemField;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.DateFieldWithUserTimeZone;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateTimeViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.vaadin.ui.Field;
 
@@ -70,7 +70,7 @@ class CallReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
             if (attachForm.getBean().getStartdate() == null) {
                 return new DefaultViewField("");
             } else {
-                return new DateFieldWithUserTimeZone(attachForm.getBean().getStartdate(), "DATETIME_FIELD");
+                return new DateTimeViewField(attachForm.getBean().getStartdate());
             }
         }
 

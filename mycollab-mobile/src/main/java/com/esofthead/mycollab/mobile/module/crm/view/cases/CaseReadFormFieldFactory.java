@@ -17,10 +17,10 @@
 package com.esofthead.mycollab.mobile.module.crm.view.cases;
 
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormEmailLinkViewField;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.EmailViewField;
 import com.vaadin.ui.Field;
 
 /**
@@ -40,7 +40,7 @@ class CaseReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
         if (propertyId.equals("accountid")) {
             return new DefaultViewField(cases.getAccountName());
         } else if (propertyId.equals("email")) {
-            return new FormEmailLinkViewField(cases.getEmail());
+            return new EmailViewField(cases.getEmail());
         } else if (propertyId.equals("assignuser")) {
             return new DefaultViewField(cases.getAssignUserFullName());
         }

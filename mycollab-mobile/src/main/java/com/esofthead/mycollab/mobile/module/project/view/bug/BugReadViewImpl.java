@@ -25,10 +25,6 @@ import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDateViewField;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -51,7 +47,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.*;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
@@ -319,9 +315,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         @Override
         protected Field<?> onCreateField(Object propertyId) {
             if (propertyId.equals("duedate")) {
-                return new FormDateViewField(beanItem.getDuedate());
+                return new DateViewField(beanItem.getDuedate());
             } else if (propertyId.equals("createdtime")) {
-                return new FormDateViewField(beanItem.getCreatedtime());
+                return new DateViewField(beanItem.getCreatedtime());
             } else if (propertyId.equals("assignuserFullName")) {
                 return new DefaultViewField(beanItem.getAssignuserFullName());
             } else if (propertyId.equals("loguserFullName")) {
@@ -334,9 +330,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 }
 
             } else if (propertyId.equals("environment")) {
-                return new FormDetectAndDisplayUrlViewField(beanItem.getEnvironment());
+                return new RichTextViewField(beanItem.getEnvironment());
             } else if (propertyId.equals("description")) {
-                return new FormDetectAndDisplayUrlViewField(beanItem.getDescription());
+                return new RichTextViewField(beanItem.getDescription());
             } else if (propertyId.equals("status")) {
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class);
             } else if (propertyId.equals("priority")) {
@@ -345,7 +341,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     final Image iconEmbedded = new Image(null, iconPriority);
                     final Label lbPriority = new Label(AppContext.getMessage(BugPriority.class, beanItem.getPriority()));
 
-                    final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+                    final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
                     containerField.addComponentField(iconEmbedded);
                     containerField.addComponentField(lbPriority);
                     containerField.getLayout().setExpandRatio(lbPriority, 1.0f);
@@ -359,15 +355,14 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     iconEmbedded.setSource(iconPriority);
                     final Label lbPriority = new Label(AppContext.getMessage(BugSeverity.class, beanItem.getSeverity()));
 
-                    final FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+                    final ContainerHorizontalViewField containerField = new ContainerHorizontalViewField();
                     containerField.addComponentField(iconEmbedded);
                     containerField.addComponentField(lbPriority);
                     containerField.getLayout().setExpandRatio(lbPriority, 1.0f);
                     return containerField;
                 }
             } else if (propertyId.equals("resolution")) {
-                return new I18nFormViewField(beanItem.getResolution(),
-                        BugResolution.class);
+                return new I18nFormViewField(beanItem.getResolution(), BugResolution.class);
                 // } else if (propertyId.equals("id")) {
                 // return new ProjectFormAttachmentDisplayField(
                 // beanItem.getProjectid(),

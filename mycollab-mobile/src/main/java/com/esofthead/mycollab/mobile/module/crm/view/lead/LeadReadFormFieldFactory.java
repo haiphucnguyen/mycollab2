@@ -17,10 +17,10 @@
 package com.esofthead.mycollab.mobile.module.crm.view.lead;
 
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormEmailLinkViewField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.EmailViewField;
 import com.vaadin.ui.Field;
 
 /**
@@ -51,7 +51,7 @@ class LeadReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Si
         } else if (propertyId.equals("website")) {
             return new DefaultViewField(lead.getWebsite());
         } else if (propertyId.equals("email")) {
-            return new FormEmailLinkViewField(lead.getEmail());
+            return new EmailViewField(lead.getEmail());
         } else if (propertyId.equals("accountid")) {
             return new DefaultViewField(lead.getAccountname());
         } else if (propertyId.equals("assignuser")) {
