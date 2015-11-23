@@ -21,9 +21,7 @@
     }
     .gridform-field {
       min-height: 43px;
-      .v-csslayout {
-        width: 95%;
-        .editable-field {
+      .v-csslayout.editable-field {
           display: flex;
           min-height: 21px;
           &:hover::after {

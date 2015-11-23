@@ -5,6 +5,8 @@ import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.EditableField;
 import com.esofthead.mycollab.validator.constraints.DateComparision;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -61,13 +63,13 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                 Field<?> formField = onCreateField(bindField);
                 if (formField == null) {
                     if (isReadOnlyGroup) {
-//                        try {
-//                            String propertyValue = BeanUtils.getProperty(attachForm.getBean(), field.getName());
-//                            formField = new DefaultViewField(propertyValue);
-//                        } catch (Exception e) {
-//                            LOG.error("Error while get field value", e);
-//                            formField = new DefaultViewField("Error");
-//                        }
+                        try {
+                            String propertyValue = BeanUtils.getProperty(attachForm.getBean(), bindField);
+                            formField = new DefaultViewField(propertyValue);
+                        } catch (Exception e) {
+                            LOG.error("Error while get field value", e);
+                            formField = new DefaultViewField("Error");
+                        }
                     } else {
                         formField = fieldGroup.buildAndBind(bindField);
                     }
@@ -99,13 +101,25 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     if (field.getAnnotation(NotBindable.class) != null) {
                         continue;
                     } else {
-                        formField = fieldGroup.buildAndBind(field.getName());
+                        if (isReadOnlyGroup) {
+                            try {
+                                String propertyValue = BeanUtils.getProperty(attachForm.getBean(), field.getName());
+                                formField = new DefaultViewField(propertyValue);
+                            } catch (Exception e) {
+                                LOG.error("Error while get field value", e);
+                                formField = new DefaultViewField("Error");
+                            }
+                        } else {
+                            formField = fieldGroup.buildAndBind(field.getName());
+                        }
                     }
                 } else {
                     if (formField instanceof DummyCustomField) {
                         continue;
                     } else if (!(formField instanceof CompoundCustomField)) {
-                        fieldGroup.bind(formField, field.getName());
+                        if (!isReadOnlyGroup || (formField instanceof EditableField)) {
+                            fieldGroup.bind(formField, field.getName());
+                        }
                     }
                 }
 

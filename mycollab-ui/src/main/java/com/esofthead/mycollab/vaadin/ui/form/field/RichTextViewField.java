@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
+import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -17,6 +18,9 @@ public class RichTextViewField extends CustomField {
     private static final long serialVersionUID = 1L;
 
     private String value;
+
+    public RichTextViewField() {
+    }
 
     public RichTextViewField(String value) {
         this.value = value;
@@ -44,5 +48,11 @@ public class RichTextViewField extends CustomField {
             link.setWidth("100%");
             return link;
         }
+    }
+
+    @Override
+    public void setPropertyDataSource(Property newDataSource) {
+        value = (String) newDataSource.getValue();
+        super.setPropertyDataSource(newDataSource);
     }
 }

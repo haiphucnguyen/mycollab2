@@ -1515,6 +1515,30 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
+.v-gridlayout.borderless .gridform-caption, .v-gridlayout.borderless .gridform-field {
+	border: none;
+}
+
+.activity-comp .section {
+	padding: 25px 5px 5px 5px;
+	color: #006DAC;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.activity-comp .section .v-label {
+	font-size: 1.2em;
+}
+
+.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
+	display: inline-block;
+}
+
+.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
+	padding-right: 10px;
+	font-size: 14px;
+	color: black;
+}
+
 @font-face {
 	font-family: "Vaadin-Icons";
 	src: url('fonts/Vaadin-Icons.eot');
@@ -14484,53 +14508,25 @@ span.block {
 	min-height: 43px;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-field .v-csslayout {
-	width: 95%;
-}
-
-.v-gridlayout.colored-gridlayout .gridform-field .v-csslayout .editable-field {
+.v-gridlayout.colored-gridlayout .gridform-field .v-csslayout.editable-field {
 	display: flex;
 	min-height: 21px;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-field .v-csslayout .editable-field:hover::after {
+.v-gridlayout.colored-gridlayout .gridform-field .v-csslayout.editable-field:hover::after {
 	float: top;
 	content: "\f044";
 	color: #999;
 	font-family: FontAwesome;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption {
+.gridform-caption {
 	min-height: 39px;
 }
 
-.v-gridlayout.colored-gridlayout .gridform-caption .v-label {
+.gridform-caption .v-label {
 	text-align: right;
 	color: #999;
-}
-
-.v-gridlayout.borderless .gridform-caption, .v-gridlayout.borderless .gridform-field {
-	border: none;
-}
-
-.activity-comp .section {
-	padding: 25px 5px 5px 5px;
-	color: #006DAC;
-	border-bottom: 1px solid #e5e5e5;
-}
-
-.activity-comp .section .v-label {
-	font-size: 1.2em;
-}
-
-.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option {
-	display: inline-block;
-}
-
-.activity-comp .section .v-select-optiongroup-sortDirection .v-select-option.v-radiobutton {
-	padding-right: 10px;
-	font-size: 14px;
-	color: black;
 }
 
 .crm-module {
