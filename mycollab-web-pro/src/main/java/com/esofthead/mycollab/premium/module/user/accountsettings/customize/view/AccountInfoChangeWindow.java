@@ -59,8 +59,7 @@ class AccountInfoChangeWindow extends Window {
             }
         });
 
-        editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<SimpleBillingAccount>(editForm,
-                true) {
+        editForm.setBeanFormFieldFactory(new AbstractBeanFieldGroupEditFieldFactory<SimpleBillingAccount>(editForm) {
             @Override
             protected Field<?> onCreateField(Object propertyId) {
                 if (BillingAccount.Field.subdomain.equalTo(propertyId)) {

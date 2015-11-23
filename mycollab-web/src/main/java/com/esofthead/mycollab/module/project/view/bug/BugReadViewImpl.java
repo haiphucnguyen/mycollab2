@@ -586,7 +586,11 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                             AppContext.getMessage(BugSeverity.class, beanItem.getSeverity());
                     DefaultViewField lbPriority = new DefaultViewField(severityLink, ContentMode.HTML);
                     lbPriority.addStyleName("bug-severity-" + beanItem.getSeverity().toLowerCase());
-                    return new EditableField(lbPriority, new BugSeverityComboBox());
+//                    return new EditableField(lbPriority, new BugSeverityComboBox());
+                    BugSeverityComboBox severityBox =  new BugSeverityComboBox();
+                    severityBox.setValue(beanItem.getSeverity());
+                    severityBox.setReadOnly(true);
+                    return severityBox;
                 }
             } else if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getResolution(), BugResolution.class);
