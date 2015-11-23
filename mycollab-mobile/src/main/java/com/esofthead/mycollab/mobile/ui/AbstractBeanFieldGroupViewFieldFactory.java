@@ -18,9 +18,9 @@ package com.esofthead.mycollab.mobile.ui;
 
 import com.esofthead.mycollab.core.arguments.NotBindable;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IBeanFieldGroupFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.vaadin.ui.Field;
 import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
@@ -55,10 +55,10 @@ public abstract class AbstractBeanFieldGroupViewFieldFactory<B> implements IBean
                 } else {
                     try {
                         String propertyValue = BeanUtils.getProperty(attachForm.getBean(), field.getName());
-                        formField = new FormViewField(propertyValue);
+                        formField = new DefaultViewField(propertyValue);
                     } catch (Exception e) {
                         LOG.error("Error while get field value", e);
-                        formField = new FormViewField("Error");
+                        formField = new DefaultViewField("Error");
                     }
 
                     attachForm.attachField(field.getName(), formField);

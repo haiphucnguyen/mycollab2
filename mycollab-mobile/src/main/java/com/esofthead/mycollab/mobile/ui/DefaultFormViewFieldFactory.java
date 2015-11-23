@@ -212,42 +212,6 @@ public class DefaultFormViewFieldFactory {
         }
     }
 
-    public static class FormViewField extends CustomField<String> {
-        private static final long serialVersionUID = 1L;
-
-        private final String value;
-        private final ContentMode contentMode;
-
-        public FormViewField(final String value) {
-            this(value, ContentMode.TEXT);
-        }
-
-        public FormViewField(final String value, final ContentMode contentMode) {
-            this.value = value;
-            this.contentMode = contentMode;
-        }
-
-        @Override
-        public Class<String> getType() {
-            return String.class;
-        }
-
-        @Override
-        protected Component initContent() {
-            final Label label = new Label();
-            label.setWidth("100%");
-            label.setContentMode(contentMode);
-
-            if (value != null && (!value.equals(""))) {
-                label.setValue(value);
-            } else {
-                label.setValue("");
-            }
-
-            return label;
-        }
-    }
-
     public static class I18nFormViewField extends CustomField<String> {
         private static final long serialVersionUID = 1L;
 
@@ -276,8 +240,7 @@ public class DefaultFormViewFieldFactory {
                     label.setValue(value);
                 } catch (Exception e) {
                     label.setValue("");
-                    LOG.error("Error while get i18n message of {} - {}",
-                            enumClass, key);
+                    LOG.error("Error while get i18n message of {} - {}", enumClass, key);
                 }
             } else {
                 label.setValue("");

@@ -25,7 +25,10 @@ import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.*;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDateViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.FormDetectAndDisplayUrlViewField;
+import com.esofthead.mycollab.mobile.ui.DefaultFormViewFieldFactory.I18nFormViewField;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -48,6 +51,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
@@ -319,29 +323,25 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             } else if (propertyId.equals("createdtime")) {
                 return new FormDateViewField(beanItem.getCreatedtime());
             } else if (propertyId.equals("assignuserFullName")) {
-                return new FormViewField(beanItem.getAssignuserFullName());
+                return new DefaultViewField(beanItem.getAssignuserFullName());
             } else if (propertyId.equals("loguserFullName")) {
-                return new FormViewField(beanItem.getLoguserFullName());
+                return new DefaultViewField(beanItem.getLoguserFullName());
             } else if (propertyId.equals("milestoneid")) {
                 if (beanItem.getMilestoneid() != null) {
-                    return new FormViewField(beanItem.getMilestoneName());
+                    return new DefaultViewField(beanItem.getMilestoneName());
                 } else {
-                    return new FormViewField("");
+                    return new DefaultViewField("");
                 }
 
             } else if (propertyId.equals("environment")) {
-                return new FormDetectAndDisplayUrlViewField(
-                        beanItem.getEnvironment());
+                return new FormDetectAndDisplayUrlViewField(beanItem.getEnvironment());
             } else if (propertyId.equals("description")) {
-                return new FormDetectAndDisplayUrlViewField(
-                        beanItem.getDescription());
+                return new FormDetectAndDisplayUrlViewField(beanItem.getDescription());
             } else if (propertyId.equals("status")) {
-                return new I18nFormViewField(beanItem.getStatus(),
-                        BugStatus.class);
+                return new I18nFormViewField(beanItem.getStatus(), BugStatus.class);
             } else if (propertyId.equals("priority")) {
                 if (StringUtils.isNotBlank(beanItem.getPriority())) {
-                    final Resource iconPriority = new ExternalResource(ProjectResources
-                            .getIconResourceLink12ByBugPriority(beanItem.getPriority()));
+                    final Resource iconPriority = new ExternalResource(ProjectResources.getIconResourceLink12ByBugPriority(beanItem.getPriority()));
                     final Image iconEmbedded = new Image(null, iconPriority);
                     final Label lbPriority = new Label(AppContext.getMessage(BugPriority.class, beanItem.getPriority()));
 
