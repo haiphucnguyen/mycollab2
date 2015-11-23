@@ -22,7 +22,7 @@ import com.esofthead.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayC
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListDisplay;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
-import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.IconConstants;

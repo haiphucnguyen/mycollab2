@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.mobile.module.crm.view.activity;
 
 import com.esofthead.mycollab.mobile.module.crm.ui.RelatedReadItemField;
-import com.esofthead.mycollab.mobile.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.form.field.DateTimeViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
