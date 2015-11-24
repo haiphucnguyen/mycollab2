@@ -52,12 +52,16 @@ public class ToogleBugSummaryField extends CssLayout {
         }
 
         bugLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
+        bugLinkLbl.setWidthUndefined();
         this.addComponent(bugLinkLbl);
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
             this.addStyleName("editable-field");
             this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                 @Override
                 public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                    if (event.getClickedComponent() == bugLinkLbl) {
+                        return;
+                    }
                     if (isRead) {
                         ToogleBugSummaryField.this.removeComponent(bugLinkLbl);
                         final TextField editField = new TextField();

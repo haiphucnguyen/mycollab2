@@ -18,6 +18,7 @@ import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -43,6 +44,7 @@ public class ToogleTaskSummaryField extends CssLayout {
         this.maxLength = maxLength;
         this.task = task;
         taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
+        taskLinkLbl.setWidthUndefined();
         if (task.isCompleted()) {
             taskLinkLbl.addStyleName("completed");
             taskLinkLbl.removeStyleName("overdue pending");
@@ -61,6 +63,9 @@ public class ToogleTaskSummaryField extends CssLayout {
             this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                 @Override
                 public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                    if (event.getClickedComponent() == taskLinkLbl) {
+                        return;
+                    }
                     if (isRead) {
                         ToogleTaskSummaryField.this.removeComponent(taskLinkLbl);
                         final TextField editField = new TextField();
