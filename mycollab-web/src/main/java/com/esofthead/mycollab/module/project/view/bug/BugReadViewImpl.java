@@ -40,6 +40,7 @@ import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentDisplayField;
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
+import com.esofthead.mycollab.module.project.view.bug.components.BugPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.bug.components.BugSeverityComboBox;
 import com.esofthead.mycollab.module.project.view.bug.components.LinkIssueWindow;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
@@ -483,7 +484,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         @Override
         protected Field<?> onCreateField(final Object propertyId) {
             if (BugWithBLOBs.Field.duedate.equalTo(propertyId)) {
-                return new ToogleEditableField(new DateViewField(beanItem.getDuedate()), DateField.class);
+                return new DateViewField(beanItem.getDueDateRoundPlusOne());
             } else if (BugWithBLOBs.Field.createdtime.equalTo(propertyId)) {
                 return new DateViewField(beanItem.getCreatedtime());
             } else if (SimpleBug.Field.assignuserFullName.equalTo(propertyId)) {
@@ -566,9 +567,9 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, beanItem.getMilestoneid() + "",
                         beanItem.getMilestoneName());
             } else if (BugWithBLOBs.Field.environment.equalTo(propertyId)) {
-                return new ToogleEditableField(new RichTextViewField(), RichTextArea.class);
+                return new RichTextViewField(beanItem.getEnvironment());
             } else if (BugWithBLOBs.Field.description.equalTo(propertyId)) {
-                return new ToogleEditableField(new RichTextViewField(), RichTextArea.class);
+                return new RichTextViewField(beanItem.getDescription());
             } else if (BugWithBLOBs.Field.status.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getStatus(), BugStatus.class);
             } else if (BugWithBLOBs.Field.priority.equalTo(propertyId)) {
@@ -584,11 +585,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                             AppContext.getMessage(BugSeverity.class, beanItem.getSeverity());
                     DefaultViewField lbPriority = new DefaultViewField(severityLink, ContentMode.HTML);
                     lbPriority.addStyleName("bug-severity-" + beanItem.getSeverity().toLowerCase());
-//                    return new EditableField(lbPriority, new BugSeverityComboBox());
-                    BugSeverityComboBox severityBox = new BugSeverityComboBox();
-                    severityBox.setValue(beanItem.getSeverity());
-                    severityBox.setReadOnly(true);
-                    return severityBox;
+                    return lbPriority;
                 }
             } else if (BugWithBLOBs.Field.resolution.equalTo(propertyId)) {
                 return new I18nFormViewField(beanItem.getResolution(), BugResolution.class);
@@ -601,6 +598,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     public HasPreviewFormHandlers<SimpleBug> getPreviewFormHandlers() {
         return this.previewForm;
     }
+
 
     private static class PeopleInfoComp extends MVerticalLayout {
         private static final long serialVersionUID = 1L;

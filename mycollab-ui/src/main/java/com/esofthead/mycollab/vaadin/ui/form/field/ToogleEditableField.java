@@ -2,9 +2,8 @@ package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
+import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.event.LayoutEvents;
-import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 
@@ -13,9 +12,8 @@ import com.vaadin.ui.Field;
  * @since 5.2.3
  */
 public class ToogleEditableField extends EditableField {
-    private Field readField;
+    private Field readField, editField;
     private Class<? extends Field> editFieldCls;
-    private Field editField;
 
     public ToogleEditableField(final Field readField, final Class<? extends Field> editFieldCls) {
         super();
@@ -32,22 +30,15 @@ public class ToogleEditableField extends EditableField {
                         try {
                             editField = editFieldCls.newInstance();
                             editField.setWidth("100%");
-                            if (editField instanceof FieldEvents.BlurNotifier) {
-                                ((AbstractComponent) editField).setImmediate(true);
-                                ((FieldEvents.BlurNotifier) editField).addBlurListener(new FieldEvents.BlurListener() {
-                                    @Override
-                                    public void blur(FieldEvents.BlurEvent event) {
-                                        isRead = true;
-                                        wrapper.removeComponent(editField);
-                                        wrapper.addComponent(readField);
-                                        wrapper.addStyleName("editable-field");
-                                    }
-                                });
-                            }
                             editField.addValueChangeListener(new ValueChangeListener() {
                                 @Override
                                 public void valueChange(Property.ValueChangeEvent event) {
-                                    System.out.println("Value change");
+                                    isRead = true;
+                                    wrapper.removeComponent(editField);
+                                    wrapper.addComponent(readField);
+                                    Object property = editField.getValue();
+                                    readField.setPropertyDataSource(new ObjectProperty(property));
+                                    wrapper.addStyleName("editable-field");
                                 }
                             });
                         } catch (InstantiationException | IllegalAccessException e) {

@@ -1,13 +1,11 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
-import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.Label;
-
-import static com.esofthead.mycollab.core.utils.StringUtils.isBlank;
 
 /**
  * @author MyCollab Ltd.
@@ -18,12 +16,17 @@ public class RichTextViewField extends CustomField {
     private static final long serialVersionUID = 1L;
 
     private String value;
+    private Label label;
+
 
     public RichTextViewField() {
+        this("");
     }
 
     public RichTextViewField(String value) {
-        this.value = value;
+        label = new Label(value, ContentMode.HTML);
+        label.setWidth("100%");
+        label.addStyleName("wordWrap");
     }
 
     @Override
@@ -38,21 +41,14 @@ public class RichTextViewField extends CustomField {
 
     @Override
     protected Component initContent() {
-        if (isBlank(value)) {
-            Label lbl = new Label("&nbsp;");
-            lbl.setContentMode(ContentMode.HTML);
-            lbl.setWidth("100%");
-            return lbl;
-        } else {
-            SafeHtmlLabel link = new SafeHtmlLabel(value);
-            link.setWidth("100%");
-            return link;
-        }
+        return label;
     }
 
     @Override
     public void setPropertyDataSource(Property newDataSource) {
-        value = (String) newDataSource.getValue();
+        Object propValue = newDataSource.getValue();
+        value = (propValue != null) ? propValue.toString() : "";
+        label.setValue(StringUtils.formatRichText(value));
         super.setPropertyDataSource(newDataSource);
     }
 }

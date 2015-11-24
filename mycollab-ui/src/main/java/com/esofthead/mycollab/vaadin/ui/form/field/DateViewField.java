@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -17,9 +18,16 @@ public class DateViewField extends CustomField {
     private static final long serialVersionUID = 1L;
 
     private Date date;
+    private Label dateLbl;
+
+    public DateViewField() {
+        this(null);
+    }
 
     public DateViewField(Date date) {
         this.date = date;
+        dateLbl = new Label();
+        dateLbl.setWidth("100%");
     }
 
     @Override
@@ -29,8 +37,13 @@ public class DateViewField extends CustomField {
 
     @Override
     protected Component initContent() {
-        Label dateLbl = new Label();
-        dateLbl.setWidth("100%");
+        return dateLbl;
+    }
+
+    @Override
+    public void setPropertyDataSource(Property newDataSource) {
+        Object valueProp = newDataSource.getValue();
+        date = (valueProp != null) ? (Date) valueProp : null;
         if (date == null) {
             dateLbl.setValue("&nbsp;");
             dateLbl.setContentMode(ContentMode.HTML);
@@ -38,6 +51,6 @@ public class DateViewField extends CustomField {
             dateLbl.setValue(AppContext.formatDate(date));
             dateLbl.setDescription(AppContext.formatPrettyTime(date));
         }
-        return dateLbl;
+        super.setPropertyDataSource(newDataSource);
     }
 }

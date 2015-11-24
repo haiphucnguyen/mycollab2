@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
+import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -13,8 +14,14 @@ import org.apache.commons.lang3.StringUtils;
 public class DefaultViewField extends CustomField<String> {
     private static final long serialVersionUID = 1L;
 
-    private Label label;
-    private String value;
+    protected Label label;
+    protected String value;
+
+    public DefaultViewField(ContentMode contentMode) {
+        label = new Label();
+        label.setWidth("100%");
+        label.setContentMode(contentMode);
+    }
 
     public DefaultViewField(final String value) {
         this(value, ContentMode.TEXT);
@@ -22,16 +29,9 @@ public class DefaultViewField extends CustomField<String> {
 
     public DefaultViewField(final String value, final ContentMode contentMode) {
         this.value = value;
-        label = new Label();
+        label = new Label(value);
         label.setWidth("100%");
         label.setContentMode(contentMode);
-
-        if (StringUtils.isNotBlank(value)) {
-            label.setValue(value);
-            label.setDescription(value);
-        } else {
-            label.setValue("");
-        }
     }
 
     @Override
@@ -44,14 +44,30 @@ public class DefaultViewField extends CustomField<String> {
         return String.class;
     }
 
+    protected String getValueAsHtml() {
+        return value;
+    }
+
     @Override
     protected Component initContent() {
         return label;
     }
 
     @Override
-    protected void setInternalValue(String newValue) {
-        label.setValue(newValue);
-        label.setDescription(newValue);
+    public void setPropertyDataSource(Property newDataSource) {
+        Object valueProp = newDataSource.getValue();
+        value = (valueProp != null) ? valueProp.toString() : "";
+        if (StringUtils.isNotBlank(value)) {
+            if (label.getContentMode() == ContentMode.HTML) {
+                label.setValue(getValueAsHtml());
+            } else {
+                label.setValue(value);
+            }
+
+            label.setDescription(value);
+        } else {
+            label.setValue("");
+        }
+        super.setPropertyDataSource(newDataSource);
     }
 }
