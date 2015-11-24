@@ -53,6 +53,8 @@ Version 5.2.3
 
 **Improvements & New Features**
 
+* Allow inline edit task and bug summary field in dashboard view
+
 **Bug Fixes**
 
 * Upgrade process still keeps the old version value of class path items

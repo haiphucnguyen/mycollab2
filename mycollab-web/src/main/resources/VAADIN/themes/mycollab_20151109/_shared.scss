@@ -607,4 +607,15 @@
       }
     }
   }
+
+  .v-csslayout.editable-field {
+    display: flex;
+    min-height: 21px;
+    &:hover::after {
+      float:top;
+      content:"\f044";
+      color:$my-meta-color;
+      font-family: FontAwesome;
+    }
+  }
 }

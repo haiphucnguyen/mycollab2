@@ -56,6 +56,9 @@ import com.esofthead.mycollab.vaadin.ui.grid.GridFormLayoutHelper;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.vaadin.data.Property;
+import com.vaadin.event.FieldEvents;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -324,6 +327,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
     private class KanbanTaskBlockItem extends CustomComponent {
         private SimpleTask task;
+        private Label taskLinkLbl;
 
         KanbanTaskBlockItem(final SimpleTask task) {
             this.task = task;
@@ -335,7 +339,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
             MHorizontalLayout headerLayout = new MHorizontalLayout();
 
-            Label taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
+            taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
             if (task.isCompleted()) {
                 taskLinkLbl.addStyleName("completed");
                 taskLinkLbl.removeStyleName("overdue pending");
@@ -347,8 +351,9 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
                 taskLinkLbl.removeStyleName("completed overdue");
             }
             taskLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
+            ToogleTaskSummaryField toogleTaskSummaryField = new ToogleTaskSummaryField();
             PopupView priorityField = popupFieldFactory.createPriorityPopupField(task);
-            headerLayout.with(priorityField, taskLinkLbl).expand(taskLinkLbl);
+            headerLayout.with(priorityField, toogleTaskSummaryField).expand(toogleTaskSummaryField);
 
             root.with(headerLayout);
 
@@ -383,6 +388,60 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
             Div resultDiv = new DivLessFormatter().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
             return resultDiv.write();
+        }
+
+        private class ToogleTaskSummaryField extends CssLayout {
+            private boolean isRead = true;
+
+            ToogleTaskSummaryField() {
+                super(taskLinkLbl);
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    this.addStyleName("editable-field");
+                    this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                        @Override
+                        public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                            if (isRead) {
+                                ToogleTaskSummaryField.this.removeComponent(taskLinkLbl);
+                                final TextField editField = new TextField();
+                                editField.setValue(task.getTaskname());
+                                editField.setWidth("100%");
+                                editField.focus();
+                                ToogleTaskSummaryField.this.addComponent(editField);
+                                ToogleTaskSummaryField.this.removeStyleName("editable-field");
+                                editField.addValueChangeListener(new Property.ValueChangeListener() {
+                                    @Override
+                                    public void valueChange(Property.ValueChangeEvent event) {
+                                        updateFieldValue(editField);
+                                    }
+                                });
+                                editField.addBlurListener(new FieldEvents.BlurListener() {
+                                    @Override
+                                    public void blur(FieldEvents.BlurEvent event) {
+                                        updateFieldValue(editField);
+                                    }
+                                });
+                                isRead = !isRead;
+                            }
+
+                        }
+                    });
+                }
+            }
+
+            private void updateFieldValue(TextField editField) {
+                ToogleTaskSummaryField.this.removeComponent(editField);
+                ToogleTaskSummaryField.this.addComponent(taskLinkLbl);
+                ToogleTaskSummaryField.this.addStyleName("editable-field");
+                String newValue = editField.getValue();
+                if (StringUtils.isNotBlank(newValue) && !newValue.equals(task.getTaskname())) {
+                    task.setTaskname(newValue);
+                    taskLinkLbl.setValue(buildTaskLink());
+                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    taskService.updateWithSession(task, AppContext.getUsername());
+                }
+
+                isRead = !isRead;
+            }
         }
     }
 

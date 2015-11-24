@@ -322,17 +322,21 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         protected void doShow() {
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
-            timeInput.setValue("");
-            timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
-            String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
-            Label headerLbl = new Label(title, ContentMode.HTML);
-            headerLbl.addStyleName(ValoTheme.LABEL_H3);
-            dateField = new DateField();
-            dateField.setValue(new GregorianCalendar().getTime());
-            layout.with(headerLbl, timeInput);
-            Label dateCaption = new Label("For date");
-            dateCaption.addStyleName(ValoTheme.LABEL_H3);
-            layout.with(dateCaption, dateField);
+            if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+                timeInput.setValue("");
+                timeInput.setDescription("The format of duration must be [number] d [number] h [number] m [number] s");
+                String title = (isBillable) ? "Add billable hours" : "Add non billable hours";
+                Label headerLbl = new Label(title, ContentMode.HTML);
+                headerLbl.addStyleName(ValoTheme.LABEL_H3);
+                dateField = new DateField();
+                dateField.setValue(new GregorianCalendar().getTime());
+                layout.with(headerLbl, timeInput);
+                Label dateCaption = new Label("For date");
+                dateCaption.addStyleName(ValoTheme.LABEL_H3);
+                layout.with(dateCaption, dateField);
+            } else {
+                layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
+            }
         }
 
         @Override

@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -38,6 +39,9 @@ import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.vaadin.data.Property;
+import com.vaadin.event.FieldEvents;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -82,13 +86,14 @@ class TaskRowRenderer extends MVerticalLayout {
             taskLinkLbl.removeStyleName("completed overdue");
         }
         taskLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
+        ToogleTaskSummaryField toogleTaskField = new ToogleTaskSummaryField();
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
                 true, false, false));
 
         TaskPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(TaskPopupFieldFactory.class);
         PopupView priorityField = popupFieldFactory.createPriorityPopupField(task);
         PopupView assigneeField = popupFieldFactory.createAssigneePopupField(task);
-        headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, taskLinkLbl).expand(taskLinkLbl);
+        headerLayout.with(taskSettingPopupBtn, priorityField, assigneeField, toogleTaskField).expand(toogleTaskField);
 
         CssLayout footer = new CssLayout();
 
@@ -295,5 +300,59 @@ class TaskRowRenderer extends MVerticalLayout {
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         filterBtnLayout.addDangerOption(deleteBtn);
         return filterBtnLayout;
+    }
+
+    private class ToogleTaskSummaryField extends CssLayout {
+        private boolean isRead = true;
+
+        ToogleTaskSummaryField() {
+            super(taskLinkLbl);
+            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                this.addStyleName("editable-field");
+                this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                    @Override
+                    public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                        if (isRead) {
+                            ToogleTaskSummaryField.this.removeComponent(taskLinkLbl);
+                            final TextField editField = new TextField();
+                            editField.setValue(task.getTaskname());
+                            editField.setWidth("100%");
+                            editField.focus();
+                            ToogleTaskSummaryField.this.addComponent(editField);
+                            ToogleTaskSummaryField.this.removeStyleName("editable-field");
+                            editField.addValueChangeListener(new Property.ValueChangeListener() {
+                                @Override
+                                public void valueChange(Property.ValueChangeEvent event) {
+                                    updateFieldValue(editField);
+                                }
+                            });
+                            editField.addBlurListener(new FieldEvents.BlurListener() {
+                                @Override
+                                public void blur(FieldEvents.BlurEvent event) {
+                                    updateFieldValue(editField);
+                                }
+                            });
+                            isRead = !isRead;
+                        }
+
+                    }
+                });
+            }
+        }
+
+        private void updateFieldValue(TextField editField) {
+            ToogleTaskSummaryField.this.removeComponent(editField);
+            ToogleTaskSummaryField.this.addComponent(taskLinkLbl);
+            ToogleTaskSummaryField.this.addStyleName("editable-field");
+            String newValue = editField.getValue();
+            if (StringUtils.isNotBlank(newValue) && !newValue.equals(task.getTaskname())) {
+                task.setTaskname(newValue);
+                taskLinkLbl.setValue(buildTaskLink());
+                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                taskService.updateWithSession(task, AppContext.getUsername());
+            }
+
+            isRead = !isRead;
+        }
     }
 }

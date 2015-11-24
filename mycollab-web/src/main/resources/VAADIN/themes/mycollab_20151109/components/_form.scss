@@ -21,17 +21,6 @@
     }
     .gridform-field {
       min-height: 43px;
-      .v-csslayout.editable-field {
-          display: flex;
-          min-height: 21px;
-          &:hover::after {
-            float:top;
-            content:"\f044";
-            color:$my-meta-color;
-            font-family: FontAwesome;
-          }
-        }
-      }
     }
     .gridform-caption {
       min-height: 39px;
