@@ -46,6 +46,10 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.google.common.eventbus.Subscribe;
+import com.hp.gagawa.java.elements.A;
+import com.vaadin.data.Property;
+import com.vaadin.event.FieldEvents;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -248,95 +252,164 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private ComponentContainer constructMilestoneBox(final SimpleMilestone milestone) {
-        CssLayout layout = new CssLayout();
-        layout.addStyleName(UIConstants.MILESTONE_BOX);
-        layout.setWidth("100%");
-
-        LabelLink milestoneLink = new LabelLink(StringUtils.trim(milestone.getName(), 50, true),
-                ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()));
-        milestoneLink.setDescription(milestone.getName());
-        milestoneLink.addStyleName(UIConstants.LABEL_WORD_WRAP);
-        milestoneLink.addStyleName(ValoTheme.LABEL_H3);
-        milestoneLink.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-        milestoneLink.setWidth("100%");
-
-        MHorizontalLayout milestoneHeader = new MHorizontalLayout().withWidth("100%").with(milestoneLink).expand(milestoneLink);
-
-        PopupButton taskSettingPopupBtn = new PopupButton();
-        taskSettingPopupBtn.setWidth("15px");
-        OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
-
-        Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(MilestoneListViewImpl.this, milestone));
-            }
-        });
-        editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
-        editButton.setIcon(FontAwesome.EDIT);
-        filterBtnLayout.addOption(editButton);
-
-        Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                ConfirmDialogExt.show(UI.getCurrent(),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
-                        AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_YES),
-                        AppContext.getMessage(GenericI18Enum.BUTTON_NO),
-                        new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    MilestoneService projectTaskService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                                    projectTaskService.removeWithSession(milestone,
-                                            AppContext.getUsername(), AppContext.getAccountId());
-                                    milestones.remove(milestone);
-                                    displayMilestones(milestones);
-                                }
-                            }
-                        });
-            }
-        });
-        deleteBtn.setIcon(FontAwesome.TRASH_O);
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES));
-        filterBtnLayout.addDangerOption(deleteBtn);
-
-        taskSettingPopupBtn.setIcon(FontAwesome.COG);
-        taskSettingPopupBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-        taskSettingPopupBtn.setContent(filterBtnLayout);
-
-        milestoneHeader.addComponent(taskSettingPopupBtn);
-        layout.addComponent(milestoneHeader);
-
-        int openAssignments = milestone.getNumOpenBugs() + milestone.getNumOpenTasks();
-        int totalAssignments = milestone.getNumBugs() + milestone.getNumTasks();
-        ELabel progressInfoLbl;
-        if (totalAssignments > 0) {
-            progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
-                    (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
-                            * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
-        } else {
-            progressInfoLbl = new ELabel("No issue").withStyleName(UIConstants.LABEL_META_INFO);
-        }
-        layout.addComponent(progressInfoLbl);
-
-        CssLayout metaBlock = new CssLayout();
-        MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
-        metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone, false));
-        metaBlock.addComponent(popupFieldFactory.createStartDatePopupField(milestone));
-        metaBlock.addComponent(popupFieldFactory.createEndDatePopupField(milestone));
-        metaBlock.addComponent(popupFieldFactory.createBillableHoursPopupField(milestone));
-        metaBlock.addComponent(popupFieldFactory.createNonBillableHoursPopupField(milestone));
-        layout.addComponent(metaBlock);
-
+        MilestoneBox layout = new MilestoneBox(milestone);
         return layout;
+    }
+
+    private class MilestoneBox extends CssLayout {
+        private SimpleMilestone milestone;
+        private Label milestoneLbl;
+
+        MilestoneBox(final SimpleMilestone milestone) {
+            this.milestone = milestone;
+            this.addStyleName(UIConstants.MILESTONE_BOX);
+            this.setWidth("100%");
+
+            milestoneLbl = new Label(buildMilestoneLink(), ContentMode.HTML);
+            milestoneLbl.setDescription(milestone.getName());
+            milestoneLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
+            milestoneLbl.addStyleName(ValoTheme.LABEL_H3);
+            milestoneLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+            milestoneLbl.setWidth("100%");
+            ToogleMilestoneSummaryField toogleMilestoneSummaryField = new ToogleMilestoneSummaryField();
+
+            MHorizontalLayout milestoneHeader = new MHorizontalLayout().withWidth("100%").with(toogleMilestoneSummaryField).expand(toogleMilestoneSummaryField);
+
+            PopupButton taskSettingPopupBtn = new PopupButton();
+            taskSettingPopupBtn.setWidth("15px");
+            OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
+
+            Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(MilestoneBox.this, milestone));
+                }
+            });
+            editButton.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+            editButton.setIcon(FontAwesome.EDIT);
+            filterBtnLayout.addOption(editButton);
+
+            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        MilestoneService projectTaskService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                                        projectTaskService.removeWithSession(milestone,
+                                                AppContext.getUsername(), AppContext.getAccountId());
+                                        milestones.remove(milestone);
+                                        displayMilestones(milestones);
+                                    }
+                                }
+                            });
+                }
+            });
+            deleteBtn.setIcon(FontAwesome.TRASH_O);
+            deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.MILESTONES));
+            filterBtnLayout.addDangerOption(deleteBtn);
+
+            taskSettingPopupBtn.setIcon(FontAwesome.COG);
+            taskSettingPopupBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+            taskSettingPopupBtn.setContent(filterBtnLayout);
+
+            milestoneHeader.addComponent(taskSettingPopupBtn);
+            this.addComponent(milestoneHeader);
+
+            int openAssignments = milestone.getNumOpenBugs() + milestone.getNumOpenTasks();
+            int totalAssignments = milestone.getNumBugs() + milestone.getNumTasks();
+            ELabel progressInfoLbl;
+            if (totalAssignments > 0) {
+                progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
+                        (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
+                                * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
+            } else {
+                progressInfoLbl = new ELabel("No issue").withStyleName(UIConstants.LABEL_META_INFO);
+            }
+            this.addComponent(progressInfoLbl);
+
+            CssLayout metaBlock = new CssLayout();
+            MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
+            metaBlock.addComponent(popupFieldFactory.createMilestoneAssigneePopupField(milestone, false));
+            metaBlock.addComponent(popupFieldFactory.createStartDatePopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createEndDatePopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createBillableHoursPopupField(milestone));
+            metaBlock.addComponent(popupFieldFactory.createNonBillableHoursPopupField(milestone));
+            this.addComponent(metaBlock);
+        }
+
+        private String buildMilestoneLink() {
+            A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()))
+                    .appendText(StringUtils.trim(milestone.getName(), 50, true));
+            return milestoneDiv.write();
+        }
+
+        private class ToogleMilestoneSummaryField extends CssLayout {
+            private boolean isRead = true;
+
+            ToogleMilestoneSummaryField() {
+                super(milestoneLbl);
+                this.setWidth("100%");
+                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                    this.addStyleName("editable-field");
+                    this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                        @Override
+                        public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                            if (isRead) {
+                                ToogleMilestoneSummaryField.this.removeComponent(milestoneLbl);
+                                final TextField editField = new TextField();
+                                editField.setValue(milestone.getName());
+                                editField.setWidth("100%");
+                                editField.focus();
+                                ToogleMilestoneSummaryField.this.addComponent(editField);
+                                ToogleMilestoneSummaryField.this.removeStyleName("editable-field");
+                                editField.addValueChangeListener(new Property.ValueChangeListener() {
+                                    @Override
+                                    public void valueChange(Property.ValueChangeEvent event) {
+                                        updateFieldValue(editField);
+                                    }
+                                });
+                                editField.addBlurListener(new FieldEvents.BlurListener() {
+                                    @Override
+                                    public void blur(FieldEvents.BlurEvent event) {
+                                        updateFieldValue(editField);
+                                    }
+                                });
+                                isRead = !isRead;
+                            }
+
+                        }
+                    });
+                }
+            }
+
+            private void updateFieldValue(TextField editField) {
+                ToogleMilestoneSummaryField.this.removeComponent(editField);
+                ToogleMilestoneSummaryField.this.addComponent(milestoneLbl);
+                ToogleMilestoneSummaryField.this.addStyleName("editable-field");
+                String newValue = editField.getValue();
+                if (StringUtils.isNotBlank(newValue) && !newValue.equals(milestone.getName())) {
+                    milestone.setName(newValue);
+                    milestoneLbl.setValue(buildMilestoneLink());
+                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    milestoneService.updateWithSession(milestone, AppContext.getUsername());
+                }
+
+                isRead = !isRead;
+            }
+        }
     }
 
     @Override
