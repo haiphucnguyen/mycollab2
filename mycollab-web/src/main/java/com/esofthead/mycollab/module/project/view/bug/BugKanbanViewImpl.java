@@ -24,9 +24,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -34,11 +32,11 @@ import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.bug.components.BugSavedFilterComboBox;
+import com.esofthead.mycollab.module.project.view.bug.components.ToogleBugSummaryField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -50,11 +48,6 @@ import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.google.common.eventbus.Subscribe;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
@@ -63,7 +56,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.dd.VerticalDropLocation;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
@@ -222,7 +214,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
 
     private class KanbanBugBlockItem extends CustomComponent {
         private SimpleBug bug;
-        private Label bugLinkLbl;
 
         KanbanBugBlockItem(final SimpleBug bug) {
             this.bug = bug;
@@ -232,7 +223,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
 
             BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
             MHorizontalLayout headerLayout = new MHorizontalLayout();
-            bugLinkLbl = new Label(buildBugLink(), ContentMode.HTML);
+            ToogleBugSummaryField bugLinkLbl = new ToogleBugSummaryField(bug, 70);
 
             if (bug.isCompleted()) {
                 bugLinkLbl.addStyleName("completed");
@@ -243,9 +234,8 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             }
 
             bugLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
-            ToogleBugSummaryField toogleBugSummaryField = new ToogleBugSummaryField();
             PopupView priorityField = popupFieldFactory.createBugPriorityPopupField(bug);
-            headerLayout.with(priorityField, toogleBugSummaryField).expand(toogleBugSummaryField);
+            headerLayout.with(priorityField, bugLinkLbl).expand(bugLinkLbl);
 
             root.addComponent(headerLayout);
 
@@ -267,75 +257,6 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             footer.addComponent(assigneeField);
 
             root.addComponent(footer);
-        }
-
-        private String buildBugLink() {
-            String uid = UUID.randomUUID().toString();
-
-            String linkName = String.format("[#%d] - %s", bug.getBugkey(), StringUtils.trim(bug.getSummary(), 70, true));
-            A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
-                    CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-
-            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG,
-                    bug.getId() + ""));
-            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-
-            Div resultDiv = new DivLessFormatter().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
-            return resultDiv.write();
-        }
-
-        private class ToogleBugSummaryField extends CssLayout {
-            private boolean isRead = true;
-
-            ToogleBugSummaryField() {
-                super(bugLinkLbl);
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                    this.addStyleName("editable-field");
-                    this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                        @Override
-                        public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                            if (isRead) {
-                                ToogleBugSummaryField.this.removeComponent(bugLinkLbl);
-                                final TextField editField = new TextField();
-                                editField.setValue(bug.getSummary());
-                                editField.setWidth("100%");
-                                editField.focus();
-                                ToogleBugSummaryField.this.addComponent(editField);
-                                ToogleBugSummaryField.this.removeStyleName("editable-field");
-                                editField.addValueChangeListener(new Property.ValueChangeListener() {
-                                    @Override
-                                    public void valueChange(Property.ValueChangeEvent event) {
-                                        updateFieldValue(editField);
-                                    }
-                                });
-                                editField.addBlurListener(new FieldEvents.BlurListener() {
-                                    @Override
-                                    public void blur(FieldEvents.BlurEvent event) {
-                                        updateFieldValue(editField);
-                                    }
-                                });
-                                isRead = !isRead;
-                            }
-
-                        }
-                    });
-                }
-            }
-
-            private void updateFieldValue(TextField editField) {
-                ToogleBugSummaryField.this.removeComponent(editField);
-                ToogleBugSummaryField.this.addComponent(bugLinkLbl);
-                ToogleBugSummaryField.this.addStyleName("editable-field");
-                String newValue = editField.getValue();
-                if (StringUtils.isNotBlank(newValue) && !newValue.equals(bug.getSummary())) {
-                    bug.setSummary(newValue);
-                    bugLinkLbl.setValue(buildBugLink());
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                    bugService.updateWithSession(bug, AppContext.getUsername());
-                }
-
-                isRead = !isRead;
-            }
         }
     }
 

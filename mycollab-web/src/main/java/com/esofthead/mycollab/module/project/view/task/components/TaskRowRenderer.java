@@ -18,50 +18,37 @@ package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.UUID;
-
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
 class TaskRowRenderer extends MVerticalLayout {
-    private Label taskLinkLbl;
     private SimpleTask task;
 
     private PopupButton taskSettingPopupBtn;
+    private ToogleTaskSummaryField toogleTaskField;
 
     TaskRowRenderer(final SimpleTask task) {
         this.task = task;
@@ -73,20 +60,7 @@ class TaskRowRenderer extends MVerticalLayout {
         OptionPopupContent filterBtnLayout = createPopupContent();
         taskSettingPopupBtn.setContent(filterBtnLayout);
 
-        taskLinkLbl = new Label(buildTaskLink(), ContentMode.HTML);
-
-        if (task.isCompleted()) {
-            taskLinkLbl.addStyleName("completed");
-            taskLinkLbl.removeStyleName("overdue pending");
-        } else if (task.isOverdue()) {
-            taskLinkLbl.addStyleName("overdue");
-            taskLinkLbl.removeStyleName("completed pending");
-        } else if (task.isPending()) {
-            taskLinkLbl.addStyleName("pending");
-            taskLinkLbl.removeStyleName("completed overdue");
-        }
-        taskLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
-        ToogleTaskSummaryField toogleTaskField = new ToogleTaskSummaryField();
+        toogleTaskField = new ToogleTaskSummaryField(task);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
                 true, false, false));
 
@@ -130,36 +104,21 @@ class TaskRowRenderer extends MVerticalLayout {
         this.with(headerLayout, footer);
     }
 
-    private String buildTaskLink() {
-        String uid = UUID.randomUUID().toString();
-
-        String linkName = String.format("[#%d] - %s", task.getTaskkey(), task.getTaskname());
-        A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(),
-                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-
-        taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.TASK, task.getId() + ""));
-        taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-
-        Div resultDiv = new DivLessFormatter().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
-        return resultDiv.write();
-    }
 
     private void closeTask() {
-        taskLinkLbl.removeStyleName("overdue pending");
-        taskLinkLbl.addStyleName("completed");
+        toogleTaskField.closeTask();
         OptionPopupContent filterBtnLayout = createPopupContent();
         taskSettingPopupBtn.setContent(filterBtnLayout);
     }
 
     private void reOpenTask() {
-        taskLinkLbl.removeStyleName("overdue pending completed");
+        toogleTaskField.reOpenTask();
         OptionPopupContent filterBtnLayout = createPopupContent();
         taskSettingPopupBtn.setContent(filterBtnLayout);
     }
 
     private void pendingTask() {
-        taskLinkLbl.removeStyleName("overdue completed");
-        taskLinkLbl.addStyleName("pending");
+        toogleTaskField.pendingTask();
         OptionPopupContent filterBtnLayout = createPopupContent();
         taskSettingPopupBtn.setContent(filterBtnLayout);
     }
@@ -300,59 +259,5 @@ class TaskRowRenderer extends MVerticalLayout {
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         filterBtnLayout.addDangerOption(deleteBtn);
         return filterBtnLayout;
-    }
-
-    private class ToogleTaskSummaryField extends CssLayout {
-        private boolean isRead = true;
-
-        ToogleTaskSummaryField() {
-            super(taskLinkLbl);
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                this.addStyleName("editable-field");
-                this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                    @Override
-                    public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                        if (isRead) {
-                            ToogleTaskSummaryField.this.removeComponent(taskLinkLbl);
-                            final TextField editField = new TextField();
-                            editField.setValue(task.getTaskname());
-                            editField.setWidth("100%");
-                            editField.focus();
-                            ToogleTaskSummaryField.this.addComponent(editField);
-                            ToogleTaskSummaryField.this.removeStyleName("editable-field");
-                            editField.addValueChangeListener(new Property.ValueChangeListener() {
-                                @Override
-                                public void valueChange(Property.ValueChangeEvent event) {
-                                    updateFieldValue(editField);
-                                }
-                            });
-                            editField.addBlurListener(new FieldEvents.BlurListener() {
-                                @Override
-                                public void blur(FieldEvents.BlurEvent event) {
-                                    updateFieldValue(editField);
-                                }
-                            });
-                            isRead = !isRead;
-                        }
-
-                    }
-                });
-            }
-        }
-
-        private void updateFieldValue(TextField editField) {
-            ToogleTaskSummaryField.this.removeComponent(editField);
-            ToogleTaskSummaryField.this.addComponent(taskLinkLbl);
-            ToogleTaskSummaryField.this.addStyleName("editable-field");
-            String newValue = editField.getValue();
-            if (StringUtils.isNotBlank(newValue) && !newValue.equals(task.getTaskname())) {
-                task.setTaskname(newValue);
-                taskLinkLbl.setValue(buildTaskLink());
-                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                taskService.updateWithSession(task, AppContext.getUsername());
-            }
-
-            isRead = !isRead;
-        }
     }
 }

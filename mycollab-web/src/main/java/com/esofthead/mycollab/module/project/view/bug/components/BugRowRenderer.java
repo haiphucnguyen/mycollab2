@@ -17,47 +17,33 @@
 package com.esofthead.mycollab.module.project.view.bug.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugPopupFieldFactory;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.UUID;
-
 /**
  * @author MyCollab Ltd
  * @since 5.1.1
  */
 public class BugRowRenderer extends MVerticalLayout {
-    private Label bugLinkLbl;
     private SimpleBug bug;
 
     private PopupButton bugSettingPopupBtn;
@@ -72,18 +58,8 @@ public class BugRowRenderer extends MVerticalLayout {
         OptionPopupContent filterBtnLayout = createPopupContent();
         bugSettingPopupBtn.setContent(filterBtnLayout);
 
-        bugLinkLbl = new Label(buildBugLink(), ContentMode.HTML);
 
-        if (bug.isCompleted()) {
-            bugLinkLbl.addStyleName("completed");
-            bugLinkLbl.removeStyleName("overdue pending");
-        } else if (bug.isOverdue()) {
-            bugLinkLbl.addStyleName("overdue");
-            bugLinkLbl.removeStyleName("completed pending");
-        }
-
-        bugLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
-        final ToogleBugSummaryField bugWrapper = new ToogleBugSummaryField();
+        final ToogleBugSummaryField bugWrapper = new ToogleBugSummaryField(bug);
 
         BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
@@ -118,19 +94,6 @@ public class BugRowRenderer extends MVerticalLayout {
         this.with(headerLayout, footer);
     }
 
-    private String buildBugLink() {
-        String uid = UUID.randomUUID().toString();
-
-        String linkName = String.format("[#%d] - %s", bug.getBugkey(), bug.getSummary());
-        A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
-                CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-
-        taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG, bug.getId() + ""));
-        taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-
-        Div resultDiv = new DivLessFormatter().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
-        return resultDiv.write();
-    }
 
     private void deleteBug() {
         ComponentContainer parent = (ComponentContainer) this.getParent();
@@ -183,59 +146,5 @@ public class BugRowRenderer extends MVerticalLayout {
         deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
         filterBtnLayout.addDangerOption(deleteBtn);
         return filterBtnLayout;
-    }
-
-    private class ToogleBugSummaryField extends CssLayout {
-        private boolean isRead = true;
-
-        ToogleBugSummaryField() {
-            super(bugLinkLbl);
-            if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                this.addStyleName("editable-field");
-                this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                    @Override
-                    public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                        if (isRead) {
-                            ToogleBugSummaryField.this.removeComponent(bugLinkLbl);
-                            final TextField editField = new TextField();
-                            editField.setValue(bug.getSummary());
-                            editField.setWidth("100%");
-                            editField.focus();
-                            ToogleBugSummaryField.this.addComponent(editField);
-                            ToogleBugSummaryField.this.removeStyleName("editable-field");
-                            editField.addValueChangeListener(new Property.ValueChangeListener() {
-                                @Override
-                                public void valueChange(Property.ValueChangeEvent event) {
-                                    updateFieldValue(editField);
-                                }
-                            });
-                            editField.addBlurListener(new FieldEvents.BlurListener() {
-                                @Override
-                                public void blur(FieldEvents.BlurEvent event) {
-                                    updateFieldValue(editField);
-                                }
-                            });
-                            isRead = !isRead;
-                        }
-
-                    }
-                });
-            }
-        }
-
-        private void updateFieldValue(TextField editField) {
-            ToogleBugSummaryField.this.removeComponent(editField);
-            ToogleBugSummaryField.this.addComponent(bugLinkLbl);
-            ToogleBugSummaryField.this.addStyleName("editable-field");
-            String newValue = editField.getValue();
-            if (StringUtils.isNotBlank(newValue) && !newValue.equals(bug.getSummary())) {
-                bug.setSummary(newValue);
-                bugLinkLbl.setValue(buildBugLink());
-                BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                bugService.updateWithSession(bug, AppContext.getUsername());
-            }
-
-            isRead = !isRead;
-        }
     }
 }
