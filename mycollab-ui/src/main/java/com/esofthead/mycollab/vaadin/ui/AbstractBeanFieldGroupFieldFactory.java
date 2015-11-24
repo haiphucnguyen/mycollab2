@@ -6,7 +6,6 @@ import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
-import com.esofthead.mycollab.vaadin.ui.form.field.EditableField;
 import com.esofthead.mycollab.validator.constraints.DateComparision;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -117,7 +116,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
                     if (formField instanceof DummyCustomField) {
                         continue;
                     } else if (!(formField instanceof CompoundCustomField)) {
-                        if (!isReadOnlyGroup || (formField instanceof EditableField)) {
+                        if (!isReadOnlyGroup) {
                             fieldGroup.bind(formField, field.getName());
                         }
                     }
