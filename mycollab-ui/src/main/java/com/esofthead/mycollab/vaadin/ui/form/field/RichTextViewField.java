@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui.form.field;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
@@ -18,13 +17,8 @@ public class RichTextViewField extends CustomField {
     private String value;
     private Label label;
 
-
-    public RichTextViewField() {
-        this("");
-    }
-
     public RichTextViewField(String value) {
-        label = new Label(value, ContentMode.HTML);
+        label = new Label(StringUtils.formatRichText(value), ContentMode.HTML);
         label.setWidth("100%");
         label.addStyleName("wordWrap");
     }
@@ -42,13 +36,5 @@ public class RichTextViewField extends CustomField {
     @Override
     protected Component initContent() {
         return label;
-    }
-
-    @Override
-    public void setPropertyDataSource(Property newDataSource) {
-        Object propValue = newDataSource.getValue();
-        value = (propValue != null) ? propValue.toString() : "";
-        label.setValue(StringUtils.formatRichText(value));
-        super.setPropertyDataSource(newDataSource);
     }
 }
