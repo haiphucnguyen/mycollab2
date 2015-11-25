@@ -5,7 +5,7 @@
     <name>mycollab-deployer-ondemand</name>
     <groupId>com.esofthead.mycollab</groupId>
     <artifactId>mycollab-deployer-ondemand</artifactId>
-    <version>5.2.2</version>
+    <version>5.2.3</version>
     <packaging>pom</packaging>
     <prerequisites>
         <maven>3.0.4</maven>
