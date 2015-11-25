@@ -53,7 +53,8 @@ Version 5.2.3
 
 **Improvements & New Features**
 
-* Allow inline edit task and bug summary field in dashboard view
+* Allow inline edit task, milestone and bug summary field in dashboard view
+* Minor UI updates
 
 **Bug Fixes**
 

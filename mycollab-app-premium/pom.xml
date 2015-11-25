@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.2.2</version>
+            <version>5.2.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.esofthead.mycollab</groupId>
@@ -34,19 +34,19 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.2.2</version>
+            <version>5.2.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting-premium</artifactId>
-            <version>5.2.2</version>
+            <version>5.2.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.2.2</version>
+            <version>5.2.3</version>
         </dependency>
 
         <dependency>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.2.2</version>
+            <version>5.2.3</version>
         </dependency>
 
         <dependency>
@@ -296,7 +296,7 @@
                                     <fileset dir="${basedir}/src/main/logs"/>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/bin">
-                                    <fileset dir="${basedir}/src/main/bin"/>
+                                    <fileset dir="${basedir}/src/main/scripts"/>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/txt">
                                     <fileset dir="${basedir}/src/main/txt"/>

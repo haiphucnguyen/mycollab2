@@ -30,8 +30,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 1.0
  * 
  */
-public class BillingPresenter extends AbstractPresenter<IBillingContainer>
-		implements IBillingPresenter {
+public class BillingPresenter extends AbstractPresenter<IBillingContainer> implements IBillingPresenter {
 	private static final long serialVersionUID = 1L;
 
 	public BillingPresenter() {
