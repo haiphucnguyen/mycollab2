@@ -176,8 +176,9 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             this.setStyleName("roadmap-block");
 
             milestoneLbl = new ELabel(buildMilestoneLink(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
+            milestoneLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
             ToogleMilestoneSummaryField toogleMilestoneSummaryField = new ToogleMilestoneSummaryField();
-            this.addComponent(toogleMilestoneSummaryField);
+            this.with(toogleMilestoneSummaryField).expand(toogleMilestoneSummaryField);
 
             CssLayout metaBlock = new CssLayout();
             MilestonePopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(MilestonePopupFieldFactory.class);
@@ -281,13 +282,16 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             private boolean isRead = true;
 
             ToogleMilestoneSummaryField() {
-                super(milestoneLbl);
                 this.setWidth("100%");
+                this.addComponent(milestoneLbl);
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
                     this.addStyleName("editable-field");
                     this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                         @Override
                         public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                            if (event.getClickedComponent() == milestoneLbl) {
+                                return;
+                            }
                             if (isRead) {
                                 ToogleMilestoneSummaryField.this.removeComponent(milestoneLbl);
                                 final TextField editField = new TextField();

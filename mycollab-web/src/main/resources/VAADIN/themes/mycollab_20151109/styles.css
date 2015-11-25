@@ -17374,8 +17374,8 @@ div.v-ratingstars-bar {
 .vertical-tabsheet .v-button-tab {
 	border: none;
 	background: none no-repeat 0 0 transparent;
-	height: 42px;
-	border-radius: 0px;
+	margin: 5px;
+	border-radius: 6px;
 	-webkit-box-shadow: none;
 	text-align: left;
 }
@@ -17383,9 +17383,7 @@ div.v-ratingstars-bar {
 .vertical-tabsheet .v-button-tab .v-button-wrap {
 	background: none no-repeat 0 0 transparent;
 	background-image: none;
-	border-radius: 0px;
 	text-align: left;
-	margin-left: 10px;
 	border: none;
 }
 

@@ -109,13 +109,13 @@ public class ToogleBugSummaryField extends CssLayout {
         String uid = UUID.randomUUID().toString();
 
         String linkName = String.format("[#%d] - %s", bug.getBugkey(), StringUtils.trim(bug.getSummary(), maxLength, true));
-        A taskLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
+        A bugLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(),
                 CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
 
-        taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG, bug.getId() + ""));
-        taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG, bug.getId() + ""));
+        bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
 
-        Div resultDiv = new DivLessFormatter().appendChild(taskLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+        Div resultDiv = new DivLessFormatter().appendChild(bugLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
         return resultDiv.write();
     }
 }
