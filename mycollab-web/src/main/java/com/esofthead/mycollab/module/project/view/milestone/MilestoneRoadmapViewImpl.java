@@ -25,10 +25,8 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -40,7 +38,6 @@ import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -50,25 +47,18 @@ import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
-import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.teemu.VaadinIcons;
-import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author MyCollab Ltd
@@ -168,16 +158,11 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
 
     private static class MilestoneBlock extends MVerticalLayout {
         private boolean showIssues = false;
-        private ELabel milestoneLbl;
-        private Milestone milestone;
 
         MilestoneBlock(final SimpleMilestone milestone) {
-            this.milestone = milestone;
             this.setStyleName("roadmap-block");
 
-            milestoneLbl = new ELabel(buildMilestoneLink(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
-            milestoneLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-            ToogleMilestoneSummaryField toogleMilestoneSummaryField = new ToogleMilestoneSummaryField();
+            ToogleMilestoneSummaryField toogleMilestoneSummaryField = new ToogleMilestoneSummaryField(milestone);
             this.with(toogleMilestoneSummaryField).expand(toogleMilestoneSummaryField);
 
             CssLayout metaBlock = new CssLayout();
@@ -226,31 +211,16 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
                         List<ProjectGenericTask> genericTasks = genericTaskService.findPagableListByCriteria(new
                                 SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
                         for (ProjectGenericTask genericTask : genericTasks) {
-                            Div issueDiv = new Div();
-                            String uid = UUID.randomUUID().toString();
-                            A taskLink = new A().setId("tag" + uid);
-                            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
-                                    genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
-                            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, genericTask.getType(), genericTask.getTypeId() + ""));
-                            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-                            taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
-                            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
-                            Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
-                            if (genericTask.isClosed()) {
-                                issueLbl.addStyleName("completed");
-                            } else if (genericTask.isOverdue()) {
-                                issueLbl.addStyleName("overdue");
-                            }
+                            ToogleGenericTaskSummaryField toogleGenericTaskSummaryField = new ToogleGenericTaskSummaryField(genericTask);
                             MHorizontalLayout rowComp = new MHorizontalLayout();
                             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-                            rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML));
+                            rowComp.with(new ELabel(ProjectAssetsManager.getAsset(genericTask.getType()).getHtml(), ContentMode.HTML).withWidthUndefined());
                             String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
                             Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
                                     .getAssignUserFullName());
-                            rowComp.with(new ELabel(img.write(), ContentMode.HTML));
+                            rowComp.with(new ELabel(img.write(), ContentMode.HTML).withWidthUndefined());
 
-                            MCssLayout issueWrapper = new MCssLayout(issueLbl);
-                            rowComp.with(issueWrapper);
+                            rowComp.with(toogleGenericTaskSummaryField).expand(toogleGenericTaskSummaryField);
                             issueLayout.addComponent(rowComp);
 
                         }
@@ -267,73 +237,6 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             progressLayout.with(progressInfoLbl, viewIssuesBtn);
             this.addComponent(progressLayout);
             this.addComponent(issueLayout);
-        }
-
-        private String buildMilestoneLink() {
-            Div milestoneDiv = new Div().appendText(VaadinIcons.CALENDAR_BRIEFCASE.getHtml() + " ").appendChild(new A
-                    (ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()))
-                    .appendText(milestone.getName())).appendText(" (" + AppContext.getMessage(com.esofthead.mycollab
-                    .module.project.i18n.OptionI18nEnum.MilestoneStatus.class, milestone
-                    .getStatus()) + ")");
-            return milestoneDiv.write();
-        }
-
-        private class ToogleMilestoneSummaryField extends CssLayout {
-            private boolean isRead = true;
-
-            ToogleMilestoneSummaryField() {
-                this.setWidth("100%");
-                this.addComponent(milestoneLbl);
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                    this.addStyleName("editable-field");
-                    this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                        @Override
-                        public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                            if (event.getClickedComponent() == milestoneLbl) {
-                                return;
-                            }
-                            if (isRead) {
-                                ToogleMilestoneSummaryField.this.removeComponent(milestoneLbl);
-                                final TextField editField = new TextField();
-                                editField.setValue(milestone.getName());
-                                editField.setWidth("100%");
-                                editField.focus();
-                                ToogleMilestoneSummaryField.this.addComponent(editField);
-                                ToogleMilestoneSummaryField.this.removeStyleName("editable-field");
-                                editField.addValueChangeListener(new Property.ValueChangeListener() {
-                                    @Override
-                                    public void valueChange(Property.ValueChangeEvent event) {
-                                        updateFieldValue(editField);
-                                    }
-                                });
-                                editField.addBlurListener(new FieldEvents.BlurListener() {
-                                    @Override
-                                    public void blur(FieldEvents.BlurEvent event) {
-                                        updateFieldValue(editField);
-                                    }
-                                });
-                                isRead = !isRead;
-                            }
-
-                        }
-                    });
-                }
-            }
-
-            private void updateFieldValue(TextField editField) {
-                ToogleMilestoneSummaryField.this.removeComponent(editField);
-                ToogleMilestoneSummaryField.this.addComponent(milestoneLbl);
-                ToogleMilestoneSummaryField.this.addStyleName("editable-field");
-                String newValue = editField.getValue();
-                if (StringUtils.isNotBlank(newValue) && !newValue.equals(milestone.getName())) {
-                    milestone.setName(newValue);
-                    milestoneLbl.setValue(buildMilestoneLink());
-                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                    milestoneService.updateWithSession(milestone, AppContext.getUsername());
-                }
-
-                isRead = !isRead;
-            }
         }
     }
 }

@@ -19,11 +19,9 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
@@ -46,15 +44,10 @@ import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.table.AbstractPagedBeanTable;
 import com.esofthead.mycollab.web.CustomLayoutExt;
 import com.google.common.eventbus.Subscribe;
-import com.hp.gagawa.java.elements.A;
-import com.vaadin.data.Property;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.teemu.VaadinIcons;
@@ -257,23 +250,15 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private class MilestoneBox extends CssLayout {
-        private SimpleMilestone milestone;
-        private Label milestoneLbl;
 
         MilestoneBox(final SimpleMilestone milestone) {
-            this.milestone = milestone;
             this.addStyleName(UIConstants.MILESTONE_BOX);
             this.setWidth("100%");
 
-            milestoneLbl = new Label(buildMilestoneLink(), ContentMode.HTML);
-            milestoneLbl.setDescription(milestone.getName());
-            milestoneLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
-            milestoneLbl.addStyleName(ValoTheme.LABEL_H3);
-            milestoneLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-            milestoneLbl.setWidth("100%");
-            ToogleMilestoneSummaryField toogleMilestoneSummaryField = new ToogleMilestoneSummaryField();
+            ToogleMilestoneSummaryField toogleMilestoneSummaryField = new ToogleMilestoneSummaryField(milestone, 50);
 
-            MHorizontalLayout milestoneHeader = new MHorizontalLayout().withWidth("100%").with(toogleMilestoneSummaryField).expand(toogleMilestoneSummaryField);
+            MHorizontalLayout milestoneHeader = new MHorizontalLayout().withWidth("100%")
+                    .with(toogleMilestoneSummaryField).expand(toogleMilestoneSummaryField);
 
             PopupButton taskSettingPopupBtn = new PopupButton();
             taskSettingPopupBtn.setWidth("15px");
@@ -348,70 +333,6 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
             metaBlock.addComponent(popupFieldFactory.createBillableHoursPopupField(milestone));
             metaBlock.addComponent(popupFieldFactory.createNonBillableHoursPopupField(milestone));
             this.addComponent(metaBlock);
-        }
-
-        private String buildMilestoneLink() {
-            A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(milestone.getProjectid(), milestone.getId()))
-                    .appendText(StringUtils.trim(milestone.getName(), 50, true));
-            return milestoneDiv.write();
-        }
-
-        private class ToogleMilestoneSummaryField extends CssLayout {
-            private boolean isRead = true;
-
-            ToogleMilestoneSummaryField() {
-                super(milestoneLbl);
-                this.setWidth("100%");
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                    this.addStyleName("editable-field");
-                    this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                        @Override
-                        public void layoutClick(LayoutEvents.LayoutClickEvent event) {
-                            if (event.getClickedComponent() == milestoneLbl) {
-                                return;
-                            }
-                            if (isRead) {
-                                ToogleMilestoneSummaryField.this.removeComponent(milestoneLbl);
-                                final TextField editField = new TextField();
-                                editField.setValue(milestone.getName());
-                                editField.setWidth("100%");
-                                editField.focus();
-                                ToogleMilestoneSummaryField.this.addComponent(editField);
-                                ToogleMilestoneSummaryField.this.removeStyleName("editable-field");
-                                editField.addValueChangeListener(new Property.ValueChangeListener() {
-                                    @Override
-                                    public void valueChange(Property.ValueChangeEvent event) {
-                                        updateFieldValue(editField);
-                                    }
-                                });
-                                editField.addBlurListener(new FieldEvents.BlurListener() {
-                                    @Override
-                                    public void blur(FieldEvents.BlurEvent event) {
-                                        updateFieldValue(editField);
-                                    }
-                                });
-                                isRead = !isRead;
-                            }
-
-                        }
-                    });
-                }
-            }
-
-            private void updateFieldValue(TextField editField) {
-                ToogleMilestoneSummaryField.this.removeComponent(editField);
-                ToogleMilestoneSummaryField.this.addComponent(milestoneLbl);
-                ToogleMilestoneSummaryField.this.addStyleName("editable-field");
-                String newValue = editField.getValue();
-                if (StringUtils.isNotBlank(newValue) && !newValue.equals(milestone.getName())) {
-                    milestone.setName(newValue);
-                    milestoneLbl.setValue(buildMilestoneLink());
-                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                    milestoneService.updateWithSession(milestone, AppContext.getUsername());
-                }
-
-                isRead = !isRead;
-            }
         }
     }
 

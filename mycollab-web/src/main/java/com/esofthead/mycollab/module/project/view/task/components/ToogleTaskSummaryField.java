@@ -18,7 +18,6 @@ import com.vaadin.data.Property;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -123,9 +122,18 @@ public class ToogleTaskSummaryField extends CssLayout {
         return resultDiv.write();
     }
 
+    public void updateLabel() {
+        taskLinkLbl.setValue(buildTaskLink());
+    }
+
     public void closeTask() {
         taskLinkLbl.removeStyleName("overdue pending");
         taskLinkLbl.addStyleName("completed");
+    }
+
+    public void overdueTask() {
+        taskLinkLbl.removeStyleName("completed pending");
+        taskLinkLbl.addStyleName("overdue");
     }
 
     public void reOpenTask() {
