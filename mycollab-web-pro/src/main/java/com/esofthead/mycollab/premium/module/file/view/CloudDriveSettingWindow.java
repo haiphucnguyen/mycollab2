@@ -120,7 +120,7 @@ public class CloudDriveSettingWindow extends Window {
                 final PopupButton popupBtn = new PopupButton();
                 popupBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
-                final OptionPopupContent popupOptionActionLayout = new OptionPopupContent().withWidth("100px");
+                final OptionPopupContent popupOptionActionLayout = new OptionPopupContent();
 
                 Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;

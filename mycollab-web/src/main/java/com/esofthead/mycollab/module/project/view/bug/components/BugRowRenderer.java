@@ -103,7 +103,7 @@ public class BugRowRenderer extends MVerticalLayout {
     }
 
     private OptionPopupContent createPopupContent() {
-        OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("100px");
+        OptionPopupContent filterBtnLayout = new OptionPopupContent();
 
         Button editButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

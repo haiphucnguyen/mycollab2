@@ -112,7 +112,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
         linkBtn.setWidth("65px");
 
-        final OptionPopupContent filterBtnLayout = new OptionPopupContent().withWidth("180px");
+        final OptionPopupContent filterBtnLayout = new OptionPopupContent();
 
         Button connectDropboxBtn = new Button("Connect Dropbox", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
