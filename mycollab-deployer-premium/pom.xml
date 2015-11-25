@@ -14,6 +14,7 @@
         <module>../mycollab-parent</module>
         <module>../mycollab-parent-premium</module>
         <module>../mycollab-core</module>
+        <module>../mycollab-license</module>
         <module>../mycollab-dao</module>
         <module>../mycollab-jackrabbit</module>
         <module>../mycollab-config</module>
