@@ -367,6 +367,9 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
                     this.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                         @Override
                         public void layoutClick(LayoutEvents.LayoutClickEvent event) {
+                            if (event.getClickedComponent() == milestoneLbl) {
+                                return;
+                            }
                             if (isRead) {
                                 ToogleMilestoneSummaryField.this.removeComponent(milestoneLbl);
                                 final TextField editField = new TextField();
