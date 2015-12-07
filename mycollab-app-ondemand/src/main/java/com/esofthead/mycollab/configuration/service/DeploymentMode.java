@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class DeploymentMode implements IDeploymentMode {
     @Override
     public boolean isDemandEdition() {
-        return true;
+        return false;
     }
 
     @Override

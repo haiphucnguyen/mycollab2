@@ -26,8 +26,7 @@ public class AccountController {
             "Content-Type=application/x-www-form-urlencoded")
     public String signup(@RequestParam("subdomain") String subdomain, @RequestParam("planId") Integer planId,
                          @RequestParam("password") String password, @RequestParam("email") String email,
-                         @RequestParam("timezone") String timezoneId, @RequestParam("isEmailVerified") Boolean
-                                     isEmailVerified) {
+                         @RequestParam("timezone") String timezoneId, @RequestParam("isEmailVerified") Boolean isEmailVerified) {
         LOG.debug("Register account with subDomain {}, username {}", subdomain, email);
         if (isEmailVerified == null) {
             isEmailVerified = Boolean.FALSE;
@@ -35,8 +34,6 @@ public class AccountController {
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 
         String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
-        LOG.debug("Return site url {} to sign up user {}", siteUrl, email);
-
         return siteUrl;
     }
 }

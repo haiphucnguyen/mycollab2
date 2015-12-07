@@ -22,7 +22,7 @@ public class ContactUsController {
     private MailRelayService mailRelayService;
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
-    public void doContact(@RequestParam("name") String name, @RequestParam("email") String email,
+    public String doContact(@RequestParam("name") String name, @RequestParam("email") String email,
                           @RequestParam("company") String company, @RequestParam("role") String role,
                           @RequestParam("industry") String industry, @RequestParam("budget") String budget,
                           @RequestParam("subject") String subject, @RequestParam("message") String message) {
@@ -38,5 +38,6 @@ public class ContactUsController {
                 new Li().appendText(String.format("Message: %s", message))));
         mailRelayService.saveRelayEmail(new String[]{"Sir"},
                 new String[]{"hainguyen@mycollab.com"}, "New guy want to contact", bodyContent.write());
+        return "Ok";
     }
 }

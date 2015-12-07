@@ -45,7 +45,13 @@ Last changelog
 
 Version 5.2.4
 -----------------------------
+**Library Upgrades**
 
+* Gson 2.5, Other libraries
+
+**Improvements & New Features**
+
+* Add upcoming tasks in the project dashboard
 
 Version 5.2.3
 -----------------------------
