@@ -368,7 +368,10 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             root = new MVerticalLayout();
             root.setWidth("300px");
             root.addStyleName("kanban-block");
+            String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();
+            root.setId(optionId);
             this.setCompositionRoot(root);
+            JavaScript.getCurrent().execute("$('#" + optionId + "').css({'background-color':'#" + stage.getColor() + "'});");
 
             dragLayoutContainer = new DDVerticalLayout();
             dragLayoutContainer.setSpacing(true);
