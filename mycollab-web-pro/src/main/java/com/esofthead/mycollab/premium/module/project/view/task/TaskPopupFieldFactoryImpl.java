@@ -1,8 +1,11 @@
 package com.esofthead.mycollab.premium.module.project.view.task;
 
+import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -30,10 +33,12 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.task.components.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.task.components.TaskStatusComboBox;
+import com.esofthead.mycollab.premium.module.project.ui.components.WatchersMultiSelection;
 import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.form.field.PopupBeanFieldBuilder;
@@ -52,6 +57,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd
@@ -265,6 +271,48 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         TaskBillableHoursPopupField view = new TaskBillableHoursPopupField(task, false);
         view.setDescription("Non billable hours");
         return view;
+    }
+
+    @Override
+    public PopupView createFollowersPopupField(SimpleTask task) {
+        return new TaskFollowersPopupView(task);
+    }
+
+    private static class TaskFollowersPopupView extends LazyPopupView {
+        private SimpleTask task;
+        private WatchersMultiSelection watchersMultiSelection;
+
+        TaskFollowersPopupView(SimpleTask task) {
+            super("");
+            this.task = task;
+            if (task.getNumFollowers() == null || task.getNumFollowers() == 0) {
+                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " 0");
+            } else {
+                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + task.getNumFollowers());
+            }
+        }
+
+        @Override
+        protected void doShow() {
+            MVerticalLayout layout = getWrapContent();
+            layout.removeAllComponents();
+            watchersMultiSelection = new WatchersMultiSelection(ProjectTypeConstants.TASK, task.getId());
+            layout.with(new ELabel("Modify watchers").withStyleName(ValoTheme.LABEL_H3), watchersMultiSelection);
+        }
+
+        @Override
+        protected void doHide() {
+            MonitorItemService monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
+
+            List<MonitorItem> items = watchersMultiSelection.getUnsavedItems();
+            monitorItemService.saveMonitorItems(items);
+
+            MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
+            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+            searchCriteria.setTypeId(new NumberSearchField(task.getId()));
+            int numFollowers = monitorItemService.getTotalCount(searchCriteria);
+            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
+        }
     }
 
     private static class TaskCommentsPopupView extends LazyPopupView {

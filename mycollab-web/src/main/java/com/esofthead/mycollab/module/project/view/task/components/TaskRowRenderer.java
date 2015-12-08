@@ -74,6 +74,9 @@ class TaskRowRenderer extends MVerticalLayout {
         PopupView commentField = popupFieldFactory.createCommentsPopupField(task);
         footer.addComponent(commentField);
 
+        PopupView followerView = popupFieldFactory.createFollowersPopupField(task);
+        footer.addComponent(followerView);
+
         PopupView statusField = popupFieldFactory.createStatusPopupField(task);
         footer.addComponent(statusField);
 
