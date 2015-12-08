@@ -18,7 +18,7 @@
         <result column="parentTaskName" property="parentTaskName" jdbcType="VARCHAR"/>
         <result column="billableHours" property="billableHours" jdbcType="DOUBLE"/>
         <result column="nonBillableHours" property="nonBillableHours" jdbcType="DOUBLE"/>
-        <result column="numFollowers" property="numFollowers" jdbcType="DOUBLE"/>
+        <result column="numFollowers" property="numFollowers" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="querySearchCriteria">

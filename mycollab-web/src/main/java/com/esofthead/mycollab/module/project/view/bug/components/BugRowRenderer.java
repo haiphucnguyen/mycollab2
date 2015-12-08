@@ -73,6 +73,9 @@ public class BugRowRenderer extends MVerticalLayout {
         PopupView commentsField = popupFieldFactory.createBugCommentsPopupField(bug);
         footer.addComponent(commentsField);
 
+        PopupView followerField = popupFieldFactory.createFollowersPopupField(bug);
+        footer.addComponent(followerField);
+
         PopupView statusField = popupFieldFactory.createBugStatusPopupField(bug);
         footer.addComponent(statusField);
 
