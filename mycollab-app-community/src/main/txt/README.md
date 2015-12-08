@@ -52,8 +52,9 @@ Version 5.2.4
 **Improvements & New Features**
 
 * Add upcoming tasks in the project dashboard
-* Customize color of project properties
-* Customize status of project entities such as issues, tasks
+* Customize color of task statuses in kanban board
+* Display detail watchers in the sidebar
+
 
 Version 5.2.3
 -----------------------------

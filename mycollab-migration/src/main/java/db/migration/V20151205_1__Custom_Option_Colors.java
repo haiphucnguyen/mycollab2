@@ -13,5 +13,9 @@ public class V20151205_1__Custom_Option_Colors   implements SpringJdbcMigration 
         jdbcTemplate.execute("ALTER TABLE `m_options` ADD COLUMN `color` VARCHAR(6) NULL;");
         jdbcTemplate.update("UPDATE m_options SET color='fdde86' WHERE id > 0");
         jdbcTemplate.execute("ALTER TABLE `m_options` CHANGE COLUMN `color` `color` VARCHAR(6) NOT NULL ;");
+
+        jdbcTemplate.update("UPDATE s_account_theme SET vTabsheetBg=?, vTabsheetBgSelected=?, " +
+                "topMenuBgSelected=?, vTabsheetText=?, actionBtnText=?, optionBtnText=?, dangerBtnText=? WHERE " +
+                "isDefault=? ", new Object[]{"24A3E3", "f7f7f7", "f7f7f7", "f7f7f7", "f7f7f7", "f7f7f7", "f7f7f7", 1});
     }
 }

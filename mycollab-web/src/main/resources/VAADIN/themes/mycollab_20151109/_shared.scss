@@ -618,4 +618,38 @@
       font-family: FontAwesome;
     }
   }
+
+  .v-csslayout.removeable-btn {
+    display: flex;
+    min-height: 21px;
+    margin: 3px;
+    &:hover::after {
+      float:top;
+      content:"\f00d";
+      color:$my-meta-color;
+      font-family: FontAwesome;
+      margin: 0px;
+      z-index: 10;
+      cursor: pointer;
+    }
+  }
+
+  .v-popupview {
+    text-decoration: none;
+    color: #006DAC;
+    &:hover {
+      color: #006DAC;
+    }
+  }
+
+  .flex {
+    @include flex-compatible;
+    -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+    flex-wrap: wrap;
+    -ms-writing-mode:lr-tb;
+  }
+
+  .scrollable-container {
+    overflow-y: auto;
+  }
 }
