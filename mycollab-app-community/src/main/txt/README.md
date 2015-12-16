@@ -47,7 +47,10 @@ Version 5.2.4
 -----------------------------
 **Library Upgrades**
 
-* Gson 2.5, Other libraries
+* Gson 2.5 
+* Guava 19
+* Jackrabbit 2.11.3
+* Other libraries
 
 **Improvements & New Features**
 

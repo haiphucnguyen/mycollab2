@@ -21,7 +21,7 @@ public class ContactUsController {
     @Autowired
     private MailRelayService mailRelayService;
 
-    @RequestMapping(value = "/submit", method = RequestMethod.POST, headers = "Content-Type=application/x-www-form-urlencoded")
+    @RequestMapping(value = "/submit", method = RequestMethod.POST, headers = {"Content-Type=application/x-www-form-urlencoded"})
     public String doContact(@RequestParam("name") String name, @RequestParam("email") String email,
                           @RequestParam("company") String company, @RequestParam("role") String role,
                           @RequestParam("industry") String industry, @RequestParam("budget") String budget,
