@@ -58,8 +58,8 @@ public class CampaignController {
                 new Li().appendText(String.format("Email: %s", email)),
                 new Li().appendText(String.format("Company: %s", company)),
                 new Li().appendText(String.format("Role: %s", role)),
-                new Li().appendText(String.format("Industry: %s", phone)),
-                new Li().appendText(String.format("Budget: %s", country))));
+                new Li().appendText(String.format("Phone: %s", phone)),
+                new Li().appendText(String.format("Country: %s", country))));
 
         mailRelayService.saveRelayEmail(new String[]{"Sir"},
                 new String[]{"hainguyen@mycollab.com"}, "New guy want to contact", bodyContent.write());
