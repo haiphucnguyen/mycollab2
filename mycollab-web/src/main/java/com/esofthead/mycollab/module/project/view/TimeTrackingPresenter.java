@@ -36,7 +36,10 @@ public class TimeTrackingPresenter extends AbstractPresenter<ITimeTrackingView> 
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        UserDashboardView prjContainer = (UserDashboardView) container;
+        if (container instanceof ProjectModule) {
+            container.removeAllComponents();
+            container.addComponent(view);
+        }
         view.display();
     }
 }

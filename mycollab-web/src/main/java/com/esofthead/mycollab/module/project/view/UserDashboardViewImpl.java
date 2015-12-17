@@ -45,7 +45,6 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
     private static final long serialVersionUID = 1L;
 
     private List<Integer> prjKeys;
-    private ProjectVerticalTabsheet myProjectTab;
 
     private ProjectDashboardPresenter projectDashboardPresenter;
     private FollowingTicketPresenter followingTicketPresenter;
@@ -66,7 +65,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
         tabSheet.addTab(buildDashboardComp(), "Dashboard", FontAwesome.DASHBOARD);
         tabSheet.addTab(buildFollowingTicketComp(), "Following Items", FontAwesome.EYE);
         tabSheet.addTab(buildTimesheetComp(), "Time", FontAwesome.CLOCK_O);
-        tabSheet.addTab(buildSettingComp(), "Settings", FontAwesome.COG);
+//        tabSheet.addTab(buildSettingComp(), "Settings", FontAwesome.COG);
         tabSheet.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             @Override
             public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
