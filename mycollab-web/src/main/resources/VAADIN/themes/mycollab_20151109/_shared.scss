@@ -652,4 +652,87 @@
   .scrollable-container {
     overflow-y: auto;
   }
+
+  .tm-container {
+    border: 1px solid $my-separator-color;
+    .tm-wrapper {
+      overflow-x: auto;
+      .timeline {
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        li {
+          transition: all 200ms ease-in;
+          .timestamp {
+            margin-bottom: 20px;
+            padding: 0px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-weight: 100;
+            font-size: $font-small;
+            color: $my-meta-color;
+          }
+          .status {
+            padding: 0px 40px;
+            display: flex;
+            justify-content: center;
+            border-top: 2px solid #D6DCE0;
+            position: relative;
+            transition: all 200ms ease-in;
+            a {
+              margin-top: 10px;
+            }
+            &:before{
+              content: '';
+              width: 25px;
+              height: 25px;
+              background-color: white;
+              border-radius: 25px;
+              border: 1px solid #ddd;
+              position: absolute;
+              text-align: center;
+              top: -15px;
+              left: 42%;
+              transition: all 200ms ease-in;
+            }
+          }
+          &.closed {
+            .status {
+              border-top: 2px solid #d9cfb5;
+              &:before {
+                content: 'C';
+                background-color: #d9cfb5;
+                border: none;
+                transition: all 200ms ease-in;
+              }
+            }
+          }
+          &.inprogress {
+            .status {
+              border-top: 2px solid #66DC71;
+              &:before {
+                content: 'P';
+                background-color: #66DC71;
+                border: none;
+                transition: all 200ms ease-in;
+              }
+            }
+          }
+          &.future {
+            .status {
+              border-top: 2px solid #2981fe;
+              &:before {
+                content: 'F';
+                background-color: #2981fe;
+                border: none;
+                transition: all 200ms ease-in;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

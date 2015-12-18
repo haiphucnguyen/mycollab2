@@ -50,7 +50,6 @@ import java.util.GregorianCalendar;
  * @since 1.0
  */
 public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFollowingTicketService, FollowingTicketSearchCriteria, FollowingTicket> {
-
     private static final long serialVersionUID = 1L;
 
     public FollowingTicketTableDisplay() {
@@ -72,8 +71,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
 
                     if (BugStatus.Verified.name().equals(ticket.getStatus())) {
                         ticketLink.addStyleName(UIConstants.LINK_COMPLETED);
-                    } else if (ticket.getDueDate() != null
-                            && ticket.getDueDate().before(DateTimeUtils.getCurrentDateWithoutMS())) {
+                    } else if (ticket.getDueDate() != null && ticket.getDueDate().before(DateTimeUtils.getCurrentDateWithoutMS())) {
                         ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
                     }
 
@@ -86,8 +84,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                             final int bugId = ticket.getTypeId();
                             final PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                                     new BugScreenData.Read(bugId));
-                            EventBusFactory.getInstance()
-                                    .post(new ProjectEvent.GotoMyProject(this, chain));
+                            EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                         }
                     });
                 } else if (ProjectTypeConstants.TASK.equals(ticket.getType())) {
@@ -122,9 +119,7 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                     } else {
                         if ("Pending".equals(ticket.getStatus())) {
                             ticketLink.addStyleName(UIConstants.LINK_PENDING);
-                        } else if (ticket.getDueDate() != null
-                                && ticket.getDueDate().before(
-                                new GregorianCalendar().getTime())) {
+                        } else if (ticket.getDueDate() != null && ticket.getDueDate().before(new GregorianCalendar().getTime())) {
                             ticketLink.addStyleName(UIConstants.LINK_OVERDUE);
                         }
                     }
@@ -136,12 +131,9 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                         public void buttonClick(final ClickEvent event) {
                             int projectId = ticket.getProjectId();
                             int problemId = ticket.getTypeId();
-                            PageActionChain chain = new PageActionChain(
-                                    new ProjectScreenData.Goto(projectId),
+                            PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                                     new ProblemScreenData.Read(problemId));
-                            EventBusFactory.getInstance()
-                                    .post(new ProjectEvent.GotoMyProject(this,
-                                            chain));
+                            EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                         }
                     });
                 } else if (ProjectTypeConstants.RISK.equals(ticket.getType())) {
@@ -166,12 +158,9 @@ public class FollowingTicketTableDisplay extends DefaultPagedBeanTable<ProjectFo
                         public void buttonClick(final ClickEvent event) {
                             final int projectId = ticket.getProjectId();
                             final int riskId = ticket.getTypeId();
-                            final PageActionChain chain = new PageActionChain(
-                                    new ProjectScreenData.Goto(projectId),
+                            final PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                                     new RiskScreenData.Read(riskId));
-                            EventBusFactory.getInstance()
-                                    .post(new ProjectEvent.GotoMyProject(this,
-                                            chain));
+                            EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                         }
                     });
                 }
