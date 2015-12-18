@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.view.milestone.AllMilestoneTimelineWidget;
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
@@ -25,11 +26,13 @@ public class ProjectDashboardViewImpl extends AbstractPageView implements Projec
         removeAllComponents();
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false)).withWidth("100%");
 
-        ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
-        MVerticalLayout leftPanel = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
-                true, false, false)).withWidth("100%").with(activityStreamComponent);
+        AllMilestoneTimelineWidget milestoneTimelineWidget = new AllMilestoneTimelineWidget();
 
-        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("565px");
+        ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
+        MVerticalLayout leftPanel = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(true,
+                true, false, false)).withWidth("100%").with(milestoneTimelineWidget, activityStreamComponent);
+
+        MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("550px");
         MyProjectListComponent myProjectListComponent = new MyProjectListComponent();
         TaskStatusComponent taskStatusComponent = new TaskStatusComponent();
         rightPanel.with(myProjectListComponent, taskStatusComponent);
@@ -45,6 +48,7 @@ public class ProjectDashboardViewImpl extends AbstractPageView implements Projec
         List<Integer> prjKeys = userDashboardView.getInvoledProjKeys();
         if (CollectionUtils.isNotEmpty(prjKeys)) {
             activityStreamComponent.showFeeds(prjKeys);
+            milestoneTimelineWidget.display();
             myProjectListComponent.displayDefaultProjectsList();
             taskStatusComponent.showProjectTasksByStatus(prjKeys);
         }

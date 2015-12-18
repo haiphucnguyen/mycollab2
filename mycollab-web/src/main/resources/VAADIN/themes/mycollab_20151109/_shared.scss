@@ -673,17 +673,19 @@
             font-weight: 100;
             font-size: $font-small;
             color: $my-meta-color;
+            .date.overdue {
+              color: red;
+            }
           }
           .status {
-            padding: 0px 40px;
+            padding: 10px 40px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
+            text-align: center;
             border-top: 2px solid #D6DCE0;
             position: relative;
             transition: all 200ms ease-in;
-            a {
-              margin-top: 10px;
-            }
             &:before{
               content: '';
               width: 25px;

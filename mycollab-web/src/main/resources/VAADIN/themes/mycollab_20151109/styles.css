@@ -2255,17 +2255,19 @@ span.block {
 	color: #999;
 }
 
+.tm-container .tm-wrapper .timeline li .timestamp .date.overdue {
+	color: red;
+}
+
 .tm-container .tm-wrapper .timeline li .status {
-	padding: 0px 40px;
+	padding: 10px 40px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	text-align: center;
 	border-top: 2px solid #D6DCE0;
 	position: relative;
 	transition: all 200ms ease-in;
-}
-
-.tm-container .tm-wrapper .timeline li .status a {
-	margin-top: 10px;
 }
 
 .tm-container .tm-wrapper .timeline li .status:before {
@@ -14674,17 +14676,19 @@ span.block {
 	color: #999;
 }
 
+.tm-container .tm-wrapper .timeline li .timestamp .date.overdue {
+	color: red;
+}
+
 .tm-container .tm-wrapper .timeline li .status {
-	padding: 0px 40px;
+	padding: 10px 40px;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
+	text-align: center;
 	border-top: 2px solid #D6DCE0;
 	position: relative;
 	transition: all 200ms ease-in;
-}
-
-.tm-container .tm-wrapper .timeline li .status a {
-	margin-top: 10px;
 }
 
 .tm-container .tm-wrapper .timeline li .status:before {

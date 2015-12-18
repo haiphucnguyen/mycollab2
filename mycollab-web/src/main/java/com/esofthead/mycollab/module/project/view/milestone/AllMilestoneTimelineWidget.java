@@ -1,23 +1,26 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.view.UserDashboardView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.hp.gagawa.java.elements.*;
 import com.vaadin.data.Property;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CheckBox;
@@ -33,42 +36,43 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-public class MilestoneTimelineWidget extends MVerticalLayout {
-    private CssLayout timelineContainer;
+public class AllMilestoneTimelineWidget extends MVerticalLayout {
     private List<SimpleMilestone> milestones;
+    private CssLayout timelineContainer;
 
     public void display() {
+        this.withMargin(new MarginInfo(true, false, true, false));
         this.setWidth("100%");
         this.addStyleName("tm-container");
 
-        MHorizontalLayout headerLayout = new MHorizontalLayout();
+        MHorizontalLayout headerLayout = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true));
         ELabel titleLbl = new ELabel("Phase Timeline").withStyleName(ValoTheme.LABEL_H2);
         titleLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
 
-        final CheckBox noDateSetMilestone = new CheckBox("No date set");
-        noDateSetMilestone.setValue(false);
-
+        final CheckBox includeNoDateSet = new CheckBox("No date set");
+        includeNoDateSet.setValue(false);
 
         final CheckBox includeClosedMilestone = new CheckBox("Closed phase");
         includeClosedMilestone.setValue(false);
 
-        noDateSetMilestone.addValueChangeListener(new Property.ValueChangeListener() {
+        includeNoDateSet.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                displayTimelines(noDateSetMilestone.getValue(), includeClosedMilestone.getValue());
+                displayTimelines(includeNoDateSet.getValue(), includeClosedMilestone.getValue());
             }
         });
         includeClosedMilestone.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent event) {
-                displayTimelines(noDateSetMilestone.getValue(), includeClosedMilestone.getValue());
+                displayTimelines(includeNoDateSet.getValue(), includeClosedMilestone.getValue());
             }
         });
-        headerLayout.with(titleLbl, noDateSetMilestone, includeClosedMilestone).expand(titleLbl).withAlign
-                (noDateSetMilestone, Alignment.MIDDLE_RIGHT).withAlign(includeClosedMilestone, Alignment.MIDDLE_RIGHT);
+        headerLayout.with(titleLbl, includeNoDateSet, includeClosedMilestone).expand(titleLbl).withAlign(includeNoDateSet, Alignment
+                .MIDDLE_RIGHT).withAlign(includeClosedMilestone, Alignment.MIDDLE_RIGHT);
 
         MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-        searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
+        searchCriteria.setProjectIds(new SetSearchField<>(userDashboardView.getInvoledProjKeys()));
         searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField(Milestone.Field.enddate.name(), "ASC")));
         MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
         milestones = milestoneService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
@@ -87,7 +91,7 @@ public class MilestoneTimelineWidget extends MVerticalLayout {
 
         for (SimpleMilestone milestone : milestones) {
             if (!includeClosedMilestone) {
-                if (MilestoneStatus.Closed.name().equals(milestone.getStatus())) {
+                if (OptionI18nEnum.MilestoneStatus.Closed.name().equals(milestone.getStatus())) {
                     continue;
                 }
             }
@@ -97,22 +101,23 @@ public class MilestoneTimelineWidget extends MVerticalLayout {
                 }
             }
             Li li = new Li();
-            if (MilestoneStatus.Closed.name().equals(milestone.getStatus())) {
+            if (OptionI18nEnum.MilestoneStatus.Closed.name().equals(milestone.getStatus())) {
                 li.setCSSClass("li closed");
-            } else if (MilestoneStatus.InProgress.name().equals(milestone.getStatus())) {
+            } else if (OptionI18nEnum.MilestoneStatus.InProgress.name().equals(milestone.getStatus())) {
                 li.setCSSClass("li inprogress");
-            } else if (MilestoneStatus.Future.name().equals(milestone.getStatus())) {
+            } else if (OptionI18nEnum.MilestoneStatus.Future.name().equals(milestone.getStatus())) {
                 li.setCSSClass("li future");
             }
+
             Div timestampDiv = new Div().setCSSClass("timestamp");
 
             int openAssignments = milestone.getNumOpenBugs() + milestone.getNumOpenTasks();
             int totalAssignments = milestone.getNumBugs() + milestone.getNumTasks();
             if (totalAssignments > 0) {
-                timestampDiv.appendChild(new Span().setCSSClass("author").appendText((totalAssignments -
+                timestampDiv.appendChild(new Span().appendText((totalAssignments -
                         openAssignments) * 100 / totalAssignments + "%"));
             } else {
-                timestampDiv.appendChild(new Span().setCSSClass("author").appendText("100%"));
+                timestampDiv.appendChild(new Span().appendText("100%"));
             }
 
             if (milestone.getEnddate() == null) {
@@ -127,10 +132,13 @@ public class MilestoneTimelineWidget extends MVerticalLayout {
             }
             li.appendChild(timestampDiv);
 
-            Div statusDiv = new Div();
-            statusDiv.setCSSClass("status").appendChild(new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+
+            A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(milestone.getProjectid())).appendText
+                    (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true));
+            A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true)));
+                    (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true));
+            Div statusDiv = new Div().setCSSClass("status").appendChild(projectDiv, milestoneDiv);
             li.appendChild(statusDiv);
             ul.appendChild(li);
         }
