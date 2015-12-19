@@ -58,6 +58,7 @@ Version 5.2.4
 * Customize color of task statuses in kanban board
 * Display detail watchers in the sidebar
 * The new project dashboard
+* Allow to choose a set of pre-defined themes
 
 
 Version 5.2.3

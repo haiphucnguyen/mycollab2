@@ -1614,6 +1614,8 @@ $v-line-height--header:1.5em;
     }
     .navigator-wrap {
       display: inline-block;
+      border-left: 1px solid $my-separator-color;
+      border-right: 1px solid $my-separator-color;
     }
     .container-wrap {
       -webkit-box-flex: 1;
@@ -1901,7 +1903,6 @@ $v-line-height--header:1.5em;
     .v-label {
       border-bottom: 1px solid $my-separator-color;
       padding-bottom: 13px;
-      color: $my-white-color;
       font-size: $font-small;
     }
     @include margin-container(13px, 10px, 0px, 10px);
@@ -2121,7 +2122,6 @@ $v-line-height--header:1.5em;
       font-size: $font-small;
       border-left: 1px solid $my-separator-color;
       border-right: 1px solid $my-separator-color;
-      background-color: floralwhite;
     }
     .content-wrap {
       -webkit-box-flex: 1;

@@ -223,8 +223,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
 
             @Override
             public void colorChanged(ColorChangeEvent event) {
-                accountTheme.setVtabsheettext(event.getColor().getCSS()
-                        .substring(1).toUpperCase());
+                accountTheme.setVtabsheettext(event.getColor().getCSS().substring(1).toUpperCase());
                 ThemeManager.loadDemoTheme(accountTheme);
             }
         });

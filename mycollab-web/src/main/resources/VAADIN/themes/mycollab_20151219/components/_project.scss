@@ -80,6 +80,26 @@
     }
   }
 
+  .v-horizontal.project-info {
+    position: relative;
+    :after {
+      content:'';
+      left: 220px;
+      height:1px;
+      width: 100%;
+      background:$my-separator-color;
+      position:absolute;
+      bottom: 0px;
+    }
+    * :after {
+      display: none;
+    }
+    .v-popupbutton {
+      border: 1px solid $my-separator-color;
+      border-radius: 3px;
+    }
+  }
+
   .instruction-box {
     background-color: $my-block-background-color;
     padding: 10px;
@@ -179,35 +199,9 @@
     border-radius: 0px;
   }
 
-  .projectinfo-header, .message-toppanel-header {
-    font-size: $font-normal;
-    border-bottom: 1px solid $my-border-color;
-    padding-bottom: 3px;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background: none no-repeat left top $my-panel-background-color;
-    border-radius: 0px;
-  }
-
-  .message-toppanel-header {
-    @include margin-container(3px, 10px, 2px, 18px);
-  }
-
-  .projectinfo-footer {
-    @include margin-container(5px, 5px, 5px, 18px);
-  }
-
   .projectfeed-hdr-wrapper {
-    background: none repeat-x left bottom cadetblue;
     padding: 15px 30px;
-    .h1 {
-      padding: 0px;
-      color: $my-white-color;
-    }
-    .h2, .v-button-link .v-button-caption, .v-button-link .v-icon, .v-label, .v-label a  {
-      color: $my-white-color;
-    }
+    border-bottom: 1px solid $my-separator-color;
   }
 
   .member-preview-form {
