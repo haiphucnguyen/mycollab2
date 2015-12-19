@@ -25,7 +25,6 @@ import com.esofthead.mycollab.module.project.view.time.TimeTableFieldDef;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.premium.module.project.ui.components.*;
 import com.esofthead.mycollab.reporting.ReportExportType;
-import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
@@ -76,6 +75,10 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     private ItemTimeLoggingService itemTimeLoggingService;
 
     private MVerticalLayout timeTrackingWrapper;
+
+    public TimeTrackingViewImpl() {
+        this.setMargin(new MarginInfo(false, true, false, true));
+    }
 
     private void initListSelectStyle(ListSelect listSelect) {
         listSelect.setWidth("300px");
@@ -137,43 +140,19 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
     @Override
     public void display() {
+        removeAllComponents();
         projects = ApplicationContextUtil.getSpringBean(ProjectService.class)
                 .getProjectsUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label layoutHeader = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() +
+            Label titleLbl = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() +
                     " Time Tracking", ContentMode.HTML);
-            layoutHeader.addStyleName(ValoTheme.LABEL_H2);
+            titleLbl.addStyleName(ValoTheme.LABEL_H2);
 
-            CssLayout headerWrapper = new CssLayout();
-            headerWrapper.addComponent(layoutHeader);
-            headerWrapper.setWidth("100%");
-            headerWrapper.setStyleName("projectfeed-hdr-wrapper");
-            headerWrapper.setHeightUndefined();
-            this.addComponent(headerWrapper);
+            MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
+                    .withWidth("100%");
 
-            CssLayout contentWrapper = new CssLayout();
-            contentWrapper.setWidth("100%");
-            contentWrapper.addStyleName(UIConstants.CONTENT_WRAPPER);
-
-            HorizontalLayout controlBtns = new HorizontalLayout();
-            controlBtns.setMargin(new MarginInfo(true, false, true, false));
-            contentWrapper.addComponent(controlBtns);
-
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withWidth("100%");
-            contentWrapper.addComponent(controlsPanel);
-
-            Button backBtn = new Button("Back to Workboard", new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(TimeTrackingViewImpl.this, null));
-                }
-            });
-            backBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            backBtn.setIcon(FontAwesome.ARROW_LEFT);
-
-            controlBtns.addComponent(backBtn);
             Button exportBtn = new Button("Export", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
@@ -202,10 +181,15 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
             popupButtonsControl.addOption(exportExcelBtn);
 
-            controlBtns.addComponent(exportButtonControl);
-            controlBtns.setComponentAlignment(exportButtonControl, Alignment.TOP_RIGHT);
-            controlBtns.setComponentAlignment(backBtn, Alignment.TOP_LEFT);
-            controlBtns.setSizeFull();
+            headerWrapper.with(titleLbl, exportButtonControl).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
+
+            this.addComponent(headerWrapper);
+
+            CssLayout contentWrapper = new CssLayout();
+            contentWrapper.setWidth("100%");
+
+            MHorizontalLayout controlsPanel = new MHorizontalLayout().withWidth("100%");
+            contentWrapper.addComponent(controlsPanel);
 
             VerticalLayout selectionLayoutWrapper = new VerticalLayout();
             selectionLayoutWrapper.setWidth("100%");
@@ -312,22 +296,12 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
             searchTimeReporting();
         } else {
-            Button backBtn = new Button("Back to Workboard", new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(
-                            TimeTrackingViewImpl.this, null));
-                }
-            });
-            backBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            backBtn.setIcon(FontAwesome.ARROW_LEFT);
-
             MVerticalLayout contentWrapper = new MVerticalLayout();
             contentWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
             Label infoLbl = new Label("You are not involved in any project yet to track time working");
             infoLbl.setWidthUndefined();
-            contentWrapper.with(infoLbl, backBtn);
+            contentWrapper.with(infoLbl);
             this.with(contentWrapper).withAlign(contentWrapper, Alignment.TOP_CENTER);
         }
     }
@@ -473,9 +447,7 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         private List<SimpleUser> users;
 
         UserInvolvedProjectsMemberListSelect(List<Integer> projectIds) {
-            users = ApplicationContextUtil.getSpringBean(
-                    ProjectMemberService.class).getActiveUsersInProjects(
-                    projectIds, AppContext.getAccountId());
+            users = ApplicationContextUtil.getSpringBean(ProjectMemberService.class).getActiveUsersInProjects(projectIds, AppContext.getAccountId());
 
             for (SimpleUser user : users) {
                 this.addItem(user.getUsername());
