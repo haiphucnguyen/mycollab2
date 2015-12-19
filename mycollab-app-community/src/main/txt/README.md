@@ -59,6 +59,7 @@ Version 5.2.4
 * Display detail watchers in the sidebar
 * The new project dashboard
 * Allow to choose a set of pre-defined themes
+* Improve theme compatibility
 
 
 Version 5.2.3
