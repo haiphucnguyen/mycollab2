@@ -57,6 +57,7 @@ Version 5.2.4
 * Add upcoming tasks in the project dashboard
 * Customize color of task statuses in kanban board
 * Display detail watchers in the sidebar
+* The new project dashboard
 
 
 Version 5.2.3

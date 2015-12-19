@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.UserDashboardView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
@@ -31,6 +32,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd
@@ -132,13 +134,26 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
             }
             li.appendChild(timestampDiv);
 
-
+            String projectUid = UUID.randomUUID().toString();
             A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(milestone.getProjectid())).appendText
-                    (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true));
+                    (FontAwesome.BUILDING_O.getHtml() + " " + StringUtils.trim(milestone.getProjectName(), 30, true))
+                    .setId("tag" + projectUid);
+            projectDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(projectUid, ProjectTypeConstants.PROJECT,
+                    milestone.getProjectid() + ""));
+            projectDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(projectUid));
+
+
+            String milestoneUid = UUID.randomUUID().toString();
             A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
-                    (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true));
-            Div statusDiv = new Div().setCSSClass("status").appendChild(projectDiv, milestoneDiv);
+                    (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
+                    .setId("tag" + milestoneUid);
+            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(milestoneUid, ProjectTypeConstants.MILESTONE,
+                    milestone.getId() + ""));
+            milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(milestoneUid));
+
+            Div statusDiv = new Div().setCSSClass("status").appendChild(projectDiv, TooltipHelper
+                    .buildDivTooltipEnable(projectUid), milestoneDiv, TooltipHelper.buildDivTooltipEnable(milestoneUid));
             li.appendChild(statusDiv);
             ul.appendChild(li);
         }

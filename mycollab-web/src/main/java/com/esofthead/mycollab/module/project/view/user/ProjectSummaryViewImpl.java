@@ -50,14 +50,13 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         leftPanel.addComponent(milestoneTimelineWidget);
 
         ProjectActivityStreamComponent activityPanel = new ProjectActivityStreamComponent();
-        leftPanel.addComponent(activityPanel);
 
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true))
                 .withWidth("500px");
         ProjectMembersWidget membersWidget = new ProjectMembersWidget();
         ProjectAssignmentsWidget taskOverdueWidget = new ProjectAssignmentsWidget();
 
-        rightPanel.with(membersWidget, taskOverdueWidget);
+        rightPanel.with(membersWidget, activityPanel);
 
         milestoneTimelineWidget.display();
         activityPanel.showProjectFeeds();

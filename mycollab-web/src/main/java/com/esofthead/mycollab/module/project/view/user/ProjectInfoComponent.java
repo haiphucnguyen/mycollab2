@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.NumberUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -86,8 +87,8 @@ public class ProjectInfoComponent extends MHorizontalLayout {
     };
 
     public ProjectInfoComponent(final SimpleProject project) {
-        this.withMargin(true).withStyleName("project-info").withFullWidth().withHeight("80px");
-        ELabel headerLbl = ELabel.h2(FontAwesome.BUILDING_O.getHtml() + String.format(" %s (%s)", project.getName(),
+        this.withMargin(true).withStyleName("project-info").withFullWidth();
+        ELabel headerLbl = ELabel.h2(FontAwesome.BUILDING_O.getHtml() + String.format(" %s (%s)", StringUtils.trim(project.getName(), 400, true),
                 project.getShortname()));
         headerLbl.setDescription(project.getDescription());
         headerLbl.addStyleName("header");
