@@ -33,13 +33,11 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -52,30 +50,16 @@ import java.util.UUID;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-public class ProjectAssignmentsWidget extends Depot {
+public class ProjectOverdueAssignmentsWidget extends Depot {
     private static final long serialVersionUID = 1L;
 
     private ProjectGenericTaskSearchCriteria searchCriteria;
 
     private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
-    public ProjectAssignmentsWidget() {
-        super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, 0), new CssLayout());
+    public ProjectOverdueAssignmentsWidget() {
+        super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, 0), new CssLayout());
         this.setWidth("100%");
-
-        final CheckBox overdueSelection = new CheckBox("Overdue");
-        overdueSelection.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                boolean isOverdueOption = overdueSelection.getValue();
-                if (isOverdueOption) {
-                    searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));
-                } else {
-                    searchCriteria.setDueDate(null);
-                }
-                updateSearchResult();
-            }
-        });
 
         final CheckBox myItemsSelection = new CheckBox("My Items");
         myItemsSelection.addValueChangeListener(new Property.ValueChangeListener() {
@@ -91,9 +75,13 @@ public class ProjectAssignmentsWidget extends Depot {
             }
         });
 
-        taskList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
-                new TaskRowDisplayHandler(), 10);
-        this.addHeaderElement(overdueSelection);
+        taskList = new DefaultBeanPagedList(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
+                new TaskRowDisplayHandler(), 10){
+            @Override
+            protected String stringWhenEmptyList() {
+                return "No overdue assignment";
+            }
+        };
         this.addHeaderElement(myItemsSelection);
         this.bodyContent.addComponent(taskList);
     }
@@ -102,12 +90,13 @@ public class ProjectAssignmentsWidget extends Depot {
         searchCriteria = new ProjectGenericTaskSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));
         updateSearchResult();
     }
 
     private void updateSearchResult() {
         taskList.setSearchCriteria(searchCriteria);
-        this.setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, taskList.getTotalCount()));
+        this.setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, taskList.getTotalCount()));
     }
 
     public static class TaskRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
@@ -132,7 +121,8 @@ public class ProjectAssignmentsWidget extends Depot {
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
             }
 
-            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
+            issueDiv.appendChild(taskLink, new Span().appendText(" - Due in " + AppContext.formatDuration(genericTask.getDueDate()))
+                    .setCSSClass(UIConstants.LABEL_META_INFO), TooltipHelper.buildDivTooltipEnable(uid));
             Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
             if (genericTask.isClosed()) {
                 issueLbl.addStyleName("completed");

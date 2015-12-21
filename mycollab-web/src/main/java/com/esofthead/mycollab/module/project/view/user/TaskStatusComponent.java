@@ -32,13 +32,11 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
-import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Span;
 import com.vaadin.data.Property;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -59,21 +57,7 @@ public class TaskStatusComponent extends Depot {
     private ProjectGenericTaskSearchCriteria searchCriteria;
 
     public TaskStatusComponent() {
-        super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, 0), new CssLayout());
-
-        final CheckBox overdueSelection = new CheckBox("Overdue");
-        overdueSelection.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                boolean isOverdueOption = overdueSelection.getValue();
-                if (isOverdueOption) {
-                    searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));
-                } else {
-                    searchCriteria.setDueDate(null);
-                }
-                updateSearchResult();
-            }
-        });
+        super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, 0), new CssLayout());
 
         final CheckBox myItemsOnly = new CheckBox("My Items");
         myItemsOnly.addValueChangeListener(new Property.ValueChangeListener() {
@@ -89,11 +73,9 @@ public class TaskStatusComponent extends Depot {
             }
         });
 
-        this.addHeaderElement(overdueSelection);
         this.addHeaderElement(myItemsOnly);
 
         taskComponents = new TaskStatusPagedList();
-
         bodyContent.addComponent(taskComponents);
     }
 
@@ -101,12 +83,13 @@ public class TaskStatusComponent extends Depot {
         searchCriteria = new ProjectGenericTaskSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
         searchCriteria.setIsOpenned(new SearchField());
+        searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));
         updateSearchResult();
     }
 
     private void updateSearchResult() {
         taskComponents.setSearchCriteria(searchCriteria);
-        setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OPEN_ASSIGNMENTS_TITLE, taskComponents.getTotalCount()));
+        setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, taskComponents.getTotalCount()));
     }
 
     private static class TaskStatusPagedList extends DefaultBeanPagedList<ProjectGenericTaskService,
@@ -115,6 +98,11 @@ public class TaskStatusComponent extends Depot {
         public TaskStatusPagedList() {
             super(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class), new
                     GenericTaskRowDisplayHandler(), 10);
+        }
+
+        @Override
+        protected String stringWhenEmptyList() {
+            return "No overdue assignment";
         }
     }
 
@@ -130,7 +118,8 @@ public class TaskStatusComponent extends Depot {
             taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, genericTask.getType(), genericTask.getTypeId() + ""));
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
             if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
-                taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
+                taskLink.appendText(String.format("[%s-%d] - %s", genericTask.getProjectShortName(), genericTask.getExtraTypeId(),
+                        genericTask.getName()));
                 taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
             } else {
@@ -139,7 +128,8 @@ public class TaskStatusComponent extends Depot {
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
             }
 
-            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
+            issueDiv.appendChild(taskLink, new Span().appendText(" - Due in " + AppContext.formatDuration(genericTask.getDueDate()))
+                    .setCSSClass(UIConstants.LABEL_META_INFO), TooltipHelper.buildDivTooltipEnable(uid));
             Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
             if (genericTask.isClosed()) {
                 issueLbl.addStyleName("completed");
