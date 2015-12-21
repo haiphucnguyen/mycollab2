@@ -40,6 +40,7 @@ import java.util.List;
 public class TaskSavedFilterComboBox extends SavedFilterComboBox {
     public static final String ALL_TASKS = "ALL_TASKS";
     public static final String OPEN_TASKS = "OPEN_TASKS";
+    public static final String OVERDUE_TASKS = "OVERDUE_TASKS";
     public static final String MY_TASKS = "MY_TASKS";
     public static final String NEW_TASKS_THIS_WEEK = "NEW_TASKS_THIS_WEEK";
     public static final String UPDATE_TASKS_THIS_WEEK = "UPDATE_TASKS_THIS_WEEK";
@@ -67,6 +68,14 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
+        SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TASKS, "Overdue Tasks", SearchFieldInfo
+                .inCollection(TaskSearchCriteria.p_assignee, new VariableInjecter() {
+                    @Override
+                    public Object eval() {
+                        return Arrays.asList(AppContext.getUsername());
+                    }
+                }));
+
         SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TASKS, "My Tasks", SearchFieldInfo.inCollection
                 (TaskSearchCriteria.p_assignee, new VariableInjecter() {
                     @Override
@@ -89,6 +98,7 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
 
         this.addSharedSearchQueryInfo(allTasksQuery);
         this.addSharedSearchQueryInfo(allOpenTaskQuery);
+        this.addSharedSearchQueryInfo(overdueTaskQuery);
         this.addSharedSearchQueryInfo(myTasksQuery);
         this.addSharedSearchQueryInfo(newTasksThisWeekQuery);
         this.addSharedSearchQueryInfo(updateTasksThisWeekQuery);
