@@ -43,15 +43,15 @@ public class ProjectDashboardViewImpl extends AbstractPageView implements Projec
         MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false)).withWidth("100%");
 
         AllMilestoneTimelineWidget milestoneTimelineWidget = new AllMilestoneTimelineWidget();
-
+        TaskStatusComponent taskStatusComponent = new TaskStatusComponent();
         ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
         MVerticalLayout leftPanel = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(true,
-                true, false, false)).withWidth("100%").with(milestoneTimelineWidget, activityStreamComponent);
+                true, false, false)).withWidth("100%").with(milestoneTimelineWidget, taskStatusComponent);
 
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("550px");
         MyProjectListComponent myProjectListComponent = new MyProjectListComponent();
-        TaskStatusComponent taskStatusComponent = new TaskStatusComponent();
-        rightPanel.with(myProjectListComponent, taskStatusComponent);
+
+        rightPanel.with(myProjectListComponent, activityStreamComponent);
         layout.with(leftPanel, rightPanel).expand(leftPanel);
 
         CssLayout contentWrapper = new CssLayout();
