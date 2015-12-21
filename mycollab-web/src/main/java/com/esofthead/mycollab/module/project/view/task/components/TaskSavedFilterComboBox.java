@@ -17,17 +17,19 @@
 package com.esofthead.mycollab.module.project.view.task.components;
 
 import com.esofthead.mycollab.common.domain.OptionVal;
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
-import com.esofthead.mycollab.core.db.query.SearchQueryInfo;
-import com.esofthead.mycollab.core.db.query.VariableInjecter;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.db.query.*;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.query.CurrentProjectIdInjecter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.SavedFilterComboBox;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,13 +70,19 @@ public class TaskSavedFilterComboBox extends SavedFilterComboBox {
                     }
                 }));
 
-        SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TASKS, "Overdue Tasks", SearchFieldInfo
-                .inCollection(TaskSearchCriteria.p_assignee, new VariableInjecter() {
+        SearchQueryInfo overdueTaskQuery = new SearchQueryInfo(OVERDUE_TASKS, "Overdue Tasks", new SearchFieldInfo
+                (SearchField.AND, TaskSearchCriteria.p_duedate, DateParam.BEFORE, new VariableInjecter() {
                     @Override
                     public Object eval() {
-                        return Arrays.asList(AppContext.getUsername());
+                        return new LocalDate().toDate();
                     }
-                }));
+                }), new SearchFieldInfo(SearchField.AND, new StringParam("id-status", TaskI18nEnum.FORM_STATUS,
+                "m_prj_task", "status"), StringParam.IS_NOT, new VariableInjecter() {
+            @Override
+            public Object eval() {
+                return OptionI18nEnum.StatusI18nEnum.Closed.name();
+            }
+        }));
 
         SearchQueryInfo myTasksQuery = new SearchQueryInfo(MY_TASKS, "My Tasks", SearchFieldInfo.inCollection
                 (TaskSearchCriteria.p_assignee, new VariableInjecter() {
