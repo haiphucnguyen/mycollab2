@@ -5,7 +5,7 @@ $my-panel-background-color: #f1f1f1;
 $my-hover-background-color: ghostwhite;
 $my-block-background-color: #f9f9f9;
 $my-meta-color: #999;
-$my-link-color: #006DAC;
+$my-link-color: #0083ce;
 $my-title-color: #006DAC;
 $my-white-color: #f7f7f7;
 $my-font-weight-bold: 600;
@@ -22,9 +22,9 @@ $font-xx-large: 24px;
 $font-largest: 36px;
 
 @mixin hover-effect {
-  -webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-  -moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-  box-shadow: inset 5px 0px 0px 0px #3A97FF;
+  -webkit-box-shadow: inset 5px 0px 0px 0px $my-link-color;
+  -moz-box-shadow: inset 5px 0px 0px 0px $my-link-color;
+  box-shadow: inset 5px 0px 0px 0px $my-link-color;
 }
 
 @mixin text-ellipsis {

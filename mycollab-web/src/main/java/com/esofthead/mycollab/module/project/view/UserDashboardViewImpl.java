@@ -16,25 +16,40 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.html.DivLessFormatter;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.SearchTextField;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.*;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -163,8 +178,90 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
         return headerWrapper;
     }
 
-    private void displaySearchResult(String value) {
+    private static final String headerTitle = FontAwesome.SEARCH.getHtml() + " Search for '%s' (Found: %d)";
 
+    private void displaySearchResult(String value) {
+        removeAllComponents();
+
+        CssLayout headerWrapper = setupHeader();
+
+        MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withStyleName("searchitems-layout");
+        with(headerWrapper, layout).expand(layout);
+
+        MHorizontalLayout headerComp = new MHorizontalLayout();
+        Label headerLbl = new Label(String.format(headerTitle, value, 0), ContentMode.HTML);
+        headerLbl.addStyleName(ValoTheme.LABEL_H2);
+        headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        Button backDashboard = new Button("Back to workboard", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                displayView();
+            }
+        });
+        backDashboard.setStyleName(UIConstants.BUTTON_ACTION);
+        headerComp.with(headerLbl, backDashboard).alignAll(Alignment.MIDDLE_LEFT);
+        layout.with(headerComp);
+
+        ProjectService prjService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+        prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        if (CollectionUtils.isNotEmpty(prjKeys)) {
+            ProjectGenericItemSearchCriteria searchCriteria = new ProjectGenericItemSearchCriteria();
+            searchCriteria.setPrjKeys(new SetSearchField<>(prjKeys.toArray(new Integer[prjKeys.size()])));
+            searchCriteria.setTxtValue(new StringSearchField(value));
+
+            DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
+                    searchItemsTable = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new
+                    AssignmentRowDisplayHandler());
+            searchItemsTable.setControlStyle("borderlessControl");
+            int foundNum = searchItemsTable.setSearchCriteria(searchCriteria);
+            headerLbl.setValue(String.format(headerTitle, value, foundNum));
+            layout.with(searchItemsTable).expand(searchItemsTable);
+        }
+    }
+
+    private static class AssignmentRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
+        @Override
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem projectItem, int rowIndex) {
+            MVerticalLayout layout = new MVerticalLayout().withMargin(new MarginInfo(true, true, false, true)).withWidth("100%");
+            Label link = new Label(ProjectLinkBuilder.generateProjectItemHtmlLink(projectItem.getProjectShortName(), projectItem
+                    .getProjectId(), projectItem.getSummary(), projectItem.getType(), projectItem.getTypeId()), ContentMode.HTML);
+            link.addStyleName(ValoTheme.LABEL_H3);
+            link.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+
+            String desc = (StringUtils.isBlank(projectItem.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : projectItem
+                    .getDescription();
+            SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);
+
+            Div div = new Div().setStyle("width:100%").setCSSClass("footer");
+            Div lastUpdatedOn = new Div().appendChild(new Text("Modified: " + AppContext.formatPrettyTime(projectItem.getLastUpdatedTime
+                    ()))).setTitle(AppContext.formatDateTime(projectItem.getLastUpdatedTime())).setStyle("float:right;" +
+                    "margin-right:5px");
+            Text createdByTxt = new Text("Created by: ");
+            if (StringUtils.isBlank(projectItem.getCreatedUser())) {
+                div.appendChild(createdByTxt, new Text("None"), lastUpdatedOn);
+            } else {
+                String uid = UUID.randomUUID().toString();
+                Img userAvatar = new Img("", StorageFactory.getInstance().getAvatarPath(projectItem.getCreatedUserAvatarId(), 16));
+                A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(projectItem.getProjectId(), projectItem
+                        .getCreatedUser())).appendText(projectItem.getCreatedUserDisplayName());
+                userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, projectItem.getCreatedUser()));
+                userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+                Text belongPrjTxt = new Text(" - Project: ");
+                A projectLink = new A().setHref(ProjectLinkBuilder.generateProjectFullLink(projectItem.getProjectId()))
+                        .appendText(String.format("%s (%s)", projectItem.getProjectName(), projectItem.getProjectShortName()));
+
+                div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
+                        userLink, TooltipHelper.buildDivTooltipEnable(uid), DivLessFormatter.EMPTY_SPACE(), belongPrjTxt,
+                        DivLessFormatter.EMPTY_SPACE(), projectLink,
+                        lastUpdatedOn);
+            }
+
+            Label footer = new Label(div.write(), ContentMode.HTML);
+            footer.setWidth("100%");
+            layout.with(link, descLbl, footer);
+            layout.addStyleName("project-item-search-box");
+            return layout;
+        }
     }
 
     private static class AskCreateNewProjectWindow extends Window {

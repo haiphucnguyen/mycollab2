@@ -16,6 +16,10 @@
     }
   }
 
+  .v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
+    color: $my-link-color;
+  }
+
   .v-button.v-button-link, .v-button.v-button-link:hover {
     color: $my-link-color;
   }

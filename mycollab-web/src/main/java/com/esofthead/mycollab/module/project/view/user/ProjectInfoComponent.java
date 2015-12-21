@@ -34,6 +34,7 @@ import com.esofthead.mycollab.module.project.i18n.*;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -145,7 +146,10 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         } else {
             SearchTextField searchField = new SearchTextField() {
                 public void doSearch(String value) {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectSearchItemsView(ProjectInfoComponent.this, value));
+                    ProjectView prjview = UIUtils.getRoot(this, ProjectView.class);
+                    if (prjview != null) {
+                        prjview.displaySearchResult(value);
+                    }
                 }
             };
 

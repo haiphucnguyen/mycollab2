@@ -11,8 +11,8 @@ public class V20151219_1__Tweak_Theme  implements SpringJdbcMigration {
     @Override
     public void migrate(JdbcTemplate jdbcTemplate) throws Exception {
 
-        jdbcTemplate.update("UPDATE s_account_theme SET vTabsheetBg=?, vTabsheetBgSelected=?, vTabsheetText=?, " +
-                "vTabsheetTextSelected=? WHERE isDefault=? ",
-                new Object[]{"F9F9F9", "B5B5B5", "4C4C4C", "F1F1F1", 1});
+        jdbcTemplate.update("UPDATE s_account_theme SET topMenuBg=?, actionBtn=?, vTabsheetBg=?, " +
+                "vTabsheetBgSelected=?, vTabsheetText=?, vTabsheetTextSelected=? WHERE isDefault=? ",
+                new Object[]{"1a8fcb", "24a2e3", "F9F9F9", "B5B5B5", "4C4C4C", "F1F1F1", 1});
     }
 }

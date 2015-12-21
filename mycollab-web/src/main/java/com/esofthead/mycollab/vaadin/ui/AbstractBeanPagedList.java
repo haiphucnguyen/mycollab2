@@ -56,6 +56,7 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
         listContainer = new CssLayout();
         listContainer.setWidth("100%");
         this.addComponent(listContainer);
+        this.setExpandRatio(listContainer, 1.0f);
     }
 
     @Override

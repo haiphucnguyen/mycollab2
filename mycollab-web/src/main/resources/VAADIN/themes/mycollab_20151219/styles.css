@@ -1530,7 +1530,7 @@ a {
 }
 
 a:visited, a:link {
-	color: #006DAC;
+	color: #0083ce;
 }
 
 a.completed {
@@ -1546,8 +1546,12 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
+	color: #0083ce;
+}
+
 .v-button.v-button-link, .v-button.v-button-link:hover {
-	color: #006DAC;
+	color: #0083ce;
 }
 
 .meta-info {
@@ -1575,9 +1579,9 @@ a.pending {
 }
 
 .list-row:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	-moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	box-shadow: inset 5px 0px 0px 0px #3A97FF;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 }
 
 .panel-header {
@@ -13951,7 +13955,7 @@ a {
 }
 
 a:visited, a:link {
-	color: #006DAC;
+	color: #0083ce;
 }
 
 a.completed {
@@ -13967,8 +13971,12 @@ a.pending {
 	color: #108e2a;
 }
 
+.v-tabsheet-tabitemcell .v-tabsheet-tabitem-selected .v-caption.v-caption, .v-tabsheet-tabitemcell .v-caption:hover {
+	color: #0083ce;
+}
+
 .v-button.v-button-link, .v-button.v-button-link:hover {
-	color: #006DAC;
+	color: #0083ce;
 }
 
 .meta-info {
@@ -13996,9 +14004,9 @@ a.pending {
 }
 
 .list-row:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	-moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	box-shadow: inset 5px 0px 0px 0px #3A97FF;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 }
 
 .panel-header {
@@ -15009,9 +15017,9 @@ div .addview-layout-body .control-buttons {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock:hover, .myprojectlist .projectblock:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	-moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	box-shadow: inset 5px 0px 0px 0px #3A97FF;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
@@ -15025,9 +15033,9 @@ div .addview-layout-body .control-buttons {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper:hover, .myprojectlist .projectblock .projectlink-wrapper:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	-moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	box-shadow: inset 5px 0px 0px 0px #3A97FF;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper-archived {
@@ -15035,9 +15043,9 @@ div .addview-layout-body .control-buttons {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived:hover, .myprojectlist .projectblock .projectlink-wrapper-archived:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	-moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	box-shadow: inset 5px 0px 0px 0px #3A97FF;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 }
 
 .project-status .v-verticallayout.v-margin-top {
@@ -15518,9 +15526,9 @@ div.v-button.token-field:hover {
 }
 
 .tasklist .taskrow:hover {
-	-webkit-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	-moz-box-shadow: inset 5px 0px 0px 0px #3A97FF;
-	box-shadow: inset 5px 0px 0px 0px #3A97FF;
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
 }
 
 .bug-component {

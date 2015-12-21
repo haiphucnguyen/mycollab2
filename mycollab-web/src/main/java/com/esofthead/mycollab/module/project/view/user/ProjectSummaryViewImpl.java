@@ -66,4 +66,9 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
 
         layout.with(leftPanel, rightPanel).expand(leftPanel);
     }
+
+    @Override
+    public void displaySearchResult(String value) {
+        removeAllComponents();
+    }
 }

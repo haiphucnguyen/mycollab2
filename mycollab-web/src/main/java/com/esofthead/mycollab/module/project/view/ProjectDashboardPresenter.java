@@ -15,7 +15,6 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData data) {
-        UserDashboardView prjContainer = (UserDashboardView) container;
         view.display();
     }
 }
