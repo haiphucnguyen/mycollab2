@@ -161,6 +161,14 @@ $v-line-height--header:1.5em;
   /* Top Menu */
   .topNavigation {
     height: 45px;
+    #mainLogo {
+      float: left;
+      width: 195px;
+      height: 100%;
+      margin: 0;
+      padding: 4px 15px 0px 10px;
+      display: block;
+    }
     .serviceMenuContainer {
       float: left;
       .service-menu {
@@ -207,15 +215,6 @@ $v-line-height--header:1.5em;
       padding: 0 6px 0 3px;
       font-weight: $my-font-weight-bold;
     }
-    .navSeparator {
-      display: block;
-      float: left;
-      border-left: solid 1px $my-white-color;
-      border-right: solid 1px $my-white-color;
-      height: 20px;
-      width: 0;
-      margin: 10px 0px 0px;
-    }
     .accountMenuContainer {
       float: right;
       .v-button.v-popupbutton,  .v-button.v-popupbutton.v-pressed {
@@ -253,14 +252,6 @@ $v-line-height--header:1.5em;
         }
       }
     }
-  }
-
-  #mainLogo {
-    float: left;
-    width: 150px;
-    margin: 2px 15px 1px 0px;
-    padding: 0px 15px 0px 0px;
-    display: block;
   }
 
   .v-popupbutton-popup-notification-button .popupContent {

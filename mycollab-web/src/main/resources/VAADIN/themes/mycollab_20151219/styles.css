@@ -16137,6 +16137,15 @@ input.v-textfield-pagedtable-pagefield {
 	height: 45px;
 }
 
+.topNavigation #mainLogo {
+	float: left;
+	width: 195px;
+	height: 100%;
+	margin: 0;
+	padding: 4px 15px 0px 10px;
+	display: block;
+}
+
 .topNavigation .serviceMenuContainer {
 	float: left;
 }
@@ -16189,16 +16198,6 @@ input.v-textfield-pagedtable-pagefield {
 	font-weight: 600;
 }
 
-.topNavigation .navSeparator {
-	display: block;
-	float: left;
-	border-left: solid 1px #f7f7f7;
-	border-right: solid 1px #f7f7f7;
-	height: 20px;
-	width: 0;
-	margin: 10px 0px 0px;
-}
-
 .topNavigation .accountMenuContainer {
 	float: right;
 }
@@ -16244,14 +16243,6 @@ input.v-textfield-pagedtable-pagefield {
 .topNavigation .accountMenuContainer .v-button.notification-button .v-button-wrap, .topNavigation .accountMenuContainer .v-button.notification-button .v-button-wrap:hover, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-wrap, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed .v-button-wrap:hover {
 	padding: 4px 6px;
 	background: none;
-}
-
-#mainLogo {
-	float: left;
-	width: 150px;
-	margin: 2px 15px 1px 0px;
-	padding: 0px 15px 0px 0px;
-	display: block;
 }
 
 .v-popupbutton-popup-notification-button .popupContent {

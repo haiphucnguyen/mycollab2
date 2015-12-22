@@ -1,12 +1,17 @@
 package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
+import com.esofthead.mycollab.core.utils.FileUtils;
 import com.google.gson.Gson;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -20,8 +25,9 @@ public class CheckVersionController {
     @RequestMapping(method = RequestMethod.GET)
     public String getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
-        props.put("version", MyCollabVersion.getVersion());
-        props.put("downloadLink", "http://community.mycollab.com/download/");
+
+        props.put("version", getVersion());
+        props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
         props.put("releaseNotes", "http://community.mycollab.com/release-notes/");
 
         if (version != null && MyCollabVersion.isEditionNewer(MyCollabVersion.getVersion(), version) &&
@@ -32,5 +38,21 @@ public class CheckVersionController {
 
         Gson gson = new Gson();
         return gson.toJson(props);
+    }
+
+    private static String getVersion() {
+        try {
+            File pricingFile = FileUtils.getDesireFile(System.getProperty("user.dir"), "version", "src/main/conf/version");
+            InputStream pricingStream;
+            if (pricingFile != null) {
+                pricingStream = new FileInputStream(pricingFile);
+            } else {
+                pricingStream = CheckVersionController.class.getClassLoader().getResourceAsStream("version");
+            }
+
+            return IOUtils.toString(pricingStream, "UTF-8");
+        } catch (Exception e) {
+            return MyCollabVersion.getVersion();
+        }
     }
 }
