@@ -16,35 +16,24 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
-import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Img;
-import com.hp.gagawa.java.elements.Span;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.data.Property;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import org.vaadin.viritin.layouts.MCssLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.CssLayout;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author MyCollab Ltd.
@@ -103,49 +92,6 @@ public class TaskStatusComponent extends Depot {
         @Override
         protected String stringWhenEmptyList() {
             return "No overdue assignment";
-        }
-    }
-
-    private static class GenericTaskRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
-        @Override
-        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask, int rowIndex) {
-            MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName("list-row").withWidth("100%");
-            rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-            Div issueDiv = new Div();
-            String uid = UUID.randomUUID().toString();
-            A taskLink = new A().setId("tag" + uid);
-
-            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, genericTask.getType(), genericTask.getTypeId() + ""));
-            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-            if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
-                taskLink.appendText(String.format("[%s-%d] - %s", genericTask.getProjectShortName(), genericTask.getExtraTypeId(),
-                        genericTask.getName()));
-                taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
-                        genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
-            } else {
-                taskLink.appendText(genericTask.getName());
-                taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
-                        genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
-            }
-
-            issueDiv.appendChild(taskLink, new Span().appendText(" - Due in " + AppContext.formatDuration(genericTask.getDueDate()))
-                    .setCSSClass(UIConstants.LABEL_META_INFO), TooltipHelper.buildDivTooltipEnable(uid));
-            Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
-            if (genericTask.isClosed()) {
-                issueLbl.addStyleName("completed");
-            } else if (genericTask.isOverdue()) {
-                issueLbl.addStyleName("overdue");
-            }
-
-            String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
-            Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask
-                    .getAssignUserFullName());
-
-            MHorizontalLayout iconsLayout = new MHorizontalLayout().with(new ELabel(ProjectAssetsManager.getAsset
-                    (genericTask.getType()).getHtml(), ContentMode.HTML), new ELabel(img.write(), ContentMode.HTML));
-            MCssLayout issueWrapper = new MCssLayout(issueLbl);
-            rowComp.with(iconsLayout, issueWrapper).expand(issueWrapper);
-            return rowComp;
         }
     }
 }

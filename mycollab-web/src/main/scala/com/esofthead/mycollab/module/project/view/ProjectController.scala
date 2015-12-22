@@ -72,7 +72,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
             @Subscribe def handle(event: ProjectEvent.GotoEdit) {
                 val project = event.getData.asInstanceOf[SimpleProject]
                 CurrentProjectVariables.setProject(project)
-                val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
+                val presenter = PresenterResolver.getPresenter(classOf[UserProjectDashboardPresenter])
                 presenter.go(projectView, new ProjectScreenData.Edit(project))
             }
         })
@@ -80,7 +80,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         this.register(new ApplicationEventListener[ProjectEvent.GotoTagListView] {
             @Subscribe def handle(event: ProjectEvent.GotoTagListView) {
                 val tag = event.getData.asInstanceOf[Tag]
-                val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
+                val presenter = PresenterResolver.getPresenter(classOf[UserProjectDashboardPresenter])
                 presenter.go(projectView, new ProjectScreenData.GotoTagList(tag))
             }
         })

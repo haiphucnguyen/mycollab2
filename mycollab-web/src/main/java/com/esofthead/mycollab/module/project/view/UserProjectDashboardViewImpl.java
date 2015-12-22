@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.view.milestone.AllMilestoneTimeline
 import com.esofthead.mycollab.module.project.view.user.ActivityStreamComponent;
 import com.esofthead.mycollab.module.project.view.user.MyProjectListComponent;
 import com.esofthead.mycollab.module.project.view.user.TaskStatusComponent;
+import com.esofthead.mycollab.module.project.view.user.UserUnresolvedAssignmentWidget;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
@@ -36,7 +37,7 @@ import java.util.List;
  * @since 5.2.4
  */
 @ViewComponent
-public class ProjectDashboardViewImpl extends AbstractPageView implements ProjectDashboardView {
+public class UserProjectDashboardViewImpl extends AbstractPageView implements UserProjectDashboardView {
     @Override
     public void display() {
         removeAllComponents();
@@ -45,8 +46,11 @@ public class ProjectDashboardViewImpl extends AbstractPageView implements Projec
         AllMilestoneTimelineWidget milestoneTimelineWidget = new AllMilestoneTimelineWidget();
         TaskStatusComponent taskStatusComponent = new TaskStatusComponent();
         ActivityStreamComponent activityStreamComponent = new ActivityStreamComponent();
-        MVerticalLayout leftPanel = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(true,
-                true, false, false)).withWidth("100%").with(milestoneTimelineWidget, taskStatusComponent);
+        UserUnresolvedAssignmentWidget unresolvedAssignmentThisWeekWidget = new UserUnresolvedAssignmentWidget();
+        UserUnresolvedAssignmentWidget unresolvedAssignmentNextWeekWidget = new UserUnresolvedAssignmentWidget();
+        MVerticalLayout leftPanel = new MVerticalLayout().withMargin(new MarginInfo(true,
+                true, false, false)).withWidth("100%").with(milestoneTimelineWidget,
+                unresolvedAssignmentThisWeekWidget, unresolvedAssignmentNextWeekWidget, taskStatusComponent);
 
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("550px");
         MyProjectListComponent myProjectListComponent = new MyProjectListComponent();
@@ -67,6 +71,8 @@ public class ProjectDashboardViewImpl extends AbstractPageView implements Projec
             milestoneTimelineWidget.display();
             myProjectListComponent.displayDefaultProjectsList();
             taskStatusComponent.showProjectTasksByStatus(prjKeys);
+            unresolvedAssignmentThisWeekWidget.displayUnresolvedAssignmentsThisWeek();
+            unresolvedAssignmentNextWeekWidget.displayUnresolvedAssignmentsNextWeek();
         }
     }
 }

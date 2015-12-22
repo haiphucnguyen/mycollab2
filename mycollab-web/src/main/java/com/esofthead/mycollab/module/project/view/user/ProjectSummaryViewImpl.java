@@ -21,7 +21,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -47,18 +46,22 @@ public class ProjectSummaryViewImpl extends AbstractLazyPageView implements Proj
         MVerticalLayout leftPanel = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
 
         MilestoneTimelineWidget milestoneTimelineWidget = new MilestoneTimelineWidget();
-        leftPanel.addComponent(milestoneTimelineWidget);
-
         ProjectOverdueAssignmentsWidget taskOverdueWidget = new ProjectOverdueAssignmentsWidget();
-        leftPanel.addComponent(taskOverdueWidget);
+        ProjectUnresolvedAssignmentWidget unresolvedAssignmentThisWeekWidget = new ProjectUnresolvedAssignmentWidget();
+
+        ProjectUnresolvedAssignmentWidget unresolvedAssignmentNextWeekWidget = new ProjectUnresolvedAssignmentWidget();
+
+        leftPanel.addComponent(milestoneTimelineWidget);
+        leftPanel.with(milestoneTimelineWidget, unresolvedAssignmentThisWeekWidget, unresolvedAssignmentNextWeekWidget, taskOverdueWidget);
 
         MVerticalLayout rightPanel = new MVerticalLayout().withMargin(false).withWidth("500px");
         ProjectMembersWidget membersWidget = new ProjectMembersWidget();
-
         ProjectActivityStreamComponent activityPanel = new ProjectActivityStreamComponent();
         rightPanel.with(membersWidget, activityPanel);
 
         milestoneTimelineWidget.display();
+        unresolvedAssignmentThisWeekWidget.displayUnresolvedAssignmentsThisWeek();
+        unresolvedAssignmentNextWeekWidget.displayUnresolvedAssignmentsNextWeek();
         activityPanel.showProjectFeeds();
         membersWidget.showInformation();
         taskOverdueWidget.showOpenAssignments();

@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -24,7 +24,6 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskRowDisplayHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -34,22 +33,22 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.data.Property;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CssLayout;
+import org.joda.time.LocalDate;
+
+import java.util.Date;
 
 /**
- * @author MyCollab Ltd.
- * @since 4.1
+ * @author MyCollab Ltd
+ * @since 5.2.4
  */
-public class ProjectOverdueAssignmentsWidget extends Depot {
-    private static final long serialVersionUID = 1L;
-
+public class ProjectUnresolvedAssignmentWidget extends Depot {
     private ProjectGenericTaskSearchCriteria searchCriteria;
-
     private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+    private String title = "";
 
-    public ProjectOverdueAssignmentsWidget() {
-        super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, 0), new CssLayout());
+    public ProjectUnresolvedAssignmentWidget() {
+        super("", new CssLayout());
         this.setWidth("100%");
-
         final CheckBox myItemsSelection = new CheckBox("My Items");
         myItemsSelection.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
@@ -63,28 +62,44 @@ public class ProjectOverdueAssignmentsWidget extends Depot {
                 updateSearchResult();
             }
         });
-
         taskList = new DefaultBeanPagedList(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class),
                 new ProjectTaskRowDisplayHandler(), 10) {
             @Override
             protected String stringWhenEmptyList() {
-                return "No overdue assignment";
+                return "No assignment";
             }
         };
         this.addHeaderElement(myItemsSelection);
         this.bodyContent.addComponent(taskList);
     }
 
-    public void showOpenAssignments() {
+    public void displayUnresolvedAssignmentsThisWeek() {
+        title = "Unresolved assignments in this week (%d)";
         searchCriteria = new ProjectGenericTaskSearchCriteria();
         searchCriteria.setIsOpenned(new SearchField());
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setDueDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS()));
+        LocalDate now = new LocalDate();
+        Date[] bounceDateofWeek = DateTimeUtils.getBounceDateofWeek(now.toDate());
+        RangeDateSearchField range = new RangeDateSearchField(bounceDateofWeek[0], bounceDateofWeek[1]);
+        searchCriteria.setDateInRange(range);
+        updateSearchResult();
+    }
+
+    public void displayUnresolvedAssignmentsNextWeek() {
+        title = "Unresolved assignments in next week (%d)";
+        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria.setIsOpenned(new SearchField());
+        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        LocalDate now = new LocalDate();
+        now = now.plusDays(7);
+        Date[] bounceDateofWeek = DateTimeUtils.getBounceDateofWeek(now.toDate());
+        RangeDateSearchField range = new RangeDateSearchField(bounceDateofWeek[0], bounceDateofWeek[1]);
+        searchCriteria.setDateInRange(range);
         updateSearchResult();
     }
 
     private void updateSearchResult() {
         taskList.setSearchCriteria(searchCriteria);
-        this.setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, taskList.getTotalCount()));
+        this.setTitle(String.format(title, taskList.getTotalCount()));
     }
 }

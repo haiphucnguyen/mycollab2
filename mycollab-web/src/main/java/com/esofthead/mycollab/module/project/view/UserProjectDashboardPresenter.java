@@ -24,9 +24,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboardView> {
-    public ProjectDashboardPresenter() {
-        super(ProjectDashboardView.class);
+public class UserProjectDashboardPresenter extends AbstractPresenter<UserProjectDashboardView> {
+    public UserProjectDashboardPresenter() {
+        super(UserProjectDashboardView.class);
     }
 
     @Override

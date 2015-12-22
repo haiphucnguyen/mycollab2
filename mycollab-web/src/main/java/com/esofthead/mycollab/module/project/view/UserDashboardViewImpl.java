@@ -61,7 +61,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
 
     private List<Integer> prjKeys;
 
-    private ProjectDashboardPresenter projectDashboardPresenter;
+    private UserProjectDashboardPresenter userProjectDashboardPresenter;
     private FollowingTicketPresenter followingTicketPresenter;
     private TimeTrackingPresenter timeTrackingPresenter;
     private SettingPresenter settingPresenter;
@@ -85,8 +85,8 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
             @Override
             public void selectedTabChange(TabSheet.SelectedTabChangeEvent event) {
                 Component comp = tabSheet.getSelectedTab();
-                if (comp instanceof ProjectDashboardView) {
-                    projectDashboardPresenter.onGo(UserDashboardViewImpl.this, null);
+                if (comp instanceof UserProjectDashboardView) {
+                    userProjectDashboardPresenter.onGo(UserDashboardViewImpl.this, null);
                 } else if (comp instanceof FollowingTicketView) {
                     followingTicketPresenter.onGo(UserDashboardViewImpl.this, null);
                 } else if (comp instanceof ITimeTrackingView) {
@@ -97,7 +97,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
             }
         });
         this.with(setupHeader(), tabSheet).expand(tabSheet);
-        projectDashboardPresenter.onGo(UserDashboardViewImpl.this, null);
+        userProjectDashboardPresenter.onGo(UserDashboardViewImpl.this, null);
 
         if (AppContext.canBeYes(RolePermissionCollections.CREATE_NEW_PROJECT)) {
             int countActiveProjects = prjService.getTotalActiveProjectsOfInvolvedUsers(AppContext.getUsername(), AppContext.getAccountId());
@@ -113,8 +113,8 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
     }
 
     private Component buildDashboardComp() {
-        projectDashboardPresenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
-        return projectDashboardPresenter.getView();
+        userProjectDashboardPresenter = PresenterResolver.getPresenter(UserProjectDashboardPresenter.class);
+        return userProjectDashboardPresenter.getView();
     }
 
     private Component buildFollowingTicketComp() {
