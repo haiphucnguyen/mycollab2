@@ -49,6 +49,7 @@ public class ThemeManager {
         if (accountTheme.getTopmenubg() != null) {
             extraStyles.append(".topNavigation { background-color: #" + accountTheme.getTopmenubg() + "; }");
             extraStyles.append(".topNavigation #mainLogo { background-color: " + ColorUtils.darkerColor("#" + accountTheme.getTopmenubg()) + "; }");
+            extraStyles.append(".v-sliderpanel-content, .v-sliderpanel-tab { background: " + ColorUtils.brighterColor("#" + accountTheme.getTopmenubg()) + "; }");
         }
 
         if (accountTheme.getTopmenubgselected() != null) {
@@ -59,22 +60,20 @@ public class ThemeManager {
                     + accountTheme.getTopmenubgselected() + "; }");
 
             extraStyles.append(".v-button.add-btn-popup:hover { background-color: #" + accountTheme.getTopmenubgselected() + "; }");
-
         }
 
         if (accountTheme.getTopmenutext() != null) {
             extraStyles.append(".topNavigation .v-button { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".v-sliderpanel-tab { color: #" + accountTheme.getTopmenutext() + "; }");
         }
 
         if (accountTheme.getTopmenutextselected() != null) {
             extraStyles.append(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button.selected { color: #"
                     + accountTheme.getTopmenutextselected() + "; }");
 
-            extraStyles.append(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { color: #"
-                    + accountTheme.getTopmenutextselected() + "; }");
+            extraStyles.append(".topNavigation .serviceMenuContainer .service-menu.v-buttongroup .v-button:hover { color: #" + accountTheme.getTopmenutextselected() + "; }");
 
-            extraStyles.append(".v-button.add-btn-popup:hover { color: #"
-                    + accountTheme.getTopmenutextselected() + "; }");
+            extraStyles.append(".v-button.add-btn-popup:hover { color: #" + accountTheme.getTopmenutextselected() + "; }");
         }
 
 		/* Vertical Tabsheet */

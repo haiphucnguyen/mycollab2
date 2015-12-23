@@ -834,7 +834,7 @@ $v-line-height--header:1.5em;
   /* End Filter Select */
 
   /* Main body */
-  .v-csslayout.main-view {
+  .main-view {
     overflow-y: auto;
     overflow-x: hidden;
     background-color: #FFF;
@@ -2128,6 +2128,26 @@ $v-line-height--header:1.5em;
       flex: 1;
       /* NEW, Spec - Opera 12.1, Firefox 20+ */
       display: inline-block;
+    }
+  }
+  .community {
+    color: darken(#f1f1f1, 5%);
+    .v-label-h2 {
+      color: #f1f1f1;
+      a {
+        color: #f1f1f1;
+      }
+    }
+    .title a {
+      color: #f1f1f1;
+      font-size: 1.1em;
+    }
+    .title .v-icon {
+      font-size: 1.2em;
+      color: #f1f1f1;
+    }
+    .desc {
+      font-size: 0.9em;
     }
   }
 }
