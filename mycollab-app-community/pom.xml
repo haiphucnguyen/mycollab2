@@ -278,7 +278,7 @@
                             </target>
                         </configuration>
                     </execution>
-                    <!--
+
                     <execution>
                         <id>create-macos-bundle</id>
                         <phase>install</phase>
@@ -304,7 +304,6 @@
                             </target>
                         </configuration>
                     </execution>
--->
                 </executions>
                 <dependencies>
                     <dependency>

@@ -50,7 +50,7 @@ public class CheckVersionController {
                 pricingStream = CheckVersionController.class.getClassLoader().getResourceAsStream("version");
             }
 
-            return IOUtils.toString(pricingStream, "UTF-8");
+            return IOUtils.toString(pricingStream, "UTF-8").replace("\n","");
         } catch (Exception e) {
             return MyCollabVersion.getVersion();
         }

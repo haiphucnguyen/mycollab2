@@ -65,13 +65,13 @@ public class CampaignController {
                 new String[]{"hainguyen@mycollab.com"}, "New guy want to contact", bodyContent.write());
         Map result = new HashMap();
         result.put("windows", String.format("https://sourceforge" +
-                ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Installer-%s.zip/download",
+                        ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Installer-%s.zip/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
         result.put("macos", String.format("https://sourceforge" +
-                ".net/projects/mycollab/files/MyCollab_%s/MyCollab-MacOS-%s.zip/download",
+                        ".net/projects/mycollab/files/MyCollab_%s/MyCollab-MacOS-%s.zip/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
         result.put("linux", String.format("https://sourceforge" +
-                ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Generic-%s.jar/download",
+                        ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Generic-%s.jar/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
         return result;
     }
