@@ -172,6 +172,9 @@ public class ThemeManager {
 
             extraStyles.append(".v-button.v-button-block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
 
+            extraStyles.append("div.v-button.token-field { background-color: " + ColorUtils.brighterColor("#" +
+                    accountTheme.getActionbtn()) + "; }");
+
             extraStyles.append("span.block {background-color: " + ColorUtils.brighterColor("#" + accountTheme.getActionbtn()) + ";}");
 
             extraStyles.append(".v-context-menu-container .v-context-menu .v-context-submenu:hover " +
@@ -197,6 +200,8 @@ public class ThemeManager {
             extraStyles.append(".feed-block-wrap .date-lbl { color:#" + accountTheme.getActionbtntext() + ";}");
 
             extraStyles.append(".v-button.v-button-block {color:#" + accountTheme.getActionbtntext() + ";}");
+
+            extraStyles.append("div.v-button.token-field { color: #" + accountTheme.getActionbtntext() + "; }");
 
             extraStyles.append("span.block {color:#" + accountTheme.getActionbtntext() + ";}");
 

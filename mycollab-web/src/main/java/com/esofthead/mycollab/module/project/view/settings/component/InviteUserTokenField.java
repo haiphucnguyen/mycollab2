@@ -55,12 +55,11 @@ public class InviteUserTokenField extends CssLayout implements SuggestField.NewI
         super();
         inviteEmails = new ArrayList<>();
         this.setWidth("100%");
-        this.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
+//        this.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
         this.addStyleName("member-token");
         suggestField = new SuggestField();
-        suggestField.setWidth("100%");
-        suggestField.setHeight("32px");
-        suggestField.setInputPrompt(AppContext.getMessage(ProjectMemberI18nEnum.USER_TOKEN_INVITE_HINT));
+        suggestField.setHeight("25px");
+        suggestField.setWidth("300px");
         suggestField.setNewItemsAllowed(true);
         suggestField.setNewItemsHandler(this);
         suggestField.setImmediate(true);

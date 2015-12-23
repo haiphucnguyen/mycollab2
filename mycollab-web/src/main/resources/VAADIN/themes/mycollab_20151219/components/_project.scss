@@ -354,10 +354,11 @@
 
   /* End Stand Up List View */
 
-  div.v-csslayout.member-token{
+  div.v-csslayout.member-token {
     cursor: text;
     .v-textfield {
-      border: 0px solid $my-separator-color;
+      border-width: 0px;
+      box-shadow: none;
       &:focus {
         @include box-shadow(none);
       }
@@ -372,13 +373,9 @@
   }
 
   div.v-button.token-field {
-    background-color:antiquewhite;
     height: 32px;
     margin-right: 5px;
     margin-bottom: 5px;
-    &:hover {
-      background-color:antiquewhite;
-    }
   }
 
   /* StandUp Report List */

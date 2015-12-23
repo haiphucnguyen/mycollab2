@@ -2321,6 +2321,10 @@ span.block {
 	transition: all 200ms ease-in;
 }
 
+.v-sliderpanel-tab {
+	font-size: 0.9em !important;
+}
+
 table {
 	table-layout: auto;
 	word-break: break-through;
@@ -14746,6 +14750,10 @@ span.block {
 	transition: all 200ms ease-in;
 }
 
+.v-sliderpanel-tab {
+	font-size: 0.9em !important;
+}
+
 .form .section {
 	padding: 25px 5px 5px 5px;
 	color: #006DAC;
@@ -15374,7 +15382,8 @@ div.v-csslayout.member-token {
 }
 
 div.v-csslayout.member-token .v-textfield {
-	border: 0px solid #e5e5e5;
+	border-width: 0px;
+	box-shadow: none;
 }
 
 div.v-csslayout.member-token .v-textfield:focus {
@@ -15393,14 +15402,9 @@ div.v-csslayout.member-token .v-button-small {
 }
 
 div.v-button.token-field {
-	background-color: antiquewhite;
 	height: 32px;
 	margin-right: 5px;
 	margin-bottom: 5px;
-}
-
-div.v-button.token-field:hover {
-	background-color: antiquewhite;
 }
 
 .standup-calendar .selected-ext {
