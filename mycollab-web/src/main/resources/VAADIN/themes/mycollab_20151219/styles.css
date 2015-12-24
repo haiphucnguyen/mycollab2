@@ -13772,7 +13772,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button.small-padding.v-pressed .v-button-wrap, .v-button.small-padding .v-button-wrap {
-	padding: 2px 2px;
+	padding: 4px 4px;
 }
 
 .v-button.small-padding.v-pressed .v-button-wrap .v-icon, .v-button.small-padding .v-button-wrap .v-icon {

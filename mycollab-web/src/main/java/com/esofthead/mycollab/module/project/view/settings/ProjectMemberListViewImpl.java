@@ -112,7 +112,20 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 100);
         blockTop.addComponent(memberAvatar);
 
-        VerticalLayout memberInfo = new VerticalLayout();
+
+        MHorizontalLayout buttonControls = new MHorizontalLayout();
+        Button editBtn = new Button("", FontAwesome.EDIT);
+        editBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoEdit(ProjectMemberListViewImpl.this, member));
+            }
+        });
+        editBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
+        editBtn.setDescription("Edit user '" + member.getDisplayName() + "' information");
+        editBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        blockContent.addComponent(editBtn);
+        blockContent.setComponentAlignment(editBtn, Alignment.TOP_RIGHT);
 
         Button deleteBtn = new Button("", FontAwesome.TRASH_O);
         deleteBtn.addClickListener(new Button.ClickListener() {
@@ -134,18 +147,19 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                                     member.setStatus(ProjectMemberStatusConstants.INACTIVE);
                                     prjMemberService.updateWithSession(member, AppContext.getUsername());
 
-                                    EventBusFactory.getInstance()
-                                            .post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, null));
+                                    EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, null));
                                 }
                             }
                         });
             }
         });
+        deleteBtn.setDescription("Remove user '" + member.getDisplayName() + "' out of this project");
         deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-
-        blockContent.addComponent(deleteBtn);
         deleteBtn.setVisible(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
-        blockContent.setComponentAlignment(deleteBtn, Alignment.TOP_RIGHT);
+
+        buttonControls.with(editBtn, deleteBtn);
+        blockContent.addComponent(buttonControls);
+        blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
         LabelLink memberLink = new LabelLink(member.getMemberFullName(),
                 ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member.getUsername()));
@@ -153,6 +167,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         memberLink.setWidth("100%");
         memberLink.addStyleName("member-name");
 
+        VerticalLayout memberInfo = new VerticalLayout();
         memberInfo.addComponent(memberLink);
 
         String roleLink = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,

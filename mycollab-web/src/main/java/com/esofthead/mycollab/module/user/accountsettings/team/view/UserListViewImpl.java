@@ -18,13 +18,10 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
-import com.esofthead.mycollab.module.user.accountsettings.localization.RoleI18nEnum;
-import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -107,8 +104,17 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         VerticalLayout memberInfo = new VerticalLayout();
 
-        MHorizontalLayout layoutButtonDelete = new MHorizontalLayout().withWidth("100%");
-        layoutButtonDelete.setVisible(AppContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
+        MHorizontalLayout buttonControls = new MHorizontalLayout();
+        buttonControls.setVisible(AppContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
+
+        Button editBtn = new Button("", FontAwesome.EDIT);
+        editBtn.addClickListener(new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBusFactory.getInstance().post(new UserEvent.GotoEdit(UserListViewImpl.this, member));
+            }
+        });
+        editBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 
         Button deleteBtn = new Button();
         deleteBtn.addClickListener(new Button.ClickListener() {
@@ -138,9 +144,10 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         });
         deleteBtn.setIcon(FontAwesome.TRASH_O);
         deleteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
-        layoutButtonDelete.with(deleteBtn).withAlign(deleteBtn, Alignment.MIDDLE_RIGHT);
+        buttonControls.with(editBtn, deleteBtn);
 
-        memberInfo.addComponent(layoutButtonDelete);
+        memberInfo.addComponent(buttonControls);
+        memberInfo.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
         A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());

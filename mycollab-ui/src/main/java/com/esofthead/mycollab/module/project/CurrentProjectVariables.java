@@ -58,12 +58,9 @@ public class CurrentProjectVariables {
                     throw new SecureAccessException("You are not belong to this project");
                 }
                 ProjectRolePermissionExample ex = new ProjectRolePermissionExample();
-                ex.createCriteria().andRoleidEqualTo(prjMember.getProjectroleid())
-                        .andProjectidEqualTo(CurrentProjectVariables.getProjectId());
-                ProjectRolePermissionMapper rolePermissionMapper = ApplicationContextUtil
-                        .getSpringBean(ProjectRolePermissionMapper.class);
-                List<ProjectRolePermission> rolePermissions = rolePermissionMapper
-                        .selectByExampleWithBLOBs(ex);
+                ex.createCriteria().andRoleidEqualTo(prjMember.getProjectroleid()).andProjectidEqualTo(CurrentProjectVariables.getProjectId());
+                ProjectRolePermissionMapper rolePermissionMapper = ApplicationContextUtil.getSpringBean(ProjectRolePermissionMapper.class);
+                List<ProjectRolePermission> rolePermissions = rolePermissionMapper.selectByExampleWithBLOBs(ex);
                 if (!rolePermissions.isEmpty()) {
                     ProjectRolePermission rolePer = rolePermissions.get(0);
                     PermissionMap permissionMap = PermissionMap.fromJsonString(rolePer.getRoleval());

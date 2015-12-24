@@ -240,9 +240,9 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     }
 
     @Override
-    public void massRemoveWithSession(List<User> items, String username, Integer accountId) {
+    public void massRemoveWithSession(List<User> users, String username, Integer accountId) {
         List<String> keys = new ArrayList<>();
-        for (User user : items) {
+        for (User user : users) {
             keys.add(user.getUsername());
         }
         userMapperExt.removeKeysWithSession(keys);
