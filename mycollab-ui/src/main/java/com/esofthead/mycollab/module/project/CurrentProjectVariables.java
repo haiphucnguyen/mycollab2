@@ -53,7 +53,7 @@ public class CurrentProjectVariables {
         ProjectMemberService prjMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
         SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(AppContext.getUsername(), project.getId(), AppContext.getAccountId());
         if (prjMember != null) {
-            if (!prjMember.isAdmin()) {
+            if (!prjMember.isProjectOwner()) {
                 if (prjMember.getProjectRoleId() == null) {
                     throw new SecureAccessException("You are not belong to this project");
                 }

@@ -40,7 +40,6 @@ import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -96,7 +95,7 @@ public class ProjectMembersWidget extends Depot {
             CssLayout footer = new CssLayout();
 
             String roleVal;
-            if (member.isAdmin()) {
+            if (member.isProjectOwner()) {
                 roleVal = AppContext.getMessage(ProjectRoleI18nEnum.OPT_ADMIN_ROLE_DISPLAY);
             } else {
                 roleVal = member.getRoleName();

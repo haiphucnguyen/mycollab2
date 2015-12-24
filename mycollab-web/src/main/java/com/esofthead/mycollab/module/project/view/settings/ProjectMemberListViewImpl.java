@@ -142,10 +142,8 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    ProjectMemberService prjMemberService = ApplicationContextUtil
-                                            .getSpringBean(ProjectMemberService.class);
-                                    member.setStatus(ProjectMemberStatusConstants.INACTIVE);
-                                    prjMemberService.updateWithSession(member, AppContext.getUsername());
+                                    ProjectMemberService prjMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
+                                    prjMemberService.removeWithSession(member, AppContext.getUsername(), AppContext.getAccountId());
 
                                     EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(ProjectMemberListViewImpl.this, null));
                                 }
@@ -175,8 +173,8 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         Label memberRole = new Label();
         memberRole.setContentMode(ContentMode.HTML);
         memberRole.setStyleName("member-role");
-        if (member.isAdmin()) {
-            memberRole.setValue(roleLink + "style=\"color: #B00000;\">" + "Project Admin" + "</a>");
+        if (member.isProjectOwner()) {
+            memberRole.setValue(roleLink + "style=\"color: #B00000;\">" + "Project Owner" + "</a>");
         } else {
             memberRole.setValue(roleLink + "style=\"color:gray;font-size:12px;\">" + member.getRoleName() + "</a>");
         }

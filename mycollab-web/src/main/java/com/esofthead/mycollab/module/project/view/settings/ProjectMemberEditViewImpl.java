@@ -187,7 +187,6 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
                 this.setInternalValue(null);
             } else {
                 this.setInternalValue((Integer) this.roleComboBox.getValue());
-                beanItem.setIsadmin(Boolean.FALSE);
             }
 
             super.commit();
