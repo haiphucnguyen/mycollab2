@@ -904,22 +904,13 @@ $v-line-height--header:1.5em;
 
   .member-block {
     .member-name {
-      font-size: $font-large;
       border-bottom: 1px solid $my-separator-color !important;
       padding-bottom: 5px;
-      &:focus {
-        font-size: $font-large;
-        border-bottom: 1px solid $my-separator-color !important;
-        padding-bottom: 5px;
-      }
     }
     div {
       &.v-button-link .v-button-wrap .v-button-caption, a {
         font-weight: $my-font-weight-bold - 100;
       }
-    }
-    .member-role {
-      padding-top: 3px;
     }
   }
 

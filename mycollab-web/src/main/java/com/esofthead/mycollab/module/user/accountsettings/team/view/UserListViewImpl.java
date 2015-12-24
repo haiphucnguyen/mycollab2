@@ -39,8 +39,10 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.List;
@@ -102,7 +104,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getAvatarid(), 100);
         blockTop.addComponent(memberAvatar);
 
-        VerticalLayout memberInfo = new VerticalLayout();
+        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false);
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
         buttonControls.setVisible(AppContext.canWrite(RolePermissionCollections.ACCOUNT_USER));
@@ -151,7 +153,10 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());
-        memberInfo.addComponent(new ELabel(memberLink.write(), ContentMode.HTML));
+        ELabel memberLinkLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
+        memberLinkLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        memberInfo.addComponent(memberLinkLbl);
+        memberInfo.addComponent(new Hr());
 
         Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
                 member.getUsername()), ContentMode.HTML);
@@ -159,9 +164,8 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         memberEmailLabel.setWidth("100%");
         memberInfo.addComponent(memberEmailLabel);
 
-        ELabel memberSinceLabel = new ELabel("Member since: "
-                + AppContext.formatPrettyTime(member.getRegisteredtime())).withDescription(AppContext.formatDateTime
-                (member.getRegisteredtime()));
+        ELabel memberSinceLabel = new ELabel("Member since: " + AppContext.formatPrettyTime(member.getRegisteredtime()))
+                .withDescription(AppContext.formatDateTime(member.getRegisteredtime()));
         memberSinceLabel.addStyleName(UIConstants.LABEL_META_INFO);
         memberSinceLabel.setWidth("100%");
         memberInfo.addComponent(memberSinceLabel);

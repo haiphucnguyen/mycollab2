@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
 import com.esofthead.mycollab.form.view.builder.TextDynaFieldBuilder;
@@ -372,8 +373,13 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
         public void commit() throws SourceException, InvalidValueException {
             Integer roleId = (Integer) roleBox.getValue();
             if (roleId == -1) {
-                user.setIsAccountOwner(Boolean.TRUE);
-                user.setRoleName("Account Owner");
+                if (!AppContext.isAdmin()) {
+                    throw new UserInvalidInputException("Only the Account Owner can assign the role Account " +
+                            "Owner to the user");
+                } else {
+                    user.setIsAccountOwner(Boolean.TRUE);
+                    user.setRoleName("Account Owner");
+                }
             } else {
                 user.setIsAccountOwner(Boolean.FALSE);
                 BeanItem<SimpleRole> role = (BeanItem<SimpleRole>) roleBox.getItem(roleId);

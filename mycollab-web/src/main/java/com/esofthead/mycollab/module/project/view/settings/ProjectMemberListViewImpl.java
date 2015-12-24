@@ -36,14 +36,17 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
 
@@ -159,20 +162,20 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         blockContent.addComponent(buttonControls);
         blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
-        LabelLink memberLink = new LabelLink(member.getMemberFullName(),
-                ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member.getUsername()));
+        A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
+                .getUsername())).appendText(member.getMemberFullName());
+        ELabel memberNameLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
+        memberNameLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        memberNameLbl.setWidth("100%");
 
-        memberLink.setWidth("100%");
-        memberLink.addStyleName("member-name");
-
-        VerticalLayout memberInfo = new VerticalLayout();
-        memberInfo.addComponent(memberLink);
+        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false);
+        memberInfo.addComponent(memberNameLbl);
+        memberInfo.addComponent(new Hr());
 
         String roleLink = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectRoleId()));
         Label memberRole = new Label();
         memberRole.setContentMode(ContentMode.HTML);
-        memberRole.setStyleName("member-role");
         if (member.isProjectOwner()) {
             memberRole.setValue(roleLink + "style=\"color: #B00000;\">" + "Project Owner" + "</a>");
         } else {
@@ -196,7 +199,6 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(member.getStatus())) {
             final VerticalLayout waitingNotLayout = new VerticalLayout();
             Label infoStatus = new Label(AppContext.getMessage(ProjectMemberI18nEnum.WAITING_ACCEPT_INVITATION));
-            infoStatus.addStyleName("member-email");
             waitingNotLayout.addComponent(infoStatus);
 
             ButtonLink resendInvitationLink = new ButtonLink(
@@ -225,7 +227,6 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
             memberInfo.addComponent(lastAccessTimeLbl);
         } else if (RegisterStatusConstants.VERIFICATING.equals(member.getStatus())) {
             Label infoStatus = new Label(AppContext.getMessage(ProjectMemberI18nEnum.SENDING_EMAIL_INVITATION));
-            infoStatus.addStyleName("member-email");
             memberInfo.addComponent(infoStatus);
         }
 

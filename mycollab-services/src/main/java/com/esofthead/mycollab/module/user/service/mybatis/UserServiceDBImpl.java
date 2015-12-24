@@ -244,6 +244,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
                 userAccount.setIsaccountowner(true);
             } else {
                 userAccount.setRoleid(record.getRoleid());
+                userAccount.setIsaccountowner(false);
             }
 
             userAccount.setRegisterstatus(record.getRegisterstatus());

@@ -16919,23 +16919,12 @@ div.v-csslayout.member-block {
 }
 
 .member-block .member-name {
-	font-size: 15px;
-	border-bottom: 1px solid #e5e5e5 !important;
-	padding-bottom: 5px;
-}
-
-.member-block .member-name:focus {
-	font-size: 15px;
 	border-bottom: 1px solid #e5e5e5 !important;
 	padding-bottom: 5px;
 }
 
 .member-block div.v-button-link .v-button-wrap .v-button-caption, .member-block div a {
 	font-weight: 500;
-}
-
-.member-block .member-role {
-	padding-top: 3px;
 }
 
 .member-role {
