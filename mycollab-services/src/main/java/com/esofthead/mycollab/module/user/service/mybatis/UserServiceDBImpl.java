@@ -215,6 +215,19 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
             }
         }
 
+        if (Boolean.TRUE.equals(record.getIsAccountOwner())) {
+            if (record.getRoleid() != null && record.getRoleid() !=-1) {
+                UserAccountExample userAccountEx = new UserAccountExample();
+                userAccountEx.createCriteria().andAccountidEqualTo(sAccountId).andIsaccountownerEqualTo(Boolean.TRUE);
+                if (userAccountMapper.countByExample(userAccountEx) == 1) {
+                    throw new UserInvalidInputException(String.format("Can not change role of user %s. The reason is " +
+                            "%s is the unique account owner of the current account.", record.getUsername(), record.getUsername()));
+                } else {
+                    record.setIsAccountOwner(false);
+                }
+            }
+        }
+
         // now we keep username similar than email
         UserExample ex = new UserExample();
         ex.createCriteria().andUsernameEqualTo(record.getUsername());
@@ -314,6 +327,13 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         pendingUserAccounts(Arrays.asList(username), accountId);
     }
 
+    @Override
+    public void pendingUserAccounts(List<String> usernames, Integer accountId) {
+        for (String username : usernames) {
+            internalPendingUserAccount(username, accountId);
+        }
+    }
+
     private void internalPendingUserAccount(String username, Integer accountId) {
         // check if current user is the unique account owner, then reject deletion
         UserAccountExample userAccountEx = new UserAccountExample();
@@ -340,13 +360,6 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         // notify users are "deleted"
         DeleteUserEvent event = new DeleteUserEvent(username, accountId);
         asyncEventBus.post(event);
-    }
-
-    @Override
-    public void pendingUserAccounts(List<String> usernames, Integer accountId) {
-        for (String username : usernames) {
-            internalPendingUserAccount(username, accountId);
-        }
     }
 
     @Override

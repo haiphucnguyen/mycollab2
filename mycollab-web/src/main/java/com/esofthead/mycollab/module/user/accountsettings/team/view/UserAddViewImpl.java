@@ -257,8 +257,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
             @Override
             public ComponentContainer getLayout() {
-                String title = (user.getUsername() == null) ?
-                        AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
+                String title = (user.getUsername() == null) ? AppContext.getMessage(UserI18nEnum.VIEW_NEW_USER) : user.getDisplayName();
                 AddViewLayout formAddLayout = new AddViewLayout(title, FontAwesome.USER);
                 formAddLayout.addHeaderRight(createButtonControls());
                 userInformationLayout = new UserInformationLayout();
@@ -287,8 +286,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
             protected Field<?> onCreateField(Object propertyId) {
                 if (SimpleUser.Field.roleid.equalTo(propertyId)) {
                     return new AdminRoleSelectionField();
-                } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId)
-                        || User.Field.lastname.equalTo(propertyId)) {
+                } else if (User.Field.email.equalTo(propertyId) || User.Field.firstname.equalTo(propertyId) || User.Field.lastname.equalTo(propertyId)) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
