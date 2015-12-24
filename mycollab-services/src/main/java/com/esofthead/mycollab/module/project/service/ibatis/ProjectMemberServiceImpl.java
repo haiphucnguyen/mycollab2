@@ -54,10 +54,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -115,8 +112,9 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         if (Boolean.TRUE.equals(member.getIsadmin())) {
             if (member.getProjectroleid() != null && member.getProjectroleid() != -1) {
                 ProjectMemberExample userAccountEx = new ProjectMemberExample();
-                userAccountEx.createCriteria().andProjectidEqualTo(member.getProjectid()).andIsadminEqualTo(Boolean.TRUE);
-                if (projectMemberMapper.countByExample(userAccountEx) == 1) {
+                userAccountEx.createCriteria().andUsernameNotIn(Arrays.asList(member.getUsername())).andProjectidEqualTo(member.getProjectid())
+                        .andIsadminEqualTo(Boolean.TRUE).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE);
+                if (projectMemberMapper.countByExample(userAccountEx) == 0) {
                     throw new UserInvalidInputException(String.format("Can not change role of user %s. The reason is " +
                             "%s is the unique account owner of the current project.", member.getUsername(), member.getUsername()));
                 } else {
@@ -135,7 +133,8 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
                 usernames.add(member.getUsername());
             }
             ProjectMemberExample ex = new ProjectMemberExample();
-            ex.createCriteria().andUsernameNotIn(usernames).andProjectidEqualTo(members.get(0).getProjectid()).andIsadminEqualTo(true);
+            ex.createCriteria().andUsernameNotIn(usernames).andProjectidEqualTo(members.get(0).getProjectid())
+                    .andIsadminEqualTo(true).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE);
             if (projectMemberMapper.countByExample(ex) == 0) {
                 throw new UserInvalidInputException("Can not delete users. The reason is there is no " +
                         "project owner in the rest users");
