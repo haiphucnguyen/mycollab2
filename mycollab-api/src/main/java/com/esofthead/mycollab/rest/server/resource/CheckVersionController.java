@@ -26,7 +26,7 @@ public class CheckVersionController {
     public String getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
 
-        props.put("version", getVersion());
+        props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
         props.put("releaseNotes", "http://community.mycollab.com/release-notes/");
 
@@ -38,21 +38,5 @@ public class CheckVersionController {
 
         Gson gson = new Gson();
         return gson.toJson(props);
-    }
-
-    private static String getVersion() {
-        try {
-            File pricingFile = FileUtils.getDesireFile(System.getProperty("user.dir"), "version", "src/main/conf/version");
-            InputStream pricingStream;
-            if (pricingFile != null) {
-                pricingStream = new FileInputStream(pricingFile);
-            } else {
-                pricingStream = CheckVersionController.class.getClassLoader().getResourceAsStream("version");
-            }
-
-            return IOUtils.toString(pricingStream, "UTF-8").replace("\n","");
-        } catch (Exception e) {
-            return MyCollabVersion.getVersion();
-        }
     }
 }
