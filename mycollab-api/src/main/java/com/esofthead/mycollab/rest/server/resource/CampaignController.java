@@ -3,6 +3,8 @@ package com.esofthead.mycollab.rest.server.resource;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
+import com.esofthead.mycollab.module.support.dao.CommunityLeadMapper;
+import com.esofthead.mycollab.module.support.domain.CommunityLead;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Li;
 import com.hp.gagawa.java.elements.Ul;
@@ -27,7 +29,7 @@ import java.util.Map;
 @RestController
 public class CampaignController {
     @Autowired
-    private MailRelayService mailRelayService;
+    private CommunityLeadMapper communityLeadMapper;
 
     @RequestMapping(method = RequestMethod.GET, path = "/linktobuy")
     public String getLinkToBuy() {
@@ -60,9 +62,16 @@ public class CampaignController {
                 new Li().appendText(String.format("Role: %s", role)),
                 new Li().appendText(String.format("Phone: %s", phone)),
                 new Li().appendText(String.format("Country: %s", country))));
+        CommunityLead communityLead = new CommunityLead();
+        communityLead.setFirstname(firstname);
+        communityLead.setLastname(lastname);
+        communityLead.setEmail(email);
+        communityLead.setCompany(company);
+        communityLead.setRole(role);
+        communityLead.setPhone(phone);
+        communityLead.setCountry(country);
+        communityLeadMapper.insert(communityLead);
 
-        mailRelayService.saveRelayEmail(new String[]{"Sir"},
-                new String[]{"hainguyen@mycollab.com"}, "New guy want to contact", bodyContent.write());
         Map result = new HashMap();
         result.put("windows", String.format("https://sourceforge" +
                         ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Installer-%s.zip/download",
