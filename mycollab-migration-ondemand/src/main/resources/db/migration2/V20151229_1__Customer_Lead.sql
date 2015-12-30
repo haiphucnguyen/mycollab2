@@ -7,4 +7,7 @@ CREATE TABLE `s_customer_lead` (
   `phone` VARCHAR(45) NOT NULL,
   `country` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
+  `registerDate` DATETIME NULL,
+  `edition` VARCHAR(45) NULL,
+  `version` VARCHAR(45) NULL;
   PRIMARY KEY (`id`));

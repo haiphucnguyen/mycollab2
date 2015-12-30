@@ -2,13 +2,10 @@ package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.support.dao.CommunityLeadMapper;
 import com.esofthead.mycollab.module.support.domain.CommunityLead;
-import com.hp.gagawa.java.elements.Div;
-import com.hp.gagawa.java.elements.Li;
-import com.hp.gagawa.java.elements.Ul;
 import org.apache.commons.io.IOUtils;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,13 +52,6 @@ public class CampaignController {
                           @RequestParam("email") String email, @RequestParam("role") String role,
                           @RequestParam("company") String company, @RequestParam("phone") String phone,
                           @RequestParam("country") String country) {
-        Div bodyContent = new Div().appendChild(new Ul().appendChild(
-                new Li().appendText(String.format("Name: %s", (firstname + lastname))),
-                new Li().appendText(String.format("Email: %s", email)),
-                new Li().appendText(String.format("Company: %s", company)),
-                new Li().appendText(String.format("Role: %s", role)),
-                new Li().appendText(String.format("Phone: %s", phone)),
-                new Li().appendText(String.format("Country: %s", country))));
         CommunityLead communityLead = new CommunityLead();
         communityLead.setFirstname(firstname);
         communityLead.setLastname(lastname);
@@ -70,6 +60,9 @@ public class CampaignController {
         communityLead.setRole(role);
         communityLead.setPhone(phone);
         communityLead.setCountry(country);
+        communityLead.setRegisterdate(new LocalDate().toDate());
+        communityLead.setVersion(MyCollabVersion.getVersion());
+        communityLead.setEdition("Community");
         communityLeadMapper.insert(communityLead);
 
         Map result = new HashMap();
