@@ -18,6 +18,7 @@ package com.esofthead.mycollab.mobile;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.IgnoreException;
+import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.SessionExpireException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -60,7 +61,7 @@ import java.util.Collection;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-@Theme("mycollab-mobile")
+@Theme(MyCollabVersion.THEME_MOBILE_VERSION)
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet")
 public class MobileApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
