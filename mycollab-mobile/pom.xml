@@ -55,12 +55,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>slidemenu</artifactId>
-            <version>0.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-sass-compiler</artifactId>
             <version>0.9.13</version>
