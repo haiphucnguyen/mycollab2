@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.module.support.dao.CommunityLeadMapper;
 import com.esofthead.mycollab.module.support.domain.CommunityLead;
+import com.esofthead.mycollab.module.support.domain.CommunityLeadExample;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,14 @@ public class CampaignController {
         communityLead.setRegisterdate(new LocalDate().toDate());
         communityLead.setVersion(MyCollabVersion.getVersion());
         communityLead.setEdition("Community");
-        communityLeadMapper.insert(communityLead);
+
+        CommunityLeadExample ex = new CommunityLeadExample();
+        ex.createCriteria().andFirstnameEqualTo(firstname).andLastnameEqualTo(lastname).andEmailEqualTo(email)
+                .andVersionEqualTo(MyCollabVersion.getVersion());
+        if (communityLeadMapper.countByExample(ex) == 0) {
+            communityLeadMapper.insert(communityLead);
+        }
+
 
         Map result = new HashMap();
         result.put("windows", String.format("https://sourceforge" +
