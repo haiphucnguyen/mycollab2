@@ -38,7 +38,6 @@ public class ProjectListViewImpl extends AbstractListViewComp<ProjectSearchCrite
 
 	public ProjectListViewImpl() {
 		this.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST));
-		this.setToggleButton(true);
 	}
 
 	@Override

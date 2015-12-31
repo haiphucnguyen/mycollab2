@@ -139,7 +139,7 @@ public abstract class AbstractPagedBeanList<S extends SearchCriteria, B> extends
         this.searchRequest.setCurrentPage(this.currentPage);
         List<B> currentData = this.queryCurrentData();
         if (this.currentListData == null)
-            this.currentListData = new ArrayList<B>();
+            this.currentListData = new ArrayList<>();
         this.currentListData.addAll(currentData);
         this.currentViewCount += this.currentListData.size();
 

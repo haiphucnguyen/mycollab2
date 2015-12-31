@@ -32,8 +32,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.ThemeManager;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
@@ -181,6 +181,7 @@ public class MobileApplication extends MyCollabUI {
         setContent(manager);
 
         registerControllers(manager);
+        ThemeManager.loadMobileTheme(AppContext.getAccountId());
 
         getPage().addUriFragmentChangedListener(new UriFragmentChangedListener() {
             private static final long serialVersionUID = -6410955178515535406L;

@@ -29,17 +29,41 @@ import com.vaadin.server.Page;
  * @since 4.1.2
  */
 public class ThemeManager {
-
-    public static void loadUserTheme(int sAccountId) {
+    public static void loadMobileTheme(int sAccountId) {
         AccountThemeService themeService = ApplicationContextUtil.getSpringBean(AccountThemeService.class);
-
         AccountTheme accountTheme = themeService.findTheme(sAccountId);
 
         if (accountTheme == null) {
             accountTheme = themeService.findDefaultTheme(AppContext.getAccountId());
             if (accountTheme == null) {
                 throw new UserInvalidInputException("Can not load theme for this account. You may get bad experience " +
-                        "while using MyCollab. Please contact your site admoinistrator to solve this issue or fill a " +
+                        "while using MyCollab. Please contact your site administrator to solve this issue or fill a " +
+                        "support request to MyCollab team");
+            }
+        }
+
+        StringBuilder extraStyles = new StringBuilder();
+        if (accountTheme.getTopmenubg() != null) {
+            extraStyles.append(".mobilenavview .v-touchkit-navbar { background-color: #" + accountTheme.getTopmenubg() + "; }");
+        }
+
+        if (accountTheme.getTopmenutext() != null) {
+            extraStyles.append(".mobilenavview .v-touchkit-navbar { color: #" + accountTheme.getTopmenutext() + "; }");
+        }
+        if (extraStyles.length() > 0) {
+            Page.getCurrent().getStyles().add(extraStyles.toString());
+        }
+    }
+
+    public static void loadDesktopTheme(int sAccountId) {
+        AccountThemeService themeService = ApplicationContextUtil.getSpringBean(AccountThemeService.class);
+        AccountTheme accountTheme = themeService.findTheme(sAccountId);
+
+        if (accountTheme == null) {
+            accountTheme = themeService.findDefaultTheme(AppContext.getAccountId());
+            if (accountTheme == null) {
+                throw new UserInvalidInputException("Can not load theme for this account. You may get bad experience " +
+                        "while using MyCollab. Please contact your site administrator to solve this issue or fill a " +
                         "support request to MyCollab team");
             }
         }

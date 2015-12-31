@@ -128,7 +128,6 @@ public class MilestoneListViewImpl extends AbstractMobileTabPageView implements 
             this.setCaption(AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
             this.milestoneList = new MilestoneListDisplay();
             this.setContent(milestoneList);
-            this.setToggleButton(true);
             this.setRightComponent(createRightComponent());
         }
 
@@ -137,12 +136,9 @@ public class MilestoneListViewImpl extends AbstractMobileTabPageView implements 
         }
 
         private Component createRightComponent() {
-            Button addMilestone = new Button();
-            addMilestone.addClickListener(new Button.ClickListener() {
-                private static final long serialVersionUID = 1336922660536188779L;
-
+            Button addMilestone = new Button("", new Button.ClickListener() {
                 @Override
-                public void buttonClick(Button.ClickEvent event) {
+                public void buttonClick(Button.ClickEvent clickEvent) {
                     EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(this, null));
                 }
             });

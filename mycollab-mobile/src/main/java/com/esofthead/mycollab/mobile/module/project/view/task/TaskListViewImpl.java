@@ -58,7 +58,6 @@ public class TaskListViewImpl extends AbstractListViewComp<TaskSearchCriteria, S
 
     public TaskListViewImpl() {
         this.addStyleName("task-list-view");
-        this.setToggleButton(false);
     }
 
     @Override

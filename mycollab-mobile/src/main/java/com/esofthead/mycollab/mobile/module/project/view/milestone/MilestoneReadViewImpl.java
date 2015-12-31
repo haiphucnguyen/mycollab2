@@ -21,6 +21,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListDisplay;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
@@ -40,8 +41,10 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -117,62 +120,36 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
 
     @Override
     protected ComponentContainer createBottomPanel() {
-        HorizontalLayout toolbarLayout = new HorizontalLayout();
+        MHorizontalLayout toolbarLayout = new MHorizontalLayout();
         toolbarLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        toolbarLayout.setSpacing(true);
 
-        Button relatedBugs = new Button();
-        relatedBugs.setCaption("<span aria-hidden=\"true\" data-icon=\""
-                + IconConstants.PROJECT_BUG
-                + "\"></span><div class=\"screen-reader-text\">"
-                + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG)
-                + "</div>");
-        relatedBugs.setHtmlContentAllowed(true);
-        relatedBugs.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = 2113811477874305745L;
-
+        Button relatedBugs = new Button(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " +
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG), new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent arg0) {
+            public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ShellEvent.PushView(this, getRelatedBugs()));
             }
         });
+        relatedBugs.setHtmlContentAllowed(true);
         toolbarLayout.addComponent(relatedBugs);
 
-        Button relatedTasks = new Button();
-        relatedTasks.setCaption("<span aria-hidden=\"true\" data-icon=\""
-                + IconConstants.PROJECT_TASK
-                + "\"></span><div class=\"screen-reader-text\">"
-                + AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK)
-                + "</div>");
-        relatedTasks.setHtmlContentAllowed(true);
-        relatedTasks.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = -9171495386840452500L;
-
+        Button relatedTasks = new Button(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK).getHtml() + " " +
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK), new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent arg0) {
+            public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ShellEvent.PushView(this, getRelatedTasks()));
             }
         });
+        relatedTasks.setHtmlContentAllowed(true);
         toolbarLayout.addComponent(relatedTasks);
 
-        relatedComments = new Button();
-        relatedComments.setCaption("<span aria-hidden=\"true\" data-icon=\""
-                + IconConstants.PROJECT_MESSAGE
-                + "\"></span><div class=\"screen-reader-text\">"
-                + AppContext.getMessage(GenericI18Enum.TAB_COMMENT)
-                + "</div>");
-        relatedComments.setHtmlContentAllowed(true);
-        relatedComments.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = 2206489649468573076L;
-
+        relatedComments = new Button(FontAwesome.COMMENT.getHtml() + " " + AppContext.getMessage(GenericI18Enum.TAB_COMMENT), new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent arg0) {
+            public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ShellEvent.PushView(this, associateComments));
             }
         });
+        relatedComments.setHtmlContentAllowed(true);
         toolbarLayout.addComponent(relatedComments);
 
         return toolbarLayout;
@@ -192,9 +169,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
         return associateTasks;
     }
 
-    private class MilestoneFormFieldFactory extends
-            AbstractBeanFieldGroupViewFieldFactory<SimpleMilestone> {
-
+    private class MilestoneFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleMilestone> {
         private static final long serialVersionUID = 1L;
 
         public MilestoneFormFieldFactory(GenericBeanForm<SimpleMilestone> form) {

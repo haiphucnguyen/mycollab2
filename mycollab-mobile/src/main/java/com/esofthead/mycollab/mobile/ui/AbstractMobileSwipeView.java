@@ -18,8 +18,8 @@ package com.esofthead.mycollab.mobile.ui;
 
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewEvent;
-import com.esofthead.vaadin.mobilecomponent.MobileNavigationView;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.addon.touchkit.ui.NavigationView;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
@@ -27,13 +27,12 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Inc.
  * @since 4.3.1
  */
-public class AbstractMobileSwipeView extends MobileNavigationView implements PageView {
+public class AbstractMobileSwipeView extends NavigationView implements PageView {
     private static final long serialVersionUID = -5179416042698544018L;
 
     public AbstractMobileSwipeView() {
         super();
         this.setStyleName("mobilenavview");
-        this.setToggleButton(true);
     }
 
     @Override

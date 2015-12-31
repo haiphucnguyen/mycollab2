@@ -18,7 +18,6 @@ package com.esofthead.mycollab.mobile.ui;
 
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.vaadin.mobilecomponent.MobileViewToolbar;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.ComponentContainer;
 
@@ -53,10 +52,7 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView 
             toolbarContent.addStyleName("related-items");
             toolbarContent.setHeight("100%");
             toolbarContent.setWidthUndefined();
-
-            MobileViewToolbar toolbar = new MobileViewToolbar();
-            toolbar.setComponent(toolbarContent);
-            this.setToolbar(toolbar);
+            this.setToolbar(toolbarContent);
         }
     }
 

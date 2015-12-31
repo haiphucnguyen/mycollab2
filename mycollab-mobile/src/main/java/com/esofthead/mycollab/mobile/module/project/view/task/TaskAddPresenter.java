@@ -18,7 +18,6 @@ package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.module.project.ui.InsideProjectNavigationMenu;
 import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePresenter;
@@ -27,16 +26,13 @@ import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.UI;
 
 /**
  * @author MyCollab Ltd.
@@ -52,45 +48,32 @@ public class TaskAddPresenter extends AbstractMobilePresenter<TaskAddView> {
     @Override
     protected void postInitView() {
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<SimpleTask>() {
-                    private static final long serialVersionUID = 9034340428921755073L;
+            private static final long serialVersionUID = 9034340428921755073L;
 
-                    @Override
-                    public void onSave(SimpleTask bean) {
-                        saveTask(bean);
-                        EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
-                    }
+            @Override
+            public void onSave(SimpleTask bean) {
+                saveTask(bean);
+                EventBusFactory.getInstance().post(new ShellEvent.NavigateBack(this, null));
+            }
 
-                    @Override
-                    public void onSaveAndNew(SimpleTask bean) {
-                    }
+            @Override
+            public void onSaveAndNew(SimpleTask bean) {
+            }
 
-                    @Override
-                    public void onCancel() {
-                    }
+            @Override
+            public void onCancel() {
+            }
 
-                });
+        });
     }
 
     @Override
     protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-            InsideProjectNavigationMenu projectModuleMenu = (InsideProjectNavigationMenu) ((MobileNavigationManager) UI
-                    .getCurrent().getContent()).getNavigationMenu();
-            projectModuleMenu.selectButton(AppContext
-                    .getMessage(ProjectCommonI18nEnum.VIEW_TASK));
-
             SimpleTask task = (SimpleTask) data.getParams();
             view.editItem(task);
             super.onGo(navigator, data);
             if (task.getId() == null) {
-//				AppContext
-//						.addFragment(
-//								"project/task/task/add/"
-//										+ GenericLinkUtils.encodeParam(CurrentProjectVariables
-//                                                .getProjectId(),
-//										task.getTasklistid()),
-//								AppContext
-//										.getMessage(TaskI18nEnum.FORM_NEW_TASK_TITLE));
             } else {
                 AppContext.addFragment(ProjectLinkGenerator.generateTaskEditLink(task.getTaskkey(), task.getProjectShortname()), task.getTaskname());
             }
