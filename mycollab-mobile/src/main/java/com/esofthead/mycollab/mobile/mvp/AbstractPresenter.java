@@ -33,7 +33,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
+ *
  * @param <V>
  * @author MyCollab Ltd.
  * @since 3.0

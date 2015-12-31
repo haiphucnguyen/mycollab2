@@ -23,90 +23,72 @@ import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.5.0
- *
  */
 public abstract class TimeLogComp<V extends ValuedBean> extends VerticalLayout {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected ItemTimeLoggingService itemTimeLoggingService;
+    protected ItemTimeLoggingService itemTimeLoggingService;
 
-	protected TimeLogComp() {
-		this.itemTimeLoggingService = ApplicationContextUtil
-				.getSpringBean(ItemTimeLoggingService.class);
-	}
+    protected TimeLogComp() {
+        this.itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
+    }
 
-	public void displayTime(final V bean) {
-		this.removeAllComponents();
+    public void displayTime(final V bean) {
+        this.removeAllComponents();
 
-		HorizontalLayout header = new HorizontalLayout();
-		header.setSpacing(true);
-		header.setStyleName("info-hdr");
-		header.addStyleName("timelog-comp-hdr");
-		header.setWidth("100%");
-		Label dateInfoHeader = new Label(
-				AppContext.getMessage(TimeTrackingI18nEnum.SUB_INFO_TIME));
-		dateInfoHeader.setWidthUndefined();
-		header.addComponent(dateInfoHeader);
-		header.setExpandRatio(dateInfoHeader, 1.0f);
+        HorizontalLayout header = new HorizontalLayout();
+        header.setSpacing(true);
+        header.setStyleName("info-hdr");
+        header.addStyleName("timelog-comp-hdr");
+        header.setWidth("100%");
+        Label dateInfoHeader = new Label(AppContext.getMessage(TimeTrackingI18nEnum.SUB_INFO_TIME));
+        dateInfoHeader.setWidthUndefined();
+        header.addComponent(dateInfoHeader);
+        header.setExpandRatio(dateInfoHeader, 1.0f);
 
-		if (hasEditPermission()) {
-			Button editBtn = new Button(
-					AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+        if (hasEditPermission()) {
+            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							showEditTimeView(bean);
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    showEditTimeView(bean);
+                }
+            });
+            editBtn.setStyleName("link");
+            editBtn.setHtmlContentAllowed(true);
+            header.addComponent(editBtn);
+            header.setComponentAlignment(editBtn, Alignment.BOTTOM_LEFT);
+        }
 
-						}
-					});
-			editBtn.setStyleName("link");
-			editBtn.setHtmlContentAllowed(true);
-			header.addComponent(editBtn);
-			header.setComponentAlignment(editBtn, Alignment.BOTTOM_LEFT);
-		}
+        this.addComponent(header);
 
-		this.addComponent(header);
+        MobileGridFormLayoutHelper layout = new MobileGridFormLayoutHelper(1, 3, "100%", "150px", Alignment.TOP_RIGHT);
+        layout.getLayout().setWidth("100%");
+        layout.getLayout().setMargin(false);
 
-		MobileGridFormLayoutHelper layout = new MobileGridFormLayoutHelper(1, 3, "100%",
-				"150px", Alignment.TOP_RIGHT);
-		layout.getLayout().setWidth("100%");
-		layout.getLayout().setMargin(false);
+        double billableHours = getTotalBillableHours(bean);
+        double nonBillableHours = getTotalNonBillableHours(bean);
+        double remainHours = getRemainedHours(bean);
+        layout.addComponent(new Label(billableHours + ""), AppContext.getMessage(TimeTrackingI18nEnum.M_FORM_BILLABLE_HOURS), 0, 0);
+        layout.addComponent(new Label(nonBillableHours + ""), AppContext.getMessage(TimeTrackingI18nEnum.M_FORM_NON_BILLABLE_HOURS), 0, 1);
+        layout.addComponent(new Label(remainHours + ""), AppContext.getMessage(TimeTrackingI18nEnum.M_FORM_REMAIN_HOURS), 0, 2);
+        this.addComponent(layout.getLayout());
+    }
 
-		double billableHours = getTotalBillableHours(bean);
-		double nonBillableHours = getTotalNonBillableHours(bean);
-		double remainHours = getRemainedHours(bean);
-		layout.addComponent(new Label(billableHours + ""), AppContext
-				.getMessage(TimeTrackingI18nEnum.M_FORM_BILLABLE_HOURS), 0, 0);
-		layout.addComponent(new Label(nonBillableHours + ""), AppContext
-				.getMessage(TimeTrackingI18nEnum.M_FORM_NON_BILLABLE_HOURS), 0,
-				1);
-		layout.addComponent(
-				new Label(remainHours + ""),
-				AppContext.getMessage(TimeTrackingI18nEnum.M_FORM_REMAIN_HOURS),
-				0, 2);
-		this.addComponent(layout.getLayout());
-	}
+    protected abstract Double getTotalBillableHours(V bean);
 
-	protected abstract Double getTotalBillableHours(V bean);
+    protected abstract Double getTotalNonBillableHours(V bean);
 
-	protected abstract Double getTotalNonBillableHours(V bean);
+    protected abstract Double getRemainedHours(V bean);
 
-	protected abstract Double getRemainedHours(V bean);
+    protected abstract boolean hasEditPermission();
 
-	protected abstract boolean hasEditPermission();
-
-	protected abstract void showEditTimeView(V bean);
+    protected abstract void showEditTimeView(V bean);
 }

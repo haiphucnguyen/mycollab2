@@ -79,19 +79,16 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements Proj
         rememberPassword.setValue(true);
         contentLayout.addComponent(rememberPassword);
 
-        Button signInBtn = new Button("Sign In");
-        signInBtn.setWidth("100%");
-        signInBtn.addStyleName(UIConstants.BUTTON_BIG);
-        signInBtn.addStyleName(UIConstants.COLOR_BLUE);
-        signInBtn.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
+        Button signInBtn = new Button("Sign In", new Button.ClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent event) {
+            public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ProjectEvent.PlainLogin(this, new String[]{
                         emailField.getValue(), pwdField.getValue(), String.valueOf(rememberPassword.getValue())}));
             }
         });
+        signInBtn.setWidth("100%");
+        signInBtn.addStyleName(UIConstants.BUTTON_BIG);
+        signInBtn.addStyleName(UIConstants.COLOR_BLUE);
         contentLayout.addComponent(signInBtn);
 
         Button createAccountBtn = new Button("Create Account");

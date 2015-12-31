@@ -50,14 +50,10 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
     private Integer numComments;
     private ProjectCommentInput commentBox;
 
-    public ProjectCommentListDisplay(
-            final String type,
-            final Integer extraTypeId,
-            final boolean isDisplayCommentInput,
-            final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+    public ProjectCommentListDisplay(final String type, final Integer extraTypeId,
+            final boolean isDisplayCommentInput, final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
         this.addStyleName("comment-list");
-        this.setCaption(AppContext
-                .getMessage(GenericI18Enum.TAB_COMMENT));
+        this.setCaption(AppContext.getMessage(GenericI18Enum.TAB_COMMENT));
         this.type = type;
         if (isDisplayCommentInput) {
             commentBox = new ProjectCommentInput(this, type, extraTypeId, false, emailHandler);
@@ -107,8 +103,7 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
         public Component generateRow(SimpleComment comment, int rowIndex) {
             MHorizontalLayout commentBlock = new MHorizontalLayout().withSpacing(false);
             commentBlock.setStyleName("comment-block");
-            Image userAvatarImg = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(
-                    comment.getOwnerAvatarId(), 32);
+            Image userAvatarImg = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(comment.getOwnerAvatarId(), 32);
             userAvatarImg.setStyleName("user-avatar");
             commentBlock.addComponent(userAvatarImg);
 
@@ -141,8 +136,7 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
                 attachmentPanel.setWidth("100%");
 
                 for (Content attachment : attachments) {
-                    attachmentPanel.addComponent(MobileAttachmentUtils
-                            .renderAttachmentRow(attachment));
+                    attachmentPanel.addComponent(MobileAttachmentUtils.renderAttachmentRow(attachment));
                 }
                 rightCol.addComponent(attachmentPanel);
             }

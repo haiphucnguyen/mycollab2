@@ -51,8 +51,7 @@ public class ProjectAttachmentReceiver implements Receiver {
 	}
 
 	protected File createFile(String fileName, String mimeType) {
-		final String tempFileName = "upload_tmpfile_"
-				+ System.currentTimeMillis();
+		final String tempFileName = "upload_tmpfile_" + System.currentTimeMillis();
 		try {
 			return File.createTempFile(tempFileName, null);
 		} catch (IOException e) {

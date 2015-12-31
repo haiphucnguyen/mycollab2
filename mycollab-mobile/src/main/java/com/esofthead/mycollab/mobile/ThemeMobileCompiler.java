@@ -35,6 +35,5 @@ public class ThemeMobileCompiler {
         Path source = FileSystems.getDefault().getPath("src/main/resources/VAADIN/themes/" + MyCollabVersion.THEME_MOBILE_VERSION + "/", "styles.css");
         Path dest = FileSystems.getDefault().getPath("target/classes/VAADIN/themes/" + MyCollabVersion.THEME_MOBILE_VERSION + "/", "styles.css");
         Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
-
     }
 }

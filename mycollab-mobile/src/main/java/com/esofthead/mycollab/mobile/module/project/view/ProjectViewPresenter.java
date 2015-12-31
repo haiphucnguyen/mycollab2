@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.mobile.module.project.view;
 
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.mobile.module.project.ui.InsideProjectNavigationMenu;
 import com.esofthead.mycollab.mobile.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.mobile.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestonePresenter;
@@ -63,7 +62,6 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
                 NotificationUtil.showRecordNotExistNotification();
             } else {
                 CurrentProjectVariables.setProject(project);
-                ((MobileNavigationManager) UI.getCurrent().getContent()).setNavigationMenu(new InsideProjectNavigationMenu());
             }
         }
     }

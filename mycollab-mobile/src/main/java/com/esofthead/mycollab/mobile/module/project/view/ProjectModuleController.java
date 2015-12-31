@@ -57,9 +57,9 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractController;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.vaadin.mobilecomponent.MobileNavigationManager;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.addon.touchkit.extensions.LocalStorage;
+import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,11 +71,11 @@ import org.slf4j.LoggerFactory;
 public class ProjectModuleController extends AbstractController {
     private static final long serialVersionUID = 8999456416358169209L;
 
-    private final MobileNavigationManager navManager;
+    private final NavigationManager navManager;
 
     private static final Logger LOG = LoggerFactory.getLogger(ProjectModuleController.class);
 
-    public ProjectModuleController(MobileNavigationManager navigationManager) {
+    public ProjectModuleController(NavigationManager navigationManager) {
         this.navManager = navigationManager;
 
         bindProjectEvents();

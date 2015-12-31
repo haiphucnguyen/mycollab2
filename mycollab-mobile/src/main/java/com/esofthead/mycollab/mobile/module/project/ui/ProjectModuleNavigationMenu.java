@@ -29,60 +29,37 @@ import com.vaadin.ui.Button.ClickListener;
 
 /**
  * @author MyCollab Ltd.
- * 
  * @since 4.4.0
- * 
  */
 public class ProjectModuleNavigationMenu extends AbstractNavigationMenu {
+    private static final long serialVersionUID = -4087918174690391176L;
 
-	private static final long serialVersionUID = -4087918174690391176L;
+    public ProjectModuleNavigationMenu() {
+        super();
 
-	public ProjectModuleNavigationMenu() {
-		super();
+        final MenuButton prjListBtn = new MenuButton(AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST), IconConstants.PROJECT_DASHBOARD);
+        addMenu(prjListBtn);
 
-		final MenuButton prjListBtn = new MenuButton(
-				AppContext
-						.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST),
-				IconConstants.PROJECT_DASHBOARD);
-		addMenu(prjListBtn);
+        final MenuButton activityBtn = new MenuButton(AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES), IconConstants.PROJECT_ACTIVITIES);
+        addMenu(activityBtn);
+    }
 
-		final MenuButton activityBtn = new MenuButton(
-				AppContext
-						.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES),
-				IconConstants.PROJECT_ACTIVITIES);
-		addMenu(activityBtn);
+    @Override
+    protected ClickListener createDefaultButtonClickListener() {
+        return new Button.ClickListener() {
 
-		// final MenuButton ticketBtn = new MenuButton(
-		// AppContext
-		// .getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_FOLLOWING_TICKETS),
-		// IconConstants.PROJECT_FOLLOWING);
-		// addMenu(ticketBtn);
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	protected ClickListener createDefaultButtonClickListener() {
-		return new Button.ClickListener() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				final String caption = ((MenuButton) event.getButton())
-						.getBtnId();
-				if (AppContext.getMessage(
-						ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST).equals(
-						caption)) {
-					EventBusFactory.getInstance().post(
-							new ProjectEvent.GotoProjectList(this, null));
-				} else if (AppContext.getMessage(
-						ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES)
-						.equals(caption)) {
-					EventBusFactory.getInstance().post(
-							new ProjectEvent.AllActivities(this,
-									new ProjectScreenData.AllActivities()));
-				}
-			}
-		};
-	}
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                final String caption = ((MenuButton) event.getButton()).getBtnId();
+                if (AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST).equals(caption)) {
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectList(this, null));
+                } else if (AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES).equals(caption)) {
+                    EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this, new ProjectScreenData.AllActivities()));
+                }
+            }
+        };
+    }
 
 }
