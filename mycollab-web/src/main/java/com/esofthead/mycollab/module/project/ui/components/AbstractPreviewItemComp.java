@@ -23,7 +23,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
@@ -115,6 +114,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         }
 
         CssLayout contentWrapper = new CssLayout();
+        contentWrapper.setWidth("100%");
         contentWrapper.setStyleName("content-wrapper");
 
         if (previewLayout == null)
@@ -127,19 +127,17 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             bodyContainer.setSizeFull();
             bodyContainer.addStyleName("readview-body-wrap");
 
-            bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).with(previewForm);
+            bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).withFullWidth().with(previewForm);
             bodyContainer.setContent(bodyContent);
             sidebarContent = new MVerticalLayout().withWidth("250px").withStyleName("readview-sidebar");
             bodyContainer.setSidebar(sidebarContent);
 
-//            FloatingComponent floatSidebar = FloatingComponent.floatThis(sidebarContent);
-//            floatSidebar.setContainerId("main-body");
             previewLayout.addBody(bodyContainer);
         } else {
             CssLayout bodyContainer = new CssLayout();
             bodyContainer.setSizeFull();
             bodyContainer.addStyleName("readview-body-wrap");
-            bodyContent = new MVerticalLayout().withSpacing(false).withMargin(false).with(previewForm);
+            bodyContent = new MVerticalLayout().withSpacing(false).withFullWidth().withMargin(false).with(previewForm);
             bodyContainer.addComponent(bodyContent);
             previewLayout.addBody(bodyContainer);
         }
