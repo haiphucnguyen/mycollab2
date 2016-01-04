@@ -29,6 +29,7 @@ import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -113,9 +114,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             addHeaderRightContent(actionControls);
         }
 
-        CssLayout contentWrapper = new CssLayout();
-        contentWrapper.setWidth("100%");
-        contentWrapper.setStyleName("content-wrapper");
+        MCssLayout contentWrapper = new MCssLayout().withFullWidth().withStyleName(UIConstants.CONTENT_WRAPPER);
 
         if (previewLayout == null)
             previewLayout = new DefaultReadViewLayout("");

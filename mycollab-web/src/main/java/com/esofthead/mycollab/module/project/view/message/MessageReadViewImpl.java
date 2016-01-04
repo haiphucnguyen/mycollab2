@@ -45,6 +45,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -60,7 +61,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
 
     private AdvancedPreviewBeanForm<SimpleMessage> previewForm;
     private SimpleMessage message;
-    private CssLayout contentWrapper;
+    private MCssLayout contentWrapper;
     private MHorizontalLayout header;
     private CommentDisplay commentDisplay;
     private CheckBox stickyCheck;
@@ -71,8 +72,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
         header = new MHorizontalLayout().withMargin(true).withStyleName("hdr-view").withWidth("100%");
         previewForm = new AdvancedPreviewBeanForm<>();
 
-        contentWrapper = new CssLayout();
-        contentWrapper.setStyleName("content-wrapper");
+        contentWrapper = new MCssLayout().withStyleName(UIConstants.CONTENT_WRAPPER);
         contentWrapper.addComponent(previewForm);
         contentWrapper.setWidth("900px");
         with(header, contentWrapper).expand(contentWrapper);

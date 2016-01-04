@@ -39,113 +39,93 @@ import java.util.List;
 
 /**
  * @author MyCollab Ltd.
- *
  * @since 4.4.0
- *
  */
-public class MessageListDisplay extends
-		DefaultPagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> {
-	private static final long serialVersionUID = 7625380843753142287L;
+public class MessageListDisplay extends DefaultPagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> {
+    private static final long serialVersionUID = 7625380843753142287L;
 
-	public MessageListDisplay() {
-		super(ApplicationContextUtil.getSpringBean(MessageService.class),
-				new MessageRowDisplayHandler());
-	}
+    public MessageListDisplay() {
+        super(ApplicationContextUtil.getSpringBean(MessageService.class), new MessageRowDisplayHandler());
+    }
 
-	public static class MessageRowDisplayHandler implements
-			RowDisplayHandler<SimpleMessage> {
+    public static class MessageRowDisplayHandler implements RowDisplayHandler<SimpleMessage> {
 
-		@Override
-		public Component generateRow(final SimpleMessage message, int rowIndex) {
-			HorizontalLayout mainLayout = new HorizontalLayout();
-			mainLayout.setStyleName("message-block");
-			Image userAvatarImg = UserAvatarControlFactory
-					.createUserAvatarEmbeddedComponent(
-							message.getPostedUserAvatarId(), 32);
-			userAvatarImg.setStyleName("user-avatar");
-			mainLayout.addComponent(userAvatarImg);
+        @Override
+        public Component generateRow(final SimpleMessage message, int rowIndex) {
+            HorizontalLayout mainLayout = new HorizontalLayout();
+            mainLayout.setStyleName("message-block");
+            Image userAvatarImg = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(message.getPostedUserAvatarId(), 32);
+            userAvatarImg.setStyleName("user-avatar");
+            mainLayout.addComponent(userAvatarImg);
 
-			CssLayout rightCol = new CssLayout();
-			rightCol.setWidth("100%");
+            CssLayout rightCol = new CssLayout();
+            rightCol.setWidth("100%");
 
-			HorizontalLayout metadataRow = new HorizontalLayout();
-			metadataRow.setWidth("100%");
-			metadataRow.setStyleName("metadata-row");
-			Label userNameLbl = new Label(message.getFullPostedUserName());
-			userNameLbl.setStyleName("user-name");
-			metadataRow.addComponent(userNameLbl);
-			metadataRow.setExpandRatio(userNameLbl, 1.0f);
+            HorizontalLayout metadataRow = new HorizontalLayout();
+            metadataRow.setWidth("100%");
+            metadataRow.setStyleName("metadata-row");
+            Label userNameLbl = new Label(message.getFullPostedUserName());
+            userNameLbl.setStyleName("user-name");
+            metadataRow.addComponent(userNameLbl);
+            metadataRow.setExpandRatio(userNameLbl, 1.0f);
 
-			Label messageTimePost = new Label(AppContext.formatPrettyTime(message.getPosteddate()));
-			messageTimePost.setStyleName("time-post");
-			messageTimePost.setWidthUndefined();
-			metadataRow.addComponent(messageTimePost);
-			rightCol.addComponent(metadataRow);
+            Label messageTimePost = new Label(AppContext.formatPrettyTime(message.getPosteddate()));
+            messageTimePost.setStyleName("time-post");
+            messageTimePost.setWidthUndefined();
+            metadataRow.addComponent(messageTimePost);
+            rightCol.addComponent(metadataRow);
 
-			HorizontalLayout titleRow = new HorizontalLayout();
-			titleRow.setWidth("100%");
-			titleRow.setStyleName("title-row");
-			Label messageTitle = new Label(message.getTitle());
-			messageTitle.setStyleName("message-title");
-			titleRow.addComponent(messageTitle);
-			titleRow.setExpandRatio(messageTitle, 1.0f);
+            HorizontalLayout titleRow = new HorizontalLayout();
+            titleRow.setWidth("100%");
+            titleRow.setStyleName("title-row");
+            Label messageTitle = new Label(message.getTitle());
+            messageTitle.setStyleName("message-title");
+            titleRow.addComponent(messageTitle);
+            titleRow.setExpandRatio(messageTitle, 1.0f);
 
-			if (message.getCommentsCount() > 0) {
-				Label msgCommentCount = new Label(String.valueOf(message
-						.getCommentsCount()));
-				msgCommentCount.setStyleName("comment-count");
-				msgCommentCount.setWidthUndefined();
-				titleRow.addComponent(msgCommentCount);
-				titleRow.addStyleName("has-comment");
-				titleRow.setComponentAlignment(messageTitle,
-						Alignment.MIDDLE_LEFT);
-			}
-			rightCol.addComponent(titleRow);
+            if (message.getCommentsCount() > 0) {
+                Label msgCommentCount = new Label(String.valueOf(message.getCommentsCount()));
+                msgCommentCount.setStyleName("comment-count");
+                msgCommentCount.setWidthUndefined();
+                titleRow.addComponent(msgCommentCount);
+                titleRow.addStyleName("has-comment");
+                titleRow.setComponentAlignment(messageTitle, Alignment.MIDDLE_LEFT);
+            }
+            rightCol.addComponent(titleRow);
 
-			Label messageContent = new Label(StringUtils.trim(
-					StringUtils.trimHtmlTags(message.getMessage()), 150, true));
-			messageContent.setStyleName("message-content");
-			rightCol.addComponent(messageContent);
+            Label messageContent = new Label(StringUtils.trim(StringUtils.trimHtmlTags(message.getMessage()), 150, true));
+            messageContent.setStyleName("message-content");
+            rightCol.addComponent(messageContent);
 
-			ResourceService attachmentService = ApplicationContextUtil
-					.getSpringBean(ResourceService.class);
-			List<Content> attachments = attachmentService
-					.getContents(AttachmentUtils
-							.getProjectEntityAttachmentPath(
-									AppContext.getAccountId(), message.getProjectid(),
-									ProjectTypeConstants.MESSAGE, "" + message.getId()));
-			if (CollectionUtils.isNotEmpty(attachments)) {
-				CssLayout attachmentPanel = new CssLayout();
-				attachmentPanel.setStyleName("attachment-panel");
-				attachmentPanel.setWidth("100%");
+            ResourceService attachmentService = ApplicationContextUtil.getSpringBean(ResourceService.class);
+            List<Content> attachments = attachmentService.getContents(AttachmentUtils.getProjectEntityAttachmentPath(
+                    AppContext.getAccountId(), message.getProjectid(),
+                    ProjectTypeConstants.MESSAGE, "" + message.getId()));
+            if (CollectionUtils.isNotEmpty(attachments)) {
+                CssLayout attachmentPanel = new CssLayout();
+                attachmentPanel.setStyleName("attachment-panel");
+                attachmentPanel.setWidth("100%");
 
-				for (Content attachment : attachments) {
-					attachmentPanel.addComponent(MobileAttachmentUtils
-							.renderAttachmentRow(attachment));
-				}
-				rightCol.addComponent(attachmentPanel);
-			}
+                for (Content attachment : attachments) {
+                    attachmentPanel.addComponent(MobileAttachmentUtils.renderAttachmentRow(attachment));
+                }
+                rightCol.addComponent(attachmentPanel);
+            }
 
-			mainLayout.addComponent(rightCol);
-			mainLayout.setExpandRatio(rightCol, 1.0f);
-			mainLayout
-					.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+            mainLayout.addComponent(rightCol);
+            mainLayout.setExpandRatio(rightCol, 1.0f);
+            mainLayout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                private static final long serialVersionUID = 4964058820993577962L;
 
-						private static final long serialVersionUID = 4964058820993577962L;
-
-						@Override
-						public void layoutClick(
-								LayoutEvents.LayoutClickEvent arg0) {
-							EventBusFactory.getInstance().post(
-									new MessageEvent.GotoRead(
-											MessageRowDisplayHandler.this,
-											message.getId()));
-						}
-					});
-			mainLayout.setWidth("100%");
-			mainLayout.addStyleName("list-item");
-			return mainLayout;
-		}
-	}
+                @Override
+                public void layoutClick(LayoutEvents.LayoutClickEvent arg0) {
+                    EventBusFactory.getInstance().post(new MessageEvent.GotoRead(MessageRowDisplayHandler.this, message.getId()));
+                }
+            });
+            mainLayout.setWidth("100%");
+            mainLayout.addStyleName("list-item");
+            return mainLayout;
+        }
+    }
 
 }

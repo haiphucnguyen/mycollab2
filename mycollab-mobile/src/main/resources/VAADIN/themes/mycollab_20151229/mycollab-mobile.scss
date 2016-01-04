@@ -1,6 +1,6 @@
 /* This contains all of your theme.*/
 /* If somebody wants to extend the theme she will include this mixin. */
-@import "mixins.scss";
+@import "variables.scss";
 @import "colors.scss";
 @import "vaadin-components.scss";
 
@@ -35,13 +35,13 @@
 	.v-touchkit-navview-wrapper {
 	  background-color: white;
 	}
+
+	.v-touchkit-navbar, .v-touchkit-tabbar-toolbar .v-touchkit-toolbar, .v-touchkit-navview-toolbar, .v-mobilecomponent .v-touchkit-navpanel {
+	  box-shadow: none !important;
+	}
     
     .v-table-body {
     	border: none;
-    }
-    
-    .v-mobilecomponent .v-touchkit-navpanel {
-    	box-shadow: none;
     }
 
     .content-wrapper {
@@ -74,8 +74,6 @@
         overflow: auto;
 
         .v-textfield {
-            padding: 10px 5px 10px 55px;
-            font-size: 1.5rem;
             color: rgb(34, 34, 34);
         }
 
@@ -83,87 +81,10 @@
             color: #c7c7c7;
         }
 
-        .v-textfield.email-input {
-            background: url("icons/email_input_bg.png") no-repeat left center #FFFFFF;
-        }
-
         .v-textfield.password-input {
-            background: url("icons/password_input_bg.png") no-repeat left center #FFFFFF;
+
         }
     }
-	
-	/* Data List View */
-	.data-list-view {
-		background-color: rgb(255, 255, 255);
-		.list-item {
-			&.v-touchkit-navbutton {
-				padding: 1rem 2.7rem 1rem 1.4rem;
-				border-bottom: 0.1rem solid #DDDDDD;
-				color: #8C8C8C;
-				font-size: 1.3rem;
-				
-				&:after {
-					content: "\e60a";
-					font-family: "icomoon";
-					line-height: 1.8rem;
-					padding: 10px 0px;
-					color: #8c8c8c;
-					font-size: 1.1rem;
-				}
-			}
-			&.blank-item:before {
-				content: "";
-				font-weight: bold;
-				display: inline-block;
-				width: 100%;
-				vertical-align: top;
-				position: relative;
-			}
-			&.v-button {
-				text-align: left;
-				margin: 0px;
-				
-				.v-button-wrap {
-					padding: 1rem 2.7rem 1rem 1.4rem;
-					word-wrap: break-word;
-					white-space: normal;
-					border-bottom: 1px solid #DDDDDD;
-					
-					.v-button-caption {
-						color: #8C8C8C;
-						font-size: 1.3rem;
-					}
-				}
-				&.selectable-button.selected {
-					.v-button-wrap {
-						position: relative;
-						
-						&:after {
-							content: "\e042";
-							font-family: "icomoon";
-							color: #49A3E1;
-							position: absolute;
-							right: 2rem;
-							display: inline-block;
-							font-size: 1.6rem;
-							line-height: 1.6rem;
-						}
-					}
-				}			
-			}
-			.v-button {
-				text-align: left;
-				margin: 0rem;
-				.v-button-wrap {
-					padding: 0rem;
-					.v-button-caption {
-						font-size: 1.3rem;
-					}
-				}				
-			}
-		}
-		
-	}
 	
 	/* Read View Layout */
 	.readview-layout, .editview-layout {
@@ -298,97 +219,6 @@
 	
 	/* Edit View Layout */
 	
-	.editview-layout {
-		.v-caption {
-			font-size: 1.5rem;
-			
-			.v-required-field-indicator {
-				font-size: 1.3rem;
-				line-height: 2rem;
-			}
-		}
-		input.v-textfield, .v-filterselect, .v-textarea {
-			@include editform-field;
-			
-			border: none;
-			border-radius: 0px;
-			padding: 0px 1px;
-			vertical-align: top;
-			margin: 0px;
-		}
-			
-		.v-filterselect-button {
-			@include icomoon;
-		}
-		
-		.v-select {
-			border: none;
-			border-radius: 0px;
-			background-color: transparent;
-			box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			-webkit-box-sizing: border-box;
-			
-			select.v-select-select {
-				@include editform-field;
-				min-height: 2rem;
-				
-				option {
-					padding: 0px;
-				}
-			}
-			&:after {
-				content: "\e60c";
-				font-family: "icomoon";
-				padding-right: 5px;
-				color: #8C8C8C;
-			}
-		}
-		.v-datefield.v-datefield-popupcalendar {
-			font-size: 1.5rem;
-			
-			input.v-textfield.v-datefield-textfield {
-				border: none;
-			}
-			.v-datefield-button {
-				line-height: normal;
-			}
-		}
-		
-		.v-touchkit-datepicker .v-select-select {
-			@include editform-field;
-			
-			min-height: 2rem;
-		}
-		
-		.v-touchkit-navbutton.combo-box {
-			@include editform-field;
-			
-			&:before {
-				content: "";
-				position: relative;
-				display: inline-block;
-			}
-			&:after {
-				content: "\e60a";
-				font-family: "icomoon";
-				color: #8c8c8c;
-				font-size: 1.1rem;
-				right: 0px;
-				top: 0px;
-			}
-		}
-		
-		.v-upload {
-			.v-button {
-				font-size: 1.5rem;
-				.v-button-wrap {
-					padding: 0px;
-				}
-			}
-		}
-	}
-	
 	.attachment-panel {
 		.v-label.attachment-name {
 			text-overflow: ellipsis;
@@ -418,49 +248,6 @@
 			color: rgb(149, 149, 149);
 		}
 	}
-	
-    .v-button {
-        line-height: normal;
-        box-shadow: none;
-        padding: 0px;
-        cursor: pointer;
-        
-        &.big-btn {
-	        font-size: 1.5rem;
-	
-	        .v-button-wrap {
-	            padding: 1rem 0rem;
-	
-	            .v-button-caption {
-	                font-size: 1.5rem;
-	            }
-	        }
-	    }
-	    
-	    &.blue {
-	        background-color: #49a3e1;
-	        border: 1px solid #226899;
-	
-	        .v-button-caption {
-	            color: white;
-	        }
-	    }
-	    
-	    &.gray {
-	        background-color: #9b9b9b;
-	        border: 1px solid #616161;
-	
-	        .v-button-caption {
-	            color: white;
-	        }
-	    }
-	    
-	    &:active {
-	    	.v-button-wrap:after {
-	    		background-color: transparent;
-	    	}
-    	}
-    }
     
     .v-touchkit-navbutton {
         line-height: normal;

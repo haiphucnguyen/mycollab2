@@ -1,18 +1,18 @@
 /**
- * This file is part of mycollab-web.
+ * This file is part of mycollab-ui.
  *
- * mycollab-web is free software: you can redistribute it and/or modify
+ * mycollab-ui is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * mycollab-web is distributed in the hope that it will be useful,
+ * mycollab-ui is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+ * along with mycollab-ui.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.esofthead.mycollab.vaadin.ui;
 
@@ -44,12 +44,59 @@ public class ThemeManager {
 
         StringBuilder extraStyles = new StringBuilder();
         if (accountTheme.getTopmenubg() != null) {
-            extraStyles.append(".mobilenavview .v-touchkit-navbar { background-color: #" + accountTheme.getTopmenubg() + "; }");
+            extraStyles.append(".v-touchkit-navbar { background-color: #" + accountTheme.getTopmenubg() + "; }");
         }
 
         if (accountTheme.getTopmenutext() != null) {
-            extraStyles.append(".mobilenavview .v-touchkit-navbar { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".v-touchkit-navbar { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".v-touchkit-navbar .v-touchkit-navbutton { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".v-touchkit-navbutton:after { color: #" + accountTheme.getTopmenutext() + "; }");
         }
+
+        if (accountTheme.getVtabsheetbg() != null) {
+            extraStyles.append(".project-dashboard .project-info-layout { background-color: #"
+                    + accountTheme.getVtabsheetbg() + "; }");
+        }
+
+        if (accountTheme.getVtabsheettext() != null) {
+            extraStyles.append(".project-dashboard .project-info-layout { color: #"
+                    + accountTheme.getVtabsheettext() + "; }");
+        }
+
+        /* Action Buttons */
+
+        if (accountTheme.getActionbtn() != null) {
+            extraStyles.append(".v-touchkit-tabbar-toolbar .v-button.selected { background-color: #"
+                    + accountTheme.getActionbtn() + " !important; }");
+        }
+
+        if (accountTheme.getActionbtntext() != null) {
+            extraStyles.append(".v-touchkit-tabbar-toolbar .v-button.selected { color: #"
+                    + accountTheme.getActionbtntext() + "; }");
+        }
+
+		/* Option Buttons */
+
+        if (accountTheme.getOptionbtn() != null) {
+            extraStyles.append(".v-touchkit-tabbar-toolbar .v-button { background-color: #"
+                    + accountTheme.getOptionbtn() + " !important; }");
+        }
+
+        if (accountTheme.getOptionbtntext() != null) {
+            extraStyles.append(".v-touchkit-tabbar-toolbar .v-button { color: #"
+                    + accountTheme.getOptionbtntext() + " !important; }");
+        }
+
+		/* Danger Buttons */
+
+        if (accountTheme.getDangerbtn() != null) {
+
+        }
+
+        if (accountTheme.getDangerbtntext() != null) {
+
+        }
+
         if (extraStyles.length() > 0) {
             Page.getCurrent().getStyles().add(extraStyles.toString());
         }

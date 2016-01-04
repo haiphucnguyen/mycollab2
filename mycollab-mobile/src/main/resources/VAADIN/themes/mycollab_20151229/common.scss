@@ -1,35 +1,36 @@
 @mixin common {
-
-    input {
-        box-shadow: none;
+  .meta-info {
+    color: $my-meta-color;
+    font-size: smaller !important;
+    a {
+      color: $my-meta-color !important;
     }
+  }
 
-    body.v-generated-body {
-        background: none repeat scroll 0% 0% #F3F1F0;
-    }
+  hr {
+    border: 0;
+    border-top: 1px solid $my-separator-color;
+  }
 
-    div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
-        display: inline-block;
+  a {
+    color: $my-black-color !important;
+    text-decoration: none !important;
+  }
+
+  .truncate {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    a span {
+      width:100%;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis;
     }
+  }
     
-    .attachment-panel {
-    	border-top: 1px solid $light-gray-border;
-    	padding: 0.5rem 0rem 0.8rem;
-    }
-    
-    [data-count]:after {
-		content: attr(data-count);
-		font-family: "Open Sans",Verdana,Helvetica,sans-serif;
-		display: block;
-		position: absolute;
-		background-color: rgb(245, 147, 48);
-		border-radius: 50%;
-		color: rgb(255, 255, 255);
-		font-size: 1rem;
-		right: -1.7rem;
-		width: 2.2rem;
-		height: 2.2rem;
-		line-height: 2.2rem;
-		top: -1.6rem;
-	}
+  .attachment-panel {
+    border-top: 1px solid $light-gray-border;
+    padding: 0.5rem 0rem 0.8rem;
+  }
 }

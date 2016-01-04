@@ -37,7 +37,6 @@ public abstract class AbstractMobilePageView extends NavigationView implements P
 
     public AbstractMobilePageView() {
         super();
-        this.setStyleName("mobilenavview");
         if (this.getLeftComponent() != null && this.getLeftComponent() instanceof NavigationButton) {
             this.getLeftComponent().setCaption(AppContext.getMessage(GenericI18Enum.M_BUTTON_BACK));
         }

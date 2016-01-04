@@ -29,40 +29,35 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 
 @ViewComponent
-public class MessageListViewImpl extends
-		AbstractListViewComp<MessageSearchCriteria, SimpleMessage> implements
-		MessageListView {
+public class MessageListViewImpl extends AbstractListViewComp<MessageSearchCriteria, SimpleMessage> implements MessageListView {
+    private static final long serialVersionUID = -5340014066758050437L;
 
-	private static final long serialVersionUID = -5340014066758050437L;
+    public MessageListViewImpl() {
+        super();
+        setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE));
+        setStyleName("message-list-view");
+    }
 
-	public MessageListViewImpl() {
-		super();
-		setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE));
-		setStyleName("message-list-view");
+    @Override
+    protected AbstractPagedBeanList<MessageSearchCriteria, SimpleMessage> createBeanTable() {
+        MessageListDisplay messageListDisplay = new MessageListDisplay();
+        return messageListDisplay;
+    }
 
-	}
+    @Override
+    protected Component createRightComponent() {
+        Button addMessage = new Button();
+        addMessage.addClickListener(new Button.ClickListener() {
 
-	@Override
-	protected AbstractPagedBeanList<MessageSearchCriteria, SimpleMessage> createBeanTable() {
-		MessageListDisplay messageListDisplay = new MessageListDisplay();
-		return messageListDisplay;
-	}
+            private static final long serialVersionUID = 1556502569683651113L;
 
-	@Override
-	protected Component createRightComponent() {
-		Button addMessage = new Button();
-		addMessage.addClickListener(new Button.ClickListener() {
-
-			private static final long serialVersionUID = 1556502569683651113L;
-
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBusFactory.getInstance().post(
-						new MessageEvent.GotoAdd(this, null));
-			}
-		});
-		addMessage.setStyleName("add-btn");
-		return addMessage;
-	}
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null));
+            }
+        });
+        addMessage.setStyleName("add-btn");
+        return addMessage;
+    }
 
 }

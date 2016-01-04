@@ -23,13 +23,13 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileSwipeView;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileTabPageView;
-import com.esofthead.mycollab.mobile.ui.IconConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.MilestoneStatus;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 
@@ -49,37 +49,13 @@ public class MilestoneListViewImpl extends AbstractMobileTabPageView implements 
         this.addStyleName("milestones-list-view");
 
         this.closedMilestonesList = new MilestoneListChildView();
-        this.closedMilestonesList.addStyleName("milestones-list");
-        this.closedMilestonesList.addStyleName("closed-milestones-list");
-        this.addTab(closedMilestonesList,
-                "<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
-                        + IconConstants.PROJECT_MILESTONE_CLOSED
-                        + "\"></span><div class=\"screen-reader-text\">"
-                        + AppContext
-                        .getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE)
-                        + "</div>");
+        this.addTab(closedMilestonesList, FontAwesome.MINUS.getHtml() + " " + AppContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE));
 
         this.inProgressMilestonesList = new MilestoneListChildView();
-        this.inProgressMilestonesList.addStyleName("milestones-list");
-        this.inProgressMilestonesList.addStyleName("inprogress-milestones-list");
-        this.addTab(inProgressMilestonesList,
-                "<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
-                        + IconConstants.PROJECT_MILESTONE_INPROGRESS
-                        + "\"></span><div class=\"screen-reader-text\">"
-                        + AppContext
-                        .getMessage(MilestoneI18nEnum.WIDGET_INPROGRESS_PHASE_TITLE)
-                        + "</div>");
+        this.addTab(inProgressMilestonesList, FontAwesome.SPINNER.getHtml() + " " + AppContext.getMessage(MilestoneI18nEnum.WIDGET_INPROGRESS_PHASE_TITLE));
 
         this.futureMilestonesList = new MilestoneListChildView();
-        this.futureMilestonesList.addStyleName("milestones-list");
-        this.futureMilestonesList.addStyleName("future-milestones-list");
-        this.addTab(futureMilestonesList,
-                "<span class=\"nav-btn-icon\" aria-hidden=\"true\" data-icon=\""
-                        + IconConstants.PROJECT_MILESTONE_FUTURE
-                        + "\"></span><div class=\"screen-reader-text\">"
-                        + AppContext
-                        .getMessage(MilestoneI18nEnum.WIDGET_FUTURE_PHASE_TITLE)
-                        + "</div>");
+        this.addTab(futureMilestonesList, FontAwesome.CLOCK_O.getHtml() + " " + AppContext.getMessage(MilestoneI18nEnum.WIDGET_FUTURE_PHASE_TITLE));
 
         this.addListener(new SelectedTabChangeListener() {
 

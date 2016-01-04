@@ -43,7 +43,7 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements Proj
         this.setStyleName("login-view");
         this.setSizeFull();
 
-        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper").withWidth("320px");
+        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper");
         contentLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
         Image mainLogo = new Image(null, new ThemeResource("icons/logo_m.png"));
@@ -57,7 +57,6 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements Proj
         welcomeTextWrapper.setStyleName("welcometext-wrapper");
         welcomeTextWrapper.setWidth("100%");
         Label welcomeText = new Label("Login to Projects");
-        welcomeText.setWidth("150px");
         welcomeTextWrapper.addComponent(welcomeText);
         contentLayout.addComponent(welcomeTextWrapper);
 
@@ -87,14 +86,12 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements Proj
             }
         });
         signInBtn.setWidth("100%");
-        signInBtn.addStyleName(UIConstants.BUTTON_BIG);
-        signInBtn.addStyleName(UIConstants.COLOR_BLUE);
+        signInBtn.addStyleName(UIConstants.BUTTON_ACTION);
         contentLayout.addComponent(signInBtn);
 
         Button createAccountBtn = new Button("Create Account");
         createAccountBtn.setWidth("100%");
-        createAccountBtn.addStyleName(UIConstants.BUTTON_BIG);
-        createAccountBtn.addStyleName(UIConstants.COLOR_GRAY);
+        createAccountBtn.addStyleName(UIConstants.BUTTON_OPTION);
         contentLayout.addComponent(createAccountBtn);
 
         this.addComponent(contentLayout);

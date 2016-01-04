@@ -22,14 +22,19 @@ package com.esofthead.mycollab.mobile.ui;
  */
 public class UIConstants {
 
-	public static final String BUTTON_BIG = "big-btn";
-	public static final String COLOR_GRAY = "gray";
-	public static final String COLOR_BLUE = "blue";
-	public static final String LINK_COMPLETED = "completed";
-	public static final String LINK_OVERDUE = "overdue";
-	public static final String LBL_URGENT = "priority-lbl urgent-lbl";
-	public static final String LBL_HIGH = "priority-lbl high-lbl";
-	public static final String LBL_MEDIUM = "priority-lbl medium-lbl";
-	public static final String LBL_LOW = "priority-lbl low-lbl";
-	public static final String STATUS_DISABLED = "disabled";
+    public static final String BUTTON_BIG = "big-btn";
+    public static final String COLOR_GRAY = "gray";
+    public static final String COLOR_BLUE = "blue";
+    public static final String BUTTON_ACTION = "greenbtn";
+    public static final String BUTTON_OPTION = "graybtn";
+    public static final String BUTTON_DANGER = "redbtn";
+    public static final String LINK_COMPLETED = "completed";
+    public static final String LINK_OVERDUE = "overdue";
+    public static final String LBL_URGENT = "priority-lbl urgent-lbl";
+    public static final String LBL_HIGH = "priority-lbl high-lbl";
+    public static final String LBL_MEDIUM = "priority-lbl medium-lbl";
+    public static final String LBL_LOW = "priority-lbl low-lbl";
+    public static final String STATUS_DISABLED = "disabled";
+
+    public static final String META_INFO = "meta-info";
 }

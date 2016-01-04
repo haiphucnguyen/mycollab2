@@ -37,7 +37,6 @@ public class BugListViewImpl extends AbstractListViewComp<BugSearchCriteria, Sim
     private static final long serialVersionUID = -7877935907665712184L;
 
     public BugListViewImpl() {
-        this.addStyleName("bugs-list-view");
         this.setCaption(AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
     }
 
@@ -48,12 +47,9 @@ public class BugListViewImpl extends AbstractListViewComp<BugSearchCriteria, Sim
 
     @Override
     protected Component createRightComponent() {
-        Button addBug = new Button();
-        addBug.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 8204610801164300917L;
-
+        Button addBug = new Button("", new Button.ClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent event) {
+            public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));
             }
         });

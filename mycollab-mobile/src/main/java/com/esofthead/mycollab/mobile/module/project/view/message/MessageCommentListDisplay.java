@@ -40,8 +40,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class MessageCommentListDisplay extends VerticalLayout implements
-        ReloadableComponent {
+public class MessageCommentListDisplay extends VerticalLayout implements ReloadableComponent {
     private static final long serialVersionUID = 1L;
 
     private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
@@ -50,22 +49,16 @@ public class MessageCommentListDisplay extends VerticalLayout implements
     private Integer numComments;
     private ProjectCommentInput commentBox;
 
-    public MessageCommentListDisplay(
-            final String type,
-            final Integer extraTypeId,
-            final boolean isDisplayCommentInput,
-            final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+    public MessageCommentListDisplay(final String type, final Integer extraTypeId,
+                                     final boolean isDisplayCommentInput, final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
         this.setStyleName("comment-list");
         this.setMargin(new MarginInfo(true, false, false, false));
         this.type = type;
         if (isDisplayCommentInput) {
-            commentBox = new ProjectCommentInput(this, type, extraTypeId,
-                    false, emailHandler);
+            commentBox = new ProjectCommentInput(this, type, extraTypeId, false, emailHandler);
         }
 
-        commentList = new BeanList<>(
-                ApplicationContextUtil.getSpringBean(CommentService.class),
-                CommentRowDisplayHandler.class);
+        commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
         commentList.setDisplayEmptyListText(false);
         this.addComponent(commentList);
 
@@ -96,18 +89,14 @@ public class MessageCommentListDisplay extends VerticalLayout implements
         displayCommentList();
     }
 
-    public static class CommentRowDisplayHandler extends
-            BeanList.RowDisplayHandler<SimpleComment> {
-
+    public static class CommentRowDisplayHandler extends BeanList.RowDisplayHandler<SimpleComment> {
         private static final long serialVersionUID = 7604097872938029830L;
 
         @Override
         public Component generateRow(SimpleComment comment, int rowIndex) {
             HorizontalLayout commentBlock = new HorizontalLayout();
             commentBlock.setStyleName("comment-block");
-            Image userAvatarImg = UserAvatarControlFactory
-                    .createUserAvatarEmbeddedComponent(
-                            comment.getOwnerAvatarId(), 32);
+            Image userAvatarImg = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(comment.getOwnerAvatarId(), 32);
             userAvatarImg.setStyleName("user-avatar");
             commentBlock.addComponent(userAvatarImg);
 
@@ -140,8 +129,7 @@ public class MessageCommentListDisplay extends VerticalLayout implements
                 attachmentPanel.setWidth("100%");
 
                 for (Content attachment : attachments) {
-                    attachmentPanel.addComponent(MobileAttachmentUtils
-                            .renderAttachmentRow(attachment));
+                    attachmentPanel.addComponent(MobileAttachmentUtils.renderAttachmentRow(attachment));
                 }
                 rightCol.addComponent(attachmentPanel);
             }

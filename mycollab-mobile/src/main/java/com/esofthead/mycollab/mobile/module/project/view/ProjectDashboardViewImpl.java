@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -45,6 +46,7 @@ public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
     public ProjectDashboardViewImpl() {
         super();
         this.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
+        this.setRightComponent(new Label("AAAAAAAAAAAAAA"));
         mainLayout = new CssLayout();
         mainLayout.setSizeFull();
         mainLayout.setStyleName("project-dashboard");
@@ -60,7 +62,7 @@ public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
         projectInfo.setWidth("100%");
         projectInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-        Label projectIcon = new Label("<span aria-hidden=\"true\" data-icon=\"&#xe614\"></span>");
+        ELabel projectIcon = ELabel.h2(FontAwesome.BUILDING_O.getHtml());
         projectIcon.setStyleName("project-icon");
         projectIcon.setContentMode(ContentMode.HTML);
         projectIcon.setWidthUndefined();
@@ -72,7 +74,6 @@ public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
         projectInfo.addComponent(projectName);
 
         GridLayout projectModulesList = new GridLayout(2, 3);
-        projectModulesList.setStyleName("project-modules-layout");
         projectModulesList.setWidth("100%");
         projectModulesList.setSpacing(true);
         projectModulesList.setDefaultComponentAlignment(Alignment.TOP_CENTER);
@@ -104,7 +105,6 @@ public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements
             super(id);
             this.setIcon(iconCode);
             this.setWidth("100%");
-            this.setStyleName("project-module-btn");
             this.buttonId = id;
             this.setHtmlContentAllowed(true);
             this.addClickListener(new Button.ClickListener() {

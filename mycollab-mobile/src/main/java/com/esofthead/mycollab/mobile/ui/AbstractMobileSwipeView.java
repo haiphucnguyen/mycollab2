@@ -32,7 +32,6 @@ public class AbstractMobileSwipeView extends NavigationView implements PageView 
 
     public AbstractMobileSwipeView() {
         super();
-        this.setStyleName("mobilenavview");
     }
 
     @Override

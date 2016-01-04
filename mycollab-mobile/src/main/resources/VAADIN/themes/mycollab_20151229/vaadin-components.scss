@@ -1,11 +1,14 @@
-@import "mixins.scss";
+@import "variables.scss";
 
 @mixin vaadin-components {
+  .v-touchkit-navbar-caption {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
 	.v-touchkit-switch-widget {
 		height: 2.4rem;
 		.v-touchkit-switch-wrapper {
 			height: 2rem;
-			@include box-shadow(none);
 			background-color: $primary-blue;
 			border: 2px solid $primary-blue;
 			&.v-touchkit-switch-off {
@@ -33,21 +36,10 @@
 					
 					&:after {
 						content: "";
-						@include box-shadow(none);
 						background-color: rgb(255, 255, 255);
 						margin: 0.2rem;
 					}
 				}
-			}
-		}
-	}
-	
-	.v-touchkit-navbar {
-		.v-touchkit-navbar-right {
-			top: 0px;
-			right: 0px;
-			.v-button {
-				min-height: inherit;
 			}
 		}
 	}
@@ -127,9 +119,6 @@
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 		border: 1px solid #CFCFCF;
-	}
-	.v-button-link, .v-button-link .v-button-wrap, .v-button-link .v-button-caption, .v-button-link:active, .v-button-link.v-pressed, .v-nativebutton-link {
-		font-size: inherit;
 	}
 	
 	/* Datepicker Popopver */

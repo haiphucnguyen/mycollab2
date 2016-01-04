@@ -1,13 +1,33 @@
-input {
-	box-shadow: none;
+.meta-info {
+	color: #999;
+	font-size: smaller !important;
 }
 
-body.v-generated-body {
-	background: none repeat scroll 0% 0% #F3F1F0;
+.meta-info a {
+	color: #999 !important;
 }
 
-div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
-	display: inline-block;
+hr {
+	border: 0;
+	border-top: 1px solid #e5e5e5;
+}
+
+a {
+	color: #5e5d55 !important;
+	text-decoration: none !important;
+}
+
+.truncate {
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis;
+}
+
+.truncate a span {
+	width: 100%;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis;
 }
 
 .attachment-panel {
@@ -15,20 +35,9 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	padding: 0.5rem 0rem 0.8rem;
 }
 
-[data-count]:after {
-	content: attr(data-count);
-	font-family: "Open Sans", Verdana, Helvetica, sans-serif;
-	display: block;
-	position: absolute;
-	background-color: #f59330;
-	border-radius: 50%;
-	color: white;
-	font-size: 1rem;
-	right: -1.7rem;
-	width: 2.2rem;
-	height: 2.2rem;
-	line-height: 2.2rem;
-	top: -1.6rem;
+.v-touchkit-navbar-caption {
+	padding-left: 0px !important;
+	padding-right: 0px !important;
 }
 
 .v-touchkit-switch-widget {
@@ -37,9 +46,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 
 .v-touchkit-switch-widget .v-touchkit-switch-wrapper {
 	height: 2rem;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
 	background-color: #49a3e1;
 	border: 2px solid #49a3e1;
 }
@@ -69,20 +75,8 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 
 .v-touchkit-switch-widget .v-touchkit-switch-wrapper .v-touchkit-switch .v-touchkit-switch-slider:after {
 	content: "";
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
 	background-color: white;
 	margin: 0.2rem;
-}
-
-.v-touchkit-navbar .v-touchkit-navbar-right {
-	top: 0px;
-	right: 0px;
-}
-
-.v-touchkit-navbar .v-touchkit-navbar-right .v-button {
-	min-height: inherit;
 }
 
 .confirm-dialog .v-window-outerheader {
@@ -153,10 +147,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	border: 1px solid #CFCFCF;
-}
-
-.v-button-link, .v-button-link .v-button-wrap, .v-button-link .v-button-caption, .v-button-link:active, .v-button-link.v-pressed, .v-nativebutton-link {
-	font-size: inherit;
 }
 
 .v-touchkit-datepopover .v-touchkit-date-cancel, .v-touchkit-datepopover .v-touchkit-date-ok {
@@ -270,12 +260,12 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	background-color: white;
 }
 
-.v-table-body {
-	border: none;
+.v-touchkit-navbar, .v-touchkit-tabbar-toolbar .v-touchkit-toolbar, .v-touchkit-navview-toolbar, .v-mobilecomponent .v-touchkit-navpanel {
+	box-shadow: none !important;
 }
 
-.v-mobilecomponent .v-touchkit-navpanel {
-	box-shadow: none;
+.v-table-body {
+	border: none;
 }
 
 .content-wrapper {
@@ -310,95 +300,11 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 }
 
 .login-view .v-textfield {
-	padding: 10px 5px 10px 55px;
-	font-size: 1.5rem;
 	color: #222222;
 }
 
 .login-view .v-textfield.v-textfield-prompt {
 	color: #c7c7c7;
-}
-
-.login-view .v-textfield.email-input {
-	background: url("icons/email_input_bg.png") no-repeat left center #FFFFFF;
-}
-
-.login-view .v-textfield.password-input {
-	background: url("icons/password_input_bg.png") no-repeat left center #FFFFFF;
-}
-
-.data-list-view {
-	background-color: white;
-}
-
-.data-list-view .list-item.v-touchkit-navbutton {
-	padding: 1rem 2.7rem 1rem 1.4rem;
-	border-bottom: 0.1rem solid #DDDDDD;
-	color: #8C8C8C;
-	font-size: 1.3rem;
-}
-
-.data-list-view .list-item.v-touchkit-navbutton:after {
-	content: "\e60a";
-	font-family: "icomoon";
-	line-height: 1.8rem;
-	padding: 10px 0px;
-	color: #8c8c8c;
-	font-size: 1.1rem;
-}
-
-.data-list-view .list-item.blank-item:before {
-	content: "";
-	font-weight: bold;
-	display: inline-block;
-	width: 100%;
-	vertical-align: top;
-	position: relative;
-}
-
-.data-list-view .list-item.v-button {
-	text-align: left;
-	margin: 0px;
-}
-
-.data-list-view .list-item.v-button .v-button-wrap {
-	padding: 1rem 2.7rem 1rem 1.4rem;
-	word-wrap: break-word;
-	white-space: normal;
-	border-bottom: 1px solid #DDDDDD;
-}
-
-.data-list-view .list-item.v-button .v-button-wrap .v-button-caption {
-	color: #8C8C8C;
-	font-size: 1.3rem;
-}
-
-.data-list-view .list-item.v-button.selectable-button.selected .v-button-wrap {
-	position: relative;
-}
-
-.data-list-view .list-item.v-button.selectable-button.selected .v-button-wrap:after {
-	content: "\e042";
-	font-family: "icomoon";
-	color: #49A3E1;
-	position: absolute;
-	right: 2rem;
-	display: inline-block;
-	font-size: 1.6rem;
-	line-height: 1.6rem;
-}
-
-.data-list-view .list-item .v-button {
-	text-align: left;
-	margin: 0rem;
-}
-
-.data-list-view .list-item .v-button .v-button-wrap {
-	padding: 0rem;
-}
-
-.data-list-view .list-item .v-button .v-button-wrap .v-button-caption {
-	font-size: 1.3rem;
 }
 
 .readview-layout, .editview-layout {
@@ -530,116 +436,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	line-height: 2rem;
 }
 
-.editview-layout .v-caption {
-	font-size: 1.5rem;
-}
-
-.editview-layout .v-caption .v-required-field-indicator {
-	font-size: 1.3rem;
-	line-height: 2rem;
-}
-
-.editview-layout input.v-textfield, .editview-layout .v-filterselect, .editview-layout .v-textarea {
-	font-size: 1.5rem;
-	line-height: 2rem;
-	min-height: 2rem;
-	color: #8C8C8C;
-	border: none;
-	border-radius: 0px;
-	padding: 0px 1px;
-	vertical-align: top;
-	margin: 0px;
-}
-
-.editview-layout .v-filterselect-button {
-	font-family: "icomoon";
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.editview-layout .v-select {
-	border: none;
-	border-radius: 0px;
-	background-color: transparent;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-}
-
-.editview-layout .v-select select.v-select-select {
-	font-size: 1.5rem;
-	line-height: 2rem;
-	min-height: 2rem;
-	color: #8C8C8C;
-	min-height: 2rem;
-}
-
-.editview-layout .v-select select.v-select-select option {
-	padding: 0px;
-}
-
-.editview-layout .v-select:after {
-	content: "\e60c";
-	font-family: "icomoon";
-	padding-right: 5px;
-	color: #8C8C8C;
-}
-
-.editview-layout .v-datefield.v-datefield-popupcalendar {
-	font-size: 1.5rem;
-}
-
-.editview-layout .v-datefield.v-datefield-popupcalendar input.v-textfield.v-datefield-textfield {
-	border: none;
-}
-
-.editview-layout .v-datefield.v-datefield-popupcalendar .v-datefield-button {
-	line-height: normal;
-}
-
-.editview-layout .v-touchkit-datepicker .v-select-select {
-	font-size: 1.5rem;
-	line-height: 2rem;
-	min-height: 2rem;
-	color: #8C8C8C;
-	min-height: 2rem;
-}
-
-.editview-layout .v-touchkit-navbutton.combo-box {
-	font-size: 1.5rem;
-	line-height: 2rem;
-	min-height: 2rem;
-	color: #8C8C8C;
-}
-
-.editview-layout .v-touchkit-navbutton.combo-box:before {
-	content: "";
-	position: relative;
-	display: inline-block;
-}
-
-.editview-layout .v-touchkit-navbutton.combo-box:after {
-	content: "\e60a";
-	font-family: "icomoon";
-	color: #8c8c8c;
-	font-size: 1.1rem;
-	right: 0px;
-	top: 0px;
-}
-
-.editview-layout .v-upload .v-button {
-	font-size: 1.5rem;
-}
-
-.editview-layout .v-upload .v-button .v-button-wrap {
-	padding: 0px;
-}
-
 .attachment-panel .v-label.attachment-name {
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -665,47 +461,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	color: #959595;
 }
 
-.v-button {
-	line-height: normal;
-	box-shadow: none;
-	padding: 0px;
-	cursor: pointer;
-}
-
-.v-button.big-btn {
-	font-size: 1.5rem;
-}
-
-.v-button.big-btn .v-button-wrap {
-	padding: 1rem 0rem;
-}
-
-.v-button.big-btn .v-button-wrap .v-button-caption {
-	font-size: 1.5rem;
-}
-
-.v-button.blue {
-	background-color: #49a3e1;
-	border: 1px solid #226899;
-}
-
-.v-button.blue .v-button-caption {
-	color: white;
-}
-
-.v-button.gray {
-	background-color: #9b9b9b;
-	border: 1px solid #616161;
-}
-
-.v-button.gray .v-button-caption {
-	color: white;
-}
-
-.v-button:active .v-button-wrap:after {
-	background-color: transparent;
-}
-
 .v-touchkit-navbutton {
 	line-height: normal;
 }
@@ -726,15 +481,11 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 
 .project-dashboard .project-info-layout {
 	padding: 1.2rem 0rem;
-	background-color: #14171a;
-	color: white;
 }
 
 .project-dashboard .project-info-layout .project-icon {
-	font-size: 5rem;
+	font-size: 4rem;
 	line-height: 5rem;
-	border: 0.3rem solid white;
-	border-radius: 4rem;
 	padding: 1rem;
 }
 
@@ -743,49 +494,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	font-size: 1.4rem;
 	padding-top: 0.6rem;
 	text-align: center;
-}
-
-.project-dashboard .project-modules-layout {
-	display: block;
-	margin: 0 auto;
-	padding: 2rem 1rem 0rem;
-}
-
-.project-dashboard .project-modules-layout .v-gridlayout-spacing-on {
-	padding-top: 1rem;
-	padding-left: 1rem;
-}
-
-.project-dashboard .project-modules-layout .v-button {
-	background-color: transparent;
-	border-radius: 0rem;
-	overflow: visible;
-}
-
-.project-dashboard .project-modules-layout .v-button .v-button-wrap {
-	padding: 0.5rem 0rem 0.3rem;
-	border: 0.1rem solid #d2d2d2;
-	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-.project-dashboard .project-modules-layout .v-button .v-button-wrap .v-button-caption {
-	display: inline-block;
-	box-sizing: border-box;
-}
-
-.project-dashboard .project-modules-layout .v-button .v-button-wrap .v-button-caption span {
-	font-size: 5.3rem;
-	line-height: 1;
-	display: inline-block;
-}
-
-.project-dashboard .project-modules-layout .v-button .v-button-wrap .v-button-caption div {
-	color: #959595;
-	font-size: 1.1rem;
-	font-weight: bold;
-	text-transform: uppercase;
 }
 
 .project-activities-view .activity-date {
@@ -833,36 +541,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 
 .project-activities-view .activity-row .activity-detail-row .v-button.link .v-button-wrap .v-button-caption {
 	font-size: 1.1rem;
-}
-
-.bugs-list .list-item {
-	padding: 1rem 1.4rem;
-	border-bottom: 0.1rem solid #dddddd;
-	color: #959595;
-}
-
-.bugs-list .list-item .bug-icon {
-	color: #f59330;
-	font-size: 1.8rem;
-}
-
-.bugs-list .list-item .bug-icon span[data-icon]:before {
-	font-weight: bold;
-}
-
-.bugs-list .list-item .bug-name {
-	color: #414141;
-	font-size: 1.4rem;
-	font-weight: bold;
-}
-
-.bugs-list .list-item .bug-meta-info {
-	font-size: 1.2rem;
-}
-
-.bugs-list .list-item .bug-meta-info .bug-assignee {
-	color: #49a3e1;
-	text-decoration: none;
 }
 
 .message-list-view .message-block, .message-read-view .message-block {
@@ -1020,36 +698,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	display: inline-block;
 }
 
-.bugs-list .list-item {
-	padding: 1rem 1.4rem;
-	border-bottom: 0.1rem solid #dddddd;
-	color: #959595;
-}
-
-.bugs-list .list-item .bug-icon {
-	color: #f59330;
-	font-size: 1.8rem;
-}
-
-.bugs-list .list-item .bug-icon span[data-icon]:before {
-	font-weight: bold;
-}
-
-.bugs-list .list-item .bug-name {
-	color: #414141;
-	font-size: 1.4rem;
-	font-weight: bold;
-}
-
-.bugs-list .list-item .bug-meta-info {
-	font-size: 1.2rem;
-}
-
-.bugs-list .list-item .bug-meta-info .bug-assignee {
-	color: #49a3e1;
-	text-decoration: none;
-}
-
 .member-list .list-item.member-row {
 	padding: 1rem 2.5rem 1rem 1.4rem;
 	border-bottom: 0.1rem solid #DDDDDD;
@@ -1071,49 +719,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 	color: #959595;
 }
 
-.milestones-list-view .milestones-list .list-item {
-	padding: 1rem 1.4rem;
-	border-bottom: 0.1rem solid #dddddd;
-	color: #959595;
-}
-
-.milestones-list-view .milestones-list .list-item .milestone-icon {
-	color: #f59330;
-	font-size: 1.8rem;
-}
-
-.milestones-list-view .milestones-list .list-item .milestone-icon span[data-icon]:before {
-	font-weight: bold;
-}
-
-.milestones-list-view .milestones-list .list-item .milestone-name {
-	color: #414141;
-	font-size: 1.4rem;
-	font-weight: bold;
-}
-
-.milestones-list-view .milestones-list .list-item .milestone-meta-info {
-	font-size: 1.2rem;
-}
-
-.milestones-list-view .milestones-list .list-item .milestone-meta-info .milestone-assignee {
-	color: #49a3e1;
-	text-decoration: none;
-}
-
-.milestones-list-view .milestones-list .list-item .milestone-meta-info span[data-icon]:before {
-	font-size: 1.5rem;
-	vertical-align: top;
-}
-
-.milestones-list-view .v-touchkit-toolbar {
-	width: 100%;
-}
-
-.milestones-list-view .v-touchkit-toolbar .v-button {
-	width: 33%;
-}
-
 .timelog-comp-hdr .v-button.link {
 	margin: 0px;
 	text-align: left;
@@ -1121,23 +726,6 @@ div.v-vertical > .v-spacing, div.v-vertical > .v-expand > .v-spacing {
 
 .timelog-comp-hdr .v-button.link .v-button-wrap {
 	padding: 0rem 0.3rem 0rem 0rem;
-}
-
-.timelog-comp-hdr .v-button.link .v-button-wrap .v-button-caption:after {
-	font-family: "icomoon";
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	content: "\e60a";
-	display: inline-block;
-	font-size: 1.3rem;
-	line-height: 1.7rem;
-	vertical-align: top;
-	padding-left: 0.3rem;
 }
 
 .timelog-edit-view div.v-vertical > .v-expand > .v-spacing {

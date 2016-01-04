@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.ui.ThemeManager;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Viewport;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.Page;
@@ -55,6 +56,7 @@ import java.util.Collection;
  * @since 3.0
  */
 @Theme(MyCollabVersion.THEME_MOBILE_VERSION)
+@Viewport("width=device-width, initial-scale=1")
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet")
 public class MobileApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
