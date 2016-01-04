@@ -38,17 +38,16 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.TextArea;
 
 import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.5.2
- */
-
-/*
- * TODO: Add support BugVersion when it's ready in the next version
  */
 class ResolvedInputView extends AbstractMobilePageView {
     private static final long serialVersionUID = 1L;
@@ -129,10 +128,7 @@ class ResolvedInputView extends AbstractMobilePageView {
 
             @Override
             public ComponentContainer getLayout() {
-                informationLayout = new MobileGridFormLayoutHelper(1, 3, "100%", "140px", Alignment.TOP_LEFT);
-                this.informationLayout.getLayout().setWidth("100%");
-                this.informationLayout.getLayout().setMargin(false);
-
+                informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
                 return informationLayout.getLayout();
             }
 

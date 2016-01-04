@@ -22,7 +22,6 @@ import com.esofthead.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayC
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListDisplay;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
@@ -45,6 +44,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.form.field.*;
@@ -67,11 +67,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     private ProjectCommentListDisplay associateComments;
     private Button relatedComments;
-
     private VerticalLayout bugWorkFlowControl;
-
     private BugTimeLogComp bugTimeLogComp;
-
     private ProjectAttachmentDisplayComp attachmentComp;
 
     public BugReadViewImpl() {
@@ -111,20 +108,14 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             });
             bugWorkFlowControl.addComponent(resolveBtn);
 
-            final Button wontFixBtn = new Button(
-                    AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            final Button wontFixBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_WONTFIX), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            EventBusFactory.getInstance().post(
-                                    new ShellEvent.PushView(this,
-                                            new WontFixExplainView(
-                                                    BugReadViewImpl.this,
-                                                    beanItem)));
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    EventBusFactory.getInstance().post(new ShellEvent.PushView(this, new WontFixExplainView(BugReadViewImpl.this, beanItem)));
+                }
+            });
             bugWorkFlowControl.addComponent(wontFixBtn);
         } else if (BugStatus.InProgress.name().equals(this.beanItem.getStatus())) {
             final Button stopProgressBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_STOP_PROGRESS), new Button.ClickListener() {
@@ -240,8 +231,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected String initFormTitle() {
-        return "[" + CurrentProjectVariables.getProject().getShortname() + "-"
-                + beanItem.getBugkey() + "]";
+        return "[" + CurrentProjectVariables.getProject().getShortname() + "-" + beanItem.getBugkey() + "]";
     }
 
     @Override
@@ -252,8 +242,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected void initRelatedComponents() {
         associateComments = new ProjectCommentListDisplay(ProjectTypeConstants.BUG,
-                CurrentProjectVariables.getProjectId(), true,
-                BugRelayEmailNotificationAction.class);
+                CurrentProjectVariables.getProjectId(), true, BugRelayEmailNotificationAction.class);
     }
 
     @Override

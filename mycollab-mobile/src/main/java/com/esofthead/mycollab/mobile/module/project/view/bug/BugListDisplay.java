@@ -38,7 +38,6 @@ import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -63,7 +62,7 @@ public class BugListDisplay extends DefaultPagedBeanList<BugService, BugSearchCr
                     ())).appendText(String.format("[#%s] - %s", bug.getBugkey(), bug.getSummary()));
             Div bugDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + "").appendChild(bugLink);
 
-            bugRowLayout.with(new MCssLayout(new ELabel(bugDiv.write(), ContentMode.HTML)));
+            bugRowLayout.with(new MCssLayout(new ELabel(bugDiv.write(), ContentMode.HTML).withStyleName("truncate")));
 
             CssLayout metaInfoLayout = new CssLayout();
             bugRowLayout.with(metaInfoLayout);
@@ -81,7 +80,7 @@ public class BugListDisplay extends DefaultPagedBeanList<BugService, BugSearchCr
             ELabel assigneeLbl = new ELabel(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + (bug
                     .getAssignuserFullName() == null ?
                     ":&nbsp;N/A&nbsp;" : ":&nbsp;" + assigneeLink.write()), ContentMode.HTML).withStyleName(UIConstants.META_INFO);
-            assigneeLbl.addStyleName("truncate");
+            assigneeLbl.addStyleName(UIConstants.TRUNCATE);
             metaInfoLayout.addComponent(assigneeLbl);
 
             ELabel statusLbl = new ELabel(AppContext.getMessage(BugI18nEnum.FORM_STATUS) + ": " + AppContext.getMessage

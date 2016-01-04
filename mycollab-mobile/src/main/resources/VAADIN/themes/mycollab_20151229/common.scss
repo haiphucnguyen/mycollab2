@@ -1,3 +1,18 @@
+@mixin margin-container($top, $right, $bottom, $left) {
+  &.v-margin-top {
+    padding-top: $top;
+  }
+  &.v-margin-right{
+    padding-right: $right;
+  }
+  &.v-margin-bottom {
+    padding-bottom: $bottom;
+  }
+  &.v-margin-left {
+    padding-left: $left;
+  }
+}
+
 @mixin common {
   .meta-info {
     color: $my-meta-color;
@@ -26,6 +41,23 @@
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis;
+    }
+  }
+
+  .v-gridlayout.colored-gridlayout {
+    .gridform-caption, .gridform-field {
+      @include margin-container(8px, 8px, 4px, 0px);
+      border-bottom: 1px solid $my-separator-color;
+    }
+    .gridform-field {
+      min-height: 43px;
+    }
+    .gridform-caption {
+      min-height: 39px;
+      .v-label {
+        text-align: right;
+        color: $my-meta-color;
+      }
     }
   }
     

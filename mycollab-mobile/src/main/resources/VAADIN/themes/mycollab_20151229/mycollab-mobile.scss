@@ -88,19 +88,7 @@
 	
 	/* Read View Layout */
 	.readview-layout, .editview-layout {
-		background-color: #F3F1F0;
-		
-		.v-label {
-			font-size: 1.5rem;
-			line-height: 2rem;
-			
-			&.h2 {
-				font-size: 1.2rem;
-				color: #6B6A70;
-				padding: 2.0rem 0rem 0.9rem 1rem;
-				border-bottom: .1rem solid $light-gray-border;
-			}
-		}
+		background-color: white;
 		
 		.info-hdr {
 			font-size: 1.2rem;
@@ -109,110 +97,6 @@
 			border-bottom: .1rem solid $light-gray-border;
 			.v-label {
 				font-size: 1.2rem;
-			}
-		}
-		
-		.v-gridlayout {
-			color: #060606;
-			background-color: #FFFFFF;
-			
-			.gridform-caption, .gridform-field {
-				border-bottom: .1rem solid $light-gray-border;
-				
-				&.v-horizontallayout{
-					&.v-margin-top {
-						padding-top: 1.3rem;
-					}
-					&.v-margin-bottom {
-						padding-bottom: 1.3rem;
-					}
-					&.v-margin-left {
-						padding-left: 0rem;
-					}
-				}
-			}
-			
-			.gridform-caption {
-				.v-label.v-widget {
-					text-align: right;
-				}				
-			}
-			
-			.gridform-field {
-				color: #8C8C8C;
-				.v-label {
-					line-height: 2rem;
-					font-size: 1.5rem;
-					text-overflow: ellipsis;
-					&.v-has-width {
-						white-space: nowrap;
-					}
-					
-					&:after {
-						content: "";
-						position: relative;
-						display: inline-block;
-					}
-				}				
-			}
-		}
-		
-		.v-touchkit-verticalcomponentgroup {
-			box-shadow: none;
-			border-color: $light-gray-border;
-			border-top: none;
-			margin: 0px;
-			.v-touchkit-componentgroup-row { 
-				&:before {
-					border-color: $light-gray-border;
-					left: 0px;
-					right: 0px;
-				}
-				.v-caption {
-					margin: 1.3rem 0rem;
-				}
-				&.v-touchkit-componentgroup-row-full {
-					& > .v-caption {
-						color: $black-caption;
-						text-align: right;
-						line-height: 2rem;
-						padding-right: 1rem;
-						overflow: hidden;
-					}
-					& > .v-touchkit-componentgroup-cell {
-						flex: 2 1 0%;
-					}
-				}
-			}
-			.v-touchkit-componentgroup-cell > * {
-				margin: 1.3rem 0rem;
-			}
-			.v-textfield {
-				height: auto;
-			}
-			.v-textfield:focus,
-			.v-textarea:focus,
-			.v-touchkit-numberfield:focus,
-			.v-filterselect-input:focus {
-				box-shadow: none;
-			}
-		}
-	}
-
-	.readview-layout {
-		.gridform-field {
-			.v-button-wrap {
-				text-align: left;
-				padding: 0px;
-				.v-icon {
-					vertical-align: middle;
-				}
-				.v-button-caption {
-					vertical-align: middle;
-					padding-left: 3px;
-					font-size: 1.5rem;
-					line-height: 2rem;
-				}
 			}
 		}
 	}

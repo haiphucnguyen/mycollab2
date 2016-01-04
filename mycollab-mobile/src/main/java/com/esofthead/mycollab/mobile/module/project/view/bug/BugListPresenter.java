@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
-import com.esofthead.mycollab.mobile.module.project.view.parameters.BugFilterParameter;
 import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -43,9 +42,9 @@ public class BugListPresenter extends AbstractListPresenter<BugListView, BugSear
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
-            BugFilterParameter param = (BugFilterParameter) data.getParams();
+            BugSearchCriteria param = (BugSearchCriteria) data.getParams();
             super.onGo(container, data);
-            this.doSearch(param.getSearchCriteria());
+            this.doSearch(param);
             AppContext.addFragment("project/bug/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
 

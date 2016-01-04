@@ -45,11 +45,6 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-
-/*
- * TODO: Add support BugVersion when it's ready in the next version
- */
-
 @SuppressWarnings("serial")
 class ReOpenView extends AbstractMobilePageView {
     private final SimpleBug bug;
@@ -130,9 +125,7 @@ class ReOpenView extends AbstractMobilePageView {
 
             @Override
             public ComponentContainer getLayout() {
-                this.informationLayout = new MobileGridFormLayoutHelper(1, 3, "100%", "140px", Alignment.TOP_LEFT);
-                this.informationLayout.getLayout().setWidth("100%");
-                this.informationLayout.getLayout().setMargin(false);
+                this.informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
                 return informationLayout.getLayout();
             }
 

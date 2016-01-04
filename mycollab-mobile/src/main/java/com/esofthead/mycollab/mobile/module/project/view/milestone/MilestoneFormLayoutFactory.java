@@ -21,14 +21,9 @@ import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 /**
- *
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
@@ -66,10 +61,7 @@ public class MilestoneFormLayoutFactory implements IFormLayoutFactory {
         header.setStyleName("h2");
         layout.addComponent(header);
 
-        this.informationLayout = new MobileGridFormLayoutHelper(1, 8, "100%", "150px", Alignment.TOP_LEFT);
-        this.informationLayout.getLayout().setWidth("100%");
-        this.informationLayout.getLayout().addStyleName("colored-gridlayout");
-        this.informationLayout.getLayout().setMargin(false);
+        this.informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 8);
         layout.addComponent(this.informationLayout.getLayout());
         layout.setComponentAlignment(this.informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
         return layout;

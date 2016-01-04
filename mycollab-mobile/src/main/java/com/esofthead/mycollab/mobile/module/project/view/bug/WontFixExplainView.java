@@ -34,8 +34,11 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.*;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.TextArea;
 
 import java.util.GregorianCalendar;
 
@@ -128,10 +131,7 @@ class WontFixExplainView extends AbstractMobilePageView {
 
             @Override
             public ComponentContainer getLayout() {
-                informationLayout = new MobileGridFormLayoutHelper(1, 3, "100%", "140px", Alignment.TOP_LEFT);
-                this.informationLayout.getLayout().setWidth("100%");
-                this.informationLayout.getLayout().setMargin(false);
-
+                informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
                 return informationLayout.getLayout();
             }
 

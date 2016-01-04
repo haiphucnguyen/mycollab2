@@ -175,10 +175,8 @@ public class ProjectModuleController extends AbstractController {
                 BugPresenter presenter = PresenterResolver.getPresenter(BugPresenter.class);
                 if (params == null) {
                     BugSearchCriteria criteria = new BugSearchCriteria();
-
                     criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
-                    BugFilterParameter parameter = new BugFilterParameter("Open Bugs", criteria);
-                    presenter.go(navManager, new BugScreenData.Search(parameter));
+                    presenter.go(navManager, new BugScreenData.Search(criteria));
                 } else if (params instanceof BugScreenData.Search) {
                     presenter.go(navManager, (BugScreenData.Search) params);
                 } else {

@@ -152,10 +152,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             header.setStyleName("h2");
             layout.addComponent(header);
 
-            this.informationLayout = new MobileGridFormLayoutHelper(1, 10, "100%", "150px", Alignment.TOP_LEFT);
-            this.informationLayout.getLayout().addStyleName("colored-gridlayout");
-            this.informationLayout.getLayout().setMargin(false);
-            this.informationLayout.getLayout().setWidth("100%");
+            this.informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 10);
             layout.addComponent(this.informationLayout.getLayout());
             layout.setComponentAlignment(this.informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
             layout.addComponent(attachmentUploadField);

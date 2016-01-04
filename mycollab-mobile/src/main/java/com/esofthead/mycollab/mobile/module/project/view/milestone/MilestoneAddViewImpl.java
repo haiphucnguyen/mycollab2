@@ -69,10 +69,7 @@ public class MilestoneAddViewImpl extends AbstractEditItemComp<SimpleMilestone> 
             header.setStyleName("h2");
             layout.addComponent(header);
 
-            this.informationLayout = new MobileGridFormLayoutHelper(1, 6, "100%", "150px", Alignment.TOP_LEFT);
-            this.informationLayout.getLayout().setWidth("100%");
-            this.informationLayout.getLayout().addStyleName("colored-gridlayout");
-            this.informationLayout.getLayout().setMargin(false);
+            this.informationLayout =  MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 6);
             layout.addComponent(this.informationLayout.getLayout());
             layout.setComponentAlignment(this.informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
             return layout;

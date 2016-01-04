@@ -37,4 +37,7 @@ public class UIConstants {
     public static final String STATUS_DISABLED = "disabled";
 
     public static final String META_INFO = "meta-info";
+    public static final String TRUNCATE = "truncate";
+
+    public static final String GRIDFORM_STANDARD = "colored-gridlayout";
 }

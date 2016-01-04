@@ -69,9 +69,7 @@ public abstract class TimeLogComp<V extends ValuedBean> extends VerticalLayout {
 
         this.addComponent(header);
 
-        MobileGridFormLayoutHelper layout = new MobileGridFormLayoutHelper(1, 3, "100%", "150px", Alignment.TOP_RIGHT);
-        layout.getLayout().setWidth("100%");
-        layout.getLayout().setMargin(false);
+        MobileGridFormLayoutHelper layout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
         double billableHours = getTotalBillableHours(bean);
         double nonBillableHours = getTotalNonBillableHours(bean);

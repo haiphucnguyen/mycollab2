@@ -30,6 +30,39 @@ a {
 	text-overflow: ellipsis;
 }
 
+.v-gridlayout.colored-gridlayout .gridform-caption, .v-gridlayout.colored-gridlayout .gridform-field {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-top, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-top {
+	padding-top: 8px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-right, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-right {
+	padding-right: 8px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-bottom, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-bottom {
+	padding-bottom: 4px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption.v-margin-left, .v-gridlayout.colored-gridlayout .gridform-field.v-margin-left {
+	padding-left: 0px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-field {
+	min-height: 43px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption {
+	min-height: 39px;
+}
+
+.v-gridlayout.colored-gridlayout .gridform-caption .v-label {
+	text-align: right;
+	color: #999;
+}
+
 .attachment-panel {
 	border-top: 1px solid #dddddd;
 	padding: 0.5rem 0rem 0.8rem;
@@ -308,19 +341,7 @@ a {
 }
 
 .readview-layout, .editview-layout {
-	background-color: #F3F1F0;
-}
-
-.readview-layout .v-label, .editview-layout .v-label {
-	font-size: 1.5rem;
-	line-height: 2rem;
-}
-
-.readview-layout .v-label.h2, .editview-layout .v-label.h2 {
-	font-size: 1.2rem;
-	color: #6B6A70;
-	padding: 2rem 0rem 0.9rem 1rem;
-	border-bottom: 0.1rem solid #dddddd;
+	background-color: white;
 }
 
 .readview-layout .info-hdr, .editview-layout .info-hdr {
@@ -332,108 +353,6 @@ a {
 
 .readview-layout .info-hdr .v-label, .editview-layout .info-hdr .v-label {
 	font-size: 1.2rem;
-}
-
-.readview-layout .v-gridlayout, .editview-layout .v-gridlayout {
-	color: #060606;
-	background-color: #FFFFFF;
-}
-
-.readview-layout .v-gridlayout .gridform-caption, .readview-layout .v-gridlayout .gridform-field, .editview-layout .v-gridlayout .gridform-caption, .editview-layout .v-gridlayout .gridform-field {
-	border-bottom: 0.1rem solid #dddddd;
-}
-
-.readview-layout .v-gridlayout .gridform-caption.v-horizontallayout.v-margin-top, .readview-layout .v-gridlayout .gridform-field.v-horizontallayout.v-margin-top, .editview-layout .v-gridlayout .gridform-caption.v-horizontallayout.v-margin-top, .editview-layout .v-gridlayout .gridform-field.v-horizontallayout.v-margin-top {
-	padding-top: 1.3rem;
-}
-
-.readview-layout .v-gridlayout .gridform-caption.v-horizontallayout.v-margin-bottom, .readview-layout .v-gridlayout .gridform-field.v-horizontallayout.v-margin-bottom, .editview-layout .v-gridlayout .gridform-caption.v-horizontallayout.v-margin-bottom, .editview-layout .v-gridlayout .gridform-field.v-horizontallayout.v-margin-bottom {
-	padding-bottom: 1.3rem;
-}
-
-.readview-layout .v-gridlayout .gridform-caption.v-horizontallayout.v-margin-left, .readview-layout .v-gridlayout .gridform-field.v-horizontallayout.v-margin-left, .editview-layout .v-gridlayout .gridform-caption.v-horizontallayout.v-margin-left, .editview-layout .v-gridlayout .gridform-field.v-horizontallayout.v-margin-left {
-	padding-left: 0rem;
-}
-
-.readview-layout .v-gridlayout .gridform-caption .v-label.v-widget, .editview-layout .v-gridlayout .gridform-caption .v-label.v-widget {
-	text-align: right;
-}
-
-.readview-layout .v-gridlayout .gridform-field, .editview-layout .v-gridlayout .gridform-field {
-	color: #8C8C8C;
-}
-
-.readview-layout .v-gridlayout .gridform-field .v-label, .editview-layout .v-gridlayout .gridform-field .v-label {
-	line-height: 2rem;
-	font-size: 1.5rem;
-	text-overflow: ellipsis;
-}
-
-.readview-layout .v-gridlayout .gridform-field .v-label.v-has-width, .editview-layout .v-gridlayout .gridform-field .v-label.v-has-width {
-	white-space: nowrap;
-}
-
-.readview-layout .v-gridlayout .gridform-field .v-label:after, .editview-layout .v-gridlayout .gridform-field .v-label:after {
-	content: "";
-	position: relative;
-	display: inline-block;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup, .editview-layout .v-touchkit-verticalcomponentgroup {
-	box-shadow: none;
-	border-color: #dddddd;
-	border-top: none;
-	margin: 0px;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before, .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row:before {
-	border-color: #dddddd;
-	left: 0px;
-	right: 0px;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row .v-caption, .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row .v-caption {
-	margin: 1.3rem 0rem;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-caption, .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-caption {
-	color: #060606;
-	text-align: right;
-	line-height: 2rem;
-	padding-right: 1rem;
-	overflow: hidden;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell, .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-row.v-touchkit-componentgroup-row-full > .v-touchkit-componentgroup-cell {
-	flex: 2 1 0%;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-cell > *, .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-componentgroup-cell > * {
-	margin: 1.3rem 0rem;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-textfield, .editview-layout .v-touchkit-verticalcomponentgroup .v-textfield {
-	height: auto;
-}
-
-.readview-layout .v-touchkit-verticalcomponentgroup .v-textfield:focus, .readview-layout .v-touchkit-verticalcomponentgroup .v-textarea:focus, .readview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-numberfield:focus, .readview-layout .v-touchkit-verticalcomponentgroup .v-filterselect-input:focus, .editview-layout .v-touchkit-verticalcomponentgroup .v-textfield:focus, .editview-layout .v-touchkit-verticalcomponentgroup .v-textarea:focus, .editview-layout .v-touchkit-verticalcomponentgroup .v-touchkit-numberfield:focus, .editview-layout .v-touchkit-verticalcomponentgroup .v-filterselect-input:focus {
-	box-shadow: none;
-}
-
-.readview-layout .gridform-field .v-button-wrap {
-	text-align: left;
-	padding: 0px;
-}
-
-.readview-layout .gridform-field .v-button-wrap .v-icon {
-	vertical-align: middle;
-}
-
-.readview-layout .gridform-field .v-button-wrap .v-button-caption {
-	vertical-align: middle;
-	padding-left: 3px;
-	font-size: 1.5rem;
-	line-height: 2rem;
 }
 
 .attachment-panel .v-label.attachment-name {

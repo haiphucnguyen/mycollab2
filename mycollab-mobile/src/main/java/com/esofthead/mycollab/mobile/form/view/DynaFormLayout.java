@@ -24,7 +24,10 @@ import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.ui.*;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,12 +104,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
                 continue;
             }
 
-            gridLayout = new MobileGridFormLayoutHelper(1, section.getFieldCount(), "100%", "150px", Alignment.TOP_RIGHT);
-
-            gridLayout.getLayout().setWidth("100%");
-            gridLayout.getLayout().setMargin(false);
-            gridLayout.getLayout().setSpacing(false);
-            gridLayout.getLayout().addStyleName("colored-gridlayout");
+            gridLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, section.getFieldCount());
             layout.addComponent(gridLayout.getLayout());
 
             sectionMappings.put(section, gridLayout);
@@ -120,7 +118,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
         if (dynaField != null) {
             DynaSection section = dynaField.getOwnSection();
             MobileGridFormLayoutHelper gridLayout = sectionMappings.get(section);
-            gridLayout.addComponent(field, dynaField.getDisplayName(), 0, dynaField.getFieldIndex(), Alignment.TOP_RIGHT);
+            gridLayout.addComponent(field, dynaField.getDisplayName(), 0, dynaField.getFieldIndex());
 
         }
     }

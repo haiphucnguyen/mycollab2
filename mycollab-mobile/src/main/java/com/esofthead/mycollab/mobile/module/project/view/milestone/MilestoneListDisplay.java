@@ -64,7 +64,7 @@ public class MilestoneListDisplay extends DefaultPagedBeanList<MilestoneService,
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
             milestoneDiv.appendChild(milestoneLink);
             milestoneInfoLayout.addComponent(new MCssLayout(new ELabel(milestoneDiv.write(), ContentMode.HTML)
-                    .withStyleName("truncate").withWidth("100%")));
+                    .withStyleName(UIConstants.TRUNCATE).withWidth("100%")));
 
             CssLayout metaLayout = new CssLayout();
             milestoneInfoLayout.addComponent(metaLayout);
