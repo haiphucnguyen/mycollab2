@@ -84,7 +84,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
         } else if (ClassUtils.instanceOf(pageAction, TaskScreenData.List.class, TaskScreenData.Read.class, TaskScreenData.Add.class,
                 TaskScreenData.Edit.class)) {
             presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-        } else if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.List.class, MilestoneScreenData.Search.class,
+        } else if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Search.class,
                 MilestoneScreenData.Read.class, MilestoneScreenData.Add.class, MilestoneScreenData.Edit.class)) {
             presenter = PresenterResolver.getPresenter(MilestonePresenter.class);
         } else if (ClassUtils.instanceOf(pageAction, BugScreenData.Search.class, BugScreenData.Add.class,

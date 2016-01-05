@@ -38,7 +38,7 @@ public class MilestonePresenter extends AbstractPresenter<MilestoneContainer> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AbstractPresenter<?> presenter;
 
-        if (data instanceof MilestoneScreenData.List) {
+        if (data instanceof MilestoneScreenData.Search) {
             presenter = PresenterResolver.getPresenter(MilestoneListPresenter.class);
         } else if (data instanceof MilestoneScreenData.Add || data instanceof MilestoneScreenData.Edit) {
             presenter = PresenterResolver.getPresenter(MilestoneAddPresenter.class);

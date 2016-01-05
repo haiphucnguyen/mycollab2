@@ -43,6 +43,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -165,7 +166,6 @@ public class ProjectModuleController extends AbstractController {
 
     private void bindBugEvents() {
         this.register(new ApplicationEventListener<BugEvent.GotoList>() {
-
             private static final long serialVersionUID = 4076325106652853379L;
 
             @Subscribe
@@ -266,15 +266,22 @@ public class ProjectModuleController extends AbstractController {
 
     private void bindMilestoneEvents() {
         this.register(new ApplicationEventListener<MilestoneEvent.GotoList>() {
-
             private static final long serialVersionUID = -4211546107827460336L;
 
             @Subscribe
             @Override
             public void handle(MilestoneEvent.GotoList event) {
-                MilestoneScreenData.List data = new MilestoneScreenData.List();
+                Object params = event.getData();
                 MilestonePresenter presenter = PresenterResolver.getPresenter(MilestonePresenter.class);
-                presenter.go(navManager, data);
+                if (params == null) {
+                    MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
+                    criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
+                    presenter.go(navManager, new MilestoneScreenData.Search(criteria));
+                } else if (params instanceof MilestoneScreenData.Search) {
+                    presenter.go(navManager, (MilestoneScreenData.Search) params);
+                } else {
+                    throw new MyCollabException("Invalid search parameter: " + BeanUtility.printBeanObj(params));
+                }
             }
         });
         this.register(new ApplicationEventListener<MilestoneEvent.GotoRead>() {
