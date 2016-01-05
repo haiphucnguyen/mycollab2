@@ -23,7 +23,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
-import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
+import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -124,11 +124,11 @@ class ResolvedInputView extends AbstractMobilePageView {
 
         class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
-            private MobileGridFormLayoutHelper informationLayout;
+            private GridFormLayoutHelper informationLayout;
 
             @Override
             public ComponentContainer getLayout() {
-                informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
                 return informationLayout.getLayout();
             }
 

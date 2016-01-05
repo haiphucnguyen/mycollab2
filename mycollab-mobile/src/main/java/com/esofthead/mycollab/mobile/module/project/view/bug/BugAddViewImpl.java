@@ -21,7 +21,7 @@ import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAtt
 import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.ui.AbstractEditItemComp;
-import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
+import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -142,7 +142,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
     public class EditFormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = -9159483523170247666L;
 
-        private MobileGridFormLayoutHelper informationLayout;
+        private GridFormLayoutHelper informationLayout;
 
         @Override
         public ComponentContainer getLayout() {
@@ -152,7 +152,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             header.setStyleName("h2");
             layout.addComponent(header);
 
-            this.informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 10);
+            this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 10);
             layout.addComponent(this.informationLayout.getLayout());
             layout.setComponentAlignment(this.informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
             layout.addComponent(attachmentUploadField);

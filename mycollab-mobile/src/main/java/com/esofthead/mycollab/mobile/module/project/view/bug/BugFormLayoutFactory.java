@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
+import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -30,7 +30,7 @@ import com.vaadin.ui.*;
 public class BugFormLayoutFactory implements IFormLayoutFactory {
     private static final long serialVersionUID = -9159483523170247666L;
 
-    private MobileGridFormLayoutHelper informationLayout;
+    private GridFormLayoutHelper informationLayout;
 
     @Override
     public ComponentContainer getLayout() {
@@ -41,7 +41,7 @@ public class BugFormLayoutFactory implements IFormLayoutFactory {
         header.setStyleName("h2");
         layout.addComponent(header);
 
-        informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 12);
+        informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 12);
         layout.addComponent(informationLayout.getLayout());
         layout.setComponentAlignment(informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
         layout.setExpandRatio(informationLayout.getLayout(), 1.0f);

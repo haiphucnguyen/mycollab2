@@ -34,6 +34,7 @@ public class AdvancedPreviewBeanForm<B> extends GenericBeanForm<B> implements Pr
 
     public AdvancedPreviewBeanForm() {
         super();
+        this.setSizeFull();
     }
 
     @Override

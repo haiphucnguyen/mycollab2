@@ -24,7 +24,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
-import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
+import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
@@ -119,11 +119,11 @@ class ApproveInputView extends AbstractMobilePageView {
 
         static class FormLayoutFactory implements IFormLayoutFactory {
             private static final long serialVersionUID = 1L;
-            private MobileGridFormLayoutHelper informationLayout;
+            private GridFormLayoutHelper informationLayout;
 
             @Override
             public ComponentContainer getLayout() {
-                this.informationLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
+                this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
                 return this.informationLayout.getLayout();
             }
 

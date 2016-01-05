@@ -20,7 +20,7 @@ import com.esofthead.mycollab.form.service.MasterFormService;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
-import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
+import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -44,7 +44,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
 
     private DynaForm dynaForm;
     private final Map<String, AbstractDynaField> fieldMappings = new HashMap<>();
-    private Map<DynaSection, MobileGridFormLayoutHelper> sectionMappings;
+    private Map<DynaSection, GridFormLayoutHelper> sectionMappings;
 
     private VerticalLayout layout;
 
@@ -98,13 +98,13 @@ public class DynaFormLayout implements IFormLayoutFactory {
             header.setStyleName("h2");
             layout.addComponent(header);
 
-            MobileGridFormLayoutHelper gridLayout;
+            GridFormLayoutHelper gridLayout;
 
             if (section.isDeletedSection() || section.getFieldCount() == 0) {
                 continue;
             }
 
-            gridLayout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, section.getFieldCount());
+            gridLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, section.getFieldCount());
             layout.addComponent(gridLayout.getLayout());
 
             sectionMappings.put(section, gridLayout);
@@ -117,7 +117,7 @@ public class DynaFormLayout implements IFormLayoutFactory {
         AbstractDynaField dynaField = fieldMappings.get(propertyId);
         if (dynaField != null) {
             DynaSection section = dynaField.getOwnSection();
-            MobileGridFormLayoutHelper gridLayout = sectionMappings.get(section);
+            GridFormLayoutHelper gridLayout = sectionMappings.get(section);
             gridLayout.addComponent(field, dynaField.getDisplayName(), 0, dynaField.getFieldIndex());
 
         }

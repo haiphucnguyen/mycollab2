@@ -59,37 +59,27 @@ public class MainView extends AbstractMobileMainView {
         welcomeTextWrapper.setHeight("15px");
         contentLayout.addComponent(welcomeTextWrapper);
 
-        ModuleButton crmButton = new ModuleButton(AppContext.getMessage(GenericI18Enum.MODULE_CRM));
-        crmButton.setWidth("100%");
-        crmButton.addStyleName("crm");
-        crmButton.addClickListener(new Button.ClickListener() {
-            private static final long serialVersionUID = -1218427186205574547L;
-
+        Button crmButton = new Button(AppContext.getMessage(GenericI18Enum.MODULE_CRM), new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
             }
         });
+        crmButton.setWidth("100%");
 
         contentLayout.addComponent(crmButton);
 
-        ModuleButton pmButton = new ModuleButton(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT));
-        pmButton.setWidth("100%");
-        pmButton.addStyleName("project");
-        pmButton.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = -5323408319082242586L;
-
+        Button pmButton = new Button(AppContext.getMessage(GenericI18Enum.MODULE_PROJECT), new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new ShellEvent.GotoProjectModule(this, null));
             }
         });
+        pmButton.setWidth("100%");
         contentLayout.addComponent(pmButton);
 
-        ModuleButton fileButton = new ModuleButton(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT));
+        Button fileButton = new Button(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT));
         fileButton.setWidth("100%");
-        fileButton.addStyleName("document");
         contentLayout.addComponent(fileButton);
 
         this.addComponent(contentLayout);

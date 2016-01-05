@@ -18,7 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
-import com.esofthead.mycollab.mobile.ui.MobileGridFormLayoutHelper;
+import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -69,7 +69,7 @@ public abstract class TimeLogComp<V extends ValuedBean> extends VerticalLayout {
 
         this.addComponent(header);
 
-        MobileGridFormLayoutHelper layout = MobileGridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
+        GridFormLayoutHelper layout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
 
         double billableHours = getTotalBillableHours(bean);
         double nonBillableHours = getTotalNonBillableHours(bean);

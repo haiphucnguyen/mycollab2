@@ -231,7 +231,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected String initFormTitle() {
-        return "[" + CurrentProjectVariables.getProject().getShortname() + "-" + beanItem.getBugkey() + "]";
+        return beanItem.getSummary();
     }
 
     @Override
