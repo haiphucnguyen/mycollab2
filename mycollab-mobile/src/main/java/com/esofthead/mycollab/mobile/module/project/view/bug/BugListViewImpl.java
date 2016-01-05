@@ -56,5 +56,4 @@ public class BugListViewImpl extends AbstractListViewComp<BugSearchCriteria, Sim
         addBug.setStyleName("add-btn");
         return addBug;
     }
-
 }

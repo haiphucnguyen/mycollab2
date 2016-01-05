@@ -31,7 +31,6 @@ public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView 
 
     protected B beanItem;
     protected AdvancedPreviewBeanForm<B> previewForm;
-
     private NavigationBarQuickMenu editBtn;
 
     public AbstractPreviewItemComp() {

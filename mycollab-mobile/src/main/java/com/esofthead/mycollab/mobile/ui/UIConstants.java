@@ -21,10 +21,6 @@ package com.esofthead.mycollab.mobile.ui;
  * @since 3.0
  */
 public class UIConstants {
-
-    public static final String BUTTON_BIG = "big-btn";
-    public static final String COLOR_GRAY = "gray";
-    public static final String COLOR_BLUE = "blue";
     public static final String BUTTON_ACTION = "greenbtn";
     public static final String BUTTON_OPTION = "graybtn";
     public static final String BUTTON_DANGER = "redbtn";

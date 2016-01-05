@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -34,7 +35,6 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 
     public LoginViewImpl() {
         super();
-
         initUI();
     }
 
@@ -42,18 +42,14 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
         this.setStyleName("login-view");
         this.setSizeFull();
 
-        VerticalLayout contentLayout = new VerticalLayout();
-        contentLayout.setStyleName("content-wrapper");
+        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper");
         contentLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
-        contentLayout.setMargin(true);
-        contentLayout.setSpacing(true);
         contentLayout.setWidth("320px");
 
         Image mainLogo = new Image(null, new ThemeResource("icons/logo_m.png"));
         contentLayout.addComponent(mainLogo);
 
-        Label introText = new Label(
-                "MyCollab helps you do all your office jobs on the computers, phones and tablets you use");
+        Label introText = new Label("MyCollab helps you do all your office jobs on the computers, phones and tablets you use");
         introText.setStyleName("intro-text");
         contentLayout.addComponent(introText);
 
@@ -86,8 +82,7 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 
         Button signInBtn = new Button("Sign In");
         signInBtn.setWidth("100%");
-        signInBtn.addStyleName(UIConstants.BUTTON_BIG);
-        signInBtn.addStyleName(UIConstants.COLOR_BLUE);
+        signInBtn.addStyleName(UIConstants.BUTTON_ACTION);
         signInBtn.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -100,8 +95,7 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 
         Button createAccountBtn = new Button("Create Account");
         createAccountBtn.setWidth("100%");
-        createAccountBtn.addStyleName(UIConstants.BUTTON_BIG);
-        createAccountBtn.addStyleName(UIConstants.COLOR_GRAY);
+        createAccountBtn.addStyleName(UIConstants.BUTTON_OPTION);
         contentLayout.addComponent(createAccountBtn);
 
         this.addComponent(contentLayout);

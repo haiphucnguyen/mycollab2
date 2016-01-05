@@ -121,7 +121,6 @@ public class ShellController extends AbstractController {
         });
 
         this.register(new ApplicationEventListener<ShellEvent.PushView>() {
-
             private static final long serialVersionUID = 1305847008958371404L;
 
             @Subscribe

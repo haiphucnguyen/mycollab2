@@ -52,5 +52,4 @@ public class AbstractMobileTabPageView extends TabBarView implements PageView {
         ((Button) newTab).setHtmlContentAllowed(true);
         return newTab;
     }
-
 }

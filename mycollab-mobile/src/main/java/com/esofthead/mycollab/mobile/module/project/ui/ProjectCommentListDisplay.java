@@ -51,7 +51,7 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
     private ProjectCommentInput commentBox;
 
     public ProjectCommentListDisplay(final String type, final Integer extraTypeId,
-            final boolean isDisplayCommentInput, final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+                                     final boolean isDisplayCommentInput, final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
         this.addStyleName("comment-list");
         this.setCaption(AppContext.getMessage(GenericI18Enum.TAB_COMMENT));
         this.type = type;
