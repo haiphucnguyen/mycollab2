@@ -3,7 +3,14 @@
 @mixin vaadin-components {
   .v-touchkit-navbar-caption {
     font-size: smaller;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
+
+  .v-touchkit-navbar .v-navbar-quickmenu-button {
+    font-size: 20px !important;
+  }
+
 	.v-touchkit-switch-widget {
 		height: 2.4rem;
 		.v-touchkit-switch-wrapper {

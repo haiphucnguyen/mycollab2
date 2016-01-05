@@ -21,9 +21,9 @@ package com.esofthead.mycollab.mobile.ui;
  * @since 3.0
  */
 public class UIConstants {
-    public static final String BUTTON_ACTION = "greenbtn";
-    public static final String BUTTON_OPTION = "graybtn";
-    public static final String BUTTON_DANGER = "redbtn";
+    public static final String BUTTON_ACTION = "action-btn";
+    public static final String BUTTON_OPTION = "option-btn";
+    public static final String BUTTON_DANGER = "danger-btn";
     public static final String LINK_COMPLETED = "completed";
     public static final String LINK_OVERDUE = "overdue";
     public static final String LBL_URGENT = "priority-lbl urgent-lbl";

@@ -41,13 +41,13 @@ public class ProjectListViewImpl extends AbstractListViewComp<ProjectSearchCrite
 	}
 
 	@Override
-	protected AbstractPagedBeanList<ProjectSearchCriteria, SimpleProject> createBeanTable() {
+	protected AbstractPagedBeanList<ProjectSearchCriteria, SimpleProject> createBeanList() {
 		ProjectListDisplay projectListDisplay = new ProjectListDisplay();
 		return projectListDisplay;
 	}
 
 	@Override
-	protected Component createRightComponent() {
+	protected Component buildRightComponent() {
 		// TODO Auto-generated method stub
 		return null;
 	}

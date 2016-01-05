@@ -39,13 +39,13 @@ public class MessageListViewImpl extends AbstractListViewComp<MessageSearchCrite
     }
 
     @Override
-    protected AbstractPagedBeanList<MessageSearchCriteria, SimpleMessage> createBeanTable() {
+    protected AbstractPagedBeanList<MessageSearchCriteria, SimpleMessage> createBeanList() {
         MessageListDisplay messageListDisplay = new MessageListDisplay();
         return messageListDisplay;
     }
 
     @Override
-    protected Component createRightComponent() {
+    protected Component buildRightComponent() {
         Button addMessage = new Button();
         addMessage.addClickListener(new Button.ClickListener() {
 

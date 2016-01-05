@@ -63,6 +63,11 @@ a {
 	color: #999;
 }
 
+.v-navbar-quickmenu-content {
+	width: 100%;
+	background-color: #252c34;
+}
+
 .attachment-panel {
 	border-top: 1px solid #dddddd;
 	padding: 0.5rem 0rem 0.8rem;
@@ -70,6 +75,12 @@ a {
 
 .v-touchkit-navbar-caption {
 	font-size: smaller;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.v-touchkit-navbar .v-navbar-quickmenu-button {
+	font-size: 20px !important;
 }
 
 .v-touchkit-switch-widget {

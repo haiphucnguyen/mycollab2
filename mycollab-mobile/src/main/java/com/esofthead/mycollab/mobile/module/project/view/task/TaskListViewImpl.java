@@ -61,12 +61,12 @@ public class TaskListViewImpl extends AbstractListViewComp<TaskSearchCriteria, S
     }
 
     @Override
-    protected AbstractPagedBeanList<TaskSearchCriteria, SimpleTask> createBeanTable() {
+    protected AbstractPagedBeanList<TaskSearchCriteria, SimpleTask> createBeanList() {
         return new TaskListDisplay();
     }
 
     @Override
-    protected Component createRightComponent() {
+    protected Component buildRightComponent() {
         NavigationBarQuickMenu editBtn = new NavigationBarQuickMenu();
         editBtn.setButtonCaption(null);
         editBtn.setStyleName("edit-btn");

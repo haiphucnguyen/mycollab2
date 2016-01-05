@@ -51,6 +51,7 @@ public class ThemeManager {
             extraStyles.append(".v-touchkit-navbar { color: #" + accountTheme.getTopmenutext() + "; }");
             extraStyles.append(".v-touchkit-navbar .v-touchkit-navbutton { color: #" + accountTheme.getTopmenutext() + "; }");
             extraStyles.append(".v-touchkit-navbutton:after { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".v-touchkit-navbar .v-navbar-quickmenu-button { color: #" + accountTheme.getTopmenutext() + "; }");
         }
 
         if (accountTheme.getVtabsheetbg() != null) {
@@ -68,11 +69,17 @@ public class ThemeManager {
         if (accountTheme.getActionbtn() != null) {
             extraStyles.append(".v-touchkit-tabbar-toolbar .v-button.selected { background-color: #"
                     + accountTheme.getActionbtn() + " !important; }");
+
+            extraStyles.append(".v-button.v-button-action-btn, .v-button-action-btn:focus { background-color: #" +
+                    accountTheme.getActionbtn() + "; }");
         }
 
         if (accountTheme.getActionbtntext() != null) {
             extraStyles.append(".v-touchkit-tabbar-toolbar .v-button.selected { color: #"
                     + accountTheme.getActionbtntext() + "; }");
+
+            extraStyles.append(".v-button.v-button-action-btn, .v-button-action-btn:focus { color: #" +
+                    accountTheme.getActionbtntext() + "; }");
         }
 
 		/* Option Buttons */
@@ -80,11 +87,17 @@ public class ThemeManager {
         if (accountTheme.getOptionbtn() != null) {
             extraStyles.append(".v-touchkit-tabbar-toolbar .v-button { background-color: #"
                     + accountTheme.getOptionbtn() + " !important; }");
+
+            extraStyles.append(".v-button.v-button-option-btn, .v-button-option-btn:focus { background-color: #" +
+                    accountTheme.getOptionbtn() + "; }");
         }
 
         if (accountTheme.getOptionbtntext() != null) {
             extraStyles.append(".v-touchkit-tabbar-toolbar .v-button { color: #"
                     + accountTheme.getOptionbtntext() + " !important; }");
+
+            extraStyles.append(".v-button.v-button-option-btn, .v-button-option-btn:focus { color: #" +
+                    accountTheme.getOptionbtntext() + "; }");
         }
 
 		/* Danger Buttons */

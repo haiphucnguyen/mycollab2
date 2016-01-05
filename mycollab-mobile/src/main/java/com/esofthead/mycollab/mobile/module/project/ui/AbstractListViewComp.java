@@ -17,28 +17,24 @@
 package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.mobile.ui.AbstractMobileSwipeView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.IListView;
+import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.ui.Component;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends AbstractMobileSwipeView implements IListView<S, B> {
+public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends AbstractMobilePageView implements IListView<S, B> {
     private static final long serialVersionUID = 3603608419228750094L;
 
     protected AbstractPagedBeanList<S, B> itemList;
 
     public AbstractListViewComp() {
-        this.itemList = createBeanTable();
+        this.itemList = createBeanList();
         setContent(itemList);
-
-        Component rightComponent = createRightComponent();
-        if (rightComponent != null) {
-            setRightComponent(rightComponent);
-        }
     }
 
     @Override
@@ -49,12 +45,32 @@ public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends 
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-
-        if (getPagedBeanTable().getSearchRequest() != null)
+        onVisible();
+        if (getPagedBeanTable().getSearchRequest() != null) {
             getPagedBeanTable().refresh();
+        }
+
+        Component rightComponent = buildRightComponent();
+        if (rightComponent != null) {
+            setRightComponent(rightComponent);
+        }
+
+        Component toolbar = buildToolbar();
+        if (toolbar != null) {
+            setToolbar(toolbar);
+        }
     }
 
-    abstract protected AbstractPagedBeanList<S, B> createBeanTable();
+    protected void onVisible() {
+    }
 
-    abstract protected Component createRightComponent();
+    abstract protected AbstractPagedBeanList<S, B> createBeanList();
+
+    protected Component buildRightComponent() {
+        return null;
+    }
+
+    protected Toolbar buildToolbar() {
+        return null;
+    }
 }

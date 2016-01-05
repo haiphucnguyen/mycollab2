@@ -19,7 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.*;
-import com.esofthead.mycollab.mobile.ui.AbstractMobileSwipeView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -38,7 +38,7 @@ import com.vaadin.ui.*;
  */
 
 @ViewComponent
-public class ProjectDashboardViewImpl extends AbstractMobileSwipeView implements ProjectDashboardView {
+public class ProjectDashboardViewImpl extends AbstractMobilePageView implements ProjectDashboardView {
     private static final long serialVersionUID = 2364544271302929730L;
 
     private final CssLayout mainLayout;

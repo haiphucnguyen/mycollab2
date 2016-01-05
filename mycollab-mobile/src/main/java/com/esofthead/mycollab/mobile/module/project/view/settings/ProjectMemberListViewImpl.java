@@ -42,12 +42,12 @@ public class ProjectMemberListViewImpl extends AbstractListViewComp<ProjectMembe
     }
 
     @Override
-    protected AbstractPagedBeanList<ProjectMemberSearchCriteria, SimpleProjectMember> createBeanTable() {
+    protected AbstractPagedBeanList<ProjectMemberSearchCriteria, SimpleProjectMember> createBeanList() {
         return new ProjectMemberListDisplay();
     }
 
     @Override
-    protected Component createRightComponent() {
+    protected Component buildRightComponent() {
         Button inviteMemberBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

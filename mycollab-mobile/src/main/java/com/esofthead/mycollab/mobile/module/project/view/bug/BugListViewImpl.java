@@ -41,12 +41,12 @@ public class BugListViewImpl extends AbstractListViewComp<BugSearchCriteria, Sim
     }
 
     @Override
-    protected AbstractPagedBeanList<BugSearchCriteria, SimpleBug> createBeanTable() {
+    protected AbstractPagedBeanList<BugSearchCriteria, SimpleBug> createBeanList() {
         return new BugListDisplay();
     }
 
     @Override
-    protected Component createRightComponent() {
+    protected Component buildRightComponent() {
         Button addBug = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

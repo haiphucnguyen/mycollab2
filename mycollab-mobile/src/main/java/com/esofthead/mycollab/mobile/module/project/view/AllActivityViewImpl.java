@@ -53,14 +53,14 @@ public class AllActivityViewImpl extends AbstractListViewComp<ActivityStreamSear
     }
 
     @Override
-    protected AbstractPagedBeanList<ActivityStreamSearchCriteria, ProjectActivityStream> createBeanTable() {
+    protected AbstractPagedBeanList<ActivityStreamSearchCriteria, ProjectActivityStream> createBeanList() {
         ProjectActivityStreamListDisplay beanList = new ProjectActivityStreamListDisplay();
         beanList.setRowDisplayHandler(new ActivityStreamRowHandler());
         return beanList;
     }
 
     @Override
-    protected Component createRightComponent() {
+    protected Component buildRightComponent() {
         return null;
     }
 
