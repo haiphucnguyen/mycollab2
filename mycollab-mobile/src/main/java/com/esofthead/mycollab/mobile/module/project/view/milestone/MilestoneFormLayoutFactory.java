@@ -44,10 +44,6 @@ public class MilestoneFormLayoutFactory implements IFormLayoutFactory {
             this.informationLayout.addComponent(field, AppContext.getMessage(MilestoneI18nEnum.FORM_START_DATE_FIELD), 0, 3);
         } else if (propertyId.equals("enddate")) {
             this.informationLayout.addComponent(field, AppContext.getMessage(MilestoneI18nEnum.FORM_END_DATE_FIELD), 0, 4);
-        } else if (propertyId.equals("numOpenTasks")) {
-            this.informationLayout.addComponent(field, AppContext.getMessage(MilestoneI18nEnum.FORM_TASK_FIELD), 0, 5);
-        } else if (propertyId.equals("numOpenBugs")) {
-            this.informationLayout.addComponent(field, AppContext.getMessage(MilestoneI18nEnum.FORM_BUG_FIELD), 0, 6);
         } else if (propertyId.equals("description")) {
             this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 7);
         }
@@ -57,13 +53,12 @@ public class MilestoneFormLayoutFactory implements IFormLayoutFactory {
     public ComponentContainer getLayout() {
         final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(false);
-        Label header = new Label(AppContext.getMessage(MilestoneI18nEnum.M_FORM_READ_TITLE));
-        header.setStyleName("h2");
-        layout.addComponent(header);
+//        Label header = new Label(AppContext.getMessage(MilestoneI18nEnum.M_FORM_READ_TITLE));
+//        header.setStyleName("h2");
+//        layout.addComponent(header);
 
         this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 8);
         layout.addComponent(this.informationLayout.getLayout());
-        layout.setComponentAlignment(this.informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
         return layout;
     }
 }

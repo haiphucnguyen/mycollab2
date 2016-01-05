@@ -115,7 +115,6 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
         content.setExpandRatio(tableItem, 1.0f);
 
         MVerticalLayout controlBtns = new MVerticalLayout().withWidth("100%");
-        controlBtns.addStyleName("edit-btn-layout");
         controlBtns.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
         Button addNewEntryBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.M_DIALOG_ADD_TIME_LOG_ENTRY), new Button.ClickListener() {

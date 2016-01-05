@@ -46,7 +46,6 @@ public class GridFormLayoutHelper implements Serializable {
         this.layout = new GridLayout(2 * columns, rows);
         this.layout.setMargin(false);
         this.layout.setSpacing(false);
-
         this.layout.setRowExpandRatio(0, 0);
     }
 
