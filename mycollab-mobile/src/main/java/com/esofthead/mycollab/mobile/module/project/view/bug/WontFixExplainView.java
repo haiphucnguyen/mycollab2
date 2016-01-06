@@ -104,7 +104,6 @@ class WontFixExplainView extends AbstractMobilePageView {
                 }
             }
         });
-        wonFixBtn.setStyleName("save-btn");
         this.setRightComponent(wonFixBtn);
         this.setContent(this.editForm);
     }
@@ -112,10 +111,6 @@ class WontFixExplainView extends AbstractMobilePageView {
     private static class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
         private static final long serialVersionUID = 1L;
         private TextArea commentArea;
-
-        public EditForm() {
-            this.addStyleName("editview-layout");
-        }
 
         @Override
         public void setBean(final BugWithBLOBs newDataSource) {

@@ -1,21 +1,20 @@
 @mixin project-dashboard {
-	/* Project Dashboard */
-    .project-dashboard {
-    	background-color: rgb(255, 255, 255);
-    	
-	    .project-info-layout {
-		    padding: 1.2rem 0rem;
-	    	.project-icon {
-	    		font-size: 4rem;
-				line-height: 5rem;
-				padding: 1rem;
-	    	}
-	    	.project-name {
-				font-weight: bold;
-				font-size: 1.4rem;
-				padding-top: 0.6rem;
-				text-align: center;
-			}
-	    }
+  .project-dashboard {
+    background-color: rgb(255, 255, 255);
+    .project-info-layout {
+      padding: 1.2rem 0rem;
+      border-bottom: 1px solid $my-separator-color;
+	  .project-icon {
+        font-size: 4rem;
+        line-height: 5rem;
+        padding: 1rem;
+      }
+      .project-name {
+        font-weight: bold;
+        font-size: 1.4rem;
+        padding-top: 0.6rem;
+        text-align: center;
+      }
     }
+  }
 }

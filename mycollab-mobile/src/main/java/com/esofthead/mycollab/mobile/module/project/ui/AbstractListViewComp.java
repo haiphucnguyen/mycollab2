@@ -20,7 +20,6 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.IListView;
-import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.ui.Component;
 
 /**
@@ -45,7 +44,6 @@ public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends 
     @Override
     public void onBecomingVisible() {
         super.onBecomingVisible();
-        onVisible();
         if (getPagedBeanTable().getSearchRequest() != null) {
             getPagedBeanTable().refresh();
         }
@@ -61,16 +59,13 @@ public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends 
         }
     }
 
-    protected void onVisible() {
-    }
-
     abstract protected AbstractPagedBeanList<S, B> createBeanList();
 
     protected Component buildRightComponent() {
         return null;
     }
 
-    protected Toolbar buildToolbar() {
+    protected Component buildToolbar() {
         return null;
     }
 }

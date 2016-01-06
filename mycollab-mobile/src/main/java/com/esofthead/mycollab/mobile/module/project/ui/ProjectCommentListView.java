@@ -49,18 +49,24 @@ public class ProjectCommentListView extends AbstractMobilePageView implements Re
     private Integer numComments;
     private ProjectCommentInput commentBox;
 
-    public ProjectCommentListView(final String type, final Integer extraTypeId, final boolean isDisplayCommentInput) {
+    @Deprecated
+    public ProjectCommentListView(String type, Integer extraTypeId, boolean isDisplayCommentInput) {
+        this(type, null, extraTypeId, isDisplayCommentInput);
+    }
+
+    public ProjectCommentListView(String type, String typeId, Integer extraTypeId, boolean isDisplayCommentInput) {
         this.addStyleName("comment-list");
-        this.setCaption(AppContext.getMessage(GenericI18Enum.TAB_COMMENT));
         this.type = type;
-        if (isDisplayCommentInput) {
-            commentBox = new ProjectCommentInput(this, type, extraTypeId, false);
-            this.setToolbar(commentBox);
-        }
+        this.typeId = typeId;
 
         commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
         commentList.setDisplayEmptyListText(false);
         this.setContent(commentList);
+        if (isDisplayCommentInput) {
+            commentBox = new ProjectCommentInput(this, type, extraTypeId);
+            this.setToolbar(commentBox);
+        }
+        displayCommentList();
     }
 
     private void displayCommentList() {
@@ -72,12 +78,14 @@ public class ProjectCommentListView extends AbstractMobilePageView implements Re
         searchCriteria.setType(new StringSearchField(type));
         searchCriteria.setTypeid(new StringSearchField(typeId));
         numComments = commentList.setSearchCriteria(searchCriteria);
+        this.setCaption(AppContext.getMessage(GenericI18Enum.TAB_COMMENT, numComments));
     }
 
     public int getNumComments() {
         return numComments;
     }
 
+    @Deprecated
     public void loadComments(final String typeId) {
         this.typeId = typeId;
         if (commentBox != null) {

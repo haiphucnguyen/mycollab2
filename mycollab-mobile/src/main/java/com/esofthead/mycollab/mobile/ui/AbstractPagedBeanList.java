@@ -60,10 +60,7 @@ public abstract class AbstractPagedBeanList<S extends SearchCriteria, B> extends
         this.rowDisplayHandler = rowDisplayHandler;
 
         listContainer = new CssLayout();
-        listContainer.setStyleName("beanlist-content");
-        listContainer.setWidth("100%");
         this.addComponent(listContainer);
-        this.setStyleName("data-list-view");
     }
 
     public AbstractPagedBeanList(RowDisplayHandler<B> rowDisplayHandler, int defaultNumberSearchItems) {

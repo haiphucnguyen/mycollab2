@@ -19,137 +19,116 @@
 @import "components/project/timelog.scss";
 
 @mixin mycollab-mobile {
-    /* Include all the styles from the reindeer theme */
-    
-    @include vaadin-components;
-    
-    /* Include common components */
-    @include attachment-preview;
-    @include attachments-display;
-    @include attachment-upload;
-    
-    * {
-	   -webkit-tap-highlight-color: rgba(0,0,0,0);
-	   -webkit-tap-highlight-color: transparent; /* For some Androids */
-	}
+  /* Include all the styles from the reindeer theme */
+  
+  @include vaadin-components;
+  
+  /* Include common components */
+  @include attachment-preview;
+  @include attachments-display;
+  @include attachment-upload;
+  
+  * {
+     -webkit-tap-highlight-color: rgba(0,0,0,0);
+     -webkit-tap-highlight-color: transparent; /* For some Androids */
+  }
 
-	.v-touchkit-navview-wrapper {
-	  background-color: white;
-	}
+  .v-touchkit-navview-wrapper {
+    background-color: white;
+  }
 
-	.v-touchkit-navbar, .v-touchkit-tabbar-toolbar .v-touchkit-toolbar, .v-touchkit-navview-toolbar, .v-mobilecomponent .v-touchkit-navpanel {
-	  box-shadow: none !important;
-	}
-    
-    .v-table-body {
-    	border: none;
+  .v-touchkit-navbar, .v-touchkit-tabbar-toolbar .v-touchkit-toolbar, .v-touchkit-navview-toolbar, .v-mobilecomponent .v-touchkit-navpanel {
+    box-shadow: none !important;
+  }
+  
+  .v-table-body {
+    border: none;
+  }
+
+  .content-wrapper {
+    margin: 0 auto;
+    display: block;
+    &.v-margin-top {
+      padding-top: 2.5rem;
     }
 
-    .content-wrapper {
-        margin: 0 auto;
+    .intro-text {
+      text-align: center;
+    }
+
+    .welcometext-wrapper {
+      background: url("icons/welcometext_bg.png") repeat-x left center rgb(245, 245, 245);
+
+      .v-label {
         display: block;
-        &.v-margin-top {
-        	padding-top: 2.5rem;
-        }
-
-        .intro-text {
-            text-align: center;
-        }
-
-        .welcometext-wrapper {
-            background: url("icons/welcometext_bg.png") repeat-x left center rgb(245, 245, 245);
-
-            .v-label {
-                display: block;
-                margin: 0 auto;
-                text-align: center;
-                background-color: rgb(245, 245, 245);
-                font-size: 1.6rem;
-                color: #2692db;
-                border: none;
-            }
-        }
+        margin: 0 auto;
+        text-align: center;
+        background-color: rgb(245, 245, 245);
+        font-size: 1.6rem;
+        color: #2692db;
+        border: none;
+      }
     }
+  }
 
-    .login-view {
-        overflow: auto;
-
-        .v-textfield {
-            color: rgb(34, 34, 34);
-        }
-
-        .v-textfield.password-input {
-
-        }
-    }
-	
-	/* Read View Layout */
-	.readview-layout, .editview-layout {
-		background-color: white;
-		
-		.info-hdr {
-			font-size: 1.2rem;
-			color: #6B6A70;
-			padding: 2.0rem 0rem 0.9rem 1rem;
-			border-bottom: .1rem solid $light-gray-border;
-			.v-label {
-				font-size: 1.2rem;
-			}
-		}
-	}
-	
-	/* Edit View Layout */
-	
-	.attachment-panel {
-		.v-label.attachment-name {
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-	}	
-	
-	/* Note List */
-	.noteList {
-		background-color: rgb(255, 255, 255);
-	}
-	
-	/* Message Row */
-	.message {
-		border-bottom: 1px solid rgb(203, 203, 203);
-		
-		.message-header {
-			.user-name {
-				color: rgb(227, 146, 65);
-			}
-			.time-post {
-				color: rgb(191, 191, 191);
-			}
-		}
-		
-		.message-body {
-			color: rgb(149, 149, 149);
-		}
-	}
-    
-    .v-touchkit-navbutton {
-        line-height: normal;
-        
-        &:after {
-	        content: "";
-	    }
-    }
+  .login-view {
+    overflow: auto;
 
     .v-textfield {
-        border-radius: 4px;
-        border: 1px solid #c7c7c7;
-        outline: none;
+      color: rgb(34, 34, 34);
+    }
+
+    .v-textfield.password-input {
+
+    }
+  }
+  
+  /* Edit View Layout */
+  
+  .attachment-panel {
+    .v-label.attachment-name {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }  
+  
+  /* Note List */
+  .noteList {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  /* Message Row */
+  .message {
+    border-bottom: 1px solid rgb(203, 203, 203);
+    
+    .message-header {
+      .user-name {
+        color: rgb(227, 146, 65);
+      }
+      .time-post {
+        color: rgb(191, 191, 191);
+      }
     }
     
-    @include project-dashboard;
-    @include project-activities;
-    @include project-bug;
-    @include project-message;
-    @include project-bug;
-    @include project-member;
-    @include project-milestone;
-    @include project-timelog;
+    .message-body {
+      color: rgb(149, 149, 149);
+    }
+  }
+  
+  .v-touchkit-navbutton {
+    line-height: normal;
+    
+    &:after {
+      content: "";
+    }
+  }
+  
+  @include project-dashboard;
+  @include project-activities;
+  @include project-bug;
+  @include project-message;
+  @include project-bug;
+  @include project-member;
+  @include project-milestone;
+  @include project-timelog;
 }

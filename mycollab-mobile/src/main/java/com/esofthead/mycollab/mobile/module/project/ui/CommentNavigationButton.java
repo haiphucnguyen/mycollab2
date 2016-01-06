@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
@@ -32,9 +33,18 @@ public class CommentNavigationButton extends NavigationButton {
     private String type;
     private String typeId;
 
-    public CommentNavigationButton(String type) {
+    public CommentNavigationButton(String typeVal) {
         super(AppContext.getMessage(GenericI18Enum.TAB_COMMENT, 0));
-        this.type = type;
+        this.type = typeVal;
+        this.addClickListener(new NavigationButtonClickListener() {
+            @Override
+            public void buttonClick(NavigationButtonClickEvent event) {
+                if (typeId != null) {
+                    getNavigationManager().navigateTo(new ProjectCommentListView(type, typeId,
+                            CurrentProjectVariables.getProjectId(), true));
+                }
+            }
+        });
     }
 
     public void displayTotalComments(String typeId) {

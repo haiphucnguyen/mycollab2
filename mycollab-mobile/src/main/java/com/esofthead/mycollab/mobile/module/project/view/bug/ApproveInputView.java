@@ -96,7 +96,6 @@ class ApproveInputView extends AbstractMobilePageView {
                 }
             }
         });
-        approveBtn.setStyleName("save-btn");
         this.setRightComponent(approveBtn);
 
         this.setContent(this.editForm);
@@ -105,10 +104,6 @@ class ApproveInputView extends AbstractMobilePageView {
     private static class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
         private static final long serialVersionUID = 1L;
         private TextArea commentArea;
-
-        public EditForm() {
-            this.addStyleName("editview-layout");
-        }
 
         @Override
         public void setBean(final BugWithBLOBs newDataSource) {

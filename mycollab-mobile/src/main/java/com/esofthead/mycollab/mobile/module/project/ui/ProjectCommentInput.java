@@ -56,7 +56,7 @@ public class ProjectCommentInput extends VerticalLayout {
     private TextArea commentInput;
 
     private String type;
-    private String typeid;
+    private String typeId;
     private Integer extraTypeId;
     private ReloadableComponent component;
 
@@ -70,8 +70,7 @@ public class ProjectCommentInput extends VerticalLayout {
 
     private CssLayout statusWrapper;
 
-    public ProjectCommentInput(final ReloadableComponent component, final String typeVal,
-                               final Integer extraTypeIdVal, final boolean cancelButtonEnable) {
+    public ProjectCommentInput(ReloadableComponent component, String typeVal, Integer extraTypeIdVal) {
         resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 
         type = typeVal;
@@ -101,29 +100,23 @@ public class ProjectCommentInput extends VerticalLayout {
         commentInput.setInputPrompt(AppContext.getMessage(GenericI18Enum.M_NOTE_INPUT_PROMPT));
         commentInput.setSizeFull();
 
-        Button postBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_SEND));
-        postBtn.setStyleName("submit-btn");
-        postBtn.setWidthUndefined();
-        postBtn.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = 6687918902751556313L;
-
+        Button postBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_SEND), new Button.ClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent arg0) {
+            public void buttonClick(ClickEvent clickEvent) {
                 final CommentWithBLOBs comment = new CommentWithBLOBs();
                 comment.setComment(commentInput.getValue());
                 comment.setCreatedtime(new GregorianCalendar().getTime());
                 comment.setCreateduser(AppContext.getUsername());
                 comment.setSaccountid(AppContext.getAccountId());
                 comment.setType(type.toString());
-                comment.setTypeid("" + typeid);
+                comment.setTypeid("" + typeId);
                 comment.setExtratypeid(extraTypeId);
 
                 final CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
                 int commentId = commentService.saveWithSession(comment, AppContext.getUsername());
 
                 String attachmentPath = AttachmentUtils.getCommentAttachmentPath(type, AppContext.getAccountId(),
-                        CurrentProjectVariables.getProjectId(), typeid, commentId);
+                        CurrentProjectVariables.getProjectId(), typeId, commentId);
                 if (!"".equals(attachmentPath)) {
                     saveContentsToRepo(attachmentPath);
                 }
@@ -134,8 +127,9 @@ public class ProjectCommentInput extends VerticalLayout {
                 statusWrapper.removeAllComponents();
                 component.reload();
             }
-
         });
+        postBtn.setStyleName("submit-btn");
+        postBtn.setWidthUndefined();
         inputWrapper.with(commentInput, postBtn).expand(commentInput);
         this.addComponent(inputWrapper);
     }
@@ -324,7 +318,7 @@ public class ProjectCommentInput extends VerticalLayout {
     }
 
     public void setTypeAndId(final String typeid) {
-        this.typeid = typeid;
+        this.typeId = typeid;
     }
 
     public void receiveFile(File file, String fileName, String mimeType, long length) {

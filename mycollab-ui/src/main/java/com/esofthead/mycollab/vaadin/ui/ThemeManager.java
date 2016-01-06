@@ -43,12 +43,15 @@ public class ThemeManager {
         }
 
         StringBuilder extraStyles = new StringBuilder();
+
+        extraStyles.append(".v-touchkit-navbar-caption { width: " + (UIUtils.getBrowserWidth() - 144) + "px !important; }");
         if (accountTheme.getTopmenubg() != null) {
             extraStyles.append(".v-touchkit-navbar { background-color: #" + accountTheme.getTopmenubg() + "; }");
         }
 
         if (accountTheme.getTopmenutext() != null) {
             extraStyles.append(".v-touchkit-navbar { color: #" + accountTheme.getTopmenutext() + "; }");
+            extraStyles.append(".v-touchkit-navbar .v-button { color: #" + accountTheme.getTopmenutext() + "; }");
             extraStyles.append(".v-touchkit-navbar .v-touchkit-navbutton { color: #" + accountTheme.getTopmenutext() + "; }");
             extraStyles.append(".v-touchkit-navbutton:after { color: #" + accountTheme.getTopmenutext() + "; }");
             extraStyles.append(".v-touchkit-navbar .v-navbar-quickmenu-button { color: #" + accountTheme.getTopmenutext() + "; }");
@@ -78,6 +81,9 @@ public class ThemeManager {
                     accountTheme.getActionbtn() + "; }");
 
             extraStyles.append(".section .v-touchkit-navbutton:after { color: #" +
+                    accountTheme.getActionbtn() + "; }");
+
+            extraStyles.append(".v-touchkit-verticalcomponentgroup .v-touchkit-navbutton:after { color: #" +
                     accountTheme.getActionbtn() + "; }");
         }
 

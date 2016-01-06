@@ -31,13 +31,11 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
-import com.vaadin.addon.touchkit.ui.NavigationView;
-import com.vaadin.addon.touchkit.ui.Popover;
 import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -109,8 +107,9 @@ public class MilestoneListViewImpl extends AbstractListViewComp<MilestoneSearchC
     }
 
     @Override
-    protected Toolbar buildToolbar() {
-        Toolbar toolbar = new Toolbar();
+    protected Component buildToolbar() {
+        HorizontalLayout toolbar = new HorizontalLayout();
+        toolbar.setHeight("50px");
         closedMilestoneBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

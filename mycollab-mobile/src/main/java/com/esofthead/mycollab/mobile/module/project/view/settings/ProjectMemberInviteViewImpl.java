@@ -76,12 +76,9 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
                 displayRolePermission(roleId);
             }
         });
-        roleComboBox.setCaption(AppContext
-                .getMessage(ProjectMemberI18nEnum.FORM_ROLE));
+        roleComboBox.setCaption(AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE));
 
         final VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setStyleName("main-layout");
-        mainLayout.addStyleName("editview-layout");
         mainLayout.setWidth("100%");
 
         inviteFormLayout = new VerticalComponentGroup();
@@ -122,7 +119,6 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
 
             }
         });
-        inviteBtn.addStyleName("save-btn");
         this.setRightComponent(inviteBtn);
         this.setContent(mainLayout);
     }

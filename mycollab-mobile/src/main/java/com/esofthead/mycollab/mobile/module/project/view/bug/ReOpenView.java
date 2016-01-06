@@ -98,7 +98,6 @@ class ReOpenView extends AbstractMobilePageView {
 
             }
         });
-        reOpenBtn.setStyleName("save-btn");
         this.setRightComponent(reOpenBtn);
 
         this.setContent(contentLayout);
@@ -107,10 +106,6 @@ class ReOpenView extends AbstractMobilePageView {
     private static class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
         private static final long serialVersionUID = 1L;
         private TextArea commentArea;
-
-        public EditForm() {
-            this.addStyleName("editview-layout");
-        }
 
         @Override
         public void setBean(final BugWithBLOBs newDataSource) {

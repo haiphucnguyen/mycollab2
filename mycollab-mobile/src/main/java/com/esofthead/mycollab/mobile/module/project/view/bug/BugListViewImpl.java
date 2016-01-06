@@ -25,8 +25,10 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -47,13 +49,16 @@ public class BugListViewImpl extends AbstractListViewComp<BugSearchCriteria, Sim
 
     @Override
     protected Component buildRightComponent() {
-        Button addBug = new Button("", new Button.ClickListener() {
+        NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
+        menu.setButtonCaption("...");
+        MVerticalLayout content = new MVerticalLayout();
+        content.with(new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));
             }
-        });
-        addBug.setStyleName("add-btn");
-        return addBug;
+        }));
+        menu.setContent(content);
+        return menu;
     }
 }

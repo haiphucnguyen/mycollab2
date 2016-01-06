@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.mobile.mvp;
 
-import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.security.PermissionChecker;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -56,7 +55,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     }
 
     public void go(ScreenData<?> data) {
-        NavigationManager manager = (NavigationManager) (((MobileApplication) UI.getCurrent()).getContent());
+        NavigationManager manager = (NavigationManager) ((UI.getCurrent()).getContent());
         go(manager, data);
     }
 

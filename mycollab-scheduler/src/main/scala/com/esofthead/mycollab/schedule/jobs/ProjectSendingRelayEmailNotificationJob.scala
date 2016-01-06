@@ -60,12 +60,13 @@ class ProjectSendingRelayEmailNotificationJob extends GenericQuartzJobBean {
               case MonitorTypeConstants.ADD_COMMENT_ACTION => emailNotificationAction.sendNotificationForCommentAction(notification)
             }
           }
+          relayNotificationMapper.deleteByPrimaryKey(notification.getId)
         }
       }
       catch {
         case ex: Exception => LOG.error("Error while sending scheduler command", ex)
       } finally {
-        relayNotificationMapper.deleteByPrimaryKey(notification.getId)
+//        relayNotificationMapper.deleteByPrimaryKey(notification.getId)
       }
     }
   }

@@ -98,7 +98,7 @@ public class MilestoneReadPresenter extends AbstractMobilePresenter<MilestoneRea
                 SimpleMilestone milestone = milestoneService.findById(
                         (Integer) data.getParams(), AppContext.getAccountId());
                 if (milestone != null) {
-                    this.view.previewItem(milestone);
+                    view.previewItem(milestone);
                     super.onGo(container, data);
 
                     AppContext.addFragment("project/milestone/preview/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId(), milestone.getId()),

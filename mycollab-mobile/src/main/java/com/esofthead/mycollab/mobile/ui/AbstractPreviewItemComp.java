@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.mobile.ui;
 
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
@@ -27,22 +28,21 @@ import com.vaadin.ui.CssLayout;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView {
+public abstract class AbstractPreviewItemComp<B> extends AbstractMobilePageView implements IPreviewView<B> {
     private static final long serialVersionUID = 1L;
 
     protected B beanItem;
     protected AdvancedPreviewBeanForm<B> previewForm;
     private NavigationBarQuickMenu editBtn;
+    private CssLayout content;
 
     public AbstractPreviewItemComp() {
-        CssLayout content = new CssLayout();
+        content = new CssLayout();
         previewForm = initPreviewForm();
-        previewForm.setStyleName("readview-layout");
         content.addComponent(previewForm);
 
         editBtn = new NavigationBarQuickMenu();
         editBtn.setButtonCaption("...");
-        editBtn.setStyleName("edit-btn");
         editBtn.setContent(createButtonControls());
         this.setRightComponent(editBtn);
 

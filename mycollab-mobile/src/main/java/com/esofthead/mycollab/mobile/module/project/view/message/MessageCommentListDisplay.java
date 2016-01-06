@@ -44,7 +44,7 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
 
     private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
     private String type;
-    private String typeid;
+    private String typeId;
     private Integer numComments;
     private ProjectCommentInput commentBox;
 
@@ -53,7 +53,7 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
         this.setMargin(new MarginInfo(true, false, false, false));
         this.type = type;
         if (isDisplayCommentInput) {
-            commentBox = new ProjectCommentInput(this, type, extraTypeId, false);
+            commentBox = new ProjectCommentInput(this, type, extraTypeId);
         }
 
         commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
@@ -64,18 +64,18 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
     }
 
     private void displayCommentList() {
-        if (type == null || typeid == null) {
+        if (type == null || typeId == null) {
             return;
         }
 
         final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
         searchCriteria.setType(new StringSearchField(type));
-        searchCriteria.setTypeid(new StringSearchField(typeid));
+        searchCriteria.setTypeid(new StringSearchField(typeId));
         numComments = commentList.setSearchCriteria(searchCriteria);
     }
 
     public void loadComments(final String typeId) {
-        this.typeid = typeId;
+        this.typeId = typeId;
         if (commentBox != null) {
             commentBox.setTypeAndId(typeId);
         }
