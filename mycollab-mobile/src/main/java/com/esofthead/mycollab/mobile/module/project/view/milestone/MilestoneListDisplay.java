@@ -40,6 +40,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import org.vaadin.viritin.layouts.MCssLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -59,12 +60,12 @@ public class MilestoneListDisplay extends DefaultPagedBeanList<MilestoneService,
         public Component generateRow(final SimpleMilestone milestone, int rowIndex) {
             MVerticalLayout milestoneInfoLayout = new MVerticalLayout().withSpacing(false).withFullWidth();
 
-            Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE).getHtml() + " ");
             A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), milestone.getId())).appendChild(new Span().appendText(milestone.getName()));
-            milestoneDiv.appendChild(milestoneLink);
-            milestoneInfoLayout.addComponent(new MCssLayout(new ELabel(milestoneDiv.write(), ContentMode.HTML)
-                    .withStyleName(UIConstants.TRUNCATE).withWidth("100%")));
+            MCssLayout milestoneWrap = new MCssLayout(new ELabel(milestoneLink.write(), ContentMode.HTML));
+            milestoneInfoLayout.addComponent(new MHorizontalLayout(new ELabel(ProjectAssetsManager.getAsset
+                    (ProjectTypeConstants.MILESTONE).getHtml(), ContentMode.HTML).withWidthUndefined(), milestoneWrap)
+                    .expand(milestoneWrap).withFullWidth());
 
             CssLayout metaLayout = new CssLayout();
             milestoneInfoLayout.addComponent(metaLayout);

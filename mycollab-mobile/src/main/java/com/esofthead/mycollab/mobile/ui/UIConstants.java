@@ -32,6 +32,8 @@ public class UIConstants {
     public static final String LBL_LOW = "priority-lbl low-lbl";
     public static final String STATUS_DISABLED = "disabled";
 
+    public static final String LABEL_H3 = "h3";
+
     public static final String META_INFO = "meta-info";
     public static final String TRUNCATE = "truncate";
 

@@ -71,7 +71,6 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
 
         HorizontalLayout metadataRow = new HorizontalLayout();
         metadataRow.setWidth("100%");
-        metadataRow.setStyleName("metadata-row");
         Label userNameLbl = new Label(message.getFullPostedUserName());
         userNameLbl.setStyleName("user-name");
         metadataRow.addComponent(userNameLbl);

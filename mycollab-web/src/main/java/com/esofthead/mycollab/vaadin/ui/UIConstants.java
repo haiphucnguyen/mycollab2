@@ -22,7 +22,6 @@ package com.esofthead.mycollab.vaadin.ui;
  */
 public class UIConstants {
     public static final String BORDER_BOX_2 = "border-box2";
-    public static final String DEFAULT_CAPTION_FORM_WIDTH = "120px";
     public static final String DEFAULT_CONTROL_WIDTH = "250px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_WIDTH = "180px";
     public static final String DEFAULT_ATTACHMENT_THUMBNAIL_HEIGHT = "180px";

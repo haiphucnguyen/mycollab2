@@ -49,8 +49,8 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis;
-    a span {
-      width:100%;
+    a  {
+      display:block;
       white-space: nowrap !important;
       overflow: hidden !important;
       text-overflow: ellipsis;
@@ -79,6 +79,12 @@
   .v-navbar-quickmenu-content {
     width: 100%;
     background-color: #252c34;
+  }
+
+  .navigation-button-wrap {
+    .v-icon {
+      padding-right: 10px;
+    }
   }
     
   .attachment-panel {

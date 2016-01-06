@@ -104,7 +104,6 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
 
             HorizontalLayout metadataRow = new HorizontalLayout();
             metadataRow.setWidth("100%");
-            metadataRow.setStyleName("metadata-row");
             Label userNameLbl = new Label(comment.getOwnerFullName());
             userNameLbl.setStyleName("user-name");
             metadataRow.addComponent(userNameLbl);

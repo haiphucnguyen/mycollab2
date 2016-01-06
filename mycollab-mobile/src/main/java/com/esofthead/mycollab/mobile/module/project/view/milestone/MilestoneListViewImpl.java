@@ -35,7 +35,6 @@ import com.vaadin.addon.touchkit.ui.Toolbar;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -47,10 +46,6 @@ public class MilestoneListViewImpl extends AbstractListViewComp<MilestoneSearchC
     private static final long serialVersionUID = 2799191640785637556L;
 
     private Button closedMilestoneBtn, inProgressMilestoneBtn, futureMilestoneBtn;
-
-    public MilestoneListViewImpl() {
-        this.addStyleName("milestones-list-view");
-    }
 
     @Override
     protected AbstractPagedBeanList<MilestoneSearchCriteria, SimpleMilestone> createBeanList() {
@@ -108,8 +103,7 @@ public class MilestoneListViewImpl extends AbstractListViewComp<MilestoneSearchC
 
     @Override
     protected Component buildToolbar() {
-        HorizontalLayout toolbar = new HorizontalLayout();
-        toolbar.setHeight("50px");
+        Toolbar toolbar = new Toolbar();
         closedMilestoneBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {

@@ -21,19 +21,21 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.*;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.*;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -49,11 +51,45 @@ public class ProjectDashboardViewImpl extends AbstractMobilePageView implements 
     public ProjectDashboardViewImpl() {
         super();
         this.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_DASHBOARD));
-        this.setRightComponent(new Label("AAAAAAAAAAAAAA"));
+        this.setRightComponent(buildRightComponent());
         mainLayout = new CssLayout();
         mainLayout.setSizeFull();
         mainLayout.setStyleName("project-dashboard");
         this.setContent(mainLayout);
+    }
+
+    private Component buildRightComponent() {
+        NavigationBarQuickMenu menu = new NavigationBarQuickMenu();
+        menu.setButtonCaption("...");
+        MVerticalLayout content = new MVerticalLayout();
+        content.with(new Button(AppContext.getMessage(MessageI18nEnum.BUTTON_NEW_MESSAGE), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new MessageEvent.GotoAdd(this, null));
+            }
+        }));
+        content.with(new Button(AppContext.getMessage(MilestoneI18nEnum.BUTTON_NEW_PHASE), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new MilestoneEvent.GotoAdd(this, null));
+            }
+        }));
+
+        content.with(new Button(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASK), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new TaskEvent.GotoAdd(this, null));
+            }
+        }));
+
+        content.with(new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new BugEvent.GotoAdd(this, null));
+            }
+        }));
+        menu.setContent(content);
+        return menu;
     }
 
     @Override
@@ -83,48 +119,56 @@ public class ProjectDashboardViewImpl extends AbstractMobilePageView implements 
         NavigationButton messageBtn = new NavigationButton(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MESSAGE));
         messageBtn.addClickListener(new NavigationButton.NavigationButtonClickListener() {
             @Override
-            public void buttonClick(NavigationButton.NavigationButtonClickEvent navigationButtonClickEvent) {
+            public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
                 EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null));
             }
         });
-        btnGroup.addComponent(messageBtn);
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE), messageBtn));
 
         NavigationButton milestoneBtn = new NavigationButton(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MILESTONE));
         milestoneBtn.addClickListener(new NavigationButton.NavigationButtonClickListener() {
             @Override
-            public void buttonClick(NavigationButton.NavigationButtonClickEvent navigationButtonClickEvent) {
+            public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null));
             }
         });
-        btnGroup.addComponent(milestoneBtn);
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE), milestoneBtn));
 
         NavigationButton taskBtn = new NavigationButton(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TASK));
         taskBtn.addClickListener(new NavigationButton.NavigationButtonClickListener() {
             @Override
-            public void buttonClick(NavigationButton.NavigationButtonClickEvent navigationButtonClickEvent) {
+            public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoList(this, null));
             }
         });
-        btnGroup.addComponent(taskBtn);
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK), taskBtn));
 
         NavigationButton bugBtn = new NavigationButton(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_BUG));
         bugBtn.addClickListener(new NavigationButton.NavigationButtonClickListener() {
             @Override
-            public void buttonClick(NavigationButton.NavigationButtonClickEvent navigationButtonClickEvent) {
+            public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
                 EventBusFactory.getInstance().post(new BugEvent.GotoList(this, null));
             }
         });
-        btnGroup.addComponent(bugBtn);
+        btnGroup.addComponent(new NavigationButtonWrap(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG), bugBtn));
 
         NavigationButton userBtn = new NavigationButton(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_USERS));
         userBtn.addClickListener(new NavigationButton.NavigationButtonClickListener() {
             @Override
-            public void buttonClick(NavigationButton.NavigationButtonClickEvent navigationButtonClickEvent) {
+            public void buttonClick(NavigationButton.NavigationButtonClickEvent event) {
                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
             }
         });
-        btnGroup.addComponent(userBtn);
+        btnGroup.addComponent(new NavigationButtonWrap(FontAwesome.USERS, userBtn));
 
         mainLayout.addComponent(btnGroup);
+    }
+
+    private static class NavigationButtonWrap extends MHorizontalLayout {
+        NavigationButtonWrap(FontAwesome icon, NavigationButton button) {
+            this.setStyleName("navigation-button-wrap");
+            ELabel iconLbl = new ELabel(icon.getHtml(), ContentMode.HTML).withWidthUndefined();
+            with(iconLbl, button).withAlign(iconLbl, Alignment.MIDDLE_LEFT).expand(button);
+        }
     }
 }

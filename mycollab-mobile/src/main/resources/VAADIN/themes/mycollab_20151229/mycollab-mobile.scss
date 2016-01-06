@@ -33,12 +33,28 @@
      -webkit-tap-highlight-color: transparent; /* For some Androids */
   }
 
+  body {
+    background-color: white;
+  }
+
   .v-touchkit-navview-wrapper {
     background-color: white;
   }
 
   .v-touchkit-navbar, .v-touchkit-tabbar-toolbar .v-touchkit-toolbar, .v-touchkit-navview-toolbar, .v-mobilecomponent .v-touchkit-navpanel {
     box-shadow: none !important;
+  }
+
+  .v-touchkit-verticalcomponentgroup {
+    border-top: 1px solid $my-separator-color !important;
+    border-bottom: 1px solid $my-separator-color !important;
+    box-shadow: none !important;
+  }
+
+  .v-touchkit-componentgroup-row:before {
+    border-top: 1px solid $my-separator-color !important;
+    left: 0px !important;
+    right: 0px !important;
   }
   
   .v-table-body {
@@ -116,8 +132,6 @@
   }
   
   .v-touchkit-navbutton {
-    line-height: normal;
-    
     &:after {
       content: "";
     }

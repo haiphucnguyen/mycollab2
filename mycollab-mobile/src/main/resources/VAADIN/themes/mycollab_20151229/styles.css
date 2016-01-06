@@ -43,8 +43,8 @@ a {
 	text-overflow: ellipsis;
 }
 
-.truncate a span {
-	width: 100%;
+.truncate a {
+	display: block;
 	white-space: nowrap !important;
 	overflow: hidden !important;
 	text-overflow: ellipsis;
@@ -88,6 +88,10 @@ a {
 .v-navbar-quickmenu-content {
 	width: 100%;
 	background-color: #252c34;
+}
+
+.navigation-button-wrap .v-icon {
+	padding-right: 10px;
 }
 
 .attachment-panel {
@@ -196,12 +200,28 @@ a {
 	-webkit-tap-highlight-color: transparent;
 }
 
+body {
+	background-color: white;
+}
+
 .v-touchkit-navview-wrapper {
 	background-color: white;
 }
 
 .v-touchkit-navbar, .v-touchkit-tabbar-toolbar .v-touchkit-toolbar, .v-touchkit-navview-toolbar, .v-mobilecomponent .v-touchkit-navpanel {
 	box-shadow: none !important;
+}
+
+.v-touchkit-verticalcomponentgroup {
+	border-top: 1px solid #e5e5e5 !important;
+	border-bottom: 1px solid #e5e5e5 !important;
+	box-shadow: none !important;
+}
+
+.v-touchkit-componentgroup-row:before {
+	border-top: 1px solid #e5e5e5 !important;
+	left: 0px !important;
+	right: 0px !important;
 }
 
 .v-table-body {
@@ -268,10 +288,6 @@ a {
 	color: #959595;
 }
 
-.v-touchkit-navbutton {
-	line-height: normal;
-}
-
 .v-touchkit-navbutton:after {
 	content: "";
 }
@@ -281,8 +297,7 @@ a {
 }
 
 .project-dashboard .project-info-layout {
-	padding: 1.2rem 0rem;
-	border-bottom: 1px solid #e5e5e5;
+	padding-bottom: 1.2rem;
 }
 
 .project-dashboard .project-info-layout .project-icon {
@@ -347,21 +362,10 @@ a {
 
 .message-list-view .message-block, .message-read-view .message-block {
 	padding: 1.2rem 0.8rem 0rem 0.8rem;
-	border-bottom: 1px solid #cbcbcb;
-	background-color: white;
 }
 
 .message-list-view .message-block .user-avatar, .message-read-view .message-block .user-avatar {
 	padding-right: 0.8rem;
-}
-
-.message-list-view .message-block .user-name, .message-read-view .message-block .user-name {
-	color: #f59330;
-}
-
-.message-list-view .message-block .time-post, .message-read-view .message-block .time-post {
-	font-size: 1.1rem;
-	color: #bfbfbf;
 }
 
 .message-list-view .message-block .title-row .comment-count, .message-read-view .message-block .title-row .comment-count {
@@ -374,11 +378,6 @@ a {
 
 .message-list-view .message-block .title-row.has-comment, .message-read-view .message-block .title-row.has-comment {
 	padding: 0.3rem 0rem;
-}
-
-.message-list-view .message-block .message-content, .message-read-view .message-block .message-content {
-	color: #959595;
-	padding-bottom: 0.8rem;
 }
 
 .message-list-view .message-block .attachment-row, .message-read-view .message-block .attachment-row {
@@ -441,37 +440,6 @@ a {
 
 .comment-list .comment-block .right-col .attachment-row {
 	padding: 0.3rem 0.5rem 0.4rem;
-}
-
-.message-add-view .content-layout {
-	background-color: #252c34;
-}
-
-.message-add-view .content-layout .addform-layout {
-	display: block;
-	margin: 0 auto;
-	background-color: white;
-}
-
-.message-add-view .content-layout .addform-layout .title-field {
-	border-color: #dddddd;
-	border-width: 0px 0px 1px 0px;
-	border-style: solid;
-	padding: 0.8rem;
-	font-size: 1.4rem;
-}
-
-.message-add-view .content-layout .addform-layout .title-field.v-textfield-prompt {
-	font-style: normal;
-}
-
-.message-add-view .content-layout .addform-layout .content-field {
-	font-size: 1.4rem;
-	padding: 0.8rem;
-}
-
-.message-add-view .content-layout .addform-layout .content-field.v-textarea-prompt {
-	font-style: normal;
 }
 
 .message-add-view .content-layout .bottom-row {

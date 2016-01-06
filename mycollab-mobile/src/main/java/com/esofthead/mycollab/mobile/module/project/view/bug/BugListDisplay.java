@@ -34,11 +34,10 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import org.vaadin.viritin.layouts.MCssLayout;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -60,9 +59,10 @@ public class BugListDisplay extends DefaultPagedBeanList<BugService, BugSearchCr
 
             A bugLink = new A(ProjectLinkBuilder.generateBugPreviewFullLink(bug.getBugkey(), bug.getProjectShortName
                     ())).appendText(String.format("[#%s] - %s", bug.getBugkey(), bug.getSummary()));
-            Div bugDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG).getHtml() + " " + "").appendChild(bugLink);
 
-            bugRowLayout.with(new MCssLayout(new ELabel(bugDiv.write(), ContentMode.HTML).withStyleName("truncate")));
+            CssLayout bugLbl = new CssLayout(new ELabel(bugLink.write(), ContentMode.HTML).withStyleName(UIConstants.TRUNCATE));
+            bugRowLayout.with(new MHorizontalLayout(new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG)
+                    .getHtml(), ContentMode.HTML).withWidthUndefined(), bugLbl).expand(bugLbl).withFullWidth());
 
             CssLayout metaInfoLayout = new CssLayout();
             bugRowLayout.with(metaInfoLayout);

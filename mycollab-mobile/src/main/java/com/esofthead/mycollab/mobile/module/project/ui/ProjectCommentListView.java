@@ -116,7 +116,6 @@ public class ProjectCommentListView extends AbstractMobilePageView implements Re
 
             HorizontalLayout metadataRow = new HorizontalLayout();
             metadataRow.setWidth("100%");
-            metadataRow.setStyleName("metadata-row");
             Label userNameLbl = new Label(comment.getOwnerFullName());
             userNameLbl.setStyleName("user-name");
             metadataRow.addComponent(userNameLbl);

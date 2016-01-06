@@ -17,23 +17,27 @@
 package com.esofthead.mycollab.mobile.module.project.view.message;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.module.project.events.MessageEvent;
 import com.esofthead.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.MobileAttachmentUtils;
+import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.vaadin.event.LayoutEvents;
+import com.hp.gagawa.java.elements.A;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
 
@@ -61,25 +65,25 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
             CssLayout rightCol = new CssLayout();
             rightCol.setWidth("100%");
 
-            HorizontalLayout metadataRow = new HorizontalLayout();
-            metadataRow.setWidth("100%");
-            metadataRow.setStyleName("metadata-row");
-            Label userNameLbl = new Label(message.getFullPostedUserName());
-            userNameLbl.setStyleName("user-name");
-            metadataRow.addComponent(userNameLbl);
-            metadataRow.setExpandRatio(userNameLbl, 1.0f);
+            MHorizontalLayout metadataRow = new MHorizontalLayout().withWidth("100%");
 
-            Label messageTimePost = new Label(AppContext.formatPrettyTime(message.getPosteddate()));
-            messageTimePost.setStyleName("time-post");
+            ELabel userNameLbl = new ELabel(message.getFullPostedUserName()).withStyleName(UIConstants.META_INFO);
+            userNameLbl.addStyleName(UIConstants.TRUNCATE);
+            CssLayout userNameLblWrap = new CssLayout(userNameLbl);
+
+            ELabel messageTimePost = new ELabel(AppContext.formatPrettyTime(message.getPosteddate())).withStyleName(UIConstants.META_INFO);
             messageTimePost.setWidthUndefined();
-            metadataRow.addComponent(messageTimePost);
+            metadataRow.with(userNameLblWrap, messageTimePost).withAlign(messageTimePost, Alignment.TOP_RIGHT).expand(userNameLblWrap);
+
             rightCol.addComponent(metadataRow);
 
             HorizontalLayout titleRow = new HorizontalLayout();
             titleRow.setWidth("100%");
             titleRow.setStyleName("title-row");
-            Label messageTitle = new Label(message.getTitle());
-            messageTitle.setStyleName("message-title");
+
+            A messageLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(CurrentProjectVariables
+                    .getProjectId(), message.getId())).appendText(message.getTitle());
+            ELabel messageTitle = new ELabel(messageLink.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_H3);
             titleRow.addComponent(messageTitle);
             titleRow.setExpandRatio(messageTitle, 1.0f);
 
@@ -94,7 +98,6 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
             rightCol.addComponent(titleRow);
 
             Label messageContent = new Label(StringUtils.trim(StringUtils.trimHtmlTags(message.getMessage()), 150, true));
-            messageContent.setStyleName("message-content");
             rightCol.addComponent(messageContent);
 
             ResourceService attachmentService = ApplicationContextUtil.getSpringBean(ResourceService.class);
@@ -114,14 +117,6 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
 
             mainLayout.addComponent(rightCol);
             mainLayout.setExpandRatio(rightCol, 1.0f);
-            mainLayout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
-                private static final long serialVersionUID = 4964058820993577962L;
-
-                @Override
-                public void layoutClick(LayoutEvents.LayoutClickEvent arg0) {
-                    EventBusFactory.getInstance().post(new MessageEvent.GotoRead(MessageRowDisplayHandler.this, message.getId()));
-                }
-            });
             mainLayout.setWidth("100%");
             mainLayout.addStyleName("list-item");
             return mainLayout;
