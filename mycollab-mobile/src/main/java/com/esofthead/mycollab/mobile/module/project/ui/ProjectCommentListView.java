@@ -24,7 +24,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.mobile.ui.MobileAttachmentUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -41,7 +40,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class ProjectCommentListDisplay extends AbstractMobilePageView implements ReloadableComponent {
+public class ProjectCommentListView extends AbstractMobilePageView implements ReloadableComponent {
     private static final long serialVersionUID = 1L;
 
     private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
@@ -50,22 +49,18 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
     private Integer numComments;
     private ProjectCommentInput commentBox;
 
-    public ProjectCommentListDisplay(final String type, final Integer extraTypeId,
-                                     final boolean isDisplayCommentInput, final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+    public ProjectCommentListView(final String type, final Integer extraTypeId, final boolean isDisplayCommentInput) {
         this.addStyleName("comment-list");
         this.setCaption(AppContext.getMessage(GenericI18Enum.TAB_COMMENT));
         this.type = type;
         if (isDisplayCommentInput) {
-            commentBox = new ProjectCommentInput(this, type, extraTypeId, false, emailHandler);
+            commentBox = new ProjectCommentInput(this, type, extraTypeId, false);
             this.setToolbar(commentBox);
         }
 
-        commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class),
-                CommentRowDisplayHandler.class);
+        commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
         commentList.setDisplayEmptyListText(false);
         this.setContent(commentList);
-
-        displayCommentList();
     }
 
     private void displayCommentList() {
@@ -74,7 +69,7 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
         }
 
         CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-        searchCriteria.setType(new StringSearchField(type.toString()));
+        searchCriteria.setType(new StringSearchField(type));
         searchCriteria.setTypeid(new StringSearchField(typeId));
         numComments = commentList.setSearchCriteria(searchCriteria);
     }
@@ -83,10 +78,10 @@ public class ProjectCommentListDisplay extends AbstractMobilePageView implements
         return numComments;
     }
 
-    public void loadComments(final String typeid) {
-        this.typeId = typeid;
+    public void loadComments(final String typeId) {
+        this.typeId = typeId;
         if (commentBox != null) {
-            commentBox.setTypeAndId(typeid);
+            commentBox.setTypeAndId(typeId);
         }
         displayCommentList();
     }

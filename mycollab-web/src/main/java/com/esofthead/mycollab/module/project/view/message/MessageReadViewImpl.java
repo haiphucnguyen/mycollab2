@@ -30,7 +30,6 @@ import com.esofthead.mycollab.module.project.ui.components.CommentDisplay;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAttachmentDisplayComponentFactory;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMemberBlock;
-import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -225,8 +224,7 @@ public class MessageReadViewImpl extends AbstractPageView implements MessageRead
         }
 
         protected CommentDisplay createCommentPanel() {
-            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.MESSAGE,
-                    CurrentProjectVariables.getProjectId(), MessageRelayEmailNotificationAction.class);
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.MESSAGE, CurrentProjectVariables.getProjectId());
             commentDisplay.loadComments("" + message.getId());
             return commentDisplay;
         }

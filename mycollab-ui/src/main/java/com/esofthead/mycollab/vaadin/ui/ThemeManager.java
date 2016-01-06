@@ -57,11 +57,15 @@ public class ThemeManager {
         if (accountTheme.getVtabsheetbg() != null) {
             extraStyles.append(".project-dashboard .project-info-layout { background-color: #"
                     + accountTheme.getVtabsheetbg() + "; }");
+
+            extraStyles.append(".section { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
             extraStyles.append(".project-dashboard .project-info-layout { color: #"
                     + accountTheme.getVtabsheettext() + "; }");
+
+            extraStyles.append(".section { color: #" + accountTheme.getVtabsheettext() + "; }");
         }
 
         /* Action Buttons */
@@ -71,6 +75,9 @@ public class ThemeManager {
                     + accountTheme.getActionbtn() + " !important; }");
 
             extraStyles.append(".v-button.v-button-action-btn, .v-button-action-btn:focus { background-color: #" +
+                    accountTheme.getActionbtn() + "; }");
+
+            extraStyles.append(".section .v-touchkit-navbutton:after { color: #" +
                     accountTheme.getActionbtn() + "; }");
         }
 

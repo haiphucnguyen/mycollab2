@@ -19,7 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view.bug;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayComp;
-import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListDisplay;
+import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentListView;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
@@ -39,7 +39,6 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -65,7 +64,7 @@ import java.util.List;
 public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implements BugReadView {
     private static final long serialVersionUID = 579279560838174387L;
 
-    private ProjectCommentListDisplay associateComments;
+    private ProjectCommentListView associateComments;
     private Button relatedComments;
     private VerticalLayout bugWorkFlowControl;
     private BugTimeLogComp bugTimeLogComp;
@@ -241,8 +240,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
     @Override
     protected void initRelatedComponents() {
-        associateComments = new ProjectCommentListDisplay(ProjectTypeConstants.BUG,
-                CurrentProjectVariables.getProjectId(), true, BugRelayEmailNotificationAction.class);
+        associateComments = new ProjectCommentListView(ProjectTypeConstants.BUG,
+                CurrentProjectVariables.getProjectId(), true);
     }
 
     @Override

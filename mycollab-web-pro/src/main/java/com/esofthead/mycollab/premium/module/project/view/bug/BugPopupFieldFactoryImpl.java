@@ -34,7 +34,6 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.premium.module.project.ui.components.WatchersMultiSelection;
-import com.esofthead.mycollab.schedule.email.project.BugRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -178,8 +177,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
         @Override
         protected void doShow() {
-            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId(),
-                    BugRelayEmailNotificationAction.class);
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.BUG, CurrentProjectVariables.getProjectId());
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             layout.with(commentDisplay);

@@ -11,10 +11,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.i18n.ProblemI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.*;
+import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
+import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
+import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
+import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.ui.format.ProblemFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.schedule.email.project.ProjectProblemRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -64,8 +66,7 @@ public class ProblemReadViewImpl extends AbstractPreviewItemComp<SimpleProblem> 
     @Override
     protected void initRelatedComponents() {
         activityComponent = new ProjectActivityComponent(ProjectTypeConstants.PROBLEM,
-                CurrentProjectVariables.getProjectId(), ProblemFieldFormatter.instance(),
-                ProjectProblemRelayEmailNotificationAction.class);
+                CurrentProjectVariables.getProjectId(), ProblemFieldFormatter.instance());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.PROBLEM, ProjectRolePermissionCollections.PROBLEMS);

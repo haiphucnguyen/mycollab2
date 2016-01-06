@@ -40,6 +40,11 @@ public class UIUtils {
         return null;
     }
 
+    public static String getBrowserWidthInPixels() {
+        int windowWidth = UI.getCurrent().getPage().getBrowserWindowWidth();
+        return windowWidth + "px";
+    }
+
     public static void removeAllWindows() {
         Collection<Window> windows = UI.getCurrent().getWindows();
         for (Window window : windows) {

@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectActivityCompon
 import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
 import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
-import com.esofthead.mycollab.schedule.email.project.ProjectRiskRelayEmailNotificationAction;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -74,8 +73,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     @Override
     protected void initRelatedComponents() {
         activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK,
-                CurrentProjectVariables.getProjectId(), RiskFieldFormatter.instance(),
-                ProjectRiskRelayEmailNotificationAction.class);
+                CurrentProjectVariables.getProjectId(), RiskFieldFormatter.instance());
         dateInfoComp = new DateInfoComp();
         peopleInfoComp = new PeopleInfoComp();
         followerSheet = new ProjectFollowersComp<>(ProjectTypeConstants.RISK, ProjectRolePermissionCollections.RISKS);
@@ -138,17 +136,14 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 tinyRs.setReadOnly(true);
                 return tinyRs;
             } else if (Risk.Field.status.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getStatus(),
-                        StatusI18nEnum.class);
+                return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {
                 return new DateViewField(risk.getDatedue());
             } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getRaisedbyuser(),
-                        risk.getRaisedByUserAvatarId(),
+                return new ProjectUserFormLinkField(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(),
                         risk.getRaisedByUserFullName());
             } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getAssigntouser(),
-                        risk.getAssignToUserAvatarId(),
+                return new ProjectUserFormLinkField(risk.getAssigntouser(), risk.getAssignToUserAvatarId(),
                         risk.getAssignedToUserFullName());
             } else if (Risk.Field.response.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getResponse());
@@ -185,8 +180,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             layout.setWidth("100%");
             layout.setMargin(new MarginInfo(false, false, false, true));
             try {
-                Label createdLbl = new Label(AppContext
-                        .getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
+                Label createdLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.ITEM_CREATED_PEOPLE));
                 createdLbl.setSizeUndefined();
                 layout.addComponent(createdLbl, 0, 0);
 

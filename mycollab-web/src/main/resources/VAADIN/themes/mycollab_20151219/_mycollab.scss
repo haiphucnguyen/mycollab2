@@ -631,11 +631,6 @@ $v-line-height--header:1.5em;
     .addNewControl {
       @include margin-container(5px, 0px, 5px, 0px);
     }
-    .addViewTopControls {
-      .edit-btn .v-horizontallayout-margin {
-        padding: 0px;
-      }
-    }
   }
 
   /* End Add View Styles */

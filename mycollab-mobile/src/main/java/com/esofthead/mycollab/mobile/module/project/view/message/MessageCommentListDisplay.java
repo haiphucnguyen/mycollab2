@@ -23,7 +23,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentInput;
 import com.esofthead.mycollab.mobile.ui.MobileAttachmentUtils;
 import com.esofthead.mycollab.module.ecm.domain.Content;
-import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -49,13 +48,12 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
     private Integer numComments;
     private ProjectCommentInput commentBox;
 
-    public MessageCommentListDisplay(final String type, final Integer extraTypeId,
-                                     final boolean isDisplayCommentInput, final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+    public MessageCommentListDisplay(final String type, final Integer extraTypeId, final boolean isDisplayCommentInput) {
         this.setStyleName("comment-list");
         this.setMargin(new MarginInfo(true, false, false, false));
         this.type = type;
         if (isDisplayCommentInput) {
-            commentBox = new ProjectCommentInput(this, type, extraTypeId, false, emailHandler);
+            commentBox = new ProjectCommentInput(this, type, extraTypeId, false);
         }
 
         commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);

@@ -207,15 +207,11 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
         initRelatedComponents();
         ComponentContainer bottomPanel = createBottomPanel();
-        addBottomPanel(bottomPanel);
-    }
-
-    protected void addBottomPanel(ComponentContainer container) {
-        if (container != null) {
+        if (bottomPanel != null) {
             if (bodyContent.getComponentCount() >= 2) {
-                bodyContent.replaceComponent(bodyContent.getComponent(bodyContent.getComponentCount() - 1), container);
+                bodyContent.replaceComponent(bodyContent.getComponent(bodyContent.getComponentCount() - 1), bottomPanel);
             } else {
-                bodyContent.addComponent(container);
+                bodyContent.addComponent(bottomPanel);
             }
         }
     }

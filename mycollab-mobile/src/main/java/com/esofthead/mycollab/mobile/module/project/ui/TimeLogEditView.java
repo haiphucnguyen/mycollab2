@@ -141,7 +141,6 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
 
         NavigationBarQuickMenu editBtn = new NavigationBarQuickMenu();
         editBtn.setButtonCaption(null);
-        editBtn.setStyleName("edit-btn");
         editBtn.setContent(controlBtns);
         this.setRightComponent(editBtn);
     }

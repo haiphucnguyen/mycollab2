@@ -26,7 +26,6 @@ import com.esofthead.mycollab.mobile.ui.TempFileFactory;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.schedule.email.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -60,7 +59,6 @@ public class ProjectCommentInput extends VerticalLayout {
     private String typeid;
     private Integer extraTypeId;
     private ReloadableComponent component;
-    private Class<? extends SendingRelayEmailNotificationAction> emailHandlerClass;
 
     private FileBuffer receiver;
     private MultiUpload uploadField;
@@ -73,14 +71,12 @@ public class ProjectCommentInput extends VerticalLayout {
     private CssLayout statusWrapper;
 
     public ProjectCommentInput(final ReloadableComponent component, final String typeVal,
-                               final Integer extraTypeIdVal, final boolean cancelButtonEnable,
-                               final Class<? extends SendingRelayEmailNotificationAction> emailHandler) {
+                               final Integer extraTypeIdVal, final boolean cancelButtonEnable) {
         resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 
         type = typeVal;
         extraTypeId = extraTypeIdVal;
         this.component = component;
-        this.emailHandlerClass = emailHandler;
 
         currentPollInterval = UI.getCurrent().getPollInterval();
         constructUI();
@@ -124,7 +120,7 @@ public class ProjectCommentInput extends VerticalLayout {
                 comment.setExtratypeid(extraTypeId);
 
                 final CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
-                int commentId = commentService.saveWithSession(comment, AppContext.getUsername(), emailHandlerClass);
+                int commentId = commentService.saveWithSession(comment, AppContext.getUsername());
 
                 String attachmentPath = AttachmentUtils.getCommentAttachmentPath(type, AppContext.getAccountId(),
                         CurrentProjectVariables.getProjectId(), typeid, commentId);

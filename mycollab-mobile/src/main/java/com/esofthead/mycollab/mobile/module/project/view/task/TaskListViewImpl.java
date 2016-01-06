@@ -69,7 +69,6 @@ public class TaskListViewImpl extends AbstractListViewComp<TaskSearchCriteria, S
     protected Component buildRightComponent() {
         NavigationBarQuickMenu editBtn = new NavigationBarQuickMenu();
         editBtn.setButtonCaption(null);
-        editBtn.setStyleName("edit-btn");
 
         ProjectPreviewFormControlsGenerator<SimpleTaskList> controlsGenerator = new ProjectPreviewFormControlsGenerator<>(this);
         VerticalLayout menuContent = controlsGenerator.createButtonControls(ProjectRolePermissionCollections.TASKS);

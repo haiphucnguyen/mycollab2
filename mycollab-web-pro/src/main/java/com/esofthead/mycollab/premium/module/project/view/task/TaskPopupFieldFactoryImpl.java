@@ -34,7 +34,6 @@ import com.esofthead.mycollab.module.project.view.task.TaskPopupFieldFactory;
 import com.esofthead.mycollab.module.project.view.task.components.TaskPriorityComboBox;
 import com.esofthead.mycollab.module.project.view.task.components.TaskStatusComboBox;
 import com.esofthead.mycollab.premium.module.project.ui.components.WatchersMultiSelection;
-import com.esofthead.mycollab.schedule.email.project.ProjectTaskRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -330,8 +329,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
 
         @Override
         protected void doShow() {
-            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId(),
-                    ProjectTaskRelayEmailNotificationAction.class);
+            CommentDisplay commentDisplay = new CommentDisplay(ProjectTypeConstants.TASK, CurrentProjectVariables.getProjectId());
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
             layout.with(commentDisplay);

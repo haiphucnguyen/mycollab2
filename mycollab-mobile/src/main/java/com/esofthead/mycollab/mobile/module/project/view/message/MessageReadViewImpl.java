@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
-import com.esofthead.mycollab.schedule.email.project.MessageRelayEmailNotificationAction;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -128,7 +127,7 @@ public class MessageReadViewImpl extends AbstractMobilePageView implements Messa
         mainLayout.addComponent(messageBlock);
 
         MessageCommentListDisplay commentDisplay = new MessageCommentListDisplay(ProjectTypeConstants.MESSAGE,
-                CurrentProjectVariables.getProjectId(), true, MessageRelayEmailNotificationAction.class);
+                CurrentProjectVariables.getProjectId(), true);
         commentDisplay.loadComments("" + message.getId());
 
         this.setToolbar(commentDisplay.getCommentBox());

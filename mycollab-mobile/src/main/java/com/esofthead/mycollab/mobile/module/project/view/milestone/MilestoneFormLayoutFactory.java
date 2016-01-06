@@ -21,7 +21,11 @@ import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.ui.*;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import org.vaadin.viritin.layouts.MCssLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -52,13 +56,14 @@ public class MilestoneFormLayoutFactory implements IFormLayoutFactory {
     @Override
     public ComponentContainer getLayout() {
         final VerticalLayout layout = new VerticalLayout();
+        layout.setWidth("100%");
         layout.setMargin(false);
-//        Label header = new Label(AppContext.getMessage(MilestoneI18nEnum.M_FORM_READ_TITLE));
-//        header.setStyleName("h2");
-//        layout.addComponent(header);
 
-        this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 8);
-        layout.addComponent(this.informationLayout.getLayout());
+        Label header = new Label(AppContext.getMessage(MilestoneI18nEnum.M_FORM_READ_TITLE));
+        layout.addComponent(new MCssLayout(header).withStyleName("section"));
+
+        informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 8);
+        layout.addComponent(informationLayout.getLayout());
         return layout;
     }
 }

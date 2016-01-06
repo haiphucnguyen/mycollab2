@@ -2,6 +2,7 @@
 /* If somebody wants to extend the theme she will include this mixin. */
 @import "variables.scss";
 @import "colors.scss";
+@import "common.scss";
 @import "vaadin-components.scss";
 
 /* Import our component styles */
@@ -151,5 +152,4 @@
     @include project-member;
     @include project-milestone;
     @include project-timelog;
-    
 }
