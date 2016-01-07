@@ -33,7 +33,7 @@ hr {
 }
 
 a {
-	color: #5e5d55 !important;
+	color: #0083ce !important;
 	text-decoration: none !important;
 }
 
@@ -151,16 +151,13 @@ a {
 
 .attachment-row .v-button {
 	text-align: left;
-}
-
-.attachment-row .v-button .v-button-wrap {
-	padding: 0px;
+	color: #0083ce;
+	box-shadow: none;
 }
 
 .attachment-display-comp .attachment-row {
 	padding: 0.3rem 0.5rem 0.4rem;
-	border-bottom: 0.1rem solid #dddddd;
-	background-color: white;
+	border-bottom: 0.1rem solid #e5e5e5;
 }
 
 .attachment-field .v-upload .v-button {
@@ -178,11 +175,11 @@ a {
 	padding: 1.3rem 0.5rem 1.4rem;
 	display: block;
 	background-color: white;
-	border-bottom: 0.1rem solid #dddddd;
+	border-bottom: 0.1rem solid #e5e5e5;
 }
 
 .attachment-field .v-progressbar.upload-progress .v-progressbar-wrapper {
-	border-color: #49a3e1;
+	border-color: #e5e5e5;
 }
 
 .attachment-field .v-progressbar.upload-progress .v-progressbar-wrapper .v-progressbar-indicator {
@@ -191,8 +188,11 @@ a {
 
 .attachment-field .attachment-row {
 	padding: 0.3rem 0.5rem 0.4rem;
-	border-bottom: 0.1rem solid #dddddd;
-	background-color: white;
+	border-bottom: 0.1rem solid #e5e5e5;
+}
+
+.attachment-field .attachment-row .v-button {
+	color: #0083ce;
 }
 
 * {
@@ -368,10 +368,14 @@ body {
 	padding-right: 0.8rem;
 }
 
+.message-list-view .message-block .title-row, .message-read-view .message-block .title-row {
+	padding: 0.5rem 0;
+}
+
 .message-list-view .message-block .title-row .comment-count, .message-read-view .message-block .title-row .comment-count {
-	font-size: 1.1rem;
-	color: white;
-	background-color: #7c7c7c;
+	font-size: 1rem;
+	color: #f7f7f7;
+	background-color: #5e5d55;
 	padding: 0.2rem 0.5rem;
 	border-radius: 0.3rem;
 }

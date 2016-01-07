@@ -77,15 +77,13 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
 
             rightCol.addComponent(metadataRow);
 
-            HorizontalLayout titleRow = new HorizontalLayout();
-            titleRow.setWidth("100%");
-            titleRow.setStyleName("title-row");
+            MHorizontalLayout titleRow = new MHorizontalLayout().withWidth("100%").withStyleName("title-row");
 
             A messageLink = new A(ProjectLinkBuilder.generateMessagePreviewFullLink(CurrentProjectVariables
                     .getProjectId(), message.getId())).appendText(message.getTitle());
             ELabel messageTitle = new ELabel(messageLink.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_H3);
-            titleRow.addComponent(messageTitle);
-            titleRow.setExpandRatio(messageTitle, 1.0f);
+            messageTitle.addStyleName(UIConstants.TRUNCATE);
+            CssLayout messageWrap = new CssLayout(messageTitle);
 
             if (message.getCommentsCount() > 0) {
                 Label msgCommentCount = new Label(String.valueOf(message.getCommentsCount()));
@@ -93,7 +91,9 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
                 msgCommentCount.setWidthUndefined();
                 titleRow.addComponent(msgCommentCount);
                 titleRow.addStyleName("has-comment");
-                titleRow.setComponentAlignment(messageTitle, Alignment.MIDDLE_LEFT);
+                titleRow.with(messageWrap, msgCommentCount).expand(messageWrap);
+            } else {
+                titleRow.with(messageWrap);
             }
             rightCol.addComponent(titleRow);
 
@@ -118,7 +118,6 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
             mainLayout.addComponent(rightCol);
             mainLayout.setExpandRatio(rightCol, 1.0f);
             mainLayout.setWidth("100%");
-            mainLayout.addStyleName("list-item");
             return mainLayout;
         }
     }

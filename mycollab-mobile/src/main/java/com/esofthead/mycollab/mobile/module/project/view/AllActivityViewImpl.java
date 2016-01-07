@@ -68,7 +68,7 @@ public class AllActivityViewImpl extends AbstractListViewComp<ActivityStreamSear
 
         @Override
         public Component generateRow(final ProjectActivityStream streamData, int rowIndex) {
-            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%").withStyleName("list-item");
+            MHorizontalLayout layout = new MHorizontalLayout().withWidth("100%");
             layout.addStyleName("activity-row");
 
             Label typeIcon = new Label("<span aria-hidden=\"true\" data-icon=\""

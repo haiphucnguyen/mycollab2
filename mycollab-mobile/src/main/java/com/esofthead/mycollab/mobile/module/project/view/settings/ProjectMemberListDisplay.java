@@ -82,7 +82,6 @@ public class ProjectMemberListDisplay extends DefaultPagedBeanList<ProjectMember
 
             mainLayout.addComponent(memberInfoLayout);
             mainLayout.setExpandRatio(memberInfoLayout, 1.0f);
-            mainLayout.addStyleName("list-item");
 
             return mainLayout;
         }

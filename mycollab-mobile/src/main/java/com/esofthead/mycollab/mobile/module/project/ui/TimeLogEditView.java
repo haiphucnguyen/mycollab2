@@ -242,7 +242,6 @@ public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobi
         public Component generateRow(SimpleItemTimeLogging obj, int rowIndex) {
             HorizontalLayout layout = new HorizontalLayout();
             layout.setWidth("100%");
-            layout.setStyleName("list-item");
             layout.addStyleName("time-log-item");
 
             VerticalLayout leftCol = new VerticalLayout();

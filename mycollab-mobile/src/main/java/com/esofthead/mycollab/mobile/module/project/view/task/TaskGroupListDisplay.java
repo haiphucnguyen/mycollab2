@@ -80,7 +80,6 @@ public class TaskGroupListDisplay extends DefaultPagedBeanList<ProjectTaskListSe
                 taskListLayout.setComponentAlignment(activeTasksNum, Alignment.MIDDLE_LEFT);
             }
             taskListLayout.setExpandRatio(taskListInfo, 1.0f);
-            taskListLayout.addStyleName("list-item");
 
             return taskListLayout;
         }
