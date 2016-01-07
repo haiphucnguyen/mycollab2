@@ -22,16 +22,15 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectCommentInput;
 import com.esofthead.mycollab.mobile.ui.MobileAttachmentUtils;
+import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.BeanList;
-import com.esofthead.mycollab.vaadin.ui.ReloadableComponent;
-import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
 
@@ -63,23 +62,24 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
         displayCommentList();
     }
 
-    private void displayCommentList() {
+    private int displayCommentList() {
         if (type == null || typeId == null) {
-            return;
+            return 0;
         }
 
         final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
         searchCriteria.setType(new StringSearchField(type));
         searchCriteria.setTypeid(new StringSearchField(typeId));
         numComments = commentList.setSearchCriteria(searchCriteria);
+        return numComments;
     }
 
-    public void loadComments(final String typeId) {
+    public int loadComments(final String typeId) {
         this.typeId = typeId;
         if (commentBox != null) {
             commentBox.setTypeAndId(typeId);
         }
-        displayCommentList();
+        return displayCommentList();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
 
         @Override
         public Component generateRow(SimpleComment comment, int rowIndex) {
-            HorizontalLayout commentBlock = new HorizontalLayout();
+            MHorizontalLayout commentBlock = new MHorizontalLayout().withSpacing(false).withFullWidth();
             commentBlock.setStyleName("comment-block");
             Image userAvatarImg = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(comment.getOwnerAvatarId(), 32);
             userAvatarImg.setStyleName("user-avatar");
@@ -102,17 +102,15 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
             rightCol.setWidth("100%");
             rightCol.setStyleName("right-col");
 
-            HorizontalLayout metadataRow = new HorizontalLayout();
-            metadataRow.setWidth("100%");
-            Label userNameLbl = new Label(comment.getOwnerFullName());
-            userNameLbl.setStyleName("user-name");
-            metadataRow.addComponent(userNameLbl);
-            metadataRow.setExpandRatio(userNameLbl, 1.0f);
+            MHorizontalLayout metadataRow = new MHorizontalLayout().withFullWidth();
+            ELabel userNameLbl = new ELabel(comment.getOwnerFullName()).withStyleName(UIConstants.META_INFO);
+            userNameLbl.addStyleName(UIConstants.TRUNCATE);
+            CssLayout userNameWrap = new CssLayout(userNameLbl);
 
-            Label commentTimePost = new Label(AppContext.formatPrettyTime(comment.getCreatedtime()));
-            commentTimePost.setStyleName("time-post");
-            commentTimePost.setWidthUndefined();
-            metadataRow.addComponent(commentTimePost);
+            ELabel commentTimePost = new ELabel(AppContext.formatPrettyTime(comment.getCreatedtime())).withStyleName
+                    (UIConstants.META_INFO).withWidthUndefined();
+            metadataRow.with(userNameWrap, commentTimePost).withAlign(commentTimePost, Alignment.TOP_RIGHT).expand
+                    (userNameWrap);
             rightCol.addComponent(metadataRow);
 
             SafeHtmlLabel commentContent = new SafeHtmlLabel(comment.getComment());
@@ -131,9 +129,7 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
                 rightCol.addComponent(attachmentPanel);
             }
 
-            commentBlock.addComponent(rightCol);
-            commentBlock.setExpandRatio(rightCol, 1.0f);
-            commentBlock.setWidth("100%");
+            commentBlock.with(rightCol).expand(rightCol);
             return commentBlock;
         }
 

@@ -65,14 +65,14 @@ public class MessageListDisplay extends DefaultPagedBeanList<MessageService, Mes
             CssLayout rightCol = new CssLayout();
             rightCol.setWidth("100%");
 
-            MHorizontalLayout metadataRow = new MHorizontalLayout().withWidth("100%");
+            MHorizontalLayout metadataRow = new MHorizontalLayout().withFullWidth();
 
             ELabel userNameLbl = new ELabel(message.getFullPostedUserName()).withStyleName(UIConstants.META_INFO);
             userNameLbl.addStyleName(UIConstants.TRUNCATE);
             CssLayout userNameLblWrap = new CssLayout(userNameLbl);
 
-            ELabel messageTimePost = new ELabel(AppContext.formatPrettyTime(message.getPosteddate())).withStyleName(UIConstants.META_INFO);
-            messageTimePost.setWidthUndefined();
+            ELabel messageTimePost = new ELabel(AppContext.formatPrettyTime(message.getPosteddate())).withStyleName
+                    (UIConstants.META_INFO).withWidthUndefined();
             metadataRow.with(userNameLblWrap, messageTimePost).withAlign(messageTimePost, Alignment.TOP_RIGHT).expand(userNameLblWrap);
 
             rightCol.addComponent(metadataRow);

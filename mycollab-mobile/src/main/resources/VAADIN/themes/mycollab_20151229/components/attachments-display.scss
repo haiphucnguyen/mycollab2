@@ -1,21 +1,13 @@
 @mixin attachments-display {
   .attachment-row {
     .thumbnail-wrap {
-      &:before {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-      }
-      img {
-        display: inline-block;
-        vertical-align: middle;
-      }
+      display: inline-block;
     }
     .v-button {
       text-align: left;
       color: $my-link-color;
       box-shadow: none;
+      font-size: smaller;
     }
   }
   .attachment-display-comp {

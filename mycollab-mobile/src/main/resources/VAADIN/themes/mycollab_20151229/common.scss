@@ -26,13 +26,16 @@
   @include section-header();
 }
 
+@mixin truncate() {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
 @mixin common {
   .meta-info {
     color: $my-meta-color;
     font-size: smaller !important;
-    a {
-      color: $my-meta-color !important;
-    }
   }
 
   hr {
@@ -46,15 +49,12 @@
   }
 
   .truncate {
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-    a  {
-      display:block;
-      white-space: nowrap !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis;
-    }
+    @include truncate();
+  }
+
+  .truncate a,  .v-button.truncate, .truncate span {
+    display:block;
+    @include truncate();
   }
 
   .v-gridlayout.colored-gridlayout {
