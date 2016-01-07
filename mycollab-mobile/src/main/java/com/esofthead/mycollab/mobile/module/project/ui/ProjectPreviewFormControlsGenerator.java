@@ -51,8 +51,7 @@ public class ProjectPreviewFormControlsGenerator<T> {
     }
 
     public VerticalLayout createButtonControls(final String permissionItem) {
-        return createButtonControls(EDIT_BTN_PRESENTED | DELETE_BTN_PRESENTED
-                | CLONE_BTN_PRESENTED, permissionItem);
+        return createButtonControls(EDIT_BTN_PRESENTED | DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED, permissionItem);
     }
 
     public VerticalLayout createButtonControls(int buttonEnableFlags, final String permissionItem) {
@@ -71,7 +70,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
                     previewForm.fireEditForm(item);
                 }
             });
-            editBtn.setWidth("100%");
             editButtons.addComponent(editBtn);
             editBtn.setEnabled(canWrite);
         }
@@ -86,7 +84,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
                     previewForm.fireDeleteForm(item);
                 }
             });
-            deleteBtn.setWidth("100%");
             editButtons.addComponent(deleteBtn);
             deleteBtn.setEnabled(canAccess);
         }
@@ -99,7 +96,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
                     previewForm.fireCloneForm(item);
                 }
             });
-            cloneBtn.setWidth("100%");
             editButtons.addComponent(cloneBtn);
             cloneBtn.setEnabled(canWrite);
         }
@@ -112,7 +108,6 @@ public class ProjectPreviewFormControlsGenerator<T> {
                     previewForm.fireAssignForm(item);
                 }
             });
-            assignBtn.setWidth("100%");
             editButtons.addComponent(assignBtn);
             editButtons.setEnabled(canWrite);
         }

@@ -99,12 +99,10 @@ public class MessageCommentListDisplay extends VerticalLayout implements Reloada
             commentBlock.addComponent(userAvatarImg);
 
             CssLayout rightCol = new CssLayout();
-            rightCol.setWidth("100%");
             rightCol.setStyleName("right-col");
 
             MHorizontalLayout metadataRow = new MHorizontalLayout().withFullWidth();
             ELabel userNameLbl = new ELabel(comment.getOwnerFullName()).withStyleName(UIConstants.META_INFO);
-            userNameLbl.addStyleName(UIConstants.TRUNCATE);
             CssLayout userNameWrap = new CssLayout(userNameLbl);
 
             ELabel commentTimePost = new ELabel(AppContext.formatPrettyTime(comment.getCreatedtime())).withStyleName

@@ -23,8 +23,12 @@ import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -42,15 +46,10 @@ public abstract class TimeLogComp<V extends ValuedBean> extends VerticalLayout {
     public void displayTime(final V bean) {
         this.removeAllComponents();
 
-        HorizontalLayout header = new HorizontalLayout();
-        header.setSpacing(true);
-        header.setStyleName("info-hdr");
-        header.addStyleName("timelog-comp-hdr");
-        header.setWidth("100%");
+        MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
+        header.addStyleName("section");
         Label dateInfoHeader = new Label(AppContext.getMessage(TimeTrackingI18nEnum.SUB_INFO_TIME));
-        dateInfoHeader.setWidthUndefined();
-        header.addComponent(dateInfoHeader);
-        header.setExpandRatio(dateInfoHeader, 1.0f);
+        header.with(new ELabel(FontAwesome.CLOCK_O.getHtml(), ContentMode.HTML).withWidthUndefined(), dateInfoHeader).expand(dateInfoHeader);
 
         if (hasEditPermission()) {
             Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {

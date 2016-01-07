@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MCssLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -38,8 +39,7 @@ public class BugFormLayoutFactory implements IFormLayoutFactory {
         layout.setMargin(false);
         layout.setWidth("100%");
         Label header = new Label(AppContext.getMessage(BugI18nEnum.M_FORM_READ_TITLE));
-        header.setStyleName("h2");
-        layout.addComponent(header);
+        layout.addComponent(new MCssLayout(header).withStyleName("section"));
 
         informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 12);
         layout.addComponent(informationLayout.getLayout());

@@ -22,7 +22,6 @@ import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestoneComb
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.ui.AbstractEditItemComp;
 import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
@@ -37,14 +36,11 @@ import com.vaadin.addon.touchkit.ui.DatePicker;
 import com.vaadin.addon.touchkit.ui.NumberField;
 import com.vaadin.data.Property;
 import com.vaadin.ui.*;
+import org.vaadin.viritin.layouts.MCssLayout;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.5.2
- */
-
-/*
- * TODO: Add support for Attachments, Components, Versions when they're ready
  */
 @ViewComponent
 public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements BugAddView {
@@ -54,8 +50,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
 
     @Override
     protected String initFormTitle() {
-        return beanItem.getId() == null ? AppContext.getMessage(BugI18nEnum.FORM_NEW_BUG_TITLE) :
-                "[" + CurrentProjectVariables.getProject().getShortname() + "-" + beanItem.getBugkey() + "]";
+        return beanItem.getId() == null ? AppContext.getMessage(BugI18nEnum.FORM_NEW_BUG_TITLE) : beanItem.getSummary();
     }
 
     @Override
@@ -149,8 +144,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
             Label header = new Label(AppContext.getMessage(BugI18nEnum.M_FORM_READ_TITLE));
-            header.setStyleName("h2");
-            layout.addComponent(header);
+            layout.addComponent(new MCssLayout(header).withStyleName("section"));
 
             this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 10);
             layout.addComponent(this.informationLayout.getLayout());

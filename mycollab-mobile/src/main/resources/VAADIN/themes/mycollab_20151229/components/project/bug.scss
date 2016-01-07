@@ -1,2 +1,102 @@
 @mixin project-bug {
+/*BUG PRIORITY STYLES*/
+  $bug-blocker-color: #d32d1a;
+  $bug-critical-color: #e95948;
+  $bug-major-color: #f09085;
+  $bug-minor-color: #f7c7c1;
+  $bug-trivial-color: #b7b9b0;
+
+  .bug-blocker, .v-filterselect-item-bug-blocker {
+    .v-icon {
+      color: $bug-blocker-color;
+    }
+  }
+
+  .bug-blocker.v-icon {
+    color: $bug-blocker-color;
+  }
+
+  .bug-critical, .v-filterselect-item-bug-critical {
+    .v-icon {
+      color: $bug-critical-color;
+    }
+  }
+
+  .bug-critical.v-icon {
+    color: $bug-critical-color;
+  }
+
+  .bug-major, .v-filterselect-item-bug-major {
+    .v-icon {
+      color: $bug-major-color;
+    }
+  }
+
+  .bug-major.v-icon {
+    color: $bug-major-color;
+  }
+
+  .bug-minor, .v-filterselect-item-bug-minor {
+    .v-icon {
+      color: $bug-minor-color;
+    }
+  }
+
+  .bug-minor.v-icon {
+    color: $bug-minor-color;
+  }
+
+  .bug-trivial, .v-filterselect-item-bug-trivial {
+    .v-icon {
+      color: $bug-trivial-color;
+    }
+  }
+
+  .bug-trivial.v-icon {
+    color: $bug-trivial-color;
+  }
+  /*END BUG PRIORITY STYLES*/
+
+  /*BUG SEVERITY STYLES*/
+  $bug-severity-critical-color: #d32d1a;
+  $bug-severity-major-color: #e95948;
+  $bug-severity-minor-color: #f09085;
+  $bug-severity-trivial-color: #f7c7c1;
+
+  .bug-severity-critical, .v-filterselect-item-bug-severity-critical {
+    .v-icon {
+      color: $bug-severity-critical-color;
+    }
+  }
+  .bug-severity-critical.v-icon {
+    color: $bug-severity-critical-color;
+  }
+
+  .bug-severity-major, .v-filterselect-item-bug-severity-major {
+    .v-icon {
+      color: $bug-severity-major-color;
+    }
+  }
+  .bug-severity-major.v-icon {
+    color: $bug-severity-major-color;
+  }
+
+  .bug-severity-minor, .v-filterselect-item-bug-severity-minor {
+    .v-icon {
+      color: $bug-severity-minor-color;
+    }
+  }
+  .bug-severity-minor.v-icon {
+    color: $bug-severity-minor-color;
+  }
+
+  .bug-severity-trivial, .v-filterselect-item-bug-severity-trivial {
+    .v-icon {
+      color: $bug-severity-trivial-color;
+    }
+  }
+  .bug-severity-trivial.v-icon {
+    color: $bug-severity-trivial-color;
+  }
+  /*END BUG SEVERITY STYLES*/
 }
