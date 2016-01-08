@@ -29,7 +29,6 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.mobile.module.project.events.*;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent.AllActivities;
-import com.esofthead.mycollab.mobile.module.project.events.TaskEvent.GoInsideList;
 import com.esofthead.mycollab.mobile.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.mobile.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestonePresenter;
@@ -41,11 +40,7 @@ import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.*;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -324,31 +319,19 @@ public class ProjectModuleController extends AbstractController {
 
     private void bindTaskEvents() {
         this.register(new ApplicationEventListener<TaskEvent.GotoList>() {
-
             private static final long serialVersionUID = -4009103684129154556L;
 
             @Subscribe
             @Override
             public void handle(TaskEvent.GotoList event) {
-                TaskGroupScreenData.List data = new TaskGroupScreenData.List();
+                TaskSearchCriteria criteria = new TaskSearchCriteria();
+                criteria.setProjectid(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId()));
+                TaskScreenData.Search data = new TaskScreenData.Search(criteria);
                 TaskPresenter presenter = PresenterResolver.getPresenter(TaskPresenter.class);
                 presenter.go(navManager, data);
             }
-
         });
-        this.register(new ApplicationEventListener<TaskEvent.GoInsideList>() {
 
-            private static final long serialVersionUID = 5272374413178583391L;
-
-            @Subscribe
-            @Override
-            public void handle(GoInsideList event) {
-                TaskScreenData.List data = new TaskScreenData.List((Integer) event.getData());
-                TaskPresenter presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-                presenter.go(navManager, data);
-            }
-
-        });
         this.register(new ApplicationEventListener<TaskEvent.GotoRead>() {
 
             private static final long serialVersionUID = -5438389231124986497L;
@@ -376,55 +359,12 @@ public class ProjectModuleController extends AbstractController {
 
         });
         this.register(new ApplicationEventListener<TaskEvent.GotoAdd>() {
-
             private static final long serialVersionUID = -2205879182939668100L;
 
             @Subscribe
             @Override
             public void handle(TaskEvent.GotoAdd event) {
-                TaskScreenData.Add data = new TaskScreenData.Add((Integer) event.getData());
-                TaskPresenter presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-                presenter.go(navManager, data);
-            }
-
-        });
-        this.register(new ApplicationEventListener<TaskEvent.GotoListView>() {
-
-            private static final long serialVersionUID = 8482472427144553994L;
-
-            @Subscribe
-            @Override
-            public void handle(TaskEvent.GotoListView event) {
-                TaskGroupScreenData.Read data = new TaskGroupScreenData.Read((Integer) event.getData());
-                TaskPresenter presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-                presenter.go(navManager, data);
-            }
-
-        });
-        this.register(new ApplicationEventListener<TaskEvent.GotoListAdd>() {
-
-            private static final long serialVersionUID = -3087445308221821731L;
-
-            @Subscribe
-            @Override
-            public void handle(TaskEvent.GotoListAdd event) {
-                SimpleTaskList taskList = new SimpleTaskList();
-                taskList.setProjectid(CurrentProjectVariables.getProjectId());
-                taskList.setStatus(StatusI18nEnum.Open.name());
-                TaskGroupScreenData.Add data = new TaskGroupScreenData.Add(taskList);
-                TaskPresenter presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-                presenter.go(navManager, data);
-            }
-
-        });
-        this.register(new ApplicationEventListener<TaskEvent.GotoListEdit>() {
-
-            private static final long serialVersionUID = -5526088325467106990L;
-
-            @Subscribe
-            @Override
-            public void handle(TaskEvent.GotoListEdit event) {
-                TaskGroupScreenData.Edit data = new TaskGroupScreenData.Edit((SimpleTaskList) event.getData());
+                TaskScreenData.Add data = new TaskScreenData.Add(new SimpleTask());
                 TaskPresenter presenter = PresenterResolver.getPresenter(TaskPresenter.class);
                 presenter.go(navManager, data);
             }

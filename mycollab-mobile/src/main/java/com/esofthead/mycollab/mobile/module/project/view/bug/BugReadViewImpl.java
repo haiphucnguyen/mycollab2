@@ -225,10 +225,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         return new AdvancedPreviewBeanForm<>();
     }
 
-    @Override
-    protected void initRelatedComponents() {
-
-    }
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {

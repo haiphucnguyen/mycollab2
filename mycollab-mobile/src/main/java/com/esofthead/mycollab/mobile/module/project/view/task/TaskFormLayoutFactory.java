@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.mobile.ui.FormSectionBuilder;
 import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -36,9 +37,7 @@ public class TaskFormLayoutFactory implements IFormLayoutFactory {
     public ComponentContainer getLayout() {
         final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(false);
-        Label header = new Label(AppContext.getMessage(TaskI18nEnum.M_FORM_READ_TITLE));
-        header.setStyleName("h2");
-        layout.addComponent(header);
+        layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(TaskI18nEnum.M_FORM_READ_TITLE)));
 
         this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 11);
         layout.addComponent(this.informationLayout.getLayout());
