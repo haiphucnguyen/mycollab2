@@ -33,13 +33,11 @@ a {
 	text-decoration: none !important;
 }
 
-.truncate {
-	white-space: nowrap !important;
-	overflow: hidden !important;
-	text-overflow: ellipsis;
+.truncate .v-layout, .truncate .v-label, .truncate {
+	width: 100% !important;
 }
 
-.truncate a, .v-button.truncate, .truncate span {
+.truncate .v-layout a, .truncate .v-label a, .truncate a {
 	display: block;
 	white-space: nowrap !important;
 	overflow: hidden !important;
@@ -597,27 +595,6 @@ body {
 
 .bug-severity-trivial.v-icon {
 	color: #f7c7c1;
-}
-
-.member-list .list-item.member-row {
-	padding: 1rem 2.5rem 1rem 1.4rem;
-	border-bottom: 0.1rem solid #DDDDDD;
-	color: #8C8C8C;
-}
-
-.member-list .list-item.member-row .member-info {
-	padding-left: 0.5rem;
-}
-
-.member-list .list-item.member-row .member-info .display-name {
-	font-weight: bold;
-	font-size: 1.4rem;
-	color: #f59330;
-}
-
-.member-list .list-item.member-row .member-info .user-name {
-	font-size: 1.2rem;
-	color: #959595;
 }
 
 .timelog-edit-view div.v-vertical > .v-expand > .v-spacing {
