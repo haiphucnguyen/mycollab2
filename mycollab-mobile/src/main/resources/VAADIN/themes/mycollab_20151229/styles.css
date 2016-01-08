@@ -279,24 +279,18 @@ body {
 	content: "";
 }
 
-.project-dashboard {
-	background-color: white;
-}
-
 .project-dashboard .project-info-layout {
-	padding-bottom: 1.2rem;
+	padding-bottom: 0.5rem;
 }
 
 .project-dashboard .project-info-layout .project-icon {
-	font-size: 4rem;
-	line-height: 5rem;
-	padding: 1rem;
+	font-size: 2.5rem;
+	padding: 0.5rem;
 }
 
 .project-dashboard .project-info-layout .project-name {
 	font-weight: bold;
-	font-size: 1.4rem;
-	padding-top: 0.6rem;
+	font-size: 1.2rem;
 	text-align: center;
 }
 

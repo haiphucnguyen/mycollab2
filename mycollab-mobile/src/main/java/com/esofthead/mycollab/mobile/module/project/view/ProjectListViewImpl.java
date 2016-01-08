@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import org.vaadin.thomas.slidemenu.SlideMenuView;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
