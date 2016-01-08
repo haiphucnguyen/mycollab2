@@ -53,7 +53,7 @@ public class ProjectCommentInput extends VerticalLayout {
     private static final Logger LOG = LoggerFactory.getLogger(ProjectCommentInput.class.getName());
     private static final long serialVersionUID = 8118887310759503892L;
 
-    private TextArea commentInput;
+    private TextField commentInput;
 
     private String type;
     private String typeId;
@@ -89,16 +89,14 @@ public class ProjectCommentInput extends VerticalLayout {
         statusWrapper.setStyleName("upload-status-wrap");
         this.addComponent(statusWrapper);
 
-        MHorizontalLayout inputWrapper = new MHorizontalLayout().withWidth("100%").withStyleName("comment-box");
-        inputWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        MHorizontalLayout inputWrapper = new MHorizontalLayout().withWidth("100%");
 
         this.prepareUploadField();
 
         inputWrapper.addComponent(uploadField);
 
-        commentInput = new TextArea();
+        commentInput = new TextField();
         commentInput.setInputPrompt(AppContext.getMessage(GenericI18Enum.M_NOTE_INPUT_PROMPT));
-        commentInput.setSizeFull();
 
         Button postBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_SEND), new Button.ClickListener() {
             @Override
@@ -121,8 +119,7 @@ public class ProjectCommentInput extends VerticalLayout {
                     saveContentsToRepo(attachmentPath);
                 }
 
-                // save success, clear comment area and load list
-                // comments again
+                // save success, clear comment area and load list comments again
                 commentInput.setValue("");
                 statusWrapper.removeAllComponents();
                 component.reload();

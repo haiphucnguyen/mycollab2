@@ -91,7 +91,6 @@ public class NotesList extends AbstractMobilePageView {
 
         HorizontalLayout commentBox = new HorizontalLayout();
         commentBox.setSizeFull();
-        commentBox.setStyleName("comment-box");
         commentBox.setSpacing(true);
         commentBox.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         final TextArea noteInput = new TextArea();
