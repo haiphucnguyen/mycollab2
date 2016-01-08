@@ -24,16 +24,15 @@ import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControl
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractPreviewItemComp;
 import com.esofthead.mycollab.mobile.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.mobile.ui.Section;
+import com.esofthead.mycollab.mobile.ui.FormSectionBuilder;
 import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
 import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectResources;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugPriority;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
@@ -47,10 +46,11 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.ui.form.field.*;
-import com.vaadin.server.ExternalResource;
+import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
+import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -255,7 +255,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         MVerticalLayout toolbarLayout = new MVerticalLayout().withSpacing(false).withMargin(false);
         toolbarLayout.setDefaultComponentAlignment(Alignment.TOP_LEFT);
         relatedComments = new CommentNavigationButton(ProjectTypeConstants.BUG);
-        Section section = new Section(FontAwesome.COMMENT, relatedComments);
+        Component section = FormSectionBuilder.build(FontAwesome.COMMENT, relatedComments);
         toolbarLayout.addComponent(section);
         bugTimeLogComp = new BugTimeLogComp();
         toolbarLayout.addComponent(bugTimeLogComp);
@@ -276,10 +276,14 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
             } else if (propertyId.equals("createdtime")) {
                 return new DateViewField(beanItem.getCreatedtime());
             } else if (propertyId.equals("assignuserFullName")) {
-                DefaultViewField field = new DefaultViewField(beanItem.getAssignuserFullName());
+                DefaultViewField field = new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink
+                        (CurrentProjectVariables.getProjectId(), beanItem.getAssignuser(), beanItem.getAssignuserFullName(),
+                                beanItem.getAssignUserAvatarId(), false), ContentMode.HTML);
                 return field;
             } else if (propertyId.equals("loguserFullName")) {
-                return new DefaultViewField(beanItem.getLoguserFullName());
+                return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
+                        .getProjectId(), beanItem.getLogby(), beanItem.getLoguserFullName(), beanItem
+                        .getLoguserAvatarId(), false), ContentMode.HTML);
             } else if (propertyId.equals("milestoneid")) {
                 if (beanItem.getMilestoneid() != null) {
                     return new DefaultViewField(beanItem.getMilestoneName());
