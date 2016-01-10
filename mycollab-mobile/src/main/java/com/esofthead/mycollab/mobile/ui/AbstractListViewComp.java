@@ -23,7 +23,7 @@ import com.vaadin.ui.Component;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends AbstractMobilePageView implements IListView<S, B> {
+public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends AbstractMobileMenuPageView implements IListView<S, B> {
     private static final long serialVersionUID = 3603608419228750094L;
 
     protected AbstractPagedBeanList<S, B> itemList;

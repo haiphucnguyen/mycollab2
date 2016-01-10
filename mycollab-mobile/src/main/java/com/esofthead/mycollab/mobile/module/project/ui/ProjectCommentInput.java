@@ -72,6 +72,8 @@ public class ProjectCommentInput extends VerticalLayout {
 
     public ProjectCommentInput(ReloadableComponent component, String typeVal, Integer extraTypeIdVal) {
         resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
+        this.setWidth("100%");
+        this.setStyleName("comment-input");
 
         type = typeVal;
         extraTypeId = extraTypeIdVal;
@@ -82,8 +84,6 @@ public class ProjectCommentInput extends VerticalLayout {
     }
 
     private void constructUI() {
-        this.setWidth("100%");
-
         statusWrapper = new CssLayout();
         statusWrapper.setWidth("100%");
         statusWrapper.setStyleName("upload-status-wrap");
@@ -92,8 +92,6 @@ public class ProjectCommentInput extends VerticalLayout {
         MHorizontalLayout inputWrapper = new MHorizontalLayout().withWidth("100%");
 
         this.prepareUploadField();
-
-        inputWrapper.addComponent(uploadField);
 
         commentInput = new TextField();
         commentInput.setInputPrompt(AppContext.getMessage(GenericI18Enum.M_NOTE_INPUT_PROMPT));
@@ -127,8 +125,9 @@ public class ProjectCommentInput extends VerticalLayout {
         });
         postBtn.setStyleName("submit-btn");
         postBtn.setWidthUndefined();
-        inputWrapper.with(commentInput, postBtn).expand(commentInput);
+        inputWrapper.with(uploadField, commentInput, postBtn).expand(commentInput);
         this.addComponent(inputWrapper);
+        this.setExpandRatio(inputWrapper, 1.0f);
     }
 
     private void prepareUploadField() {
@@ -187,10 +186,8 @@ public class ProjectCommentInput extends VerticalLayout {
 
             @Override
             public OutputStream getOutputStream() {
-                MultiUpload.FileDetail next = uploadField.getPendingFileNames()
-                        .iterator().next();
-                return receiver.receiveUpload(next.getFileName(),
-                        next.getMimeType());
+                MultiUpload.FileDetail next = uploadField.getPendingFileNames().iterator().next();
+                return receiver.receiveUpload(next.getFileName(), next.getMimeType());
             }
 
             @Override

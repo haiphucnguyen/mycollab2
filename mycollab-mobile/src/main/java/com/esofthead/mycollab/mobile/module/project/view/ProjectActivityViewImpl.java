@@ -27,27 +27,25 @@ import com.vaadin.ui.Component;
 
 /**
  * @author MyCollab Ltd.
- *
  * @since 4.5.2
  */
-
 @ViewComponent
 public class ProjectActivityViewImpl extends AbstractListViewComp<ActivityStreamSearchCriteria, ProjectActivityStream> implements ProjectActivityView {
-	private static final long serialVersionUID = 6930154745425180819L;
+    private static final long serialVersionUID = 6930154745425180819L;
 
-	public ProjectActivityViewImpl() {
-		this.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
-		this.addStyleName("project-activities-view");
-	}
+    public ProjectActivityViewImpl() {
+        this.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_ACTIVITIES));
+        this.addStyleName("project-activities-view");
+    }
 
-	@Override
-	protected AbstractPagedBeanList<ActivityStreamSearchCriteria, ProjectActivityStream> createBeanList() {
-		return new ProjectActivityStreamListDisplay();
-	}
+    @Override
+    protected AbstractPagedBeanList<ActivityStreamSearchCriteria, ProjectActivityStream> createBeanList() {
+        return new ProjectActivityStreamListDisplay();
+    }
 
-	@Override
-	protected Component buildRightComponent() {
-		return null;
-	}
+    @Override
+    protected Component buildRightComponent() {
+        return null;
+    }
 
 }

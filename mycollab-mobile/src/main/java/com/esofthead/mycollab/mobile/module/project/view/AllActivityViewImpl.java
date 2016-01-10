@@ -42,7 +42,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-
 @ViewComponent
 public class AllActivityViewImpl extends AbstractListViewComp<ActivityStreamSearchCriteria, ProjectActivityStream> implements AllActivityView {
     private static final long serialVersionUID = -7722214412998470562L;

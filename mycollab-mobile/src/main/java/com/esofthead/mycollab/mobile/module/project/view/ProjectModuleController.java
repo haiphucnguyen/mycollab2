@@ -66,10 +66,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ProjectModuleController extends AbstractController {
     private static final long serialVersionUID = 8999456416358169209L;
+    private static final Logger LOG = LoggerFactory.getLogger(ProjectModuleController.class);
 
     private final NavigationManager navManager;
-
-    private static final Logger LOG = LoggerFactory.getLogger(ProjectModuleController.class);
 
     public ProjectModuleController(NavigationManager navigationManager) {
         this.navManager = navigationManager;

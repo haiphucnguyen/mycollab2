@@ -22,7 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.FieldSelection;
  * @author MyCollab Ltd.
  * @since 4.3.1
  */
-public abstract class AbstractSelectionView<B> extends AbstractMobilePageView {
+public abstract class AbstractSelectionView<B> extends AbstractMobileMenuPageView {
     private static final long serialVersionUID = 1L;
 
     protected FieldSelection<B> selectionField;

@@ -19,7 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.*;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -44,7 +44,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  */
 
 @ViewComponent
-public class ProjectDashboardViewImpl extends AbstractMobilePageView implements ProjectDashboardView {
+public class ProjectDashboardViewImpl extends AbstractMobileMenuPageView implements ProjectDashboardView {
     private static final long serialVersionUID = 2364544271302929730L;
 
     private final CssLayout mainLayout;

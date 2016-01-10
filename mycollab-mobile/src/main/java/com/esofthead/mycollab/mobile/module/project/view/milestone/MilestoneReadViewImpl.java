@@ -48,7 +48,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-
 @ViewComponent
 public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilestone> implements MilestoneReadView {
     private static final long serialVersionUID = -2466318105833801922L;

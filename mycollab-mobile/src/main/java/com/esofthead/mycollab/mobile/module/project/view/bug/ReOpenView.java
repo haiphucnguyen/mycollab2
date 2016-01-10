@@ -22,7 +22,7 @@ import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -46,7 +46,7 @@ import java.util.GregorianCalendar;
  * @since 4.5.2
  */
 @SuppressWarnings("serial")
-class ReOpenView extends AbstractMobilePageView {
+class ReOpenView extends AbstractMobileMenuPageView {
     private final SimpleBug bug;
     private final EditForm editForm;
     private final BugReadView callbackForm;

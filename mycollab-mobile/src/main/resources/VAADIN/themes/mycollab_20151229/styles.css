@@ -68,6 +68,7 @@ a {
 	min-height: 43px;
 	padding-top: 8px;
 	padding-bottom: 8px;
+	display: flex;
 }
 
 .v-gridlayout.colored-gridlayout .gridform-caption {
@@ -77,6 +78,11 @@ a {
 .v-gridlayout.colored-gridlayout .gridform-caption .v-label {
 	text-align: right;
 	color: #999;
+}
+
+.v-gridlayout.colored-gridlayout .v-required-field-indicator {
+	color: red !important;
+	margin-top: 0px !important;
 }
 
 .v-navbar-quickmenu-content {
@@ -91,6 +97,27 @@ a {
 .attachment-panel {
 	border-top: 1px solid #dddddd;
 	padding: 0.5rem 0rem 0.8rem;
+}
+
+.slidemenu {
+	top: 0px !important;
+}
+
+.slidemenu .v-window-contents {
+	background-color: gray !important;
+}
+
+.comment-input  > div > .v-horizontallayout {
+	width: 100%;
+}
+
+.comment-input input[type="text"] {
+	width: 100%;
+	height: 100%;
+}
+
+.comment-input .submit-btn {
+	background-color: transparent;
 }
 
 .v-touchkit-navbar-caption {

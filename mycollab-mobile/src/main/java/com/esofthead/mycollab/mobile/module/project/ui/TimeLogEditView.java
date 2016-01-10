@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.mobile.ui.DefaultPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.IconConstants;
@@ -49,7 +49,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
-public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobilePageView {
+public abstract class TimeLogEditView<V extends ValuedBean> extends AbstractMobileMenuPageView {
     private static final long serialVersionUID = 1L;
 
     protected ItemTimeLoggingService itemTimeLoggingService;

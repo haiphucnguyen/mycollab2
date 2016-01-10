@@ -18,7 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.view.settings;
 
 import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectMemberEvent;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
@@ -47,7 +47,7 @@ import java.util.Arrays;
  * @since 4.5.2
  */
 @ViewComponent
-public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implements ProjectMemberInviteView {
+public class ProjectMemberInviteViewImpl extends AbstractMobileMenuPageView implements ProjectMemberInviteView {
     private static final long serialVersionUID = 6319585054784302576L;
     private Integer roleId = 0;
 

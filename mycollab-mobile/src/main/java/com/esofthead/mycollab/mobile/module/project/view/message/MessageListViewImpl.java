@@ -31,6 +31,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+/**
+ * @author MyCollab Ltd
+ * @since 4.0.0
+ */
 @ViewComponent
 public class MessageListViewImpl extends AbstractListViewComp<MessageSearchCriteria, SimpleMessage> implements MessageListView {
     private static final long serialVersionUID = -5340014066758050437L;

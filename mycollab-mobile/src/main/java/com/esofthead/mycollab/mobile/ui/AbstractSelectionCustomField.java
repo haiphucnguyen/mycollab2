@@ -30,7 +30,7 @@ public abstract class AbstractSelectionCustomField<T, B> extends CustomField<T> 
     private static final long serialVersionUID = 1L;
 
     private Class<? extends AbstractSelectionView<B>> targetSelectionViewCls;
-    protected NavigationButton navButton = new NavigationButton();
+    protected NavigationButton navButton;
     protected B beanItem;
 
     public AbstractSelectionCustomField(Class<? extends AbstractSelectionView<B>> targetSelectionView) {
@@ -42,6 +42,7 @@ public abstract class AbstractSelectionCustomField<T, B> extends CustomField<T> 
         try {
             final AbstractSelectionView<B> selectionView = targetSelectionViewCls.newInstance();
             selectionView.setSelectionField(this);
+            navButton = new NavigationButton("Select", selectionView);
             navButton.setTargetView(selectionView);
             navButton.setWidth("100%");
             navButton.addClickListener(new NavigationButton.NavigationButtonClickListener() {
