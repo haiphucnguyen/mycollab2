@@ -23,7 +23,7 @@ import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
-import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -48,7 +48,7 @@ import java.util.GregorianCalendar;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-class ApproveInputView extends AbstractMobileMenuPageView {
+class ApproveInputView extends AbstractMobilePageView {
     private static final long serialVersionUID = 1L;
     private final SimpleBug bug;
     private final EditForm editForm;
@@ -144,9 +144,9 @@ class ApproveInputView extends AbstractMobileMenuPageView {
                 if (propertyId.equals("assignuser")) {
                     return new ProjectMemberSelectionField();
                 } else if (propertyId.equals("comment")) {
-                    EditForm.this.commentArea = new TextArea();
-                    EditForm.this.commentArea.setNullRepresentation("");
-                    return EditForm.this.commentArea;
+                    commentArea = new TextArea();
+                    commentArea.setNullRepresentation("");
+                    return commentArea;
                 }
 
                 return null;

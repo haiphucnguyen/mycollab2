@@ -36,4 +36,8 @@ public class ProjectModule extends AbstractMobileMenuPageView implements IModule
         ControllerRegistry.addController(new ProjectModuleController((NavigationManager) UI.getCurrent().getContent()));
     }
 
+    @Override
+    protected void buildNavigateMenu() {
+
+    }
 }

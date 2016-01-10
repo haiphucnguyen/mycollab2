@@ -18,7 +18,7 @@ package com.esofthead.mycollab.mobile.module.crm.view.lead;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.mobile.ui.AbstractListViewComp;
+import com.esofthead.mycollab.mobile.module.crm.ui.AbstractListViewComp;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
@@ -37,15 +37,12 @@ public class LeadListViewImpl extends AbstractListViewComp<LeadSearchCriteria, S
     private static final long serialVersionUID = -5311139413938817084L;
 
     public LeadListViewImpl() {
-        super();
-
         setCaption(AppContext.getMessage(LeadI18nEnum.VIEW_LIST_TITLE));
     }
 
     @Override
     protected AbstractPagedBeanList<LeadSearchCriteria, SimpleLead> createBeanTable() {
-        LeadListDisplay leadListDisplay = new LeadListDisplay();
-        return leadListDisplay;
+        return new LeadListDisplay();
     }
 
     @Override

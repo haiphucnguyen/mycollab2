@@ -48,7 +48,6 @@ public class CampaignSelectionView extends AbstractSelectionView<CampaignWithBLO
 
     private void createUI() {
         itemList = new CampaignListDisplay();
-
         itemList.setWidth("100%");
         itemList.setRowDisplayHandler(rowHandler);
         this.setContent(itemList);

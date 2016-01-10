@@ -59,6 +59,11 @@ public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends 
         }
     }
 
+    @Override
+    protected void buildNavigateMenu() {
+
+    }
+
     abstract protected AbstractPagedBeanList<S, B> createBeanList();
 
     protected Component buildRightComponent() {

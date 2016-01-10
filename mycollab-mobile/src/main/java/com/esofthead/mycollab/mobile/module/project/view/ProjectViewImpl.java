@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view;
 
-import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 /**
@@ -24,7 +23,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
  * @since 4.4.0
  */
 @ViewComponent
-public class ProjectViewImpl extends AbstractMobileMenuPageView implements ProjectView {
+public class ProjectViewImpl extends ProjectMobileMenuPageView implements ProjectView {
     private static final long serialVersionUID = -5411890906862175950L;
 
 }

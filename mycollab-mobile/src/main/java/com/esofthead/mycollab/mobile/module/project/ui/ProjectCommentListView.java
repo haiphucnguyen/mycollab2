@@ -21,7 +21,7 @@ import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.mobile.ui.MobileAttachmentUtils;
 import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.ecm.domain.Content;
@@ -38,7 +38,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class ProjectCommentListView extends AbstractMobileMenuPageView implements ReloadableComponent {
+public class ProjectCommentListView extends AbstractMobilePageView implements ReloadableComponent {
     private static final long serialVersionUID = 1L;
 
     private final BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;

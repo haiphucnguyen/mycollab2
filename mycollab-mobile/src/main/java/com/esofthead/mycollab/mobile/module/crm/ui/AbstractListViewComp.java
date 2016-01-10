@@ -14,9 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.ui;
+package com.esofthead.mycollab.mobile.module.crm.ui;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
+import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
+import com.esofthead.mycollab.mobile.ui.IListView;
 import com.vaadin.ui.Component;
 
 /**
@@ -49,6 +52,11 @@ public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends 
 
         if (getPagedBeanTable().getSearchRequest() != null)
             getPagedBeanTable().refresh();
+    }
+
+    @Override
+    protected void buildNavigateMenu() {
+
     }
 
     abstract protected AbstractPagedBeanList<S, B> createBeanTable();
