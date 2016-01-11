@@ -82,7 +82,15 @@
 
   .v-navbar-quickmenu-content {
     width: 100%;
-    background-color: gray;
+    border-bottom: 1px solid $my-border-color;
+    .v-button {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .v-touchkit-navbar {
+    border-bottom: none !important;
   }
 
   .navigation-button-wrap {
@@ -99,7 +107,11 @@
   .slidemenu {
     top: 0px !important;
     .v-window-contents {
-      background-color: gray !important;
+      border-right: 1px solid $my-border-color;
+      .v-button {
+        background: transparent !important;
+        box-shadow: none !important;
+      }
     }
   }
 

@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
-import com.vaadin.addon.touchkit.ui.NavigationView;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import org.vaadin.thomas.slidemenu.SlideMenu;
@@ -13,72 +15,51 @@ import org.vaadin.thomas.slidemenu.SlideMenu;
 public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
     @Override
     protected void buildNavigateMenu() {
-// Just a normal Vaadin button
-        final Button close = new Button("close menu");
-        close.setWidth(null);
-        close.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = -1692006683791129470L;
-
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                // Programmatic closing of the menu
-                getMenu().close();
-            }
-        });
-        getMenu().addComponent(close);
 
         // Section labels have a bolded style
-        Label l = new Label("Sections:");
+        Label l = new Label("Views:");
         l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
         getMenu().addComponent(l);
 
         // Buttons with styling (slightly smaller with left-aligned text)
-        Button b = new Button("Dashboard");
-        b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(b);
-
-        b.addClickListener(new Button.ClickListener() {
-
-            private static final long serialVersionUID = -194718083859615332L;
-
+        Button activityBtn = new Button("Activities", new Button.ClickListener() {
             @Override
-            public void buttonClick(Button.ClickEvent event) {
-
-                // TODO automate with the nav listener
+            public void buttonClick(Button.ClickEvent clickEvent) {
                 getMenu().close();
-
-                // Only this button actually does something in the menu. Here we
-                // navigate to a dummy view.
-                getNavigationManager().navigateTo(new NavigationView() {
-                    private static final long serialVersionUID = 7226460754270812124L;
-
-                    {
-                        setContent(new Label("another view"));
-                        setCaption("DashBoard");
-                    }
-                });
             }
         });
+        activityBtn.setIcon(FontAwesome.INBOX);
+        activityBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        getMenu().addComponent(activityBtn);
 
         // add more buttons for a more realistic look.
-        b = new Button("Inbox");
-        b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(b);
+        Button messageBtn = new Button("Messages");
+        messageBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE));
+        messageBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        getMenu().addComponent(messageBtn);
 
-        b = new Button("Admin");
-        b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(b);
+        Button phaseBtn = new Button("Phases");
+        phaseBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        phaseBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
+        getMenu().addComponent(phaseBtn);
+
+        Button ticketBtn = new Button("Tickets");
+        ticketBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        ticketBtn.setIcon(FontAwesome.TICKET);
+        getMenu().addComponent(ticketBtn);
+
+        Button userBtn = new Button("Users");
+        userBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
+        userBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        getMenu().addComponent(userBtn);
 
         l = new Label("Settings:");
         l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
         getMenu().addComponent(l);
 
-        b = new Button("Options");
-        b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(b);
-        b = new Button("Logout");
-        b.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(b);
+        Button logoutBtn = new Button("Logout");
+        logoutBtn.setIcon(FontAwesome.SIGN_OUT);
+        logoutBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        getMenu().addComponent(logoutBtn);
     }
 }

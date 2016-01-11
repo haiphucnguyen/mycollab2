@@ -87,7 +87,16 @@ a {
 
 .v-navbar-quickmenu-content {
 	width: 100%;
-	background-color: gray;
+	border-bottom: 1px solid #c5c5c5;
+}
+
+.v-navbar-quickmenu-content .v-button {
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
+.v-touchkit-navbar {
+	border-bottom: none !important;
 }
 
 .navigation-button-wrap .v-icon {
@@ -104,7 +113,12 @@ a {
 }
 
 .slidemenu .v-window-contents {
-	background-color: gray !important;
+	border-right: 1px solid #c5c5c5;
+}
+
+.slidemenu .v-window-contents .v-button {
+	background: transparent !important;
+	box-shadow: none !important;
 }
 
 .comment-input  > div > .v-horizontallayout {
