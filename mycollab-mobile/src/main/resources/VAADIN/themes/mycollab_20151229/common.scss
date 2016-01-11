@@ -98,6 +98,18 @@
       padding-right: 10px;
     }
   }
+
+  .confirm-dialog {
+    .v-window-outerheader {
+      display: none;
+    }
+    .v-window-closebox {
+      background-color: transparent !important;
+    }
+    .v-horizontallayout .v-button {
+      font-size: 14px;
+    }
+  }
     
   .attachment-panel {
     border-top: 1px solid $light-gray-border;
