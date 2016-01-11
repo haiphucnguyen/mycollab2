@@ -75,8 +75,6 @@ public class CampaignSelectionView extends AbstractSelectionView<CampaignWithBLO
                     CampaignSelectionView.this.getNavigationManager().navigateBack();
                 }
             });
-            if (campaign.getId() == null)
-                b.addStyleName("blank-item");
             return b;
         }
 

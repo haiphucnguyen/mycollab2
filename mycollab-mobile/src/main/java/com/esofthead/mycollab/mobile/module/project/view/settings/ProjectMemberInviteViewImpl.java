@@ -18,7 +18,8 @@ package com.esofthead.mycollab.mobile.module.project.view.settings;
 
 import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectMemberEvent;
-import com.esofthead.mycollab.mobile.module.project.ui.ProjectMobileMenuPageView;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
+import com.esofthead.mycollab.mobile.ui.FormSectionBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
@@ -47,7 +48,7 @@ import java.util.Arrays;
  * @since 4.5.2
  */
 @ViewComponent
-public class ProjectMemberInviteViewImpl extends ProjectMobileMenuPageView implements ProjectMemberInviteView {
+public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implements ProjectMemberInviteView {
     private static final long serialVersionUID = 6319585054784302576L;
     private Integer roleId = 0;
 
@@ -92,12 +93,9 @@ public class ProjectMemberInviteViewImpl extends ProjectMobileMenuPageView imple
         inviteFormLayout.addComponent(messageArea);
 
         inviteFormLayout.addComponent(roleComboBox);
-
         mainLayout.addComponent(inviteFormLayout);
 
-        Label permissionSectionHdr = new Label(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS));
-        permissionSectionHdr.setStyleName("h2");
-        mainLayout.addComponent(permissionSectionHdr);
+        mainLayout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
 
         permissionsPanel = new VerticalComponentGroup();
         mainLayout.addComponent(permissionsPanel);
@@ -110,8 +108,8 @@ public class ProjectMemberInviteViewImpl extends ProjectMobileMenuPageView imple
                 if ("".equals(inviteEmailField.getValue())) {
                     return;
                 }
-                ProjectMemberInviteViewImpl.this.roleId = (Integer) roleComboBox.getValue();
-                ProjectMemberInviteViewImpl.this.fireEvent(new ViewEvent<>(ProjectMemberInviteViewImpl.this,
+                roleId = (Integer) roleComboBox.getValue();
+                fireEvent(new ViewEvent<>(ProjectMemberInviteViewImpl.this,
                         new ProjectMemberEvent.InviteProjectMembers(Arrays.asList(inviteEmailField.getValue()),
                                 ProjectMemberInviteViewImpl.this.roleId, messageArea.getValue())));
 

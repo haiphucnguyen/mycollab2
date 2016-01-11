@@ -83,7 +83,6 @@ public class ProjectModuleController extends AbstractController {
 
     private void bindProjectEvents() {
         this.register(new ApplicationEventListener<ProjectEvent.GotoLogin>() {
-
             private static final long serialVersionUID = -3978301997191156254L;
 
             @Subscribe
@@ -95,7 +94,6 @@ public class ProjectModuleController extends AbstractController {
         });
 
         this.register(new ApplicationEventListener<ProjectEvent.PlainLogin>() {
-
             private static final long serialVersionUID = 7930156079489701720L;
 
             @Subscribe
@@ -110,8 +108,15 @@ public class ProjectModuleController extends AbstractController {
             }
         });
 
-        this.register(new ApplicationEventListener<ProjectEvent.GotoProjectList>() {
+        this.register(new ApplicationEventListener<ProjectEvent.GotoAdd>() {
+            @Subscribe
+            @Override
+            public void handle(ProjectEvent.GotoAdd event) {
 
+            }
+        });
+
+        this.register(new ApplicationEventListener<ProjectEvent.GotoProjectList>() {
             private static final long serialVersionUID = -9006615798118115613L;
 
             @Subscribe
@@ -135,7 +140,6 @@ public class ProjectModuleController extends AbstractController {
             }
         });
         this.register(new ApplicationEventListener<ProjectEvent.AllActivities>() {
-
             private static final long serialVersionUID = 2264166446431876916L;
 
             @Subscribe
@@ -373,7 +377,6 @@ public class ProjectModuleController extends AbstractController {
 
     private void bindMemberEvents() {
         this.register(new ApplicationEventListener<ProjectMemberEvent.GotoList>() {
-
             private static final long serialVersionUID = 976165067913682631L;
 
             @Subscribe

@@ -126,8 +126,7 @@ public class BugAddViewImpl extends AbstractEditItemComp<SimpleBug> implements B
                 });
                 return milestoneBox;
             } else if (propertyId.equals("estimatetime") || (propertyId.equals("estimateremaintime"))) {
-                NumberField field = new NumberField();
-                return field;
+                return new NumberField();
             }
 
             return null;
