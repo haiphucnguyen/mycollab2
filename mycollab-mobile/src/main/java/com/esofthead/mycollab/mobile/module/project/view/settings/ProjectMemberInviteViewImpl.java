@@ -18,7 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.view.settings;
 
 import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectMemberEvent;
-import com.esofthead.mycollab.mobile.module.project.view.ProjectMobileMenuPageView;
+import com.esofthead.mycollab.mobile.module.project.ui.ProjectMobileMenuPageView;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;

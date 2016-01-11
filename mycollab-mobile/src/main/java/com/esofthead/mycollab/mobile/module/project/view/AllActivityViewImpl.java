@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.mobile.module.project.ui.AbstractListViewComp;
+import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
@@ -43,7 +43,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 4.5.2
  */
 @ViewComponent
-public class AllActivityViewImpl extends AbstractListViewComp<ActivityStreamSearchCriteria, ProjectActivityStream> implements AllActivityView {
+public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSearchCriteria, ProjectActivityStream> implements AllActivityView {
     private static final long serialVersionUID = -7722214412998470562L;
 
     public AllActivityViewImpl() {

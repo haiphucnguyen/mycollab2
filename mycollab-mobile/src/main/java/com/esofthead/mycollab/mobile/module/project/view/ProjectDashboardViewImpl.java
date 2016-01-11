@@ -19,6 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.*;
+import com.esofthead.mycollab.mobile.module.project.ui.ProjectMobileMenuPageView;
 import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;

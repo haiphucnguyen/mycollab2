@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.IListView;
 import com.vaadin.ui.Component;
@@ -26,12 +25,12 @@ import com.vaadin.ui.Component;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends AbstractMobileMenuPageView implements IListView<S, B> {
+public abstract class AbstractListPageView<S extends SearchCriteria, B> extends ProjectMobileMenuPageView implements IListView<S, B> {
     private static final long serialVersionUID = 3603608419228750094L;
 
     protected AbstractPagedBeanList<S, B> itemList;
 
-    public AbstractListViewComp() {
+    public AbstractListPageView() {
         this.itemList = createBeanList();
         setContent(itemList);
     }
@@ -57,11 +56,6 @@ public abstract class AbstractListViewComp<S extends SearchCriteria, B> extends 
         if (toolbar != null) {
             setToolbar(toolbar);
         }
-    }
-
-    @Override
-    protected void buildNavigateMenu() {
-
     }
 
     abstract protected AbstractPagedBeanList<S, B> createBeanList();

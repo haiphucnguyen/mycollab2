@@ -18,6 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayComp;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
@@ -33,6 +34,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
@@ -45,6 +47,8 @@ import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -206,6 +210,12 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                     field.addStyleName("task-" + beanItem.getPriority().toLowerCase());
                     return field;
                 }
+            } else if (Task.Field.milestoneid.equalTo(propertyId)) {
+                A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+                        (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
+                Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants
+                        .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
+                return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
             } else if (propertyId.equals("notes")) {
                 return new RichTextViewField(beanItem.getNotes());
             }

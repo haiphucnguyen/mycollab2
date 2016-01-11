@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view;
 
+import com.esofthead.mycollab.mobile.module.project.ui.ProjectMobileMenuPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 
 /**

@@ -18,11 +18,10 @@ package com.esofthead.mycollab.mobile.module.project.view.settings;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectMemberEvent;
-import com.esofthead.mycollab.mobile.module.project.ui.AbstractListViewComp;
+import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
-import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -36,7 +35,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 4.5.2
  */
 @ViewComponent
-public class ProjectMemberListViewImpl extends AbstractListViewComp<ProjectMemberSearchCriteria, SimpleProjectMember>
+public class ProjectMemberListViewImpl extends AbstractListPageView<ProjectMemberSearchCriteria, SimpleProjectMember>
         implements ProjectMemberListView {
     private static final long serialVersionUID = 3008732621100597514L;
 

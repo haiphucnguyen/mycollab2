@@ -18,6 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.mobile.module.project.ui.CommentNavigationButton;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectAttachmentDisplayComp;
 import com.esofthead.mycollab.mobile.module.project.ui.ProjectPreviewFormControlsGenerator;
@@ -37,6 +38,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugResolution;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugSeverity;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.BugStatus;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -50,6 +52,8 @@ import com.esofthead.mycollab.vaadin.ui.form.field.DateViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.ui.form.field.RichTextViewField;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -280,11 +284,15 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 return new DefaultViewField(ProjectLinkBuilder.generateProjectMemberHtmlLink(CurrentProjectVariables
                         .getProjectId(), beanItem.getLogby(), beanItem.getLoguserFullName(), beanItem
                         .getLoguserAvatarId(), false), ContentMode.HTML);
-            } else if (propertyId.equals("milestoneid")) {
+            } else if (BugWithBLOBs.Field.milestoneid.equalTo(propertyId)) {
                 if (beanItem.getMilestoneid() != null) {
-                    return new DefaultViewField(beanItem.getMilestoneName());
+                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+                            (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants
+                            .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
+                    return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
                 } else {
-                    return new DefaultViewField("");
+                    return new DefaultViewField("", ContentMode.HTML);
                 }
 
             } else if (propertyId.equals("environment")) {

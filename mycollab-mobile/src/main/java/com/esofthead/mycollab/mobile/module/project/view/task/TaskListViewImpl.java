@@ -18,7 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.TaskEvent;
-import com.esofthead.mycollab.mobile.module.project.ui.AbstractListViewComp;
+import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -35,7 +35,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 4.5.0
  */
 @ViewComponent
-public class TaskListViewImpl extends AbstractListViewComp<TaskSearchCriteria, SimpleTask> implements TaskListView {
+public class TaskListViewImpl extends AbstractListPageView<TaskSearchCriteria, SimpleTask> implements TaskListView {
     private static final long serialVersionUID = -3705209608075399509L;
 
     @Override

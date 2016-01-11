@@ -19,6 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view.task;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.mobile.ui.FormSectionBuilder;
 import com.esofthead.mycollab.mobile.ui.grid.GridFormLayoutHelper;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -63,7 +64,7 @@ public class TaskFormLayoutFactory implements IFormLayoutFactory {
             this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_PRIORITY), 0, 6);
         } else if (propertyId.equals("assignuser")) {
             this.informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE), 0, 7);
-        } else if (propertyId.equals("tasklistid")) {
+        } else if (Task.Field.milestoneid.equalTo(propertyId)) {
             this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_MILESTONE), 0, 8);
         } else if (propertyId.equals("percentagecomplete")) {
             this.informationLayout.addComponent(field, AppContext.getMessage(TaskI18nEnum.FORM_PERCENTAGE_COMPLETE), 0, 9);

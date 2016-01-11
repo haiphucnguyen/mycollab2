@@ -18,7 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.view;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.mobile.module.project.ui.AbstractListViewComp;
+import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
@@ -28,7 +28,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import org.vaadin.thomas.slidemenu.SlideMenuView;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -36,7 +35,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 4.4.0
  */
 @ViewComponent
-public class ProjectListViewImpl extends AbstractListViewComp<ProjectSearchCriteria, SimpleProject> implements ProjectListView {
+public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCriteria, SimpleProject> implements ProjectListView {
     private static final long serialVersionUID = 664947871255886622L;
 
     public ProjectListViewImpl() {
