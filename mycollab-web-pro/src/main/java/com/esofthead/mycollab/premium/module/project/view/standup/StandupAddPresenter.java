@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
@@ -30,7 +30,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<StandupReportWithBLOBs>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<StandupReportWithBLOBs>() {
             private static final long serialVersionUID = 1L;
 
             @Override

@@ -136,9 +136,9 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
             layout.setMargin(false);
             layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 
-            this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
-            layout.addComponent(this.informationLayout.getLayout());
-            layout.setComponentAlignment(this.informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
+            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 3);
+            layout.addComponent(informationLayout.getLayout());
+            layout.setComponentAlignment(informationLayout.getLayout(), Alignment.BOTTOM_CENTER);
 
             layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
             layout.addComponent(permissionGroup);
@@ -148,11 +148,11 @@ public class ProjectMemberReadViewImpl extends AbstractPreviewItemComp<SimplePro
         @Override
         public void attachField(Object propertyId, Field<?> field) {
             if (propertyId.equals("memberFullName")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_USER), 0, 0);
             } else if (propertyId.equals("email")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_EMAIL), 0, 1);
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.M_FORM_EMAIL), 0, 1);
             } else if (propertyId.equals("roleName")) {
-                this.informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0, 2);
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectMemberI18nEnum.FORM_ROLE), 0, 2);
             }
         }
     }

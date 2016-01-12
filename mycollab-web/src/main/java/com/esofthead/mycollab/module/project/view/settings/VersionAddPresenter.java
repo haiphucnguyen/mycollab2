@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -47,7 +47,7 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Version>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<Version>() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -106,5 +106,4 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
             NotificationUtil.showMessagePermissionAlert();
         }
     }
-
 }

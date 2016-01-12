@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @since 1.0
  * 
  */
-public interface EditFormHandler<T> extends Serializable {
+public interface IEditFormHandler<T> extends Serializable {
 	/**
 	 * 
 	 * @param bean

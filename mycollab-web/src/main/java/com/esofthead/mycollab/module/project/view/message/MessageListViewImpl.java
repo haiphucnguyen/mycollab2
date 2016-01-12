@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectListNoItemView
 import com.esofthead.mycollab.module.project.ui.components.ProjectMemberBlock;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -75,7 +75,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
     private static final long serialVersionUID = 8433776359091397422L;
 
     private DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
-    private Set<EditFormHandler<Message>> editFormHandlers;
+    private Set<IEditFormHandler<Message>> editFormHandlers;
     private MessageSearchCriteria searchCriteria;
     private TopMessagePanel topMessagePanel;
     private boolean isEmpty;
@@ -98,7 +98,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
     }
 
     @Override
-    public void addFormHandler(final EditFormHandler<Message> handler) {
+    public void addFormHandler(final IEditFormHandler<Message> handler) {
         if (editFormHandlers == null) {
             editFormHandlers = new HashSet<>();
         }
@@ -107,7 +107,7 @@ public class MessageListViewImpl extends AbstractPageView implements MessageList
 
     private void fireSaveItem(final Message message) {
         if (editFormHandlers != null) {
-            for (EditFormHandler<Message> handler : editFormHandlers) {
+            for (IEditFormHandler<Message> handler : editFormHandlers) {
                 handler.onSave(message);
             }
         }

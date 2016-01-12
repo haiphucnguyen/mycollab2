@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -46,7 +46,7 @@ public class AccountAddPresenter extends AbstractMobilePresenter<AccountAddView>
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<SimpleAccount>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<SimpleAccount>() {
             private static final long serialVersionUID = 1L;
 
             @Override

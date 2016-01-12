@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -48,7 +48,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Component>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<Component>() {
             private static final long serialVersionUID = 1L;
 
             @Override

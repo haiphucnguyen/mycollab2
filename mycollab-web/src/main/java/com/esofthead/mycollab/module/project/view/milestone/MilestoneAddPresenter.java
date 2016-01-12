@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectViewPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -48,7 +48,7 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<SimpleMilestone>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<SimpleMilestone>() {
             private static final long serialVersionUID = 1L;
 
             @Override

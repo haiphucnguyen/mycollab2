@@ -50,8 +50,7 @@ public abstract class AbstractBeanFieldGroupFieldFactory<B> implements IBeanFiel
     protected boolean isReadOnlyGroup;
     protected Validator validation;
 
-    public AbstractBeanFieldGroupFieldFactory(GenericBeanForm<B> form, boolean isValidateForm, boolean
-            isReadOnlyGroup) {
+    public AbstractBeanFieldGroupFieldFactory(GenericBeanForm<B> form, boolean isValidateForm, boolean isReadOnlyGroup) {
         this.attachForm = form;
         this.fieldGroup = new FieldGroup();
         this.fieldGroup.setBuffered(true);
