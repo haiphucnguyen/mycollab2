@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.crm.view.opportunity.IOpportunityPipelineFu
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.web.ui.Depot;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.Configuration;
 import com.vaadin.addon.charts.model.Credits;

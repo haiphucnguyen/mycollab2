@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view.task;
 
+import com.esofthead.mycollab.mobile.ui.I18nValueComboBox;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.TaskPriority;
 
 import java.util.Arrays;

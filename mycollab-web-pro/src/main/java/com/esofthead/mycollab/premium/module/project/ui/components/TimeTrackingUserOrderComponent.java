@@ -19,7 +19,7 @@ package com.esofthead.mycollab.premium.module.project.ui.components;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserLink;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable.TableClickListener;
+import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 
 import java.util.List;
 

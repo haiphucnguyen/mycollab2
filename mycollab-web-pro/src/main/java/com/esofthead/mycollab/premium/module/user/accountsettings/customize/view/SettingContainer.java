@@ -20,8 +20,7 @@ import com.esofthead.mycollab.module.user.accountsettings.customize.view.ISettin
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.TabSheetDecorator;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.TabSheetDecorator;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 

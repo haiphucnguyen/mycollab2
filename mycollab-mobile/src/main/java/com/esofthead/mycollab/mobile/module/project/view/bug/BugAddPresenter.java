@@ -41,10 +41,6 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-
-/*
- * TODO: Add support for Attachments, Components, Versions when they're ready
- */
 public class BugAddPresenter extends AbstractMobilePresenter<BugAddView> {
     private static final long serialVersionUID = 1L;
 
