@@ -36,10 +36,6 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements Proj
     private static final long serialVersionUID = 2079094611178305339L;
 
     public ProjectLoginViewImpl() {
-        initUI();
-    }
-
-    private void initUI() {
         this.setStyleName("login-view");
         this.setSizeFull();
 

@@ -16,7 +16,11 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view;
 
+import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
+import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList.RowDisplayHandler;
@@ -24,10 +28,18 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
+import com.esofthead.mycollab.module.project.ui.components.ProjectAuditLogStreamGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Img;
+import com.hp.gagawa.java.elements.Text;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Label;
 
 /**
  * @author MyCollab Ltd.
@@ -56,25 +68,93 @@ public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSear
     private static class ActivityStreamRowHandler implements RowDisplayHandler<ProjectActivityStream> {
 
         @Override
-        public Component generateRow(final ProjectActivityStream streamData, int rowIndex) {
-            return null;
+        public Component generateRow(final ProjectActivityStream activityStream, int rowIndex) {
+            CssLayout layout = new CssLayout();
+            layout.addStyleName("activity-cell");
+            StringBuilder content = new StringBuilder();
+            String assigneeValue = buildAssigneeValue(activityStream);
+            String itemLink = buildItemValue(activityStream);
+            String projectLink = buildProjectValue(activityStream);
+            String type = AppContext.getMessage(ProjectLocalizationTypeMap.getType(activityStream.getType()));
+
+            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
+                    content.append(AppContext.getMessage(
+                            ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
+                            assigneeValue, type, projectLink));
+                } else {
+                    content.append(AppContext.getMessage(
+                            ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_CREATE_ACTION_TITLE,
+                            assigneeValue, type, itemLink, projectLink));
+                }
+
+            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
+                if (ProjectTypeConstants.PROJECT.equals(activityStream.getType())) {
+                    content.append(AppContext.getMessage(
+                            ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
+                            assigneeValue, type, projectLink));
+                } else {
+                    content.append(AppContext.getMessage(
+                            ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_UPDATE_ACTION_TITLE,
+                            assigneeValue, type, itemLink, projectLink));
+                }
+                if (activityStream.getAssoAuditLog() != null) {
+                    content.append(ProjectAuditLogStreamGenerator
+                            .generatorDetailChangeOfActivity(activityStream));
+                }
+            } else if (ActivityStreamConstants.ACTION_COMMENT.equals(activityStream.getAction())) {
+                content.append(AppContext.getMessage(
+                        ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_COMMENT_ACTION_TITLE,
+                        assigneeValue, type, itemLink, projectLink));
+
+                if (activityStream.getAssoAuditLog() != null) {
+                    content.append("<p><ul><li>\"").append(activityStream.getAssoAuditLog()
+                            .getChangeset()).append("\"</li></ul></p>");
+                }
+            }
+
+            Label actionLbl = new Label(content.toString(), ContentMode.HTML);
+            layout.addComponent(actionLbl);
+            return layout;
         }
 
     }
 
-    private static String generateItemLink(ProjectActivityStream stream) {
+    private static String buildAssigneeValue(ProjectActivityStream activityStream) {
+        DivLessFormatter div = new DivLessFormatter();
+        Img userAvatar = new Img("", StorageFactory.getInstance().getAvatarPath(activityStream.getCreatedUserAvatarId(), 16));
+        A userLink = new A().setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+                activityStream.getExtratypeid(), activityStream.getCreateduser()));
+        userLink.appendText(StringUtils.trim(activityStream.getCreatedUserFullName(), 30, true));
+
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
+        return div.write();
+    }
+
+    private static String buildItemValue(ProjectActivityStream activityStream) {
+        DivLessFormatter div = new DivLessFormatter();
+        Text itemImg = new Text(ProjectAssetsManager.getAsset(activityStream.getType()).getHtml());
         A itemLink = new A();
-        if (ProjectTypeConstants.TASK.equals(stream.getType()) || ProjectTypeConstants.BUG.equals(stream.getType())) {
-            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
-                    stream.getProjectShortName(), stream.getExtratypeid(),
-                    stream.getType(), stream.getItemKey() + ""));
+
+        if (ProjectTypeConstants.TASK.equals(activityStream.getType())
+                || ProjectTypeConstants.BUG.equals(activityStream.getType())) {
+            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(activityStream.getProjectShortName(),
+                    activityStream.getExtratypeid(), activityStream.getType(), activityStream.getItemKey() + ""));
         } else {
-            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(
-                    stream.getProjectShortName(), stream.getExtratypeid(),
-                    stream.getType(), stream.getTypeid()));
+            itemLink.setHref(ProjectLinkBuilder.generateProjectItemLink(activityStream.getProjectShortName(),
+                    activityStream.getExtratypeid(), activityStream.getType(), activityStream.getTypeid()));
         }
-        itemLink.appendText(stream.getNamefield());
-        return itemLink.write();
+        itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
+
+        div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink);
+        return div.write();
     }
 
+    private static String buildProjectValue(ProjectActivityStream activityStream) {
+        DivLessFormatter div = new DivLessFormatter();
+        Text prjImg = new Text(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml());
+        A prjLink = new A(ProjectLinkBuilder.generateProjectFullLink(activityStream.getProjectId())).appendText(activityStream.getProjectName());
+        div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink);
+        return div.write();
+    }
 }

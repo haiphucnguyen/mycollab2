@@ -61,6 +61,7 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 getMenu().close();
+                EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this, null));
             }
         });
         activityBtn.setIcon(FontAwesome.INBOX);
@@ -71,6 +72,7 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 getMenu().close();
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectList(this, null));
             }
         });
         prjBtn.setIcon(FontAwesome.BUILDING);
