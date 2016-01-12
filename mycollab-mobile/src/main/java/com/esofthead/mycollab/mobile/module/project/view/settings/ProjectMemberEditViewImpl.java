@@ -97,7 +97,6 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
                 permissionGroup.addComponent(permissionLbl);
             }
         }
-
     }
 
     private class ProjectMemberEditFormLayoutFactory implements IFormLayoutFactory {
@@ -111,8 +110,8 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             layout.setWidth(UIUtils.getBrowserWidthInPixels());
             layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 
-            this.informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
-            layout.addComponent(this.informationLayout.getLayout());
+            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);
+            layout.addComponent(informationLayout.getLayout());
             layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS)));
             layout.addComponent(permissionGroup);
 
