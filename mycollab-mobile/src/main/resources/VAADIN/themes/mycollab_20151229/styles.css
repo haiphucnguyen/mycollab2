@@ -347,6 +347,11 @@ body {
 	text-align: center;
 }
 
+.activity-cell {
+	border-bottom: 1px solid #e5e5e5;
+	padding: 5px;
+}
+
 .bug-blocker .v-icon, .v-filterselect-item-bug-blocker .v-icon {
 	color: #d32d1a;
 }

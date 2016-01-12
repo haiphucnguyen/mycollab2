@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.utils;
 
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
@@ -24,7 +8,6 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.web.ui.HistoryFieldFormat;
 import com.hp.gagawa.java.elements.I;
 import com.hp.gagawa.java.elements.Li;
 import org.slf4j.Logger;
@@ -62,27 +45,22 @@ public class FieldGroupFormatter {
         defaultFieldHandlers.put(CURRENCY_FIELD, new CurrencyHistoryFieldFormat());
     }
 
-    @SuppressWarnings("rawtypes")
     public void generateFieldDisplayHandler(String fieldName, Enum displayName) {
         fieldsFormat.put(fieldName, new FieldDisplayHandler(displayName));
     }
 
-    @SuppressWarnings("rawtypes")
     public void generateFieldDisplayHandler(String fieldName, Enum displayName, HistoryFieldFormat format) {
         fieldsFormat.put(fieldName, new FieldDisplayHandler(displayName, format));
     }
 
-    @SuppressWarnings("rawtypes")
     public void generateFieldDisplayHandler(String fieldName, Enum displayName, String formatName) {
-        fieldsFormat.put(fieldName, new FieldDisplayHandler(displayName,
-                defaultFieldHandlers.get(formatName)));
+        fieldsFormat.put(fieldName, new FieldDisplayHandler(displayName, defaultFieldHandlers.get(formatName)));
     }
 
     public FieldDisplayHandler getFieldDisplayHandler(String fieldName) {
         return fieldsFormat.get(fieldName);
     }
 
-    @SuppressWarnings("rawtypes")
     public static class FieldDisplayHandler {
         private Enum displayName;
         private HistoryFieldFormat format;
@@ -211,7 +189,6 @@ public class FieldGroupFormatter {
         }
     }
 
-    @SuppressWarnings("rawtypes")
     public static class I18nHistoryFieldFormat implements HistoryFieldFormat {
         private Class<? extends Enum> enumCls;
 
