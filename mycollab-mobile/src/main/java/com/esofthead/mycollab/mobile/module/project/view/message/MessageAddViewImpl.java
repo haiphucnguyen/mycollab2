@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.addon.touchkit.ui.Switch;
@@ -91,7 +91,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         this.content.addComponent(addFormLayout);
         this.content.addComponent(bottomRow);
 
-        this.saveBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_DONE), new Button.ClickListener() {
+        this.saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 final SimpleMessage message = new SimpleMessage();

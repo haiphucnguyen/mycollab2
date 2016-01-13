@@ -20,7 +20,7 @@ import com.esofthead.mycollab.common.domain.CommentWithBLOBs;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.utils.ImageUtil;
-import com.esofthead.mycollab.mobile.ui.IconConstants;
+import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.mobile.ui.MobileAttachmentUtils;
 import com.esofthead.mycollab.mobile.ui.TempFileFactory;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
@@ -28,8 +28,9 @@ import com.esofthead.mycollab.module.file.AttachmentUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
-import com.esofthead.mycollab.vaadin.ui.ReloadableComponent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -48,54 +50,43 @@ import java.util.*;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class ProjectCommentInput extends VerticalLayout {
-    private static final Logger LOG = LoggerFactory.getLogger(ProjectCommentInput.class.getName());
-    private static final long serialVersionUID = 8118887310759503892L;
+public class ProjectCommentInputView extends AbstractMobilePageView {
+    private static final Logger LOG = LoggerFactory.getLogger(ProjectCommentInputView.class.getName());
 
-    private TextField commentInput;
+    private TextArea commentInput;
 
     private String type;
     private String typeId;
     private Integer extraTypeId;
-    private ReloadableComponent component;
 
     private FileBuffer receiver;
     private MultiUpload uploadField;
     private Map<String, File> fileStores;
 
     private ResourceService resourceService;
-
-    private int currentPollInterval;
-
     private CssLayout statusWrapper;
 
-    public ProjectCommentInput(ReloadableComponent component, String typeVal, Integer extraTypeIdVal) {
+    public ProjectCommentInputView(String typeVal, String typeIdVal, Integer extraTypeIdVal) {
+        this.setCaption("Add a comment");
         resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
-        this.setWidth("100%");
-        this.setStyleName("comment-input");
+        MVerticalLayout content = new MVerticalLayout().withFullWidth().withStyleName("comment-input");
+        this.setContent(content);
 
         type = typeVal;
+        typeId = typeIdVal;
         extraTypeId = extraTypeIdVal;
-        this.component = component;
 
-        currentPollInterval = UI.getCurrent().getPollInterval();
-        constructUI();
-    }
-
-    private void constructUI() {
         statusWrapper = new CssLayout();
         statusWrapper.setWidth("100%");
         statusWrapper.setStyleName("upload-status-wrap");
-        this.addComponent(statusWrapper);
 
-        MHorizontalLayout inputWrapper = new MHorizontalLayout().withWidth("100%");
+        prepareUploadField();
 
-        this.prepareUploadField();
-
-        commentInput = new TextField();
+        commentInput = new TextArea();
+        commentInput.setWidth("100%");
         commentInput.setInputPrompt(AppContext.getMessage(GenericI18Enum.M_NOTE_INPUT_PROMPT));
 
-        Button postBtn = new Button(AppContext.getMessage(GenericI18Enum.M_BUTTON_SEND), new Button.ClickListener() {
+        Button postBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 final CommentWithBLOBs comment = new CommentWithBLOBs();
@@ -116,24 +107,18 @@ public class ProjectCommentInput extends VerticalLayout {
                     saveContentsToRepo(attachmentPath);
                 }
 
-                // save success, clear comment area and load list comments again
-                commentInput.setValue("");
-                statusWrapper.removeAllComponents();
-                component.reload();
+                getNavigationManager().navigateBack();
             }
         });
-        postBtn.setStyleName("submit-btn");
-        postBtn.setWidthUndefined();
-        inputWrapper.with(uploadField, commentInput, postBtn).expand(commentInput);
-        this.addComponent(inputWrapper);
-        this.setExpandRatio(inputWrapper, 1.0f);
+        this.setRightComponent(postBtn);
+        content.with(commentInput, new Hr(), uploadField, statusWrapper);
     }
 
     private void prepareUploadField() {
         receiver = createReceiver();
 
         uploadField = new MultiUpload();
-        uploadField.setButtonCaption("");
+        uploadField.setButtonCaption("File");
         uploadField.setImmediate(true);
 
         MultiUploadHandler handler = new MultiUploadHandler() {
@@ -154,10 +139,6 @@ public class ProjectCommentInput extends VerticalLayout {
 
                 if (!indicators.isEmpty()) {
                     statusWrapper.replaceComponent(indicators.remove(0), createAttachmentRow(fileName));
-                }
-
-                if (indicators.size() == 0) {
-                    UI.getCurrent().setPollInterval(currentPollInterval);
                 }
 
                 File file = receiver.getFile();
@@ -216,31 +197,20 @@ public class ProjectCommentInput extends VerticalLayout {
     }
 
     private Component createAttachmentRow(String fileName) {
-        final HorizontalLayout uploadSucceedLayout = new HorizontalLayout();
-        uploadSucceedLayout.setWidth("100%");
+        final MHorizontalLayout uploadSucceedLayout = new MHorizontalLayout().withFullWidth();
         Label uploadResult = new Label(fileName);
-        uploadResult.setWidth("100%");
-        uploadSucceedLayout.addComponent(uploadResult);
-        uploadSucceedLayout.setExpandRatio(uploadResult, 1.0f);
+        uploadSucceedLayout.with(uploadResult).expand(uploadResult);
 
-        Button removeAttachment = new Button(
-                "<span aria-hidden=\"true\" data-icon=\""
-                        + IconConstants.DELETE + "\"></span>",
-                new Button.ClickListener() {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        statusWrapper.removeComponent(uploadSucceedLayout);
-                    }
-
-                });
+        Button removeAttachment = new Button("", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                statusWrapper.removeComponent(uploadSucceedLayout);
+            }
+        });
+        removeAttachment.setIcon(FontAwesome.TRASH);
         removeAttachment.setHtmlContentAllowed(true);
         removeAttachment.setStyleName("link");
         uploadSucceedLayout.addComponent(removeAttachment);
-        uploadSucceedLayout.setStyleName("upload-succeed-layout");
-        uploadSucceedLayout.setSpacing(true);
         return uploadSucceedLayout;
     }
 
@@ -308,10 +278,6 @@ public class ProjectCommentInput extends VerticalLayout {
         };
         receiver.setDeleteFiles(false);
         return receiver;
-    }
-
-    public void setTypeAndId(final String typeid) {
-        this.typeId = typeid;
     }
 
     public void receiveFile(File file, String fileName, String mimeType, long length) {
