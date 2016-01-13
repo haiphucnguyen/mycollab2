@@ -102,6 +102,17 @@
     overflow-x: hidden !important;
   }
 
+  .v-touchkit-navbar-caption {
+    font-size: smaller;
+    span {
+    display: block;
+      @include truncate();
+    }
+  }
+  .v-touchkit-navbar .v-navbar-quickmenu-button {
+    font-size: 20px !important;
+  }
+
   .navigation-button-wrap {
     .v-icon {
       padding-right: 10px;

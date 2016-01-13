@@ -1,11 +1,5 @@
 @import "variables.scss";
 
 @mixin vaadin-components {
-  .v-touchkit-navbar-caption {
-    font-size: smaller;
-  }
 
-  .v-touchkit-navbar .v-navbar-quickmenu-button {
-    font-size: 20px !important;
-  }
 }

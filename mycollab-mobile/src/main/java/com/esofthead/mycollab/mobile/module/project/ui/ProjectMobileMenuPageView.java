@@ -23,8 +23,6 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
-import org.vaadin.thomas.slidemenu.SlideMenu;
 
 /**
  * @author MyCollab Ltd
@@ -33,11 +31,7 @@ import org.vaadin.thomas.slidemenu.SlideMenu;
 public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
     @Override
     protected void buildNavigateMenu() {
-
-        // Section labels have a bolded style
-        Label l = new Label("Views:");
-        l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-        getMenu().addComponent(l);
+        addSection("Views:");
 
         Button prjButton = new Button("Projects", new Button.ClickListener() {
             @Override
@@ -47,8 +41,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             }
         });
         prjButton.setIcon(FontAwesome.BUILDING);
-        prjButton.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(prjButton);
+        addMenuItem(prjButton);
 
         // Buttons with styling (slightly smaller with left-aligned text)
         Button activityBtn = new Button("Activities", new Button.ClickListener() {
@@ -59,8 +52,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             }
         });
         activityBtn.setIcon(FontAwesome.INBOX);
-        activityBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(activityBtn);
+        addMenuItem(activityBtn);
 
         // add more buttons for a more realistic look.
         Button messageBtn = new Button("Messages", new Button.ClickListener() {
@@ -71,8 +63,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             }
         });
         messageBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MESSAGE));
-        messageBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(messageBtn);
+        addMenuItem(messageBtn);
 
         Button phaseBtn = new Button("Phases", new Button.ClickListener() {
             @Override
@@ -81,9 +72,8 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null));
             }
         });
-        phaseBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
         phaseBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
-        getMenu().addComponent(phaseBtn);
+        addMenuItem(phaseBtn);
 
         Button taskBtn = new Button("Tasks", new Button.ClickListener() {
             @Override
@@ -92,9 +82,8 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
                 EventBusFactory.getInstance().post(new TaskEvent.GotoList(this, null));
             }
         });
-        taskBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
         taskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
-        getMenu().addComponent(taskBtn);
+        addMenuItem(taskBtn);
 
         Button bugBtn = new Button("Bugs", new Button.ClickListener() {
             @Override
@@ -103,9 +92,8 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
                 EventBusFactory.getInstance().post(new BugEvent.GotoList(this, null));
             }
         });
-        bugBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
         bugBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
-        getMenu().addComponent(bugBtn);
+        addMenuItem(bugBtn);
 
         Button userBtn = new Button("Users", new Button.ClickListener() {
             @Override
@@ -115,12 +103,9 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             }
         });
         userBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MEMBER));
-        userBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(userBtn);
+        addMenuItem(userBtn);
 
-        l = new Label("Settings:");
-        l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
-        getMenu().addComponent(l);
+        addSection("Settings:");
 
         Button logoutBtn = new Button("Logout", new Button.ClickListener() {
             @Override
@@ -129,7 +114,6 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             }
         });
         logoutBtn.setIcon(FontAwesome.SIGN_OUT);
-        logoutBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        getMenu().addComponent(logoutBtn);
+        addMenuItem(logoutBtn);
     }
 }
