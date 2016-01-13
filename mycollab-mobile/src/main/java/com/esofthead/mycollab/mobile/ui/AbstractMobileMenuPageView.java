@@ -45,6 +45,10 @@ public abstract class AbstractMobileMenuPageView extends SlideMenuView implement
         buildNavigateMenu();
     }
 
+    public void closeMenu() {
+        getMenu().close();
+    }
+
     protected abstract void buildNavigateMenu();
 
     @Override

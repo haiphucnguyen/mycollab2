@@ -17,10 +17,7 @@
 package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.module.project.events.MessageEvent;
-import com.esofthead.mycollab.mobile.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.mobile.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.mobile.module.project.events.*;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
@@ -45,7 +42,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         Button prjButton = new Button("Projects", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getMenu().close();
+                closeMenu();
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectList(this, null));
             }
         });
@@ -57,7 +54,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         Button activityBtn = new Button("Activities", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getMenu().close();
+                closeMenu();
                 EventBusFactory.getInstance().post(new ProjectEvent.MyProjectActivities(this, null));
             }
         });
@@ -69,7 +66,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         Button messageBtn = new Button("Messages", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getMenu().close();
+                closeMenu();
                 EventBusFactory.getInstance().post(new MessageEvent.GotoList(this, null));
             }
         });
@@ -80,7 +77,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         Button phaseBtn = new Button("Phases", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getMenu().close();
+                closeMenu();
                 EventBusFactory.getInstance().post(new MilestoneEvent.GotoList(this, null));
             }
         });
@@ -88,14 +85,32 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         phaseBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.MILESTONE));
         getMenu().addComponent(phaseBtn);
 
-        Button ticketBtn = new Button("Tickets");
-        ticketBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
-        ticketBtn.setIcon(FontAwesome.TICKET);
-        getMenu().addComponent(ticketBtn);
+        Button taskBtn = new Button("Tasks", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                closeMenu();
+                EventBusFactory.getInstance().post(new TaskEvent.GotoList(this, null));
+            }
+        });
+        taskBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        taskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.TASK));
+        getMenu().addComponent(taskBtn);
+
+        Button bugBtn = new Button("Bugs", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                closeMenu();
+                EventBusFactory.getInstance().post(new BugEvent.GotoList(this, null));
+            }
+        });
+        bugBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
+        bugBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.BUG));
+        getMenu().addComponent(bugBtn);
 
         Button userBtn = new Button("Users", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                closeMenu();
                 EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
             }
         });
@@ -107,7 +122,12 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
         l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
         getMenu().addComponent(l);
 
-        Button logoutBtn = new Button("Logout");
+        Button logoutBtn = new Button("Logout", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                closeMenu();
+            }
+        });
         logoutBtn.setIcon(FontAwesome.SIGN_OUT);
         logoutBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
         getMenu().addComponent(logoutBtn);

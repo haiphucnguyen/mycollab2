@@ -60,7 +60,7 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
         Button activityBtn = new Button("Activities", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getMenu().close();
+                closeMenu();
                 EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this, null));
             }
         });
@@ -71,7 +71,7 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
         Button prjBtn = new Button("Projects", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                getMenu().close();
+                closeMenu();
                 EventBusFactory.getInstance().post(new ProjectEvent.GotoProjectList(this, null));
             }
         });
@@ -83,7 +83,12 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
         l.addStyleName(SlideMenu.STYLENAME_SECTIONLABEL);
         getMenu().addComponent(l);
 
-        Button logoutBtn = new Button("Logout");
+        Button logoutBtn = new Button("Logout", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                closeMenu();
+            }
+        });
         logoutBtn.setIcon(FontAwesome.SIGN_OUT);
         logoutBtn.addStyleName(SlideMenu.STYLENAME_BUTTON);
         getMenu().addComponent(logoutBtn);

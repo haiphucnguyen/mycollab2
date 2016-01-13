@@ -107,7 +107,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
         public ComponentContainer getLayout() {
             final VerticalLayout layout = new VerticalLayout();
             layout.setMargin(false);
-            layout.setWidth(UIUtils.getBrowserWidthInPixels());
+            layout.setWidth("100%");
             layout.addComponent(FormSectionBuilder.build(AppContext.getMessage(ProjectMemberI18nEnum.FORM_INFORMATION_SECTION)));
 
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(1, 2);

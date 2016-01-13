@@ -23,7 +23,11 @@
 }
 
 .section {
+  width: 100%;
   @include section-header();
+  .v-touchkit-navbutton {
+    width: 100% !important;
+  }
 }
 
 @mixin truncate() {
@@ -57,6 +61,7 @@
   }
 
   .v-gridlayout.colored-gridlayout {
+    width: 100%;
     .gridform-caption, .gridform-field {
       @include margin-container(8px, 8px, 4px, 0px);
       border-bottom: 1px solid $my-separator-color;
@@ -93,6 +98,10 @@
     border-bottom: none !important;
   }
 
+  .v-touchkit-navview-wrapper, .v-touchkit-navpanel, .v-scrollable {
+    overflow-x: hidden !important;
+  }
+
   .navigation-button-wrap {
     .v-icon {
       padding-right: 10px;
@@ -125,6 +134,10 @@
         box-shadow: none !important;
       }
     }
+  }
+
+  .full-width-comp {
+    width: 100%;
   }
 
   .comment-input {
