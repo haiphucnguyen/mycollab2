@@ -75,6 +75,12 @@ public class ProjectCommentListView extends AbstractMobilePageView implements Re
     }
 
     @Override
+    protected void onBecomingVisible() {
+        super.onBecomingVisible();
+        displayCommentList();
+    }
+
+    @Override
     public void reload() {
         displayCommentList();
     }
