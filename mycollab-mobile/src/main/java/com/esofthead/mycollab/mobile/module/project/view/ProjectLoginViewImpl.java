@@ -85,11 +85,6 @@ public class ProjectLoginViewImpl extends AbstractMobileMainView implements Proj
         signInBtn.addStyleName(UIConstants.BUTTON_ACTION);
         contentLayout.addComponent(signInBtn);
 
-        Button createAccountBtn = new Button("Create Account");
-        createAccountBtn.setWidth("100%");
-        createAccountBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        contentLayout.addComponent(createAccountBtn);
-
         this.addComponent(contentLayout);
     }
 }

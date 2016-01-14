@@ -46,6 +46,8 @@ public class ThemeManager {
 
         extraStyles.append(".v-touchkit-navbar-caption { width: " + (UIUtils.getBrowserWidth() - 144) + "px " +
                 "!important; }");
+        extraStyles.append(".v-touchkit-navbar-caption span { width: " + (UIUtils.getBrowserWidth() - 144) + "px " +
+                "!important; }");
         if (accountTheme.getTopmenubg() != null) {
             extraStyles.append(".v-touchkit-navbar { background-color: #" + accountTheme.getTopmenubg() + "; }");
             extraStyles.append(".project-dashboard .project-info-layout { background-color: "
