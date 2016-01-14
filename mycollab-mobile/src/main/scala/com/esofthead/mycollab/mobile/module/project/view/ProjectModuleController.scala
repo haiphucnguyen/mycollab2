@@ -43,25 +43,6 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   bindMemberEvents()
 
   private def bindProjectEvents() {
-    this.register(new ApplicationEventListener[ProjectEvent.GotoLogin]() {
-      @Subscribe def handle(event: ProjectEvent.GotoLogin) {
-        val presenter: ProjectLoginPresenter = PresenterResolver.getPresenter(classOf[ProjectLoginPresenter])
-        presenter.go(navManager, null)
-      }
-    })
-    this.register(new ApplicationEventListener[ProjectEvent.PlainLogin]() {
-      @Subscribe def handle(event: ProjectEvent.PlainLogin) {
-        val data: Array[String] = event.getData.asInstanceOf[Array[String]]
-        try {
-          doLogin(data(0), data(1), data(2).toBoolean)
-        }
-        catch {
-          case exception: MyCollabException => {
-            EventBusFactory.getInstance.post(new ProjectEvent.GotoLogin(this, null))
-          }
-        }
-      }
-    })
     this.register(new ApplicationEventListener[ProjectEvent.GotoAdd]() {
       @Subscribe def handle(event: ProjectEvent.GotoAdd): Unit = {
         val presenter = PresenterResolver.getPresenter(classOf[ProjectAddPresenter])

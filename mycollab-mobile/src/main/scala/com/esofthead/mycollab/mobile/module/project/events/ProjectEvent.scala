@@ -27,10 +27,6 @@ object ProjectEvent {
 
   class GotoProjectList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
-  class GotoLogin(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-
-  class PlainLogin(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
-
   class GotoMyProject(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
   class MyProjectActivities(source: AnyRef, data: Integer) extends ApplicationEvent(source, data) {}

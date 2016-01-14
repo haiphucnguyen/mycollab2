@@ -82,7 +82,6 @@ public class MobileApplication extends MyCollabUI {
     protected void init(VaadinRequest request) {
         GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
-        LOG.debug("Init mycollab mobile application {}", this.toString());
 
         VaadinSession.getCurrent().setErrorHandler(new DefaultErrorHandler() {
             private static final long serialVersionUID = 1L;

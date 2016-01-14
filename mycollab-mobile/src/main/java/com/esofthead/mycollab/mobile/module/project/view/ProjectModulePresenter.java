@@ -16,14 +16,8 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view;
 
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.MobileApplication;
-import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.vaadin.addon.touchkit.extensions.LocalStorage;
-import com.vaadin.addon.touchkit.extensions.LocalStorageCallback;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -39,25 +33,6 @@ public class ProjectModulePresenter extends AbstractMobilePresenter<ProjectModul
 
     @Override
     protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
-        LocalStorage.detectValue(MobileApplication.NAME_COOKIE, new LocalStorageCallback() {
-            private static final long serialVersionUID = 3217947479690600476L;
 
-            @Override
-            public void onSuccess(String value) {
-                if (value != null) {
-                    String[] loginParams = value.split("\\$");
-                    EventBusFactory.getInstance().post(new ProjectEvent.PlainLogin(this, new String[]{loginParams[0],
-                            PasswordEncryptHelper.decryptText(loginParams[1]), String.valueOf(false)}));
-
-                } else {
-                    EventBusFactory.getInstance().post(new ProjectEvent.GotoLogin(this, null));
-                }
-            }
-
-            @Override
-            public void onFailure(FailureEvent error) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoLogin(this, null));
-            }
-        });
     }
 }

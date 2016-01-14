@@ -89,35 +89,6 @@ public class CrmModuleController extends AbstractController {
     }
 
     private void bindCrmEvents() {
-
-        this.register(new ApplicationEventListener<CrmEvent.GotoLogin>() {
-
-            private static final long serialVersionUID = 8085525190643870881L;
-
-            @Subscribe
-            @Override
-            public void handle(CrmEvent.GotoLogin event) {
-                CrmLoginPresenter presenter = PresenterResolver.getPresenter(CrmLoginPresenter.class);
-                presenter.go(crmViewNavigation, null);
-            }
-        });
-
-        this.register(new ApplicationEventListener<CrmEvent.PlainLogin>() {
-
-            private static final long serialVersionUID = 916898284643597069L;
-
-            @Subscribe
-            @Override
-            public void handle(CrmEvent.PlainLogin event) {
-                String[] data = (String[]) event.getData();
-                try {
-                    doLogin(data[0], data[1], Boolean.valueOf(data[2]));
-                } catch (MyCollabException exception) {
-                    EventBusFactory.getInstance().post(new CrmEvent.GotoLogin(this, null));
-                }
-            }
-        });
-
         this.register(new ApplicationEventListener<CrmEvent.GotoContainer>() {
 
             private static final long serialVersionUID = -3626315180394209108L;
