@@ -18,6 +18,7 @@ package com.esofthead.mycollab.mobile.module.project.ui;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.*;
+import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
@@ -111,6 +112,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 closeMenu();
+                EventBusFactory.getInstance().post(new ShellEvent.LogOut(this));
             }
         });
         logoutBtn.setIcon(FontAwesome.SIGN_OUT);

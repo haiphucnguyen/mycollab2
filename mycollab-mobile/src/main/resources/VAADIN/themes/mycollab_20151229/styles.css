@@ -117,6 +117,10 @@ a {
 	overflow-x: hidden !important;
 }
 
+.v-touchkit-navpanel-wrapper {
+	background-color: white;
+}
+
 .v-touchkit-navbar-caption {
 	font-size: smaller;
 }
@@ -304,10 +308,6 @@ body {
 
 .content-wrapper .intro-text {
 	text-align: center;
-}
-
-.content-wrapper .welcometext-wrapper {
-	background: url("icons/welcometext_bg.png") repeat-x left center #f5f5f5;
 }
 
 .content-wrapper .welcometext-wrapper .v-label {

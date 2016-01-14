@@ -46,7 +46,7 @@ public class CrmModulePresenter extends AbstractMobilePresenter<CrmModule> {
     }
 
     private void checkLocalData() {
-        LocalStorage.detectValue(MobileApplication.LOGIN_DATA, new LocalStorageCallback() {
+        LocalStorage.detectValue(MobileApplication.NAME_COOKIE, new LocalStorageCallback() {
             private static final long serialVersionUID = 3217947479690600476L;
 
             @Override

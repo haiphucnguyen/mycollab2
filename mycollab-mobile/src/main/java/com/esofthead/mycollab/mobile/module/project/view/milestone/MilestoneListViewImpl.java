@@ -45,6 +45,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchCriteria, SimpleMilestone> implements MilestoneListView {
     private static final long serialVersionUID = 2799191640785637556L;
 
+    private OptionI18nEnum.MilestoneStatus status = OptionI18nEnum.MilestoneStatus.InProgress;
     private Button closedMilestoneBtn, inProgressMilestoneBtn, futureMilestoneBtn;
 
     @Override
@@ -68,37 +69,38 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
     }
 
     @Override
-    public void goToClosedMilestones() {
-        this.setCaption("Closed Phases");
-        closedMilestoneBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        inProgressMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        futureMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        displayMilestonesByStatus(OptionI18nEnum.MilestoneStatus.Closed.name());
-    }
-
-    @Override
-    public void goToInProgressMilestones() {
-        this.setCaption("In Progress Phases");
-        closedMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        inProgressMilestoneBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        futureMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        displayMilestonesByStatus(OptionI18nEnum.MilestoneStatus.InProgress.name());
-    }
-
-    @Override
-    public void goToFutureMilestones() {
-        this.setCaption("Future Phases");
-        closedMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        inProgressMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
-        futureMilestoneBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        displayMilestonesByStatus(OptionI18nEnum.MilestoneStatus.Future.name());
-    }
-
-    private void displayMilestonesByStatus(String status) {
+    public void displayStatus(OptionI18nEnum.MilestoneStatus status) {
+        this.status = status;
         MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
         searchCriteria.setProjectId(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
-        searchCriteria.setStatus(StringSearchField.and(status));
+        searchCriteria.setStatus(StringSearchField.and(status.name()));
         itemList.setSearchCriteria(searchCriteria);
+        updateTabStatus();
+    }
+
+    @Override
+    public void onBecomingVisible() {
+        super.onBecomingVisible();
+        updateTabStatus();
+    }
+
+    private void updateTabStatus() {
+        if (status == OptionI18nEnum.MilestoneStatus.Closed) {
+            this.setCaption("Closed Phases");
+            closedMilestoneBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            inProgressMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            futureMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        } else if (status == OptionI18nEnum.MilestoneStatus.Future) {
+            this.setCaption("Future Phases");
+            closedMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            inProgressMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            futureMilestoneBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        } else {
+            this.setCaption("In Progress Phases");
+            closedMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            inProgressMilestoneBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            futureMilestoneBtn.setStyleName(UIConstants.BUTTON_OPTION);
+        }
     }
 
     @Override
@@ -107,7 +109,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         closedMilestoneBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.WIDGET_CLOSED_PHASE_TITLE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                goToClosedMilestones();
+                displayStatus(OptionI18nEnum.MilestoneStatus.Closed);
             }
         });
         closedMilestoneBtn.setIcon(FontAwesome.MINUS);
@@ -116,7 +118,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         inProgressMilestoneBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.WIDGET_INPROGRESS_PHASE_TITLE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                goToInProgressMilestones();
+                displayStatus(OptionI18nEnum.MilestoneStatus.InProgress);
             }
         });
         inProgressMilestoneBtn.setIcon(FontAwesome.SPINNER);
@@ -124,7 +126,7 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
         futureMilestoneBtn = new Button(AppContext.getMessage(MilestoneI18nEnum.WIDGET_FUTURE_PHASE_TITLE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                goToFutureMilestones();
+                displayStatus(OptionI18nEnum.MilestoneStatus.Future);
             }
         });
         futureMilestoneBtn.setIcon(FontAwesome.CLOCK_O);

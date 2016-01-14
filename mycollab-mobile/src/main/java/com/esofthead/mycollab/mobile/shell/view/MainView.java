@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.shell.ui;
+package com.esofthead.mycollab.mobile.shell.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMainView;
+import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.server.ThemeResource;
@@ -39,7 +40,7 @@ public class MainView extends AbstractMobileMainView {
         super();
         this.setSizeFull();
 
-        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper").withWidth("320px");
+        MVerticalLayout contentLayout = new MVerticalLayout().withStyleName("content-wrapper").withFullWidth();
         contentLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
         Image mainLogo = new Image(null, new ThemeResource("icons/logo_m.png"));
@@ -61,6 +62,7 @@ public class MainView extends AbstractMobileMainView {
                 EventBusFactory.getInstance().post(new ShellEvent.GotoCrmModule(this, null));
             }
         });
+        crmButton.addStyleName(UIConstants.BUTTON_ACTION);
         crmButton.setWidth("100%");
 
         contentLayout.addComponent(crmButton);
@@ -72,11 +74,12 @@ public class MainView extends AbstractMobileMainView {
             }
         });
         pmButton.setWidth("100%");
+        pmButton.addStyleName(UIConstants.BUTTON_ACTION);
         contentLayout.addComponent(pmButton);
 
-        Button fileButton = new Button(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT));
-        fileButton.setWidth("100%");
-        contentLayout.addComponent(fileButton);
+//        Button fileButton = new Button(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT));
+//        fileButton.setWidth("100%");
+//        contentLayout.addComponent(fileButton);
 
         this.addComponent(contentLayout);
     }

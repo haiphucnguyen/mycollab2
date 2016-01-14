@@ -1,25 +1,9 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.mobile.module.project.view
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.esofthead.mycollab.configuration.PasswordEncryptHelper
 import com.esofthead.mycollab.core.MyCollabException
-import com.esofthead.mycollab.core.arguments.{SetSearchField, SearchField, NumberSearchField, StringSearchField}
+import com.esofthead.mycollab.core.arguments.{NumberSearchField, SearchField, SetSearchField, StringSearchField}
 import com.esofthead.mycollab.core.utils.BeanUtility
 import com.esofthead.mycollab.eventmanager.{ApplicationEventListener, EventBusFactory}
 import com.esofthead.mycollab.mobile.MobileApplication
@@ -27,20 +11,20 @@ import com.esofthead.mycollab.mobile.module.project.events._
 import com.esofthead.mycollab.mobile.module.project.view.bug.BugPresenter
 import com.esofthead.mycollab.mobile.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestonePresenter
-import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData.{ViewActivities, Add}
+import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData.{Add, ViewActivities}
 import com.esofthead.mycollab.mobile.module.project.view.parameters._
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectUserPresenter
 import com.esofthead.mycollab.mobile.module.project.view.task.TaskPresenter
-import com.esofthead.mycollab.module.project.{ProjectMemberStatusConstants, CurrentProjectVariables}
-import com.esofthead.mycollab.module.project.domain.{SimpleProject, SimpleProjectMember, SimpleTask, SimpleMilestone}
 import com.esofthead.mycollab.module.project.domain.criteria._
+import com.esofthead.mycollab.module.project.domain.{SimpleMilestone, SimpleProject, SimpleProjectMember, SimpleTask}
+import com.esofthead.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria
 import com.esofthead.mycollab.module.user.domain.{SimpleBillingAccount, SimpleUser}
 import com.esofthead.mycollab.module.user.service.{BillingAccountService, UserService}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.esofthead.mycollab.vaadin.AppContext
-import com.esofthead.mycollab.vaadin.mvp.{ScreenData, PageActionChain, PresenterResolver, AbstractController}
+import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.google.common.eventbus.Subscribe
 import com.vaadin.addon.touchkit.extensions.LocalStorage
 import com.vaadin.addon.touchkit.ui.NavigationManager
@@ -108,7 +92,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     this.register(new ApplicationEventListener[ProjectEvent.MyProjectActivities]() {
       @Subscribe def handle(event: ProjectEvent.MyProjectActivities) {
         val presenter: ProjectActivityStreamPresenter = PresenterResolver.getPresenter(classOf[ProjectActivityStreamPresenter])
-        presenter.go(navManager,new ViewActivities(event.getData.asInstanceOf[Integer]))
+        presenter.go(navManager, new ViewActivities(event.getData.asInstanceOf[Integer]))
       }
     })
   }
@@ -297,7 +281,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     if (isRememberPassword) {
       val storage: LocalStorage = LocalStorage.get
       val storeVal: String = username + "$" + PasswordEncryptHelper.encryptText(password)
-      storage.put(MobileApplication.LOGIN_DATA, storeVal)
+      storage.put(MobileApplication.NAME_COOKIE, storeVal)
     }
     AppContext.getInstance.setSessionVariables(user, billingAccount)
     EventBusFactory.getInstance.post(new ProjectEvent.GotoProjectList(UI.getCurrent, null))

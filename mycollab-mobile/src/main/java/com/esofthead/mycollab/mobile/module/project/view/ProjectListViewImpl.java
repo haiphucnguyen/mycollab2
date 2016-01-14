@@ -19,6 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
+import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
@@ -80,6 +81,7 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 closeMenu();
+                EventBusFactory.getInstance().post(new ShellEvent.LogOut(this));
             }
         });
         logoutBtn.setIcon(FontAwesome.SIGN_OUT);

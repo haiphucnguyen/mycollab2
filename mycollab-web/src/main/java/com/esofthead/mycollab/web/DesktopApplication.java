@@ -317,11 +317,11 @@ public class DesktopApplication extends MyCollabUI {
 
     public void rememberPassword(String username, String password) {
         String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
-        BrowserCookie.setCookie(DesktopApplication.NAME_COOKIE, storeVal);
+        BrowserCookie.setCookie(NAME_COOKIE, storeVal);
     }
 
     public void unsetRememberPassword() {
-        BrowserCookie.setCookie(DesktopApplication.NAME_COOKIE, "");
+        BrowserCookie.setCookie(NAME_COOKIE, "");
     }
 
     private class ShellErrorHandler {

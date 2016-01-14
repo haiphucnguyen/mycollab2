@@ -644,7 +644,7 @@ public class CrmModuleController extends AbstractController {
         if (isRememberPassword) {
             LocalStorage storage = LocalStorage.get();
             String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
-            storage.put(MobileApplication.LOGIN_DATA, storeVal);
+            storage.put(MobileApplication.NAME_COOKIE, storeVal);
         }
 
         AppContext.getInstance().setSessionVariables(user, billingAccount);

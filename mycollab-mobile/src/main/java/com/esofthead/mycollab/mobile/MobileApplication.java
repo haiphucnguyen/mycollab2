@@ -22,15 +22,17 @@ import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.SessionExpireException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.shell.ShellController;
+import com.esofthead.mycollab.mobile.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.mobile.shell.ShellUrlResolver;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
+import com.esofthead.mycollab.mobile.shell.view.ShellController;
 import com.esofthead.mycollab.mobile.ui.ConfirmDialog;
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.ThemeManager;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
@@ -48,6 +50,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.Collection;
 
@@ -60,11 +63,9 @@ import java.util.Collection;
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet")
 public class MobileApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
-
-    public static final String LOGIN_DATA = "m_login";
-
     private static final Logger LOG = LoggerFactory.getLogger(MobileApplication.class);
 
+    public static final String NAME_COOKIE = "mycollab";
     public static final ShellUrlResolver rootUrlResolver = new ShellUrlResolver();
 
     @Override
@@ -186,4 +187,27 @@ public class MobileApplication extends MyCollabUI {
         }
     }
 
+    public void redirectToLoginView() {
+        clearSession();
+        AppContext.addFragment("", "Login Page");
+        // clear cookie remember username/password if any
+        this.unsetRememberPassword();
+
+        final NavigationManager manager = new NavigationManager();
+        setContent(manager);
+        registerControllers(manager);
+        LoginPresenter presenter = PresenterResolver.getPresenter(LoginPresenter.class);
+        presenter.go(manager, null);
+    }
+
+    private void clearSession() {
+        if (currentContext != null) {
+            currentContext.clearSessionVariables();
+            initialUrl = "";
+        }
+    }
+
+    public void unsetRememberPassword() {
+        BrowserCookie.setCookie(NAME_COOKIE, "");
+    }
 }

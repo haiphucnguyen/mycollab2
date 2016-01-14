@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.MilestoneI18nEnum;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -43,7 +44,7 @@ public class MilestoneListPresenter extends AbstractListPresenter<MilestoneListV
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
             super.onGo(container, data);
-            view.goToInProgressMilestones();
+            view.displayStatus(OptionI18nEnum.MilestoneStatus.InProgress);
             AppContext.addFragment("project/milestone/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     AppContext.getMessage(MilestoneI18nEnum.VIEW_LIST_TITLE));
         } else {
