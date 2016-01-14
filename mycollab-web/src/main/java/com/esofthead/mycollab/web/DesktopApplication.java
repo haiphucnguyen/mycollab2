@@ -315,7 +315,7 @@ public class DesktopApplication extends MyCollabUI {
         }
     }
 
-    public void rememberPassword(String username, String password) {
+    private void rememberPassword(String username, String password) {
         String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
         BrowserCookie.setCookie(NAME_COOKIE, storeVal);
     }

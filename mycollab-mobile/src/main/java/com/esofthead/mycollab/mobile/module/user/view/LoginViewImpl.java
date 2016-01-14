@@ -16,9 +16,12 @@
  */
 package com.esofthead.mycollab.mobile.module.user.view;
 
+import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.mobile.module.user.events.UserEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMainView;
 import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewEvent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
@@ -78,7 +81,12 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
         Button signInBtn = new Button("Sign In", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-//                ShellController.doLogin(emailField.getValue(), pwdField.getValue(), rememberPassword.getValue());
+                try {
+                    LoginViewImpl.this.fireEvent(new ViewEvent<>(LoginViewImpl.this, new UserEvent.PlainLogin(
+                            emailField.getValue(), pwdField.getValue(), rememberPassword.getValue())));
+                } catch (Exception e) {
+                    throw new MyCollabException(e);
+                }
             }
         });
         signInBtn.setWidth("100%");

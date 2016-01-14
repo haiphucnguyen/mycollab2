@@ -17,10 +17,12 @@
 package com.esofthead.mycollab.mobile;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
 import com.esofthead.mycollab.core.IgnoreException;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.SessionExpireException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.mobile.shell.ShellUrlResolver;
@@ -28,6 +30,13 @@ import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.shell.view.ShellController;
 import com.esofthead.mycollab.mobile.ui.ConfirmDialog;
 import com.esofthead.mycollab.module.billing.UsageExceedBillingPlanException;
+import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.domain.UserAccount;
+import com.esofthead.mycollab.module.user.domain.UserAccountExample;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.MyCollabUI;
@@ -53,6 +62,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 
 /**
  * @author MyCollab Ltd.
@@ -175,6 +185,34 @@ public class MobileApplication extends MyCollabUI {
 
     private void registerControllers(NavigationManager manager) {
         ControllerRegistry.addController(new ShellController(manager));
+    }
+
+    public void doLogin(String username, String password, boolean isRememberPassword) {
+        UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+        SimpleUser user = userService.authentication(username, password, AppContext.getSubDomain(), false);
+
+        if (isRememberPassword) {
+            rememberPassword(username, password);
+        }
+
+        BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
+
+        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId());
+        LOG.debug(String.format("Get billing account successfully: %s", BeanUtility.printBeanObj(billingAccount)));
+        AppContext.getInstance().setSessionVariables(user, billingAccount);
+
+        UserAccountMapper userAccountMapper = ApplicationContextUtil.getSpringBean(UserAccountMapper.class);
+        UserAccount userAccount = new UserAccount();
+        userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
+        UserAccountExample ex = new UserAccountExample();
+        ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
+        userAccountMapper.updateByExampleSelective(userAccount, ex);
+        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
+    }
+
+    private void rememberPassword(String username, String password) {
+        String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
+        BrowserCookie.setCookie(NAME_COOKIE, storeVal);
     }
 
     private static Throwable getExceptionType(Throwable e, Class<? extends Throwable> exceptionType) {

@@ -6,7 +6,6 @@ import com.esofthead.mycollab.eventmanager.{ApplicationEventListener, EventBusFa
 import com.esofthead.mycollab.mobile.MobileApplication
 import com.esofthead.mycollab.mobile.module.crm.view.CrmModulePresenter
 import com.esofthead.mycollab.mobile.module.project.view.ProjectModulePresenter
-import com.esofthead.mycollab.mobile.module.user.events.UserEvent
 import com.esofthead.mycollab.mobile.module.user.view.LoginPresenter
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent
 import com.esofthead.mycollab.mobile.ui.IMobileView
@@ -41,19 +40,6 @@ class ShellController(val mainNav: NavigationManager) extends AbstractController
       }
     })
 
-    this.register(new ApplicationEventListener[UserEvent.PlainLogin]() {
-      @Subscribe def handle(event: UserEvent.PlainLogin) {
-        val data: Array[String] = event.getData.asInstanceOf[Array[String]]
-        try {
-          doLogin(data(0), data(1), data(2).toBoolean)
-        }
-        catch {
-          case exception: MyCollabException => {
-            EventBusFactory.getInstance.post(new ShellEvent.GotoLoginView(this, null))
-          }
-        }
-      }
-    })
     this.register(new ApplicationEventListener[ShellEvent.GotoMainPage]() {
       @Subscribe def handle(event: ShellEvent.GotoMainPage) {
         val presenter: MainViewPresenter = PresenterResolver.getPresenter(classOf[MainViewPresenter])
