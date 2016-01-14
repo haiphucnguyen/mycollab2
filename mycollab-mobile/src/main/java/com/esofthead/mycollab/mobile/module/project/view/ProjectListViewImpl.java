@@ -30,7 +30,6 @@ import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import org.vaadin.thomas.slidemenu.SlideMenu;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**

@@ -282,7 +282,7 @@ public class DesktopApplication extends MyCollabUI {
         BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
 
         SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId());
-        LOG.debug(String.format("Get billing account successfully: %s", BeanUtility.printBeanObj(billingAccount)));
+        LOG.info(String.format("Get billing account successfully: %s", BeanUtility.printBeanObj(billingAccount)));
         AppContext.getInstance().setSessionVariables(user, billingAccount);
 
         UserAccountMapper userAccountMapper = ApplicationContextUtil.getSpringBean(UserAccountMapper.class);

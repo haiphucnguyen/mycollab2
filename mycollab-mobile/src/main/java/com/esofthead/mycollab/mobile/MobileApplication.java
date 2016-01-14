@@ -45,6 +45,8 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.ui.ThemeManager;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
+import com.vaadin.addon.touchkit.extensions.LocalStorage;
+import com.vaadin.addon.touchkit.extensions.LocalStorageCallback;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Viewport;
@@ -59,7 +61,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.viritin.util.BrowserCookie;
 
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -171,7 +172,22 @@ public class MobileApplication extends MyCollabUI {
                 enter(event.getUriFragment());
             }
         });
-        enter(initialUrl);
+        detectAutoLogin();
+    }
+
+    private void detectAutoLogin() {
+        LocalStorage.detectValue(NAME_COOKIE, new LocalStorageCallback() {
+            @Override
+            public void onSuccess(String value) {
+                String[] loginParams = value.split("\\$");
+                doLogin(loginParams[0], PasswordEncryptHelper.decryptText(loginParams[1]), false);
+            }
+
+            @Override
+            public void onFailure(FailureEvent failureEvent) {
+                EventBusFactory.getInstance().post(new ShellEvent.GotoLoginView(this));
+            }
+        });
     }
 
     private void enter(String uriFragement) {
@@ -206,12 +222,12 @@ public class MobileApplication extends MyCollabUI {
         UserAccountExample ex = new UserAccountExample();
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
         userAccountMapper.updateByExampleSelective(userAccount, ex);
-        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
+        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this));
     }
 
     private void rememberPassword(String username, String password) {
         String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
-        BrowserCookie.setCookie(NAME_COOKIE, storeVal);
+        LocalStorage.get().put(NAME_COOKIE, storeVal);
     }
 
     private static Throwable getExceptionType(Throwable e, Class<? extends Throwable> exceptionType) {
@@ -230,11 +246,10 @@ public class MobileApplication extends MyCollabUI {
         // clear cookie remember username/password if any
         this.unsetRememberPassword();
 
-        final NavigationManager manager = new NavigationManager();
-        setContent(manager);
-        registerControllers(manager);
+        NavigationManager navigationManager = (NavigationManager) this.getContent();
+        navigationManager.getViewStack().empty();
         LoginPresenter presenter = PresenterResolver.getPresenter(LoginPresenter.class);
-        presenter.go(manager, null);
+        presenter.go(navigationManager, null);
     }
 
     private void clearSession() {
@@ -244,7 +259,7 @@ public class MobileApplication extends MyCollabUI {
         }
     }
 
-    public void unsetRememberPassword() {
-        BrowserCookie.setCookie(NAME_COOKIE, "");
+    private void unsetRememberPassword() {
+        LocalStorage.get().put(NAME_COOKIE, "");
     }
 }

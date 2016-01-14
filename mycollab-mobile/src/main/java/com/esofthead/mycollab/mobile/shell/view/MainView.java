@@ -77,10 +77,9 @@ public class MainView extends AbstractMobileMainView {
         pmButton.addStyleName(UIConstants.BUTTON_ACTION);
         contentLayout.addComponent(pmButton);
 
-//        Button fileButton = new Button(AppContext.getMessage(GenericI18Enum.MODULE_DOCUMENT));
-//        fileButton.setWidth("100%");
-//        contentLayout.addComponent(fileButton);
-
         this.addComponent(contentLayout);
+    }
+
+    public void display() {
     }
 }

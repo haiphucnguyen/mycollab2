@@ -31,13 +31,13 @@ public abstract class AbstractListPageView<S extends SearchCriteria, B> extends 
     protected AbstractPagedBeanList<S, B> itemList;
 
     public AbstractListPageView() {
-        this.itemList = createBeanList();
+        itemList = createBeanList();
         setContent(itemList);
     }
 
     @Override
     public AbstractPagedBeanList<S, B> getPagedBeanTable() {
-        return this.itemList;
+        return itemList;
     }
 
     @Override

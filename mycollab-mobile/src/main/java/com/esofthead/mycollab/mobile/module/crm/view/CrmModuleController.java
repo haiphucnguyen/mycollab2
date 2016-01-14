@@ -16,14 +16,9 @@
  */
 package com.esofthead.mycollab.mobile.module.crm.view;
 
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.mobile.module.crm.CrmModuleScreenData;
 import com.esofthead.mycollab.mobile.module.crm.events.*;
 import com.esofthead.mycollab.mobile.module.crm.events.ActivityEvent.CallEdit;
@@ -49,19 +44,12 @@ import com.esofthead.mycollab.mobile.module.crm.view.opportunity.OpportunityList
 import com.esofthead.mycollab.mobile.module.crm.view.opportunity.OpportunityReadPresenter;
 import com.esofthead.mycollab.module.crm.domain.*;
 import com.esofthead.mycollab.module.crm.domain.criteria.*;
-import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.service.BillingAccountService;
-import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.addon.touchkit.extensions.LocalStorage;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -599,26 +587,5 @@ public class CrmModuleController extends AbstractController {
                     crmViewNavigation.navigateTo(((CrmRelatedItemsScreenData) event.getData()).getParams());
             }
         });
-    }
-
-    public static void doLogin(String username, String password, boolean isRememberPassword) throws MyCollabException {
-        UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-        SimpleUser user = userService.authentication(username, password, AppContext.getSubDomain(), false);
-
-        BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
-
-        SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId());
-
-        LOG.debug("Get billing account successfully: " + BeanUtility.printBeanObj(billingAccount));
-
-
-        if (isRememberPassword) {
-            LocalStorage storage = LocalStorage.get();
-            String storeVal = username + "$" + PasswordEncryptHelper.encryptText(password);
-            storage.put(MobileApplication.NAME_COOKIE, storeVal);
-        }
-
-        AppContext.getInstance().setSessionVariables(user, billingAccount);
-        EventBusFactory.getInstance().post(new CrmEvent.GotoContainer(UI.getCurrent(), null));
     }
 }

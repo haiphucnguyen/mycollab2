@@ -1,12 +1,10 @@
 package com.esofthead.mycollab.mobile.module.project.view
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
-import com.esofthead.mycollab.configuration.PasswordEncryptHelper
 import com.esofthead.mycollab.core.MyCollabException
 import com.esofthead.mycollab.core.arguments.{NumberSearchField, SearchField, SetSearchField, StringSearchField}
 import com.esofthead.mycollab.core.utils.BeanUtility
-import com.esofthead.mycollab.eventmanager.{ApplicationEventListener, EventBusFactory}
-import com.esofthead.mycollab.mobile.MobileApplication
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener
 import com.esofthead.mycollab.mobile.module.project.events._
 import com.esofthead.mycollab.mobile.module.project.view.bug.BugPresenter
 import com.esofthead.mycollab.mobile.module.project.view.message.MessagePresenter
@@ -20,15 +18,10 @@ import com.esofthead.mycollab.module.project.domain.{SimpleMilestone, SimpleProj
 import com.esofthead.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria
-import com.esofthead.mycollab.module.user.domain.{SimpleBillingAccount, SimpleUser}
-import com.esofthead.mycollab.module.user.service.{BillingAccountService, UserService}
-import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.esofthead.mycollab.vaadin.AppContext
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.google.common.eventbus.Subscribe
-import com.vaadin.addon.touchkit.extensions.LocalStorage
 import com.vaadin.addon.touchkit.ui.NavigationManager
-import com.vaadin.ui.UI
 
 /**
   * @author MyCollab Ltd
@@ -251,20 +244,5 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         presenter.go(navManager, data)
       }
     })
-  }
-
-  @throws(classOf[MyCollabException])
-  def doLogin(username: String, password: String, isRememberPassword: Boolean) {
-    val userService: UserService = ApplicationContextUtil.getSpringBean(classOf[UserService])
-    val user: SimpleUser = userService.authentication(username, password, AppContext.getSubDomain, false)
-    val billingAccountService: BillingAccountService = ApplicationContextUtil.getSpringBean(classOf[BillingAccountService])
-    val billingAccount: SimpleBillingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId)
-    if (isRememberPassword) {
-      val storage: LocalStorage = LocalStorage.get
-      val storeVal: String = username + "$" + PasswordEncryptHelper.encryptText(password)
-      storage.put(MobileApplication.NAME_COOKIE, storeVal)
-    }
-    AppContext.getInstance.setSessionVariables(user, billingAccount)
-    EventBusFactory.getInstance.post(new ProjectEvent.GotoProjectList(UI.getCurrent, null))
   }
 }
