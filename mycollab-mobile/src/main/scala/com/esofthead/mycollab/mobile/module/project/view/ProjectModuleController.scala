@@ -44,8 +44,8 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     })
     this.register(new ApplicationEventListener[ProjectEvent.GotoProjectList]() {
       @Subscribe def handle(event: ProjectEvent.GotoProjectList) {
-        val presenter: ProjectListPresenter = PresenterResolver.getPresenter(classOf[ProjectListPresenter])
-        val criteria: ProjectSearchCriteria = new ProjectSearchCriteria
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectListPresenter])
+        val criteria = new ProjectSearchCriteria
         criteria.setInvolvedMember(new StringSearchField(AppContext.getUsername))
         criteria.setProjectStatuses(new SetSearchField[String](StatusI18nEnum.Open.name))
         presenter.go(navManager, new ScreenData.Search[ProjectSearchCriteria](criteria))
@@ -53,13 +53,13 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     })
     this.register(new ApplicationEventListener[ProjectEvent.GotoMyProject]() {
       @Subscribe def handle(event: ProjectEvent.GotoMyProject) {
-        val presenter: ProjectViewPresenter = PresenterResolver.getPresenter(classOf[ProjectViewPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectViewPresenter])
         presenter.handleChain(navManager, event.getData.asInstanceOf[PageActionChain])
       }
     })
     this.register(new ApplicationEventListener[ProjectEvent.AllActivities]() {
       @Subscribe def handle(event: ProjectEvent.AllActivities) {
-        val presenter: AllActivityStreamPresenter = PresenterResolver.getPresenter(classOf[AllActivityStreamPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[AllActivityStreamPresenter])
         presenter.go(navManager, event.getData.asInstanceOf[ProjectScreenData.AllActivities])
       }
     })
@@ -75,9 +75,9 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     this.register(new ApplicationEventListener[BugEvent.GotoList]() {
       @Subscribe def handle(event: BugEvent.GotoList) {
         val params: Any = event.getData
-        val presenter: BugPresenter = PresenterResolver.getPresenter(classOf[BugPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
         if (params == null) {
-          val criteria: BugSearchCriteria = new BugSearchCriteria
+          val criteria = new BugSearchCriteria
           criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
           presenter.go(navManager, new BugScreenData.Search(criteria))
         }
@@ -91,15 +91,15 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     })
     this.register(new ApplicationEventListener[BugEvent.GotoRead]() {
       @Subscribe def handle(event: BugEvent.GotoRead) {
-        val data: BugScreenData.Read = new BugScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter: BugPresenter = PresenterResolver.getPresenter(classOf[BugPresenter])
+        val data = new BugScreenData.Read(event.getData.asInstanceOf[Integer])
+        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[BugEvent.GotoAdd]() {
       @Subscribe def handle(event: BugEvent.GotoAdd) {
-        val data: BugScreenData.Add = new BugScreenData.Add(new SimpleBug)
-        val presenter: BugPresenter = PresenterResolver.getPresenter(classOf[BugPresenter])
+        val data = new BugScreenData.Add(new SimpleBug)
+        val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
         presenter.go(navManager, data)
       }
     })
@@ -115,24 +115,24 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   private def bindMessageEvents() {
     this.register(new ApplicationEventListener[MessageEvent.GotoAdd]() {
       @Subscribe def handle(event: MessageEvent.GotoAdd) {
-        val data: MessageScreenData.Add = new MessageScreenData.Add
-        val presenter: MessagePresenter = PresenterResolver.getPresenter(classOf[MessagePresenter])
+        val data = new MessageScreenData.Add
+        val presenter = PresenterResolver.getPresenter(classOf[MessagePresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[MessageEvent.GotoList]() {
       @Subscribe def handle(event: MessageEvent.GotoList) {
-        val searchCriteria: MessageSearchCriteria = new MessageSearchCriteria
+        val searchCriteria = new MessageSearchCriteria
         searchCriteria.setProjectids(new SetSearchField[Integer](CurrentProjectVariables.getProjectId))
-        val data: MessageScreenData.Search = new MessageScreenData.Search(searchCriteria)
-        val presenter: MessagePresenter = PresenterResolver.getPresenter(classOf[MessagePresenter])
+        val data = new MessageScreenData.Search(searchCriteria)
+        val presenter = PresenterResolver.getPresenter(classOf[MessagePresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[MessageEvent.GotoRead]() {
       @Subscribe def handle(event: MessageEvent.GotoRead) {
-        val data: MessageScreenData.Read = new MessageScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter: MessagePresenter = PresenterResolver.getPresenter(classOf[MessagePresenter])
+        val data = new MessageScreenData.Read(event.getData.asInstanceOf[Integer])
+        val presenter = PresenterResolver.getPresenter(classOf[MessagePresenter])
         presenter.go(navManager, data)
       }
     })
@@ -144,7 +144,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val params: Any = event.getData
         val presenter: MilestonePresenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         if (params == null) {
-          val criteria: MilestoneSearchCriteria = new MilestoneSearchCriteria
+          val criteria = new MilestoneSearchCriteria
           criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
           presenter.go(navManager, new MilestoneScreenData.Search(criteria))
         }
@@ -158,22 +158,22 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     })
     this.register(new ApplicationEventListener[MilestoneEvent.GotoRead]() {
       @Subscribe def handle(event: MilestoneEvent.GotoRead) {
-        val data: MilestoneScreenData.Read = new MilestoneScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter: MilestonePresenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
+        val data = new MilestoneScreenData.Read(event.getData.asInstanceOf[Integer])
+        val presenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[MilestoneEvent.GotoAdd]() {
       @Subscribe def handle(event: MilestoneEvent.GotoAdd) {
-        val data: MilestoneScreenData.Add = new MilestoneScreenData.Add(new SimpleMilestone)
-        val presenter: MilestonePresenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
+        val data = new MilestoneScreenData.Add(new SimpleMilestone)
+        val presenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[MilestoneEvent.GotoEdit]() {
       @Subscribe def handle(event: MilestoneEvent.GotoEdit) {
-        val data: MilestoneScreenData.Edit = new MilestoneScreenData.Edit(event.getData.asInstanceOf[SimpleMilestone])
-        val presenter: MilestonePresenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
+        val data = new MilestoneScreenData.Edit(event.getData.asInstanceOf[SimpleMilestone])
+        val presenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         presenter.go(navManager, data)
       }
     })
@@ -182,31 +182,31 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   private def bindTaskEvents() {
     this.register(new ApplicationEventListener[TaskEvent.GotoList]() {
       @Subscribe def handle(event: TaskEvent.GotoList) {
-        val criteria: TaskSearchCriteria = new TaskSearchCriteria
+        val criteria = new TaskSearchCriteria
         criteria.setProjectid(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
-        val data: TaskScreenData.Search = new TaskScreenData.Search(criteria)
-        val presenter: TaskPresenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val data = new TaskScreenData.Search(criteria)
+        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[TaskEvent.GotoRead]() {
       @Subscribe def handle(event: TaskEvent.GotoRead) {
-        val data: TaskScreenData.Read = new TaskScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter: TaskPresenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val data = new TaskScreenData.Read(event.getData.asInstanceOf[Integer])
+        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[TaskEvent.GotoEdit]() {
       @Subscribe def handle(event: TaskEvent.GotoEdit) {
-        val data: TaskScreenData.Edit = new TaskScreenData.Edit(event.getData.asInstanceOf[SimpleTask])
-        val presenter: TaskPresenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val data = new TaskScreenData.Edit(event.getData.asInstanceOf[SimpleTask])
+        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[TaskEvent.GotoAdd]() {
       @Subscribe def handle(event: TaskEvent.GotoAdd) {
-        val data: TaskScreenData.Add = new TaskScreenData.Add(new SimpleTask)
-        val presenter: TaskPresenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
+        val data = new TaskScreenData.Add(new SimpleTask)
+        val presenter = PresenterResolver.getPresenter(classOf[TaskPresenter])
         presenter.go(navManager, data)
       }
     })
@@ -215,32 +215,32 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   private def bindMemberEvents() {
     this.register(new ApplicationEventListener[ProjectMemberEvent.GotoList]() {
       @Subscribe def handle(event: ProjectMemberEvent.GotoList) {
-        val criteria: ProjectMemberSearchCriteria = new ProjectMemberSearchCriteria
+        val criteria = new ProjectMemberSearchCriteria
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId))
         criteria.setStatus(new StringSearchField(ProjectMemberStatusConstants.ACTIVE))
-        val presenter: ProjectUserPresenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, new ProjectMemberScreenData.Search(criteria))
       }
     })
     this.register(new ApplicationEventListener[ProjectMemberEvent.GotoRead]() {
       @Subscribe def handle(event: ProjectMemberEvent.GotoRead) {
-        val data: ProjectMemberScreenData.Read = new ProjectMemberScreenData.Read(event.getData)
-        val presenter: ProjectUserPresenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
+        val data = new ProjectMemberScreenData.Read(event.getData)
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[ProjectMemberEvent.GotoEdit]() {
       @Subscribe def handle(event: ProjectMemberEvent.GotoEdit) {
-        val data: ProjectMemberScreenData.Edit = new ProjectMemberScreenData.Edit(event.getData.asInstanceOf[SimpleProjectMember])
-        val presenter: ProjectUserPresenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
+        val data = new ProjectMemberScreenData.Edit(event.getData.asInstanceOf[SimpleProjectMember])
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, data)
       }
     })
     this.register(new ApplicationEventListener[ProjectMemberEvent.GotoInviteMembers]() {
       @Subscribe def handle(event: ProjectMemberEvent.GotoInviteMembers) {
-        val data: ProjectMemberScreenData.InviteProjectMembers = new ProjectMemberScreenData.InviteProjectMembers
-        val presenter: ProjectUserPresenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
+        val data = new ProjectMemberScreenData.InviteProjectMembers
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, data)
       }
     })

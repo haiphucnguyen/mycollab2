@@ -53,8 +53,8 @@ class ProjectUrlResolver extends UrlResolver {
         EventBusFactory.getInstance.post(new ShellEvent.GotoProjectModule(this, null))
       }
       else {
-        val projectId: Int = new UrlTokenizer(params(0)).getInt
-        val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectScreenData.GotoDashboard)
+        val projectId = new UrlTokenizer(params(0)).getInt
+        val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectScreenData.GotoDashboard)
         EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
       }
     }
@@ -67,8 +67,7 @@ class ProjectUrlResolver extends UrlResolver {
       }
       else {
         val projectId: Int = new UrlTokenizer(params(0)).getInt
-        val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId), new
-            ProjectScreenData.ViewActivities(projectId))
+        val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectScreenData.ViewActivities(projectId))
         EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
       }
     }

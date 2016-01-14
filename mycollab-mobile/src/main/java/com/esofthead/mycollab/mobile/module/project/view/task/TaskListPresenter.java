@@ -41,7 +41,7 @@ public class TaskListPresenter extends AbstractListPresenter<TaskListView, TaskS
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
             TaskSearchCriteria param = (TaskSearchCriteria) data.getParams();
             super.onGo(container, data);
             this.doSearch(param);

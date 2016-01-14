@@ -42,7 +42,7 @@ class MilestoneUrlResolver extends ProjectUrlResolver {
 
     private class ListUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
-            val projectId: Int = new UrlTokenizer(params(0)).getInt
+            val projectId = new UrlTokenizer(params(0)).getInt
             val searchCriteria = new MilestoneSearchCriteria
             searchCriteria.setProjectId(new NumberSearchField(projectId))
             val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new Search(searchCriteria))
@@ -52,10 +52,10 @@ class MilestoneUrlResolver extends ProjectUrlResolver {
 
     private class AddUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
-            val projectId: Int = new UrlTokenizer(params(0)).getInt
-            val milestone: SimpleMilestone = new SimpleMilestone
+            val projectId = new UrlTokenizer(params(0)).getInt
+            val milestone = new SimpleMilestone
             milestone.setProjectid(projectId)
-            val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId), new MilestoneScreenData.Add(milestone))
+            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new MilestoneScreenData.Add(milestone))
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }

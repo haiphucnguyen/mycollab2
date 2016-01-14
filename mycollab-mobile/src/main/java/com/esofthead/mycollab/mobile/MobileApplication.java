@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.SessionExpireException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.mobile.shell.ShellUrlResolver;
@@ -179,8 +180,12 @@ public class MobileApplication extends MyCollabUI {
         LocalStorage.detectValue(NAME_COOKIE, new LocalStorageCallback() {
             @Override
             public void onSuccess(String value) {
-                String[] loginParams = value.split("\\$");
-                doLogin(loginParams[0], PasswordEncryptHelper.decryptText(loginParams[1]), false);
+                if (StringUtils.isNotBlank(value)) {
+                    String[] loginParams = value.split("\\$");
+                    doLogin(loginParams[0], PasswordEncryptHelper.decryptText(loginParams[1]), false);
+                } else {
+                    EventBusFactory.getInstance().post(new ShellEvent.GotoLoginView(this));
+                }
             }
 
             @Override

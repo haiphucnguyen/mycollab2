@@ -47,7 +47,6 @@ public class BugListPresenter extends AbstractListPresenter<BugListView, BugSear
             this.doSearch(param);
             AppContext.addFragment("project/bug/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
-
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
