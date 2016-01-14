@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.addon.touchkit.ui.Switch;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
@@ -57,14 +58,16 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         this.addStyleName("message-add-view");
         this.setCaption(AppContext.getMessage(MessageI18nEnum.M_VIEW_ADD_TITLE));
 
-        this.content = new CssLayout();
-        this.content.setStyleName("content-layout");
-        this.content.setSizeFull();
-        this.setContent(this.content);
+        content = new CssLayout();
+        content.setStyleName("content-layout");
+        content.setSizeFull();
+        this.setContent(content);
 
         VerticalLayout addFormLayout = new VerticalLayout();
         addFormLayout.setStyleName("addform-layout");
         addFormLayout.setWidth("100%");
+
+        addFormLayout.addComponent(new Hr());
 
         subjectField = new TextField();
         subjectField.setStyleName("title-field");
@@ -88,8 +91,8 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         attachment.setCaption(null);
         bottomRow.addComponent(attachment);
 
-        this.content.addComponent(addFormLayout);
-        this.content.addComponent(bottomRow);
+        content.addComponent(addFormLayout);
+        content.addComponent(bottomRow);
 
         this.saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             @Override
