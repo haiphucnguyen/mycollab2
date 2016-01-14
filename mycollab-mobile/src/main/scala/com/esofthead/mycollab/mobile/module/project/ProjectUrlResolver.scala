@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.mobile.module.project
 
 import com.esofthead.mycollab.common.UrlTokenizer
@@ -24,7 +8,7 @@ import com.esofthead.mycollab.mobile.module.project.view.message.MessageUrlResol
 import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestoneUrlResolver
 import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData
 import com.esofthead.mycollab.mobile.module.project.view.settings.UserUrlResolver
-import com.esofthead.mycollab.mobile.module.project.view.task.TaskModuleUrlResolver
+import com.esofthead.mycollab.mobile.module.project.view.task.TaskUrlResolver
 import com.esofthead.mycollab.mobile.shell.ModuleHelper
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent
 import com.esofthead.mycollab.vaadin.mvp.{PageActionChain, UrlResolver}
@@ -39,7 +23,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("activities", new ActivityUrlResolver)
     this.addSubResolver("message", new MessageUrlResolver)
     this.addSubResolver("milestone", new MilestoneUrlResolver)
-    this.addSubResolver("task", new TaskModuleUrlResolver)
+    this.addSubResolver("task", new TaskUrlResolver)
     this.addSubResolver("bug", new BugUrlResolver)
     this.addSubResolver("user", new UserUrlResolver)
     return this
@@ -47,7 +31,7 @@ class ProjectUrlResolver extends UrlResolver {
 
   override def handle(params: String*) {
     if (!ModuleHelper.isCurrentProjectModule) {
-      EventBusFactory.getInstance.post(new ShellEvent.GotoProjectModule(this, null))
+      EventBusFactory.getInstance.post(new ShellEvent.GotoProjectModule(this, params))
     }
     else {
       super.handle(params: _*)

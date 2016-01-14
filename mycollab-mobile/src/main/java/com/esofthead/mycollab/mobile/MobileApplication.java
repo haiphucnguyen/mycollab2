@@ -222,7 +222,7 @@ public class MobileApplication extends MyCollabUI {
         UserAccountExample ex = new UserAccountExample();
         ex.createCriteria().andAccountidEqualTo(billingAccount.getId()).andUsernameEqualTo(user.getUsername());
         userAccountMapper.updateByExampleSelective(userAccount, ex);
-        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this));
+        EventBusFactory.getInstance().post(new ShellEvent.GotoMainPage(this, null));
     }
 
     private void rememberPassword(String username, String password) {

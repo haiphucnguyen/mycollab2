@@ -45,8 +45,7 @@ class MilestoneUrlResolver extends ProjectUrlResolver {
             val projectId: Int = new UrlTokenizer(params(0)).getInt
             val searchCriteria = new MilestoneSearchCriteria
             searchCriteria.setProjectId(new NumberSearchField(projectId))
-            val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId), new
-                    Search(searchCriteria))
+            val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new Search(searchCriteria))
             EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
         }
     }

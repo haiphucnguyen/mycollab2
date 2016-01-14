@@ -42,7 +42,7 @@ class UserUrlResolver extends ProjectUrlResolver {
 
     private class ListUrlResolver extends ProjectUrlResolver {
         protected override def handlePage(params: String*) {
-            val projectId: Int = new UrlTokenizer(params(0)).getInt
+            val projectId = new UrlTokenizer(params(0)).getInt
             val memberSearchCriteria: ProjectMemberSearchCriteria = new ProjectMemberSearchCriteria
             memberSearchCriteria.setProjectId(new NumberSearchField(projectId))
             memberSearchCriteria.setStatus(new StringSearchField(ProjectMemberStatusConstants.ACTIVE))

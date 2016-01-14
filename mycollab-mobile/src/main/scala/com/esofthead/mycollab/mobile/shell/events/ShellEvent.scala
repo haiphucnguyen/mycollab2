@@ -26,7 +26,7 @@ object ShellEvent {
 
     class GotoLoginView(source: AnyRef) extends ApplicationEvent(source, null) {}
 
-    class GotoMainPage(source: AnyRef) extends ApplicationEvent(source, null) {}
+    class GotoMainPage(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
     class GotoCrmModule(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
