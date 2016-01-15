@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.mobile.module.crm.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePresenter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -26,7 +25,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.2
  */
-public class CrmModulePresenter extends AbstractMobilePresenter<CrmModule> {
+public class CrmModulePresenter extends AbstractCrmPresenter<CrmModule> {
     private static final long serialVersionUID = -3370467477599009160L;
 
     public CrmModulePresenter() {

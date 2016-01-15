@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view.message;
 
-import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.ProjectListPresenter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -32,7 +32,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public class MessageListPresenter extends AbstractListPresenter<MessageListView, MessageSearchCriteria, SimpleMessage> {
+public class MessageListPresenter extends ProjectListPresenter<MessageListView, MessageSearchCriteria, SimpleMessage> {
     private static final long serialVersionUID = -4299885147378046501L;
 
     public MessageListPresenter() {

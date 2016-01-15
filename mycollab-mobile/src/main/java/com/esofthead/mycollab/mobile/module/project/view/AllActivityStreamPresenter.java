@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -35,7 +34,7 @@ import java.util.List;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class AllActivityStreamPresenter extends AbstractListPresenter<AllActivityView, ActivityStreamSearchCriteria, ProjectActivityStream> {
+public class AllActivityStreamPresenter extends ProjectListPresenter<AllActivityView, ActivityStreamSearchCriteria, ProjectActivityStream> {
     private static final long serialVersionUID = -2089284900326846089L;
 
     public AllActivityStreamPresenter() {

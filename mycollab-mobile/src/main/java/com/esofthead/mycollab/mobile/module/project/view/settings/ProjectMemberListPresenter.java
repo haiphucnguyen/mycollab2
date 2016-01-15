@@ -19,7 +19,7 @@ package com.esofthead.mycollab.mobile.module.project.view.settings;
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.ProjectListPresenter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -35,7 +35,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class ProjectMemberListPresenter extends AbstractListPresenter<ProjectMemberListView, ProjectMemberSearchCriteria, SimpleProjectMember> {
+public class ProjectMemberListPresenter extends ProjectListPresenter<ProjectMemberListView, ProjectMemberSearchCriteria, SimpleProjectMember> {
     private static final long serialVersionUID = 1L;
 
     public ProjectMemberListPresenter() {

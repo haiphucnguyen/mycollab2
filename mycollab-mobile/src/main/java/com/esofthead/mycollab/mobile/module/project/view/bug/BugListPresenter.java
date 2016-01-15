@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
-import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.ProjectListPresenter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
@@ -32,7 +32,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class BugListPresenter extends AbstractListPresenter<BugListView, BugSearchCriteria, SimpleBug> {
+public class BugListPresenter extends ProjectListPresenter<BugListView, BugSearchCriteria, SimpleBug> {
     private static final long serialVersionUID = -3814540725962187693L;
 
     public BugListPresenter() {

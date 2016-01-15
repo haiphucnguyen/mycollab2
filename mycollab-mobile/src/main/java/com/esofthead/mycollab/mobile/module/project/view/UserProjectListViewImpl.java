@@ -37,10 +37,10 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @since 4.4.0
  */
 @ViewComponent
-public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCriteria, SimpleProject> implements ProjectListView {
+public class UserProjectListViewImpl extends AbstractListPageView<ProjectSearchCriteria, SimpleProject> implements UserProjectListView {
     private static final long serialVersionUID = 664947871255886622L;
 
-    public ProjectListViewImpl() {
+    public UserProjectListViewImpl() {
         this.setCaption(AppContext.getMessage(ProjectCommonI18nEnum.M_VIEW_PROJECT_LIST));
     }
 
@@ -58,7 +58,7 @@ public class ProjectListViewImpl extends AbstractListPageView<ProjectSearchCrite
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 closeMenu();
-                EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this, null));
+                EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this));
             }
         });
         activityBtn.setIcon(FontAwesome.INBOX);

@@ -24,6 +24,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-public interface ProjectListView extends IListView<ProjectSearchCriteria, SimpleProject> {
+public interface UserProjectListView extends IListView<ProjectSearchCriteria, SimpleProject> {
 
 }

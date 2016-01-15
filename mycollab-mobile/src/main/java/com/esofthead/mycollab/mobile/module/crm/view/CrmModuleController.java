@@ -50,8 +50,6 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author MyCollab Ltd.
@@ -60,8 +58,6 @@ import org.slf4j.LoggerFactory;
 public class CrmModuleController extends AbstractController {
     private static final long serialVersionUID = 6995176903239247669L;
     final private NavigationManager crmViewNavigation;
-
-    private static final Logger LOG = LoggerFactory.getLogger(CrmModuleController.class);
 
     public CrmModuleController(NavigationManager navigationManager) {
         this.crmViewNavigation = navigationManager;

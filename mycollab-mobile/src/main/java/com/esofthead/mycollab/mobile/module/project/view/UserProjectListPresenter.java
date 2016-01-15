@@ -14,33 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.ui;
+package com.esofthead.mycollab.mobile.module.project.view;
 
-import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.ComponentContainer;
 
 /**
  * @author MyCollab Ltd.
- * @since 4.5.0
+ * @since 4.4.0
  */
+public class UserProjectListPresenter extends ProjectListPresenter<UserProjectListView, ProjectSearchCriteria, SimpleProject> {
+    private static final long serialVersionUID = 35574182873793474L;
 
-public abstract class AbstractMobilePresenter<V extends PageView> extends AbstractPresenter<V> {
-    private static final long serialVersionUID = 1L;
-
-    public AbstractMobilePresenter(Class<V> viewClass) {
-        super(viewClass);
+    public UserProjectListPresenter() {
+        super(UserProjectListView.class);
     }
 
     @Override
-    protected void onGo(ComponentContainer navigator, ScreenData<?> data) {
-        if (navigator instanceof NavigationManager) {
-            ((NavigationManager) navigator).navigateTo(view.getWidget());
-        } else {
-            navigator.removeAllComponents();
-            navigator.addComponent(view.getWidget());
-        }
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((ProjectSearchCriteria) data.getParams());
     }
 }

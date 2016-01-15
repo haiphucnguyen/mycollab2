@@ -9,7 +9,7 @@ import com.esofthead.mycollab.mobile.module.project.events._
 import com.esofthead.mycollab.mobile.module.project.view.bug.BugPresenter
 import com.esofthead.mycollab.mobile.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.mobile.module.project.view.milestone.MilestonePresenter
-import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData.{Add, ViewActivities}
+import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData.{Add, ProjectActivities}
 import com.esofthead.mycollab.mobile.module.project.view.parameters._
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectUserPresenter
 import com.esofthead.mycollab.mobile.module.project.view.task.TaskPresenter
@@ -44,7 +44,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     })
     this.register(new ApplicationEventListener[ProjectEvent.GotoProjectList]() {
       @Subscribe def handle(event: ProjectEvent.GotoProjectList) {
-        val presenter = PresenterResolver.getPresenter(classOf[ProjectListPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[UserProjectListPresenter])
         val criteria = new ProjectSearchCriteria
         criteria.setInvolvedMember(new StringSearchField(AppContext.getUsername))
         criteria.setProjectStatuses(new SetSearchField[String](StatusI18nEnum.Open.name))
@@ -66,7 +66,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     this.register(new ApplicationEventListener[ProjectEvent.MyProjectActivities]() {
       @Subscribe def handle(event: ProjectEvent.MyProjectActivities) {
         val presenter: ProjectActivityStreamPresenter = PresenterResolver.getPresenter(classOf[ProjectActivityStreamPresenter])
-        presenter.go(navManager, new ViewActivities(event.getData.asInstanceOf[Integer]))
+        presenter.go(navManager, new ProjectActivities(event.getData.asInstanceOf[Integer]))
       }
     })
   }

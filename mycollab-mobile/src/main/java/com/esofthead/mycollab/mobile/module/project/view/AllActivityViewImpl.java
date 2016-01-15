@@ -74,7 +74,7 @@ public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSear
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 closeMenu();
-                EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this, null));
+                EventBusFactory.getInstance().post(new ProjectEvent.AllActivities(this));
             }
         });
         activityBtn.setIcon(FontAwesome.INBOX);

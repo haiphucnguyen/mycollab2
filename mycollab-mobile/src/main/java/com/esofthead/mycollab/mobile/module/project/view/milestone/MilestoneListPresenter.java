@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.mobile.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
-import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.ProjectListPresenter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
@@ -33,7 +33,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class MilestoneListPresenter extends AbstractListPresenter<MilestoneListView, MilestoneSearchCriteria, SimpleMilestone> {
+public class MilestoneListPresenter extends ProjectListPresenter<MilestoneListView, MilestoneSearchCriteria, SimpleMilestone> {
     private static final long serialVersionUID = 8282868336211950427L;
 
     public MilestoneListPresenter() {

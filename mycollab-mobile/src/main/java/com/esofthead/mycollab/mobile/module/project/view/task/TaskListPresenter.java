@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
-import com.esofthead.mycollab.mobile.ui.AbstractListPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.ProjectListPresenter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -32,7 +32,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.0
  */
-public class TaskListPresenter extends AbstractListPresenter<TaskListView, TaskSearchCriteria, SimpleTask> {
+public class TaskListPresenter extends ProjectListPresenter<TaskListView, TaskSearchCriteria, SimpleTask> {
     private static final long serialVersionUID = -2899902106379842031L;
 
     public TaskListPresenter() {

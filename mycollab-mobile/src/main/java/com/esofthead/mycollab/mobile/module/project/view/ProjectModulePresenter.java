@@ -21,7 +21,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.MobileApplication;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.shell.ModuleHelper;
-import com.esofthead.mycollab.mobile.ui.AbstractMobilePresenter;
+import com.esofthead.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -30,7 +30,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Inc.
  * @since 4.3.1
  */
-public class ProjectModulePresenter extends AbstractMobilePresenter<ProjectModule> {
+public class ProjectModulePresenter extends AbstractProjectPresenter<ProjectModule> {
     private static final long serialVersionUID = 6940806138148601147L;
 
     public ProjectModulePresenter() {
