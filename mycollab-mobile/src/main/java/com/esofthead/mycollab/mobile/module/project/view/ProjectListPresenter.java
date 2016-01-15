@@ -28,7 +28,7 @@ public abstract class ProjectListPresenter<V extends IListView<S, B>, S extends 
         doSearch((S) data.getParams());
     }
 
-    protected final void doSearch(S searchCriteria) {
+    private void doSearch(S searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
     }

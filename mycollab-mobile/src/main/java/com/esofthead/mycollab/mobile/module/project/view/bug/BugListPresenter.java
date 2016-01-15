@@ -42,9 +42,7 @@ public class BugListPresenter extends ProjectListPresenter<BugListView, BugSearc
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
-            BugSearchCriteria param = (BugSearchCriteria) data.getParams();
             super.onGo(container, data);
-            this.doSearch(param);
             AppContext.addFragment("project/bug/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     AppContext.getMessage(BugI18nEnum.VIEW_LIST_TITLE));
         } else {

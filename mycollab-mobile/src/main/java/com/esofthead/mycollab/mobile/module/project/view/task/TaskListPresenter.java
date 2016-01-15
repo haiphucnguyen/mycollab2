@@ -42,9 +42,7 @@ public class TaskListPresenter extends ProjectListPresenter<TaskListView, TaskSe
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-            TaskSearchCriteria param = (TaskSearchCriteria) data.getParams();
             super.onGo(container, data);
-            this.doSearch(param);
             AppContext.addFragment("project/task/list/" + GenericLinkUtils.encodeParam(CurrentProjectVariables.getProjectId()),
                     AppContext.getMessage(TaskI18nEnum.M_VIEW_LIST_TITLE));
         } else {

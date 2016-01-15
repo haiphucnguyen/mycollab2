@@ -43,7 +43,6 @@ public class MessageListPresenter extends ProjectListPresenter<MessageListView, 
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MESSAGES)) {
             super.onGo(container, data);
-            doSearch((MessageSearchCriteria) data.getParams());
             AppContext.addFragment(ProjectLinkGenerator.generateMessagesLink(CurrentProjectVariables.getProjectId()),
                     AppContext.getMessage(MessageI18nEnum.VIEW_LIST_TITLE));
         } else {

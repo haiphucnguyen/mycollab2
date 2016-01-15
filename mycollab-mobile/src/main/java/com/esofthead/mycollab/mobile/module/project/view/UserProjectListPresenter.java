@@ -35,6 +35,6 @@ public class UserProjectListPresenter extends ProjectListPresenter<UserProjectLi
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        doSearch((ProjectSearchCriteria) data.getParams());
+        //TODO: add fragement
     }
 }

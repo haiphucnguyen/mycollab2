@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.mobile.module.project.view
 
+import com.esofthead.mycollab.common.ModuleNameConstants
+import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum
 import com.esofthead.mycollab.core.MyCollabException
 import com.esofthead.mycollab.core.arguments.{NumberSearchField, SearchField, SetSearchField, StringSearchField}
@@ -15,9 +17,11 @@ import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectUserPre
 import com.esofthead.mycollab.mobile.module.project.view.task.TaskPresenter
 import com.esofthead.mycollab.module.project.domain.criteria._
 import com.esofthead.mycollab.module.project.domain.{SimpleMilestone, SimpleProject, SimpleProjectMember, SimpleTask}
+import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.project.{CurrentProjectVariables, ProjectMemberStatusConstants}
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria
+import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.esofthead.mycollab.vaadin.AppContext
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver, ScreenData}
 import com.google.common.eventbus.Subscribe
@@ -60,13 +64,23 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
     this.register(new ApplicationEventListener[ProjectEvent.AllActivities]() {
       @Subscribe def handle(event: ProjectEvent.AllActivities) {
         val presenter = PresenterResolver.getPresenter(classOf[AllActivityStreamPresenter])
-        presenter.go(navManager, event.getData.asInstanceOf[ProjectScreenData.AllActivities])
+        val prjService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
+        val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId())
+        val searchCriteria = new ActivityStreamSearchCriteria()
+        searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
+        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()))
+        searchCriteria.setExtraTypeIds(new SetSearchField(prjKeys))
+        presenter.go(navManager, new ProjectScreenData.AllActivities(searchCriteria))
       }
     })
     this.register(new ApplicationEventListener[ProjectEvent.MyProjectActivities]() {
       @Subscribe def handle(event: ProjectEvent.MyProjectActivities) {
         val presenter: ProjectActivityStreamPresenter = PresenterResolver.getPresenter(classOf[ProjectActivityStreamPresenter])
-        presenter.go(navManager, new ProjectActivities(event.getData.asInstanceOf[Integer]))
+        val searchCriteria = new ActivityStreamSearchCriteria()
+        searchCriteria.setModuleSet(new SetSearchField(ModuleNameConstants.PRJ))
+        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()))
+        searchCriteria.setExtraTypeIds(new SetSearchField(event.getData.asInstanceOf[Integer]))
+        presenter.go(navManager, new ProjectActivities(searchCriteria))
       }
     })
   }
@@ -78,7 +92,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val presenter = PresenterResolver.getPresenter(classOf[BugPresenter])
         if (params == null) {
           val criteria = new BugSearchCriteria
-          criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
+          criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
           presenter.go(navManager, new BugScreenData.Search(criteria))
         }
         else if (params.isInstanceOf[BugScreenData.Search]) {
