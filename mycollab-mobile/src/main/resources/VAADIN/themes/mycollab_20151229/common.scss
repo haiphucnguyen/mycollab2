@@ -113,6 +113,19 @@
       @include truncate();
     }
   }
+
+  .v-touchkit-navbar-left, .v-touchkit-navbar-right {
+    width: 68px !important;
+  }
+
+  .v-touchkit-navbar-right {
+    text-align: right !important;
+  }
+
+  .v-touchkit-navbar .v-button-wrap {
+    text-align: left;
+  }
+
   .v-touchkit-navbar .v-navbar-quickmenu-button {
     font-size: 20px !important;
   }

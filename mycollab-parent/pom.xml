@@ -18,6 +18,7 @@
         <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>7.6.1</vaadinVersion>
         <jettyVersion>9.2.13.v20150730</jettyVersion>
+        <undertow>1.2.11.Final</undertow>
         <mysqlVersion>5.1.38</mysqlVersion>
         <junitVersion>4.12</junitVersion>
         <jackrabbitVersion>2.11.3</jackrabbitVersion>
