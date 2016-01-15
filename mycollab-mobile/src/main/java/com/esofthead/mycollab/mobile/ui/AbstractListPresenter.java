@@ -38,6 +38,6 @@ public abstract class AbstractListPresenter<V extends IListView<S, B>, S extends
 
     public void doSearch(S searchCriteria) {
         this.searchCriteria = searchCriteria;
-        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        view.getPagedBeanTable().search(searchCriteria);
     }
 }

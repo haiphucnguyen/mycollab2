@@ -53,7 +53,6 @@ public class ProjectCommentListView extends AbstractMobilePageView implements Re
         this.typeId = typeId;
 
         commentList = new BeanList<>(ApplicationContextUtil.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
-        commentList.setDisplayEmptyListText(false);
         this.setContent(commentList);
         if (isDisplayCommentInput) {
             commentBox = new ProjectCommentRequestComp(type, typeId, extraTypeId);

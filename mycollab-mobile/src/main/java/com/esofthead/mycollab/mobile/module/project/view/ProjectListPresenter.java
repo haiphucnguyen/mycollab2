@@ -24,12 +24,8 @@ public abstract class ProjectListPresenter<V extends IListView<S, B>, S extends 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         NavigationManager currentNav = (NavigationManager) container;
-        currentNav.navigateTo(view);
-        doSearch((S) data.getParams());
-    }
-
-    private void doSearch(S searchCriteria) {
-        this.searchCriteria = searchCriteria;
+        this.searchCriteria = (S) data.getParams();
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        currentNav.navigateTo(view);
     }
 }

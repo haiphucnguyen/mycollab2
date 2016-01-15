@@ -16,6 +16,9 @@
  */
 package com.esofthead.mycollab.mobile.module.project.view;
 
+import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
@@ -47,6 +50,17 @@ public class UserProjectListViewImpl extends AbstractListPageView<ProjectSearchC
     @Override
     protected AbstractPagedBeanList<ProjectSearchCriteria, SimpleProject> createBeanList() {
         return new ProjectListDisplay();
+    }
+
+    @Override
+    protected void doSearch() {
+        if (getPagedBeanTable().getSearchRequest() == null) {
+            ProjectSearchCriteria criteria = new ProjectSearchCriteria();
+            criteria.setInvolvedMember(new StringSearchField(AppContext.getUsername()));
+            criteria.setProjectStatuses(new SetSearchField(OptionI18nEnum.StatusI18nEnum.Open.name()));
+            getPagedBeanTable().setSearchCriteria(criteria);
+        }
+        getPagedBeanTable().refresh();
     }
 
     @Override

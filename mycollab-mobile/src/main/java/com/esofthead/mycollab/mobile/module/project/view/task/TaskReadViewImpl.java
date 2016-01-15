@@ -211,11 +211,13 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                     return field;
                 }
             } else if (Task.Field.milestoneid.equalTo(propertyId)) {
-                A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
-                        (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
-                Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants
-                        .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
-                return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
+                if (beanItem.getMilestoneid() != null) {
+                    A milestoneLink = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
+                            (CurrentProjectVariables.getProjectId(), beanItem.getMilestoneid())).appendText(beanItem.getMilestoneName());
+                    Div milestoneDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants
+                            .MILESTONE).getHtml()).appendChild(DivLessFormatter.EMPTY_SPACE(), milestoneLink);
+                    return new DefaultViewField(milestoneDiv.write(), ContentMode.HTML);
+                }
             } else if (propertyId.equals("notes")) {
                 return new RichTextViewField(beanItem.getNotes());
             }

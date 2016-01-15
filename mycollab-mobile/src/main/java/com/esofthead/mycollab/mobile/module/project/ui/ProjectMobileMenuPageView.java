@@ -20,6 +20,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.*;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractMobileMenuPageView;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.vaadin.server.FontAwesome;
@@ -49,7 +50,7 @@ public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 closeMenu();
-                EventBusFactory.getInstance().post(new ProjectEvent.MyProjectActivities(this, null));
+                EventBusFactory.getInstance().post(new ProjectEvent.MyProjectActivities(this, CurrentProjectVariables.getProjectId()));
             }
         });
         activityBtn.setIcon(FontAwesome.INBOX);

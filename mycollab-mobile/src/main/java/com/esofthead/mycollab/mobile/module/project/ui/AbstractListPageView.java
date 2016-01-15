@@ -40,12 +40,16 @@ public abstract class AbstractListPageView<S extends SearchCriteria, B> extends 
         return itemList;
     }
 
-    @Override
-    public void onBecomingVisible() {
-        super.onBecomingVisible();
+    protected void doSearch() {
         if (getPagedBeanTable().getSearchRequest() != null) {
             getPagedBeanTable().refresh();
         }
+    }
+
+    @Override
+    public void onBecomingVisible() {
+        super.onBecomingVisible();
+        doSearch();
 
         Component rightComponent = buildRightComponent();
         if (rightComponent != null) {
