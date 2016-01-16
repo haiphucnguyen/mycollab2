@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-server-runner.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.jetty;
+package com.esofthead.mycollab.server.jetty;
 
 import ch.qos.logback.classic.Level;
 import com.esofthead.mycollab.configuration.ApplicationProperties;
@@ -23,6 +23,7 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.configuration.logging.LogConfig;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import com.esofthead.mycollab.server.ClientCommunitor;
 import com.esofthead.mycollab.servlet.*;
 import com.zaxxer.hikari.HikariDataSource;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;

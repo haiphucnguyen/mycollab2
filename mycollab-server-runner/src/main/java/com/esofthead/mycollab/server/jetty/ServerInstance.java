@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-server-runner.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.jetty;
+package com.esofthead.mycollab.server.jetty;
 
 import com.esofthead.mycollab.core.MyCollabException;
 

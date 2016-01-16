@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-app-community.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.jetty;
+package com.esofthead.mycollab.server.jetty;
 
 import org.eclipse.jetty.webapp.WebAppContext;
 

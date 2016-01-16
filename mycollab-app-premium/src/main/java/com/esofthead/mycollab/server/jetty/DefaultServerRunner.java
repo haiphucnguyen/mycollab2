@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.jetty;
+package com.esofthead.mycollab.server.jetty;
 
 import org.eclipse.jetty.webapp.WebAppContext;
 
