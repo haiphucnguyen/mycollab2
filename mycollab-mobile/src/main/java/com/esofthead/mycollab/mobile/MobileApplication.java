@@ -143,7 +143,6 @@ public class MobileApplication extends MyCollabUI {
             }
         });
 
-        System.out.println("REQUEST: " + request +"---" + this);
         initialUrl = this.getPage().getUriFragment();
         currentContext = new AppContext();
         postSetupApp(request);

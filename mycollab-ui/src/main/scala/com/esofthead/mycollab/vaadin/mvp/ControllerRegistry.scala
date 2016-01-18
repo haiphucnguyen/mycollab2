@@ -29,7 +29,6 @@ object ControllerRegistry {
   def addController(controller: AbstractController): Unit = {
     var controllerList: Map[Class[_], AbstractController] = (MyCollabSession.getVariable(CONTROLLER_REGISTRY).
       asInstanceOf[Map[Class[_], AbstractController]])
-    System.out.println("CONTROLLER: " + controllerList)
     if (controllerList == null) {
       controllerList = Map().withDefaultValue(null)
       MyCollabSession.putVariable(CONTROLLER_REGISTRY, controllerList)
