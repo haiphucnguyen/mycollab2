@@ -6,6 +6,7 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.vaadin.data.Property;
 import com.vaadin.ui.TextField;
+import org.vaadin.jouni.dom.Dom;
 import org.vaadin.resetbuttonfortextfield.ResetButtonClickListener;
 import org.vaadin.resetbuttonfortextfield.ResetButtonForTextField;
 
@@ -22,7 +23,8 @@ public abstract class SearchInputField<S extends SearchCriteria> extends TextFie
     public SearchInputField() {
         this.setImmediate(true);
         this.setStyleName("searchinputfield");
-        this.setInputPrompt("Search");
+        Dom dom = new Dom(this);
+        dom.setAttribute("placeholder", "Search");
         this.setTextChangeEventMode(TextChangeEventMode.TIMEOUT);
         this.setTextChangeTimeout(3000);
         this.addValueChangeListener(new ValueChangeListener() {

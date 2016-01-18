@@ -33,6 +33,7 @@ import com.vaadin.ui.Button;
 public class ProjectMobileMenuPageView extends AbstractMobileMenuPageView {
     @Override
     protected void buildNavigateMenu() {
+        getMenu().setWidth("80%");
         addSection("Views:");
 
         Button prjButton = new Button("Projects", new Button.ClickListener() {

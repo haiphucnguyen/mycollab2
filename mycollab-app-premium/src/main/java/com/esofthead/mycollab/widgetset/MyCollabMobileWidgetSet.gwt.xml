@@ -17,4 +17,5 @@
 
     <inherits name="org.vaadin.resetbuttonfortextfield.WidgetSet"/>
 
+    <inherits name="org.vaadin.jouni.dom.DomWidgetset"/>
 </module>

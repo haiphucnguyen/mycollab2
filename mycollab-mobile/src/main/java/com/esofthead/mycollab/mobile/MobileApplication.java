@@ -108,7 +108,6 @@ public class MobileApplication extends MyCollabUI {
                     NotificationUtil.showWarningNotification(AppContext.getMessage(GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
                             invalidException.getMessage()));
                 } else {
-
                     UsageExceedBillingPlanException usageBillingException = (UsageExceedBillingPlanException) getExceptionType(
                             e, UsageExceedBillingPlanException.class);
                     if (usageBillingException != null) {
@@ -144,6 +143,7 @@ public class MobileApplication extends MyCollabUI {
             }
         });
 
+        System.out.println("REQUEST: " + request +"---" + this);
         initialUrl = this.getPage().getUriFragment();
         currentContext = new AppContext();
         postSetupApp(request);

@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.vaadin.addon.touchkit.ui.EmailField;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
+import org.vaadin.jouni.dom.Dom;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -62,14 +63,12 @@ public class LoginViewImpl extends AbstractMobileMainView implements LoginView {
 
         final EmailField emailField = new EmailField();
         emailField.setWidth("100%");
-        emailField.setInputPrompt("E-mail Address");
-        emailField.setStyleName("email-input");
+        new Dom(emailField).setAttribute("placeholder", "Email address");
         contentLayout.addComponent(emailField);
 
         final PasswordField pwdField = new PasswordField();
         pwdField.setWidth("100%");
-        pwdField.setInputPrompt("Password");
-        pwdField.setStyleName("password-input");
+        new Dom(pwdField).setAttribute("placeholder", "Password");
         contentLayout.addComponent(pwdField);
 
         final CheckBox rememberPassword = new CheckBox();
