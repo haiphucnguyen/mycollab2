@@ -195,6 +195,17 @@ a {
 	height: 100%;
 }
 
+input.searchinputfield {
+	width: 100%;
+	height: 35px;
+	border-bottom: 1px solid #e5e5e5;
+	text-align: center;
+}
+
+.v-slot-searchinputfield .resetbuttonfortextfield-resetbutton {
+	top: -7pt;
+}
+
 .attachment-preview-view {
 	background-color: black;
 }

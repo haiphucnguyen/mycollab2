@@ -20,6 +20,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
 import com.esofthead.mycollab.mobile.ui.IListView;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.ComponentContainer;
@@ -35,6 +37,21 @@ public abstract class ProjectListPresenter<V extends IListView<S, B>, S extends 
 
     public ProjectListPresenter(Class<V> viewClass) {
         super(viewClass);
+    }
+
+    @Override
+    protected void postInitView() {
+        super.postInitView();
+        HasSearchHandlers<S> searchHandlers = view.getSearchHandlers();
+        if (searchHandlers != null) {
+            searchHandlers.addSearchHandler(new SearchHandler<S>() {
+                @Override
+                public void onSearch(S criteria) {
+                    searchCriteria = criteria;
+                    view.getPagedBeanTable().search(criteria);
+                }
+            });
+        }
     }
 
     @Override

@@ -50,7 +50,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-        criteria.setStatus(new StringSearchField(ProjectMemberStatusConstants.ACTIVE));
+        criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
 
         ProjectMemberService projectMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
         projectMembers = projectMemberService.findPagableListByCriteria(new SearchRequest<>(
@@ -115,8 +115,8 @@ public class WatchersMultiSelection extends MVerticalLayout {
         private void unfollowItem(String username) {
             MonitorSearchCriteria criteria = new MonitorSearchCriteria();
             criteria.setTypeId(new NumberSearchField(typeId));
-            criteria.setType(new StringSearchField(type));
-            criteria.setUser(new StringSearchField(username));
+            criteria.setType(StringSearchField.and(type));
+            criteria.setUser(StringSearchField.and(username));
             monitorItemService.removeByCriteria(criteria, AppContext.getAccountId());
         }
     }

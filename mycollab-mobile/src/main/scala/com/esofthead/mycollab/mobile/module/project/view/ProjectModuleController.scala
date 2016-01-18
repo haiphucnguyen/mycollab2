@@ -66,7 +66,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
       @Subscribe def handle(event: ProjectEvent.GotoProjectList) {
         val presenter = PresenterResolver.getPresenter(classOf[UserProjectListPresenter])
         val criteria = new ProjectSearchCriteria
-        criteria.setInvolvedMember(new StringSearchField(AppContext.getUsername))
+        criteria.setInvolvedMember(StringSearchField.and(AppContext.getUsername))
         criteria.setProjectStatuses(new SetSearchField[String](StatusI18nEnum.Open.name))
         presenter.go(navManager, new ScreenData.Search[ProjectSearchCriteria](criteria))
       }
@@ -248,7 +248,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val criteria = new ProjectMemberSearchCriteria
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId))
-        criteria.setStatus(new StringSearchField(ProjectMemberStatusConstants.ACTIVE))
+        criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE))
         val presenter = PresenterResolver.getPresenter(classOf[ProjectUserPresenter])
         presenter.go(navManager, new ProjectMemberScreenData.Search(criteria))
       }

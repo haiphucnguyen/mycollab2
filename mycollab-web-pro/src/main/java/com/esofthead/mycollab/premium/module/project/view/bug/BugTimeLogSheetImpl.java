@@ -103,7 +103,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private Double loadTotalBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -112,7 +112,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
     private Double loadTotalNonBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -163,7 +163,7 @@ public class BugTimeLogSheetImpl extends BugTimeLogSheet {
         protected ItemTimeLoggingSearchCriteria getItemSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
             return searchCriteria;
         }

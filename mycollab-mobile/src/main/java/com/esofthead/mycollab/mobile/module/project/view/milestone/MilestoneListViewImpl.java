@@ -25,6 +25,7 @@ import com.esofthead.mycollab.mobile.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.DefaultPagedBeanList;
+import com.esofthead.mycollab.mobile.ui.SearchInputField;
 import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -69,6 +70,19 @@ public class MilestoneListViewImpl extends AbstractListPageView<MilestoneSearchC
     @Override
     protected AbstractPagedBeanList<MilestoneSearchCriteria, SimpleMilestone> createBeanList() {
         return new DefaultPagedBeanList<>(ApplicationContextUtil.getSpringBean(MilestoneService.class), new MilestoneRowDisplayHandler());
+    }
+
+    @Override
+    protected SearchInputField<MilestoneSearchCriteria> createSearchField() {
+        return new SearchInputField<MilestoneSearchCriteria>() {
+            @Override
+            protected MilestoneSearchCriteria fillUpSearchCriteria(String value) {
+                MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
+                searchCriteria.setProjectId(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
+                searchCriteria.setMilestoneName(StringSearchField.and(value));
+                return searchCriteria;
+            }
+        };
     }
 
     @Override

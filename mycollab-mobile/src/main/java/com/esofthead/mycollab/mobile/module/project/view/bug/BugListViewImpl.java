@@ -26,6 +26,7 @@ import com.esofthead.mycollab.mobile.module.project.events.BugEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.DefaultPagedBeanList;
+import com.esofthead.mycollab.mobile.ui.SearchInputField;
 import com.esofthead.mycollab.mobile.ui.UIConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -67,6 +68,11 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
     @Override
     protected AbstractPagedBeanList<BugSearchCriteria, SimpleBug> createBeanList() {
         return new DefaultPagedBeanList<>(ApplicationContextUtil.getSpringBean(BugService.class), new BugRowDisplayHandler());
+    }
+
+    @Override
+    protected SearchInputField<BugSearchCriteria> createSearchField() {
+        return null;
     }
 
     @Override

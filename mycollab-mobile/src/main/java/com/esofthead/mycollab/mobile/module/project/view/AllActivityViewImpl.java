@@ -27,6 +27,7 @@ import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList.RowDisplayHandler;
+import com.esofthead.mycollab.mobile.ui.SearchInputField;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
@@ -63,6 +64,11 @@ public class AllActivityViewImpl extends AbstractListPageView<ActivityStreamSear
         ProjectActivityStreamListDisplay beanList = new ProjectActivityStreamListDisplay();
         beanList.setRowDisplayHandler(new ActivityStreamRowHandler());
         return beanList;
+    }
+
+    @Override
+    protected SearchInputField<ActivityStreamSearchCriteria> createSearchField() {
+        return null;
     }
 
     @Override

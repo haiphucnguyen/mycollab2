@@ -26,25 +26,23 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 
 /**
- * 
- * @author MyCollab Ltd.
- * @since 2.0
- * 
  * @param <S>
  * @param <B>
+ * @author MyCollab Ltd.
+ * @since 2.0
  */
-public interface ListView<S extends SearchCriteria, B> extends PageView {
-	void enableActionControls(int numOfSelectedItem);
+public interface IListView<S extends SearchCriteria, B> extends PageView {
+    void enableActionControls(int numOfSelectedItem);
 
-	void disableActionControls();
+    void disableActionControls();
 
-	HasSearchHandlers<S> getSearchHandlers();
+    HasSearchHandlers<S> getSearchHandlers();
 
-	HasSelectionOptionHandlers getOptionSelectionHandlers();
+    HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-	HasMassItemActionHandler getPopupActionHandlers();
+    HasMassItemActionHandler getPopupActionHandlers();
 
-	HasSelectableItemHandlers<B> getSelectableItemHandlers();
+    HasSelectableItemHandlers<B> getSelectableItemHandlers();
 
-	AbstractPagedBeanTable<S, B> getPagedBeanTable();
+    AbstractPagedBeanTable<S, B> getPagedBeanTable();
 }

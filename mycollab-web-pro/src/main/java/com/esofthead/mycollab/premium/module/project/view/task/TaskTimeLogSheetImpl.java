@@ -81,7 +81,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
     private Double loadTotalBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(true));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -90,7 +90,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
     private Double loadTotalNonBillableHours() {
         ItemTimeLoggingSearchCriteria criteria = new ItemTimeLoggingSearchCriteria();
         criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-        criteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+        criteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
         criteria.setTypeId(new NumberSearchField(beanItem.getId()));
         criteria.setIsBillable(new BooleanSearchField(false));
         return itemTimeLoggingService.getTotalHoursByCriteria(criteria);
@@ -164,7 +164,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
         protected ItemTimeLoggingSearchCriteria getItemSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
             return searchCriteria;
         }

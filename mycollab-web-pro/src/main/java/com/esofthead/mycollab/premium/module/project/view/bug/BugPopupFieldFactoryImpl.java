@@ -155,7 +155,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
             monitorItemService.saveMonitorItems(items);
 
             MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
             searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
@@ -187,8 +187,8 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         @Override
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
-            searchCriteria.setTypeid(new StringSearchField(bug.getId() + ""));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
+            searchCriteria.setTypeid(StringSearchField.and(bug.getId() + ""));
             CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
@@ -450,7 +450,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                     searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    searchCriteria.setType(new StringSearchField(ProjectTypeConstants.BUG));
+                    searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
                     searchCriteria.setTypeId(new NumberSearchField(bug.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {

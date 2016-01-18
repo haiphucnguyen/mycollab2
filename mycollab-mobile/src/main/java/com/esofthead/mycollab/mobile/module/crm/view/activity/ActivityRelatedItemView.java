@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.mobile.module.crm.view.activity;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.mobile.ui.AbstractRelatedListView;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -57,7 +56,7 @@ public class ActivityRelatedItemView extends AbstractRelatedListView<SimpleActiv
     private void loadActivities() {
         ActivitySearchCriteria criteria = new ActivitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        criteria.setType(new StringSearchField(SearchField.AND, this.type));
+        criteria.setType(StringSearchField.and(type));
         criteria.setTypeid(new NumberSearchField(this.beanId));
         this.itemList.search(criteria);
     }

@@ -307,7 +307,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
             monitorItemService.saveMonitorItems(items);
 
             MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
             searchCriteria.setTypeId(new NumberSearchField(task.getId()));
             int numFollowers = monitorItemService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + numFollowers);
@@ -339,8 +339,8 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         @Override
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-            searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
-            searchCriteria.setTypeid(new StringSearchField(task.getId() + ""));
+            searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
+            searchCriteria.setTypeid(StringSearchField.and(task.getId() + ""));
             CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
@@ -411,7 +411,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
                     ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                     searchCriteria.setIsBillable(new BooleanSearchField(isBillable));
                     searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                    searchCriteria.setType(new StringSearchField(ProjectTypeConstants.TASK));
+                    searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
                     searchCriteria.setTypeId(new NumberSearchField(task.getId()));
                     Double calculatedHours = timeLoggingService.getTotalHoursByCriteria(searchCriteria);
                     if (isBillable) {

@@ -105,7 +105,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
     }
 
     private void callSearchAction() {
-        searchCriteria.setName(new StringSearchField(this.nameField.getValue().trim()));
+        searchCriteria.setName(StringSearchField.and(this.nameField.getValue().trim()));
         assignmentTableDisplay.setSearchCriteria(searchCriteria);
     }
 }

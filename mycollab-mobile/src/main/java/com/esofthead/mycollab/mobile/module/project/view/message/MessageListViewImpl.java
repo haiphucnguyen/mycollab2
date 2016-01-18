@@ -20,6 +20,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.MessageEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
+import com.esofthead.mycollab.mobile.ui.SearchInputField;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.MessageI18nEnum;
@@ -49,6 +50,11 @@ public class MessageListViewImpl extends AbstractListPageView<MessageSearchCrite
     protected AbstractPagedBeanList<MessageSearchCriteria, SimpleMessage> createBeanList() {
         MessageListDisplay messageListDisplay = new MessageListDisplay();
         return messageListDisplay;
+    }
+
+    @Override
+    protected SearchInputField<MessageSearchCriteria> createSearchField() {
+        return null;
     }
 
     @Override
