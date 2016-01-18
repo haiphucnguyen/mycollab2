@@ -19,6 +19,8 @@ package com.esofthead.mycollab.mobile.module.project.view.task;
 import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -72,7 +74,15 @@ public class TaskListViewImpl extends AbstractListPageView<TaskSearchCriteria, S
 
     @Override
     protected SearchInputField<TaskSearchCriteria> createSearchField() {
-        return null;
+        return new SearchInputField<TaskSearchCriteria>() {
+            @Override
+            protected TaskSearchCriteria fillUpSearchCriteria(String value) {
+                TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+                searchCriteria.setProjectid(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
+                searchCriteria.setTaskName(StringSearchField.and(value));
+                return searchCriteria;
+            }
+        };
     }
 
     @Override

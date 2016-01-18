@@ -19,6 +19,11 @@ package com.esofthead.mycollab.mobile.module.project.view.bug;
 import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.db.query.StringParam;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -32,6 +37,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
@@ -72,7 +78,16 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
 
     @Override
     protected SearchInputField<BugSearchCriteria> createSearchField() {
-        return null;
+        return new SearchInputField<BugSearchCriteria>() {
+            @Override
+            protected BugSearchCriteria fillUpSearchCriteria(String value) {
+                BugSearchCriteria searchCriteria = new BugSearchCriteria();
+                searchCriteria.setProjectId(NumberSearchField.and(CurrentProjectVariables.getProjectId()));
+                searchCriteria.addExtraField(BugSearchCriteria.p_textDesc.buildSearchField(SearchField.AND,
+                        StringParam.CONTAINS, value));
+                return searchCriteria;
+            }
+        };
     }
 
     @Override
