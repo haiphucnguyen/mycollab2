@@ -18,8 +18,10 @@ package com.esofthead.mycollab.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.mobile.module.project.events.BugEvent;
 import com.esofthead.mycollab.mobile.module.project.ui.AbstractListPageView;
 import com.esofthead.mycollab.mobile.ui.AbstractPagedBeanList;
@@ -41,6 +43,8 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -100,14 +104,16 @@ public class BugListViewImpl extends AbstractListPageView<BugSearchCriteria, Sim
                     .formatPrettyTime((bug.getLastupdatedtime())))).withStyleName(UIConstants.META_INFO);
             metaInfoLayout.addComponent(lastUpdatedTimeLbl);
 
-            A assigneeLink = new A();
-            assigneeLink.setHref(ProjectLinkGenerator.generateProjectMemberFullLink(AppContext.getSiteUrl(),
+            A assigneeLink = new A(ProjectLinkGenerator.generateProjectMemberFullLink(AppContext.getSiteUrl(),
                     CurrentProjectVariables.getProjectId(), bug.getAssignuser()));
             assigneeLink.appendText(StringUtils.trim(bug.getAssignuserFullName(), 30, true));
+            Div assigneeDiv = new Div().appendText(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
+                    .appendChild(DivLessFormatter.EMPTY_SPACE(), new Img("", StorageFactory.getInstance()
+                            .getAvatarPath(bug.getAssignUserAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(),
+                            assigneeLink);
 
-            ELabel assigneeLbl = new ELabel(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE) + (bug
-                    .getAssignuserFullName() == null ?
-                    ":&nbsp;N/A&nbsp;" : ":&nbsp;" + assigneeLink.write()), ContentMode.HTML).withStyleName(UIConstants.META_INFO);
+            ELabel assigneeLbl = new ELabel(assigneeDiv.write(), ContentMode.HTML).withStyleName(UIConstants.META_INFO)
+                    .withWidthUndefined();
             metaInfoLayout.addComponent(assigneeLbl);
 
             ELabel statusLbl = new ELabel(AppContext.getMessage(BugI18nEnum.FORM_STATUS) + ": " + AppContext.getMessage
