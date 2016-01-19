@@ -114,7 +114,7 @@ public class LogoEditWindow extends Window {
                         new SettingEvent.GotoGeneralSetting(LogoEditWindow.this, null));
             }
         });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
         controlBtns.with(cancelBtn);
 
         Button acceptBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ACCEPT), new Button.ClickListener() {

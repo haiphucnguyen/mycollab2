@@ -167,7 +167,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
             }
         });
         resetButton.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        resetButton.setStyleName(UIConstants.THEME_GRAY_LINK);
+        resetButton.setStyleName(UIConstants.BUTTON_OPTION);
         buttonControls.with(logoUploadField, resetButton);
         rightPanel.with(previewLayout, buttonControls);
         layout.with(leftPanel, rightPanel).expand(rightPanel);
@@ -237,7 +237,7 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
             }
         });
         resetButton.setEnabled(AppContext.canBeYes(RolePermissionCollections.ACCOUNT_THEME));
-        resetButton.setStyleName(UIConstants.THEME_GRAY_LINK);
+        resetButton.setStyleName(UIConstants.BUTTON_OPTION);
 
         buttonControls.with(favIconUploadField, resetButton);
         rightPanel.with(favIconRes, buttonControls);

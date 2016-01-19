@@ -171,7 +171,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
                 DefaultCloudDriveOAuthWindow.this.close();
             }
         });
-        cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
         controllGroupBtn.addComponent(cancelBtn);
 
         mainLayout.addComponent(controllGroupBtn);

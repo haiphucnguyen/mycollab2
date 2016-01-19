@@ -184,7 +184,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                     userField.setValue(null);
                 }
             });
-            clearBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+            clearBtn.setStyleName(UIConstants.BUTTON_OPTION);
 
             buttonControls.with(searchBtn, clearBtn).alignAll(Alignment.MIDDLE_LEFT);
             bodyWrap.with(gridLayout, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_CENTER);

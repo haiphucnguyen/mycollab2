@@ -141,7 +141,7 @@ public class CreateCustomFieldWindow extends Window {
                 CreateCustomFieldWindow.this.close();
             }
         });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
         buttonControls.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
 
         content.with(buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);

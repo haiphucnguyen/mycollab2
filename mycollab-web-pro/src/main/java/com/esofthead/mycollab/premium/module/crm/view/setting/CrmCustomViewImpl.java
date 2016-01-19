@@ -161,7 +161,7 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
                 display(moduleName);
             }
         });
-        cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
         buttonsLayout.addComponent(cancelBtn);
 
         headerContent.addComponent(buttonsLayout);

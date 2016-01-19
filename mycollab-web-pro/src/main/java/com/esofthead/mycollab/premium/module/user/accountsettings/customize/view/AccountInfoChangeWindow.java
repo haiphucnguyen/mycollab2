@@ -108,7 +108,7 @@ class AccountInfoChangeWindow extends Window {
                 AccountInfoChangeWindow.this.close();
             }
         });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
         buttonControls.with(cancelBtn, saveBtn);
 
         content.with(editForm, buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);

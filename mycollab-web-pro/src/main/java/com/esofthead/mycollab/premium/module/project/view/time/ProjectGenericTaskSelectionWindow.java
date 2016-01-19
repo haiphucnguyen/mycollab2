@@ -98,7 +98,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
                 nameField.setValue("");
             }
         });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
         basicSearchBody.addComponent(cancelBtn);
 
         return basicSearchBody;

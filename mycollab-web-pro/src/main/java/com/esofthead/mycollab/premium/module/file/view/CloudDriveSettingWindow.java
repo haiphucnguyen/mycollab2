@@ -80,7 +80,7 @@ public class CloudDriveSettingWindow extends Window {
                 CloudDriveSettingWindow.this.close();
             }
         });
-        closeBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        closeBtn.setStyleName(UIConstants.BUTTON_OPTION);
         mainLayout.with(closeBtn).withAlign(closeBtn, Alignment.MIDDLE_RIGHT);
 
         this.setContent(mainLayout);
@@ -233,7 +233,7 @@ public class CloudDriveSettingWindow extends Window {
                     CloudDriveSettingWindow.this.close();
                 }
             });
-            cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+            cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
             layout.with(saveBtn, cancelBtn);
             return layout;
         }

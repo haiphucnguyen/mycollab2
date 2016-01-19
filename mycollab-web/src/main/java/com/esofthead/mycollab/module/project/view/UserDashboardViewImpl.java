@@ -287,7 +287,7 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
                     AskCreateNewProjectWindow.this.close();
                 }
             });
-            skipBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+            skipBtn.setStyleName(UIConstants.BUTTON_OPTION);
             Button createNewBtn = new Button("New Project", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {

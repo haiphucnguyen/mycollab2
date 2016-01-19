@@ -83,7 +83,7 @@ public class AdRequestWindow extends Window {
                 turnOffAdd(user);
             }
         });
-        ignoreBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        ignoreBtn.addStyleName(UIConstants.BUTTON_OPTION);
 
         Button loveBtn = new Button("I did", new Button.ClickListener() {
             @Override

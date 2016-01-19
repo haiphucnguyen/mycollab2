@@ -356,7 +356,7 @@ public class ThemeCustomizeViewImpl extends AbstractPageView implements ThemeCus
         propertyLayout.addComponent(optionBtnPanel, 1, 0);
 
         Button exampleOptionBtn = new Button("Button");
-        exampleOptionBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        exampleOptionBtn.setStyleName(UIConstants.BUTTON_OPTION);
         optionBtnPanel.addComponent(exampleOptionBtn);
 
         HorizontalLayout optionBtnColorPane = new HorizontalLayout();

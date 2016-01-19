@@ -103,7 +103,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
                 TimeTrackingEditViewWindow.this.close();
             }
         });
-        cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
 
 
         Button saveBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), new Button.ClickListener() {

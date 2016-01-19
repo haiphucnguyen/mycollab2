@@ -97,7 +97,7 @@
                             <finalName>runner</finalName>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.esofthead.mycollab.server.jetty.DefaultServerRunner</mainClass>
+                                    <mainClass>com.esofthead.mycollab.server.DefaultServerRunner</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>

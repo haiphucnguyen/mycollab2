@@ -73,7 +73,7 @@ public class CreateSectionWindow extends Window {
                         CreateSectionWindow.this.close();
                     }
                 });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
 
         controlLayout.with(saveBtn, cancelBtn);
 

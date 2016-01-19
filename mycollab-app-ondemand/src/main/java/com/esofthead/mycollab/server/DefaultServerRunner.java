@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.server.jetty;
+package com.esofthead.mycollab.server;
 
 import org.eclipse.jetty.webapp.WebAppContext;
 
@@ -13,9 +13,6 @@ public class DefaultServerRunner extends GenericServerRunner {
         WebAppContext webAppContext = new WebAppContext();
         webAppContext.setContextPath("/");
         webAppContext.setWar(baseDir);
-//        GzipHandler gzipHandler = new GzipHandler();
-//        gzipHandler.addExcludedMimeTypes("text/html,text/plain,text/xml,application/xhtml+xml,text/css,application/javascript,image/svg+xml");
-//        webAppContext.setGzipHandler(gzipHandler);
         webAppContext.setResourceBase(baseDir);
         return webAppContext;
     }
@@ -23,5 +20,4 @@ public class DefaultServerRunner extends GenericServerRunner {
     public static void main(String[] args) throws Exception {
         new DefaultServerRunner().run(args);
     }
-
 }

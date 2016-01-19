@@ -138,7 +138,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
                 AddTimeEntryWindow.this.close();
             }
         });
-        cancelBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
 
         Button saveBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

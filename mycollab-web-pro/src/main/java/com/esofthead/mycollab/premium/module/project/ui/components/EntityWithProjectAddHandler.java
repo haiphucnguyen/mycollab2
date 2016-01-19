@@ -62,7 +62,7 @@ public class EntityWithProjectAddHandler {
                     prjSelectionWindow.close();
                 }
             });
-            cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+            cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
 
             Button nextBtn = new Button("Next", new Button.ClickListener() {
                 @Override

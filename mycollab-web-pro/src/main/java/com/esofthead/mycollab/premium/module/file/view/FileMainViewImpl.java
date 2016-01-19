@@ -90,7 +90,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         topControlMenuWrapper.addComponent(topControlMenu);
 
         ButtonGroup navButton = new ButtonGroup();
-        navButton.addStyleName(UIConstants.THEME_GRAY_LINK);
+        navButton.addStyleName(UIConstants.BUTTON_OPTION);
         topControlMenu.with(navButton).withAlign(navButton, Alignment.MIDDLE_RIGHT);
 
         Button settingBtn = new Button();
@@ -104,12 +104,12 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 UI.getCurrent().addWindow(cloudDriveSettingWindow);
             }
         });
-        settingBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        settingBtn.addStyleName(UIConstants.BUTTON_OPTION);
         navButton.addButton(settingBtn);
 
         final PopupButton linkBtn = new PopupButton();
         linkBtn.setIcon(FontAwesome.LINK);
-        linkBtn.addStyleName(UIConstants.THEME_GRAY_LINK);
+        linkBtn.addStyleName(UIConstants.BUTTON_OPTION);
         linkBtn.setWidth("65px");
 
         final OptionPopupContent filterBtnLayout = new OptionPopupContent();

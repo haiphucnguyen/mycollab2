@@ -113,7 +113,7 @@ public class AddNewColumnWindow extends Window {
                 AddNewColumnWindow.this.close();
             }
         });
-        cancelBtn.setStyleName(UIConstants.THEME_GRAY_LINK);
+        cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);
 
         MHorizontalLayout controls = new MHorizontalLayout().with(saveBtn, cancelBtn).withMargin(
                 new MarginInfo(false, true, false, false));
