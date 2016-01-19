@@ -68,7 +68,7 @@ class MyCollabProcessRunner {
                         LOG.error("Can not find the library folder at " + libDir.getAbsolutePath());
                         System.exit(-1);
                     }
-                    StringBuilder classPaths = new StringBuilder("runner.jar");
+                    StringBuilder classPaths = new StringBuilder();
                     File[] jarFiles = libDir.listFiles(new FileFilter() {
                         @Override
                         public boolean accept(File pathname) {
