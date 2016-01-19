@@ -310,7 +310,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountLayout.addComponent(accountNameLabel);
 
         if (SiteConfiguration.isCommunityEdition()) {
-            Button buyPremiumBtn = new Button(null, new ClickListener() {
+            Button buyPremiumBtn = new Button("Upgrade to Pro edition", new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     UI.getCurrent().addWindow(new AdWindow());
