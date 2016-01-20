@@ -98,6 +98,7 @@ public class AddNewColumnWindow extends Window {
                     optionVal.setIsdefault(false);
                     optionVal.setRefoption(optionValId);
                     optionVal.setExtraid(CurrentProjectVariables.getProjectId());
+                    optionVal.setColor(UIConstants.DEFAULT_COLOR_OPTION);
                     optionService.saveWithSession(optionVal, AppContext.getUsername());
                 }
                 kanbanView.addColumn(optionVal);

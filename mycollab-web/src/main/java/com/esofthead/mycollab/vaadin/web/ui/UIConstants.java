@@ -63,7 +63,7 @@ public class UIConstants {
 
     public static final String GRIDFORM_STANDARD = "colored-gridlayout";
     public static final String GRIDFORM_BORDERLESS = "borderless";
-
+    public static final String DEFAULT_COLOR_OPTION = "fdde86";
 
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
