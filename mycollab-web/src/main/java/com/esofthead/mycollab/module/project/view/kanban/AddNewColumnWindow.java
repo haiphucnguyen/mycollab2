@@ -98,11 +98,10 @@ public class AddNewColumnWindow extends Window {
                     optionVal.setIsdefault(false);
                     optionVal.setRefoption(optionValId);
                     optionVal.setExtraid(CurrentProjectVariables.getProjectId());
-                    optionVal.setColor(UIConstants.DEFAULT_COLOR_OPTION);
                     optionService.saveWithSession(optionVal, AppContext.getUsername());
                 }
                 kanbanView.addColumn(optionVal);
-                AddNewColumnWindow.this.close();
+                close();
             }
         });
         saveBtn.setIcon(FontAwesome.SAVE);
@@ -111,7 +110,7 @@ public class AddNewColumnWindow extends Window {
         Button cancelBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CANCEL), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                AddNewColumnWindow.this.close();
+                close();
             }
         });
         cancelBtn.setStyleName(UIConstants.BUTTON_OPTION);

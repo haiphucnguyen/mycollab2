@@ -38,7 +38,6 @@ import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.server.jetty.ServerInstance;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.view.components.AboutWindow;
-import com.esofthead.mycollab.shell.view.components.AdRequestWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -369,7 +368,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             GregorianCalendar tenDaysAgo = new GregorianCalendar();
             tenDaysAgo.add(Calendar.DATE, -10);
             if (Boolean.TRUE.equals(user.getRequestad()) && user.getRegisteredtime().before(tenDaysAgo.getTime())) {
-               EventBusFactory.getInstance().post(new ShellEvent.RequestAd(this, null));
+                EventBusFactory.getInstance().post(new ShellEvent.RequestAd(this, null));
             }
         }
 
