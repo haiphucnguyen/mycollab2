@@ -11,7 +11,26 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%5p %c{1}:%L - %m%n</pattern>
         </layout>
+        <filter class="com.esofthead.mycollab.configuration.logging.LogFilter">
+            <level>ERROR</level>
+        </filter>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+    <appender name="R" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/mycollab.out</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePatternlog>logs/mycollab_%d{yyyy-MM-dd}.log</fileNamePatternlog>
+
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{"HH:mm:ss,SSS"} %5p %c{1}:%L - %m%n</pattern>
+        </encoder>
+        <filter class="com.esofthead.mycollab.configuration.logging.LogFilter">
             <level>ERROR</level>
         </filter>
     </appender>
@@ -20,5 +39,6 @@
     <root level="INFO">
         <appender-ref ref="stdout"/>
         <appender-ref ref="email"/>
+        <appender-ref ref="R"/>
     </root>
 </configuration>

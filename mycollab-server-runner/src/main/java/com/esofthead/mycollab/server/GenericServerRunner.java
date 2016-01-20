@@ -213,8 +213,7 @@ public abstract class GenericServerRunner {
     }
 
     private boolean checkConfigFileExist() {
-        File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"),
-                "conf", "src/main/conf");
+        File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
         return (confFolder == null) ? false : new File(confFolder, "mycollab.properties").exists();
     }
 
@@ -222,7 +221,6 @@ public abstract class GenericServerRunner {
         SiteConfiguration.loadConfiguration();
         LogConfig.initMyCollabLog();
         String webAppDirLocation = detectWebApp();
-        LOG.debug("Detect web location: {}", webAppDirLocation);
         appContext = buildContext(webAppDirLocation);
         appContext.setClassLoader(Thread.currentThread().getContextClassLoader());
         appContext.setServer(server);

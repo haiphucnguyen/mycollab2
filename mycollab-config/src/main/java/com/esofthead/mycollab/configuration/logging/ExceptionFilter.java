@@ -32,7 +32,10 @@ public class ExceptionFilter extends Filter<ILoggingEvent> {
     static {
         try {
             blacklistClss = new Class[]{Class.forName("org.apache.jackrabbit.core.cluster.ClusterException"),
-                    Class.forName("java.net.SocketTimeoutException")};
+                    Class.forName("org.springframework.dao.UncategorizedDataAccessException"),
+                    Class.forName("org.springframework.transaction.CannotCreateTransactionException"),
+                    Class.forName("java.net.SocketTimeoutException"),
+                    Class.forName("java.sql.SQLTransientConnectionException")};
         } catch (Exception e) {
         }
     }
@@ -51,12 +54,21 @@ public class ExceptionFilter extends Filter<ILoggingEvent> {
         final ThrowableProxy throwableProxyImpl = (ThrowableProxy) throwableProxy;
         final Throwable throwable = throwableProxyImpl.getThrowable();
         for (Class exceptCls : blacklistClss) {
-            if (exceptCls.isInstance(throwable)) {
+            if (isInstanceInBlackList(exceptCls, throwable)) {
                 return FilterReply.DENY;
             }
         }
 
-
         return FilterReply.NEUTRAL;
+    }
+
+    private static boolean isInstanceInBlackList(Class cls, Throwable throwable) {
+        if (cls.isInstance(throwable)) {
+            return true;
+        }
+        if (throwable.getCause() != null) {
+            return isInstanceInBlackList(cls, throwable.getCause());
+        }
+        return false;
     }
 }

@@ -403,7 +403,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         userMgtBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.USERS));
         accountPopupContent.addOption(userMgtBtn);
 
-        Button generalSettingBtn = new Button("General", new ClickListener() {
+        Button generalSettingBtn = new Button("Setting", new ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
                 accountMenu.setPopupVisible(false);
