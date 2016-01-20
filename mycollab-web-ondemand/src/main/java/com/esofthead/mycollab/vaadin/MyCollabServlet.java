@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin;
 
+import com.esofthead.mycollab.core.MyCollabVersion;
 import com.vaadin.addon.touchkit.annotations.CacheManifestEnabled;
 import com.vaadin.addon.touchkit.server.TouchKitServlet;
 import com.vaadin.addon.touchkit.settings.TouchKitSettings;
@@ -30,6 +31,9 @@ public class MyCollabServlet extends TouchKitServlet {
         TouchKitSettings s = getTouchKitSettings();
         s.getWebAppSettings().setWebAppCapable(true);
         s.getApplicationCacheSettings().setCacheManifestEnabled(false);
+        String contextPath = getServletConfig().getServletContext().getContextPath();
+        s.getApplicationIcons().addApplicationIcon(contextPath + "VAADIN/themes/" + MyCollabVersion
+                .THEME_MOBILE_VERSION + "/icons/icon.png");
 
         getService().addSessionInitListener(new SessionInitListener() {
             private static final long serialVersionUID = 1L;
