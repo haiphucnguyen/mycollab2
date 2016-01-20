@@ -28,10 +28,10 @@ public class CheckVersionController {
 
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
-        props.put("releaseNotes", "http://community.mycollab.com/release-notes/");
+        props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-5/");
 
         if (version != null && MyCollabVersion.isEditionNewer(MyCollabVersion.getVersion(), version) &&
-                MyCollabVersion.isEditionNewer(version, "5.2.2")) {
+                MyCollabVersion.isEditionNewer(version, "5.2.4")) {
             props.put("autoDownload", String.format("http://sourceforge" +
                     ".net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download", MyCollabVersion.getVersion()));
         }
