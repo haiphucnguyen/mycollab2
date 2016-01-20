@@ -31,7 +31,8 @@ public class ExceptionFilter extends Filter<ILoggingEvent> {
 
     static {
         try {
-            blacklistClss = new Class[]{Class.forName("org.apache.jackrabbit.core.cluster.ClusterException")};
+            blacklistClss = new Class[]{Class.forName("org.apache.jackrabbit.core.cluster.ClusterException"),
+                    Class.forName("java.net.SocketTimeoutException")};
         } catch (Exception e) {
         }
     }
