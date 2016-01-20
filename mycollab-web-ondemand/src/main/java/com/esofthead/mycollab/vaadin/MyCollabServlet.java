@@ -34,6 +34,8 @@ public class MyCollabServlet extends TouchKitServlet {
         String contextPath = getServletConfig().getServletContext().getContextPath();
         s.getApplicationIcons().addApplicationIcon(contextPath + "VAADIN/themes/" + MyCollabVersion
                 .THEME_MOBILE_VERSION + "/icons/icon.png");
+        s.getWebAppSettings().setStartupImage(contextPath + "VAADIN/themes/" + MyCollabVersion
+                .THEME_MOBILE_VERSION + "/icons/icon.png");
 
         getService().addSessionInitListener(new SessionInitListener() {
             private static final long serialVersionUID = 1L;
