@@ -29,6 +29,7 @@ public class MyCollabServlet extends TouchKitServlet {
     protected void servletInitialized() throws ServletException {
         super.servletInitialized();
         TouchKitSettings s = getTouchKitSettings();
+        s.getWebAppSettings().setWebAppCapable(true);
         s.getApplicationCacheSettings().setCacheManifestEnabled(false);
 
         getService().addSessionInitListener(new SessionInitListener() {
