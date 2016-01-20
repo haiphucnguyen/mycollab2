@@ -13,6 +13,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.HumanTime;
+import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -284,11 +285,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         TaskFollowersPopupView(SimpleTask task) {
             super("");
             this.task = task;
-            if (task.getNumFollowers() == null || task.getNumFollowers() == 0) {
-                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " 0");
-            } else {
-                this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + task.getNumFollowers());
-            }
+            this.setMinimizedValueAsHTML(FontAwesome.EYE.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumFollowers()));
         }
 
         @Override
@@ -320,11 +317,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         TaskCommentsPopupView(SimpleTask task) {
             super("");
             this.task = task;
-            if (task.getNumComments() == null || task.getNumComments() == 0) {
-                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " 0");
-            } else {
-                this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + task.getNumComments());
-            }
+            this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + NumberUtils.zeroIfNull(task.getNumComments()));
         }
 
         @Override

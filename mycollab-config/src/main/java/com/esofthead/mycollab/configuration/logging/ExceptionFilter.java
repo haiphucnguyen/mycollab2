@@ -34,6 +34,7 @@ public class ExceptionFilter extends Filter<ILoggingEvent> {
             blacklistClss = new Class[]{Class.forName("org.apache.jackrabbit.core.cluster.ClusterException"),
                     Class.forName("org.springframework.dao.UncategorizedDataAccessException"),
                     Class.forName("org.springframework.transaction.CannotCreateTransactionException"),
+                    Class.forName("com.esofthead.mycollab.core.SessionExpireException"),
                     Class.forName("java.net.SocketTimeoutException"),
                     Class.forName("java.sql.SQLTransientConnectionException")};
         } catch (Exception e) {
