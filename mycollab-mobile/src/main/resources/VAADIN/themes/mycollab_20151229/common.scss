@@ -47,6 +47,12 @@
     border-top: 1px solid $my-separator-color;
   }
 
+  .h1 {
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    text-align: center !important;
+  }
+
   a {
     color: $my-link-color !important;
     text-decoration: none !important;
