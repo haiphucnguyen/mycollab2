@@ -18,6 +18,10 @@ package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.common.SessionIdGenerator;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
+import com.esofthead.mycollab.license.LicenseResolver;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
@@ -85,9 +89,23 @@ public abstract class MyCollabUI extends UI {
         return attributes.get(key);
     }
 
-    public AppContext getCurrentContext() {
-        return currentContext;
+    @Override
+    protected final void init(final VaadinRequest request) {
+        GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
+        googleAnalyticsService.registerUI(this);
+
+        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        if (licenseResolver != null) {
+            if (licenseResolver.getLicenseInfo() == null) {
+                NotificationUtil.showWarningNotification("License is not existed. Please contact MyCollab agency to " +
+                        "get your license");
+                return;
+            }
+        }
+        doInit(request);
     }
+
+    abstract protected void doInit(final VaadinRequest request);
 
     @Override
     public void close() {

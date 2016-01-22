@@ -87,12 +87,7 @@ public class DesktopApplication extends MyCollabUI {
     private MainWindowContainer mainWindowContainer;
 
     @Override
-    protected void init(final VaadinRequest request) {
-        GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
-        googleAnalyticsService.registerUI(this);
-
-        LOG.debug("Register default error handler");
-
+    protected void doInit(final VaadinRequest request) {
         if (SiteConfiguration.getPullMethod() == SiteConfiguration.PullMethod.push) {
             getPushConfiguration().setPushMode(PushMode.MANUAL);
         }

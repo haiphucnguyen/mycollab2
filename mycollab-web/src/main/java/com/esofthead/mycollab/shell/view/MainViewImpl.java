@@ -35,14 +35,14 @@ import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.SettingAssetsManager;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
-import com.esofthead.mycollab.server.jetty.ServerInstance;
 import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.shell.view.components.AboutWindow;
+import com.esofthead.mycollab.shell.view.components.AbstractAboutWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.ThemeManager;
@@ -456,27 +456,26 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         myAccountBtn.setIcon(SettingAssetsManager.getAsset(SettingUIConstants.BILLING));
         accountPopupContent.addOption(myAccountBtn);
 
-        if (!SiteConfiguration.isDemandEdition()) {
-            accountPopupContent.addSeparator();
-            Button aboutBtn = new Button("About MyCollab", new ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent clickEvent) {
-                    accountMenu.setPopupVisible(false);
-                    ServerInstance.getInstance().preUpgrade();
-                    UI.getCurrent().addWindow(new AboutWindow());
-                }
-            });
-            aboutBtn.setIcon(FontAwesome.INFO_CIRCLE);
-            accountPopupContent.addOption(aboutBtn);
 
-            Button releaseNotesBtn = new Button("Release Notes");
-            ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/release-notes/");
-            BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
-            releaseNotesOpener.extend(releaseNotesBtn);
+        accountPopupContent.addSeparator();
+        Button aboutBtn = new Button("About MyCollab", new ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent clickEvent) {
+                accountMenu.setPopupVisible(false);
+                Window aboutWindow = ViewManager.getCacheComponent(AbstractAboutWindow.class);
+                UI.getCurrent().addWindow(aboutWindow);
+            }
+        });
+        aboutBtn.setIcon(FontAwesome.INFO_CIRCLE);
+        accountPopupContent.addOption(aboutBtn);
 
-            releaseNotesBtn.setIcon(FontAwesome.BULLHORN);
-            accountPopupContent.addOption(releaseNotesBtn);
-        }
+        Button releaseNotesBtn = new Button("Release Notes");
+        ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/release-notes/");
+        BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
+        releaseNotesOpener.extend(releaseNotesBtn);
+
+        releaseNotesBtn.setIcon(FontAwesome.BULLHORN);
+        accountPopupContent.addOption(releaseNotesBtn);
 
         Button signoutBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SIGNOUT), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
