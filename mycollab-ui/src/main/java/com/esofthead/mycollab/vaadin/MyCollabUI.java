@@ -20,10 +20,11 @@ import com.esofthead.mycollab.common.SessionIdGenerator;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,9 +98,8 @@ public abstract class MyCollabUI extends UI {
         LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
         if (licenseResolver != null) {
             if (licenseResolver.getLicenseInfo() == null) {
-                NotificationUtil.showWarningNotification("License is not existed. Please contact MyCollab agency to " +
-                        "get your license");
-                return;
+                Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+                UI.getCurrent().addWindow(activateWindow);
             }
         }
         doInit(request);

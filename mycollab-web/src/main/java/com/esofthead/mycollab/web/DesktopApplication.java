@@ -259,7 +259,7 @@ public class DesktopApplication extends MyCollabUI {
         }
 
         LOG.error("Error " + userAgent, e);
-        ConfirmDialog dialog = ConfirmDialogExt.show(UI.getCurrent(),
+        ConfirmDialog dialog = ConfirmDialogExt.show(DesktopApplication.this,
                 AppContext.getMessage(GenericI18Enum.WINDOW_ERROR_TITLE, AppContext.getSiteName()),
                 AppContext.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
                 AppContext.getMessage(GenericI18Enum.BUTTON_YES),
