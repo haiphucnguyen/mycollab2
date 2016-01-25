@@ -17,10 +17,5 @@
             <artifactId>mycollab-reporting</artifactId>
             <version>5.2.5</version>
         </dependency>
-        <dependency>
-            <groupId>net.sourceforge.dynamicreports</groupId>
-            <artifactId>dynamicreports-core</artifactId>
-            <version>4.0.2</version>
-        </dependency>
     </dependencies>
 </project>

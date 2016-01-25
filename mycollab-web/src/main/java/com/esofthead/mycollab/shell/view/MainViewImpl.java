@@ -491,7 +491,7 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         accountPopupContent.addOption(aboutBtn);
 
         Button releaseNotesBtn = new Button("Release Notes");
-        ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/release-notes/");
+        ExternalResource releaseNotesRes = new ExternalResource("https://community.mycollab.com/releases/");
         BrowserWindowOpener releaseNotesOpener = new BrowserWindowOpener(releaseNotesRes);
         releaseNotesOpener.extend(releaseNotesBtn);
 

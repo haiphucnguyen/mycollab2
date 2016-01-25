@@ -100,7 +100,6 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <finalName>runner</finalName>
                             <archive>
                                 <manifest>
                                     <mainClass>com.esofthead.mycollab.server.DefaultServerRunner</mainClass>
@@ -126,9 +125,6 @@
                                 <includes>
                                     <include>com.esofthead.mycollab:*</include>
                                 </includes>
-                                <excludes>
-                                    <exclude>com.esofthead.mycollab:mycollab-app-premium</exclude>
-                                </excludes>
                             </artifactSet>
                         </configuration>
                     </execution>
@@ -288,8 +284,6 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy file="${project.build.directory}/runner.jar"
-                                      tofile="${installer.staging.dir}/runner.jar"/>
                                 <copy todir="${installer.staging.dir}">
                                     <fileset dir="${izpack.dir.app}"/>
                                 </copy>

@@ -28,8 +28,8 @@ import java.io.InputStream;
 public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseActivationWindow.class);
 
-    private static final String ACT_CODE = "Activation code";
-    private static final String LICENSE_FILE = "License file from the hard drive (mycollab.lic)";
+    private static final String ACT_CODE = "ACT_CODE";
+    private static final String LICENSE_FILE = "LICENSE_FILE";
 
     private TextField uploadFilenameField;
     private TextArea activationField;
@@ -51,14 +51,12 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         final FlexibleOptionGroup optionGroup = new FlexibleOptionGroup();
         optionGroup.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT);
         optionGroup.addItems(ACT_CODE, LICENSE_FILE);
-        optionGroup.setItemCaption(ACT_CODE, "1");
-        optionGroup.setItemCaption(LICENSE_FILE, "2");
         activationField = new TextArea();
         activationField.setImmediate(true);
         activationField.setTextChangeEventMode(AbstractTextField.TextChangeEventMode.EAGER);
         activationField.setTextChangeTimeout(2000);
         activationField.setWidth("100%");
-        content.with(optionGroup.getItemComponent(ACT_CODE), activationField);
+        content.with(new MHorizontalLayout(optionGroup.getItemComponent(ACT_CODE), new Label("Activation code")), activationField);
 
         uploadFilenameField = new TextField();
         uploadFilenameField.setReadOnly(true);
@@ -67,7 +65,8 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         MHorizontalLayout licenseFileUploadLayout = new MHorizontalLayout().with(uploadFilenameField, licenseUploadField).expand
                 (uploadFilenameField);
 
-        content.with(optionGroup.getItemComponent(LICENSE_FILE), licenseFileUploadLayout);
+        content.with(new MHorizontalLayout(optionGroup.getItemComponent(LICENSE_FILE), new Label("License file from the hard drive (mycollab.lic)")),
+                licenseFileUploadLayout);
 
         changeLicenseBtn = new Button("Change license", new Button.ClickListener() {
             @Override

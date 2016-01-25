@@ -33,6 +33,8 @@ public class LicenseInfo {
 
     private String licenseOrg;
 
+    private Integer maxUsers = Integer.MAX_VALUE;
+
     public String getEdition() {
         return edition;
     }
@@ -71,5 +73,13 @@ public class LicenseInfo {
 
     public void setLicenseOrg(String licenseOrg) {
         this.licenseOrg = licenseOrg;
+    }
+
+    public Integer getMaxUsers() {
+        return maxUsers;
+    }
+
+    public void setMaxUsers(Integer maxUsers) {
+        this.maxUsers = maxUsers;
     }
 }
