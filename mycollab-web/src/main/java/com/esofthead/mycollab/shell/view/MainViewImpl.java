@@ -26,6 +26,8 @@ import com.esofthead.mycollab.configuration.SiteConfiguration;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.license.LicenseInfo;
+import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -341,6 +343,25 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
             buyPremiumBtn.setIcon(FontAwesome.SHOPPING_CART);
             buyPremiumBtn.addStyleName("ad");
             accountLayout.addComponent(buyPremiumBtn);
+        }
+
+        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        if (licenseResolver != null) {
+            LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
+            if (licenseInfo != null) {
+                Date now = new GregorianCalendar().getTime();
+                if (licenseInfo.getExpireDate().before(now)) {
+                    Button buyPremiumBtn = new Button("License is expired. Upgrade?", new ClickListener() {
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            UI.getCurrent().addWindow(new AdWindow());
+                        }
+                    });
+                    buyPremiumBtn.setIcon(FontAwesome.SHOPPING_CART);
+                    buyPremiumBtn.addStyleName("ad");
+                    accountLayout.addComponent(buyPremiumBtn);
+                }
+            }
         }
 
         NotificationComponent notificationComponent = new NotificationComponent();

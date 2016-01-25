@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.common.SessionIdGenerator;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
+import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -28,6 +29,8 @@ import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,7 +100,8 @@ public abstract class MyCollabUI extends UI {
 
         LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
         if (licenseResolver != null) {
-            if (licenseResolver.getLicenseInfo() == null) {
+            LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
+            if (licenseInfo == null) {
                 Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
                 UI.getCurrent().addWindow(activateWindow);
             }
