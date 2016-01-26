@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.license.service;
 
+import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.FileUtils;
@@ -11,6 +12,7 @@ import org.bouncycastle.openpgp.PGPException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -23,6 +25,9 @@ import java.util.Properties;
 @Service
 public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
+
+    @Autowired
+    private IDeploymentMode deploymentMode;
 
     private LicenseInfo licenseInfo = null;
 
@@ -68,6 +73,7 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
             licenseInfo.setExpireDate(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")));
             licenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
             licenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));
+            licenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "9999")));
             if (isSave) {
                 File licenseFile = getLicenseFile();
                 FileOutputStream fileOutputStream = new FileOutputStream(licenseFile);

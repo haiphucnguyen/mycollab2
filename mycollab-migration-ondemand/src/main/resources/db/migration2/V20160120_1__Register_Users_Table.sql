@@ -11,3 +11,7 @@ CREATE TABLE `s_premium_users` (
   `registerDate` DATETIME NOT NULL,
   `expireDate` DATETIME NOT NULL,
   PRIMARY KEY (`id`));
+
+ALTER TABLE `s_premium_users`
+  ADD COLUMN `website` VARCHAR(255) NOT NULL,
+  ADD COLUMN `isPhoneCall` TINYINT(1) NOT NULL;
