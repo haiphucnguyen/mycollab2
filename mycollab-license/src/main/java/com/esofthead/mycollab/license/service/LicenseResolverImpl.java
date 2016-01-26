@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
+import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
 import org.bouncycastle.openpgp.PGPException;
 import org.slf4j.Logger;
@@ -35,11 +36,8 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
     }
 
     private File getLicenseFile() {
-        String userFolder = System.getProperty("user.home");
-        File homeDir = new File(userFolder + "/.mycollab");
-        FileUtils.mkdirs(homeDir);
-        File licenseFile = new File(homeDir, "mycollab.lic");
-        return licenseFile;
+        File homeDir = FileUtils.getHomeFolder();
+        return new File(homeDir, "mycollab.lic");
     }
 
     @Override
@@ -66,7 +64,7 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
             prop.load(new ByteArrayInputStream(bytes));
             licenseInfo = new LicenseInfo();
             licenseInfo.setCustomerId(prop.getProperty("customerId"));
-            licenseInfo.setEdition(prop.getProperty("edition"));
+            licenseInfo.setEdition(LicenseType.valueOf(prop.getProperty("edition")));
             licenseInfo.setExpireDate(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")));
             licenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
             licenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));

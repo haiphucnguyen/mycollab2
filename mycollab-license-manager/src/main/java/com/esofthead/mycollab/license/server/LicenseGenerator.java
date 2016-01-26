@@ -3,6 +3,7 @@ package com.esofthead.mycollab.license.server;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
+import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
 
 import java.io.ByteArrayInputStream;
@@ -21,7 +22,7 @@ public class LicenseGenerator {
         try {
             Properties prop = new Properties();
             prop.setProperty("customerId", licenseInfo.getCustomerId());
-            prop.setProperty("edition", licenseInfo.getEdition());
+            prop.setProperty("edition", licenseInfo.getEdition().name());
             prop.setProperty("licenseOrg", licenseInfo.getLicenseOrg());
             prop.setProperty("expireDate", DateTimeUtils.formatDateToW3C(licenseInfo.getExpireDate()));
             prop.setProperty("issueDate", DateTimeUtils.formatDateToW3C(licenseInfo.getIssueDate()));
@@ -59,10 +60,11 @@ public class LicenseGenerator {
     public static void main(String[] args) {
         LicenseInfo info = new LicenseInfo();
         info.setCustomerId("1");
-        info.setEdition("Pro");
+        info.setEdition(LicenseType.PRO);
         info.setExpireDate(new GregorianCalendar().getTime());
         info.setIssueDate(new GregorianCalendar().getTime());
         info.setLicenseOrg("eSoftHead");
+        info.setMaxUsers(10);
         LicenseGenerator generator = new LicenseGenerator();
         String str = generator.encode(info);
         System.out.println(str);

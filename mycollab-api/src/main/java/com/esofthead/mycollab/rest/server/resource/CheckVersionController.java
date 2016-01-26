@@ -1,17 +1,12 @@
 package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
-import com.esofthead.mycollab.core.utils.FileUtils;
 import com.google.gson.Gson;
-import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Properties;
 
 /**

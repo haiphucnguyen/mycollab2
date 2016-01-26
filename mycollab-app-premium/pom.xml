@@ -185,7 +185,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
-                            <excludeScope>provided</excludeScope>
+                            <includeScope>compile</includeScope>
                             <!-- this excludes tools.jar, e.g. -->
                             <excludeArtifactIds>mycustompanels</excludeArtifactIds>
                             <!-- IMPORTANT: don't copy custom panels

@@ -8,7 +8,7 @@
 
         <plugin type="com.esofthead.mybatis.plugin.MyCollabModelFilePlugin" />
 
-        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mycollab"
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mycollab_base"
                         driverClass="com.mysql.jdbc.Driver" password="esofthead321"
                         userId="root" />
 
@@ -32,10 +32,12 @@
                       value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />
         </javaClientGenerator>
 
-        <table domainObjectName="Testimonial" schema="mycollab_origin"
+        <table domainObjectName="Testimonial" schema="mycollab_base"
                tableName="s_testimonial" />
-        <table domainObjectName="CommunityLead" schema="mycollab_origin"
+        <table domainObjectName="CommunityLead" schema="mycollab_base"
                tableName="s_customer_lead" />
+        <table domainObjectName="PremiumUser" schema="mycollab_base"
+               tableName="s_premium_users" />
     </context>
 
 </generatorConfiguration>
