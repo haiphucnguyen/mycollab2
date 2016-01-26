@@ -17,14 +17,11 @@
 
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultSearchService;
 import com.esofthead.mycollab.module.project.dao.ProjectGenericTaskMapper;
-import com.esofthead.mycollab.module.project.domain.ProjectGenericTaskCount;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +32,7 @@ import java.util.List;
  * @since 1.0
  */
 @Service
-public class ProjectGenericTaskServiceImpl extends DefaultSearchService<ProjectGenericTaskSearchCriteria> implements
-        ProjectGenericTaskService {
+public class ProjectGenericTaskServiceImpl extends DefaultSearchService<ProjectGenericTaskSearchCriteria> implements ProjectGenericTaskService {
 
     @Autowired
     private ProjectGenericTaskMapper projectGenericTaskMapper;
@@ -55,9 +51,12 @@ public class ProjectGenericTaskServiceImpl extends DefaultSearchService<ProjectG
     }
 
     @Override
-    public List<ProjectGenericTaskCount> findPagableTaskCountListByCriteria(
-            SearchRequest<ProjectGenericTaskSearchCriteria> searchRequest) {
-        return projectGenericTaskMapper.findPagableTaskCountListByCriteria(searchRequest.getSearchCriteria(),
-                new RowBounds((searchRequest.getCurrentPage() - 1) * searchRequest.getNumberOfItems(), searchRequest.getNumberOfItems()));
+    public List<Integer> getAccountsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria) {
+        return projectGenericTaskMapper.getAccountsHasOverdueAssignments(searchCriteria);
+    }
+
+    @Override
+    public List<Integer> getProjectsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria) {
+        return projectGenericTaskMapper.getProjectsHasOverdueAssignments(searchCriteria);
     }
 }

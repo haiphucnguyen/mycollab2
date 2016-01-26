@@ -98,7 +98,6 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
                 bean = getBeanInContext(context)
                 if (bean != null) {
                     context.setWrappedBean(bean)
-                    contentGenerator.putVariable("userName", user.getDisplayName)
                     buildExtraTemplateVariables(context)
                     if (context.getTypeid != null) {
                         val auditLog: SimpleAuditLog = auditLogService.findLastestLog(context.getTypeid.toInt, context.getSaccountid)
@@ -127,7 +126,6 @@ abstract class SendMailToAllMembersAction[B] extends SendingRelayEmailNotificati
                 bean = getBeanInContext(context)
                 if (bean != null) {
                     buildExtraTemplateVariables(context)
-                    contentGenerator.putVariable("userName", user.getDisplayName)
                     contentGenerator.putVariable("comment", context.getEmailNotification)
                     val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)
                     val recipients: List[MailRecipientField] = List[MailRecipientField](userMail)

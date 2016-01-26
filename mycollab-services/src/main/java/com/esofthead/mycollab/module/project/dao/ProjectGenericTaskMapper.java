@@ -38,6 +38,7 @@ public interface ProjectGenericTaskMapper extends ISearchableDAO<ProjectGenericT
 
     int getTotalCountFromTask(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
-    List<ProjectGenericTaskCount> findPagableTaskCountListByCriteria(
-            @Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria, RowBounds rowBounds);
+    List<Integer> getAccountsHasOverdueAssignments(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
+
+    List<Integer> getProjectsHasOverdueAssignments(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 }

@@ -45,7 +45,6 @@ class SendingRelayEmailJob extends GenericQuartzJobBean {
 
     import scala.collection.JavaConversions._
     for (relayEmail <- relayEmails) {
-
       val recipientVal: String = relayEmail.getRecipients
       val recipientArr: Array[Array[String]] = JsonDeSerializer.fromJson(recipientVal, classOf[Array[Array[String]]])
       try {

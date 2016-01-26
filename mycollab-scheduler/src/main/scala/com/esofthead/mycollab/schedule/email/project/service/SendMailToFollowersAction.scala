@@ -77,7 +77,6 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
                 if (bean != null) {
                     context.setWrappedBean(bean)
                     buildExtraTemplateVariables(context)
-                    contentGenerator.putVariable("userName", user.getDisplayName)
                     if (context.getTypeid != null) {
                         val auditLog: SimpleAuditLog = auditLogService.findLastestLog(context.getTypeid.toInt, context.getSaccountid)
                         contentGenerator.putVariable("historyLog", auditLog)
@@ -105,7 +104,6 @@ abstract class SendMailToFollowersAction[B] extends SendingRelayEmailNotificatio
                 bean = getBeanInContext(context)
                 if (bean != null) {
                     context.wrappedBean = bean
-                    contentGenerator.putVariable("userName", user.getDisplayName)
                     buildExtraTemplateVariables(context)
                     contentGenerator.putVariable("comment", context.getEmailNotification)
                     val userMail: MailRecipientField = new MailRecipientField(user.getEmail, user.getUsername)

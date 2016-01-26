@@ -73,10 +73,7 @@
         #end
         
          #ifnotnull($searchCriteria.dueDate)
-            ${searchCriteria.dueDate.operation}
-            CAST(m_prj_problem.datedue AS DATE )
-            ${searchCriteria.dueDate.comparison}
-            @{searchCriteria.dueDate.value}
+            ${searchCriteria.dueDate.operation} CAST(m_prj_problem.datedue AS DATE ) ${searchCriteria.dueDate.comparison} @{searchCriteria.dueDate.value}
         #end
         ]]>
 	</sql>
@@ -404,6 +401,47 @@
 		#end
 	</select>
 
+	<select id="getAccountsHasOverdueAssignments" parameterType="ProjectGenericTaskSearchCriteria"
+			resultType="Integer" lang="velocity">
+		SELECT s_account.id
+		FROM s_account
+		WHERE
+		  EXISTS (
+		    SELECT * FROM m_tracker_bug
+		      #trimext("WHERE" "AND|OR")
+		        <include refid="queryBugSearchCriteria" />
+		      #end
+		      AND m_tracker_bug.sAccountId = s_account.id
+		  ) OR
+		  EXISTS (
+		    SELECT * FROM m_prj_task
+		      #trimext("WHERE" "AND|OR")
+		        <include refid="queryTaskSearchCriteria" />
+		      #end
+		      AND m_prj_task.sAccountId = s_account.id
+		  )
+	</select>
+
+	<select id="getProjectsHasOverdueAssignments" parameterType="ProjectGenericTaskSearchCriteria"
+			resultType="Integer" lang="velocity">
+		SELECT m_prj_project.id
+		FROM m_prj_project
+		WHERE
+		  EXISTS (
+		    SELECT * FROM m_tracker_bug
+		    #trimext("WHERE" "AND|OR")
+		      <include refid="queryBugSearchCriteria" />
+		    #end
+		    AND m_tracker_bug.projectid = m_prj_project.id) OR
+		  EXISTS (
+		    SELECT * FROM m_prj_task
+		    #trimext("WHERE" "AND|OR")
+		      <include refid="queryTaskSearchCriteria" />
+		    #end
+		    AND m_prj_task.projectid = m_prj_project.id
+		  )
+	</select>
+
 	<sql id="selectGenericTaskCountFromTask">
 
         <![CDATA[
@@ -455,57 +493,4 @@
               LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id AND m_prj_project.projectStatus="Open")
         ]]>
 	</sql>
-
-	<select id="findPagableTaskCountListByCriteria" parameterType="ProjectGenericTaskSearchCriteria"
-		resultMap="BaseResultTaskCountMap" lang="velocity">
-
-		SELECT COUNT(*) AS taskCount, agreeT.projectId,
-		agreeT.projectName, agreeT.assignUser, agreeT.assignUserFullName
-		FROM
-		(
-		(
-		<include refid="selectGenericTaskCountFromProblem" />
-		#ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-				<include refid="queryProblemSearchCriteria" />
-			#end
-		#end
-		)
-
-		UNION ALL
-
-		(
-		<include refid="selectGenericTaskCountFromRisk" />
-		#ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-				<include refid="queryRiskSearchCriteria" />
-			#end
-		#end
-		)
-
-		UNION ALL
-
-		(
-		<include refid="selectGenericTaskCountFromBug" />
-		#ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-				<include refid="queryBugSearchCriteria" />
-			#end
-		#end
-		)
-
-		UNION ALL
-
-		(
-		<include refid="selectGenericTaskCountFromTask" />
-		#ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-				<include refid="queryTaskSearchCriteria" />
-			#end
-		#end
-		)
-		) AS agreeT
-
-		GROUP BY agreeT.projectId
-	</select>
 </mapper>
