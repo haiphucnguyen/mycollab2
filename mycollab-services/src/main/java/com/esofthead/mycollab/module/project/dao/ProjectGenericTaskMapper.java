@@ -24,6 +24,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -38,7 +39,7 @@ public interface ProjectGenericTaskMapper extends ISearchableDAO<ProjectGenericT
 
     int getTotalCountFromTask(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
-    List<Integer> getAccountsHasOverdueAssignments(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
+    List<Map> getAccountsHasOverdueAssignments(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 
     List<Integer> getProjectsHasOverdueAssignments(@Param("searchCriteria") ProjectGenericTaskSearchCriteria criteria);
 }

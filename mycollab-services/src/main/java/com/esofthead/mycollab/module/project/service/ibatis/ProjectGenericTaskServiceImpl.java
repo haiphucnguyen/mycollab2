@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd.
@@ -51,7 +52,7 @@ public class ProjectGenericTaskServiceImpl extends DefaultSearchService<ProjectG
     }
 
     @Override
-    public List<Integer> getAccountsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria) {
+    public List<Map> getAccountsHasOverdueAssignments(ProjectGenericTaskSearchCriteria searchCriteria) {
         return projectGenericTaskMapper.getAccountsHasOverdueAssignments(searchCriteria);
     }
 
