@@ -1,11 +1,15 @@
 package com.esofthead.mycollab.schedule.jobs
 
+import java.util
+
 import com.esofthead.mycollab.common.NotificationType
+import com.esofthead.mycollab.common.domain.MailRecipientField
+import com.esofthead.mycollab.configuration.SiteConfiguration
 import com.esofthead.mycollab.core.arguments.{NumberSearchField, RangeDateSearchField, SetSearchField}
-import com.esofthead.mycollab.module.mail.service.{IContentGenerator, ExtMailService}
-import com.esofthead.mycollab.module.project.domain.{ProjectNotificationSetting, ProjectGenericTask}
+import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
+import com.esofthead.mycollab.module.project.domain.ProjectNotificationSetting
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria
-import com.esofthead.mycollab.module.project.service.{ProjectNotificationSettingService, ProjectMemberService, ProjectGenericTaskService}
+import com.esofthead.mycollab.module.project.service.{ProjectGenericTaskService, ProjectMemberService, ProjectNotificationSettingService}
 import com.esofthead.mycollab.module.user.domain.SimpleUser
 import org.joda.time.LocalDate
 import org.quartz.{JobExecutionContext, JobExecutionException}
@@ -22,7 +26,7 @@ import org.springframework.stereotype.Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class OverdueProjectAssignmentsNotificationJob extends GenericQuartzJobBean {
 
-  @Autowired private var projectGenericTaskService: ProjectGenericTaskService = null
+  @Autowired private var projectGenericTaskService: ProjectGenericTaskService = _
 
   @Autowired private var extMailService: ExtMailService = _
 
@@ -50,17 +54,22 @@ class OverdueProjectAssignmentsNotificationJob extends GenericQuartzJobBean {
         for (projectId <- projectIds) {
           searchCriteria.setProjectIds(new SetSearchField[Integer](projectId))
           val assignments = projectGenericTaskService.findAbsoluteListByCriteria(searchCriteria, 0, Integer.MAX_VALUE).asScala.toList
-          for (assignment <- assignments) {
-            val genericTask = assignment.asInstanceOf[ProjectGenericTask]
-          }
           val notifiers = getNotifiersOfProject(projectId, accountId)
-
+          for (notifier <- notifiers) {
+            contentGenerator.putVariable("assignments", assignments)
+            val userMail = new MailRecipientField(notifier.getEmail, notifier.getDisplayName)
+            val recipients = util.Arrays.asList(userMail)
+            extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, recipients,
+              null, null,
+              contentGenerator.parseString("Overdue assignments"),
+              contentGenerator.parseFile("templates/email/project/itemCreatedNotifier.mt", SiteConfiguration.getDefaultLocale), null)
+          }
         }
       }
     }
   }
 
-  private def getNotifiersOfProject(projectId: Integer, accountId:Integer): Set[SimpleUser] = {
+  private def getNotifiersOfProject(projectId: Integer, accountId: Integer): Set[SimpleUser] = {
     import scala.collection.JavaConverters._
     var notifyUsers: Set[SimpleUser] = projectMemberService.getActiveUsersInProject(projectId, accountId).asScala.toSet
     val notificationSettings: List[ProjectNotificationSetting] = projectNotificationService.findNotifications(projectId, accountId).asScala.toList

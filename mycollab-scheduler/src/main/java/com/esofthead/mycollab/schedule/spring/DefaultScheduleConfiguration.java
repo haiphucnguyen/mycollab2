@@ -159,12 +159,12 @@ public class DefaultScheduleConfiguration {
         bean.setApplicationContextSchedulerContextKey("applicationContextSchedulerContextKey");
 
         bean.setTriggers(
-//                sendingRelayEmailTrigger().getObject(),
-//                projectSendRelayNotificationEmailTrigger().getObject(),
-                projectOverdueAssignmentsNotificationEmailTrigger().getObject()
-//                crmSendRelayNotificationEmailTrigger().getObject(),
-//                sendInviteUserEmailTrigger().getObject(),
-//                userSignUpNotificationEmailTrigger().getObject()
+                sendingRelayEmailTrigger().getObject(),
+                projectSendRelayNotificationEmailTrigger().getObject(),
+                projectOverdueAssignmentsNotificationEmailTrigger().getObject(),
+                crmSendRelayNotificationEmailTrigger().getObject(),
+                sendInviteUserEmailTrigger().getObject(),
+                userSignUpNotificationEmailTrigger().getObject()
         );
         return bean;
     }
