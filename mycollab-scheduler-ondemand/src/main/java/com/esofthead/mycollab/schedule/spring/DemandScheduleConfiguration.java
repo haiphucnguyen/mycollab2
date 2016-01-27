@@ -45,7 +45,7 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean deleteObsoleteAccountsTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(removeObsoleteAccountsJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
+        bean.setCronExpression("0 0 12 * * ?");
         return bean;
     }
 

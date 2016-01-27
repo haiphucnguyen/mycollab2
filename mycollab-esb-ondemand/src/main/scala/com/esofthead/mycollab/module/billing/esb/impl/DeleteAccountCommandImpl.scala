@@ -38,8 +38,10 @@ import org.springframework.stereotype.Component
     optionValMapper.deleteByExample(optionEx)
 
     val feedback = event.feedback
-    mailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
-      Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
-      "User cancelled account", BeanUtility.printBeanObj(feedback), null)
+    if (feedback != null) {
+      mailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+        Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
+        "User cancelled account", BeanUtility.printBeanObj(feedback), null)
+    }
   }
 }
