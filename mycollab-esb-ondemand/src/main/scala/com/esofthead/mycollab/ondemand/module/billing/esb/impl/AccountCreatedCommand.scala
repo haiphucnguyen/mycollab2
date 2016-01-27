@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component
   @AllowConcurrentEvents
   @Subscribe
   def execute(event: AccountCreatedEvent): Unit = {
-    val option: OptionVal = new OptionVal
+    val option = new OptionVal
     option.setCreatedtime(new GregorianCalendar().getTime)
     option.setIsdefault(true)
     option.setSaccountid(event.accountId)

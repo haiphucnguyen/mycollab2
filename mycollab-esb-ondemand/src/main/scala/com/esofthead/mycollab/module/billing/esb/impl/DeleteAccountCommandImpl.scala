@@ -1,55 +1,45 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.billing.esb.impl
 
+import java.util.Arrays
+
 import com.esofthead.mycollab.common.dao.OptionValMapper
-import com.esofthead.mycollab.common.domain.OptionValExample
+import com.esofthead.mycollab.common.domain.{MailRecipientField, OptionValExample}
+import com.esofthead.mycollab.configuration.SiteConfiguration
+import com.esofthead.mycollab.core.utils.BeanUtility
 import com.esofthead.mycollab.module.GenericCommand
 import com.esofthead.mycollab.module.billing.esb.DeleteAccountEvent
 import com.esofthead.mycollab.module.ecm.service.ResourceService
+import com.esofthead.mycollab.module.mail.service.ExtMailService
 import com.esofthead.mycollab.module.page.service.PageService
 import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 /**
- *
- * @author MyCollab Ltd.
- * @since 1.0
- *
- */
+  * @author MyCollab Ltd.
+  * @since 1.0
+  */
 @Component class DeleteAccountCommandImpl extends GenericCommand {
-    @Autowired private val resourceService: ResourceService = null
-    @Autowired private val pageService: PageService = null
-    @Autowired private val optionValMapper: OptionValMapper = null
+  @Autowired private val resourceService: ResourceService = null
+  @Autowired private val pageService: PageService = null
+  @Autowired private val optionValMapper: OptionValMapper = null
+  @Autowired private val mailService: ExtMailService = null
 
-    @AllowConcurrentEvents
-    @Subscribe
-    def deleteAccount(event: DeleteAccountEvent): Unit = {
-        val rootPath: String = event.accountId + ""
-        resourceService.removeResource(rootPath, "", event.accountId)
-        pageService.removeResource(rootPath)
+  @AllowConcurrentEvents
+  @Subscribe
+  def deleteAccount(event: DeleteAccountEvent): Unit = {
+    val rootPath = event.accountId + ""
+    resourceService.removeResource(rootPath, "", event.accountId)
+    pageService.removeResource(rootPath)
 
-        //delete all options of this account
-        val optionEx: OptionValExample = new OptionValExample
-        optionEx.createCriteria().andSaccountidEqualTo(event.accountId)
-        optionValMapper.deleteByExample(optionEx)
+    //delete all options of this account
+    val optionEx = new OptionValExample
+    optionEx.createCriteria().andSaccountidEqualTo(event.accountId)
+    optionValMapper.deleteByExample(optionEx)
 
-        val feedback = event.feedback
-
-    }
+    val feedback = event.feedback
+    mailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName,
+      Arrays.asList(new MailRecipientField("hainguyen@esofthead.com", "Hai Nguyen")), null, null,
+      "User cancelled account", BeanUtility.printBeanObj(feedback), null)
+  }
 }

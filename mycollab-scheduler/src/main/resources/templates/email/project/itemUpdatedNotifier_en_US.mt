@@ -46,15 +46,9 @@
                                     #if ($mapper.hasField($item.field))
                                     #set($fieldFormat=$mapper.getFieldLabel($item.field))
                                     <tr style="border-bottom: 1px solid $styles.border_color">
-                                        <td style="$styles.cell('240px'); color: $styles.meta_color">
-                                            $context.getMessage($fieldFormat.displayName)
-                                        </td>
-                                        <td style="$styles.cell('250px');">
-                                            $fieldFormat.formatField($context, $item.oldvalue)
-                                        </td>
-                                        <td  style="$styles.cell('250px');">
-                                            $fieldFormat.formatField($context, $item.newvalue)
-                                        </td>
+                                        <td style="$styles.cell('240px'); color: $styles.meta_color">$context.getMessage($fieldFormat.displayName)</td>
+                                        <td style="$styles.cell('250px');">$fieldFormat.formatField($context, $item.oldvalue)</td>
+                                        <td  style="$styles.cell('250px');">$fieldFormat.formatField($context, $item.newvalue)</td>
                                     </tr>
                                     #end
                                 #end
