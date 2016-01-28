@@ -34,7 +34,7 @@ public class LicenseManager {
     @Autowired
     private MailRelayService mailRelayService;
 
-    @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
+    @RequestMapping(path = "/register-ee", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public String registerEE(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastname,
                              @RequestParam("email") String email, @RequestParam("role") String role,
