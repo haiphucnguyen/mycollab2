@@ -153,6 +153,7 @@ public class DesktopApplication extends MyCollabUI {
             String attr = headerNames.nextElement();
             requestInfo.append(attr + ": " + request.getHeader(attr)).append('\n');
         }
+        requestInfo.append("Subdomain: " + initialSubDomain).append('\n');
         requestInfo.append("Remote address: " + request.getRemoteAddr()).append('\n');
         requestInfo.append("Path info: " + request.getPathInfo()).append('\n');
         requestInfo.append("Remote host: " + request.getRemoteHost()).append('\n');
