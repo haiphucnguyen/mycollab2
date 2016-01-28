@@ -38,6 +38,8 @@
                tableName="s_customer_lead" />
         <table domainObjectName="PremiumUser" schema="mycollab_base"
                tableName="s_premium_users" />
+        <table domainObjectName="LiveInstance" schema="mycollab_base"
+               tableName="s_live_instances" />
     </context>
 
 </generatorConfiguration>
