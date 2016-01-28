@@ -5,10 +5,24 @@
 <title>Project Invitation</title>
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; padding: 0px;">
-    #macro( linkBlock $webLink )
-        <div style="width: 100%; padding: 20px 15px; background-color: rgb(237, 248, 255); box-sizing: border-box;">
-            <a href="$webLink" style="color: ${styles.link_color}; font-size: 12px; width: 100%; display: inline-block; word-wrap: break-word; white-space: normal; word-break: break-all;">$webLink</a>
-        </div>
+    #macro( linkBlock $webLink $displayName)
+        <table style="width: auto; border-collapse: collapse; margin: 10px auto">
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="border: 1px solid ${styles.border_color}; border-radius: 3px">
+                            <table style="width: auto; border-collapse: collapse">
+                                <tr>
+                                    <td style="font: 14px/1.4285714 Arial, sans-serif; padding: 4px 10px; background-color: ${styles.action_color}">
+                                        <a href="$webLink" style="color: white; text-decoration: none; font-weight: bold">$displayName</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     #end
     
     #macro( messageBlock $messageContent )
@@ -29,15 +43,13 @@
         </tr>
         <tr>
             <td style="padding: 10px 25px;">
-                <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>$inviteUser has <b>invited</b> you to join the project "$!member.projectName".</div>
-                <p>Please, accept the invitation at:</p>
-                #linkBlock( $!urlAccept )
-                <p>or decline it and cancel further reminders at:</p>
-                #linkBlock( $!urlDeny )
+                <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16"
+                style="display: inline-block; vertical-align: top;"/><b>${inviteUser}</b> invited you to join the project <b>"$!{member.projectName}"</b>.</div>
+                #linkBlock( $!urlAccept "Accept Invitation")
             </td>
         </tr>
         <tr>
-        <td style="padding: 10px 25px;">
+        <td style="padding: 0px 25px;">
         #messageBlock( $inviteMessage )
         </td>
         </tr>
