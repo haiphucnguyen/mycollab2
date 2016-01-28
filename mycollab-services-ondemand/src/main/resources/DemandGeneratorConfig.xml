@@ -3,9 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-
     <context id="MySQL" targetRuntime="MyBatis3">
-
         <plugin type="com.esofthead.mybatis.plugin.MyCollabModelFilePlugin" />
 
         <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/mycollab_base"
@@ -15,9 +13,7 @@
         <javaModelGenerator
                 targetPackage="com.esofthead.mycollab.module.support.domain"
                 targetProject="src/main/java">
-
-            <property name="rootClass"
-                      value="com.esofthead.mycollab.core.arguments.ValuedBean" />
+            <property name="rootClass" value="com.esofthead.mycollab.core.arguments.ValuedBean" />
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="."
@@ -25,21 +21,13 @@
 
         <javaClientGenerator targetPackage="com.esofthead.mycollab.module.support.dao"
                              targetProject="src/main/java" type="XMLMAPPER">
-
             <property name="exampleMethodVisibility" value="public" />
-
-            <property name="rootInterface"
-                      value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />
+            <property name="rootInterface" value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />
         </javaClientGenerator>
 
-        <table domainObjectName="Testimonial" schema="mycollab_base"
-               tableName="s_testimonial" />
-        <table domainObjectName="CommunityLead" schema="mycollab_base"
-               tableName="s_customer_lead" />
-        <table domainObjectName="PremiumUser" schema="mycollab_base"
-               tableName="s_premium_users" />
-        <table domainObjectName="LiveInstance" schema="mycollab_base"
-               tableName="s_live_instances" />
+        <table domainObjectName="Testimonial" schema="mycollab_base" tableName="s_testimonial" />
+        <table domainObjectName="CommunityLead" schema="mycollab_base" tableName="s_customer_lead" />
+        <table domainObjectName="PremiumUser" schema="mycollab_base" tableName="s_premium_users" />
     </context>
 
 </generatorConfiguration>
