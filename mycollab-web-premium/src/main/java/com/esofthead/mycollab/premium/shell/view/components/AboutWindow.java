@@ -23,7 +23,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -66,16 +65,21 @@ public class AboutWindow extends AbstractAboutWindow {
             Label licenseInfoLbl = new Label("Invalid license");
             rightPanel.add(licenseInfoLbl);
         } else {
-            Date now = new GregorianCalendar().getTime();
-            if (licenseInfo.getExpireDate().before(now)) {
-                Label licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
+            Label licenseInfoLbl;
+            if (licenseInfo.isExpired()) {
+                licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
                         .getLicenseOrg() + "</b>. The license is expired", ContentMode.HTML);
-                rightPanel.add(licenseInfoLbl);
             } else {
-                Label licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
-                        .getLicenseOrg() + "</b>. Expire at <b>" + AppContext.formatPrettyTime(licenseInfo.getExpireDate()) + "</b>", ContentMode.HTML);
-                rightPanel.add(licenseInfoLbl);
+                if (licenseInfo.isTrial()) {
+                    licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
+                            .getLicenseOrg() + "</b>. Trial, Expire at <b>" + AppContext.formatPrettyTime(licenseInfo
+                            .getExpireDate()) + "</b>", ContentMode.HTML);
+                } else {
+                    licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
+                            .getLicenseOrg() + "</b>. Expire at <b>" + AppContext.formatPrettyTime(licenseInfo.getExpireDate()) + "</b>", ContentMode.HTML);
+                }
             }
+            rightPanel.add(licenseInfoLbl);
         }
 
         Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",

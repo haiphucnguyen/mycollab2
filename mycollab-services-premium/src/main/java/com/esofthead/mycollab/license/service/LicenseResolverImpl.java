@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.license.service;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.FileUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -62,23 +64,28 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
             Properties prop = new Properties();
             byte[] bytes = outputStream.toByteArray();
             prop.load(new ByteArrayInputStream(bytes));
+            Date expireDate = DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate"));
             licenseInfo = new LicenseInfo();
             licenseInfo.setCustomerId(prop.getProperty("customerId"));
-            licenseInfo.setEdition(LicenseType.valueOf(prop.getProperty("edition")));
-            licenseInfo.setExpireDate(DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate")));
+            licenseInfo.setLicenseType(LicenseType.valueOf(prop.getProperty("licenseType")));
+            licenseInfo.setExpireDate(expireDate);
             licenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
             licenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));
             licenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "9999")));
             if (isSave) {
+                if (licenseInfo.isExpired()) {
+                    throw new UserInvalidInputException("License is expired");
+                }
                 File licenseFile = getLicenseFile();
                 FileOutputStream fileOutputStream = new FileOutputStream(licenseFile);
                 fileOutputStream.write(licenseBytes);
                 fileOutputStream.close();
             }
         } catch (IOException e) {
-            LOG.warn("Can not read the license file mycollab.lic");
+            throw new UserInvalidInputException("Invalid license");
         } catch (PGPException e) {
             LOG.error("Error while reading license", e);
+            throw new UserInvalidInputException("Invalid license");
         }
     }
 

@@ -15,31 +15,37 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-license</artifactId>
+            <version>5.2.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-migration</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.5</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.5</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

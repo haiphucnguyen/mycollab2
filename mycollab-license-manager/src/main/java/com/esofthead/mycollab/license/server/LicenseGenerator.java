@@ -5,12 +5,12 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
+import org.joda.time.LocalDate;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.GregorianCalendar;
 import java.util.Properties;
 
 /**
@@ -22,10 +22,10 @@ public class LicenseGenerator {
         try {
             Properties prop = new Properties();
             prop.setProperty("customerId", licenseInfo.getCustomerId());
-            prop.setProperty("edition", licenseInfo.getEdition().name());
             prop.setProperty("licenseOrg", licenseInfo.getLicenseOrg());
             prop.setProperty("expireDate", DateTimeUtils.formatDateToW3C(licenseInfo.getExpireDate()));
             prop.setProperty("issueDate", DateTimeUtils.formatDateToW3C(licenseInfo.getIssueDate()));
+            prop.setProperty("licenseType", licenseInfo.getLicenseType().name());
             StringWriter outStream = new StringWriter();
             prop.store(outStream, "");
             String licenseStrInfo = outStream.toString();
@@ -60,9 +60,9 @@ public class LicenseGenerator {
     public static void main(String[] args) {
         LicenseInfo info = new LicenseInfo();
         info.setCustomerId("1");
-        info.setEdition(LicenseType.PRO);
-        info.setExpireDate(new GregorianCalendar().getTime());
-        info.setIssueDate(new GregorianCalendar().getTime());
+        info.setLicenseType(LicenseType.PRO_TRIAL);
+        info.setExpireDate(new LocalDate().minusDays(1).toDate());
+        info.setIssueDate(new LocalDate().minusDays(30).toDate());
         info.setLicenseOrg("eSoftHead");
         info.setMaxUsers(10);
         LicenseGenerator generator = new LicenseGenerator();

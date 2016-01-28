@@ -66,7 +66,7 @@ public class LicenseManager {
 
         LicenseInfo licenseInfo = new LicenseInfo();
         licenseInfo.setCustomerId("" + customerId);
-        licenseInfo.setEdition(LicenseType.PRO_TRIAL);
+        licenseInfo.setLicenseType(LicenseType.PRO_TRIAL);
         licenseInfo.setIssueDate(now.toDate());
         licenseInfo.setExpireDate(now.plusDays(30).toDate());
         licenseInfo.setLicenseOrg(company);
@@ -80,7 +80,7 @@ public class LicenseManager {
         try {
             Properties prop = new Properties();
             prop.setProperty("customerId", licenseInfo.getCustomerId());
-            prop.setProperty("edition", licenseInfo.getEdition().name());
+            prop.setProperty("licenseType", licenseInfo.getLicenseType().name());
             prop.setProperty("licenseOrg", licenseInfo.getLicenseOrg());
             prop.setProperty("expireDate", DateTimeUtils.formatDateToW3C(licenseInfo.getExpireDate()));
             prop.setProperty("issueDate", DateTimeUtils.formatDateToW3C(licenseInfo.getIssueDate()));
