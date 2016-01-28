@@ -14,10 +14,9 @@ import java.util.Properties;
  * @since 5.1.2
  */
 @RestController
-@RequestMapping("/checkupdate")
 public class CheckVersionController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/checkupdate", method = RequestMethod.GET)
     public String getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
 
@@ -27,8 +26,8 @@ public class CheckVersionController {
 
         if (version != null && MyCollabVersion.isEditionNewer(MyCollabVersion.getVersion(), version) &&
                 MyCollabVersion.isEditionNewer(version, "5.2.4")) {
-            props.put("autoDownload", String.format("http://sourceforge" +
-                    ".net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download", MyCollabVersion.getVersion()));
+            props.put("autoDownload", String.format("http://sourceforge.net/projects/mycollab/files/MyCollab_%s/upgrade.zip/download",
+                    MyCollabVersion.getVersion()));
         }
 
         Gson gson = new Gson();
