@@ -99,7 +99,7 @@ public abstract class MyCollabUI extends UI {
         LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
         if (licenseResolver != null) {
             LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
-            if (licenseInfo == null) {
+            if (licenseInfo == null || (licenseInfo.isExpired() && licenseInfo.isTrial())) {
                 Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
                 UI.getCurrent().addWindow(activateWindow);
             }

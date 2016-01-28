@@ -9,8 +9,7 @@ import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.license.LicenseType;
 import com.verhas.licensor.License;
 import org.bouncycastle.openpgp.PGPException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.bouncycastle.util.encoders.DecoderException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,6 @@ import java.util.Properties;
  */
 @Service
 public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
-    private static final Logger LOG = LoggerFactory.getLogger(LicenseResolverImpl.class);
 
     private LicenseInfo licenseInfo = null;
 
@@ -81,10 +79,7 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
                 fileOutputStream.write(licenseBytes);
                 fileOutputStream.close();
             }
-        } catch (IOException e) {
-            throw new UserInvalidInputException("Invalid license");
-        } catch (PGPException e) {
-            LOG.error("Error while reading license", e);
+        } catch (IOException | PGPException | DecoderException e) {
             throw new UserInvalidInputException("Invalid license");
         }
     }

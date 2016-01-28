@@ -61,7 +61,7 @@ public class LicenseGenerator {
         LicenseInfo info = new LicenseInfo();
         info.setCustomerId("1");
         info.setLicenseType(LicenseType.PRO_TRIAL);
-        info.setExpireDate(new LocalDate().minusDays(1).toDate());
+        info.setExpireDate(new LocalDate().plusDays(10).toDate());
         info.setIssueDate(new LocalDate().minusDays(30).toDate());
         info.setLicenseOrg("eSoftHead");
         info.setMaxUsers(10);
