@@ -27,7 +27,7 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
   def executeJob(context: JobExecutionContext): Unit = {
     val billingAccountExample = new BillingAccountExample
     billingAccountExample.createCriteria().andCreatedtimeLessThan(new LocalDateTime().minusDays(60).toDate).
-      andStatusNotEqualTo(AccountStatusConstants.TRIAL)
+      andStatusEqualTo(AccountStatusConstants.TRIAL)
 
     import scala.collection.JavaConverters._
     val obsoleteAccounts = billingAccountMapper.selectByExample(billingAccountExample).asScala.toList
