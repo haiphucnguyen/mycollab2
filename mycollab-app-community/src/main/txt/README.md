@@ -52,6 +52,10 @@ Version 5.2.6
 * Lighter email template
 * Send overdue assignments email
 
+**Bug Fixes**
+
+* Can not assign user as the account owner
+
 Version 5.2.5
 -----------------------------
 **Library Upgrades**
