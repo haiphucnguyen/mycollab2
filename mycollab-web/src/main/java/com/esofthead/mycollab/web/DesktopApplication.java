@@ -271,7 +271,7 @@ public class DesktopApplication extends MyCollabUI {
             BrowserWindowOpener opener = new BrowserWindowOpener("http://support.mycollab.com");
             opener.extend(okBtn);
             if (request != null) {
-                String remoteAddress = request.getRemoteAddr();
+                String remoteAddress = request.getRemoteHost();
                 if (remoteAddress != null) {
                     if (!ipLists.contains(remoteAddress)) {
                         LOG.error("Async not supported: " + printRequest(request));
