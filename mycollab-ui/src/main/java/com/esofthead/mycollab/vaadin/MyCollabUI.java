@@ -18,10 +18,14 @@ package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.common.SessionIdGenerator;
 import com.esofthead.mycollab.core.arguments.GroupIdProvider;
+import com.esofthead.mycollab.license.LicenseInfo;
+import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,14 +96,14 @@ public abstract class MyCollabUI extends UI {
         GoogleAnalyticsService googleAnalyticsService = ApplicationContextUtil.getSpringBean(GoogleAnalyticsService.class);
         googleAnalyticsService.registerUI(this);
 
-//        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
-//        if (licenseResolver != null) {
-//            LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
-//            if (licenseInfo == null) {
-//                Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
-//                UI.getCurrent().addWindow(activateWindow);
-//            }
-//        }
+        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        if (licenseResolver != null) {
+            LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
+            if (licenseInfo == null) {
+                Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+                UI.getCurrent().addWindow(activateWindow);
+            }
+        }
         doInit(request);
     }
 
