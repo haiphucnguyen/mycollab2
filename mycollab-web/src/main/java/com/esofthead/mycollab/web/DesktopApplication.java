@@ -275,6 +275,7 @@ public class DesktopApplication extends MyCollabUI {
                 if (remoteAddress != null) {
                     if (!ipLists.contains(remoteAddress)) {
                         LOG.error("Async not supported: " + printRequest(request));
+                        ipLists.add(remoteAddress);
                     }
                 }
             }
