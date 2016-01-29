@@ -51,6 +51,7 @@ Version 5.2.6
 
 * Lighter email template
 * Send overdue assignments email
+* Notify project members when the new member join
 
 **Bug Fixes**
 

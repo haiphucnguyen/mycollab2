@@ -3,6 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New member joined to the project</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<style>
+a {
+  color: $styles.link_color;
+}
+</style>
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; padding: 0px;">
   #macro( hyperLink $displayName $webLink )
@@ -19,7 +25,8 @@
     <tr>
       <td style="padding: 10px 25px;">
         <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>
-          <b>${newMember.displayName}</b> has joined to the project <b>"$!{newMember.projectName}"</b> as ${newMember.qualifiedRole}.
+          $formatter.formatMemberLink($siteUrl, $newMember) has joined to the project $formatter.formatProjectLink($siteUrl, $newMember) as
+          ${newMember.qualifiedRole}.
         </div>
       </td>
     </tr>
