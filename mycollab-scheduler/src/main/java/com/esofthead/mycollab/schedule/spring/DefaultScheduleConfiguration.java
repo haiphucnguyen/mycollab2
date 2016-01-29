@@ -111,7 +111,7 @@ public class DefaultScheduleConfiguration {
     public CronTriggerFactoryBean projectOverdueAssignmentsNotificationEmailTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(projectOverdueAssignmentsNotificationEmailJob().getObject());
-        bean.setCronExpression("0 0 0 * * ?");
+        bean.setCronExpression("0 * * * * ?");
         return bean;
     }
 
