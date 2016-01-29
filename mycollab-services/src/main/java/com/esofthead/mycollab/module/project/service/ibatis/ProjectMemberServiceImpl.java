@@ -38,6 +38,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.esb.DeleteProjectMemberEvent;
 import com.esofthead.mycollab.module.project.esb.InviteProjectMembersEvent;
+import com.esofthead.mycollab.module.project.esb.NewProjectMemberJoinEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.UserExistedException;
 import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
@@ -179,15 +180,13 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
             simpleUser.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
             simpleUser.setUsername(email);
             simpleUser.setEmail(email);
-            LOG.debug("Save user {}", BeanUtility.printBeanObj(simpleUser));
             userMapper.insert(simpleUser);
         } catch (DuplicateKeyException e) {
             throw new UserExistedException("User existed " + email);
         }
 
         LOG.debug("Assign guest role for this user {}", email);
-        Integer systemGuestRoleId = roleService.getSystemRoleId(
-                SimpleRole.GUEST, sAccountId);
+        Integer systemGuestRoleId = roleService.getSystemRoleId(SimpleRole.GUEST, sAccountId);
         if (systemGuestRoleId == null) {
             LOG.error("Can not find guess role for account {}", sAccountId);
         }
@@ -214,6 +213,8 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         LOG.debug("Start save project member {}", BeanUtility.printBeanObj(member));
 
         saveWithSession(member, "");
+
+        asyncEventBus.post(new NewProjectMemberJoinEvent(email, projectId, sAccountId, true));
     }
 
     @Override
