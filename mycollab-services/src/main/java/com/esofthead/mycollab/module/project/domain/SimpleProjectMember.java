@@ -36,8 +36,6 @@ public class SimpleProjectMember extends ProjectMember {
 
     private String roleName;
 
-    private Integer projectRoleId;
-
     @NotBindable
     private PermissionMap permissionMaps;
 
@@ -127,14 +125,6 @@ public class SimpleProjectMember extends ProjectMember {
         this.lastAccessTime = lastAccessTime;
     }
 
-    public Integer getProjectRoleId() {
-        return projectRoleId;
-    }
-
-    public void setProjectRoleId(Integer projectRoleId) {
-        this.projectRoleId = projectRoleId;
-    }
-
     public String getDisplayName() {
         if (StringUtils.isBlank(memberFullName)) {
             return StringUtils.extractNameFromEmail(getUsername());
@@ -166,7 +156,7 @@ public class SimpleProjectMember extends ProjectMember {
         String role = getRoleName();
         if (role != null) {
             return role;
-        } else if (getProjectRoleId() == -1) {
+        } else if (getProjectroleid() == null && getIsadmin()) {
             return "Project Owner";
         } else {
             return "";

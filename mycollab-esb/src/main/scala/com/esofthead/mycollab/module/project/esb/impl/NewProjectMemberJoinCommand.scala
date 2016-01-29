@@ -33,10 +33,7 @@ import scala.collection.mutable.ListBuffer
     val recipients = ListBuffer[MailRecipientField]()
     membersInProjects.foreach(user => recipients.append(new MailRecipientField(user.getUsername, user.getDisplayName)))
     extMailService.sendHTMLMail(SiteConfiguration.getNoReplyEmail, SiteConfiguration.getDefaultSiteName, recipients.asJava,
-      null, null, String.format("%s has joined on project %s", newMember.getDisplayName, newMember.getProjectName),
+      null, null, String.format("%s has just joined on project %s", newMember.getDisplayName, newMember.getProjectName),
       contentGenerator.parseFile("templates/email/project/newMemberJoinProjectNotifier.mt", SiteConfiguration.getDefaultLocale), null)
-    if (event.isNewAccountCreated) {
-
-    }
   }
 }

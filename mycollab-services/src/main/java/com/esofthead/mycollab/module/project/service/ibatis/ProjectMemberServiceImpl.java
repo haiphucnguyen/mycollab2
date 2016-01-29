@@ -46,6 +46,7 @@ import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
+import com.esofthead.mycollab.module.user.esb.NewUserJoinEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.google.common.eventbus.AsyncEventBus;
 import org.apache.commons.collections.CollectionUtils;
@@ -215,6 +216,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         saveWithSession(member, "");
 
         asyncEventBus.post(new NewProjectMemberJoinEvent(email, projectId, sAccountId, true));
+        asyncEventBus.post(new NewUserJoinEvent(email, sAccountId));
     }
 
     @Override

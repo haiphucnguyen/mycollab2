@@ -76,8 +76,7 @@ public class UserSearchCriteria extends SearchCriteria {
 
     // @NOTE: Only works with method find... not getTotalCount(...)
     public void setLastAccessTimeRange(Date from, Date to) {
-        String expr = String
-                .format("s_user_account.lastAccessedTime >= '%s' AND s_user_account.lastAccessedTime <='%s'",
+        String expr = String.format("s_user_account.lastAccessedTime >= '%s' AND s_user_account.lastAccessedTime <='%s'",
                         DateTimeUtils.formatDate(from, "yyyy-MM-dd"),
                         DateTimeUtils.formatDate(to, "yyyy-MM-dd"));
         NoValueSearchField searchField = new NoValueSearchField(
