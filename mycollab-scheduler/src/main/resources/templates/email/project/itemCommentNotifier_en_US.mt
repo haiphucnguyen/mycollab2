@@ -4,6 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New comment created</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<style>
+a {
+  color: $styles.link_color;
+}
+</style>
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px;">
     #macro( hyperLink $displayName $webLink )
@@ -22,7 +27,7 @@
         <tr>
             <td>
                 <div style="padding: 0px 25px;">
-                    <img src="${defaultUrls.cdn_url}icons/logo.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
+                    <img src="${defaultUrls.cdn_url}icons/logo.png" width="130" height="30" style="margin: 0px; padding: 0px;">
                    </div>
                </td>
         </tr>

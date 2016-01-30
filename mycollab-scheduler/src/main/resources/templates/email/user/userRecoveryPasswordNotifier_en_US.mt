@@ -3,11 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Recovery password</title>
+<style>
+a {
+  color: $styles.link_color;
+}
+</style>
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; color: #4e4e4e; padding: 0px 0px;">
     #macro( linkBlock $webLink )
         <div style="padding: 20px 15px; background-color: rgb(237, 248, 255);">
-            <a href="$webLink" style="color: ${styles.link_color}; font-size: 12px; width: 100%; display: inline-block; word-wrap: break-word; white-space: normal; word-break: break-all;">$webLink</a>
+            <a href="$webLink" style="font-size: 12px; width: 100%; display: inline-block; word-wrap: break-word; white-space: normal; word-break: break-all;">$webLink</a>
         </div>
     #end
     
@@ -15,7 +20,7 @@
         <tr>
             <td>
                 <div style="padding: 0px 25px;">
-                    <img src="${defaultUrls.cdn_url}icons/logo.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
+                    <img src="${defaultUrls.cdn_url}icons/logo.png" width="130" height="30" style="margin: 0px; padding: 0px;">
                 </div>
             </td>
         </tr>

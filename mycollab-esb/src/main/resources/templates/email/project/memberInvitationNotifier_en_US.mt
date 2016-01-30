@@ -3,6 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Project Invitation</title>
+<style>
+a {
+  color: $styles.link_color;
+}
+</style>
 </head>
 <body style="background-color: ${styles.background}; font: ${styles.font}; padding: 0px;">
     #macro( linkBlock $webLink $displayName)
