@@ -33,6 +33,7 @@ public class UserSearchCriteria extends SearchCriteria {
     private SetSearchField<String> registerStatuses;
     private StringSearchField subdomain;
     private SetSearchField<String> statuses;
+    private BooleanSearchField isAccountOwner;
 
     public StringSearchField getDisplayName() {
         return displayName;
@@ -79,8 +80,7 @@ public class UserSearchCriteria extends SearchCriteria {
         String expr = String.format("s_user_account.lastAccessedTime >= '%s' AND s_user_account.lastAccessedTime <='%s'",
                         DateTimeUtils.formatDate(from, "yyyy-MM-dd"),
                         DateTimeUtils.formatDate(to, "yyyy-MM-dd"));
-        NoValueSearchField searchField = new NoValueSearchField(
-                SearchField.AND, expr);
+        NoValueSearchField searchField = new NoValueSearchField(SearchField.AND, expr);
         this.addExtraField(searchField);
     }
 }

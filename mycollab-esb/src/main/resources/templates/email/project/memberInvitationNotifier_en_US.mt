@@ -33,7 +33,7 @@
         </div>
     #end
     
-    <table width="700" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
         <tr>
             <td>
                 <div style="padding: 0px 25px;">

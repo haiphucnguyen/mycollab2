@@ -23,7 +23,7 @@ import com.esofthead.mycollab.common.domain.MailRecipientField
 import com.esofthead.mycollab.common.{FontAwesomeUtils, NotificationType}
 import com.esofthead.mycollab.configuration.{SiteConfiguration, StorageFactory}
 import com.esofthead.mycollab.core.MyCollabException
-import com.esofthead.mycollab.core.arguments.{NumberSearchField, RangeDateSearchField, SetSearchField}
+import com.esofthead.mycollab.core.arguments.{SearchField, NumberSearchField, RangeDateSearchField, SetSearchField}
 import com.esofthead.mycollab.core.utils.{BeanUtility, DateTimeUtils}
 import com.esofthead.mycollab.html.DivLessFormatter
 import com.esofthead.mycollab.module.mail.service.{ExtMailService, IContentGenerator}
@@ -112,6 +112,7 @@ class OverdueProjectAssignmentsNotificationJob extends GenericQuartzJobBean {
     val past = now.minusDays(10000)
     val rangeDate = new RangeDateSearchField(past.toDate, now.toDate)
     searchCriteria.setDateInRange(rangeDate)
+    searchCriteria.setIsOpenned(new SearchField())
     import scala.collection.JavaConverters._
     val accountIds = projectGenericTaskService.getAccountsHasOverdueAssignments(searchCriteria).asScala.toList
     if (accountIds != null) {

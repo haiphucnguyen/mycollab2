@@ -30,7 +30,7 @@ a {
         </table>
     #end
     
-    <table width="800" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
         <tr>
             <td>
                 <div style="padding: 0px 25px;">
@@ -40,8 +40,7 @@ a {
         </tr>
         <tr>
             <td style="padding: 10px 30px;">
-                <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>
-                    $!inviterName has invited you to join MyCollab workspace.</div>
+                <div>$formatter.formatUser($inviter) invites you to join MyCollab workspace.</div>
                 #linkBlock( $!urlAccept "Accept Invitation")
             </td>
          </tr>
