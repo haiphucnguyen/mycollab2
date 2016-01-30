@@ -31,13 +31,7 @@ a {
     #end
     
     <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
-        <tr>
-            <td>
-                <div style="padding: 0px 25px;">
-                    <img src="${defaultUrls.cdn_url}icons/logo.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
-                   </div>
-               </td>
-        </tr>
+        #parse("templates/email/logo.mt")
         <tr>
             <td style="padding: 10px 30px;">
                 <div>$formatter.formatUser($inviter) invites you to join MyCollab workspace.</div>

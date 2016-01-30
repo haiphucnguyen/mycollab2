@@ -22,11 +22,7 @@ a {
     #end
     
     <table width="760" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
-        <tr>
-            <td style="text-align: center; padding: 50px 0px 0px;">
-                <img src="${defaultUrls.cdn_url}icons/logo.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
-            </td>
-        </tr>
+        #parse("templates/email/logo.mt")
         <tr>
             <td style="padding: 0px 25px; text-align: center;">
                 <p style="font-size: 22px;"><b><i>Thank you for choosing MyCollab!</i></b><p>
