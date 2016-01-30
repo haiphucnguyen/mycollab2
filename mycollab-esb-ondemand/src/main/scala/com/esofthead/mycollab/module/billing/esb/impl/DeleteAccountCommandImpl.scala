@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.billing.esb.DeleteAccountEvent
 import com.esofthead.mycollab.module.ecm.service.ResourceService
 import com.esofthead.mycollab.module.mail.service.ExtMailService
 import com.esofthead.mycollab.module.page.service.PageService
-import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
+import com.google.common.eventbus.Subscribe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component
   @Autowired private val optionValMapper: OptionValMapper = null
   @Autowired private val mailService: ExtMailService = null
 
-  @AllowConcurrentEvents
   @Subscribe
   def deleteAccount(event: DeleteAccountEvent): Unit = {
     val rootPath = event.accountId + ""
