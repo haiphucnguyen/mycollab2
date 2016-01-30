@@ -17,15 +17,15 @@
     #end
     
     <table width="760" cellpadding="0" cellspacing="0" border="0" style="margin: 20px auto;">
-       <tr>
-               <td style="text-align: center; padding: 50px 0px 0px;">
-                   <img src="${defaultUrls.cdn_url}icons/logo_email.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
-               </td>            
+        <tr>
+            <td style="text-align: center; padding: 50px 0px 0px;">
+                <img src="${defaultUrls.cdn_url}icons/logo_email.png" alt="The power productivity tool for your organization" width="130" height="30" style="margin: 0px; padding: 0px;">
+            </td>
         </tr>
         <tr>
             <td style="padding: 0px 25px; text-align: center;">
-                        <p style="font-size: 22px;"><b><i>Thank you for choosing MyCollab!</i></b><p>
-                        <p>You are just one click away from completing your account registration: <p>
+                <p style="font-size: 22px;"><b><i>Thank you for choosing MyCollab!</i></b><p>
+                    <p>You are just one click away from completing your account registration: <p>
                         <div style="background-color: rgb(32, 36, 35); tex-align: center; padding: 3px 0px; width: 330px; margin: 0px auto;">
                             <div style="width: 100%; padding: 10px 0px; border-color: rgb(99, 102, 101); border-width: 1px 0px; border-style: solid;">
                                 <a style="text-decoration:none;" href="$!linkConfirm"/><span style="font-size: 22px; text-transform: uppercase; color: rgb(255, 255, 255);">Confirm your e-mail</span></a>

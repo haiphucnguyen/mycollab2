@@ -31,7 +31,7 @@ object NewUserJoinCommand {
         appendText(newMember.getDisplayName).write()
     }
 
-    def formatRoleName(newMember: SimpleUser): String = if (newMember.getRoleName != null) newMember.getRoleName else "Account Owner"
+    def formatRoleName(newMember: SimpleUser): String = if (newMember.getIsAccountOwner == true) "Account Owner" else newMember.getRoleName
   }
 
 }
@@ -49,7 +49,7 @@ object NewUserJoinCommand {
     val sAccountId = event.sAccountId
     val searchCriteria = new UserSearchCriteria
     searchCriteria.setSaccountid(new NumberSearchField(sAccountId))
-    searchCriteria.setStatuses(new SetSearchField[String](RegisterStatusConstants.ACTIVE))
+    searchCriteria.setRegisterStatuses(new SetSearchField[String](RegisterStatusConstants.ACTIVE))
     searchCriteria.addExtraField(new OneValueSearchField(SearchField.AND, "s_user_account.isAccountOwner = ", 1))
     import scala.collection.JavaConverters._
     val accountOwners = userService.findPagableListByCriteria(new SearchRequest[UserSearchCriteria](searchCriteria, 0,

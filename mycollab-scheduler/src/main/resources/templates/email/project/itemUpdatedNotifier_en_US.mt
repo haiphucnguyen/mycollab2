@@ -10,7 +10,8 @@
         <a href="$webLink" style="color: ${styles.link_color}; white-space: normal;">$displayName</a>
     #end
     
-    <table width="800" cellpadding="0" cellspacing="0" border="0" style="font-size:12px; color: #4e4e4e; margin: 20px auto;">
+    <table width="600" cellpadding="0" cellspacing="0" border="0" style="font-size:12px; color: #4e4e4e; margin: 20px
+    auto;">
         <tr>
             <td>
                 <div style="padding: 0px 25px;">

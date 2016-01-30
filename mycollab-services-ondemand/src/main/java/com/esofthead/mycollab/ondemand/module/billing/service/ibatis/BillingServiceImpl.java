@@ -153,13 +153,11 @@ public class BillingServiceImpl implements BillingService {
         }
 
         // save default roles
-        LOG.debug("Save default roles for account of subdomain {}", subDomain);
         saveEmployeeRole(accountId);
         int adminRoleId = saveAdminRole(accountId);
         saveGuestRole(accountId);
 
         // save user account
-        LOG.debug("Register user {} to subdomain {}", username, subDomain);
         UserAccount userAccount = new UserAccount();
         userAccount.setAccountid(accountId);
         userAccount.setIsaccountowner(true);
