@@ -40,7 +40,6 @@
         <module>../mycollab-mobile</module>
         <module>../mycollab-web</module>
         <module>../mycollab-license</module>
-        <module>../mycollab-license-manager</module>
         <module>../mycollab-api</module>
         <module>../mycollab-scheduler-ondemand</module>
         <module>../mycollab-web-pro</module>
