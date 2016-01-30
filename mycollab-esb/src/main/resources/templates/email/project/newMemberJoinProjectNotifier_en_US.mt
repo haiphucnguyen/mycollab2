@@ -26,7 +26,7 @@ a {
       <td style="padding: 10px 25px;">
         <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>
           $formatter.formatMemberLink($siteUrl, $newMember) has joined to the project $formatter.formatProjectLink($siteUrl, $newMember) as
-          ${newMember.qualifiedRole}.
+          $formatter.formatRoleName($siteUrl, $newMember)
         </div>
       </td>
     </tr>

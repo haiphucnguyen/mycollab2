@@ -151,15 +151,4 @@ public class SimpleProjectMember extends ProjectMember {
     public void setTotalNonBillableLogTime(Double totalNonBillableLogTime) {
         this.totalNonBillableLogTime = totalNonBillableLogTime;
     }
-
-    public String getQualifiedRole() {
-        String role = getRoleName();
-        if (role != null) {
-            return role;
-        } else if (getProjectroleid() == null && getIsadmin()) {
-            return "Project Owner";
-        } else {
-            return "";
-        }
-    }
 }

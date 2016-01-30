@@ -36,6 +36,12 @@ object NewProjectMemberJoinCommand {
       new A(ProjectLinkGenerator.generateProjectMemberFullLink(siteUrl, newMember.getProjectid, newMember.getUsername)).
         appendText(newMember.getDisplayName).write();
     }
+
+    def formatRoleName(siteUrl: String, newMember: SimpleProjectMember): String = {
+      if (newMember.isProjectOwner) "Project Owner"
+      else new A(ProjectLinkGenerator.generateRolePreviewFullLink(siteUrl, newMember.getProjectid,
+        newMember.getProjectid)).appendText(newMember.getRoleName).write()
+    }
   }
 
 }
