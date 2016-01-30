@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.support.dao.PremiumUserMapper;
 import com.esofthead.mycollab.module.support.domain.PremiumUser;
 import com.esofthead.mycollab.module.support.domain.PremiumUserExample;
 import com.verhas.licensor.License;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Properties;
@@ -96,5 +99,36 @@ public class LicenseManager {
         } catch (Exception e) {
             throw new MyCollabException("Can not generate license", e);
         }
+    }
+
+    private Properties decode(String encodeStr) {
+        try {
+            License license = new License();
+            InputStream publicStream = LicenseManager.class.getClassLoader().getResourceAsStream("pubring.gpg");
+            license.loadKeyRing(publicStream, null);
+            license.setLicenseEncoded(encodeStr);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            license.dumpLicense(outputStream);
+            outputStream.flush();
+            Properties prop = new Properties();
+            prop.load(new ByteArrayInputStream(outputStream.toByteArray()));
+            return prop;
+        } catch (Exception e) {
+            throw new MyCollabException("Failed to check MyCollab license", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        LicenseInfo info = new LicenseInfo();
+        info.setCustomerId("1");
+        info.setLicenseType(LicenseType.PRO_TRIAL);
+        info.setExpireDate(new LocalDate().plusDays(10).toDate());
+        info.setIssueDate(new LocalDate().minusDays(30).toDate());
+        info.setLicenseOrg("eSoftHead");
+        info.setMaxUsers(10);
+        LicenseManager generator = new LicenseManager();
+        String str = generator.encode(info);
+        System.out.println(str);
+        generator.decode(str);
     }
 }

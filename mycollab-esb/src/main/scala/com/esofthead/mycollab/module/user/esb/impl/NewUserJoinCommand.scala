@@ -31,7 +31,10 @@ object NewUserJoinCommand {
         appendText(newMember.getDisplayName).write()
     }
 
-    def formatRoleName(newMember: SimpleUser): String = if (newMember.getIsAccountOwner == true) "Account Owner" else newMember.getRoleName
+    def formatRoleName(siteUrl: String, newMember: SimpleUser): String = {
+      if (newMember.getIsAccountOwner == true) "Account Owner"
+      else new A(AccountLinkGenerator.generatePreviewFullRoleLink(siteUrl, newMember.getRoleid)).appendText(newMember.getRoleName).write()
+    }
   }
 
 }

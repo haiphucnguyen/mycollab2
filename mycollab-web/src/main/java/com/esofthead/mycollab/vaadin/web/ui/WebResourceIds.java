@@ -75,7 +75,6 @@ public final class WebResourceIds {
   public static final String _footer_clouds = "icons/footer_clouds.png";
   public static final String _lazy_load_icon = "icons/lazy-load-icon.gif";
   public static final String _logo = "icons/logo.png";
-  public static final String _logo_email = "icons/logo_email.png";
   public static final String _logo_mycollab_2 = "icons/logo_mycollab_2.png";
   public static final String _sad_face = "icons/sad_face.png";
 }

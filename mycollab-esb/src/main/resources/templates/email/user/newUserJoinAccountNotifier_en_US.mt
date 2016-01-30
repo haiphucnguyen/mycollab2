@@ -21,7 +21,7 @@ a {
     <tr>
       <td style="padding: 10px 25px;">
         <div><img src="${defaultUrls.cdn_url}icons/default_user_avatar_16.png" width="16" height="16" style="display: inline-block; vertical-align: top;"/>
-              $formatter.formatMemberLink($siteUrl, $newUser) has joined to MyCollab workspace as $formatter.formatRoleName($newUser)
+              $formatter.formatMemberLink($siteUrl, $newUser) has joined to MyCollab workspace as $formatter.formatRoleName($siteUrl, $newUser)
         </div>
       </td>
     </tr>
