@@ -1,19 +1,19 @@
 /**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-mobile.
+  *
+  * mycollab-mobile is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-mobile is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.esofthead.mycollab.mobile.module.project.view
 
 import com.esofthead.mycollab.common.ModuleNameConstants
@@ -31,6 +31,7 @@ import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScree
 import com.esofthead.mycollab.mobile.module.project.view.parameters._
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectUserPresenter
 import com.esofthead.mycollab.mobile.module.project.view.task.TaskPresenter
+import com.esofthead.mycollab.mobile.mvp.view.PresenterOptionUtil
 import com.esofthead.mycollab.module.project.domain.criteria._
 import com.esofthead.mycollab.module.project.domain.{SimpleMilestone, SimpleProject, SimpleProjectMember, SimpleTask}
 import com.esofthead.mycollab.module.project.service.ProjectService
@@ -58,7 +59,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
   private def bindProjectEvents() {
     this.register(new ApplicationEventListener[ProjectEvent.GotoAdd]() {
       @Subscribe def handle(event: ProjectEvent.GotoAdd): Unit = {
-        val presenter = PresenterResolver.getPresenter(classOf[ProjectAddPresenter])
+        val presenter = PresenterOptionUtil.getPresenter(classOf[IProjectAddPresenter])
         presenter.go(navManager, new Add(new SimpleProject))
       }
     })

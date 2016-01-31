@@ -70,7 +70,7 @@ public final class PresenterResolver {
             if (value != null) {
                 return value;
             } else {
-                throw new MyCollabException("Can not find instance of " + presenterClass);
+                throw new PresenterNotFoundException("Can not find instance of " + presenterClass);
             }
         } catch (Exception e) {
             throw new MyCollabException(e);

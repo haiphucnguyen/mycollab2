@@ -14,11 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.mobile.module.project.view;
+package com.esofthead.mycollab.premium.mobile.module.project.view;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.mobile.module.project.view.AbstractProjectPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.IProjectAddPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.ProjectAddView;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
@@ -33,7 +36,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 5.2.5
  */
-public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView> {
+public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView> implements IProjectAddPresenter {
     public ProjectAddPresenter() {
         super(ProjectAddView.class);
     }
