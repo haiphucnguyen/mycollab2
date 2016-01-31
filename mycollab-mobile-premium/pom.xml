@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>mycollab-mobile-premium</name>
+    <artifactId>mycollab-mobile-premium</artifactId>
+    <parent>
+        <groupId>com.esofthead.mycollab</groupId>
+        <artifactId>mycollab-parent-premium</artifactId>
+        <version>5.2.6</version>
+        <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-core</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-dao</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-localization</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-services</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-ui</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-mobile</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.vaadin</groupId>
+            <artifactId>mobilecomponent</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.vaadin</groupId>
+            <artifactId>navigationbar-quickmenu</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-sass-compiler</artifactId>
+            <version>0.9.13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>slidemenu</artifactId>
+            <version>0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin</groupId>
+            <artifactId>resetbuttonfortextfield</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin.addon</groupId>
+            <artifactId>vaadin-touchkit-agpl</artifactId>
+            <version>4.1.0.beta1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-themes</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+    </dependencies>
+
+</project>
