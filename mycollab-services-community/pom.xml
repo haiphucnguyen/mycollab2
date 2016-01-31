@@ -14,6 +14,12 @@
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-caching</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-community</artifactId>
             <version>5.2.6</version>
         </dependency>
@@ -40,6 +46,13 @@
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
             <version>5.2.6</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>2.3.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
