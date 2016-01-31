@@ -56,6 +56,7 @@ Version 5.2.6
 **Bug Fixes**
 
 * Can not assign user as the account owner
+* Can not load fonts of reporting
 * [Premium] Display events with no project throws exception
 
 Version 5.2.5
