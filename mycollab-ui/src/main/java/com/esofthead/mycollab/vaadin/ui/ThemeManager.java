@@ -194,7 +194,8 @@ public class ThemeManager {
             extraStyles.append(".v-label.volumeUsageInfo { border-top: 25px solid #" + accountTheme
                     .getVtabsheetbg() + ";}");
 
-            extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { background-color: #" + accountTheme.getVtabsheetbg() + ";}");
+            extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { background-color: " + ColorUtils
+                    .brighterColor("#" + accountTheme.getVtabsheetbg()) + ";}");
         }
 
         if (accountTheme.getVtabsheettext() != null) {
