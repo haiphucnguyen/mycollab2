@@ -1,25 +1,11 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.mobile.module.project.view.settings;
+package com.esofthead.mycollab.mobile.premium.module.project.view.settings;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.mobile.module.project.view.AbstractProjectPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.settings.IProjectMemberEditPresenter;
+import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberEditView;
+import com.esofthead.mycollab.mobile.shell.events.ShellEvent;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -35,7 +21,8 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 4.5.2
  */
-public class ProjectMemberEditPresenter extends AbstractProjectPresenter<ProjectMemberEditView> {
+public class ProjectMemberEditPresenter extends AbstractProjectPresenter<ProjectMemberEditView> implements
+        IProjectMemberEditPresenter {
     private static final long serialVersionUID = -209370866970403913L;
 
     public ProjectMemberEditPresenter() {
