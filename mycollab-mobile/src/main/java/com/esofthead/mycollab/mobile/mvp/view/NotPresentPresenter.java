@@ -17,7 +17,9 @@
 package com.esofthead.mycollab.mobile.mvp.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.mobile.module.project.view.UserProjectListPresenter;
 import com.esofthead.mycollab.mobile.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
 import com.vaadin.ui.ComponentContainer;
@@ -37,6 +39,10 @@ public class NotPresentPresenter extends AbstractPresenter<NotPresenterView> {
             NavigationManager navManager = ((NavigationManager) navigator);
             navManager.navigateTo(view.getWidget());
             view.display();
+            if (navManager.getPreviousComponent() == null) {
+                UserProjectListPresenter projectListPresenter = PresenterResolver.getPresenter(UserProjectListPresenter.class);
+                navManager.setPreviousComponent(projectListPresenter.getView());
+            }
         } else {
             throw new MyCollabException("Invalid flow");
         }
