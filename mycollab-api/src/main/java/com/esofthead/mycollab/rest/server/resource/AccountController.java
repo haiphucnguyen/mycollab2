@@ -33,7 +33,6 @@ public class AccountController {
         }
         billingService.registerAccount(subdomain, planId, email, password, email, timezoneId, isEmailVerified);
 
-        String siteUrl = SiteConfiguration.getSiteUrl(subdomain);
-        return siteUrl;
+        return SiteConfiguration.getSiteUrl(subdomain);
     }
 }

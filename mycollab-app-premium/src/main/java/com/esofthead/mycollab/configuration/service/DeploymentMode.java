@@ -21,4 +21,9 @@ public class DeploymentMode implements IDeploymentMode, IService {
     public boolean isCommunityEdition() {
         return false;
     }
+
+    @Override
+    public boolean isPremiumEdition() {
+        return true;
+    }
 }

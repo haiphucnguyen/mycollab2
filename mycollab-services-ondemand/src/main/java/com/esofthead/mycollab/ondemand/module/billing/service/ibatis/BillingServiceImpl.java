@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-services.
- *
- * mycollab-services is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-services is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.ondemand.module.billing.service.ibatis;
 
 import com.esofthead.mycollab.common.domain.CustomerFeedbackWithBLOBs;
@@ -165,17 +149,15 @@ public class BillingServiceImpl implements BillingService {
             if (StringUtils.isBlank(user.getLastname())) {
                 user.setLastname(StringUtils.extractNameFromEmail(email));
             }
-            this.userMapper.insert(user);
+            userMapper.insert(user);
         }
 
         // save default roles
-        LOG.debug("Save default roles for account of subdomain {}", subDomain);
         saveEmployeeRole(accountId);
         int adminRoleId = saveAdminRole(accountId);
         saveGuestRole(accountId);
 
         // save user account
-        LOG.debug("Register user {} to subdomain {}", username, subDomain);
         UserAccount userAccount = new UserAccount();
         userAccount.setAccountid(accountId);
         userAccount.setIsaccountowner(true);
@@ -196,7 +178,7 @@ public class BillingServiceImpl implements BillingService {
         role.setDescription("");
         role.setSaccountid(accountId);
         role.setIssystemrole(true);
-        Integer roleId = this.roleService.saveWithSession(role, "");
+        Integer roleId = roleService.saveWithSession(role, "");
         roleService.savePermission(roleId, PermissionMap.buildEmployeePermissionCollection(), accountId);
         return roleId;
     }
@@ -220,9 +202,9 @@ public class BillingServiceImpl implements BillingService {
         role.setDescription("");
         role.setSaccountid(accountid);
         role.setIssystemrole(true);
-        final int roleId = this.roleService.saveWithSession(role, "");
+        final int roleId = roleService.saveWithSession(role, "");
 
-        this.roleService.savePermission(roleId, PermissionMap.buildGuestPermissionCollection(), accountid);
+        roleService.savePermission(roleId, PermissionMap.buildGuestPermissionCollection(), accountid);
         return roleId;
     }
 

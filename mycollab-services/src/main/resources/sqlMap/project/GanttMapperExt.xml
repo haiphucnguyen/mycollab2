@@ -61,14 +61,14 @@
     </resultMap>
 
     <select id="getTaskWithPredecessors" resultMap="ProjectGanttItem" parameterType="map" lang="velocity">
-        SELECT m_prj_project.id AS prjId, m_prj_project.name, m_prj_project.owner AS assignUser,
+        SELECT m_prj_project.id AS prjId, m_prj_project.name, m_prj_project.lead AS assignUser,
         m_prj_project.shortname AS prjKey,m_prj_project.planStartDate AS startDate, m_prj_project.planEndDate AS endDate,
         m_prj_project.projectStatus AS status, m_prj_project.id AS id, m_prj_project.actualStartDate,
         m_prj_project.actualEndDate,m_prj_project.sAccountId, m_prj_project.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project' AS type
         FROM m_prj_project
-        LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username)
+        LEFT OUTER JOIN s_user ON (m_prj_project.lead = s_user.username)
         LEFT OUTER JOIN m_prj_milestone ON (m_prj_project.id = m_prj_milestone.projectid)
         WHERE m_prj_project.id IN
         #repeat($_parameter.projectIds $projectId "," "(" ")")

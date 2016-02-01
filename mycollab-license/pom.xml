@@ -7,20 +7,25 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.2.5</version>
+        <version>5.2.6</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-config</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.6</version>
         </dependency>
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-test</artifactId>
-            <version>5.2.4</version>
+            <version>5.2.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>

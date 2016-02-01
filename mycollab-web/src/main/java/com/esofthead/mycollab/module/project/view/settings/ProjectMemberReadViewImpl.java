@@ -129,7 +129,6 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         leftColumn.with(activityStreamList);
 
         UserAssignmentWidget userAssignmentWidget = new UserAssignmentWidget();
-
         userAssignmentWidget.showOpenAssignments();
         bottomLayout.with(leftColumn, userAssignmentWidget).expand(leftColumn);
 
@@ -173,7 +172,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             memberInfo.addComponent(memberLink);
 
             String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
-                    ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectRoleId()));
+                    ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
             Label memberRole = new Label();
             memberRole.setContentMode(ContentMode.HTML);
             memberRole.setStyleName("member-role");
@@ -290,7 +289,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         private final DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
 
         public UserAssignmentWidget() {
-            super(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, 0), new CssLayout());
+            super(String.format("Assignments: %d", 0), new CssLayout());
             this.setWidth("400px");
 
             final CheckBox overdueSelection = new CheckBox("Overdue");
@@ -339,7 +338,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
 
         private void updateSearchResult() {
             taskList.setSearchCriteria(searchCriteria);
-            setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_OVERDUE_ASSIGNMENTS_TITLE, taskList.getTotalCount()));
+            setTitle(String.format("Assignments: %d", taskList.getTotalCount()));
         }
     }
 

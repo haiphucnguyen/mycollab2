@@ -74,14 +74,11 @@ public class CampaignController {
 
 
         Map result = new HashMap();
-        result.put("windows", String.format("https://sourceforge" +
-                        ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Installer-%s.zip/download",
+        result.put("windows", String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-Installer-%s.zip/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
-        result.put("macos", String.format("https://sourceforge" +
-                        ".net/projects/mycollab/files/MyCollab_%s/MyCollab-MacOS-%s.zip/download",
+        result.put("macos", String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-MacOS-%s.zip/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
-        result.put("linux", String.format("https://sourceforge" +
-                        ".net/projects/mycollab/files/MyCollab_%s/MyCollab-Generic-%s.jar/download",
+        result.put("linux", String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-Generic-%s.jar/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
         return result;
     }

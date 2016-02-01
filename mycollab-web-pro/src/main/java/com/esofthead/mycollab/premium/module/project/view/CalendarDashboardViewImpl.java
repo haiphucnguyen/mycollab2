@@ -32,6 +32,7 @@ import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
 import com.vaadin.ui.components.calendar.handler.BasicEventMoveHandler;
 import com.vaadin.ui.components.calendar.handler.BasicEventResizeHandler;
 import com.vaadin.ui.themes.ValoTheme;
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -39,6 +40,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -232,8 +234,6 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         viewButtons.addButton(monthViewBtn);
         viewButtons.setDefaultButton(monthViewBtn);
 
-//        header.with(titleWrapper, newTaskBtn, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
-//                .withAlign(newTaskBtn, Alignment.MIDDLE_RIGHT).withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
         header.with(titleWrapper, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
                 .withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
         return header;
@@ -272,26 +272,34 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
             public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {
-                assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
-                assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
-                nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
-                billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " Billable hours: " + provider
-                        .getTotalBillableHours());
-                nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider
-                        .getTotalNonBillableHours());
+                displayInfo(provider);
             }
         });
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        CollectionValueSearchField projectIdsInList = new CollectionValueSearchField(SearchField.AND,
-                "m_prj_task.projectid IN", projectKeys);
-        searchCriteria.addExtraField(projectIdsInList);
-        CompositionSearchField compoField = new CompositionSearchField(SearchField.AND);
-        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.startdate BETWEEN ", start.toDate(), end.toDate()));
-        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.enddate BETWEEN ", start.toDate(), end.toDate()));
-        searchCriteria.addExtraField(compoField);
+        if (CollectionUtils.isNotEmpty(projectKeys)) {
+            TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+            searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+            CollectionValueSearchField projectIdsInList = new CollectionValueSearchField(SearchField.AND,
+                    "m_prj_task.projectid IN", projectKeys);
+            searchCriteria.addExtraField(projectIdsInList);
+            CompositionSearchField compoField = new CompositionSearchField(SearchField.AND);
+            compoField.addField(new BetweenValuesSearchField("", "m_prj_task.startdate BETWEEN ", start.toDate(), end.toDate()));
+            compoField.addField(new BetweenValuesSearchField("", "m_prj_task.enddate BETWEEN ", start.toDate(), end.toDate()));
+            searchCriteria.addExtraField(compoField);
 
-        provider.loadEvents(searchCriteria);
+            provider.loadEvents(searchCriteria);
+        } else {
+            displayInfo(provider);
+        }
         calendar.setEventProvider(provider);
+    }
+
+    private void displayInfo(AgreegateGenericCalendarProvider provider) {
+        assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
+        assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
+        nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
+        billableHoursLbl.setValue(FontAwesome.MONEY.getHtml() + " Billable hours: " + provider
+                .getTotalBillableHours());
+        nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider
+                .getTotalNonBillableHours());
     }
 }

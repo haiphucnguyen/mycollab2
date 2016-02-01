@@ -156,7 +156,12 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         userAccount.setAccountid(record.getAccountId());
         userAccount.setIsaccountowner((record.getIsAccountOwner() == null) ? Boolean.FALSE : record.getIsAccountOwner());
 
-        userAccount.setRoleid(record.getRoleid());
+        if (record.getRoleid() <= 0) {
+            record.setRoleid(null);
+        } else {
+            userAccount.setRoleid(record.getRoleid());
+        }
+
         userAccount.setUsername(record.getUsername());
         userAccount.setRegisteredtime(new GregorianCalendar().getTime());
         userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
@@ -177,8 +182,9 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
             userAccountMapper.insert(userAccount);
         }
 
-        SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(record.getUsername(), record
-                .getDisplayName(), record.getSubdomain(), sAccountId);
+        SimpleUser inviterUserEntity = findUserByUserNameInAccount(inviteUser, sAccountId);
+        SendUserInvitationEvent invitationEvent = new SendUserInvitationEvent(record.getUsername(), inviterUserEntity.getUsername(),
+                record.getSubdomain(), sAccountId);
         asyncEventBus.post(invitationEvent);
     }
 

@@ -3,6 +3,8 @@ package com.esofthead.mycollab.schedule.spring;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
 import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
+import com.esofthead.mycollab.schedule.jobs.DeleteObsoleteAccountJob;
+import com.esofthead.mycollab.schedule.jobs.DeleteObsoleteLiveInstancesJob;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -26,9 +28,39 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
+    public JobDetailFactoryBean removeObsoleteAccountsJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(DeleteObsoleteAccountJob.class);
+        return bean;
+    }
+
+    @Bean
+    public JobDetailFactoryBean removeObsoleteLiveInstancesJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(DeleteObsoleteLiveInstancesJob.class);
+        return bean;
+    }
+
+    @Bean
     public CronTriggerFactoryBean sendingCountUserLoginByDateTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendCountUserLoginByDateJob().getObject());
+        bean.setCronExpression("0 0 0 * * ?");
+        return bean;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean deleteObsoleteAccountsTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(removeObsoleteAccountsJob().getObject());
+        bean.setCronExpression("0 0 12 * * ?");
+        return bean;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean deleteObsoleteLiveInstancesTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(removeObsoleteLiveInstancesJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
@@ -66,7 +98,10 @@ public class DemandScheduleConfiguration {
         bean.setAutoStartup(true);
         bean.setApplicationContextSchedulerContextKey("onDemandScheduleContext");
 
-        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(), sendAccountBillingEmailTrigger().getObject());
+        bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(),
+                deleteObsoleteAccountsTrigger().getObject(),
+                sendAccountBillingEmailTrigger().getObject(),
+                deleteObsoleteLiveInstancesTrigger().getObject());
         return bean;
     }
 }

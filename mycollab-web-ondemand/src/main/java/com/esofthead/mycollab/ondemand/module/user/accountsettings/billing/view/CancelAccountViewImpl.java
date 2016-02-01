@@ -117,6 +117,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
             public void buttonClick(ClickEvent event) {
                 // Save cancel account reason
                 CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
+                feedback.setUsername(AppContext.getUsername());
+                feedback.setSaccountid(AppContext.getAccountId());
                 feedback.setOthertool(alternativeTool.getValue());
                 feedback.setReasontoback(reasonToBack.getValue());
                 if (optionGroup.getValue() != null) {

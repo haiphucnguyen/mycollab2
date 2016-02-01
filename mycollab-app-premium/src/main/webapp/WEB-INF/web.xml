@@ -64,6 +64,11 @@
 
     <!-- REGISTER MYCOLLAB SERVLETS -->
 
+    <context-param>
+        <param-name>heartbeatInterval</param-name>
+        <param-value>120</param-value>
+    </context-param>
+
     <mime-mapping>
         <extension>manifest</extension>
         <mime-type>text/cache-manifest</mime-type>

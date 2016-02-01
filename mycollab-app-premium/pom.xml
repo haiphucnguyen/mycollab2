@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>mycollab-parent-premium</artifactId>
-        <version>5.2.5</version>
+        <version>5.2.6</version>
         <relativePath>../mycollab-parent-premium/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-server-runner</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.esofthead.mycollab</groupId>
@@ -34,37 +34,49 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-servlet</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-license</artifactId>
+            <version>5.2.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting-premium</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-mobile</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-mobile-premium</artifactId>
+            <version>5.2.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-services-premium</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
         </dependency>
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.vaadin</groupId>
@@ -94,7 +106,6 @@
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <finalName>runner</finalName>
                             <archive>
                                 <manifest>
                                     <mainClass>com.esofthead.mycollab.server.DefaultServerRunner</mainClass>
@@ -120,9 +131,6 @@
                                 <includes>
                                     <include>com.esofthead.mycollab:*</include>
                                 </includes>
-                                <excludes>
-                                    <exclude>com.esofthead.mycollab:mycollab-app-premium</exclude>
-                                </excludes>
                             </artifactSet>
                         </configuration>
                     </execution>
@@ -183,7 +191,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
-                            <excludeScope>provided</excludeScope>
+                            <includeScope>compile</includeScope>
                             <!-- this excludes tools.jar, e.g. -->
                             <excludeArtifactIds>mycustompanels</excludeArtifactIds>
                             <!-- IMPORTANT: don't copy custom panels
@@ -282,8 +290,6 @@
                         </goals>
                         <configuration>
                             <target>
-                                <copy file="${project.build.directory}/runner.jar"
-                                      tofile="${installer.staging.dir}/runner.jar"/>
                                 <copy todir="${installer.staging.dir}">
                                     <fileset dir="${izpack.dir.app}"/>
                                 </copy>

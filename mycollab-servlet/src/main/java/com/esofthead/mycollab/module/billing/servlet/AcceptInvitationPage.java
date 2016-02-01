@@ -29,8 +29,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserAccount;
 import com.esofthead.mycollab.module.user.domain.UserAccountExample;
+import com.esofthead.mycollab.module.user.esb.NewUserJoinEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.servlet.VelocityWebServletRequestHandler;
+import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,11 +66,12 @@ public class AcceptInvitationPage extends VelocityWebServletRequestHandler {
     @Autowired
     private IDeploymentMode deploymentMode;
 
-    @Override
-    protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
+    @Autowired
+    private AsyncEventBus asyncEventBus;
 
+    @Override
+    protected void onHandleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
         String subDomain = "";
         String loginURL = request.getContextPath() + "/";
 
@@ -130,6 +133,7 @@ public class AcceptInvitationPage extends VelocityWebServletRequestHandler {
                                 LOG.debug("Forward user {} to page {}", user.getUsername(), request.getContextPath());
                                 // redirect to account site
                                 userService.updateUserAccountStatus(username, accountId, RegisterStatusConstants.ACTIVE);
+                                asyncEventBus.post(new NewUserJoinEvent(username, accountId));
                                 response.sendRedirect(request.getContextPath() + "/");
                             }
                         }
