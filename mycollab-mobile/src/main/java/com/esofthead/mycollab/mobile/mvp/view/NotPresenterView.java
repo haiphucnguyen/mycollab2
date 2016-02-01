@@ -32,8 +32,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 @ViewComponent
 public class NotPresenterView extends AbstractMobilePageView {
     void display() {
-        setContent(new MVerticalLayout().withFullHeight().withFullWidth().with(new ELabel(FontAwesome.WARNING.getHtml() +
-                " This feature is currently not available in your MyCollab instance", ContentMode.HTML).withStyleName
-                (UIConstants.LABEL_H3)).alignAll(Alignment.MIDDLE_CENTER));
+        setContent(new MVerticalLayout().withFullHeight().withFullWidth().with(new ELabel(FontAwesome.WARNING.getHtml(), ContentMode.HTML),
+                new ELabel("This feature is currently not available in your MyCollab instance", ContentMode.HTML).
+                        withStyleName(UIConstants.LABEL_H3)).alignAll(Alignment.MIDDLE_CENTER));
     }
 }
