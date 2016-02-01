@@ -1,23 +1,9 @@
-/**
- * This file is part of mycollab-mobile.
- *
- * mycollab-mobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-mobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-mobile.  If not, see <http://www.gnu.org/licenses/>.
- */
-package com.esofthead.mycollab.mobile.module.project.view.message;
+package com.esofthead.mycollab.mobile.premium.module.project.view.message;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
+import com.esofthead.mycollab.mobile.module.project.view.message.MessageAddView;
+import com.esofthead.mycollab.mobile.module.project.view.message.MessageAttachmentField;
 import com.esofthead.mycollab.mobile.ui.AbstractMobilePageView;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -30,7 +16,6 @@ import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.addon.touchkit.ui.Switch;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
 import java.util.GregorianCalendar;

@@ -87,6 +87,12 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-mobile-premium</artifactId>
+            <version>5.2.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-scheduler-ondemand</artifactId>
             <version>5.2.6</version>
         </dependency>
