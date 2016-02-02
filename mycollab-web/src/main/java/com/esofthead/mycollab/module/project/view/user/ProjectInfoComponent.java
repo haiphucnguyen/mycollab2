@@ -36,15 +36,18 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.web.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.base.MoreObjects;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
@@ -100,6 +103,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         MVerticalLayout headerLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout();
+        footer.setDefaultComponentAlignment(Alignment.TOP_LEFT);
         footer.addStyleName(UIConstants.LABEL_META_INFO);
         if (project.getHomepage() != null) {
             ELabel homepageLbl = new ELabel(FontAwesome.WECHAT.getHtml() + " " + new A(project.getHomepage())
@@ -126,6 +130,32 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         nonBillableHoursLbl = new ELabel(FontAwesome.GIFT.getHtml() + " " + project.getTotalNonBillableHours(),
                 ContentMode.HTML).withDescription("Non billable hours").withStyleName(ValoTheme.LABEL_SMALL);
         footer.addComponent(nonBillableHoursLbl);
+
+        final Button markProjectTemplateBtn = new Button();
+        markProjectTemplateBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                Boolean isTemplate = !MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
+                project.setIstemplate(isTemplate);
+                ProjectService prjService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+                prjService.updateWithSession(project, AppContext.getUsername());
+                if (project.getIstemplate()) {
+                    markProjectTemplateBtn.setCaption("Unmark template");
+                } else {
+                    markProjectTemplateBtn.setCaption("Mark as Template");
+                }
+            }
+        });
+        markProjectTemplateBtn.setIcon(FontAwesome.STICKY_NOTE);
+        markProjectTemplateBtn.setStyleName(UIConstants.BUTTON_ACTION);
+        Boolean isTemplate = MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
+        if (isTemplate) {
+            markProjectTemplateBtn.setCaption("Unmark template");
+        } else {
+            markProjectTemplateBtn.setCaption("Mark as Template");
+        }
+        markProjectTemplateBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT));
+        footer.add(markProjectTemplateBtn);
 
         headerLayout.with(headerLbl, footer);
         this.with(headerLayout).expand(headerLayout);
