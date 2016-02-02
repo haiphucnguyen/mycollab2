@@ -100,7 +100,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         MVerticalLayout headerLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout();
-        footer.addStyleName("desc");
+        footer.addStyleName(UIConstants.LABEL_META_INFO);
         if (project.getHomepage() != null) {
             ELabel homepageLbl = new ELabel(FontAwesome.WECHAT.getHtml() + " " + new A(project.getHomepage())
                     .appendText(project.getHomepage()).setTarget("_blank").write(), ContentMode.HTML)

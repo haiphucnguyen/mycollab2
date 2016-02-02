@@ -40,12 +40,6 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
-Version 5.2.7
------------------------------
-**Library Upgrades**
-
-* Joda time 2.9.2
-
 Version 5.2.6
 -----------------------------
 **Library Upgrades**
@@ -64,6 +58,7 @@ Version 5.2.6
 * Can not assign user as the account owner
 * Can not load fonts of reporting
 * [Premium] Display events with no project throws exception
+* [Mobile] Can not redirect the login view when the obsolete password id stored in the local storage
 
 Version 5.2.5
 -----------------------------

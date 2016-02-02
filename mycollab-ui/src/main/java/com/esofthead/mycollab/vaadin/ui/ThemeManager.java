@@ -63,9 +63,6 @@ public class ThemeManager {
 
             extraStyles.append(".project-dashboard .project-info-layout { color: #"
                     + accountTheme.getTopmenutext() + "; }");
-
-            extraStyles.append(".project-dashboard .project-info-layout .meta-info { color: "
-                    + ColorUtils.darkerColor("#" + accountTheme.getTopmenutext()) + "; }");
         }
 
         if (accountTheme.getVtabsheetbg() != null) {
@@ -203,10 +200,6 @@ public class ThemeManager {
                     + accountTheme.getVtabsheettext() + "; }");
 
             extraStyles.append(".project-info .header { color: #" + accountTheme.getVtabsheettext() + "; }");
-
-            extraStyles.append(".project-info .v-label { color: #" + accountTheme.getVtabsheettext() + "; }");
-
-            extraStyles.append(".project-info .v-label a { color: #" + accountTheme.getVtabsheettext() + "; }");
 
             extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { color: #" + accountTheme.getVtabsheettext() + "; }");
 
