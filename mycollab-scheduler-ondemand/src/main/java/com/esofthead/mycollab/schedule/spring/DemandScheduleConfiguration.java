@@ -3,6 +3,7 @@ package com.esofthead.mycollab.schedule.spring;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
 import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
+import com.esofthead.mycollab.schedule.jobs.CountLiveInstancesJob;
 import com.esofthead.mycollab.schedule.jobs.DeleteObsoleteAccountJob;
 import com.esofthead.mycollab.schedule.jobs.DeleteObsoleteLiveInstancesJob;
 import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
@@ -28,6 +29,13 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
+    public JobDetailFactoryBean sendCountLiveInstancesByDateJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(CountLiveInstancesJob.class);
+        return bean;
+    }
+
+    @Bean
     public JobDetailFactoryBean removeObsoleteAccountsJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(DeleteObsoleteAccountJob.class);
@@ -45,6 +53,14 @@ public class DemandScheduleConfiguration {
     public CronTriggerFactoryBean sendingCountUserLoginByDateTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendCountUserLoginByDateJob().getObject());
+        bean.setCronExpression("0 0 0 * * ?");
+        return bean;
+    }
+
+    @Bean
+    public CronTriggerFactoryBean sendingCountLiveInstancesByDateTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(sendCountLiveInstancesByDateJob().getObject());
         bean.setCronExpression("0 0 0 * * ?");
         return bean;
     }
@@ -99,6 +115,7 @@ public class DemandScheduleConfiguration {
         bean.setApplicationContextSchedulerContextKey("onDemandScheduleContext");
 
         bean.setTriggers(sendingCountUserLoginByDateTrigger().getObject(),
+                sendingCountLiveInstancesByDateTrigger().getObject(),
                 deleteObsoleteAccountsTrigger().getObject(),
                 sendAccountBillingEmailTrigger().getObject(),
                 deleteObsoleteLiveInstancesTrigger().getObject());

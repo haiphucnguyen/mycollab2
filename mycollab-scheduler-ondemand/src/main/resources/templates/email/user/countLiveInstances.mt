@@ -13,19 +13,19 @@
   <br/>
   <table border="1">
     <tr>
-      <th>App Version</th>
-      <th>Java Version</th>
-      <th>Installed time</th>
+      <th>User name</th>
+      <th>Email</th>
+      <th>Registered time</th>
       <th>Last accessed time</th>
-      <th>Properties</th>
+      <th>Subdomain</th>
     </tr>
-    #foreach( $instance in $instances )
+    #foreach( $user in $lstUser )
     <tr>
-      <th>$!instance.appVersion</th>
-      <th>$!instance.javaVersion</th>
-      <th>$!instance.installedDate</th>
-      <th>$!instance.lastUpdatedDate</th>
-      <th>$!instance.sysProperties</th>
+      <th>$!user.username</th>
+      <th>$!user.email</th>
+      <th>$!user.registeredtime</th>
+      <th>$!user.lastaccessedtime</th>
+      <th>$!user.subdomain</th>
     </tr>
     #end
   </table>
