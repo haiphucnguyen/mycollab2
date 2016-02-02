@@ -40,6 +40,12 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.7
+-----------------------------
+**Library Upgrades**
+
+* Joda time 2.9.2
+
 Version 5.2.6
 -----------------------------
 **Library Upgrades**

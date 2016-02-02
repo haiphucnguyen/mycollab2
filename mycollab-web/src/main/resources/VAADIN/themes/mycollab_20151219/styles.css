@@ -16522,7 +16522,7 @@ input.v-textfield-errorField {
 
 #login-header #logo-here {
 	background: url('icons/logo.png') no-repeat 0 0 transparent;
-	margin: 5px 0px 5px 100px;
+	margin: 15px 0px 5px 100px;
 	height: 50px;
 	width: 218px;
 	float: left;
