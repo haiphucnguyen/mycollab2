@@ -460,20 +460,11 @@
             <name>SpringSource Milestone Repository</name>
             <url>http://repo.springsource.org/milestone</url>
         </repository>
-        <repository>
-            <id>vaadin-prereleases</id>
-            <name>Vaadin Pre-releases</name>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>mycollab-plugin-repo</id>
             <url>https://raw.githubusercontent.com/MyCollab/mycollab-maven-repo/master/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>vaadin-pre-releases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
