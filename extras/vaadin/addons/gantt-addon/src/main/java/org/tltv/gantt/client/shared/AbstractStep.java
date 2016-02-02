@@ -20,6 +20,7 @@ import java.util.Date;
 
 public abstract class AbstractStep implements Serializable {
 
+    private Long identifier;
     private String uid;
     private CaptionMode captionMode = CaptionMode.TEXT;
     private String styleName;
@@ -42,6 +43,15 @@ public abstract class AbstractStep implements Serializable {
     public AbstractStep(String caption, CaptionMode captionMode) {
         setCaption(caption);
         setCaptionMode(captionMode);
+    }
+
+    /** Application specific Optional identifier. */
+    public Long getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(Long identifier) {
+        this.identifier = identifier;
     }
 
     /**

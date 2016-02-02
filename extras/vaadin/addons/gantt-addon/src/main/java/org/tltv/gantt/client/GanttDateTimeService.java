@@ -47,12 +47,14 @@ public class GanttDateTimeService extends DateTimeService {
      *            The date to convert
      * @param formatStr
      *            The format string that might contain MMM or MMMM
-     * @param dateTimeService
-     *            Reference to the Vaadin DateTimeService
      * @return
      */
     @Override
     public String formatDate(Date date, String formatStr) {
+        return formatDate(date, formatStr, null);
+    }
+
+    public String formatDate(Date date, String formatStr, TimeZone timeZone) {
         /*
          * Format month and day names separately when locale for the
          * DateTimeService is not the same as the browser locale
@@ -63,9 +65,11 @@ public class GanttDateTimeService extends DateTimeService {
         // Format uses the browser locale
         DateTimeFormat format = DateTimeFormat.getFormat(formatStr);
 
-        String result = format.format(date, gmt);
-
-        return result;
+        if (timeZone != null) {
+            return format.format(date, timeZone);
+        } else {
+            return format.format(date, gmt);
+        }
     }
 
     /* copy of super.formatDayNames */
