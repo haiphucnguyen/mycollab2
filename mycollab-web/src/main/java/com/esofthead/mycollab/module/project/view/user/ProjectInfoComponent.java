@@ -131,31 +131,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 ContentMode.HTML).withDescription("Non billable hours").withStyleName(ValoTheme.LABEL_SMALL);
         footer.addComponent(nonBillableHoursLbl);
 
-        final Button markProjectTemplateBtn = new Button();
-        markProjectTemplateBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                Boolean isTemplate = !MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
-                project.setIstemplate(isTemplate);
-                ProjectService prjService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-                prjService.updateWithSession(project, AppContext.getUsername());
-                if (project.getIstemplate()) {
-                    markProjectTemplateBtn.setCaption("Unmark template");
-                } else {
-                    markProjectTemplateBtn.setCaption("Mark as Template");
-                }
-            }
-        });
-        markProjectTemplateBtn.setIcon(FontAwesome.STICKY_NOTE);
-        markProjectTemplateBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        Boolean isTemplate = MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
-        if (isTemplate) {
-            markProjectTemplateBtn.setCaption("Unmark template");
-        } else {
-            markProjectTemplateBtn.setCaption("Mark as Template");
-        }
-        markProjectTemplateBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT));
-        footer.add(markProjectTemplateBtn);
 
         headerLayout.with(headerLbl, footer);
         this.with(headerLayout).expand(headerLayout);
@@ -294,6 +269,31 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             popupButtonsControl.addOption(settingBtn);
 
             popupButtonsControl.addSeparator();
+
+            final Button markProjectTemplateBtn = new Button();
+            markProjectTemplateBtn.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    Boolean isTemplate = !MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
+                    project.setIstemplate(isTemplate);
+                    ProjectService prjService = ApplicationContextUtil.getSpringBean(ProjectService.class);
+                    prjService.updateWithSession(project, AppContext.getUsername());
+                    if (project.getIstemplate()) {
+                        markProjectTemplateBtn.setCaption("Unmark template");
+                    } else {
+                        markProjectTemplateBtn.setCaption("Mark as Template");
+                    }
+                }
+            });
+            markProjectTemplateBtn.setIcon(FontAwesome.STICKY_NOTE);
+            Boolean isTemplate = MoreObjects.firstNonNull(project.getIstemplate(), Boolean.FALSE);
+            if (isTemplate) {
+                markProjectTemplateBtn.setCaption("Unmark template");
+            } else {
+                markProjectTemplateBtn.setCaption("Mark as Template");
+            }
+            markProjectTemplateBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT));
+            popupButtonsControl.addOption(markProjectTemplateBtn);
 
             Button editProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_EDIT_PROJECT), new Button.ClickListener() {
                 @Override
