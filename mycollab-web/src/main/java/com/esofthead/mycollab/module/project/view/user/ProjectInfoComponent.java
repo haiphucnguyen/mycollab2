@@ -293,7 +293,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 markProjectTemplateBtn.setCaption("Mark as Template");
             }
             markProjectTemplateBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT));
-            popupButtonsControl.addOption(markProjectTemplateBtn);
+//            popupButtonsControl.addOption(markProjectTemplateBtn);
 
             Button editProjectBtn = new Button(AppContext.getMessage(ProjectCommonI18nEnum.BUTTON_EDIT_PROJECT), new Button.ClickListener() {
                 @Override

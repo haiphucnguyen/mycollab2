@@ -434,6 +434,10 @@
             <url>http://repo1.maven.org/maven2</url>
         </repository>
         <repository>
+            <id>mycollab-repo</id>
+            <url>https://raw.githubusercontent.com/MyCollab/mycollab-maven-repo/master/</url>
+        </repository>
+        <repository>
             <id>mycollab-bitbucket-repo</id>
             <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/master</url>
         </repository>
