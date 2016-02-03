@@ -17,8 +17,6 @@
         <result column="ganttIndex" jdbcType="INTEGER" property="ganttIndex"/>
         <result column="startDate" property="startDate" jdbcType="TIMESTAMP"/>
         <result column="endDate" property="endDate" jdbcType="TIMESTAMP"/>
-        <result column="actualStartDate" property="actualStartDate" jdbcType="TIMESTAMP"/>
-        <result column="actualEndDate" property="actualEndDate" jdbcType="TIMESTAMP"/>
         <result column="deadline" property="deadline" jdbcType="TIMESTAMP"/>
         <result column="duration" property="duration" jdbcType="BIGINT"/>
         <result column="progress" property="progress" jdbcType="DOUBLE"/>
@@ -63,8 +61,7 @@
     <select id="getTaskWithPredecessors" resultMap="ProjectGanttItem" parameterType="map" lang="velocity">
         SELECT m_prj_project.id AS prjId, m_prj_project.name, m_prj_project.lead AS assignUser,
         m_prj_project.shortname AS prjKey,m_prj_project.planStartDate AS startDate, m_prj_project.planEndDate AS endDate,
-        m_prj_project.projectStatus AS status, m_prj_project.id AS id, m_prj_project.actualStartDate,
-        m_prj_project.actualEndDate,m_prj_project.sAccountId, m_prj_project.deadline,
+        m_prj_project.projectStatus AS status, m_prj_project.id AS id, m_prj_project.sAccountId, m_prj_project.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project' AS type
         FROM m_prj_project
@@ -81,8 +78,7 @@
     <select id="selectMilestones" resultMap="MilestoneGanttItem" parameterType="Integer" lang="velocity">
         SELECT m_prj_milestone.projectid AS prjId, m_prj_milestone.name, m_prj_milestone.owner AS assignUser,
         m_prj_milestone.startdate AS startDate, m_prj_milestone.enddate AS endDate, m_prj_milestone.status,
-        m_prj_milestone.id, m_prj_milestone.actualstartdate AS actualStartDate,
-        m_prj_milestone.actualenddate AS actualEndDate, m_prj_milestone.deadline, m_prj_milestone.ganttindex,
+        m_prj_milestone.id, m_prj_milestone.deadline, m_prj_milestone.ganttindex,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Milestone' AS type
         FROM m_prj_milestone
@@ -94,7 +90,7 @@
     <select id="selectTasksWithMilestone" resultMap="TaskGanttItemWithoutParent" parameterType="Integer" lang="velocity">
         SELECT m_prj_task.projectid AS prjId, m_prj_task.taskname AS name, m_prj_task.assignUser,
         m_prj_task.startdate AS startDate, m_prj_task.enddate AS endDate, m_prj_task.status,
-        m_prj_task.id, m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.deadline,
+        m_prj_task.id, m_prj_task.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Task' AS type, m_prj_task.ganttindex,
         m_prj_task.duration, m_prj_task.parentTaskId, m_prj_task.percentagecomplete AS progress,
@@ -147,7 +143,7 @@
     <select id="selectSubTasks" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
         SELECT m_prj_task.projectid AS prjId, m_prj_task.taskname AS name, m_prj_task.assignUser,
         m_prj_task.startdate AS startDate, m_prj_task.enddate AS endDate, m_prj_task.status,
-        m_prj_task.id, m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.deadline,
+        m_prj_task.id, m_prj_task.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Task' AS type, m_prj_task.ganttindex,
         m_prj_task.duration, m_prj_task.parentTaskId, m_prj_task.percentagecomplete AS progress,
