@@ -11,7 +11,6 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver
 import com.esofthead.mycollab.module.project.view.page.PageUrlResolver
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.{GotoCalendarView, GotoGanttChart}
 import com.esofthead.mycollab.module.project.view.parameters.{MilestoneScreenData, ProjectScreenData}
-import com.esofthead.mycollab.module.project.view.problem.ProblemUrlResolver
 import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver
 import com.esofthead.mycollab.module.project.view.settings._
 import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver
@@ -39,7 +38,6 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("bug", new BugUrlResolver)
     this.addSubResolver("page", new PageUrlResolver)
     this.addSubResolver("risk", new RiskUrlResolver)
-    this.addSubResolver("problem", new ProblemUrlResolver)
     this.addSubResolver("standup", new StandupUrlResolver)
     this.addSubResolver("user", new UserUrlResolver)
     this.addSubResolver("role", new RoleUrlResolver)

@@ -2,11 +2,9 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
@@ -50,12 +48,6 @@ public class GenericTaskDetailMapper {
             SimpleRisk risk = service.findById(typeId, sAccountId);
             if (risk != null) {
                 name = risk.getRiskname();
-            }
-        } else if (ProjectTypeConstants.PROBLEM.equals(type)) {
-            ProblemService service = ApplicationContextUtil.getSpringBean(ProblemService.class);
-            SimpleProblem problem = service.findById(typeId, sAccountId);
-            if (problem != null) {
-                name = problem.getIssuename();
             }
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
             VersionService service = ApplicationContextUtil

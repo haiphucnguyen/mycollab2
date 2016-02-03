@@ -18,11 +18,15 @@ package com.esofthead.mycollab.module.project.view.assignments;
 
 import com.esofthead.mycollab.core.arguments.*;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.google.common.base.MoreObjects;
 import com.vaadin.ui.components.calendar.event.BasicEventProvider;
 
 import java.util.Date;
@@ -32,7 +36,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-public class GenericTaskProvider extends BasicEventProvider {
+public class GenericAssignmentProvider extends BasicEventProvider {
     private Double totalBillableHours = 0d;
     private Double totalNonBillableHours = 0d;
     private int assignMeNum = 0;
@@ -40,28 +44,26 @@ public class GenericTaskProvider extends BasicEventProvider {
     private int notAssignNum = 0;
 
     public void loadEvents(Date start, Date end) {
-        TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-        searchCriteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+        ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        CompositionSearchField compoField = new CompositionSearchField(SearchField.AND);
-        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.startdate BETWEEN ", start, end));
-        compoField.addField(new BetweenValuesSearchField("", "m_prj_task.enddate BETWEEN ", start, end));
-        searchCriteria.addExtraField(compoField);
+        RangeDateSearchField dateRange = new RangeDateSearchField(start, end);
+        searchCriteria.addExtraField(dateRange);
 
-        ProjectTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-        List<SimpleTask> assignments = genericTaskService.findPagableListByCriteria(new SearchRequest<>
+        ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
+        List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new SearchRequest<>
                 (searchCriteria, 0, Integer.MAX_VALUE));
-        for (SimpleTask assignment : assignments) {
-            totalBillableHours += assignment.getBillableHours();
-            totalNonBillableHours += assignment.getNonBillableHours();
-            if (AppContext.getUsername().equals(assignment.getAssignuser())) {
+        for (ProjectGenericTask assignment : assignments) {
+            totalBillableHours += MoreObjects.firstNonNull(assignment.getBillableHours(), 0d);
+            totalNonBillableHours += MoreObjects.firstNonNull(assignment.getNonBillableHours(), 0d);
+            if (AppContext.getUsername().equals(assignment.getAssignUser())) {
                 assignMeNum += 1;
-            } else if (assignment.getAssignuser() == null) {
+            } else if (assignment.getAssignUser() == null) {
                 notAssignNum += 1;
             } else {
                 assignOthersNum += 1;
             }
-            addEvent(new GenericTaskEvent(assignment));
+            addEvent(new GenericAssignmentEvent(assignment));
         }
         fireEventSetChange();
     }

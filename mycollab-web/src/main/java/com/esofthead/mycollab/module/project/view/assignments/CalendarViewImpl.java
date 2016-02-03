@@ -64,8 +64,8 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             Integer taskId = (Integer) event.getData();
             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = taskService.findById(taskId, AppContext.getAccountId());
-            GenericTaskEvent taskEvent = new GenericTaskEvent(task);
-            GenericTaskProvider provider = (GenericTaskProvider) calendar.getEventProvider();
+            GenericAssignmentEvent taskEvent = new GenericAssignmentEvent(null);
+            GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             if (provider.containsEvent(taskEvent)) {
                 provider.removeEvent(taskEvent);
                 provider.addEvent(taskEvent);
@@ -105,9 +105,9 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                    SimpleTask task = calendarEvent.getAssignment();
-                    UI.getCurrent().addWindow(new TaskAddWindow(task));
+                    GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+//                    SimpleTask task = calendarEvent.getAssignment();
+//                    UI.getCurrent().addWindow(new TaskAddWindow(task));
                 }
             }
         });
@@ -130,10 +130,10 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             public void eventMove(CalendarComponentEvents.MoveEvent event) {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     super.eventMove(event);
-                    GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                    SimpleTask task = calendarEvent.getAssignment();
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                    taskService.updateWithSession(task, AppContext.getUsername());
+                    GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+//                    SimpleTask task = calendarEvent.getAssignment();
+//                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+//                    taskService.updateWithSession(task, AppContext.getUsername());
                 }
             }
         });
@@ -143,10 +143,10 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             public void eventResize(CalendarComponentEvents.EventResize event) {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     super.eventResize(event);
-                    GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                    SimpleTask task = calendarEvent.getAssignment();
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                    taskService.updateWithSession(task, AppContext.getUsername());
+                    GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+//                    SimpleTask task = calendarEvent.getAssignment();
+//                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+//                    taskService.updateWithSession(task, AppContext.getUsername());
                 }
             }
         });
@@ -266,7 +266,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         calendar.setStartDate(firstDayOfMonth.toDate());
         calendar.setEndDate(lastDayOfMonth.toDate());
         headerLbl.setValue(baseDate.toString(MY_FORMATTER));
-        final GenericTaskProvider provider = new GenericTaskProvider();
+        final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
             public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {

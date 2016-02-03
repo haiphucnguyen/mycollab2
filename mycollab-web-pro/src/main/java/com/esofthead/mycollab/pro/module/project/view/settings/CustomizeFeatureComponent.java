@@ -93,12 +93,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.getDisplayrisk());
         rightColLayout.addComponent(displayRiskSelection);
 
-        final SelectionBox displayProblemSelection = new SelectionBox(
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROBLEM),
-                customizeView.getDisplayproblem());
-        rightColLayout.addComponent(displayProblemSelection);
-
         final SelectionBox displayTimeSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME),
                 AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
@@ -127,7 +121,6 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.setDisplaypage(displayPageSelection.getSelected());
                 customizeView.setDisplayfile(displayFileSelection.getSelected());
                 customizeView.setDisplayrisk(displayRiskSelection.getSelected());
-                customizeView.setDisplayproblem(displayProblemSelection.getSelected());
                 customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
                 customizeView.setDisplaystandup(displayStandupSelection.getSelected());
 

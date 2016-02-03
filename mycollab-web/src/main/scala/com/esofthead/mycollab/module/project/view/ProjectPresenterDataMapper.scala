@@ -6,7 +6,6 @@ import com.esofthead.mycollab.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter
 import com.esofthead.mycollab.module.project.view.page.PagePresenter
 import com.esofthead.mycollab.module.project.view.parameters._
-import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
 import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter
@@ -35,12 +34,6 @@ object ProjectPresenterDataMapper {
     classOf[PageScreenData.Add] -> classOf[PagePresenter],
     classOf[PageScreenData.Edit] -> classOf[PagePresenter],
     classOf[PageScreenData.Search] -> classOf[PagePresenter])
-
-  val problemMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
-    classOf[ProblemScreenData.Add] -> classOf[IProblemPresenter],
-    classOf[ProblemScreenData.Edit] -> classOf[IProblemPresenter],
-    classOf[ProblemScreenData.Read] -> classOf[IProblemPresenter],
-    classOf[ProblemScreenData.Search] -> classOf[IProblemPresenter])
 
   val riskMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
     classOf[RiskScreenData.Add] -> classOf[IRiskPresenter],
@@ -97,7 +90,7 @@ object ProjectPresenterDataMapper {
     classOf[ProjectScreenData.SearchItem] -> classOf[UserProjectDashboardPresenter],
     classOf[ProjectScreenData.Edit] -> classOf[UserProjectDashboardPresenter])
 
-  val allMapper = milestoneMapper ++ messageMapper ++ pageMapper ++ problemMapper ++ riskMapper ++ taskMapper ++
+  val allMapper = milestoneMapper ++ messageMapper ++ pageMapper  ++ riskMapper ++ taskMapper ++
     trackerMapper ++ standupMapper ++ userMapper ++ timeMapper ++ fileMapper ++ projectMapper
 
   def presenter(screenData: ScreenData[_]): Class[_ <: IPresenter[_]] = {

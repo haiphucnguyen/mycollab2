@@ -2,11 +2,9 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
@@ -46,10 +44,6 @@ class ProjectGenericTaskTooltipGenerator {
             RiskService service = ApplicationContextUtil.getSpringBean(RiskService.class);
             SimpleRisk risk = service.findById(typeid, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), risk, siteURL, timeZone);
-        } else if (ProjectTypeConstants.PROBLEM.equals(type)) {
-            ProblemService service = ApplicationContextUtil.getSpringBean(ProblemService.class);
-            SimpleProblem problem = service.findById(typeid, sAccountId);
-            html = ProjectTooltipGenerator.generateToolTipProblem(AppContext.getUserLocale(), problem, siteURL, timeZone);
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
             VersionService service = ApplicationContextUtil.getSpringBean(VersionService.class);
             SimpleVersion version = service.findById(typeid, sAccountId);

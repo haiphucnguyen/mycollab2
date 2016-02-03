@@ -275,14 +275,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                 myProjectTab.removeTab(ProjectTypeConstants.RISK);
             }
 
-            if (CurrentProjectVariables.hasProblemFeature()) {
-//                myProjectTab.addTab(constructProjectProblemComponent(), ProjectTypeConstants.PROBLEM, 9,
-//                        AppContext.getMessage(ProjectCommonI18nEnum.VIEW_PROBLEM),
-//                        GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateProblemsLink(prjId));
-            } else {
-                myProjectTab.removeTab(ProjectTypeConstants.PROBLEM);
-            }
-
             if (CurrentProjectVariables.hasTimeFeature()) {
                 myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.TIME, 10,
                         AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),

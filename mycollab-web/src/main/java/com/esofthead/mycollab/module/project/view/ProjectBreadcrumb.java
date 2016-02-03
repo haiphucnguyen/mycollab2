@@ -281,7 +281,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         buildPageBreadcrumbChain();
         this.addLink(new Button(AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE)));
         AppContext.addFragment(ProjectLinkGenerator.generatePageAdd(
-                        project.getId(), CurrentProjectVariables.getCurrentPagePath()),
+                project.getId(), CurrentProjectVariables.getCurrentPagePath()),
                 AppContext.getMessage(Page18InEnum.VIEW_NEW_TITLE));
     }
 
@@ -313,59 +313,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         @Override
         public void buttonClick(ClickEvent event) {
             EventBusFactory.getInstance().post(new PageEvent.GotoList(this, path));
-        }
-    }
-
-    public void gotoProblemList() {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.PROBLEMS)));
-        AppContext.addFragment(ProjectLinkGenerator.generateProblemsLink(project.getId()),
-                AppContext.getMessage(ProblemI18nEnum.VIEW_LIST_TITLE));
-    }
-
-    public void gotoProblemRead(Problem problem) {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.PROBLEMS), new GotoProblemListListener()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(problem.getIssuename()));
-        AppContext.addFragment(ProjectLinkGenerator.generateProblemPreviewLink(
-                project.getId(), problem.getId()), AppContext.getMessage(
-                BreadcrumbI18nEnum.FRA_PROBLEM_READ, problem.getIssuename()));
-    }
-
-    public void gotoProblemEdit(final Problem problem) {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.PROBLEMS), new GotoProblemListListener()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(generateBreadcrumbLink(problem.getIssuename(), new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBusFactory.getInstance().post(new ProblemEvent.GotoRead(this, problem.getId()));
-            }
-        }));
-        this.setLinkEnabled(true, 2);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT)));
-        AppContext.addFragment("project/problem/edit/" + UrlEncodeDecoder.encode(project.getId() + "/"
-                + problem.getId()), AppContext.getMessage(BreadcrumbI18nEnum.FRA_PROBLEM_EDIT, problem.getIssuename()));
-    }
-
-    public void gotoProblemAdd() {
-        this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.PROBLEMS), new GotoProblemListListener()));
-        this.setLinkEnabled(true, 1);
-        this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
-        AppContext.addFragment("project/problem/add/" + UrlEncodeDecoder.encode(project.getId()),
-                AppContext.getMessage(BreadcrumbI18nEnum.FRA_PROBLEM_NEW));
-    }
-
-    private static class GotoProblemListListener implements Button.ClickListener {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void buttonClick(ClickEvent event) {
-            EventBusFactory.getInstance().post(new ProblemEvent.GotoList(this, null));
         }
     }
 

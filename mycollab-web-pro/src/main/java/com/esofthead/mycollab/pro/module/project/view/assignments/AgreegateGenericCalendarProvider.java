@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.assignments.GenericTaskEvent;
+import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.ui.components.calendar.event.BasicEventProvider;
@@ -36,7 +36,7 @@ public class AgreegateGenericCalendarProvider extends BasicEventProvider {
             } else {
                 assignOthersNum += 1;
             }
-            addEvent(new GenericTaskEvent(assignment));
+//            addEvent(new GenericAssignmentEvent(assignment));
         }
         fireEventSetChange();
     }

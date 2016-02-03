@@ -255,17 +255,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             createRiskBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK));
             popupButtonsControl.addOption(createRiskBtn);
 
-            Button createProblemBtn = new Button(AppContext.getMessage(ProblemI18nEnum.BUTTON_NEW_PROBLEM), new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    controlsBtn.setPopupVisible(false);
-                    EventBusFactory.getInstance().post(new ProblemEvent.GotoAdd(this, null));
-                }
-            });
-            createProblemBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROBLEMS));
-            createProblemBtn.setIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROBLEM));
-            popupButtonsControl.addOption(createProblemBtn);
-
             popupButtonsControl.addSeparator();
             Button inviteMemberBtn = new Button(AppContext.getMessage(ProjectMemberI18nEnum.BUTTON_NEW_INVITEES), new
                     Button.ClickListener() {

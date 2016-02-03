@@ -17,7 +17,7 @@
 package com.esofthead.mycollab.module.project.view.assignments;
 
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
 
@@ -27,59 +27,60 @@ import java.util.Date;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-public class GenericTaskEvent extends BasicEvent {
-    private SimpleTask assignment;
+public class GenericAssignmentEvent extends BasicEvent {
+    private ProjectGenericTask assignment;
 
-    public GenericTaskEvent(SimpleTask assignment) {
+    public GenericAssignmentEvent(ProjectGenericTask assignment) {
         this.assignment = assignment;
-        this.setCaption(assignment.getTaskname());
-        this.setDescription(ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), assignment,
-                AppContext.getSiteUrl(), AppContext.getUserTimezone()));
+        this.setCaption(assignment.getName());
+        this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(AppContext.getUserLocale(), assignment.getType(),
+                assignment.getTypeId(), AppContext.getAccountId(), AppContext.getSiteUrl(), AppContext.getUserTimezone()));
         this.setAllDay(true);
 
-        if (AppContext.getUsername().equals(assignment.getAssignuser())) {
+        if (AppContext.getUsername().equals(assignment.getAssignUser())) {
             this.setStyleName("owner");
-        } else if (assignment.getAssignuser() == null) {
+        } else if (assignment.getAssignUser() == null) {
             this.setStyleName("nonowner");
         } else {
             this.setStyleName("otheruser");
         }
 
         // task has not start and end has both null
-        if (assignment.getStartdate() == null) {
-            assignment.setStartdate(assignment.getEnddate());
+        if (assignment.getStartDate() == null) {
+            assignment.setStartDate(assignment.getEndDate());
         }
-        if (assignment.getEnddate() == null) {
-            assignment.setEnddate(assignment.getStartdate());
+        if (assignment.getEndDate() == null) {
+            assignment.setEndDate(assignment.getStartDate());
         }
 
-        this.setStart(assignment.getStartdate());
-        this.setEnd(assignment.getEnddate());
+        this.setStart(assignment.getStartDate());
+        this.setEnd(assignment.getEndDate());
     }
 
-    public SimpleTask getAssignment() {
+    public ProjectGenericTask getAssignment() {
         return assignment;
     }
 
     @Override
     public void setStart(Date start) {
         super.setStart(start);
-        assignment.setStartdate(start);
+        assignment.setStartDate(start);
     }
 
     @Override
     public void setEnd(Date end) {
         super.setEnd(end);
-        assignment.setEnddate(end);
+        assignment.setEndDate(end);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof GenericTaskEvent)) return false;
+        if (!(o instanceof GenericAssignmentEvent)) return false;
 
-        GenericTaskEvent taskEvent = (GenericTaskEvent) o;
-        return (assignment.getId().intValue() == taskEvent.assignment.getId().intValue());
+        GenericAssignmentEvent assignmentEvent = (GenericAssignmentEvent) o;
+        return (assignment.getType().equals(assignmentEvent.assignment.getType())) &&
+                (assignment.getTypeId() == assignmentEvent.assignment.getTypeId());
 
     }
 

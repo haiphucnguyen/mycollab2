@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
-import com.esofthead.mycollab.module.project.view.assignments.GenericTaskEvent;
+import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
 import com.esofthead.mycollab.pro.module.project.view.assignments.AgreegateGenericCalendarProvider;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -64,14 +64,14 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             Integer taskId = (Integer) event.getData();
             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = taskService.findById(taskId, AppContext.getAccountId());
-            GenericTaskEvent taskEvent = new GenericTaskEvent(task);
-            AgreegateGenericCalendarProvider provider = (AgreegateGenericCalendarProvider) calendar.getEventProvider();
-            if (provider.containsEvent(taskEvent)) {
-                provider.removeEvent(taskEvent);
-                provider.addEvent(taskEvent);
-            } else {
-                provider.addEvent(taskEvent);
-            }
+//            GenericAssignmentEvent taskEvent = new GenericAssignmentEvent(task);
+//            AgreegateGenericCalendarProvider provider = (AgreegateGenericCalendarProvider) calendar.getEventProvider();
+//            if (provider.containsEvent(taskEvent)) {
+//                provider.removeEvent(taskEvent);
+//                provider.addEvent(taskEvent);
+//            } else {
+//                provider.addEvent(taskEvent);
+//            }
         }
     };
 
@@ -104,11 +104,11 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
-                GenericTaskEvent calendarEvent = (GenericTaskEvent) event.getCalendarEvent();
-                SimpleTask task = calendarEvent.getAssignment();
+                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+//                SimpleTask task = calendarEvent.getAssignment();
 //                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
-                String link = ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(), task.getProjectShortname());
-                Page.getCurrent().updateLocation(link, true);
+//                String link = ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(), task.getProjectShortname());
+//                Page.getCurrent().updateLocation(link, true);
             }
         });
 

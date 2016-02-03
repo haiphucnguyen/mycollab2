@@ -21,7 +21,6 @@ import com.esofthead.mycollab.module.project.view.page.PagePresenter
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData.Roadmap
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoDashboard
 import com.esofthead.mycollab.module.project.view.parameters._
-import com.esofthead.mycollab.module.project.view.problem.IProblemPresenter
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
 import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter
@@ -43,7 +42,6 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
   bindProjectEvents()
   bindTaskEvents()
   bindRiskEvents()
-  bindProblemEvents()
   bindBugEvents()
   bindMessageEvents()
   bindMilestoneEvents()
@@ -162,39 +160,6 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
         val presenter = PresenterResolver.getPresenter(classOf[IRiskPresenter])
         presenter.go(projectView, new RiskScreenData.Search(criteria))
-      }
-    })
-  }
-
-  private def bindProblemEvents(): Unit = {
-    this.register(new ApplicationEventListener[ProblemEvent.GotoAdd] {
-      @Subscribe def handle(event: ProblemEvent.GotoAdd) {
-        val data: ProblemScreenData.Add = new ProblemScreenData.Add(new Problem)
-        val presenter: IProblemPresenter = PresenterResolver.getPresenter(classOf[IProblemPresenter])
-        presenter.go(projectView, data)
-      }
-    })
-    this.register(new ApplicationEventListener[ProblemEvent.GotoRead] {
-      @Subscribe def handle(event: ProblemEvent.GotoRead) {
-        val data: ProblemScreenData.Read = new ProblemScreenData.Read(event.getData.asInstanceOf[Integer])
-        val presenter: IProblemPresenter = PresenterResolver.getPresenter(classOf[IProblemPresenter])
-        presenter.go(projectView, data)
-      }
-    })
-    this.register(new ApplicationEventListener[ProblemEvent.GotoList] {
-      @Subscribe def handle(event: ProblemEvent.GotoList) {
-        val criteria = new ProblemSearchCriteria
-        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
-        val data = new ProblemScreenData.Search(criteria)
-        val presenter = PresenterResolver.getPresenter(classOf[IProblemPresenter])
-        presenter.go(projectView, data)
-      }
-    })
-    this.register(new ApplicationEventListener[ProblemEvent.GotoEdit] {
-      @Subscribe def handle(event: ProblemEvent.GotoEdit) {
-        val data: ProblemScreenData.Edit = new ProblemScreenData.Edit(event.getData.asInstanceOf[Problem])
-        val presenter: IProblemPresenter = PresenterResolver.getPresenter(classOf[IProblemPresenter])
-        presenter.go(projectView, data)
       }
     })
   }

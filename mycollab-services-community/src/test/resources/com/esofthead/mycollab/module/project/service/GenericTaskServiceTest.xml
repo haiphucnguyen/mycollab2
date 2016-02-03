@@ -14,13 +14,6 @@
 	<s_user firstname="a2" lastname="b2" username="user2"
 		email="linhduong@esofthead.com" />
 
-	<m_prj_problem id="1" assigntouser="user1" description="aaa"
-		issuename="a" projectid="1" raisedbyuser="user2" problemsource="source"
-		status="Open" sAccountId="1" datedue="2015-01-23 10:49:49" />
-
-	<m_prj_problem id="2" description="aaa" issuename="problem a"
-		projectid="1" status="Open" sAccountId="1" datedue="2013-01-23 10:49:49" />
-
 	<m_prj_risk id="1" description="aaa" riskname="b" projectid="1"
 		sAccountId="1" datedue="2013-05-30 15:01:52" />
 
