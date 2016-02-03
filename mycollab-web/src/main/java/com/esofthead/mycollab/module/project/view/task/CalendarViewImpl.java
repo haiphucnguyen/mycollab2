@@ -21,6 +21,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.task.calendar.GenericTaskEvent;
@@ -231,7 +232,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoGanttChart(CalendarViewImpl.this, null));
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(CalendarViewImpl.this, null));
             }
         });
         chartDisplayBtn.setWidth("50px");

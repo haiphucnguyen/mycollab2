@@ -103,7 +103,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         MVerticalLayout headerLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, true));
 
         MHorizontalLayout footer = new MHorizontalLayout();
-        footer.setDefaultComponentAlignment(Alignment.TOP_LEFT);
+        footer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         footer.addStyleName(UIConstants.LABEL_META_INFO);
         if (project.getHomepage() != null) {
             ELabel homepageLbl = new ELabel(FontAwesome.WECHAT.getHtml() + " " + new A(project.getHomepage())
@@ -131,6 +131,27 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                 ContentMode.HTML).withDescription("Non billable hours").withStyleName(ValoTheme.LABEL_SMALL);
         footer.addComponent(nonBillableHoursLbl);
 
+        Button eventBtn = new Button("Calendar", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(this));
+            }
+        });
+        eventBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
+        eventBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        eventBtn.setIcon(FontAwesome.CALENDAR);
+        footer.addComponent(eventBtn);
+
+        Button ganttChartBtn = new Button("Gantt", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null));
+            }
+        });
+        ganttChartBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
+        ganttChartBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        ganttChartBtn.setIcon(FontAwesome.BAR_CHART_O);
+        footer.addComponent(ganttChartBtn);
 
         headerLayout.with(headerLbl, footer);
         this.with(headerLayout).expand(headerLayout);

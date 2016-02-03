@@ -17,13 +17,12 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -37,9 +36,8 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-            TaskContainer taskContainer = (TaskContainer) container;
-            taskContainer.navigateToContainer(ProjectTypeConstants.TASK);
+        if (CurrentProjectVariables.canReadAssignments()) {
+            ProjectDashboardContainer taskContainer = (ProjectDashboardContainer) container;
             taskContainer.removeAllComponents();
             taskContainer.addComponent(view.getWidget());
             view.removeAllComponents();

@@ -122,6 +122,11 @@ public class CurrentProjectVariables {
         }
     }
 
+    public static boolean canReadAssignments() {
+        return canRead(ProjectRolePermissionCollections.BUGS) || canRead(ProjectRolePermissionCollections.TASKS) ||
+                canRead(ProjectRolePermissionCollections.RISKS) || canRead(ProjectRolePermissionCollections.MILESTONES);
+    }
+
     public static boolean canWrite(String permissionItem) {
         if (isProjectArchived()) {
             return false;

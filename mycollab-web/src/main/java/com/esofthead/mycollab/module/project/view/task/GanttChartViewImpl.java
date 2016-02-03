@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
@@ -104,7 +105,7 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
         Button calendarBtn = new Button(null, new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoCalendarView(GanttChartViewImpl.this));
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(GanttChartViewImpl.this));
             }
         });
         calendarBtn.setWidth("50px");

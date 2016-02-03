@@ -387,10 +387,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoGanttView() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
-        this.setLinkEnabled(true, 1);
         this.addLink(new Button("Gantt chart"));
-        AppContext.addFragment("project/task/gantt/" + UrlEncodeDecoder.encode(project.getId()), "Gantt chart");
+        AppContext.addFragment("project/gantt/" + UrlEncodeDecoder.encode(project.getId()), "Gantt chart");
     }
 
     public void gotoTaskKanbanView() {
@@ -403,10 +401,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoCalendar() {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.TASKS), new GotoTaskAssignmentDashboard()));
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.CALENDAR)));
-        this.setLinkEnabled(true, 1);
-        AppContext.addFragment("project/task/calendar/" + UrlEncodeDecoder.encode(project.getId()), "Calendar");
+        AppContext.addFragment("project/calendar/" + UrlEncodeDecoder.encode(project.getId()), "Calendar");
     }
 
     public void gotoTaskRead(SimpleTask task) {

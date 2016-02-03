@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
@@ -166,11 +167,10 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
-            TaskContainer taskContainer = (TaskContainer) container;
-            taskContainer.navigateToContainer(ProjectTypeConstants.TASK);
-            taskContainer.removeAllComponents();
-            taskContainer.addComponent(view.getWidget());
+        if (CurrentProjectVariables.canReadAssignments()) {
+            ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
+            projectDashboardContainer.removeAllComponents();
+            projectDashboardContainer.addComponent(view.getWidget());
             view.lazyLoadView();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

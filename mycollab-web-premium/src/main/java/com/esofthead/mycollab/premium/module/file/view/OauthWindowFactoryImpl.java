@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.module.file.view;
 
 import com.esofthead.mycollab.core.UnsupportedFeatureException;
+import com.esofthead.mycollab.pro.module.file.view.OauthWindowFactory;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Window;
 
