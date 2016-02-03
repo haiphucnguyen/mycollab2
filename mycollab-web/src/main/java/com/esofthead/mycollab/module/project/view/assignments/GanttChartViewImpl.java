@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.assignments;
 
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.view.ProjectView;
-import com.esofthead.mycollab.module.project.view.task.gantt.GanttExt;
-import com.esofthead.mycollab.module.project.view.task.gantt.GanttTreeTable;
+import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttExt;
+import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttTreeTable;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;

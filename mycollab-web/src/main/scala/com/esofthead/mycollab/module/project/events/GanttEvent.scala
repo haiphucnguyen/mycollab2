@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.events
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent
 import com.esofthead.mycollab.module.project.domain.{AssignWithPredecessors, TaskPredecessor}
-import com.esofthead.mycollab.module.project.view.task.gantt.GanttItemWrapper
+import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttItemWrapper
 
 /**
  * @author MyCollab Ltd

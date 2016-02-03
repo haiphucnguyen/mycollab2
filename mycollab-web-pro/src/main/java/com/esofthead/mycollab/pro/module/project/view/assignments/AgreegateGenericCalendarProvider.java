@@ -1,10 +1,10 @@
-package com.esofthead.mycollab.pro.module.project.view.task;
+package com.esofthead.mycollab.pro.module.project.view.assignments;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.task.calendar.GenericTaskEvent;
+import com.esofthead.mycollab.module.project.view.assignments.GenericTaskEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.ui.components.calendar.event.BasicEventProvider;

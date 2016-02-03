@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.assignments;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -37,9 +37,9 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (CurrentProjectVariables.canReadAssignments()) {
-            ProjectDashboardContainer taskContainer = (ProjectDashboardContainer) container;
-            taskContainer.removeAllComponents();
-            taskContainer.addComponent(view.getWidget());
+            ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
+            projectDashboardContainer.removeAllComponents();
+            projectDashboardContainer.addComponent(view.getWidget());
             view.removeAllComponents();
             view.display();
 
