@@ -13,55 +13,49 @@ import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public class ProblemPresenter extends AbstractPresenter<IProblemContainer>
-		implements IProblemPresenter {
+        implements IProblemPresenter {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ProblemPresenter() {
-		super(IProblemContainer.class);
-	}
+    public ProblemPresenter() {
+        super(IProblemContainer.class);
+    }
 
-	@Override
-	public void go(ComponentContainer container, ScreenData<?> data) {
-		super.go(container, data, false);
-	}
+    @Override
+    public void go(ComponentContainer container, ScreenData<?> data) {
+        super.go(container, data, false);
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView(ProjectTypeConstants.PROBLEM);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView(ProjectTypeConstants.PROBLEM);
+        view.removeAllComponents();
 
-		view.removeAllComponents();
+        AbstractPresenter presenter;
 
-		AbstractPresenter presenter;
+        if (data instanceof ProblemScreenData.Search) {
+            presenter = PresenterResolver.getPresenter(ProblemListPresenter.class);
+        } else if (data instanceof ProblemScreenData.Add || data instanceof ProblemScreenData.Edit) {
+            presenter = PresenterResolver.getPresenter(ProblemAddPresenter.class);
+        } else if (data instanceof ProblemScreenData.Read) {
+            presenter = PresenterResolver.getPresenter(ProblemReadPresenter.class);
+        } else {
+            throw new MyCollabException("Do not support screen data " + data);
+        }
 
-		if (data instanceof ProblemScreenData.Search) {
-			presenter = PresenterResolver.getPresenter(ProblemListPresenter.class);
-		} else if (data instanceof ProblemScreenData.Add || data instanceof ProblemScreenData.Edit) {
-			presenter = PresenterResolver.getPresenter(ProblemAddPresenter.class);
-		} else if (data instanceof ProblemScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(ProblemReadPresenter.class);
-		} else {
-			throw new MyCollabException("Do not support screen data " + data);
-		}
+        presenter.go(view, data);
+    }
 
-		presenter.go(view, data);
-	}
-
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void handleChain(ComponentContainer container,
-			PageActionChain pageActionChain) {
-		ScreenData pageAction = pageActionChain.pop();
-		onGo(container, pageAction);
-	}
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ScreenData pageAction = pageActionChain.pop();
+        onGo(container, pageAction);
+    }
 
 }

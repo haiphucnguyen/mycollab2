@@ -27,7 +27,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd.
  * @since 4.4.0
  */
-
 public class CustomizeFeatureComponent extends BlockWidget {
     private static final long serialVersionUID = 1L;
 

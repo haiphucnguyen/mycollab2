@@ -10,27 +10,25 @@ import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
  * @author MyCollab Ltd
  * @since 2.0
- * 
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingListView> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public TimeTrackingListPresenter() {
-		super(TimeTrackingListView.class);
-	}
+    public TimeTrackingListPresenter() {
+        super(TimeTrackingListView.class);
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		TimeTrackingContainer timeContainer = (TimeTrackingContainer) container;
-		timeContainer.removeAllComponents();
-		timeContainer.addComponent(view.getWidget());
-		view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        TimeTrackingContainer timeContainer = (TimeTrackingContainer) container;
+        timeContainer.removeAllComponents();
+        timeContainer.addComponent(view.getWidget());
+        view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
-		ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-		breadCrumb.gotoTimeTrackingList();
-	}
+        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+        breadCrumb.gotoTimeTrackingList();
+    }
 }

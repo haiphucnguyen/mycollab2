@@ -31,15 +31,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1.2
- * 
  */
-
 @ViewComponent
 public class RiskListNoItemView extends ProjectListNoItemView {
-	private static final long serialVersionUID = -2154602282175183516L;
+    private static final long serialVersionUID = -2154602282175183516L;
 
     @Override
     protected FontAwesome viewIcon() {
@@ -66,8 +63,7 @@ public class RiskListNoItemView extends ProjectListNoItemView {
         return new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(
-                        new RiskEvent.GotoAdd(this, null));
+                EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
             }
         };
     }

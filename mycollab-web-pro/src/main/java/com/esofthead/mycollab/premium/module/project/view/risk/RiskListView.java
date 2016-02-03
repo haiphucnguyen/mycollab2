@@ -5,12 +5,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.vaadin.web.ui.IListView;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public interface RiskListView extends IListView<RiskSearchCriteria, SimpleRisk> {
 
-	public static final String VIEW_DEF_ID = "project-risk-list";
+    String VIEW_DEF_ID = "project-risk-list";
 }

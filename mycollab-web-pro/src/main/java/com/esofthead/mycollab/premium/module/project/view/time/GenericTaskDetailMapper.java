@@ -27,7 +27,6 @@ import java.util.TimeZone;
  * @since 4.0.0
  */
 public class GenericTaskDetailMapper {
-
     private String name;
 
     public GenericTaskDetailMapper(String type, int typeId) {

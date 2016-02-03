@@ -4,11 +4,9 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public interface StandupListView extends PageView {
-	void setSearchCriteria(StandupReportSearchCriteria searchCriteria);
+    void setSearchCriteria(StandupReportSearchCriteria searchCriteria);
 }

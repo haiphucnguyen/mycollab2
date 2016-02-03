@@ -31,15 +31,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1.2
- * 
  */
-
 @ViewComponent
 public class ProblemListNoItemView extends ProjectListNoItemView {
-	private static final long serialVersionUID = -5309904764815118311L;
+    private static final long serialVersionUID = -5309904764815118311L;
 
     @Override
     protected FontAwesome viewIcon() {

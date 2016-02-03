@@ -12,33 +12,31 @@ import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
  * @author MyCollab Ltd
  * @since 2.0
- *
  */
 public class TimeTrackingPresenter extends AbstractPresenter<ITimeTrackingContainer> implements ITimeTrackingPresenter {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public TimeTrackingPresenter() {
-		super(ITimeTrackingContainer.class);
-	}
+    public TimeTrackingPresenter() {
+        super(ITimeTrackingContainer.class);
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView(ProjectTypeConstants.TIME);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView(ProjectTypeConstants.TIME);
 
-		view.removeAllComponents();
-		AbstractPresenter presenter;
+        view.removeAllComponents();
+        AbstractPresenter presenter;
 
-		if (data instanceof TimeTrackingScreenData.Search) {
-			presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
-		} else {
-			throw new MyCollabException("No support screen data " + data);
-		}
+        if (data instanceof TimeTrackingScreenData.Search) {
+            presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
+        } else {
+            throw new MyCollabException("No support screen data " + data);
+        }
 
-		presenter.go(view, data);
-	}
+        presenter.go(view, data);
+    }
 }

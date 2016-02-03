@@ -5,12 +5,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.vaadin.web.ui.IListView;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public interface ProblemListView extends IListView<ProblemSearchCriteria, SimpleProblem> {
 
-	String VIEW_DEF_ID = "project-problem-list";
+    String VIEW_DEF_ID = "project-problem-list";
 }

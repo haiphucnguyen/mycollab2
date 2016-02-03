@@ -29,6 +29,8 @@ import com.vaadin.ui.Label;
 public class SettingViewImpl extends AbstractPageView implements SettingView {
     @Override
     public void display() {
+        removeAllComponents();
+
         this.addComponent(new Label("AAA"));
     }
 }

@@ -5,12 +5,10 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 public interface RiskReadView extends IPreviewView<SimpleRisk> {
 
-	HasPreviewFormHandlers<SimpleRisk> getPreviewFormHandlers();
+    HasPreviewFormHandlers<SimpleRisk> getPreviewFormHandlers();
 }

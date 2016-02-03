@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberListSelect;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.web.ui.DynamicQueryParamLayout;
 import com.esofthead.mycollab.vaadin.web.ui.ShortcutExtension;
@@ -48,15 +48,14 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
     @Override
     protected void buildExtraControls() {
-        Button createBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK),
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+        Button createBtn = new Button(AppContext.getMessage(RiskI18nEnum.BUTTON_NEW_RISK), new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
-                    }
-                });
+            @Override
+            public void buttonClick(final ClickEvent event) {
+                EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
+            }
+        });
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
@@ -112,7 +111,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    RiskBasicSearchLayout.this.callSearchAction();
+                    callSearchAction();
                 }
             });
             basicSearchBody.with(searchBtn).withAlign(searchBtn, Alignment.MIDDLE_LEFT);
@@ -124,7 +123,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    RiskBasicSearchLayout.this.nameField.setValue("");
+                    nameField.setValue("");
                 }
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
@@ -134,7 +133,7 @@ public class RiskSearchPanel extends DefaultGenericSearchPanel<RiskSearchCriteri
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                    RiskSearchPanel.this.moveToAdvancedSearchLayout();
+                    moveToAdvancedSearchLayout();
                 }
             });
             advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
