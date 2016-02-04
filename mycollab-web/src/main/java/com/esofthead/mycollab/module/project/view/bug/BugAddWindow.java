@@ -22,6 +22,7 @@ import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.i18n.BugI18nEnum;
 import com.esofthead.mycollab.module.project.ui.components.ProjectSubscribersComp;
@@ -49,7 +50,7 @@ import java.util.List;
  * @since 5.2.0
  */
 public class BugAddWindow extends Window {
-    BugAddWindow(SimpleBug bug) {
+    public BugAddWindow(SimpleBug bug) {
         if (bug.getId() == null) {
             setCaption("New bug");
         } else {
@@ -94,7 +95,7 @@ public class BugAddWindow extends Window {
                 Button updateAllBtn = new Button("Update other fields", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        EventBusFactory.getInstance().post(new BugEvent.GotoAdd(BugAddWindow.this, EditForm.this.bean));
+                        EventBusFactory.getInstance().post(new BugEvent.GotoAdd(BugAddWindow.this, bean));
                         close();
                     }
                 });
@@ -117,6 +118,8 @@ public class BugAddWindow extends Window {
                             uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(),
                                     ProjectTypeConstants.BUG, bugId);
                             EventBusFactory.getInstance().post(new BugEvent.NewBugAdded(BugAddWindow.this, bugId));
+                            EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(BugAddWindow.this,
+                                    ProjectTypeConstants.BUG, bugId));
                             ProjectSubscribersComp subcribersComp = ((BugEditFormFieldFactory) fieldFactory).getSubcribersComp();
                             List<String> followers = subcribersComp.getFollowers();
                             if (followers.size() > 0) {

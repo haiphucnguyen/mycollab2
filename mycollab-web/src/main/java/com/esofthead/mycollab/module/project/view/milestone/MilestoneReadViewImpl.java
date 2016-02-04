@@ -45,7 +45,10 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
@@ -170,12 +173,7 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
             } else if (Milestone.Field.enddate.equalTo(propertyId)) {
                 return new DateViewField(milestone.getEnddate());
             } else if (Milestone.Field.owner.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(milestone.getOwner(),
-                        milestone.getOwnerAvatarId(), milestone.getOwnerFullName());
-            } else if (Milestone.Field.actualstartdate.equalTo(propertyId)) {
-                return new DateViewField(milestone.getActualstartdate());
-            } else if (Milestone.Field.actualenddate.equalTo(propertyId)) {
-                return new DateViewField(milestone.getActualenddate());
+                return new ProjectUserFormLinkField(milestone.getOwner(), milestone.getOwnerAvatarId(), milestone.getOwnerFullName());
             } else if (Milestone.Field.description.equalTo(propertyId)) {
                 return new RichTextViewField(milestone.getDescription());
             } else if (Milestone.Field.status.equalTo(propertyId)) {

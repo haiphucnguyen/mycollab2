@@ -62,6 +62,14 @@ public class ProjectGenericTask implements Serializable {
 
     private Integer sAccountId;
 
+    private Double billableHours;
+
+    private Double nonBillableHours;
+
+    private Date startDate;
+
+    private Date endDate;
+
     public String getName() {
         return name;
     }
@@ -209,5 +217,37 @@ public class ProjectGenericTask implements Serializable {
     public Date getDueDatePlusOne() {
         Date value = getDueDate();
         return (value != null) ? DateTimeUtils.subtractOrAddDayDuration(value, 1) : null;
+    }
+
+    public Double getBillableHours() {
+        return billableHours;
+    }
+
+    public void setBillableHours(Double billableHours) {
+        this.billableHours = billableHours;
+    }
+
+    public Double getNonBillableHours() {
+        return nonBillableHours;
+    }
+
+    public void setNonBillableHours(Double nonBillableHours) {
+        this.nonBillableHours = nonBillableHours;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

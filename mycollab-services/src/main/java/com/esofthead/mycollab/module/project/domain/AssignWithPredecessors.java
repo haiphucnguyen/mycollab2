@@ -28,8 +28,6 @@ import java.util.List;
 public abstract class AssignWithPredecessors {
     private Date startDate;
     private Date endDate;
-    private Date actualStartDate;
-    private Date actualEndDate;
     private Date deadline;
     private String projectName;
     private String name;
@@ -66,22 +64,6 @@ public abstract class AssignWithPredecessors {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Date getActualStartDate() {
-        return actualStartDate;
-    }
-
-    public void setActualStartDate(Date actualStartDate) {
-        this.actualStartDate = actualStartDate;
-    }
-
-    public Date getActualEndDate() {
-        return actualEndDate;
-    }
-
-    public void setActualEndDate(Date actualEndDate) {
-        this.actualEndDate = actualEndDate;
     }
 
     public Date getDeadline() {

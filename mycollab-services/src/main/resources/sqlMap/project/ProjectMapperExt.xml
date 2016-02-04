@@ -110,8 +110,8 @@
         SELECT m_prj_project.id, m_prj_project.name, m_prj_project.createUser, m_prj_project.account,
         m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
         m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
-        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
-        m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, m_prj_project.sAccountId,
+        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate,
+        m_prj_project.defaultOvertimeBillingRate, m_prj_project.sAccountId,
         m_prj_project.createdtime, m_prj_project.lastUpdatedTime, m_prj_project.contextAsk,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS createUserFullName,
         m_crm_account.accountName, m_prj_project.currencyid, m_prj_project.progress,
@@ -389,29 +389,6 @@
         UNION
         (
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, null AS itemKey,
-               s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, m_prj_problem.issuename AS nameField, s_activitystream.extraTypeId,
-               s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
-               s_user.avatarId AS createdUserAvatarId,
-               s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName,
-               NULL AS log_id, NULL AS log_object_class, NULL AS log_posteddate, NULL AS log_posteduser, 
-               NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
-               s_activitystream.nameField AS log_changeset
-        FROM s_activitystream
-        INNER JOIN m_prj_problem ON (s_activitystream.typeid=m_prj_problem.id)
-        LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
-        LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
-        LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
-        #ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-                <include refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-                AND s_activitystream.type = 'Project-Problem'
-                AND s_activitystream.action = 'comment'
-            #end
-        #end
-        )
-        UNION
-        (
-        SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, null AS itemKey,
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, NULL AS nameField, s_activitystream.extraTypeId,
                s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
                s_user.avatarId AS createdUserAvatarId,
@@ -567,28 +544,6 @@
             LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
             LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
             JOIN m_prj_risk ON (s_relay_email_notification.type="Project-Risk" AND m_prj_risk.id=s_relay_email_notification.typeid))
-
-        UNION
-        (SELECT
-        s_relay_email_notification.id,
-        s_relay_email_notification.sAccountId,
-        s_relay_email_notification.type,
-        s_relay_email_notification.typeid,
-        s_relay_email_notification.action,
-        s_relay_email_notification.extraTypeId,
-        s_relay_email_notification.changeby,
-        s_relay_email_notification.changeComment,
-        m_prj_problem.projectid AS projectId,
-        concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename, '')), changeUser.lastname) as changeByUserFullName,
-        notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
-        notifier.username AS notifiers_username, notifier.timezone AS notifiers_timezone,
-        notifier.email AS notifiers_email, notifier.language AS notifiers_language, s_relay_email_notification.sAccountId AS notifiers_accountId
-        FROM s_relay_email_notification
-            LEFT OUTER JOIN s_user AS changeUser ON (changeUser.username=s_relay_email_notification.changeby)
-            LEFT OUTER JOIN m_monitor_item ON (m_monitor_item.typeid=s_relay_email_notification.typeid AND s_relay_email_notification.type=m_monitor_item.type)
-            LEFT OUTER JOIN s_user AS notifier ON (m_monitor_item.user=notifier.username)
-            JOIN m_prj_problem ON (s_relay_email_notification.type="Project-Problem" AND m_prj_problem.id=s_relay_email_notification.typeid))
-            
         UNION
         (SELECT s_relay_email_notification.id,
         s_relay_email_notification.sAccountId,
