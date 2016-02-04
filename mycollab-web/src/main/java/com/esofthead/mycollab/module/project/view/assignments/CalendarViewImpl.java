@@ -20,11 +20,19 @@ import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -99,15 +107,32 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
     @Override
     public void display() {
         calendar = new Calendar();
+        calendar.setEventCaptionAsHtml(true);
         calendar.addStyleName("assignment-calendar");
         calendar.setSizeFull();
         calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-//                    SimpleTask task = calendarEvent.getAssignment();
-//                    UI.getCurrent().addWindow(new TaskAddWindow(task));
+                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+                ProjectGenericTask assignment = calendarEvent.getAssignment();
+                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new TaskAddWindow(task));
+                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new BugAddWindow(bug));
+                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+
                 }
             }
         });

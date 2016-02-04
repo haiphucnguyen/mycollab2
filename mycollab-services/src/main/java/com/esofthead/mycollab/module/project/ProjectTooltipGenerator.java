@@ -28,7 +28,9 @@ import com.esofthead.mycollab.module.page.domain.Page;
 import com.esofthead.mycollab.module.project.domain.*;
 import com.esofthead.mycollab.module.project.i18n.*;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum.*;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -77,6 +79,14 @@ public class ProjectTooltipGenerator {
             ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
             SimpleTask task = taskService.findById(typeId, sAccountId);
             return generateToolTipTask(locale, task, siteUrl, timeZone);
+        } else if (ProjectTypeConstants.MILESTONE.equals(type)) {
+            MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+            SimpleMilestone milestone = milestoneService.findById(typeId, sAccountId);
+            return generateToolTipMilestone(locale, milestone, siteUrl, timeZone);
+        } else if (ProjectTypeConstants.RISK.equals(type)) {
+            RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+            SimpleRisk risk = riskService.findById(typeId, sAccountId);
+            return generateToolTipRisk(locale, risk, siteUrl, timeZone);
         } else {
             return "";
         }

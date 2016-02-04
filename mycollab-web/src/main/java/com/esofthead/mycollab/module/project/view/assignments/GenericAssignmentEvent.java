@@ -18,7 +18,9 @@ package com.esofthead.mycollab.module.project.view.assignments;
 
 import com.esofthead.mycollab.module.project.ProjectTooltipGenerator;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.components.calendar.event.BasicEvent;
 
 import java.util.Date;
@@ -32,7 +34,8 @@ public class GenericAssignmentEvent extends BasicEvent {
 
     public GenericAssignmentEvent(ProjectGenericTask assignment) {
         this.assignment = assignment;
-        this.setCaption(assignment.getName());
+        FontAwesome icon = ProjectAssetsManager.getAsset(assignment.getType());
+        this.setCaption(icon.getHtml() + " " + assignment.getName());
         this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(AppContext.getUserLocale(), assignment.getType(),
                 assignment.getTypeId(), AppContext.getAccountId(), AppContext.getSiteUrl(), AppContext.getUserTimezone()));
         this.setAllDay(true);
