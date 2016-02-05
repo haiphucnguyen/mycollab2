@@ -243,49 +243,41 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
         titleWrapper.addComponent(headerLbl);
 
-        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
+        Button dailyBtn = new Button("Daily", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(CalendarViewImpl.this, null));
+
             }
         });
-        advanceDisplayBtn.setWidth("50px");
-        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
-        advanceDisplayBtn.setDescription("Advance View");
+        dailyBtn.setWidth("80px");
 
-        Button calendarBtn = new Button();
-        calendarBtn.setWidth("50px");
-        calendarBtn.setDescription("Calendar View");
-        calendarBtn.setIcon(FontAwesome.CALENDAR);
-
-        Button chartDisplayBtn = new Button(null, new Button.ClickListener() {
+        Button weeklyBtn = new Button("Weekly", new Button.ClickListener() {
             private static final long serialVersionUID = -5707546605789537298L;
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(CalendarViewImpl.this, null));
+                LocalDate now = new LocalDate();
+                LocalDate firstOfWeek = now.dayOfWeek().withMinimumValue();
+                LocalDate lastOfWeek = now.dayOfWeek().withMaximumValue();
+                calendar.setStartDate(firstOfWeek.toDate());
+                calendar.setEndDate(lastOfWeek.toDate());
             }
         });
-        chartDisplayBtn.setWidth("50px");
-        chartDisplayBtn.setDescription("Display Gantt chart");
-        chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
+        weeklyBtn.setWidth("80px");
 
-        Button kanbanBtn = new Button(null, new Button.ClickListener() {
+        Button monthlyBtn = new Button("Monthly", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(CalendarViewImpl.this, null));
+
             }
         });
-        kanbanBtn.setWidth("50px");
-        kanbanBtn.setDescription("Kanban View");
-        kanbanBtn.setIcon(FontAwesome.TH);
+        monthlyBtn.setWidth("80px");
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
-        viewButtons.addButton(advanceDisplayBtn);
-        viewButtons.addButton(calendarBtn);
-        viewButtons.addButton(kanbanBtn);
-        viewButtons.addButton(chartDisplayBtn);
-        viewButtons.setDefaultButton(calendarBtn);
+        viewButtons.addButton(dailyBtn);
+        viewButtons.addButton(monthlyBtn);
+        viewButtons.addButton(weeklyBtn);
+        viewButtons.setDefaultButton(dailyBtn);
 
         header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign(viewButtons,
                 Alignment.MIDDLE_RIGHT);

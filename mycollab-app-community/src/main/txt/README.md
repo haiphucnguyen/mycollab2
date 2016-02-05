@@ -40,6 +40,22 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.7
+-----------------------------
+**Library Upgrades**
+
+* Vaadin 7.6.2
+* Other libraries
+
+**Improvements & New Features**
+
+* Support calendar event types are issues, risks, milestones
+* Display issues, risks in Gantt chart besides tasks, milestones as well
+
+**Bug Fixes**
+
+* [Mobile] Throws silent exception when display the empty activities in account
+
 Version 5.2.6
 -----------------------------
 **Library Upgrades**
