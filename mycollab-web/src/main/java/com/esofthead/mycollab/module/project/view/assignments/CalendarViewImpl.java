@@ -28,8 +28,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -99,6 +97,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
     private Label headerLbl, billableHoursLbl, nonBillableHoursLbl, assignMeLbl, assignOtherLbl, nonAssigneeLbl;
     private Calendar calendar;
     private LocalDate baseDate;
+    private CalendarMode mode = CalendarMode.MONTHLY;
 
     public CalendarViewImpl() {
         this.withMargin(true).withSpacing(true);
@@ -208,7 +207,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 baseDate = new LocalDate();
-                displayMonthView();
+                displayCalendarView();
             }
         });
         todayBtn.setStyleName(UIConstants.BUTTON_ACTION);
@@ -216,8 +215,14 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         Button previousBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = baseDate.minusMonths(1);
-                displayMonthView();
+                if (mode == CalendarMode.DAILY) {
+                    baseDate = baseDate.minusDays(1);
+                } else if (mode == CalendarMode.WEEKLY) {
+                    baseDate = baseDate.minusWeeks(1);
+                } else {
+                    baseDate = baseDate.minusMonths(1);
+                }
+                displayCalendarView();
             }
         });
         previousBtn.setStyleName(UIConstants.BUTTON_ACTION);
@@ -227,8 +232,14 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         Button nextBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                baseDate = baseDate.plusMonths(1);
-                displayMonthView();
+                if (mode == CalendarMode.DAILY) {
+                    baseDate = baseDate.plusDays(1);
+                } else if (mode == CalendarMode.WEEKLY) {
+                    baseDate = baseDate.plusWeeks(1);
+                } else {
+                    baseDate = baseDate.plusMonths(1);
+                }
+                displayCalendarView();
             }
         });
         nextBtn.setStyleName(UIConstants.BUTTON_ACTION);
@@ -246,7 +257,8 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         Button dailyBtn = new Button("Daily", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
+                baseDate = new LocalDate();
+                displayDayView();
             }
         });
         dailyBtn.setWidth("80px");
@@ -256,11 +268,8 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                LocalDate now = new LocalDate();
-                LocalDate firstOfWeek = now.dayOfWeek().withMinimumValue();
-                LocalDate lastOfWeek = now.dayOfWeek().withMaximumValue();
-                calendar.setStartDate(firstOfWeek.toDate());
-                calendar.setEndDate(lastOfWeek.toDate());
+                baseDate = new LocalDate();
+                displayWeekView();
             }
         });
         weeklyBtn.setWidth("80px");
@@ -268,27 +277,36 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         Button monthlyBtn = new Button("Monthly", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
+                baseDate = new LocalDate();
+                displayMonthView();
             }
         });
         monthlyBtn.setWidth("80px");
 
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(dailyBtn);
-        viewButtons.addButton(monthlyBtn);
         viewButtons.addButton(weeklyBtn);
-        viewButtons.setDefaultButton(dailyBtn);
+        viewButtons.addButton(monthlyBtn);
+        viewButtons.setDefaultButton(monthlyBtn);
 
         header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign(viewButtons,
                 Alignment.MIDDLE_RIGHT);
         return header;
     }
 
-    private void displayMonthView() {
-        LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
-        LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
-        calendar.setStartDate(firstDayOfMonth.toDate());
-        calendar.setEndDate(lastDayOfMonth.toDate());
+    private void displayCalendarView() {
+        if (mode == CalendarMode.DAILY) {
+            displayDayView();
+        } else if (mode == CalendarMode.WEEKLY) {
+            displayWeekView();
+        } else {
+            displayMonthView();
+        }
+    }
+
+    private void displayCalendarView(LocalDate start, LocalDate end) {
+        calendar.setStartDate(start.toDate());
+        calendar.setEndDate(end.toDate());
         headerLbl.setValue(baseDate.toString(MY_FORMATTER));
         final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
@@ -303,7 +321,26 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                         .getTotalNonBillableHours());
             }
         });
-        provider.loadEvents(firstDayOfMonth.toDate(), lastDayOfMonth.toDate());
+        provider.loadEvents(start.toDate(), end.toDate());
         calendar.setEventProvider(provider);
+    }
+
+    private void displayDayView() {
+        mode = CalendarMode.DAILY;
+        displayCalendarView(baseDate, baseDate);
+    }
+
+    private void displayWeekView() {
+        mode = CalendarMode.WEEKLY;
+        LocalDate firstDayOfWeek = baseDate.dayOfWeek().withMinimumValue();
+        LocalDate lastDayOfWeek = baseDate.dayOfWeek().withMaximumValue();
+        displayCalendarView(firstDayOfWeek, lastDayOfWeek);
+    }
+
+    private void displayMonthView() {
+        mode = CalendarMode.MONTHLY;
+        LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
+        LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
+        displayCalendarView(firstDayOfMonth, lastDayOfMonth);
     }
 }
