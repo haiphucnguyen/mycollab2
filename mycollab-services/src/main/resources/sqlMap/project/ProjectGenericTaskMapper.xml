@@ -72,6 +72,13 @@
                 @{type}
             #end
         #end
+
+        #ifnotnull($searchCriteria.typeIds)
+            ${searchCriteria.typeIds.operation} m_prj_risk.id IN
+            #repeat(${searchCriteria.typeIds.values} $typeId "," "(" ")")
+                @{typeId}
+            #end
+        #end
         
         #ifnotnull($searchCriteria.dueDate)
             ${searchCriteria.dueDate.operation} CAST(m_prj_risk.datedue AS DATE ) ${searchCriteria.dueDate.comparison} @{searchCriteria.dueDate.value}
@@ -120,6 +127,13 @@
             ${searchCriteria.types.operation} "Project-Bug" IN
             #repeat(${searchCriteria.types.values} $type "," "(" ")")
                 @{type}
+            #end
+        #end
+
+        #ifnotnull($searchCriteria.typeIds)
+            ${searchCriteria.typeIds.operation} m_tracker_bug.id IN
+            #repeat(${searchCriteria.typeIds.values} $typeId "," "(" ")")
+                @{typeId}
             #end
         #end
         
@@ -172,6 +186,13 @@
                 @{type}
             #end
         #end
+
+        #ifnotnull($searchCriteria.typeIds)
+            ${searchCriteria.typeIds.operation} m_prj_task.id IN
+            #repeat(${searchCriteria.typeIds.values} $typeId "," "(" ")")
+                @{typeId}
+            #end
+        #end
         
         #ifnotnull($searchCriteria.dueDate) ${searchCriteria.dueDate.operation} CAST(m_prj_task.deadline AS DATE) ${searchCriteria.dueDate.comparison} @{searchCriteria.dueDate.value}
         #end
@@ -219,6 +240,13 @@
             ${searchCriteria.types.operation} "Project-Milestone" IN
             #repeat(${searchCriteria.types.values} $type "," "(" ")")
                 @{type}
+            #end
+        #end
+
+        #ifnotnull($searchCriteria.typeIds)
+            ${searchCriteria.typeIds.operation} m_prj_milestone.id IN
+            #repeat(${searchCriteria.typeIds.values} $typeId "," "(" ")")
+                @{typeId}
             #end
         #end
 

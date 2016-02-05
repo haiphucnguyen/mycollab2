@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view.assignments;
 
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -24,9 +26,12 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
@@ -57,6 +62,8 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.List;
+
 /**
  * @author MyCollab Ltd
  * @since 5.2.0
@@ -65,20 +72,26 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class CalendarViewImpl extends AbstractPageView implements CalendarView {
     private static final DateTimeFormatter MY_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
 
-    private ApplicationEventListener<TaskEvent.NewTaskAdded> taskChangeHandler = new ApplicationEventListener<TaskEvent.NewTaskAdded>() {
+    private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> assignmentChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
         @Override
         @Subscribe
-        public void handle(TaskEvent.NewTaskAdded event) {
-            Integer taskId = (Integer) event.getData();
-            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = taskService.findById(taskId, AppContext.getAccountId());
-            GenericAssignmentEvent taskEvent = new GenericAssignmentEvent(null);
-            GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
-            if (provider.containsEvent(taskEvent)) {
-                provider.removeEvent(taskEvent);
-                provider.addEvent(taskEvent);
-            } else {
-                provider.addEvent(taskEvent);
+        public void handle(AssignmentEvent.NewAssignmentAdd event) {
+            String type = event.getTypeVal();
+            Integer typeId = event.getTypeIdVal();
+            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+            searchCriteria.setTypeIds(new SetSearchField<>(typeId));
+            searchCriteria.setTypes(new SetSearchField<>(type));
+            ProjectGenericTaskService assignmentService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
+            List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+            for (ProjectGenericTask assignment : assignments) {
+                GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment);
+                GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
+                if (provider.containsEvent(assignmentEvent)) {
+                    provider.removeEvent(assignmentEvent);
+                    provider.addEvent(assignmentEvent);
+                } else {
+                    provider.addEvent(assignmentEvent);
+                }
             }
         }
     };
@@ -94,13 +107,13 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
 
     @Override
     public void attach() {
-        EventBusFactory.getInstance().register(taskChangeHandler);
+        EventBusFactory.getInstance().register(assignmentChangeHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
-        EventBusFactory.getInstance().unregister(taskChangeHandler);
+        EventBusFactory.getInstance().unregister(assignmentChangeHandler);
         super.detach();
     }
 
@@ -156,9 +169,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     super.eventMove(event);
                     GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-//                    SimpleTask task = calendarEvent.getAssignment();
-//                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-//                    taskService.updateWithSession(task, AppContext.getUsername());
+                    calendarEvent.updateAssociateEntity();
                 }
             }
         });
@@ -166,13 +177,9 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         calendar.setHandler(new BasicEventResizeHandler() {
             @Override
             public void eventResize(CalendarComponentEvents.EventResize event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    super.eventResize(event);
-                    GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-//                    SimpleTask task = calendarEvent.getAssignment();
-//                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-//                    taskService.updateWithSession(task, AppContext.getUsername());
-                }
+                super.eventResize(event);
+                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+                calendarEvent.updateAssociateEntity();
             }
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))

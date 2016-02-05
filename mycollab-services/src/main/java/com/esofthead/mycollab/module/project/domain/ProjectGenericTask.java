@@ -113,7 +113,7 @@ public class ProjectGenericTask implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public int getProjectId() {
+    public Integer getProjectId() {
         return projectId;
     }
 

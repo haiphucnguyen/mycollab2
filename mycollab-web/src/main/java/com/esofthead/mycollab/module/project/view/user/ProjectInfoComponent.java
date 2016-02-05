@@ -138,7 +138,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             }
         });
         eventBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-        eventBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        eventBtn.addStyleName(UIConstants.BUTTON_OPTION);
         eventBtn.setIcon(FontAwesome.CALENDAR);
         footer.addComponent(eventBtn);
 
@@ -149,7 +149,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             }
         });
         ganttChartBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-        ganttChartBtn.addStyleName(UIConstants.BUTTON_ACTION);
+        ganttChartBtn.addStyleName(UIConstants.BUTTON_OPTION);
         ganttChartBtn.setIcon(FontAwesome.BAR_CHART_O);
         footer.addComponent(ganttChartBtn);
 
