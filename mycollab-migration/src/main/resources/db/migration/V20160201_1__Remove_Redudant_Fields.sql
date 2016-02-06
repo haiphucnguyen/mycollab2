@@ -11,3 +11,13 @@ DROP COLUMN `actualstartdate`;
 ALTER TABLE `m_prj_task`
 DROP COLUMN `actualEndDate`,
 DROP COLUMN `actualStartDate`;
+ALTER TABLE `m_prj_risk`
+DROP COLUMN `prjKey`,
+ADD COLUMN `milestoneId` INT(11) NULL,
+ADD INDEX `FK_m_prj_risk1_5_idx` (`milestoneId` ASC);
+ALTER TABLE `m_prj_risk`
+ADD CONSTRAINT `FK_m_prj_risk1_5`
+  FOREIGN KEY (`milestoneId`)
+  REFERENCES `m_prj_milestone` (`id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;

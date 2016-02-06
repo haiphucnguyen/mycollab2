@@ -96,9 +96,9 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnExpandRatio("name", 1.0f);
         this.setHierarchyColumn("name");
         this.setColumnHeader("startDate", "Start");
-        this.setColumnWidth("startDate", 85);
+        this.setColumnWidth("startDate", 90);
         this.setColumnHeader("endDate", "End");
-        this.setColumnWidth("endDate", 85);
+        this.setColumnWidth("endDate", 90);
         this.setColumnHeader("duration", "Duration");
         this.setColumnWidth("duration", 65);
         this.setColumnHeader("predecessors", "Predecessors");
@@ -126,13 +126,8 @@ public class GanttTreeTable extends TreeTable {
                 Field field = null;
                 final GanttItemWrapper ganttItem = (GanttItemWrapper) itemId;
                 if ("name".equals(propertyId)) {
-                    if (ganttItem.isMilestone()) {
-                        field = new MilestoneNameCellField();
-                    } else {
-                        field = new TextField();
-                        ((TextField) field).setDescription(ganttItem.getName());
-                    }
-
+                    field = new AssignmentNameCellField(ganttItem.getType());
+                    ((AssignmentNameCellField)field).setDescription(ganttItem.getName());
                 } else if ("percentageComplete".equals(propertyId)) {
                     field = new TextField();
                     ((TextField) field).setNullRepresentation("0");
@@ -291,13 +286,13 @@ public class GanttTreeTable extends TreeTable {
             List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
             for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
                 GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
-                this.addTask(itemWrapper);
+                this.addAssignment(itemWrapper);
             }
 
             List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
             for (TaskGanttItem taskGanttItem : taskGanttItems) {
                 GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
-                this.addTask(itemWrapper);
+                this.addAssignment(itemWrapper);
             }
             this.updateWholeGanttIndexes();
         } else {
@@ -315,7 +310,7 @@ public class GanttTreeTable extends TreeTable {
         this.markAsDirtyRecursive();
     }
 
-    public void addTask(GanttItemWrapper itemWrapper) {
+    public void addAssignment(GanttItemWrapper itemWrapper) {
         int ganttIndex = beanContainer.size() + 1;
         if (itemWrapper.getGanttIndex() == null || ganttIndex != itemWrapper.getGanttIndex()) {
             itemWrapper.setGanttIndex(ganttIndex);

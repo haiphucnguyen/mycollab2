@@ -101,6 +101,10 @@ public class ProjectGenericTask implements Serializable {
         return ProjectTypeConstants.TASK.equals(getType());
     }
 
+    public boolean isRisk() {
+        return ProjectTypeConstants.RISK.equals(getType());
+    }
+
     public void setAssignUserFullName(String assignUserFullName) {
         this.assignUserFullName = assignUserFullName;
     }

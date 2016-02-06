@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
@@ -99,6 +100,8 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Ri
             tf.setRequired(true);
             tf.setRequiredError("Name must be not empty");
             return tf;
+        } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
+            return new MilestoneComboBox();
         }
 
         return null;

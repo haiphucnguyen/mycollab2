@@ -36,6 +36,7 @@ public enum RiskI18nEnum {
     FORM_DESCRIPTION,
     FORM_RAISED_BY,
     FORM_RELATED,
+    FORM_PHASE,
     FORM_DATE_DUE,
     FORM_STATUS,
     FORM_RESPONSE,

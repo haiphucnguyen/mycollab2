@@ -21,8 +21,10 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -118,6 +120,13 @@ public class ToogleGenericTaskSummaryField extends CssLayout {
                 task.setSaccountid(AppContext.getAccountId());
                 ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
                 taskService.updateSelectiveWithSession(task, AppContext.getUsername());
+            } else if (genericTask.isRisk()) {
+                Risk risk = new Risk();
+                risk.setId(genericTask.getTypeId());
+                risk.setRiskname(genericTask.getName());
+                risk.setSaccountid(AppContext.getAccountId());
+                RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                riskService.updateSelectiveWithSession(risk, AppContext.getUsername());
             }
         }
 

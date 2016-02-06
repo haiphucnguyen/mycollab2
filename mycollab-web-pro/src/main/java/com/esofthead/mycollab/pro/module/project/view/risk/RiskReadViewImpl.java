@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemCo
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
+import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
+import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;
@@ -148,6 +150,9 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                         risk.getAssignedToUserFullName());
             } else if (Risk.Field.response.equalTo(propertyId)) {
                 return new RichTextViewField(risk.getResponse());
+            } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
+                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "",
+                        risk.getMilestoneName());
             }
 
             return null;
