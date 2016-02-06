@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import com.esofthead.mycollab.core.IgnoreException;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -137,11 +138,24 @@ public class ToogleGenericTaskSummaryField extends CssLayout {
         Div issueDiv = new Div();
         String uid = UUID.randomUUID().toString();
         A taskLink = new A().setId("tag" + uid);
-        taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
-                genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
+        if (genericTask.isBug() || genericTask.isTask()) {
+            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+                    genericTask.getProjectId(), genericTask.getType(), genericTask.getExtraTypeId() + ""));
+        } else if (genericTask.isRisk()) {
+            taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
+                    genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
+        } else {
+            throw new IgnoreException("Not support type: " + genericTask.getType());
+        }
+
         taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, genericTask.getType(), genericTask.getTypeId() + ""));
         taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-        taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
+        if (genericTask.isBug() || genericTask.isTask()) {
+            taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
+        } else if (genericTask.isRisk()) {
+            taskLink.appendText(genericTask.getName());
+        }
+
         issueDiv.appendChild(taskLink);
 
         if (genericTask.isClosed()) {
@@ -151,7 +165,7 @@ public class ToogleGenericTaskSummaryField extends CssLayout {
             issueDiv.appendChild(new Span().setCSSClass(UIConstants.LABEL_META_INFO).appendText(" - Due in " + AppContext
                     .formatDuration(genericTask.getDueDate())));
         }
-        TooltipHelper.buildDivTooltipEnable(uid);
+        issueDiv.appendChild(TooltipHelper.buildDivTooltipEnable(uid));
         return issueDiv.write();
     }
 }

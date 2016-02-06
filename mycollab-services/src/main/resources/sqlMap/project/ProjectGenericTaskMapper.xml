@@ -28,8 +28,7 @@
     <resultMap id="BaseResultTaskCountMap"
         type="com.esofthead.mycollab.module.project.domain.ProjectGenericTaskCount">
         <result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
-        <result column="assignUserFullName" jdbcType="VARCHAR"
-            property="assignUserFullName" />
+        <result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
         <result column="projectId" jdbcType="INTEGER" property="projectId" />
         <result column="projectName" jdbcType="VARCHAR" property="projectName" />
         <result column="taskCount" jdbcType="INTEGER" property="taskCount" />
@@ -323,7 +322,6 @@
     <select id="getTotalCountFromRisk" parameterType="ProjectGenericTaskSearchCriteria"
         resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_risk
-
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
                 <include refid="queryRiskSearchCriteria" />
@@ -334,7 +332,6 @@
     <select id="getTotalCountFromBug" parameterType="ProjectGenericTaskSearchCriteria"
         resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_tracker_bug
-
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
                 <include refid="queryBugSearchCriteria" />
@@ -345,10 +342,8 @@
     <select id="getTotalCountFromTask" parameterType="ProjectGenericTaskSearchCriteria"
         resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_task
-
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
-
                 <include refid="queryTaskSearchCriteria" />
             #end
         #end
@@ -357,11 +352,10 @@
     <select id="getTotalCountFromMilestone" parameterType="ProjectGenericTaskSearchCriteria"
             resultType="int" lang="velocity">
         SELECT count(*) as totalCount FROM m_prj_milestone
-
         #ifnotnull($_parameter.searchCriteria)
-        #trimext("WHERE" "AND|OR")
-        <include refid="queryMilestoneSearchCriteria" />
-        #end
+            #trimext("WHERE" "AND|OR")
+                <include refid="queryMilestoneSearchCriteria" />
+            #end
         #end
     </select>
 
