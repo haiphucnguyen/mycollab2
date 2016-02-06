@@ -33,9 +33,9 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.HumanTimeConverter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.converter.LocalDateConverter;
 import com.google.common.eventbus.Subscribe;
@@ -89,7 +89,7 @@ public class GanttTreeTable extends TreeTable {
         beanContainer = gantt.getBeanContainer();
         this.setContainerDataSource(beanContainer);
         this.setVisibleColumns("ganttIndex", "name", "startDate", "endDate", "duration", "percentageComplete",
-                "predecessors", "assignUser", "actualStartDate", "actualEndDate");
+                "predecessors", "assignUser");
         this.setColumnHeader("ganttIndex", "");
         this.setColumnWidth("ganttIndex", 25);
         this.setColumnHeader("name", "Task");
@@ -103,17 +103,11 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnWidth("duration", 65);
         this.setColumnHeader("predecessors", "Predecessors");
         this.setColumnWidth("predecessors", 100);
-        this.setColumnHeader("actualStartDate", "Actual Start");
-        this.setColumnWidth("actualStartDate", 85);
-        this.setColumnHeader("actualEndDate", "Actual End");
-        this.setColumnWidth("actualEndDate", 85);
         this.setColumnHeader("percentageComplete", "% Complete");
         this.setColumnWidth("percentageComplete", 75);
         this.setColumnHeader("assignUser", "Assignee");
         this.setColumnWidth("assignUser", 80);
         this.setColumnCollapsingAllowed(true);
-        this.setColumnCollapsed("actualStartDate", true);
-        this.setColumnCollapsed("actualEndDate", true);
         this.setColumnCollapsed("assignUser", true);
         this.setEditable(true);
 
@@ -131,7 +125,7 @@ public class GanttTreeTable extends TreeTable {
             public Field<?> createField(Container container, Object itemId, final Object propertyId, Component uiContext) {
                 Field field = null;
                 final GanttItemWrapper ganttItem = (GanttItemWrapper) itemId;
-                if ("name" .equals(propertyId)) {
+                if ("name".equals(propertyId)) {
                     if (ganttItem.isMilestone()) {
                         field = new MilestoneNameCellField();
                     } else {
@@ -139,7 +133,7 @@ public class GanttTreeTable extends TreeTable {
                         ((TextField) field).setDescription(ganttItem.getName());
                     }
 
-                } else if ("percentageComplete" .equals(propertyId)) {
+                } else if ("percentageComplete".equals(propertyId)) {
                     field = new TextField();
                     ((TextField) field).setNullRepresentation("0");
                     ((TextField) field).setImmediate(true);
@@ -150,8 +144,7 @@ public class GanttTreeTable extends TreeTable {
                                 "is a summary value and can not be edited directly. You can edit cells " +
                                 "beneath this row to change its value");
                     }
-                } else if ("startDate" .equals(propertyId) || "endDate" .equals(propertyId) ||
-                        "actualStartDate" .equals(propertyId) || "actualEndDate" .equals(propertyId)) {
+                } else if ("startDate".equals(propertyId) || "endDate".equals(propertyId)) {
                     field = new DateField();
                     field.addStyleName(ValoTheme.DATEFIELD_SMALL);
                     ((DateField) field).setConverter(new LocalDateConverter());
@@ -162,13 +155,13 @@ public class GanttTreeTable extends TreeTable {
                                 "is a summary value and can not be edited directly. You can edit cells " +
                                 "beneath this row to change its value");
                     }
-                } else if ("assignUser" .equals(propertyId)) {
+                } else if ("assignUser".equals(propertyId)) {
                     field = new ProjectMemberSelectionField();
-                } else if ("predecessors" .equals(propertyId)) {
+                } else if ("predecessors".equals(propertyId)) {
                     field = new DefaultViewField("");
                     ((DefaultViewField) field).setConverter(new PredecessorConverter());
                     return field;
-                } else if ("duration" .equals(propertyId)) {
+                } else if ("duration".equals(propertyId)) {
                     field = new TextField();
                     ((TextField) field).setConverter(new HumanTimeConverter());
                     field.addStyleName(ValoTheme.TEXTFIELD_SMALL);

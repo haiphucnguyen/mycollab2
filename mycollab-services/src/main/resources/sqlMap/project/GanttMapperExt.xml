@@ -116,7 +116,7 @@
     <select id="selectTasksWithoutMilestone" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
         SELECT m_prj_task.projectid AS prjId, m_prj_task.taskname AS name, m_prj_task.assignUser,
         m_prj_task.startdate AS startDate, m_prj_task.enddate AS endDate, m_prj_task.status,
-        m_prj_task.id, m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.deadline,
+        m_prj_task.id, m_prj_task.deadline,
         concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS
         assignUserFullName, s_user.avatarId AS assignUserAvatarId, 'Project-Task' AS type, m_prj_task.ganttindex,
         m_prj_task.duration, m_prj_task.parentTaskId, m_prj_task.percentagecomplete AS progress,

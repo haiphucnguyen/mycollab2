@@ -54,8 +54,6 @@ public class TaskAddWindow extends Window {
         this.setResizable(false);
 
         EditForm editForm = new EditForm();
-        task.setLogby(AppContext.getUsername());
-        task.setSaccountid(AppContext.getAccountId());
         editForm.setBean(task);
         this.setContent(editForm);
     }
@@ -64,6 +62,8 @@ public class TaskAddWindow extends Window {
 
         @Override
         public void setBean(final SimpleTask item) {
+            item.setLogby(AppContext.getUsername());
+            item.setSaccountid(AppContext.getAccountId());
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setBeanFormFieldFactory(new TaskEditFormFieldFactory(this));
             super.setBean(item);

@@ -89,7 +89,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
             informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
             layout.addSection(AppContext.getMessage(ProjectI18nEnum.SECTION_PROJECT_INFO), informationLayout.getLayout());
 
-            financialLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 5);
+            financialLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
             layout.addSection(AppContext.getMessage(ProjectI18nEnum.SECTION_FINANCE_SCHEDULE), financialLayout.getLayout());
 
             descriptionLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 1);
@@ -115,18 +115,14 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
                 financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 0, 1);
             } else if (propertyId.equals("defaultbillingrate")) {
                 financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_BILLING_RATE), 1, 1);
-            } else if (propertyId.equals("actualstartdate")) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_START_DATE), 0, 2);
             } else if (Project.Field.defaultovertimebillingrate.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE), 1, 2);
-            } else if (propertyId.equals("actualenddate")) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_END_DATE), 0, 3);
+                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_OVERTIME_BILLING_RATE), 0, 2);
             } else if (Project.Field.targetbudget.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET), 1, 3);
+                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_TARGET_BUDGET), 1, 2);
             } else if (Project.Field.currencyid.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY), 0, 4);
+                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_CURRENCY), 0, 3);
             } else if (Project.Field.actualbudget.equalTo(propertyId)) {
-                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_BUDGET), 1, 4);
+                financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_ACTUAL_BUDGET), 1, 3);
             } else if (propertyId.equals("description")) {
                 descriptionLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 0, 2, "100%");
             }

@@ -31,7 +31,6 @@ public enum ProjectTypeI18nEnum {
     MESSAGE_ITEM,
     PHASE_ITEM,
     TASK_ITEM,
-    TASKGROUP_ITEM,
     BUG_ITEM,
     COMPONENT_ITEM,
     VERSION_ITEM,
