@@ -21,3 +21,11 @@ ADD CONSTRAINT `FK_m_prj_risk1_5`
   REFERENCES `m_prj_milestone` (`id`)
   ON DELETE SET NULL
   ON UPDATE CASCADE;
+ALTER TABLE `m_prj_risk`
+  ADD COLUMN `ganttIndex` INT(5) UNSIGNED NULL;
+ALTER TABLE `m_tracker_bug`
+  ADD COLUMN `ganttIndex` INT(5) UNSIGNED NULL;
+ALTER TABLE `m_tracker_bug`
+  ADD COLUMN `percentagecomplete` DOUBLE NULL;
+ALTER TABLE `m_prj_risk`
+  ADD COLUMN `percentagecomplete` DOUBLE NULL;

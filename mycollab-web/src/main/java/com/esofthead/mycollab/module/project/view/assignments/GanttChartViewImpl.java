@@ -16,22 +16,20 @@
  */
 package com.esofthead.mycollab.module.project.view.assignments;
 
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttExt;
 import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttTreeTable;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.vaadin.data.Property;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.tltv.gantt.client.shared.Resolution;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -91,49 +89,6 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
         });
         resWrapper.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         resWrapper.with(resLbl, resValue);
-
-        Button advanceDisplayBtn = new Button(null, new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoDashboard(GanttChartViewImpl.this, null));
-            }
-        });
-        advanceDisplayBtn.setWidth("50px");
-        advanceDisplayBtn.setIcon(FontAwesome.SITEMAP);
-        advanceDisplayBtn.setDescription("Advance View");
-
-        Button calendarBtn = new Button(null, new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(GanttChartViewImpl.this));
-            }
-        });
-        calendarBtn.setWidth("50px");
-        calendarBtn.setDescription("Calendar View");
-        calendarBtn.setIcon(FontAwesome.CALENDAR);
-
-        Button chartDisplayBtn = new Button();
-        chartDisplayBtn.setWidth("50px");
-        chartDisplayBtn.setDescription("Display Gantt chart");
-        chartDisplayBtn.setIcon(FontAwesome.BAR_CHART_O);
-
-        Button kanbanBtn = new Button(null, new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new TaskEvent.GotoKanbanView(this, null));
-            }
-        });
-        kanbanBtn.setWidth("50px");
-        kanbanBtn.setDescription("Kanban View");
-        kanbanBtn.setIcon(FontAwesome.TH);
-
-        ToggleButtonGroup viewButtons = new ToggleButtonGroup();
-        viewButtons.addButton(advanceDisplayBtn);
-        viewButtons.addButton(calendarBtn);
-        viewButtons.addButton(kanbanBtn);
-        viewButtons.addButton(chartDisplayBtn);
-        viewButtons.setDefaultButton(chartDisplayBtn);
-        resWrapper.addComponent(viewButtons);
 
         header.with(headerWrapper, resWrapper).withAlign(headerWrapper, Alignment.MIDDLE_LEFT).expand(headerWrapper);
 
