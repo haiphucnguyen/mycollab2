@@ -93,6 +93,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
     private void save(SimpleUser user) {
         UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
         user.setAccountId(AppContext.getAccountId());
+        user.setSubdomain(AppContext.getSubDomain());
 
         if (user.getStatus() == null) {
             user.setStatus(UserStatusConstants.EMAIL_VERIFIED_REQUEST);
