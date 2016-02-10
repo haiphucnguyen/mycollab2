@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.assignments.gantt;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -321,10 +322,10 @@ public class GanttTreeTable extends TreeTable {
         gantt.addTask(itemWrapper);
 
         if (itemWrapper.hasSubTasks()) {
-            this.setChildrenAllowed(itemWrapper, true);
-            this.setCollapsed(itemWrapper, false);
+//            this.setChildrenAllowed(itemWrapper, true);
+//            this.setCollapsed(itemWrapper, false);
         } else {
-            this.setChildrenAllowed(itemWrapper, false);
+//            this.setChildrenAllowed(itemWrapper, false);
         }
     }
 
@@ -354,7 +355,11 @@ public class GanttTreeTable extends TreeTable {
 
                     if (child.hasSubTasks()) {
                         this.setChildrenAllowed(child, true);
-                        this.setCollapsed(child, false);
+                        try {
+                            this.setCollapsed(child, false);
+                        } catch (Exception e) {
+                            System.out.println("B: " + BeanUtility.printBeanObj(child));
+                        }
                     } else {
                         this.setChildrenAllowed(child, false);
                     }
