@@ -279,27 +279,31 @@ public class GanttTreeTable extends TreeTable {
     }
 
     public void loadAssignments() {
-        GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
-        final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
-                (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
-        if (assignments.size() == 1) {
-            ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
-            List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
-            for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
-                GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
-                this.addAssignment(itemWrapper);
-            }
+        try {
+            GanttAssignmentService ganttAssignmentService = ApplicationContextUtil.getSpringBean(GanttAssignmentService.class);
+            final List<AssignWithPredecessors> assignments = ganttAssignmentService.getTaskWithPredecessors(Arrays.asList
+                    (CurrentProjectVariables.getProjectId()), AppContext.getAccountId());
+            if (assignments.size() == 1) {
+                ProjectGanttItem projectGanttItem = (ProjectGanttItem) assignments.get(0);
+                List<MilestoneGanttItem> milestoneGanttItems = projectGanttItem.getMilestones();
+                for (MilestoneGanttItem milestoneGanttItem : milestoneGanttItems) {
+                    GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, milestoneGanttItem);
+                    this.addAssignment(itemWrapper);
+                }
 
-            List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
-            for (TaskGanttItem taskGanttItem : taskGanttItems) {
-                GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
-                this.addAssignment(itemWrapper);
+                List<TaskGanttItem> taskGanttItems = projectGanttItem.getTasksWithNoMilestones();
+                for (TaskGanttItem taskGanttItem : taskGanttItems) {
+                    GanttItemWrapper itemWrapper = new GanttItemWrapper(gantt, taskGanttItem);
+                    this.addAssignment(itemWrapper);
+                }
+                this.updateWholeGanttIndexes();
+            } else {
+                LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
             }
-            this.updateWholeGanttIndexes();
-        } else {
-            LOG.error("Error to query multiple value " + CurrentProjectVariables.getProjectId());
+            isStartedGanttChart = true;
+        } catch (Exception e) {
+            LOG.error("Error", e);
         }
-        isStartedGanttChart = true;
     }
 
     private void updateTaskTree(GanttItemWrapper ganttItemWrapper) {
@@ -322,10 +326,12 @@ public class GanttTreeTable extends TreeTable {
         gantt.addTask(itemWrapper);
 
         if (itemWrapper.hasSubTasks()) {
-//            this.setChildrenAllowed(itemWrapper, true);
-//            this.setCollapsed(itemWrapper, false);
+            System.out.println("OUT: " + BeanUtility.printBeanObj(itemWrapper));
+            this.setChildrenAllowed(itemWrapper, true);
+            this.setCollapsed(itemWrapper, false);
         } else {
-//            this.setChildrenAllowed(itemWrapper, false);
+            this.setChildrenAllowed(itemWrapper, false);
+            System.out.println("NOT OUT: " + BeanUtility.printBeanObj(itemWrapper));
         }
     }
 
