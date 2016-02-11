@@ -126,6 +126,7 @@
       LEFT OUTER JOIN m_prj_predecessor AS dep_predecessor ON (m_tracker_bug.id=dep_predecessor.descId AND
       dep_predecessor.descType='Project-Bug')
       LEFT OUTER JOIN m_tracker_bug AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
+      WHERE m_tracker_bug.milestoneId = @{id}
      )
     
     ORDER BY ISNULL(ganttindex), ganttindex ASC, startDate ASC, endDate ASC

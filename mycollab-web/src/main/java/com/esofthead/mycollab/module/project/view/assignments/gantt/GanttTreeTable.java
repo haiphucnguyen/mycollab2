@@ -111,6 +111,7 @@ public class GanttTreeTable extends TreeTable {
         this.setColumnCollapsingAllowed(true);
         this.setColumnCollapsed("assignUser", true);
         this.setEditable(true);
+        this.setNullSelectionAllowed(false);
 
         this.addGeneratedColumn("ganttIndex", new ColumnGenerator() {
             @Override
@@ -328,7 +329,7 @@ public class GanttTreeTable extends TreeTable {
         if (itemWrapper.hasSubTasks()) {
             System.out.println("OUT: " + BeanUtility.printBeanObj(itemWrapper));
             this.setChildrenAllowed(itemWrapper, true);
-            this.setCollapsed(itemWrapper, false);
+//            this.setCollapsed(itemWrapper, false);
         } else {
             this.setChildrenAllowed(itemWrapper, false);
             System.out.println("NOT OUT: " + BeanUtility.printBeanObj(itemWrapper));
