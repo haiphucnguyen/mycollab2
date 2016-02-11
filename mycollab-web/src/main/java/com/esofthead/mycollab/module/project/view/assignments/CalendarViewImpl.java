@@ -164,20 +164,18 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         calendar.setHandler(new BasicEventMoveHandler() {
             @Override
             public void eventMove(CalendarComponentEvents.MoveEvent event) {
-                if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    super.eventMove(event);
-                    GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-                    calendarEvent.updateAssociateEntity();
-                }
+                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+                calendarEvent.updateAssociateEntity();
+                super.eventMove(event);
             }
         });
 
         calendar.setHandler(new BasicEventResizeHandler() {
             @Override
             public void eventResize(CalendarComponentEvents.EventResize event) {
-                super.eventResize(event);
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
                 calendarEvent.updateAssociateEntity();
+                super.eventResize(event);
             }
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))

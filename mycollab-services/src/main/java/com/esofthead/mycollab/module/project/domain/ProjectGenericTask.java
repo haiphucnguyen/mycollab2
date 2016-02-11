@@ -21,6 +21,7 @@ import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -240,7 +241,15 @@ public class ProjectGenericTask implements Serializable {
     }
 
     public Date getStartDate() {
-        return startDate;
+        if (startDate != null) {
+            return startDate;
+        } else {
+            if (endDate != null && dueDate != null) {
+                return (endDate.before(dueDate)) ? endDate : dueDate;
+            } else {
+                return MoreObjects.firstNonNull(endDate, dueDate);
+            }
+        }
     }
 
     public void setStartDate(Date startDate) {
@@ -248,7 +257,15 @@ public class ProjectGenericTask implements Serializable {
     }
 
     public Date getEndDate() {
-        return endDate;
+        if (endDate != null) {
+            return endDate;
+        } else {
+            if (startDate != null && dueDate != null) {
+                return (startDate.before(dueDate)) ? dueDate : startDate;
+            } else {
+                return MoreObjects.firstNonNull(startDate, dueDate);
+            }
+        }
     }
 
     public void setEndDate(Date endDate) {

@@ -4,23 +4,34 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
 import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentProvider;
+import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
+import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
@@ -113,16 +124,32 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
-//                SimpleTask task = calendarEvent.getAssignment();
-//                UI.getCurrent().addWindow(new EntityWithProjectAddHandler().buildWindow(task));
-//                String link = ProjectLinkBuilder.generateTaskPreviewFullLink(task.getTaskkey(), task.getProjectShortname());
-//                Page.getCurrent().updateLocation(link, true);
+                ProjectGenericTask assignment = calendarEvent.getAssignment();
+                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new TaskAddWindow(task));
+                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new BugAddWindow(bug));
+                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
+                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+
+                }
             }
         });
 
         calendar.setHandler(new CalendarComponentEvents.DateClickHandler() {
             @Override
-            public void dateClick(CalendarComponentEvents.DateClickEvent dateClickEvent) {
+            public void dateClick(CalendarComponentEvents.DateClickEvent event) {
 //                SimpleTask task = new SimpleTask();
 //                task.setStartdate(dateClickEvent.getDate());
 //                task.setEnddate(dateClickEvent.getDate());
@@ -133,14 +160,18 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setHandler(new BasicEventMoveHandler() {
             @Override
             public void eventMove(CalendarComponentEvents.MoveEvent event) {
-
+                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+                calendarEvent.updateAssociateEntity();
+                super.eventMove(event);
             }
         });
 
         calendar.setHandler(new BasicEventResizeHandler() {
             @Override
             public void eventResize(CalendarComponentEvents.EventResize event) {
-
+                GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
+                calendarEvent.updateAssociateEntity();
+                super.eventResize(event);
             }
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
@@ -241,7 +272,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         viewButtons.addButton(monthViewBtn);
         viewButtons.setDefaultButton(monthViewBtn);
 
-        header.with(titleWrapper, viewButtons).expand(titleWrapper).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
+        header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
                 .withAlign(viewButtons, Alignment.MIDDLE_RIGHT);
         return header;
     }
@@ -275,6 +306,24 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private void displayCalendarView(LocalDate start, LocalDate end) {
         calendar.setStartDate(start.toDate());
         calendar.setEndDate(end.toDate());
+        calendar.setHandler(new CalendarComponentEvents.BackwardHandler() {
+            @Override
+            public void backward(CalendarComponentEvents.BackwardEvent backwardEvent) {
+               if (!isMonthView) {
+                   baseDate = baseDate.minusWeeks(1);
+                   displayWeekView();
+               }
+            }
+        });
+        calendar.setHandler(new CalendarComponentEvents.ForwardHandler() {
+            @Override
+            public void forward(CalendarComponentEvents.ForwardEvent forwardEvent) {
+                if (!isMonthView) {
+                    baseDate = baseDate.plusWeeks(1);
+                    displayWeekView();
+                }
+            }
+        });
         final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override

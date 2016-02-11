@@ -20,6 +20,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
@@ -63,6 +64,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
                 assignOthersNum += 1;
             }
             addEvent(new GenericAssignmentEvent(assignment));
+            System.out.println("TASK: " + BeanUtility.printBeanObj(assignment));
         }
         fireEventSetChange();
     }
