@@ -60,6 +60,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -68,7 +69,9 @@ import java.util.List;
  */
 @ViewComponent
 public class CalendarViewImpl extends AbstractPageView implements CalendarView {
-    private static final DateTimeFormatter MY_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
+    private static final DateTimeFormatter DAY_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
+    private static final DateTimeFormatter WEEK_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
+    private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
 
     private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> assignmentChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
         @Override
@@ -81,9 +84,9 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             searchCriteria.setTypes(new SetSearchField<>(type));
             ProjectGenericTaskService assignmentService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
             List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+            GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectGenericTask assignment : assignments) {
                 GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment);
-                GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
                 if (provider.containsEvent(assignmentEvent)) {
                     provider.removeEvent(assignmentEvent);
                     provider.addEvent(assignmentEvent);
@@ -303,7 +306,6 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
     private void displayCalendarView(LocalDate start, LocalDate end) {
         calendar.setStartDate(start.toDate());
         calendar.setEndDate(end.toDate());
-        headerLbl.setValue(baseDate.toString(MY_FORMATTER));
         final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
@@ -317,12 +319,13 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                         .getTotalNonBillableHours());
             }
         });
-        provider.loadEvents(start.toDate(), end.toDate());
+        provider.loadEvents(start.toDate(), end.toDate(), Arrays.asList(CurrentProjectVariables.getProjectId()));
         calendar.setEventProvider(provider);
     }
 
     private void displayDayView() {
         mode = CalendarMode.DAILY;
+        headerLbl.setValue(baseDate.toString(DAY_FORMATTER));
         displayCalendarView(baseDate, baseDate);
     }
 
@@ -330,6 +333,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         mode = CalendarMode.WEEKLY;
         LocalDate firstDayOfWeek = baseDate.dayOfWeek().withMinimumValue();
         LocalDate lastDayOfWeek = baseDate.dayOfWeek().withMaximumValue();
+        headerLbl.setValue(firstDayOfWeek.toString(WEEK_FORMATTER) + " - " + lastDayOfWeek.toString(WEEK_FORMATTER));
         displayCalendarView(firstDayOfWeek, lastDayOfWeek);
     }
 
@@ -337,6 +341,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         mode = CalendarMode.MONTHLY;
         LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
         LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
+        headerLbl.setValue(baseDate.toString(MONTH_FORMATTER));
         displayCalendarView(firstDayOfMonth, lastDayOfMonth);
     }
 }

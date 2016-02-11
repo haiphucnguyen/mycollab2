@@ -16,14 +16,13 @@
  */
 package com.esofthead.mycollab.module.project.view.assignments;
 
-import com.esofthead.mycollab.core.arguments.*;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.google.common.base.MoreObjects;
@@ -43,12 +42,12 @@ public class GenericAssignmentProvider extends BasicEventProvider {
     private int assignOthersNum = 0;
     private int notAssignNum = 0;
 
-    public void loadEvents(Date start, Date end) {
+    public void loadEvents(Date start, Date end, List<Integer> prjKeys) {
         ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        searchCriteria.setProjectIds(new SetSearchField<>(prjKeys));
         searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         RangeDateSearchField dateRange = new RangeDateSearchField(start, end);
-        searchCriteria.addExtraField(dateRange);
+        searchCriteria.setDateInRange(dateRange);
 
         ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
         List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new SearchRequest<>

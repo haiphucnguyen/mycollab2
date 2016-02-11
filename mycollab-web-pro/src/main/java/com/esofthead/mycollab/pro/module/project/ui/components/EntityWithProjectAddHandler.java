@@ -31,7 +31,7 @@ public class EntityWithProjectAddHandler {
             prjSelectionWindow.setResizable(false);
             prjSelectionWindow.setModal(true);
             prjSelectionWindow.setWidth("500px");
-            prjSelectionWindow.setCaption("New Task");
+            prjSelectionWindow.setCaption("New Assignment");
             prjSelectionWindow.setContent(new ProjectSelectionLayout());
             return prjSelectionWindow;
         } else {

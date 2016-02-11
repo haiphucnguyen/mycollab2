@@ -1,19 +1,21 @@
 package com.esofthead.mycollab.pro.module.project.view;
 
-import com.esofthead.mycollab.core.arguments.*;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
 import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentEvent;
+import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentProvider;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
-import com.esofthead.mycollab.pro.module.project.view.assignments.AgreegateGenericCalendarProvider;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -23,7 +25,6 @@ import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -57,21 +58,27 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private List<Integer> projectKeys;
     private boolean isMonthView = true;
 
-    private ApplicationEventListener<TaskEvent.NewTaskAdded> taskChangeHandler = new ApplicationEventListener<TaskEvent.NewTaskAdded>() {
+    private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> taskChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
         @Override
         @Subscribe
-        public void handle(TaskEvent.NewTaskAdded event) {
-            Integer taskId = (Integer) event.getData();
-            ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = taskService.findById(taskId, AppContext.getAccountId());
-//            GenericAssignmentEvent taskEvent = new GenericAssignmentEvent(task);
-//            AgreegateGenericCalendarProvider provider = (AgreegateGenericCalendarProvider) calendar.getEventProvider();
-//            if (provider.containsEvent(taskEvent)) {
-//                provider.removeEvent(taskEvent);
-//                provider.addEvent(taskEvent);
-//            } else {
-//                provider.addEvent(taskEvent);
-//            }
+        public void handle(AssignmentEvent.NewAssignmentAdd event) {
+            String type = event.getTypeVal();
+            Integer typeId = event.getTypeIdVal();
+            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+            searchCriteria.setTypeIds(new SetSearchField<>(typeId));
+            searchCriteria.setTypes(new SetSearchField<>(type));
+            ProjectGenericTaskService assignmentService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
+            List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
+            GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
+            for (ProjectGenericTask assignment : assignments) {
+                GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment);
+                if (provider.containsEvent(assignmentEvent)) {
+                    provider.removeEvent(assignmentEvent);
+                    provider.addEvent(assignmentEvent);
+                } else {
+                    provider.addEvent(assignmentEvent);
+                }
+            }
         }
     };
 
@@ -101,6 +108,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.addStyleName("assignment-calendar");
         calendar.setWidth("100%");
         calendar.setHeight("100%");
+        calendar.setEventCaptionAsHtml(true);
         calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
@@ -267,7 +275,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private void displayCalendarView(LocalDate start, LocalDate end) {
         calendar.setStartDate(start.toDate());
         calendar.setEndDate(end.toDate());
-        final AgreegateGenericCalendarProvider provider = new AgreegateGenericCalendarProvider();
+        final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
             public void eventSetChange(CalendarEventProvider.EventSetChangeEvent event) {
@@ -275,24 +283,14 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             }
         });
         if (CollectionUtils.isNotEmpty(projectKeys)) {
-            TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
-            searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-            CollectionValueSearchField projectIdsInList = new CollectionValueSearchField(SearchField.AND,
-                    "m_prj_task.projectid IN", projectKeys);
-            searchCriteria.addExtraField(projectIdsInList);
-            CompositionSearchField compoField = new CompositionSearchField(SearchField.AND);
-            compoField.addField(new BetweenValuesSearchField("", "m_prj_task.startdate BETWEEN ", start.toDate(), end.toDate()));
-            compoField.addField(new BetweenValuesSearchField("", "m_prj_task.enddate BETWEEN ", start.toDate(), end.toDate()));
-            searchCriteria.addExtraField(compoField);
-
-            provider.loadEvents(searchCriteria);
+            provider.loadEvents(start.toDate(), end.toDate(), projectKeys);
         } else {
             displayInfo(provider);
         }
         calendar.setEventProvider(provider);
     }
 
-    private void displayInfo(AgreegateGenericCalendarProvider provider) {
+    private void displayInfo(GenericAssignmentProvider provider) {
         assignMeLbl.setValue("Assign to me (" + provider.getAssignMeNum() + ")");
         assignOtherLbl.setValue("Assign to others (" + provider.getAssignOthersNum() + ")");
         nonAssigneeLbl.setValue("Not assign (" + provider.getNotAssignNum() + ")");
