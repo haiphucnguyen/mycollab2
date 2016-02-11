@@ -94,7 +94,6 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     };
 
     public CalendarDashboardViewImpl() {
-        baseDate = new LocalDate();
         this.withMargin(true);
     }
 
@@ -113,6 +112,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     @Override
     public void display() {
         this.removeAllComponents();
+        baseDate = new LocalDate();
         ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
         projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         calendar = new Calendar();
