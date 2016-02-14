@@ -106,21 +106,6 @@
     background: #fdde86;
   }
 
-  .v-progressbar.medium {
-    display: block;
-    .v-progressbar-wrapper {
-      height: 7px;
-      box-shadow: none;
-      border: 1px solid $my-separator-color;
-      background: $my-background-color;
-    }
-    .v-progressbar-indicator {
-      height: 7px;
-      border: 1px solid $my-separator-color;
-      background: #fdde86;
-    }
-  }
-
   /* Pageable controls */
   .listControl {
     padding: 2px;

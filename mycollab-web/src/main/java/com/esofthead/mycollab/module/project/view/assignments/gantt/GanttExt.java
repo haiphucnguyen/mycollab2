@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.GanttEvent;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.google.gwt.i18n.client.constants.TimeZoneConstants;
 import com.vaadin.server.Page;
 import org.joda.time.LocalDate;
 import org.tltv.gantt.Gantt;
@@ -37,11 +38,12 @@ import java.util.TimeZone;
  * @since 5.0.8
  */
 public class GanttExt extends Gantt {
+    TimeZoneConstants a;
     private LocalDate minDate, maxDate;
     private GanttItemContainer beanContainer;
 
     public GanttExt() {
-        this.setTimeZone(TimeZone.getTimeZone("UTC"));
+        this.setTimeZone(TimeZone.getTimeZone("Atlantic/Reykjavik"));
         this.setImmediate(true);
         minDate = new LocalDate(2100, 1, 1);
         maxDate = new LocalDate(1970, 1, 1);

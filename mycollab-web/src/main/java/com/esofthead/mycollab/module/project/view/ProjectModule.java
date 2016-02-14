@@ -117,7 +117,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         switchProjectPopup.addStyleName("add-btn-popup");
         switchProjectPopup.setIcon(VaadinIcons.ARROW_CIRCLE_RIGHT_O);
         final ProjectPagedList projectList = new ProjectPagedList();
-        projectList.addStyleName("contentWrapper");
+
         final Label titleLbl = new Label(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_ACTIVE_PROJECTS_TITLE, 0));
         titleLbl.setStyleName(ValoTheme.LABEL_H2);
         OptionPopupContent contentLayout = new OptionPopupContent();

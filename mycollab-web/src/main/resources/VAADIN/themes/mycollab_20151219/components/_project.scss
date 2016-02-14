@@ -60,23 +60,17 @@
         padding: 10px 15px 8px;
       }
       .projectlink-wrapper {
-        background-color: lavenderblush;
+        background-color: aliceblue;
         &:hover {
           @include hover-effect;
         }
       }
       .projectlink-wrapper-archived {
-        background-color: darkgray;
+        background-color: lightgray;
         &:hover {
           @include hover-effect;
         }
       }
-    }
-  }
-
-  .project-status {
-    .v-verticallayout {
-      @include margin-container(8px, 15px, 5px, 15px);
     }
   }
 

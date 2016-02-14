@@ -57,6 +57,7 @@ Version 5.2.7
 **Bug Fixes**
 
 * [Mobile] Throws silent exception when display the empty activities in account
+* Throws exception when assign the Project Owner role to the existing user
 
 Version 5.2.6
 -----------------------------

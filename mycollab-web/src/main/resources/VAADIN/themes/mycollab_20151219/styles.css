@@ -975,7 +975,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.6.1";
+	content: "7.6.2";
 }
 
 .v-widget {
@@ -1653,23 +1653,6 @@ a.pending {
 	margin: -1px;
 	border: 1px solid #e5e5e5;
 	background-image: none;
-	background: #fdde86;
-}
-
-.v-progressbar.medium {
-	display: block;
-}
-
-.v-progressbar.medium .v-progressbar-wrapper {
-	height: 7px;
-	box-shadow: none;
-	border: 1px solid #e5e5e5;
-	background: #ffffff;
-}
-
-.v-progressbar.medium .v-progressbar-indicator {
-	height: 7px;
-	border: 1px solid #e5e5e5;
 	background: #fdde86;
 }
 
@@ -5463,11 +5446,11 @@ a.v-disabled {
 }
 
 .v-ie8 .v-grid-editor-cells  > div .v-datefield-button {
-	margin-left: -30px;
+	margin-left: -37px;
 }
 
 .v-ie8 .v-grid-editor-cells  > div .v-filterselect-button {
-	margin-left: -27px;
+	margin-left: -25px;
 }
 
 .v-grid-editor-cells  > div .v-select, .v-grid-editor-cells  > div .v-select-select {
@@ -14211,23 +14194,6 @@ a.pending {
 	background: #fdde86;
 }
 
-.v-progressbar.medium {
-	display: block;
-}
-
-.v-progressbar.medium .v-progressbar-wrapper {
-	height: 7px;
-	box-shadow: none;
-	border: 1px solid #e5e5e5;
-	background: #ffffff;
-}
-
-.v-progressbar.medium .v-progressbar-indicator {
-	height: 7px;
-	border: 1px solid #e5e5e5;
-	background: #fdde86;
-}
-
 .listControl {
 	padding: 2px;
 	border-width: 0px 1px 1px 1px;
@@ -15181,7 +15147,7 @@ div .addview-layout-body .control-buttons {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper {
-	background-color: lavenderblush;
+	background-color: aliceblue;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper:hover, .myprojectlist .projectblock .projectlink-wrapper:hover {
@@ -15191,29 +15157,13 @@ div .addview-layout-body .control-buttons {
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper-archived {
-	background-color: darkgray;
+	background-color: lightgray;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived:hover, .myprojectlist .projectblock .projectlink-wrapper-archived:hover {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
-}
-
-.project-status .v-verticallayout.v-margin-top {
-	padding-top: 8px;
-}
-
-.project-status .v-verticallayout.v-margin-right {
-	padding-right: 15px;
-}
-
-.project-status .v-verticallayout.v-margin-bottom {
-	padding-bottom: 5px;
-}
-
-.project-status .v-verticallayout.v-margin-left {
-	padding-left: 15px;
 }
 
 .v-horizontal.project-info {

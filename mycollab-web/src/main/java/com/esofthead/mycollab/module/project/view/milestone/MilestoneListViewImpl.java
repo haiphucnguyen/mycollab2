@@ -249,8 +249,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private ComponentContainer constructMilestoneBox(final SimpleMilestone milestone) {
-        MilestoneBox layout = new MilestoneBox(milestone);
-        return layout;
+        return new MilestoneBox(milestone);
     }
 
     private class MilestoneBox extends CssLayout {
