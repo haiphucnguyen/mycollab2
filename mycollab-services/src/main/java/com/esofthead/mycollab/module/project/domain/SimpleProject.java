@@ -55,6 +55,10 @@ public class SimpleProject extends Project {
 
     private double totalNonBillableHours;
 
+    private String leadFullName;
+
+    private String leadAvatarId;
+
     @NotBindable
     private ProjectCustomizeView customizeView;
 
@@ -211,6 +215,22 @@ public class SimpleProject extends Project {
 
     public boolean isArchived() {
         return StatusI18nEnum.Archived.name().equals(getProjectstatus());
+    }
+
+    public String getLeadFullName() {
+        return leadFullName;
+    }
+
+    public void setLeadFullName(String leadFullName) {
+        this.leadFullName = leadFullName;
+    }
+
+    public String getLeadAvatarId() {
+        return leadAvatarId;
+    }
+
+    public void setLeadAvatarId(String leadAvatarId) {
+        this.leadAvatarId = leadAvatarId;
     }
 
     public enum Field {

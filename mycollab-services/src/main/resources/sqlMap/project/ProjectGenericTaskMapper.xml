@@ -65,6 +65,10 @@
             ${searchCriteria.dateInRange.operation} (m_prj_risk.datedue BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
         #end
 
+         #ifnotnull($searchCriteria.milestoneId)
+            ${searchCriteria.milestoneId.operation} m_prj_risk.milestoneId = @{searchCriteria.milestoneId.value}
+        #end
+
         #ifnotnull($searchCriteria.types)
             ${searchCriteria.types.operation} "Project-Risk" IN
             #repeat(${searchCriteria.types.values} $type "," "(" ")")

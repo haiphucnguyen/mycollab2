@@ -52,6 +52,7 @@ Version 5.2.7
 * Support calendar event types are issues, risks, milestones
 * Display issues, risks in Gantt chart besides tasks, milestones as well
 * Several minor improvements
+* Add lead field to the project
 
 **Bug Fixes**
 

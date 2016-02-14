@@ -22,9 +22,9 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.FormContainer;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
@@ -86,7 +86,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
         public ComponentContainer getLayout() {
             final FormContainer layout = new FormContainer();
 
-            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 2);
+            informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 3);
             layout.addSection(AppContext.getMessage(ProjectI18nEnum.SECTION_PROJECT_INFO), informationLayout.getLayout());
 
             financialLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
@@ -107,6 +107,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 1);
             } else if (propertyId.equals("projectstatus")) {
                 informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 1, 1);
+            } else if (Project.Field.lead.equalTo(propertyId)) {
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_LEADER), 0, 2);
             } else if (propertyId.equals("planstartdate")) {
                 financialLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 0);
             } else if (Project.Field.account.equalTo(propertyId)) {
