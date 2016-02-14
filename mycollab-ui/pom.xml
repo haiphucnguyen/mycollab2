@@ -94,7 +94,7 @@
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>loginform</artifactId>
-            <version>0.6.1</version>
+            <version>0.6.2</version>
         </dependency>
 
         <dependency>

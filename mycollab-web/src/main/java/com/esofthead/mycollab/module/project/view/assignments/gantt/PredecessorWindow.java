@@ -310,8 +310,9 @@ class PredecessorWindow extends Window {
                 this.setItemCaptionMode(ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
                 this.setFilteringMode(FilteringMode.CONTAINS);
                 GanttItemContainer beanItemContainer = taskTreeTable.getRawContainer();
-                Collection<GanttItemWrapper> itemIds = beanItemContainer.getItemIds();
-                for (GanttItemWrapper item : itemIds) {
+                Collection itemIds = beanItemContainer.getItemIds();
+                for (Object itemId : itemIds) {
+                    GanttItemWrapper item = (GanttItemWrapper) itemId;
                     if (item.isTask()) {
                         this.addItem(item);
                         this.setItemCaption(item, String.format("[Row %d]: %s", item.getGanttIndex(),

@@ -485,7 +485,7 @@ public class GanttItemWrapper {
 
     boolean isIndentable() {
         GanttItemContainer beanContainer = gantt.getBeanContainer();
-        GanttItemWrapper prevItemId = beanContainer.prevItemId(this);
+        GanttItemWrapper prevItemId = (GanttItemWrapper) beanContainer.prevItemId(this);
         if (prevItemId != null && this.getParent() != prevItemId) {
             return true;
         }

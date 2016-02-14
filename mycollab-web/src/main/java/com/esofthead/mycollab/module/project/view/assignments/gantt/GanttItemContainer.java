@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.HierarchicalContainer;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -32,17 +33,14 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
-
-    public GanttItemContainer() {
-        super(GanttItemWrapper.class);
-    }
+public class GanttItemContainer extends HierarchicalContainer {
 
     public GanttItemWrapper getItemByGanttIndex(int rowIndex) {
-        List<GanttItemWrapper> items = getItemIds();
-        for (GanttItemWrapper item : items) {
-            if (rowIndex == item.getGanttIndex()) {
-                return item;
+        List items = getAllItemIds();
+        for (Object item : items) {
+            GanttItemWrapper itemWrapper = (GanttItemWrapper)item;
+            if (rowIndex == itemWrapper.getGanttIndex()) {
+                return itemWrapper;
             }
         }
         return null;
@@ -60,8 +58,9 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> {
     }
 
     private void removeAssociatesPredecessorsAndDependents(GanttItemWrapper removedTask) {
-        List<GanttItemWrapper> items = getItemIds();
-        for (GanttItemWrapper item : items) {
+        List items = getAllItemIds();
+        for (Object itemId : items) {
+            GanttItemWrapper item = (GanttItemWrapper) itemId;
             List<TaskPredecessor> removedPredecessors = new ArrayList<>();
 
             List<TaskPredecessor> predecessors = item.getPredecessors();
