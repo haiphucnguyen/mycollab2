@@ -40,7 +40,6 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();
             projectDashboardContainer.addComponent(view.getWidget());
-            view.removeAllComponents();
             view.display();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
