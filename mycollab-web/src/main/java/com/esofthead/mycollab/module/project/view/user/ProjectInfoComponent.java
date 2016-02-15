@@ -18,13 +18,16 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.NumberUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -51,6 +54,8 @@ import com.google.common.base.MoreObjects;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -105,6 +110,14 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         MHorizontalLayout footer = new MHorizontalLayout();
         footer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         footer.addStyleName(UIConstants.LABEL_META_INFO);
+        if (project.getLead() != null) {
+            Div leadAvatar = new DivLessFormatter().appendChild(new Img("", StorageFactory.getInstance().getAvatarPath
+                    (project.getLeadAvatarId(), 16)), new A(ProjectLinkBuilder.generateProjectMemberFullLink(project.getId(),
+                    project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
+                    .setTitle(project.getLeadFullName());
+            ELabel leadLbl = new ELabel("Lead: " + leadAvatar.write(), ContentMode.HTML);
+            footer.addComponent(leadLbl);
+        }
         if (project.getHomepage() != null) {
             ELabel homepageLbl = new ELabel(FontAwesome.WECHAT.getHtml() + " " + new A(project.getHomepage())
                     .appendText(project.getHomepage()).setTarget("_blank").write(), ContentMode.HTML)

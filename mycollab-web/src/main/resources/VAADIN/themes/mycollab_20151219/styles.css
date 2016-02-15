@@ -1608,6 +1608,10 @@ a.pending {
 	height: 40px !important;
 }
 
+.border-bottom {
+	border-bottom: 1px solid #e5e5e5;
+}
+
 .panel-body {
 	border: 1px solid #e5e5e5;
 	border-top: 0;
@@ -14146,6 +14150,10 @@ a.pending {
 	height: 40px !important;
 }
 
+.border-bottom {
+	border-bottom: 1px solid #e5e5e5;
+}
+
 .panel-body {
 	border: 1px solid #e5e5e5;
 	border-top: 0;
@@ -15129,9 +15137,7 @@ div .addview-layout-body .control-buttons {
 .v-popupbutton-popup-myprojectlist .projectblock, .myprojectlist .projectblock {
 	padding: 0px;
 	background-color: #FFF;
-	border-color: #e5e5e5;
-	border-width: 0px 1px 1px 0px;
-	border-style: solid;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock:hover, .myprojectlist .projectblock:hover {

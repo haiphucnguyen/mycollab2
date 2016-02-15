@@ -48,9 +48,7 @@
     .projectblock {
       padding: 0px;
       background-color: #FFF;
-      border-color: $my-separator-color;
-      border-width: 0px 1px 1px 0px;
-      border-style: solid;
+      border-bottom: 1px solid $my-separator-color;
       &:hover {
         @include hover-effect;
       }

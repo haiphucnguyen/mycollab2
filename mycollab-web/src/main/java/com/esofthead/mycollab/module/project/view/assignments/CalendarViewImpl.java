@@ -156,7 +156,8 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
             @Override
             public void dateClick(CalendarComponentEvents.DateClickEvent dateClickEvent) {
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    UI.getCurrent().addWindow(new AssignmentAddWindow(dateClickEvent.getDate()));
+                    UI.getCurrent().addWindow(new AssignmentAddWindow(dateClickEvent.getDate(),
+                            CurrentProjectVariables.getProjectId()));
                 }
             }
         });

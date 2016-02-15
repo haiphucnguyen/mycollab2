@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.assignments;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
@@ -29,6 +30,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.ui.*;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
 
@@ -37,11 +39,9 @@ import java.util.Date;
  * @since 5.2.7
  */
 public class AssignmentAddWindow extends Window {
-    private Date date;
 
-    public AssignmentAddWindow(Date date) {
+    public AssignmentAddWindow(Date date, final Integer prjId) {
         super("New assignment");
-        this.date = date;
         final DateField dateSelection = new DateField(null, date);
         final ComboBox typeSelection = new ComboBox();
         typeSelection.setItemCaptionMode(AbstractSelect.ItemCaptionMode.EXPLICIT_DEFAULTS_ID);
@@ -53,8 +53,8 @@ public class AssignmentAddWindow extends Window {
         typeSelection.select("Task");
         this.setModal(true);
         this.setResizable(false);
-        this.setWidth("800px");
-        MHorizontalLayout content = new MHorizontalLayout().withMargin(true);
+        this.setWidth("400px");
+        MVerticalLayout content = new MVerticalLayout().withMargin(true);
         this.setContent(content);
 
         Button okButton = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OK), new Button.ClickListener() {
@@ -64,19 +64,30 @@ public class AssignmentAddWindow extends Window {
                 if ("Task".equals(type)) {
                     close();
                     SimpleTask task = new SimpleTask();
+                    task.setProjectid(prjId);
+                    task.setSaccountid(AppContext.getAccountId());
                     task.setStartdate(dateSelection.getValue());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if ("Bug".equals(type)) {
                     close();
                     SimpleBug bug = new SimpleBug();
+                    bug.setProjectid(prjId);
+                    bug.setSaccountid(AppContext.getAccountId());
                     bug.setStartdate(dateSelection.getValue());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if ("Milestone".equals(type)) {
                     close();
                     SimpleMilestone milestone = new SimpleMilestone();
+                    milestone.setSaccountid(AppContext.getAccountId());
+                    milestone.setProjectid(prjId);
                     milestone.setStartdate(dateSelection.getValue());
                     UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
                 } else {
+                    close();
+                    SimpleRisk risk = new SimpleRisk();
+                    risk.setSaccountid(AppContext.getAccountId());
+                    risk.setProjectid(prjId);
+                    risk.setStartdate(dateSelection.getValue());
 
                 }
             }
@@ -90,7 +101,7 @@ public class AssignmentAddWindow extends Window {
         });
         cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
         MHorizontalLayout buttonControls = new MHorizontalLayout(okButton, cancelBtn);
-        content.with(new Label("Date: "), dateSelection, new Label("Type: "), typeSelection, buttonControls).withAlign
+        content.with(new MHorizontalLayout().with(new Label("Date: "), dateSelection, new Label("Type: "), typeSelection), buttonControls).withAlign
                 (buttonControls, Alignment.TOP_RIGHT);
     }
 }

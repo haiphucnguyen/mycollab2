@@ -143,7 +143,7 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         searchBtn.setIcon(FontAwesome.SEARCH);
 
         MHorizontalLayout popupHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true))
-                .withWidth("100%");
+                .withWidth("100%").withStyleName("border-bottom");
         MHorizontalLayout searchPanel = new MHorizontalLayout().withMargin(true);
         searchPanel.with(searchField, searchBtn);
         popupHeader.with(titleLbl, searchPanel).withAlign(titleLbl, Alignment.MIDDLE_LEFT).expand(titleLbl);
