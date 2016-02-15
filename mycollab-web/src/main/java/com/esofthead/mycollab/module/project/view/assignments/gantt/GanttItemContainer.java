@@ -21,11 +21,13 @@ import com.esofthead.mycollab.module.project.domain.TaskPredecessor;
 import com.esofthead.mycollab.module.project.service.GanttAssignmentService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.util.HierarchicalContainer;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,12 +35,17 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.1.3
  */
-public class GanttItemContainer extends HierarchicalContainer {
+public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> implements Container.Hierarchical {
+    private List<GanttItemWrapper> rootItems = new ArrayList<>();
+
+    public GanttItemContainer() {
+        super(GanttItemWrapper.class);
+    }
 
     public GanttItemWrapper getItemByGanttIndex(int rowIndex) {
         List items = getAllItemIds();
         for (Object item : items) {
-            GanttItemWrapper itemWrapper = (GanttItemWrapper)item;
+            GanttItemWrapper itemWrapper = (GanttItemWrapper) item;
             if (rowIndex == itemWrapper.getGanttIndex()) {
                 return itemWrapper;
             }
@@ -99,5 +106,60 @@ public class GanttItemContainer extends HierarchicalContainer {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public BeanItem<GanttItemWrapper> addItem(Object itemId) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper)itemId;
+        BeanItem<GanttItemWrapper> item =  super.addItem(ganttItemWrapper);
+        if (ganttItemWrapper.getParent() == null) {
+            rootItems.add(ganttItemWrapper);
+        }
+        return item;
+    }
+
+    @Override
+    public Collection<?> getChildren(Object o) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper)o;
+        return ganttItemWrapper.subTasks();
+    }
+
+    @Override
+    public Object getParent(Object o) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper)o;
+        return ganttItemWrapper.getParent();
+    }
+
+    @Override
+    public Collection<?> rootItemIds() {
+        return rootItems;
+    }
+
+    @Override
+    public boolean setParent(Object o, Object o1) throws UnsupportedOperationException {
+        return true;
+    }
+
+    @Override
+    public boolean areChildrenAllowed(Object o) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) o;
+        return ganttItemWrapper.hasSubTasks();
+    }
+
+    @Override
+    public boolean setChildrenAllowed(Object o, boolean b) throws UnsupportedOperationException {
+        return b;
+    }
+
+    @Override
+    public boolean isRoot(Object o) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) o;
+        return ganttItemWrapper.getParent() == null;
+    }
+
+    @Override
+    public boolean hasChildren(Object o) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) o;
+        return ganttItemWrapper.hasSubTasks();
     }
 }

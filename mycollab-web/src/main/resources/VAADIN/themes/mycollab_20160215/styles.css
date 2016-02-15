@@ -15710,8 +15710,8 @@ div.v-button.token-field {
 	padding-top: 3px;
 }
 
-.gantt_container .v-table-table .v-table-row-milestone {
-	background-color: #C2DFFF;
+.gantt_container .v-table-table .v-table-row-root {
+	background-color: #c6c6c6;
 }
 
 .gantt_container .v-table-table .v-table-row-task {
@@ -16091,12 +16091,12 @@ div.v-button.token-field {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	margin: 3px;
 }
 
 .gantt .bar-progress {
 	position: absolute;
 	bottom: 0;
+	top: 0;
 	display: block;
 	width: 100%;
 	overflow: hidden;
@@ -16104,6 +16104,16 @@ div.v-button.token-field {
 
 .gantt .bar-progress .v-progressbar-wrapper, .gantt .bar-progress .v-progressbar-indicator {
 	min-width: auto;
+}
+
+.gantt .bar-progress .v-progressbar-indicator {
+	height: 36px;
+	background-color: #60bceb;
+}
+
+.gantt .bar-progress .v-progressbar-wrapper {
+	height: 36px;
+	background-color: #c6c6c6;
 }
 
 .gantt .bar.moving {

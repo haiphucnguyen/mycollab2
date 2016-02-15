@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttExt;
 import com.esofthead.mycollab.module.project.view.assignments.gantt.GanttTreeTable;
 import com.esofthead.mycollab.vaadin.mvp.AbstractLazyPageView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
@@ -39,7 +40,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 4.0
  */
 @ViewComponent
-public class GanttChartViewImpl extends AbstractLazyPageView implements GanttChartView {
+public class GanttChartViewImpl extends AbstractPageView implements GanttChartView {
     private static final long serialVersionUID = 1L;
 
     private MHorizontalLayout mainLayout;
@@ -99,7 +100,7 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
     }
 
     @Override
-    protected void displayView() {
+    public void display() {
         setProjectNavigatorVisibility(false);
         constructUI();
 

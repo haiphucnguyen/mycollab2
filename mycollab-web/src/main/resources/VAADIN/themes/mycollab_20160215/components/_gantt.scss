@@ -149,12 +149,12 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 			overflow: hidden;
-			margin: 3px;
 		}
 		
 		.bar-progress {
 			position: absolute;
 			bottom: 0;
+			top: 0;
 			display: block;
 			width: 100%;
 			overflow: hidden;
@@ -162,6 +162,16 @@
 			.v-progressbar-wrapper,
 			.v-progressbar-indicator {
 				min-width: auto;
+			}
+
+			.v-progressbar-indicator {
+			  height: 36px;
+			  background-color: #60bceb;
+			}
+
+			.v-progressbar-wrapper {
+			  height: 36px;
+			  background-color: #c6c6c6;
 			}
 		}
 		

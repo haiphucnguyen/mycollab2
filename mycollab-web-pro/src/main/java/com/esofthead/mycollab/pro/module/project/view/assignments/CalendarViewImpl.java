@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.assignments;
+package com.esofthead.mycollab.pro.module.project.view.assignments;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.assignments.*;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
@@ -281,13 +282,24 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         });
         monthlyBtn.setWidth("80px");
 
+        Button newAssignmentBtn = new Button("New assignment", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(), CurrentProjectVariables.getProjectId()));
+            }
+        });
+        newAssignmentBtn.setIcon(FontAwesome.PLUS);
+        newAssignmentBtn.setStyleName(UIConstants.BUTTON_ACTION);
+
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(dailyBtn);
         viewButtons.addButton(weeklyBtn);
         viewButtons.addButton(monthlyBtn);
         viewButtons.setDefaultButton(monthlyBtn);
 
-        header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign(viewButtons,
+        MHorizontalLayout rightControls = new MHorizontalLayout().with(newAssignmentBtn, viewButtons);
+
+        header.with(titleWrapper, rightControls).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign(rightControls,
                 Alignment.MIDDLE_RIGHT);
         return header;
     }

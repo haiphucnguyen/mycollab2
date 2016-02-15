@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.NumberUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -99,7 +100,8 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             if (project.getLead() != null) {
                 Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(project
                         .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(), new A(ProjectLinkBuilder.generateProjectMemberFullLink(project
-                        .getId(), project.getLead())).appendText(project.getLeadFullName())).setTitle("Manager");
+                        .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
+                        .setTitle("Manager");
                 metaDiv.appendChild(0, leadDiv);
                 metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
             }

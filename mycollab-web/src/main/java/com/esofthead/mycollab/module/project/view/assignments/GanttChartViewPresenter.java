@@ -169,7 +169,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();
             projectDashboardContainer.addComponent(view.getWidget());
-            view.lazyLoadView();
+            view.display();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoGanttView();

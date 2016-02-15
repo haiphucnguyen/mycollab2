@@ -80,6 +80,7 @@ public class AssignmentNameCellField extends CustomField<String> implements Fiel
 
         super.setPropertyDataSource(newDataSource);
     }
+
     @Override
     public void setReadOnly(boolean readOnly) {
         field.setReadOnly(readOnly);

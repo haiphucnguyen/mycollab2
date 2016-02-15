@@ -118,18 +118,12 @@ public class GanttItemWrapper {
         ownStep.setDescription(buildTooltip());
         ownStep.setStartDate(startDate.toDate());
         ownStep.setEndDate(endDate.plusDays(1).toDate());
+        ownStep.setShowProgress(true);
+
         if (task.getProgress() == null) {
             ownStep.setProgress(0);
         } else {
             ownStep.setProgress(task.getProgress());
-        }
-
-        if (isMilestone()) {
-            ownStep.setBackgroundColor("C2DFFF");
-        } else if (isTask() && task.hasSubAssignments()) {
-            ownStep.setBackgroundColor("E4F1FF");
-        } else {
-            ownStep.setBackgroundColor("E4F1FF");
         }
     }
 
@@ -138,7 +132,11 @@ public class GanttItemWrapper {
     }
 
     public boolean isTask() {
-        return task instanceof TaskGanttItem;
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.TASK.equals(task.getType());
+    }
+
+    public boolean isBug() {
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.BUG.equals(task.getType());
     }
 
     public boolean hasSubTasks() {
@@ -207,7 +205,7 @@ public class GanttItemWrapper {
 
     public String getType() {
         if (task instanceof TaskGanttItem) {
-            return ProjectTypeConstants.TASK;
+            return task.getType();
         } else if (task instanceof MilestoneGanttItem) {
             return ProjectTypeConstants.MILESTONE;
         } else {
@@ -485,7 +483,7 @@ public class GanttItemWrapper {
 
     boolean isIndentable() {
         GanttItemContainer beanContainer = gantt.getBeanContainer();
-        GanttItemWrapper prevItemId = (GanttItemWrapper) beanContainer.prevItemId(this);
+        GanttItemWrapper prevItemId = beanContainer.prevItemId(this);
         if (prevItemId != null && this.getParent() != prevItemId) {
             return true;
         }
