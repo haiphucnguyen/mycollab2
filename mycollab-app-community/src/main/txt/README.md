@@ -45,14 +45,15 @@ Version 5.2.7
 **Library Upgrades**
 
 * Vaadin 7.6.2
+* MyBatis 3.3.1
 * Other libraries
 
 **Improvements & New Features**
 
-* Support calendar event types are issues, risks, milestones
 * Display issues, risks in Gantt chart besides tasks, milestones as well
 * Several minor improvements
 * Add lead field to the project
+* [Premium] Support calendar event types are issues, risks, milestones
 
 **Bug Fixes**
 
