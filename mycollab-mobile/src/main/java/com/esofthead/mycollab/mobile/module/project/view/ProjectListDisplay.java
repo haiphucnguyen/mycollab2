@@ -86,7 +86,7 @@ public class ProjectListDisplay extends DefaultPagedBeanList<ProjectService, Pro
             layout.addComponent(metaInfo);
 
             int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks() + project.getNumOpenRisks();
-            int totalAssignments = project.getNumBugs() + project.getNumTasks() + project.getNumRisks() + project.getNumProblems();
+            int totalAssignments = project.getNumBugs() + project.getNumTasks() + project.getNumRisks();
             ELabel progressInfoLbl;
             if (totalAssignments > 0) {
                 progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",

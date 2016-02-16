@@ -35,10 +35,6 @@ public class SimpleProject extends Project {
 
     private int numTasks;
 
-    private int numOpenProblems;
-
-    private int numProblems;
-
     private int numOpenRisks;
 
     private int numRisks;
@@ -111,22 +107,6 @@ public class SimpleProject extends Project {
 
     public void setNumTasks(int numTasks) {
         this.numTasks = numTasks;
-    }
-
-    public int getNumOpenProblems() {
-        return numOpenProblems;
-    }
-
-    public void setNumOpenProblems(int numOpenProblems) {
-        this.numOpenProblems = numOpenProblems;
-    }
-
-    public int getNumProblems() {
-        return numProblems;
-    }
-
-    public void setNumProblems(int numProblems) {
-        this.numProblems = numProblems;
     }
 
     public int getNumOpenRisks() {

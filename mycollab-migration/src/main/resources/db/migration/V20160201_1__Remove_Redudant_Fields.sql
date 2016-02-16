@@ -35,3 +35,5 @@ ALTER TABLE `m_prj_project`
     REFERENCES `s_user` (`username`)
     ON DELETE SET NULL
     ON UPDATE CASCADE;
+ALTER TABLE `m_prj_customize_view`
+    DROP COLUMN `displayProblem`;

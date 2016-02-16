@@ -172,7 +172,6 @@ public class CurrentProjectVariables {
             customizeView.setDisplaymessage(true);
             customizeView.setDisplaymilestone(true);
             customizeView.setDisplaypage(true);
-            customizeView.setDisplayproblem(true);
             customizeView.setDisplayrisk(true);
             customizeView.setDisplaystandup(true);
             customizeView.setDisplaytask(true);
@@ -200,10 +199,6 @@ public class CurrentProjectVariables {
 
     public static boolean hasPageFeature() {
         return getFeatures().getDisplaypage();
-    }
-
-    public static boolean hasProblemFeature() {
-        return getFeatures().getDisplayproblem();
     }
 
     public static boolean hasRiskFeature() {
