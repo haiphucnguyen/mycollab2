@@ -54,6 +54,16 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> impl
     }
 
     @Override
+    public BeanItem<GanttItemWrapper> addItem(Object itemId) {
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) itemId;
+        BeanItem<GanttItemWrapper> item = super.addItem(ganttItemWrapper);
+        if (ganttItemWrapper.getParent() == null) {
+            rootItems.add(ganttItemWrapper);
+        }
+        return item;
+    }
+
+    @Override
     public boolean removeItem(Object itemId) {
         if (itemId instanceof GanttItemWrapper) {
             GanttItemWrapper removedTask = (GanttItemWrapper) itemId;
@@ -109,24 +119,14 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> impl
     }
 
     @Override
-    public BeanItem<GanttItemWrapper> addItem(Object itemId) {
-        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper)itemId;
-        BeanItem<GanttItemWrapper> item =  super.addItem(ganttItemWrapper);
-        if (ganttItemWrapper.getParent() == null) {
-            rootItems.add(ganttItemWrapper);
-        }
-        return item;
-    }
-
-    @Override
     public Collection<?> getChildren(Object o) {
-        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper)o;
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) o;
         return ganttItemWrapper.subTasks();
     }
 
     @Override
     public Object getParent(Object o) {
-        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper)o;
+        GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) o;
         return ganttItemWrapper.getParent();
     }
 
@@ -136,7 +136,7 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> impl
     }
 
     @Override
-    public boolean setParent(Object o, Object o1) throws UnsupportedOperationException {
+    public boolean setParent(Object child, Object parent) throws UnsupportedOperationException {
         return true;
     }
 

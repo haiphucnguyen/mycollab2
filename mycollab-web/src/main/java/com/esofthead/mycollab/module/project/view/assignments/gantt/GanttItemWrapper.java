@@ -58,9 +58,9 @@ public class GanttItemWrapper {
         this.gantt = gantt;
         setTask(task);
 
-        if (task instanceof MilestoneGanttItem) {
+        if (isMilestone()) {
             subItems = buildSubTasks(gantt, this, (MilestoneGanttItem) task);
-        } else if (task instanceof TaskGanttItem) {
+        } else if (isBug() || isTask() || isRisk()){
             subItems = buildSubTasks(gantt, this, (TaskGanttItem) task);
         }
     }
@@ -68,9 +68,9 @@ public class GanttItemWrapper {
     public void removeSubTask(GanttItemWrapper subTask) {
         if (CollectionUtils.isNotEmpty(subItems)) {
             subItems.remove(subTask);
-            if (task instanceof MilestoneGanttItem) {
+            if (isMilestone()) {
                 ((MilestoneGanttItem) task).removeSubTask((TaskGanttItem) subTask.task);
-            } else if (task instanceof TaskGanttItem) {
+            } else if (isBug() || isTask() || isRisk()) {
                 ((TaskGanttItem) task).removeSubTask((TaskGanttItem) subTask.task);
             }
         }
@@ -137,6 +137,10 @@ public class GanttItemWrapper {
 
     public boolean isBug() {
         return (task instanceof TaskGanttItem) && ProjectTypeConstants.BUG.equals(task.getType());
+    }
+
+    public boolean isRisk() {
+        return (task instanceof TaskGanttItem) && ProjectTypeConstants.RISK.equals(task.getType());
     }
 
     public boolean hasSubTasks() {

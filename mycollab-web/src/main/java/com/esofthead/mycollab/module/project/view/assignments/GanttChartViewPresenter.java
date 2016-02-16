@@ -34,8 +34,8 @@ import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
-import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
@@ -169,7 +169,7 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();
             projectDashboardContainer.addComponent(view.getWidget());
-            view.display();
+            view.lazyLoadView();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoGanttView();

@@ -222,8 +222,7 @@ public abstract class AssignWithPredecessors {
 
     @Override
     public int hashCode() {
-        int result = ganttIndex != null ? ganttIndex.hashCode() : 0;
-        result = 31 * result + prjId.hashCode();
+        int result = 31 + prjId.hashCode();
         result = 31 * result + type.hashCode();
         result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
