@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -112,7 +111,7 @@ public class BugAddWindow extends Window {
                             }
 
                             ProjectFormAttachmentUploadField uploadField = ((BugEditFormFieldFactory) fieldFactory).getAttachmentUploadField();
-                            uploadField.saveContentsToRepo(CurrentProjectVariables.getProjectId(),
+                            uploadField.saveContentsToRepo(bean.getProjectid(),
                                     ProjectTypeConstants.BUG, bugId);
                             EventBusFactory.getInstance().post(new BugEvent.NewBugAdded(BugAddWindow.this, bugId));
                             EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(BugAddWindow.this,
@@ -128,7 +127,7 @@ public class BugAddWindow extends Window {
                                     monitorItem.setType(ProjectTypeConstants.BUG);
                                     monitorItem.setTypeid(bugId);
                                     monitorItem.setUser(follower);
-                                    monitorItem.setExtratypeid(CurrentProjectVariables.getProjectId());
+                                    monitorItem.setExtratypeid(bean.getProjectid());
                                     monitorItems.add(monitorItem);
                                 }
                                 MonitorItemService monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);

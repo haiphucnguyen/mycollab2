@@ -1,13 +1,15 @@
 package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractEditItemComp;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.vaadin.server.Resource;
@@ -21,7 +23,7 @@ import java.util.Map;
  * @since 1.0
  */
 @ViewComponent
-public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements RiskAddView {
+public class RiskAddViewImpl extends AbstractEditItemComp<SimpleRisk> implements RiskAddView {
     private static final long serialVersionUID = 1L;
 
     private static Map<Integer, String> valueCaptions = new HashMap<>(5);
@@ -60,7 +62,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements RiskA
     }
 
     @Override
-    protected AdvancedEditBeanForm<Risk> initPreviewForm() {
+    protected AdvancedEditBeanForm<SimpleRisk> initPreviewForm() {
         return new AdvancedEditBeanForm<>();
     }
 
@@ -70,7 +72,7 @@ public class RiskAddViewImpl extends AbstractEditItemComp<Risk> implements RiskA
     }
 
     @Override
-    protected AbstractBeanFieldGroupEditFieldFactory<Risk> initBeanFormFieldFactory() {
+    protected AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> initBeanFormFieldFactory() {
         return new RiskEditFormFieldFactory(editForm);
     }
 }

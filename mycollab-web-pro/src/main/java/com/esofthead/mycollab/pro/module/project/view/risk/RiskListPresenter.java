@@ -11,11 +11,11 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectGenericListPresenter;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.web.ui.DefaultMassEditActionHandler;
 import com.esofthead.mycollab.vaadin.events.ViewItemAction;
 import com.esofthead.mycollab.vaadin.mvp.*;
-import com.esofthead.mycollab.vaadin.web.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultMassEditActionHandler;
+import com.esofthead.mycollab.vaadin.web.ui.MailFormWindow;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView, RiskSearchCriteria, SimpleRisk>
-        implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<Risk> {
+        implements ListCommand<RiskSearchCriteria>, MassUpdateCommand<SimpleRisk> {
     private static final long serialVersionUID = 1L;
 
     private RiskService riskService;
@@ -122,10 +122,9 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
     }
 
     @Override
-    public void massUpdate(Risk value) {
+    public void massUpdate(SimpleRisk value) {
         if (!isSelectAll) {
-            Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
-                    .getCurrentDataList();
+            Collection<SimpleRisk> currentDataList = view.getPagedBeanTable().getCurrentDataList();
             List<Integer> keyList = new ArrayList<>();
             for (SimpleRisk item : currentDataList) {
                 if (item.isSelected()) {
@@ -134,8 +133,7 @@ public class RiskListPresenter extends ProjectGenericListPresenter<RiskListView,
             }
 
             if (keyList.size() > 0) {
-                riskService.massUpdateWithSession(value, keyList,
-                        AppContext.getAccountId());
+                riskService.massUpdateWithSession(value, keyList, AppContext.getAccountId());
                 doSearch(searchCriteria);
             }
         } else {

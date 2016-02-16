@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.assignments;
+package com.esofthead.mycollab.pro.module.project.view.assignments;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.ui.*;
@@ -90,7 +91,8 @@ public class AssignmentAddWindow extends Window {
                     risk.setSaccountid(AppContext.getAccountId());
                     risk.setProjectid(prjId);
                     risk.setStartdate(dateSelection.getValue());
-
+                    risk.setRaisedbyuser(AppContext.getUsername());
+                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
                 }
             }
         });

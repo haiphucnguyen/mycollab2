@@ -3,6 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.risk;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -19,11 +20,11 @@ import com.vaadin.ui.Field;
  * @author MyCollab Ltd.
  * @since 2.0
  */
-public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
+public class MassUpdateRiskWindow extends MassUpdateWindow<SimpleRisk> {
     private static final long serialVersionUID = 1L;
 
-    public MassUpdateRiskWindow(String title, MassUpdateCommand<Risk> massUpdatePresenter) {
-        super(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK), new Risk(), massUpdatePresenter);
+    public MassUpdateRiskWindow(String title, MassUpdateCommand<SimpleRisk> massUpdatePresenter) {
+        super(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.RISK), new SimpleRisk(), massUpdatePresenter);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class MassUpdateRiskWindow extends MassUpdateWindow<Risk> {
     }
 
     @Override
-    protected AbstractBeanFieldGroupEditFieldFactory<Risk> buildBeanFormFieldFactory() {
+    protected AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> buildBeanFormFieldFactory() {
         return new RiskEditFormFieldFactory(updateForm);
     }
 

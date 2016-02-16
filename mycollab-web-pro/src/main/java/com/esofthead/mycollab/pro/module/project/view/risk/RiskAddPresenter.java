@@ -4,6 +4,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -12,8 +13,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.*;
-import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -30,11 +31,11 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 
     @Override
     protected void postInitView() {
-        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<Risk>() {
+        view.getEditFormHandlers().addFormHandler(new IEditFormHandler<SimpleRisk>() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void onSave(final Risk risk) {
+            public void onSave(final SimpleRisk risk) {
                 int riskId = saveRisk(risk);
                 EventBusFactory.getInstance().post(new RiskEvent.GotoRead(this, riskId));
             }
@@ -48,7 +49,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
             }
 
             @Override
-            public void onSaveAndNew(final Risk risk) {
+            public void onSaveAndNew(final SimpleRisk risk) {
                 saveRisk(risk);
                 EventBusFactory.getInstance().post(new RiskEvent.GotoAdd(this, null));
             }
@@ -61,7 +62,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
             RiskContainer riskContainer = (RiskContainer) container;
             riskContainer.removeAllComponents();
             riskContainer.addComponent(view.getWidget());
-            Risk risk = (Risk) data.getParams();
+            SimpleRisk risk = (SimpleRisk) data.getParams();
             view.editItem(risk);
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

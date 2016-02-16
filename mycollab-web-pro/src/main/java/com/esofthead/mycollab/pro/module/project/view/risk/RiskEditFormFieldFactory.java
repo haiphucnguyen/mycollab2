@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.risk;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -16,14 +17,13 @@ import com.vaadin.ui.TextField;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 /**
- * @param <B>
  * @author MyCollab Ltd.
  * @since 2.0
  */
-class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Risk> {
+class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleRisk> {
     private static final long serialVersionUID = 1L;
 
-    RiskEditFormFieldFactory(GenericBeanForm<Risk> form) {
+    RiskEditFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
         super(form);
     }
 
