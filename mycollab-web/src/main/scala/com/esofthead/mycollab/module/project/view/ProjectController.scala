@@ -151,7 +151,14 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
   private def bindRiskEvents(): Unit = {
     this.register(new ApplicationEventListener[RiskEvent.GotoAdd] {
       @Subscribe def handle(event: RiskEvent.GotoAdd) {
-        val data: RiskScreenData.Add = new RiskScreenData.Add(new SimpleRisk)
+        val param: Any = event.getData
+        var data: RiskScreenData.Add = null
+        if (param.isInstanceOf[SimpleRisk]) {
+          data = new RiskScreenData.Add(param.asInstanceOf[SimpleRisk])
+        }
+        else {
+          data = new RiskScreenData.Add(new SimpleRisk)
+        }
         val presenter = PresenterResolver.getPresenter(classOf[IRiskPresenter])
         presenter.go(projectView, data)
       }

@@ -55,7 +55,7 @@ public class RiskAddWindow extends Window {
             @Override
             public ComponentContainer getLayout() {
                 VerticalLayout layout = new VerticalLayout();
-                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 4);
+                informationLayout = GridFormLayoutHelper.defaultFormLayoutHelper(2, 5);
                 informationLayout.getLayout().setMargin(false);
                 informationLayout.getLayout().setSpacing(false);
                 layout.addComponent(informationLayout.getLayout());
@@ -123,6 +123,8 @@ public class RiskAddWindow extends Window {
                     informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY), 0, 3);
                 } else if (Risk.Field.level.equalTo(propertyId)) {
                     informationLayout.addComponent(field, AppContext.getMessage(RiskI18nEnum.FORM_RATING), 1, 3);
+                } else if (Risk.Field.description.equalTo(propertyId)) {
+                    informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 4, 2, "100%");
                 }
             }
         }

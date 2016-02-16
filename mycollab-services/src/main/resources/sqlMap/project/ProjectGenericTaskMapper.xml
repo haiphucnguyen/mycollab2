@@ -62,7 +62,10 @@
         #end
 
         #ifnotnull($searchCriteria.dateInRange)
-            ${searchCriteria.dateInRange.operation} (m_prj_risk.datedue BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
+            ${searchCriteria.dateInRange.operation} ((m_prj_risk.datedue BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
+              OR (m_prj_risk.startdate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
+              OR (m_prj_risk.enddate BETWEEN @{searchCriteria.dateInRange.from} AND @{searchCriteria.dateInRange.to})
+            )
         #end
 
          #ifnotnull($searchCriteria.milestoneId)
