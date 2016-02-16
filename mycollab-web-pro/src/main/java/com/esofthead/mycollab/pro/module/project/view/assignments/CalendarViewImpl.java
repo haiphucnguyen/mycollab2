@@ -1,19 +1,3 @@
-/**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.pro.module.project.view.assignments;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -33,10 +17,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
-import com.esofthead.mycollab.module.project.view.assignments.CalendarMode;
 import com.esofthead.mycollab.module.project.view.assignments.CalendarView;
-import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentEvent;
-import com.esofthead.mycollab.module.project.view.assignments.GenericAssignmentProvider;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
