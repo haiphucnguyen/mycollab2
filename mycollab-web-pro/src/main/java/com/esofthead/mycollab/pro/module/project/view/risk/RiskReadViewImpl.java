@@ -21,10 +21,11 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectUser
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
-import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
 import com.vaadin.server.FontAwesome;

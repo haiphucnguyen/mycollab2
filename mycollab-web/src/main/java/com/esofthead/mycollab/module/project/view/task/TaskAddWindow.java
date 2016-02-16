@@ -62,8 +62,6 @@ public class TaskAddWindow extends Window {
 
         @Override
         public void setBean(final SimpleTask item) {
-            item.setLogby(AppContext.getUsername());
-            item.setSaccountid(AppContext.getAccountId());
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setBeanFormFieldFactory(new TaskEditFormFieldFactory(this));
             super.setBean(item);

@@ -198,6 +198,8 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
                 if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
                     SimpleTask newTask = new SimpleTask();
                     newTask.setProjectid(CurrentProjectVariables.getProjectId());
+                    newTask.setSaccountid(AppContext.getAccountId());
+                    newTask.setLogby(AppContext.getUsername());
                     UI.getCurrent().addWindow(new TaskAddWindow(newTask));
                 }
             }

@@ -61,9 +61,6 @@ public class BugAddWindow extends Window {
         this.setResizable(false);
 
         EditForm editForm = new EditForm();
-        bug.setLogby(AppContext.getUsername());
-        bug.setSaccountid(AppContext.getAccountId());
-        bug.setProjectid(CurrentProjectVariables.getProjectId());
         editForm.setBean(bug);
         this.setContent(editForm);
     }
@@ -73,7 +70,7 @@ public class BugAddWindow extends Window {
         @Override
         public void setBean(final SimpleBug item) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setBeanFormFieldFactory(new BugEditFormFieldFactory(EditForm.this));
+            this.setBeanFormFieldFactory(new BugEditFormFieldFactory(EditForm.this, item.getProjectid()));
             super.setBean(item);
         }
 
@@ -120,7 +117,7 @@ public class BugAddWindow extends Window {
                             EventBusFactory.getInstance().post(new BugEvent.NewBugAdded(BugAddWindow.this, bugId));
                             EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(BugAddWindow.this,
                                     ProjectTypeConstants.BUG, bugId));
-                            ProjectSubscribersComp subcribersComp = ((BugEditFormFieldFactory) fieldFactory).getSubcribersComp();
+                            ProjectSubscribersComp subcribersComp = ((BugEditFormFieldFactory) fieldFactory).getSubscribersComp();
                             List<String> followers = subcribersComp.getFollowers();
                             if (followers.size() > 0) {
                                 List<MonitorItem> monitorItems = new ArrayList<>();

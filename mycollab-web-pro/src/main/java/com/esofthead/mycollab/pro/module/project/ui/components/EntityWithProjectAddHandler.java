@@ -43,6 +43,8 @@ public class EntityWithProjectAddHandler {
         if (entity instanceof SimpleTask) {
             SimpleTask newTask = (SimpleTask) entity;
             newTask.setProjectid(projectId);
+            newTask.setSaccountid(AppContext.getAccountId());
+            newTask.setLogby(AppContext.getUsername());
             UI.getCurrent().addWindow(new TaskAddWindow(newTask));
         }
     }

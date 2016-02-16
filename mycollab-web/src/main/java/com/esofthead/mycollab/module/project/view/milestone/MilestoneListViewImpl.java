@@ -158,7 +158,10 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
 
             @Override
             public void buttonClick(final ClickEvent event) {
-                UI.getCurrent().addWindow(new MilestoneAddWindow(new SimpleMilestone()));
+                SimpleMilestone milestone = new SimpleMilestone();
+                milestone.setSaccountid(AppContext.getAccountId());
+                milestone.setProjectid(CurrentProjectVariables.getProjectId());
+                UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
             }
         });
         createBtn.setIcon(FontAwesome.PLUS);

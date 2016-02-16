@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
@@ -79,8 +78,6 @@ public class MilestoneAddWindow extends Window {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 if (editBeanForm.validateForm()) {
                     MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                    milestone.setProjectid(CurrentProjectVariables.getProjectId());
-                    milestone.setSaccountid(AppContext.getAccountId());
                     Integer milestoneId;
                     if (milestone.getId() == null) {
                         milestoneId = milestoneService.saveWithSession(milestone, AppContext.getUsername());

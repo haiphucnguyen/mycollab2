@@ -66,6 +66,7 @@ public class AssignmentAddWindow extends Window {
                     SimpleTask task = new SimpleTask();
                     task.setProjectid(prjId);
                     task.setSaccountid(AppContext.getAccountId());
+                    task.setLogby(AppContext.getUsername());
                     task.setStartdate(dateSelection.getValue());
                     UI.getCurrent().addWindow(new TaskAddWindow(task));
                 } else if ("Bug".equals(type)) {
@@ -74,6 +75,7 @@ public class AssignmentAddWindow extends Window {
                     bug.setProjectid(prjId);
                     bug.setSaccountid(AppContext.getAccountId());
                     bug.setStartdate(dateSelection.getValue());
+                    bug.setLogby(AppContext.getUsername());
                     UI.getCurrent().addWindow(new BugAddWindow(bug));
                 } else if ("Milestone".equals(type)) {
                     close();
