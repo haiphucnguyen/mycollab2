@@ -45,30 +45,38 @@ public class RiskDefaultFormLayoutFactory {
                 .displayName(AppContext.getMessage(GenericI18Enum.FORM_ASSIGNEE))
                 .fieldIndex(6).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.consequence)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE))
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.status)
+                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_STATUS))
                 .fieldIndex(7).build());
 
-        mainSection.addField(new DateDynaFieldBuilder().fieldName(Risk.Field.datedue)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_DATE_DUE))
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.startdate)
+                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_START_DATE))
                 .fieldIndex(8).build());
+
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.consequence)
+                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_CONSEQUENCE))
+                .fieldIndex(9).build());
+
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.enddate)
+                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_END_DATE))
+                .fieldIndex(10).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.probalitity)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_PROBABILITY))
-                .fieldIndex(9).build());
+                .fieldIndex(11).build());
 
-        mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.status)
-                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_STATUS))
-                .fieldIndex(10).build());
+        mainSection.addField(new DateDynaFieldBuilder().fieldName(Risk.Field.datedue)
+                .displayName(AppContext.getMessage(RiskI18nEnum.FORM_DATE_DUE))
+                .fieldIndex(12).build());
 
         mainSection.addField(new TextDynaFieldBuilder()
                 .fieldName(Risk.Field.level)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_RATING))
-                .fieldIndex(11).build());
+                .fieldIndex(13).build());
 
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Risk.Field.response)
                 .displayName(AppContext.getMessage(RiskI18nEnum.FORM_RESPONSE))
-                .fieldIndex(12).colSpan(true).build());
+                .fieldIndex(14).colSpan(true).build());
 
         defaultForm.addSection(mainSection);
     }

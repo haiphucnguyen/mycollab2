@@ -143,6 +143,10 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
                 return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {
                 return new DateViewField(risk.getDatedue());
+            } else if (Risk.Field.startdate.equalTo(propertyId)) {
+                return new DateViewField(risk.getStartdate());
+            } else if (Risk.Field.enddate.equalTo(propertyId)) {
+                return new DateViewField(risk.getEnddate());
             } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
                 return new ProjectUserFormLinkField(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(),
                         risk.getRaisedByUserFullName());

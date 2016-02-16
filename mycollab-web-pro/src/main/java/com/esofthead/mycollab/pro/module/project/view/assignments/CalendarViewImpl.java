@@ -128,6 +128,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
 
     @Override
     public void display() {
+        removeAllComponents();
         calendar = new Calendar();
         calendar.setEventCaptionAsHtml(true);
         calendar.addStyleName("assignment-calendar");
