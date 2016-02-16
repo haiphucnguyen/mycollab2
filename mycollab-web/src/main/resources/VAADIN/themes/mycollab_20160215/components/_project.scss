@@ -22,6 +22,7 @@
     .container-wrap.main-content {
       .top-panel {
         background-color: #FFF;
+        border-top: 1px solid $my-separator-color;
         border-bottom: 1px solid $my-separator-color;
         padding: 10px 30px;
       }
@@ -74,15 +75,6 @@
 
   .v-horizontal.project-info {
     position: relative;
-    :after {
-      content:'';
-      left: 220px;
-      height:1px;
-      width: 100%;
-      background:$my-separator-color;
-      position:absolute;
-      bottom: 0px;
-    }
     * :after {
       display: none;
     }

@@ -15108,6 +15108,7 @@ div .addview-layout-body .control-buttons {
 
 .projectDashboardView .container-wrap.main-content .top-panel {
 	background-color: #FFF;
+	border-top: 1px solid #e5e5e5;
 	border-bottom: 1px solid #e5e5e5;
 	padding: 10px 30px;
 }
@@ -15174,16 +15175,6 @@ div .addview-layout-body .control-buttons {
 
 .v-horizontal.project-info {
 	position: relative;
-}
-
-.v-horizontal.project-info :after {
-	content: "";
-	left: 220px;
-	height: 1px;
-	width: 100%;
-	background: #e5e5e5;
-	position: absolute;
-	bottom: 0px;
 }
 
 .v-horizontal.project-info * :after {
@@ -18213,28 +18204,18 @@ div.v-csslayout.rightsidebar-layout .content-wrap {
 	display: inline-block;
 }
 
-.community {
-	color: #e4e4e4;
+.v-sliderpanel-content .community {
+	color: black;
 }
 
-.community .v-label-h2 {
-	color: #f1f1f1;
-}
-
-.community .v-label-h2 a {
-	color: #f1f1f1;
-}
-
-.community .title a {
-	color: #f1f1f1;
-	font-size: 1.1em;
-}
-
-.community .title .v-icon {
-	font-size: 1.2em;
-	color: #f1f1f1;
-}
-
-.community .desc {
+.v-sliderpanel-content .community .desc {
 	font-size: 0.9em;
+}
+
+.v-sliderpanel-tab {
+	color: black !important;
+}
+
+.v-sliderpanel-icon::before {
+	color: black !important;
 }
