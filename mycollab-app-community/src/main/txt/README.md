@@ -59,6 +59,7 @@ Version 5.2.7
 
 * [Mobile] Throws silent exception when display the empty activities in account
 * Throws exception when assign the Project Owner role to the existing user
+* Not display deleted entries in the activity stream
 
 Version 5.2.6
 -----------------------------

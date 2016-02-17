@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectMapperExt">
 
-    <resultMap
-        extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.ResultMapWithBLOBs"
+    <resultMap extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.ResultMapWithBLOBs"
         id="SimpleProjectResult" type="com.esofthead.mycollab.module.project.domain.SimpleProject">
         <result column="createUserFullName" jdbcType="VARCHAR" property="createUserFullName" />
         <result column="accountName" jdbcType="VARCHAR" property="accountName" />
@@ -29,10 +28,8 @@
             columnPrefix="view_"/>
     </resultMap>
 
-    <resultMap
-        extends="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.SimpleActivityStreamResult"
-        id="ActivityStreamResult"
-        type="com.esofthead.mycollab.module.project.domain.ProjectActivityStream">
+    <resultMap extends="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.SimpleActivityStreamResult"
+        id="ActivityStreamResult" type="com.esofthead.mycollab.module.project.domain.ProjectActivityStream">
         <result column="projectId" jdbcType="INTEGER" property="projectId" />
         <result column="projectName" jdbcType="VARCHAR" property="projectName" />
         <result column="projectShortName" jdbcType="VARCHAR" property="projectShortName" />
@@ -146,20 +143,18 @@
         ]]>
     </sql>
 
-    <select id="findProjectById" parameterType="java.lang.Integer"
-        resultMap="SimpleProjectResult" lang="velocity">
+    <select id="findProjectById" parameterType="java.lang.Integer" resultMap="SimpleProjectResult" lang="velocity">
         <include refid="selectSimpleProject" />
-
         WHERE m_prj_project.id=@{projectId, jdbcType=NUMERIC}
     </select>
 
-    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria"
-        lang="velocity">
-        SELECT count(*) as totalCount FROM m_prj_project
+    <select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria" lang="velocity">
+        SELECT count(*) as totalCount
+        FROM m_prj_project
         #ifnotnull($_parameter.searchCriteria)
-        #trimext("WHERE" "AND|OR")
-        <include refid="queryTotalCountSearchCriteria" />
-        #end
+          #trimext("WHERE" "AND|OR")
+            <include refid="queryTotalCountSearchCriteria" />
+          #end
         #end
     </select>
     
@@ -173,8 +168,7 @@
                             LIMIT 1)
     </select>
 
-    <select id="getUserProjectKeys" resultType="java.lang.Integer"
-        lang="velocity">
+    <select id="getUserProjectKeys" resultType="java.lang.Integer" lang="velocity">
         SELECT m_prj_project.id
         FROM m_prj_project
         #ifnotnull($_parameter.searchCriteria)
@@ -185,18 +179,16 @@
     </select>
 
 
-    <select id="findPagableListByCriteria" resultMap="SimpleProjectResult"
-        parameterType="ProjectSearchCriteria" lang="velocity">
+    <select id="findPagableListByCriteria" resultMap="SimpleProjectResult" parameterType="ProjectSearchCriteria" lang="velocity">
         <include refid="selectSimpleProject" />
         #ifnotnull($_parameter.searchCriteria)
-        #trimext("WHERE" "AND|OR")
-        <include refid="querySearchCriteria" />
-        #end
+          #trimext("WHERE" "AND|OR")
+            <include refid="querySearchCriteria" />
+          #end
         #end
     </select>
 
-    <select id="getProjectActivityStreams" parameterType="ActivityStreamSearchCriteria"
-        resultMap="ActivityStreamResult" lang="velocity">
+    <select id="getProjectActivityStreams" parameterType="ActivityStreamSearchCriteria" resultMap="ActivityStreamResult" lang="velocity">
          (SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, m_tracker_bug.bugkey AS itemKey, 
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
                s_activitystream.module, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as createdUserFullName,
@@ -206,7 +198,7 @@
                m_audit_log.sAccountId AS log_sAccountId, m_audit_log.type AS log_type, m_audit_log.typeid AS log_typeid, m_audit_log.module AS log_module, 
                m_audit_log.changeset AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_tracker_bug ON (s_activitystream.typeid=m_tracker_bug.id)
+        LEFT OUTER JOIN m_tracker_bug ON (s_activitystream.typeid=m_tracker_bug.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
@@ -226,7 +218,7 @@
                NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
                s_activitystream.nameField AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_tracker_bug ON (s_activitystream.typeid=m_tracker_bug.id)
+        LEFT OUTER JOIN m_tracker_bug ON (s_activitystream.typeid=m_tracker_bug.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
          #ifnotnull($_parameter.searchCriteria)
@@ -247,7 +239,7 @@
                m_audit_log.sAccountId AS log_sAccountId, m_audit_log.type AS log_type, m_audit_log.typeid AS log_typeid, m_audit_log.module AS log_module, 
                m_audit_log.changeset AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_prj_task ON (s_activitystream.typeid=m_prj_task.id)
+        LEFT OUTER JOIN m_prj_task ON (s_activitystream.typeid=m_prj_task.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
@@ -268,7 +260,7 @@
                NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
                s_activitystream.nameField AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_prj_task ON (s_activitystream.typeid=m_prj_task.id)
+        LEFT OUTER JOIN m_prj_task ON (s_activitystream.typeid=m_prj_task.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         #ifnotnull($_parameter.searchCriteria)
@@ -310,7 +302,7 @@
                NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
                s_activitystream.nameField AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_prj_message ON (s_activitystream.typeid=m_prj_message.id)
+        LEFT OUTER JOIN m_prj_message ON (s_activitystream.typeid=m_prj_message.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
@@ -333,7 +325,7 @@
                NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
                s_activitystream.nameField AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_tracker_component ON (s_activitystream.typeid=m_tracker_component.id)
+        LEFT OUTER JOIN m_tracker_component ON (s_activitystream.typeid=m_tracker_component.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
@@ -356,7 +348,7 @@
                NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
                s_activitystream.nameField AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_tracker_version ON (s_activitystream.typeid=m_tracker_version.id)
+        LEFT OUTER JOIN m_tracker_version ON (s_activitystream.typeid=m_tracker_version.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
@@ -379,7 +371,7 @@
                NULL AS log_sAccountId, NULL AS log_type, NULL AS log_typeid, NULL AS log_module, 
                s_activitystream.nameField AS log_changeset
         FROM s_activitystream
-        INNER JOIN m_prj_risk ON (s_activitystream.typeid=m_prj_risk.id)
+        LEFT OUTER JOIN m_prj_risk ON (s_activitystream.typeid=m_prj_risk.id)
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_prj_project ON (m_prj_project.id=s_activitystream.extraTypeId)
         LEFT OUTER JOIN m_audit_log ON (s_activitystream.id=m_audit_log.activityLogId)
@@ -422,19 +414,17 @@
         createdTime DESC
     </select>
 
-    <select id="getTotalActivityStream" resultType="int"
-        parameterType="ActivityStreamSearchCriteria" lang="velocity">
-        SELECT count(*) as totalCount FROM s_activitystream
+    <select id="getTotalActivityStream" resultType="int" parameterType="ActivityStreamSearchCriteria" lang="velocity">
+        SELECT count(*) as totalCount
+        FROM s_activitystream
         #ifnotnull($_parameter.searchCriteria)
-        #trimext("WHERE" "AND|OR")
-        <include
-            refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
-        #end
+          #trimext("WHERE" "AND|OR")
+            <include refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+          #end
         #end
     </select>
 
-    <select id="getSubdomainOfProject" resultType="java.lang.String"
-        parameterType="java.lang.Integer" lang="velocity">
+    <select id="getSubdomainOfProject" resultType="java.lang.String" parameterType="java.lang.Integer" lang="velocity">
         <![CDATA[
         SELECT s_account.subdomain
             FROM s_account, m_prj_project
@@ -443,8 +433,7 @@
                   ]]>
     </select>
 
-    <resultMap id="ProjectEmailRelayNotificationResult"
-        type="com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification"
+    <resultMap id="ProjectEmailRelayNotificationResult" type="com.esofthead.mycollab.module.project.domain.ProjectRelayEmailNotification"
         extends="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.SimpleEmailRelayNotificationResult">
         <result column="projectId" jdbcType="INTEGER" property="projectId" />
     </resultMap>

@@ -212,8 +212,6 @@ public abstract class AssignWithPredecessors {
         if (!(o instanceof AssignWithPredecessors)) return false;
 
         AssignWithPredecessors that = (AssignWithPredecessors) o;
-
-        if (ganttIndex != null ? !ganttIndex.equals(that.ganttIndex) : that.ganttIndex != null) return false;
         if (!prjId.equals(that.prjId)) return false;
         if (!type.equals(that.type)) return false;
         return !(id != null ? !id.equals(that.id) : that.id != null);

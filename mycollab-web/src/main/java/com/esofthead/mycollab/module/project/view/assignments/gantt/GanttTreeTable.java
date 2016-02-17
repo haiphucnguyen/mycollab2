@@ -330,10 +330,10 @@ public class GanttTreeTable extends TreeTable {
         gantt.addTask(itemWrapper);
 
         if (itemWrapper.hasSubTasks()) {
-            this.setChildrenAllowed(itemWrapper, true);
+            beanContainer.setChildrenAllowed(itemWrapper, true);
             this.setCollapsed(itemWrapper, false);
         } else {
-            this.setChildrenAllowed(itemWrapper, false);
+            beanContainer.setChildrenAllowed(itemWrapper, false);
         }
     }
 
@@ -522,18 +522,18 @@ public class GanttTreeTable extends TreeTable {
                         // Set all below tasks of taskWrapper have parent is taskWrapper
                         GanttItemWrapper nextItem = (GanttItemWrapper) beanContainer.nextItemId(ganttItemWrapper);
                         while (nextItem != null && nextItem.getParent() == parent) {
-                            GanttTreeTable.this.setChildrenAllowed(ganttItemWrapper, true);
+                            beanContainer.setChildrenAllowed(ganttItemWrapper, true);
                             nextItem.updateParentRelationship(ganttItemWrapper);
-                            GanttTreeTable.this.setParent(nextItem, ganttItemWrapper);
+                            beanContainer.setParent(nextItem, ganttItemWrapper);
                             EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttTreeTable.this, nextItem));
                         }
 
                         if (ganttItemWrapper.hasSubTasks()) {
                             ganttItemWrapper.calculateDatesByChildTasks();
                         }
-                        GanttTreeTable.this.setChildrenAllowed(ganttItemWrapper, ganttItemWrapper.hasSubTasks());
+                        beanContainer.setChildrenAllowed(ganttItemWrapper, ganttItemWrapper.hasSubTasks());
                         parent.calculateDatesByChildTasks();
-                        GanttTreeTable.this.setChildrenAllowed(parent, parent.hasSubTasks());
+                        beanContainer.setChildrenAllowed(parent, parent.hasSubTasks());
 
                         if (parent.getParent() != null) {
                             parent.getParent().calculateDatesByChildTasks();
@@ -564,11 +564,11 @@ public class GanttTreeTable extends TreeTable {
                             GanttItemWrapper prevItem = (GanttItemWrapper) beanContainer.prevItemId(ganttItemWrapper);
                             beanContainer.addItemAfter(prevItem, newGanttItem);
                             gantt.addTask(index, newGanttItem);
-                            GanttTreeTable.this.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
+                            beanContainer.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
 
                             if (ganttItemWrapper.getParent() != null) {
                                 GanttItemWrapper parentTask = ganttItemWrapper.getParent();
-                                GanttTreeTable.this.setParent(newGanttItem, parentTask);
+                                beanContainer.setParent(newGanttItem, parentTask);
                                 newGanttItem.updateParentRelationship(parentTask);
                                 parentTask.calculateDatesByChildTasks();
                             }
@@ -598,18 +598,18 @@ public class GanttTreeTable extends TreeTable {
                     gantt.addTask(index, newGanttItem);
 
                     if (ganttItemWrapper.hasSubTasks()) {
-                        GanttTreeTable.this.setParent(newGanttItem, ganttItemWrapper);
+                        beanContainer.setParent(newGanttItem, ganttItemWrapper);
                         newGanttItem.updateParentRelationship(ganttItemWrapper);
                         ganttItemWrapper.calculateDatesByChildTasks();
                     } else if (ganttItemWrapper.getParent() != null) {
                         GanttItemWrapper parentTask = ganttItemWrapper.getParent();
-                        GanttTreeTable.this.setParent(newGanttItem, parentTask);
+                        beanContainer.setParent(newGanttItem, parentTask);
                         newGanttItem.updateParentRelationship(parentTask);
                         parentTask.calculateDatesByChildTasks();
                     }
-                    GanttTreeTable.this.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
+                    beanContainer.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
                     calculateWholeGanttIndexes();
-                    GanttTreeTable.this.refreshRowCache();
+                    refreshRowCache();
                 }
             });
 
