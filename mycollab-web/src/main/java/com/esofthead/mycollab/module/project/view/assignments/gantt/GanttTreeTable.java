@@ -594,17 +594,18 @@ public class GanttTreeTable extends TreeTable {
                     newTask.setsAccountId(AppContext.getAccountId());
                     GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
                     newGanttItem.setGanttIndex(index);
-                    beanContainer.addItemAfter(ganttItemWrapper, newGanttItem);
                     gantt.addTask(index, newGanttItem);
 
                     if (ganttItemWrapper.hasSubTasks()) {
-                        beanContainer.setParent(newGanttItem, ganttItemWrapper);
                         newGanttItem.updateParentRelationship(ganttItemWrapper);
+                        beanContainer.setParent(newGanttItem, ganttItemWrapper);
+                        beanContainer.addItemAfter(ganttItemWrapper, newGanttItem);
                         ganttItemWrapper.calculateDatesByChildTasks();
                     } else if (ganttItemWrapper.getParent() != null) {
                         GanttItemWrapper parentTask = ganttItemWrapper.getParent();
-                        beanContainer.setParent(newGanttItem, parentTask);
                         newGanttItem.updateParentRelationship(parentTask);
+                        beanContainer.setParent(newGanttItem, parentTask);
+                        beanContainer.addItemAfter(ganttItemWrapper, newGanttItem);
                         parentTask.calculateDatesByChildTasks();
                     }
                     beanContainer.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());

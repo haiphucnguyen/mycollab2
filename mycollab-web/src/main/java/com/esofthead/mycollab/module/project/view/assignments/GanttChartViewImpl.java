@@ -24,6 +24,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.vaadin.data.Property;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -68,7 +69,7 @@ public class GanttChartViewImpl extends AbstractLazyPageView implements GanttCha
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withStyleName("hdr-view").withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        Label headerText = new Label("Gantt chart", ContentMode.HTML);
+        Label headerText = new Label(FontAwesome.BAR_CHART_O.getHtml() + " Gantt chart", ContentMode.HTML);
         headerText.setStyleName(ValoTheme.LABEL_H2);
         CssLayout headerWrapper = new CssLayout();
         headerWrapper.addComponent(headerText);

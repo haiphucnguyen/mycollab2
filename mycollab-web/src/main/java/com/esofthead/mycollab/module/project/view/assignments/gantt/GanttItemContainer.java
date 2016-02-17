@@ -56,10 +56,10 @@ public class GanttItemContainer extends BeanItemContainer<GanttItemWrapper> impl
     @Override
     public BeanItem<GanttItemWrapper> addItem(Object itemId) {
         GanttItemWrapper ganttItemWrapper = (GanttItemWrapper) itemId;
-        BeanItem<GanttItemWrapper> item = super.addItem(ganttItemWrapper);
         if (ganttItemWrapper.getParent() == null) {
             rootItems.add(ganttItemWrapper);
         }
+        BeanItem<GanttItemWrapper> item = super.addItem(ganttItemWrapper);
         return item;
     }
 

@@ -33,7 +33,7 @@
     <result column="parentTaskId" property="parentTaskId" jdbcType="INTEGER"/>
     <result column="milestoneId" property="milestoneId" jdbcType="INTEGER"/>
     <collection property="subTasks" ofType="com.esofthead.mycollab.module.project.domain.TaskGanttItem"
-          column="id" select="selectSubTasks"/>
+          column="{type=type, id=id}" select="selectSubTasks"/>
   </resultMap>
 
   <resultMap id="MilestoneGanttItem" type="com.esofthead.mycollab.module.project.domain.MilestoneGanttItem"
@@ -182,7 +182,7 @@
     ORDER BY ISNULL(ganttindex), ganttindex ASC, startdate ASC, enddate ASC
   </select>
 
-  <select id="selectSubTasks" resultMap="TaskGanttItem" parameterType="Integer" lang="velocity">
+  <select id="selectSubTasks" resultMap="TaskGanttItem" lang="velocity">
     SELECT m_prj_task.projectid AS prjId, m_prj_task.taskname AS name, m_prj_task.assignUser,
       m_prj_task.startdate AS startDate, m_prj_task.enddate AS endDate, m_prj_task.status,
       m_prj_task.id, m_prj_task.deadline,
@@ -205,7 +205,7 @@
       LEFT OUTER JOIN m_prj_predecessor AS dep_predecessor ON (m_prj_task.id=dep_predecessor.descId AND
         dep_predecessor.descType='Project-Task')
       LEFT OUTER JOIN m_prj_task AS dep_task ON (dep_predecessor.sourceId=dep_task.id)
-    WHERE m_prj_task.parentTaskId = @{id}
+    WHERE m_prj_task.parentTaskId = @{id} AND 'Project-Task' = @{type}
     ORDER BY ISNULL(m_prj_task.ganttindex), m_prj_task.ganttindex ASC, m_prj_task.startdate ASC, m_prj_task.enddate ASC
   </select>
 </mapper>
