@@ -631,7 +631,7 @@ public class GanttTreeTable extends TreeTable {
                                 @Override
                                 public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
-                                        removeTask(ganttItemWrapper);
+                                        removeAssignments(ganttItemWrapper);
                                     }
                                 }
                             });
@@ -639,16 +639,15 @@ public class GanttTreeTable extends TreeTable {
             });
         }
 
-        private void removeTask(GanttItemWrapper task) {
+        private void removeAssignments(GanttItemWrapper task) {
             EventBusFactory.getInstance().post(new GanttEvent.DeleteGanttItemUpdateToQueue(GanttTreeTable.this, task));
-            beanContainer.removeItem(task);
             gantt.removeStep(task.getStep());
             gantt.markAsDirtyRecursive();
 
             GanttItemWrapper parentTask = task.getParent();
             if (parentTask != null) {
                 parentTask.removeSubTask(task);
-                GanttTreeTable.this.setChildrenAllowed(parentTask, parentTask.hasSubTasks());
+                beanContainer.setChildrenAllowed(parentTask, parentTask.hasSubTasks());
             }
 
             if (task.hasSubTasks()) {
@@ -656,10 +655,10 @@ public class GanttTreeTable extends TreeTable {
                 while (iter.hasNext()) {
                     GanttItemWrapper subTask = iter.next();
                     iter.remove();
-                    removeTask(subTask);
+                    removeAssignments(subTask);
                 }
             }
-
+            beanContainer.removeItem(task);
             if (parentTask != null) {
                 parentTask.calculateDatesByChildTasks();
             }
