@@ -25,16 +25,16 @@ class DeleteObsoleteAccountJob extends GenericQuartzJobBean {
 
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
-    val billingAccountExample = new BillingAccountExample
-    billingAccountExample.createCriteria().andCreatedtimeLessThan(new LocalDateTime().minusDays(60).toDate).
-      andStatusEqualTo(AccountStatusConstants.TRIAL)
-
-    import scala.collection.JavaConverters._
-    val obsoleteAccounts = billingAccountMapper.selectByExample(billingAccountExample).asScala.toList
-    for (obsoleteAccount <- obsoleteAccounts) {
-      val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)
-      asyncEventBus.post(deleteAccountEvent)
-    }
-    billingAccountMapper.deleteByExample(billingAccountExample)
+//    val billingAccountExample = new BillingAccountExample
+//    billingAccountExample.createCriteria().andCreatedtimeLessThan(new LocalDateTime().minusDays(60).toDate).
+//      andStatusEqualTo(AccountStatusConstants.TRIAL)
+//
+//    import scala.collection.JavaConverters._
+//    val obsoleteAccounts = billingAccountMapper.selectByExample(billingAccountExample).asScala.toList
+//    for (obsoleteAccount <- obsoleteAccounts) {
+//      val deleteAccountEvent = new DeleteAccountEvent(obsoleteAccount.getId, null)
+//      asyncEventBus.post(deleteAccountEvent)
+//    }
+//    billingAccountMapper.deleteByExample(billingAccountExample)
   }
 }

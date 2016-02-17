@@ -33,7 +33,7 @@ public class LiveInstanceMonitorController {
             instance.setLastupdateddate(new DateTime().toDate());
             liveInstanceMapper.insert(instance);
         } else {
-            List<LiveInstance> liveInstances =  liveInstanceMapper.selectByExample(ex);
+            List<LiveInstance> liveInstances = liveInstanceMapper.selectByExample(ex);
             if (liveInstances.size() > 0) {
                 LiveInstance oldInstance = liveInstances.get(0);
                 instance.setId(oldInstance.getId());

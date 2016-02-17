@@ -18,14 +18,18 @@
       <th>Installed time</th>
       <th>Last accessed time</th>
       <th>Properties</th>
+      <th>Num of Users</th>
+      <th>Num of Projects</th>
     </tr>
     #foreach( $instance in $instances )
     <tr>
-      <th>$!instance.appVersion</th>
-      <th>$!instance.javaVersion</th>
-      <th>$!instance.installedDate</th>
-      <th>$!instance.lastUpdatedDate</th>
-      <th>$!instance.sysProperties</th>
+      <th>$!instance.appversion</th>
+      <th>$!instance.javaversion</th>
+      <th>$!instance.installeddate</th>
+      <th>$!instance.lastupdateddate</th>
+      <th>$!instance.sysproperties</th>
+      <th>$!instance.numusers</th>
+      <th>$!instance.numprojects</th>
     </tr>
     #end
   </table>
