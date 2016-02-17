@@ -97,11 +97,11 @@ public class GanttChartViewPresenter extends AbstractPresenter<GanttChartView> {
                 @Subscribe
                 @Override
                 public void handle(GanttEvent.DeleteGanttItemUpdateToQueue event) {
-//                    GanttItemWrapper item = (GanttItemWrapper) event.getData();
-//                    if (queueSetTasksUpdate.contains(item.getTask())) {
-//                        queueSetTasksUpdate.remove(item.getTask());
-//                    }
-//                    queueSetTasksDelete.add(item.getTask());
+                    GanttItemWrapper item = (GanttItemWrapper) event.getData();
+                    if (queueSetTasksUpdate.contains(item.getTask())) {
+                        queueSetTasksUpdate.remove(item.getTask());
+                    }
+                    queueSetTasksDelete.add(item.getTask());
                 }
             };
 

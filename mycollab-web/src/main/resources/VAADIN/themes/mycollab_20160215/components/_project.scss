@@ -78,6 +78,9 @@
     * :after {
       display: none;
     }
+    .header {
+      @include text-ellipsis;
+    }
     .v-popupbutton {
       border: 1px solid $my-separator-color;
       border-radius: 3px;

@@ -1,3 +1,11 @@
+.text-ellipsis a {
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /**
  * Checks if a list contains a certain value.
  * 
@@ -1541,6 +1549,14 @@ div.v-layout.v-horizontal.v-widget {
 
 .Vaadin-Icons {
 	font-family: "Vaadin-Icons";
+}
+
+.text-ellipsis a {
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 a {
@@ -15179,6 +15195,12 @@ div .addview-layout-body .control-buttons {
 
 .v-horizontal.project-info * :after {
 	display: none;
+}
+
+.v-horizontal.project-info .header {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .v-horizontal.project-info .v-popupbutton {
