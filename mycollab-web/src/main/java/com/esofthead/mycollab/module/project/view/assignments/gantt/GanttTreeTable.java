@@ -498,9 +498,9 @@ public class GanttTreeTable extends TreeTable {
                     GanttItemWrapper preItemWrapper = beanContainer.prevItemId(ganttItemWrapper);
                     if (preItemWrapper != null && preItemWrapper != ganttItemWrapper.getParent()) {
                         ganttItemWrapper.updateParentRelationship(preItemWrapper);
-                        GanttTreeTable.this.setChildrenAllowed(preItemWrapper, true);
-                        GanttTreeTable.this.setParent(ganttItemWrapper, preItemWrapper);
                         preItemWrapper.calculateDatesByChildTasks();
+                        beanContainer.setChildrenAllowed(preItemWrapper, true);
+                        beanContainer.setParent(ganttItemWrapper, preItemWrapper);
                         GanttTreeTable.this.setCollapsed(preItemWrapper, false);
                         GanttTreeTable.this.refreshRowCache();
                         EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue
@@ -522,8 +522,8 @@ public class GanttTreeTable extends TreeTable {
                         // Set all below tasks of taskWrapper have parent is taskWrapper
                         GanttItemWrapper nextItem = (GanttItemWrapper) beanContainer.nextItemId(ganttItemWrapper);
                         while (nextItem != null && nextItem.getParent() == parent) {
-                            beanContainer.setChildrenAllowed(ganttItemWrapper, true);
                             nextItem.updateParentRelationship(ganttItemWrapper);
+                            beanContainer.setChildrenAllowed(ganttItemWrapper, true);
                             beanContainer.setParent(nextItem, ganttItemWrapper);
                             EventBusFactory.getInstance().post(new GanttEvent.AddGanttItemUpdateToQueue(GanttTreeTable.this, nextItem));
                         }
@@ -561,7 +561,7 @@ public class GanttTreeTable extends TreeTable {
                             newTask.setsAccountId(AppContext.getAccountId());
                             GanttItemWrapper newGanttItem = new GanttItemWrapper(gantt, newTask);
                             newGanttItem.setGanttIndex(index + 1);
-                            GanttItemWrapper prevItem = (GanttItemWrapper) beanContainer.prevItemId(ganttItemWrapper);
+                            GanttItemWrapper prevItem = beanContainer.prevItemId(ganttItemWrapper);
                             beanContainer.addItemAfter(prevItem, newGanttItem);
                             gantt.addTask(index, newGanttItem);
                             beanContainer.setChildrenAllowed(newGanttItem, newGanttItem.hasSubTasks());
