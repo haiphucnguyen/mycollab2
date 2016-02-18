@@ -111,8 +111,6 @@ public abstract class PopupBeanFieldBuilder<B> {
         protected void doShow() {
             BeanItem item = new BeanItem(bean);
             fieldGroup = new BeanFieldGroup(bean.getClass());
-            fieldGroup.setBuffered(true);
-            fieldGroup.setItemDataSource(item);
 
             MVerticalLayout layout = getWrapContent();
             layout.removeAllComponents();
@@ -124,7 +122,9 @@ public abstract class PopupBeanFieldBuilder<B> {
                 new Restrain((AbstractComponent) field).setMaxWidth("200px");
             }
 
+            fieldGroup.setBuffered(true);
             fieldGroup.bind(field, bindProperty);
+            fieldGroup.setItemDataSource(item);
             field.setEnabled(hasPermission);
             if (!hasPermission) {
                 layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
