@@ -271,8 +271,9 @@ public class GanttItemWrapper {
             if (OptionI18nEnum.BugStatus.Resolved.name().equals(task.getStatus()) || OptionI18nEnum.BugStatus
                     .Verified.equals(task.getStatus())) {
                 return 100d;
+            } else {
+                return MoreObjects.firstNonNull(task.getProgress(), 0d);
             }
-            return 0d;
         } else {
             return 0d;
         }
