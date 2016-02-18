@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.MonitorItemService;
@@ -28,6 +29,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectSubscribersCom
 import com.esofthead.mycollab.module.project.ui.form.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -35,6 +37,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
+import com.google.common.eventbus.AsyncEventBus;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
@@ -65,7 +68,6 @@ public class BugAddWindow extends Window {
     }
 
     private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
-
         @Override
         public void setBean(final SimpleBug item) {
             this.setFormLayoutFactory(new FormLayoutFactory());
@@ -110,13 +112,21 @@ public class BugAddWindow extends Window {
                                 bugId = bean.getId();
                             }
 
-                            ProjectFormAttachmentUploadField uploadField = ((BugEditFormFieldFactory) fieldFactory).getAttachmentUploadField();
+                            AsyncEventBus asyncEventBus = ApplicationContextUtil.getSpringBean(AsyncEventBus.class);
+                            // save component
+                            BugEditFormFieldFactory bugEditFormFieldFactory = (BugEditFormFieldFactory) fieldFactory;
+                            BugRelatedItemService bugRelatedItemService = ApplicationContextUtil.getSpringBean(BugRelatedItemService.class);
+                            bugRelatedItemService.saveAffectedVersionsOfBug(bugId, bugEditFormFieldFactory.getAffectedVersionSelect().getSelectedItems());
+                            bugRelatedItemService.saveComponentsOfBug(bugId, bugEditFormFieldFactory.getComponentSelect().getSelectedItems());
+                            asyncEventBus.post(new CleanCacheEvent(AppContext.getAccountId(), new Class[]{BugService.class}));
+
+                            ProjectFormAttachmentUploadField uploadField = bugEditFormFieldFactory.getAttachmentUploadField();
                             uploadField.saveContentsToRepo(bean.getProjectid(),
                                     ProjectTypeConstants.BUG, bugId);
                             EventBusFactory.getInstance().post(new BugEvent.NewBugAdded(BugAddWindow.this, bugId));
                             EventBusFactory.getInstance().post(new AssignmentEvent.NewAssignmentAdd(BugAddWindow.this,
                                     ProjectTypeConstants.BUG, bugId));
-                            ProjectSubscribersComp subcribersComp = ((BugEditFormFieldFactory) fieldFactory).getSubscribersComp();
+                            ProjectSubscribersComp subcribersComp = bugEditFormFieldFactory.getSubscribersComp();
                             List<String> followers = subcribersComp.getFollowers();
                             if (followers.size() > 0) {
                                 List<MonitorItem> monitorItems = new ArrayList<>();
