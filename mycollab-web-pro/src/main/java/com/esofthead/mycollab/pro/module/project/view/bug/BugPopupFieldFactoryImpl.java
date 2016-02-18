@@ -34,14 +34,14 @@ import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.WatchersMultiSelection;
+import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.LazyPopupView;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.esofthead.mycollab.pro.vaadin.web.ui.field.PopupBeanFieldBuilder;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
@@ -49,6 +49,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.teemu.VaadinIcons;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
@@ -63,7 +64,7 @@ import java.util.List;
 public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
 
     @Override
-    public PopupView createBugPriorityPopupField(final SimpleBug bug) {
+    public PopupView createPriorityPopupField(final SimpleBug bug) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -83,7 +84,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     }
 
     @Override
-    public PopupView createBugAssigneePopupField(final SimpleBug bug) {
+    public PopupView createAssigneePopupField(final SimpleBug bug) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -114,7 +115,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     }
 
     @Override
-    public PopupView createBugCommentsPopupField(SimpleBug bug) {
+    public PopupView createCommentsPopupField(SimpleBug bug) {
         BugCommentsPopupView view = new BugCommentsPopupView(bug);
         view.setDescription("Click to edit");
         return view;
@@ -196,7 +197,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     }
 
     @Override
-    public PopupView createBugStatusPopupField(final SimpleBug bug) {
+    public PopupView createStatusPopupField(final SimpleBug bug) {
         final PopupView view = new BugStatusPopupView(bug);
         view.setDescription("Click to edit");
         return view;
@@ -331,7 +332,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     }
 
     @Override
-    public PopupView createBugMilestonePopupField(final SimpleBug bug) {
+    public PopupView createMilestonePopupField(final SimpleBug bug) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -356,7 +357,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     }
 
     @Override
-    public PopupView createBugDeadlinePopupField(final SimpleBug bug) {
+    public PopupView createDeadlinePopupField(final SimpleBug bug) {
         PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
             @Override
             protected String generateSmallContentAsHtml() {
@@ -377,12 +378,54 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
     }
 
     @Override
-    public PopupView createBugNonbillableHoursPopupField(SimpleBug bug) {
+    public PopupView createStartDatePopupField(final SimpleBug bug) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                if (bug.getStartdate() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(VaadinIcons.TIME_FORWARD.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return String.format(" %s %s", VaadinIcons.TIME_FORWARD.getHtml(), AppContext.formatPrettyTime(bug.getStartdate()));
+                }
+            }
+        };
+        builder.withBean(bug).withBindProperty("startdate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_START_DATE))
+                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getStartdate())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+        return builder.build();
+    }
+
+    @Override
+    public PopupView createEndDatePopupField(final SimpleBug bug) {
+        PopupBeanFieldBuilder builder = new PopupBeanFieldBuilder() {
+            @Override
+            protected String generateSmallContentAsHtml() {
+                if (bug.getEnddate() == null) {
+                    Div divHint = new Div().setCSSClass("nonValue");
+                    divHint.appendText(VaadinIcons.TIME_BACKWARD.getHtml());
+                    divHint.appendChild(new Span().appendText(" Click to edit " + caption).setCSSClass("hide"));
+                    return divHint.write();
+                } else {
+                    return String.format(" %s %s", VaadinIcons.TIME_BACKWARD.getHtml(), AppContext.formatPrettyTime(bug.getEnddate()));
+                }
+            }
+        };
+        builder.withBean(bug).withBindProperty("enddate").withCaption(AppContext.getMessage(BugI18nEnum.FORM_END_DATE))
+                .withField(new DateField()).withService(ApplicationContextUtil.getSpringBean(BugService.class)).withValue(bug.getEnddate())
+                .withHasPermission(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+        return builder.build();
+    }
+
+    @Override
+    public PopupView createNonbillableHoursPopupField(SimpleBug bug) {
         return new BugBillableHoursPopupField(bug, false);
     }
 
     @Override
-    public PopupView createBugBillableHoursPopupField(SimpleBug bug) {
+    public PopupView createBillableHoursPopupField(SimpleBug bug) {
         return new BugBillableHoursPopupField(bug, true);
     }
 
