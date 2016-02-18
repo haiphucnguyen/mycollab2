@@ -336,7 +336,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                 }
             });
             new Restrain(dragLayoutContainer).setMinHeight("50px").setMaxHeight((Page.getCurrent()
-                    .getBrowserWindowHeight() - 410) + "px");
+                    .getBrowserWindowHeight() - 450) + "px");
 
             HorizontalLayout headerLayout = new HorizontalLayout();
             headerLayout.setWidth("100%");
