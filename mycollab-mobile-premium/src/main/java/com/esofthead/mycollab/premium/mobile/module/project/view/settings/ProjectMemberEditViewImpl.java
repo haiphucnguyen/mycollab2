@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.premium.module.project.view.settings;
+package com.esofthead.mycollab.premium.mobile.module.project.view.settings;
 
 import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberEditView;

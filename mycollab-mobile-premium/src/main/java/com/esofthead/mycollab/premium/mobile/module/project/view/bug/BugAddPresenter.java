@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.premium.module.project.view.bug;
+package com.esofthead.mycollab.premium.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;

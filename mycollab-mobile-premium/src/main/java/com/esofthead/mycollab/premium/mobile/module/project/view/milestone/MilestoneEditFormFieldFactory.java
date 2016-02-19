@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.premium.module.project.view.milestone;
+package com.esofthead.mycollab.premium.mobile.module.project.view.milestone;
 
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;
 import com.esofthead.mycollab.mobile.ui.I18nValueComboBox;

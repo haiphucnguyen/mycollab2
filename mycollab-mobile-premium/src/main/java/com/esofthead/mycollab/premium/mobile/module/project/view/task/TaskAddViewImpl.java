@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.premium.module.project.view.task;
+package com.esofthead.mycollab.premium.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.mobile.module.project.view.settings.ProjectMemberSelectionField;

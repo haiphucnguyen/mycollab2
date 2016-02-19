@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.premium.module.project.view.task;
+package com.esofthead.mycollab.premium.mobile.module.project.view.task;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;

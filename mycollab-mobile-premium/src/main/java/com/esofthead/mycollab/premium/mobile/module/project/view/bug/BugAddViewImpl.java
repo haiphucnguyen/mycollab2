@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mobile.premium.module.project.view.bug;
+package com.esofthead.mycollab.premium.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
