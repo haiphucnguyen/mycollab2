@@ -1359,6 +1359,12 @@ $v-line-height--header:1.5em;
       box-sizing: border-box;
       width: 100%;
     }
+    &.tray {
+      background-color: #d9a437;
+      .v-Notification-description {
+        color: $my-white-color;
+      }
+    }
   }
 
   .v-Notification.humanized {
