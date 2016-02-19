@@ -110,6 +110,7 @@
   .v-touchkit-navbutton {
     &:after {
       content: "";
+      right: 0px !important;
     }
   }
 

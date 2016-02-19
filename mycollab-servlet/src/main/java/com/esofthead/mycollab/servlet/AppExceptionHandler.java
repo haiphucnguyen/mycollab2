@@ -65,6 +65,7 @@ public class AppExceptionHandler extends GenericHttpServlet {
 
         try {
             if ((status_code != null && status_code == 404) || ("404".equals(request.getParameter("param")))) {
+                String uri = request.getRequestURI();
                 LOG.error("Page 404: " + printRequest(request));
                 responsePage404(response);
             } else {
