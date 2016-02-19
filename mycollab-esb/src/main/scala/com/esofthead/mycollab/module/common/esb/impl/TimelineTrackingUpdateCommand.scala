@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component
   * @author MyCollab Ltd
   * @since 5.2.2
   */
-@Component class TimelineTrackingCommand extends GenericCommand {
+@Component class TimelineTrackingUpdateCommand extends GenericCommand {
   @Autowired var timelineMapper: TimelineTrackingMapper = _
 
   @AllowConcurrentEvents
@@ -46,7 +46,7 @@ import org.springframework.stereotype.Component
         val now = new LocalDate()
         criteria.andTypeEqualTo(event.typevar).andTypeidEqualTo(event.typeId).
           andFieldgroupEqualTo(event.fieldgroup).andSaccountidEqualTo(event.accountId).andFlagEqualTo(Byte.box(1))
-        ex.setOrderByClause("forDay DESC")
+        ex.setOrderByClause("forDay DESC, index DESC")
         if (event.extratypeid != null) {
           criteria.andExtratypeidEqualTo(event.extratypeid)
         }

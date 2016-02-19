@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import com.esofthead.mycollab.cache.CleanCacheEvent;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.event.TimelineTrackingAdjustIfEntityDeleteEvent;
 import com.esofthead.mycollab.common.event.TimelineTrackingUpdateEvent;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
@@ -199,7 +200,8 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     @Override
     public void removeWithSession(Task item, String username, Integer accountId) {
         super.removeWithSession(item, username, accountId);
-
+        asyncEventBus.post(new TimelineTrackingAdjustIfEntityDeleteEvent(ProjectTypeConstants.TASK, item.getId(), new
+                String[]{"status"}, item.getProjectid(), item.getSaccountid()));
     }
 
     @Override
