@@ -197,6 +197,12 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     }
 
     @Override
+    public void removeWithSession(Task item, String username, Integer accountId) {
+        super.removeWithSession(item, username, accountId);
+
+    }
+
+    @Override
     public List<GroupItem> getPrioritySummary(TaskSearchCriteria criteria) {
         return taskMapperExt.getPrioritySummary(criteria);
     }

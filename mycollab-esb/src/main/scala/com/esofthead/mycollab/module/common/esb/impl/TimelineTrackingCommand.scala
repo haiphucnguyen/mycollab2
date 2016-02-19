@@ -51,7 +51,7 @@ import org.springframework.stereotype.Component
           criteria.andExtratypeidEqualTo(event.extratypeid)
         }
         val items = timelineMapper.selectByExample(ex)
-        var isNew = true;
+        var isNew = true
         if (items != null && items.size() > 0) {
           val timeline = items.get(0)
           val forDay = new LocalDate(timeline.getForday)
@@ -59,7 +59,7 @@ import org.springframework.stereotype.Component
             if (event.fieldVal != timeline.getFieldval) {
               timeline.setFieldval(event.fieldVal)
               timelineMapper.updateByPrimaryKey(timeline)
-              isNew = false;
+              isNew = false
             }
           } else {
             val minusTimeline = new TimelineTracking
