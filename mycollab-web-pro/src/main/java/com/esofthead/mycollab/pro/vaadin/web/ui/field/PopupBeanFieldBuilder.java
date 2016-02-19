@@ -123,8 +123,8 @@ public abstract class PopupBeanFieldBuilder<B> {
             }
 
             fieldGroup.setBuffered(true);
-            fieldGroup.bind(field, bindProperty);
             fieldGroup.setItemDataSource(item);
+            fieldGroup.bind(field, bindProperty);
             field.setEnabled(hasPermission);
             if (!hasPermission) {
                 layout.add(new Label(AppContext.getMessage(GenericI18Enum.NOTIFICATION_NO_PERMISSION_DO_TASK)));
