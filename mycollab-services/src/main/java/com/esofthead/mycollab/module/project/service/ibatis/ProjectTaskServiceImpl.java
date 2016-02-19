@@ -34,6 +34,7 @@ import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.lock.DistributionLockUtil;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.TaskMapper;
@@ -109,14 +110,13 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     @Override
     public Integer saveWithSession(Task record, String username) {
         if (record.getPercentagecomplete() == null) {
-            record.setStatus(StatusI18nEnum.Open.name());
             record.setPercentagecomplete(0d);
         }
         if (record.getPercentagecomplete() == 100d) {
             record.setStatus(StatusI18nEnum.Closed.name());
         }
 
-        if (record.getStatus() == null) {
+        if (StringUtils.isBlank(record.getStatus())) {
             record.setStatus(StatusI18nEnum.Open.name());
         }
 

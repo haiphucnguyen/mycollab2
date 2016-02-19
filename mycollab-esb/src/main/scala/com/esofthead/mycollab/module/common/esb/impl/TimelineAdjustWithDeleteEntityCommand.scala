@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.common.esb.impl
 import java.util.concurrent.TimeUnit
 
 import com.esofthead.mycollab.common.dao.TimelineTrackingMapper
-import com.esofthead.mycollab.common.domain.TimelineTrackingExample
+import com.esofthead.mycollab.common.domain.{TimelineTracking, TimelineTrackingExample}
 import com.esofthead.mycollab.common.event.TimelineTrackingAdjustIfEntityDeleteEvent
 import com.esofthead.mycollab.lock.DistributionLockUtil
 import com.esofthead.mycollab.module.GenericCommand
@@ -25,14 +25,27 @@ import org.springframework.stereotype.Component
     val lock = DistributionLockUtil.getLock("timeline-" + event.accountId)
     try {
       if (lock.tryLock(120, TimeUnit.SECONDS)) {
-        val ex = new TimelineTrackingExample
-        val criteria = ex.createCriteria()
-        val now = new LocalDate()
-        ex.setOrderByClause("forDay DESC, index DESC")
-for (var fieldType <- event.fieldVals) {
-
-}
-          criteria.andSaccountidEqualTo(event.accountId).andTypeidEqualTo(event.typeId)
+        for (groupVal <- event.groupVals) {
+          val ex = new TimelineTrackingExample
+          ex.setOrderByClause("forDay DESC, id DESC")
+          val criteria = ex.createCriteria()
+          criteria.andSaccountidEqualTo(event.accountId).andTypeidEqualTo(event.typeId).
+            andFieldgroupEqualTo(groupVal).andExtratypeidEqualTo(event.extratypeid).andTypeEqualTo(event.typevar)
+          val items = timelineMapper.selectByExample(ex)
+          if (items.size() > 0) {
+            val item = items.get(0)
+            val minusTimeline = new TimelineTracking
+            minusTimeline.setType(event.typevar)
+            minusTimeline.setTypeid(event.typeId)
+            minusTimeline.setFieldgroup(groupVal)
+            minusTimeline.setFieldval(item.getFieldval)
+            minusTimeline.setExtratypeid(event.extratypeid)
+            minusTimeline.setSaccountid(event.accountId)
+            minusTimeline.setForday(new LocalDate().toDate)
+            minusTimeline.setFlag(Byte.box(-1))
+            timelineMapper.insert(minusTimeline)
+          }
+        }
       }
     } finally {
       DistributionLockUtil.removeLock("timeline-" + event.accountId)

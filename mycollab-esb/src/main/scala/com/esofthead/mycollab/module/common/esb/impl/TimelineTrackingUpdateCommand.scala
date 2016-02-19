@@ -46,7 +46,7 @@ import org.springframework.stereotype.Component
         val now = new LocalDate()
         criteria.andTypeEqualTo(event.typevar).andTypeidEqualTo(event.typeId).
           andFieldgroupEqualTo(event.fieldgroup).andSaccountidEqualTo(event.accountId).andFlagEqualTo(Byte.box(1))
-        ex.setOrderByClause("forDay DESC, index DESC")
+        ex.setOrderByClause("forDay DESC, id DESC")
         if (event.extratypeid != null) {
           criteria.andExtratypeidEqualTo(event.extratypeid)
         }
