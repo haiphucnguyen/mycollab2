@@ -21,7 +21,7 @@ var mousePosition = {
 mousePosition.getMousePosition();
 
 var stickytooltip = {
-  tooltipoffsets: [20, -30], // additional x and y offset from mouse cursor
+  tooltipoffsets: [10, 15], // additional x and y offset from mouse cursor
                 // for tooltips
   fadeinspeed: 200, // duration of fade effect in milliseconds
 
@@ -36,7 +36,7 @@ var stickytooltip = {
     var x = position.x + this.tooltipoffsets[0], y = position.y + this.tooltipoffsets[1]
     var tipw = $tooltip.outerWidth(), tiph = $tooltip.outerHeight(),
     x = (x+tipw > $(document).scrollLeft() + $(window).width())? x - tipw - (stickytooltip.tooltipoffsets[0] * 2) : x
-    y = (y+tiph > $(document).scrollTop() + $(window).height())? $(document).scrollTop() + $(window).height()- tiph : y
+    y = (y+tiph > $(document).scrollTop() + $(window).height())? y - tiph - (stickytooltip.tooltipoffsets[1] * 2) : y
     $tooltip.css({left:x, top:y})
   },
 
