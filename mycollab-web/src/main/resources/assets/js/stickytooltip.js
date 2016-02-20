@@ -53,6 +53,10 @@ var stickytooltip = {
       stickytooltip.hidebox($, $tooltip)
     })
 
+    $tooltip.bind("mouseenter", function(){
+      stickytooltip.hidebox($, $tooltip)
+    })
+
     $tooltip.bind('click', function(e) { 
       e.stopPropagation()
     })
