@@ -1,23 +1,6 @@
-/**
- * This file is part of mycollab-scheduler.
- *
- * mycollab-scheduler is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-scheduler is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-scheduler.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.schedule.email.crm.service
 
 import com.esofthead.mycollab.common.MonitorTypeConstants
-import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification
 import com.esofthead.mycollab.common.i18n.GenericI18Enum
 import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.html.{FormatUtils, LinkUtils}
@@ -27,13 +10,12 @@ import com.esofthead.mycollab.module.crm.i18n.CallI18nEnum
 import com.esofthead.mycollab.module.crm.service.CallService
 import com.esofthead.mycollab.module.mail.MailUtils
 import com.esofthead.mycollab.module.user.AccountLinkGenerator
-import com.esofthead.mycollab.module.user.domain.SimpleUser
 import com.esofthead.mycollab.module.user.service.UserService
 import com.esofthead.mycollab.schedule.email.crm.CallRelayEmailNotificationAction
 import com.esofthead.mycollab.schedule.email.format.{DateTimeFieldFormat, FieldFormat}
 import com.esofthead.mycollab.schedule.email.{ItemFieldMapper, MailContext}
 import com.esofthead.mycollab.spring.ApplicationContextUtil
-import com.hp.gagawa.java.elements.{A, Img, Span}
+import com.hp.gagawa.java.elements.Span
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.config.BeanDefinition
 import org.springframework.context.annotation.Scope

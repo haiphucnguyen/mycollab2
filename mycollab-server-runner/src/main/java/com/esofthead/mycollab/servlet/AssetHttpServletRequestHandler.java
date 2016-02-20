@@ -33,7 +33,6 @@ import java.io.InputStream;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-
 public class AssetHttpServletRequestHandler extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -43,8 +42,7 @@ public class AssetHttpServletRequestHandler extends HttpServlet {
         String path = request.getPathInfo();
         String resourcePath = "assets" + path;
 
-        InputStream inputStream = AssetHttpServletRequestHandler.class
-                .getClassLoader().getResourceAsStream(resourcePath);
+        InputStream inputStream = AssetHttpServletRequestHandler.class.getClassLoader().getResourceAsStream(resourcePath);
 
         if (inputStream == null) {
             resourcePath = "VAADIN/themes/mycollab" + path;

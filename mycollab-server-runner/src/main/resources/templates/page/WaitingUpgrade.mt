@@ -115,7 +115,6 @@ h3 {
           setTimeout(checkUpgradeReady, 5000);
         }
       });
-
     }
 </script>
 </html>
