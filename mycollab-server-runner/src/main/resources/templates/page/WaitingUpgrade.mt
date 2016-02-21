@@ -100,10 +100,10 @@ h3 {
     });
     function checkUpgradeReady(){
       var urlPost = "/it/upgrade_status";
-      $.ajax({type: 'GET', url: urlPost,
+      $.ajax({cache:false, type: 'GET', url: urlPost,
         success: function(data) {
           if(data!=null){
-            if(data.length > 0) {
+            if(data == "Still upgrading") {
               setTimeout(checkUpgradeReady, 5000);
             } else {
               alert("MyCollab is upgraded successfully. Redirect to the app?");

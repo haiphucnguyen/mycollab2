@@ -123,7 +123,7 @@ public class UpgradeConfirmWindow extends Window {
                             TimeUnit.SECONDS.sleep(5);
                             ServerInstance.getInstance().upgrade(installerFile);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            LOG.error("Error while upgrade", e);
                         }
                     }
                 }).start();

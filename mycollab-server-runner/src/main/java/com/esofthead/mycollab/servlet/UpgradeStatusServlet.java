@@ -33,9 +33,14 @@ public class UpgradeStatusServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Cache-Control", "no-cache,no-store");
         PrintWriter out = response.getWriter();
         if (ServerInstance.getInstance().isUpgrading()) {
+            System.out.println("Status " + ServerInstance.getInstance());
             out.write("Still upgrading");
+        } else {
+            System.out.println("Status1" + ServerInstance.getInstance());
+            out.write("Finish");
         }
     }
 }
