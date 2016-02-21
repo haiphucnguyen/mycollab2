@@ -36,10 +36,8 @@ public class UpgradeStatusServlet extends HttpServlet {
         response.setHeader("Cache-Control", "no-cache,no-store");
         PrintWriter out = response.getWriter();
         if (ServerInstance.getInstance().isUpgrading()) {
-            System.out.println("Status " + ServerInstance.getInstance());
             out.write("Still upgrading");
         } else {
-            System.out.println("Status1" + ServerInstance.getInstance());
             out.write("Finish");
         }
     }
