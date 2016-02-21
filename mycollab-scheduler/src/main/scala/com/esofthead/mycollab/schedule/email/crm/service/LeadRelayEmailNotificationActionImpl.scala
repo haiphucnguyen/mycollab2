@@ -46,7 +46,6 @@ import org.springframework.stereotype.Component
 @Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 class LeadRelayEmailNotificationActionImpl extends CrmDefaultSendingRelayEmailAction[SimpleLead] with LeadRelayEmailNotificationAction {
-
     @Autowired var leadService: LeadService = _
     private val mapper = new LeadFieldNameMapper
 
