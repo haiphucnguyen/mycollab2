@@ -76,7 +76,6 @@ public class CheckUpdateJob extends GenericQuartzJobBean {
                         downloadMyCollabThread.start();
                         downloadMyCollabThread.join();
                         File installerFile = downloadMyCollabThread.tmpFile;
-                        installerFile = new File("/Users/baohan/upgrade.zip");
                         if (installerFile.exists() && installerFile.isFile() && installerFile.length() > 0 && isValid(installerFile)) {
                             latestFileDownloadedPath = installerFile.getAbsolutePath();
                             NotificationBroadcaster.removeGlobalNotification(NewUpdateAvailableNotification.class);

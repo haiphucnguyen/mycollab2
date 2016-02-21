@@ -65,6 +65,10 @@ public class UpgradeConfirmWindow extends Window {
                         .appendText("Download link"));
         content.with(new Label(manualInstallLink.write(), ContentMode.HTML));
 
+        Div manualUpgradeHowtoLink = new Div().appendText("&nbsp;&nbsp;&nbsp;&nbsp;Manual upgrade: ")
+                .appendChild(new A("https://community.mycollab.com/administration/upgrade/", "_blank").appendText("Link"));
+        content.with(new Label(manualUpgradeHowtoLink.write(), ContentMode.HTML));
+
         Div releaseNoteLink = new Div().appendText("&nbsp;&nbsp;&nbsp;&nbsp;Release Notes: ")
                 .appendChild(new A("https://community.mycollab.com/releases/", "_blank").appendText("Link"));
         content.with(new Label(releaseNoteLink.write(), ContentMode.HTML));
@@ -94,33 +98,29 @@ public class UpgradeConfirmWindow extends Window {
     }
 
     private void navigateToWaitingUpgradePage() {
-        new Thread() {
-            public void run() {
-                if (installerFilePath != null) {
-                    File installerFile = new File(installerFilePath);
-                    if (installerFile.exists()) {
-                        ServerInstance.getInstance().preUpgrade();
-                        final String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
-                        Future<Void> access = currentUI.access(new Runnable() {
-                            @Override
-                            public void run() {
-                                currentUI.getPage().setLocation(locUrl);
-                                currentUI.push();
-                            }
-                        });
-
-                        try {
-                            access.get();
-                            TimeUnit.SECONDS.sleep(5);
-                            ServerInstance.getInstance().upgrade(installerFile);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+        if (installerFilePath != null) {
+            File installerFile = new File(installerFilePath);
+            if (installerFile.exists()) {
+                ServerInstance.getInstance().preUpgrade();
+                final String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
+                Future<Void> access = currentUI.access(new Runnable() {
+                    @Override
+                    public void run() {
+                        currentUI.getPage().setLocation(locUrl);
+                        currentUI.push();
                     }
-                } else {
-                    throw new IgnoreException("Can not upgrade MyCollab");
+                });
+
+                try {
+                    access.get();
+                    TimeUnit.SECONDS.sleep(5);
+                    ServerInstance.getInstance().upgrade(installerFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }.start();
+        } else {
+            throw new IgnoreException("Can not upgrade MyCollab");
+        }
     }
 }

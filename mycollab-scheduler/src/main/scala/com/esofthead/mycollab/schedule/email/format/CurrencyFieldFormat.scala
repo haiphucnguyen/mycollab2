@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory
  * @author MyCollab Ltd.
  * @since 4.6.0
  */
-classCurrencyFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
+class CurrencyFieldFormat(fieldName: String, displayName: Enum[_]) extends FieldFormat(fieldName, displayName) {
     private val LOG = LoggerFactory.getLogger(classOf[CurrencyFieldFormat])
 
     override def formatField(context: MailContext[_]): String = {
