@@ -25,6 +25,8 @@ import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -37,6 +39,7 @@ import java.util.concurrent.TimeUnit;
  * @since 5.0.4
  */
 public class UpgradeConfirmWindow extends Window {
+    private static final Logger LOG = LoggerFactory.getLogger(UpgradeConfirmWindow.class);
 
     private static String headerTemplate = "MyCollab just got better . For the " +
             "enhancements and security purpose, you should upgrade to the latest version";
@@ -99,25 +102,31 @@ public class UpgradeConfirmWindow extends Window {
 
     private void navigateToWaitingUpgradePage() {
         if (installerFilePath != null) {
-            File installerFile = new File(installerFilePath);
+            final File installerFile = new File(installerFilePath);
             if (installerFile.exists()) {
-                ServerInstance.getInstance().preUpgrade();
-                final String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
-                Future<Void> access = currentUI.access(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        currentUI.getPage().setLocation(locUrl);
-                        currentUI.push();
-                    }
-                });
+                        ServerInstance.getInstance().preUpgrade();
+                        final String locUrl = SiteConfiguration.getSiteUrl(AppContext.getSubDomain()) + "it/upgrade";
+                        Future<Void> access = currentUI.access(new Runnable() {
+                            @Override
+                            public void run() {
+                                LOG.info("Redirect to the upgrade page " + locUrl);
+                                currentUI.getPage().setLocation(locUrl);
+                                currentUI.push();
+                            }
+                        });
 
-                try {
-                    access.get();
-                    TimeUnit.SECONDS.sleep(5);
-                    ServerInstance.getInstance().upgrade(installerFile);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                        try {
+                            access.get();
+                            TimeUnit.SECONDS.sleep(5);
+                            ServerInstance.getInstance().upgrade(installerFile);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         } else {
             throw new IgnoreException("Can not upgrade MyCollab");
