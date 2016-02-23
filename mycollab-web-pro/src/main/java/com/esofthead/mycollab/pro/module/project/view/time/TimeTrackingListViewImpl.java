@@ -157,7 +157,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private StreamResource constructStreamResource(ReportExportType exportType) {
-        List fields = Arrays.asList(TimeTableFieldDef.summary);
+        List fields = Arrays.asList(TimeTableFieldDef.summary());
         SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time Tracking", new
                 RpFieldsBuilder(fields), exportType, ItemTimeLoggingService.class, ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
@@ -234,15 +234,15 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     private AbstractTimeTrackingDisplayComp buildTimeTrackingComp(String groupBy) {
         if ("Date".equals(groupBy)) {
             return new TimeTrackingDateOrderComponent(Arrays.asList(
-                    TimeTableFieldDef.summary, TimeTableFieldDef.logUser,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-                    TimeTableFieldDef.id), this.tableClickListener);
+                    TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(),
+                    TimeTableFieldDef.id()), this.tableClickListener);
 
         } else if ("User".equals(groupBy)) {
             return new TimeTrackingUserOrderComponent(Arrays.asList(
-                    TimeTableFieldDef.summary, TimeTableFieldDef.logForDate,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable,
-                    TimeTableFieldDef.id), this.tableClickListener);
+                    TimeTableFieldDef.summary(), TimeTableFieldDef.logForDate(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(),
+                    TimeTableFieldDef.id()), this.tableClickListener);
         } else {
             throw new MyCollabException("Do not support view type: " + groupBy);
         }

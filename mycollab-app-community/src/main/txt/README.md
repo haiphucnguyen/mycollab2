@@ -47,6 +47,7 @@ Version 5.2.8
 * [Premium] Revise the Calendar view
 
 **Bug Fixes**
+* [Premium] Export project timelog is failed
 * Delete the selected resource is failed
 
 Version 5.2.7
