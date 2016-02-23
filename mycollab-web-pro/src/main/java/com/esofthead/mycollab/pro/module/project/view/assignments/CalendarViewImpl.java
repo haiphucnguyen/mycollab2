@@ -77,7 +77,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
             List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectGenericTask assignment : assignments) {
-                GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment);
+                GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment, false);
                 if (provider.containsEvent(assignmentEvent)) {
                     provider.removeEvent(assignmentEvent);
                     provider.addEvent(assignmentEvent);
@@ -342,7 +342,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
                         .getTotalNonBillableHours());
             }
         });
-        provider.loadEvents(searchCriteria);
+        provider.loadEvents(searchCriteria, false);
         calendar.setEventProvider(provider);
         calendar.markAsDirtyRecursive();
     }

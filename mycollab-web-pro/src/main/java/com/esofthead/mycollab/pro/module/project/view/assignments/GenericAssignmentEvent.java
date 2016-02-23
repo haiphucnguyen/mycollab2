@@ -28,10 +28,15 @@ import java.util.Date;
 public class GenericAssignmentEvent extends BasicEvent {
     private ProjectGenericTask assignment;
 
-    public GenericAssignmentEvent(ProjectGenericTask assignment) {
+    public GenericAssignmentEvent(ProjectGenericTask assignment, boolean showProject) {
         this.assignment = assignment;
         FontAwesome icon = ProjectAssetsManager.getAsset(assignment.getType());
-        this.setCaption(icon.getHtml() + " " + assignment.getName());
+        if (showProject) {
+            this.setCaption(String.format("%s [%s] %s", icon.getHtml(), assignment.getProjectShortName(), assignment.getName()));
+        } else {
+            this.setCaption(String.format("%s %s", icon.getHtml(), assignment.getName()));
+        }
+
         this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(AppContext.getUserLocale(), assignment.getType(),
                 assignment.getTypeId(), AppContext.getAccountId(), AppContext.getSiteUrl(), AppContext.getUserTimezone()));
         this.setAllDay(true);

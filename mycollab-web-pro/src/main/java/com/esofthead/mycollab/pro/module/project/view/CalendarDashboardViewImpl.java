@@ -5,18 +5,28 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.ProjectPermissionChecker;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.service.*;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
+import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
+import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
 import com.esofthead.mycollab.pro.module.project.view.assignments.CalendarSearchPanel;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
+import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -75,7 +85,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             List<ProjectGenericTask> assignments = assignmentService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
             GenericAssignmentProvider provider = (GenericAssignmentProvider) calendar.getEventProvider();
             for (ProjectGenericTask assignment : assignments) {
-                GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment);
+                GenericAssignmentEvent assignmentEvent = new GenericAssignmentEvent(assignment, true);
                 if (provider.containsEvent(assignmentEvent)) {
                     provider.removeEvent(assignmentEvent);
                     provider.addEvent(assignmentEvent);
@@ -139,27 +149,27 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
                 ProjectGenericTask assignment = calendarEvent.getAssignment();
-//                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
-//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-//                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-//                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
-//                    UI.getCurrent().addWindow(new TaskAddWindow(task));
-//                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
-//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-//                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-//                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
-//                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-//                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
-//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-//                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-//                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
-//                    UI.getCurrent().addWindow(new BugAddWindow(bug));
-//                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
-//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-//                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
-//                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
-//                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
-//                }
+                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.TASKS)) {
+                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new TaskAddWindow(task));
+                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.MILESTONES)) {
+                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.BUGS)) {
+                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new BugAddWindow(bug));
+                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
+                        ProjectPermissionChecker.canWrite(assignment.getProjectId(), ProjectRolePermissionCollections.RISKS)) {
+                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
+                }
             }
         });
 
@@ -330,7 +340,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         if (CollectionUtils.isNotEmpty(projectKeys)) {
             RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
             searchCriteria.setDateInRange(dateRange);
-            provider.loadEvents(searchCriteria);
+            provider.loadEvents(searchCriteria, true);
         } else {
             displayInfo(provider);
         }

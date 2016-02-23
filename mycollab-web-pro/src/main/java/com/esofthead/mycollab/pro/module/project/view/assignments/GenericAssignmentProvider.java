@@ -26,7 +26,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
     private int assignOthersNum = 0;
     private int notAssignNum = 0;
 
-    public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria) {
+    public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria, boolean showProject) {
         ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
         List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new SearchRequest<>
                 (searchCriteria, 0, Integer.MAX_VALUE));
@@ -40,7 +40,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
             } else {
                 assignOthersNum += 1;
             }
-            addEvent(new GenericAssignmentEvent(assignment));
+            addEvent(new GenericAssignmentEvent(assignment, showProject));
         }
         fireEventSetChange();
     }
