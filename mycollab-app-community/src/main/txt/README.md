@@ -40,6 +40,15 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.8
+-----------------------------
+
+**Improvements & New Features**
+* [Premium] Revise the Calendar view
+
+**Bug Fixes**
+* Delete the selected resource is failed
+
 Version 5.2.7
 -----------------------------
 **Library Upgrades**
