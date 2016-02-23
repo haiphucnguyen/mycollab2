@@ -5,28 +5,18 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
-import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
-import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
-import com.esofthead.mycollab.module.project.service.*;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
-import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
-import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
-import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
 import com.esofthead.mycollab.pro.module.project.view.assignments.CalendarSearchPanel;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
-import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -98,6 +88,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
     public CalendarDashboardViewImpl() {
         this.withMargin(true);
+        baseDate = new LocalDate();
         searchPanel = new CalendarSearchPanel(false);
     }
 
@@ -116,7 +107,6 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     @Override
     public void display() {
         this.removeAllComponents();
-        baseDate = new LocalDate();
         ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
         projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
         searchCriteria = new ProjectGenericTaskSearchCriteria();
@@ -126,32 +116,50 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setWidth("100%");
         calendar.setHeight("100%");
         calendar.setEventCaptionAsHtml(true);
+        calendar.setHandler(new CalendarComponentEvents.BackwardHandler() {
+            @Override
+            public void backward(CalendarComponentEvents.BackwardEvent backwardEvent) {
+                if (!isMonthView) {
+                    baseDate = baseDate.minusWeeks(1);
+                    displayWeekView();
+                }
+            }
+        });
+        calendar.setHandler(new CalendarComponentEvents.ForwardHandler() {
+            @Override
+            public void forward(CalendarComponentEvents.ForwardEvent forwardEvent) {
+                if (!isMonthView) {
+                    baseDate = baseDate.plusWeeks(1);
+                    displayWeekView();
+                }
+            }
+        });
         calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
             @Override
             public void eventClick(CalendarComponentEvents.EventClick event) {
                 GenericAssignmentEvent calendarEvent = (GenericAssignmentEvent) event.getCalendarEvent();
                 ProjectGenericTask assignment = calendarEvent.getAssignment();
-                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
-                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
-                    UI.getCurrent().addWindow(new TaskAddWindow(task));
-                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
-                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
-                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
-                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
-                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
-                    UI.getCurrent().addWindow(new BugAddWindow(bug));
-                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
-                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
-                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
-                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
-                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
-                }
+//                if (ProjectTypeConstants.TASK.equals(assignment.getType()) &&
+//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
+//                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+//                    SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+//                    UI.getCurrent().addWindow(new TaskAddWindow(task));
+//                } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType()) &&
+//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+//                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+//                    SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext.getAccountId());
+//                    UI.getCurrent().addWindow(new MilestoneAddWindow(milestone));
+//                } else if (ProjectTypeConstants.BUG.equals(assignment.getType()) &&
+//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS)) {
+//                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+//                    SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+//                    UI.getCurrent().addWindow(new BugAddWindow(bug));
+//                } else if (ProjectTypeConstants.RISK.equals(assignment.getType()) &&
+//                        CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS)) {
+//                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+//                    SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+//                    UI.getCurrent().addWindow(new RiskAddWindow(risk));
+//                }
             }
         });
 
@@ -198,11 +206,6 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         displayMonthView();
     }
 
-    @Override
-    public void queryAssignments(ProjectGenericTaskSearchCriteria criteria) {
-
-    }
-
     private MHorizontalLayout buildHeader() {
         MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
 
@@ -224,7 +227,6 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 } else {
                     baseDate = baseDate.minusWeeks(1);
                 }
-
                 displayCalendar();
             }
         });
@@ -290,18 +292,18 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
     private void displayMonthView() {
         isMonthView = true;
-        LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
-        LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
+        startDate = baseDate.dayOfMonth().withMinimumValue();
+        endDate = baseDate.dayOfMonth().withMaximumValue();
         headerLbl.setValue(baseDate.toString(MY_FORMATTER));
-        displayCalendarView(firstDayOfMonth, lastDayOfMonth);
+        displayCalendarView();
     }
 
     private void displayWeekView() {
         isMonthView = false;
-        LocalDate firstDayOfWeek = baseDate.dayOfWeek().withMinimumValue();
-        LocalDate lastDayOfWeek = baseDate.dayOfWeek().withMaximumValue();
-        headerLbl.setValue(firstDayOfWeek.toString(DMY_FORMATTER) + " - " + lastDayOfWeek.toString(DMY_FORMATTER));
-        displayCalendarView(firstDayOfWeek, lastDayOfWeek);
+        startDate = baseDate.dayOfWeek().withMinimumValue();
+        endDate = baseDate.dayOfWeek().withMaximumValue();
+        headerLbl.setValue(startDate.toString(DMY_FORMATTER) + " - " + endDate.toString(DMY_FORMATTER));
+        displayCalendarView();
         calendar.setFirstVisibleHourOfDay(0);
         calendar.setLastVisibleHourOfDay(0);
     }
@@ -314,27 +316,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         }
     }
 
-    private void displayCalendarView(LocalDate start, LocalDate end) {
-        calendar.setStartDate(start.toDate());
-        calendar.setEndDate(end.toDate());
-        calendar.setHandler(new CalendarComponentEvents.BackwardHandler() {
-            @Override
-            public void backward(CalendarComponentEvents.BackwardEvent backwardEvent) {
-                if (!isMonthView) {
-                    baseDate = baseDate.minusWeeks(1);
-                    displayWeekView();
-                }
-            }
-        });
-        calendar.setHandler(new CalendarComponentEvents.ForwardHandler() {
-            @Override
-            public void forward(CalendarComponentEvents.ForwardEvent forwardEvent) {
-                if (!isMonthView) {
-                    baseDate = baseDate.plusWeeks(1);
-                    displayWeekView();
-                }
-            }
-        });
+    private void displayCalendarView() {
+        calendar.setStartDate(startDate.toDate());
+        calendar.setEndDate(endDate.toDate());
+
         final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
@@ -343,13 +328,23 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             }
         });
         if (CollectionUtils.isNotEmpty(projectKeys)) {
-            RangeDateSearchField dateRange = new RangeDateSearchField(start.toDate(), end.toDate());
+            RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
             searchCriteria.setDateInRange(dateRange);
             provider.loadEvents(searchCriteria);
         } else {
             displayInfo(provider);
         }
         calendar.setEventProvider(provider);
+        calendar.markAsDirtyRecursive();
+    }
+
+    @Override
+    public void queryAssignments(ProjectGenericTaskSearchCriteria criteria) {
+        searchCriteria = criteria;
+        searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
+        RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
+        searchCriteria.setDateInRange(dateRange);
+        displayCalendarView();
     }
 
     private void displayInfo(GenericAssignmentProvider provider) {
