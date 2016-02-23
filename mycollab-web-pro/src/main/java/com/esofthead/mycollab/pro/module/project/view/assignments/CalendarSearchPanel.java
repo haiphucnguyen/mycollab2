@@ -3,14 +3,10 @@ package com.esofthead.mycollab.pro.module.project.view.assignments;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.db.query.SearchFieldInfo;
-import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.CalendarEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
-import com.esofthead.mycollab.vaadin.web.ui.SavedFilterComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -19,15 +15,17 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.LocalDate;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.List;
-
 /**
  * @author MyCollab Ltd
  * @since 5.2.8
  */
 public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGenericTaskSearchCriteria> {
     private ProjectGenericTaskSearchCriteria searchCriteria;
-    private CalendarSavedFilterComboBox savedFilterComboBox;
+    private boolean isCreateAssignment;
+
+    public CalendarSearchPanel(boolean isCreateAssignment) {
+        this.isCreateAssignment = isCreateAssignment;
+    }
 
     @Override
     protected SearchLayout<ProjectGenericTaskSearchCriteria> createBasicSearchLayout() {
@@ -41,35 +39,26 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
     @Override
     protected ComponentContainer buildSearchTitle() {
-        savedFilterComboBox = new CalendarSavedFilterComboBox();
-        savedFilterComboBox.addQuerySelectListener(new SavedFilterComboBox.QuerySelectListener() {
-            @Override
-            public void querySelect(SavedFilterComboBox.QuerySelectEvent querySelectEvent) {
-                List<SearchFieldInfo> fieldInfos = querySelectEvent.getSearchFieldInfos();
-                ProjectGenericTaskSearchCriteria criteria = SearchFieldInfo.buildSearchCriteria(ProjectGenericTaskSearchCriteria.class,
-                        fieldInfos);
-                criteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                EventBusFactory.getInstance().post(new CalendarEvent.SearchRequest(CalendarSearchPanel.this, criteria));
-            }
-        });
-        Label taskIcon = new Label(FontAwesome.HASHTAG.getHtml(), ContentMode.HTML);
+        Label taskIcon = new Label(FontAwesome.HASHTAG.getHtml() + " Assignments", ContentMode.HTML);
         taskIcon.addStyleName(ValoTheme.LABEL_H2);
         taskIcon.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         taskIcon.setWidthUndefined();
-        return new MHorizontalLayout(taskIcon, savedFilterComboBox).expand(savedFilterComboBox).alignAll(Alignment.MIDDLE_LEFT);
+        return new MHorizontalLayout(taskIcon);
     }
 
     @Override
     protected void buildExtraControls() {
-        Button newAssignmentBtn = new Button("New assignment", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(), CurrentProjectVariables.getProjectId()));
-            }
-        });
-        newAssignmentBtn.setIcon(FontAwesome.PLUS);
-        newAssignmentBtn.setStyleName(UIConstants.BUTTON_ACTION);
-        this.addHeaderRight(newAssignmentBtn);
+        if (isCreateAssignment) {
+            Button newAssignmentBtn = new Button("New assignment", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(), CurrentProjectVariables.getProjectId()));
+                }
+            });
+            newAssignmentBtn.setIcon(FontAwesome.PLUS);
+            newAssignmentBtn.setStyleName(UIConstants.BUTTON_ACTION);
+            this.addHeaderRight(newAssignmentBtn);
+        }
     }
 
     private class TaskBasicSearchLayout extends BasicSearchLayout<ProjectGenericTaskSearchCriteria> {
@@ -124,18 +113,6 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
                 }
             });
             basicSearchBody.with(cancelBtn).withAlign(cancelBtn, Alignment.MIDDLE_CENTER);
-
-            Button advancedSearchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADVANCED_SEARCH), new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(final Button.ClickEvent event) {
-                    moveToAdvancedSearchLayout();
-                }
-            });
-            advancedSearchBtn.setStyleName(UIConstants.BUTTON_LINK);
-
-            basicSearchBody.with(advancedSearchBtn).withAlign(advancedSearchBtn, Alignment.MIDDLE_CENTER);
             return basicSearchBody;
         }
 

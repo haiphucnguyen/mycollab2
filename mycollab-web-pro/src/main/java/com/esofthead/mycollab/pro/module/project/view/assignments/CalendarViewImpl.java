@@ -98,7 +98,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
     public CalendarViewImpl() {
         this.withMargin(true).withSpacing(true);
         baseDate = new LocalDate();
-        searchPanel = new CalendarSearchPanel();
+        searchPanel = new CalendarSearchPanel(true);
     }
 
     @Override

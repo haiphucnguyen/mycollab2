@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 
 /**
@@ -24,4 +26,8 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  */
 public interface ICalendarDashboardView extends PageView {
     void display();
+
+    void queryAssignments(ProjectGenericTaskSearchCriteria criteria);
+
+    HasSearchHandlers<ProjectGenericTaskSearchCriteria> getSearchHandlers();
 }

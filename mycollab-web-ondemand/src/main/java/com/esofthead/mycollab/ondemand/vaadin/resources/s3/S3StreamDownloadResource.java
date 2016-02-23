@@ -15,7 +15,7 @@
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.esofthead.mycollab.vaadin.resources.s3;
+package com.esofthead.mycollab.ondemand.vaadin.resources.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;

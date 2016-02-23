@@ -16,7 +16,9 @@
  */
 package com.esofthead.mycollab.community.module.project.view;
 
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.view.NotPresentedView;
 
@@ -29,5 +31,15 @@ public class CalendarDashboardViewImpl extends NotPresentedView implements ICale
     @Override
     public void display() {
 
+    }
+
+    @Override
+    public void queryAssignments(ProjectGenericTaskSearchCriteria criteria) {
+
+    }
+
+    @Override
+    public HasSearchHandlers<ProjectGenericTaskSearchCriteria> getSearchHandlers() {
+        return null;
     }
 }

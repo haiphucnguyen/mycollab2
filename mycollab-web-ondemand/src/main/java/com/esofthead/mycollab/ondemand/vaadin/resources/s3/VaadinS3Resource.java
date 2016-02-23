@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.vaadin.resources.s3;
+package com.esofthead.mycollab.ondemand.vaadin.resources.s3;
 
 import com.esofthead.mycollab.vaadin.resources.VaadinResource;
 import com.vaadin.server.Resource;

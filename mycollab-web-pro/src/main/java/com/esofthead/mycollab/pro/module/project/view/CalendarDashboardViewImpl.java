@@ -23,11 +23,13 @@ import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
+import com.esofthead.mycollab.pro.module.project.view.assignments.CalendarSearchPanel;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
 import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -64,10 +66,11 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
     private Label headerLbl, billableHoursLbl, nonBillableHoursLbl, assignMeLbl, assignOtherLbl, nonAssigneeLbl;
     private Calendar calendar;
-    private LocalDate baseDate;
+    private LocalDate baseDate, startDate, endDate;
     private List<Integer> projectKeys;
     private boolean isMonthView = true;
     private ProjectGenericTaskSearchCriteria searchCriteria;
+    private CalendarSearchPanel searchPanel;
 
     private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> taskChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
         @Override
@@ -95,6 +98,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
 
     public CalendarDashboardViewImpl() {
         this.withMargin(true);
+        searchPanel = new CalendarSearchPanel(false);
     }
 
     @Override
@@ -180,20 +184,23 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%");
-        MVerticalLayout helpBlock = new MVerticalLayout().withMargin(false);
-        assignMeLbl = new ELabel("").withStyleName("owner").withWidth("200px");
-        assignOtherLbl = new ELabel("").withStyleName("otheruser").withWidth("200px");
-        nonAssigneeLbl = new ELabel("").withStyleName("nonowner").withWidth("200px");
-        helpBlock.with(assignMeLbl, assignOtherLbl, nonAssigneeLbl);
-        billableHoursLbl = new Label("", ContentMode.HTML);
-        nonBillableHoursLbl = new Label("", ContentMode.HTML);
-        MVerticalLayout hoursNoteContainer = new MVerticalLayout().withMargin(false);
-        hoursNoteContainer.with(billableHoursLbl, nonBillableHoursLbl);
-        hoursNoteContainer.setWidthUndefined();
-        noteContainer.with(helpBlock, hoursNoteContainer).withAlign(helpBlock, Alignment.TOP_LEFT)
-                .withAlign(hoursNoteContainer, Alignment.TOP_RIGHT);
-        this.with(buildHeader(), noteContainer, calendar);
+        MVerticalLayout helpBlock = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false))
+                .withWidth("80px");
+        assignMeLbl = new ELabel("").withStyleName("owner");
+        assignOtherLbl = new ELabel("").withStyleName("otheruser");
+        nonAssigneeLbl = new ELabel("").withStyleName("nonowner");
+        billableHoursLbl = new ELabel("", ContentMode.HTML).withStyleName("hint");
+        nonBillableHoursLbl = new ELabel("", ContentMode.HTML).withStyleName("hint");
+        helpBlock.with(assignMeLbl, assignOtherLbl, nonAssigneeLbl, nonAssigneeLbl, billableHoursLbl, nonBillableHoursLbl);
+
+        noteContainer.with(helpBlock, calendar).expand(calendar);
+        this.with(searchPanel, buildHeader(), noteContainer);
         displayMonthView();
+    }
+
+    @Override
+    public void queryAssignments(ProjectGenericTaskSearchCriteria criteria) {
+
     }
 
     private MHorizontalLayout buildHeader() {
@@ -353,5 +360,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
                 .getTotalBillableHours());
         nonBillableHoursLbl.setValue(FontAwesome.GIFT.getHtml() + " Non billable hours: " + provider
                 .getTotalNonBillableHours());
+    }
+
+    @Override
+    public HasSearchHandlers<ProjectGenericTaskSearchCriteria> getSearchHandlers() {
+        return searchPanel;
     }
 }

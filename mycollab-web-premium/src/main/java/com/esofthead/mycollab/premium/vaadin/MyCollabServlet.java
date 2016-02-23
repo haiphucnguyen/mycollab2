@@ -1,6 +1,8 @@
-package com.esofthead.mycollab.vaadin;
+package com.esofthead.mycollab.premium.vaadin;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
+import com.esofthead.mycollab.vaadin.MyCollabBootstrapListener;
+import com.esofthead.mycollab.vaadin.MyCollabUIProvider;
 import com.vaadin.addon.touchkit.annotations.CacheManifestEnabled;
 import com.vaadin.addon.touchkit.server.TouchKitServlet;
 import com.vaadin.addon.touchkit.settings.TouchKitSettings;
@@ -15,14 +17,15 @@ import javax.servlet.annotation.WebServlet;
  * @author MyCollab Ltd.
  * @since 3.0
  */
-@WebServlet(name = "MyCollabApplication", urlPatterns = "/*", asyncSupported = true, loadOnStartup = 0,
-        initParams = {@WebInitParam(name = "closeIdleSessions", value = "true"),
-//                @WebInitParam(name = "Resources", value = SiteConfiguration.A),
+@WebServlet(name = "MyCollabApplication", urlPatterns = "/*", asyncSupported = true, loadOnStartup = 0, initParams =
+        {@WebInitParam(name = "closeIdleSessions", value = "true"),
                 @WebInitParam(name = "resourceCacheTime", value = "8640000"),
-                @WebInitParam(name = "maxIdleTime", value = "1000000")})
+                @WebInitParam(name = "maxIdleTime", value = "10000")
+        })
 @CacheManifestEnabled(false)
 public class MyCollabServlet extends TouchKitServlet {
     private static final long serialVersionUID = 1L;
+
     private MyCollabUIProvider uiProvider = new MyCollabUIProvider();
 
     @Override

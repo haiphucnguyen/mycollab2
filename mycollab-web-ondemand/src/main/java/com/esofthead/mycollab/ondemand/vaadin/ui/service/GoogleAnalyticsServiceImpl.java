@@ -1,7 +1,8 @@
-package com.esofthead.mycollab.vaadin.ui.service;
+package com.esofthead.mycollab.ondemand.vaadin.ui.service;
 
 import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.vaadin.ui.MyCollabSession;
+import com.esofthead.mycollab.vaadin.ui.service.GoogleAnalyticsService;
 import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
