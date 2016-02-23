@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view;
 
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -16,14 +17,14 @@ import com.esofthead.mycollab.module.project.events.AssignmentEvent;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.*;
 import com.esofthead.mycollab.module.project.view.ICalendarDashboardView;
-import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
-import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
 import com.esofthead.mycollab.module.project.view.task.TaskAddWindow;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.ui.components.EntityWithProjectAddHandler;
+import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentEvent;
+import com.esofthead.mycollab.pro.module.project.view.assignments.GenericAssignmentProvider;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -66,6 +67,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
     private LocalDate baseDate;
     private List<Integer> projectKeys;
     private boolean isMonthView = true;
+    private ProjectGenericTaskSearchCriteria searchCriteria;
 
     private ApplicationEventListener<AssignmentEvent.NewAssignmentAdd> taskChangeHandler = new ApplicationEventListener<AssignmentEvent.NewAssignmentAdd>() {
         @Override
@@ -113,6 +115,8 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         baseDate = new LocalDate();
         ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
         projectKeys = projectService.getProjectKeysUserInvolved(AppContext.getUsername(), AppContext.getAccountId());
+        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria.setProjectIds(new SetSearchField<>(projectKeys));
         calendar = new Calendar();
         calendar.addStyleName("assignment-calendar");
         calendar.setWidth("100%");
@@ -309,10 +313,10 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
         calendar.setHandler(new CalendarComponentEvents.BackwardHandler() {
             @Override
             public void backward(CalendarComponentEvents.BackwardEvent backwardEvent) {
-               if (!isMonthView) {
-                   baseDate = baseDate.minusWeeks(1);
-                   displayWeekView();
-               }
+                if (!isMonthView) {
+                    baseDate = baseDate.minusWeeks(1);
+                    displayWeekView();
+                }
             }
         });
         calendar.setHandler(new CalendarComponentEvents.ForwardHandler() {
@@ -332,7 +336,9 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             }
         });
         if (CollectionUtils.isNotEmpty(projectKeys)) {
-            provider.loadEvents(start.toDate(), end.toDate(), projectKeys);
+            RangeDateSearchField dateRange = new RangeDateSearchField(start.toDate(), end.toDate());
+            searchCriteria.setDateInRange(dateRange);
+            provider.loadEvents(searchCriteria);
         } else {
             displayInfo(provider);
         }

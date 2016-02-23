@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.assignments;
 
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.assignments.CalendarView;
 import com.esofthead.mycollab.module.project.view.bug.BugAddWindow;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneAddWindow;
@@ -26,9 +28,11 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.google.common.eventbus.Subscribe;
@@ -48,7 +52,6 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -56,7 +59,7 @@ import java.util.List;
  * @since 5.2.0
  */
 @ViewComponent
-public class CalendarViewImpl extends AbstractPageView implements CalendarView {
+public class CalendarViewImpl extends AbstractLazyPageView implements CalendarView {
     private static final DateTimeFormatter DAY_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
     private static final DateTimeFormatter WEEK_FORMATTER = DateTimeFormat.forPattern("dd MMMM, yyyy");
     private static final DateTimeFormatter MONTH_FORMATTER = DateTimeFormat.forPattern("MMMM, yyyy");
@@ -87,12 +90,15 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
 
     private Label headerLbl, billableHoursLbl, nonBillableHoursLbl, assignMeLbl, assignOtherLbl, nonAssigneeLbl;
     private Calendar calendar;
-    private LocalDate baseDate;
+    private LocalDate baseDate, startDate, endDate;
     private CalendarMode mode = CalendarMode.MONTHLY;
+    private CalendarSearchPanel searchPanel;
+    private ProjectGenericTaskSearchCriteria searchCriteria;
 
     public CalendarViewImpl() {
         this.withMargin(true).withSpacing(true);
         baseDate = new LocalDate();
+        searchPanel = new CalendarSearchPanel();
     }
 
     @Override
@@ -104,11 +110,15 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
     @Override
     public void detach() {
         EventBusFactory.getInstance().unregister(assignmentChangeHandler);
+        setProjectNavigatorVisibility(true);
         super.detach();
     }
 
     @Override
-    public void display() {
+    protected void displayView() {
+        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        setProjectNavigatorVisibility(false);
         removeAllComponents();
         calendar = new Calendar();
         calendar.setEventCaptionAsHtml(true);
@@ -172,20 +182,26 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         });
         MHorizontalLayout noteContainer = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%");
-        MVerticalLayout helpBlock = new MVerticalLayout().withMargin(false);
-        assignMeLbl = new ELabel("").withStyleName("owner").withWidth("200px");
-        assignOtherLbl = new ELabel("").withStyleName("otheruser").withWidth("200px");
-        nonAssigneeLbl = new ELabel("").withStyleName("nonowner").withWidth("200px");
-        helpBlock.with(assignMeLbl, assignOtherLbl, nonAssigneeLbl);
-        billableHoursLbl = new Label("", ContentMode.HTML);
-        nonBillableHoursLbl = new Label("", ContentMode.HTML);
-        MVerticalLayout hoursNoteContainer = new MVerticalLayout().withMargin(false);
-        hoursNoteContainer.with(billableHoursLbl, nonBillableHoursLbl);
-        hoursNoteContainer.setWidthUndefined();
-        noteContainer.with(helpBlock, hoursNoteContainer).withAlign(helpBlock, Alignment.TOP_LEFT)
-                .withAlign(hoursNoteContainer, Alignment.TOP_RIGHT);
-        this.with(buildHeader(), noteContainer, calendar);
+        MVerticalLayout helpBlock = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false))
+                .withWidth("80px");
+        assignMeLbl = new ELabel("").withStyleName("owner");
+        assignOtherLbl = new ELabel("").withStyleName("otheruser");
+        nonAssigneeLbl = new ELabel("").withStyleName("nonowner");
+        billableHoursLbl = new ELabel("", ContentMode.HTML).withStyleName("hint");
+        nonBillableHoursLbl = new ELabel("", ContentMode.HTML).withStyleName("hint");
+        helpBlock.with(assignMeLbl, assignOtherLbl, nonAssigneeLbl, nonAssigneeLbl, billableHoursLbl,
+                nonBillableHoursLbl);
+
+        noteContainer.with(helpBlock, calendar).expand(calendar);
+        this.with(searchPanel, buildHeader(), noteContainer);
         displayMonthView();
+    }
+
+    private void setProjectNavigatorVisibility(boolean visibility) {
+        ProjectView view = UIUtils.getRoot(this, ProjectView.class);
+        if (view != null) {
+            view.setNavigatorVisibility(visibility);
+        }
     }
 
     private MHorizontalLayout buildHeader() {
@@ -272,26 +288,34 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         });
         monthlyBtn.setWidth("80px");
 
-        Button newAssignmentBtn = new Button("New assignment", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().addWindow(new AssignmentAddWindow(new LocalDate().toDate(), CurrentProjectVariables.getProjectId()));
-            }
-        });
-        newAssignmentBtn.setIcon(FontAwesome.PLUS);
-        newAssignmentBtn.setStyleName(UIConstants.BUTTON_ACTION);
-
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(dailyBtn);
         viewButtons.addButton(weeklyBtn);
         viewButtons.addButton(monthlyBtn);
         viewButtons.setDefaultButton(monthlyBtn);
 
-        MHorizontalLayout rightControls = new MHorizontalLayout().with(newAssignmentBtn, viewButtons);
+        MHorizontalLayout rightControls = new MHorizontalLayout().with(viewButtons);
 
         header.with(titleWrapper, rightControls).withAlign(titleWrapper, Alignment.MIDDLE_CENTER).withAlign(rightControls,
                 Alignment.MIDDLE_RIGHT);
         return header;
+    }
+
+    @Override
+    public void queryAssignments(ProjectGenericTaskSearchCriteria criteria) {
+        searchCriteria = criteria;
+        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
+        RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
+        searchCriteria.setDateInRange(dateRange);
+        loadEvents();
+    }
+
+    private void loadEventViews() {
+        calendar.setStartDate(startDate.toDate());
+        calendar.setEndDate(endDate.toDate());
+        RangeDateSearchField dateRange = new RangeDateSearchField(startDate.toDate(), endDate.toDate());
+        searchCriteria.setDateInRange(dateRange);
+        loadEvents();
     }
 
     private void displayCalendarView() {
@@ -304,9 +328,7 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
         }
     }
 
-    private void displayCalendarView(LocalDate start, LocalDate end) {
-        calendar.setStartDate(start.toDate());
-        calendar.setEndDate(end.toDate());
+    private void loadEvents() {
         final GenericAssignmentProvider provider = new GenericAssignmentProvider();
         provider.addEventSetChangeListener(new CalendarEventProvider.EventSetChangeListener() {
             @Override
@@ -320,29 +342,37 @@ public class CalendarViewImpl extends AbstractPageView implements CalendarView {
                         .getTotalNonBillableHours());
             }
         });
-        provider.loadEvents(start.toDate(), end.toDate(), Arrays.asList(CurrentProjectVariables.getProjectId()));
+        provider.loadEvents(searchCriteria);
         calendar.setEventProvider(provider);
+        calendar.markAsDirtyRecursive();
     }
 
     private void displayDayView() {
         mode = CalendarMode.DAILY;
         headerLbl.setValue(baseDate.toString(DAY_FORMATTER));
-        displayCalendarView(baseDate, baseDate);
+        startDate = baseDate;
+        endDate = baseDate;
+        loadEventViews();
     }
 
     private void displayWeekView() {
         mode = CalendarMode.WEEKLY;
-        LocalDate firstDayOfWeek = baseDate.dayOfWeek().withMinimumValue();
-        LocalDate lastDayOfWeek = baseDate.dayOfWeek().withMaximumValue();
-        headerLbl.setValue(firstDayOfWeek.toString(WEEK_FORMATTER) + " - " + lastDayOfWeek.toString(WEEK_FORMATTER));
-        displayCalendarView(firstDayOfWeek, lastDayOfWeek);
+        startDate = baseDate.dayOfWeek().withMinimumValue();
+        endDate = baseDate.dayOfWeek().withMaximumValue();
+        headerLbl.setValue(startDate.toString(WEEK_FORMATTER) + " - " + endDate.toString(WEEK_FORMATTER));
+        loadEventViews();
     }
 
     private void displayMonthView() {
         mode = CalendarMode.MONTHLY;
-        LocalDate firstDayOfMonth = baseDate.dayOfMonth().withMinimumValue();
-        LocalDate lastDayOfMonth = baseDate.dayOfMonth().withMaximumValue();
+        startDate = baseDate.dayOfMonth().withMinimumValue();
+        endDate = baseDate.dayOfMonth().withMaximumValue();
         headerLbl.setValue(baseDate.toString(MONTH_FORMATTER));
-        displayCalendarView(firstDayOfMonth, lastDayOfMonth);
+        loadEventViews();
+    }
+
+    @Override
+    public HasSearchHandlers<ProjectGenericTaskSearchCriteria> getSearchHandlers() {
+        return searchPanel;
     }
 }

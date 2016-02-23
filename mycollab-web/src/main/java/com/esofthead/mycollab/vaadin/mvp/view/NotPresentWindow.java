@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.vaadin.mvp;
+package com.esofthead.mycollab.vaadin.mvp.view;
 
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Window;
 

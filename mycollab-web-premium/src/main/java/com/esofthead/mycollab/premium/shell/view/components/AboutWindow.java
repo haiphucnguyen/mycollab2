@@ -10,14 +10,17 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AssetResource;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.WebResourceIds;
+import com.esofthead.mycollab.web.AdWindow;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -80,6 +83,18 @@ public class AboutWindow extends AbstractAboutWindow {
                 }
             }
             rightPanel.add(licenseInfoLbl);
+        }
+
+        if (licenseInfo != null && licenseInfo.isTrial()) {
+            Button buyBtn = new Button("Buy a license", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    UI.getCurrent().addWindow(new AdWindow());
+                    close();
+                }
+            });
+            buyBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            rightPanel.addComponent(buyBtn);
         }
 
         Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",

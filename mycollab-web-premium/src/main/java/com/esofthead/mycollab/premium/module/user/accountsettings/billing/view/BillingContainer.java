@@ -18,7 +18,7 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.NotPresentedView;
+import com.esofthead.mycollab.vaadin.mvp.view.NotPresentedView;
 
 /**
  * @author MyCollab Ltd.

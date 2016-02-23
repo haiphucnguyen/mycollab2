@@ -14,11 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view.assignments;
+package com.esofthead.mycollab.pro.module.project.view.assignments;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.assignments.CalendarView;
+import com.esofthead.mycollab.module.project.view.assignments.ICalendarPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -29,9 +34,22 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 5.2.0
  */
-public class CalendarPresenter extends AbstractPresenter<CalendarView> {
+public class CalendarPresenter extends AbstractPresenter<CalendarView> implements ICalendarPresenter {
     public CalendarPresenter() {
         super(CalendarView.class);
+    }
+
+    @Override
+    protected void postInitView() {
+        HasSearchHandlers<ProjectGenericTaskSearchCriteria> searchHandlers = view.getSearchHandlers();
+        if (searchHandlers != null) {
+            searchHandlers.addSearchHandler(new SearchHandler<ProjectGenericTaskSearchCriteria>() {
+                @Override
+                public void onSearch(ProjectGenericTaskSearchCriteria criteria) {
+                    view.queryAssignments(criteria);
+                }
+            });
+        }
     }
 
     @Override
@@ -40,7 +58,7 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> {
             ProjectDashboardContainer projectDashboardContainer = (ProjectDashboardContainer) container;
             projectDashboardContainer.removeAllComponents();
             projectDashboardContainer.addComponent(view.getWidget());
-            view.display();
+            view.lazyLoadView();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
             breadCrumb.gotoCalendar();

@@ -26,13 +26,7 @@ public class GenericAssignmentProvider extends BasicEventProvider {
     private int assignOthersNum = 0;
     private int notAssignNum = 0;
 
-    public void loadEvents(Date start, Date end, List<Integer> prjKeys) {
-        ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
-        searchCriteria.setProjectIds(new SetSearchField<>(prjKeys));
-        searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        RangeDateSearchField dateRange = new RangeDateSearchField(start, end);
-        searchCriteria.setDateInRange(dateRange);
-
+    public void loadEvents(ProjectGenericTaskSearchCriteria searchCriteria) {
         ProjectGenericTaskService genericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
         List<ProjectGenericTask> assignments = genericTaskService.findPagableListByCriteria(new SearchRequest<>
                 (searchCriteria, 0, Integer.MAX_VALUE));
