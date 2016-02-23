@@ -3,10 +3,7 @@ package com.esofthead.mycollab.schedule.spring;
 import com.esofthead.mycollab.schedule.AutowiringSpringBeanJobFactory;
 import com.esofthead.mycollab.schedule.QuartzScheduleProperties;
 import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
-import com.esofthead.mycollab.schedule.jobs.CountLiveInstancesJob;
-import com.esofthead.mycollab.schedule.jobs.DeleteObsoleteAccountJob;
-import com.esofthead.mycollab.schedule.jobs.DeleteObsoleteLiveInstancesJob;
-import com.esofthead.mycollab.schedule.jobs.SendingCountUserLoginByDateJob;
+import com.esofthead.mycollab.schedule.jobs.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +47,13 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
+    public JobDetailFactoryBean sendOneweekFollowupDownloadedUsersJob() {
+        JobDetailFactoryBean bean = new JobDetailFactoryBean();
+        bean.setJobClass(FollowupDownloadedUsersAfterOneWeekJob.class);
+        return bean;
+    }
+
+    @Bean
     public CronTriggerFactoryBean sendingCountUserLoginByDateTrigger() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(sendCountUserLoginByDateJob().getObject());
@@ -82,6 +86,14 @@ public class DemandScheduleConfiguration {
     }
 
     @Bean
+    public CronTriggerFactoryBean sendOneweekFollowupDownloadedUsersTrigger() {
+        CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
+        bean.setJobDetail(sendOneweekFollowupDownloadedUsersJob().getObject());
+        bean.setCronExpression("0 0 9 * * ?");
+        return bean;
+    }
+
+    @Bean
     public JobDetailFactoryBean sendAccountBillingRequestEmailJob() {
         JobDetailFactoryBean bean = new JobDetailFactoryBean();
         bean.setJobClass(BillingSendingNotificationJob.class);
@@ -98,6 +110,10 @@ public class DemandScheduleConfiguration {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    public DemandScheduleConfiguration() {
+        super();
+    }
 
     @Bean
     public SchedulerFactoryBean quartzSchedulerDemand() {
@@ -118,7 +134,8 @@ public class DemandScheduleConfiguration {
                 sendingCountLiveInstancesByDateTrigger().getObject(),
                 deleteObsoleteAccountsTrigger().getObject(),
                 sendAccountBillingEmailTrigger().getObject(),
-                deleteObsoleteLiveInstancesTrigger().getObject());
+                deleteObsoleteLiveInstancesTrigger().getObject(),
+                sendOneweekFollowupDownloadedUsersTrigger().getObject());
         return bean;
     }
 }

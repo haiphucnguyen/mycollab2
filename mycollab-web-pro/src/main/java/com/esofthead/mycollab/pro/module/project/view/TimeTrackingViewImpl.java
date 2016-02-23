@@ -32,7 +32,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
 import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.web.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -126,17 +126,17 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         String groupBy = (String) groupField.getValue();
 
         if (groupBy.equals(GROUPBY_PROJECT)) {
-            return Arrays.asList(TimeTableFieldDef.summary,
-                    TimeTableFieldDef.logForDate, TimeTableFieldDef.logUser,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
+            return Arrays.asList(TimeTableFieldDef.summary(),
+                    TimeTableFieldDef.logForDate(), TimeTableFieldDef.logUser(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable());
         } else if (groupBy.equals(GROUPBY_DATE)) {
-            return Arrays.asList(TimeTableFieldDef.summary,
-                    TimeTableFieldDef.logUser, TimeTableFieldDef.project,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
+            return Arrays.asList(TimeTableFieldDef.summary(),
+                    TimeTableFieldDef.logUser(), TimeTableFieldDef.project(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable());
         } else if (groupBy.equals(GROUPBY_USER)) {
-            return Arrays.asList(TimeTableFieldDef.summary,
-                    TimeTableFieldDef.logForDate, TimeTableFieldDef.project,
-                    TimeTableFieldDef.logValue, TimeTableFieldDef.billable);
+            return Arrays.asList(TimeTableFieldDef.summary(),
+                    TimeTableFieldDef.logForDate(), TimeTableFieldDef.project(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable());
         } else {
             throw new MyCollabException("Do not support view type: " + groupBy);
         }

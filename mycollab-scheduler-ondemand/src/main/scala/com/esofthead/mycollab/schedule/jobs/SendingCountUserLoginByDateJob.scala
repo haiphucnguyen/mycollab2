@@ -35,7 +35,7 @@ class SendingCountUserLoginByDateJob extends GenericQuartzJobBean {
   @SuppressWarnings(Array("unchecked"))
   @throws(classOf[JobExecutionException])
   def executeJob(context: JobExecutionContext): Unit = {
-    val criteria: UserSearchCriteria = new UserSearchCriteria
+    val criteria = new UserSearchCriteria
     val to = new LocalDateTime()
     val from = to.minusDays(1)
     criteria.setSaccountid(null)
