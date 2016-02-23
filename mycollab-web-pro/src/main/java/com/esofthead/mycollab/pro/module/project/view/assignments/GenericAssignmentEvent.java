@@ -38,7 +38,8 @@ public class GenericAssignmentEvent extends BasicEvent {
         }
 
         this.setDescription(ProjectTooltipGenerator.generateTooltipEntity(AppContext.getUserLocale(), assignment.getType(),
-                assignment.getTypeId(), AppContext.getAccountId(), AppContext.getSiteUrl(), AppContext.getUserTimezone()));
+                assignment.getTypeId(), AppContext.getAccountId(), AppContext.getSiteUrl(), AppContext
+                        .getUserTimezone(), showProject));
         this.setAllDay(true);
 
         if (AppContext.getUsername().equals(assignment.getAssignUser())) {

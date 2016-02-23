@@ -1,28 +1,10 @@
-/**
- * This file is part of mycollab-esb.
- *
- * mycollab-esb is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-esb is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-esb.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.esofthead.mycollab.module.ecm.esb.impl
 
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.locks.Lock
 
 import com.esofthead.mycollab.core.utils.StringUtils
 import com.esofthead.mycollab.lock.DistributionLockUtil
 import com.esofthead.mycollab.module.GenericCommand
-import com.esofthead.mycollab.module.ecm.domain.DriveInfo
 import com.esofthead.mycollab.module.ecm.esb.DeleteResourcesEvent
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService
 import com.esofthead.mycollab.module.file.service.RawContentService
@@ -61,11 +43,8 @@ object DeleteResourcesCommandImpl {
           }
         }
         if (driveInfo.getUsedvolume == null || (driveInfo.getUsedvolume < totalSize)) {
-          DeleteResourcesCommandImpl.LOG.error("Inconsistent storage volume site of account {}, used " +
-            "storage is less than removed storage", event.sAccountId)
           driveInfo.setUsedvolume(0L)
-        }
-        else {
+        } else {
           driveInfo.setUsedvolume(driveInfo.getUsedvolume - totalSize)
         }
         driveInfoService.saveOrUpdateDriveInfo(driveInfo)

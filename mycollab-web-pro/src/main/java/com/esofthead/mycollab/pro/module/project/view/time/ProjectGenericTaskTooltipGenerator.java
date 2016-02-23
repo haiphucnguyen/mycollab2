@@ -26,7 +26,7 @@ import java.util.TimeZone;
 class ProjectGenericTaskTooltipGenerator {
     private String html;
 
-    public ProjectGenericTaskTooltipGenerator(String type, int typeid) {
+    public ProjectGenericTaskTooltipGenerator(String type, int typeId) {
         html = "";
         int sAccountId = AppContext.getAccountId();
         TimeZone timeZone = AppContext.getUserTimezone();
@@ -34,27 +34,27 @@ class ProjectGenericTaskTooltipGenerator {
 
         if (ProjectTypeConstants.BUG.equals(type)) {
             BugService service = ApplicationContextUtil.getSpringBean(BugService.class);
-            SimpleBug bug = service.findById(typeid, sAccountId);
-            html = ProjectTooltipGenerator.generateToolTipBug(AppContext.getUserLocale(), bug, siteURL, timeZone);
+            SimpleBug bug = service.findById(typeId, sAccountId);
+            html = ProjectTooltipGenerator.generateToolTipBug(AppContext.getUserLocale(), bug, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.TASK.equals(type)) {
             ProjectTaskService service = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-            SimpleTask task = service.findById(typeid, sAccountId);
-            html = ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, siteURL, timeZone);
+            SimpleTask task = service.findById(typeId, sAccountId);
+            html = ProjectTooltipGenerator.generateToolTipTask(AppContext.getUserLocale(), task, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.RISK.equals(type)) {
             RiskService service = ApplicationContextUtil.getSpringBean(RiskService.class);
-            SimpleRisk risk = service.findById(typeid, sAccountId);
-            html = ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), risk, siteURL, timeZone);
+            SimpleRisk risk = service.findById(typeId, sAccountId);
+            html = ProjectTooltipGenerator.generateToolTipRisk(AppContext.getUserLocale(), risk, siteURL, timeZone, false);
         } else if (ProjectTypeConstants.BUG_VERSION.equals(type)) {
             VersionService service = ApplicationContextUtil.getSpringBean(VersionService.class);
-            SimpleVersion version = service.findById(typeid, sAccountId);
+            SimpleVersion version = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipVersion(AppContext.getUserLocale(), version, siteURL, timeZone);
         } else if (ProjectTypeConstants.BUG_COMPONENT.equals(type)) {
             ComponentService service = ApplicationContextUtil.getSpringBean(ComponentService.class);
-            SimpleComponent component = service.findById(typeid, sAccountId);
+            SimpleComponent component = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipComponent(AppContext.getUserLocale(), component, siteURL, timeZone);
         } else if (ProjectTypeConstants.STANDUP.equals(type)) {
             StandupReportService service = ApplicationContextUtil.getSpringBean(StandupReportService.class);
-            SimpleStandupReport standup = service.findById(typeid, sAccountId);
+            SimpleStandupReport standup = service.findById(typeId, sAccountId);
             html = ProjectTooltipGenerator.generateToolTipStandUp(AppContext.getUserLocale(), standup, siteURL, timeZone);
         }
     }
