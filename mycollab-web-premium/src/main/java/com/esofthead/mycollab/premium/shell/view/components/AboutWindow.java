@@ -5,8 +5,10 @@ import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.shell.view.components.AbstractAboutWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
+import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.AssetResource;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.WebResourceIds;
@@ -17,10 +19,7 @@ import com.hp.gagawa.java.elements.Text;
 import com.vaadin.server.Page;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -94,7 +93,16 @@ public class AboutWindow extends AbstractAboutWindow {
                 }
             });
             buyBtn.addStyleName(UIConstants.BUTTON_ACTION);
-            rightPanel.addComponent(buyBtn);
+            Button editLicenseBtn = new Button("Enter license code", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    Window activateWindow = ViewManager.getCacheComponent(AbstractLicenseActivationWindow.class);
+                    UI.getCurrent().addWindow(activateWindow);
+                    close();
+                }
+            });
+            editLicenseBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            rightPanel.addComponent(new MHorizontalLayout().with(buyBtn, editLicenseBtn));
         }
 
         Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",

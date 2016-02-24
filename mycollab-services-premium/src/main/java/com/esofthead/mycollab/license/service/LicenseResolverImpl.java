@@ -63,22 +63,26 @@ public class LicenseResolverImpl implements LicenseResolver, InitializingBean {
             byte[] bytes = outputStream.toByteArray();
             prop.load(new ByteArrayInputStream(bytes));
             Date expireDate = DateTimeUtils.parseDateByW3C(prop.getProperty("expireDate"));
-            licenseInfo = new LicenseInfo();
-            licenseInfo.setCustomerId(prop.getProperty("customerId"));
-            licenseInfo.setLicenseType(LicenseType.valueOf(prop.getProperty("licenseType")));
-            licenseInfo.setExpireDate(expireDate);
-            licenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
-            licenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));
-            licenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "9999")));
+            LicenseInfo newLicenseInfo = new LicenseInfo();
+            newLicenseInfo.setCustomerId(prop.getProperty("customerId"));
+            newLicenseInfo.setLicenseType(LicenseType.valueOf(prop.getProperty("licenseType")));
+            newLicenseInfo.setExpireDate(expireDate);
+            newLicenseInfo.setIssueDate(DateTimeUtils.parseDateByW3C(prop.getProperty("issueDate")));
+            newLicenseInfo.setLicenseOrg(prop.getProperty("licenseOrg"));
+            newLicenseInfo.setMaxUsers(Integer.parseInt(prop.getProperty("maxUsers", "9999")));
             if (isSave) {
-                if (licenseInfo.isExpired()) {
+                if (newLicenseInfo.isExpired()) {
                     throw new UserInvalidInputException("License is expired");
+                }
+                if (licenseInfo != null && newLicenseInfo.isTrial()) {
+                    throw new UserInvalidInputException("You can not enter another trial license during trial period");
                 }
                 File licenseFile = getLicenseFile();
                 FileOutputStream fileOutputStream = new FileOutputStream(licenseFile);
                 fileOutputStream.write(licenseBytes);
                 fileOutputStream.close();
             }
+            licenseInfo = newLicenseInfo;
         } catch (IOException | PGPException | DecoderException e) {
             throw new UserInvalidInputException("Invalid license");
         }

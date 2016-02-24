@@ -2,6 +2,7 @@ package com.esofthead.mycollab.premium.shell.view.components;
 
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
@@ -38,8 +39,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
 
     public LicenseActivationWindow() {
         super();
-        this.setClosable(false);
-        this.setModal(true);
+        this.setModal(false);
         this.setResizable(false);
         this.setWidth("600px");
         MVerticalLayout content = new MVerticalLayout();
@@ -126,6 +126,14 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         changeLicenseBtn.addStyleName(UIConstants.BUTTON_ACTION);
         content.with(changeLicenseBtn).withAlign(changeLicenseBtn, Alignment.BOTTOM_RIGHT);
         setContent(content);
+
+        LicenseResolver licenseResolver = ApplicationContextUtil.getSpringBean(LicenseResolver.class);
+        LicenseInfo licenseInfo = licenseResolver.getLicenseInfo();
+        if (licenseInfo != null) {
+            this.setClosable(!licenseInfo.isExpired());
+        } else {
+            this.setClosable(true);
+        }
     }
 
     private class LicenseUploadField extends UploadField {
