@@ -286,7 +286,8 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
                 reopenBtn.addStyleName(UIConstants.BUTTON_ACTION);
                 reopenBtn.setEnabled(hasPermission);
                 content.with(reopenBtn);
-            } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus())) {
+            } else if (OptionI18nEnum.BugStatus.Resolved.name().equals(beanItem.getStatus()) ||
+                    OptionI18nEnum.BugStatus.WontFix.name().equals(beanItem.getStatus())) {
                 Button reopenBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN), new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
