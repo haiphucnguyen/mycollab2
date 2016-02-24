@@ -8,71 +8,61 @@ import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.service.UserService;
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 4.1
- * 
  */
 @Service
 public class BillingPlanCheckerServiceImpl implements BillingPlanCheckerService {
-	private static final Logger LOG = LoggerFactory.getLogger(BillingPlanCheckerServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BillingPlanCheckerServiceImpl.class);
 
-	@Override
-	public void validateAccountCanCreateMoreProject(Integer sAccountId)
-			throws UsageExceedBillingPlanException {
-		BillingService billingService = ApplicationContextUtil
-				.getSpringBean(BillingService.class);
-		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
+    @Autowired
+    private BillingService billingService;
 
-		ProjectService projectService = ApplicationContextUtil
-				.getSpringBean(ProjectService.class);
-		Integer numOfActiveProjects = projectService
-				.getTotalActiveProjectsInAccount(sAccountId);
+    @Autowired
+    private ProjectService projectService;
 
-		if (numOfActiveProjects >= billingPlan.getNumprojects()) {
-			throw new UsageExceedBillingPlanException();
-		}
-	}
+    @Autowired
+    private UserService userService;
 
-	@Override
-	public void validateAccountCanCreateNewUser(Integer sAccountId)
-			throws UsageExceedBillingPlanException {
-		BillingService billingService = ApplicationContextUtil
-				.getSpringBean(BillingService.class);
-		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
+    @Autowired
+    private DriveInfoService driveInfoService;
 
-		UserService userService = ApplicationContextUtil
-				.getSpringBean(UserService.class);
-		int numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId);
-		if (numOfUsers >= billingPlan.getNumusers()) {
-			throw new UsageExceedBillingPlanException();
-		}
+    @Override
+    public void validateAccountCanCreateMoreProject(Integer sAccountId) throws UsageExceedBillingPlanException {
+        BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
+        Integer numOfActiveProjects = projectService.getTotalActiveProjectsInAccount(sAccountId);
 
-	}
+        if (numOfActiveProjects >= billingPlan.getNumprojects()) {
+            throw new UsageExceedBillingPlanException();
+        }
+    }
 
-	@Override
-	public void validateAccountCanUploadMoreFiles(Integer sAccountId,
-			long extraBytes) throws UsageExceedBillingPlanException {
-		BillingService billingService = ApplicationContextUtil
-				.getSpringBean(BillingService.class);
-		BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
-		if (billingPlan == null) {
-			LOG.error("Can not define the billing plan for account ",
-					sAccountId);
-			return;
-		}
+    @Override
+    public void validateAccountCanCreateNewUser(Integer sAccountId) throws UsageExceedBillingPlanException {
+        BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
+        int numOfUsers = userService.getTotalActiveUsersInAccount(sAccountId);
+        if (numOfUsers >= billingPlan.getNumusers()) {
+            throw new UsageExceedBillingPlanException();
+        }
+    }
 
-		DriveInfoService driveInfoService = ApplicationContextUtil
-				.getSpringBean(DriveInfoService.class);
-		DriveInfo driveInfo = driveInfoService.getDriveInfo(sAccountId);
-		if (driveInfo.getUsedvolume() + extraBytes >= billingPlan.getVolume()) {
-			throw new UsageExceedBillingPlanException();
-		}
-	}
+    @Override
+    public void validateAccountCanUploadMoreFiles(Integer sAccountId, long extraBytes) throws UsageExceedBillingPlanException {
+        BillingPlan billingPlan = billingService.findBillingPlan(sAccountId);
+        if (billingPlan == null) {
+            LOG.error("Can not define the billing plan for account ", sAccountId);
+            return;
+        }
+
+        DriveInfo driveInfo = driveInfoService.getDriveInfo(sAccountId);
+        if (driveInfo.getUsedvolume() + extraBytes >= billingPlan.getVolume()) {
+            throw new UsageExceedBillingPlanException();
+        }
+    }
 }
