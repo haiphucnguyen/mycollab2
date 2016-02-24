@@ -39,7 +39,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
 
     public LicenseActivationWindow() {
         super();
-        this.setModal(false);
+        this.setModal(true);
         this.setResizable(false);
         this.setWidth("600px");
         MVerticalLayout content = new MVerticalLayout();
@@ -132,7 +132,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         if (licenseInfo != null) {
             this.setClosable(!licenseInfo.isExpired());
         } else {
-            this.setClosable(true);
+            this.setClosable(false);
         }
     }
 

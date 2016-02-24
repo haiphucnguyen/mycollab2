@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.license.LicenseInfo;
 import com.esofthead.mycollab.license.LicenseType;
+import com.esofthead.mycollab.module.mail.service.IContentGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.support.dao.PremiumUserMapper;
 import com.esofthead.mycollab.module.support.domain.PremiumUser;
@@ -36,6 +37,9 @@ public class LicenseManager {
 
     @Autowired
     private MailRelayService mailRelayService;
+
+    @Autowired
+    private IContentGenerator contentGenerator;
 
     @RequestMapping(path = "/register-ee", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
@@ -79,6 +83,22 @@ public class LicenseManager {
         return "Ok";
     }
 
+    @RequestMapping(path = "/register-trial", method = RequestMethod.POST, headers =
+            {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
+    public String registerTrial() {
+        LicenseInfo info = new LicenseInfo();
+        info.setCustomerId("0");
+        info.setLicenseType(LicenseType.PRO_TRIAL);
+        info.setExpireDate(new LocalDate().plusDays(30).toDate());
+        info.setIssueDate(new LocalDate().toDate());
+        info.setLicenseOrg("MyCollab");
+        info.setMaxUsers(10);
+        LicenseManager generator = new LicenseManager();
+        String str = generator.encode(info);
+        return str;
+    }
+
+
     private String encode(LicenseInfo licenseInfo) {
         try {
             Properties prop = new Properties();
@@ -120,11 +140,11 @@ public class LicenseManager {
 
     public static void main(String[] args) {
         LicenseInfo info = new LicenseInfo();
-        info.setCustomerId("1");
+        info.setCustomerId("");
         info.setLicenseType(LicenseType.PRO_TRIAL);
         info.setExpireDate(new LocalDate().plusDays(10).toDate());
         info.setIssueDate(new LocalDate().minusDays(30).toDate());
-        info.setLicenseOrg("eSoftHead");
+        info.setLicenseOrg("");
         info.setMaxUsers(10);
         LicenseManager generator = new LicenseManager();
         String str = generator.encode(info);
