@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt">
+    <resultMap type="com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount"
+               extends="com.esofthead.mycollab.module.user.dao.BillingAccountMapper.ResultMapWithBLOBs"
+               id="SimpleBillingAccountResult">
+        <result column="numUsers" jdbcType="INTEGER" property="createdtime" />
+        <result column="numProjects" jdbcType="INTEGER" property="createdtime" />
+        <result column="lastAccessTime" jdbcType="TIMESTAMP" property="createdtime" />
+    </resultMap>
 
+    <sql id="querySearchCriteria">
+        <![CDATA[
+        ]]>
+    </sql>
+
+    <sql id="selectBillingAccount">
+        <![CDATA[
+        ]]>
+    </sql>
+
+    <sql id="orderStatement">
+    </sql>
+
+    <select id="getTotalCount" resultType="int" parameterType="BillingAccountSearchCriteria" lang="velocity">
+        SELECT count(*) as totalCount FROM m_tracker_component
+        #ifnotnull($_parameter.searchCriteria)
+            #trimext("WHERE" "AND|OR")
+                <include refid="querySearchCriteria" />
+            #end
+        #end
+    </select>
+
+    <select id="findPagableListByCriteria" resultMap="SimpleBillingAccountResult" parameterType="BillingAccountSearchCriteria" lang="velocity">
+        <include refid="selectBillingAccount" />
+        #ifnotnull($_parameter.searchCriteria)
+            #trimext("WHERE" "AND|OR")
+                <include refid="querySearchCriteria" />
+            #end
+        #end
+        <include refid="orderStatement" />
+    </select>
 </mapper>

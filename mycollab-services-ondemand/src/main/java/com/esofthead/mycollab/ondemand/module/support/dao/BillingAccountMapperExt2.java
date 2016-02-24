@@ -11,6 +11,6 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.8
  */
-public interface BillingAccountMapperExt {
+public interface BillingAccountMapperExt2 {
     List<SimpleBillingAccount> findPagableListByCriteria(@Param("searchCriteria") BillingAccountSearchCriteria criteria, RowBounds rowBounds);
 }
