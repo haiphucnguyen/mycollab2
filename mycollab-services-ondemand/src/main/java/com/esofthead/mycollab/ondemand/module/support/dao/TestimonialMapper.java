@@ -1,9 +1,11 @@
-package com.esofthead.mycollab.module.support.dao;
+package com.esofthead.mycollab.ondemand.module.support.dao;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.module.support.domain.Testimonial;
-import com.esofthead.mycollab.module.support.domain.TestimonialExample;
+import com.esofthead.mycollab.ondemand.module.support.domain.Testimonial;
+import com.esofthead.mycollab.ondemand.module.support.domain.TestimonialExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 @SuppressWarnings({ "ucd", "rawtypes" })

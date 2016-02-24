@@ -1,8 +1,8 @@
-package com.esofthead.mycollab.module.support.dao;
+package com.esofthead.mycollab.ondemand.module.support.dao;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.module.support.domain.CommunityLead;
-import com.esofthead.mycollab.module.support.domain.CommunityLeadExample;
+import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLead;
+import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLeadExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

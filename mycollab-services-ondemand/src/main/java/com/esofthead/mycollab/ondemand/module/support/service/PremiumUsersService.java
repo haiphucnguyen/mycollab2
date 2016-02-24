@@ -1,7 +1,7 @@
-package com.esofthead.mycollab.module.support.service;
+package com.esofthead.mycollab.ondemand.module.support.service;
 
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
-import com.esofthead.mycollab.module.support.domain.PremiumUser;
+import com.esofthead.mycollab.ondemand.module.support.domain.PremiumUser;
 
 /**
  * @author MyCollab Ltd

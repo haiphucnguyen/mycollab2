@@ -1,5 +1,5 @@
 /*Domain class of table s_premium_users*/
-package com.esofthead.mycollab.module.support.domain;
+package com.esofthead.mycollab.ondemand.module.support.domain;
 
 import com.esofthead.mycollab.core.arguments.ValuedBean;
 import com.esofthead.mycollab.core.db.metadata.Column;

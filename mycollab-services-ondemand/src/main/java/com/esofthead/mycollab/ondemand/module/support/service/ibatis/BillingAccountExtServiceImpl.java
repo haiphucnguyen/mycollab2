@@ -1,6 +1,6 @@
-package com.esofthead.mycollab.module.support.service.ibatis;
+package com.esofthead.mycollab.ondemand.module.support.service.ibatis;
 
-import com.esofthead.mycollab.module.support.service.BillingAccountExtService;
+import com.esofthead.mycollab.ondemand.module.support.service.BillingAccountExtService;
 import org.springframework.stereotype.Service;
 
 /**

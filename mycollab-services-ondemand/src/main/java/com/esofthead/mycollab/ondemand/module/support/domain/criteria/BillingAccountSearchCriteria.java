@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.support.domain.criteria;
+package com.esofthead.mycollab.ondemand.module.support.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 

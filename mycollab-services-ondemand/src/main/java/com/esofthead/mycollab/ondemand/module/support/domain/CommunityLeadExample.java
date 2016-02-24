@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.support.domain;
+package com.esofthead.mycollab.ondemand.module.support.domain;
 
 import java.util.ArrayList;
 import java.util.Date;

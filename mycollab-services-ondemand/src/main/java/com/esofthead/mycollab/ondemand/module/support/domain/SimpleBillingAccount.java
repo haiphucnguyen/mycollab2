@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.support.domain;
+package com.esofthead.mycollab.ondemand.module.support.domain;
 
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 

@@ -2,9 +2,9 @@ package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.module.support.dao.CommunityLeadMapper;
-import com.esofthead.mycollab.module.support.domain.CommunityLead;
-import com.esofthead.mycollab.module.support.domain.CommunityLeadExample;
+import com.esofthead.mycollab.ondemand.module.support.dao.CommunityLeadMapper;
+import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLead;
+import com.esofthead.mycollab.ondemand.module.support.domain.CommunityLeadExample;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;

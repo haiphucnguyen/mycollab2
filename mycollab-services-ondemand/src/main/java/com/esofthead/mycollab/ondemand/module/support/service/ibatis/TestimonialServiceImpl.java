@@ -1,10 +1,10 @@
-package com.esofthead.mycollab.module.support.service.ibatis;
+package com.esofthead.mycollab.ondemand.module.support.service.ibatis;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
-import com.esofthead.mycollab.module.support.dao.TestimonialMapper;
-import com.esofthead.mycollab.module.support.domain.Testimonial;
-import com.esofthead.mycollab.module.support.service.TestimonialService;
+import com.esofthead.mycollab.ondemand.module.support.dao.TestimonialMapper;
+import com.esofthead.mycollab.ondemand.module.support.domain.Testimonial;
+import com.esofthead.mycollab.ondemand.module.support.service.TestimonialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

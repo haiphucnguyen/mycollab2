@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.support.service;
+package com.esofthead.mycollab.ondemand.module.support.service;
 
 /**
  * @author MyCollab Ltd

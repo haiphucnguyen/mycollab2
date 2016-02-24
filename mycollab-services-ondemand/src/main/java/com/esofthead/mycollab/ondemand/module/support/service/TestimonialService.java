@@ -1,8 +1,8 @@
-package com.esofthead.mycollab.module.support.service;
+package com.esofthead.mycollab.ondemand.module.support.service;
 
 import com.esofthead.mycollab.cache.IgnoreCacheClass;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
-import com.esofthead.mycollab.module.support.domain.Testimonial;
+import com.esofthead.mycollab.ondemand.module.support.domain.Testimonial;
 
 /**
  * @author MyCollab Ltd.
