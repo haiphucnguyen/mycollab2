@@ -17,9 +17,7 @@ import java.util.List;
  * @since 4.1
  */
 @Service
-@SuppressWarnings("unchecked")
-public class AccountThemeServiceImpl extends DefaultCrudService<Integer, AccountTheme> implements
-        AccountThemeService {
+public class AccountThemeServiceImpl extends DefaultCrudService<Integer, AccountTheme> implements AccountThemeService {
 
     @Autowired
     private AccountThemeMapper accountThemeMapper;

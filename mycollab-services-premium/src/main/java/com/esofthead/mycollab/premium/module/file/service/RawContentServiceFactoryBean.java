@@ -18,8 +18,7 @@ import com.esofthead.mycollab.module.file.service.impl.FileRawContentServiceImpl
  */
 @Service(value = "rawContentService")
 @IgnoreCacheClass
-public class RawContentServiceFactoryBean extends
-		AbstractFactoryBean<RawContentService> implements IService {
+public class RawContentServiceFactoryBean extends AbstractFactoryBean<RawContentService> implements IService {
 
 	@Override
 	protected RawContentService createInstance() throws Exception {

@@ -147,13 +147,23 @@ public class ProjectAddWindow extends Window implements WizardProgressListener {
         this.close();
     }
 
-    private static class ProjectAddWizard extends Wizard {
+    private class ProjectAddWizard extends Wizard {
         ProjectAddWizard() {
             this.getCancelButton().setStyleName(UIConstants.BUTTON_OPTION);
             this.getBackButton().setStyleName(UIConstants.BUTTON_OPTION);
             this.getNextButton().setStyleName(UIConstants.BUTTON_ACTION);
             this.getFinishButton().setStyleName(UIConstants.BUTTON_ACTION);
             this.footer.setMargin(new MarginInfo(true, true, false, false));
+
+            Button newProjectFromTemplateBtn = new Button("New project from template", new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    ProjectAddWindow.this.close();
+                    UI.getCurrent().addWindow(new ProjectAddBaseTemplateWindow());
+                }
+            });
+            newProjectFromTemplateBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            footer.addComponent(newProjectFromTemplateBtn, 0);
         }
 
         @Override
