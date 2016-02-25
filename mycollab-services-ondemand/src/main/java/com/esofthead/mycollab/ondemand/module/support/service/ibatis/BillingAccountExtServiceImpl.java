@@ -2,7 +2,7 @@ package com.esofthead.mycollab.ondemand.module.support.service.ibatis;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.ondemand.module.support.dao.BillingAccountMapperExt2;
-import com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount2;
 import com.esofthead.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria;
 import com.esofthead.mycollab.ondemand.module.support.service.BillingAccountExtService;
 import org.apache.ibatis.session.RowBounds;
@@ -21,7 +21,7 @@ public class BillingAccountExtServiceImpl implements BillingAccountExtService {
     private BillingAccountMapperExt2 billingAccountMapperExt2;
 
     @Override
-    public List<SimpleBillingAccount> findPagableListByCriteria(SearchRequest<BillingAccountSearchCriteria> searchRequest) {
+    public List<SimpleBillingAccount2> findPagableListByCriteria(SearchRequest<BillingAccountSearchCriteria> searchRequest) {
         return billingAccountMapperExt2.findPagableListByCriteria(searchRequest.getSearchCriteria(),
                 new RowBounds((searchRequest.getCurrentPage() - 1) * searchRequest.getNumberOfItems(),
                         searchRequest.getNumberOfItems()));

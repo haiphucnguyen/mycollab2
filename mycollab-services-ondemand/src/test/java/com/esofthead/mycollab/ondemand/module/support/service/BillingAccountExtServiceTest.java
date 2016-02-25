@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.ondemand.module.support.service;
 
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount2;
 import com.esofthead.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.service.IntergrationServiceTest;
@@ -30,17 +33,23 @@ public class BillingAccountExtServiceTest extends IntergrationServiceTest {
     @Test
     @DataSet
     public void testFindAccounts() {
-        List<SimpleBillingAccount> billingAccounts = billingAccountExtService.findPagableListByCriteria(
-                new SearchRequest<>(new BillingAccountSearchCriteria()));
+        BillingAccountSearchCriteria criteria = new BillingAccountSearchCriteria();
+        criteria.setStatuses(new SetSearchField<>("Active"));
+        criteria.setLastAccessTime(new DateSearchField(new LocalDate(2016, 1, 3).toDate()));
+        List<SimpleBillingAccount2> billingAccounts = billingAccountExtService.findPagableListByCriteria(
+                new SearchRequest<>(criteria));
         assertThat(billingAccounts).hasSize(2);
-        Collection<SimpleBillingAccount> filter = Collections2.filter(billingAccounts, new Predicate<SimpleBillingAccount>() {
+        Collection<SimpleBillingAccount2> filter = Collections2.filter(billingAccounts, new Predicate<SimpleBillingAccount2>() {
             @Override
-            public boolean apply(SimpleBillingAccount account) {
+            public boolean apply(SimpleBillingAccount2 account) {
                 return (account.getId() == 1);
             }
         });
-        SimpleBillingAccount account = filter.iterator().next();
-        assertThat(account).extracting("numProjects", "numUsers", "lastAccessTime").containsSequence(2, 2, new
+        SimpleBillingAccount2 account = filter.iterator().next();
+        assertThat(account).extracting("numProjects", "numUsers", "lastAccessTime").containsSequence(2, 3, new
                 LocalDate(2016, 1, 1).toDate());
+        List accountOwners = account.getAccountOwners();
+        assertThat(accountOwners).hasSize(2).extracting("username").contains("hainguyen@esofthead.com",
+                "linhduong@esofthead.com");
     }
 }

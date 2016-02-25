@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.ondemand.module.support.dao.BillingAccountMapperExt2">
-    <resultMap type="com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount"
+    <resultMap type="com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount2"
                extends="com.esofthead.mycollab.module.user.dao.BillingAccountMapper.BaseResultMap"
                id="SimpleBillingAccountResult">
         <result column="numUsers" jdbcType="INTEGER" property="numUsers" />
         <result column="numProjects" jdbcType="INTEGER" property="numProjects" />
         <result column="lastAccessTime" jdbcType="TIMESTAMP" property="lastAccessTime" />
+        <collection columnPrefix="owner_" notNullColumn="username"
+                    ofType="com.esofthead.mycollab.module.user.domain.SimpleUser"
+                    property="accountOwners"
+                    resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" />
     </resultMap>
 
     <sql id="querySearchCriteria">
         <![CDATA[
+        #set($searchCriteria = $_parameter.searchCriteria)
 
+        #ifnotnull($searchCriteria.lastAccessTime)
+            ${searchCriteria.lastAccessTime.operation} (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser3 WHERE accountUser3.accountId = s_account.id) < @{searchCriteria.lastAccessTime.value}
+        #end
+
+        #ifnotnull($searchCriteria.statuses)
+            ${searchCriteria.statuses.operation} s_account.status IN
+            #repeat(${searchCriteria.statuses.values} $status "," "(" ")")
+                @{status}
+            #end
+        #end
         ]]>
     </sql>
 
@@ -20,8 +35,11 @@
         SELECT s_account.id, s_account.subdomain, s_account.createdTime, s_account.pricing,
             (SELECT COUNT(*) FROM m_prj_project WHERE m_prj_project.sAccountId = s_account.id) AS numProjects,
             (SELECT COUNT(*) FROM s_user_account AS accountUser WHERE accountUser.accountId = s_account.id) AS numUsers,
-            (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime
+            (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime,
+            s_user.username AS owner_username, s_user.email AS owner_email, s_user.firstname AS owner_firstname, s_user.lastname AS owner_lastname
         FROM s_account
+          LEFT OUTER JOIN s_user_account ON (s_user_account.accountId = s_account.id AND s_user_account.isAccountOwner = '1')
+          LEFT OUTER JOIN s_user ON (s_user_account.username = s_user.username)
         ]]>
     </sql>
 
@@ -34,15 +52,6 @@
         #end
         s_account.createdTime DESC
     </sql>
-
-    <select id="getTotalCount" resultType="int" parameterType="BillingAccountSearchCriteria" lang="velocity">
-        SELECT count(*) as totalCount FROM s_account
-        #ifnotnull($_parameter.searchCriteria)
-            #trimext("WHERE" "AND|OR")
-                <include refid="querySearchCriteria" />
-            #end
-        #end
-    </select>
 
     <select id="findPagableListByCriteria" resultMap="SimpleBillingAccountResult" parameterType="BillingAccountSearchCriteria" lang="velocity">
         <include refid="selectBillingAccount" />
