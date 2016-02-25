@@ -25,7 +25,7 @@ public class GenericController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity rulesFoException(HttpServletRequest req, Exception e) {
-        LOG.error("Error", e);
+        LOG.error("Error " + req.getContextPath(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
