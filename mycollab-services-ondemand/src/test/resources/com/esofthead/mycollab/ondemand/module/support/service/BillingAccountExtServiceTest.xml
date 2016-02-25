@@ -1,3 +1,17 @@
 <!DOCTYPE dataset PUBLIC "-//MyCollab/MyCollab Database Schema//EN" "http://www.mycollab.com/mycollab.dtd">
 <dataset>
+    <s_account id="1" status="Active" paymentMethod="Credit Card" subdomain="test1" createdTime="2013-04-10 00:00:00"/>
+    <s_account id="2" status="Active" paymentMethod="Credit Card" subdomain="test2" createdTime="2014-04-10 00:00:00"/>
+
+    <s_user username="hainguyen@esofthead.com" firstname="Hai" lastname="Nguyen" email="hainguyen@esofthead.com"/>
+    <s_user username="linhduong@esofthead.com" firstname="Linh" lastname="Duong" email="linhduong@esofthead.com"/>
+
+    <s_user_account id="1" username="hainguyen@esofthead.com" accountId="1" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
+                    registerStatus="Active" lastAccessedTime="2015-12-15 00:00:00"/>
+    <s_user_account id="2" username="linhduong@esofthead.com" accountId="1" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
+                    registerStatus="Active" lastAccessedTime="2016-01-01 00:00:00"/>
+    <s_user_account id="3" username="hainguyen@esofthead.com" accountId="2" isAccountOwner="1" registeredTime="2014-04-10 00:00:00"
+                    registerStatus="Active" lastAccessedTime="2015-12-15 00:00:00"/>
+    <m_prj_project id="1" name="Prj 1" shortname="1" projectStatus="Active" sAccountId="1"/>
+    <m_prj_project id="2" name="Prj 2" shortname="2" projectStatus="Active" sAccountId="1"/>
 </dataset>

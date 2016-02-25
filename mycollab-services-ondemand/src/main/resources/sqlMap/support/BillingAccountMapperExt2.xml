@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt">
+<mapper namespace="com.esofthead.mycollab.ondemand.module.support.dao.BillingAccountMapperExt2">
     <resultMap type="com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount"
                extends="com.esofthead.mycollab.module.user.dao.BillingAccountMapper.ResultMapWithBLOBs"
                id="SimpleBillingAccountResult">
         <result column="numUsers" jdbcType="INTEGER" property="createdtime" />
         <result column="numProjects" jdbcType="INTEGER" property="createdtime" />
-        <result column="lastAccessTime" jdbcType="TIMESTAMP" property="createdtime" />
+        <result column="lastAccessTime" jdbcType="TIMESTAMP" property="lastAccessTime" />
     </resultMap>
 
     <sql id="querySearchCriteria">
         <![CDATA[
+
         ]]>
     </sql>
 
     <sql id="selectBillingAccount">
         <![CDATA[
+        SELECT s_account.subdomain, s_account.createdTime, s_account.pricing,
+            (SELECT COUNT(*) FROM m_prj_project WHERE m_prj_project.sAccountId = s_account.id) AS numProjects,
+            (SELECT COUNT(*) FROM s_account AS accountUser WHERE accountUser.accountId = s_account.id) AS numProjects,
+            (SELECT MAX(lastAccessedTime) FROM s_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime
+        FROM s_account
         ]]>
     </sql>
 
     <sql id="orderStatement">
+        ORDER BY
+        #ifnotnull($_parameter.searchCriteria.orderFields)
+            #repeat(${_parameter.searchCriteria.orderFields} $orderField "" "" "")
+                ${orderField.field} ${orderField.direction},
+            #end
+        #end
+        s_account.createdTime DESC
     </sql>
 
     <select id="getTotalCount" resultType="int" parameterType="BillingAccountSearchCriteria" lang="velocity">
-        SELECT count(*) as totalCount FROM m_tracker_component
+        SELECT count(*) as totalCount FROM s_account
         #ifnotnull($_parameter.searchCriteria)
             #trimext("WHERE" "AND|OR")
                 <include refid="querySearchCriteria" />

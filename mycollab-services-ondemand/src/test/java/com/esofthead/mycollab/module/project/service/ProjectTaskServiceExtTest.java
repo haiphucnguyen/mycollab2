@@ -17,7 +17,6 @@ import java.util.concurrent.Future;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
-
     private static Logger LOG = LoggerFactory.getLogger(ProjectTaskServiceExtTest.class);
 
     @Autowired
@@ -40,8 +39,7 @@ public class ProjectTaskServiceExtTest extends IntergrationServiceTest {
                 @Override
                 public void run() {
                     Task record = (Task) baseRecord.copy();
-                    projectTaskService.saveWithSession(record,
-                            "hainguyen@esofthead.com");
+                    projectTaskService.saveWithSession(record, "hainguyen@esofthead.com");
                 }
             };
 
