@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.ondemand.module.support.dao.BillingAccountMapperExt2">
     <resultMap type="com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount"
-               extends="com.esofthead.mycollab.module.user.dao.BillingAccountMapper.ResultMapWithBLOBs"
+               extends="com.esofthead.mycollab.module.user.dao.BillingAccountMapper.BaseResultMap"
                id="SimpleBillingAccountResult">
-        <result column="numUsers" jdbcType="INTEGER" property="createdtime" />
-        <result column="numProjects" jdbcType="INTEGER" property="createdtime" />
+        <result column="numUsers" jdbcType="INTEGER" property="numUsers" />
+        <result column="numProjects" jdbcType="INTEGER" property="numProjects" />
         <result column="lastAccessTime" jdbcType="TIMESTAMP" property="lastAccessTime" />
     </resultMap>
 
@@ -17,10 +17,10 @@
 
     <sql id="selectBillingAccount">
         <![CDATA[
-        SELECT s_account.subdomain, s_account.createdTime, s_account.pricing,
+        SELECT s_account.id, s_account.subdomain, s_account.createdTime, s_account.pricing,
             (SELECT COUNT(*) FROM m_prj_project WHERE m_prj_project.sAccountId = s_account.id) AS numProjects,
-            (SELECT COUNT(*) FROM s_account AS accountUser WHERE accountUser.accountId = s_account.id) AS numProjects,
-            (SELECT MAX(lastAccessedTime) FROM s_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime
+            (SELECT COUNT(*) FROM s_user_account AS accountUser WHERE accountUser.accountId = s_account.id) AS numUsers,
+            (SELECT MAX(lastAccessedTime) FROM s_user_account AS accountUser2 WHERE accountUser2.accountId = s_account.id) AS lastAccessTime
         FROM s_account
         ]]>
     </sql>
