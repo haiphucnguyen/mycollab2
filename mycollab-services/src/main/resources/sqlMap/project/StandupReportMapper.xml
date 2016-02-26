@@ -9,7 +9,7 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="sAccountId" jdbcType="INTEGER" property="saccountid" />
-    <result column="projectId" jdbcType="INTEGER" property="projectid" />
+    <result column="projectId" jdbcType="INTEGER" property="projectId" />
     <result column="forday" jdbcType="DATE" property="forday" />
     <result column="logBy" jdbcType="VARCHAR" property="logby" />
     <result column="createdTime" jdbcType="TIMESTAMP" property="createdtime" />
@@ -192,7 +192,7 @@
       forday, logBy, createdTime, 
       lastUpdatedTime, whatlastday, whattoday, 
       whatproblem)
-    values (#{id,jdbcType=INTEGER}, #{saccountid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{saccountid,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER},
       #{forday,jdbcType=DATE}, #{logby,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, 
       #{lastupdatedtime,jdbcType=TIMESTAMP}, #{whatlastday,jdbcType=LONGVARCHAR}, #{whattoday,jdbcType=LONGVARCHAR}, 
       #{whatproblem,jdbcType=LONGVARCHAR})
@@ -211,7 +211,7 @@
       <if test="saccountid != null">
         sAccountId,
       </if>
-      <if test="projectid != null">
+      <if test="projectId != null">
         projectId,
       </if>
       <if test="forday != null">
@@ -243,8 +243,8 @@
       <if test="saccountid != null">
         #{saccountid,jdbcType=INTEGER},
       </if>
-      <if test="projectid != null">
-        #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
       </if>
       <if test="forday != null">
         #{forday,jdbcType=DATE},
@@ -294,8 +294,8 @@
       <if test="record.saccountid != null">
         sAccountId = #{record.saccountid,jdbcType=INTEGER},
       </if>
-      <if test="record.projectid != null">
-        projectId = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.forday != null">
         forday = #{record.forday,jdbcType=DATE},
@@ -332,7 +332,7 @@
     update m_prj_standup
     set id = #{record.id,jdbcType=INTEGER},
       sAccountId = #{record.saccountid,jdbcType=INTEGER},
-      projectId = #{record.projectid,jdbcType=INTEGER},
+      projectId = #{record.projectId,jdbcType=INTEGER},
       forday = #{record.forday,jdbcType=DATE},
       logBy = #{record.logby,jdbcType=VARCHAR},
       createdTime = #{record.createdtime,jdbcType=TIMESTAMP},
@@ -353,7 +353,7 @@
     update m_prj_standup
     set id = #{record.id,jdbcType=INTEGER},
       sAccountId = #{record.saccountid,jdbcType=INTEGER},
-      projectId = #{record.projectid,jdbcType=INTEGER},
+      projectId = #{record.projectId,jdbcType=INTEGER},
       forday = #{record.forday,jdbcType=DATE},
       logBy = #{record.logby,jdbcType=VARCHAR},
       createdTime = #{record.createdtime,jdbcType=TIMESTAMP},
@@ -373,8 +373,8 @@
       <if test="saccountid != null">
         sAccountId = #{saccountid,jdbcType=INTEGER},
       </if>
-      <if test="projectid != null">
-        projectId = #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        projectId = #{projectId,jdbcType=INTEGER},
       </if>
       <if test="forday != null">
         forday = #{forday,jdbcType=DATE},
@@ -408,7 +408,7 @@
     -->
     update m_prj_standup
     set sAccountId = #{saccountid,jdbcType=INTEGER},
-      projectId = #{projectid,jdbcType=INTEGER},
+      projectId = #{projectId,jdbcType=INTEGER},
       forday = #{forday,jdbcType=DATE},
       logBy = #{logby,jdbcType=VARCHAR},
       createdTime = #{createdtime,jdbcType=TIMESTAMP},
@@ -426,7 +426,7 @@
     -->
     update m_prj_standup
     set sAccountId = #{saccountid,jdbcType=INTEGER},
-      projectId = #{projectid,jdbcType=INTEGER},
+      projectId = #{projectId,jdbcType=INTEGER},
       forday = #{forday,jdbcType=DATE},
       logBy = #{logby,jdbcType=VARCHAR},
       createdTime = #{createdtime,jdbcType=TIMESTAMP},
@@ -435,7 +435,7 @@
   </update>
   <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs" useGeneratedKeys="true">
     <!--WARNING - @mbggenerated-->
-    insert into m_prj_standup (id, sAccountId, projectId, forday, logBy, createdTime, lastUpdatedTime, whatlastday, whattoday, whatproblem) values (#{id,jdbcType=INTEGER}, #{saccountid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, #{forday,jdbcType=DATE}, #{logby,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP}, #{whatlastday,jdbcType=LONGVARCHAR}, #{whattoday,jdbcType=LONGVARCHAR}, #{whatproblem,jdbcType=LONGVARCHAR})
+    insert into m_prj_standup (id, sAccountId, projectId, forday, logBy, createdTime, lastUpdatedTime, whatlastday, whattoday, whatproblem) values (#{id,jdbcType=INTEGER}, #{saccountid,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{forday,jdbcType=DATE}, #{logby,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP}, #{whatlastday,jdbcType=LONGVARCHAR}, #{whattoday,jdbcType=LONGVARCHAR}, #{whatproblem,jdbcType=LONGVARCHAR})
   </insert>
   <delete id="removeKeysWithSession" parameterType="java.util.List">
     <!--WARNING - @mbggenerated-->
@@ -448,8 +448,8 @@
       <if test="record.saccountid != null">
         sAccountId = #{record.saccountid,jdbcType=INTEGER},
       </if>
-      <if test="record.projectid != null">
-        projectId = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.forday != null">
         forday = #{record.forday,jdbcType=DATE},

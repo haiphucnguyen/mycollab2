@@ -15,7 +15,7 @@
     <result column="owner" jdbcType="VARCHAR" property="owner" />
     <result column="querytext" jdbcType="VARCHAR" property="querytext" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="projectid" jdbcType="INTEGER" property="projectid" />
+    <result column="projectId" jdbcType="INTEGER" property="projectId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -92,7 +92,7 @@
       This element was generated on Wed Feb 17 22:06:36 ICT 2016.
     -->
     id, queryname, sharetype, createddate, updateddate, owner, querytext, description, 
-    projectid
+    projectId
   </sql>
   <select id="selectByExample" parameterType="com.esofthead.mycollab.module.tracker.domain.QueryExample" resultMap="BaseResultMap">
     <!--
@@ -152,11 +152,11 @@
     -->
     insert into m_tracker_query (id, queryname, sharetype, 
       createddate, updateddate, owner, 
-      querytext, description, projectid
+      querytext, description, projectId
       )
     values (#{id,jdbcType=INTEGER}, #{queryname,jdbcType=VARCHAR}, #{sharetype,jdbcType=INTEGER}, 
       #{createddate,jdbcType=TIMESTAMP}, #{updateddate,jdbcType=TIMESTAMP}, #{owner,jdbcType=VARCHAR}, 
-      #{querytext,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER}
+      #{querytext,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.esofthead.mycollab.module.tracker.domain.Query">
@@ -191,8 +191,8 @@
       <if test="description != null">
         description,
       </if>
-      <if test="projectid != null">
-        projectid,
+      <if test="projectId != null">
+        projectId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -220,8 +220,8 @@
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="projectid != null">
-        #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -268,8 +268,8 @@
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectid != null">
-        projectid = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -291,7 +291,7 @@
       owner = #{record.owner,jdbcType=VARCHAR},
       querytext = #{record.querytext,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      projectid = #{record.projectid,jdbcType=INTEGER}
+      projectId = #{record.projectId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -325,8 +325,8 @@
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="projectid != null">
-        projectid = #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        projectId = #{projectId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -345,12 +345,12 @@
       owner = #{owner,jdbcType=VARCHAR},
       querytext = #{querytext,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      projectid = #{projectid,jdbcType=INTEGER}
+      projectId = #{projectId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.esofthead.mycollab.module.tracker.domain.Query" useGeneratedKeys="true">
     <!--WARNING - @mbggenerated-->
-    insert into m_tracker_query (id, queryname, sharetype, createddate, updateddate, owner, querytext, description, projectid) values (#{id,jdbcType=INTEGER}, #{queryname,jdbcType=VARCHAR}, #{sharetype,jdbcType=INTEGER}, #{createddate,jdbcType=TIMESTAMP}, #{updateddate,jdbcType=TIMESTAMP}, #{owner,jdbcType=VARCHAR}, #{querytext,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER})
+    insert into m_tracker_query (id, queryname, sharetype, createddate, updateddate, owner, querytext, description, projectId) values (#{id,jdbcType=INTEGER}, #{queryname,jdbcType=VARCHAR}, #{sharetype,jdbcType=INTEGER}, #{createddate,jdbcType=TIMESTAMP}, #{updateddate,jdbcType=TIMESTAMP}, #{owner,jdbcType=VARCHAR}, #{querytext,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER})
   </insert>
   <delete id="removeKeysWithSession" parameterType="java.util.List">
     <!--WARNING - @mbggenerated-->
@@ -381,8 +381,8 @@
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectid != null">
-        projectid = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
     </set>
   </sql>

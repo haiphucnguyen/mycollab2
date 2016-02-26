@@ -42,12 +42,12 @@ Last changelog
 
 Version 5.2.8
 -----------------------------
-
 **Improvements & New Features**
 * [Premium] Revise the Calendar view
 * [Premium] Add tag management view for project module
-* [Premium] Support project template
+* Support project template
 * Add 'Won't Fix' status to bug workflow
+* Other minor improvements
 
 **Bug Fixes**
 * [Premium] Export project timelog is failed

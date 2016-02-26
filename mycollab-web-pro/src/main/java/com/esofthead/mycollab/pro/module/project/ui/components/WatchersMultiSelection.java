@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.data.Property;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Image;
@@ -46,7 +47,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
         monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
         followers = monitorItemService.getWatchers(type, typeId);
         new Restrain(this).setMaxHeight("600px");
-        this.addStyleName("scrollable-container");
+        this.addStyleName(UIConstants.SCROLLABLE_CONTAINER);
 
         ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));

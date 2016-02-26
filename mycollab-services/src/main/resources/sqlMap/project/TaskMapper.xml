@@ -15,7 +15,7 @@
     <result column="priority" jdbcType="VARCHAR" property="priority" />
     <result column="duration" jdbcType="BIGINT" property="duration" />
     <result column="isestimated" jdbcType="BIT" property="isestimated" />
-    <result column="projectid" jdbcType="INTEGER" property="projectid" />
+    <result column="projectId" jdbcType="INTEGER" property="projectId" />
     <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
     <result column="taskindex" jdbcType="INTEGER" property="taskindex" />
     <result column="createdTime" jdbcType="TIMESTAMP" property="createdtime" />
@@ -114,7 +114,7 @@
       This element was generated on Wed Feb 17 22:06:36 ICT 2016.
     -->
     id, taskname, percentagecomplete, startdate, enddate, priority, duration, isestimated, 
-    projectid, deadline, taskindex, createdTime, lastUpdatedTime, assignUser, sAccountId, 
+    projectId, deadline, taskindex, createdTime, lastUpdatedTime, assignUser, sAccountId,
     status, logBy, taskkey, originalEstimate, remainEstimate, parentTaskId, milestoneId, 
     ganttindex
   </sql>
@@ -207,7 +207,7 @@
     -->
     insert into m_prj_task (id, taskname, percentagecomplete, 
       startdate, enddate, priority, 
-      duration, isestimated, projectid, 
+      duration, isestimated, projectId,
       deadline, taskindex, createdTime, 
       lastUpdatedTime, assignUser, sAccountId, 
       status, logBy, taskkey, 
@@ -216,7 +216,7 @@
       )
     values (#{id,jdbcType=INTEGER}, #{taskname,jdbcType=VARCHAR}, #{percentagecomplete,jdbcType=DOUBLE}, 
       #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, #{priority,jdbcType=VARCHAR}, 
-      #{duration,jdbcType=BIGINT}, #{isestimated,jdbcType=BIT}, #{projectid,jdbcType=INTEGER}, 
+      #{duration,jdbcType=BIGINT}, #{isestimated,jdbcType=BIT}, #{projectId,jdbcType=INTEGER},
       #{deadline,jdbcType=TIMESTAMP}, #{taskindex,jdbcType=INTEGER}, #{createdtime,jdbcType=TIMESTAMP}, 
       #{lastupdatedtime,jdbcType=TIMESTAMP}, #{assignuser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, 
       #{status,jdbcType=VARCHAR}, #{logby,jdbcType=VARCHAR}, #{taskkey,jdbcType=INTEGER}, 
@@ -256,8 +256,8 @@
       <if test="isestimated != null">
         isestimated,
       </if>
-      <if test="projectid != null">
-        projectid,
+      <if test="projectId != null">
+        projectId,
       </if>
       <if test="deadline != null">
         deadline,
@@ -330,8 +330,8 @@
       <if test="isestimated != null">
         #{isestimated,jdbcType=BIT},
       </if>
-      <if test="projectid != null">
-        #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
       </if>
       <if test="deadline != null">
         #{deadline,jdbcType=TIMESTAMP},
@@ -423,8 +423,8 @@
       <if test="record.isestimated != null">
         isestimated = #{record.isestimated,jdbcType=BIT},
       </if>
-      <if test="record.projectid != null">
-        projectid = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.deadline != null">
         deadline = #{record.deadline,jdbcType=TIMESTAMP},
@@ -491,7 +491,7 @@
       priority = #{record.priority,jdbcType=VARCHAR},
       duration = #{record.duration,jdbcType=BIGINT},
       isestimated = #{record.isestimated,jdbcType=BIT},
-      projectid = #{record.projectid,jdbcType=INTEGER},
+      projectId = #{record.projectId,jdbcType=INTEGER},
       deadline = #{record.deadline,jdbcType=TIMESTAMP},
       taskindex = #{record.taskindex,jdbcType=INTEGER},
       createdTime = #{record.createdtime,jdbcType=TIMESTAMP},
@@ -526,7 +526,7 @@
       priority = #{record.priority,jdbcType=VARCHAR},
       duration = #{record.duration,jdbcType=BIGINT},
       isestimated = #{record.isestimated,jdbcType=BIT},
-      projectid = #{record.projectid,jdbcType=INTEGER},
+      projectId = #{record.projectId,jdbcType=INTEGER},
       deadline = #{record.deadline,jdbcType=TIMESTAMP},
       taskindex = #{record.taskindex,jdbcType=INTEGER},
       createdTime = #{record.createdtime,jdbcType=TIMESTAMP},
@@ -574,8 +574,8 @@
       <if test="isestimated != null">
         isestimated = #{isestimated,jdbcType=BIT},
       </if>
-      <if test="projectid != null">
-        projectid = #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        projectId = #{projectId,jdbcType=INTEGER},
       </if>
       <if test="deadline != null">
         deadline = #{deadline,jdbcType=TIMESTAMP},
@@ -639,7 +639,7 @@
       priority = #{priority,jdbcType=VARCHAR},
       duration = #{duration,jdbcType=BIGINT},
       isestimated = #{isestimated,jdbcType=BIT},
-      projectid = #{projectid,jdbcType=INTEGER},
+      projectId = #{projectId,jdbcType=INTEGER},
       deadline = #{deadline,jdbcType=TIMESTAMP},
       taskindex = #{taskindex,jdbcType=INTEGER},
       createdTime = #{createdtime,jdbcType=TIMESTAMP},
@@ -671,7 +671,7 @@
       priority = #{priority,jdbcType=VARCHAR},
       duration = #{duration,jdbcType=BIGINT},
       isestimated = #{isestimated,jdbcType=BIT},
-      projectid = #{projectid,jdbcType=INTEGER},
+      projectId = #{projectId,jdbcType=INTEGER},
       deadline = #{deadline,jdbcType=TIMESTAMP},
       taskindex = #{taskindex,jdbcType=INTEGER},
       createdTime = #{createdtime,jdbcType=TIMESTAMP},
@@ -690,7 +690,7 @@
   </update>
   <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.esofthead.mycollab.module.project.domain.Task" useGeneratedKeys="true">
     <!--WARNING - @mbggenerated-->
-    insert into m_prj_task (id, taskname, percentagecomplete, startdate, enddate, priority, duration, isestimated, projectid, deadline, taskindex, createdTime, lastUpdatedTime, assignUser, sAccountId, status, logBy, taskkey, originalEstimate, remainEstimate, parentTaskId, milestoneId, ganttindex, notes) values (#{id,jdbcType=INTEGER}, #{taskname,jdbcType=VARCHAR}, #{percentagecomplete,jdbcType=DOUBLE}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, #{priority,jdbcType=VARCHAR}, #{duration,jdbcType=BIGINT}, #{isestimated,jdbcType=BIT}, #{projectid,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, #{taskindex,jdbcType=INTEGER}, #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP}, #{assignuser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{logby,jdbcType=VARCHAR}, #{taskkey,jdbcType=INTEGER}, #{originalestimate,jdbcType=DOUBLE}, #{remainestimate,jdbcType=DOUBLE}, #{parenttaskid,jdbcType=INTEGER}, #{milestoneid,jdbcType=INTEGER}, #{ganttindex,jdbcType=INTEGER}, #{notes,jdbcType=LONGVARCHAR})
+    insert into m_prj_task (id, taskname, percentagecomplete, startdate, enddate, priority, duration, isestimated, projectId, deadline, taskindex, createdTime, lastUpdatedTime, assignUser, sAccountId, status, logBy, taskkey, originalEstimate, remainEstimate, parentTaskId, milestoneId, ganttindex, notes) values (#{id,jdbcType=INTEGER}, #{taskname,jdbcType=VARCHAR}, #{percentagecomplete,jdbcType=DOUBLE}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, #{priority,jdbcType=VARCHAR}, #{duration,jdbcType=BIGINT}, #{isestimated,jdbcType=BIT}, #{projectId,jdbcType=INTEGER}, #{deadline,jdbcType=TIMESTAMP}, #{taskindex,jdbcType=INTEGER}, #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP}, #{assignuser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{logby,jdbcType=VARCHAR}, #{taskkey,jdbcType=INTEGER}, #{originalestimate,jdbcType=DOUBLE}, #{remainestimate,jdbcType=DOUBLE}, #{parenttaskid,jdbcType=INTEGER}, #{milestoneid,jdbcType=INTEGER}, #{ganttindex,jdbcType=INTEGER}, #{notes,jdbcType=LONGVARCHAR})
   </insert>
   <delete id="removeKeysWithSession" parameterType="java.util.List">
     <!--WARNING - @mbggenerated-->
@@ -721,8 +721,8 @@
       <if test="record.isestimated != null">
         isestimated = #{record.isestimated,jdbcType=BIT},
       </if>
-      <if test="record.projectid != null">
-        projectid = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.deadline != null">
         deadline = #{record.deadline,jdbcType=TIMESTAMP},

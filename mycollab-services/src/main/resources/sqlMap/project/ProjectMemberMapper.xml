@@ -9,7 +9,7 @@
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="projectId" jdbcType="INTEGER" property="projectid" />
+    <result column="projectId" jdbcType="INTEGER" property="projectId" />
     <result column="joinDate" jdbcType="TIMESTAMP" property="joindate" />
     <result column="projectRoleId" jdbcType="INTEGER" property="projectroleid" />
     <result column="isAdmin" jdbcType="BIT" property="isadmin" />
@@ -155,7 +155,7 @@
       joinDate, projectRoleId, isAdmin, 
       status, sAccountId, billingRate, 
       overtimeBillingRate)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER},
       #{joindate,jdbcType=TIMESTAMP}, #{projectroleid,jdbcType=INTEGER}, #{isadmin,jdbcType=BIT}, 
       #{status,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{billingrate,jdbcType=DOUBLE}, 
       #{overtimebillingrate,jdbcType=DOUBLE})
@@ -174,7 +174,7 @@
       <if test="username != null">
         username,
       </if>
-      <if test="projectid != null">
+      <if test="projectId != null">
         projectId,
       </if>
       <if test="joindate != null">
@@ -206,8 +206,8 @@
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="projectid != null">
-        #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
       </if>
       <if test="joindate != null">
         #{joindate,jdbcType=TIMESTAMP},
@@ -257,8 +257,8 @@
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectid != null">
-        projectId = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.joindate != null">
         joinDate = #{record.joindate,jdbcType=TIMESTAMP},
@@ -295,7 +295,7 @@
     update m_prj_member
     set id = #{record.id,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
-      projectId = #{record.projectid,jdbcType=INTEGER},
+      projectId = #{record.projectId,jdbcType=INTEGER},
       joinDate = #{record.joindate,jdbcType=TIMESTAMP},
       projectRoleId = #{record.projectroleid,jdbcType=INTEGER},
       isAdmin = #{record.isadmin,jdbcType=BIT},
@@ -318,8 +318,8 @@
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="projectid != null">
-        projectId = #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        projectId = #{projectId,jdbcType=INTEGER},
       </if>
       <if test="joindate != null">
         joinDate = #{joindate,jdbcType=TIMESTAMP},
@@ -353,7 +353,7 @@
     -->
     update m_prj_member
     set username = #{username,jdbcType=VARCHAR},
-      projectId = #{projectid,jdbcType=INTEGER},
+      projectId = #{projectId,jdbcType=INTEGER},
       joinDate = #{joindate,jdbcType=TIMESTAMP},
       projectRoleId = #{projectroleid,jdbcType=INTEGER},
       isAdmin = #{isadmin,jdbcType=BIT},
@@ -365,7 +365,7 @@
   </update>
   <insert id="insertAndReturnKey" keyProperty="id" parameterType="com.esofthead.mycollab.module.project.domain.ProjectMember" useGeneratedKeys="true">
     <!--WARNING - @mbggenerated-->
-    insert into m_prj_member (id, username, projectId, joinDate, projectRoleId, isAdmin, status, sAccountId, billingRate, overtimeBillingRate) values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER}, #{joindate,jdbcType=TIMESTAMP}, #{projectroleid,jdbcType=INTEGER}, #{isadmin,jdbcType=BIT}, #{status,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{billingrate,jdbcType=DOUBLE}, #{overtimebillingrate,jdbcType=DOUBLE})
+    insert into m_prj_member (id, username, projectId, joinDate, projectRoleId, isAdmin, status, sAccountId, billingRate, overtimeBillingRate) values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, #{joindate,jdbcType=TIMESTAMP}, #{projectroleid,jdbcType=INTEGER}, #{isadmin,jdbcType=BIT}, #{status,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{billingrate,jdbcType=DOUBLE}, #{overtimebillingrate,jdbcType=DOUBLE})
   </insert>
   <delete id="removeKeysWithSession" parameterType="java.util.List">
     <!--WARNING - @mbggenerated-->
@@ -378,8 +378,8 @@
       <if test="record.username != null">
         username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectid != null">
-        projectId = #{record.projectid,jdbcType=INTEGER},
+      <if test="record.projectId != null">
+        projectId = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.joindate != null">
         joinDate = #{record.joindate,jdbcType=TIMESTAMP},
