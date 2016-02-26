@@ -5,7 +5,6 @@
     <resultMap extends="com.esofthead.mycollab.common.dao.MonitorItemMapper.BaseResultMap"
         id="MonitorItemResult" type="com.esofthead.mycollab.common.domain.SimpleMonitorItem">
         <result column="userFullname" jdbcType="VARCHAR" property="userFullname" />
-
         <result column="userAvatarId" jdbcType="VARCHAR" property="userAvatarId" />
     </resultMap>
 
@@ -79,7 +78,7 @@
         <foreach collection="monitors" item="monitorItem" separator=",">
             (
             #{monitorItem.id}, #{monitorItem.user}, #{monitorItem.monitorDate}, #{monitorItem.type},
-            #{monitorItem.typeId}, #{monitorItem.extratypeid}, #{monitorItem.saccountid}
+            #{monitorItem.typeid}, #{monitorItem.extratypeid}, #{monitorItem.saccountid}
             )
         </foreach>
     </insert>

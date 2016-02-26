@@ -20,10 +20,10 @@
         assignuser="nghiemle" createdTime="2014-10-01 06:45:22"
         sAccountId="1" />
 
-    <m_tracker_bug_related_item id="1" bugid="1" type="Component" typeId="1" />
-    <m_tracker_bug_related_item id="2" bugid="2" type="Component" typeId="2" />
-    <m_tracker_bug_related_item id="3" bugid="3" type="Component" typeId="3" />
-    <m_tracker_bug_related_item id="4" bugid="4" type="Component" typeId="2" />
+    <m_tracker_bug_related_item id="1" bugId="1" type="Component" typeId="1" />
+    <m_tracker_bug_related_item id="2" bugId="2" type="Component" typeId="2" />
+    <m_tracker_bug_related_item id="3" bugId="3" type="Component" typeId="3" />
+    <m_tracker_bug_related_item id="4" bugId="4" type="Component" typeId="2" />
 
     <m_tracker_component id="1" componentname="com 1"
         projectId="1" sAccountId="1" status="Open" userlead="hai79"

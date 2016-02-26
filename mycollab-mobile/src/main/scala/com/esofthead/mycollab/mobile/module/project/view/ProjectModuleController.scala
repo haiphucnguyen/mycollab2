@@ -178,7 +178,7 @@ class ProjectModuleController(val navManager: NavigationManager) extends Abstrac
         val presenter: MilestonePresenter = PresenterResolver.getPresenter(classOf[MilestonePresenter])
         if (params == null) {
           val criteria = new MilestoneSearchCriteria
-          criteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables.getProjectId))
+          criteria.setProjectIds(new SetSearchField[Integer](CurrentProjectVariables.getProjectId))
           presenter.go(navManager, new MilestoneScreenData.Search(criteria))
         }
         else if (params.isInstanceOf[MilestoneScreenData.Search]) {

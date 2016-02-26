@@ -304,7 +304,7 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         LOG.info("Clone project milestones");
         Map<Integer, Integer> milestoneMapIds = new HashMap<>();
         MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-        searchCriteria.setProjectId(NumberSearchField.and(projectId));
+        searchCriteria.setProjectIds(new SetSearchField<>(projectId));
         List<SimpleMilestone> milestones = milestoneService.findPagableListByCriteria(new SearchRequest<>(searchCriteria));
         for (SimpleMilestone milestone : milestones) {
             Integer milestoneId = milestone.getId();

@@ -36,10 +36,6 @@
             #ifnotnull($searchCriteria.status)
                 ${searchCriteria.status.operation} m_prj_milestone.status = @{searchCriteria.status.value}
             #end
-            
-            #ifnotnull($searchCriteria.projectId)
-                ${searchCriteria.projectId.operation} m_prj_milestone.projectId = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
-            #end
 
             #ifnotnull($searchCriteria.projectIds)
                 ${searchCriteria.projectIds.operation} m_prj_milestone.projectId IN
@@ -74,10 +70,6 @@
             
             #ifnotnull($searchCriteria.status)
                 ${searchCriteria.status.operation} m_prj_milestone.status = @{searchCriteria.status.value}
-            #end
-            
-            #ifnotnull($searchCriteria.projectId)
-                ${searchCriteria.projectId.operation} m_prj_milestone.projectId = @{searchCriteria.projectId.value,jdbcType=NUMERIC}
             #end
 
             #ifnotnull($searchCriteria.projectIds)
