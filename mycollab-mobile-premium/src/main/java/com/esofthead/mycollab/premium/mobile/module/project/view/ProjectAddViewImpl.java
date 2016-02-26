@@ -100,9 +100,9 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
             } else if (Project.Field.projectstatus.equalTo(propertyId)) {
                 informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_STATUS), 0, 3);
             } else if (Project.Field.planstartdate.equalTo(propertyId)) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_START_DATE), 0, 4);
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_START_DATE), 0, 4);
             } else if (Project.Field.planenddate.equalTo(propertyId)) {
-                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_PLAN_END_DATE), 0, 5);
+                informationLayout.addComponent(field, AppContext.getMessage(ProjectI18nEnum.FORM_END_DATE), 0, 5);
             } else if (Project.Field.description.equalTo(propertyId)) {
                 informationLayout.addComponent(field, AppContext.getMessage(GenericI18Enum.FORM_DESCRIPTION), 0, 6);
             }

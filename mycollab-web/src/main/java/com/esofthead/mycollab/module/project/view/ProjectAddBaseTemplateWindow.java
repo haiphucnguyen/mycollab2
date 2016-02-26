@@ -8,6 +8,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.i18n.ProjectI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.service.ProjectTemplateService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -45,9 +46,9 @@ public class ProjectAddBaseTemplateWindow extends Window {
         gridFormLayoutHelper.addComponent(new MHorizontalLayout().withFullWidth().with(templateProjectComboBox,
                 helpBtn).expand(templateProjectComboBox), "Template", 0, 0);
         final TextField prjNameField = new TextField();
-        gridFormLayoutHelper.addComponent(prjNameField, "Name", 0, 1);
+        gridFormLayoutHelper.addComponent(prjNameField, AppContext.getMessage(ProjectI18nEnum.FORM_NAME), 0, 1);
         final TextField prjKeyField = new TextField();
-        gridFormLayoutHelper.addComponent(prjKeyField, "Key (<= 3 characters)", 0, 2);
+        gridFormLayoutHelper.addComponent(prjKeyField, AppContext.getMessage(ProjectI18nEnum.FORM_SHORT_NAME), 0, 2);
         MHorizontalLayout buttonControls = new MHorizontalLayout();
         content.with(gridFormLayoutHelper.getLayout(), buttonControls).withAlign(buttonControls, Alignment.MIDDLE_RIGHT);
         Button okBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OK), new Button.ClickListener() {

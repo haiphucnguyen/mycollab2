@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.premium.module.project.service.ibatis;
+package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.common.dao.OptionValMapper;
 import com.esofthead.mycollab.common.domain.OptionVal;
