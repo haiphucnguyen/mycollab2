@@ -333,7 +333,7 @@ public class TaskPopupFieldFactoryImpl implements TaskPopupFieldFactory {
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.TASK));
-            searchCriteria.setTypeid(StringSearchField.and(task.getId() + ""));
+            searchCriteria.setTypeId(StringSearchField.and(task.getId() + ""));
             CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);

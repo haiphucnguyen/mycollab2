@@ -189,7 +189,7 @@ public class BugPopupFieldFactoryImpl implements BugPopupFieldFactory {
         protected void doHide() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
             searchCriteria.setType(StringSearchField.and(ProjectTypeConstants.BUG));
-            searchCriteria.setTypeid(StringSearchField.and(bug.getId() + ""));
+            searchCriteria.setTypeId(StringSearchField.and(bug.getId() + ""));
             CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
             int commentCount = commentService.getTotalCount(searchCriteria);
             this.setMinimizedValueAsHTML(FontAwesome.COMMENT_O.getHtml() + " " + commentCount);
