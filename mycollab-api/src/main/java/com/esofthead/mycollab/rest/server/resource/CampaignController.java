@@ -17,8 +17,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -49,10 +47,10 @@ public class CampaignController {
 
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public Map registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
-                          @RequestParam("email") String email, @RequestParam("role") String role,
-                          @RequestParam("company") String company, @RequestParam("phone") String phone,
-                          @RequestParam("country") String country) {
+    public String registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
+                             @RequestParam("email") String email, @RequestParam("role") String role,
+                             @RequestParam("company") String company, @RequestParam("phone") String phone,
+                             @RequestParam("country") String country) {
         CommunityLead communityLead = new CommunityLead();
         communityLead.setFirstname(firstname);
         communityLead.setLastname(lastname);
@@ -72,14 +70,7 @@ public class CampaignController {
             communityLeadMapper.insert(communityLead);
         }
 
-
-        Map result = new HashMap();
-        result.put("windows", String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-Installer-%s.zip/download",
-                MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
-        result.put("macos", String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-MacOS-%s.zip/download",
-                MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
-        result.put("linux", String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-Generic-%s.jar/download",
-                MyCollabVersion.getVersion(), MyCollabVersion.getVersion()));
-        return result;
+        return String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-%s-All.zip/download",
+                MyCollabVersion.getVersion(), MyCollabVersion.getVersion());
     }
 }

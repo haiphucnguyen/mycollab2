@@ -22,7 +22,7 @@ public class CheckVersionController {
 
         props.put("version", MyCollabVersion.getVersion());
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
-        props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-5/");
+        props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-8/");
 
         if (version != null && MyCollabVersion.isEditionNewer(MyCollabVersion.getVersion(), version) &&
                 MyCollabVersion.isEditionNewer(version, "5.2.4")) {
