@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author MyCollab Ltd
@@ -47,7 +49,7 @@ public class CampaignController {
 
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
-    public String registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
+    public Map registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
                              @RequestParam("email") String email, @RequestParam("role") String role,
                              @RequestParam("company") String company, @RequestParam("phone") String phone,
                              @RequestParam("country") String country) {
@@ -69,8 +71,12 @@ public class CampaignController {
         if (communityLeadMapper.countByExample(ex) == 0) {
             communityLeadMapper.insert(communityLead);
         }
-
-        return String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-%s-All.zip/download",
+        Map<String, String> result = new HashMap<>();
+        String name = String.format("MyCollab-All-%s.zip", MyCollabVersion.getVersion());
+        String link = String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-All-%s.zip/download",
                 MyCollabVersion.getVersion(), MyCollabVersion.getVersion());
+        result.put("name", name);
+        result.put("link", link);
+        return result;
     }
 }
