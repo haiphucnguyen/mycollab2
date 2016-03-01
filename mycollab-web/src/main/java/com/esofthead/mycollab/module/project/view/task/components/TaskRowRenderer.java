@@ -44,13 +44,13 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
  * @author MyCollab Ltd
  * @since 5.1.1
  */
-class TaskRowRenderer extends MVerticalLayout {
+public class TaskRowRenderer extends MVerticalLayout {
     private SimpleTask task;
 
     private PopupButton taskSettingPopupBtn;
     private ToogleTaskSummaryField toogleTaskField;
 
-    TaskRowRenderer(final SimpleTask task) {
+    public TaskRowRenderer(final SimpleTask task) {
         this.task = task;
         withSpacing(true).withMargin(false).withWidth("100%").addStyleName("taskrow");
 

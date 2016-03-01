@@ -30,6 +30,7 @@ public interface BugListView extends IListView<BugSearchCriteria, SimpleBug> {
     String GROUP_START_DATE = "Start Date";
     String GROUP_CREATED_DATE = "Created Date";
     String PLAIN_LIST = "Plain";
+    String GROUP_USER = "User";
 
     void displayView();
 

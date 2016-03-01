@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.criteria.TimelineTrackingSearchCriteria;
 import com.esofthead.mycollab.common.service.OptionValService;
+import com.esofthead.mycollab.configuration.IDeploymentMode;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -49,8 +50,10 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
+import com.esofthead.mycollab.web.AdWindow;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.server.FileDownloader;
@@ -82,6 +85,7 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
     static final String GROUP_START_DATE = "Start Date";
     static final String GROUP_CREATED_DATE = "Created Date";
     static final String PLAIN_LIST = "Plain";
+    static final String GROUP_USER = "User";
 
     private int currentPage = 0;
 
@@ -151,7 +155,8 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         groupWrapLayout.addComponent(sortCombo);
 
         groupWrapLayout.addComponent(new Label("Group by:"));
-        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, GROUP_CREATED_DATE, PLAIN_LIST);
+        final ComboBox groupCombo = new ValueComboBox(false, GROUP_DUE_DATE, GROUP_START_DATE, GROUP_CREATED_DATE,
+                PLAIN_LIST, GROUP_USER);
         groupCombo.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
@@ -317,6 +322,15 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         } else if (GROUP_CREATED_DATE.equals(groupByState)) {
             baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdtime", sortDirection)));
             taskGroupOrderComponent = new CreatedDateOrderComponent();
+        } else if (GROUP_USER.equals(groupByState)) {
+            IDeploymentMode deploymentMode = ApplicationContextUtil.getSpringBean(IDeploymentMode.class);
+            if (deploymentMode.isCommunityEdition()) {
+                UI.getCurrent().addWindow(new AdWindow());
+                return;
+            } else {
+                baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdtime", sortDirection)));
+                taskGroupOrderComponent = ViewManager.getCacheComponent(AbstractUserOrderComponent.class);
+            }
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);
         }

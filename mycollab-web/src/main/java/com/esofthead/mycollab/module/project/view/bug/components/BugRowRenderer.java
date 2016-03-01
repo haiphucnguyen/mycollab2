@@ -48,7 +48,7 @@ public class BugRowRenderer extends MVerticalLayout {
 
     private PopupButton bugSettingPopupBtn;
 
-    BugRowRenderer(final SimpleBug bug) {
+    public BugRowRenderer(final SimpleBug bug) {
         this.bug = bug;
         withSpacing(true).withMargin(false).withWidth("100%").addStyleName("taskrow");
 
