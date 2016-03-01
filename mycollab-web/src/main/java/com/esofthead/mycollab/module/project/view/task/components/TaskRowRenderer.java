@@ -48,7 +48,7 @@ public class TaskRowRenderer extends MVerticalLayout {
     private SimpleTask task;
 
     private PopupButton taskSettingPopupBtn;
-    private ToogleTaskSummaryField toogleTaskField;
+    private ToggleTaskSummaryField toogleTaskField;
 
     public TaskRowRenderer(final SimpleTask task) {
         this.task = task;
@@ -60,7 +60,7 @@ public class TaskRowRenderer extends MVerticalLayout {
         OptionPopupContent filterBtnLayout = createPopupContent();
         taskSettingPopupBtn.setContent(filterBtnLayout);
 
-        toogleTaskField = new ToogleTaskSummaryField(task);
+        toogleTaskField = new ToggleTaskSummaryField(task);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,
                 true, false, false));
 

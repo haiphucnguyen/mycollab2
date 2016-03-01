@@ -605,15 +605,20 @@
     }
   }
 
-  .v-csslayout.editable-field {
+  .editable-field {
     display: flex;
     min-height: 21px;
-    &:hover::after {
-      margin-left: 5px;
-      float:top;
-      content:"\f044";
-      color:black;
-      font-family: FontAwesome;
+    &:hover {
+      .toggle {
+        display: block;
+        .v-button-wrap {
+          padding: 0px;
+        }
+      }
+    }
+    .toggle {
+      float: top;
+      display: none;
     }
   }
 
