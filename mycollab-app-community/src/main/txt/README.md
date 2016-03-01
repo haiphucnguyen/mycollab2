@@ -40,6 +40,26 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.9
+-----------------------------
+**Library Upgrades**
+
+* Spring framework 4.2.5.RELEASE
+* Jackrabbit 2.12.1
+* Other libraries
+
+**Improvements & New Features**
+
+* [Premium] Tag management is supported
+* [Premium] Resource planning is added
+* [Premium] Option management is added
+* Related bug is revised
+* Show template icon if the project is the template one
+
+**Bug Fixes**
+
+* Moving resource may causes exception
+
 Version 5.2.8
 -----------------------------
 **Improvements & New Features**
