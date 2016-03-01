@@ -211,7 +211,6 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
         });
         newTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
         newTaskBtn.setIcon(FontAwesome.PLUS);
-        newTaskBtn.setDescription(AppContext.getMessage(TaskI18nEnum.BUTTON_NEW_TASKGROUP));
         newTaskBtn.setStyleName(UIConstants.BUTTON_ACTION);
         groupWrapLayout.addComponent(newTaskBtn);
 

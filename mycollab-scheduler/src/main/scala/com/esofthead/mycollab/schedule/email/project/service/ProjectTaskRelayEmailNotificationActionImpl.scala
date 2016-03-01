@@ -209,7 +209,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
         val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK))
         val tasklistlink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.getParentTaskKey,
           task.getProjectShortname)
-        val link = FormatUtils.newA(tasklistlink, task.getParentTaskName)
+        val link = FormatUtils.newA(tasklistlink, task.getTaskname)
         FormatUtils.newLink(img, link).write
       }
       else {
@@ -228,7 +228,7 @@ class ProjectTaskRelayEmailNotificationActionImpl extends SendMailToFollowersAct
         if (task != null) {
           val img = new Text(ProjectResources.getFontIconHtml(ProjectTypeConstants.TASK));
           val taskListLink = ProjectLinkGenerator.generateTaskPreviewFullLink(context.siteUrl, task.getTaskkey, task.getProjectShortname)
-          val link = FormatUtils.newA(taskListLink, task.getParentTaskName)
+          val link = FormatUtils.newA(taskListLink, task.getTaskname)
           return FormatUtils.newLink(img, link).write
         }
       }
