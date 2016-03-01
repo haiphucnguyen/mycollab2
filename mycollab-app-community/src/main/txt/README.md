@@ -60,6 +60,7 @@ Version 5.2.9
 
 **Bug Fixes**
 
+* [Premium] Display wrong list of history fields in several special cases
 * Moving resource may causes exception
 
 Version 5.2.8

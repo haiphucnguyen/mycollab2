@@ -59,7 +59,7 @@ public class BugRowRenderer extends MVerticalLayout {
         bugSettingPopupBtn.setContent(filterBtnLayout);
 
 
-        final ToogleBugSummaryField bugWrapper = new ToogleBugSummaryField(bug);
+        final ToggleBugSummaryField bugWrapper = new ToggleBugSummaryField(bug);
 
         BugPopupFieldFactory popupFieldFactory = ViewManager.getCacheComponent(BugPopupFieldFactory.class);
         MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(false,

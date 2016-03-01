@@ -68,8 +68,7 @@ public class ToggleTaskSummaryField extends CssLayout {
         taskLinkLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
 
         this.addComponent(taskLinkLbl);
-        buttonControls = new MHorizontalLayout().withStyleName
-                ("toggle").withSpacing(false);
+        buttonControls = new MHorizontalLayout().withStyleName("toggle").withSpacing(false);
         if (CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS)) {
             this.addStyleName("editable-field");
 
