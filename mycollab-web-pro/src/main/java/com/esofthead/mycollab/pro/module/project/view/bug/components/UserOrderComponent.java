@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.utils.SortedArrayMap;
 import com.esofthead.mycollab.module.project.view.bug.components.AbstractUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.bug.components.BugRowRenderer;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
@@ -20,6 +21,7 @@ import java.util.List;
  * @author MyCollab Ltd
  * @since 5.2.9
  */
+@ViewComponent
 public class UserOrderComponent extends AbstractUserOrderComponent {
     private SortedArrayMap<String, GroupComponent> userAvailables = new SortedArrayMap<>();
     private GroupComponent unspecifiedBugs;

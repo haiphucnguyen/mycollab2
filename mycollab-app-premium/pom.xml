@@ -45,6 +45,12 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-scheduler-premium</artifactId>
+            <version>5.2.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-reporting-premium</artifactId>
             <version>5.2.8</version>
         </dependency>
