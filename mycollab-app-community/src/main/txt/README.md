@@ -56,6 +56,7 @@ Version 5.2.9
 * [Premium] New user group for task and bug views
 * Related bug is revised
 * Show template icon if the project is the template one
+* Other minor improvements
 
 **Bug Fixes**
 

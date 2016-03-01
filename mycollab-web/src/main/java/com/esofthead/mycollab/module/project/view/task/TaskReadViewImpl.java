@@ -410,6 +410,7 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
             layout.with(new ELabel(avatarImg.write(), ContentMode.HTML).withWidthUndefined());
 
             final ToggleTaskSummaryField toggleTaskSummaryField = new ToggleTaskSummaryField(subTask, Integer.MAX_VALUE, true);
+
             layout.with(toggleTaskSummaryField).expand(toggleTaskSummaryField);
 
             checkBox.addValueChangeListener(new ValueChangeListener() {

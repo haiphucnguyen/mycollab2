@@ -43,7 +43,7 @@ public final class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
         }
 
         try {
-            int milestoneId = Integer.parseInt(value);
+            Integer milestoneId = Integer.parseInt(value);
             MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
             SimpleMilestone milestone = milestoneService.findById(milestoneId, AppContext.getAccountId());
 
@@ -57,5 +57,4 @@ public final class MilestoneHistoryFieldFormat implements HistoryFieldFormat {
 
         return value;
     }
-
 }
