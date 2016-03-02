@@ -20,14 +20,14 @@ public class CheckVersionController {
     public String getLatestVersion(@RequestParam("version") String version) {
         Properties props = new Properties();
 
-        props.put("version", MyCollabVersion.getVersion());
+        String liveVersion = EditionInfoResolver.getEditionInfo().getVersion();
+        props.put("version", liveVersion);
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
         props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-8/");
 
-        if (version != null && MyCollabVersion.isEditionNewer(MyCollabVersion.getVersion(), version) &&
+        if (version != null && MyCollabVersion.isEditionNewer(liveVersion, version) &&
                 MyCollabVersion.isEditionNewer(version, "5.2.4")) {
-            props.put("autoDownload", String.format("https://github.com/MyCollab/mycollab/releases/download/Release_%s/upgrade.zip",
-                    MyCollabVersion.getVersion()));
+            props.put("autoDownload", EditionInfoResolver.getEditionInfo().getCommunityUpgradeLink());
         }
 
         Gson gson = new Gson();

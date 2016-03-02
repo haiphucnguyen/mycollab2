@@ -73,10 +73,11 @@ public class CampaignController {
         }
         Map<String, String> result = new HashMap<>();
         String name = String.format("MyCollab-All-%s.zip", MyCollabVersion.getVersion());
-        String link = String.format("https://sourceforge.net/projects/mycollab/files/MyCollab_%s/MyCollab-All-%s.zip/download",
-                MyCollabVersion.getVersion(), MyCollabVersion.getVersion());
+        String link = EditionInfoResolver.getEditionInfo().getCommunityDownloadLink();
+        String altLink = EditionInfoResolver.getEditionInfo().getAltCommunityDownloadLink();
         result.put("name", name);
         result.put("link", link);
+        result.put("altlink", altLink);
         return result;
     }
 }

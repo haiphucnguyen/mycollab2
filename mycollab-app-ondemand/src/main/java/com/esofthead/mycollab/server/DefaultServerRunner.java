@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.server;
 
+import com.esofthead.mycollab.rest.server.resource.EditionInfoResolver;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -18,6 +19,7 @@ public class DefaultServerRunner extends GenericServerRunner {
     }
 
     public static void main(String[] args) throws Exception {
+        EditionInfoResolver.init();
         new DefaultServerRunner().run(args);
     }
 }
