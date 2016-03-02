@@ -54,6 +54,7 @@ Version 5.2.9
 * [Premium] Resource planning is added
 * [Premium] Option management is added
 * [Premium] New user group for task and bug views
+* [Premium] Can add many kanban boards in a project
 * Related bug is revised
 * Show template icon if the project is the template one
 * Other minor improvements
