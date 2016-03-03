@@ -28,7 +28,6 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.web.ui.ServiceMenu;
@@ -56,11 +55,6 @@ public class ProjectModule extends AbstractPageView implements IDesktopModule {
         setStyleName("project-module");
         setSizeFull();
         ControllerRegistry.addController(new ProjectModuleController(this));
-    }
-
-    public void gotoProjectPage() {
-        UserDashboardPresenter presenter = PresenterResolver.getPresenter(UserDashboardPresenter.class);
-        presenter.go(this, null);
     }
 
     @Override

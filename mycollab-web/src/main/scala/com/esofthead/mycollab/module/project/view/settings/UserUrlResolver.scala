@@ -47,9 +47,9 @@ class UserUrlResolver extends ProjectUrlResolver {
 
   private class AddUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
-      val token: UrlTokenizer = new UrlTokenizer(params(0))
-      val projectId: Integer = token.getInt
-      val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+      val token = new UrlTokenizer(params(0))
+      val projectId = token.getInt
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new ProjectMemberScreenData.InviteProjectMembers)
       EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
     }
@@ -57,12 +57,12 @@ class UserUrlResolver extends ProjectUrlResolver {
 
   private class EditUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
-      val token: UrlTokenizer = new UrlTokenizer(params(0))
-      val projectId: Integer = token.getInt
-      val memberId: Integer = token.getInt
+      val token = new UrlTokenizer(params(0))
+      val projectId = token.getInt
+      val memberId = token.getInt
       val projectMemberService = ApplicationContextUtil.getSpringBean(classOf[ProjectMemberService])
       val member = projectMemberService.findById(memberId, AppContext.getAccountId)
-      val chain: PageActionChain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new ProjectMemberScreenData.Add(member))
       EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
     }

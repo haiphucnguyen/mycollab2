@@ -22,8 +22,7 @@ class RoleUrlResolver extends ProjectUrlResolver {
       val projectId = new UrlTokenizer(params(0)).getInt
       val roleSearchCriteria = new ProjectRoleSearchCriteria
       roleSearchCriteria.setProjectId(new NumberSearchField(projectId))
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-        new ProjectRoleScreenData.Search(roleSearchCriteria))
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectRoleScreenData.Search(roleSearchCriteria))
       EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
