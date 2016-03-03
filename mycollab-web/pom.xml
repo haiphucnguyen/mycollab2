@@ -282,6 +282,12 @@
 
         <dependency>
             <groupId>org.vaadin.addons</groupId>
+            <artifactId>vaadin-scrollable-panel</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
             <artifactId>ckeditor-wrapper-for-vaadin</artifactId>
             <version>7.10.6</version>
         </dependency>

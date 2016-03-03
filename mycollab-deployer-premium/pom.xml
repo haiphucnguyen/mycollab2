@@ -32,6 +32,7 @@
         <module>../mycollab-simple-monitoring</module>
         <module>../mycollab-server-runner</module>
         <module>../mycollab-scheduler</module>
+        <module>../mycollab-scheduler-premium</module>
         <module>../mycollab-ui</module>
         <module>../mycollab-mobile</module>
         <module>../mycollab-mobile-premium</module>

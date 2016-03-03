@@ -10,4 +10,15 @@ import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 @ViewComponent
 public class ClientListViewImpl extends AbstractPageView implements ClientListView {
 
+    private ClientSearchPanel accountSearchPanel;
+
+    public ClientListViewImpl() {
+        this.setMargin(true);
+    }
+
+    @Override
+    public void display() {
+        accountSearchPanel = new ClientSearchPanel();
+        this.addComponent(accountSearchPanel);
+    }
 }

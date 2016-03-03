@@ -7,4 +7,5 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
  * @since 5.2.9
  */
 public interface ClientListView extends PageView {
+    void display();
 }

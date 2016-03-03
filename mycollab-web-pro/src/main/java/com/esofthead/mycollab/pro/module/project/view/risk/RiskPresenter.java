@@ -11,8 +11,6 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author MyCollab Ltd.
@@ -20,7 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements IRiskPresenter {
     private static final long serialVersionUID = 1L;
-    private static final Logger LOG = LoggerFactory.getLogger(RiskPresenter.class);
 
     public RiskPresenter() {
         super(IRiskContainer.class);
@@ -41,12 +38,9 @@ public class RiskPresenter extends AbstractPresenter<IRiskContainer> implements 
 
         if (data instanceof RiskScreenData.Search) {
             presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
-        } else if (data instanceof RiskScreenData.Add
-                || data instanceof RiskScreenData.Edit) {
-            LOG.debug("Go to projectMember add view");
+        } else if (data instanceof RiskScreenData.Add || data instanceof RiskScreenData.Edit) {
             presenter = PresenterResolver.getPresenter(RiskAddPresenter.class);
         } else if (data instanceof RiskScreenData.Read) {
-            LOG.debug("Go to projectMember preview view");
             presenter = PresenterResolver.getPresenter(RiskReadPresenter.class);
         } else {
             throw new MyCollabException("No support screen data " + data);
