@@ -25,3 +25,13 @@ CREATE TABLE `m_prj_kanban_board` (
     REFERENCES `s_user` (`username`)
     ON DELETE SET NULL
     ON UPDATE CASCADE);
+ALTER TABLE `m_prj_project`
+DROP FOREIGN KEY `FK_m_project_project_1`;
+ALTER TABLE `m_prj_project`
+CHANGE COLUMN `account` `accountId` INT(10) UNSIGNED NULL DEFAULT NULL ;
+ALTER TABLE `m_prj_project`
+ADD CONSTRAINT `FK_m_project_project_1`
+  FOREIGN KEY (`accountId`)
+  REFERENCES `m_crm_account` (`id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;

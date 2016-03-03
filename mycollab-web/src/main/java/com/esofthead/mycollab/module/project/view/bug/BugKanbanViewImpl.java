@@ -352,7 +352,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             headerLayout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
             OptionPopupContent popupContent = new OptionPopupContent();
-            Button addBtn = new Button("Add a bug", new Button.ClickListener() {
+            Button addBtn = new Button("New issue", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     addNewBugComp();
@@ -363,7 +363,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
 
-            Button addNewBtn = new Button("Add a bug", new Button.ClickListener() {
+            Button addNewBtn = new Button("New issue", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     addNewBugComp();

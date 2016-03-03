@@ -125,7 +125,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         groupWrapLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        Button addNewColumnBtn = new Button("Add a new column", new Button.ClickListener() {
+        Button addNewColumnBtn = new Button("New column", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 UI.getCurrent().addWindow(new AddNewColumnWindow(TaskKanbanviewImpl.this, ProjectTypeConstants.TASK));
@@ -504,7 +504,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
 
             popupContent.addSeparator();
 
-            Button addBtn = new Button("Add a task", new Button.ClickListener() {
+            Button addBtn = new Button("New task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     controlsBtn.setPopupVisible(false);
@@ -516,7 +516,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
             popupContent.addOption(addBtn);
             controlsBtn.setContent(popupContent);
 
-            Button addNewBtn = new Button("Add a task", new Button.ClickListener() {
+            Button addNewBtn = new Button("New task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                     addNewTaskComp();

@@ -21,6 +21,7 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory
 import com.esofthead.mycollab.module.project.events.{CalendarEvent, FollowingTicketEvent, ProjectEvent, TimeTrackingEvent}
 import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver
+import com.esofthead.mycollab.module.project.view.client.ClientUrlResolver
 import com.esofthead.mycollab.module.project.view.file.ProjectFileUrlResolver
 import com.esofthead.mycollab.module.project.view.message.MessageUrlResolver
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver
@@ -66,6 +67,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("version", new VersionUrlResolver)
     this.addSubResolver("roadmap", new RoadmapUrlResolver)
     this.addSubResolver("calendar", new CalendarUrlResolver)
+    this.addSubResolver("client", new ClientUrlResolver)
     return this
   }
 
