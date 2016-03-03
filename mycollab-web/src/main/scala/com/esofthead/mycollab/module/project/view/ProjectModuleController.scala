@@ -17,9 +17,8 @@
 package com.esofthead.mycollab.module.project.view
 
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener
+import com.esofthead.mycollab.module.project.events.ProjectEvent
 import com.esofthead.mycollab.module.project.events.ProjectEvent.GotoMyProject
-import com.esofthead.mycollab.module.project.events.{FollowingTicketEvent, ProjectEvent}
-import com.esofthead.mycollab.module.project.view.parameters.FollowingTicketsScreenData
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver}
 import com.google.common.eventbus.Subscribe
 
@@ -28,25 +27,10 @@ import com.google.common.eventbus.Subscribe
   * @since 5.0.9
   */
 class ProjectModuleController(val container: ProjectModule) extends AbstractController {
-  bindProjectEvents()
-  bindFollowingTicketEvents()
-
-  private def bindProjectEvents(): Unit = {
-    this.register(new ApplicationEventListener[ProjectEvent.GotoMyProject]() {
-      @Subscribe override def handle(event: GotoMyProject): Unit = {
-        val presenter = PresenterResolver.getPresenter(classOf[ProjectViewPresenter])
-        presenter.handleChain(container, event.getData.asInstanceOf[PageActionChain])
-      }
-    })
-  }
-
-  private def bindFollowingTicketEvents(): Unit = {
-    this.register(new ApplicationEventListener[FollowingTicketEvent.GotoMyFollowingItems]() {
-      @Subscribe def handle(event: FollowingTicketEvent.GotoMyFollowingItems) {
-        val presenter = PresenterResolver.getPresenter(classOf[FollowingTicketPresenter])
-        presenter.go(container, new FollowingTicketsScreenData.GotoMyFollowingItems(event.getData
-          .asInstanceOf[java.util.List[Integer]]))
-      }
-    })
-  }
+  this.register(new ApplicationEventListener[ProjectEvent.GotoMyProject]() {
+    @Subscribe override def handle(event: GotoMyProject): Unit = {
+      val presenter = PresenterResolver.getPresenter(classOf[ProjectViewPresenter])
+      presenter.handleChain(container, event.getData.asInstanceOf[PageActionChain])
+    }
+  })
 }

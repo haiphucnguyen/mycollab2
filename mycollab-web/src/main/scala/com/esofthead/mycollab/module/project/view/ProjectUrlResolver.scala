@@ -18,7 +18,7 @@ package com.esofthead.mycollab.module.project.view
 
 import com.esofthead.mycollab.common.UrlTokenizer
 import com.esofthead.mycollab.eventmanager.EventBusFactory
-import com.esofthead.mycollab.module.project.events.{FollowingTicketEvent, ProjectEvent}
+import com.esofthead.mycollab.module.project.events.ProjectEvent
 import com.esofthead.mycollab.module.project.service.ProjectService
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver
 import com.esofthead.mycollab.module.project.view.client.ClientUrlResolver
@@ -61,7 +61,6 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("setting", new SettingUrlResolver)
     this.addSubResolver("time", new TimeUrlResolver)
     this.addSubResolver("file", new ProjectFileUrlResolver)
-    this.addSubResolver("following", new FollowingTicketsResolver)
     this.addSubResolver("component", new ComponentUrlResolver)
     this.addSubResolver("version", new VersionUrlResolver)
     this.addSubResolver("roadmap", new RoadmapUrlResolver)
@@ -129,14 +128,6 @@ class ProjectUrlResolver extends UrlResolver {
         val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new MilestoneScreenData.Roadmap())
         EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
       }
-    }
-  }
-
-  private class FollowingTicketsResolver extends ProjectUrlResolver {
-    protected override def handlePage(params: String*) {
-      val prjService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
-      val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
-      EventBusFactory.getInstance.post(new FollowingTicketEvent.GotoMyFollowingItems(this, prjKeys))
     }
   }
 
