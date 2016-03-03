@@ -1,19 +1,19 @@
 /**
- * This file is part of mycollab-web.
- *
- * mycollab-web is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * mycollab-web is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
- */
+  * This file is part of mycollab-web.
+  *
+  * mycollab-web is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * mycollab-web is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
+  */
 package com.esofthead.mycollab.module.project.view
 
 import com.esofthead.mycollab.common.UrlTokenizer
@@ -32,7 +32,6 @@ import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver
 import com.esofthead.mycollab.module.project.view.settings._
 import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver
-import com.esofthead.mycollab.module.project.view.time.TimeUrlResolver
 import com.esofthead.mycollab.shell.events.ShellEvent
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.esofthead.mycollab.vaadin.AppContext
@@ -59,7 +58,6 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("user", new UserUrlResolver)
     this.addSubResolver("role", new RoleUrlResolver)
     this.addSubResolver("setting", new SettingUrlResolver)
-    this.addSubResolver("time", new TimeUrlResolver)
     this.addSubResolver("file", new ProjectFileUrlResolver)
     this.addSubResolver("following", new FollowingTicketsResolver)
     this.addSubResolver("timetracking", new TimeTrackingResolver)
@@ -111,7 +109,7 @@ class ProjectUrlResolver extends UrlResolver {
         EventBusFactory.getInstance.post(new ShellEvent.GotoProjectModule(this, null))
       } else {
         val projectId = new UrlTokenizer(params(0)).getInt
-        val prjService: ProjectService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
+        val prjService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
         val project = prjService.findById(projectId, AppContext.getAccountId)
         if (project != null) {
           val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectScreenData.Edit(project))
@@ -136,7 +134,7 @@ class ProjectUrlResolver extends UrlResolver {
   private class FollowingTicketsResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val prjService: ProjectService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
-      val prjKeys: java.util.List[Integer] = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
+      val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
       EventBusFactory.getInstance.post(new FollowingTicketEvent.GotoMyFollowingItems(this, prjKeys))
     }
   }
@@ -144,7 +142,7 @@ class ProjectUrlResolver extends UrlResolver {
   private class TimeTrackingResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val prjService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
-      val prjKeys: java.util.List[Integer] = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
+      val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
       EventBusFactory.getInstance.post(new TimeTrackingEvent.GotoTimeTrackingView(this, prjKeys))
     }
   }
@@ -157,7 +155,7 @@ class ProjectUrlResolver extends UrlResolver {
         EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
       } else {
         val prjService = ApplicationContextUtil.getSpringBean(classOf[ProjectService])
-        val prjKeys: java.util.List[Integer] = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
+        val prjKeys = prjService.getProjectKeysUserInvolved(AppContext.getUsername, AppContext.getAccountId)
         EventBusFactory.getInstance.post(new CalendarEvent.GotoCalendarView(this, prjKeys))
       }
     }
