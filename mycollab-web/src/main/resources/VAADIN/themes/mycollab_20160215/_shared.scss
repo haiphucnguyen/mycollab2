@@ -439,12 +439,15 @@
   }
 
   /* Block  - applied in history*/
-  span.block {
+  .block {
     border-radius: 5px;
     padding: 3px 5px;
     margin-right: 5px;
     color: $my-white-color;
     font-size: $font-small;
+    a {
+      color: $my-white-color;
+    }
   }
 
   /*Wizard style*/
