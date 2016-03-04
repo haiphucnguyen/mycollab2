@@ -806,4 +806,19 @@
       padding: 5px;
     }
   }
+
+  .clientblock {
+    border: 1px solid $my-separator-color;
+    margin: 10px 10px 10px 0px;
+    padding: 0px;
+    .header {
+      border-bottom: 1px solid $my-separator-color;
+      background-color: #d9effa;
+      color: #1a8fcb;
+      padding: 5px;
+    }
+    .meta-info {
+      padding: 5px 5px 0px 5px;
+    }
+  }
 }

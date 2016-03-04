@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
+import com.mycollab.vaadin.addon.webcomponents.mobilecomponents.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.layouts.MVerticalLayout;

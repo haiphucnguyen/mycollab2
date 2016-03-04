@@ -58,6 +58,7 @@ import com.esofthead.mycollab.web.IDesktopModule;
 import com.google.common.eventbus.Subscribe;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.mycollab.vaadin.addon.sharedcomponents.InfiniteScrollLayout;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.server.BrowserWindowOpener;
@@ -73,7 +74,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.sliderpanel.SliderPanel;
 import org.vaadin.sliderpanel.SliderPanelBuilder;
@@ -143,6 +143,15 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         bodyLayout.addStyleName("main-view");
         bodyLayout.setId("main-body");
         bodyLayout.setSizeFull();
+
+//        InfiniteScrollLayout scrollLayout = InfiniteScrollLayout.extend(bodyLayout);
+//        scrollLayout.addScrollListener(new InfiniteScrollLayout.ScrollReachBottomListener() {
+//            @Override
+//            public void onReachBottom() {
+//                System.out.println("A");
+//            }
+//        });
+
         this.with(createTopMenu(), bodyLayout, createFooter()).expand(bodyLayout);
     }
 

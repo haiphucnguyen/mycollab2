@@ -8,7 +8,6 @@ import com.esofthead.mycollab.core.db.query.Param;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.ComponentUtils;
 import com.esofthead.mycollab.module.project.events.ClientEvent;
 import com.esofthead.mycollab.module.user.ui.components.ActiveUserListSelect;

@@ -192,7 +192,7 @@
                 ${orderField.field} ${orderField.direction},
             #end
         #end
-        m_crm_account.lastUpdatedTime DESC
+        m_crm_account.lastUpdatedTime DESC, m_crm_account.accountName ASC
         ]]>
     </sql>
 

@@ -170,9 +170,15 @@
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.vaadin</groupId>
-            <artifactId>cropField</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.mycollab.vaadin.addon</groupId>
+            <artifactId>shared-components</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mycollab.vaadin.addon</groupId>
+            <artifactId>web-components</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
@@ -275,15 +281,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.esofthead.vaadin</groupId>
-            <artifactId>floatingcomponent</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>vaadin-scrollable-panel</artifactId>
-            <version>1.0.2</version>
+            <groupId>com.mycollab.vaadin.addon</groupId>
+            <artifactId>shared-components</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

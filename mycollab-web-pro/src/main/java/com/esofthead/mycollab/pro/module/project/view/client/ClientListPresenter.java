@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewScope;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -22,7 +25,12 @@ public class ClientListPresenter extends AbstractPresenter<ClientListView> {
         ClientContainer clientContainer = (ClientContainer)container;
         clientContainer.removeAllComponents();
         clientContainer.addComponent(view);
-        view.display();
-        AppContext.addFragment("project/client/list", "Clients");
+        if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+            AccountSearchCriteria searchCriteria = (AccountSearchCriteria) data.getParams();
+            view.display(searchCriteria);
+            AppContext.addFragment("project/client/list", "Clients");
+        } else {
+            NotificationUtil.showMessagePermissionAlert();
+        }
     }
 }

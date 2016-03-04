@@ -19,7 +19,7 @@ package com.esofthead.mycollab.mobile.ui;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.vaadin.ui.Hr;
-import com.esofthead.vaadin.mobilecomponent.InfiniteScrollLayout;
+import com.mycollab.vaadin.addon.sharedcomponents.InfiniteScrollLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 

@@ -33,11 +33,14 @@
 package com.esofthead.mycollab.module.project.view
 
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria
+import com.esofthead.mycollab.module.project.events.ClientEvent.GotoList
 import com.esofthead.mycollab.module.project.events.ProjectEvent.GotoMyProject
 import com.esofthead.mycollab.module.project.events.{ClientEvent, ProjectEvent}
 import com.esofthead.mycollab.module.project.view.client.IClientPresenter
 import com.esofthead.mycollab.module.project.view.parameters.ClientScreenData
+import com.esofthead.mycollab.module.project.view.parameters.ClientScreenData.Add
 import com.esofthead.mycollab.vaadin.mvp.{AbstractController, PageActionChain, PresenterResolver}
 import com.google.common.eventbus.Subscribe
 
@@ -58,6 +61,14 @@ class ProjectModuleController(val container: ProjectModule) extends AbstractCont
       val presenter = PresenterResolver.getPresenter(classOf[IClientPresenter])
       val searchCriteria = new AccountSearchCriteria
       presenter.go(container, new ClientScreenData.Search(searchCriteria))
+    }
+  })
+
+  this.register(new ApplicationEventListener[ClientEvent.GotoAdd]() {
+    @Subscribe  def handle(event: ClientEvent.GotoAdd): Unit = {
+      val presenter = PresenterResolver.getPresenter(classOf[IClientPresenter])
+      val account = new SimpleAccount
+      presenter.go(container, new Add(account))
     }
   })
 }

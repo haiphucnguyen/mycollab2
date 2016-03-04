@@ -272,7 +272,7 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
                 FieldGroupFormatter.FieldDisplayHandler fieldDisplayHandler = groupFormatter.getFieldDisplayHandler(fieldName);
                 if (fieldDisplayHandler != null) {
                     Span fieldBlock = new Span().appendText(AppContext.getMessage(fieldDisplayHandler.getDisplayName
-                            ())).setCSSClass("block");
+                            ())).setCSSClass(UIConstants.BUTTON_BLOCK);
                     Div historyDiv = new Div().appendChild(fieldBlock).appendText(fieldDisplayHandler.getFormat()
                             .toString(item.getOldvalue())).appendText(" " + FontAwesome.LONG_ARROW_RIGHT.getHtml() +
                             " ").appendText(fieldDisplayHandler.getFormat().toString(item.getNewvalue()));
