@@ -144,13 +144,13 @@ public final class MainViewImpl extends AbstractPageView implements MainView {
         bodyLayout.setId("main-body");
         bodyLayout.setSizeFull();
 
-//        InfiniteScrollLayout scrollLayout = InfiniteScrollLayout.extend(bodyLayout);
-//        scrollLayout.addScrollListener(new InfiniteScrollLayout.ScrollReachBottomListener() {
-//            @Override
-//            public void onReachBottom() {
-//                System.out.println("A");
-//            }
-//        });
+        InfiniteScrollLayout scrollLayout = InfiniteScrollLayout.extend(bodyLayout);
+        scrollLayout.addScrollListener(new InfiniteScrollLayout.ScrollReachBottomListener() {
+            @Override
+            public void onReachBottom() {
+                System.out.println("A");
+            }
+        });
 
         this.with(createTopMenu(), bodyLayout, createFooter()).expand(bodyLayout);
     }
