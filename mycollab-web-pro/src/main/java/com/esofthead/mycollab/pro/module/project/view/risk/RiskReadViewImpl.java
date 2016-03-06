@@ -95,7 +95,6 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         }
 
         activityComponent.loadActivities("" + beanItem.getId());
-
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
         followerSheet.displayFollowers(beanItem);
@@ -217,7 +216,6 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             }
 
             this.addComponent(layout);
-
         }
     }
 }

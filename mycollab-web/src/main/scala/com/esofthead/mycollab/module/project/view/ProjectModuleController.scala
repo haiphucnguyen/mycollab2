@@ -39,6 +39,14 @@ class ProjectModuleController(val container: ProjectModule) extends AbstractCont
     }
   })
 
+  this.register(new ApplicationEventListener[ClientEvent.GotoEdit]() {
+    @Subscribe def handle(event: ClientEvent.GotoEdit): Unit = {
+      val presenter = PresenterResolver.getPresenter(classOf[IClientPresenter])
+      val account = event.getData.asInstanceOf[SimpleAccount]
+      presenter.go(container, new Add(account))
+    }
+  })
+
   this.register(new ApplicationEventListener[ClientEvent.GotoRead]() {
     @Subscribe def handle(event: ClientEvent.GotoRead): Unit = {
       val presenter = PresenterResolver.getPresenter(classOf[IClientPresenter])
