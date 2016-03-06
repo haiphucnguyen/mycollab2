@@ -111,7 +111,8 @@ public class ProjectPagedList extends DefaultBeanPagedList<ProjectService, Proje
             }
 
             if (project.getAccountid() != null) {
-                Div accountDiv = new Div().appendText(FontAwesome.INSTITUTION.getHtml() + " ").appendChild(new A("")
+                Div accountDiv = new Div().appendText(FontAwesome.INSTITUTION.getHtml() + " ")
+                        .appendChild(new A(ProjectLinkBuilder.generateClientPreviewFullLink(project.getAccountid()))
                         .appendText(StringUtils.trim(project.getClientName(), 30, true))).setCSSClass(UIConstants.BUTTON_BLOCK)
                         .setTitle(project.getClientName());
                 metaDiv.appendChild(0, accountDiv);

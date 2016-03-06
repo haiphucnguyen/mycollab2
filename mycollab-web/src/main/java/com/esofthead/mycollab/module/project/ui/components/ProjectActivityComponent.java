@@ -103,8 +103,9 @@ public class ProjectActivityComponent extends MVerticalLayout implements Reloada
             }
         });
 
-        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName("section").withWidth("100%")
-                .with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT).withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
+        MHorizontalLayout headerPanel = new MHorizontalLayout().withMargin(true).withStyleName(UIConstants.FORM_SECTION)
+                .withWidth("100%").with(headerLbl, sortDirection).withAlign(headerLbl, Alignment.MIDDLE_LEFT)
+                .withAlign(sortDirection, Alignment.MIDDLE_RIGHT);
 
         commentBox = new ProjectCommentInput(this, type, extraTypeId);
         activityBox = new MVerticalLayout();

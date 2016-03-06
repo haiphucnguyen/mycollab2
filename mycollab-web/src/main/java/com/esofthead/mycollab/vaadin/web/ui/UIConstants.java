@@ -62,6 +62,9 @@ public class UIConstants {
     public static final String GRIDFORM_STANDARD = "colored-gridlayout";
     public static final String GRIDFORM_BORDERLESS = "borderless";
 
+    public static final String FORM = "form";
+    public static final String FORM_SECTION = "section";
+
     public static final String FLEX_DISPLAY = "flex";
     public static final String SCROLLABLE_CONTAINER = "scrollable-container";
 

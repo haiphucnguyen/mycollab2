@@ -62,7 +62,7 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
     private static class ClientBlock extends VerticalLayout {
         ClientBlock(SimpleAccount client) {
             this.setWidth("400px");
-            this.addStyleName("clientblock");
+            this.addStyleName("entityblock");
             Div clientDiv = new Div().appendText(FontAwesome.INSTITUTION.getHtml() + " ").appendChild(new A
                     (ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client.getAccountname()));
             ELabel headerLbl = new ELabel(clientDiv.write(), ContentMode.HTML).withStyleName("header");

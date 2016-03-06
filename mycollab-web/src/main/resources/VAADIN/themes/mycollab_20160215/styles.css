@@ -15974,20 +15974,20 @@ div.v-button.token-field {
 	padding: 5px;
 }
 
-.clientblock {
+.entityblock {
 	border: 1px solid #e0e0e0;
 	margin: 10px 10px 10px 0px;
 	padding: 0px;
 }
 
-.clientblock .header {
+.entityblock .header {
 	border-bottom: 1px solid #e0e0e0;
 	background-color: #d9effa;
 	color: #1a8fcb;
 	padding: 5px;
 }
 
-.clientblock .meta-info {
+.entityblock .meta-info {
 	padding: 5px 5px 0px 5px;
 }
 
