@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
@@ -39,18 +40,22 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
 
     public ClientListViewImpl() {
         this.setMargin(true);
-    }
-
-    @Override
-    public void display(AccountSearchCriteria searchCriteria) {
         accountSearchPanel = new ClientSearchPanel();
         this.addComponent(accountSearchPanel);
-
         content = new CssLayout();
         content.setSizeFull();
         content.addStyleName(UIConstants.FLEX_DISPLAY);
         this.addComponent(content);
+    }
 
+    @Override
+    public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
+        return accountSearchPanel;
+    }
+
+    @Override
+    public void display(AccountSearchCriteria searchCriteria) {
+        content.removeAllComponents();
         AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
         List<SimpleAccount> clients = accountService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0,
                 Integer.MAX_VALUE));
