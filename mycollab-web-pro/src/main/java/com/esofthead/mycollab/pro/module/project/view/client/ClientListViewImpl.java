@@ -68,11 +68,12 @@ public class ClientListViewImpl extends AbstractPageView implements ClientListVi
         ClientBlock(SimpleAccount client) {
             this.setWidth("400px");
             this.addStyleName("entityblock");
-            Div clientDiv = new Div().appendText(FontAwesome.INSTITUTION.getHtml() + " ").appendChild(new A
-                    (ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText(client.getAccountname()));
+            A clientDiv = new A(ProjectLinkBuilder.generateClientPreviewFullLink(client.getId())).appendText
+                    (FontAwesome.INSTITUTION.getHtml() + " " + client.getAccountname()).setTitle(client.getAccountname());
             ELabel headerLbl = new ELabel(clientDiv.write(), ContentMode.HTML).withStyleName("header");
             headerLbl.addStyleName(ValoTheme.LABEL_H3);
             headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+            headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
             Div websiteDiv = new Div().appendText(AppContext.getMessage(AccountI18nEnum.FORM_WEBSITE) + ": " +

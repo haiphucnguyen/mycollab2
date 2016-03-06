@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.pro.module.project.view.client;
 
+import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.core.utils.NumberUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
+import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.ui.components.CrmFollowersComp;
@@ -32,6 +36,7 @@ import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.UserLink;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
+import com.hp.gagawa.java.elements.Img;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -207,14 +212,48 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
         ProjectBlock(SimpleProject project) {
             this.setWidth("400px");
             this.addStyleName("entityblock");
-            Div projectDiv = new Div().appendText(FontAwesome.BUILDING_O.getHtml() + " ").appendChild(new A
-                    (ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(project.getName()));
+            A projectDiv = new A(ProjectLinkBuilder.generateProjectFullLink(project.getId())).appendText(FontAwesome
+                    .BUILDING_O.getHtml() + " " + project.getName()).setTitle(project.getName());
             ELabel headerLbl = new ELabel(projectDiv.write(), ContentMode.HTML).withStyleName("header");
             headerLbl.addStyleName(ValoTheme.LABEL_H3);
             headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+            headerLbl.addStyleName(UIConstants.TEXT_ELLIPSIS);
             this.addComponent(headerLbl);
 
+            Div activeMembersDiv = new Div().appendText(FontAwesome.USERS.getHtml() + " " + project.getNumActiveMembers()).setTitle("Active members");
+            Div createdTimeDiv = new Div().appendText(FontAwesome.CLOCK_O.getHtml() + " " + AppContext
+                    .formatPrettyTime(project.getCreatedtime())).setTitle("Created time");
+            Div billableHoursDiv = new Div().appendText(FontAwesome.MONEY.getHtml() + " " + NumberUtils.roundDouble(2, project.getTotalBillableHours())).
+                    setTitle("Billable hours");
+            Div nonBillableHoursDiv = new Div().appendText(FontAwesome.GIFT.getHtml() + " " + NumberUtils.roundDouble(2,
+                    project.getTotalNonBillableHours())).setTitle("Non billable hours");
+            Div metaDiv = new Div().appendChild(activeMembersDiv, DivLessFormatter.EMPTY_SPACE(), createdTimeDiv,
+                    DivLessFormatter.EMPTY_SPACE(), billableHoursDiv, DivLessFormatter.EMPTY_SPACE(),
+                    nonBillableHoursDiv, DivLessFormatter.EMPTY_SPACE());
+            if (project.getLead() != null) {
+                Div leadDiv = new Div().appendChild(new Img("", StorageFactory.getInstance().getAvatarPath(project
+                        .getLeadAvatarId(), 16)), DivLessFormatter.EMPTY_SPACE(), new A(ProjectLinkBuilder.generateProjectMemberFullLink(project
+                        .getId(), project.getLead())).appendText(StringUtils.trim(project.getLeadFullName(), 30, true)))
+                        .setTitle("Manager");
+                metaDiv.appendChild(0, leadDiv);
+                metaDiv.appendChild(1, DivLessFormatter.EMPTY_SPACE());
+            }
+            metaDiv.setCSSClass(UIConstants.FLEX_DISPLAY);
+            ELabel prjInfo = new ELabel(metaDiv.write(), ContentMode.HTML).withStyleName(UIConstants
+                    .LABEL_META_INFO).withWidthUndefined();
+            this.addComponent(prjInfo);
 
+            int openAssignments = project.getNumOpenBugs() + project.getNumOpenTasks() + project.getNumOpenRisks();
+            int totalAssignments = project.getNumBugs() + project.getNumTasks() + project.getNumRisks();
+            ELabel progressInfoLbl;
+            if (totalAssignments > 0) {
+                progressInfoLbl = new ELabel(String.format("%d of %d issue(s) resolved. Progress (%d%%)",
+                        (totalAssignments - openAssignments), totalAssignments, (totalAssignments - openAssignments)
+                                * 100 / totalAssignments)).withStyleName(UIConstants.LABEL_META_INFO);
+            } else {
+                progressInfoLbl = new ELabel("No issue").withStyleName(UIConstants.LABEL_META_INFO);
+            }
+            this.addComponent(progressInfoLbl);
         }
     }
 }
