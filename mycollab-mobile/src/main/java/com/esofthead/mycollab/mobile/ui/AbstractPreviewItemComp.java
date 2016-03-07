@@ -19,7 +19,7 @@ package com.esofthead.mycollab.mobile.ui;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.mycollab.vaadin.addon.webcomponents.mobilecomponents.navigationbarquickmenu.NavigationBarQuickMenu;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 

@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.mycollab.vaadin.addon.webcomponents.mobilecomponents.navigationbarquickmenu.NavigationBarQuickMenu;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.addon.touchkit.ui.NavigationButton;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
 import com.vaadin.server.FontAwesome;

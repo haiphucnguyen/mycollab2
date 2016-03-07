@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.mycollab.vaadin.addon.webcomponents.mobilecomponents.navigationbarquickmenu.NavigationBarQuickMenu;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;

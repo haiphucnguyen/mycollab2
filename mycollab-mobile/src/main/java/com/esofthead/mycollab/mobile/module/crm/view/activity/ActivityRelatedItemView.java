@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.crm.i18n.CallI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.MeetingI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.mycollab.vaadin.addon.webcomponents.mobilecomponents.navigationbarquickmenu.NavigationBarQuickMenu;
+import com.esofthead.vaadin.navigationbarquickmenu.NavigationBarQuickMenu;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import org.vaadin.viritin.layouts.MVerticalLayout;
