@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.pro.module.project.view;
 
+import com.esofthead.mycollab.common.domain.AggregateTag;
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.service.TagService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -24,9 +25,12 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -35,6 +39,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,14 +49,24 @@ import java.util.List;
 @ViewComponent
 public class TagListViewImpl extends AbstractPageView implements ITagListView {
 
+    private TagService tagService;
+    private MVerticalLayout content;
+    private List<String> selectedTags;
+
     public TagListViewImpl() {
         withMargin(new MarginInfo(true, false, true, true));
+        tagService = ApplicationContextUtil.getSpringBean(TagService.class);
+        selectedTags = new ArrayList<>();
     }
 
     @Override
     public void displayTags(Tag tag) {
         removeAllComponents();
+        selectedTags.clear();
 
+        if (tag != null) {
+            selectedTags.add(tag.getName());
+        }
         MHorizontalLayout header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%");
         Label headerLbl = new Label(FontAwesome.TAGS.getHtml() + " Tags", ContentMode.HTML);
         headerLbl.setSizeUndefined();
@@ -59,19 +74,20 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         header.with(headerLbl);
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
+        content = new MVerticalLayout();
 
         MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withWidth("450px");
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
-                false, true)).withHeight("34px").withWidth("100%");
+                false, true)).withWidth("100%");
         panelHeader.addStyleName("panel-header");
-        Label lbl = new Label("Tag Cloud");
-        panelHeader.with(lbl);
+        ELabel lbl = new ELabel("Tag Cloud").withStyleName(ValoTheme.LABEL_H3, ValoTheme.LABEL_NO_MARGIN);
+        panelHeader.with(lbl).alignAll(Alignment.MIDDLE_LEFT);
 
         TagCloudComp cloudComp = new TagCloudComp();
         cloudComp.displayTagItems();
         rightSideBar.with(panelHeader, cloudComp);
 
-        contentWrapper.with(rightSideBar);
+        contentWrapper.with(content, rightSideBar).expand(content);
         with(header, contentWrapper);
     }
 
@@ -81,14 +97,16 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         }
 
         void displayTagItems() {
-            TagService tagService = ApplicationContextUtil.getSpringBean(TagService.class);
-            List<Tag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
+            List<AggregateTag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext
+                    .getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
                 this.addComponent(new Label("No tag is existed"));
             } else {
-                for (Tag tag : tags) {
+                for (AggregateTag tag : tags) {
                     TagButton btn = new TagButton(tag);
                     this.addComponent(btn);
+                    boolean isSelected = selectedTags.contains(tag.getName());
+                    btn.setSelected(isSelected);
                 }
             }
         }
@@ -97,22 +115,26 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
     private class TagButton extends Button {
         private boolean isSelected = false;
 
-        public TagButton(Tag tag) {
-            super(tag.getName());
+        public TagButton(AggregateTag tag) {
+            super(tag.getName() + "(" + tag.getCount() + ")");
             this.setStyleName("tagbutton");
             this.addClickListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     isSelected = !isSelected;
-                    if (isSelected) {
-                        TagButton.this.removeStyleName("nonselected");
-                        TagButton.this.addStyleName("selected");
-                    } else {
-                        TagButton.this.removeStyleName("selected");
-                        TagButton.this.addStyleName("nonselected");
-                    }
+                    setSelected(isSelected);
                 }
             });
+        }
+
+        public void setSelected(boolean isSelected) {
+            if (isSelected) {
+                removeStyleName(UIConstants.BUTTON_OPTION);
+                addStyleName(UIConstants.BUTTON_BLOCK);
+            } else {
+                removeStyleName(UIConstants.BUTTON_BLOCK);
+                addStyleName(UIConstants.BUTTON_OPTION);
+            }
         }
     }
 }

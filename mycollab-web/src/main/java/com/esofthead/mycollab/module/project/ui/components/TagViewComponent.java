@@ -23,8 +23,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
@@ -133,7 +133,8 @@ public class TagViewComponent extends CssLayout {
             return Collections.emptyList();
         }
         suggestedTags = tagService.findTagsInAccount(query, new String[]{ProjectTypeConstants.BUG,
-                ProjectTypeConstants.TASK}, AppContext.getAccountId());
+                        ProjectTypeConstants.TASK, ProjectTypeConstants.MILESTONE, ProjectTypeConstants.RISK},
+                AppContext.getAccountId());
         return new ArrayList<Object>(suggestedTags);
     }
 

@@ -18,6 +18,7 @@ package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.view.ITagListPresenter;
 import com.esofthead.mycollab.module.project.view.ITagListView;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
@@ -33,7 +34,7 @@ import com.vaadin.ui.ComponentContainer;
  * @since 5.0.1
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class TagListPresenter extends AbstractPresenter<ITagListView> {
+public class TagListPresenter extends AbstractPresenter<ITagListView> implements ITagListPresenter {
     private static final long serialVersionUID = 1L;
 
     public TagListPresenter() {
