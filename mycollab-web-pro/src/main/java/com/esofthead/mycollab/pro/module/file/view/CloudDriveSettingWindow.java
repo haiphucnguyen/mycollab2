@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.file.events.FileEvent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -67,10 +67,10 @@ public class CloudDriveSettingWindow extends Window {
 
         List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
 
-        bodyLayout.addComponent(new Hr());
+        bodyLayout.addComponent(ELabel.Hr());
         for (ExternalDrive drive : externalDrives) {
             OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(drive);
-            bodyLayout.with(layout, new Hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
+            bodyLayout.with(layout, ELabel.Hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
         }
 
         mainLayout.addComponent(bodyLayout);
@@ -154,7 +154,7 @@ public class CloudDriveSettingWindow extends Window {
                     public void buttonClick(Button.ClickEvent event) {
                         try {
                             ConfirmDialogExt.show(UI.getCurrent(), AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE,
-                                            AppContext.getSiteName()),
+                                    AppContext.getSiteName()),
                                     AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
                                     AppContext.getMessage(GenericI18Enum.BUTTON_YES),
                                     AppContext.getMessage(GenericI18Enum.BUTTON_NO),

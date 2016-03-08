@@ -29,6 +29,7 @@ import java.util.Date;
  * @since 5.0.3
  */
 public class ELabel extends Label {
+
     public ELabel() {
         super();
     }
@@ -88,5 +89,13 @@ public class ELabel extends Label {
         ELabel label = new ELabel(value, ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
         label.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         return label;
+    }
+
+    public static final ELabel EMPTY_SPACE() {
+        return new ELabel("&nbsp;", ContentMode.HTML).withWidthUndefined();
+    }
+
+    public static final ELabel Hr() {
+        return new ELabel("<hr/>", ContentMode.HTML).withStyleName("hr");
     }
 }

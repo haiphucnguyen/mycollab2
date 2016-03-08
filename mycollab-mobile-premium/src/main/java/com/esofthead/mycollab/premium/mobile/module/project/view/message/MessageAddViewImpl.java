@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.Hr;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.addon.touchkit.ui.Switch;
 import com.vaadin.addon.touchkit.ui.VerticalComponentGroup;
@@ -60,7 +60,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         subjectField.setInputPrompt(AppContext.getMessage(MessageI18nEnum.FORM_TITLE));
         addFormLayout.addComponent(subjectField);
 
-        addFormLayout.addComponent(new Hr());
+        addFormLayout.addComponent(ELabel.Hr());
 
         contentField = new TextArea();
         contentField.setStyleName("content-field");
