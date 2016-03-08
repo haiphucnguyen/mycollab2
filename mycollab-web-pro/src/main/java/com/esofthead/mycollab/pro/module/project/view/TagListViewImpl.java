@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.service.TagService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.view.ITagListView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -42,7 +42,7 @@ import java.util.List;
  * @since 5.0.1
  */
 @ViewComponent
-public class TagListViewImpl extends AbstractPageView implements TagListView {
+public class TagListViewImpl extends AbstractPageView implements ITagListView {
 
     public TagListViewImpl() {
         withMargin(new MarginInfo(true, false, true, true));

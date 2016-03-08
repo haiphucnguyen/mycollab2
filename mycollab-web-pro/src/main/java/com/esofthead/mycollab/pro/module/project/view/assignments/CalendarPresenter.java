@@ -61,7 +61,7 @@ public class CalendarPresenter extends AbstractPresenter<CalendarView> implement
             view.lazyLoadView();
 
             ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-            breadCrumb.gotoCalendar();
+//            breadCrumb.gotoCalendar();
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }

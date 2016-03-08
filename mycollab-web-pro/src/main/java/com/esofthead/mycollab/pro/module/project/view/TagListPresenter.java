@@ -14,10 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-web.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.project.view.ITagListView;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -31,11 +33,11 @@ import com.vaadin.ui.ComponentContainer;
  * @since 5.0.1
  */
 @LoadPolicy(scope = ViewScope.PROTOTYPE)
-public class TagListPresenter extends AbstractPresenter<TagListView> {
+public class TagListPresenter extends AbstractPresenter<ITagListView> {
     private static final long serialVersionUID = 1L;
 
     public TagListPresenter() {
-        super(TagListView.class);
+        super(ITagListView.class);
     }
 
     @Override
