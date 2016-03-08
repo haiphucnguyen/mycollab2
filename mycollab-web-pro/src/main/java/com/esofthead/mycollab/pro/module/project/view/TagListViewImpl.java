@@ -24,26 +24,28 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.module.project.ui.components.ProjectTaskRowDisplayHandler;
 import com.esofthead.mycollab.module.project.view.ITagListView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -80,9 +82,11 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         header.with(headerLbl);
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
-        assignmentList = new DefaultBeanPagedList<>(projectGenericTaskService, new AssignmentRowRenderer());
+        assignmentList = new DefaultBeanPagedList<>(projectGenericTaskService, new ProjectTaskRowDisplayHandler());
+        assignmentList.addStyleName("border-top");
 
-        MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withWidth("450px");
+        MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
+                true, true, true)).withWidth("450px");
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                 false, true)).withWidth("100%");
         panelHeader.addStyleName("panel-header");
@@ -158,13 +162,6 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 removeStyleName(UIConstants.BUTTON_BLOCK);
                 addStyleName(UIConstants.BUTTON_OPTION);
             }
-        }
-    }
-
-    public static class AssignmentRowRenderer implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
-        @Override
-        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask item, int rowIndex) {
-            return new Label(item.getName());
         }
     }
 }
