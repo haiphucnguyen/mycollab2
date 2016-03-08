@@ -60,7 +60,7 @@ public class ELabel extends Label {
     }
 
     public ELabel withStyleName(String styleName) {
-        this.setStyleName(styleName);
+        this.addStyleName(styleName);
         return this;
     }
 
