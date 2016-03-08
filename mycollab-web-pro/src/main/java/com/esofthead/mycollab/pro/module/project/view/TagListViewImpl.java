@@ -19,27 +19,31 @@ package com.esofthead.mycollab.pro.module.project.view;
 import com.esofthead.mycollab.common.domain.AggregateTag;
 import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.service.TagService;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.ITagListView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.web.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,13 +52,15 @@ import java.util.List;
  */
 @ViewComponent
 public class TagListViewImpl extends AbstractPageView implements ITagListView {
-
     private TagService tagService;
-    private MVerticalLayout content;
+    private ProjectGenericTaskService projectGenericTaskService;
+
+    private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> assignmentList;
     private List<String> selectedTags;
 
     public TagListViewImpl() {
         withMargin(new MarginInfo(true, false, true, true));
+        projectGenericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
         tagService = ApplicationContextUtil.getSpringBean(TagService.class);
         selectedTags = new ArrayList<>();
     }
@@ -74,7 +80,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         header.with(headerLbl);
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
-        content = new MVerticalLayout();
+        assignmentList = new DefaultBeanPagedList<>(projectGenericTaskService, new AssignmentRowRenderer());
 
         MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withWidth("450px");
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
@@ -87,8 +93,18 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         cloudComp.displayTagItems();
         rightSideBar.with(panelHeader, cloudComp);
 
-        contentWrapper.with(content, rightSideBar).expand(content);
+        contentWrapper.with(assignmentList, rightSideBar).expand(assignmentList);
         with(header, contentWrapper);
+    }
+
+    private void displaySelectedTags() {
+        if (CollectionUtils.isNotEmpty(selectedTags)) {
+            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+            searchCriteria.setTagNames(new SetSearchField<>(selectedTags));
+            assignmentList.setSearchCriteria(searchCriteria);
+        } else {
+            assignmentList.setCurrentDataList(new ArrayList<ProjectGenericTask>());
+        }
     }
 
     private class TagCloudComp extends CssLayout {
@@ -109,19 +125,26 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                     btn.setSelected(isSelected);
                 }
             }
+            displaySelectedTags();
         }
     }
 
     private class TagButton extends Button {
         private boolean isSelected = false;
 
-        public TagButton(AggregateTag tag) {
-            super(tag.getName() + "(" + tag.getCount() + ")");
+        public TagButton(final AggregateTag tag) {
+            super(tag.getName() + " (" + tag.getCount() + ")");
             this.setStyleName("tagbutton");
             this.addClickListener(new ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     isSelected = !isSelected;
+                    if (isSelected) {
+                        selectedTags.add(tag.getName());
+                    } else {
+                        selectedTags.remove(tag.getName());
+                    }
+                    displaySelectedTags();
                     setSelected(isSelected);
                 }
             });
@@ -135,6 +158,13 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
                 removeStyleName(UIConstants.BUTTON_BLOCK);
                 addStyleName(UIConstants.BUTTON_OPTION);
             }
+        }
+    }
+
+    public static class AssignmentRowRenderer implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
+        @Override
+        public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask item, int rowIndex) {
+            return new Label(item.getName());
         }
     }
 }
