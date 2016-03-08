@@ -53,7 +53,6 @@ public class TagListViewImpl extends AbstractPageView implements TagListView {
         removeAllComponents();
 
         MHorizontalLayout header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%");
-
         Label headerLbl = new Label(FontAwesome.TAGS.getHtml() + " Tags", ContentMode.HTML);
         headerLbl.setSizeUndefined();
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
@@ -83,8 +82,7 @@ public class TagListViewImpl extends AbstractPageView implements TagListView {
 
         void displayTagItems() {
             TagService tagService = ApplicationContextUtil.getSpringBean(TagService.class);
-            List<Tag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext
-                    .getAccountId());
+            List<Tag> tags = tagService.findTagsInProject(CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
             if (CollectionUtils.isEmpty(tags)) {
                 this.addComponent(new Label("No tag is existed"));
             } else {

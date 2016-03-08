@@ -21,4 +21,5 @@ package com.esofthead.mycollab.common.dao;
  * @since 5.0.1
  */
 public interface TagMapperExt {
+
 }

@@ -173,7 +173,7 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         Button tagBtn = new Button("Tag", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoTagListView(this, null));
             }
         });
         tagBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);

@@ -11,10 +11,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.esofthead.mycollab.module.project.ui.components.ProjectFollowersComp;
+import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
@@ -50,6 +47,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(RiskReadViewImpl.class);
 
+    private TagViewComponent tagViewComponent;
     private ProjectActivityComponent activityComponent;
     private DateInfoComp dateInfoComp;
     private PeopleInfoComp peopleInfoComp;
@@ -94,10 +92,17 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
             previewLayout.addTitleStyleName(UIConstants.LABEL_OVERDUE);
         }
 
+        tagViewComponent.display(ProjectTypeConstants.RISK, beanItem.getId());
         activityComponent.loadActivities("" + beanItem.getId());
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
         followerSheet.displayFollowers(beanItem);
+    }
+
+    @Override
+    protected ComponentContainer createExtraControls() {
+        tagViewComponent = new TagViewComponent();
+        return tagViewComponent;
     }
 
     @Override
