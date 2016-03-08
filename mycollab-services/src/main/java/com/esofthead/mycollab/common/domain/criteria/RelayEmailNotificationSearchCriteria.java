@@ -20,21 +20,19 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- *
  */
 public class RelayEmailNotificationSearchCriteria extends SearchCriteria {
-	private static final long serialVersionUID = 1L;
-	
-	private SetSearchField<String> types;
+    private static final long serialVersionUID = 1L;
 
-	public SetSearchField<String> getTypes() {
-		return types;
-	}
+    private SetSearchField<String> types;
 
-	public void setTypes(SetSearchField<String> types) {
-		this.types = types;
-	}
+    public SetSearchField<String> getTypes() {
+        return types;
+    }
+
+    public void setTypes(SetSearchField<String> types) {
+        this.types = types;
+    }
 }
