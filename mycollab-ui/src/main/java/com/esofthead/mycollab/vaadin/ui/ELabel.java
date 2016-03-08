@@ -59,8 +59,10 @@ public class ELabel extends Label {
         return this;
     }
 
-    public ELabel withStyleName(String styleName) {
-        this.addStyleName(styleName);
+    public ELabel withStyleName(String... styleNames) {
+        for (String styleName: styleNames) {
+            this.addStyleName(styleName);
+        }
         return this;
     }
 

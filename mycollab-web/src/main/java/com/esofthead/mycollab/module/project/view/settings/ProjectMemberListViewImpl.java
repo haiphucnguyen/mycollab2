@@ -97,7 +97,6 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void setSearchCriteria(ProjectMemberSearchCriteria searchCriteria) {
         contentLayout.removeAllComponents();
         ProjectMemberService prjMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
@@ -166,14 +165,11 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         blockContent.setComponentAlignment(buttonControls, Alignment.TOP_RIGHT);
 
         A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
-                .getUsername())).appendText(member.getMemberFullName());
-        ELabel memberNameLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
-        memberNameLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-        memberNameLbl.setWidth("100%");
+                .getUsername())).appendText(member.getMemberFullName()).setTitle(member.getMemberFullName());
+        ELabel memberNameLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3,
+                ValoTheme.LABEL_NO_MARGIN, UIConstants.TEXT_ELLIPSIS).withWidth("100%");
 
-        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false);
-        memberInfo.addComponent(memberNameLbl);
-        memberInfo.addComponent(new Hr());
+        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false).with(memberNameLbl, new Hr());
 
         String roleLink = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
