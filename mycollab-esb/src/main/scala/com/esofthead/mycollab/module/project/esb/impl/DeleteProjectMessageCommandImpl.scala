@@ -27,6 +27,10 @@ import com.google.common.eventbus.{AllowConcurrentEvents, Subscribe}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+/**
+  * @author MyCollab Ltd
+  * @since 1.0.0
+  */
 @Component class DeleteProjectMessageCommandImpl extends GenericCommand {
   @Autowired private val resourceService: ResourceService = null
   @Autowired private val commentMapper: CommentMapper = null
