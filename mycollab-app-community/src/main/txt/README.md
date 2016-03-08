@@ -51,10 +51,8 @@ Version 5.2.9
 **Improvements & New Features**
 
 * [Premium] Tag management is supported
-* [Premium] Resource planning is added
-* [Premium] Option management is added
+* [Premium] Project client management is added
 * [Premium] New user group for task and bug views
-* [Premium] Can add many kanban boards in a project
 * [Premium] Support tag for phase and risk
 * Related bug is revised
 * Show template icon if the project is the template one
