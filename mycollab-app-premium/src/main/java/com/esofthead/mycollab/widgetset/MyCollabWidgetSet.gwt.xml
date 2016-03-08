@@ -47,9 +47,9 @@
 
     <inherits name="com.ejt.vaadin.loginform.WidgetSet" />
 
-    <inherits name="com.mycollab.vaadin.addon.sharedcomponents.WidgetSet" />
+    <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
-    <inherits name="com.mycollab.vaadin.addon.webcomponents.WidgetSet" />
+    <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
 
     <inherits name="org.vaadin.hene.flexibleoptiongroup.widgetset.FlexibleOptionGroupWidgetset" />
 </module>

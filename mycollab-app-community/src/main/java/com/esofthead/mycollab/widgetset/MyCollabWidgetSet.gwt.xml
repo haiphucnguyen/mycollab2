@@ -49,7 +49,5 @@
 
     <inherits name="com.ejt.vaadin.loginform.WidgetSet" />
 
-    <inherits name="org.vaadin.addons.scrollablepanel.WidgetSet" />
-
     <inherits name="org.vaadin.sliderpanel.WidgetSet" />
 </module>

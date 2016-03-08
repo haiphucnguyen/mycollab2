@@ -25,7 +25,6 @@
         <module>../mycollab-services</module>
         <module>../mycollab-services-premium</module>
         <module>../mycollab-esb</module>
-        <module>../mycollab-caching-premium</module>
         <module>../mycollab-reporting</module>
         <module>../mycollab-reporting-premium</module>
         <module>../mycollab-servlet</module>

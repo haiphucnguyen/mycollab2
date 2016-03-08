@@ -16,16 +16,13 @@
 
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 
-    <inherits
-            name="org.vaadin.openesignforms.ckeditor.widgetset.VaadinCKEditorWidgetset" />
+    <inherits name="org.vaadin.openesignforms.ckeditor.widgetset.VaadinCKEditorWidgetset" />
 
-    <inherits
-            name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
+    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 
     <inherits name="com.vaadin.addon.charts.Widgetset" />
 
-    <inherits
-            name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
+    <inherits name="org.vaadin.risto.stylecalendar.widgetset.StyleCalendarWidgetset" />
 
     <inherits name="com.vaadin.DefaultWidgetSet" />
 
@@ -35,18 +32,15 @@
 
     <inherits name="com.vaadin.breadcrumb.gwt.BreadcrumbWidgetset" />
 
-    <inherits
-            name="org.vaadin.tepi.listbuilder.widgetset.ListBuilderWidgetset" />
+    <inherits name="org.vaadin.tepi.listbuilder.widgetset.ListBuilderWidgetset" />
 
     <inherits name="org.vaadin.easyuploads.Widgetset" />
-
-    <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
     <inherits name="org.tltv.gantt.WidgetSet" />
 
     <inherits name="com.vaadin.addon.timeline.gwt.TimelineWidgetSet" />
 
-    <inherits name="com.esofthead.vaadin.calendarext.WidgetSet" />
+    <inherits name="com.esofthead.vaadin.cropField.WidgetSet" />
 
     <inherits name="com.esofthead.vaadin.floatingcomponent.WidgetSet" />
 
@@ -55,8 +49,6 @@
     <inherits name="org.vaadin.addons.fancybox.FancyboxWidgetSet" />
 
     <inherits name="org.vaadin.jouni.restrain.RestrainWidgetset" />
-
-    <inherits name="org.vaadin.addons.scrollablepanel.WidgetSet" />
 
     <inherits name="com.ejt.vaadin.loginform.WidgetSet" />
 </module>

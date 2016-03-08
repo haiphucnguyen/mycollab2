@@ -75,12 +75,6 @@
 
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
-            <artifactId>mycollab-caching-premium</artifactId>
-            <version>5.2.8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-web-premium</artifactId>
             <version>5.2.8</version>
             <exclusions>
