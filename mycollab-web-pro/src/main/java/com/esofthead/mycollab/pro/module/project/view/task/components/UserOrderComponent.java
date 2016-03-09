@@ -3,6 +3,7 @@ package com.esofthead.mycollab.pro.module.project.view.task.components;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.SortedArrayMap;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.ui.components.IGroupComponent;
 import com.esofthead.mycollab.module.project.view.task.components.AbstractUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.task.components.TaskRowRenderer;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
@@ -56,7 +57,7 @@ public class UserOrderComponent extends AbstractUserOrderComponent {
         }
     }
 
-    private static class GroupComponent extends VerticalLayout {
+    private static class GroupComponent extends VerticalLayout implements IGroupComponent {
         private CssLayout wrapBody;
         private Label headerLbl;
 

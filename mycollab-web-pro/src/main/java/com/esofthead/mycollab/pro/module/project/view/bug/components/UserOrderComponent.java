@@ -2,6 +2,7 @@ package com.esofthead.mycollab.pro.module.project.view.bug.components;
 
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.SortedArrayMap;
+import com.esofthead.mycollab.module.project.ui.components.IGroupComponent;
 import com.esofthead.mycollab.module.project.view.bug.components.AbstractUserOrderComponent;
 import com.esofthead.mycollab.module.project.view.bug.components.BugRowRenderer;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -56,7 +57,7 @@ public class UserOrderComponent extends AbstractUserOrderComponent {
         }
     }
 
-    private static class GroupComponent extends VerticalLayout {
+    private static class GroupComponent extends VerticalLayout implements IGroupComponent {
         private CssLayout wrapBody;
         private Label headerLbl;
 
