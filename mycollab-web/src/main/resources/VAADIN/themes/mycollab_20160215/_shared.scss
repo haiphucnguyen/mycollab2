@@ -309,6 +309,9 @@
         &:first-child {
           border-width: 0px;
         }
+        ul li {
+          word-break: break-all;
+        }
       }
     }
   }
