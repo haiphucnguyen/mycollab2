@@ -629,6 +629,9 @@
     .toggle {
       float: top;
       display: none;
+      .v-button {
+        background: transparent;
+      }
     }
   }
 

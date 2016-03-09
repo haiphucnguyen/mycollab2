@@ -2233,6 +2233,10 @@ div.v-window {
 	display: none;
 }
 
+.editable-field .toggle .v-button {
+	background: transparent;
+}
+
 .v-csslayout.removeable-btn {
 	display: flex;
 	min-height: 21px;
@@ -14796,6 +14800,10 @@ div.v-window {
 .editable-field .toggle {
 	float: top;
 	display: none;
+}
+
+.editable-field .toggle .v-button {
+	background: transparent;
 }
 
 .v-csslayout.removeable-btn {
