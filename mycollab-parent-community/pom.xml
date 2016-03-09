@@ -18,7 +18,7 @@
         <slf4jVersion>1.7.18</slf4jVersion>
         <servletVersion>3.1.0</servletVersion>
         <vaadinVersion>7.6.3</vaadinVersion>
-        <jettyVersion>9.2.14.v20151106</jettyVersion>
+        <jettyVersion>9.2.15.v20160210</jettyVersion>
         <mysqlVersion>5.1.38</mysqlVersion>
         <junitVersion>4.12</junitVersion>
         <gsonVersion>2.6.2</gsonVersion>
@@ -230,19 +230,19 @@
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>5.0.4</version>
+            <version>5.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-commons</artifactId>
-            <version>5.0.4</version>
+            <version>5.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-tree</artifactId>
-            <version>5.0.4</version>
+            <version>5.1</version>
         </dependency>
 
         <dependency>

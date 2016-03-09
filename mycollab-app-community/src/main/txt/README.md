@@ -46,6 +46,8 @@ Version 5.2.9
 
 * Spring framework 4.2.5.RELEASE
 * Jackrabbit 2.12.1
+* Jetty 9.2.15.v20160210
+* Flyway 4.0
 * Commons Collection 4.4.1
 * Other libraries
 
