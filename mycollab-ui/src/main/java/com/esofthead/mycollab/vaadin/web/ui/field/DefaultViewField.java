@@ -42,6 +42,11 @@ public class DefaultViewField extends CustomField<String> {
         label.setContentMode(contentMode);
     }
 
+    public DefaultViewField withStylename(String stylename) {
+        label.addStyleName(stylename);
+        return this;
+    }
+
     @Override
     public String getValue() {
         return value;

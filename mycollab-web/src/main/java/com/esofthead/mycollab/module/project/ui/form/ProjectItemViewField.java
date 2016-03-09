@@ -22,7 +22,10 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.utils.TooltipHelper;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Text;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
@@ -53,7 +56,7 @@ public class ProjectItemViewField extends CustomField<String> {
         }
 
         SimpleProject project = CurrentProjectVariables.getProject();
-        DivLessFormatter div = new DivLessFormatter();
+        Div div = new Div().setCSSClass(UIConstants.TEXT_ELLIPSIS);
         String uid = UUID.randomUUID().toString();
         Text avatarLink = new Text(ProjectAssetsManager.getAsset(type).getHtml());
         A milestoneLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectItemLink(project.getShortname(),
@@ -62,7 +65,8 @@ public class ProjectItemViewField extends CustomField<String> {
         milestoneLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
         div.appendChild(avatarLink, DivLessFormatter.EMPTY_SPACE(), milestoneLink, DivLessFormatter.EMPTY_SPACE(),
                 TooltipHelper.buildDivTooltipEnable(uid));
-        return new Label(div.write(), ContentMode.HTML);
+        ELabel label = new ELabel(div.write(), ContentMode.HTML);
+        return label;
     }
 
     @Override

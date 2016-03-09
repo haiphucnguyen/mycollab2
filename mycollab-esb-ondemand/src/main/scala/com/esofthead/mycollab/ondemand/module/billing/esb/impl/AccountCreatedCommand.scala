@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component
     option.setType(ProjectTypeConstants.TASK)
     option.setTypeval(StatusI18nEnum.Open.name())
     option.setColor("fdde86")
+    option.setFieldgroup("status")
     optionValService.saveWithSession(option, null)
 
     option.setTypeval(StatusI18nEnum.Closed.name())

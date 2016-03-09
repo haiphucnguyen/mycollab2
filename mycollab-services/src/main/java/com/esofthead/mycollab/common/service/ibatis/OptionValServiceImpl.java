@@ -17,8 +17,11 @@
 package com.esofthead.mycollab.common.service.ibatis;
 
 import com.esofthead.mycollab.common.dao.OptionValMapper;
+import com.esofthead.mycollab.common.dao.TimelineTrackingCachingMapper;
+import com.esofthead.mycollab.common.dao.TimelineTrackingMapper;
 import com.esofthead.mycollab.common.domain.OptionVal;
 import com.esofthead.mycollab.common.domain.OptionValExample;
+import com.esofthead.mycollab.common.domain.TimelineTrackingExample;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -44,6 +47,12 @@ import java.util.Map;
 public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal> implements OptionValService {
     @Autowired
     private OptionValMapper optionValMapper;
+
+    @Autowired
+    private TimelineTrackingMapper timelineTrackingMapper;
+
+    @Autowired
+    private TimelineTrackingCachingMapper timelineTrackingCachingMapper;
 
     @Autowired
     private DataSource dataSource;
@@ -76,23 +85,38 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
 
     @Override
     public Integer saveWithSession(OptionVal record, String username) {
+        checkSaveOrUpdateValid(record);
+        return super.saveWithSession(record, username);
+    }
+
+    private void checkSaveOrUpdateValid(OptionVal record) {
         String typeVal = record.getTypeval();
         if (Boolean.TRUE.equals(record.getIsdefault())) {
             OptionValExample ex = new OptionValExample();
-            ex.createCriteria().andTypeEqualTo(record.getType()).andTypevalEqualTo(typeVal).andSaccountidEqualTo(record.getSaccountid());
+            ex.createCriteria().andTypeEqualTo(record.getType()).andTypevalEqualTo(typeVal)
+                    .andFieldgroupEqualTo(record.getFieldgroup())
+                    .andSaccountidEqualTo(record.getSaccountid());
             if (optionValMapper.countByExample(ex) > 0) {
                 throw new UserInvalidInputException("There is already column name " + typeVal);
             }
         } else {
             OptionValExample ex = new OptionValExample();
-            ex.createCriteria().andTypeEqualTo(record.getType()).andTypevalEqualTo(typeVal).andSaccountidEqualTo(record
+            ex.createCriteria().andTypeEqualTo(record.getType()).andTypevalEqualTo(typeVal)
+                    .andFieldgroupEqualTo(record.getFieldgroup()).andSaccountidEqualTo(record
                     .getSaccountid()).andIsdefaultEqualTo(Boolean.FALSE);
             if (optionValMapper.countByExample(ex) > 0) {
                 throw new UserInvalidInputException("There is already column name " + typeVal);
             }
         }
+    }
 
-        return super.saveWithSession(record, username);
+    @Override
+    public Integer updateWithSession(OptionVal record, String username) {
+        checkSaveOrUpdateValid(record);
+        String typeVal = record.getTypeval();
+        TimelineTrackingExample timelineTrackingExample = new TimelineTrackingExample();
+
+        return super.updateWithSession(record, username);
     }
 
     @Override
@@ -114,10 +138,10 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     }
 
     @Override
-    public boolean isExistedOptionVal(String type, String typeVal, Integer projectId, Integer sAccountId) {
+    public boolean isExistedOptionVal(String type, String typeVal, String fieldGroup, Integer projectId, Integer sAccountId) {
         OptionValExample ex = new OptionValExample();
-        ex.createCriteria().andTypeEqualTo(type).andTypevalEqualTo(typeVal).andSaccountidEqualTo(sAccountId)
-                .andExtraidEqualTo(projectId);
+        ex.createCriteria().andTypeEqualTo(type).andTypevalEqualTo(typeVal).andFieldgroupEqualTo(fieldGroup)
+                .andSaccountidEqualTo(sAccountId).andExtraidEqualTo(projectId);
         return (optionValMapper.countByExample(ex) > 0);
     }
 }
