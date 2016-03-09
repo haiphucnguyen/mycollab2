@@ -2,12 +2,12 @@ $my-border-color: #c5c5c5;
 $my-separator-color: #e0e0e0;
 $my-background-color: #ffffff;
 $my-panel-background-color: #f1f1f1;
-$my-hover-background-color: ghostwhite;
+$my-hover-background-color: #f5f5f5;
 $my-block-background-color: #f9f9f9;
 $my-meta-color: #999;
 $my-link-color: #0083ce;
 $my-title-color: #006DAC;
-$my-white-color: #f7f7f7;
+$my-white-color: #fff;
 $my-font-weight-bold: 600;
 
 $font-family: Arial, Verdana, Helvetica, sans-serif;
@@ -25,6 +25,7 @@ $font-largest: 36px;
   -webkit-box-shadow: inset 5px 0px 0px 0px $my-link-color;
   -moz-box-shadow: inset 5px 0px 0px 0px $my-link-color;
   box-shadow: inset 5px 0px 0px 0px $my-link-color;
+  background-color: $my-hover-background-color;
 }
 
 @mixin text-ellipsis {

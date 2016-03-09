@@ -31,10 +31,8 @@ public class I18nFormViewField extends CustomField<String> {
     private static final long serialVersionUID = 1L;
 
     private String key;
-    @SuppressWarnings("rawtypes")
     private Class<? extends Enum> enumClass;
 
-    @SuppressWarnings("rawtypes")
     public I18nFormViewField(final String key, Class<? extends Enum> enumCls) {
         this.key = key;
         this.enumClass = enumCls;

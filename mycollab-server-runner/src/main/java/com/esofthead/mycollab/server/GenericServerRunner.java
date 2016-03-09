@@ -311,8 +311,7 @@ public abstract class GenericServerRunner {
                 @Override
                 public void run() {
                     LOG.debug("Detect root folder webapp");
-                    File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"),
-                            "conf", "src/main/conf");
+                    File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
 
                     if (confFolder == null) {
                         throw new MyCollabException("Can not detect webapp base folder");

@@ -1616,6 +1616,7 @@ a.pending {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .panel-header {
@@ -1717,7 +1718,7 @@ a.pending {
 }
 
 .v-button.buttonPaging.current, .v-button.buttonPaging:hover {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .warning-icon .v-icon {
@@ -1804,7 +1805,7 @@ a.pending {
 }
 
 .optionPopupContent .action-wrap:hover .v-button-action {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .optionPopupContent .v-label.section-header {
@@ -1977,7 +1978,7 @@ div.v-window {
 
 .v-popupview.block-popupedit:hover {
 	background-color: #33aae5;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-popupview.block-popupedit .nonValue .hide {
@@ -2027,12 +2028,12 @@ div.v-window {
 	border-radius: 5px;
 	padding: 3px 5px;
 	margin-right: 5px;
-	color: #f7f7f7;
+	color: #fff;
 	font-size: 13px;
 }
 
 .block a {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .wizard .wizard-progress-bar {
@@ -2207,7 +2208,7 @@ div.v-window {
 
 .v-context-menu-container .v-context-menu .v-context-submenu:hover {
 	background-color: red;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
@@ -14180,6 +14181,7 @@ a.pending {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .panel-header {
@@ -14281,7 +14283,7 @@ a.pending {
 }
 
 .v-button.buttonPaging.current, .v-button.buttonPaging:hover {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .warning-icon .v-icon {
@@ -14368,7 +14370,7 @@ a.pending {
 }
 
 .optionPopupContent .action-wrap:hover .v-button-action {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .optionPopupContent .v-label.section-header {
@@ -14541,7 +14543,7 @@ div.v-window {
 
 .v-popupview.block-popupedit:hover {
 	background-color: #33aae5;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-popupview.block-popupedit .nonValue .hide {
@@ -14591,12 +14593,12 @@ div.v-window {
 	border-radius: 5px;
 	padding: 3px 5px;
 	margin-right: 5px;
-	color: #f7f7f7;
+	color: #fff;
 	font-size: 13px;
 }
 
 .block a {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .wizard .wizard-progress-bar {
@@ -14771,7 +14773,7 @@ div.v-window {
 
 .v-context-menu-container .v-context-menu .v-context-submenu:hover {
 	background-color: red;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
@@ -15205,6 +15207,7 @@ div .addview-layout-body .control-buttons {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper-archived {
@@ -15213,14 +15216,11 @@ div .addview-layout-body .control-buttons {
 	padding: 10px 15px 8px;
 }
 
-.v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper, .myprojectlist .projectblock .projectlink-wrapper {
-	background-color: aliceblue;
-}
-
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper:hover, .myprojectlist .projectblock .projectlink-wrapper:hover {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .v-popupbutton-popup-myprojectlist .projectblock .projectlink-wrapper-archived, .myprojectlist .projectblock .projectlink-wrapper-archived {
@@ -15231,6 +15231,7 @@ div .addview-layout-body .control-buttons {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .v-horizontal.project-info {
@@ -15295,7 +15296,7 @@ div .addview-layout-body .control-buttons {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #f9f9f9;
+	background-color: #fff;
 	border: 1px solid #e0e0e0;
 	border-radius: 5px;
 	position: relative;
@@ -15304,6 +15305,14 @@ div .addview-layout-body .control-buttons {
 
 .message .message-container .v-verticallayout {
 	display: block;
+}
+
+.message .message-container:hover {
+	background-color: #f5f5f5;
+}
+
+.message .message-container:hover:after {
+	border-color: transparent #f5f5f5;
 }
 
 .message .message-container .v-label.wordWrap {
@@ -15332,7 +15341,7 @@ div .addview-layout-body .control-buttons {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #f9f9f9;
+	border-color: transparent #fff;
 	border-radius: 0px;
 }
 
@@ -15674,18 +15683,11 @@ div.v-button.token-field {
 	border-style: none;
 }
 
-.tasklist .taskrow:nth-child(even) {
-	background-color: #ffffff;
-}
-
-.tasklist .taskrow:nth-child(odd) {
-	background-color: #FFF;
-}
-
 .tasklist .taskrow:hover {
 	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
 	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .bug-component {
@@ -15949,40 +15951,40 @@ div.v-button.token-field {
 
 .v-calendar.assignment-calendar .v-calendar-event.owner, .v-calendar.assignment-calendar .v-calendar-event-owner-all-day {
 	background-color: green;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.otheruser, .v-calendar.assignment-calendar .v-calendar-event-otheruser-all-day {
 	background-color: cadetblue;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.nonowner, .v-calendar.assignment-calendar .v-calendar-event-nonowner-all-day {
 	background-color: brown;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-label.owner {
 	background-color: green;
-	color: #f7f7f7;
+	color: #fff;
 	padding: 5px;
 }
 
 .v-label.otheruser {
 	background-color: cadetblue;
-	color: #f7f7f7;
+	color: #fff;
 	padding: 5px;
 }
 
 .v-label.nonowner {
 	background-color: brown;
-	color: #f7f7f7;
+	color: #fff;
 	padding: 5px;
 }
 
 .v-label.hint {
 	background-color: #8B8B8B;
-	color: #f7f7f7;
+	color: #fff;
 	padding: 5px;
 }
 
@@ -16382,7 +16384,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .subdomain {
 	font-size: 14px;
-	color: #f7f7f7;
+	color: #fff;
 	padding: 0 6px 0 3px;
 	font-weight: 600;
 }
@@ -16406,13 +16408,13 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-popup-indicator::before, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-popup-indicator::before {
 	content: "\f0dd";
-	color: #f7f7f7;
+	color: #fff;
 	font-size: 15px;
 	opacity: 1;
 }
 
 .topNavigation .accountMenuContainer .v-button.notification-button, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed {
-	background-color: #f7f7f7;
+	background-color: #fff;
 	border-radius: 5px;
 }
 
@@ -17186,7 +17188,7 @@ div.v-stylecalendar .weekdays TD {
 .v-stylecalendar .red {
 	background-color: #0C7AD3;
 	background-repeat: repeat-x;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-label.numberTotal {
@@ -17514,7 +17516,7 @@ div.v-ratingstars-bar {
 	border: none;
 	font-size: 18px;
 	padding: 7px 10px;
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-Notification.v-Notification-warning h1, .v-Notification.v-Notification-warning p {
@@ -17535,7 +17537,7 @@ div.v-ratingstars-bar {
 }
 
 .v-Notification.tray .v-Notification-description {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .v-Notification.humanized {
@@ -17545,7 +17547,7 @@ div.v-ratingstars-bar {
 }
 
 .v-Notification.humanized h1, .v-Notification.humanized p {
-	color: #f7f7f7;
+	color: #fff;
 }
 
 .cancelAccountHeader .first-line {
@@ -17580,7 +17582,7 @@ div.v-ratingstars-bar {
 
 .trialEndingNotification {
 	background-color: #e8a052;
-	color: #f7f7f7;
+	color: #fff;
 	padding: 0px 10px;
 	display: inline-block;
 	vertical-align: middle;
@@ -17596,7 +17598,7 @@ div.v-ratingstars-bar {
 }
 
 .trialEndingNotification a {
-	color: #f7f7f7;
+	color: #fff;
 	display: block;
 }
 
