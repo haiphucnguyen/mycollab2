@@ -50,9 +50,9 @@ public class CampaignController {
     @RequestMapping(path = "/register-ce", method = RequestMethod.POST, headers =
             {"Content-Type=application/x-www-form-urlencoded", "Accept=application/json"})
     public Map registerCE(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
-                             @RequestParam("email") String email, @RequestParam("role") String role,
-                             @RequestParam("company") String company, @RequestParam("phone") String phone,
-                             @RequestParam("country") String country) {
+                          @RequestParam("email") String email, @RequestParam("role") String role,
+                          @RequestParam("company") String company, @RequestParam("phone") String phone,
+                          @RequestParam("country") String country) {
         CommunityLead communityLead = new CommunityLead();
         communityLead.setFirstname(firstname);
         communityLead.setLastname(lastname);
@@ -72,9 +72,10 @@ public class CampaignController {
             communityLeadMapper.insert(communityLead);
         }
         Map<String, String> result = new HashMap<>();
-        String name = String.format("MyCollab-All-%s.zip", MyCollabVersion.getVersion());
-        String link = EditionInfoResolver.getEditionInfo().getCommunityDownloadLink();
-        String altLink = EditionInfoResolver.getEditionInfo().getAltCommunityDownloadLink();
+        EditionInfo info = EditionInfoResolver.getEditionInfo();
+        String name = String.format("MyCollab-All-%s.zip", info.getVersion());
+        String link = info.getCommunityDownloadLink();
+        String altLink = info.getAltCommunityDownloadLink();
         result.put("name", name);
         result.put("link", link);
         result.put("altlink", altLink);
