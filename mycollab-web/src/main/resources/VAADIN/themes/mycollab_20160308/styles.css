@@ -2193,23 +2193,14 @@ div.v-window {
 	background-color: #f9f9f9;
 }
 
-.v-table-body {
-	border: 1px solid #e0e0e0;
-}
-
 .v-table-header-wrap {
 	background-image: none;
 	background-color: #f9f9f9;
 	font-size: 15px;
-	border-color: #e0e0e0;
 }
 
 .v-table-row-odd {
 	background-color: #f9f9f9;
-}
-
-.v-table-caption-container {
-	border-color: #e0e0e0;
 }
 
 .v-context-menu-container {
@@ -14785,23 +14776,14 @@ div.v-window {
 	background-color: #f9f9f9;
 }
 
-.v-table-body {
-	border: 1px solid #e0e0e0;
-}
-
 .v-table-header-wrap {
 	background-image: none;
 	background-color: #f9f9f9;
 	font-size: 15px;
-	border-color: #e0e0e0;
 }
 
 .v-table-row-odd {
 	background-color: #f9f9f9;
-}
-
-.v-table-caption-container {
-	border-color: #e0e0e0;
 }
 
 .v-context-menu-container {

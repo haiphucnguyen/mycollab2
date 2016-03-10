@@ -597,23 +597,14 @@
     background-color: $my-block-background-color;
   }
 
-  .v-table-body {
-    border: 1px solid $my-separator-color;
-  }
-
   .v-table-header-wrap {
     background-image: none;
     background-color: $my-block-background-color;
     font-size: $font-large;
-    border-color: $my-separator-color;
   }
 
   .v-table-row-odd {
     background-color: $my-block-background-color;
-  }
-
-  .v-table-caption-container {
-    border-color: $my-separator-color;
   }
 
   /* Context menu style */
