@@ -196,22 +196,6 @@
     border-bottom: 1px solid $my-separator-color;
   }
 
-  .member-preview-form {
-    border: 1px solid $my-separator-color;
-    padding: 30px;
-    background-color: $my-block-background-color;
-    div.v-csslayout.member-block {
-      border-radius: 0px;
-      border: none;
-      padding: 0px;
-      margin: 0px;
-      width: 350px;
-    }
-    .member-block .member-info.v-margin-left {
-      padding-left: 20px;
-    }
-  }
-
   .project-tableless {
     display: table;
     width: 100%;

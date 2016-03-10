@@ -1,4 +1,4 @@
-a .text-ellipsis, .text-ellipsis a {
+.text-ellipsis a {
 	display: inline-block;
 	width: 100%;
 	white-space: nowrap;
@@ -1551,7 +1551,7 @@ div.v-layout.v-horizontal.v-widget {
 	font-family: "Vaadin-Icons";
 }
 
-a .text-ellipsis, .text-ellipsis a {
+.text-ellipsis a {
 	display: inline-block;
 	width: 100%;
 	white-space: nowrap;
@@ -15384,24 +15384,6 @@ div .addview-layout-body .control-buttons {
 	border-bottom: 1px solid #e0e0e0;
 }
 
-.member-preview-form {
-	border: 1px solid #e0e0e0;
-	padding: 30px;
-	background-color: #f9f9f9;
-}
-
-.member-preview-form div.v-csslayout.member-block {
-	border-radius: 0px;
-	border: none;
-	padding: 0px;
-	margin: 0px;
-	width: 350px;
-}
-
-.member-preview-form .member-block .member-info.v-margin-left {
-	padding-left: 20px;
-}
-
 .project-tableless {
 	display: table;
 	width: 100%;
@@ -17094,28 +17076,21 @@ div.v-csslayout.main-body {
 	overflow: hidden;
 }
 
-div.v-csslayout.member-block {
+.member-block {
 	display: inline-block;
-	background-color: #f9f9f9;
+	background-color: #fff;
 	margin-bottom: 15px;
 	font-size: 14px;
 	vertical-align: top;
 	width: 350px;
 	margin-right: 11px;
-	border-width: 1px 1px 2px;
+	border: 1px solid #e0e0e0;
 	border-radius: 3px;
-	border-style: solid;
 	padding: 5px 5px 10px 10px;
-	border-color: #e0e0e0;
 }
 
-.member-block .member-name {
-	border-bottom: 1px solid #e0e0e0 !important;
-	padding-bottom: 5px;
-}
-
-.member-block div.v-button-link .v-button-wrap .v-button-caption, .member-block div a {
-	font-weight: 500;
+.member-block:hover {
+	background-color: #f9f9f9;
 }
 
 .member-role {
