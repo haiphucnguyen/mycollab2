@@ -102,7 +102,7 @@ public class CloudDriveSettingWindow extends Window {
             iconWapper.setWidth("60px");
 
             if (drive.getStoragename().equals(StorageNames.DROPBOX)) {
-                ELabel driveIcon = new ELabel(FontAwesome.DROPBOX);
+                ELabel driveIcon = ELabel.fontIcon(FontAwesome.DROPBOX);
                 driveIcon.addStyleName("icon-38px");
                 iconWapper.addComponent(driveIcon);
             }

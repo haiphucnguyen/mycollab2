@@ -57,7 +57,6 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
-import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -344,11 +343,6 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
                 return new RichTextViewField(beanItem.getNotes());
             } else if (Task.Field.parenttaskid.equalTo(propertyId)) {
                 return new SubTasksComp();
-            } else if (Task.Field.status.equalTo(propertyId)) {
-                I18nFormViewField fieldView = new I18nFormViewField(beanItem.getStatus(), StatusI18nEnum.class);
-                fieldView.withStylename(UIConstants.BUTTON_BLOCK);
-                fieldView.withStylename(UIConstants.TEXT_ELLIPSIS);
-                return fieldView;
             }
             return null;
         }

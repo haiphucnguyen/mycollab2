@@ -48,7 +48,7 @@ Version 5.2.9
 * Jackrabbit 2.12.1
 * Jetty 9.2.15.v20160210
 * Flyway 4.0
-* Commons Collection 4.4.1
+* Commons Collection 3.2.2
 * Other libraries
 
 **Improvements & New Features**

@@ -1,4 +1,4 @@
-.text-ellipsis a {
+a .text-ellipsis, .text-ellipsis a {
 	display: inline-block;
 	width: 100%;
 	white-space: nowrap;
@@ -1551,7 +1551,7 @@ div.v-layout.v-horizontal.v-widget {
 	font-family: "Vaadin-Icons";
 }
 
-.text-ellipsis a {
+a .text-ellipsis, .text-ellipsis a {
 	display: inline-block;
 	width: 100%;
 	white-space: nowrap;

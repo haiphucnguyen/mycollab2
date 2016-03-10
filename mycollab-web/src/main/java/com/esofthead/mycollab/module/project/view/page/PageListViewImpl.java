@@ -235,7 +235,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
     private Layout displayFolderBlock(final Folder resource) {
         MHorizontalLayout container = new MHorizontalLayout().withWidth("100%").withStyleName("page-item-block");
 
-        ELabel iconResource = new ELabel(FontAwesome.FOLDER_OPEN);
+        ELabel iconResource = ELabel.fontIcon(FontAwesome.FOLDER_OPEN);
         iconResource.addStyleName("icon-48px");
 
         VerticalLayout block = new VerticalLayout();
@@ -318,7 +318,7 @@ public class PageListViewImpl extends AbstractPageView implements PageListView {
     private Layout displayPageBlock(final Page resource) {
         MHorizontalLayout container = new MHorizontalLayout().withWidth("100%").withStyleName("page-item-block");
 
-        ELabel iconResource = new ELabel(FontAwesome.FILE_WORD_O);
+        ELabel iconResource = ELabel.fontIcon(FontAwesome.FILE_WORD_O);
         iconResource.addStyleName("icon-48px");
 
         MVerticalLayout block = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false, true, false, true)).withWidth("100%");

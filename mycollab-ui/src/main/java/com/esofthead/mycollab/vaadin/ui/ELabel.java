@@ -38,10 +38,6 @@ public class ELabel extends Label {
         super(content);
     }
 
-    public ELabel(FontAwesome icon) {
-        this(icon.getHtml(), ContentMode.HTML);
-    }
-
     public ELabel(String content, ContentMode mode) {
         super(content, mode);
     }
@@ -61,7 +57,7 @@ public class ELabel extends Label {
     }
 
     public ELabel withStyleName(String... styleNames) {
-        for (String styleName: styleNames) {
+        for (String styleName : styleNames) {
             this.addStyleName(styleName);
         }
         return this;
@@ -89,6 +85,10 @@ public class ELabel extends Label {
         ELabel label = new ELabel(value, ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
         label.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         return label;
+    }
+
+    public static final ELabel fontIcon(FontAwesome icon) {
+        return new ELabel(icon.getHtml(), ContentMode.HTML).withWidthUndefined();
     }
 
     public static final ELabel EMPTY_SPACE() {
