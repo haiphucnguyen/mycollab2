@@ -278,7 +278,9 @@
     }
     .page-item-block {
       border-top: 1px solid $my-separator-color;
-      padding: 6px 24px 6px 0px;
+      &:hover {
+        @include hover-effect;
+      }
     }
   }
 
@@ -417,17 +419,24 @@
 
   .milestone-box {
     margin-top: 25px;
-    background-color: $my-block-background-color;
+    background-color: $my-white-color;
     border-color: $my-separator-color;
     border-style: solid;
     border-width: 1px 1px 1px 0px;
     box-shadow: -6px 0px 0 #fdde86;
     padding: 12px 20px;
+    &:hover {
+      background-color: $my-hover-background-color;
+      box-shadow: -6px 0px 0 $my-link-color;
+    }
   }
 
   .v-slot-roadmap-block {
     padding-left: 20px;
     border-top: 1px solid $my-separator-color;
+    &:hover {
+      @include hover-effect;
+    }
   }
 
   /* End Milestone View */

@@ -15530,7 +15530,13 @@ div.v-csslayout.followers-container .v-checkbox {
 
 .pages-list-layout .page-item-block {
 	border-top: 1px solid #e0e0e0;
-	padding: 6px 24px 6px 0px;
+}
+
+.pages-list-layout .page-item-block:hover {
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .page-read-layout {
@@ -15683,7 +15689,7 @@ div.v-button.token-field {
 
 .milestone-box {
 	margin-top: 25px;
-	background-color: #f9f9f9;
+	background-color: #ffffff;
 	border-color: #e0e0e0;
 	border-style: solid;
 	border-width: 1px 1px 1px 0px;
@@ -15691,9 +15697,21 @@ div.v-button.token-field {
 	padding: 12px 20px;
 }
 
+.milestone-box:hover {
+	background-color: #f5f5f5;
+	box-shadow: -6px 0px 0 #0083ce;
+}
+
 .v-slot-roadmap-block {
 	padding-left: 20px;
 	border-top: 1px solid #e0e0e0;
+}
+
+.v-slot-roadmap-block:hover {
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
 }
 
 .tasklist {
