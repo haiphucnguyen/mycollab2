@@ -108,7 +108,7 @@
 
   .v-navbar-quickmenu-content {
     width: 100%;
-    border-bottom: 1px solid $my-border-color;
+    border-bottom: 1px solid $my-separator-color;
     .v-button {
       background: transparent !important;
       box-shadow: none !important;
@@ -177,7 +177,7 @@
   .slidemenu {
     top: 0px !important;
     .v-window-contents {
-      border-right: 1px solid $my-border-color;
+      border-right: 1px solid $my-separator-color;
       .v-button {
         background: transparent !important;
         box-shadow: none !important;

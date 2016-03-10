@@ -42,7 +42,7 @@
       background-color: $my-background-color;
     }
     &:nth-child(odd) {
-      background-color: #FFF;
+      background-color: $my-white-color;
     }
     &:hover {
       @include hover-effect;
@@ -132,14 +132,14 @@
     padding: 4px;
     border-width: 1px 0px 0px 0px;
     border-style: solid;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     border-radius: 0px;
     background: none no-repeat 0 0 #ffffff;
   }
 
   .v-button.buttonPaging {
     background-color: $my-background-color;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     .v-button-wrap {
       width: 17px;
       padding: 0px 5px;
@@ -182,7 +182,7 @@
   }
 
   .v-horizontallayout.searchfield {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -215,7 +215,7 @@
 
   .optionPopupContent {
     background-color: #ffffff;
-    border: solid 1px $my-border-color;
+    border: solid 1px $my-separator-color;
     @include my-box-shadow;
     max-width: 800px;
     .action-wrap {
@@ -342,7 +342,7 @@
 
   /* Popup Button */
   div.v-popupbutton-popup {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     border-radius: 0px;
     box-shadow: none;
     .popupContent {
@@ -352,7 +352,7 @@
 
   div.v-window {
     box-shadow: none;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
   }
 
   /* Kanban block */
@@ -547,13 +547,13 @@
   /* Panel */
   .v-panel-caption {
     background: $my-background-color;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
   }
 
   .v-panel-content {
     border-style: solid;
     border-width: 0px 1px 0px 1px;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
   }
 
   /*Remove default background of combobox*/
@@ -589,14 +589,37 @@
     padding-bottom: 5px;
   }
 
-  .v-table-header-wrap, .v-table-body {
+  .table-actionctls {
+    padding: 7px;
+    border-width: 0px 1px;
+    border-style: solid;
+    border-color: $my-separator-color;
+    background-color: $my-block-background-color;
+  }
+
+  .v-table-body {
     border: 1px solid $my-separator-color;
+  }
+
+  .v-table-header-wrap {
+    background-image: none;
+    background-color: $my-block-background-color;
+    font-size: $font-large;
+    border-color: $my-separator-color;
+  }
+
+  .v-table-row-odd {
+    background-color: $my-block-background-color;
+  }
+
+  .v-table-caption-container {
+    border-color: $my-separator-color;
   }
 
   /* Context menu style */
   .v-context-menu-container {
     background-color: #ffffff;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     max-width:400px;
     @include my-box-shadow;
     .v-context-menu {

@@ -1,11 +1,6 @@
 @mixin mycollab-document {
   /* volume usage info */
 
-  .v-horizontallayout.border-box2-no-margin.file-topcontrols {
-    border-radius: 2px 3px 0px 0px;
-    border-width: 1px 1px 0px 1px;
-  }
-
   .file-topcontrols .v-button.v-button-right {
     border-right: none;
   }

@@ -151,7 +151,7 @@ $v-line-height--header:1.5em;
 
   .v-textfield {
     &.v-readonly {
-      border: 1px solid $my-border-color;
+      border: 1px solid $my-separator-color;
     }
     &.noBorderRight {
       border-right-style: none;
@@ -420,7 +420,7 @@ $v-line-height--header:1.5em;
       line-height: normal;
       color: rgb(80, 127, 140);
       padding: 0px 0px 5px;
-      border-bottom: 1px solid $my-border-color;
+      border-bottom: 1px solid $my-separator-color;
       text-align: left;
     }
     #form-intro-text {
@@ -700,7 +700,7 @@ $v-line-height--header:1.5em;
       box-sizing: border-box;
       display: block;
       &.empty {
-        border-bottom: 1px solid $my-border-color;
+        border-bottom: 1px solid $my-separator-color;
       }
       &.bordered {
         border-color: $my-separator-color;
@@ -803,31 +803,8 @@ $v-line-height--header:1.5em;
       vertical-align: bottom;
     }
   }
-
   /* End Clickable Label */
 
-  /* End Border Box */
-
-  /* Border Box 2 */
-
-  .border-box2 {
-    border: 1px solid $my-border-color;
-  }
-
-  .v-horizontallayout.border-box2-no-margin {
-    background-color: #F5F5F5;
-    border-radius: 5px;
-    padding: 0px;
-    border: 1px solid $my-border-color;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0px;
-  }
-
-  .v-horizontallayout.border-box2-no-margin .v-horizontallayout-margin {
-    padding: 0px 1px 1px 0px;
-  }
   /* End Filter Select */
 
   /* Main body */
@@ -999,7 +976,7 @@ $v-line-height--header:1.5em;
     background-color: #E9E9E9;
     -moz-border-radius: 15px;
     border-radius: 5px;
-    border-color: $my-border-color;
+    border-color: $my-separator-color;
     border-width: 1px 1px 2px 1px;
     border-style: solid;
     -moz-box-sizing: border-box;
@@ -1075,16 +1052,6 @@ $v-line-height--header:1.5em;
     div.v-panel-content-light, .v-panel-nocaption, .v-panel-deco {
       border: none;
     }
-  }
-
-  /*Table Action Controls */
-
-  .table-actionctls {
-    padding: 7px;
-    border-width: 0px 1px;
-    border-style: solid;
-    border-color: $my-separator-color;;
-    background-color: #F5F5F5;
   }
 
   .v-label.separator {
@@ -1645,7 +1612,7 @@ $v-line-height--header:1.5em;
   }
 
   .contactopp-list-header {
-    border-bottom: 1px solid $my-border-color;
+    border-bottom: 1px solid $my-separator-color;
     > .v-expand > .v-slot:first-child .v-label {
       border-left: none;
       padding-left: 0px;
@@ -1653,7 +1620,7 @@ $v-line-height--header:1.5em;
     .v-label {
       font-weight: $my-font-weight-bold;
       padding: 4px 0px 4px 12px;
-      border-left: 1px solid $my-border-color;
+      border-left: 1px solid $my-separator-color;
     }
   }
 
@@ -1661,7 +1628,7 @@ $v-line-height--header:1.5em;
     &.no-child {
       border-bottom: none;
     }
-    border-bottom: 1px solid $my-border-color;
+    border-bottom: 1px solid $my-separator-color;
   }
 
   .contactrole-row {
@@ -1803,7 +1770,7 @@ $v-line-height--header:1.5em;
       }
     }
     .stylecalendar-ext {
-      border-top: 1px solid $my-border-color;
+      border-top: 1px solid $my-separator-color;
       &.v-margin-top {
         padding-top: 10px;
       }
@@ -1939,7 +1906,7 @@ $v-line-height--header:1.5em;
   }
 
   .v-colorpicker {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     .v-caption {
       display:none;
     }

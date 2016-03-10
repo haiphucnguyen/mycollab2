@@ -1,7 +1,7 @@
 @mixin mycollab-tooltip {
   .v-tooltip, .v-sa .v-tooltip  {
     font: $font-small $font-family !important;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     max-width: 60em;
     max-height: 60em;
     @include my-box-shadow;
@@ -19,7 +19,7 @@
   }
 
   .stickytooltip {
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     display: none;
     position: absolute;
     display: none;

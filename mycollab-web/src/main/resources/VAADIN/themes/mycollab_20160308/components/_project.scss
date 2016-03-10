@@ -105,7 +105,7 @@
       background: none no-repeat left top #FFF;
       border-width: 0px 1px 1px;
       border-style: solid;
-      border-color: $my-border-color;
+      border-color: $my-separator-color;
     }
     .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
       display: inline-block;
@@ -360,9 +360,9 @@
 
   .standup-block {
     background-color: $my-background-color;
-    border: 1px solid $my-border-color;
+    border: 1px solid $my-separator-color;
     .report-content {
-      border-left: 1px solid $my-border-color;
+      border-left: 1px solid $my-separator-color;
       background-color: #FFF;
       @include margin-container(20px, 20px, 20px, 20px);
       .v-label.h2 {
@@ -548,7 +548,7 @@
         box-shadow: none;
       }
       input.v-widget.v-textfield.v-textfield-focus[type="text"], input.v-widget.v-textfield[type="text"]:hover {
-        border: solid 1px $my-border-color;
+        border: solid 1px $my-separator-color;
         background-color:white;
       }
       border-style: solid;

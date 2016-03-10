@@ -1609,7 +1609,7 @@ a.pending {
 }
 
 .list-row:nth-child(odd) {
-	background-color: #FFF;
+	background-color: #ffffff;
 }
 
 .list-row:hover {
@@ -1698,14 +1698,14 @@ a.pending {
 	padding: 4px;
 	border-width: 1px 0px 0px 0px;
 	border-style: solid;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 	border-radius: 0px;
 	background: none no-repeat 0 0 #ffffff;
 }
 
 .v-button.buttonPaging {
 	background-color: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-button.buttonPaging .v-button-wrap {
@@ -1718,7 +1718,7 @@ a.pending {
 }
 
 .v-button.buttonPaging.current, .v-button.buttonPaging:hover {
-	color: #fff;
+	color: #ffffff;
 }
 
 .warning-icon .v-icon {
@@ -1752,7 +1752,7 @@ a.pending {
 }
 
 .v-horizontallayout.searchfield {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -1782,7 +1782,7 @@ a.pending {
 
 .optionPopupContent {
 	background-color: #ffffff;
-	border: solid 1px #c5c5c5;
+	border: solid 1px #e0e0e0;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 	max-width: 800px;
 }
@@ -1805,7 +1805,7 @@ a.pending {
 }
 
 .optionPopupContent .action-wrap:hover .v-button-action {
-	color: #fff;
+	color: #ffffff;
 }
 
 .optionPopupContent .v-label.section-header {
@@ -1921,7 +1921,7 @@ a.pending {
 }
 
 div.v-popupbutton-popup {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	border-radius: 0px;
 	box-shadow: none;
 }
@@ -1932,7 +1932,7 @@ div.v-popupbutton-popup .popupContent {
 
 div.v-window {
 	box-shadow: none;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-slot.v-slot-kanban-layout {
@@ -1978,7 +1978,7 @@ div.v-window {
 
 .v-popupview.block-popupedit:hover {
 	background-color: #33aae5;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-popupview.block-popupedit .nonValue .hide {
@@ -2028,12 +2028,12 @@ div.v-window {
 	border-radius: 5px;
 	padding: 3px 5px;
 	margin-right: 5px;
-	color: #fff;
+	color: #ffffff;
 	font-size: 13px;
 }
 
 .block a {
-	color: #fff;
+	color: #ffffff;
 }
 
 .wizard .wizard-progress-bar {
@@ -2146,13 +2146,13 @@ div.v-window {
 
 .v-panel-caption {
 	background: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-panel-content {
 	border-style: solid;
 	border-width: 0px 1px 0px 1px;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 }
 
 .v-filterselect-suggestpopup .gwt-MenuItem-selected {
@@ -2185,13 +2185,36 @@ div.v-window {
 	padding-bottom: 5px;
 }
 
-.v-table-header-wrap, .v-table-body {
+.table-actionctls {
+	padding: 7px;
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: #e0e0e0;
+	background-color: #f9f9f9;
+}
+
+.v-table-body {
 	border: 1px solid #e0e0e0;
+}
+
+.v-table-header-wrap {
+	background-image: none;
+	background-color: #f9f9f9;
+	font-size: 15px;
+	border-color: #e0e0e0;
+}
+
+.v-table-row-odd {
+	background-color: #f9f9f9;
+}
+
+.v-table-caption-container {
+	border-color: #e0e0e0;
 }
 
 .v-context-menu-container {
 	background-color: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	max-width: 400px;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
@@ -2208,7 +2231,7 @@ div.v-window {
 
 .v-context-menu-container .v-context-menu .v-context-submenu:hover {
 	background-color: red;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
@@ -13774,7 +13797,7 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 }
 
 .accountViewContainer .addview-layout-body {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .accountViewContainer .addViewLayout {
@@ -13846,7 +13869,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 .v-button:focus:after {
 	content: none;
 	box-shadow: none;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 }
 
 .v-button .v-icon {
@@ -13917,7 +13940,7 @@ div.v-button-link.xbreadcrumbbutton .v-button-wrap {
 }
 
 .splitbutton .parent-button {
-	border-right: 1px solid #c5c5c5;
+	border-right: 1px solid #e0e0e0;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 	padding: 0px 5px;
@@ -13988,7 +14011,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 	border-radius: 0px 4px 4px 0px;
 	border-style: solid;
 	border-width: 1px;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 	background-color: white;
 }
 
@@ -14007,7 +14030,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 
 .v-buttongroup .v-button.v-button-middle {
 	border-radius: 0px;
-	border-left: 1px solid #c5c5c5;
+	border-left: 1px solid #e0e0e0;
 }
 
 .v-buttongroup .v-button.v-button-left {
@@ -14017,7 +14040,7 @@ div.v-button.button-icon-only .v-button-wrap .v-popup-indicator::before, div.v-b
 
 .v-buttongroup .v-button.v-button-right {
 	border-radius: 0px 4px 4px 0px;
-	border-left: 1px solid #c5c5c5;
+	border-left: 1px solid #e0e0e0;
 }
 
 .v-buttongroup.toggle-btn-group .v-button {
@@ -14090,7 +14113,7 @@ td.v-tabsheet-spacertd div {
 
 .v-tooltip, .v-sa .v-tooltip {
 	font: 13px Arial, Verdana, Helvetica, sans-serif !important;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	max-width: 60em;
 	max-height: 60em;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
@@ -14110,7 +14133,7 @@ td.v-tabsheet-spacertd div {
 }
 
 .stickytooltip {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	display: none;
 	position: absolute;
 	display: none;
@@ -14178,7 +14201,7 @@ a.pending {
 }
 
 .list-row:nth-child(odd) {
-	background-color: #FFF;
+	background-color: #ffffff;
 }
 
 .list-row:hover {
@@ -14267,14 +14290,14 @@ a.pending {
 	padding: 4px;
 	border-width: 1px 0px 0px 0px;
 	border-style: solid;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 	border-radius: 0px;
 	background: none no-repeat 0 0 #ffffff;
 }
 
 .v-button.buttonPaging {
 	background-color: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-button.buttonPaging .v-button-wrap {
@@ -14287,7 +14310,7 @@ a.pending {
 }
 
 .v-button.buttonPaging.current, .v-button.buttonPaging:hover {
-	color: #fff;
+	color: #ffffff;
 }
 
 .warning-icon .v-icon {
@@ -14321,7 +14344,7 @@ a.pending {
 }
 
 .v-horizontallayout.searchfield {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -14351,7 +14374,7 @@ a.pending {
 
 .optionPopupContent {
 	background-color: #ffffff;
-	border: solid 1px #c5c5c5;
+	border: solid 1px #e0e0e0;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 	max-width: 800px;
 }
@@ -14374,7 +14397,7 @@ a.pending {
 }
 
 .optionPopupContent .action-wrap:hover .v-button-action {
-	color: #fff;
+	color: #ffffff;
 }
 
 .optionPopupContent .v-label.section-header {
@@ -14490,7 +14513,7 @@ a.pending {
 }
 
 div.v-popupbutton-popup {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	border-radius: 0px;
 	box-shadow: none;
 }
@@ -14501,7 +14524,7 @@ div.v-popupbutton-popup .popupContent {
 
 div.v-window {
 	box-shadow: none;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-slot.v-slot-kanban-layout {
@@ -14547,7 +14570,7 @@ div.v-window {
 
 .v-popupview.block-popupedit:hover {
 	background-color: #33aae5;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-popupview.block-popupedit .nonValue .hide {
@@ -14597,12 +14620,12 @@ div.v-window {
 	border-radius: 5px;
 	padding: 3px 5px;
 	margin-right: 5px;
-	color: #fff;
+	color: #ffffff;
 	font-size: 13px;
 }
 
 .block a {
-	color: #fff;
+	color: #ffffff;
 }
 
 .wizard .wizard-progress-bar {
@@ -14715,13 +14738,13 @@ div.v-window {
 
 .v-panel-caption {
 	background: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-panel-content {
 	border-style: solid;
 	border-width: 0px 1px 0px 1px;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 }
 
 .v-filterselect-suggestpopup .gwt-MenuItem-selected {
@@ -14754,13 +14777,36 @@ div.v-window {
 	padding-bottom: 5px;
 }
 
-.v-table-header-wrap, .v-table-body {
+.table-actionctls {
+	padding: 7px;
+	border-width: 0px 1px;
+	border-style: solid;
+	border-color: #e0e0e0;
+	background-color: #f9f9f9;
+}
+
+.v-table-body {
 	border: 1px solid #e0e0e0;
+}
+
+.v-table-header-wrap {
+	background-image: none;
+	background-color: #f9f9f9;
+	font-size: 15px;
+	border-color: #e0e0e0;
+}
+
+.v-table-row-odd {
+	background-color: #f9f9f9;
+}
+
+.v-table-caption-container {
+	border-color: #e0e0e0;
 }
 
 .v-context-menu-container {
 	background-color: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 	max-width: 400px;
 	box-shadow: 0 0 14px rgba(0, 0, 0, 0.4);
 }
@@ -14777,7 +14823,7 @@ div.v-window {
 
 .v-context-menu-container .v-context-menu .v-context-submenu:hover {
 	background-color: red;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-context-menu-container .v-context-menu .v-context-submenu .v-context-menu-item-basic-text {
@@ -15128,12 +15174,7 @@ div .addview-layout-body .control-buttons {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	border-bottom: 1px solid #c5c5c5;
-}
-
-.v-horizontallayout.border-box2-no-margin.file-topcontrols {
-	border-radius: 2px 3px 0px 0px;
-	border-width: 1px 1px 0px 1px;
+	border-bottom: 1px solid #e0e0e0;
 }
 
 .file-topcontrols .v-button.v-button-right {
@@ -15290,7 +15331,7 @@ div .addview-layout-body .control-buttons {
 	background: none no-repeat left top #FFF;
 	border-width: 0px 1px 1px;
 	border-style: solid;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 }
 
 .message-list .v-csslayout-beanlist-content > .v-csslayout-margin > .v-csslayout-container > div {
@@ -15304,7 +15345,7 @@ div .addview-layout-body .control-buttons {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-	background-color: #fff;
+	background-color: #ffffff;
 	border: 1px solid #e0e0e0;
 	border-radius: 5px;
 	position: relative;
@@ -15349,7 +15390,7 @@ div .addview-layout-body .control-buttons {
 	top: 10px;
 	left: -10px;
 	border-width: 10px 10px 10px 0;
-	border-color: transparent #fff;
+	border-color: transparent #ffffff;
 	border-radius: 0px;
 }
 
@@ -15569,11 +15610,11 @@ div.v-button.token-field {
 
 .standup-block {
 	background-color: #ffffff;
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .standup-block .report-content {
-	border-left: 1px solid #c5c5c5;
+	border-left: 1px solid #e0e0e0;
 	background-color: #FFF;
 }
 
@@ -15791,7 +15832,7 @@ div.v-button.token-field {
 }
 
 .gantt_container .v-table-table tr td.v-table-cell-content input.v-widget.v-textfield.v-textfield-focus[type="text"], .gantt_container .v-table-table tr td.v-table-cell-content input.v-widget.v-textfield[type="text"]:hover {
-	border: solid 1px #c5c5c5;
+	border: solid 1px #e0e0e0;
 	background-color: white;
 }
 
@@ -15941,40 +15982,40 @@ div.v-button.token-field {
 
 .v-calendar.assignment-calendar .v-calendar-event.owner, .v-calendar.assignment-calendar .v-calendar-event-owner-all-day {
 	background-color: green;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.otheruser, .v-calendar.assignment-calendar .v-calendar-event-otheruser-all-day {
 	background-color: cadetblue;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-calendar.assignment-calendar .v-calendar-event.nonowner, .v-calendar.assignment-calendar .v-calendar-event-nonowner-all-day {
 	background-color: brown;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-label.owner {
 	background-color: green;
-	color: #fff;
+	color: #ffffff;
 	padding: 5px;
 }
 
 .v-label.otheruser {
 	background-color: cadetblue;
-	color: #fff;
+	color: #ffffff;
 	padding: 5px;
 }
 
 .v-label.nonowner {
 	background-color: brown;
-	color: #fff;
+	color: #ffffff;
 	padding: 5px;
 }
 
 .v-label.hint {
 	background-color: #8B8B8B;
-	color: #fff;
+	color: #ffffff;
 	padding: 5px;
 }
 
@@ -16302,7 +16343,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .v-textfield.v-readonly {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-textfield.noBorderRight {
@@ -16374,7 +16415,7 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .subdomain {
 	font-size: 14px;
-	color: #fff;
+	color: #ffffff;
 	padding: 0 6px 0 3px;
 	font-weight: 600;
 }
@@ -16398,13 +16439,13 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation .accountMenuContainer .v-button.v-popupbutton .v-button-wrap .v-popup-indicator::before, .topNavigation .accountMenuContainer .v-button.v-popupbutton.v-pressed .v-button-wrap .v-popup-indicator::before {
 	content: "\f0dd";
-	color: #fff;
+	color: #ffffff;
 	font-size: 15px;
 	opacity: 1;
 }
 
 .topNavigation .accountMenuContainer .v-button.notification-button, .topNavigation .accountMenuContainer .v-button.notification-button.v-pressed {
-	background-color: #fff;
+	background-color: #ffffff;
 	border-radius: 5px;
 }
 
@@ -16601,7 +16642,7 @@ input.v-textfield-errorField {
 	line-height: normal;
 	color: #507f8c;
 	padding: 0px 0px 5px;
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e0e0e0;
 	text-align: left;
 }
 
@@ -16915,7 +16956,7 @@ input.v-textfield-errorField {
 }
 
 .depotComp .depotContent.empty {
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e0e0e0;
 }
 
 .depotComp .depotContent.bordered {
@@ -17013,25 +17054,6 @@ input.v-textfield-errorField {
 	vertical-align: bottom;
 }
 
-.border-box2 {
-	border: 1px solid #c5c5c5;
-}
-
-.v-horizontallayout.border-box2-no-margin {
-	background-color: #F5F5F5;
-	border-radius: 5px;
-	padding: 0px;
-	border: 1px solid #c5c5c5;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 0px;
-}
-
-.v-horizontallayout.border-box2-no-margin .v-horizontallayout-margin {
-	padding: 0px 1px 1px 0px;
-}
-
 .main-view {
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -17078,7 +17100,7 @@ div.v-csslayout.main-body {
 
 .member-block {
 	display: inline-block;
-	background-color: #fff;
+	background-color: #ffffff;
 	margin-bottom: 15px;
 	font-size: 14px;
 	vertical-align: top;
@@ -17171,7 +17193,7 @@ div.v-stylecalendar .weekdays TD {
 .v-stylecalendar .red {
 	background-color: #0C7AD3;
 	background-repeat: repeat-x;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-label.numberTotal {
@@ -17184,7 +17206,7 @@ div.v-stylecalendar .weekdays TD {
 	background-color: #E9E9E9;
 	-moz-border-radius: 15px;
 	border-radius: 5px;
-	border-color: #c5c5c5;
+	border-color: #e0e0e0;
 	border-width: 1px 1px 2px 1px;
 	border-style: solid;
 	-moz-box-sizing: border-box;
@@ -17247,14 +17269,6 @@ div.v-ratingstars-bar {
 
 .custom-dialog div.v-panel-content-light, .custom-dialog .v-panel-nocaption, .custom-dialog .v-panel-deco {
 	border: none;
-}
-
-.table-actionctls {
-	padding: 7px;
-	border-width: 0px 1px;
-	border-style: solid;
-	border-color: #e0e0e0;
-	background-color: #F5F5F5;
 }
 
 .v-label.separator {
@@ -17499,7 +17513,7 @@ div.v-ratingstars-bar {
 	border: none;
 	font-size: 18px;
 	padding: 7px 10px;
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-Notification.v-Notification-warning h1, .v-Notification.v-Notification-warning p {
@@ -17520,7 +17534,7 @@ div.v-ratingstars-bar {
 }
 
 .v-Notification.tray .v-Notification-description {
-	color: #fff;
+	color: #ffffff;
 }
 
 .v-Notification.humanized {
@@ -17530,7 +17544,7 @@ div.v-ratingstars-bar {
 }
 
 .v-Notification.humanized h1, .v-Notification.humanized p {
-	color: #fff;
+	color: #ffffff;
 }
 
 .cancelAccountHeader .first-line {
@@ -17565,7 +17579,7 @@ div.v-ratingstars-bar {
 
 .trialEndingNotification {
 	background-color: #e8a052;
-	color: #fff;
+	color: #ffffff;
 	padding: 0px 10px;
 	display: inline-block;
 	vertical-align: middle;
@@ -17581,7 +17595,7 @@ div.v-ratingstars-bar {
 }
 
 .trialEndingNotification a {
-	color: #fff;
+	color: #ffffff;
 	display: block;
 }
 
@@ -17800,7 +17814,7 @@ div.v-ratingstars-bar {
 }
 
 .contactopp-list-header {
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e0e0e0;
 }
 
 .contactopp-list-header  > .v-expand > .v-slot:first-child .v-label {
@@ -17811,11 +17825,11 @@ div.v-ratingstars-bar {
 .contactopp-list-header .v-label {
 	font-weight: 600;
 	padding: 4px 0px 4px 12px;
-	border-left: 1px solid #c5c5c5;
+	border-left: 1px solid #e0e0e0;
 }
 
 .contactopp-list-body {
-	border-bottom: 1px solid #c5c5c5;
+	border-bottom: 1px solid #e0e0e0;
 }
 
 .contactopp-list-body.no-child {
@@ -17943,7 +17957,7 @@ div.v-csslayout.bean-block {
 }
 
 .activityCalendar .stylecalendar-ext {
-	border-top: 1px solid #c5c5c5;
+	border-top: 1px solid #e0e0e0;
 }
 
 .activityCalendar .stylecalendar-ext.v-margin-top {
@@ -18098,7 +18112,7 @@ div.v-csslayout.bean-block.olive-block {
 }
 
 .v-colorpicker {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #e0e0e0;
 }
 
 .v-colorpicker .v-caption {
