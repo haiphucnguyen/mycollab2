@@ -365,10 +365,12 @@
     overflow: auto;
     position: relative;
   }
-  .v-layout.kanban-layout {
+  .kanban-layout {
     .kanban-block {
       cursor: move;
       background-color: #fdde86;
+      padding: 10px 5px;
+      margin-right: 10px;
       .header {
         font-weight: $my-font-weight-bold;
         color: black;
@@ -380,6 +382,9 @@
       .kanban-item {
         background-color: white;
         cursor: move;
+        &:hover {
+          background-color: $my-hover-background-color;
+        }
       }
     }
   }

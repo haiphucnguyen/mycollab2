@@ -350,7 +350,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         public KanbanBlock(final OptionVal stage) {
             this.setHeight("100%");
             this.optionVal = stage;
-            root = new MVerticalLayout();
+            root = new MVerticalLayout().withMargin(false);
             root.setWidth("300px");
             root.addStyleName("kanban-block");
             final String optionId = UUID.randomUUID().toString() + "-" + stage.hashCode();

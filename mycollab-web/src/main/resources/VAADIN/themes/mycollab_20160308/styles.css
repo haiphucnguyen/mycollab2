@@ -1947,24 +1947,30 @@ div.v-window {
 	position: relative;
 }
 
-.v-layout.kanban-layout .kanban-block {
+.kanban-layout .kanban-block {
 	cursor: move;
 	background-color: #fdde86;
+	padding: 10px 5px;
+	margin-right: 10px;
 }
 
-.v-layout.kanban-layout .kanban-block .header {
+.kanban-layout .kanban-block .header {
 	font-weight: 600;
 	color: black;
 	font-size: 15px;
 }
 
-.v-layout.kanban-layout .kanban-block .v-verticallayout {
+.kanban-layout .kanban-block .v-verticallayout {
 	overflow-y: auto;
 }
 
-.v-layout.kanban-layout .kanban-block .kanban-item {
+.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 	cursor: move;
+}
+
+.kanban-layout .kanban-block .kanban-item:hover {
+	background-color: #f5f5f5;
 }
 
 .v-popupview.block-popupedit {
@@ -14537,24 +14543,30 @@ div.v-window {
 	position: relative;
 }
 
-.v-layout.kanban-layout .kanban-block {
+.kanban-layout .kanban-block {
 	cursor: move;
 	background-color: #fdde86;
+	padding: 10px 5px;
+	margin-right: 10px;
 }
 
-.v-layout.kanban-layout .kanban-block .header {
+.kanban-layout .kanban-block .header {
 	font-weight: 600;
 	color: black;
 	font-size: 15px;
 }
 
-.v-layout.kanban-layout .kanban-block .v-verticallayout {
+.kanban-layout .kanban-block .v-verticallayout {
 	overflow-y: auto;
 }
 
-.v-layout.kanban-layout .kanban-block .kanban-item {
+.kanban-layout .kanban-block .kanban-item {
 	background-color: white;
 	cursor: move;
+}
+
+.kanban-layout .kanban-block .kanban-item:hover {
+	background-color: #f5f5f5;
 }
 
 .v-popupview.block-popupedit {
@@ -16048,6 +16060,10 @@ div.v-button.token-field {
 
 .entityblock .meta-info {
 	padding: 5px 5px 0px 5px;
+}
+
+.entityblock:hover {
+	background-color: #f5f5f5;
 }
 
 .gantt {

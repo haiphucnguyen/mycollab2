@@ -805,5 +805,8 @@
     .meta-info {
       padding: 5px 5px 0px 5px;
     }
+    &:hover {
+      background-color: $my-hover-background-color;
+    }
   }
 }
