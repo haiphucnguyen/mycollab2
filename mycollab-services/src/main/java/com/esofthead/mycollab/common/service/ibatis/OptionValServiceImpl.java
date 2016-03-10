@@ -19,9 +19,7 @@ package com.esofthead.mycollab.common.service.ibatis;
 import com.esofthead.mycollab.common.dao.OptionValMapper;
 import com.esofthead.mycollab.common.dao.TimelineTrackingCachingMapper;
 import com.esofthead.mycollab.common.dao.TimelineTrackingMapper;
-import com.esofthead.mycollab.common.domain.OptionVal;
-import com.esofthead.mycollab.common.domain.OptionValExample;
-import com.esofthead.mycollab.common.domain.TimelineTrackingExample;
+import com.esofthead.mycollab.common.domain.*;
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.common.service.OptionValService;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -113,9 +111,23 @@ public class OptionValServiceImpl extends DefaultCrudService<Integer, OptionVal>
     @Override
     public Integer updateWithSession(OptionVal record, String username) {
         checkSaveOrUpdateValid(record);
-        String typeVal = record.getTypeval();
-        TimelineTrackingExample timelineTrackingExample = new TimelineTrackingExample();
 
+        if (Boolean.FALSE.equals(record.getIsdefault())) {
+            TimelineTrackingExample timelineTrackingExample = new TimelineTrackingExample();
+            timelineTrackingExample.createCriteria().andTypeEqualTo(record.getType()).andFieldvalEqualTo(record.getTypeval())
+                    .andFieldgroupEqualTo(record.getFieldgroup()).andExtratypeidEqualTo(record.getExtraid());
+            TimelineTracking timelineTracking = new TimelineTracking();
+            timelineTracking.setFieldval(record.getTypeval());
+            timelineTrackingMapper.updateByExampleSelective(timelineTracking, timelineTrackingExample);
+
+            TimelineTrackingCachingExample timelineTrackingCachingExample = new TimelineTrackingCachingExample();
+            timelineTrackingCachingExample.createCriteria().andTypeEqualTo(record.getType()).andFieldvalEqualTo
+                    (record.getTypeval()).andFieldgroupEqualTo(record.getFieldgroup()).andExtratypeidEqualTo(record.getExtraid());
+            TimelineTrackingCaching timelineTrackingCaching = new TimelineTrackingCaching();
+            timelineTrackingCaching.setFieldval(record.getTypeval());
+            timelineTrackingCachingMapper.updateByExampleSelective(timelineTrackingCaching,
+                    timelineTrackingCachingExample);
+        }
         return super.updateWithSession(record, username);
     }
 

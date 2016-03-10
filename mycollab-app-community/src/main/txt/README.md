@@ -64,6 +64,8 @@ Version 5.2.9
 **Bug Fixes**
 
 * [Premium] Display wrong list of history fields in several special cases
+* Rename option column may cause the exception in trending chart
+* Websocket timeout error
 
 Version 5.2.8
 -----------------------------
