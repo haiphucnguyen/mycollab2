@@ -668,12 +668,14 @@ $v-line-height--header:1.5em;
     content:'\f0d7';
     font-family:FontAwesome;
     font-size:16px;
+    padding-right: 5px;
   }
 
   .collapsed .depot-title::before {
     content:'\f0da';
     font-family:FontAwesome;
     font-size:16px;
+    padding-right: 5px;
   }
 
   .depotComp {
