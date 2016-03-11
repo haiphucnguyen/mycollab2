@@ -16349,10 +16349,10 @@ input.v-textfield-pagedtable-pagefield {
 
 .topNavigation #mainLogo {
 	float: left;
-	width: 195px;
+	width: 170px;
 	height: 100%;
 	margin: 0;
-	padding: 4px 15px 0px 10px;
+	padding: 4px 15px 0px 15px;
 	display: block;
 }
 
@@ -16394,7 +16394,11 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .topNavigation .v-button .v-button-wrap {
-	padding: 2px 5px 2px 5px;
+	padding: 2px 5px 2px 0px;
+}
+
+.topNavigation .v-button .v-button-wrap .v-icon {
+	padding-left: 5px;
 }
 
 .topNavigation .v-button.ad {
@@ -17794,6 +17798,10 @@ div.v-ratingstars-bar {
 
 .message-list > .v-slot > .v-verticallayout {
 	display: block;
+}
+
+.hdr-view {
+	padding: 12px 30px;
 }
 
 img.icon-btn {

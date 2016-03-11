@@ -244,6 +244,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
         private boolean showIssues = false;
 
         MilestoneBlock(final SimpleMilestone milestone) {
+            this.setMargin(new MarginInfo(true, false, true, false));
             this.setStyleName("roadmap-block");
 
             ToggleMilestoneSummaryField toggleMilestoneSummaryField = new ToggleMilestoneSummaryField(milestone);
@@ -258,9 +259,11 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             metaBlock.addComponent(popupFieldFactory.createNonBillableHoursPopupField(milestone));
             this.add(metaBlock);
 
-            ELabel descriptionLbl = new ELabel(StringUtils.formatRichText(milestone.getDescription()), ContentMode
-                    .HTML).withStyleName("meta");
-            this.addComponent(descriptionLbl);
+            if (StringUtils.isNotBlank(milestone.getDescription())) {
+                ELabel descriptionLbl = new ELabel(StringUtils.formatRichText(milestone.getDescription()),
+                        ContentMode.HTML);
+                this.addComponent(descriptionLbl);
+            }
 
             MHorizontalLayout progressLayout = new MHorizontalLayout();
             progressLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
@@ -319,8 +322,7 @@ public class MilestoneRoadmapViewImpl extends AbstractLazyPageView implements Mi
             viewIssuesBtn.addStyleName(UIConstants.BUTTON_ACTION);
             viewIssuesBtn.addStyleName(ValoTheme.BUTTON_SMALL);
             progressLayout.with(progressInfoLbl, viewIssuesBtn);
-            this.addComponent(progressLayout);
-            this.addComponent(issueLayout);
+            this.with(progressLayout, issueLayout);
         }
     }
 }

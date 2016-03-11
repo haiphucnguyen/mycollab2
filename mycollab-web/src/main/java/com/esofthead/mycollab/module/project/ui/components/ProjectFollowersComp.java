@@ -78,7 +78,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
 
     public ProjectFollowersComp(String type, String permissionItem) {
         super();
-        this.withMargin(new MarginInfo(false, false, false, true));
+        this.withMargin(false);
         monitorItemService = ApplicationContextUtil.getSpringBean(MonitorItemService.class);
         this.type = type;
         this.permissionItem = permissionItem;
@@ -154,6 +154,12 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             criteria.setType(StringSearchField.and(type));
             criteria.setUser(StringSearchField.and(username));
             monitorItemService.removeByCriteria(criteria, AppContext.getAccountId());
+            for (SimpleUser user: followers) {
+                if (username.equals(user.getUsername())) {
+                    followers.remove(user);
+                    break;
+                }
+            }
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOG.error("Error", e);
         }

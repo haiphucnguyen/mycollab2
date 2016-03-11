@@ -87,7 +87,6 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         this.addComponent(contentWrap);
     }
 
-    @SuppressWarnings("serial")
     private void addCalendarEvent() {
         standupCalendar.getStyleCalendar().addValueChangeListener(new ValueChangeListener() {
             @Override
@@ -183,7 +182,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     private void constructHeader() {
         MHorizontalLayout header = new MHorizontalLayout().withMargin((new MarginInfo(true, false, true, false))).
-                withWidth("100%").withStyleName("hdr-view");
+                withWidth("100%");
         header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         MHorizontalLayout headerLeft = new MHorizontalLayout();

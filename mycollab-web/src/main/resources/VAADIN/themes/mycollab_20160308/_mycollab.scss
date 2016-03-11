@@ -161,10 +161,10 @@ $v-line-height--header:1.5em;
     height: 45px;
     #mainLogo {
       float: left;
-      width: 195px;
+      width: 170px;
       height: 100%;
       margin: 0;
-      padding: 4px 15px 0px 10px;
+      padding: 4px 15px 0px 15px;
       display: block;
     }
     .serviceMenuContainer {
@@ -197,7 +197,10 @@ $v-line-height--header:1.5em;
       border-radius: $v-border-radius;
       font-weight: $my-font-weight-bold;
       .v-button-wrap {
-        padding: 2px 5px 2px 5px;
+        padding: 2px 5px 2px 0px;
+        .v-icon {
+          padding-left: 5px;
+        }
       }
     }
 
@@ -1574,6 +1577,13 @@ $v-line-height--header:1.5em;
   }
 
   /* case list no item */
+
+
+  /* New View's Styles */
+
+  .hdr-view {
+    padding: 12px 30px;
+  }
 
   /* Icon only button */
 
