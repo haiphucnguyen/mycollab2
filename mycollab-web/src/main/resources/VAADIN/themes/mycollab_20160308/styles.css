@@ -983,7 +983,7 @@
  */
 
 .v-vaadin-version:after {
-	content: "7.6.3";
+	content: "7.6.4";
 }
 
 .v-widget {
@@ -16332,6 +16332,10 @@ input.noBorderRight {
 	border-radius: 4px 0px 0px 4px;
 }
 
+.v-label {
+	word-wrap: break-word;
+}
+
 .v-label.overdue {
 	color: red;
 }
@@ -16352,10 +16356,6 @@ input.noBorderRight {
 .v-label.wordWrap {
 	word-wrap: break-word;
 	white-space: normal;
-}
-
-.v-label {
-	word-wrap: break-word;
 }
 
 .v-label.link img {
@@ -17224,24 +17224,6 @@ div.v-stylecalendar .weekdays TD {
 	background-color: #0C7AD3;
 	background-repeat: repeat-x;
 	color: #ffffff;
-}
-
-.v-label.numberTotal {
-	font-size: 16px;
-	color: #000000;
-	font-weight: 600;
-}
-
-.boxTotal {
-	background-color: #E9E9E9;
-	-moz-border-radius: 15px;
-	border-radius: 5px;
-	border-color: #e9e9e9;
-	border-width: 1px 1px 2px 1px;
-	border-style: solid;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
 }
 
 .v-richtextarea .gwt-RichTextToolbar {

@@ -114,6 +114,7 @@ $v-line-height--header:1.5em;
   }
 
   .v-label {
+    word-wrap: break-word;
     &.overdue {
       color: red;
       a {
@@ -131,10 +132,6 @@ $v-line-height--header:1.5em;
       word-wrap: break-word;
       white-space: normal;
     }
-  }
-
-  .v-label {
-    word-wrap: break-word;
     &.link img {
       vertical-align: top;
       margin-right: 3px;
@@ -963,30 +960,6 @@ $v-line-height--header:1.5em;
   }
 
   /* End Style calendar */
-
-
-  /* Start Time Addon */
-
-  .v-label.numberTotal {
-    font-size: $font-larger;
-    color: #000000;
-    font-weight: $my-font-weight-bold;
-  }
-
-  .boxTotal {
-    background-color: #E9E9E9;
-    -moz-border-radius: 15px;
-    border-radius: 5px;
-    border-color: $my-separator-color;
-    border-width: 1px 1px 2px 1px;
-    border-style: solid;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  /* End Time Addon */
-
-
 
   /* Richtext Editor */
 
