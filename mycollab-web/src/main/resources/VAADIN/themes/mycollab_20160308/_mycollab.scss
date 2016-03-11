@@ -656,13 +656,7 @@ $v-line-height--header:1.5em;
       .depot-title {
         padding: 0px 10px;
         display: inline-flex;
-        > .v-expand {
-          margin-left: 5px;
-          .v-label {
-            font-size: $font-normal;
-            margin-top: 5px;
-          }
-        }
+        font-weight: $my-font-weight-bold;
       }
     }
   }
@@ -671,14 +665,12 @@ $v-line-height--header:1.5em;
     content:'\f0d7';
     font-family:FontAwesome;
     font-size:16px;
-    margin-top: 5px;
   }
 
   .collapsed .depot-title::before {
     content:'\f0da';
     font-family:FontAwesome;
     font-size:16px;
-    margin-top: 5px;
   }
 
   .depotComp {
@@ -712,7 +704,6 @@ $v-line-height--header:1.5em;
   /* End Depot */
 
   /* Activity Tabs */
-
   .activityTabs {
     margin-top: 15px;
     .v-nativebutton-tab {
@@ -742,22 +733,9 @@ $v-line-height--header:1.5em;
   }
   /* End Activity Tabs */
 
-  .project {
-    padding-top: 3px;
-    > .v-csslayout-margin > .v-csslayout-container > div {
-      display: inline-block;
-      vertical-align: top;
-      margin: 0px 3px;
-      line-height: 16px;
-    }
-    img {
-      display: inline-block;
-      vertical-align: top;
-    }
-  }
+
 
   /* End Activity Stream Channel*/
-
   .activity-realated-content .v-table-header-wrap {
     border-top-width: 1px;
   }
@@ -770,31 +748,20 @@ $v-line-height--header:1.5em;
     color: red;
   }
 
-  /* Popup Window */
-
-  /* End Popup Window */
-
   /* Rating Stars */
-
   .v-table-row-odd .v-ratingstars-wrapper-tiny .v-ratingstars-star {
     background-image: url("icons/star_12x11.png");
   }
-
   /* End Rating Stars */
 
-  /* End no border Panel */
-
   /* Mail Panel */
-
   .mail-panel .v-gridlayout-margin {
     max-height: 150px;
     overflow-y: auto;
   }
-
   /* End Mail Panel */
 
   /* Clickable Label */
-
   .clickable-label {
     cursor: pointer;
     > img.plus-btn {
@@ -818,7 +785,6 @@ $v-line-height--header:1.5em;
   }
 
   /* Footer */
-
   .footer {
     border-top: 1px solid $my-separator-color;
     .v-link, div {
@@ -826,18 +792,8 @@ $v-line-height--header:1.5em;
       font-size:$font-small;
     }
   }
-
   /* End Footer */
 
-
-  /* Photo Cropbox */
-
-  .photo-cropbox {
-    padding-top: 10px;
-    border-top: 1px solid rgb(143, 143, 143);
-  }
-
-  /* End Photo Cropbox */
 
   /* Pie Chart Legend Box */
   .legendBoxContent {
@@ -854,11 +810,9 @@ $v-line-height--header:1.5em;
     box-sizing: border-box;
     overflow: hidden;
   }
-
   /* End Pie Chart Legend Box */
 
   /* Project Member Block */
-
   .member-block {
     display: inline-block;
     background-color: $my-white-color;
@@ -1493,7 +1447,6 @@ $v-line-height--header:1.5em;
   }
 
   /* VerticalTabsheet */
-
   .v-csslayout.tab-content {
     background-color: #fff;
     height: 100%;
@@ -1551,11 +1504,9 @@ $v-line-height--header:1.5em;
       }
     }
   }
-
   /* End VerticalTabsheet */
 
   /* OptionGroup */
-
   .v-radiobutton {
     input[type="radio"] {
       margin: 0px 3px;
@@ -1570,7 +1521,6 @@ $v-line-height--header:1.5em;
   /* Normal Gridlayout */
 
   /* Bean List fix */
-
   .bean-list .v-verticallayout {
     display: block;
   }
@@ -1667,7 +1617,6 @@ $v-line-height--header:1.5em;
   }
 
   /* Project Feed Block */
-
   .crm-activity-list, .project-activity-list {
     padding-top: 5px;
   }
@@ -1714,11 +1663,6 @@ $v-line-height--header:1.5em;
 
   .notification-label {
     background-color: #fff0e3;
-  }
-
-  .index_lbl {
-    padding-top: 2px;
-    font-size: $font-normal;
   }
 
   /* Activity Calendar */
@@ -1788,19 +1732,8 @@ $v-line-height--header:1.5em;
     }
   }
 
-  /* Profile Intro Text */
-
-  .intro-text-wrap {
-    .v-label {
-      border-bottom: 1px solid $my-separator-color;
-      padding-bottom: 13px;
-      font-size: $font-small;
-    }
-    @include margin-container(13px, 10px, 0px, 10px);
-  }
 
   /* Opportunity Contact Role Edit */
-
   .oppcontact-role-edit .addview-layout-body {
     border: 1px solid $my-separator-color;
   }
@@ -1887,7 +1820,6 @@ $v-line-height--header:1.5em;
   }
 
   /* gridlayout without border fixes */
-
   .example-block {
     position: relative;
   }
@@ -1985,7 +1917,6 @@ $v-line-height--header:1.5em;
   }
 
   /* Right Sidebar Layout */
-
   div.v-csslayout.rightsidebar-layout {
     @include flex-compatible;
     /* NEW, Spec - Opera 12.1, Firefox 20+ */

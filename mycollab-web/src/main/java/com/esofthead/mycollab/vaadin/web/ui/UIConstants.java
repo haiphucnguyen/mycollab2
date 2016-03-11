@@ -42,7 +42,6 @@ public class UIConstants {
     public static final String LINK_PENDING = "pending";
     public static final String STANDUP_ROW_CONTENT = "standup-row-content";
     public static final String MILESTONE_BOX = "milestone-box";
-    public static final String PHOTO_CROPBOX = "photo-cropbox";
     public static final String MULTI_SELECT_BG = "multiselect";
     public static final String LABEL_WORD_WRAP = "wordWrap";
     public static final String TEXT_ELLIPSIS = "text-ellipsis";

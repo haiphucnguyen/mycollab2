@@ -95,7 +95,7 @@ public class ELabel extends Label {
         return new ELabel("&nbsp;", ContentMode.HTML).withWidthUndefined();
     }
 
-    public static final ELabel Hr() {
+    public static final ELabel hr() {
         return new ELabel("<hr/>", ContentMode.HTML).withStyleName("hr");
     }
 }

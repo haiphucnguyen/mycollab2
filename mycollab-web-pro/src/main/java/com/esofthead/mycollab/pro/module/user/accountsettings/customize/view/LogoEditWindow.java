@@ -27,6 +27,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AccountAssetsResolver;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.ByteArrayImageResource;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.vaadin.cropField.CropField;
@@ -53,7 +54,6 @@ import java.io.IOException;
  * @author MyCollab Ltd.
  * @since 4.1
  */
-
 @ViewComponent
 public class LogoEditWindow extends Window {
     private static final long serialVersionUID = -5294741083557671011L;
@@ -143,7 +143,6 @@ public class LogoEditWindow extends Window {
         content.addComponent(previewBox);
 
         CssLayout cropBox = new CssLayout();
-        cropBox.addStyleName(UIConstants.PHOTO_CROPBOX);
         cropBox.setWidth("100%");
         VerticalLayout currentPhotoBox = new VerticalLayout();
         Resource resource = new ByteArrayImageResource(
@@ -177,12 +176,10 @@ public class LogoEditWindow extends Window {
         });
         currentPhotoBox.setWidth("650px");
         currentPhotoBox.setHeight("650px");
-
         currentPhotoBox.addComponent(cropField);
-
         cropBox.addComponent(currentPhotoBox);
 
-        content.with(previewBox, cropBox);
+        content.with(previewBox, ELabel.hr(), cropBox);
     }
 
     private void displayPreviewImage() {

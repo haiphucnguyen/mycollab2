@@ -361,7 +361,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
         private void constructBody(Folder currentFolder) {
             this.removeAllComponents();
-            this.addComponent(ELabel.Hr());
+            this.addComponent(ELabel.hr());
 
             if (currentFolder instanceof ExternalFolder) {
                 resources = externalResourceService.getResources(((ExternalFolder) currentFolder).getExternalDrive(),
@@ -397,7 +397,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                         ComponentContainer resContainer = buildResourceRowComp(res);
                         if (resContainer != null) {
                             this.addComponent(buildResourceRowComp(res));
-                            this.addComponent(ELabel.Hr());
+                            this.addComponent(ELabel.hr());
                         }
                     }
                 } else if (resources.size() > pageNavigator.pageItemNum) {
@@ -406,7 +406,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                         ComponentContainer resContainer = buildResourceRowComp(res);
                         if (resContainer != null) {
                             this.addComponent(buildResourceRowComp(res));
-                            this.addComponent(ELabel.Hr());
+                            this.addComponent(ELabel.hr());
                         }
                     }
                     this.with(pageNavigator).withAlign(pageNavigator, Alignment.MIDDLE_CENTER);
@@ -987,7 +987,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 ComponentContainer resContainer = resourcesContainer.buildResourceRowComp(res);
                 if (resContainer != null) {
                     resourcesContainer.addComponent(resContainer);
-                    resourcesContainer.addComponent(ELabel.Hr());
+                    resourcesContainer.addComponent(ELabel.hr());
                 }
             }
             createPageControls();

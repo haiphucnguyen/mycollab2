@@ -67,10 +67,10 @@ public class CloudDriveSettingWindow extends Window {
 
         List<ExternalDrive> externalDrives = externalDriveService.getExternalDrivesOfUser(AppContext.getUsername());
 
-        bodyLayout.addComponent(ELabel.Hr());
+        bodyLayout.addComponent(ELabel.hr());
         for (ExternalDrive drive : externalDrives) {
             OneDriveConnectionBodyLayout layout = new OneDriveConnectionBodyLayout(drive);
-            bodyLayout.with(layout, ELabel.Hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
+            bodyLayout.with(layout, ELabel.hr()).withAlign(layout, Alignment.MIDDLE_LEFT);
         }
 
         mainLayout.addComponent(bodyLayout);

@@ -84,22 +84,12 @@ public class AccountModuleImpl extends AbstractCssPageView implements AccountMod
         accountTab.setNavigatorWidth("220px");
         accountTab.setNavigatorStyleName("sidebar-menu");
         accountTab.setContainerStyleName("tab-content");
-
         VerticalLayout contentWrapper = accountTab.getContentWrapper();
         contentWrapper.addStyleName("main-content");
         contentWrapper.addComponentAsFirst(topPanel);
-
-        VerticalLayout introTextWrap = new VerticalLayout();
-        introTextWrap.setStyleName("intro-text-wrap");
-        introTextWrap.setMargin(new MarginInfo(true, true, false, true));
-        introTextWrap.setWidth("100%");
-        introTextWrap.addComponent(generateIntroText());
-
         accountTab.getNavigatorWrapper().setWidth("220px");
-        accountTab.getNavigatorWrapper().addComponentAsFirst(introTextWrap);
 
         this.buildComponents();
-
         this.addComponent(accountTab);
     }
 

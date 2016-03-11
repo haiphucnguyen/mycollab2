@@ -60,7 +60,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         subjectField.setInputPrompt(AppContext.getMessage(MessageI18nEnum.FORM_TITLE));
         addFormLayout.addComponent(subjectField);
 
-        addFormLayout.addComponent(ELabel.Hr());
+        addFormLayout.addComponent(ELabel.hr());
 
         contentField = new TextArea();
         contentField.setStyleName("content-field");

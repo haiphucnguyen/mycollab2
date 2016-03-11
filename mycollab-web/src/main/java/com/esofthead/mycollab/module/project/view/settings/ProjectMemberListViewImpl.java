@@ -171,7 +171,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         ELabel memberNameLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3,
                 ValoTheme.LABEL_NO_MARGIN, UIConstants.TEXT_ELLIPSIS).withWidth("100%");
 
-        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false).with(memberNameLbl, ELabel.Hr());
+        MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false).with(memberNameLbl, ELabel.hr());
 
         String roleLink = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
