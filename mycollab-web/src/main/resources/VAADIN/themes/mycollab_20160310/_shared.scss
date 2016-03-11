@@ -53,6 +53,9 @@
     border: 1px solid $my-separator-color;
     background-color: $my-panel-background-color;
     height: 40px !important;
+    .v-label {
+      font-weight: $my-font-weight-bold;
+    }
   }
 
   .border-bottom {

@@ -1625,6 +1625,10 @@ a.pending {
 	height: 40px !important;
 }
 
+.panel-header .v-label {
+	font-weight: 600;
+}
+
 .border-bottom {
 	border-bottom: 1px solid #e9e9e9;
 }
@@ -14214,6 +14218,10 @@ a.pending {
 	border: 1px solid #e9e9e9;
 	background-color: #f1f1f1;
 	height: 40px !important;
+}
+
+.panel-header .v-label {
+	font-weight: 600;
 }
 
 .border-bottom {

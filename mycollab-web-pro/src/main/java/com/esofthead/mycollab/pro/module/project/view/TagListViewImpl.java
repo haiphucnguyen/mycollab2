@@ -75,10 +75,12 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         if (tag != null) {
             selectedTags.add(tag.getName());
         }
-        MHorizontalLayout header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%");
+        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
+                .withWidth("100%");
         Label headerLbl = new Label(FontAwesome.TAGS.getHtml() + " Tags", ContentMode.HTML);
         headerLbl.setSizeUndefined();
         headerLbl.setStyleName(ValoTheme.LABEL_H2);
+        headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         header.with(headerLbl);
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();

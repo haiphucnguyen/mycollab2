@@ -42,7 +42,6 @@ import com.vaadin.data.Property;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -154,7 +153,7 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             criteria.setType(StringSearchField.and(type));
             criteria.setUser(StringSearchField.and(username));
             monitorItemService.removeByCriteria(criteria, AppContext.getAccountId());
-            for (SimpleUser user: followers) {
+            for (SimpleUser user : followers) {
                 if (username.equals(user.getUsername())) {
                     followers.remove(user);
                     break;
@@ -209,7 +208,6 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
             for (SimpleProjectMember member : projectMembers) {
                 this.addComponent(new FollowerRow(member));
             }
-
             this.setWidth("100%");
         }
 
