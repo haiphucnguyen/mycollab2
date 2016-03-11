@@ -176,7 +176,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
     private boolean isUserWatching(V bean) {
         try {
             return monitorItemService.isUserWatchingItem(AppContext.getUsername(), type,
-                    (int) PropertyUtils.getProperty(bean, "id"));
+                    (Integer) PropertyUtils.getProperty(bean, "id"));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             return false;
         }
@@ -217,8 +217,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
                     .getProperty(bean, "id")));
             criteria.setType(StringSearchField.and(type));
             criteria.setUser(StringSearchField.and(username));
-            monitorItemService.removeByCriteria(criteria,
-                    AppContext.getAccountId());
+            monitorItemService.removeByCriteria(criteria, AppContext.getAccountId());
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             LOG.error("Error", e);
         }
@@ -342,9 +341,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
                 });
             }
             tableItem.setWidth("100%");
-
             content.addComponent(tableItem);
-
             loadMonitorItems();
         }
 
@@ -354,8 +351,7 @@ public class CrmFollowersComp<V extends ValuedBean> extends MVerticalLayout {
                 searchCriteria.setTypeId(new NumberSearchField((Number) PropertyUtils.getProperty(bean, "id")));
                 searchCriteria.setType(StringSearchField.and(type));
                 tableItem.setSearchCriteria(searchCriteria);
-            } catch (IllegalAccessException | InvocationTargetException
-                    | NoSuchMethodException e) {
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 LOG.error("Error", e);
             }
         }

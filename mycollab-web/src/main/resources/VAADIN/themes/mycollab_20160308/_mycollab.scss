@@ -1915,32 +1915,21 @@ $v-line-height--header:1.5em;
     }
   }
 
-  .readview-body-wrap .readview-sidebar .info-hdr {
+  .info-hdr {
     margin-top: 10px;
-    .v-button-wrap {
-      padding: 6px;
+    .v-label {
+      font-size: $font-large;
     }
+  }
+
+  .v-label.info-hdr {
+    font-size: $font-large;
   }
 
   /* Feature Select Box */
 
   .feature-select-box {
     background-color: #EEE;
-  }
-
-
-  /* Time Tracking */
-
-  .text-log-hours {
-    text-align: right;
-    color: $my-meta-color;
-  }
-
-  .text-log-hours-total {
-    margin-top: 10px;
-    text-align: right;
-    font-weight: $my-font-weight-bold;
-    color: $my-meta-color;
   }
 
   /* Attachment Block */
@@ -1967,10 +1956,8 @@ $v-line-height--header:1.5em;
       }
     }
     .attachment-name-wrap .v-label {
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      @include text-ellipsis;
       color: #FFF;
-      font-weight: $my-font-weight-bold;
     }
     .attachment-control {
       border-radius: 3px;

@@ -47,8 +47,6 @@ public class UIConstants {
     public static final String LABEL_WORD_WRAP = "wordWrap";
     public static final String TEXT_ELLIPSIS = "text-ellipsis";
     public static final String BTN_ACTIVE = "btn-group-default";
-    public static final String TEXT_LOG_HOURS = "text-log-hours";
-    public static final String TEXT_LOG_HOURS_TOTAL = "text-log-hours-total";
     public static final String FULL_BORDER_TABLE = "full-border-table";
     public static final String CONTENT_WRAPPER = "content-wrapper";
     public static final String OPTION_POPUP_CONTENT = "optionPopupContent";

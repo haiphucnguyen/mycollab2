@@ -34,20 +34,11 @@
         height: 15px;
         display: block;
       }
-      .info-hdr {
-        font-size: $font-normal;
-        .v-button-wrap {
-          padding: 6px;
-        }
-      }
-
     }
     &.preview-comp {
       min-height: 100%;
     }
   }
-
-
 
   /* New ReadViewLayout */
   .readViewLayout {
