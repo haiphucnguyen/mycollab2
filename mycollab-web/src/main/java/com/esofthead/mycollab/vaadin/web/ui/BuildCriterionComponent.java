@@ -169,7 +169,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         buildFilterBox(queryText);
     }
 
-    @SuppressWarnings("unchecked")
     private List<SearchFieldInfo> buildSearchFieldInfos() {
         Iterator<Component> iterator = searchContainer.iterator();
         List<SearchFieldInfo> fieldInfos = new ArrayList<>();
@@ -187,7 +186,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     public S fillupSearchCriteria() {
         try {
             S searchCriteria = type.newInstance();
@@ -287,7 +285,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             }
         }
 
-        @SuppressWarnings({"rawtypes", "unchecked"})
         private void fillSearchFieldInfo(SearchFieldInfo searchFieldInfo) {
             String width = "300px";
             if (operatorSelectionBox != null) {
@@ -737,7 +734,6 @@ public class BuildCriterionComponent<S extends SearchCriteria> extends MVertical
             this.setImmediate(true);
         }
 
-        @SuppressWarnings("unchecked")
         private void contructComboBox() {
             SaveSearchResultCriteria searchCriteria = new SaveSearchResultCriteria();
             searchCriteria.setType(StringSearchField.and(searchCategory));
