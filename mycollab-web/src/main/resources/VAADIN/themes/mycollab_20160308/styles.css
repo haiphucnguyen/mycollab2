@@ -13800,12 +13800,6 @@ h1.no-margin, .v-label-h1.no-margin, h2.no-margin, .v-label-h2.no-margin, h3.no-
 	border: 1px solid #e9e9e9;
 }
 
-.accountViewContainer .addViewLayout {
-	background: none;
-	box-shadow: none;
-	box-shadow: none;
-}
-
 .accountViewContainer .container-wrap.main-content .top-panel {
 	background-color: #FFF;
 	border-bottom: 1px solid #e9e9e9;
@@ -17800,30 +17794,6 @@ div.v-ratingstars-bar {
 
 .message-list > .v-slot > .v-verticallayout {
 	display: block;
-}
-
-.hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
-	background-color: #FFF;
-}
-
-.hdr-view.v-margin-top, .advSearchHeader .hdr-view.v-margin-top, .basicSearchHeader .hdr-view.v-margin-top {
-	padding-top: 12px;
-}
-
-.hdr-view.v-margin-right, .advSearchHeader .hdr-view.v-margin-right, .basicSearchHeader .hdr-view.v-margin-right {
-	padding-right: 30px;
-}
-
-.hdr-view.v-margin-bottom, .advSearchHeader .hdr-view.v-margin-bottom, .basicSearchHeader .hdr-view.v-margin-bottom {
-	padding-bottom: 12px;
-}
-
-.hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
-	padding-left: 30px;
-}
-
-.basicSearchHeader .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view {
-	border: none;
 }
 
 img.icon-btn {

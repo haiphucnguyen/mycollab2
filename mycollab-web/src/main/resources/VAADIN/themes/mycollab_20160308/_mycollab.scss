@@ -1575,33 +1575,6 @@ $v-line-height--header:1.5em;
 
   /* case list no item */
 
-
-  /* New View's Styles */
-
-  .hdr-view, .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view, .basicSearchHeader .hdr-view {
-    background-color: #FFF;
-  }
-
-  .hdr-view.v-margin-top, .advSearchHeader .hdr-view.v-margin-top, .basicSearchHeader .hdr-view.v-margin-top {
-    padding-top: 12px;
-  }
-
-  .hdr-view.v-margin-right, .advSearchHeader .hdr-view.v-margin-right, .basicSearchHeader .hdr-view.v-margin-right {
-    padding-right: 30px;
-  }
-
-  .hdr-view.v-margin-bottom, .advSearchHeader .hdr-view.v-margin-bottom, .basicSearchHeader .hdr-view.v-margin-bottom {
-    padding-bottom: 12px;
-  }
-
-  .hdr-view.v-margin-left, .advSearchHeader .hdr-view.v-margin-left, .basicSearchHeader .hdr-view.v-margin-left {
-    padding-left: 30px;
-  }
-
-  .basicSearchHeader .v-horizontallayout.hdr-view, .advSearchHeader .v-horizontallayout.hdr-view {
-    border: none;
-  }
-
   /* Icon only button */
 
   img.icon-btn {
