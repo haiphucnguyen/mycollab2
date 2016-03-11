@@ -19,12 +19,15 @@ package com.esofthead.mycollab.pro.module.project.ui.components;
 import com.esofthead.mycollab.common.TableViewField;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.view.time.TimeTrackingTableDisplay;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +66,7 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 
     public void flush() {
         if (CollectionUtils.isNotEmpty(itemEntries)) {
-           displayGroupItems(itemEntries);
+            displayGroupItems(itemEntries);
         }
     }
 
@@ -71,14 +74,14 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
 
     protected abstract void displayGroupItems(List<SimpleItemTimeLogging> list);
 
-    static class TimeLoggingBockLayout extends VerticalLayout {
+    static class TimeLoggingBockLayout extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
         public TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
                                      List<SimpleItemTimeLogging> timeLoggingEntries) {
+            withMargin(new MarginInfo(true, false, true, false));
             TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
             table.addStyleName(UIConstants.FULL_BORDER_TABLE);
-            table.setMargin(new MarginInfo(true, false, false, false));
             table.addTableListener(tableClickListener);
             table.setCurrentDataList(timeLoggingEntries);
             addComponent(table);
@@ -89,17 +92,12 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
                 nonbillable += !item.getIsbillable() ? item.getLogvalue() : 0;
             }
 
-            Label labelTotalHours = new Label(("Total Hours: " + (billable + nonbillable)));
-            labelTotalHours.addStyleName(UIConstants.TEXT_LOG_HOURS_TOTAL);
-            addComponent(labelTotalHours);
-
-            Label labelBillableHours = new Label(("Billable Hours: " + billable));
-            labelBillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
-            addComponent(labelBillableHours);
-
-            Label labelNonbillableHours = new Label(("Non Billable Hours: " + nonbillable));
-            labelNonbillableHours.setStyleName(UIConstants.TEXT_LOG_HOURS);
-            addComponent(labelNonbillableHours);
+            ELabel totalHoursLbl = new ELabel(("Total Hours: " + (billable + nonbillable))).withStyleName(ValoTheme
+                    .LABEL_BOLD).withWidthUndefined();
+            ELabel totalBillableHoursLbl = new ELabel(("Billable Hours: " + billable)).withWidthUndefined();
+            ELabel totalNonBillableHoursLbl = new ELabel(("Non Billable Hours: " + nonbillable)).withWidthUndefined();
+            with(totalHoursLbl, totalBillableHoursLbl, totalNonBillableHoursLbl).withAlign(totalHoursLbl, Alignment.TOP_RIGHT)
+                    .withAlign(totalBillableHoursLbl, Alignment.TOP_RIGHT).withAlign(totalNonBillableHoursLbl, Alignment.TOP_RIGHT);
         }
     }
 }

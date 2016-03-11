@@ -404,23 +404,17 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
                 int projectId = itemLogging.getProjectid();
 
                 if (ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
-                    PageActionChain chain = new PageActionChain(
-                            new ProjectScreenData.Goto(projectId),
+                    PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                             new BugScreenData.Read(typeId));
                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
-                } else if (ProjectTypeConstants.TASK.equals(itemLogging
-                        .getType())) {
-                    PageActionChain chain = new PageActionChain(
-                            new ProjectScreenData.Goto(projectId),
+                } else if (ProjectTypeConstants.TASK.equals(itemLogging.getType())) {
+                    PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
                             new TaskScreenData.Read(typeId));
-                    EventBusFactory.getInstance().post(
-                            new ProjectEvent.GotoMyProject(this, chain));
+                    EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
                 }
             } else if ("projectName".equals(event.getFieldName())) {
-                PageActionChain chain = new PageActionChain(
-                        new ProjectScreenData.Goto(itemLogging.getProjectid()));
-                EventBusFactory.getInstance().post(
-                        new ProjectEvent.GotoMyProject(this, chain));
+                PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto(itemLogging.getProjectid()));
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));
             }
         }
     };

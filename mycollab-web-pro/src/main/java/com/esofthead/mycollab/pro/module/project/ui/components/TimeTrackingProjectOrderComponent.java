@@ -21,8 +21,11 @@ import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.vaadin.web.ui.LabelLink;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
+import com.hp.gagawa.java.elements.A;
+import com.hp.gagawa.java.elements.Div;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.themes.ValoTheme;
 
 import java.util.List;
@@ -44,9 +47,9 @@ public class TimeTrackingProjectOrderComponent extends AbstractTimeTrackingDispl
         if (timeLoggingEntries.size() > 0) {
             SimpleItemTimeLogging firstItem = timeLoggingEntries.get(0);
 
-            LabelLink link = new LabelLink(firstItem.getProjectName(), ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid()));
-            link.setIconLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
-            link.addStyleName(ValoTheme.LABEL_H3);
+            Div projectDiv = new Div().appendText(ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT).getHtml
+                    () + " ").appendChild(new A(ProjectLinkBuilder.generateProjectFullLink(firstItem.getProjectid())).appendText(firstItem.getProjectName()));
+            ELabel link = new ELabel(projectDiv.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3, ValoTheme.LABEL_NO_MARGIN);
             addComponent(link);
             addComponent(new TimeLoggingBockLayout(visibleFields, tableClickListener, timeLoggingEntries));
         }

@@ -49,11 +49,11 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
     }
 
     public Date getFromDate() {
-        return layout.dateStart.getValue();
+        return layout.startDateField.getValue();
     }
 
     public Date getToDate() {
-        return layout.dateEnd.getValue();
+        return layout.endDateField.getValue();
     }
 
     @Override
@@ -93,15 +93,13 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         return (Order) layout.orderField.getValue();
     }
 
-    @SuppressWarnings({"serial", "rawtypes"})
     private class TimeLoggingBasicSearchLayout extends BasicSearchLayout {
-        private DateFieldExt dateStart, dateEnd;
+        private DateFieldExt startDateField, endDateField;
 
         private ProjectMemberListSelect userField;
         private ComboBox groupField, orderField;
         private MVerticalLayout bodyWrap;
 
-        @SuppressWarnings("unchecked")
         public TimeLoggingBasicSearchLayout() {
             super(ItemTimeLoggingSearchPanel.this);
         }
@@ -120,14 +118,14 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             gridLayout.setMargin(true);
 
             Date[] boundWeekDays = DateTimeUtils.getBounceDateofWeek(new Date());
-            dateStart = new DateFieldExt();
-            dateStart.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-            dateStart.setResolution(Resolution.DAY);
-            dateStart.setValue(boundWeekDays[0]);
-            dateEnd = new DateFieldExt();
-            dateEnd.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
-            dateEnd.setResolution(Resolution.DAY);
-            dateEnd.setValue(boundWeekDays[1]);
+            startDateField = new DateFieldExt();
+            startDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            startDateField.setResolution(Resolution.DAY);
+            startDateField.setValue(boundWeekDays[0]);
+            endDateField = new DateFieldExt();
+            endDateField.setDateFormat(AppContext.getUserDateFormat().getDateFormat());
+            endDateField.setResolution(Resolution.DAY);
+            endDateField.setValue(boundWeekDays[1]);
 
 
             this.groupField = new ValueComboBox(false, "Date", "User");
@@ -153,9 +151,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             Label sortLb = new Label("Sort:");
 
             gridLayout.addComponent(dateStartLb, 0, 0);
-            gridLayout.addComponent(this.dateStart, 1, 0);
+            gridLayout.addComponent(startDateField, 1, 0);
             gridLayout.addComponent(dateEndLb, 2, 0);
-            gridLayout.addComponent(dateEnd, 3, 0);
+            gridLayout.addComponent(endDateField, 3, 0);
             gridLayout.addComponent(new Label("User:"), 4, 0);
 
             gridLayout.addComponent(groupLb, 0, 1);
@@ -166,7 +164,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             userField = new ProjectMemberListSelect();
             gridLayout.addComponent(userField, 5, 0, 5, 1);
 
-            MHorizontalLayout buttonControls = new MHorizontalLayout().withSpacing(true).withMargin(false);
+            MHorizontalLayout buttonControls = new MHorizontalLayout();
 
             Button searchBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SEARCH), new Button.ClickListener() {
                 @Override
@@ -197,8 +195,8 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         protected SearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-            Date fDate = dateStart.getValue();
-            Date tDate = dateEnd.getValue();
+            Date fDate = startDateField.getValue();
+            Date tDate = endDateField.getValue();
             searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                     new DateRangeInjecter(fDate, tDate)));
             Collection<String> selectedUsers = (Collection<String>) userField.getValue();
