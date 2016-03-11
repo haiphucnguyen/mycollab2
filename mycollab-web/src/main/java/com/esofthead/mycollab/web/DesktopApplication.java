@@ -74,7 +74,6 @@ import static com.esofthead.mycollab.core.utils.ExceptionUtils.getExceptionType;
  */
 @Theme(MyCollabVersion.THEME_VERSION)
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabWidgetSet")
-@PreserveOnRefresh
 public class DesktopApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
 
