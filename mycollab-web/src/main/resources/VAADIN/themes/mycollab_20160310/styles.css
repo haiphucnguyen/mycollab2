@@ -15561,6 +15561,13 @@ div.v-csslayout.followers-container .v-checkbox {
 	font-size: 13px;
 }
 
+.searchitems-layout .project-item-search-box:hover {
+	-webkit-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	-moz-box-shadow: inset 5px 0px 0px 0px #0083ce;
+	box-shadow: inset 5px 0px 0px 0px #0083ce;
+	background-color: #f5f5f5;
+}
+
 .v-csslayout.tagcloud {
 	border-style: solid;
 	border-top-style: none;
