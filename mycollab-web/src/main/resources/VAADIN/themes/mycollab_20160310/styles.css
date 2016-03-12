@@ -1,3 +1,7 @@
+.hover-effect-not-box:hover {
+	background-color: #f5f5f5;
+}
+
 .text-ellipsis a {
 	display: inline-block;
 	width: 100%;
@@ -1549,6 +1553,10 @@ div.v-layout.v-horizontal.v-widget {
 
 .Vaadin-Icons {
 	font-family: "Vaadin-Icons";
+}
+
+.hover-effect-not-box:hover {
+	background-color: #f5f5f5;
 }
 
 .text-ellipsis a {

@@ -28,6 +28,10 @@ $font-largest: 36px;
   background-color: $my-hover-background-color;
 }
 
+.hover-effect-not-box:hover{
+  background-color: $my-hover-background-color;
+}
+
 @mixin text-ellipsis {
   white-space: nowrap;
   overflow: hidden;
