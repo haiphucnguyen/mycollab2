@@ -41,7 +41,8 @@ public class CrmGenericPresenter<V extends PageView> extends AbstractPresenter<V
     }
 
     @Override
-    protected void onDefaultStopChain(Throwable throwable) {
+    protected void onErrorStopChain(Throwable throwable) {
+        super.onErrorStopChain(throwable);
         if (!(this instanceof CrmHomePresenter)) {
             EventBusFactory.getInstance().post(new CrmEvent.GotoHome(this, null));
         }

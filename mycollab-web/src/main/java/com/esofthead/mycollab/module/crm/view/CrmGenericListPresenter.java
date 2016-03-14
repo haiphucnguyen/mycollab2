@@ -74,7 +74,8 @@ public abstract class CrmGenericListPresenter<V extends IListView<S, B>, S exten
     }
 
     @Override
-    protected void onDefaultStopChain(Throwable throwable) {
+    protected void onErrorStopChain(Throwable throwable) {
+        super.onErrorStopChain(throwable);
         EventBusFactory.getInstance().post(new CrmEvent.GotoHome(this, null));
     }
 }

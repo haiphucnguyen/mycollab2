@@ -116,7 +116,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
             try {
                 onGo(container, data);
             } catch (Throwable e) {
-                defaultStopChain(e);
+                onErrorStopChain(e);
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -157,24 +157,24 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         if (pageActionChain.hasNext()) {
             onHandleChain(container, pageActionChain);
         } else {
-            defaultStopChain(null);
+            onDefaultStopChain();
         }
     }
 
-    protected void onDefaultStopChain(Throwable throwable) {
+    protected void onDefaultStopChain() {
 
     }
 
-    private void defaultStopChain(Throwable throwable) {
-        if (throwable != null) {
-            if (getExceptionType(throwable, ResourceNotFoundException.class) != null) {
-                NotificationUtil.showRecordNotExistNotification();
-            } else if (getExceptionType(throwable, SecureAccessException.class) != null) {
-                NotificationUtil.showMessagePermissionAlert();
-            }
+    protected void onErrorStopChain(Throwable throwable) {
+        if (getExceptionType(throwable, ResourceNotFoundException.class) != null) {
+            NotificationUtil.showRecordNotExistNotification();
+        } else if (getExceptionType(throwable, SecureAccessException.class) != null) {
+            NotificationUtil.showMessagePermissionAlert();
+        } else {
+            LOG.error("Exception", throwable);
         }
-        onDefaultStopChain(throwable);
     }
+
 
     protected void onHandleChain(ComponentContainer container, PageActionChain pageActionChain) {
         throw new UnsupportedOperationException("You need override this method");
