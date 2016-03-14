@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.mobile.module.project.view.bug;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
+import com.esofthead.mycollab.core.SecureAccessException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.mobile.module.project.view.AbstractProjectPresenter;
@@ -62,7 +63,7 @@ public class BugAddPresenter extends AbstractProjectPresenter<BugAddView> implem
                         AppContext.getMessage(BugI18nEnum.FORM_EDIT_BUG_TITLE));
             }
         } else {
-            NotificationUtil.showMessagePermissionAlert();
+            throw new SecureAccessException();
         }
     }
 

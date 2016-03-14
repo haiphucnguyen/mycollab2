@@ -95,12 +95,12 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     }
 
     @Override
-    public void go(ComponentContainer container, ScreenData<?> data) {
-        go(container, data, true);
+    public boolean go(ComponentContainer container, ScreenData<?> data) {
+        return go(container, data, true);
     }
 
     @Override
-    public void go(ComponentContainer container, ScreenData<?> data, boolean isHistoryTrack) {
+    public boolean go(ComponentContainer container, ScreenData<?> data, boolean isHistoryTrack) {
         initView();
 
         if (isHistoryTrack) {
@@ -109,7 +109,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         }
 
         if (view == null) {
-            NotificationUtil.showMessagePermissionAlert();
+            return false;
         }
 
         if (checkPermissionAccessIfAny()) {
@@ -117,11 +117,12 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
                 onGo(container, data);
             } catch (Throwable e) {
                 onErrorStopChain(e);
+                return false;
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
-
+        return true;
     }
 
     protected abstract void onGo(ComponentContainer container, ScreenData<?> data);
@@ -152,9 +153,9 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     @Override
     public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
         ScreenData pageAction = pageActionChain.pop();
-        go(container, pageAction);
+        boolean isSuccess = go(container, pageAction);
 
-        if (pageActionChain.hasNext()) {
+        if (pageActionChain.hasNext() && isSuccess) {
             onHandleChain(container, pageActionChain);
         } else {
             onDefaultStopChain();
@@ -174,7 +175,6 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
             LOG.error("Exception", throwable);
         }
     }
-
 
     protected void onHandleChain(ComponentContainer container, PageActionChain pageActionChain) {
         throw new UnsupportedOperationException("You need override this method");
