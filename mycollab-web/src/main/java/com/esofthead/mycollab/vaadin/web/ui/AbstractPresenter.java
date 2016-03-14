@@ -17,6 +17,8 @@
 package com.esofthead.mycollab.vaadin.web.ui;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.ResourceNotFoundException;
+import com.esofthead.mycollab.core.SecureAccessException;
 import com.esofthead.mycollab.security.PermissionChecker;
 import com.esofthead.mycollab.security.PermissionMap;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -28,6 +30,8 @@ import com.vaadin.server.ClientConnector;
 import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.esofthead.mycollab.core.utils.ExceptionUtils.getExceptionType;
 
 /**
  * @param <V>
@@ -112,7 +116,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
             try {
                 onGo(container, data);
             } catch (Throwable e) {
-                onDefaultStopChain(e);
+                defaultStopChain(e);
             }
         } else {
             NotificationUtil.showMessagePermissionAlert();
@@ -153,12 +157,23 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         if (pageActionChain.hasNext()) {
             onHandleChain(container, pageActionChain);
         } else {
-            onDefaultStopChain(null);
+            defaultStopChain(null);
         }
     }
 
     protected void onDefaultStopChain(Throwable throwable) {
 
+    }
+
+    private void defaultStopChain(Throwable throwable) {
+        if (throwable != null) {
+            if (getExceptionType(throwable, ResourceNotFoundException.class) != null) {
+                NotificationUtil.showRecordNotExistNotification();
+            } else if (getExceptionType(throwable, SecureAccessException.class) != null) {
+                NotificationUtil.showMessagePermissionAlert();
+            }
+        }
+        onDefaultStopChain(throwable);
     }
 
     protected void onHandleChain(ComponentContainer container, PageActionChain pageActionChain) {
