@@ -17,9 +17,9 @@ class ShellUrlResolver extends UrlResolver {
   this.addSubResolver("account", new AccountSettingUrlResolver().build)
   this.addSubResolver("document", new FileUrlResolver().build)
 
-  def navigateByFragment(fragment: String) {
-    if (!StringUtils.isBlank(fragment)) {
-      val tokens: Array[String] = fragment.split("/")
+  def resolveFragment(newFragmentUrl: String) {
+    if (!StringUtils.isBlank(newFragmentUrl)) {
+      val tokens = newFragmentUrl.split("/")
       this.handle(tokens: _*)
     }
   }

@@ -153,7 +153,7 @@ public class MobileApplication extends MyCollabUI {
             }
         });
 
-        initialUrl = this.getPage().getUriFragment();
+        setCurrentFragmentUrl(this.getPage().getUriFragment());
         currentContext = new AppContext();
         postSetupApp(request);
         try {
@@ -178,7 +178,7 @@ public class MobileApplication extends MyCollabUI {
 
             @Override
             public void uriFragmentChanged(UriFragmentChangedEvent event) {
-                setInitialUrl(event.getUriFragment());
+                setCurrentFragmentUrl(event.getUriFragment());
                 enter(event.getUriFragment());
             }
         });
@@ -273,7 +273,7 @@ public class MobileApplication extends MyCollabUI {
     private void clearSession() {
         if (currentContext != null) {
             currentContext.clearSessionVariables();
-            initialUrl = "";
+            setCurrentFragmentUrl("");
         }
     }
 

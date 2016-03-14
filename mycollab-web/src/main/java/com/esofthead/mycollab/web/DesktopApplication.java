@@ -99,7 +99,7 @@ public class DesktopApplication extends MyCollabUI {
             }
         });
 
-        initialUrl = this.getPage().getUriFragment();
+        setCurrentFragmentUrl(this.getPage().getUriFragment());
         currentContext = new AppContext();
         postSetupApp(request);
 
@@ -298,14 +298,14 @@ public class DesktopApplication extends MyCollabUI {
         opener.extend(okBtn);
     }
 
-    private void enter(String uriFragment) {
-        rootUrlResolver.navigateByFragment(uriFragment);
+    private void enter(String newFragmentUrl) {
+        rootUrlResolver.resolveFragment(newFragmentUrl);
     }
 
     private void clearSession() {
         if (currentContext != null) {
             currentContext.clearSessionVariables();
-            initialUrl = "";
+            setCurrentFragmentUrl("");
         }
     }
 

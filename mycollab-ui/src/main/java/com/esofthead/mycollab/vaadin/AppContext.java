@@ -225,7 +225,6 @@ public class AppContext implements Serializable {
     public void initDomain(String domain) {
         this.subDomain = domain;
         BillingAccountService billingService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
-
         BillingAccount account = billingService.getAccountByDomain(domain);
 
         if (account == null) {
