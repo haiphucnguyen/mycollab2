@@ -299,7 +299,7 @@ public class DesktopApplication extends MyCollabUI {
     }
 
     private void enter(String uriFragment) {
-        rootUrlResolver.navigateByFragement(uriFragment);
+        rootUrlResolver.navigateByFragment(uriFragment);
     }
 
     private void clearSession() {
