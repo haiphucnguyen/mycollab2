@@ -67,7 +67,6 @@ public class ClientAddPresenter extends AbstractPresenter<ClientAddView> {
 
     private int saveAccount(Account account) {
         AccountService accountService = ApplicationContextUtil.getSpringBean(AccountService.class);
-
         account.setSaccountid(AppContext.getAccountId());
         if (account.getId() == null) {
             accountService.saveWithSession(account, AppContext.getUsername());

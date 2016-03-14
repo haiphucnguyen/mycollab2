@@ -42,7 +42,6 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
     protected Class<V> implClass;
     protected V view;
 
-    @SuppressWarnings("unchecked")
     public AbstractPresenter(Class<V> viewClass) {
         this.viewClass = viewClass;
         ComponentScannerService componentScannerService = ApplicationContextUtil.getSpringBean(ComponentScannerService.class);
@@ -133,11 +132,7 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
                     return false;
                 } else {
                     Integer value = permissionMap.get(permissionId);
-                    if (value == null) {
-                        return false;
-                    } else {
-                        return PermissionChecker.isImplied(value, impliedPermissionVal);
-                    }
+                    return (value != null) && PermissionChecker.isImplied(value, impliedPermissionVal);
                 }
             }
         } else {

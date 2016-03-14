@@ -2,16 +2,17 @@ package com.esofthead.mycollab.premium.mobile.module.project.view;
 
 import com.esofthead.mycollab.common.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.mobile.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.mobile.module.project.view.AbstractProjectPresenter;
 import com.esofthead.mycollab.mobile.module.project.view.IProjectAddPresenter;
 import com.esofthead.mycollab.mobile.module.project.view.ProjectAddView;
+import com.esofthead.mycollab.mobile.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultEditFormHandler;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
@@ -33,7 +34,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
             @Override
             public void onSave(final SimpleProject project) {
                 Integer prjId = saveProject(project);
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, prjId));
+                EventBusFactory.getInstance().post(new PageActionChain(new ProjectScreenData.Goto(prjId)));
             }
         });
     }
@@ -43,6 +44,9 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
         if (AppContext.canAccess(RolePermissionCollections.CREATE_NEW_PROJECT)) {
             super.onGo(container, data);
             SimpleProject project = (SimpleProject) data.getParams();
+            if (project.getProjectstatus() == null) {
+                project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Open.name());
+            }
             view.editItem(project);
 
             if (project.getId() == null) {
@@ -55,9 +59,7 @@ public class ProjectAddPresenter extends AbstractProjectPresenter<ProjectAddView
 
     private Integer saveProject(SimpleProject project) {
         ProjectService projectService = ApplicationContextUtil.getSpringBean(ProjectService.class);
-        if (project.getProjectstatus() == null) {
-            project.setProjectstatus(OptionI18nEnum.StatusI18nEnum.Open.name());
-        }
+        project.setSaccountid(AppContext.getAccountId());
         return projectService.saveWithSession(project, AppContext.getUsername());
     }
 }
