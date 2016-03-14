@@ -298,8 +298,8 @@ public class DesktopApplication extends MyCollabUI {
         opener.extend(okBtn);
     }
 
-    private void enter(String uriFragement) {
-        rootUrlResolver.navigateByFragement(uriFragement);
+    private void enter(String uriFragment) {
+        rootUrlResolver.navigateByFragement(uriFragment);
     }
 
     private void clearSession() {
@@ -317,6 +317,10 @@ public class DesktopApplication extends MyCollabUI {
             rememberPassword(username, password);
         }
 
+        afterDoLogin(user);
+    }
+
+    public void afterDoLogin(SimpleUser user) {
         BillingAccountService billingAccountService = ApplicationContextUtil.getSpringBean(BillingAccountService.class);
 
         SimpleBillingAccount billingAccount = billingAccountService.getBillingAccountById(AppContext.getAccountId());
