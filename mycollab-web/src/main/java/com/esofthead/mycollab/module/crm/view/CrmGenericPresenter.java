@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
@@ -36,5 +38,12 @@ public class CrmGenericPresenter<V extends PageView> extends AbstractPresenter<V
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         CrmModule crmModule = (CrmModule) container;
         crmModule.addView(view);
+    }
+
+    @Override
+    protected void onDefaultStopChain(Throwable throwable) {
+        if (!(this instanceof CrmHomePresenter)) {
+            EventBusFactory.getInstance().post(new CrmEvent.GotoHome(this, null));
+        }
     }
 }

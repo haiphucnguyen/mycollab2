@@ -109,7 +109,11 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         }
 
         if (checkPermissionAccessIfAny()) {
-            onGo(container, data);
+            try {
+                onGo(container, data);
+            } catch (Throwable e) {
+                onDefaultStopChain(e);
+            }
         } else {
             NotificationUtil.showMessagePermissionAlert();
         }
@@ -149,11 +153,11 @@ public abstract class AbstractPresenter<V extends PageView> implements IPresente
         if (pageActionChain.hasNext()) {
             onHandleChain(container, pageActionChain);
         } else {
-            onDefaultStopChain();
+            onDefaultStopChain(null);
         }
     }
 
-    protected void onDefaultStopChain() {
+    protected void onDefaultStopChain(Throwable throwable) {
 
     }
 

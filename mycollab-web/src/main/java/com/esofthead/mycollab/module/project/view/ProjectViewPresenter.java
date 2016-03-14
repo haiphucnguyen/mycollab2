@@ -29,8 +29,8 @@ import com.esofthead.mycollab.vaadin.mvp.IPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
+import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 
@@ -72,7 +72,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
     }
 
     @Override
-    protected void onDefaultStopChain() {
+    protected void onDefaultStopChain(Throwable throwable) {
         ProjectDashboardPresenter presenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
         presenter.go(this.view, null);
     }
