@@ -49,6 +49,7 @@ import com.vaadin.addon.touchkit.extensions.LocalStorage;
 import com.vaadin.addon.touchkit.extensions.LocalStorageCallback;
 import com.vaadin.addon.touchkit.extensions.OfflineMode;
 import com.vaadin.addon.touchkit.ui.NavigationManager;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Viewport;
 import com.vaadin.annotations.Widgetset;
@@ -73,6 +74,7 @@ import java.util.GregorianCalendar;
 @Theme(MyCollabVersion.THEME_MOBILE_VERSION)
 @Viewport("width=device-width, initial-scale=1")
 @Widgetset("com.esofthead.mycollab.widgetset.MyCollabMobileWidgetSet")
+@PreserveOnRefresh
 public class MobileApplication extends MyCollabUI {
     private static final long serialVersionUID = 1L;
     private static final Logger LOG = LoggerFactory.getLogger(MobileApplication.class);
