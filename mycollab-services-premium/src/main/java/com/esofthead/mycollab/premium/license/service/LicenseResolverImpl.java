@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.license.service;
+package com.esofthead.mycollab.premium.license.service;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
