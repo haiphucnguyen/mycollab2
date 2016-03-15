@@ -40,6 +40,14 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.10
+-----------------------------
+**Library Upgrades**
+
+**Improvements & New Features**
+
+* Support install MyCollab as windows service
+
 Version 5.2.9
 -----------------------------
 **Library Upgrades**

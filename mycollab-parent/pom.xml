@@ -456,14 +456,6 @@
             <url>http://repo.springsource.org/milestone</url>
         </repository>
     </repositories>
-    <!--
-    <pluginRepositories>
-        <pluginRepository>
-            <id>mycollab-bitbucket-plugin-repo</id>
-            <url>https://bitbucket.org/hainguyen/mycollab-repo/raw/master</url>
-        </pluginRepository>
-    </pluginRepositories>
-    -->
     <profiles>
         <profile>
             <id>sonar</id>
