@@ -1,0 +1,8 @@
+<service>
+    <id>mycollab</id>
+    <name>MyCollab, Open source project management software</name>
+    <description>This service runs MyCollab as windows service</description>
+    <executable>java</executable>
+    <arguments>-Xrs -Xmx256m -jar "%BASE%\..\executor.war" --httpPort=8080</arguments>
+    <logmode>rotate</logmode>
+</service>
