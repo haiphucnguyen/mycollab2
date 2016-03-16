@@ -7,7 +7,7 @@ CREATE TABLE `m_prj_invoice` (
   `amount` DOUBLE NOT NULL,
   `currentId` INT(11) NULL,
   `clientId` INT(10) UNSIGNED NOT NULL,
-  `contactUserFullName` VARCHAR(100) NOT NULL,
+  `contactUserFullName` VARCHAR(100) NULL,
   `sAccountId` INT(11) NOT NULL,
   `status` VARCHAR(45) NOT NULL,
   `note` VARCHAR(400) NULL,
@@ -45,3 +45,4 @@ ADD CONSTRAINT `FK_m_prj_invoice_4`
   REFERENCES `m_prj_project` (`id`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+ALTER TABLE `m_prj_invoice` ADD COLUMN `issueDate` DATETIME NOT NULL;

@@ -30,7 +30,6 @@ import com.vaadin.ui.TextField;
 import java.util.Arrays;
 
 /**
- * @param
  * @author MyCollab Ltd.
  * @since 3.0
  */

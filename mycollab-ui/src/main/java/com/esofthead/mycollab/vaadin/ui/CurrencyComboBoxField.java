@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.service.CurrencyService;
+import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -43,13 +44,11 @@ public class CurrencyComboBoxField extends CustomField<Integer> {
         currencyBox = new ComboBox();
         currencyBox.setItemCaptionMode(ItemCaptionMode.EXPLICIT);
 
-        CurrencyService currencyService = ApplicationContextUtil
-                .getSpringBean(CurrencyService.class);
+        CurrencyService currencyService = ApplicationContextUtil.getSpringBean(CurrencyService.class);
         List<Currency> currencyList = currencyService.getCurrencies();
         for (Currency currency : currencyList) {
             currencyBox.addItem(currency.getId());
-            currencyBox.setItemCaption(currency.getId(),
-                    String.format("%s (%s)", currency.getShortname(), currency.getSymbol()));
+            currencyBox.setItemCaption(currency.getId(), String.format("%s (%s)", currency.getShortname(), currency.getSymbol()));
         }
     }
 

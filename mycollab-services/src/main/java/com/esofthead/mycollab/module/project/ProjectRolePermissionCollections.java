@@ -26,6 +26,8 @@ public class ProjectRolePermissionCollections {
 
     public static final String MILESTONES = "Milestone";
 
+    public static final String INVOICE = "Invoice";
+
     public static final String TASKS = "Task";
 
     public static final String BUGS = "Bug";
@@ -45,6 +47,6 @@ public class ProjectRolePermissionCollections {
     public static final String PROJECT = "Project";
 
     public static final String[] PROJECT_PERMISSIONS = {MESSAGES, MILESTONES,
-            TASKS, BUGS, COMPONENTS, VERSIONS, PAGES, RISKS, USERS,
+            TASKS, BUGS, COMPONENTS, VERSIONS, PAGES, RISKS, INVOICE, USERS,
             ROLES, PROJECT};
 }
