@@ -36,3 +36,12 @@ ALTER TABLE `m_prj_invoice`
     ADD COLUMN `type` VARCHAR(45) NOT NULL;
 ALTER TABLE `m_prj_invoice`
     ADD COLUMN `noId` VARCHAR(45);
+ALTER TABLE `m_prj_invoice`
+ADD COLUMN `projectId` INT(10) UNSIGNED NOT NULL,
+ADD INDEX `FK_m_prj_invoice_4_idx` (`projectId` ASC);
+ALTER TABLE `m_prj_invoice`
+ADD CONSTRAINT `FK_m_prj_invoice_4`
+  FOREIGN KEY (`projectId`)
+  REFERENCES `m_prj_project` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;

@@ -16,10 +16,14 @@
  */
 package com.esofthead.mycollab.module.project.domain.criteria
 
+import com.esofthead.mycollab.core.arguments.SearchCriteria
+import com.esofthead.mycollab.core.db.query.{DateParam, PropertyListParam}
+
 /**
   * @author MyCollab Ltd
   * @since 5.2.10
   */
-class InvoiceSearchCriteria {
-  
+class InvoiceSearchCriteria extends SearchCriteria {
+  val p_createddate = new DateParam("invoice-createddate", null, "m_prj_invoice", "createdTime")
+  val p_status = new PropertyListParam("invoice-status", null, "m_prj_invoice", "status")
 }

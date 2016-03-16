@@ -46,6 +46,7 @@ Version 5.2.10
 
 **Improvements & New Features**
 
+* [Premium] Invoice management in project
 * Support install MyCollab as windows service
 
 Version 5.2.9
