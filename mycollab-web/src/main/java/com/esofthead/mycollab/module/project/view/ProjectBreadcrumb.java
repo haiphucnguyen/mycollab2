@@ -556,6 +556,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
                 AppContext.getMessage(BreadcrumbI18nEnum.FRA_TIME_TRACKING));
     }
 
+    public void gotoInvoiceView() {
+        this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.INVOICE)));
+        AppContext.addFragment(
+                ProjectLinkGenerator.generateInvoiceListLink(project.getId()),
+                "Project Invoices");
+    }
+
     public void gotoFileList() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.FILES)));

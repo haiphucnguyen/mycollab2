@@ -17,11 +17,12 @@
 package com.esofthead.mycollab.module.project.view.time;
 
 import com.esofthead.mycollab.vaadin.mvp.PageView;
+import com.vaadin.ui.Component;
 
 /**
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface ITimeTrackingContainer extends PageView {
-
+public interface IFinanceContainer extends PageView {
+    Component gotoSubView(String name);
 }

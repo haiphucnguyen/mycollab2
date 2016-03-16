@@ -127,8 +127,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             endDateField.setResolution(Resolution.DAY);
             endDateField.setValue(boundWeekDays[1]);
 
-
-            this.groupField = new ValueComboBox(false, "Date", "User");
+            groupField = new ValueComboBox(false, "Date", "User");
             groupField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -136,7 +135,7 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
                 }
             });
 
-            this.orderField = new ItemOrderComboBox();
+            orderField = new ItemOrderComboBox();
             orderField.addValueChangeListener(new Property.ValueChangeListener() {
                 @Override
                 public void valueChange(Property.ValueChangeEvent event) {
@@ -190,7 +189,6 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             return bodyWrap;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         protected SearchCriteria fillUpSearchCriteria() {
             ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();

@@ -34,7 +34,7 @@ public class ProjectVerticalTabsheet extends VerticalTabsheet {
     private Button toogleBtn;
 
     @Override
-    protected void setDefaulButtonIcon(Component btn, Boolean selected) {
+    protected void setDefaultButtonIcon(Component btn, Boolean selected) {
         ButtonTabImpl btnTabImpl = (ButtonTabImpl) btn;
         String tabId = btnTabImpl.getTabId();
 

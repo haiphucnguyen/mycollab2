@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
+import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -23,9 +25,8 @@ public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingLis
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        TimeTrackingContainer timeContainer = (TimeTrackingContainer) container;
-        timeContainer.removeAllComponents();
-        timeContainer.addComponent(view.getWidget());
+        FinanceContainer timeContainer = (FinanceContainer) container;
+        timeContainer.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME));
         view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
         ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);

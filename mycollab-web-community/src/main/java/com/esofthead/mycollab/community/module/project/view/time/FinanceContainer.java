@@ -16,17 +16,21 @@
  */
 package com.esofthead.mycollab.community.module.project.view.time;
 
-import com.esofthead.mycollab.module.project.view.time.ITimeTrackingContainer;
+import com.esofthead.mycollab.module.project.view.time.IFinanceContainer;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.view.NotPresentedView;
+import com.vaadin.ui.Component;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
  */
 @ViewComponent
-public class TimeTrackingContainer extends NotPresentedView implements
-		ITimeTrackingContainer {
-	private static final long serialVersionUID = 1L;
+public class FinanceContainer extends NotPresentedView implements IFinanceContainer {
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public Component gotoSubView(String name) {
+        return null;
+    }
 }

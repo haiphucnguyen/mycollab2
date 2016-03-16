@@ -167,6 +167,10 @@ public class ProjectLinkGenerator {
         return "project/time/list/" + UrlEncodeDecoder.encode(projectId);
     }
 
+    public static String generateInvoiceListLink(Integer projectId) {
+        return "project/invoice/list/" + UrlEncodeDecoder.encode(projectId);
+    }
+
     public static String generateRolePreviewLink(Integer projectId, Integer roleId) {
         return "project/role/preview/" + GenericLinkUtils.encodeParam(projectId, roleId);
     }

@@ -101,7 +101,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
 
         final SelectionBox displayStandupSelection = new SelectionBox(
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP),
-                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 

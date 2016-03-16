@@ -18,8 +18,8 @@ package com.esofthead.mycollab.community.module.project.view.time;
 
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectView;
-import com.esofthead.mycollab.module.project.view.time.ITimeTrackingContainer;
-import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
+import com.esofthead.mycollab.module.project.view.time.IFinanceContainer;
+import com.esofthead.mycollab.module.project.view.time.IFinancePresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
@@ -29,11 +29,11 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public class TimeTrackingPresenter extends AbstractPresenter<ITimeTrackingContainer> implements ITimeTrackingPresenter {
+public class FinancePresenter extends AbstractPresenter<IFinanceContainer> implements IFinancePresenter {
 	private static final long serialVersionUID = 1L;
 
-	public TimeTrackingPresenter() {
-		super(ITimeTrackingContainer.class);
+	public FinancePresenter() {
+		super(IFinanceContainer.class);
 	}
 
 	@Override

@@ -14,23 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with mycollab-services.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.esofthead.mycollab.module.project.domain.criteria;
+package com.esofthead.mycollab.module.project.domain.criteria
 
-import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-
-public class FollowingTicketSearchCriteria extends MonitorSearchCriteria {
-    private static final long serialVersionUID = 1L;
-
-    private StringSearchField summary;
-
-
-    public StringSearchField getSummary() {
-        return summary;
-    }
-
-
-    public void setSummary(StringSearchField summary) {
-        this.summary = summary;
-    }
+/**
+  * @author MyCollab Ltd
+  * @since 5.2.10
+  */
+class InvoiceSearchCriteria {
+  
 }

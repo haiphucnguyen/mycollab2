@@ -147,7 +147,7 @@ public class VerticalTabsheet extends CustomComponent {
             });
 
             if (resource == null) {
-                setDefaulButtonIcon(button, false);
+                setDefaultButtonIcon(button, false);
             } else {
                 button.setIcon(resource);
             }
@@ -238,7 +238,7 @@ public class VerticalTabsheet extends CustomComponent {
             selectedButton = btn;
             clearTabSelection(true);
             selectedButton.addStyleName(TAB_SELECTED_STYLENAME);
-            setDefaulButtonIcon(selectedButton, true);
+            setDefaultButtonIcon(selectedButton, true);
             selectedComp = tab;
             tabContainer.removeAllComponents();
             tabContainer.addComponent(tab.getComponent());
@@ -284,7 +284,7 @@ public class VerticalTabsheet extends CustomComponent {
                 Component btn = iterator.next();
                 if (btn.getStyleName().contains(TAB_SELECTED_STYLENAME)) {
                     btn.removeStyleName(TAB_SELECTED_STYLENAME);
-                    setDefaulButtonIcon(btn, false);
+                    setDefaultButtonIcon(btn, false);
                 }
             }
         } else {
@@ -305,7 +305,7 @@ public class VerticalTabsheet extends CustomComponent {
         return this.navigatorWrapper;
     }
 
-    protected void setDefaulButtonIcon(Component btn, Boolean selected) {
+    protected void setDefaultButtonIcon(Component btn, Boolean selected) {
 
     }
 

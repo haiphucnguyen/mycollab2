@@ -22,6 +22,6 @@ import com.esofthead.mycollab.vaadin.mvp.IPresenter;
  * @author MyCollab Ltd.
  * @since 1.0
  */
-public interface ITimeTrackingPresenter extends IPresenter<ITimeTrackingContainer> {
+public interface IFinancePresenter extends IPresenter<IFinanceContainer> {
 
 }

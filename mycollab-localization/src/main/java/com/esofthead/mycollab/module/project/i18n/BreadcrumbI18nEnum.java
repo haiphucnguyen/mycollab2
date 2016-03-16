@@ -34,6 +34,7 @@ public enum BreadcrumbI18nEnum {
     VERSIONS,
     COMPONENTS,
     TIME_TRACKING,
+    INVOICE,
     FILES,
     CALENDAR,
     STANDUP,
@@ -42,10 +43,6 @@ public enum BreadcrumbI18nEnum {
 
     FRA_MESSAGE_READ,
     FRA_TASK_DASHBOARD,
-    FRA_TASKGROUP_REORDER,
-    FRA_TASKGROUP_NEW,
-    FRA_TASKGROUP_READ,
-    FRA_TASKGROUP_EDIT,
     FRA_TASK_NEW,
     FRA_TASK_READ,
     FRA_TASK_EDIT,

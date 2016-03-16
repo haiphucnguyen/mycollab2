@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.AsyncInvoker;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
 import com.esofthead.mycollab.vaadin.web.ui.SplitButton;
@@ -39,10 +40,11 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -65,7 +67,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     private ItemTimeLoggingSearchPanel searchPanel;
     private VerticalLayout timeTrackingWrapper;
     private SplitButton exportButtonControl;
-    private final Label lbTimeRange;
+    private final ELabel lbTimeRange;
 
     private ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange> timeEntryChangeHandler = new
             ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange>() {
@@ -76,9 +78,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             };
 
     public TimeTrackingListViewImpl() {
-        this.setMargin(new MarginInfo(false, true, false, true));
-
-        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withSpacing(false).withWidth("100%");
+        this.setMargin(new MarginInfo(false, true, true, true));
+        final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(true).withSpacing(false).withWidth("100%");
 
         itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
@@ -101,12 +102,10 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             }
         });
 
-
         final MHorizontalLayout headerLayout = new MHorizontalLayout().withWidth("100%");
         headerWrapper.addComponent(headerLayout);
 
-        lbTimeRange = new Label("", ContentMode.HTML);
-        lbTimeRange.addStyleName(ValoTheme.LABEL_H3);
+        lbTimeRange = ELabel.h3("");
 
         Button exportBtn = new Button("Export", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -204,7 +203,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         this.searchCriteria = searchCriteria;
         refresh();
     }
-
 
     private void refresh() {
         this.setTimeRange();

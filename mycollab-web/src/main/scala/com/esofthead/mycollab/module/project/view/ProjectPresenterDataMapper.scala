@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
 import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter
-import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter
+import com.esofthead.mycollab.module.project.view.time.IFinancePresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
 import com.esofthead.mycollab.vaadin.mvp.{IPresenter, ScreenData}
 
@@ -95,7 +95,7 @@ object ProjectPresenterDataMapper {
     classOf[VersionScreenData.Search] -> classOf[UserSettingPresenter])
 
   val timeMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
-    classOf[TimeTrackingScreenData.Search] -> classOf[ITimeTrackingPresenter])
+    classOf[TimeTrackingScreenData.Search] -> classOf[IFinancePresenter])
 
   val fileMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
     classOf[FileScreenData.GotoDashboard] -> classOf[FilePresenter])

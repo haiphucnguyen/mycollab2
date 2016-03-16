@@ -45,7 +45,7 @@ import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
 import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
-import com.esofthead.mycollab.module.project.view.time.ITimeTrackingPresenter;
+import com.esofthead.mycollab.module.project.view.time.IFinancePresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectInfoComponent;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -111,7 +111,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         private PagePresenter pagePresenter;
         private FilePresenter filePresenter;
         private IRiskPresenter riskPresenter;
-        private ITimeTrackingPresenter timePresenter;
+        private IFinancePresenter financePresenter;
         private UserSettingPresenter userPresenter;
         private IStandupPresenter standupPresenter;
 
@@ -155,12 +155,12 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                         criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
                         userPresenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
-                    } else if (ProjectTypeConstants.TIME.equals(caption)) {
+                    } else if (ProjectTypeConstants.FINANCE.equals(caption)) {
                         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
                         searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                                 VariableInjecter.THIS_WEEK));
-                        timePresenter.go(ProjectViewImpl.this, new TimeTrackingScreenData.Search(searchCriteria));
+                        financePresenter.go(ProjectViewImpl.this, new TimeTrackingScreenData.Search(searchCriteria));
                     } else if (ProjectTypeConstants.STANDUP.equals(caption)) {
                         StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
                         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
@@ -275,8 +275,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
             }
 
             if (CurrentProjectVariables.hasTimeFeature()) {
-                myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.TIME, 10,
-                        AppContext.getMessage(ProjectCommonI18nEnum.VIEW_TIME),
+                myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.FINANCE, 10,
+                        AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimeReportLink(prjId));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.TIME);
@@ -284,7 +284,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
 
             if (CurrentProjectVariables.hasStandupFeature()) {
                 myProjectTab.addTab(constructProjectStandupMeeting(), ProjectTypeConstants.STANDUP, 11,
-                        AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDAUP),
+                        AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink(prjId));
             } else {
                 myProjectTab.removeTab(ProjectTypeConstants.STANDUP);
@@ -328,8 +328,8 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         }
 
         private Component constructTimeTrackingComponent() {
-            timePresenter = PresenterResolver.getPresenter(ITimeTrackingPresenter.class);
-            return timePresenter.getView();
+            financePresenter = PresenterResolver.getPresenter(IFinancePresenter.class);
+            return financePresenter.getView();
         }
 
         private Component constructProjectStandupMeeting() {

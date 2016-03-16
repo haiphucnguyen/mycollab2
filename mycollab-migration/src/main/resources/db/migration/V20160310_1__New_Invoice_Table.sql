@@ -10,7 +10,7 @@ CREATE TABLE `m_prj_invoice` (
   `contactUserFullName` VARCHAR(100) NOT NULL,
   `sAccountId` INT(11) NOT NULL,
   `status` VARCHAR(45) NOT NULL,
-  `note` VARCHAR(400) NOT NULL,
+  `note` VARCHAR(400) NULL,
   `description` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_m_prj_invoice_1_idx` (`currentId` ASC),
@@ -31,3 +31,8 @@ CREATE TABLE `m_prj_invoice` (
     REFERENCES `s_account` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
+
+ALTER TABLE `m_prj_invoice`
+    ADD COLUMN `type` VARCHAR(45) NOT NULL;
+ALTER TABLE `m_prj_invoice`
+    ADD COLUMN `noId` VARCHAR(45);
