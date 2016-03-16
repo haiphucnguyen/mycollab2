@@ -32,7 +32,7 @@ import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver
 import com.esofthead.mycollab.module.project.view.settings._
 import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver
-import com.esofthead.mycollab.module.project.view.time.TimeUrlResolver
+import com.esofthead.mycollab.module.project.view.time.{InvoiceUrlResolver, TimeUrlResolver}
 import com.esofthead.mycollab.shell.events.ShellEvent
 import com.esofthead.mycollab.spring.ApplicationContextUtil
 import com.esofthead.mycollab.vaadin.AppContext
@@ -60,6 +60,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("role", new RoleUrlResolver)
     this.addSubResolver("setting", new SettingUrlResolver)
     this.addSubResolver("time", new TimeUrlResolver)
+    this.addSubResolver("invoice", new InvoiceUrlResolver)
     this.addSubResolver("file", new ProjectFileUrlResolver)
     this.addSubResolver("component", new ComponentUrlResolver)
     this.addSubResolver("version", new VersionUrlResolver)

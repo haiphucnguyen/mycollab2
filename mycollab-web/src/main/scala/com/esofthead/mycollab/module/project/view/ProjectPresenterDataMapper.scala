@@ -95,7 +95,8 @@ object ProjectPresenterDataMapper {
     classOf[VersionScreenData.Search] -> classOf[UserSettingPresenter])
 
   val timeMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
-    classOf[TimeTrackingScreenData.Search] -> classOf[IFinancePresenter])
+    classOf[TimeTrackingScreenData.Search] -> classOf[IFinancePresenter],
+    classOf[InvoiceScreenData.GotoInvoiceList] -> classOf[IFinancePresenter])
 
   val fileMapper = Map[Class[_ <: ScreenData[_]], Class[_ <: IPresenter[_]]](
     classOf[FileScreenData.GotoDashboard] -> classOf[FilePresenter])

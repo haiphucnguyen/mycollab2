@@ -22,10 +22,11 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     private MVerticalLayout bodyContent;
     private Button favoriteBtn;
 
-    public AbstractPreviewItemComp(String headerText, Resource iconResource) {
+    public AbstractPreviewItemComp(String headerText, FontAwesome iconResource) {
         this(headerText, iconResource, null);
     }
 
@@ -65,7 +66,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         initContent();
     }
 
-    public AbstractPreviewItemComp(String headerText, Resource iconResource, ReadViewLayout layout) {
+    public AbstractPreviewItemComp(String headerText, FontAwesome iconResource, ReadViewLayout layout) {
         ELabel headerLbl = ELabel.h3("");
         headerLbl.setSizeUndefined();
 
@@ -75,14 +76,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         ((MHorizontalLayout) header).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {
-            if (iconResource instanceof FontAwesome) {
-                String title = ((FontAwesome) iconResource).getHtml() + " " + headerText;
-                headerLbl.setValue(title);
-            } else {
-                Image titleIcon = new Image(null, iconResource);
-                ((MHorizontalLayout) header).with(titleIcon).withAlign(titleIcon, Alignment.MIDDLE_LEFT);
-                headerLbl.setValue(headerText);
-            }
+            String title = iconResource.getHtml() + " " + headerText;
+            headerLbl.setValue(title);
         } else {
             headerLbl.setValue(headerText);
         }
