@@ -130,6 +130,12 @@ public class Executor {
 
         if (!isStop) {
             LOG.info("Start MyCollab server process");
+            Runtime.getRuntime().addShutdownHook(new Thread(){
+                @Override
+                public void run() {
+
+                }
+            });
             final ServerSocket serverSocket = new ServerSocket(listenPort);
             final MyCollabProcessRunner process = new MyCollabProcessRunner(processRunningPort, listenPort, stopKey);
             final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
