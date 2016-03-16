@@ -3,22 +3,12 @@ package com.esofthead.mycollab;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.zeroturnaround.exec.ProcessExecutor;
-import org.zeroturnaround.exec.StartedProcess;
-import org.zeroturnaround.process.JavaProcess;
-import org.zeroturnaround.process.Processes;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -102,9 +92,12 @@ public class Executor {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        boolean isStop = false;
 
+    private int listenPort;
+    private String stopKey;
+
+    private void runServer(String[] args) throws Exception {
+        boolean isStop = false;
         String stopKeyVal = "";
 
         int processRunningPort = 8080;
@@ -123,17 +116,18 @@ public class Executor {
             }
         } catch (Exception e) {
             LOG.error("Error in parsing arguments", e);
+            return;
         }
 
-        final int listenPort = listenPortVal;
-        final String stopKey = stopKeyVal;
+        listenPort = listenPortVal;
+        stopKey = stopKeyVal;
 
         if (!isStop) {
             LOG.info("Start MyCollab server process");
-            Runtime.getRuntime().addShutdownHook(new Thread(){
+            Runtime.getRuntime().addShutdownHook(new Thread() {
                 @Override
                 public void run() {
-
+                    stopServer();
                 }
             });
             final ServerSocket serverSocket = new ServerSocket(listenPort);
@@ -179,15 +173,23 @@ public class Executor {
             clientProcessingPool.submit(serverTask);
             process.start();
         } else {
-            LOG.info("Kill MyCollab server process");
-            try (Socket socket = new Socket("localhost", listenPort);
-                 OutputStream outputStream = socket.getOutputStream();
-                 DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
-                dataOutputStream.writeUTF("STOP:" + stopKey);
-            } catch (Exception e) {
-                LOG.error("Error while send RELOAD request to the host process", e);
-            }
-            System.exit(-1);
+            stopServer();
         }
+    }
+
+    private void stopServer() {
+        LOG.info("Kill MyCollab server process");
+        try (Socket socket = new Socket("localhost", listenPort);
+             OutputStream outputStream = socket.getOutputStream();
+             DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
+            dataOutputStream.writeUTF("STOP:" + stopKey);
+        } catch (Exception e) {
+            LOG.error("Error while send RELOAD request to the host process", e);
+        }
+        System.exit(-1);
+    }
+
+    public static void main(String[] args) throws Exception {
+        new Executor().runServer(args);
     }
 }
