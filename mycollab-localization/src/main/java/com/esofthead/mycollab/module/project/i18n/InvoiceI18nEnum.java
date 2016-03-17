@@ -19,6 +19,7 @@ public enum InvoiceI18nEnum {
     FORM_STATUS,
     FORM_TYPE,
     FORM_CONTACT_PERSON,
+    FORM_AMOUNT,
     FIX_PRICE,
     TIME_MATERIAL
 }

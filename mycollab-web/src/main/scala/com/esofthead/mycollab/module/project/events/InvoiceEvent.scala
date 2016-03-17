@@ -10,4 +10,5 @@ object InvoiceEvent {
 
   class GotoList(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
+  class NewInvoiceAdded(source: AnyRef, data: Integer) extends ApplicationEvent(source, data) {}
 }

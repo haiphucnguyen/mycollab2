@@ -18,7 +18,7 @@
         #set($searchCriteria = $_parameter.searchCriteria)
 
         #ifnotnull($searchCriteria.saccountid)
-            ${searchCriteria.saccountid.operation} m_prj_milestone.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
+            ${searchCriteria.saccountid.operation} m_prj_invoice.sAccountId = @{searchCriteria.saccountid.value,jdbcType=NUMERIC}
         #end
 
         #selectExpr($searchCriteria.extraFields)

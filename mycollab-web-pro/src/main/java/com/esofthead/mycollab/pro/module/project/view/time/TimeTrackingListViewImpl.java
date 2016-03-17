@@ -78,12 +78,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             };
 
     public TimeTrackingListViewImpl() {
-        this.setMargin(new MarginInfo(false, true, true, true));
+        this.setMargin(false);
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(true).withSpacing(false).withWidth("100%");
 
         itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
         searchPanel = new ItemTimeLoggingSearchPanel();
+        searchPanel.addStyleName("hdr-view");
         searchPanel.addSearchHandler(new SearchHandler<ItemTimeLoggingSearchCriteria>() {
             @Override
             public void onSearch(ItemTimeLoggingSearchCriteria criteria) {

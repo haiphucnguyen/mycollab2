@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
+import com.esofthead.mycollab.module.project.events.InvoiceEvent;
+import com.esofthead.mycollab.module.project.service.InvoiceService;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
@@ -21,7 +25,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 5.2.10
  */
 public class InvoiceAddWindow extends Window {
-    InvoiceAddWindow(SimpleInvoice invoice) {
+    InvoiceAddWindow(final SimpleInvoice invoice) {
         if (invoice.getId() == null) {
             setCaption("New invoice");
         } else {
@@ -46,7 +50,16 @@ public class InvoiceAddWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 if (editBeanForm.validateForm()) {
-
+                    InvoiceService invoiceService = ApplicationContextUtil.getSpringBean(InvoiceService.class);
+                    Integer invoiceId;
+                    if (invoice.getId() == null) {
+                        invoiceId = invoiceService.saveWithSession(invoice, AppContext.getUsername());
+                    } else {
+                        invoiceService.updateWithSession(invoice, AppContext.getUsername());
+                        invoiceId = invoice.getId();
+                    }
+                    EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoiceId));
+                    close();
                 }
             }
         });

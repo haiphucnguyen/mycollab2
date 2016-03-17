@@ -24,6 +24,7 @@ import com.esofthead.mycollab.core.db.query.{DateParam, PropertyListParam}
   * @since 5.2.10
   */
 class InvoiceSearchCriteria extends SearchCriteria {
-  val p_createddate = new DateParam("invoice-createddate", null, "m_prj_invoice", "createdTime")
-  val p_status = new PropertyListParam("invoice-status", null, "m_prj_invoice", "status")
+  val p_createdDate = new DateParam("invoice-createddate", null, "m_prj_invoice", "createdTime")
+  val p_status = new PropertyListParam[String]("invoice-status", null, "m_prj_invoice", "status")
+  val p_projectIds = new PropertyListParam[Integer]("invoice-projectid", null, "m_prj_invoice", "projectId")
 }

@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.domain.criteria.InvoiceSearchCriteria;
+import com.esofthead.mycollab.module.project.events.InvoiceEvent;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.InvoiceService;
@@ -18,6 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -30,7 +33,17 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 @ViewComponent
 public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceContainer {
 
-    private InvoiceSearchCriteria searchCriteria;
+    private ApplicationEventListener<InvoiceEvent.NewInvoiceAdded> newInvoiceAddedHandler = new
+            ApplicationEventListener<InvoiceEvent.NewInvoiceAdded>() {
+                @Override
+                @Subscribe
+                public void handle(InvoiceEvent.NewInvoiceAdded event) {
+
+                }
+            };
+
+    private InvoiceListComp invoiceListComp;
+    private InvoiceReadView invoiceReadView;
 
     @Override
     public void display() {
@@ -44,9 +57,10 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         MHorizontalLayout bodyLayout = new MHorizontalLayout().withMargin(true);
         with(header, bodyLayout).expand(bodyLayout);
 
-        InvoiceListComp invoiceListComp = new InvoiceListComp();
-        InvoiceReadView invoiceReadView = new InvoiceReadView();
+        invoiceListComp = new InvoiceListComp();
+        invoiceReadView = new InvoiceReadView();
         bodyLayout.with(invoiceListComp, invoiceReadView).expand(invoiceReadView);
+        displayInvoices();
     }
 
     private HorizontalLayout createHeaderRight() {
@@ -68,6 +82,11 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
         layout.with(createBtn);
         return layout;
+    }
+
+    private void displayInvoices() {
+        InvoiceSearchCriteria searchCriteria = new InvoiceSearchCriteria();
+        invoiceListComp.setSearchCriteria(searchCriteria);
     }
 
     private static class InvoiceListComp extends DefaultBeanPagedList<InvoiceService, InvoiceSearchCriteria,

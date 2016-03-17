@@ -32,6 +32,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.DefaultPagedBeanTable;
 import com.vaadin.server.FontAwesome;
@@ -39,7 +40,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.viritin.fields.AbstractNumberField;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -65,11 +65,11 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     private boolean hasTimeChange = false;
     private Button addBtn;
     private Label totalSpentTimeLbl;
-    private NumericTextField newTimeInputField;
+    private DoubleField newTimeInputField;
     private CheckBox isBillableField;
     private DateFieldExt forDateField;
 
-    private NumericTextField remainTimeInputField;
+    private DoubleField remainTimeInputField;
     private Label remainTimeLbl;
 
     protected TimeLogEditWindow(final V bean) {
@@ -202,7 +202,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         addLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         spentTimePanel.addComponent(addLayout);
 
-        newTimeInputField = new NumericTextField();
+        newTimeInputField = new DoubleField();
         newTimeInputField.setWidth("80px");
 
         forDateField = new DateFieldExt();
@@ -250,7 +250,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         addLayout.setSizeUndefined();
         remainTimePanel.addComponent(addLayout);
 
-        remainTimeInputField = new NumericTextField();
+        remainTimeInputField = new DoubleField();
         remainTimeInputField.setWidth("80px");
         addLayout.addComponent(remainTimeInputField);
         addLayout.setComponentAlignment(remainTimeInputField, Alignment.MIDDLE_LEFT);
@@ -283,7 +283,6 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         setUpdateTimeValue();
     }
 
-    @SuppressWarnings("unchecked")
     private double getTotalInvest() {
         ItemTimeLoggingSearchCriteria searchCriteria = getItemSearchCriteria();
         return itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
@@ -326,28 +325,5 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
     protected double getUpdateRemainTime() {
         return remainTimeInputField.getValue();
-    }
-
-    private class NumericTextField extends AbstractNumberField<Double> {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        protected void userInputToValue(String str) {
-            try {
-                this.setValue(Double.valueOf(Double.parseDouble(str)));
-            } catch (Exception e) {
-                this.setValue(0d);
-            }
-        }
-
-        @Override
-        public Class<? extends Double> getType() {
-            return Double.class;
-        }
-
-        @Override
-        public void setWidth(String width) {
-            tf.setWidth(width);
-        }
     }
 }
