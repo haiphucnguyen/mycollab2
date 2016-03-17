@@ -443,6 +443,7 @@
     border: 1px solid $my-separator-color;
     background-color:#FFF;
     width: 100%;
+    overflow-y: auto;
 
     .taskrow {
       padding: 10px;
@@ -456,6 +457,10 @@
         @include hover-effect;
       }
     }
+  }
+
+  .selected {
+    background-color: darken($my-hover-background-color, 10%);
   }
 
   /* GANTT */

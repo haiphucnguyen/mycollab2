@@ -64,7 +64,6 @@ public class BugSelectionWindow extends Window {
             public void onSearch(BugSearchCriteria criteria) {
                 tableItem.setSearchCriteria(criteria);
             }
-
         });
         layout.addComponent(contactSimpleSearchPanel);
         createBugList();

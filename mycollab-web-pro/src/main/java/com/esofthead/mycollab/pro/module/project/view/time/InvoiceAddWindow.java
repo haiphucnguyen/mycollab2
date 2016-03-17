@@ -51,14 +51,14 @@ public class InvoiceAddWindow extends Window {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 if (editBeanForm.validateForm()) {
                     InvoiceService invoiceService = ApplicationContextUtil.getSpringBean(InvoiceService.class);
-                    Integer invoiceId;
+
                     if (invoice.getId() == null) {
-                        invoiceId = invoiceService.saveWithSession(invoice, AppContext.getUsername());
+                        invoiceService.saveWithSession(invoice, AppContext.getUsername());
                     } else {
                         invoiceService.updateWithSession(invoice, AppContext.getUsername());
-                        invoiceId = invoice.getId();
+                        invoice.getId();
                     }
-                    EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoiceId));
+                    EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoice));
                     close();
                 }
             }

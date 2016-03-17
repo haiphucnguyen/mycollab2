@@ -46,6 +46,12 @@ public class InvoiceDefaultFormLayoutFactory {
         mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.amount).displayName(AppContext
                 .getMessage(InvoiceI18nEnum.FORM_AMOUNT)).fieldIndex(7).build());
 
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.note).displayName(AppContext
+                .getMessage(InvoiceI18nEnum.FORM_NOTE)).fieldIndex(8).colSpan(true).build());
+
+        mainSection.addField(new TextDynaFieldBuilder().fieldName(Invoice.Field.description).displayName(AppContext
+                .getMessage(GenericI18Enum.FORM_DESCRIPTION)).fieldIndex(9).colSpan(true).build());
+
         defaultForm.addSection(mainSection);
     }
 

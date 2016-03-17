@@ -3,13 +3,14 @@ package com.esofthead.mycollab.pro.module.project.view.time;
 import com.esofthead.mycollab.module.project.domain.Invoice;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
+import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionField;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.CurrencyComboBoxField;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 /**
@@ -28,7 +29,7 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
         } else if (Invoice.Field.status.equalTo(propertyId)) {
             return new InvoiceStatusComboBox();
         } else if (Invoice.Field.assignuser.equalTo(propertyId)) {
-            return new ProjectMemberSelectionBox(true);
+            return new ProjectMemberSelectionField();
         } else if (Invoice.Field.noid.equalTo(propertyId)) {
             TextField field = new TextField();
             field.setRequired(true);
@@ -44,8 +45,13 @@ public class InvoiceEditFormFieldFactory extends AbstractBeanFieldGroupEditField
             attachForm.getBean().setType(InvoiceI18nEnum.FIX_PRICE.name());
             field.setRequired(true);
             return field;
+        } else if (Invoice.Field.description.equalTo(propertyId)) {
+            return new TextArea();
         } else if (Invoice.Field.amount.equalTo(propertyId)) {
-            return new DoubleField();
+            DoubleField field = new DoubleField();
+            field.setRequired(true);
+            field.setRequiredError("Amount can not be null");
+            return field;
         }
         return null;
     }

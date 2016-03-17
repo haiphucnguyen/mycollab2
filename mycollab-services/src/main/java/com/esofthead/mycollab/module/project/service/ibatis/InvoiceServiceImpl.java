@@ -16,12 +16,16 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
+import com.esofthead.mycollab.common.interceptor.aspect.ClassInfoMap;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
 import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.dao.InvoiceMapper;
 import com.esofthead.mycollab.module.project.dao.InvoiceMapperExt;
 import com.esofthead.mycollab.module.project.domain.Invoice;
@@ -38,9 +42,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Traceable(nameField = "note", extraFieldName = "projectid")
-@Watchable(userFieldName = "assignuser", extraTypeId = "projectid")
 public class InvoiceServiceImpl extends DefaultService<Integer, Invoice, InvoiceSearchCriteria> implements InvoiceService {
+
+    static {
+        ClassInfoMap.put(InvoiceServiceImpl.class, new ClassInfo(ModuleNameConstants.PRJ, ProjectTypeConstants.INVOICE));
+    }
 
     @Autowired
     private InvoiceMapper invoiceMapper;

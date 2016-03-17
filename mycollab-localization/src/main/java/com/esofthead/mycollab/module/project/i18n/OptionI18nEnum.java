@@ -58,7 +58,7 @@ public class OptionI18nEnum {
     @BaseName("localization/project-invoice-status")
     @LocaleData(value = {@Locale("en-US")}, defaultCharset = "UTF-8")
     public enum InvoiceStatus {
-        Paid, Sent, Scheduled
+        Paid, Sent, Scheduled, All
     }
 
     @BaseName("localization/project-task-priority")

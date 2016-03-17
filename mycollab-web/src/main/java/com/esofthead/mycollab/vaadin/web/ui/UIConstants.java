@@ -66,6 +66,9 @@ public class UIConstants {
     public static final String FLEX_DISPLAY = "flex";
     public static final String SCROLLABLE_CONTAINER = "scrollable-container";
 
+    public static final String BORDER_LIST = "tasklist";
+    public static final String BORDER_LIST_ROW = "taskrow";
+
     public static final int TABLE_CONTROL_WIDTH = 30;
     public static final int TABLE_ACTION_CONTROL_WIDTH = 40;
     public static final int TABLE_S_LABEL_WIDTH = 80;

@@ -17,6 +17,8 @@
   .v-gridlayout.colored-gridlayout {
     .gridform-caption, .gridform-field {
       @include margin-container(8px, 8px, 4px, 0px);
+    }
+    .v-gridlayout-slot {
       border-bottom: 1px solid $my-separator-color;
     }
     .gridform-field {
