@@ -54,11 +54,11 @@ public class InvoiceAddWindow extends Window {
 
                     if (invoice.getId() == null) {
                         invoiceService.saveWithSession(invoice, AppContext.getUsername());
+                        EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoice));
                     } else {
                         invoiceService.updateWithSession(invoice, AppContext.getUsername());
-                        invoice.getId();
+                        EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceUpdateAdded(this, invoice));
                     }
-                    EventBusFactory.getInstance().post(new InvoiceEvent.NewInvoiceAdded(this, invoice));
                     close();
                 }
             }

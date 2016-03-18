@@ -13,6 +13,10 @@ object InvoiceEvent {
 
   class NewInvoiceAdded(source: AnyRef, data: SimpleInvoice) extends ApplicationEvent(source, data) {}
 
+  class InvoiceUpdateAdded(source: AnyRef, data: SimpleInvoice) extends ApplicationEvent(source, data) {}
+
+  class InvoiceDelete(source: AnyRef, data: SimpleInvoice) extends ApplicationEvent(source, data) {}
+
   class DisplayInvoiceView(source: AnyRef, data: SimpleInvoice) extends ApplicationEvent(source, data) {}
 
 }

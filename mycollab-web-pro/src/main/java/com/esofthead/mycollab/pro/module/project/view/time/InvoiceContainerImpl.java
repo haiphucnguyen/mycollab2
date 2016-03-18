@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
@@ -10,9 +11,11 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.domain.criteria.InvoiceSearchCriteria;
 import com.esofthead.mycollab.module.project.events.InvoiceEvent;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.InvoiceService;
+import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.esofthead.mycollab.module.project.ui.format.InvoiceFieldFormatter;
@@ -23,14 +26,16 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.*;
-import com.esofthead.vaadin.floatingcomponent.FloatingComponent;
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
+import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -50,7 +55,27 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                 @Subscribe
                 public void handle(InvoiceEvent.NewInvoiceAdded event) {
                     SimpleInvoice newInvoice = (SimpleInvoice) event.getData();
-                    updateNewInvoice(newInvoice);
+                    insertNewInvoiceAdded(newInvoice);
+                }
+            };
+
+    private ApplicationEventListener<InvoiceEvent.InvoiceUpdateAdded> updateInvoiceAddedHandler = new
+            ApplicationEventListener<InvoiceEvent.InvoiceUpdateAdded>() {
+                @Override
+                @Subscribe
+                public void handle(InvoiceEvent.InvoiceUpdateAdded event) {
+                    SimpleInvoice newInvoice = (SimpleInvoice) event.getData();
+                    updateInvoiceAdded(newInvoice);
+                }
+            };
+
+    private ApplicationEventListener<InvoiceEvent.InvoiceDelete> deleteInvoiceHandler = new
+            ApplicationEventListener<InvoiceEvent.InvoiceDelete>() {
+                @Override
+                @Subscribe
+                public void handle(InvoiceEvent.InvoiceDelete event) {
+                    SimpleInvoice newInvoice = (SimpleInvoice) event.getData();
+                    displayInvoices(invoiceStatus);
                 }
             };
 
@@ -63,12 +88,16 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     @Override
     public void attach() {
         EventBusFactory.getInstance().register(newInvoiceAddedHandler);
+        EventBusFactory.getInstance().register(updateInvoiceAddedHandler);
+        EventBusFactory.getInstance().register(deleteInvoiceHandler);
         super.attach();
     }
 
     @Override
     public void detach() {
         EventBusFactory.getInstance().unregister(newInvoiceAddedHandler);
+        EventBusFactory.getInstance().unregister(updateInvoiceAddedHandler);
+        EventBusFactory.getInstance().unregister(deleteInvoiceHandler);
         super.detach();
     }
 
@@ -89,8 +118,6 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         with(header, bodyLayout).expand(bodyLayout);
 
         invoiceListComp = new InvoiceListComp();
-        FloatingComponent floatingComponent = FloatingComponent.floatThis(invoiceListComp);
-        floatingComponent.setContainerId("invoice-body");
         invoiceReadView = new InvoiceReadView();
         bodyLayout.with(invoiceListComp, invoiceReadView).expand(invoiceReadView);
         statusComboBox.addValueChangeListener(new Property.ValueChangeListener() {
@@ -147,11 +174,18 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         }
     }
 
-    private void updateNewInvoice(SimpleInvoice invoice) {
+    private void insertNewInvoiceAdded(SimpleInvoice invoice) {
         if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(OptionI18nEnum.InvoiceStatus.All.name())) {
             Component newRow = invoiceListComp.insertRowAt(invoice, 0);
             EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
             invoiceListComp.setSelectedRow(newRow);
+        }
+    }
+
+    private void updateInvoiceAdded(SimpleInvoice invoice) {
+        if (invoice.getStatus().equals(invoiceStatus) || invoiceStatus.equals(OptionI18nEnum.InvoiceStatus.All.name())) {
+            displayInvoices(invoiceStatus);
+            EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
         }
     }
 
@@ -166,7 +200,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
         @Override
         protected String stringWhenEmptyList() {
-            return "No item";
+            return "No invoice";
         }
     }
 
@@ -185,6 +219,13 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             });
             invoiceLink.setCaptionAsHtml(true);
             layout.with(invoiceLink);
+            layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
+                @Override
+                public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
+                    EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
+                    host.setSelectedRow(layout);
+                }
+            });
             if (StringUtils.isNotBlank(invoice.getNote())) {
                 Label noteLbl = new Label(invoice.getNote());
                 layout.with(noteLbl);
@@ -216,6 +257,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                     }
                 };
 
+        private SimpleInvoice invoice;
         private AdvancedPreviewBeanForm<SimpleInvoice> previewForm;
         private ELabel headerLbl;
         private ProjectActivityComponent activityComponent;
@@ -234,13 +276,50 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
         InvoiceReadView() {
             this.setMargin(new MarginInfo(false, false, false, true));
-            MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).withWidth("100%");
-            header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+            MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
+            header.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             addComponent(header);
 
-            headerLbl = ELabel.h3("");
-            headerLbl.setSizeUndefined();
-            header.with(headerLbl);
+            headerLbl = ELabel.h3("").withStyleName(UIConstants.TEXT_ELLIPSIS);
+
+            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    UI.getCurrent().addWindow(new InvoiceAddWindow(invoice));
+                }
+            });
+            editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+            editBtn.setIcon(FontAwesome.EDIT);
+            editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.INVOICE));
+
+            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    ConfirmDialogExt.show(UI.getCurrent(),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
+                            AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_SINGLE_ITEM_MESSAGE),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_YES),
+                            AppContext.getMessage(GenericI18Enum.BUTTON_NO),
+                            new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        InvoiceService invoiceService = ApplicationContextUtil.getSpringBean(InvoiceService.class);
+                                        invoiceService.removeWithSession(invoice, AppContext.getUsername(), AppContext.getAccountId());
+                                        EventBusFactory.getInstance().post(new InvoiceEvent.InvoiceDelete(this, invoice));
+                                    }
+                                }
+                            });
+                }
+            });
+            deleteBtn.addStyleName(UIConstants.BUTTON_DANGER);
+            deleteBtn.setIcon(FontAwesome.TRASH_O);
+            deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.INVOICE));
+
+            MHorizontalLayout buttonControls = new MHorizontalLayout(editBtn, deleteBtn);
+            header.with(headerLbl, buttonControls).expand(headerLbl);
             previewForm = new AdvancedPreviewBeanForm<>();
             addComponent(previewForm);
 
@@ -250,6 +329,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         }
 
         void showInvoice(SimpleInvoice invoice) {
+            this.invoice = invoice;
             if (StringUtils.isBlank(invoice.getNote())) {
                 headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " + invoice.getNoid());
             } else {

@@ -102,7 +102,7 @@ public class BugSelectionWindow extends Window {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         fieldSelection.fireValueChange(bug);
-                        BugSelectionWindow.this.close();
+                        close();
                     }
                 });
 
