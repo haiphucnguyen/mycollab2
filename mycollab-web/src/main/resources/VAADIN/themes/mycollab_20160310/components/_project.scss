@@ -237,21 +237,21 @@
     -webkit-flex-wrap: wrap; /* Safari 6.1+ */
     flex-wrap: wrap;
     -ms-writing-mode:lr-tb;
-    padding: 0px 30px 10px 20px;
+    padding: 0px 30px 10px 30px;
   }
 
   .v-csslayout.tag-block {
     @include flex-compatible;
-    margin: 0px 6px 3px 6px;
-    background-color: #fdde86;
-    height: 25px;
+    margin: 0px 3px 3px 0px;
+    background-color: #fef0c9;
+    height: 30px;
     .v-button.link:focus .v-button-wrap, .v-button-wrap,  .v-pressed .v-button-wrap {
-      padding: 2px 5px 0px 5px;
+      padding: 2px 5px;
     }
     .v-button.remove-btn-sup {
       width: 20px;
       height: 25px;
-      background-color: #fdde86;
+      background-color: #fef0c9;
       .v-button-wrap {
         padding: 0px;
         margin: 0px;

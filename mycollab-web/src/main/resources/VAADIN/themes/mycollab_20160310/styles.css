@@ -15497,7 +15497,7 @@ div.v-csslayout.followers-container .v-checkbox {
 	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap;
 	-ms-writing-mode: lr-tb;
-	padding: 0px 30px 10px 20px;
+	padding: 0px 30px 10px 30px;
 }
 
 .v-csslayout.tag-block {
@@ -15506,19 +15506,19 @@ div.v-csslayout.followers-container .v-checkbox {
 	display: -ms-flexbox;
 	display: -webkit-flex;
 	display: flex;
-	margin: 0px 6px 3px 6px;
-	background-color: #fdde86;
-	height: 25px;
+	margin: 0px 3px 3px 0px;
+	background-color: #fef0c9;
+	height: 30px;
 }
 
 .v-csslayout.tag-block .v-button.link:focus .v-button-wrap, .v-csslayout.tag-block .v-button-wrap, .v-csslayout.tag-block .v-pressed .v-button-wrap {
-	padding: 2px 5px 0px 5px;
+	padding: 2px 5px;
 }
 
 .v-csslayout.tag-block .v-button.remove-btn-sup {
 	width: 20px;
 	height: 25px;
-	background-color: #fdde86;
+	background-color: #fef0c9;
 }
 
 .v-csslayout.tag-block .v-button.remove-btn-sup .v-button-wrap {

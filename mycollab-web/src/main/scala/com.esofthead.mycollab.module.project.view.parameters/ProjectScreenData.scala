@@ -31,6 +31,8 @@ object ProjectScreenData {
 
   class GotoTagList(params: Object) extends ScreenData[Object](params) {}
 
+  class GotoFavorite() extends ScreenData[Object](null) {}
+
   class SearchItem(params: String) extends ScreenData[String](params) {}
 
   class GotoGanttChart extends ScreenData {}

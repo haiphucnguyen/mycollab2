@@ -186,6 +186,17 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         tagBtn.setIcon(FontAwesome.TAGS);
         footer.addComponents(tagBtn);
 
+        Button favoriteBtn = new Button("Favorite", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoFavoriteView(this, null));
+            }
+        });
+        favoriteBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
+        favoriteBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        favoriteBtn.setIcon(FontAwesome.STAR);
+        footer.addComponents(favoriteBtn);
+
         headerLayout.with(headerLbl, footer);
 
         MHorizontalLayout topPanel = new MHorizontalLayout().withMargin(false);

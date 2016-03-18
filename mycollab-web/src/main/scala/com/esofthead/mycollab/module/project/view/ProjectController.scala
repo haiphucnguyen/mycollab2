@@ -36,6 +36,7 @@ import com.esofthead.mycollab.module.project.view.message.MessagePresenter
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter
 import com.esofthead.mycollab.module.project.view.page.PagePresenter
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData.Roadmap
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.GotoFavorite
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.GotoDashboard
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
@@ -84,6 +85,13 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         val tag = event.getData.asInstanceOf[Tag]
         val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
         presenter.go(projectView, new ProjectScreenData.GotoTagList(tag))
+      }
+    })
+
+    this.register(new ApplicationEventListener[ProjectEvent.GotoFavoriteView] {
+      @Subscribe def handle(event: ProjectEvent.GotoFavoriteView) {
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
+        presenter.go(projectView, new GotoFavorite())
       }
     })
 

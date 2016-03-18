@@ -32,6 +32,8 @@ object ProjectEvent {
 
   class GotoTagListView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
+  class GotoFavoriteView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
   class TimeLoggingChangedEvent(source: AnyRef) extends ApplicationEvent(source, null) {}
 
   class GotoCalendarView(source: AnyRef) extends ApplicationEvent(source, null) {}

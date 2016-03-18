@@ -20,6 +20,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.view.IFavoritePresenter;
 import com.esofthead.mycollab.module.project.view.ITagListPresenter;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectView;
@@ -69,7 +70,11 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
         } else if (data instanceof ProjectScreenData.GotoTagList) {
             ITagListPresenter presenter = PresenterResolver.getPresenter(ITagListPresenter.class);
             presenter.go(view, data);
-        } else if (data instanceof ProjectScreenData.SearchItem) {
+        } else if (data instanceof ProjectScreenData.GotoFavorite) {
+            IFavoritePresenter presenter = PresenterResolver.getPresenter(IFavoritePresenter.class);
+            presenter.go(view, data);
+        }
+        else if (data instanceof ProjectScreenData.SearchItem) {
             ProjectSearchItemPresenter presenter = PresenterResolver.getPresenter(ProjectSearchItemPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof ProjectScreenData.GotoGanttChart) {

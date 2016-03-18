@@ -47,7 +47,14 @@ Version 5.2.10
 **Improvements & New Features**
 
 * [Premium] Invoice management in project
+* [Premium] Favorite view in project
 * Support install MyCollab as windows service
+* Other minor improvements
+
+**Bug Fixes**
+
+* Form display badly when the field shows long text
+* Can not export report
 
 Version 5.2.9
 -----------------------------
