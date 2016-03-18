@@ -6,36 +6,30 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.*;
-import com.esofthead.mycollab.module.project.ui.form.ProjectItemViewField;
 import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
-import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.esofthead.mycollab.vaadin.web.ui.*;
-import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
-import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
-import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
+import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.UserLink;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.teemu.ratingstars.RatingStars;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
@@ -59,7 +53,7 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected AdvancedPreviewBeanForm<SimpleRisk> initPreviewForm() {
-        return new AdvancedPreviewBeanForm<>();
+        return new RiskPreviewForm();
     }
 
     @Override
@@ -107,13 +101,12 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
 
     @Override
     protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(ProjectTypeConstants.RISK,
-                RiskDefaultFormLayoutFactory.getForm(), Risk.Field.riskname.name());
+        return null;
     }
 
     @Override
     protected AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> initBeanFormFieldFactory() {
-        return new RiskReadFormFieldFactory(previewForm);
+        return null;
     }
 
     @Override
@@ -126,47 +119,6 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
         return ProjectTypeConstants.RISK;
     }
 
-    private static class RiskReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> {
-        private static final long serialVersionUID = 1L;
-
-        public RiskReadFormFieldFactory(GenericBeanForm<SimpleRisk> form) {
-            super(form);
-        }
-
-        @Override
-        protected Field<?> onCreateField(Object propertyId) {
-            SimpleRisk risk = attachForm.getBean();
-            if (Risk.Field.description.equalTo(propertyId)) {
-                return new RichTextViewField(risk.getDescription());
-            } else if (Risk.Field.level.equalTo(propertyId)) {
-                RatingStars tinyRs = new RatingStars();
-                tinyRs.setValue(risk.getLevel());
-                tinyRs.setReadOnly(true);
-                return tinyRs;
-            } else if (Risk.Field.status.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getStatus(), StatusI18nEnum.class);
-            } else if (Risk.Field.datedue.equalTo(propertyId)) {
-                return new DateViewField(risk.getDatedue());
-            } else if (Risk.Field.startdate.equalTo(propertyId)) {
-                return new DateViewField(risk.getStartdate());
-            } else if (Risk.Field.enddate.equalTo(propertyId)) {
-                return new DateViewField(risk.getEnddate());
-            } else if (Risk.Field.raisedbyuser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getRaisedbyuser(), risk.getRaisedByUserAvatarId(),
-                        risk.getRaisedByUserFullName());
-            } else if (Risk.Field.assigntouser.equalTo(propertyId)) {
-                return new ProjectUserFormLinkField(risk.getAssigntouser(), risk.getAssignToUserAvatarId(),
-                        risk.getAssignedToUserFullName());
-            } else if (Risk.Field.response.equalTo(propertyId)) {
-                return new RichTextViewField(risk.getResponse());
-            } else if (Risk.Field.milestoneid.equalTo(propertyId)) {
-                return new ProjectItemViewField(ProjectTypeConstants.MILESTONE, risk.getMilestoneid() + "",
-                        risk.getMilestoneName());
-            }
-
-            return null;
-        }
-    }
 
     @Override
     public SimpleRisk getItem() {

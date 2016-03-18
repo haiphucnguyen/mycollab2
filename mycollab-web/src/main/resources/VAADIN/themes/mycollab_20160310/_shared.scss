@@ -29,6 +29,10 @@
     font-size: $font-small;
   }
 
+  .cursor_pointer {
+    cursor: pointer;
+  }
+
   .v-filterselect-suggestmenu table {
     width:100%;
   }
@@ -127,7 +131,7 @@
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: $my-separator-color;
-    border-radius: 0px 0px 3px 3px;
+    border-radius: 0px;
     background: none no-repeat 0 0 #ffffff;
   }
 

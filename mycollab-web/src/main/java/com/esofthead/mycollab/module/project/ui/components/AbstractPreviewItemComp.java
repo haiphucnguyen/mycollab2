@@ -181,8 +181,16 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         initLayout();
         previewLayout.setTitle(initFormTitle());
 
-        previewForm.setFormLayoutFactory(initFormLayoutFactory());
-        previewForm.setBeanFormFieldFactory(initBeanFormFieldFactory());
+        IFormLayoutFactory formLayoutFactory = initFormLayoutFactory();
+        if (formLayoutFactory != null) {
+            previewForm.setFormLayoutFactory(formLayoutFactory);
+        }
+
+        AbstractBeanFieldGroupViewFieldFactory<B> fieldFactory = initBeanFormFieldFactory();
+        if (fieldFactory != null) {
+            previewForm.setBeanFormFieldFactory(fieldFactory);
+        }
+
         previewForm.setBean(item);
 
         if (favoriteBtn != null) {
@@ -255,8 +263,10 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
     abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
 
+    @Deprecated
     abstract protected IFormLayoutFactory initFormLayoutFactory();
 
+    @Deprecated
     abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
 
     protected ComponentContainer createExtraControls() {

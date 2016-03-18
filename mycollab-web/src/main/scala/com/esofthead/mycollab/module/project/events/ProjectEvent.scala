@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.events
 
 import com.esofthead.mycollab.eventmanager.ApplicationEvent
+import com.esofthead.mycollab.module.project.domain.ProjectGenericTask
 
 /**
   * @author MyCollab Ltd.
@@ -33,6 +34,8 @@ object ProjectEvent {
   class GotoTagListView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
 
   class GotoFavoriteView(source: AnyRef, data: AnyRef) extends ApplicationEvent(source, data) {}
+
+  class SelectFavoriteItem(source: AnyRef, data: ProjectGenericTask) extends ApplicationEvent(source, data) {}
 
   class TimeLoggingChangedEvent(source: AnyRef) extends ApplicationEvent(source, null) {}
 

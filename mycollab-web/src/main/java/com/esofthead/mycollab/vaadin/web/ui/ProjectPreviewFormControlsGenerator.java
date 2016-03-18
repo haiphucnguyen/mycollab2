@@ -223,7 +223,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
     }
 
     public void addOptionButton(Button button) {
-        button.setStyleName(UIConstants.BUTTON_LINK);
         button.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 2710916670115028630L;
 

@@ -1601,6 +1601,10 @@ a.pending {
 	font-size: 13px;
 }
 
+.cursor_pointer {
+	cursor: pointer;
+}
+
 .v-filterselect-suggestmenu table {
 	width: 100%;
 }
@@ -14197,6 +14201,10 @@ a.pending {
 .meta-info {
 	color: #999;
 	font-size: 13px;
+}
+
+.cursor_pointer {
+	cursor: pointer;
 }
 
 .v-filterselect-suggestmenu table {

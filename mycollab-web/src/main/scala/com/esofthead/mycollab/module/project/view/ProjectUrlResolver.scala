@@ -48,6 +48,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("dashboard", new ProjectDashboardUrlResolver)
     this.addSubResolver("edit", new ProjectEditUrlResolver)
     this.addSubResolver("tag", new ProjectTagUrlResolver)
+    this.addSubResolver("favorite", new ProjectFavoriteUrlResolver)
     this.addSubResolver("gantt", new GanttUrlResolver)
     this.addSubResolver("message", new MessageUrlResolver)
     this.addSubResolver("milestone", new MilestoneUrlResolver)
@@ -88,6 +89,15 @@ class ProjectUrlResolver extends UrlResolver {
       val projectId = new UrlTokenizer(params(0)).getInt
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new ProjectScreenData.GotoTagList(null))
+      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+    }
+  }
+
+  class ProjectFavoriteUrlResolver extends ProjectUrlResolver {
+    protected override def handlePage(params: String*) {
+      val projectId = new UrlTokenizer(params(0)).getInt
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+        new ProjectScreenData.GotoFavorite())
       EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }

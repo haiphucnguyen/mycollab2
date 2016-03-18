@@ -110,9 +110,8 @@
                     #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
                         @{extraId}
                     #end
-                    LIMIT 1)
                     AND s_favorite.extraTypeId = m_prj_risk.projectId AND s_favorite.type='Project-Risk' AND s_favorite.typeid=m_prj_risk.id
-            )
+                    LIMIT 1)
         #end
         ]]>
     </sql>
@@ -192,9 +191,8 @@
                     #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
                         @{extraId}
                     #end
-                    LIMIT 1)
                     AND s_favorite.extraTypeId = m_tracker_bug.projectId AND s_favorite.type='Project-Bug' AND s_favorite.typeid=m_tracker_bug.id
-            )
+                    LIMIT 1)
         #end
         ]]>
     </sql>
@@ -274,9 +272,8 @@
                     #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
                         @{extraId}
                     #end
+                    AND s_favorite.extraTypeId = m_prj_task.projectId AND s_favorite.type='Project-Task' AND s_favorite.typeid=m_prj_task.id
                     LIMIT 1)
-                    AND s_favorite.extraTypeId = m_prj_task.projectId AND s_favorite.type='Project-Risk' AND s_favorite.typeid=m_prj_task.id
-            )
         #end
         ]]>
     </sql>
@@ -356,9 +353,8 @@
                     #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
                         @{extraId}
                     #end
+                    AND s_favorite.extraTypeId = m_prj_milestone.projectId AND s_favorite.type='Project-Milestone' AND s_favorite.typeid=m_prj_milestone.id
                     LIMIT 1)
-                    AND s_favorite.extraTypeId = m_prj_milestone.projectId AND s_favorite.type='Project-Risk' AND s_favorite.typeid=m_prj_milestone.id
-            )
         #end
         ]]>
     </sql>

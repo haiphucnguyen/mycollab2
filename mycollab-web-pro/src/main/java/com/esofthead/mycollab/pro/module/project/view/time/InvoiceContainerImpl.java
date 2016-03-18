@@ -11,11 +11,9 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleInvoice;
 import com.esofthead.mycollab.module.project.domain.criteria.InvoiceSearchCriteria;
 import com.esofthead.mycollab.module.project.events.InvoiceEvent;
-import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.service.InvoiceService;
-import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
 import com.esofthead.mycollab.module.project.ui.format.InvoiceFieldFormatter;
@@ -26,13 +24,13 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.*;
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.event.LayoutEvents;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -207,18 +205,16 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     private static class InvoiceRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<SimpleInvoice> {
         @Override
         public Component generateRow(final AbstractBeanPagedList host, final SimpleInvoice invoice, int rowIndex) {
-            final MVerticalLayout layout = new MVerticalLayout().withStyleName(UIConstants.BORDER_LIST_ROW);
-            Button invoiceLink = new ButtonLink(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()
-                    + " " + invoice.getNoid() + " (" + AppContext.getMessage(OptionI18nEnum
-                    .InvoiceStatus.class, invoice.getStatus()) + ")", new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    EventBusFactory.getInstance().post(new InvoiceEvent.DisplayInvoiceView(this, invoice));
-                    host.setSelectedRow(layout);
-                }
-            });
-            invoiceLink.setCaptionAsHtml(true);
-            layout.with(invoiceLink);
+            final MVerticalLayout layout = new MVerticalLayout().withStyleName(UIConstants.BORDER_LIST_ROW)
+                    .withStyleName(UIConstants.CURSOR_POINTER);
+            ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " "
+                    + invoice.getNoid() + " (" + AppContext.getMessage(OptionI18nEnum.InvoiceStatus.class, invoice
+                    .getStatus()) + ")", ContentMode.HTML);
+            layout.addComponent(headerLbl);
+            if (StringUtils.isNotBlank(invoice.getNote())) {
+                Label noteLbl = new Label(invoice.getNote());
+                layout.with(noteLbl);
+            }
             layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                 @Override
                 public void layoutClick(LayoutEvents.LayoutClickEvent layoutClickEvent) {
@@ -226,10 +222,6 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                     host.setSelectedRow(layout);
                 }
             });
-            if (StringUtils.isNotBlank(invoice.getNote())) {
-                Label noteLbl = new Label(invoice.getNote());
-                layout.with(noteLbl);
-            }
             return layout;
         }
     }
