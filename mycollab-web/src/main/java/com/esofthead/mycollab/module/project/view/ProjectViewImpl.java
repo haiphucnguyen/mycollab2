@@ -17,10 +17,12 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
-import com.esofthead.mycollab.core.arguments.*;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.VariableInjecter;
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
@@ -30,7 +32,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -43,7 +44,6 @@ import com.esofthead.mycollab.module.project.view.page.PagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.*;
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter;
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter;
-import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.time.IFinancePresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
@@ -113,7 +113,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         private IRiskPresenter riskPresenter;
         private IFinancePresenter financePresenter;
         private UserSettingPresenter userPresenter;
-        private IStandupPresenter standupPresenter;
 
         ProjectViewWrap(final SimpleProject project) {
             super();
@@ -161,11 +160,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                         searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
                                 VariableInjecter.THIS_WEEK));
                         financePresenter.go(ProjectViewImpl.this, new TimeTrackingScreenData.Search(searchCriteria));
-                    } else if (ProjectTypeConstants.STANDUP.equals(caption)) {
-                        StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-                        criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                        criteria.setOnDate(new DateSearchField(DateTimeUtils.getCurrentDateWithoutMS(), DateSearchField.EQUAL));
-                        standupPresenter.go(ProjectViewImpl.this, new StandupScreenData.Search(criteria));
                     }
                 }
             });
@@ -274,27 +268,19 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                 myProjectTab.removeTab(ProjectTypeConstants.RISK);
             }
 
-            if (CurrentProjectVariables.hasTimeFeature()) {
+            if (CurrentProjectVariables.hasTimeFeature() || CurrentProjectVariables.hasInvoiceFeature()) {
                 myProjectTab.addTab(constructTimeTrackingComponent(), ProjectTypeConstants.FINANCE, 10,
                         AppContext.getMessage(ProjectCommonI18nEnum.VIEW_FINANCE),
                         GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateTimeReportLink(prjId));
             } else {
-                myProjectTab.removeTab(ProjectTypeConstants.TIME);
-            }
-
-            if (CurrentProjectVariables.hasStandupFeature()) {
-                myProjectTab.addTab(constructProjectStandupMeeting(), ProjectTypeConstants.STANDUP, 11,
-                        AppContext.getMessage(ProjectCommonI18nEnum.VIEW_STANDUP),
-                        GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateStandupDashboardLink(prjId));
-            } else {
-                myProjectTab.removeTab(ProjectTypeConstants.STANDUP);
+                myProjectTab.removeTab(ProjectTypeConstants.FINANCE);
             }
 
             myProjectTab.addTab(constructProjectUsers(), ProjectTypeConstants.MEMBER, 13,
                     AppContext.getMessage(ProjectCommonI18nEnum.VIEW_MEMBER),
                     GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator.generateUsersLink(prjId));
 
-            myProjectTab.addToogleNavigatorControl();
+            myProjectTab.addToggleNavigatorControl();
         }
 
         private Component constructProjectDashboardComponent() {
@@ -330,11 +316,6 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
         private Component constructTimeTrackingComponent() {
             financePresenter = PresenterResolver.getPresenter(IFinancePresenter.class);
             return financePresenter.getView();
-        }
-
-        private Component constructProjectStandupMeeting() {
-            standupPresenter = PresenterResolver.getPresenter(IStandupPresenter.class);
-            return standupPresenter.getView();
         }
 
         private Component constructTaskDashboardComponent() {

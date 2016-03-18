@@ -69,19 +69,19 @@ public class CurrentProjectVariables {
             }
 
             setProjectMember(prjMember);
-            if (getProjectToogleMenu() == null) {
-                setProjectToogleMenu(true);
+            if (getProjectToggleMenu() == null) {
+                setProjectToggleMenu(true);
             }
         } else if (!AppContext.isAdmin()) {
             throw new SecureAccessException("You are not belong to this project");
         }
     }
 
-    public static Boolean getProjectToogleMenu() {
+    public static Boolean getProjectToggleMenu() {
         return (Boolean) MyCollabSession.getCurrentUIVariable(TOOGLE_MENU_FLAG);
     }
 
-    public static void setProjectToogleMenu(boolean visibility) {
+    public static void setProjectToggleMenu(boolean visibility) {
         MyCollabSession.putCurrentUIVariable(TOOGLE_MENU_FLAG, new Boolean(visibility));
     }
 
@@ -211,6 +211,10 @@ public class CurrentProjectVariables {
 
     public static boolean hasTimeFeature() {
         return getFeatures().getDisplaytimelogging();
+    }
+
+    public static boolean hasInvoiceFeature() {
+        return Boolean.TRUE.equals(getFeatures().getDisplayinvoice());
     }
 
     public static boolean hasStandupFeature() {

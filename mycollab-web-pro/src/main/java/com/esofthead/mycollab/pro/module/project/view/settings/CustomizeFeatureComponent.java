@@ -14,6 +14,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.BlockWidget;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.google.common.base.MoreObjects;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -105,6 +106,12 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.getDisplaystandup());
         rightColLayout.addComponent(displayStandupSelection);
 
+        final SelectionBox displayInvoiceSelection = new SelectionBox(
+                ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE),
+                AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE),
+                customizeView.getDisplayinvoice());
+        rightColLayout.addComponent(displayInvoiceSelection);
+
         layout.addComponent(rightColLayout);
 
         body.addComponent(layout);
@@ -123,6 +130,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
                 customizeView.setDisplayrisk(displayRiskSelection.getSelected());
                 customizeView.setDisplaytimelogging(displayTimeSelection.getSelected());
                 customizeView.setDisplaystandup(displayStandupSelection.getSelected());
+                customizeView.setDisplayinvoice(displayInvoiceSelection.getSelected());
 
                 ProjectCustomizeViewService projectCustomizeService = ApplicationContextUtil
                         .getSpringBean(ProjectCustomizeViewService.class);
@@ -154,7 +162,7 @@ public class CustomizeFeatureComponent extends BlockWidget {
             this.addComponent(captionLbl);
             this.setExpandRatio(captionLbl, 1.0f);
             this.setComponentAlignment(captionLbl, Alignment.MIDDLE_LEFT);
-            checkbox = new CheckBox("", selected);
+            checkbox = new CheckBox("", MoreObjects.firstNonNull(selected, Boolean.FALSE));
             this.addComponent(checkbox);
             this.setComponentAlignment(checkbox, Alignment.MIDDLE_LEFT);
         }

@@ -33,19 +33,28 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
 
     public FinanceContainer() {
         this.setWidth("100%");
+    }
+
+    @Override
+    public void initContent() {
+        removeAllComponents();
         this.myProjectTab = new TabSheetDecorator();
         this.addComponent(myProjectTab);
         this.buildComponents();
     }
 
     private void buildComponents() {
-        timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
-        myProjectTab.addTab(timeTrackingListPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
-                .VIEW_TIME), ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
+        if (CurrentProjectVariables.hasTimeFeature()) {
+            timeTrackingListPresenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
+            myProjectTab.addTab(timeTrackingListPresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
+                    .VIEW_TIME), ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME));
+        }
 
-        invoicePresenter = PresenterResolver.getPresenter(InvoicePresenter.class);
-        myProjectTab.addTab(invoicePresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
-                .VIEW_INVOICE), ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
+        if (CurrentProjectVariables.hasInvoiceFeature()) {
+            invoicePresenter = PresenterResolver.getPresenter(InvoicePresenter.class);
+            myProjectTab.addTab(invoicePresenter.getView(), AppContext.getMessage(ProjectCommonI18nEnum
+                    .VIEW_INVOICE), ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE));
+        }
 
         myProjectTab.addSelectedTabChangeListener(new TabSheet.SelectedTabChangeListener() {
             private static final long serialVersionUID = 1L;

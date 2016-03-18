@@ -177,13 +177,16 @@ public class VerticalTabsheet extends CustomComponent {
     }
 
     public Button addButtonOnNavigatorContainer(String id, String caption, Resource icon) {
-        final ButtonTabImpl button = new ButtonTabImpl(id, 0, caption, "");
-        navigatorContainer.addComponent(button);
-        navigatorContainer.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
-        button.setStyleName(TAB_STYLENAME);
-        button.setWidth("90%");
-        button.setIcon(icon);
-        return button;
+        if (getButtonById(id) == null) {
+            final ButtonTabImpl button = new ButtonTabImpl(id, 0, caption, "");
+            navigatorContainer.addComponent(button);
+            navigatorContainer.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
+            button.setStyleName(TAB_STYLENAME);
+            button.setWidth("90%");
+            button.setIcon(icon);
+            return button;
+        }
+        return null;
     }
 
     public boolean hasTab(String viewId) {

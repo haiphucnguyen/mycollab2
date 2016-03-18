@@ -26,3 +26,6 @@ CREATE TABLE `m_prj_invoice` (
   CONSTRAINT `FK_m_prj_invoice_3` FOREIGN KEY (`sAccountId`) REFERENCES `s_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_m_prj_invoice_4` FOREIGN KEY (`projectId`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `m_prj_customize_view`
+ADD COLUMN `displayInvoice` BIT(1) NULL;
