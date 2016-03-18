@@ -173,6 +173,11 @@ public class UserDashboardViewImpl extends AbstractLazyPageView implements UserD
             public void doSearch(String value) {
                 displaySearchResult(value);
             }
+
+            @Override
+            public void emptySearch() {
+
+            }
         };
         headerContentTop.with(searchTextField).withAlign(searchTextField, Alignment.TOP_RIGHT);
 

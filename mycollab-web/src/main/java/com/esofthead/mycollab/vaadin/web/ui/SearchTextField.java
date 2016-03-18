@@ -39,6 +39,8 @@ public abstract class SearchTextField extends MHorizontalLayout {
             String value = ((TextField) target).getValue();
             if (isNotBlank(value)) {
                 doSearch(value);
+            } else {
+                emptySearch();
             }
         }
     };
@@ -55,6 +57,8 @@ public abstract class SearchTextField extends MHorizontalLayout {
     }
 
     abstract public void doSearch(String value);
+
+    abstract public void emptySearch();
 
     public void setInputPrompt(String value) {
         innerField.setInputPrompt(value);

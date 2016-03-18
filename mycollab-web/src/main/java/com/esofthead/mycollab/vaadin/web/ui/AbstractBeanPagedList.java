@@ -301,6 +301,10 @@ public abstract class AbstractBeanPagedList<S extends SearchCriteria, T> extends
         return totalCount;
     }
 
+    public void removeRow(Component row) {
+        listContainer.removeComponent(row);
+    }
+
     public void setSelectedRow(Component row) {
         for (int i = 0; i < listContainer.getComponentCount(); i++) {
             listContainer.getComponent(i).removeStyleName("selected");

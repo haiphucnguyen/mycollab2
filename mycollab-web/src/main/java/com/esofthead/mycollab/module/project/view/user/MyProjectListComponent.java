@@ -91,6 +91,13 @@ public class MyProjectListComponent extends MVerticalLayout {
                 searchCriteria.setProjectName(StringSearchField.and(value));
                 displayResults();
             }
+
+            @Override
+            public void emptySearch() {
+                searchCriteria = getAllProjectsSearchCriteria();
+                searchCriteria.setProjectName(null);
+                displayResults();
+            }
         };
         searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
 

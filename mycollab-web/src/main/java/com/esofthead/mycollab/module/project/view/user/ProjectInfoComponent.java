@@ -225,6 +225,11 @@ public class ProjectInfoComponent extends MHorizontalLayout {
                         prjview.displaySearchResult(value);
                     }
                 }
+
+                @Override
+                public void emptySearch() {
+
+                }
             };
 
             final PopupButton controlsBtn = new PopupButton();
