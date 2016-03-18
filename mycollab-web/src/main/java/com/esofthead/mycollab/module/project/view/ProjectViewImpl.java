@@ -19,17 +19,13 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.core.db.query.DateParam;
-import com.esofthead.mycollab.core.db.query.VariableInjecter;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusConstants;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
@@ -155,11 +151,7 @@ public class ProjectViewImpl extends AbstractPageView implements ProjectView {
                         criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
                         userPresenter.go(ProjectViewImpl.this, new ProjectMemberScreenData.Search(criteria));
                     } else if (ProjectTypeConstants.FINANCE.equals(caption)) {
-                        ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
-                        searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
-                        searchCriteria.addExtraField(DateParam.inRangeDate(ItemTimeLoggingSearchCriteria.p_logDates,
-                                VariableInjecter.THIS_WEEK));
-                        financePresenter.go(ProjectViewImpl.this, new TimeTrackingScreenData.Search(searchCriteria));
+                        financePresenter.go(ProjectViewImpl.this, null);
                     }
                 }
             });
