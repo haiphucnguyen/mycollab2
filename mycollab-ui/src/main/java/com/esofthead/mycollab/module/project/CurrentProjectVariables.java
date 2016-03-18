@@ -177,6 +177,7 @@ public class CurrentProjectVariables {
             customizeView.setDisplaytask(true);
             customizeView.setDisplaytimelogging(true);
             customizeView.setDisplayfile(true);
+            customizeView.setDisplayinvoice(true);
         }
         return customizeView;
     }
