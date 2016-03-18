@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 5.2.10
  */
 @Service
+@Traceable(nameField = "noid", extraFieldName = "projectid")
 @Transactional
 public class InvoiceServiceImpl extends DefaultService<Integer, Invoice, InvoiceSearchCriteria> implements InvoiceService {
 

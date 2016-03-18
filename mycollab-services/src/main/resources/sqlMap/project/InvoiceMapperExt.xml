@@ -79,7 +79,7 @@
         <include refid="orderStatement" />
     </select>
 
-    <select id="findById" parameterType="java.lang.Integer" resultMap="InvoiceResult" lang="velocity">
+    <select id="findInvoiceById" parameterType="java.lang.Integer" resultMap="InvoiceResult" lang="velocity">
         <include refid="selectInvoice" />
 
         WHERE m_prj_invoice.id=@{invoiceId, jdbcType=NUMERIC}
