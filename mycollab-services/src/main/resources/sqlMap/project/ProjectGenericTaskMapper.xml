@@ -101,6 +101,19 @@
                 #end
                 LIMIT 1)
         #end
+
+        #ifnotnull($searchCriteria.monitorProjectIds)
+            ${searchCriteria.monitorProjectIds.operation}
+            EXISTS(
+                SELECT 1 FROM s_favorite
+                WHERE m_prj_risk.projectId IN
+                    #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
+                        @{extraId}
+                    #end
+                    LIMIT 1)
+                    AND s_favorite.extraTypeId = m_prj_risk.projectId AND s_favorite.type='Project-Risk' AND s_favorite.typeid=m_prj_risk.id
+            )
+        #end
         ]]>
     </sql>
 
@@ -169,6 +182,19 @@
                     @{tagName}
                 #end
                 LIMIT 1)
+        #end
+
+        #ifnotnull($searchCriteria.monitorProjectIds)
+            ${searchCriteria.monitorProjectIds.operation}
+            EXISTS(
+                SELECT 1 FROM s_favorite
+                WHERE m_tracker_bug.projectId IN
+                    #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
+                        @{extraId}
+                    #end
+                    LIMIT 1)
+                    AND s_favorite.extraTypeId = m_tracker_bug.projectId AND s_favorite.type='Project-Bug' AND s_favorite.typeid=m_tracker_bug.id
+            )
         #end
         ]]>
     </sql>
@@ -239,6 +265,19 @@
                 #end
                 LIMIT 1)
         #end
+
+        #ifnotnull($searchCriteria.monitorProjectIds)
+            ${searchCriteria.monitorProjectIds.operation}
+            EXISTS(
+                SELECT 1 FROM s_favorite
+                WHERE m_prj_task.projectId IN
+                    #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
+                        @{extraId}
+                    #end
+                    LIMIT 1)
+                    AND s_favorite.extraTypeId = m_prj_task.projectId AND s_favorite.type='Project-Risk' AND s_favorite.typeid=m_prj_task.id
+            )
+        #end
         ]]>
     </sql>
 
@@ -307,6 +346,19 @@
                     @{tagName}
                 #end
                 LIMIT 1)
+        #end
+
+        #ifnotnull($searchCriteria.monitorProjectIds)
+            ${searchCriteria.monitorProjectIds.operation}
+            EXISTS(
+                SELECT 1 FROM s_favorite
+                WHERE m_prj_milestone.projectId IN
+                    #repeat(${searchCriteria.monitorProjectIds.values} $extraId "," "(" ")")
+                        @{extraId}
+                    #end
+                    LIMIT 1)
+                    AND s_favorite.extraTypeId = m_prj_milestone.projectId AND s_favorite.type='Project-Risk' AND s_favorite.typeid=m_prj_milestone.id
+            )
         #end
         ]]>
     </sql>

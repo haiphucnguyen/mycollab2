@@ -141,7 +141,7 @@ public class TaskStatusTrendChartWidget extends Depot {
             final List series = dataset.getSeries();
 
             for (int i = 0; i < series.size(); i++) {
-                final MHorizontalLayout layout = new MHorizontalLayout().withSpacing(false).
+                final MHorizontalLayout layout = new MHorizontalLayout().
                         withMargin(new MarginInfo(false, false, false, true));
                 layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 

@@ -280,7 +280,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             header.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             addComponent(header);
 
-            headerLbl = ELabel.h3("").withStyleName(UIConstants.TEXT_ELLIPSIS);
+            headerLbl = ELabel.h2("");
 
             Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                 @Override
