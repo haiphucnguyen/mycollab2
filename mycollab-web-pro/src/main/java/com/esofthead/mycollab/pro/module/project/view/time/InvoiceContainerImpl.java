@@ -249,7 +249,6 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
                     }
                 };
 
-        private SimpleInvoice invoice;
         private AdvancedPreviewBeanForm<SimpleInvoice> previewForm;
         private ELabel headerLbl;
         private ProjectActivityComponent activityComponent;
@@ -268,6 +267,10 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
         InvoiceReadView() {
             this.setMargin(new MarginInfo(false, false, false, true));
+        }
+
+        void showInvoice(final SimpleInvoice invoice) {
+            removeAllComponents();
             MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
             header.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             addComponent(header);
@@ -318,10 +321,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INVOICE, CurrentProjectVariables.getProjectId(),
                     InvoiceFieldFormatter.instance());
             addComponent(activityComponent);
-        }
 
-        void showInvoice(SimpleInvoice invoice) {
-            this.invoice = invoice;
             if (StringUtils.isBlank(invoice.getNote())) {
                 headerLbl.setValue(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml() + " " + invoice.getNoid());
             } else {
