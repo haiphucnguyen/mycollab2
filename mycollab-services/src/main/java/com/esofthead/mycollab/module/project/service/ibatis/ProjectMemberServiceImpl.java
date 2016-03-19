@@ -208,7 +208,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         member.setUsername(email);
         member.setJoindate(now);
         member.setSaccountid(sAccountId);
-        if (projectRoleId < 0 || projectRoleId == null) {
+        if (projectRoleId == null || projectRoleId < 0) {
             member.setIsadmin(true);
             member.setProjectroleid(null);
         } else {

@@ -304,7 +304,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         });
     }
 
-    private class KanbanTaskBlockItem extends CustomComponent {
+    private static class KanbanTaskBlockItem extends CustomComponent {
         private SimpleTask task;
 
         KanbanTaskBlockItem(final SimpleTask task) {
@@ -649,9 +649,9 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         }
     }
 
-    class ColumnColorPickerWindow extends ColorPickerPopup {
-        ColumnColorPickerWindow(Color intialColor) {
-            super(intialColor);
+    private static class ColumnColorPickerWindow extends ColorPickerPopup {
+        ColumnColorPickerWindow(Color initialColor) {
+            super(initialColor);
             this.center();
         }
     }

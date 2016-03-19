@@ -58,7 +58,7 @@ public abstract class EntityImportWindow<E> extends Window {
     private static final String[] fileType = {"CSV", "VCard"};
 
     private FileConfigurationLayout fileConfigurationLayout;
-    private MappingCrmConfigurationLayout mappingCrmFieldLayout;
+//    private MappingCrmConfigurationLayout mappingCrmFieldLayout;
     private boolean isSupportCSV = true;
     private boolean isSupportVCard = false;
     private ICrudService services;
@@ -148,9 +148,9 @@ public abstract class EntityImportWindow<E> extends Window {
                         } else if (fileuploadType.equals("csv") && isSupportCSV) {
                             File uploadFile = uploadField.getContentAsFile();
                             if (uploadFile != null) {
-                                mappingCrmFieldLayout = new MappingCrmConfigurationLayout(
-                                        hasHeaderCheckBox.getValue(),
-                                        uploadFile);
+//                                mappingCrmFieldLayout = new MappingCrmConfigurationLayout(
+//                                        hasHeaderCheckBox.getValue(),
+//                                        uploadFile);
                                 // EntityImportWindow.this
                                 // .removeComponent(fileConfigurationLayout);
                                 //

@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.ondemand.module.support.domain.PremiumUser;
 import com.esofthead.mycollab.ondemand.module.support.dao.PremiumUserMapper;
 import com.esofthead.mycollab.ondemand.module.support.service.PremiumUsersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PremiumUsersServiceImpl extends DefaultCrudService<Integer, PremiumUser> implements PremiumUsersService {
+    @Autowired
     private PremiumUserMapper premiumUserMapper;
 
     @Override

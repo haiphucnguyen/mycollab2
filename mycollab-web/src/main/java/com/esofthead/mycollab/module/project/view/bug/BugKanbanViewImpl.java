@@ -211,7 +211,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         });
     }
 
-    private class KanbanBugBlockItem extends CustomComponent {
+    private static class KanbanBugBlockItem extends CustomComponent {
         private SimpleBug bug;
 
         KanbanBugBlockItem(final SimpleBug bug) {

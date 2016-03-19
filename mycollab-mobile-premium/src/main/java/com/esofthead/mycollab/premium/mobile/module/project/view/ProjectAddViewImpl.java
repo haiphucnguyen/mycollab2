@@ -40,10 +40,10 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         return new EditFormFieldFactory(this.editForm);
     }
 
-    private class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleProject> {
+    private static class EditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<SimpleProject> {
         private static final long serialVersionUID = 1L;
 
-        public EditFormFieldFactory(GenericBeanForm<SimpleProject> form) {
+        EditFormFieldFactory(GenericBeanForm<SimpleProject> form) {
             super(form);
         }
 
@@ -72,7 +72,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
         }
     }
 
-    public class EditFormLayoutFactory implements IFormLayoutFactory {
+    private static class EditFormLayoutFactory implements IFormLayoutFactory {
         private static final long serialVersionUID = -9159483523170247666L;
 
         private GridFormLayoutHelper informationLayout;
@@ -112,7 +112,7 @@ public class ProjectAddViewImpl extends AbstractEditItemComp<SimpleProject> impl
     private static class ProjectStatusComboBox extends I18nValueComboBox {
         private static final long serialVersionUID = 1L;
 
-        public ProjectStatusComboBox() {
+        ProjectStatusComboBox() {
             super(false, OptionI18nEnum.StatusI18nEnum.Open, OptionI18nEnum.StatusI18nEnum.Closed);
         }
     }
