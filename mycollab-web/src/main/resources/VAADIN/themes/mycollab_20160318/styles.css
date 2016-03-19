@@ -15089,6 +15089,14 @@ div.v-window {
 	color: black;
 }
 
+.field-note {
+	border-radius: 5px;
+	padding: 3px 5px;
+	margin-right: 5px;
+	color: #ffffff;
+	background-color: #1a8955;
+}
+
 .crm-module {
 	position: absolute;
 	top: 0;

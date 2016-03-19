@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
+import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
@@ -104,6 +105,9 @@ public class TaskPreviewForm extends AdvancedPreviewBeanForm<SimpleTask> {
                 return new RichTextViewField(beanItem.getNotes());
             } else if (Task.Field.parenttaskid.equalTo(propertyId)) {
                 return new SubTasksComp(beanItem);
+            } else if (Task.Field.status.equalTo(propertyId)) {
+                return new I18nFormViewField(beanItem.getStatus(), com.esofthead.mycollab.common.i18n.OptionI18nEnum.StatusI18nEnum.class)
+                        .withStyleName(UIConstants.FIELD_NOTE);
             }
             return null;
         }

@@ -74,10 +74,14 @@ public class MainWindowContainer extends CssLayout {
                             }
                         }
                     } else {
-                        SimpleUser user = (SimpleUser) MyCollabSession.getSessionVariable(USER_VAL);
-                        if (user != null) {
-                            ((DesktopApplication) UI.getCurrent()).afterDoLogin(user);
-                        } else {
+                        try {
+                            SimpleUser user = (SimpleUser) MyCollabSession.getSessionVariable(USER_VAL);
+                            if (user != null) {
+                                ((DesktopApplication) UI.getCurrent()).afterDoLogin(user);
+                            } else {
+                                navigateToLoginView();
+                            }
+                        } catch (Exception e) {
                             navigateToLoginView();
                         }
                     }

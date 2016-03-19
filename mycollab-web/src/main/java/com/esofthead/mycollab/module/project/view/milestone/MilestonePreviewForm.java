@@ -76,7 +76,8 @@ public class MilestonePreviewForm extends AdvancedPreviewBeanForm<SimpleMileston
             } else if (Milestone.Field.status.equalTo(propertyId)) {
                 String milestoneStatus = AppContext.getMessage(OptionI18nEnum.MilestoneStatus.class, beanItem.getStatus());
                 FontAwesome statusIcon = ProjectAssetsUtil.getPhaseIcon(beanItem.getStatus());
-                return new DefaultViewField(statusIcon.getHtml() + " " + milestoneStatus, ContentMode.HTML);
+                return new DefaultViewField(statusIcon.getHtml() + " " + milestoneStatus, ContentMode.HTML)
+                        .withStyleName(UIConstants.FIELD_NOTE);
             } else if (Milestone.Field.id.equalTo(propertyId)) {
                 ContainerViewField containerField = new ContainerViewField();
                 containerField.addComponentField(new AssignmentsComp(beanItem));

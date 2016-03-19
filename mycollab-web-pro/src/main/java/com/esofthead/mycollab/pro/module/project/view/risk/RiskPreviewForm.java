@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
@@ -48,7 +49,8 @@ public class RiskPreviewForm extends AdvancedPreviewBeanForm<SimpleRisk> {
                 tinyRs.setReadOnly(true);
                 return tinyRs;
             } else if (Risk.Field.status.equalTo(propertyId)) {
-                return new I18nFormViewField(risk.getStatus(), OptionI18nEnum.StatusI18nEnum.class);
+                return new I18nFormViewField(risk.getStatus(), OptionI18nEnum.StatusI18nEnum.class).withStyleName
+                        (UIConstants.FIELD_NOTE);
             } else if (Risk.Field.datedue.equalTo(propertyId)) {
                 return new DateViewField(risk.getDatedue());
             } else if (Risk.Field.startdate.equalTo(propertyId)) {
