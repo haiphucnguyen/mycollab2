@@ -51,6 +51,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -142,7 +143,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
                                     UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-                                    userService.pendingUserAccounts(Arrays.asList(member.getUsername()),
+                                    userService.pendingUserAccounts(Collections.singletonList(member.getUsername()),
                                             AppContext.getAccountId());
                                     EventBusFactory.getInstance().post(new UserEvent.GotoList(UserListViewImpl.this, null));
                                 }

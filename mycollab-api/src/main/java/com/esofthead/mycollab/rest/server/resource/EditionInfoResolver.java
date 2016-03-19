@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.core.utils.FileUtils;
 
 import java.io.File;
@@ -41,7 +40,6 @@ public class EditionInfoResolver {
                                     final WatchEvent.Kind<?> kind = watchEvent.kind();
                                     // Overflow event
                                     if (StandardWatchEventKinds.OVERFLOW == kind) {
-                                        continue; // loop
                                     } else if (StandardWatchEventKinds.ENTRY_MODIFY == kind) {
                                         // A new Path was created
                                         Path modifiedPath = ((WatchEvent<Path>) watchEvent).context();

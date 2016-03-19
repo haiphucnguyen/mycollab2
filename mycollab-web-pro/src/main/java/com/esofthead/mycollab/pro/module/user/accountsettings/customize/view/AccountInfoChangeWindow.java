@@ -27,7 +27,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 class AccountInfoChangeWindow extends Window {
     private SimpleBillingAccount billingAccount;
 
-    private MVerticalLayout content;
     private AdvancedEditBeanForm<SimpleBillingAccount> editForm;
 
     AccountInfoChangeWindow() {
@@ -37,7 +36,7 @@ class AccountInfoChangeWindow extends Window {
         this.setWidth("600px");
 
         billingAccount = (SimpleBillingAccount) AppContext.getBillingAccount().copy();
-        content = new MVerticalLayout().withMargin(false);
+        MVerticalLayout content = new MVerticalLayout().withMargin(false);
         this.setContent(content);
         editForm = new AdvancedEditBeanForm<>();
         editForm.setFormLayoutFactory(new IFormLayoutFactory() {

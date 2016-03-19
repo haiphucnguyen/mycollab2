@@ -115,7 +115,7 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
         if (oldMember != null) {
             if (Boolean.FALSE.equals(member.getIsadmin()) && Boolean.TRUE.equals(oldMember.getIsadmin())) {
                 ProjectMemberExample userAccountEx = new ProjectMemberExample();
-                userAccountEx.createCriteria().andUsernameNotIn(Arrays.asList(member.getUsername())).andProjectidEqualTo(member.getProjectid())
+                userAccountEx.createCriteria().andUsernameNotIn(Collections.singletonList(member.getUsername())).andProjectidEqualTo(member.getProjectid())
                         .andIsadminEqualTo(Boolean.TRUE).andStatusEqualTo(ProjectMemberStatusConstants.ACTIVE);
                 if (projectMemberMapper.countByExample(userAccountEx) == 0) {
                     throw new UserInvalidInputException(String.format("Can not change role of user %s. The reason is " +

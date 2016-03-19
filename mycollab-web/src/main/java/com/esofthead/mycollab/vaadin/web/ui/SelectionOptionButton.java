@@ -36,9 +36,6 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
     private boolean isSelectAll = false;
     private boolean isSelected = false;
 
-    @SuppressWarnings("rawtypes")
-    private final HasSelectableItemHandlers selectableItemHandlers;
-
     private Set<SelectionOptionHandler> handlers;
 
     private final Button selectAllBtn;
@@ -47,7 +44,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
     @SuppressWarnings("serial")
     public SelectionOptionButton(final HasSelectableItemHandlers selectableItemHandlers) {
         super();
-        this.selectableItemHandlers = selectableItemHandlers;
+        HasSelectableItemHandlers selectableItemHandlers1 = selectableItemHandlers;
         addStyleName(UIConstants.BUTTON_ACTION);
         addStyleName(UIConstants.BUTTON_SMALL_PADDING);
         setIcon(FontAwesome.SQUARE_O);

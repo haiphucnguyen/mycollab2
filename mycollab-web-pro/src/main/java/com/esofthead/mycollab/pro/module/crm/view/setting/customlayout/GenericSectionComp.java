@@ -83,9 +83,7 @@ public class GenericSectionComp extends VerticalLayout {
 		@Override
 		public boolean isDraggable(Component component) {
 			if (component instanceof CustomFieldComponent) {
-				if (((CustomFieldComponent) component).isEmptyField())
-					return false;
-				return true;
+				return !((CustomFieldComponent) component).isEmptyField();
 			}
 
 			return false;

@@ -127,9 +127,8 @@ public class TaskStatusTrendChartWidget extends Depot {
                 valueAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
                 return chart;
             } else {
-                JFreeChart chart = ChartFactory.createTimeSeriesChart("", "", "", new TimeSeriesCollection(),
+                return ChartFactory.createTimeSeriesChart("", "", "", new TimeSeriesCollection(),
                         false, true, false);
-                return chart;
             }
         }
 

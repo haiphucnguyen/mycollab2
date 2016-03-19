@@ -33,7 +33,6 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
 
     private MHorizontalLayout header;
     private ComponentContainer headerText;
-    private MHorizontalLayout rightComponent;
 
     public DefaultGenericSearchPanel() {
         moveToBasicSearchLayout();
@@ -51,7 +50,7 @@ public abstract class DefaultGenericSearchPanel<S extends SearchCriteria> extend
     protected ComponentContainer constructHeader() {
         if (header == null) {
             headerText = buildSearchTitle();
-            rightComponent = new MHorizontalLayout();
+            MHorizontalLayout rightComponent = new MHorizontalLayout();
 
             header = new MHorizontalLayout().withWidth("100%").withMargin(new MarginInfo(true, false, true, false));
 

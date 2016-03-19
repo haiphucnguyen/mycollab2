@@ -3,10 +3,7 @@ package com.esofthead.mycollab.schedule.email.user.service;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 import com.esofthead.mycollab.schedule.email.user.impl.BillingSendingNotificationJob;
 import org.junit.Assert;
@@ -39,13 +36,13 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 			throws JobExecutionException {
 		BillingAccountWithOwners account = new BillingAccountWithOwners();
 		SimpleUser owner = new SimpleUser();
-		account.setOwners(Arrays.asList(owner));
+		account.setOwners(Collections.singletonList(owner));
 
 		GregorianCalendar currentTime = new GregorianCalendar();
 		currentTime.add(Calendar.DATE, -26);
 		account.setCreatedtime(currentTime.getTime());
 
-		List<BillingAccountWithOwners> accounts = Arrays.asList(account);
+		List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
 		when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);
 
 		billingNotificationJob.executeJob(context);
@@ -70,13 +67,13 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 		BillingAccountWithOwners account = new BillingAccountWithOwners();
 		account.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_1ST_TIME);
 		SimpleUser owner = new SimpleUser();
-		account.setOwners(Arrays.asList(owner));
+		account.setOwners(Collections.singletonList(owner));
 
 		GregorianCalendar currentTime = new GregorianCalendar();
 		currentTime.add(Calendar.DATE, -30);
 		account.setCreatedtime(currentTime.getTime());
 
-		List<BillingAccountWithOwners> accounts = Arrays.asList(account);
+		List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
 		when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);
 
 		billingNotificationJob.executeJob(context);
@@ -101,13 +98,13 @@ public class BillingSendingNotificationJobsTest extends GenericJobTest {
 		BillingAccountWithOwners account = new BillingAccountWithOwners();
 		account.setReminderstatus(AccountReminderStatusContants.REMIND_ACCOUNT_IS_ABOUT_END_2ST_TIME);
 		SimpleUser owner = new SimpleUser();
-		account.setOwners(Arrays.asList(owner));
+		account.setOwners(Collections.singletonList(owner));
 
 		GregorianCalendar currentTime = new GregorianCalendar();
 		currentTime.add(Calendar.DATE, -35);
 		account.setCreatedtime(currentTime.getTime());
 
-		List<BillingAccountWithOwners> accounts = Arrays.asList(account);
+		List<BillingAccountWithOwners> accounts = Collections.singletonList(account);
 		when(billingService.getTrialAccountsWithOwners()).thenReturn(accounts);
 
 		BillingPlan freePlan = new BillingPlan();

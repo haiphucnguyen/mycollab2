@@ -33,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author MyCollab Ltd.
@@ -57,7 +58,7 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
                 criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
                 criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
                 criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-                criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
+                criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
             } else {
                 criteria = (ProjectMemberSearchCriteria) data.getParams();
             }

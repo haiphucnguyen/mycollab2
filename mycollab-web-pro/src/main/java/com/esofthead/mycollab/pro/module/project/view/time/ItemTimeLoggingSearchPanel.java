@@ -30,6 +30,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -210,9 +211,9 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
             }
 
             if ("Date".equals(groupField.getValue())) {
-                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("logForDay", sortDirection)));
+                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logForDay", sortDirection)));
             } else if ("User".equals(groupField.getValue())) {
-                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("loguser", sortDirection)));
+                searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("loguser", sortDirection)));
             }
             return searchCriteria;
         }

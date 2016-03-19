@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingAccountWithOwners;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.BillingPlanExample;
-import com.esofthead.mycollab.module.user.service.RoleService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

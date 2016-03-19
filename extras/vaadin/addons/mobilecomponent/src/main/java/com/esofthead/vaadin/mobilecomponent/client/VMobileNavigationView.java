@@ -50,7 +50,6 @@ public class VMobileNavigationView extends VNavigationView {
 	private int lastX;
 	private double lastSpeed;
 	private boolean touchDrag;
-	private final Element scrollElement;
 	protected TouchStartEvent dragStartEvent;
 
 	// private final TouchScrollDelegate touchScrollDelegate;
@@ -65,7 +64,7 @@ public class VMobileNavigationView extends VNavigationView {
 
 		toggleNavBtn = GWT.create(VDrawerButton.class);
 
-		scrollElement = getElement();
+		Element scrollElement = getElement();
 		Style style = scrollElement.getStyle();
 		style.setOverflow(Overflow.AUTO);
 		style.setHeight(100, Unit.PCT);

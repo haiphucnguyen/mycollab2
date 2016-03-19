@@ -18,7 +18,6 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.service.CurrencyService;
-import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.vaadin.data.Property;
 import com.vaadin.data.Validator.InvalidValueException;

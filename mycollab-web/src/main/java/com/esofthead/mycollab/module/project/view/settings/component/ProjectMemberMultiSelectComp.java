@@ -55,9 +55,8 @@ public class ProjectMemberMultiSelectComp extends MultiSelectComp<SimpleProjectM
         criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
 
         ProjectMemberService projectMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
-        List<SimpleProjectMember> items = projectMemberService.findPagableListByCriteria(new SearchRequest<>(
+        return projectMemberService.findPagableListByCriteria(new SearchRequest<>(
                 criteria, 0, Integer.MAX_VALUE));
-        return items;
     }
 
     @Override

@@ -34,7 +34,6 @@ import java.util.List;
  * @since 5.2.4
  */
 public class WatchersMultiSelection extends MVerticalLayout {
-    private List<SimpleProjectMember> projectMembers;
     private List<SimpleProjectMember> unsavedMembers = new ArrayList<>();
     private List<SimpleUser> followers;
     private String type;
@@ -54,7 +53,7 @@ public class WatchersMultiSelection extends MVerticalLayout {
         criteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
 
         ProjectMemberService projectMemberService = ApplicationContextUtil.getSpringBean(ProjectMemberService.class);
-        projectMembers = projectMemberService.findPagableListByCriteria(new SearchRequest<>(
+        List<SimpleProjectMember> projectMembers = projectMemberService.findPagableListByCriteria(new SearchRequest<>(
                 criteria, 0, Integer.MAX_VALUE));
         for (SimpleProjectMember member : projectMembers) {
             this.addComponent(new FollowerRow(member));

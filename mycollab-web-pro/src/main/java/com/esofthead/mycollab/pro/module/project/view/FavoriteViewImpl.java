@@ -59,6 +59,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author MyCollab Ltd
@@ -162,9 +163,9 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
 
     private void displayFavoriteList() {
         if (isSortAsc) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
         } else {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
         }
         int totalCount = favoriteListComp.setSearchCriteria(searchCriteria);
         headerLbl.setValue(FontAwesome.STAR.getHtml() + " Favorites (" + totalCount + ")");

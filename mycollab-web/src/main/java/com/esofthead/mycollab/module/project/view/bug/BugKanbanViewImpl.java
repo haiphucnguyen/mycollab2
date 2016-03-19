@@ -94,7 +94,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
                     BugSearchCriteria criteria = (BugSearchCriteria) event.getData();
                     if (criteria != null) {
                         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
-                        criteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("bugIndex", SearchCriteria.ASC)));
+                        criteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("bugIndex", SearchCriteria.ASC)));
                         queryBug(criteria);
                     }
                 }

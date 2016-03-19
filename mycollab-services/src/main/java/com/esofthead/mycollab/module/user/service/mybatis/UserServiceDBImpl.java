@@ -50,10 +50,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -331,7 +328,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
 
     @Override
     public void pendingUserAccount(String username, Integer accountId) {
-        pendingUserAccounts(Arrays.asList(username), accountId);
+        pendingUserAccounts(Collections.singletonList(username), accountId);
     }
 
     @Override

@@ -21,7 +21,6 @@ public class InfiniteScrollLayoutConnector extends AbstractExtensionConnector im
 
 	private ScrollReachBottomRpc scrollReachBottomRpc = RpcProxy.create(ScrollReachBottomRpc.class, this);
 	public JavaScriptObject scrollHandler;
-	private VCssLayout layout;
 	private Element contentEl;
 
 	@Override
@@ -40,7 +39,7 @@ public class InfiniteScrollLayoutConnector extends AbstractExtensionConnector im
 
 	@Override
 	protected void extend(ServerConnector target) {
-		layout = (VCssLayout) ((ComponentConnector) target).getWidget();
+		VCssLayout layout = (VCssLayout) ((ComponentConnector) target).getWidget();
 		layout.addStyleName(CLASSNAME);
 		contentEl = layout.getElement();
 		TouchScrollDelegate.enableTouchScrolling(layout, contentEl);

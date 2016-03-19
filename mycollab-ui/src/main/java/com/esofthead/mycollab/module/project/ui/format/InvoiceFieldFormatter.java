@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.project.ui.format;
 
 import com.esofthead.mycollab.module.project.domain.Invoice;
 import com.esofthead.mycollab.module.project.i18n.InvoiceI18nEnum;
-import com.esofthead.mycollab.module.project.i18n.RiskI18nEnum;
 import com.esofthead.mycollab.utils.FieldGroupFormatter;
 
 /**

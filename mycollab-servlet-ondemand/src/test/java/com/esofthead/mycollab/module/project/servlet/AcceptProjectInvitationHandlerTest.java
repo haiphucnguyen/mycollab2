@@ -23,12 +23,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.ServletException;
 
@@ -118,7 +113,7 @@ public class AcceptProjectInvitationHandlerTest extends GenericServletTest {
 		when(userService.findUserByUserName("hainguyen@mycollab.com"))
 				.thenReturn(new SimpleUser());
 
-		List<UserAccount> users = Arrays.asList(new UserAccount());
+		List<UserAccount> users = Collections.singletonList(new UserAccount());
 		when(userAccountMapper.selectByExample(any(UserAccountExample.class)))
 				.thenReturn(users);
 

@@ -31,12 +31,10 @@ public class I18nFormViewField extends CustomField<String> {
     private static final long serialVersionUID = 1L;
 
     private Label label;
-    private String key;
-    private Class<? extends Enum> enumClass;
 
     public I18nFormViewField(final String key, Class<? extends Enum> enumCls) {
-        this.key = key;
-        this.enumClass = enumCls;
+        String key1 = key;
+        Class<? extends Enum> enumClass = enumCls;
         label = new Label();
         label.setContentMode(ContentMode.TEXT);
         label.setWidthUndefined();

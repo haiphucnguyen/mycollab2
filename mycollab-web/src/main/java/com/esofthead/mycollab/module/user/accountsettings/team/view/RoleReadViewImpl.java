@@ -47,7 +47,6 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
     private AdvancedPreviewBeanForm<Role> previewForm;
     private SimpleRole role;
-    private PreviewFormControlsGenerator<Role> buttonControls;
 
     public RoleReadViewImpl() {
         super();
@@ -71,7 +70,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
     }
 
     private Layout createTopPanel() {
-        buttonControls = new PreviewFormControlsGenerator<>(previewForm);
+        PreviewFormControlsGenerator<Role> buttonControls = new PreviewFormControlsGenerator<>(previewForm);
         return buttonControls.createButtonControls(RolePermissionCollections.ACCOUNT_ROLE);
     }
 

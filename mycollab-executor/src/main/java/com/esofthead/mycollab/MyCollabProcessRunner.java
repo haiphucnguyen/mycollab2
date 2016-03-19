@@ -29,18 +29,16 @@ class MyCollabProcessRunner {
 
     private int processRunningPort;
     private int clientListenPort;
-    private String stopKey;
     private JavaProcess wrappedJavaProccess;
-    private Thread mainThread;
 
     MyCollabProcessRunner(int processRunningPort, int clientListenPort, String stopKey) {
         this.processRunningPort = processRunningPort;
         this.clientListenPort = clientListenPort;
-        this.stopKey = stopKey;
+        String stopKey1 = stopKey;
     }
 
     void start() throws IOException, ExecutionException, InterruptedException {
-        mainThread = new Thread(new Runnable() {
+        Thread mainThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -60,13 +58,11 @@ class MyCollabProcessRunner {
                     if (!"".equals(options)) {
                         String[] optArr = options.split(" ");
                         javaOptions.addAll(Arrays.asList(optArr));
-                        LOG.info("Add options: " + optArr);
                     }
 
                     File libDir = new File(System.getProperty("user.dir"), "lib");
                     if (!libDir.exists() || libDir.isFile()) {
-                        LOG.error("Can not find the library folder at " + libDir.getAbsolutePath());
-                        System.exit(-1);
+                        throw new RuntimeException("Can not find the library folder at " + libDir.getAbsolutePath());
                     }
                     StringBuilder classPaths = new StringBuilder();
                     File[] jarFiles = libDir.listFiles(new FileFilter() {

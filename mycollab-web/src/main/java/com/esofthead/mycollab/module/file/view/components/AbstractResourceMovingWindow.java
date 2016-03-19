@@ -59,7 +59,7 @@ public abstract class AbstractResourceMovingWindow extends Window {
     private final ResourceMover resourceMover;
 
     public AbstractResourceMovingWindow(Resource resource) {
-        this(Arrays.asList(resource));
+        this(Collections.singletonList(resource));
     }
 
     public AbstractResourceMovingWindow(Collection<Resource> lstRes) {

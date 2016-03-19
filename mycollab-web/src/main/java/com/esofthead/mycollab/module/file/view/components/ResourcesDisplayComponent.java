@@ -66,10 +66,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -86,7 +83,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
     private FileBreadcrumb fileBreadCrumb;
     private ResourcesContainer resourcesContainer;
-    private ResourcePagingNavigator pageNavigator;
 
     private Folder baseFolder;
     private String rootFolderName;
@@ -390,7 +386,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             }
 
             if (CollectionUtils.isNotEmpty(resources)) {
-                pageNavigator = new ResourcePagingNavigator(resources);
+                ResourcePagingNavigator pageNavigator = new ResourcePagingNavigator(resources);
                 pageNavigator.setWidth("100%");
                 if (resources.size() <= pageNavigator.pageItemNum) {
                     for (Resource res : resources) {
@@ -597,7 +593,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    deleteResourceAction(Arrays.asList(resource));
+                    deleteResourceAction(Collections.singletonList(resource));
                 }
             });
             deleteBtn.setIcon(FontAwesome.TRASH_O);
@@ -614,13 +610,12 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
         Collection<Resource> getSelectedResourceCollection() {
             if (CollectionUtils.isNotEmpty(resources)) {
-                Collection<Resource> selectedResources = Collections2.filter(resources, new Predicate<Resource>() {
+                return Collections2.filter(resources, new Predicate<Resource>() {
                     @Override
                     public boolean apply(Resource input) {
                         return input.isSelected();
                     }
                 });
-                return selectedResources;
             } else {
                 return new ArrayList<>();
             }

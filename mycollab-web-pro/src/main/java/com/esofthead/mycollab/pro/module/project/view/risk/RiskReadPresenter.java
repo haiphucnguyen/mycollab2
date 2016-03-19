@@ -131,7 +131,6 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                     breadCrumb.gotoRiskRead(risk);
                 } else {
                     NotificationUtil.showRecordNotExistNotification();
-                    return;
                 }
             } else {
                 throw new MyCollabException("Unhandle this case yet");

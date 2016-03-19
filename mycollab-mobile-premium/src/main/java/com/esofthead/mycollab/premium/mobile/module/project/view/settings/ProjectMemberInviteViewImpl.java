@@ -28,6 +28,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author MyCollab Ltd.
@@ -42,7 +43,6 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
     private ProjectRoleComboBox roleComboBox;
     private TextArea messageArea;
     private VerticalComponentGroup permissionsPanel;
-    private VerticalComponentGroup inviteFormLayout;
 
     public ProjectMemberInviteViewImpl() {
         super();
@@ -66,7 +66,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
         final VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.setWidth("100%");
 
-        inviteFormLayout = new VerticalComponentGroup();
+        VerticalComponentGroup inviteFormLayout = new VerticalComponentGroup();
         inviteFormLayout.setWidth("100%");
 
         inviteEmailField = new EmailField();
@@ -96,7 +96,7 @@ public class ProjectMemberInviteViewImpl extends AbstractMobilePageView implemen
                 }
                 roleId = (Integer) roleComboBox.getValue();
                 fireEvent(new ViewEvent<>(ProjectMemberInviteViewImpl.this,
-                        new ProjectMemberEvent.InviteProjectMembers(Arrays.asList(inviteEmailField.getValue()),
+                        new ProjectMemberEvent.InviteProjectMembers(Collections.singletonList(inviteEmailField.getValue()),
                                 ProjectMemberInviteViewImpl.this.roleId, messageArea.getValue())));
 
             }

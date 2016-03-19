@@ -35,11 +35,10 @@ public class StandupMissingComp extends MVerticalLayout {
     private static final long serialVersionUID = 5332956503787026253L;
 
     private VerticalLayout bodyWrap;
-    private Label headerLbl;
 
     public StandupMissingComp() {
         this.withSpacing(false).withMargin(false);
-        headerLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
+        Label headerLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_MEMBER_NOT_REPORT));
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, true, false, true)).
                 withHeight("34px").withWidth("100%").with(headerLbl).
                 withAlign(headerLbl, Alignment.MIDDLE_LEFT).withStyleName("panel-header");

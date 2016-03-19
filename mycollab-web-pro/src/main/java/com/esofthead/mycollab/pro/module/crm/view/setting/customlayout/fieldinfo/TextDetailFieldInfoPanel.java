@@ -34,7 +34,6 @@ public class TextDetailFieldInfoPanel extends
 	private static final long serialVersionUID = 1L;
 
 	private TextField labelField = new TextField();
-	private TextField lengthField = new TextField();
 	private SectionSelectList sectionList;
 
 	public TextDetailFieldInfoPanel(String candidateFieldName,
@@ -46,6 +45,7 @@ public class TextDetailFieldInfoPanel extends
 		layoutHelper.addComponent(labelField, "Label", 0, 0);
 		sectionList = new SectionSelectList(activeSections);
 		layoutHelper.addComponent(sectionList, "Section", 0, 1);
+		TextField lengthField = new TextField();
 		layoutHelper.addComponent(lengthField, "Length", 0, 2);
 		this.addComponent(layoutHelper.getLayout());
 	}

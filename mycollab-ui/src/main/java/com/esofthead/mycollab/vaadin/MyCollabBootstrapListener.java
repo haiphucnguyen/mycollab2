@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.vaadin;
 
 import com.esofthead.mycollab.configuration.SiteConfiguration;
-import com.esofthead.mycollab.configuration.Storage;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;

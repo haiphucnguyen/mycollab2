@@ -60,10 +60,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd.
@@ -86,7 +83,6 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     private BugSearchPanel searchPanel;
     private MVerticalLayout wrapBody;
     private VerticalLayout rightColumn;
-    private MHorizontalLayout mainLayout;
     private BugGroupOrderComponent bugGroupOrderComponent;
 
     private ApplicationEventListener<BugEvent.SearchRequest> searchHandler = new
@@ -110,7 +106,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
                     final BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                     SimpleBug bug = bugService.findById((Integer) event.getData(), AppContext.getAccountId());
                     if (bug != null && bugGroupOrderComponent != null) {
-                        bugGroupOrderComponent.insertBugs(Arrays.asList(bug));
+                        bugGroupOrderComponent.insertBugs(Collections.singletonList(bug));
                     }
                     displayBugStatistic();
 
@@ -222,7 +218,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         viewButtons.setDefaultButton(advanceDisplayBtn);
         groupWrapLayout.addComponent(viewButtons);
 
-        mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
+        MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();
         wrapBody = new MVerticalLayout().withMargin(new MarginInfo(false, true, true, false));
 
         rightColumn = new MVerticalLayout().withWidth("370px").withMargin(new MarginInfo(true, false, true, false));
@@ -299,19 +295,19 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
     private void queryAndDisplayBugs() {
         wrapBody.removeAllComponents();
         if (GROUP_DUE_DATE.equals(groupByState)) {
-            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("duedate", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("duedate", sortDirection)));
             bugGroupOrderComponent = new DueDateOrderComponent();
         } else if (GROUP_START_DATE.equals(groupByState)) {
-            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("m_tracker_bug.startdate", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("m_tracker_bug.startdate", sortDirection)));
             bugGroupOrderComponent = new StartDateOrderComponent();
         } else if (PLAIN_LIST.equals(groupByState)) {
-            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("lastUpdatedTime", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("lastUpdatedTime", sortDirection)));
             bugGroupOrderComponent = new SimpleListOrderComponent();
         } else if (GROUP_CREATED_DATE.equals(groupByState)) {
-            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("createdTime", sortDirection)));
             bugGroupOrderComponent = new CreatedDateOrderComponent();
         } else if (GROUP_USER.equals(groupByState)) {
-            baseCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("createdTime", sortDirection)));
+            baseCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("createdTime", sortDirection)));
             bugGroupOrderComponent = new UserOrderComponent();
         } else {
             throw new MyCollabException("Do not support group view by " + groupByState);

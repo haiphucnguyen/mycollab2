@@ -323,11 +323,11 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         }
 
         if (GROUPBY_DATE.equals(groupField.getValue())) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("logForDay", sortDirection)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("logForDay", sortDirection)));
         } else if (GROUPBY_USER.equals(groupField.getValue())) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("loguser", sortDirection)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("loguser", sortDirection)));
         } else if (GROUPBY_PROJECT.equals(groupField.getValue())) {
-            searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("projectName", sortDirection)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("projectName", sortDirection)));
         }
 
         final Date fromDate = fromDateField.getValue();

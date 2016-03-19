@@ -31,28 +31,27 @@ import static com.esofthead.mycollab.core.utils.StringUtils.isNotBlank;
  * @since 5.0.3
  */
 public abstract class SearchTextField extends MHorizontalLayout {
-    private ELabel icon;
     private TextField innerField;
-    private ShortcutListener shortcutListener = new ShortcutListener("searchfield", ShortcutAction.KeyCode.ENTER, null) {
-        @Override
-        public void handleAction(Object sender, Object target) {
-            String value = ((TextField) target).getValue();
-            if (isNotBlank(value)) {
-                doSearch(value);
-            } else {
-                emptySearch();
-            }
-        }
-    };
 
     public SearchTextField() {
         this.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
-        icon = ELabel.fontIcon(FontAwesome.SEARCH);
+        ELabel icon = ELabel.fontIcon(FontAwesome.SEARCH);
         innerField = new TextField();
         innerField.setImmediate(true);
         innerField.setInputPrompt("Search");
         innerField.setWidth("180px");
         this.with(icon, innerField).withStyleName("searchfield");
+        ShortcutListener shortcutListener = new ShortcutListener("searchfield", ShortcutAction.KeyCode.ENTER, null) {
+            @Override
+            public void handleAction(Object sender, Object target) {
+                String value = ((TextField) target).getValue();
+                if (isNotBlank(value)) {
+                    doSearch(value);
+                } else {
+                    emptySearch();
+                }
+            }
+        };
         ShortcutExtension.installShortcutAction(innerField, shortcutListener);
     }
 

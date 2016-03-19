@@ -17,19 +17,18 @@ public class InfiniteScrollLayout extends AbstractExtension {
 
 	private List<ScrollReachBottomListener> listeners = new ArrayList<ScrollReachBottomListener>();
 
-	private ScrollReachBottomRpc scrollReachBottomRpc = new ScrollReachBottomRpc() {
-		private static final long serialVersionUID = 8200818665164309787L;
-
-		@Override
-		public void onReachBottom() {
-			for (ScrollReachBottomListener listener : listeners) {
-				listener.onReachBottom();
-			}
-
-		}
-	};
-
 	public InfiniteScrollLayout() {
+		ScrollReachBottomRpc scrollReachBottomRpc = new ScrollReachBottomRpc() {
+			private static final long serialVersionUID = 8200818665164309787L;
+
+			@Override
+			public void onReachBottom() {
+				for (ScrollReachBottomListener listener : listeners) {
+					listener.onReachBottom();
+				}
+
+			}
+		};
 		registerRpc(scrollReachBottomRpc);
 	}
 

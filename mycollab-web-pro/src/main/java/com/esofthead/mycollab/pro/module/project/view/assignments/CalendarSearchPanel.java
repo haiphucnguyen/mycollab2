@@ -20,7 +20,6 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
  * @since 5.2.8
  */
 public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGenericTaskSearchCriteria> {
-    private ProjectGenericTaskSearchCriteria searchCriteria;
     private boolean isCreateAssignment;
 
     public CalendarSearchPanel(boolean isCreateAssignment) {
@@ -118,7 +117,7 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
         @Override
         protected ProjectGenericTaskSearchCriteria fillUpSearchCriteria() {
-            searchCriteria = new ProjectGenericTaskSearchCriteria();
+            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
             searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
             searchCriteria.setName(StringSearchField.and(nameField.getValue().trim()));
             if (myItemCheckbox.getValue()) {

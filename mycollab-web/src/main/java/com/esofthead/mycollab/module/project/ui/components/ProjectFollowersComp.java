@@ -179,7 +179,6 @@ public class ProjectFollowersComp<V extends ValuedBean> extends MVerticalLayout 
                 @Override
                 public void layoutClick(LayoutEvents.LayoutClickEvent event) {
                     if (event.getClickedComponent() == icon) {
-                        return;
                     } else if (!hasEditPermission()) {
                         NotificationUtil.showMessagePermissionAlert();
                     } else {

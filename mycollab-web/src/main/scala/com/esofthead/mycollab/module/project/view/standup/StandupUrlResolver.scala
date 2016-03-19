@@ -71,7 +71,7 @@ class StandupUrlResolver extends ProjectUrlResolver {
       }
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new StandupScreenData.Search(standupSearchCriteria))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 
@@ -88,7 +88,7 @@ class StandupUrlResolver extends ProjectUrlResolver {
       }
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new StandupScreenData.Add(report))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 

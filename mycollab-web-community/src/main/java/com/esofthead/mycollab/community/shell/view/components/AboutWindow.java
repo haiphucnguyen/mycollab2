@@ -45,11 +45,6 @@ import java.util.GregorianCalendar;
 @ViewComponent
 public class AboutWindow extends AbstractAboutWindow {
     public AboutWindow() {
-        super("About");
-        this.setModal(true);
-        this.setResizable(false);
-        this.center();
-        this.setWidth("600px");
 
         MHorizontalLayout content = new MHorizontalLayout().withMargin(true).withWidth("100%");
         this.setContent(content);

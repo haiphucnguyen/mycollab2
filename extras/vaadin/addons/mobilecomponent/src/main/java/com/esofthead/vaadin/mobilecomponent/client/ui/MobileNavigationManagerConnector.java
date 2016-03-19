@@ -75,10 +75,7 @@ public class MobileNavigationManagerConnector extends
 				&& getWidget().getMenuVisibility())
 			getWidget().toggleMenu();
 
-		if (event.getWidth() >= VMobileNavigationManager.TABLET_WIDTH_THRESHOLD)
-			VMobileNavigationManager.IS_TABLET = true;
-		else
-			VMobileNavigationManager.IS_TABLET = false;
+		VMobileNavigationManager.IS_TABLET = event.getWidth() >= VMobileNavigationManager.TABLET_WIDTH_THRESHOLD;
 
 		getWidget().beResponsive();
 	}

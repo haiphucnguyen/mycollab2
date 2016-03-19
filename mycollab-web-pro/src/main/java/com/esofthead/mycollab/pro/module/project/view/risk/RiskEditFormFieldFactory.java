@@ -49,21 +49,17 @@ class RiskEditFormFieldFactory extends AbstractBeanFieldGroupEditFieldFactory<Si
             if (risk.getConsequence() == null) {
                 risk.setConsequence("Marginal");
             }
-            final ValueComboBox box = new ValueComboBox(false, "Catastrophic", "Critical", "Marginal", "Negligible");
-            return box;
+            return new ValueComboBox(false, "Catastrophic", "Critical", "Marginal", "Negligible");
         } else if (Risk.Field.probalitity.equalTo(propertyId)) {
             if (risk.getProbalitity() == null) {
                 risk.setProbalitity("Possible");
             }
-            final ValueComboBox box = new ValueComboBox(false, "Certain", "Likely", "Possible", "Unlikely", "Rare");
-            return box;
+            return new ValueComboBox(false, "Certain", "Likely", "Possible", "Unlikely", "Rare");
         } else if (Risk.Field.status.equalTo(propertyId)) {
             if (risk.getStatus() == null) {
                 risk.setStatus(StatusI18nEnum.Open.name());
             }
-            final I18nValueComboBox box = new I18nValueComboBox(false,
-                    StatusI18nEnum.Open, StatusI18nEnum.Closed);
-            return box;
+            return new I18nValueComboBox(false, StatusI18nEnum.Open, StatusI18nEnum.Closed);
         } else if (Risk.Field.level.equalTo(propertyId)) {
             final RatingStars ratingField = new RatingStars();
             ratingField.setMaxValue(5);

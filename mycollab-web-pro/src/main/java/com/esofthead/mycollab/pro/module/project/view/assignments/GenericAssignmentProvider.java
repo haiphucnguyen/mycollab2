@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.assignments;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
@@ -12,7 +9,6 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.google.common.base.MoreObjects;
 import com.vaadin.ui.components.calendar.event.BasicEventProvider;
 
-import java.util.Date;
 import java.util.List;
 
 /**

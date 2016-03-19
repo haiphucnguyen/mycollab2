@@ -53,6 +53,7 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -75,10 +76,10 @@ public class ProjectMembersWidget extends Depot {
                 sortAsc = !sortAsc;
                 if (sortAsc) {
                     sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
-                    searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC)));
                 } else {
                     sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
-                    searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("memberFullName",
+                    searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("memberFullName",
                             SearchCriteria.DESC)));
                 }
                 memberList.setSearchCriteria(searchCriteria);

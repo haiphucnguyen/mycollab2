@@ -54,7 +54,7 @@ class BugUrlResolver extends ProjectUrlResolver {
       criteria.setProjectId(new NumberSearchField(projectId))
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new BugScreenData.Search(criteria))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 
@@ -79,7 +79,7 @@ class BugUrlResolver extends ProjectUrlResolver {
         throw new MyCollabException("Invalid bug link " + params(0))
       }
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new BugScreenData.Read(bugId))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 
@@ -99,7 +99,7 @@ class BugUrlResolver extends ProjectUrlResolver {
         throw new ResourceNotFoundException
       }
       val chain = new PageActionChain(new ProjectScreenData.Goto(bug.getProjectid), new BugScreenData.Edit(bug))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 
@@ -107,7 +107,7 @@ class BugUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val projectId = new UrlTokenizer(params(0)).getInt
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new BugScreenData.Add(new SimpleBug))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 
@@ -115,7 +115,7 @@ class BugUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*): Unit = {
       val projectId = new UrlTokenizer(params(0)).getInt
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new BugScreenData.GotoKanbanView)
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 

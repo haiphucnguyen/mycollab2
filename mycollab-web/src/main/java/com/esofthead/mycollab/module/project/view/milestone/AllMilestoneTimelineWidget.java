@@ -47,6 +47,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -91,7 +92,7 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
         MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
         UserDashboardView userDashboardView = UIUtils.getRoot(this, UserDashboardView.class);
         searchCriteria.setProjectIds(new SetSearchField<>(userDashboardView.getInvoledProjKeys()));
-        searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField(Milestone.Field.enddate.name(), "ASC")));
+        searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField(Milestone.Field.enddate.name(), "ASC")));
         MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
         milestones = milestoneService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
 

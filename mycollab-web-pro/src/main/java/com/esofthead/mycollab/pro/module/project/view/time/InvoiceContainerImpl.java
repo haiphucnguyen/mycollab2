@@ -39,6 +39,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author MyCollab Ltd
@@ -79,9 +80,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
     private String invoiceStatus;
     private InvoiceListComp invoiceListComp;
-    private InvoiceReadView invoiceReadView;
     private InvoiceStatusComboBox statusComboBox;
-    private InvoiceSearchCriteria searchCriteria;
 
     @Override
     public void attach() {
@@ -116,7 +115,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
         with(header, bodyLayout).expand(bodyLayout);
 
         invoiceListComp = new InvoiceListComp();
-        invoiceReadView = new InvoiceReadView();
+        InvoiceReadView invoiceReadView = new InvoiceReadView();
         bodyLayout.with(invoiceListComp, invoiceReadView).expand(invoiceReadView);
         statusComboBox.addValueChangeListener(new Property.ValueChangeListener() {
             @Override
@@ -151,13 +150,13 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
 
     private void displayInvoices(String status) {
         invoiceStatus = status;
-        searchCriteria = new InvoiceSearchCriteria();
+        InvoiceSearchCriteria searchCriteria = new InvoiceSearchCriteria();
         if (!OptionI18nEnum.InvoiceStatus.All.name().equals(status)) {
             searchCriteria.addExtraField(InvoiceSearchCriteria.p_status().buildPropertyParamInList(SearchField.AND,
-                    Arrays.asList(status)));
+                    Collections.singletonList(status)));
         }
         searchCriteria.addExtraField(InvoiceSearchCriteria.p_projectIds().buildPropertyParamInList(SearchField.AND,
-                Arrays.asList(CurrentProjectVariables.getProjectId())));
+                Collections.singletonList(CurrentProjectVariables.getProjectId())));
         int count = invoiceListComp.setSearchCriteria(searchCriteria);
         statusComboBox.setItemCaption(status, status + " (" + count + ")");
         if (count > 0) {

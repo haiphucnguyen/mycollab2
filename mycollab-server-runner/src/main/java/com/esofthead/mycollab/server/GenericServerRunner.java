@@ -30,7 +30,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.plus.webapp.PlusConfiguration;
-import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -224,7 +223,7 @@ public abstract class GenericServerRunner {
 
     private boolean checkConfigFileExist() {
         File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
-        return (confFolder == null) ? false : new File(confFolder, "mycollab.properties").exists();
+        return confFolder != null && new File(confFolder, "mycollab.properties").exists();
     }
 
     private WebAppContext initWebAppContext() {

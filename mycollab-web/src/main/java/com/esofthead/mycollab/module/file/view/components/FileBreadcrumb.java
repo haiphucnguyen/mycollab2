@@ -125,7 +125,7 @@ public class FileBreadcrumb extends Breadcrumb implements CacheableComponent, Ha
                 @Override
                 public void buttonClick(ClickEvent clickEvent) {
                     FileSearchCriteria criteria = new FileSearchCriteria();
-                    criteria.setBaseFolder(rootFolderPath + "/" + currentFolderPath.toString());
+                    criteria.setBaseFolder(rootFolderPath + "/" + currentFolderPath);
                     criteria.setRootFolder(rootFolderPath);
                     notifySearchHandler(criteria);
                 }

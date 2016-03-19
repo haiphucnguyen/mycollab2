@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.premium.mobile.module.project.view.message;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.mobile.module.project.ui.form.field.ProjectFormAttachmentUploadField;
 import com.esofthead.mycollab.mobile.module.project.view.message.MessageAddView;
 import com.esofthead.mycollab.mobile.module.project.view.message.MessageAttachmentField;
@@ -30,9 +31,6 @@ import java.util.Set;
 public class MessageAddViewImpl extends AbstractMobilePageView implements MessageAddView, HasEditFormHandlers<SimpleMessage> {
     private static final long serialVersionUID = -5665807255892654312L;
 
-    private CssLayout content;
-    private Button saveBtn;
-
     private final TextField subjectField;
     private final TextArea contentField;
     private final Switch isStickField;
@@ -44,7 +42,7 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         this.addStyleName("message-add-view");
         this.setCaption(AppContext.getMessage(MessageI18nEnum.M_VIEW_ADD_TITLE));
 
-        content = new CssLayout();
+        CssLayout content = new CssLayout();
         content.setStyleName("content-layout");
         content.setSizeFull();
         this.setContent(content);
@@ -81,13 +79,13 @@ public class MessageAddViewImpl extends AbstractMobilePageView implements Messag
         content.addComponent(addFormLayout);
         content.addComponent(bottomRow);
 
-        this.saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
+        Button saveBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SAVE), new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 final SimpleMessage message = new SimpleMessage();
                 message.setProjectid(CurrentProjectVariables.getProjectId());
                 message.setPosteddate(new GregorianCalendar().getTime());
-                if (!subjectField.getValue().toString().trim().equals("")) {
+                if (StringUtils.isNotBlank(subjectField.getValue())) {
                     message.setTitle(subjectField.getValue());
                     message.setMessage(contentField.getValue());
                     message.setPosteduser(AppContext.getUsername());

@@ -30,9 +30,6 @@ import java.util.regex.Pattern;
  * @since 5.0.4
  */
 public class FileUtils {
-    private static long KB_SIZE = 1024;
-    private static long MB_SIZE = 1024 * 1024;
-    private static long GB_SIZE = 1024 * 1024 * 1024;
 
     public static File getHomeFolder() {
         String userFolder = System.getProperty("user.home");
@@ -42,6 +39,9 @@ public class FileUtils {
     }
 
     public static String getVolumeDisplay(Long volume) {
+        long GB_SIZE = 1024 * 1024 * 1024;
+        long MB_SIZE = 1024 * 1024;
+        long KB_SIZE = 1024;
         if (volume == null) {
             return "0 Kb";
         } else if (volume < KB_SIZE) {

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.esofthead.mycollab.schedule.email.user.service.UserSignUpEmailNotificationJob;
@@ -39,7 +40,7 @@ public class UserSignUpEmailNotificationJobTest extends GenericJobTest {
 		SimpleUser user = new SimpleUser();
 
 		when(userService.findPagableListByCriteria(any(SearchRequest.class)))
-				.thenReturn(Arrays.asList(user));
+				.thenReturn(Collections.singletonList(user));
 
 		confirmEmailJob.executeJob(context);
 

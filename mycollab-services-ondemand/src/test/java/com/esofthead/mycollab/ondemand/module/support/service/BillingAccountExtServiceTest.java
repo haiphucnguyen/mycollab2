@@ -3,7 +3,6 @@ package com.esofthead.mycollab.ondemand.module.support.service;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.ondemand.module.support.domain.SimpleBillingAccount2;
 import com.esofthead.mycollab.ondemand.module.support.domain.criteria.BillingAccountSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;

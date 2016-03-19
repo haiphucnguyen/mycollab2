@@ -27,8 +27,7 @@ public class DistributionLockServiceImpl implements DistributionLockService {
             }
 
             LockService lock_service = new LockService(channel);
-            Lock lock = lock_service.getLock(lockName);
-            return lock;
+            return lock_service.getLock(lockName);
         } else {
             return null;
         }

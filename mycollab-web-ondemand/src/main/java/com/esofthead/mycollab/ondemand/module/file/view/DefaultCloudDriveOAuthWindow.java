@@ -39,7 +39,6 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
     private TextField folderName;
     private CloudDriveInfo cloudDriveInfo;
 
-    private VerticalLayout mainLayout;
     private VerticalLayout messageBox;
 
     private ApplicationEventListener<CloudDriveOAuthCallbackEvent.ReceiveCloudDriveInfo> listener;
@@ -85,7 +84,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
     }
 
     private void constructBody() {
-        mainLayout = new VerticalLayout();
+        VerticalLayout mainLayout = new VerticalLayout();
         mainLayout.setWidth("100%");
         mainLayout.setSpacing(true);
         mainLayout.setMargin(new MarginInfo(true, true, false, true));

@@ -20,7 +20,7 @@ class InvoiceUrlResolver extends ProjectUrlResolver {
       val projectId = new UrlTokenizer(params(0)).getInt
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new GotoInvoiceList())
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 

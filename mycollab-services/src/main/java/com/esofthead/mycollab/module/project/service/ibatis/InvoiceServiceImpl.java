@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfo;
 import com.esofthead.mycollab.common.interceptor.aspect.ClassInfoMap;
 import com.esofthead.mycollab.common.interceptor.aspect.Traceable;
-import com.esofthead.mycollab.common.interceptor.aspect.Watchable;
 import com.esofthead.mycollab.core.cache.CacheKey;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;

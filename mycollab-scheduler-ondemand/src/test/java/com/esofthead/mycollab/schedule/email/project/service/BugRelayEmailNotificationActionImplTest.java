@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.email.GenericJobTest;
-import com.esofthead.mycollab.schedule.email.project.service.BugRelayEmailNotificationActionImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +17,7 @@ import org.mockito.Spy;
 import scala.collection.immutable.Set;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,7 +57,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setUsername("hainguyen@esofthead.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt()))
-                .thenReturn(Arrays.asList(noSetting1));
+                .thenReturn(Collections.singletonList(noSetting1));
 
         Set<SimpleUser> users = bugEmailNotification
                 .getListNotifyUsersWithFilter(prjRelayNotification);
@@ -70,7 +70,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
         notUser1.setUsername("hainguyen@esofthead.com");
-        List<SimpleUser> notifyUsers = Arrays.asList(notUser1);
+        List<SimpleUser> notifyUsers = Collections.singletonList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
         prjRelayNotification.setSaccountid(1);
@@ -82,7 +82,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setUsername("hainguyen@esofthead.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt()))
-                .thenReturn(Arrays.asList(noSetting1));
+                .thenReturn(Collections.singletonList(noSetting1));
 
         SimpleBug bug = new SimpleBug();
         bug.setAssignuser("hainguyen@esofthead.com");
@@ -100,7 +100,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
         notUser1.setUsername("hainguyen@esofthead.com");
-        List<SimpleUser> notifyUsers = Arrays.asList(notUser1);
+        List<SimpleUser> notifyUsers = Collections.singletonList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
         prjRelayNotification.setSaccountid(1);
@@ -112,7 +112,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setUsername("hainguyen@esofthead.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt()))
-                .thenReturn(Arrays.asList(noSetting1));
+                .thenReturn(Collections.singletonList(noSetting1));
 
         SimpleBug bug = new SimpleBug();
         bug.setAssignuser("hainguyen@esofthead.com");
@@ -130,7 +130,7 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         ProjectRelayEmailNotification prjRelayNotification = new ProjectRelayEmailNotification();
         SimpleUser notUser1 = new SimpleUser();
         notUser1.setUsername("linhduong@esofthead.com");
-        List<SimpleUser> notifyUsers = Arrays.asList(notUser1);
+        List<SimpleUser> notifyUsers = Collections.singletonList(notUser1);
         prjRelayNotification.setNotifyUsers(notifyUsers);
         prjRelayNotification.setTypeid("1");
         prjRelayNotification.setSaccountid(1);
@@ -142,10 +142,9 @@ public class BugRelayEmailNotificationActionImplTest extends GenericJobTest {
         noSetting1.setUsername("hainguyen@esofthead.com");
 
         when(projectNotificationService.findNotifications(anyInt(), anyInt()))
-                .thenReturn(Arrays.asList(noSetting1));
+                .thenReturn(Collections.singletonList(noSetting1));
 
-        Set<SimpleUser> users = bugEmailNotification
-                .getListNotifyUsersWithFilter(prjRelayNotification);
+        Set<SimpleUser> users = bugEmailNotification.getListNotifyUsersWithFilter(prjRelayNotification);
         Assert.assertEquals(1, users.size());
     }
 }

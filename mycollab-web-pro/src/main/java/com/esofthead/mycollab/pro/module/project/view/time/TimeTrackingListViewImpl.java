@@ -48,10 +48,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author MyCollab Ltd
@@ -157,7 +154,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private StreamResource constructStreamResource(ReportExportType exportType) {
-        List fields = Arrays.asList(TimeTableFieldDef.summary());
+        List fields = Collections.singletonList(TimeTableFieldDef.summary());
         SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time Tracking", new
                 RpFieldsBuilder(fields), exportType, ItemTimeLoggingService.class, ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {

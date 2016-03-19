@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.rest.server.resource;
 
-import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.WebServer;
 import com.jayway.restassured.http.ContentType;

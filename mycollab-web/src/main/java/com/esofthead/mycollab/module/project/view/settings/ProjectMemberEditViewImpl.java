@@ -51,7 +51,6 @@ import com.vaadin.ui.*;
 public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjectMember> implements ProjectMemberEditView {
     private static final long serialVersionUID = 1L;
 
-    private FormContainer permissionsPanel;
     private GridFormLayoutHelper projectFormHelper;
 
     @Override
@@ -123,7 +122,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(formLayoutFactory.getLayout());
 
-            permissionsPanel = new FormContainer();
+            FormContainer permissionsPanel = new FormContainer();
             projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
             permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS),
                     projectFormHelper.getLayout());

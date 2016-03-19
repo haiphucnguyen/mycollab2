@@ -39,7 +39,7 @@ class RoleUrlResolver extends ProjectUrlResolver {
       val roleSearchCriteria = new ProjectRoleSearchCriteria
       roleSearchCriteria.setProjectId(new NumberSearchField(projectId))
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId), new ProjectRoleScreenData.Search(roleSearchCriteria))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 
@@ -50,7 +50,7 @@ class RoleUrlResolver extends ProjectUrlResolver {
       val roleId = token.getInt
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new ProjectRoleScreenData.Read(roleId))
-      EventBusFactory.getInstance.post(new ProjectEvent.GotoMyProject(this, chain))
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
 

@@ -34,9 +34,7 @@ import java.util.List;
 public class CloudDriveSettingWindow extends Window {
     private static final long serialVersionUID = 1L;
 
-    private final Button connectAccountBtn;
     private final MVerticalLayout bodyLayout;
-    private final MVerticalLayout mainLayout;
 
     private ExternalResourceService externalResourceService;
     private ExternalDriveService externalDriveService;
@@ -46,11 +44,11 @@ public class CloudDriveSettingWindow extends Window {
         this.setWidth("800px");
         this.setModal(true);
         this.setResizable(false);
-        mainLayout = new MVerticalLayout().withWidth("100%");
+        MVerticalLayout mainLayout = new MVerticalLayout().withWidth("100%");
         externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
         externalResourceService = ApplicationContextUtil.getSpringBean(ExternalResourceService.class);
 
-        connectAccountBtn = new Button("Connect account", new Button.ClickListener() {
+        Button connectAccountBtn = new Button("Connect account", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
