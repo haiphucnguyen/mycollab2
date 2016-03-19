@@ -91,11 +91,10 @@ public class TaskStatusTrendChartWidget extends Depot {
         protected JFreeChart createChart() {
             dataset = new TimeSeriesCollection();
             if (groupItems != null) {
-                Set<String> statuses = groupItems.keySet();
-                for (String status : statuses) {
-                    TimeSeries series = new TimeSeries(status);
-                    List<GroupItem> groupItems = this.groupItems.get(status);
-                    for (GroupItem item : groupItems) {
+                Set<Map.Entry<String, List<GroupItem>>> entries = groupItems.entrySet();
+                for (Map.Entry<String, List<GroupItem>> entry : entries) {
+                    TimeSeries series = new TimeSeries(entry.getKey());
+                    for (GroupItem item : entry.getValue()) {
                         series.add(new Day(formatter.parseDateTime(item.getGroupname()).toDate()), item.getValue());
                     }
                     dataset.addSeries(series);
@@ -118,7 +117,7 @@ public class TaskStatusTrendChartWidget extends Depot {
                     renderer.setBaseShapesVisible(true);
                     renderer.setBaseShapesFilled(true);
                     renderer.setDrawSeriesLineAsPath(true);
-                    for (int i = 0; i < statuses.size(); i++) {
+                    for (int i = 0; i < entries.size(); i++) {
                         int colorIndex = i % CHART_COLOR_STR.size();
                         renderer.setSeriesPaint(i, Color.decode("0x" + CHART_COLOR_STR.get(colorIndex)));
                     }

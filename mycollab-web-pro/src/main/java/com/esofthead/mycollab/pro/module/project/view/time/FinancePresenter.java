@@ -34,10 +34,12 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
         AbstractPresenter presenter;
 
         if (data instanceof TimeTrackingScreenData.Search) {
-            projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
+            FinanceContainer financeContainer = (FinanceContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
+            financeContainer.initContent();
             presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
         } else if (data instanceof InvoiceScreenData.GotoInvoiceList) {
-            projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
+            FinanceContainer financeContainer = (FinanceContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
+            financeContainer.initContent();
             presenter = PresenterResolver.getPresenter(InvoicePresenter.class);
         } else {
             FinanceContainer financeContainer = (FinanceContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
