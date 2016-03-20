@@ -115,7 +115,7 @@ public class ProjectMembersWidget extends Depot {
         addHeaderElement(inviteMemberBtn);
 
         memberList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectMemberService.class),
-                new MemberRowDisplayHandler(), 5);
+                new MemberRowDisplayHandler(), 7);
         bodyContent.addComponent(memberList);
     }
 
