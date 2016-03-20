@@ -1,6 +1,6 @@
-package com.esofthead.mycollab.pro.module.project.view.standup;
+package com.esofthead.mycollab.pro.module.project.view.reports;
 
-import com.esofthead.mycollab.module.project.view.standup.IStandupContainer;
+import com.esofthead.mycollab.module.project.view.reports.IStandupContainer;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 

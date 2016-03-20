@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.pro.module.project.view.standup;
+package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;

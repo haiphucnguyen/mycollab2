@@ -21,6 +21,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.i18n.ProjectMemberI18nEnum;
@@ -35,6 +36,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -104,6 +106,10 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
                 return new AdminRoleSelectionField();
             } else if (propertyId.equals("isadmin")) {
                 return new DummyCustomField<Boolean>();
+            } else if (ProjectMember.Field.billingrate.equalTo(propertyId)) {
+                return new DoubleField();
+            } else if (ProjectMember.Field.overtimebillingrate.equalTo(propertyId)) {
+                return new DoubleField();
             }
             return null;
         }

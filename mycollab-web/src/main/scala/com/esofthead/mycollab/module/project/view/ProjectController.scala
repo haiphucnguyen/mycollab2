@@ -41,7 +41,7 @@ import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.Goto
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
-import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter
+import com.esofthead.mycollab.module.project.view.reports.IStandupPresenter
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter
 import com.esofthead.mycollab.module.project.view.time.IInvoiceListPresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
@@ -106,6 +106,14 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
     this.register(new ApplicationEventListener[ProjectEvent.GotoGanttChart] {
       @Subscribe def handle(event: ProjectEvent.GotoGanttChart) {
         val data = new ProjectScreenData.GotoGanttChart
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
+        presenter.go(projectView, data)
+      }
+    })
+
+    this.register(new ApplicationEventListener[ProjectEvent.GotoReportConsole] {
+      @Subscribe def handle(event: ProjectEvent.GotoReportConsole) {
+        val data = new ProjectScreenData.GotoReportConsole
         val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
         presenter.go(projectView, data)
       }

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.pro.module.project.view.standup;
+package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;

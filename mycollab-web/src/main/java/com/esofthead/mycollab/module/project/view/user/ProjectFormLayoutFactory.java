@@ -47,7 +47,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public ComponentContainer getLayout() {
-        final AddViewLayout projectAddLayout = new AddViewLayout(this.title,
+        final AddViewLayout projectAddLayout = new AddViewLayout(title,
                 ProjectAssetsManager.getAsset(ProjectTypeConstants.PROJECT));
 
         this.projectInformationLayout = new ProjectInformationLayout();
@@ -57,9 +57,9 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
             projectAddLayout.addHeaderRight(topPanel);
         }
 
-        projectAddLayout.addBody(this.projectInformationLayout.getLayout());
+        projectAddLayout.addBody(projectInformationLayout.getLayout());
 
-        final Layout bottomPanel = this.createBottomPanel();
+        final Layout bottomPanel = createBottomPanel();
         if (bottomPanel != null) {
             projectAddLayout.addBottomControls(bottomPanel);
         }

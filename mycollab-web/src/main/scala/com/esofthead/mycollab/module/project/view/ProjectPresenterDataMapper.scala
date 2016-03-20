@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.project.view.page.PagePresenter
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
-import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter
+import com.esofthead.mycollab.module.project.view.reports.IStandupPresenter
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter
 import com.esofthead.mycollab.module.project.view.time.IFinancePresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
@@ -106,6 +106,7 @@ object ProjectPresenterDataMapper {
     classOf[ProjectScreenData.GotoFavorite] -> classOf[ProjectDashboardPresenter],
     classOf[ProjectScreenData.GotoGanttChart] -> classOf[ProjectDashboardPresenter],
     classOf[ProjectScreenData.GotoCalendarView] -> classOf[ProjectDashboardPresenter],
+    classOf[ProjectScreenData.GotoReportConsole] -> classOf[ProjectDashboardPresenter],
     classOf[ProjectScreenData.SearchItem] -> classOf[UserProjectDashboardPresenter],
     classOf[ProjectScreenData.Edit] -> classOf[UserProjectDashboardPresenter])
 

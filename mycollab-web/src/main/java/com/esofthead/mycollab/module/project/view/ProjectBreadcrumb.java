@@ -511,6 +511,12 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         AppContext.addFragment("project/favorite/" + UrlEncodeDecoder.encode(project.getId()), "Favorites");
     }
 
+    public void gotoReportConsole() {
+        this.select(0);
+        this.addLink(new Button("Reports"));
+        AppContext.addFragment("project/reports/" + UrlEncodeDecoder.encode(project.getId()), "Reports");
+    }
+
     public void gotoComponentList() {
         this.select(0);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.COMPONENTS)));

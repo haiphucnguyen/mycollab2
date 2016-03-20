@@ -154,6 +154,11 @@ public class ProjectLinkBuilder {
                 + ProjectLinkGenerator.generatePageRead(projectId, pagePath);
     }
 
+    public static String generateStandupDashboardLink(Integer projectId) {
+        return AppContext.getSiteUrl() + GenericLinkUtils.URL_PREFIX_PARAM + ProjectLinkGenerator
+                .generateStandupDashboardLink(projectId);
+    }
+
     public static String generateProjectItemHtmlLinkAndTooltip(String prjShortName, Integer projectId, String summary, String type, String typeId) {
         String uid = UUID.randomUUID().toString();
         Text image = new Text(ProjectAssetsManager.getAsset(type).getHtml());

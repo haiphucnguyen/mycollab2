@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.pro.module.project.view.standup;
+package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;

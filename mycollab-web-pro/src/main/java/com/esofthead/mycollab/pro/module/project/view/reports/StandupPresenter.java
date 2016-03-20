@@ -1,11 +1,11 @@
-package com.esofthead.mycollab.pro.module.project.view.standup;
+package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
-import com.esofthead.mycollab.module.project.view.standup.IStandupContainer;
-import com.esofthead.mycollab.module.project.view.standup.IStandupPresenter;
+import com.esofthead.mycollab.module.project.view.reports.IStandupContainer;
+import com.esofthead.mycollab.module.project.view.reports.IStandupPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;

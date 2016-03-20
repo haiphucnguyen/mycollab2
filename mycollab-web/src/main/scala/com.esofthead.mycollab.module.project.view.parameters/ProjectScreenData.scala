@@ -37,6 +37,8 @@ object ProjectScreenData {
 
   class GotoGanttChart extends ScreenData {}
 
+  class GotoReportConsole extends ScreenData {}
+
   class GotoCalendarView extends ScreenData {}
 
 }

@@ -28,9 +28,9 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver
 import com.esofthead.mycollab.module.project.view.page.PageUrlResolver
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.{GotoCalendarView, GotoGanttChart}
 import com.esofthead.mycollab.module.project.view.parameters.{MilestoneScreenData, ProjectScreenData}
+import com.esofthead.mycollab.module.project.view.reports.StandupUrlResolver
 import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver
 import com.esofthead.mycollab.module.project.view.settings._
-import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver
 import com.esofthead.mycollab.module.project.view.time.{InvoiceUrlResolver, TimeUrlResolver}
 import com.esofthead.mycollab.shell.events.ShellEvent
@@ -49,6 +49,7 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("edit", new ProjectEditUrlResolver)
     this.addSubResolver("tag", new ProjectTagUrlResolver)
     this.addSubResolver("favorite", new ProjectFavoriteUrlResolver)
+    this.addSubResolver("reports", new ProjectReportUrlResolver)
     this.addSubResolver("gantt", new GanttUrlResolver)
     this.addSubResolver("message", new MessageUrlResolver)
     this.addSubResolver("milestone", new MilestoneUrlResolver)
@@ -98,6 +99,15 @@ class ProjectUrlResolver extends UrlResolver {
       val projectId = new UrlTokenizer(params(0)).getInt
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
         new ProjectScreenData.GotoFavorite())
+      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
+    }
+  }
+
+  class ProjectReportUrlResolver extends ProjectUrlResolver {
+    protected override def handlePage(params: String*) {
+      val projectId = new UrlTokenizer(params(0)).getInt
+      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+        new ProjectScreenData.GotoReportConsole())
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }
   }
