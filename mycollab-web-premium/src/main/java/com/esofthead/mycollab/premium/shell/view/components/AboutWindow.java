@@ -74,7 +74,9 @@ public class AboutWindow extends AbstractAboutWindow {
                             .getExpireDate()) + "</b>", ContentMode.HTML);
                 } else {
                     licenseInfoLbl = new Label("License to <b>" + licenseInfo.getCustomerId() + "/" + licenseInfo
-                            .getLicenseOrg() + "</b>. Expire at <b>" + AppContext.formatPrettyTime(licenseInfo.getExpireDate()) + "</b>", ContentMode.HTML);
+                            .getLicenseOrg() + "</b>. Expire at <b>" + AppContext.formatPrettyTime(licenseInfo
+                            .getExpireDate()) + "</b>. Max users is <b>" + licenseInfo.getMaxUsers() + "</b>",
+                            ContentMode.HTML);
                 }
             }
             rightPanel.add(licenseInfoLbl);

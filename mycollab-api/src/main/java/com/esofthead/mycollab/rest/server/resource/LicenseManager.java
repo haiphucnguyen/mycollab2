@@ -107,6 +107,7 @@ public class LicenseManager {
             prop.setProperty("licenseOrg", licenseInfo.getLicenseOrg());
             prop.setProperty("expireDate", DateTimeUtils.formatDateToW3C(licenseInfo.getExpireDate()));
             prop.setProperty("issueDate", DateTimeUtils.formatDateToW3C(licenseInfo.getIssueDate()));
+            prop.setProperty("maxUsers", licenseInfo.getMaxUsers() + "");
             StringWriter outStream = new StringWriter();
             prop.store(outStream, "");
             String licenseStrInfo = outStream.toString();
@@ -140,12 +141,12 @@ public class LicenseManager {
 
     public static void main(String[] args) {
         LicenseInfo info = new LicenseInfo();
-        info.setCustomerId("");
-        info.setLicenseType(LicenseType.PRO_TRIAL);
+        info.setCustomerId("1");
+        info.setLicenseType(LicenseType.PRO);
         info.setExpireDate(new LocalDate().plusDays(10).toDate());
         info.setIssueDate(new LocalDate().minusDays(30).toDate());
-        info.setLicenseOrg("");
-        info.setMaxUsers(10);
+        info.setLicenseOrg("eSoftHead");
+        info.setMaxUsers(1);
         LicenseManager generator = new LicenseManager();
         String str = generator.encode(info);
         System.out.println(str);
