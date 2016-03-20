@@ -153,28 +153,6 @@ public class ProjectInfoComponent extends MHorizontalLayout {
             footer.addComponents(accountBtn);
         }
 
-        Button eventBtn = new Button("Calendar", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(this));
-            }
-        });
-        eventBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-        eventBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        eventBtn.setIcon(FontAwesome.CALENDAR);
-        footer.addComponents(eventBtn);
-
-        Button ganttChartBtn = new Button("Gantt", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null));
-            }
-        });
-        ganttChartBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
-        ganttChartBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        ganttChartBtn.setIcon(FontAwesome.BAR_CHART_O);
-        footer.addComponents(ganttChartBtn);
-
         Button tagBtn = new Button("Tag", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -196,6 +174,28 @@ public class ProjectInfoComponent extends MHorizontalLayout {
         favoriteBtn.addStyleName(UIConstants.BUTTON_OPTION);
         favoriteBtn.setIcon(FontAwesome.STAR);
         footer.addComponents(favoriteBtn);
+
+        Button eventBtn = new Button("Calendar", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoCalendarView(this));
+            }
+        });
+        eventBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
+        eventBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        eventBtn.setIcon(FontAwesome.CALENDAR);
+        footer.addComponents(eventBtn);
+
+        Button ganttChartBtn = new Button("Gantt", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                EventBusFactory.getInstance().post(new ProjectEvent.GotoGanttChart(this, null));
+            }
+        });
+        ganttChartBtn.addStyleName(UIConstants.BUTTON_SMALL_PADDING);
+        ganttChartBtn.addStyleName(UIConstants.BUTTON_OPTION);
+        ganttChartBtn.setIcon(FontAwesome.BAR_CHART_O);
+        footer.addComponents(ganttChartBtn);
 
         headerLayout.with(headerLbl, footer);
 
