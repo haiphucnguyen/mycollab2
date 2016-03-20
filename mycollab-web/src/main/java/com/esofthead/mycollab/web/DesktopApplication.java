@@ -159,7 +159,6 @@ public class DesktopApplication extends MyCollabUI {
 
     private void handleException(VaadinRequest request, Throwable e) {
         IgnoreException ignoreException = getExceptionType(e, IgnoreException.class);
-        e.printStackTrace();
         if (ignoreException != null) {
             return;
         }
