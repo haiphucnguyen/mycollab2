@@ -41,6 +41,16 @@
         #ifnotnull($searchCriteria.involvedMember)
             ${searchCriteria.involvedMember.operation} m_prj_member.username = @{searchCriteria.involvedMember.value}
         #end
+
+        #ifnotnull($searchCriteria.memberFullName)
+            ${searchCriteria.memberFullName.operation}
+            EXISTS(
+            SELECT 1 FROM s_user
+                WHERE m_prj_member.username=s_user.username
+                    AND concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${searchCriteria.memberFullName.value}%'
+                LIMIT 1
+            )
+        #end
         
         #selectExpr($searchCriteria.extraFields)
         ]]>
@@ -72,6 +82,16 @@
         
         #ifnotnull($searchCriteria.involvedMember)
             ${searchCriteria.involvedMember.operation} m_prj_member.username = @{searchCriteria.involvedMember.value}
+        #end
+
+        #ifnotnull($searchCriteria.memberFullName)
+            ${searchCriteria.memberFullName.operation}
+            EXISTS(
+            SELECT 1 FROM s_user
+                WHERE m_prj_member.username=s_user.username
+                    AND concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${searchCriteria.memberFullName.value}%'
+                LIMIT 1
+            )
         #end
         
         #totalCountExpr($searchCriteria.extraFields)

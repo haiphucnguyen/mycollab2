@@ -36,10 +36,7 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.web.ui.AbstractBeanPagedList;
-import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
-import com.esofthead.mycollab.vaadin.web.ui.Depot;
-import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Span;
@@ -49,10 +46,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -90,6 +87,22 @@ public class ProjectMembersWidget extends Depot {
         sortBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
         addHeaderElement(sortBtn);
 
+        final SearchTextField searchTextField = new SearchTextField() {
+            @Override
+            public void doSearch(String value) {
+                searchCriteria.setMemberFullName(StringSearchField.and(value));
+                showMembers();
+            }
+
+            @Override
+            public void emptySearch() {
+                searchCriteria.setMemberFullName(null);
+                showMembers();
+            }
+        };
+        searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
+        addHeaderElement(searchTextField);
+
         MButton inviteMemberBtn = new MButton("Invite").withListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -102,7 +115,7 @@ public class ProjectMembersWidget extends Depot {
         addHeaderElement(inviteMemberBtn);
 
         memberList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectMemberService.class),
-                new MemberRowDisplayHandler());
+                new MemberRowDisplayHandler(), 10);
         bodyContent.addComponent(memberList);
     }
 
@@ -111,6 +124,10 @@ public class ProjectMembersWidget extends Depot {
         searchCriteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
         searchCriteria.setStatus(StringSearchField.and(ProjectMemberStatusConstants.ACTIVE));
         searchCriteria.addOrderField(new SearchCriteria.OrderField("memberFullName", SearchCriteria.ASC));
+        showMembers();
+    }
+
+    private void showMembers() {
         memberList.setSearchCriteria(searchCriteria);
         this.setTitle(AppContext.getMessage(ProjectCommonI18nEnum.WIDGET_MEMBERS_TITLE, memberList.getTotalCount()));
     }
