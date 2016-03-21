@@ -48,6 +48,11 @@ Version 5.2.10
 
 * [Premium] Invoice management in project
 * [Premium] Favorite view in project
+* [Premium] Project members can enter overtime hours per assignment
+* [Premium] Add 'Can read financial data' permission in project
+* [Premium] Tag management supports for components and versions
+* [Premium] Favorites management support for components and versions
+* [Premium] Can calculate the financial data in timing view
 * Support install MyCollab as windows service
 * Other minor improvements
 

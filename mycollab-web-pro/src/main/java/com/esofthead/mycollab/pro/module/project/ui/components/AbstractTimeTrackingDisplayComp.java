@@ -91,10 +91,12 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
                 nonbillable += !item.getIsbillable() ? item.getLogvalue() : 0;
             }
 
-            ELabel totalHoursLbl = new ELabel(("Total Hours: " + (billable + nonbillable))).withStyleName(ValoTheme
-                    .LABEL_BOLD).withWidthUndefined();
-            ELabel totalBillableHoursLbl = new ELabel(("Billable Hours: " + billable)).withWidthUndefined();
-            ELabel totalNonBillableHoursLbl = new ELabel(("Non Billable Hours: " + nonbillable)).withWidthUndefined();
+            ELabel totalHoursLbl = new ELabel(("Total Hours: " + (billable + nonbillable))).withStyleName(UIConstants
+                    .LABEL_META_INFO).withWidthUndefined();
+            ELabel totalBillableHoursLbl = new ELabel(("Billable Hours: " + billable)).withStyleName(UIConstants
+                    .LABEL_META_INFO).withWidthUndefined();
+            ELabel totalNonBillableHoursLbl = new ELabel(("Non Billable Hours: " + nonbillable)).withStyleName
+                    (UIConstants.LABEL_META_INFO).withWidthUndefined();
             with(totalHoursLbl, totalBillableHoursLbl, totalNonBillableHoursLbl).withAlign(totalHoursLbl, Alignment.TOP_RIGHT)
                     .withAlign(totalBillableHoursLbl, Alignment.TOP_RIGHT).withAlign(totalNonBillableHoursLbl, Alignment.TOP_RIGHT);
         }

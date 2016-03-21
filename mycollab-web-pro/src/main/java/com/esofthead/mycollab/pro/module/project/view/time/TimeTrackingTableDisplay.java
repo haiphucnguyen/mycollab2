@@ -146,16 +146,21 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public Object generateCell(Table source, Object itemId,
-                                               Object columnId) {
+                    public Object generateCell(Table source, Object itemId, Object columnId) {
                         SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
-                        ELabel icon;
-                        if (timeLogging.getIsbillable()) {
-                            icon = ELabel.fontIcon(FontAwesome.CHECK);
-                        } else {
-                            icon = ELabel.fontIcon(FontAwesome.TIMES);
-                        }
-                        return icon;
+                        return (timeLogging.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+                    }
+                }
+        );
+
+        this.addGeneratedColumn("isovertime", new ColumnGenerator() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object generateCell(Table source, Object itemId, Object columnId) {
+                        SimpleItemTimeLogging timeLogging = getBeanByIndex(itemId);
+                        return (Boolean.TRUE.equals(timeLogging.getIsovertime())) ? ELabel.fontIcon(FontAwesome.CHECK)
+                                : ELabel.fontIcon(FontAwesome.TIMES);
                     }
                 }
         );

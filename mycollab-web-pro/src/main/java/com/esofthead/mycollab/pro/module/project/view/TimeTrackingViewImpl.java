@@ -128,15 +128,15 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         if (groupBy.equals(GROUPBY_PROJECT)) {
             return Arrays.asList(TimeTableFieldDef.summary(),
                     TimeTableFieldDef.logForDate(), TimeTableFieldDef.logUser(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable());
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime());
         } else if (groupBy.equals(GROUPBY_DATE)) {
             return Arrays.asList(TimeTableFieldDef.summary(),
                     TimeTableFieldDef.logUser(), TimeTableFieldDef.project(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable());
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime());
         } else if (groupBy.equals(GROUPBY_USER)) {
             return Arrays.asList(TimeTableFieldDef.summary(),
                     TimeTableFieldDef.logForDate(), TimeTableFieldDef.project(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable());
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime());
         } else {
             throw new MyCollabException("Do not support view type: " + groupBy);
         }

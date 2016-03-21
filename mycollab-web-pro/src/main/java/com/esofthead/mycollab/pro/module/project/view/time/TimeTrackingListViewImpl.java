@@ -231,13 +231,13 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
         if ("Date".equals(groupBy)) {
             return new TimeTrackingDateOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
                     TimeTableFieldDef.id()), this.tableClickListener);
 
         } else if ("User".equals(groupBy)) {
             return new TimeTrackingUserOrderComponent(Arrays.asList(
                     TimeTableFieldDef.summary(), TimeTableFieldDef.logForDate(),
-                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(),
+                    TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(),
                     TimeTableFieldDef.id()), this.tableClickListener);
         } else {
             throw new MyCollabException("Do not support view type: " + groupBy);

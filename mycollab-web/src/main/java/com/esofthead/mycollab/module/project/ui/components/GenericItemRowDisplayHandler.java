@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.ui.components;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
+import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -25,12 +26,18 @@ import java.util.UUID;
  * @author MyCollab Ltd
  * @since 5.2.10
  */
-public class GenericItemRowDisplayHandler  implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
+public class GenericItemRowDisplayHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
     @Override
     public Component generateRow(AbstractBeanPagedList host, ProjectGenericItem item, int rowIndex) {
         MVerticalLayout layout = new MVerticalLayout().withWidth("100%").withStyleName("border-bottom", UIConstants.HOVER_EFFECT_NOT_BOX);
-        ELabel link = ELabel.h3(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
-                item.getProjectId(), item.getSummary(), item.getType(), item.getTypeId()));
+        ELabel link = ELabel.h3("");
+        if (ProjectTypeConstants.BUG.equals(item.getType()) || ProjectTypeConstants.TASK.equals(item.getType())) {
+            link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
+                    item.getProjectId(), item.getSummary(), item.getType(), item.getExtraTypeId() + ""));
+        } else {
+            link.setValue(ProjectLinkBuilder.generateProjectItemHtmlLinkAndTooltip(item.getProjectShortName(),
+                    item.getProjectId(), item.getSummary(), item.getType(), item.getTypeId()));
+        }
 
         String desc = (StringUtils.isBlank(item.getDescription())) ? "&lt;&lt;No description&gt;&gt;" : item.getDescription();
         SafeHtmlLabel descLbl = new SafeHtmlLabel(desc);

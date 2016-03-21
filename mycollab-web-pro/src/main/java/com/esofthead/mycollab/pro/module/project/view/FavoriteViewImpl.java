@@ -249,7 +249,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             ProjectActivityComponent activityComponent;
             if (ProjectTypeConstants.BUG.equals(assignment.getType())) {
                 BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
+                final SimpleBug bug = bugService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                 if (bug != null) {
                     ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                             + bug.getSummary(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
@@ -276,7 +276,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
                 ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
+                final SimpleTask task = taskService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                 if (task != null) {
                     ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                             + task.getTaskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
