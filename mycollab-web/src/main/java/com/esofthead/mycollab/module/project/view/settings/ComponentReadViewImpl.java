@@ -26,10 +26,7 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.ComponentI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
-import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
-import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
-import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.esofthead.mycollab.module.project.ui.components.ProjectMemberLink;
+import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.format.ComponentFieldFormatter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
@@ -61,6 +58,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
     private static final Logger LOG = LoggerFactory.getLogger(ComponentReadViewImpl.class);
 
     private ProjectActivityComponent activityComponent;
+    private TagViewComponent tagViewComponent;
     private Button quickActionStatusBtn;
 
     private DateInfoComp dateInfoComp;
@@ -103,6 +101,7 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
         dateInfoComp.displayEntryDateTime(beanItem);
         peopleInfoComp.displayEntryPeople(beanItem);
         componentTimeLogComp.displayTime(beanItem);
+        tagViewComponent.display(ProjectTypeConstants.BUG_COMPONENT, beanItem.getId());
 
         if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
             removeLayoutStyleName(UIConstants.LINK_COMPLETED);
@@ -114,6 +113,12 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
             quickActionStatusBtn.setIcon(FontAwesome.CLIPBOARD);
         }
 
+    }
+
+    @Override
+    protected ComponentContainer createExtraControls() {
+        tagViewComponent = new TagViewComponent();
+        return tagViewComponent;
     }
 
     @Override

@@ -5,10 +5,10 @@ import com.esofthead.mycollab.common.domain.Tag;
 import com.esofthead.mycollab.common.service.TagService;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.ui.components.ProjectTaskRowDisplayHandler;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
+import com.esofthead.mycollab.module.project.ui.components.GenericItemRowDisplayHandler;
 import com.esofthead.mycollab.module.project.view.ITagListView;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -39,14 +39,13 @@ import java.util.List;
 @ViewComponent
 public class TagListViewImpl extends AbstractPageView implements ITagListView {
     private TagService tagService;
-    private ProjectGenericTaskService projectGenericTaskService;
 
-    private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> assignmentList;
+    private DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria, ProjectGenericItem>
+            assignmentList;
     private List<String> selectedTags;
 
     public TagListViewImpl() {
         withMargin(new MarginInfo(true, false, true, true));
-        projectGenericTaskService = ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class);
         tagService = ApplicationContextUtil.getSpringBean(TagService.class);
         selectedTags = new ArrayList<>();
     }
@@ -68,7 +67,8 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         header.with(headerLbl);
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
-        assignmentList = new DefaultBeanPagedList<>(projectGenericTaskService, new ProjectTaskRowDisplayHandler());
+        assignmentList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class),
+                new GenericItemRowDisplayHandler());
         assignmentList.addStyleName("border-top");
 
         MVerticalLayout rightSideBar = new MVerticalLayout().withSpacing(false).withMargin(new MarginInfo(false,
@@ -89,11 +89,11 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
 
     private void displaySelectedTags() {
         if (CollectionUtils.isNotEmpty(selectedTags)) {
-            ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
+            ProjectGenericItemSearchCriteria searchCriteria = new ProjectGenericItemSearchCriteria();
             searchCriteria.setTagNames(new SetSearchField<>(selectedTags));
             assignmentList.setSearchCriteria(searchCriteria);
         } else {
-            assignmentList.setCurrentDataList(new ArrayList<ProjectGenericTask>());
+            assignmentList.setCurrentDataList(new ArrayList<ProjectGenericItem>());
         }
     }
 

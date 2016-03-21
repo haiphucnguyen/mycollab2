@@ -284,20 +284,6 @@
     }
   }
 
-  .searchitems-layout {
-    .project-item-search-box {
-      border-bottom: 1px solid $my-separator-color;
-      .footer {
-        border-style:none;
-        color: $my-meta-color;
-        font-size: $font-small;
-      }
-      &:hover {
-        @include hover-effect;
-      }
-    }
-  }
-
   .v-csslayout.tagcloud {
     border-style: solid;
     border-top-style: none;

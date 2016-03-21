@@ -30,5 +30,5 @@ class ProjectGenericItemSearchCriteria extends SearchCriteria {
   @BeanProperty var createdUsers: SetSearchField[String] = _
   @BeanProperty var types: SetSearchField[String] = _
   @BeanProperty var monitorProjectIds: SetSearchField[Integer] = _
-
+  @BeanProperty var tagNames: SetSearchField[String] = null
 }

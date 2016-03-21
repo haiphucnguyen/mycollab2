@@ -44,7 +44,7 @@ import java.util.UUID;
  * @author MyCollab Ltd
  * @since 5.2.4
  */
-public class ProjectTaskRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
+public class GenericTaskRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
 
     @Override
     public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask, int rowIndex) {

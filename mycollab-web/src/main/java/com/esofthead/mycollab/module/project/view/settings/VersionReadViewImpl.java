@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.AbstractPreviewItemComp;
 import com.esofthead.mycollab.module.project.ui.components.DateInfoComp;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
+import com.esofthead.mycollab.module.project.ui.components.TagViewComponent;
 import com.esofthead.mycollab.module.project.ui.format.VersionFieldFormatter;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
@@ -51,6 +52,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
     private static final long serialVersionUID = 1L;
 
     private Button quickActionStatusBtn;
+    private TagViewComponent tagViewComponent;
     private ProjectActivityComponent activityComponent;
     private DateInfoComp dateInfoComp;
     private VersionTimeLogComp versionTimeLogComp;
@@ -80,6 +82,7 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
         activityComponent.loadActivities("" + beanItem.getId());
         dateInfoComp.displayEntryDateTime(beanItem);
         versionTimeLogComp.displayTime(beanItem);
+        tagViewComponent.display(ProjectTypeConstants.BUG_VERSION, beanItem.getId());
 
         if (StatusI18nEnum.Open.name().equals(beanItem.getStatus())) {
             removeLayoutStyleName(UIConstants.LINK_COMPLETED);
@@ -90,7 +93,12 @@ public class VersionReadViewImpl extends AbstractPreviewItemComp<Version> implem
             quickActionStatusBtn.setCaption(AppContext.getMessage(GenericI18Enum.BUTTON_REOPEN));
             quickActionStatusBtn.setIcon(FontAwesome.CLIPBOARD);
         }
+    }
 
+    @Override
+    protected ComponentContainer createExtraControls() {
+        tagViewComponent = new TagViewComponent();
+        return tagViewComponent;
     }
 
     @Override
