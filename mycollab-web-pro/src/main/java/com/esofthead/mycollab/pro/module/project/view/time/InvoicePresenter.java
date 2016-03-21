@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.core.SecureAccessException;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.time.IInvoiceContainer;
@@ -21,12 +24,16 @@ public class InvoicePresenter extends AbstractPresenter<IInvoiceContainer> imple
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        FinanceContainer timeContainer = (FinanceContainer) container;
-        timeContainer.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE));
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
+            FinanceContainer timeContainer = (FinanceContainer) container;
+            timeContainer.gotoSubView(AppContext.getMessage(ProjectCommonI18nEnum.VIEW_INVOICE));
 
-        view.display();
+            view.display();
 
-        ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
-        breadCrumb.gotoInvoiceView();
+            ProjectBreadcrumb breadCrumb = ViewManager.getCacheComponent(ProjectBreadcrumb.class);
+            breadCrumb.gotoInvoiceView();
+        } else {
+            throw new SecureAccessException();
+        }
     }
 }
