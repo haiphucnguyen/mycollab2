@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.project.view.page.PagePresenter
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
-import com.esofthead.mycollab.module.project.view.reports.IStandupPresenter
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter
 import com.esofthead.mycollab.module.project.view.time.IFinancePresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter

@@ -239,7 +239,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
             userInfo.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
             Label memberLink = new Label(buildMemberLink(report), ContentMode.HTML);
-            userInfo.with(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
+            userInfo.with(memberLink).expand(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
             this.addComponent(userInfo);
 
             MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content", UIConstants.HOVER_EFFECT_NOT_BOX);
