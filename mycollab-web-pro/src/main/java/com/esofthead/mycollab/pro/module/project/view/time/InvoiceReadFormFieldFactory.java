@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.field.DateViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
@@ -38,6 +39,8 @@ public class InvoiceReadFormFieldFactory extends AbstractBeanFieldGroupViewField
             return new I18nFormViewField(invoice.getType(), InvoiceI18nEnum.class);
         } else if (Invoice.Field.assignuser.equalTo(propertyId)) {
             return new ProjectUserFormLinkField(invoice.getAssignuser(), invoice.getAssignUserAvatarId(), invoice.getAssignUserFullName());
+        } else if (Invoice.Field.amount.equalTo(propertyId)) {
+            return new DefaultViewField(invoice.getAmount() + "").withStyleName(UIConstants.FIELD_NOTE);
         }
         return null;
     }

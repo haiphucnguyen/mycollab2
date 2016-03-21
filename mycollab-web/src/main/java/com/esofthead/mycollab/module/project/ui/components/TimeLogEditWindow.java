@@ -66,7 +66,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     private Button addBtn;
     private Label totalSpentTimeLbl;
     private DoubleField newTimeInputField;
-    private CheckBox isBillableField;
+    private CheckBox isBillableField, isOvertimeField;
     private DateFieldExt forDateField;
 
     private DoubleField remainTimeInputField;
@@ -95,7 +95,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
     }
 
     private void initUI() {
-        this.setWidth("900px");
+        this.setWidth("980px");
 
         headerPanel = new MHorizontalLayout().withWidth("100%");
         content.addComponent(headerPanel);
@@ -104,7 +104,9 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
         tableItem = new DefaultPagedBeanTable<>(ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class), SimpleItemTimeLogging.class,
                 Arrays.asList(TimeTableFieldDef.logUser(), TimeTableFieldDef.logForDate(), TimeTableFieldDef.logValue(),
-                        TimeTableFieldDef.billable(), new TableViewField(null, "id", UIConstants.TABLE_CONTROL_WIDTH)));
+                        TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), new TableViewField(null, "id",
+                                UIConstants
+                                .TABLE_CONTROL_WIDTH)));
 
         tableItem.addGeneratedColumn("logUserFullName", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -149,6 +151,19 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                                        Object columnId) {
                 SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
                 ELabel icon = (monitorItem.getIsbillable()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
+                icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
+                return icon;
+            }
+        });
+
+        tableItem.addGeneratedColumn("isovertime", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Object generateCell(Table source, Object itemId,
+                                       Object columnId) {
+                SimpleItemTimeLogging monitorItem = tableItem.getBeanByIndex(itemId);
+                ELabel icon = (monitorItem.getIsovertime()) ? ELabel.fontIcon(FontAwesome.CHECK) : ELabel.fontIcon(FontAwesome.TIMES);
                 icon.setStyleName(UIConstants.BUTTON_ICON_ONLY);
                 return icon;
             }
@@ -209,6 +224,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         forDateField.setValue(new GregorianCalendar().getTime());
 
         isBillableField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE), true);
+        isOvertimeField = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME), false);
 
         addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -229,7 +245,7 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
         addBtn.setEnabled(isEnableAdd());
         addBtn.setStyleName(UIConstants.BUTTON_ACTION);
         addBtn.setIcon(FontAwesome.PLUS);
-        addLayout.with(newTimeInputField, forDateField, isBillableField, addBtn);
+        addLayout.with(newTimeInputField, forDateField, isBillableField, isOvertimeField, addBtn);
     }
 
     private void constructRemainTimeEntryPanel() {
@@ -306,6 +322,10 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
 
     protected Boolean isBillableHours() {
         return isBillableField.getValue();
+    }
+
+    protected Boolean isOvertimeHours() {
+        return isOvertimeField.getValue();
     }
 
     protected Date forLogDate() {

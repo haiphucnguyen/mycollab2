@@ -55,7 +55,7 @@
     <sql id="selectTask">
         <![CDATA[
           	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
-                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.createdUser,
+                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                  m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_task.id AS typeId, m_prj_time_logging.type, m_prj_task.taskkey AS extraTypeId,
                  s_user.avatarId AS logUserAvatarId,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
@@ -72,7 +72,7 @@
   	<sql id="selectBug">
        <![CDATA[
        	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
-                m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.createdUser,
+                m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                 m_prj_time_logging.logValue, m_prj_time_logging.note, m_tracker_bug.id AS typeId, m_prj_time_logging.type, m_tracker_bug.bugkey AS extraTypeId,
                 s_user.avatarId AS logUserAvatarId,
                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
@@ -89,7 +89,7 @@
 	<sql id="selectRisk">
        <![CDATA[
          	SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
-                m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.createdUser,
+                m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                 m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeId, m_prj_time_logging.type, NULL  AS extraTypeId,
                 s_user.avatarId AS logUserAvatarId,
                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,
@@ -106,7 +106,7 @@
     <sql id="selectTimeLogginWithoutType">
         <![CDATA[
         SELECT m_prj_time_logging.id, m_prj_time_logging.loguser, m_prj_time_logging.projectId, m_prj_time_logging.createdTime, m_prj_time_logging.lastUpdatedTime, 
-                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.createdUser,
+                 m_prj_time_logging.logForDay, m_prj_time_logging.isBillable, m_prj_time_logging.isOvertime, m_prj_time_logging.createdUser,
                  m_prj_time_logging.logValue, m_prj_time_logging.note, m_prj_time_logging.typeId, m_prj_time_logging.type, NULL AS extraTypeId,
                  s_user.avatarId AS logUserAvatarId,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS logUserFullName,

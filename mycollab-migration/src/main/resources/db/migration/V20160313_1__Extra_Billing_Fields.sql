@@ -1,0 +1,1 @@
+ALTER TABLE `m_prj_time_logging` ADD COLUMN `isOvertime` BIT(1) NULL;

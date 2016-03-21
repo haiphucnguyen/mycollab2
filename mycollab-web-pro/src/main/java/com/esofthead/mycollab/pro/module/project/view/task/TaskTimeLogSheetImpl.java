@@ -149,6 +149,7 @@ public class TaskTimeLogSheetImpl extends TaskTimeLogSheet {
             item.setProjectid(CurrentProjectVariables.getProjectId());
             item.setLogforday(forLogDate());
             item.setIsbillable(isBillableHours());
+            item.setIsovertime(isOvertimeHours());
             itemTimeLoggingService.saveWithSession(item, AppContext.getUsername());
         }
 
