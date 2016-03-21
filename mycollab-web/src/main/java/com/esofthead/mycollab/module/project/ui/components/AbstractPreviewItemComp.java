@@ -22,9 +22,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.PageView;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -181,16 +179,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         initLayout();
         previewLayout.setTitle(initFormTitle());
 
-        IFormLayoutFactory formLayoutFactory = initFormLayoutFactory();
-        if (formLayoutFactory != null) {
-            previewForm.setFormLayoutFactory(formLayoutFactory);
-        }
-
-        AbstractBeanFieldGroupViewFieldFactory<B> fieldFactory = initBeanFormFieldFactory();
-        if (fieldFactory != null) {
-            previewForm.setBeanFormFieldFactory(fieldFactory);
-        }
-
         previewForm.setBean(item);
 
         if (favoriteBtn != null) {
@@ -262,12 +250,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     abstract protected String initFormTitle();
 
     abstract protected AdvancedPreviewBeanForm<B> initPreviewForm();
-
-    @Deprecated
-    abstract protected IFormLayoutFactory initFormLayoutFactory();
-
-    @Deprecated
-    abstract protected AbstractBeanFieldGroupViewFieldFactory<B> initBeanFormFieldFactory();
 
     protected ComponentContainer createExtraControls() {
         return null;

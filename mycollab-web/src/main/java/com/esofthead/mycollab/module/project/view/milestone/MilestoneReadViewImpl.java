@@ -31,8 +31,6 @@ import com.esofthead.mycollab.module.project.ui.format.MilestoneFieldFormatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -123,16 +121,6 @@ public class MilestoneReadViewImpl extends AbstractPreviewItemComp<SimpleMilesto
     @Override
     protected String initFormTitle() {
         return beanItem.getName();
-    }
-
-    @Override
-    protected IFormLayoutFactory initFormLayoutFactory() {
-        return null;
-    }
-
-    @Override
-    protected AbstractBeanFieldGroupViewFieldFactory<SimpleMilestone> initBeanFormFieldFactory() {
-        return null;
     }
 
     @Override

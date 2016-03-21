@@ -15,8 +15,6 @@ import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -97,16 +95,6 @@ public class RiskReadViewImpl extends AbstractPreviewItemComp<SimpleRisk> implem
     protected ComponentContainer createExtraControls() {
         tagViewComponent = new TagViewComponent();
         return tagViewComponent;
-    }
-
-    @Override
-    protected IFormLayoutFactory initFormLayoutFactory() {
-        return null;
-    }
-
-    @Override
-    protected AbstractBeanFieldGroupViewFieldFactory<SimpleRisk> initBeanFormFieldFactory() {
-        return null;
     }
 
     @Override

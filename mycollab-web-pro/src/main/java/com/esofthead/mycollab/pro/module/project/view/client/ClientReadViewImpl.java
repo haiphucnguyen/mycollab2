@@ -11,8 +11,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.ui.components.CrmFollowersComp;
 import com.esofthead.mycollab.module.crm.ui.components.CrmPreviewFormControlsGenerator;
-import com.esofthead.mycollab.module.crm.view.account.AccountDefaultDynaFormLayoutFactory;
-import com.esofthead.mycollab.module.crm.view.account.AccountReadFormFieldFactory;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -27,11 +25,8 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
-import com.esofthead.mycollab.vaadin.web.ui.DynaFormLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.UserLink;
 import com.hp.gagawa.java.elements.A;
@@ -95,17 +90,7 @@ public class ClientReadViewImpl extends AbstractPreviewItemComp<SimpleAccount> i
 
     @Override
     protected AdvancedPreviewBeanForm<SimpleAccount> initPreviewForm() {
-        return new AdvancedPreviewBeanForm<>();
-    }
-
-    @Override
-    protected IFormLayoutFactory initFormLayoutFactory() {
-        return new DynaFormLayout(CrmTypeConstants.ACCOUNT, AccountDefaultDynaFormLayoutFactory.getForm());
-    }
-
-    @Override
-    protected AbstractBeanFieldGroupViewFieldFactory<SimpleAccount> initBeanFormFieldFactory() {
-        return new AccountReadFormFieldFactory(previewForm);
+        return new ClientPreviewForm();
     }
 
     @Override

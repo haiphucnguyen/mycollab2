@@ -35,7 +35,9 @@ import com.esofthead.mycollab.module.project.ui.components.*;
 import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
 import com.esofthead.mycollab.module.project.view.bug.components.LinkIssueWindow;
 import com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper;
-import com.esofthead.mycollab.module.tracker.domain.*;
+import com.esofthead.mycollab.module.tracker.domain.RelatedBugExample;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.esofthead.mycollab.module.tracker.service.BugRelationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
@@ -44,9 +46,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.hp.gagawa.java.elements.A;
 import com.hp.gagawa.java.elements.Div;
@@ -347,16 +347,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     @Override
     protected AdvancedPreviewBeanForm<SimpleBug> initPreviewForm() {
         return new BugPreviewForm();
-    }
-
-    @Override
-    protected IFormLayoutFactory initFormLayoutFactory() {
-        return null;
-    }
-
-    @Override
-    protected AbstractBeanFieldGroupViewFieldFactory<SimpleBug> initBeanFormFieldFactory() {
-        return null;
     }
 
     @Override

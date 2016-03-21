@@ -37,8 +37,6 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
@@ -90,11 +88,6 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
     }
 
     @Override
-    protected IFormLayoutFactory initFormLayoutFactory() {
-        return null;
-    }
-
-    @Override
     protected void initRelatedComponents() {
         activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, CurrentProjectVariables
                 .getProjectId(), ComponentFieldFormatter.instance());
@@ -126,11 +119,6 @@ public class ComponentReadViewImpl extends AbstractPreviewItemComp<SimpleCompone
     @Override
     protected AdvancedPreviewBeanForm<SimpleComponent> initPreviewForm() {
         return new ComponentPreviewForm();
-    }
-
-    @Override
-    protected AbstractBeanFieldGroupViewFieldFactory<SimpleComponent> initBeanFormFieldFactory() {
-        return null;
     }
 
     @Override

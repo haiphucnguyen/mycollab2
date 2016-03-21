@@ -18,7 +18,6 @@ package com.esofthead.mycollab.module.project.view.page;
 
 import com.esofthead.mycollab.common.i18n.DayI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
-import com.esofthead.mycollab.common.i18n.WikiI18nEnum;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -41,13 +40,12 @@ import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.*;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
+import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.web.ui.ReadViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.web.ui.field.I18nFormViewField;
-import com.esofthead.mycollab.vaadin.web.ui.field.RichTextViewField;
 import com.hp.gagawa.java.elements.*;
 import com.lowagie.text.DocumentException;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -137,22 +135,12 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
 
     @Override
     protected AdvancedPreviewBeanForm<Page> initPreviewForm() {
-        return new AdvancedPreviewBeanForm<>();
-    }
-
-    @Override
-    protected IFormLayoutFactory initFormLayoutFactory() {
-        return new PageReadFormLayout();
+        return new PagePreviewForm();
     }
 
     @Override
     public HasPreviewFormHandlers<Page> getPreviewFormHandlers() {
         return previewForm;
-    }
-
-    @Override
-    protected AbstractBeanFieldGroupViewFieldFactory<Page> initBeanFormFieldFactory() {
-        return new PageReadFormFieldFactory(previewForm);
     }
 
     @Override
@@ -211,43 +199,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     @Override
     protected String getType() {
         return ProjectTypeConstants.PAGE;
-    }
-
-    private static class PageReadFormFieldFactory extends AbstractBeanFieldGroupViewFieldFactory<Page> {
-        private static final long serialVersionUID = 1L;
-
-        public PageReadFormFieldFactory(GenericBeanForm<Page> form) {
-            super(form);
-        }
-
-        @Override
-        protected Field<?> onCreateField(java.lang.Object propertyId) {
-            if (propertyId.equals("status")) {
-                return new I18nFormViewField(attachForm.getBean().getStatus(), WikiI18nEnum.class);
-            } else if (propertyId.equals("content")) {
-                return new RichTextViewField(attachForm.getBean().getContent());
-            }
-            return null;
-        }
-    }
-
-    private static class PageReadFormLayout implements IFormLayoutFactory {
-        private static final long serialVersionUID = 1L;
-
-        private MVerticalLayout layout;
-
-        @Override
-        public ComponentContainer getLayout() {
-            layout = new MVerticalLayout().withStyleName("border-bottom").withWidth("100%");
-            return layout;
-        }
-
-        @Override
-        public void attachField(java.lang.Object propertyId, Field<?> field) {
-            if (propertyId.equals("content")) {
-                layout.addComponent(field);
-            }
-        }
     }
 
     private static class PagePreviewFormLayout extends ReadViewLayout {
