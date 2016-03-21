@@ -24,7 +24,7 @@ import com.esofthead.mycollab.common.i18n.SecurityI18nEnum;
  * @author MyCollab Ltd
  * @version 1.0
  */
-public class BooleanPermissionFlag implements PermissionFlag {
+public class BooleanPermissionFlag extends PermissionFlag {
     public static final int TRUE = 128;
     public static final int FALSE = 129;
 

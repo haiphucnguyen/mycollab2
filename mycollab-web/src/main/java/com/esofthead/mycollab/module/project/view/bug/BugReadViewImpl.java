@@ -287,8 +287,8 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     MHorizontalLayout bugContainer = new MHorizontalLayout().withWidth("100%");
                     bugContainer.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
                     String bugLinkValue = buildItemValue(relatedBug);
-                    Button statusLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
-                    statusLink.setStyleName(UIConstants.BUTTON_BLOCK);
+                    Button relatedLink = new Button(AppContext.getMessage(OptionI18nEnum.BugRelation.class, relatedBug.getRelatedType()));
+                    relatedLink.setStyleName(UIConstants.BUTTON_BLOCK);
                     ELabel bugLink = new ELabel(bugLinkValue, ContentMode.HTML).withWidthUndefined();
                     Button removeBtn = new Button("Remove", new Button.ClickListener() {
                         @Override
@@ -311,7 +311,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                     });
                     removeBtn.setIcon(FontAwesome.TRASH_O);
                     removeBtn.addStyleName(UIConstants.BUTTON_DANGER);
-                    bugContainer.with(statusLink, removeBtn, bugLink).expand(bugLink).alignAll(Alignment.TOP_LEFT);
+                    bugContainer.with(relatedLink, removeBtn, bugLink).expand(bugLink).alignAll(Alignment.TOP_LEFT);
                     header.with(bugContainer);
                 }
             }

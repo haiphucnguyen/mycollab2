@@ -46,8 +46,6 @@ public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
 
     private SetSearchField<String> tagNames;
 
-    private SetSearchField<Integer> monitorProjectIds;
-
     public SetSearchField<String> getTagNames() {
         return tagNames;
     }
@@ -126,13 +124,5 @@ public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
 
     public void setTypeIds(SetSearchField<Integer> typeIds) {
         this.typeIds = typeIds;
-    }
-
-    public SetSearchField<Integer> getMonitorProjectIds() {
-        return monitorProjectIds;
-    }
-
-    public void setMonitorProjectIds(SetSearchField<Integer> monitorProjectIds) {
-        this.monitorProjectIds = monitorProjectIds;
     }
 }

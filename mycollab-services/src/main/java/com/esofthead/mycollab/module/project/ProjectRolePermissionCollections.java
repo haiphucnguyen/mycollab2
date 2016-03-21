@@ -50,5 +50,5 @@ public class ProjectRolePermissionCollections {
 
     public static final String[] PROJECT_PERMISSIONS = {MESSAGES, MILESTONES,
             TASKS, BUGS, COMPONENTS, VERSIONS, PAGES, RISKS, INVOICE, USERS,
-            ROLES, PROJECT};
+            ROLES, PROJECT, FINANCE};
 }

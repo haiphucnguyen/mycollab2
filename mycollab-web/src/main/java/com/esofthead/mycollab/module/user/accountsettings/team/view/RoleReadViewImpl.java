@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.ui.components.PreviewFormControlsGenerator;
-import com.esofthead.mycollab.security.*;
+import com.esofthead.mycollab.security.AccessPermissionFlag;
+import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.PermissionMap;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
@@ -96,17 +98,7 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
     private static String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
         final Integer perVal = permissionMap.get(permissionItem);
-        if (perVal == null) {
-            return "Undefined";
-        } else {
-            if (PermissionChecker.isAccessPermission(perVal)) {
-                return AppContext.getMessage(AccessPermissionFlag.toKey(perVal));
-            } else if (PermissionChecker.isBooleanPermission(perVal)) {
-                return AppContext.getMessage(BooleanPermissionFlag.toKey(perVal));
-            } else {
-                throw new MyCollabException("Do not support permission value " + perVal);
-            }
-        }
+        return AppContext.getMessage(AccessPermissionFlag.toVal(perVal));
     }
 
     protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,

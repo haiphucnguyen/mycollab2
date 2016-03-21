@@ -11,29 +11,32 @@ import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
-import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
+import com.esofthead.mycollab.module.project.domain.ProjectGenericItem;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericItemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.*;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
-import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.module.project.service.ProjectGenericItemService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.esofthead.mycollab.module.project.ui.format.BugFieldFormatter;
-import com.esofthead.mycollab.module.project.ui.format.MilestoneFieldFormatter;
-import com.esofthead.mycollab.module.project.ui.format.RiskFieldFormatter;
-import com.esofthead.mycollab.module.project.ui.format.TaskFieldFormatter;
+import com.esofthead.mycollab.module.project.ui.format.*;
 import com.esofthead.mycollab.module.project.view.IFavoriteView;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.bug.BugPreviewForm;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePreviewForm;
+import com.esofthead.mycollab.module.project.view.settings.ComponentPreviewForm;
+import com.esofthead.mycollab.module.project.view.settings.VersionPreviewForm;
 import com.esofthead.mycollab.module.project.view.task.TaskPreviewForm;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.pro.module.project.view.risk.RiskPreviewForm;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
@@ -58,7 +61,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -67,7 +69,7 @@ import java.util.Collections;
  */
 @ViewComponent
 public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView {
-    private ProjectGenericTaskSearchCriteria searchCriteria;
+    private ProjectGenericItemSearchCriteria searchCriteria;
 
     private boolean isSortAsc = true;
     private ELabel headerLbl;
@@ -79,7 +81,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 @Override
                 @Subscribe
                 public void handle(ProjectEvent.SelectFavoriteItem event) {
-                    ProjectGenericTask assignment = (ProjectGenericTask) event.getData();
+                    ProjectGenericItem assignment = (ProjectGenericItem) event.getData();
                     viewFavoriteItem(assignment);
                 }
             };
@@ -134,13 +136,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         final SearchTextField searchTextField = new SearchTextField() {
             @Override
             public void doSearch(String value) {
-                searchCriteria.setName(StringSearchField.and(value));
+                searchCriteria.setTxtValue(StringSearchField.and(value));
                 displayFavoriteList();
             }
 
             @Override
             public void emptySearch() {
-                searchCriteria.setName(null);
+                searchCriteria.setTxtValue(null);
                 displayFavoriteList();
             }
         };
@@ -155,7 +157,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
 
         assignmentReadView = new AssignmentReadView();
         MHorizontalLayout contentWrapper = new MHorizontalLayout(favoriteListPanel, assignmentReadView).expand(assignmentReadView).withFullWidth();
-        searchCriteria = new ProjectGenericTaskSearchCriteria();
+        searchCriteria = new ProjectGenericItemSearchCriteria();
+        searchCriteria.setPrjKeys(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setMonitorProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         displayFavoriteList();
         with(header, contentWrapper);
@@ -163,14 +166,15 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
 
     private void displayFavoriteList() {
         if (isSortAsc) {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.ASC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("summary",
+                    SearchCriteria.ASC)));
         } else {
-            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("name", SearchCriteria.DESC)));
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("summary", SearchCriteria.DESC)));
         }
         int totalCount = favoriteListComp.setSearchCriteria(searchCriteria);
         headerLbl.setValue(FontAwesome.STAR.getHtml() + " Favorites (" + totalCount + ")");
         if (totalCount > 0) {
-            ProjectGenericTask assignment = favoriteListComp.getItemAt(0);
+            ProjectGenericItem assignment = favoriteListComp.getItemAt(0);
             if (assignment != null) {
                 viewFavoriteItem(assignment);
             }
@@ -181,7 +185,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         }
     }
 
-    private void viewFavoriteItem(ProjectGenericTask assignment) {
+    private void viewFavoriteItem(ProjectGenericItem assignment) {
         assignmentReadView.showAssignment(assignment);
     }
 
@@ -192,17 +196,18 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
         }
     }
 
-    private static class FavoriteListComp extends DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> {
+    private static class FavoriteListComp extends DefaultBeanPagedList<ProjectGenericItemService, ProjectGenericItemSearchCriteria,
+            ProjectGenericItem> {
         FavoriteListComp() {
-            super(ApplicationContextUtil.getSpringBean(ProjectGenericTaskService.class), new AssignmentRowHandler(), 10);
+            super(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class), new AssignmentRowHandler(), 10);
             addStyleName(UIConstants.BORDER_LIST);
             setControlStyle("borderlessControl");
         }
     }
 
-    private static class AssignmentRowHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
+    private static class AssignmentRowHandler implements AbstractBeanPagedList.RowDisplayHandler<ProjectGenericItem> {
         @Override
-        public Component generateRow(final AbstractBeanPagedList host, final ProjectGenericTask item, int rowIndex) {
+        public Component generateRow(final AbstractBeanPagedList host, final ProjectGenericItem item, int rowIndex) {
             final MHorizontalLayout layout = new MHorizontalLayout().withStyleName(UIConstants.BORDER_LIST_ROW)
                     .withStyleName(UIConstants.CURSOR_POINTER).withFullWidth();
             Button favoriteBtn = new Button(FontAwesome.STAR);
@@ -224,7 +229,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             favoriteBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 
             ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(item.getType()).getHtml() + " " + item
-                    .getName(), ContentMode.HTML).withWidth("100%").withStyleName(UIConstants.TEXT_ELLIPSIS);
+                    .getSummary(), ContentMode.HTML).withWidth("100%").withStyleName(UIConstants.TEXT_ELLIPSIS);
             layout.with(favoriteBtn, headerLbl).expand(headerLbl);
             layout.addLayoutClickListener(new LayoutEvents.LayoutClickListener() {
                 @Override
@@ -238,13 +243,13 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
     }
 
     private static class AssignmentReadView extends VerticalLayout {
-        void showAssignment(ProjectGenericTask assignment) {
+        void showAssignment(ProjectGenericItem assignment) {
             this.setMargin(new MarginInfo(false, false, false, true));
             removeAllComponents();
             ProjectActivityComponent activityComponent;
             if (ProjectTypeConstants.BUG.equals(assignment.getType())) {
                 BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                final SimpleBug bug = bugService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                final SimpleBug bug = bugService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
                 if (bug != null) {
                     ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                             + bug.getSummary(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
@@ -271,7 +276,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
                 ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                final SimpleTask task = taskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                final SimpleTask task = taskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
                 if (task != null) {
                     ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
                             + task.getTaskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
@@ -299,7 +304,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType())) {
                 MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                final SimpleMilestone milestone = milestoneService.findById(assignment.getTypeId(), AppContext
+                final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
                         .getAccountId());
                 if (milestone != null) {
                     ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
@@ -329,11 +334,10 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                 }
             } else if (ProjectTypeConstants.RISK.equals(assignment.getType())) {
                 RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
-                final SimpleRisk risk = riskService.findById(assignment.getTypeId(), AppContext.getAccountId());
+                final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
                 if (risk != null) {
                     ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + risk.getRiskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                            .LABEL_NO_MARGIN);
+                            + risk.getRiskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
 
                     Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                         @Override
@@ -354,6 +358,66 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, assignment
                             .getProjectId(), RiskFieldFormatter.instance());
                     activityComponent.loadActivities("" + risk.getId());
+                    addComponent(activityComponent);
+                }
+            } else if (ProjectTypeConstants.BUG_COMPONENT.equals(assignment.getType())) {
+                ComponentService componentService = ApplicationContextUtil.getSpringBean(ComponentService.class);
+                final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
+                        AppContext.getAccountId());
+                if (component != null) {
+                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                            + component.getComponentname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
+                            .LABEL_NO_MARGIN);
+
+                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(Button.ClickEvent clickEvent) {
+                            EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component));
+                        }
+                    });
+                    editBtn.setIcon(FontAwesome.EDIT);
+                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+
+                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                    addComponent(headerLayout);
+                    ComponentPreviewForm form = new ComponentPreviewForm();
+                    form.setBean(component);
+                    addComponent(form);
+                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment
+                            .getProjectId(), ComponentFieldFormatter.instance());
+                    activityComponent.loadActivities("" + component.getId());
+                    addComponent(activityComponent);
+                }
+            } else if (ProjectTypeConstants.BUG_VERSION.equals(assignment.getType())) {
+                VersionService versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
+                final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
+                        .getAccountId());
+                if (version != null) {
+                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                            + version.getVersionname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
+                            .LABEL_NO_MARGIN);
+
+                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(Button.ClickEvent clickEvent) {
+                            EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version));
+                        }
+                    });
+                    editBtn.setIcon(FontAwesome.EDIT);
+                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
+
+                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                    addComponent(headerLayout);
+                    VersionPreviewForm form = new VersionPreviewForm();
+                    form.setBean(version);
+                    addComponent(form);
+                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment
+                            .getProjectId(), VersionFieldFormatter.instance());
+                    activityComponent.loadActivities("" + version.getId());
                     addComponent(activityComponent);
                 }
             }

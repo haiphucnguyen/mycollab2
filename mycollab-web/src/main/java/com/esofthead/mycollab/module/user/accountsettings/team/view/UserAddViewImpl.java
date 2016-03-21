@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.form.view.builder.DynaSectionBuilder;
@@ -30,7 +29,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
-import com.esofthead.mycollab.security.*;
+import com.esofthead.mycollab.security.PermissionDefItem;
+import com.esofthead.mycollab.security.PermissionFlag;
+import com.esofthead.mycollab.security.PermissionMap;
+import com.esofthead.mycollab.security.RolePermissionCollections;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -325,17 +327,7 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
     private static String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
         final Integer perVal = permissionMap.get(permissionItem);
-        if (perVal == null) {
-            return "Undefined";
-        } else {
-            if (PermissionChecker.isAccessPermission(perVal)) {
-                return AppContext.getMessage(AccessPermissionFlag.toKey(perVal));
-            } else if (PermissionChecker.isBooleanPermission(perVal)) {
-                return AppContext.getMessage(BooleanPermissionFlag.toKey(perVal));
-            } else {
-                throw new MyCollabException("Do not support permission value " + perVal);
-            }
-        }
+        return AppContext.getMessage(PermissionFlag.toVal(perVal));
     }
 
     private class AdminRoleSelectionField extends CustomField<Integer> {
