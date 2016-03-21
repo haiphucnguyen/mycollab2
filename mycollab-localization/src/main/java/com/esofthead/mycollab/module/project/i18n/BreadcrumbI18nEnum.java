@@ -37,6 +37,7 @@ public enum BreadcrumbI18nEnum {
     INVOICE,
     FILES,
     CALENDAR,
+    REPORTS,
     STANDUP,
     USERS,
     ROLES,

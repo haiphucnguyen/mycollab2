@@ -29,7 +29,7 @@ public class ReportContainerImpl extends AbstractPageView implements IReportCont
                 .appendText("Standup " + "Report");
         standupConsole.addComponent(ELabel.h3(standupReportLink.write()).withWidthUndefined());
         standupConsole.addComponent(new ELabel("Your daily scrum which asks three questions What you did yesterday?, " +
-                "What you will do today? and What are your obstacles? in the StandUp meeting which should not " +
+                "What you will do today? and Do you have roadblocks? in the StandUp meeting which should not " +
                 "exceed 15 minutes.").withWidth("100%"));
         this.addComponent(standupConsole);
     }

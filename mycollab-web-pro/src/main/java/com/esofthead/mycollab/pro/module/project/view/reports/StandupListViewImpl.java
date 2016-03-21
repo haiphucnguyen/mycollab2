@@ -24,11 +24,8 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.*;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
-import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
-import com.esofthead.mycollab.vaadin.ui.SafeHtmlLabel;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.web.ui.StyleCalendarExp;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
@@ -236,7 +233,8 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         StandupReportBlock(SimpleStandupReport report) {
             this.setStyleName("standup-block");
 
-            MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withStyleName("user-info");
+            MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withFullHeight().withStyleName(UIConstants
+                    .HOVER_EFFECT_NOT_BOX);
             userInfo.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
             userInfo.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
@@ -244,26 +242,23 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             userInfo.with(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
             this.addComponent(userInfo);
 
-            MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content");
+            MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content", UIConstants.HOVER_EFFECT_NOT_BOX);
 
-            Label whatYesterdayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
-            whatYesterdayLbl.setStyleName(ValoTheme.LABEL_H3);
+            ELabel whatYesterdayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
             reportContent.addComponent(whatYesterdayLbl);
             Label whatYesterdayField = new SafeHtmlLabel(report.getWhatlastday());
             whatYesterdayField.setSizeUndefined();
             whatYesterdayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatYesterdayField);
 
-            Label whatTodayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
-            whatTodayLbl.setStyleName(ValoTheme.LABEL_H3);
+            ELabel whatTodayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
             reportContent.addComponent(whatTodayLbl);
             Label whatTodayField = new SafeHtmlLabel(report.getWhattoday());
             whatTodayField.setSizeUndefined();
             whatTodayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatTodayField);
 
-            Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
-            roadblockLbl.setStyleName(ValoTheme.LABEL_H3);
+            ELabel roadblockLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
             reportContent.addComponent(roadblockLbl);
             Label whatProblemField = new SafeHtmlLabel(report.getWhatproblem());
             whatProblemField.setSizeUndefined();

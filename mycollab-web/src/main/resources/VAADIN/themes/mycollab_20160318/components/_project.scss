@@ -308,21 +308,6 @@
     }
   }
 
-  /* Stand Up List View */
-
-  .v-label.standup-row-content {
-    padding: 10px 0px 10px 0px;
-    font-size: $font-normal;
-    width: 100%;
-    white-space: normal;
-    ul {
-      padding-left: 14px;
-      margin: 0px;
-    }
-  }
-
-  /* End Stand Up List View */
-
   div.v-csslayout.member-token {
     cursor: text;
     .v-textfield {
@@ -349,27 +334,22 @@
 
   /* StandUp Report List */
 
-  .standup-calendar .selected-ext {
-    border: 1px solid #EE7C08;
-  }
-
-  .addViewLayout .standup-edit-layout .h2 {
-    border-bottom: none;
-  }
-
   .standup-block {
     background-color: $my-background-color;
     border: 1px solid $my-separator-color;
     .report-content {
       border-left: 1px solid $my-separator-color;
-      background-color: #FFF;
-      @include margin-container(20px, 20px, 20px, 20px);
-      .v-label.h2 {
-        color: #a56116;
-        font-size: $font-large;
-      }
     }
   }
+
+  .v-label.standup-row-content {
+      padding: 0px 10px 10px 20px;
+      width: 100%;
+      ul, ol {
+        padding-left: 14px;
+        margin: 0px;
+      }
+    }
 
   /* End StandUp Report List */
 

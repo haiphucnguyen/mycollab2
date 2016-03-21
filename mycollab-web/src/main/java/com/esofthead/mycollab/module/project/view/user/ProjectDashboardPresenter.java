@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.project.view.*;
 import com.esofthead.mycollab.module.project.view.assignments.GanttChartViewPresenter;
 import com.esofthead.mycollab.module.project.view.assignments.ICalendarPresenter;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.reports.IReportPresenter;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
@@ -77,7 +78,8 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
         } else if (data instanceof ProjectScreenData.GotoCalendarView) {
             ICalendarPresenter presenter = PresenterResolver.getPresenter(ICalendarPresenter.class);
             presenter.go(view, data);
-        } else if (data instanceof ProjectScreenData.GotoReportConsole) {
+        } else if (data instanceof ProjectScreenData.GotoReportConsole || data instanceof StandupScreenData.Search
+                || data instanceof StandupScreenData.Add || data instanceof StandupScreenData.Edit) {
             IReportPresenter presenter = PresenterResolver.getPresenter(IReportPresenter.class);
             presenter.go(view, data);
         } else {

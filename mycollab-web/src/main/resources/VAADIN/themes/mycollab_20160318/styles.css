@@ -15601,18 +15601,6 @@ div.v-csslayout.followers-container .v-checkbox {
 	margin: 2px;
 }
 
-.v-label.standup-row-content {
-	padding: 10px 0px 10px 0px;
-	font-size: 14px;
-	width: 100%;
-	white-space: normal;
-}
-
-.v-label.standup-row-content ul {
-	padding-left: 14px;
-	margin: 0px;
-}
-
 div.v-csslayout.member-token {
 	cursor: text;
 }
@@ -15643,14 +15631,6 @@ div.v-button.token-field {
 	margin-bottom: 5px;
 }
 
-.standup-calendar .selected-ext {
-	border: 1px solid #EE7C08;
-}
-
-.addViewLayout .standup-edit-layout .h2 {
-	border-bottom: none;
-}
-
 .standup-block {
 	background-color: #ffffff;
 	border: 1px solid #e9e9e9;
@@ -15658,28 +15638,16 @@ div.v-button.token-field {
 
 .standup-block .report-content {
 	border-left: 1px solid #e9e9e9;
-	background-color: #FFF;
 }
 
-.standup-block .report-content.v-margin-top {
-	padding-top: 20px;
+.v-label.standup-row-content {
+	padding: 0px 10px 10px 20px;
+	width: 100%;
 }
 
-.standup-block .report-content.v-margin-right {
-	padding-right: 20px;
-}
-
-.standup-block .report-content.v-margin-bottom {
-	padding-bottom: 20px;
-}
-
-.standup-block .report-content.v-margin-left {
-	padding-left: 20px;
-}
-
-.standup-block .report-content .v-label.h2 {
-	color: #a56116;
-	font-size: 15px;
+.v-label.standup-row-content ul, .v-label.standup-row-content ol {
+	padding-left: 14px;
+	margin: 0px;
 }
 
 .milestone-view {

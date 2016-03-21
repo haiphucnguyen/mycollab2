@@ -585,12 +585,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoStandupList(Date onDate) {
         this.select(0);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
+        this.setLinkEnabled(true, 1);
         this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.STANDUP)));
         if (onDate == null) {
-            AppContext.addFragment("project/standup/list/" + UrlEncodeDecoder.encode(project.getId()),
+            AppContext.addFragment("project/reports/standup/list/" + UrlEncodeDecoder.encode(project.getId()),
                     AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         } else {
-            AppContext.addFragment("project/standup/list/" + UrlEncodeDecoder.encode(project.getId() + "/" +
+            AppContext.addFragment("project/reports/standup/list/" + UrlEncodeDecoder.encode(project.getId() + "/" +
                     AppContext.formatDate(onDate)), AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP));
         }
 
@@ -598,11 +600,13 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
 
     public void gotoStandupAdd(Date date) {
         this.select(0);
-        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.STANDUP), new GotoStandupListener()));
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.REPORTS), new GotoReportsListener()));
         this.setLinkEnabled(true, 1);
+        this.addLink(new Button(AppContext.getMessage(BreadcrumbI18nEnum.STANDUP), new GotoStandupListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD)));
 
-        AppContext.addFragment("project/standup/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()
+        AppContext.addFragment("project/reports/standup/add/" + UrlEncodeDecoder.encode(CurrentProjectVariables.getProjectId()
                 + "/" + AppContext.formatDate(date)), AppContext.getMessage(BreadcrumbI18nEnum.FRA_STANDUP_FOR_DAY,
                 AppContext.formatDate(date)));
     }
@@ -715,6 +719,15 @@ public class ProjectBreadcrumb extends Breadcrumb implements CacheableComponent 
         @Override
         public void buttonClick(ClickEvent event) {
             EventBusFactory.getInstance().post(new ProjectMemberEvent.GotoList(this, null));
+        }
+    }
+
+    private static class GotoReportsListener implements Button.ClickListener {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBusFactory.getInstance().post(new ProjectEvent.GotoReportConsole(this));
         }
     }
 

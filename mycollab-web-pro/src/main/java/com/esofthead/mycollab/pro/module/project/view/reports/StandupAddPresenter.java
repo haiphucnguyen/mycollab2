@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.IEditFormHandler;
@@ -36,18 +37,13 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
             @Override
             public void onSave(StandupReportWithBLOBs standupReport) {
                 saveStandupReport(standupReport);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, null));
-                }
+                EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, null));
             }
 
             @Override
             public void onCancel() {
                 ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, null));
-                }
+                EventBusFactory.getInstance().post(new StandUpEvent.GotoList(this, null));
             }
 
             @Override
@@ -74,7 +70,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        StandupContainer standupContainer = (StandupContainer) container;
+        ProjectDashboardContainer standupContainer = (ProjectDashboardContainer) container;
         standupContainer.removeAllComponents();
         standupContainer.addComponent(view.getWidget());
         StandupReportWithBLOBs standupReport = (StandupReportWithBLOBs) data.getParams();

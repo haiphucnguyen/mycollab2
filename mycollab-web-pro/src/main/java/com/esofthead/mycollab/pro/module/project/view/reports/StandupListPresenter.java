@@ -2,6 +2,8 @@ package com.esofthead.mycollab.pro.module.project.view.reports;
 
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardContainer;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.*;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
@@ -22,7 +24,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView> imp
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        StandupContainer standupContainer = (StandupContainer) container;
+        ProjectDashboardContainer standupContainer = (ProjectDashboardContainer) container;
         standupContainer.removeAllComponents();
         standupContainer.addComponent(view.getWidget());
         StandupReportSearchCriteria searchCriteria = (StandupReportSearchCriteria) data.getParams();

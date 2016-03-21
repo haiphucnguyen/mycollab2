@@ -4,13 +4,14 @@ import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.i18n.StandupI18nEnum;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.web.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -31,33 +32,28 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
 
     @Override
     public ComponentContainer getLayout() {
-        AddViewLayout reportAddLayout = new AddViewLayout(this.title,
-                ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
+        AddViewLayout reportAddLayout = new AddViewLayout(title, ProjectAssetsManager.getAsset(ProjectTypeConstants.STANDUP));
         reportAddLayout.addHeaderRight(this.createTopPanel());
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withWidth("100%");
-        final VerticalLayout layoutField = new VerticalLayout();
-        layoutField.addStyleName("standup-edit-layout");
-        layoutField.setMargin(new MarginInfo(false, false, true, true));
-        layoutField.setWidth("100%");
-        final Label whatYesterdayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
-        whatYesterdayLbl.setStyleName(ValoTheme.LABEL_H3);
+        final MVerticalLayout layoutField = new MVerticalLayout().withMargin(new MarginInfo(false, false, true,
+                false)).withWidth("100%");
+
+        final ELabel whatYesterdayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_LASTDAY));
         layoutField.addComponent(whatYesterdayLbl);
-        this.whatYesterdayField = new StandupCustomField();
-        layoutField.addComponent(this.whatYesterdayField);
+        whatYesterdayField = new StandupCustomField();
+        layoutField.addComponent(whatYesterdayField);
 
-        final Label whatTodayLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
-        whatTodayLbl.setStyleName(ValoTheme.LABEL_H3);
-        layoutField.addComponent(whatTodayLbl);
-        this.whatTodayField = new StandupCustomField();
-        layoutField.addComponent(this.whatTodayField);
+        final ELabel whatTodayLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_TODAY));
+        layoutField.with(new Label(""), whatTodayLbl);
+        whatTodayField = new StandupCustomField();
+        layoutField.addComponent(whatTodayField);
 
-        final Label roadblockLbl = new Label(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
-        roadblockLbl.addStyleName(ValoTheme.LABEL_H3);
+        final ELabel roadblockLbl = ELabel.h3(AppContext.getMessage(StandupI18nEnum.STANDUP_ISSUE));
         roadblockLbl.addStyleName(UIConstants.LABEL_WORD_WRAP);
-        layoutField.addComponent(roadblockLbl);
-        this.whatProblemField = new StandupCustomField();
-        layoutField.addComponent(this.whatProblemField);
+        layoutField.with(new Label(""), roadblockLbl);
+        whatProblemField = new StandupCustomField();
+        layoutField.addComponent(whatProblemField);
 
         mainLayout.addComponent(layoutField);
         mainLayout.setExpandRatio(layoutField, 2.0f);

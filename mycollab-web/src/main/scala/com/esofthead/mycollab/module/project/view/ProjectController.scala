@@ -41,7 +41,6 @@ import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData.Goto
 import com.esofthead.mycollab.module.project.view.parameters._
 import com.esofthead.mycollab.module.project.view.risk.IRiskPresenter
 import com.esofthead.mycollab.module.project.view.settings.UserSettingPresenter
-import com.esofthead.mycollab.module.project.view.reports.IStandupPresenter
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter
 import com.esofthead.mycollab.module.project.view.time.IInvoiceListPresenter
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter
@@ -387,13 +386,14 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
   private def bindStandupEvents(): Unit = {
     this.register(new ApplicationEventListener[StandUpEvent.GotoAdd] {
       @Subscribe def handle(event: StandUpEvent.GotoAdd) {
-        val reportService = ApplicationContextUtil.getSpringBean(classOf[StandupReportService])
-        var report = reportService.findStandupReportByDateUser(CurrentProjectVariables.getProjectId, AppContext.getUsername, new GregorianCalendar().getTime, AppContext.getAccountId)
-        if (report == null) {
-          report = new SimpleStandupReport
+        val standupService = ApplicationContextUtil.getSpringBean(classOf[StandupReportService])
+        var standupReport = standupService.findStandupReportByDateUser(CurrentProjectVariables.getProjectId,
+          AppContext.getUsername, new GregorianCalendar().getTime, AppContext.getAccountId)
+        if (standupReport == null) {
+          standupReport = new SimpleStandupReport
         }
-        val data = new StandupScreenData.Add(report)
-        val presenter = PresenterResolver.getPresenter(classOf[IStandupPresenter])
+        val data = new StandupScreenData.Add(standupReport)
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
         presenter.go(projectView, data)
       }
     })
@@ -402,7 +402,7 @@ class ProjectController(val projectView: ProjectView) extends AbstractController
         val criteria = new StandupReportSearchCriteria
         criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
         criteria.setOnDate(new DateSearchField(new GregorianCalendar().getTime))
-        val presenter = PresenterResolver.getPresenter(classOf[IStandupPresenter])
+        val presenter = PresenterResolver.getPresenter(classOf[ProjectDashboardPresenter])
         presenter.go(projectView, new StandupScreenData.Search(criteria))
       }
     })
