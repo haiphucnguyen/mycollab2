@@ -62,10 +62,9 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
 
     public StandupListViewImpl() {
         super();
-        this.setMargin(new MarginInfo(false, true, false, true));
+        this.setMargin(new MarginInfo(false, true, true, true));
 
         this.constructHeader();
-
         this.addCalendarEvent();
         this.getListReport();
 

@@ -81,7 +81,6 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
                                      List<SimpleItemTimeLogging> timeLoggingEntries) {
             withMargin(new MarginInfo(true, false, true, false));
             TimeTrackingTableDisplay table = new TimeTrackingTableDisplay(visibleFields);
-            table.addStyleName(UIConstants.FULL_BORDER_TABLE);
             table.addTableListener(tableClickListener);
             table.setCurrentDataList(timeLoggingEntries);
             addComponent(table);

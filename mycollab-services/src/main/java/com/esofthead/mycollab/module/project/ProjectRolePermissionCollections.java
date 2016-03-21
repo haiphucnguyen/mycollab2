@@ -28,6 +28,8 @@ public class ProjectRolePermissionCollections {
 
     public static final String INVOICE = "Invoice";
 
+    public static final String FINANCE = "Finance";
+
     public static final String TASKS = "Task";
 
     public static final String BUGS = "Bug";
