@@ -47,7 +47,7 @@ class BugUrlResolver extends ProjectUrlResolver {
   private class ListUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {
       val projectId = new UrlTokenizer(params(0)).getInt
-      val criteria: BugSearchCriteria = new BugSearchCriteria
+      val criteria = new BugSearchCriteria
       criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId))
       criteria.setStatuses(new SetSearchField[String](BugStatus.InProgress.name,
         BugStatus.Open.name, BugStatus.ReOpened.name, BugStatus.Resolved.name, BugStatus.WontFix.name()))

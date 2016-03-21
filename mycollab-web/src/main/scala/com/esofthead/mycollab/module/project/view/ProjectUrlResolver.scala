@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver
 import com.esofthead.mycollab.module.project.view.page.PageUrlResolver
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData.{GotoCalendarView, GotoGanttChart}
 import com.esofthead.mycollab.module.project.view.parameters.{MilestoneScreenData, ProjectScreenData}
-import com.esofthead.mycollab.module.project.view.reports.StandupUrlResolver
+import com.esofthead.mycollab.module.project.view.reports.{ReportUrlResolver, StandupUrlResolver}
 import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver
 import com.esofthead.mycollab.module.project.view.settings._
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver
@@ -49,15 +49,14 @@ class ProjectUrlResolver extends UrlResolver {
     this.addSubResolver("edit", new ProjectEditUrlResolver)
     this.addSubResolver("tag", new ProjectTagUrlResolver)
     this.addSubResolver("favorite", new ProjectFavoriteUrlResolver)
-    this.addSubResolver("reports", new ProjectReportUrlResolver)
     this.addSubResolver("gantt", new GanttUrlResolver)
+    this.addSubResolver("reports", new ReportUrlResolver)
     this.addSubResolver("message", new MessageUrlResolver)
     this.addSubResolver("milestone", new MilestoneUrlResolver)
     this.addSubResolver("task", new ScheduleUrlResolver)
     this.addSubResolver("bug", new BugUrlResolver)
     this.addSubResolver("page", new PageUrlResolver)
     this.addSubResolver("risk", new RiskUrlResolver)
-    this.addSubResolver("standup", new StandupUrlResolver)
     this.addSubResolver("user", new UserUrlResolver)
     this.addSubResolver("role", new RoleUrlResolver)
     this.addSubResolver("setting", new SettingUrlResolver)
@@ -103,14 +102,6 @@ class ProjectUrlResolver extends UrlResolver {
     }
   }
 
-  class ProjectReportUrlResolver extends ProjectUrlResolver {
-    protected override def handlePage(params: String*) {
-      val projectId = new UrlTokenizer(params(0)).getInt
-      val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
-        new ProjectScreenData.GotoReportConsole())
-      EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
-    }
-  }
 
   class ProjectDashboardUrlResolver extends ProjectUrlResolver {
     protected override def handlePage(params: String*) {

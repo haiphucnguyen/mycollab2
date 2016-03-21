@@ -70,6 +70,7 @@ class StandupUrlResolver extends ProjectUrlResolver {
         standupSearchCriteria.setOnDate(new DateSearchField(new GregorianCalendar().getTime))
       }
       val chain = new PageActionChain(new ProjectScreenData.Goto(projectId),
+        new ProjectScreenData.GotoReportConsole(),
         new StandupScreenData.Search(standupSearchCriteria))
       EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain))
     }

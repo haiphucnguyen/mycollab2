@@ -85,11 +85,11 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
     @Override
     public void attachField(Object propertyId, final Field<?> field) {
         if (propertyId.equals("whatlastday")) {
-            this.whatYesterdayField.setContentComp(field);
+            whatYesterdayField.setContentComp(field);
         } else if (propertyId.equals("whattoday")) {
-            this.whatTodayField.setContentComp(field);
+            whatTodayField.setContentComp(field);
         } else if (propertyId.equals("whatproblem")) {
-            this.whatProblemField.setContentComp(field);
+            whatProblemField.setContentComp(field);
         }
     }
 
@@ -99,7 +99,7 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
         private static final long serialVersionUID = 1L;
 
         public void setContentComp(Component comp) {
-            this.setCompositionRoot(comp);
+            setCompositionRoot(comp);
         }
     }
 }
