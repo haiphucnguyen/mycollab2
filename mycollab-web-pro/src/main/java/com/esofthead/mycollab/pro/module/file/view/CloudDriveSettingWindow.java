@@ -188,7 +188,6 @@ public class CloudDriveSettingWindow extends Window {
 
         private HorizontalLayout editActionHorizontalLayout(final ExternalDrive drive) {
             final MHorizontalLayout layout = new MHorizontalLayout();
-            layout.addStyleName("resourceItem");
 
             Label folderTitleLbl = new Label("Folder title");
             layout.with(folderTitleLbl).withAlign(folderTitleLbl, Alignment.MIDDLE_LEFT);

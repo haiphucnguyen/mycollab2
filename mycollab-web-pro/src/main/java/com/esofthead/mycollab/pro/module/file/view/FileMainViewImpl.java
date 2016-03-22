@@ -167,31 +167,7 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
 
         resourceHandlerLayout.displayComponent(rootFolder, rootFolderName);
 
-        resourceHandlerLayout.addSearchHandlerToBreadCrumb(new SearchHandler<FileSearchCriteria>() {
-            @Override
-            public void onSearch(FileSearchCriteria criteria) {
-                Resource selectedFolder;
-                if (StorageNames.DROPBOX.equals(criteria.getStorageName())) {
-                    selectedFolder = externalResourceService.getCurrentResourceByPath(
-                            criteria.getExternalDrive(), criteria.getBaseFolder());
-                } else {
-                    selectedFolder = resourceService.getResource(criteria.getBaseFolder());
-                }
 
-                if (selectedFolder == null) {
-                    LOG.error(String.format("Can not find folder with path %s--%s", criteria.getBaseFolder(),
-                            criteria.getRootFolder()));
-                } else if (!(selectedFolder instanceof Folder)) {
-                    LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(),
-                            criteria.getRootFolder()));
-                } else {
-                    Folder resultFolder = (Folder) selectedFolder;
-                    resourceHandlerLayout.constructBodyItemContainer(resultFolder);
-                    rootFolder = resultFolder;
-                }
-
-            }
-        });
     }
 
     private void initComponents() {

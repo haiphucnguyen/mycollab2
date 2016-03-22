@@ -44,6 +44,12 @@ $font-largest: 36px;
   @include text-ellipsis;
 }
 
+.v-label.text-ellipsis {
+  display: inline-block;
+  width: 100%;
+  @include text-ellipsis;
+}
+
 @mixin margin-container($top, $right, $bottom, $left) {
   &.v-margin-top {
     padding-top: $top;

@@ -44,6 +44,9 @@ Version 5.2.10
 -----------------------------
 **Library Upgrades**
 
+* Hiraki CP 2.4.5
+* Other libraries
+
 **Improvements & New Features**
 
 * [Premium] Invoice management in project
@@ -60,6 +63,7 @@ Version 5.2.10
 
 * Form display badly when the field shows long text
 * Can not export report
+* File management is more stable
 
 Version 5.2.9
 -----------------------------

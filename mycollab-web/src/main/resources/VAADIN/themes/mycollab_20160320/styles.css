@@ -10,6 +10,14 @@
 	text-overflow: ellipsis;
 }
 
+.v-label.text-ellipsis {
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /**
  * Checks if a list contains a certain value.
  * 
@@ -1560,6 +1568,14 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .text-ellipsis a {
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.v-label.text-ellipsis {
 	display: inline-block;
 	width: 100%;
 	white-space: nowrap;
