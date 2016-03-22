@@ -101,14 +101,30 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         externalDriveService = ApplicationContextUtil.getSpringBean(ExternalDriveService.class);
         resourceService = ApplicationContextUtil.getSpringBean(ResourceService.class);
 
-        this.withMargin(new MarginInfo(true, false, true, false));
+        withSpacing(false).withMargin(new MarginInfo(true, false, true, false));
         fileBreadCrumb = new FileBreadcrumb(rootPath);
         fileBreadCrumb.addSearchHandler(new SearchHandler<FileSearchCriteria>() {
             @Override
             public void onSearch(FileSearchCriteria criteria) {
-                Folder selectedFolder = (Folder) resourceService.getResource(criteria.getBaseFolder());
-                constructBodyItemContainer(selectedFolder);
-                baseFolder = new Folder(selectedFolder.getPath());
+                Resource selectedFolder;
+                if (StorageNames.DROPBOX.equals(criteria.getStorageName())) {
+                    selectedFolder = externalResourceService.getCurrentResourceByPath(
+                            criteria.getExternalDrive(), criteria.getBaseFolder());
+                } else {
+                    selectedFolder = resourceService.getResource(criteria.getBaseFolder());
+                }
+
+                if (selectedFolder == null) {
+                    LOG.error(String.format("Can not find folder with path %s--%s", criteria.getBaseFolder(),
+                            criteria.getRootFolder()));
+                } else if (!(selectedFolder instanceof Folder)) {
+                    LOG.error(String.format("Expect folder but the result is file %s--%s", criteria.getBaseFolder(),
+                            criteria.getRootFolder()));
+                } else {
+                    Folder resultFolder = (Folder) selectedFolder;
+                    constructBodyItemContainer(resultFolder);
+                    baseFolder = resultFolder;
+                }
             }
         });
         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " Files");
@@ -144,7 +160,10 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, new MHorizontalLayout(createBtn, uploadBtn)).expand(headerLbl);
         resourcesContainer = new ResourcesContainer();
-        this.with(headerLayout, fileBreadCrumb, resourcesContainer);
+        MVerticalLayout floatControl = new MVerticalLayout(headerLayout, fileBreadCrumb).withMargin(new MarginInfo
+                (false, false, true, false)).withStyleName("floatControl");
+//        FloatingComponent.floatThis(floatControl).setContainerId("main-body");
+        this.with(floatControl, resourcesContainer);
 
         fileBreadCrumb.initBreadcrumb();
         resourcesContainer.constructBody(baseFolder);
@@ -200,17 +219,18 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private List<Resource> resources;
 
         public ResourcesContainer() {
+            this.setId("resource-container");
             withSpacing(true).withWidth("100%");
         }
 
         private void constructBody(Folder currentFolder) {
             this.removeAllComponents();
 
-            bodyContainer = new MVerticalLayout().withSpacing(false).withMargin(false).withStyleName("border-top");
-            selectedResourceControlLayout = new MVerticalLayout().withMargin(false).withWidth("400px");
+            bodyContainer = new MVerticalLayout().withSpacing(false).withMargin(false);
+            selectedResourceControlLayout = new MVerticalLayout().withSpacing(false).withMargin(false).withWidth("400px")
+                    .withStyleName("margin-top", "margin-left");
 
-            FloatingComponent floatingComponent = FloatingComponent.floatThis(selectedResourceControlLayout);
-            floatingComponent.setContainerId("main-body");
+            FloatingComponent.floatThis(selectedResourceControlLayout).setContainerId("main-body");
             with(bodyContainer, selectedResourceControlLayout).expand(bodyContainer);
             if (currentFolder instanceof ExternalFolder) {
                 resources = externalResourceService.getResources(((ExternalFolder) currentFolder).getExternalDrive(),
@@ -251,7 +271,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private void displaySelectedResourceControls() {
             if (selectedResource != null) {
                 selectedResourceControlLayout.removeAllComponents();
-                selectedResourceControlLayout.addStyleName(UIConstants.BOX);
                 ELabel resourceHeaderLbl = ELabel.h3(selectedResource.getName()).withStyleName(UIConstants.TEXT_ELLIPSIS);
                 MHorizontalLayout headerLayout = new MHorizontalLayout(resourceHeaderLbl).withMargin(new MarginInfo
                         (false, true, false, true)).withStyleName("panel-header").withFullWidth().alignAll(Alignment.MIDDLE_LEFT);
@@ -282,7 +301,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
 
                     @Override
                     public String getFilename() {
-                        return selectedResource.getName();
+                        return (selectedResource instanceof Folder) ? "out.zip" : selectedResource.getName();
                     }
                 };
 
@@ -313,7 +332,8 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 });
                 deleteBtn.addStyleName(UIConstants.BUTTON_LINK);
                 deleteBtn.setIcon(FontAwesome.TRASH_O);
-                selectedResourceControlLayout.with(new MVerticalLayout(renameBtn, downloadBtn, moveBtn, deleteBtn));
+                selectedResourceControlLayout.with(new MVerticalLayout(renameBtn, downloadBtn, moveBtn, deleteBtn)
+                        .withStyleName("panel-body"));
             } else {
                 selectedResourceControlLayout.removeAllComponents();
                 selectedResourceControlLayout.removeStyleName(UIConstants.BOX);

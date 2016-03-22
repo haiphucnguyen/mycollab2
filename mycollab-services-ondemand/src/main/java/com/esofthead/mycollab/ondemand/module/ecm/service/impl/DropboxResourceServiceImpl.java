@@ -16,9 +16,9 @@
  */
 package com.esofthead.mycollab.ondemand.module.ecm.service.impl;
 
-import com.dropbox.core.*;
-import com.dropbox.core.DbxEntry.File;
-import com.dropbox.core.DbxEntry.WithChildren;
+import com.dropbox.core.DbxException;
+import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.v1.*;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.module.ecm.StorageNames;
@@ -44,12 +44,12 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
         List<Resource> resources = new ArrayList<>();
         try {
             DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-            DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
-            WithChildren children = client.getMetadataWithChildren(path);
+            DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
+            DbxEntry.WithChildren children = client.getMetadataWithChildren(path);
             if (CollectionUtils.isNotEmpty(children.children)) {
                 for (DbxEntry entry : children.children) {
                     if (entry.isFile()) {
-                        File file = entry.asFile();
+                        DbxEntry.File file = entry.asFile();
                         ExternalContent resource = new ExternalContent(file.path);
                         resource.setStorageName(StorageNames.DROPBOX);
                         resource.setExternalDrive(drive);
@@ -92,9 +92,9 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
         try {
             DbxRequestConfig requestConfig = new DbxRequestConfig(
                     "MyCollab/1.0", null);
-            DbxClient client = new DbxClient(requestConfig,
+            DbxClientV1 client = new DbxClientV1(requestConfig,
                     drive.getAccesstoken());
-            WithChildren children = client.getMetadataWithChildren(path);
+            DbxEntry.WithChildren children = client.getMetadataWithChildren(path);
             if (CollectionUtils.isNotEmpty(children.children)) {
                 for (DbxEntry entry : children.children) {
                     if (entry.isFolder()) {
@@ -117,7 +117,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     public Resource getCurrentResourceByPath(ExternalDrive drive, String path) {
         try {
             DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-            DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+            DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
             Resource res = null;
 
             DbxEntry entry = client.getMetadata(path);
@@ -129,10 +129,10 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
                 ExternalContent resource = new ExternalContent(entry.path);
                 resource.setStorageName(StorageNames.DROPBOX);
                 resource.setExternalDrive(drive);
-                Date lastModifiedDate = ((File) entry).lastModified;
+                Date lastModifiedDate = ((DbxEntry.File) entry).lastModified;
                 Calendar createdDate = new GregorianCalendar();
                 createdDate.setTime(lastModifiedDate);
-                resource.setSize(((File) entry).numBytes);
+                resource.setSize(((DbxEntry.File) entry).numBytes);
                 resource.setCreated(createdDate);
                 res = resource;
             } else if (entry.isFolder()) {
@@ -160,7 +160,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     @Override
     public Folder createNewFolder(ExternalDrive drive, String path) {
         DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
         try {
             client.createFolder(path);
             return (Folder) this.getCurrentResourceByPath(drive, path);
@@ -173,7 +173,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     @Override
     public void saveContent(ExternalDrive drive, Content content, InputStream in) {
         DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
         try {
             client.uploadFile(content.getPath(), DbxWriteMode.add(), -1, in);
         } catch (Exception e) {
@@ -184,7 +184,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     @Override
     public void rename(ExternalDrive drive, String oldPath, String newPath) {
         DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
         try {
             client.copy(oldPath, newPath);
             client.delete(oldPath);
@@ -196,7 +196,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     @Override
     public void deleteResource(ExternalDrive drive, String path) {
         DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
         try {
             client.delete(path);
         } catch (DbxException e) {
@@ -207,7 +207,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     @Override
     public InputStream download(ExternalDrive drive, final String path) {
         DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-        final DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        final DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
         PipedInputStream in = new PipedInputStream();
         try {
             final PipedOutputStream out = new PipedOutputStream(in);
@@ -235,7 +235,7 @@ public class DropboxResourceServiceImpl implements DropboxResourceService {
     @Override
     public void move(ExternalDrive drive, String fromPath, String toPath) {
         DbxRequestConfig requestConfig = new DbxRequestConfig("MyCollab/1.0", null);
-        DbxClient client = new DbxClient(requestConfig, drive.getAccesstoken());
+        DbxClientV1 client = new DbxClientV1(requestConfig, drive.getAccesstoken());
         try {
             client.move(fromPath, toPath);
         } catch (DbxException e) {

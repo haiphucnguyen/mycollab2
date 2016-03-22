@@ -182,9 +182,6 @@ public class ThemeManager {
 
             extraStyles.append(".project-info { background-color: #" + accountTheme.getVtabsheetbg() + "; }");
 
-            extraStyles.append(".v-label.volumeUsageInfo { border-top: 25px solid #" + accountTheme
-                    .getVtabsheetbg() + ";}");
-
             extraStyles.append("div.v-csslayout.rightsidebar-layout .sidebar-wrap { background-color: " + ColorUtils
                     .brighterColor("#" + accountTheme.getVtabsheetbg()) + ";}");
 

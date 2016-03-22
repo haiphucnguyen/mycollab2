@@ -46,6 +46,7 @@ public abstract class DefaultCloudDriveOAuthWindow extends Window {
     public DefaultCloudDriveOAuthWindow() {
         this.setWidth("420px");
         this.setResizable(false);
+        this.setModal(true);
         this.center();
         this.setCaption(windowTitle());
         constructBody();

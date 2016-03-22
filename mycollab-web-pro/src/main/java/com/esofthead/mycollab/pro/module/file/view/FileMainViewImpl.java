@@ -1,19 +1,15 @@
 package com.esofthead.mycollab.pro.module.file.view;
 
 import com.esofthead.mycollab.core.utils.FileUtils;
-import com.esofthead.mycollab.module.ecm.StorageNames;
 import com.esofthead.mycollab.module.ecm.domain.Folder;
-import com.esofthead.mycollab.module.ecm.domain.Resource;
 import com.esofthead.mycollab.module.ecm.service.DriveInfoService;
 import com.esofthead.mycollab.module.ecm.service.ExternalResourceService;
 import com.esofthead.mycollab.module.ecm.service.ResourceService;
-import com.esofthead.mycollab.module.file.domain.criteria.FileSearchCriteria;
 import com.esofthead.mycollab.module.file.view.FileMainView;
 import com.esofthead.mycollab.module.file.view.components.ResourcesDisplayComponent;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -26,7 +22,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.ValoTheme;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
@@ -62,33 +57,23 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         rootFolder = new Folder(rootPath);
     }
 
-    private HorizontalLayout constructHeader() {
-        MHorizontalLayout layout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
-                .withWidth("100%");
-        Label searchTitle = new Label(FontAwesome.BRIEFCASE.getHtml() + " Files", ContentMode.HTML);
-        searchTitle.setStyleName(ValoTheme.LABEL_H2);
-        layout.with(searchTitle).expand(searchTitle);
-        return layout;
-    }
-
     private HorizontalLayout buildLeftColumn() {
         MHorizontalLayout menuBarContainerHorizontalLayout = new MHorizontalLayout()
                 .withMargin(new MarginInfo(false, true, true, true));
 
-        MVerticalLayout menuLayout = new MVerticalLayout().withWidth("250px");
+        MVerticalLayout menuLayout = new MVerticalLayout().withMargin(new MarginInfo(true, false, true, false))
+                .withWidth("250px");
 
         menuBarContainerHorizontalLayout.addComponent(menuLayout);
 
         MVerticalLayout topControlMenuWrapper = new MVerticalLayout().withSpacing(false).withWidth("250px");
 
         MHorizontalLayout topControlMenu = new MHorizontalLayout().withWidth("100%");
-        topControlMenu.addStyleName("border-box2-no-margin");
-        topControlMenu.addStyleName("file-topcontrols");
+        topControlMenu.addStyleName("panel-header");
 
         topControlMenuWrapper.addComponent(topControlMenu);
 
-        ButtonGroup navButton = new ButtonGroup();
-        navButton.addStyleName(UIConstants.BUTTON_OPTION);
+        MHorizontalLayout navButton = new MHorizontalLayout();
         topControlMenu.with(navButton).withAlign(navButton, Alignment.MIDDLE_RIGHT);
 
         Button settingBtn = new Button();
@@ -102,13 +87,12 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 UI.getCurrent().addWindow(cloudDriveSettingWindow);
             }
         });
-        settingBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        navButton.addButton(settingBtn);
+        settingBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        navButton.with(settingBtn);
 
         final PopupButton linkBtn = new PopupButton();
         linkBtn.setIcon(FontAwesome.LINK);
-        linkBtn.addStyleName(UIConstants.BUTTON_OPTION);
-        linkBtn.setWidth("65px");
+        linkBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
 
         final OptionPopupContent filterBtnLayout = new OptionPopupContent();
 
@@ -124,12 +108,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
             }
         });
 
-        connectDropboxBtn.addStyleName(UIConstants.BUTTON_LINK);
         connectDropboxBtn.setIcon(FontAwesome.DROPBOX);
         filterBtnLayout.addOption(connectDropboxBtn);
 
         linkBtn.setContent(filterBtnLayout);
-        navButton.addButton(linkBtn);
+        navButton.with(linkBtn);
 
         BillingPlan currentBillingPlan = AppContext.getBillingAccount().getBillingPlan();
         DriveInfoService driveInfoService = ApplicationContextUtil.getSpringBean(DriveInfoService.class);
@@ -178,16 +161,11 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
         separator.setWidthUndefined();
         mainView.with(separator).withAlign(separator, Alignment.TOP_LEFT);
 
-
         // here for MainBodyResourceLayout class
         MVerticalLayout rightColumn = new MVerticalLayout();
-        rightColumn.addComponent(constructHeader());
-
         mainBodyResourceLayout = new MVerticalLayout().withMargin(new MarginInfo(false, true, false, false));
-
         resourceHandlerLayout = new ResourcesDisplayComponent(rootFolder);
         mainBodyResourceLayout.addComponent(resourceHandlerLayout);
-
         rightColumn.addComponent(mainBodyResourceLayout);
 
         mainView.with(rightColumn).withAlign(rightColumn, Alignment.TOP_LEFT).expand(rightColumn);

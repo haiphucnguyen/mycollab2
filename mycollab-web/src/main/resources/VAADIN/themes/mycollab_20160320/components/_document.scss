@@ -1,17 +1,15 @@
 @mixin mycollab-document {
   /* volume usage info */
-
-  .file-topcontrols .v-button.v-button-right {
-    border-right: none;
-  }
-
-  .v-horizontallayout.border-box2-no-margin.file-topcontrols .v-buttongroup .v-button.v-button-right {
-    border-radius: 0px 3px 0px 0px;
+  .floatControl {
+    z-index: 10;
+    border-bottom: 1px solid $my-separator-color;
+    background-color: $my-white-color;
   }
 
   .v-label.volumeUsageInfo {
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
+    border-top: 25px solid gray;
     height: 0;
     overflow: visible;
     div {

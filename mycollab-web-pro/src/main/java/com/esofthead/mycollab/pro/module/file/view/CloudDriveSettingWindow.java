@@ -142,7 +142,6 @@ public class CloudDriveSettingWindow extends Window {
                         }
                     }
                 });
-                editBtn.addStyleName("link");
                 popupOptionActionLayout.addOption(editBtn);
 
                 Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
@@ -176,11 +175,10 @@ public class CloudDriveSettingWindow extends Window {
                         }
                     }
                 });
-                deleteBtn.addStyleName(UIConstants.BUTTON_LINK);
-                popupOptionActionLayout.addOption(deleteBtn);
+
+                popupOptionActionLayout.addDangerOption(deleteBtn);
                 popupBtn.setContent(popupOptionActionLayout);
-                titleLayout.addComponent(popupBtn);
-                titleLayout.setComponentAlignment(popupBtn, Alignment.MIDDLE_RIGHT);
+                titleLayout.with(popupBtn).withAlign(popupBtn, Alignment.MIDDLE_RIGHT);
 
             }
             this.addComponent(externalDriveEditLayout);
