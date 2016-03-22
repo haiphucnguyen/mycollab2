@@ -92,8 +92,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
     private ResourcesContainer resourcesContainer;
 
     private Folder baseFolder;
-    private String rootFolderName;
-    private String rootPath;
+    private final String rootPath;
 
     public ResourcesDisplayComponent(final Folder rootFolder) {
         this.baseFolder = rootFolder;
@@ -109,13 +108,13 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
             public void onSearch(FileSearchCriteria criteria) {
                 Folder selectedFolder = (Folder) resourceService.getResource(criteria.getBaseFolder());
                 constructBodyItemContainer(selectedFolder);
-                rootPath = selectedFolder.getPath();
+                baseFolder = new Folder(selectedFolder.getPath());
             }
         });
         ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.FILE).getHtml() + " Files");
 
         // Construct controllGroupBtn
-        Button createBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CREATE), new Button.ClickListener() {
+        Button createBtn = new Button("New folder", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -126,7 +125,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         });
         createBtn.setIcon(FontAwesome.PLUS);
         createBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        createBtn.setWidth("90px");
         createBtn.setDescription("Create new folder");
         createBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.PUBLIC_DOCUMENT_ACCESS));
 
@@ -139,7 +137,6 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                 UI.getCurrent().addWindow(multiUploadWindow);
             }
         });
-        uploadBtn.setWidth("90px");
         uploadBtn.setIcon(FontAwesome.UPLOAD);
         uploadBtn.addStyleName(UIConstants.BUTTON_ACTION);
         uploadBtn.setDescription("Upload");
@@ -148,20 +145,9 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, new MHorizontalLayout(createBtn, uploadBtn)).expand(headerLbl);
         resourcesContainer = new ResourcesContainer();
         this.with(headerLayout, fileBreadCrumb, resourcesContainer);
-        displayComponent(rootFolder, "Documents");
-    }
 
-    /**
-     * this method show Component when start loading
-     *
-     * @param baseFolder
-     */
-    public void displayComponent(Folder baseFolder, String rootFolderName) {
-        this.baseFolder = baseFolder;
-        this.rootPath = baseFolder.getPath();
-        this.rootFolderName = rootFolderName;
-        this.fileBreadCrumb.initBreadcrumb();
-        this.resourcesContainer.constructBody(this.baseFolder);
+        fileBreadCrumb.initBreadcrumb();
+        resourcesContainer.constructBody(baseFolder);
     }
 
     private void deleteResourceAction(final Collection<Resource> deletedResources) {
@@ -689,11 +675,7 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
         public MoveResourceWindow(Resource resource) {
-            super(resource);
-        }
-
-        public MoveResourceWindow(Collection<Resource> lstResource) {
-            super(lstResource);
+            super(new Folder(rootPath), resource);
         }
 
         @Override
@@ -708,15 +690,5 @@ public class ResourcesDisplayComponent extends MVerticalLayout {
                                 "check duplicated file-name and try again.");
             }
         }
-
-        @Override
-        protected void displayFiles() {
-            this.folderTree.removeAllItems();
-            this.baseFolder = new Folder(rootPath);
-            this.folderTree.addItem(new Object[]{ResourcesDisplayComponent.this.rootFolderName, ""}, this.baseFolder);
-            this.folderTree.setItemCaption(this.baseFolder, ResourcesDisplayComponent.this.rootFolderName);
-            this.folderTree.setCollapsed(this.baseFolder, false);
-        }
     }
-
 }

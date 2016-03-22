@@ -164,10 +164,6 @@ public class FileMainViewImpl extends AbstractPageView implements FileMainView {
                 }
             }
         });
-
-        resourceHandlerLayout.displayComponent(rootFolder, rootFolderName);
-
-
     }
 
     private void initComponents() {
