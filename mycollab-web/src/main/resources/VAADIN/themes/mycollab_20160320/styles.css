@@ -17462,7 +17462,7 @@ div.v-ratingstars-bar {
 	font-size: 22px;
 }
 
-.billing-plan .billing-user, .billing-plan .billing-storage, .billing-plan .billing-project, .billing-plan .billing-bug-feature, .billing-plan .billing-standup-feature, .billing-plan .billing-timetrack-feature {
+.billing-plan .billing-user, .billing-plan .billing-storage, .billing-plan .billing-project {
 	font-weight: 600;
 }
 

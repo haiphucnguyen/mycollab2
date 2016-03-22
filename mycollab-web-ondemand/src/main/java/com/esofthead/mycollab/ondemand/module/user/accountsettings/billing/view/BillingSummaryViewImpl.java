@@ -157,46 +157,13 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
             billingProject.setWidthUndefined();
             singlePlan.addComponent(billingProject);
 
-            Label billingBugTracking;
-            if (plan.getHasbugenable()) {
-                billingBugTracking = new Label("Issues Tracker", ContentMode.HTML);
-            } else {
-                billingBugTracking = new Label("&nbsp;", ContentMode.HTML);
-            }
-            billingBugTracking.addStyleName("billing-bug-feature");
-            billingBugTracking.setWidthUndefined();
-            singlePlan.addComponent(billingBugTracking);
+            Button selectThisPlan = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_SELECT), new ClickListener() {
 
-            Label billingTimeTracking;
-            if (plan.getHastimetracking()) {
-                billingTimeTracking = new Label("Time Tracker");
-            } else {
-                billingTimeTracking = new Label("&nbsp;", ContentMode.HTML);
-            }
-            billingTimeTracking.addStyleName("billing-timetrack-feature");
-            billingTimeTracking.setWidthUndefined();
-            singlePlan.addComponent(billingTimeTracking);
-
-            Label billingStandup;
-            if (plan.getHasstandupmeetingenable()) {
-                billingStandup = new Label("Standup Meeting", ContentMode.TEXT);
-            } else {
-                billingStandup = new Label("&nbsp;", ContentMode.HTML);
-            }
-            billingStandup.addStyleName("billing-standup-feature");
-            billingStandup.setWidthUndefined();
-            singlePlan.addComponent(billingStandup);
-
-            Button selectThisPlan = new Button(
-                    AppContext.getMessage(GenericI18Enum.BUTTON_SELECT),
-                    new ClickListener() {
-
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            UI.getCurrent().addWindow(
-                                    new UpdateBillingPlanWindow(plan));
-                        }
-                    });
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    UI.getCurrent().addWindow(new UpdateBillingPlanWindow(plan));
+                }
+            });
             selectThisPlan.addStyleName(UIConstants.BUTTON_ACTION);
             singlePlan.addComponent(selectThisPlan);
 

@@ -1194,7 +1194,7 @@ $v-line-height--header:1.5em;
   }
 
   .billing-plan {
-    .billing-user, .billing-storage, .billing-project, .billing-bug-feature, .billing-standup-feature, .billing-timetrack-feature {
+    .billing-user, .billing-storage, .billing-project {
       font-weight: $my-font-weight-bold;
     }
     .greenbtn, .graybtn {
