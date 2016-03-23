@@ -65,7 +65,8 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.List;
-import java.util.UUID;
+
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -333,15 +334,14 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
     }
 
     private static String buildItemValue(SimpleRelatedBug relatedBug) {
-        String uid = UUID.randomUUID().toString();
         String linkName = String.format("[#%d] - %s", relatedBug.getBugKey(), relatedBug.getBugSummary());
-        A bugLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(relatedBug.getBugKey(),
+        A bugLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateBugPreviewFullLink(relatedBug.getBugKey(),
                 CurrentProjectVariables.getShortName())).appendText(linkName).setStyle("display:inline");
-        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.BUG,
+        bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.BUG,
                 relatedBug.getBugId() + ""));
-        bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+        bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         return new Div().appendChild(bugLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable(uid)).write();
+                TooltipHelper.buildDivTooltipEnable()).write();
     }
 
     @Override

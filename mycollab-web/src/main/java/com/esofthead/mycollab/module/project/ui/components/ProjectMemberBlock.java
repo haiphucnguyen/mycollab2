@@ -29,7 +29,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.UUID;
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -41,13 +41,12 @@ public class ProjectMemberBlock extends MVerticalLayout {
 
         Image userAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 48, displayName);
 
-        String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
-        A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
+        A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
                 username)).appendText(StringUtils.trim(displayName, 30, true));
-        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, username));
-        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-        div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
+        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
+        div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
         Label userLbl = new Label(div.write(), ContentMode.HTML);
         userLbl.addStyleName(ValoTheme.LABEL_SMALL);
         with(userAvatar, userLbl);

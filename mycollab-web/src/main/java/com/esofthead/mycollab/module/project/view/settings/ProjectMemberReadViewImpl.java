@@ -59,7 +59,7 @@ import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.UUID;
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -345,11 +345,11 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName("list-row").withWidth("100%");
             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
             Div issueDiv = new Div();
-            String uid = UUID.randomUUID().toString();
-            A taskLink = new A().setId("tag" + uid);
 
-            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, genericTask.getType(), genericTask.getTypeId() + ""));
-            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+            A taskLink = new A().setId("tag" + TOOLTIP_ID);
+
+            taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(genericTask.getType(), genericTask.getTypeId() + ""));
+            taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
                 taskLink.appendText(String.format("[#%d] - %s", genericTask.getExtraTypeId(), genericTask.getName()));
                 taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
@@ -360,7 +360,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
             }
 
-            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable(uid));
+            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable());
             Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
             if (genericTask.isClosed()) {
                 issueLbl.addStyleName("completed");

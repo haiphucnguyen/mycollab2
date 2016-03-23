@@ -25,7 +25,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
+
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -65,18 +66,17 @@ public class StandupMissingComp extends MVerticalLayout {
     }
 
     private String buildMemberLink(SimpleUser user) {
-        String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
         Img userAvatar = new Img("", StorageFactory.getInstance().getAvatarPath(user.getAvatarid(), 16));
-        A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+        A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                 CurrentProjectVariables.getProjectId(), user.getUsername()));
 
-        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, user.getUsername()));
-        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+        userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.getUsername()));
+        userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         userLink.appendText(StringUtils.trim(user.getDisplayName(), 30, true));
 
         div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable(uid));
+                TooltipHelper.buildDivTooltipEnable());
         return div.write();
     }
 

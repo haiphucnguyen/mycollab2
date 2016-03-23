@@ -51,7 +51,8 @@ import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.Collections;
-import java.util.UUID;
+
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -170,20 +171,19 @@ public class ProjectMembersWidget extends Depot {
         }
 
         private String buildAssigneeValue(SimpleProjectMember member) {
-            String uid = UUID.randomUUID().toString();
             Div div = new DivLessFormatter();
-            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
+            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(
                     member.getProjectid(), member.getUsername()));
 
-            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, member.getUsername()));
-            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(member.getUsername()));
+            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             userLink.appendText(member.getMemberFullName());
 
             if (member.getUsername().equals(CurrentProjectVariables.getProject().getLead())) {
                 userLink.appendText(" (Lead)");
             }
 
-            return div.appendChild(userLink, TooltipHelper.buildDivTooltipEnable(uid)).write();
+            return div.appendChild(userLink, TooltipHelper.buildDivTooltipEnable()).write();
         }
     }
 }

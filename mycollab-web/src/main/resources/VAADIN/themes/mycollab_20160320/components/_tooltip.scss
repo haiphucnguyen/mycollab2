@@ -27,7 +27,7 @@
     @include my-box-shadow;
     //Keep tooltip overlay vaadin windows dialog
     z-index: 10001;
-    font: $font-small $font-family !important;
+    font-size: $font-small;
     tr {
       line-height: 1.5;
     }

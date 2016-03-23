@@ -43,7 +43,15 @@ var stickytooltip = {
   init:function(targetselector, tipid) { 
     $('#' + tipid).stop(false, true).hide();
     var $targets=$(targetselector)
-    var $tooltip=$('#' + tipid).appendTo(document.body)
+    var $tooltip=$('#' + tipid)
+    $childTooltip = $(document.body).children('#' + tipid)
+    if (!$childTooltip.length) {
+      $tooltip=$('#' + tipid).appendTo(document.body)
+    } else {
+      $tooltip.remove()
+      $tooltip = $childTooltip
+    }
+
     if ($targets.length == 0)
       return
 
@@ -66,6 +74,7 @@ var stickytooltip = {
         stickytooltip.hidebox($, $tooltip)
       }
     })
+    return $tooltip
   }
 }
 
@@ -73,7 +82,7 @@ function overIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) {
   var idDIVserverdata = "div14" + uid;
   var idStickyToolTipDiv = "div1" + uid;
   var idTagA = "tag" + uid;
-  if($("#" + idDIVserverdata).html()== "") { 
+  if($("#" + idStickyToolTipDiv).length) {
     $.ajax({
       type: 'POST',
       url: url,
@@ -81,8 +90,10 @@ function overIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) {
       success: function(data) { 
         if(data.trim()!= "null") {
           $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-          $("#" + idDIVserverdata).html(data);
-          stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+          $tooltip=stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+          if ($tooltip.length) {
+            $tooltip.find("#" + idDIVserverdata).html(data);
+          }
         }
       }
     });
@@ -104,8 +115,10 @@ function crmActivityOverIt(uid, type, typeId, url, sAccountId, siteURL, timeZone
       success: function(data) { 
         if(data.trim()!= "null") { 
           $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-          $("#" + idDIVserverdata).html(data);
-          stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+          $tooltip=stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+          if ($tooltip.length) {
+            $tooltip.find("#" + idDIVserverdata).html(data);
+          }
         }
       }
     });
@@ -127,8 +140,10 @@ function showUserTooltip(uid, username, url, siteURL, timeZone, sAccountId, loca
       success: function(data) { 
         if(data.trim()!= "null") { 
           $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-          $("#" + idDIVserverdata).html(data);
-          stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+          $tooltip=stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
+          if ($tooltip.length) {
+            $tooltip.find("#" + idDIVserverdata).html(data);
+          }
         }
       }
     });

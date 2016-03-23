@@ -67,7 +67,8 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import java.io.*;
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
+
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -210,19 +211,19 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
             Span lastUpdatedTimeTxt = new Span().appendText(AppContext.getMessage(DayI18nEnum.LAST_UPDATED_ON,
                     AppContext.formatPrettyTime(beanItem.getLastUpdatedTime().getTime())))
                     .setTitle(AppContext.formatDateTime(beanItem.getLastUpdatedTime().getTime()));
-            String uid = UUID.randomUUID().toString();
+
             ProjectMemberService projectMemberService = ApplicationContextUtil
                     .getSpringBean(ProjectMemberService.class);
             SimpleProjectMember member = projectMemberService.findMemberByUsername(beanItem.getCreatedUser(),
                     CurrentProjectVariables.getProjectId(), AppContext.getAccountId());
             if (member != null) {
                 Img userAvatar = new Img("", StorageFactory.getInstance().getAvatarPath(member.getMemberAvatarId(), 16));
-                A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(member
+                A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(member
                         .getProjectid(), member.getUsername())).appendText(StringUtils.trim(member.getMemberFullName(), 30, true));
-                userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, member.getUsername()));
-                userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+                userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(member.getUsername()));
+                userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
                 footer.appendChild(lastUpdatedTimeTxt, new Text("&nbsp;-&nbsp;Created by: "), userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink,
-                        DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+                        DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
             } else {
                 footer.appendChild(lastUpdatedTimeTxt);
             }

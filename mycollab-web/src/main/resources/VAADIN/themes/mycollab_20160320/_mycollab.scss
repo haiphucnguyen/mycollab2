@@ -1082,7 +1082,7 @@ $v-line-height--header:1.5em;
         display: table-cell;
         width: 5px;
         height: 100%;
-        background-color: #F5F5F5;
+        background-color: $my-separator-color;
       }
       .infoTitle {
         font-weight: $my-font-weight-bold;

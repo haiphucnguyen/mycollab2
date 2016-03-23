@@ -46,6 +46,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
+
 /**
  * @author MyCollab Ltd.
  * @since 1.0
@@ -269,14 +271,13 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
 
         private String buildMemberLink(SimpleStandupReport report) {
-            String uid = UUID.randomUUID().toString();
             DivLessFormatter div = new DivLessFormatter();
-            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
+            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
                     (CurrentProjectVariables.getProjectId(), report.getLogby()))
                     .appendText(com.esofthead.mycollab.core.utils.StringUtils.trim(report.getLogByFullName(), 30, true));
-            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, report.getLogby()));
-            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
-            div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable(uid));
+            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
+            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
+            div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
             return div.write();
         }
     }

@@ -43,10 +43,10 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
+
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd
@@ -148,16 +148,15 @@ public class MilestoneTimelineWidget extends MVerticalLayout {
 
             Div statusDiv = new Div();
 
-            String uid = UUID.randomUUID().toString();
             A milestoneDiv = new A(ProjectLinkBuilder.generateMilestonePreviewFullLink
                     (milestone.getProjectid(), milestone.getId())).appendText(ProjectAssetsManager.getAsset
                     (ProjectTypeConstants.MILESTONE).getHtml() + " " + StringUtils.trim(milestone.getName(), 30, true))
-                    .setId("tag" + uid);
-            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, ProjectTypeConstants.MILESTONE,
+                    .setId("tag" + TOOLTIP_ID);
+            milestoneDiv.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.MILESTONE,
                     milestone.getId() + ""));
-            milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+            milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-            statusDiv.setCSSClass("status").appendChild(milestoneDiv, TooltipHelper.buildDivTooltipEnable(uid));
+            statusDiv.setCSSClass("status").appendChild(milestoneDiv, TooltipHelper.buildDivTooltipEnable());
             li.appendChild(statusDiv);
             ul.appendChild(li);
         }

@@ -33,7 +33,8 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.List;
-import java.util.UUID;
+
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd.
@@ -222,10 +223,9 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
             return itemLogging.getNote();
         }
 
-        String uid = UUID.randomUUID().toString();
         DivLessFormatter div = new DivLessFormatter();
         Text image = new Text(ProjectAssetsManager.getAsset(itemLogging.getType()).getHtml());
-        A itemLink = new A().setId("tag" + uid);
+        A itemLink = new A().setId("tag" + TOOLTIP_ID);
 
         if (ProjectTypeConstants.TASK.equals(itemLogging.getType())
                 || ProjectTypeConstants.BUG.equals(itemLogging.getType())) {
@@ -240,12 +240,12 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
                     itemLogging.getTypeid() + ""));
         }
 
-        itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(uid, itemLogging.getType(), itemLogging.getTypeid() + ""));
-        itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+        itemLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(itemLogging.getType(), itemLogging.getTypeid() + ""));
+        itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         itemLink.appendText(itemLogging.getSummary());
 
         div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable(uid));
+                TooltipHelper.buildDivTooltipEnable());
         return div.write();
     }
 }

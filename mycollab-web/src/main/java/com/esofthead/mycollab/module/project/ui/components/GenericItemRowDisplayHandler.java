@@ -36,7 +36,7 @@ import com.vaadin.ui.Component;
 import org.apache.commons.lang3.StringUtils;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.UUID;
+import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
 /**
  * @author MyCollab Ltd
@@ -67,15 +67,14 @@ public class GenericItemRowDisplayHandler implements AbstractBeanPagedList.RowDi
         if (StringUtils.isBlank(item.getCreatedUser())) {
             div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), new Text("None"), lastUpdatedOn);
         } else {
-            String uid = UUID.randomUUID().toString();
             Img userAvatar = new Img("", StorageFactory.getInstance().getAvatarPath(item.getCreatedUserAvatarId(), 16));
-            A userLink = new A().setId("tag" + uid).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(item.getProjectId(), item
+            A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(item.getProjectId(), item
                     .getCreatedUser())).appendText(item.getCreatedUserDisplayName());
-            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(uid, item.getCreatedUser()));
-            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction(uid));
+            userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(item.getCreatedUser()));
+            userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
             div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
-                    userLink, TooltipHelper.buildDivTooltipEnable(uid),
+                    userLink, TooltipHelper.buildDivTooltipEnable(),
                     lastUpdatedOn);
         }
 

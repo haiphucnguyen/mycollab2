@@ -24,27 +24,28 @@ import com.hp.gagawa.java.elements.Div;
  * @since 4.6.0
  */
 public class TooltipHelper {
+    public static final String TOOLTIP_ID = "mycollabtip";
 
-    public static Div buildDivTooltipEnable(String uid) {
-        Div div1 = new Div().setId("div1" + uid);
+    public static Div buildDivTooltipEnable() {
+        Div div1 = new Div().setId("div1" + TOOLTIP_ID);
         div1.setAttribute("class", "stickytooltip");
 
         Div div12 = new Div();
         div12.setAttribute("style", "padding:5px");
         div1.appendChild(div12);
 
-        Div div13 = new Div().setId("div13" + uid);
+        Div div13 = new Div().setId("div13" + TOOLTIP_ID);
         div13.setAttribute("class", "atip");
         div13.setAttribute("style", "width:550px");
         div12.appendChild(div13);
 
-        Div div14 = new Div().setId("div14" + uid);
+        Div div14 = new Div().setId("div14" + TOOLTIP_ID);
         div13.appendChild(div14);
         return div1;
     }
 
-    public static String userHoverJsFunction(String uid, String user) {
-        String arg3 = "'" + uid + "'";
+    public static String userHoverJsFunction(String user) {
+        String arg3 = "'" + TOOLTIP_ID + "'";
         String arg4 = "'" + user + "'";
         String arg5 = "'" + AppContext.getSiteUrl() + "tooltip/'";
         String arg6 = "'" + AppContext.getSiteUrl() + "'";
@@ -56,8 +57,8 @@ public class TooltipHelper {
                 arg6, arg7, arg8, arg9);
     }
 
-    public static String projectHoverJsFunction(String uid, String type, String typeId) {
-        String uidVal = "'" + uid + "'";
+    public static String projectHoverJsFunction(String type, String typeId) {
+        String uidVal = "'" + TOOLTIP_ID + "'";
         String typeVal = "'" + type + "'";
         String typeIdVal = "'" + typeId + "'";
         String urlVal = "'" + AppContext.getSiteUrl() + "tooltip/'";
@@ -70,8 +71,8 @@ public class TooltipHelper {
                 urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal);
     }
 
-    public static String crmHoverJsFunction(String uid, String type, String typeId) {
-        String uidVal = "'" + uid + "'";
+    public static String crmHoverJsFunction(String type, String typeId) {
+        String uidVal = "'" + TOOLTIP_ID + "'";
         String typeVal = "'" + type + "'";
         String typeIdVal = "'" + typeId + "'";
         String urlVal = "'" + AppContext.getSiteUrl() + "tooltip/'";
@@ -83,7 +84,7 @@ public class TooltipHelper {
                 uidVal, typeVal, typeIdVal, urlVal, accountIdVal, siteUrlVal, timezoneVal, localeVal);
     }
 
-    public static String itemMouseLeaveJsFunction(String uid) {
-        return String.format("hideTooltip('%s')", uid);
+    public static String itemMouseLeaveJsFunction() {
+        return String.format("hideTooltip('%s')", TOOLTIP_ID);
     }
 }
