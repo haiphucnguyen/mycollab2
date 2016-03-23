@@ -27,6 +27,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.ArrayList;
@@ -77,6 +78,10 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
     static class TimeLoggingBockLayout extends MVerticalLayout {
         private static final long serialVersionUID = 1L;
 
+        public TimeLoggingBockLayout() {
+            super();
+        }
+
         public TimeLoggingBockLayout(List<TableViewField> visibleFields, TableClickListener tableClickListener,
                                      List<SimpleItemTimeLogging> timeLoggingEntries) {
             withMargin(new MarginInfo(true, false, true, false));
@@ -85,20 +90,43 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             table.setCurrentDataList(timeLoggingEntries);
             addComponent(table);
 
-            double billable = 0, nonbillable = 0;
+            double billableHours = 0, nonBillableHours = 0, cost = 0;
             for (SimpleItemTimeLogging item : timeLoggingEntries) {
-                billable += item.getIsbillable() ? item.getLogvalue() : 0;
-                nonbillable += !item.getIsbillable() ? item.getLogvalue() : 0;
+                billableHours += item.getIsbillable() ? item.getLogvalue() : 0;
+                nonBillableHours += !item.getIsbillable() ? item.getLogvalue() : 0;
+                if (item.getIsbillable()) {
+                    if (item.getIsovertime()) {
+                        if (item.getLogUserOvertimeRate() != null) {
+                            cost += item.getLogvalue() * item.getLogUserOvertimeRate();
+                        } else {
+
+                        }
+                    } else {
+                        if (item.getLogUserRate() != null) {
+                            cost += item.getLogvalue() * item.getLogUserRate();
+                        } else {
+
+                        }
+                    }
+                }
             }
 
-            ELabel totalHoursLbl = new ELabel(("Total Hours: " + (billable + nonbillable))).withStyleName(UIConstants
+            MHorizontalLayout summaryLayout = new MHorizontalLayout().withFullWidth();
+            with(summaryLayout);
+            ELabel totalHoursLbl = new ELabel(("Total Hours: " + (billableHours + nonBillableHours))).withStyleName(UIConstants
                     .LABEL_META_INFO).withWidthUndefined();
-            ELabel totalBillableHoursLbl = new ELabel(("Billable Hours: " + billable)).withStyleName(UIConstants
+            ELabel totalBillableHoursLbl = new ELabel(("Billable Hours: " + billableHours)).withStyleName(UIConstants
                     .LABEL_META_INFO).withWidthUndefined();
-            ELabel totalNonBillableHoursLbl = new ELabel(("Non Billable Hours: " + nonbillable)).withStyleName
+            ELabel totalNonBillableHoursLbl = new ELabel(("Non Billable Hours: " + nonBillableHours)).withStyleName
                     (UIConstants.LABEL_META_INFO).withWidthUndefined();
-            with(totalHoursLbl, totalBillableHoursLbl, totalNonBillableHoursLbl).withAlign(totalHoursLbl, Alignment.TOP_RIGHT)
-                    .withAlign(totalBillableHoursLbl, Alignment.TOP_RIGHT).withAlign(totalNonBillableHoursLbl, Alignment.TOP_RIGHT);
+            MVerticalLayout hoursSummaryLayout = new MVerticalLayout(totalHoursLbl, totalBillableHoursLbl,
+                    totalNonBillableHoursLbl).withMargin(false);
+            summaryLayout.with(hoursSummaryLayout).withAlign(hoursSummaryLayout, Alignment.TOP_LEFT);
+
+            MVerticalLayout costSummaryLayout = new MVerticalLayout().withMargin(false).with(ELabel.h3("Cost")
+                    .withStyleName(ValoTheme.LABEL_COLORED).withWidthUndefined(),
+                    ELabel.hr(), new ELabel(cost + "").withWidthUndefined()).alignAll(Alignment.TOP_RIGHT).withWidth("250px");
+            summaryLayout.with(costSummaryLayout).withAlign(costSummaryLayout, Alignment.TOP_RIGHT);
         }
     }
 }

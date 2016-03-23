@@ -65,8 +65,8 @@
                  m_prj_task.taskname as summary,  m_prj_task.status, m_prj_task.deadline AS dueDate, m_prj_task.percentagecomplete AS percentageComplete,
                  m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
             FROM m_prj_time_logging
-              LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
-              LEFT OUTER JOIN m_prj_member ON (m_prj_member.username=m_prj_time_logging.loguser)
+              INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+              INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
               INNER JOIN m_prj_task ON ( m_prj_time_logging.typeId = m_prj_task.id and m_prj_time_logging.type = "Project-Task" )
               INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_task.projectId)
         ]]>
@@ -83,8 +83,8 @@
                 m_tracker_bug.summary,  m_tracker_bug.status, m_tracker_bug.duedate AS dueDate, NULL as percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
            FROM m_prj_time_logging
-             LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
-             LEFT OUTER JOIN m_prj_member ON (m_prj_member.username=m_prj_time_logging.loguser)
+             INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+             INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
              INNER JOIN m_tracker_bug ON ( m_prj_time_logging.typeId = m_tracker_bug.id and m_prj_time_logging.type = "Project-Bug" )
              INNER JOIN m_prj_project ON (m_prj_project.id=m_tracker_bug.projectId)
        ]]>
@@ -101,8 +101,8 @@
                 m_prj_risk.riskname as summary,  m_prj_risk.status, m_prj_risk.datedue AS dueDate, NULL AS percentageComplete,
                 m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
            FROM m_prj_time_logging
-             LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
-             LEFT OUTER JOIN m_prj_member ON (m_prj_member.username=m_prj_time_logging.loguser)
+             INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+             INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
              INNER JOIN m_prj_risk ON ( m_prj_time_logging.typeId = m_prj_risk.id and m_prj_time_logging.type = "Project-Risk" )
              INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_risk.projectId)
        ]]>
@@ -119,8 +119,8 @@
                  '' AS summary,  '' AS status, NULL AS dueDate, NULL as percentageComplete,
                  m_prj_project.name AS projectName, m_prj_project.shortname AS projectShortName
             FROM m_prj_time_logging
-              LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
-              LEFT OUTER JOIN m_prj_member ON (m_prj_member.username=m_prj_time_logging.loguser)
+              INNER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+              INNER JOIN m_prj_member ON (m_prj_member.username=s_user.username AND m_prj_member.projectid=m_prj_time_logging.projectId)
               INNER JOIN m_prj_project ON (m_prj_project.id=m_prj_time_logging.projectId)
         ]]>
     </sql>

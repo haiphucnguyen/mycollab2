@@ -24,7 +24,6 @@ import com.vaadin.ui.Component;
  * @since 1.0
  */
 public interface IFinanceContainer extends PageView {
-    void initContent();
 
     Component gotoSubView(String name);
 }

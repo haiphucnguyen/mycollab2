@@ -31,19 +31,14 @@ public class FinancePresenter extends AbstractPresenter<IFinanceContainer> imple
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
         AbstractPresenter presenter;
 
         if (data instanceof TimeTrackingScreenData.Search) {
-            FinanceContainer financeContainer = (FinanceContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
-            financeContainer.initContent();
             presenter = PresenterResolver.getPresenter(TimeTrackingListPresenter.class);
         } else if (data instanceof InvoiceScreenData.GotoInvoiceList) {
-            FinanceContainer financeContainer = (FinanceContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
-            financeContainer.initContent();
             presenter = PresenterResolver.getPresenter(InvoicePresenter.class);
         } else {
-            FinanceContainer financeContainer = (FinanceContainer) projectViewContainer.gotoSubView(ProjectTypeConstants.FINANCE);
-            financeContainer.initContent();
             if (CurrentProjectVariables.hasTimeFeature()) {
                 ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
                 searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));

@@ -33,10 +33,6 @@ public class FinanceContainer extends AbstractPageView implements IFinanceContai
 
     public FinanceContainer() {
         this.setWidth("100%");
-    }
-
-    @Override
-    public void initContent() {
         removeAllComponents();
         this.myProjectTab = new TabSheetDecorator();
         this.addComponent(myProjectTab);
