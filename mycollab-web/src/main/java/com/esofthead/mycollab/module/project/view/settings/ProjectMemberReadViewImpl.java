@@ -45,7 +45,6 @@ import com.esofthead.mycollab.vaadin.web.ui.field.DefaultViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.LinkViewField;
 import com.esofthead.mycollab.vaadin.web.ui.field.UserLinkViewField;
 import com.hp.gagawa.java.elements.A;
-import com.hp.gagawa.java.elements.Div;
 import com.hp.gagawa.java.elements.Img;
 import com.hp.gagawa.java.elements.Span;
 import com.vaadin.data.Property;
@@ -344,10 +343,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
         public Component generateRow(AbstractBeanPagedList host, ProjectGenericTask genericTask, int rowIndex) {
             MHorizontalLayout rowComp = new MHorizontalLayout().withStyleName("list-row").withWidth("100%");
             rowComp.setDefaultComponentAlignment(Alignment.TOP_LEFT);
-            Div issueDiv = new Div();
 
             A taskLink = new A().setId("tag" + TOOLTIP_ID);
-
             taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(genericTask.getType(), genericTask.getTypeId() + ""));
             taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             if (ProjectTypeConstants.BUG.equals(genericTask.getType()) || ProjectTypeConstants.TASK.equals(genericTask.getType())) {
@@ -359,9 +356,7 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
                 taskLink.setHref(ProjectLinkBuilder.generateProjectItemLink(genericTask.getProjectShortName(),
                         genericTask.getProjectId(), genericTask.getType(), genericTask.getTypeId() + ""));
             }
-
-            issueDiv.appendChild(taskLink, TooltipHelper.buildDivTooltipEnable());
-            Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
+            Label issueLbl = new Label(taskLink.write(), ContentMode.HTML);
             if (genericTask.isClosed()) {
                 issueLbl.addStyleName("completed");
             } else if (genericTask.isOverdue()) {

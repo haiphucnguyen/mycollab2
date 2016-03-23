@@ -50,7 +50,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.UUID;
 
 import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
@@ -202,8 +201,7 @@ public class ActivityStreamComponent extends CssLayout {
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             userLink.appendText(StringUtils.trim(activityStream.getCreatedUserFullName(), 30, true));
 
-            div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
-                    TooltipHelper.buildDivTooltipEnable());
+            div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
             return div.write();
         }
 
@@ -226,8 +224,7 @@ public class ActivityStreamComponent extends CssLayout {
             itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
 
-            div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
-                    TooltipHelper.buildDivTooltipEnable());
+            div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink);
             return div.write();
         }
 
@@ -240,8 +237,7 @@ public class ActivityStreamComponent extends CssLayout {
             prjLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             prjLink.appendText(activityStream.getProjectName());
 
-            div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink, DivLessFormatter.EMPTY_SPACE(),
-                    TooltipHelper.buildDivTooltipEnable());
+            div.appendChild(prjImg, DivLessFormatter.EMPTY_SPACE(), prjLink);
 
             return div.write();
         }

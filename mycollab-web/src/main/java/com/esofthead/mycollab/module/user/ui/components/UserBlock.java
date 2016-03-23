@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.user.ui.components;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.utils.TooltipHelper;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -38,13 +37,12 @@ public class UserBlock extends MVerticalLayout {
         withMargin(false).withWidth("80px");
         Image avatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 48);
 
-        DivLessFormatter div = new DivLessFormatter();
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(AccountLinkBuilder.generatePreviewFullUserLink(username))
                 .appendText(StringUtils.trim(displayName, 30, true));
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
-        Label userLbl = new Label(div.write(), ContentMode.HTML);
+
+        Label userLbl = new Label(userLink.write(), ContentMode.HTML);
         with(avatar, userLbl);
     }
 }

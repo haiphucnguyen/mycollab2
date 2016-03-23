@@ -44,13 +44,6 @@ var stickytooltip = {
     $('#' + tipid).stop(false, true).hide();
     var $targets=$(targetselector)
     var $tooltip=$('#' + tipid)
-    $childTooltip = $(document.body).children('#' + tipid)
-    if (!$childTooltip.length) {
-      $tooltip=$('#' + tipid).appendTo(document.body)
-    } else {
-      $tooltip.remove()
-      $tooltip = $childTooltip
-    }
 
     if ($targets.length == 0)
       return
@@ -82,24 +75,18 @@ function overIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) {
   var idDIVserverdata = "div14" + uid;
   var idStickyToolTipDiv = "div1" + uid;
   var idTagA = "tag" + uid;
-  if($("#" + idStickyToolTipDiv).length) {
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone, locale:locale},
-      success: function(data) { 
-        if(data.trim()!= "null") {
-          $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-          $tooltip=stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-          if ($tooltip.length) {
-            $tooltip.find("#" + idDIVserverdata).html(data);
+  $.ajax({
+        type: 'POST',
+        url: url,
+        data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone, locale:locale},
+        success: function(data) {
+          if(data.trim()!= "null") {
+            $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv)
+            $("#" + idDIVserverdata).html(data)
+            stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv)
           }
         }
-      }
-    });
-  } else {
-    stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-  }
+      });
 }
 
 function crmActivityOverIt(uid, type, typeId, url, sAccountId, siteURL, timeZone, locale) { 
@@ -107,24 +94,18 @@ function crmActivityOverIt(uid, type, typeId, url, sAccountId, siteURL, timeZone
   var idStickyToolTipDiv = "div1" + uid;
   var idTagA = "tag" + uid;
   if(type=="Task") type="CRMTask";
-  if($("#" + idDIVserverdata).html()== "") { 
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone, locale:locale},
-      success: function(data) { 
-        if(data.trim()!= "null") { 
-          $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-          $tooltip=stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-          if ($tooltip.length) {
-            $tooltip.find("#" + idDIVserverdata).html(data);
+  $.ajax({
+        type: 'POST',
+        url: url,
+        data : { type: type, typeId: typeId , sAccountId : sAccountId, siteURL: siteURL , timeZone: timeZone, locale:locale},
+        success: function(data) {
+          if(data.trim()!= "null") {
+            $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv)
+            $("#" + idDIVserverdata).html(data)
+            stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv)
           }
         }
-      }
-    });
-  } else {
-    stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-  }
+      });
 }
 
 function showUserTooltip(uid, username, url, siteURL, timeZone, sAccountId, locale) {
@@ -132,24 +113,18 @@ function showUserTooltip(uid, username, url, siteURL, timeZone, sAccountId, loca
   var idStickyToolTipDiv = "div1"+uid;
   var idTagA = "tag"+ uid;
 
-  if($("#" + idDIVserverdata).html()== "") { 
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone, sAccountId:sAccountId, locale:locale},
-      success: function(data) { 
-        if(data.trim()!= "null") { 
-          $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv);
-          $tooltip=stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-          if ($tooltip.length) {
-            $tooltip.find("#" + idDIVserverdata).html(data);
+  $.ajax({
+        type: 'POST',
+        url: url,
+        data : { type: "User", username: username ,siteURL: siteURL , timeZone: timeZone, sAccountId:sAccountId, locale:locale},
+        success: function(data) {
+          if(data.trim()!= "null") {
+            $("#" + idTagA).attr('data-tooltip', idStickyToolTipDiv)
+            $("#" + idDIVserverdata).html(data)
+            stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv)
           }
         }
-      }
-    });
-  } else {
-    stickytooltip.init("*[data-tooltip]", idStickyToolTipDiv);
-  }
+      });
 }
 
 function hideTooltip(uid) {

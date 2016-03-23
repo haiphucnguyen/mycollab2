@@ -83,8 +83,7 @@ public class ProjectLinkBuilder {
         if (isDisplayTooltip) {
             link.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
             link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-            return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link,
-                    DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable()).write();
+            return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link).write();
         } else {
             return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link).write();
         }
@@ -164,8 +163,7 @@ public class ProjectLinkBuilder {
         link.setHref(AppContext.getSiteUrl() + generateProjectItemLink(prjShortName, projectId, type, typeId)).appendChild(new Text(summary));
         link.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId));
         link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        Div div = new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), link, DivLessFormatter
-                .EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
+        Div div = new DivLessFormatter().appendChild(image, DivLessFormatter.EMPTY_SPACE(), link);
         return div.write();
     }
 

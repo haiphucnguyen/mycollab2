@@ -58,8 +58,7 @@ public final class ProjectMemberHistoryFieldFormat implements HistoryFieldFormat
                                 user.getUsername())).appendText(StringUtils.trim(user.getDisplayName(), 30, true));
                 link.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(user.getUsername()));
                 link.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-                return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link,
-                        DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable()).write();
+                return new DivLessFormatter().appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), link).write();
             }
         } catch (Exception e) {
             LOG.error("Error", e);

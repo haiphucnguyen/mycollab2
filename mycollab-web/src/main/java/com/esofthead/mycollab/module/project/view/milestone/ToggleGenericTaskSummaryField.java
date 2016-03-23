@@ -175,7 +175,6 @@ public class ToggleGenericTaskSummaryField extends CssLayout {
             issueDiv.appendChild(new Span().setCSSClass(UIConstants.LABEL_META_INFO).appendText(" - Due in " + AppContext
                     .formatDuration(genericTask.getDueDate())));
         }
-        issueDiv.appendChild(TooltipHelper.buildDivTooltipEnable());
         return issueDiv.write();
     }
 }

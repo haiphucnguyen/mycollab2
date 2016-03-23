@@ -166,8 +166,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Activi
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         userLink.appendText(StringUtils.trim(activityStream.getCreatedUserFullName(), 30, true));
 
-        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable());
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
 
         return div.write();
     }
@@ -194,8 +193,7 @@ public class ProjectActivityStreamPagedList extends AbstractBeanPagedList<Activi
         itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         itemLink.appendText(StringUtils.trim(activityStream.getNamefield(), 50, true));
 
-        div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable());
+        div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
         return div.write();
     }
 

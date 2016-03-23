@@ -159,7 +159,6 @@ public class ToggleTaskSummaryField extends CssLayout {
         taskLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.TASK, task.getId() + ""));
         taskLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-        resultDiv.appendChild(TooltipHelper.buildDivTooltipEnable());
         return resultDiv.write();
     }
 

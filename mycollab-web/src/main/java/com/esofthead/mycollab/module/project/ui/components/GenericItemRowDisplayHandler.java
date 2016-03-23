@@ -74,8 +74,7 @@ public class GenericItemRowDisplayHandler implements AbstractBeanPagedList.RowDi
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
             div.appendChild(createdByTxt, DivLessFormatter.EMPTY_SPACE(), userAvatar, DivLessFormatter.EMPTY_SPACE(),
-                    userLink, TooltipHelper.buildDivTooltipEnable(),
-                    lastUpdatedOn);
+                    userLink, lastUpdatedOn);
         }
 
         ELabel footer = new ELabel(div.write(), ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO)

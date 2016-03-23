@@ -166,7 +166,7 @@ public class AllMilestoneTimelineWidget extends MVerticalLayout {
                     milestone.getId() + ""));
             milestoneDiv.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-            Div statusDiv = new Div().setCSSClass("status").appendChild(projectDiv, milestoneDiv, TooltipHelper.buildDivTooltipEnable());
+            Div statusDiv = new Div().setCSSClass("status").appendChild(projectDiv, milestoneDiv);
             li.appendChild(statusDiv);
             ul.appendChild(li);
         }

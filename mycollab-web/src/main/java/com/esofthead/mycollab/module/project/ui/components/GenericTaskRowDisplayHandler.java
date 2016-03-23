@@ -73,7 +73,6 @@ public class GenericTaskRowDisplayHandler implements DefaultBeanPagedList.RowDis
             issueDiv.appendChild(new Span().appendText(" - Due in " + AppContext.formatDuration(genericTask.getDueDate()))
                     .setCSSClass(UIConstants.LABEL_META_INFO));
         }
-        issueDiv.appendChild(TooltipHelper.buildDivTooltipEnable());
 
         Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
         String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);

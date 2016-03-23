@@ -75,8 +75,7 @@ public class StandupMissingComp extends MVerticalLayout {
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         userLink.appendText(StringUtils.trim(user.getDisplayName(), 30, true));
 
-        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable());
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
         return div.write();
     }
 

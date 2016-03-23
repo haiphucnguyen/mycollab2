@@ -46,7 +46,7 @@ public class ProjectMemberLink extends Label {
                 .appendText(StringUtils.trim(displayName, 30, true));
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
+        div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
         this.setValue(div.write());
     }
 }

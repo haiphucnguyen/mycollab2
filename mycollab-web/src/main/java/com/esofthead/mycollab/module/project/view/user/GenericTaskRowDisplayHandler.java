@@ -73,8 +73,6 @@ public class GenericTaskRowDisplayHandler implements AbstractBeanPagedList.RowDi
                     .setCSSClass(UIConstants.LABEL_META_INFO));
         }
 
-        issueDiv.appendChild(TooltipHelper.buildDivTooltipEnable());
-
         Label issueLbl = new Label(issueDiv.write(), ContentMode.HTML);
         String avatarLink = StorageFactory.getInstance().getAvatarPath(genericTask.getAssignUserAvatarId(), 16);
         Img img = new Img(genericTask.getAssignUserFullName(), avatarLink).setTitle(genericTask

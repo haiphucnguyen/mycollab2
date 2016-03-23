@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.utils;
 
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.hp.gagawa.java.elements.Div;
 
 /**
  * @author MyCollab Ltd.
@@ -25,24 +24,6 @@ import com.hp.gagawa.java.elements.Div;
  */
 public class TooltipHelper {
     public static final String TOOLTIP_ID = "mycollabtip";
-
-    public static Div buildDivTooltipEnable() {
-        Div div1 = new Div().setId("div1" + TOOLTIP_ID);
-        div1.setAttribute("class", "stickytooltip");
-
-        Div div12 = new Div();
-        div12.setAttribute("style", "padding:5px");
-        div1.appendChild(div12);
-
-        Div div13 = new Div().setId("div13" + TOOLTIP_ID);
-        div13.setAttribute("class", "atip");
-        div13.setAttribute("style", "width:550px");
-        div12.appendChild(div13);
-
-        Div div14 = new Div().setId("div14" + TOOLTIP_ID);
-        div13.appendChild(div14);
-        return div1;
-    }
 
     public static String userHoverJsFunction(String user) {
         String arg3 = "'" + TOOLTIP_ID + "'";

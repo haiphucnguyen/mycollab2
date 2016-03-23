@@ -183,7 +183,7 @@ public class ProjectMembersWidget extends Depot {
                 userLink.appendText(" (Lead)");
             }
 
-            return div.appendChild(userLink, TooltipHelper.buildDivTooltipEnable()).write();
+            return div.appendChild(userLink).write();
         }
     }
 }

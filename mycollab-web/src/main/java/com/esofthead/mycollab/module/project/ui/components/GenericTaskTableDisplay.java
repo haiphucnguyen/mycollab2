@@ -73,8 +73,7 @@ public class GenericTaskTableDisplay extends DefaultPagedBeanTable<ProjectGeneri
                 itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
                 itemLink.appendText(task.getName());
 
-                div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
-                        TooltipHelper.buildDivTooltipEnable());
+                div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
 
                 Button assignmentLink = new Button(div.write(), new Button.ClickListener() {
                     @Override

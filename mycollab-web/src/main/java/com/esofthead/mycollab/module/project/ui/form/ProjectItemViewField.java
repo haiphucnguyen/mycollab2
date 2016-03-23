@@ -61,7 +61,7 @@ public class ProjectItemViewField extends CustomField<String> {
                 project.getId(), type, typeId)).appendText(typeDisplayName);
         milestoneLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(type, typeId + ""));
         milestoneLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        div.appendChild(milestoneLink, TooltipHelper.buildDivTooltipEnable());
+        div.appendChild(milestoneLink);
         ELabel label = new ELabel(div.write(), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS);
         return new MHorizontalLayout(new ELabel(ProjectAssetsManager.getAsset(type).getHtml(), ContentMode.HTML).withWidthUndefined(),
                 label).expand(label);

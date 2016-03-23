@@ -223,7 +223,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
                 userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(member.getUsername()));
                 userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
                 footer.appendChild(lastUpdatedTimeTxt, new Text("&nbsp;-&nbsp;Created by: "), userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink,
-                        DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
+                        DivLessFormatter.EMPTY_SPACE());
             } else {
                 footer.appendChild(lastUpdatedTimeTxt);
             }

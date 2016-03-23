@@ -244,8 +244,7 @@ public class TimeTrackingTableDisplay extends DefaultPagedBeanTable<ItemTimeLogg
         itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
         itemLink.appendText(itemLogging.getSummary());
 
-        div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
-                TooltipHelper.buildDivTooltipEnable());
+        div.appendChild(image, DivLessFormatter.EMPTY_SPACE(), itemLink);
         return div.write();
     }
 }

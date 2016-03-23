@@ -7,7 +7,6 @@ import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.VariableInjecter;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
@@ -44,7 +43,6 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 
@@ -271,14 +269,13 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         }
 
         private String buildMemberLink(SimpleStandupReport report) {
-            DivLessFormatter div = new DivLessFormatter();
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
                     (CurrentProjectVariables.getProjectId(), report.getLogby()))
                     .appendText(com.esofthead.mycollab.core.utils.StringUtils.trim(report.getLogByFullName(), 30, true));
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-            div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
-            return div.write();
+
+            return userLink.write();
         }
     }
 }

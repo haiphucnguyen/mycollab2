@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.core.utils.StringUtils;
-import com.esofthead.mycollab.html.DivLessFormatter;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
 import com.esofthead.mycollab.utils.TooltipHelper;
@@ -38,16 +37,12 @@ import static com.esofthead.mycollab.utils.TooltipHelper.TOOLTIP_ID;
 public class ProjectMemberBlock extends MVerticalLayout {
     public ProjectMemberBlock(String username, String userAvatarId, String displayName) {
         withMargin(false).withWidth("80px");
-
         Image userAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(userAvatarId, 48, displayName);
-
-        DivLessFormatter div = new DivLessFormatter();
         A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink(CurrentProjectVariables.getProjectId(),
                 username)).appendText(StringUtils.trim(displayName, 30, true));
         userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(username));
         userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-        div.appendChild(userLink, DivLessFormatter.EMPTY_SPACE(), TooltipHelper.buildDivTooltipEnable());
-        Label userLbl = new Label(div.write(), ContentMode.HTML);
+        Label userLbl = new Label(userLink.write(), ContentMode.HTML);
         userLbl.addStyleName(ValoTheme.LABEL_SMALL);
         with(userAvatar, userLbl);
     }

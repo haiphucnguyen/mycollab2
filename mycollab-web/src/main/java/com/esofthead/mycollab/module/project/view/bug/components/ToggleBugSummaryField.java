@@ -139,7 +139,6 @@ public class ToggleBugSummaryField extends CssLayout {
         bugLink.setAttribute("onmouseover", TooltipHelper.projectHoverJsFunction(ProjectTypeConstants.BUG, bug.getId() + ""));
         bugLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
-        resultDiv.appendChild(TooltipHelper.buildDivTooltipEnable());
         return resultDiv.write();
     }
 }

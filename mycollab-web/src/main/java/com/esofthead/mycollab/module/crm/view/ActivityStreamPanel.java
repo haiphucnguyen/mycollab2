@@ -300,8 +300,7 @@ public class ActivityStreamPanel extends CssLayout {
 
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(activityStream.getCreateduser()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
-            div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink, DivLessFormatter.EMPTY_SPACE(),
-                    TooltipHelper.buildDivTooltipEnable());
+            div.appendChild(userAvatar, DivLessFormatter.EMPTY_SPACE(), userLink);
 
             return div.write();
         }
@@ -316,9 +315,7 @@ public class ActivityStreamPanel extends CssLayout {
             itemLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
             itemLink.appendText(activityStream.getNamefield());
 
-            div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink, DivLessFormatter.EMPTY_SPACE(),
-                    TooltipHelper.buildDivTooltipEnable());
-
+            div.appendChild(itemImg, DivLessFormatter.EMPTY_SPACE(), itemLink);
             return div.write();
         }
 
