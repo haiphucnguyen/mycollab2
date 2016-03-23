@@ -4,10 +4,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.i18n.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.AppContext;
-import com.esofthead.mycollab.vaadin.mvp.LoadPolicy;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.mvp.ViewScope;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -15,7 +13,6 @@ import com.vaadin.ui.ComponentContainer;
  * @author MyCollab Ltd
  * @since 2.0
  */
-@LoadPolicy(scope = ViewScope.PROTOTYPE)
 public class TimeTrackingListPresenter extends AbstractPresenter<TimeTrackingListView> {
     private static final long serialVersionUID = 1L;
 

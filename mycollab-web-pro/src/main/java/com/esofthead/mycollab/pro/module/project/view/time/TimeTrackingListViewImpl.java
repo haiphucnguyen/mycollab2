@@ -214,8 +214,8 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     }
 
     private void displayTimeEntries() {
-        this.setTimeRange();
         timeTrackingWrapper.removeAllComponents();
+        setTimeRange();
 
         final AbstractTimeTrackingDisplayComp timeDisplayComp = buildTimeTrackingComp(searchPanel.getGroupBy());
         timeTrackingWrapper.addComponent(timeDisplayComp);

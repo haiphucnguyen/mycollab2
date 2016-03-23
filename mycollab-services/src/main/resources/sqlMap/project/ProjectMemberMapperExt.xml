@@ -165,6 +165,7 @@
         SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId,
             m_prj_member.joinDate, m_prj_member.projectRoleId,
             m_prj_member.isAdmin, m_prj_member.status, s_user.email as email,
+            m_prj_member.billingRate, m_prj_member.overtimeBillingRate,
             m_prj_role.rolename, m_prj_member.sAccountId,
             concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')),  s_user.lastname) AS  memberFullName , s_user.avatarId AS memberAvatarId,
             (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.assignuser=m_prj_member.username AND  m_tracker_bug.projectId=m_prj_member.projectId AND m_tracker_bug.status IN ('Open', 'InProgress', 'Reopenned')) AS numOpenBugs,
