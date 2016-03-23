@@ -355,6 +355,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 UI.getCurrent().addWindow(new LinkIssueWindow(BugReadViewImpl.this, beanItem));
             }
         });
+        linkBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
         linkBtn.setIcon(FontAwesome.BOLT);
         bugPreviewFormControls.addOptionButton(linkBtn);
 
@@ -379,7 +380,6 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
         assignBtn.setStyleName(UIConstants.BUTTON_ACTION);
 
         bugWorkflowControl = new CssLayout();
-
         bugPreviewFormControls.insertToControlBlock(bugWorkflowControl);
         bugPreviewFormControls.insertToControlBlock(assignBtn);
         topPanel.setSizeUndefined();

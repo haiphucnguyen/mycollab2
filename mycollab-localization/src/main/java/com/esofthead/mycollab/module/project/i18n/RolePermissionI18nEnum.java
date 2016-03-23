@@ -31,6 +31,7 @@ public enum RolePermissionI18nEnum {
     Component,
     Page,
     Risk,
+    Time,
     Finance,
     Invoice,
     User,

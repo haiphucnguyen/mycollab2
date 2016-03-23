@@ -6,6 +6,8 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.eventmanager.ApplicationEventListener;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
@@ -70,7 +72,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange>() {
                 @Override
                 public void handle(TimeTrackingEvent.TimeLoggingEntryChange event) {
-                    refresh();
+                    displayTimeEntries();
                 }
             };
 
@@ -198,11 +200,20 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
     @Override
     public void setSearchCriteria(ItemTimeLoggingSearchCriteria searchCriteria) {
-        this.searchCriteria = searchCriteria;
-        refresh();
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TIME)) {
+            this.searchCriteria = searchCriteria;
+            displayTimeEntries();
+        } else {
+            displayNoPermissionMessage();
+        }
     }
 
-    private void refresh() {
+    private void displayNoPermissionMessage() {
+        timeTrackingWrapper.removeAllComponents();
+        timeTrackingWrapper.addComponent(ELabel.h3("You can not access the specific resource"));
+    }
+
+    private void displayTimeEntries() {
         this.setTimeRange();
         timeTrackingWrapper.removeAllComponents();
 
@@ -275,7 +286,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
                                             .getSpringBean(ItemTimeLoggingService.class);
                                     itemTimeLoggingService.removeWithSession(itemLogging,
                                             AppContext.getUsername(), AppContext.getAccountId());
-                                    refresh();
+                                    displayTimeEntries();
                                 }
                             }
                         });

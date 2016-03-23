@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.DateRangeInjecter;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ProjectTypeConstants;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
@@ -72,7 +73,8 @@ class ItemTimeLoggingSearchPanel extends DefaultGenericSearchPanel<ItemTimeLoggi
         createBtn = new Button(AppContext.getMessage(TimeTrackingI18nEnum.BUTTON_LOG_TIME));
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
-        createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived());
+        createBtn.setEnabled(!CurrentProjectVariables.isProjectArchived() && CurrentProjectVariables.canWrite
+                (ProjectRolePermissionCollections.TIME));
         addHeaderRight(createBtn);
     }
 

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.pro.module.project.view.time;
 
+import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.StringUtils;
@@ -101,30 +102,34 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     @Override
     public void display() {
         removeAllComponents();
-        ELabel invoiceIcon = ELabel.fontIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE))
-                .withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN).withWidthUndefined();
+        if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
+            ELabel invoiceIcon = ELabel.fontIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE))
+                    .withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN).withWidthUndefined();
 
-        Component headerRightLayout = createHeaderRight();
-        statusComboBox = new InvoiceStatusComboBox();
-        MHorizontalLayout header = new MHorizontalLayout(new MHorizontalLayout(invoiceIcon, statusComboBox), headerRightLayout).withSpacing(false)
-                .withStyleName("hdr-view").withWidth("100%").withMargin(true)
-                .withAlign(headerRightLayout, Alignment.MIDDLE_RIGHT);
+            Component headerRightLayout = createHeaderRight();
+            statusComboBox = new InvoiceStatusComboBox();
+            MHorizontalLayout header = new MHorizontalLayout(new MHorizontalLayout(invoiceIcon, statusComboBox), headerRightLayout).withSpacing(false)
+                    .withStyleName("hdr-view").withWidth("100%").withMargin(true)
+                    .withAlign(headerRightLayout, Alignment.MIDDLE_RIGHT);
 
-        MHorizontalLayout bodyLayout = new MHorizontalLayout().withStyleName("hdr-view");
-        bodyLayout.setId("invoice-body");
-        with(header, bodyLayout).expand(bodyLayout);
+            MHorizontalLayout bodyLayout = new MHorizontalLayout().withStyleName("hdr-view");
+            bodyLayout.setId("invoice-body");
+            with(header, bodyLayout).expand(bodyLayout);
 
-        invoiceListComp = new InvoiceListComp();
-        InvoiceReadView invoiceReadView = new InvoiceReadView();
-        bodyLayout.with(invoiceListComp, invoiceReadView).expand(invoiceReadView);
-        statusComboBox.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                Object value = statusComboBox.getValue();
-                displayInvoices((String) value);
-            }
-        });
-        displayInvoices(OptionI18nEnum.InvoiceStatus.All.name());
+            invoiceListComp = new InvoiceListComp();
+            InvoiceReadView invoiceReadView = new InvoiceReadView();
+            bodyLayout.with(invoiceListComp, invoiceReadView).expand(invoiceReadView);
+            statusComboBox.addValueChangeListener(new Property.ValueChangeListener() {
+                @Override
+                public void valueChange(Property.ValueChangeEvent event) {
+                    Object value = statusComboBox.getValue();
+                    displayInvoices((String) value);
+                }
+            });
+            displayInvoices(OptionI18nEnum.InvoiceStatus.All.name());
+        } else {
+            this.with(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION))).alignAll(Alignment.MIDDLE_CENTER);
+        }
     }
 
     private HorizontalLayout createHeaderRight() {

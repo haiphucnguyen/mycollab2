@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.pro.module.project.view;
 
 import com.esofthead.mycollab.common.domain.FavoriteItem;
+import com.esofthead.mycollab.common.i18n.ErrorI18nEnum;
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.common.service.FavoriteItemService;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -248,177 +249,201 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
             removeAllComponents();
             ProjectActivityComponent activityComponent;
             if (ProjectTypeConstants.BUG.equals(assignment.getType())) {
-                BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
-                final SimpleBug bug = bugService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
-                if (bug != null) {
-                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + bug.getSummary(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
-                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug));
-                        }
-                    });
-                    editBtn.setIcon(FontAwesome.EDIT);
-                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.BUGS)) {
+                    BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
+                    final SimpleBug bug = bugService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
+                    if (bug != null) {
+                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + bug.getSummary(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(Button.ClickEvent clickEvent) {
+                                EventBusFactory.getInstance().post(new BugEvent.GotoEdit(this, bug));
+                            }
+                        });
+                        editBtn.setIcon(FontAwesome.EDIT);
+                        editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 
-                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
-                    addComponent(headerLayout);
-                    BugPreviewForm form = new BugPreviewForm();
-                    form.setBean(bug);
-                    addComponent(form);
-                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, assignment.getProjectId(),
-                            BugFieldFormatter.instance());
-                    activityComponent.loadActivities("" + bug.getId());
-                    addComponent(activityComponent);
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        addComponent(headerLayout);
+                        BugPreviewForm form = new BugPreviewForm();
+                        form.setBean(bug);
+                        addComponent(form);
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, assignment.getProjectId(),
+                                BugFieldFormatter.instance());
+                        activityComponent.loadActivities("" + bug.getId());
+                        addComponent(activityComponent);
+                    }
+                } else {
+                    addComponent(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
             } else if (ProjectTypeConstants.TASK.equals(assignment.getType())) {
-                ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
-                final SimpleTask task = taskService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
-                if (task != null) {
-                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + task.getTaskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                            .LABEL_NO_MARGIN);
-                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task));
-                        }
-                    });
-                    editBtn.setIcon(FontAwesome.EDIT);
-                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS)) {
+                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                    final SimpleTask task = taskService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
+                    if (task != null) {
+                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + task.getTaskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
+                                .LABEL_NO_MARGIN);
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(Button.ClickEvent clickEvent) {
+                                EventBusFactory.getInstance().post(new TaskEvent.GotoEdit(this, task));
+                            }
+                        });
+                        editBtn.setIcon(FontAwesome.EDIT);
+                        editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 
-                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
-                    addComponent(headerLayout);
-                    TaskPreviewForm form = new TaskPreviewForm();
-                    form.setBean(task);
-                    addComponent(form);
-                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, assignment
-                            .getProjectId(), TaskFieldFormatter.instance());
-                    activityComponent.loadActivities("" + task.getId());
-                    addComponent(activityComponent);
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        addComponent(headerLayout);
+                        TaskPreviewForm form = new TaskPreviewForm();
+                        form.setBean(task);
+                        addComponent(form);
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, assignment
+                                .getProjectId(), TaskFieldFormatter.instance());
+                        activityComponent.loadActivities("" + task.getId());
+                        addComponent(activityComponent);
+                    }
+                } else {
+                    addComponent(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
             } else if (ProjectTypeConstants.MILESTONE.equals(assignment.getType())) {
-                MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
-                final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
-                        .getAccountId());
-                if (milestone != null) {
-                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + milestone.getName(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                            .LABEL_NO_MARGIN);
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.MILESTONES)) {
+                    MilestoneService milestoneService = ApplicationContextUtil.getSpringBean(MilestoneService.class);
+                    final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
+                            .getAccountId());
+                    if (milestone != null) {
+                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + milestone.getName(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
+                                .LABEL_NO_MARGIN);
 
-                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone));
-                        }
-                    });
-                    editBtn.setIcon(FontAwesome.EDIT);
-                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(Button.ClickEvent clickEvent) {
+                                EventBusFactory.getInstance().post(new MilestoneEvent.GotoEdit(this, milestone));
+                            }
+                        });
+                        editBtn.setIcon(FontAwesome.EDIT);
+                        editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 
-                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
-                    addComponent(headerLayout);
-                    MilestonePreviewForm form = new MilestonePreviewForm();
-                    form.setBean(milestone);
-                    addComponent(form);
-                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.MILESTONE, assignment.getProjectId(),
-                            MilestoneFieldFormatter.instance());
-                    activityComponent.loadActivities("" + milestone.getId());
-                    addComponent(activityComponent);
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        addComponent(headerLayout);
+                        MilestonePreviewForm form = new MilestonePreviewForm();
+                        form.setBean(milestone);
+                        addComponent(form);
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.MILESTONE, assignment.getProjectId(),
+                                MilestoneFieldFormatter.instance());
+                        activityComponent.loadActivities("" + milestone.getId());
+                        addComponent(activityComponent);
+                    }
+                } else {
+                    addComponent(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
             } else if (ProjectTypeConstants.RISK.equals(assignment.getType())) {
-                RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
-                final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
-                if (risk != null) {
-                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + risk.getRiskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.RISKS)) {
+                    RiskService riskService = ApplicationContextUtil.getSpringBean(RiskService.class);
+                    final SimpleRisk risk = riskService.findById(Integer.parseInt(assignment.getTypeId()), AppContext.getAccountId());
+                    if (risk != null) {
+                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + risk.getRiskname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
 
-                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk));
-                        }
-                    });
-                    editBtn.setIcon(FontAwesome.EDIT);
-                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(Button.ClickEvent clickEvent) {
+                                EventBusFactory.getInstance().post(new RiskEvent.GotoEdit(this, risk));
+                            }
+                        });
+                        editBtn.setIcon(FontAwesome.EDIT);
+                        editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.RISKS));
 
-                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
-                    addComponent(headerLayout);
-                    RiskPreviewForm form = new RiskPreviewForm();
-                    form.setBean(risk);
-                    addComponent(form);
-                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, assignment
-                            .getProjectId(), RiskFieldFormatter.instance());
-                    activityComponent.loadActivities("" + risk.getId());
-                    addComponent(activityComponent);
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        addComponent(headerLayout);
+                        RiskPreviewForm form = new RiskPreviewForm();
+                        form.setBean(risk);
+                        addComponent(form);
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, assignment
+                                .getProjectId(), RiskFieldFormatter.instance());
+                        activityComponent.loadActivities("" + risk.getId());
+                        addComponent(activityComponent);
+                    }
+                } else {
+                    addComponent(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
             } else if (ProjectTypeConstants.BUG_COMPONENT.equals(assignment.getType())) {
-                ComponentService componentService = ApplicationContextUtil.getSpringBean(ComponentService.class);
-                final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
-                        AppContext.getAccountId());
-                if (component != null) {
-                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + component.getComponentname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                            .LABEL_NO_MARGIN);
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+                    ComponentService componentService = ApplicationContextUtil.getSpringBean(ComponentService.class);
+                    final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
+                            AppContext.getAccountId());
+                    if (component != null) {
+                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + component.getComponentname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
+                                .LABEL_NO_MARGIN);
 
-                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component));
-                        }
-                    });
-                    editBtn.setIcon(FontAwesome.EDIT);
-                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(Button.ClickEvent clickEvent) {
+                                EventBusFactory.getInstance().post(new BugComponentEvent.GotoEdit(this, component));
+                            }
+                        });
+                        editBtn.setIcon(FontAwesome.EDIT);
+                        editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 
-                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
-                    addComponent(headerLayout);
-                    ComponentPreviewForm form = new ComponentPreviewForm();
-                    form.setBean(component);
-                    addComponent(form);
-                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment
-                            .getProjectId(), ComponentFieldFormatter.instance());
-                    activityComponent.loadActivities("" + component.getId());
-                    addComponent(activityComponent);
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        addComponent(headerLayout);
+                        ComponentPreviewForm form = new ComponentPreviewForm();
+                        form.setBean(component);
+                        addComponent(form);
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment
+                                .getProjectId(), ComponentFieldFormatter.instance());
+                        activityComponent.loadActivities("" + component.getId());
+                        addComponent(activityComponent);
+                    }
+                } else {
+                    addComponent(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
             } else if (ProjectTypeConstants.BUG_VERSION.equals(assignment.getType())) {
-                VersionService versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
-                final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
-                        .getAccountId());
-                if (version != null) {
-                    ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                            + version.getVersionname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                            .LABEL_NO_MARGIN);
+                if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.VERSIONS)) {
+                    VersionService versionService = ApplicationContextUtil.getSpringBean(VersionService.class);
+                    final SimpleVersion version = versionService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
+                            .getAccountId());
+                    if (version != null) {
+                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + version.getVersionname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
+                                .LABEL_NO_MARGIN);
 
-                    Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent clickEvent) {
-                            EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version));
-                        }
-                    });
-                    editBtn.setIcon(FontAwesome.EDIT);
-                    editBtn.addStyleName(UIConstants.BUTTON_ACTION);
-                    editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
+                        Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(Button.ClickEvent clickEvent) {
+                                EventBusFactory.getInstance().post(new BugVersionEvent.GotoEdit(this, version));
+                            }
+                        });
+                        editBtn.setIcon(FontAwesome.EDIT);
+                        editBtn.addStyleName(UIConstants.BUTTON_ACTION);
+                        editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 
-                    MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
-                            Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
-                    addComponent(headerLayout);
-                    VersionPreviewForm form = new VersionPreviewForm();
-                    form.setBean(version);
-                    addComponent(form);
-                    activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment
-                            .getProjectId(), VersionFieldFormatter.instance());
-                    activityComponent.loadActivities("" + version.getId());
-                    addComponent(activityComponent);
+                        MHorizontalLayout headerLayout = new MHorizontalLayout(headerLbl, editBtn).withAlign(editBtn,
+                                Alignment.TOP_RIGHT).expand(headerLbl).withFullWidth();
+                        addComponent(headerLayout);
+                        VersionPreviewForm form = new VersionPreviewForm();
+                        form.setBean(version);
+                        addComponent(form);
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment
+                                .getProjectId(), VersionFieldFormatter.instance());
+                        activityComponent.loadActivities("" + version.getId());
+                        addComponent(activityComponent);
+                    }
+                } else {
+                    addComponent(ELabel.h3(AppContext.getMessage(ErrorI18nEnum.NO_ACCESS_PERMISSION)));
                 }
             }
         }

@@ -129,7 +129,7 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
             layout.addComponent(formLayoutFactory.getLayout());
 
             FormContainer permissionsPanel = new FormContainer();
-            projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
+            projectFormHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, (ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length + 1) / 2);
             permissionsPanel.addSection(AppContext.getMessage(ProjectRoleI18nEnum.SECTION_PERMISSIONS),
                     projectFormHelper.getLayout());
             layout.addComponent(permissionsPanel);
@@ -159,14 +159,14 @@ public class ProjectMemberEditViewImpl extends AbstractEditItemComp<SimpleProjec
                     final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                     projectFormHelper.addComponent(new Label(AppContext.getPermissionCaptionValue(
                             permissionMap, permissionPath)), AppContext.getMessage(RolePermissionI18nEnum
-                            .valueOf(permissionPath)), 0, i);
+                            .valueOf(permissionPath)), i % 2, i / 2);
                 }
             }
         } else {
             for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
                 final String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
                 projectFormHelper.addComponent(new Label(AppContext.getMessage(SecurityI18nEnum.ACCESS)),
-                        permissionPath, 0, i);
+                        permissionPath, i % 2, i / 2);
             }
         }
     }
