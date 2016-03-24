@@ -39,7 +39,7 @@
         </filter>
     </appender>
     <logger name="org.springframework" level="INFO"></logger>
-    <logger name="com.esofthead" level="DEBUG"/>
+    <logger name="com.esofthead" level="INFO"/>
     <root level="INFO">
         <appender-ref ref="stdout"/>
         <appender-ref ref="email"/>
