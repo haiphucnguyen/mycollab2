@@ -19,6 +19,7 @@ package com.esofthead.mycollab.reporting;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.lowagie.text.pdf.PdfContentByte;
 import com.vaadin.server.StreamResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public abstract class ReportStreamSource implements StreamResource.StreamSource 
 
     @Override
     public InputStream getStream() {
+        PdfContentByte a;
         final PipedInputStream inStream = new PipedInputStream();
         final PipedOutputStream outStream = new PipedOutputStream();
         new Thread(new Runnable() {
