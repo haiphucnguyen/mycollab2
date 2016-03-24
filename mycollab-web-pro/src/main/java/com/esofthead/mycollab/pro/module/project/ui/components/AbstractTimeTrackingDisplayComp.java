@@ -22,6 +22,7 @@ import com.esofthead.mycollab.pro.module.project.view.time.TimeTrackingTableDisp
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -94,8 +95,8 @@ public abstract class AbstractTimeTrackingDisplayComp extends VerticalLayout {
             for (SimpleItemTimeLogging item : timeLoggingEntries) {
                 billableHours += item.getIsbillable() ? item.getLogvalue() : 0;
                 nonBillableHours += !item.getIsbillable() ? item.getLogvalue() : 0;
-                if (item.getIsbillable()) {
-                    if (item.getIsovertime()) {
+                if (Boolean.TRUE.equals(item.getIsbillable())) {
+                    if (Boolean.TRUE.equals(item.getIsovertime())) {
                         if (item.getLogUserOvertimeRate() != null) {
                             cost += item.getLogvalue() * item.getLogUserOvertimeRate();
                         } else {
