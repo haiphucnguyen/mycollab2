@@ -28,7 +28,6 @@ public enum BreadcrumbI18nEnum {
     RISKS,
     PHASES,
     PAGES,
-    PROBLEMS,
     TASKS,
     BUGS,
     VERSIONS,
