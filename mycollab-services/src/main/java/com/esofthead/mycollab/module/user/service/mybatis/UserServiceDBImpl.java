@@ -153,7 +153,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         userAccount.setAccountid(record.getAccountId());
         userAccount.setIsaccountowner((record.getIsAccountOwner() == null) ? Boolean.FALSE : record.getIsAccountOwner());
 
-        if (record.getRoleid() <= 0) {
+        if (record.getRoleid() ==  null || record.getRoleid() <= 0) {
             record.setRoleid(null);
             record.setIsAccountOwner(true);
         } else {

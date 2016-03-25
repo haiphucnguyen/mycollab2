@@ -175,8 +175,8 @@ public class TaskDashboardViewImpl extends AbstractPageView implements TaskDashb
 
         Button exportPdfBtn = new Button("PDF");
         exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
-        FileDownloader pdfFileDownloder = new FileDownloader(buildStreamSource(ReportExportType.PDF));
-        pdfFileDownloder.extend(exportPdfBtn);
+        FileDownloader pdfFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.PDF));
+        pdfFileDownloader.extend(exportPdfBtn);
         popupButtonsControl.addOption(exportPdfBtn);
 
         Button exportExcelBtn = new Button("Excel");
