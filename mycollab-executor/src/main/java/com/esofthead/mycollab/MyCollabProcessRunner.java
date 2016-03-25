@@ -34,7 +34,6 @@ class MyCollabProcessRunner {
     MyCollabProcessRunner(int processRunningPort, int clientListenPort, String stopKey) {
         this.processRunningPort = processRunningPort;
         this.clientListenPort = clientListenPort;
-        String stopKey1 = stopKey;
     }
 
     void start() throws IOException, ExecutionException, InterruptedException {
