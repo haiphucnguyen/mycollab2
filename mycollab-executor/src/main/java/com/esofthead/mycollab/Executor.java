@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.zip.ZipEntry;
@@ -83,94 +84,89 @@ public class Executor {
         }
     }
 
-
-    private int listenPort;
+    private Integer processRunningPort, processPort;
     private String stopKey;
+    private String initialOptions;
 
-    private void runServer(String[] args) throws Exception {
-        boolean isStop = false;
-        String stopKeyVal = "";
-
-        int processRunningPort = 8080;
-        int listenPortVal = 0;
+    Executor() {
         try {
-            for (int i = 0; i < args.length; i++) {
-                if ("--port".equals(args[i])) {
-                    processRunningPort = Integer.parseInt(args[++i]);
-                } else if ("--stop".equals(args[i])) {
-                    isStop = true;
-                } else if ("--stop-key".equals(args[i])) {
-                    stopKeyVal = args[++i];
-                } else if ("--process-port".equals(args[i])) {
-                    listenPortVal = Integer.parseInt(args[++i]);
-                }
+            File workingDir = new File(System.getProperty("user.dir"));
+            File iniFile = new File(workingDir, "bin/mycollab.ini");
+            LOG.info("Load config variables at " + iniFile.getAbsolutePath() + "--" + iniFile.exists());
+            if (iniFile.exists()) {
+                Properties properties = new Properties();
+                properties.load(new FileInputStream(iniFile));
+                initialOptions = properties.getProperty("MYCOLLAB_OPTS", "");
+                processRunningPort = Integer.parseInt(properties.getProperty("String initialOptions", "8080"));
+                processPort = Integer.parseInt(properties.getProperty("process_port", "12345"));
+                stopKey = properties.getProperty("stop_key", "mycollab");
+                LOG.info("Options in config file: " + initialOptions);
+            } else {
+                LOG.error("Can not find mycollab.ini in path " + iniFile.getAbsolutePath());
+                System.exit(-1);
             }
         } catch (Exception e) {
             LOG.error("Error in parsing arguments", e);
-            return;
+            System.exit(-1);
         }
+    }
 
-        listenPort = listenPortVal;
-        stopKey = stopKeyVal;
-
-        if (!isStop) {
-            LOG.info("Start MyCollab server process");
-            Runtime.getRuntime().addShutdownHook(new Thread() {
-                @Override
-                public void run() {
-                    stopServer();
-                }
-            });
-            final ServerSocket serverSocket = new ServerSocket(listenPort);
-            final MyCollabProcessRunner process = new MyCollabProcessRunner(processRunningPort, listenPort, stopKey);
-            final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
-            Runnable serverTask = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        while (true) {
-                            try (Socket socket = serverSocket.accept();
-                                 InputStream inputStream = socket.getInputStream();
-                                 DataInputStream dataInputStream = new DataInputStream(inputStream)) {
-                                String request = dataInputStream.readUTF();
-                                if (request.startsWith("RELOAD")) {
-                                    String filePath = request.substring("RELOAD:".length());
-                                    LOG.info(String.format("Update MyCollab with file %s", filePath));
-                                    File upgradeFile = new File(filePath);
-                                    if (upgradeFile.exists()) {
-                                        process.stop();
-                                        unpackFile(upgradeFile);
-                                        process.start();
-                                    } else {
-                                        LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
-                                                upgradeFile.getAbsolutePath());
-                                    }
-                                } else if (request.startsWith("STOP")) {
-                                    String key = request.substring("STOP:".length());
-                                    LOG.info(String.format("Request to terminate MyCollab server with key %s", key));
-                                    if (stopKey.equals(key)) {
-                                        process.stop();
-                                        System.exit(-1);
-                                    }
+    private void runServer() throws Exception {
+        LOG.info("Start MyCollab server process");
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                stopServer();
+            }
+        });
+        final ServerSocket serverSocket = new ServerSocket(processPort);
+        final MyCollabProcessRunner process = new MyCollabProcessRunner(processRunningPort, processPort, initialOptions);
+        final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
+        Runnable serverTask = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        try (Socket socket = serverSocket.accept();
+                             InputStream inputStream = socket.getInputStream();
+                             DataInputStream dataInputStream = new DataInputStream(inputStream)) {
+                            String request = dataInputStream.readUTF();
+                            if (request.startsWith("RELOAD")) {
+                                String filePath = request.substring("RELOAD:".length());
+                                LOG.info(String.format("Update MyCollab with file %s", filePath));
+                                File upgradeFile = new File(filePath);
+                                if (upgradeFile.exists()) {
+                                    process.stop();
+                                    unpackFile(upgradeFile);
+                                    process.start();
+                                } else {
+                                    LOG.error("Can not upgrade MyCollab because the upgrade file is not existed " +
+                                            upgradeFile.getAbsolutePath());
+                                }
+                            } else if (request.startsWith("STOP")) {
+                                String key = request.substring("STOP:".length());
+                                LOG.info(String.format("Request to terminate MyCollab server with key %s", key));
+                                if (stopKey.equals(key)) {
+                                    process.stop();
+                                    System.exit(-1);
                                 }
                             }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            };
-            clientProcessingPool.submit(serverTask);
-            process.start();
-        } else {
-            stopServer();
-        }
+
+            }
+        };
+        clientProcessingPool.submit(serverTask);
+        process.start();
+
     }
 
     private void stopServer() {
         LOG.info("Kill MyCollab server process");
-        try (Socket socket = new Socket("localhost", listenPort);
+        try (Socket socket = new Socket("localhost", processPort);
              OutputStream outputStream = socket.getOutputStream();
              DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
             dataOutputStream.writeUTF("STOP:" + stopKey);
@@ -180,7 +176,19 @@ public class Executor {
         System.exit(-1);
     }
 
+    public static void start(String[] args) throws Exception {
+        new Executor().runServer();
+    }
+
+    public static void stop(String[] args) throws Exception {
+        new Executor().stopServer();
+    }
+
     public static void main(String[] args) throws Exception {
-        new Executor().runServer(args);
+        if (args[0].equals("--stop")) {
+            new Executor().stopServer();
+        } else {
+            new Executor().runServer();
+        }
     }
 }
