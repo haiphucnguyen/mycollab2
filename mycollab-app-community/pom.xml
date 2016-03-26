@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
     <properties>
         <installer.staging.dir>${project.build.directory}/staging</installer.staging.dir>
-        <izpack.dir.app>${basedir}/src/main/izpack</izpack.dir.app>
+        <installer.resource.dir.app>${basedir}/src/main/installer-resources</installer.resource.dir.app>
         <staging.dir.app>${installer.staging.dir}</staging.dir.app>
     </properties>
 
@@ -174,7 +174,7 @@
                                 <copy file="${project.build.directory}/mycollab-app-community-${project.version}.jar"
                                       tofile="${installer.staging.dir}/lib/mycollab-app-community-${project.version}.jar"/>
                                 <copy todir="${installer.staging.dir}">
-                                    <fileset dir="${izpack.dir.app}"/>
+                                    <fileset dir="${installer.resource.dir.app}"/>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/conf">
                                     <fileset dir="${basedir}/src/main/conf">
@@ -184,11 +184,8 @@
                                 <copy todir="${installer.staging.dir}/logs">
                                     <fileset dir="${basedir}/src/main/logs"/>
                                 </copy>
-                                <copy todir="${installer.staging.dir}/bin">
+                                <copy todir="${installer.staging.dir}/scripts">
                                     <fileset dir="${basedir}/src/main/scripts"/>
-                                </copy>
-                                <copy todir="${installer.staging.dir}/txt">
-                                    <fileset dir="${basedir}/src/main/txt"/>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/webapp">
                                     <fileset dir="${basedir}/src/main/webapp"/>
