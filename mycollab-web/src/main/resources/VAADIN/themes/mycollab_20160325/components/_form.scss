@@ -32,10 +32,8 @@
       }
     }
   }
-  .v-gridlayout.borderless {
-    .gridform-caption, .gridform-field {
-      border: none;
-    }
+  .borderless .v-gridlayout-slot {
+    border: none !important;
   }
 
   /* Activity component style */

@@ -15097,8 +15097,8 @@ div.v-window {
 	color: #999;
 }
 
-.v-gridlayout.borderless .gridform-caption, .v-gridlayout.borderless .gridform-field {
-	border: none;
+.borderless .v-gridlayout-slot {
+	border: none !important;
 }
 
 .activity-comp .section {
@@ -16437,6 +16437,7 @@ input.v-textfield-pagedtable-pagefield {
 .topNavigation .v-button.ad {
 	color: black;
 	font-weight: normal;
+	background-color: #fff;
 }
 
 .topNavigation .v-button.ad .v-icon {
