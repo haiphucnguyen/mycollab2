@@ -41,7 +41,6 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
     private final Button selectAllBtn;
     private final Button selectThisPageBtn;
 
-    @SuppressWarnings("serial")
     public SelectionOptionButton(final HasSelectableItemHandlers selectableItemHandlers) {
         super();
         HasSelectableItemHandlers selectableItemHandlers1 = selectableItemHandlers;
@@ -70,7 +69,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
 
         final OptionPopupContent selectContent = new OptionPopupContent();
 
-        selectAllBtn = new ButtonLink("", new Button.ClickListener() {
+        selectAllBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = true;
@@ -81,7 +80,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
         });
         selectContent.addOption(selectAllBtn);
 
-        selectThisPageBtn = new ButtonLink("", new Button.ClickListener() {
+        selectThisPageBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = false;
@@ -92,7 +91,7 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
         });
         selectContent.addOption(selectThisPageBtn);
 
-        Button deSelectBtn = new ButtonLink("Deselect All", new Button.ClickListener() {
+        Button deSelectBtn = new Button("Deselect All", new Button.ClickListener() {
             @Override
             public void buttonClick(final ClickEvent event) {
                 isSelectAll = false;
