@@ -10,12 +10,10 @@ import org.zeroturnaround.process.Processes;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -29,11 +27,13 @@ class MyCollabProcessRunner {
 
     private int processRunningPort;
     private int clientListenPort;
-    private JavaProcess wrappedJavaProccess;
+    private String initialOptions;
+    private JavaProcess wrappedJavaProcess;
 
-    MyCollabProcessRunner(int processRunningPort, int clientListenPort, String stopKey) {
+    MyCollabProcessRunner(int processRunningPort, int clientListenPort, String initialOptions) {
         this.processRunningPort = processRunningPort;
         this.clientListenPort = clientListenPort;
+        this.initialOptions = initialOptions;
     }
 
     void start() throws IOException, ExecutionException, InterruptedException {
@@ -42,20 +42,10 @@ class MyCollabProcessRunner {
             public void run() {
                 try {
                     File workingDir = new File(System.getProperty("user.dir"));
-                    File iniFile = new File(workingDir, "bin/mycollab.ini");
-                    LOG.info("Load config variables at " + iniFile.getAbsolutePath() + "--" + iniFile.exists());
-                    String options = "";
-                    if (iniFile.exists()) {
-                        Properties properties = new Properties();
-                        properties.load(new FileInputStream(iniFile));
-                        options = properties.getProperty("MYCOLLAB_OPTS", "");
-                        LOG.info("Options in config file: " + options);
-                    }
-
                     List<String> javaOptions = new ArrayList<>();
                     javaOptions.add("java");
-                    if (!"".equals(options)) {
-                        String[] optArr = options.split(" ");
+                    if (!"".equals(initialOptions)) {
+                        String[] optArr = initialOptions.split(" ");
                         javaOptions.addAll(Arrays.asList(optArr));
                     }
 
@@ -86,7 +76,7 @@ class MyCollabProcessRunner {
                     StartedProcess javaProcess = new ProcessExecutor().command(javaOptions.toArray(new String[javaOptions.size()]))
                             .directory(workingDir).redirectOutput(System.out).readOutput(true).start();
 
-                    wrappedJavaProccess = Processes.newJavaProcess(javaProcess.getProcess());
+                    wrappedJavaProcess = Processes.newJavaProcess(javaProcess.getProcess());
                     javaProcess.getFuture().get();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -99,7 +89,7 @@ class MyCollabProcessRunner {
 
     void stop() throws InterruptedException, TimeoutException, IOException {
         LOG.info("Stopping MyCollab process");
-        ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProccess, 6000, TimeUnit.SECONDS, 6000, TimeUnit.SECONDS);
+        ProcessUtil.destroyGracefullyOrForcefullyAndWait(wrappedJavaProcess, 6000, TimeUnit.SECONDS, 6000, TimeUnit.SECONDS);
         LOG.info("Stopped MyCollab process successfully");
     }
 }

@@ -22,9 +22,6 @@ rem   JAVA_HOME       Must point at your Java Development Kit installation.
 rem                   Required to run the with the "debug" argument.
 rem ---------------------------------------------------------------------------
 
-set MYCOLLAB_PORT=8080
-set PROCESS_PORT=12345
-set STOP_KEY=mycollab
 set _RUNJAVA=java
 
 rem Suppress Terminate batch job on CTRL+C
@@ -61,7 +58,6 @@ rem ----- Execute The Requested Command ---------------------------------------
 echo Using MYCOLLAB_HOME:   "%MYCOLLAB_HOME%"
 
 set _EXECJAVA=%_RUNJAVA%
-set ACTION=--port %MYCOLLAB_PORT% --process-port %PROCESS_PORT% --stop-key %STOP_KEY%
 
 
 if ""%1"" == ""--start"" goto doStart
@@ -93,7 +89,7 @@ goto execCmd
 
 rem Execute Java with the applicable properties
 cd ..
-%_EXECJAVA% -jar executor.jar  %ACTION% %*
+%_EXECJAVA% -jar executor.jar %*
 goto end
 
 :end
