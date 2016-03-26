@@ -184,7 +184,7 @@
                                 <copy todir="${installer.staging.dir}/logs">
                                     <fileset dir="${basedir}/src/main/logs"/>
                                 </copy>
-                                <copy todir="${installer.staging.dir}/scripts">
+                                <copy todir="${installer.staging.dir}/bin">
                                     <fileset dir="${basedir}/src/main/scripts"/>
                                 </copy>
                                 <copy todir="${installer.staging.dir}/webapp">
