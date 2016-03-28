@@ -24,8 +24,8 @@ public class Executor {
 
     private static void unpackFile(File upgradeFile) throws IOException {
         if (isValidZipFile(upgradeFile)) {
-            File libFolder = new File(System.getProperty("user.dir"), "lib");
-            File webappFolder = new File(System.getProperty("user.dir"), "webapp");
+            File libFolder = new File(getUserDir(), "lib");
+            File webappFolder = new File(getUserDir(), "webapp");
             assertFolderWritePermission(libFolder);
             assertFolderWritePermission(webappFolder);
 
@@ -53,7 +53,7 @@ public class Executor {
                 ZipEntry entry;
                 while ((entry = inputStream.getNextEntry()) != null) {
                     if (!entry.isDirectory() && (entry.getName().startsWith("lib/") || entry.getName().startsWith("webapp"))) {
-                        File candidateFile = new File(System.getProperty("user.dir"), entry.getName());
+                        File candidateFile = new File(getUserDir(), entry.getName());
                         candidateFile.getParentFile().mkdirs();
                         LOG.info("Copy file: " + entry.getName());
                         try (FileOutputStream output = new FileOutputStream(candidateFile)) {
@@ -91,8 +91,7 @@ public class Executor {
 
     Executor() {
         try {
-            File workingDir = new File(System.getProperty("user.dir"));
-            File iniFile = new File(workingDir, "bin/mycollab.ini");
+            File iniFile = new File(getUserDir(), "bin/mycollab.ini");
             LOG.info("Load config variables at " + iniFile.getAbsolutePath() + "--" + iniFile.exists());
             if (iniFile.exists()) {
                 Properties properties = new Properties();

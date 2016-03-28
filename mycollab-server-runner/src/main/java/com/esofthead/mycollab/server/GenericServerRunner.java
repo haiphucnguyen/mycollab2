@@ -278,11 +278,6 @@ public abstract class GenericServerRunner {
             }
         }
 
-        File runnerJarFile = new File(System.getProperty("user.dir"), "runner.jar");
-        if (runnerJarFile.exists()) {
-            appContext.getMetaData().getWebInfClassesDirs().add(new FileResource(runnerJarFile.toURI()));
-        }
-
         // Register a mock DataSource scoped to the webapp
         // This must be linked to the webapp via an entry in
         // web.xml:
