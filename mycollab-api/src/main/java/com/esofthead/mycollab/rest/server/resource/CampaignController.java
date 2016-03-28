@@ -36,7 +36,7 @@ public class CampaignController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/storeweb")
     public String getStoreWeb() throws IOException {
-        File pricingFile = FileUtils.getDesireFile(System.getProperty("user.dir"), "pricing.html", "src/main/conf/pricing.html");
+        File pricingFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), "pricing.html", "src/main/conf/pricing.html");
         InputStream pricingStream;
         if (pricingFile != null) {
             pricingStream = new FileInputStream(pricingFile);

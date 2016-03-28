@@ -41,7 +41,7 @@ class MyCollabProcessRunner {
             @Override
             public void run() {
                 try {
-                    File workingDir = new File(System.getProperty("user.dir"));
+                    File workingDir = new File(System.getProperty("MYCOLLAB_APP_HOME"));
                     List<String> javaOptions = new ArrayList<>();
                     javaOptions.add("java");
                     if (!"".equals(initialOptions)) {
@@ -49,7 +49,7 @@ class MyCollabProcessRunner {
                         javaOptions.addAll(Arrays.asList(optArr));
                     }
 
-                    File libDir = new File(System.getProperty("user.dir"), "lib");
+                    File libDir = new File(System.getProperty("MYCOLLAB_APP_HOME"), "lib");
                     if (!libDir.exists() || libDir.isFile()) {
                         throw new RuntimeException("Can not find the library folder at " + libDir.getAbsolutePath());
                     }

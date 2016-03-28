@@ -185,12 +185,20 @@ public class Executor {
         new Executor().stopServer();
     }
 
+    private static File getUserDir(){
+        try {
+            CodeSource codeSource = Executor.class.getProtectionDomain().getCodeSource();
+            File jarFile = new File(codeSource.getLocation().toURI().getPath());
+            String jarDir = jarFile.getParentFile().getPath();
+            return new File(jarDir);
+        } catch (Exception e) {
+            return new File(System.getProperty("user.dir"));
+        }
+    }
+
     public static void main(String[] args) throws Exception {
-        CodeSource codeSource = Executor.class.getProtectionDomain().getCodeSource();
-        File jarFile = new File(codeSource.getLocation().toURI().getPath());
-        String jarDir = jarFile.getParentFile().getPath();
-        System.setProperty("MYCOLLAB_APP_HOME", jarDir);
-        System.out.println("MYCOLLAB_APP: " + System.getProperty("MYCOLLAB_APP_HOME"));
+        File jarFile = getUserDir();
+        System.setProperty("MYCOLLAB_APP_HOME", jarFile.getAbsolutePath());
         if (args.length > 0 && args[0].equals("--stop")) {
             new Executor().stopServer();
         } else {

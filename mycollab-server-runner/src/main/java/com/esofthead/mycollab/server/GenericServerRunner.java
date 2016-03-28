@@ -265,7 +265,7 @@ public abstract class GenericServerRunner {
             }
         }
 
-        File libFolder = new File(System.getProperty("user.dir"), "lib");
+        File libFolder = new File(FileUtils.getUserFolder(), "lib");
         if (libFolder.isDirectory()) {
             File[] files = libFolder.listFiles();
             if (files != null) {

@@ -21,7 +21,7 @@ public class EditionInfoResolver {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                File versionFile = FileUtils.getDesireFile(System.getProperty("user.dir"), "version", "src/main/conf/version");
+                File versionFile = FileUtils.getDesireFile(FileUtils.getUserFolder(), "version", "src/main/conf/version");
                 if (versionFile == null || !versionFile.exists()) {
                     throw new MyCollabException("Can not find version file");
                 } else {
