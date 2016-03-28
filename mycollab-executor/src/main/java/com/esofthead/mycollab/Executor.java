@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.CodeSource;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -185,7 +186,12 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args[0].equals("--stop")) {
+        CodeSource codeSource = Executor.class.getProtectionDomain().getCodeSource();
+        File jarFile = new File(codeSource.getLocation().toURI().getPath());
+        String jarDir = jarFile.getParentFile().getPath();
+        System.setProperty("MYCOLLAB_APP_HOME", jarDir);
+        System.out.println("MYCOLLAB_APP: " + System.getProperty("MYCOLLAB_APP_HOME"));
+        if (args.length > 0 && args[0].equals("--stop")) {
             new Executor().stopServer();
         } else {
             new Executor().runServer();

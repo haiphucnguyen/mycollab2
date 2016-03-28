@@ -75,7 +75,7 @@ public abstract class GenericServerRunner {
      * @return
      */
     private String detectWebApp() {
-        File webappFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "webapp", "src/main/webapp");
+        File webappFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "webapp", "src/main/webapp");
 
         if (webappFolder == null) {
             throw new MyCollabException("Can not detect webapp base folder");
@@ -222,7 +222,7 @@ public abstract class GenericServerRunner {
     }
 
     private boolean checkConfigFileExist() {
-        File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
+        File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "conf", "src/main/conf");
         return confFolder != null && new File(confFolder, "mycollab.properties").exists();
     }
 
@@ -317,7 +317,7 @@ public abstract class GenericServerRunner {
                 @Override
                 public void run() {
                     LOG.debug("Detect root folder webapp");
-                    File confFolder = FileUtils.getDesireFile(System.getProperty("user.dir"), "conf", "src/main/conf");
+                    File confFolder = FileUtils.getDesireFile(FileUtils.getUserFolder(), "conf", "src/main/conf");
 
                     if (confFolder == null) {
                         throw new MyCollabException("Can not detect webapp base folder");

@@ -23,10 +23,10 @@ public class CheckVersionController {
         String liveVersion = EditionInfoResolver.getEditionInfo().getVersion();
         props.put("version", liveVersion);
         props.put("downloadLink", "https://www.mycollab.com/ce-registration/");
-        props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-8/");
+        props.put("releaseNotes", "https://community.mycollab.com/releases/release-notes-for-mycollab-5-2-10/");
 
         if (version != null && MyCollabVersion.isEditionNewer(liveVersion, version) &&
-                MyCollabVersion.isEditionNewer(version, "5.2.4")) {
+                MyCollabVersion.isEditionNewer(version, "5.2.9")) {
             props.put("autoDownload", EditionInfoResolver.getEditionInfo().getCommunityUpgradeLink());
         }
 
