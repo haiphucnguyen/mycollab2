@@ -274,6 +274,9 @@ public class ThemeManager {
             extraStyles.append(".v-button.v-button-greenbtn, .v-button-greenbtn:focus { color: #"
                     + accountTheme.getActionbtntext() + "; }");
 
+            extraStyles.append(".upload-field .v-upload-immediate .v-button, .upload-field .v-upload-immediate " +
+                    ".v-button:focus {color: #" + accountTheme.getActionbtntext() + ";}");
+
             extraStyles.append(".optionPopupContent .action-wrap .v-button-action .v-button-wrap:hover" +
                     " {" + "color: #" + accountTheme.getActionbtntext() + "};");
 

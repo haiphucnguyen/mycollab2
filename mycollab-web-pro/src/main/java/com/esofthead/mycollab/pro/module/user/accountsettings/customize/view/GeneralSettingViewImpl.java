@@ -45,7 +45,6 @@ public class GeneralSettingViewImpl extends AbstractPageView implements GeneralS
 
     public GeneralSettingViewImpl() {
         this.setMargin(true);
-        this.addStyleName("userInfoContainer");
     }
 
     @Override

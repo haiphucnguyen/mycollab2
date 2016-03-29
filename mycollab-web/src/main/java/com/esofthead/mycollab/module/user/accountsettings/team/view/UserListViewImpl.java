@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
+import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -87,6 +88,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
 
+        BillingPlan billingPlan = AppContext.getBillingAccount().getBillingPlan();
         HeaderWithFontAwesome headerLbl = HeaderWithFontAwesome.h2(FontAwesome.USERS, "Users");
 
         header.with(headerLbl, createBtn).expand(headerLbl).withAlign(createBtn, Alignment.MIDDLE_RIGHT);

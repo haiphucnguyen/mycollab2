@@ -65,6 +65,7 @@ Version 5.2.10
 * Can not export pdf report at the first time
 * File management is more stable
 * Re-invite user does not update the latest user information
+* Project Member still receive his watched items updates though he leaved the project already
 
 Version 5.2.9
 -----------------------------
