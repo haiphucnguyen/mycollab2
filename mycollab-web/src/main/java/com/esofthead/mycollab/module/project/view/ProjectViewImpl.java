@@ -18,6 +18,7 @@ package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.common.GenericLinkUtils;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
@@ -57,6 +58,8 @@ import com.vaadin.ui.TabSheet.SelectedTabChangeListener;
 import com.vaadin.ui.TabSheet.Tab;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
+
+import java.util.Collections;
 
 /**
  * @author MyCollab Ltd.

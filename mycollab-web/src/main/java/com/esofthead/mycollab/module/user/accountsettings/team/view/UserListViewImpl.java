@@ -17,13 +17,15 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.AccountLinkBuilder;
 import com.esofthead.mycollab.module.user.AccountLinkGenerator;
-import com.esofthead.mycollab.module.user.domain.BillingPlan;
+import com.esofthead.mycollab.module.user.accountsettings.localization.UserI18nEnum;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -38,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.HeaderWithFontAwesome;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.web.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
+import com.esofthead.mycollab.vaadin.web.ui.SearchTextField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.hp.gagawa.java.elements.A;
 import com.vaadin.server.FontAwesome;
@@ -46,6 +49,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -61,20 +65,15 @@ import java.util.List;
 public class UserListViewImpl extends AbstractPageView implements UserListView {
     private static final long serialVersionUID = 1L;
 
+    private CssLayout contentLayout;
+    private UserSearchCriteria searchCriteria;
+    private boolean sortAsc = true;
+    private HeaderWithFontAwesome headerText;
+
     public UserListViewImpl() {
         super();
         this.setMargin(new MarginInfo(false, true, false, true));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void setSearchCriteria(UserSearchCriteria searchCriteria) {
-        this.removeAllComponents();
-        UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
-        List<SimpleUser> userAccountList = userService
-                .findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0, Integer.MAX_VALUE));
-
-        MHorizontalLayout header = new MHorizontalLayout().withSpacing(false).withMargin(new MarginInfo(true, false, true, false))
+        MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
                 .withWidth("100%");
         Button createBtn = new Button("Invite user", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -88,18 +87,73 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         createBtn.setStyleName(UIConstants.BUTTON_ACTION);
         createBtn.setIcon(FontAwesome.PLUS);
 
-        BillingPlan billingPlan = AppContext.getBillingAccount().getBillingPlan();
-        HeaderWithFontAwesome headerLbl = HeaderWithFontAwesome.h2(FontAwesome.USERS, "Users");
+        headerText = HeaderWithFontAwesome.h2(FontAwesome.USERS, AppContext.getMessage(UserI18nEnum.VIEW_LIST_TITLE, 0));
 
-        header.with(headerLbl, createBtn).expand(headerLbl).withAlign(createBtn, Alignment.MIDDLE_RIGHT);
+        final Button sortBtn = new Button();
+        sortBtn.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                sortAsc = !sortAsc;
+                if (sortAsc) {
+                    sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+                    displayUsers();
+                } else {
+                    sortBtn.setIcon(FontAwesome.SORT_ALPHA_DESC);
+                    displayUsers();
+                }
+            }
+        });
+        sortBtn.setIcon(FontAwesome.SORT_ALPHA_ASC);
+        sortBtn.addStyleName(UIConstants.BUTTON_ICON_ONLY);
+        header.addComponent(sortBtn);
+
+        final SearchTextField searchTextField = new SearchTextField() {
+            @Override
+            public void doSearch(String value) {
+                searchCriteria.setDisplayName(StringSearchField.and(value));
+                displayUsers();
+            }
+
+            @Override
+            public void emptySearch() {
+                searchCriteria.setDisplayName(null);
+                displayUsers();
+            }
+        };
+        searchTextField.addStyleName(ValoTheme.TEXTFIELD_SMALL);
+
+        header.with(headerText, sortBtn, searchTextField, createBtn).alignAll(Alignment.MIDDLE_LEFT).expand(headerText);
         this.addComponent(header);
 
-        CssLayout contentLayout = new CssLayout();
+        contentLayout = new CssLayout();
         contentLayout.setWidth("100%");
+        this.addComponent(contentLayout);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void setSearchCriteria(UserSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        displayUsers();
+    }
+
+    private void displayUsers() {
+        contentLayout.removeAllComponents();
+        if (sortAsc) {
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName", SearchCriteria.ASC)));
+        } else {
+            searchCriteria.setOrderFields(Collections.singletonList(new SearchCriteria.OrderField("displayName",
+                    SearchCriteria.DESC)));
+        }
+
+        UserService userService = ApplicationContextUtil.getSpringBean(UserService.class);
+        List<SimpleUser> userAccountList = userService.findPagableListByCriteria(new SearchRequest<>(searchCriteria, 0,
+                Integer.MAX_VALUE));
+        headerText.updateTitle(AppContext.getMessage(UserI18nEnum.VIEW_LIST_TITLE, userAccountList.size()));
+
         for (SimpleUser userAccount : userAccountList) {
             contentLayout.addComponent(generateMemberBlock(userAccount));
         }
-        this.addComponent(contentLayout);
     }
 
     private Component generateMemberBlock(final SimpleUser member) {
