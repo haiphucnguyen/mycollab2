@@ -189,7 +189,8 @@
                 s_user.website, s_user.registeredTime, s_user_account.registerStatus,  s_user.avatarId, s_user.language
             FROM s_user, s_user_account
             WHERE s_user.username=s_user_account.username AND s_user_account.accountId=@{sAccountId,jdbcType=NUMERIC}
-                  AND ((SELECT COUNT(*) 
+                AND s_user_account.registerStatus='Active'
+                AND ((SELECT COUNT(*)
                         FROM m_prj_member 
                         WHERE m_prj_member.username = s_user.username 
                             AND m_prj_member.status='Active' 

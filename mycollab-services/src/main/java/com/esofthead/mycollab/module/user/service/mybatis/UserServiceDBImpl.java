@@ -146,6 +146,8 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
             record.setRegisterstatus(UserStatusConstants.EMAIL_NOT_VERIFIED);
             userMapper.insert(record);
             userAvatarService.uploadDefaultAvatar(record.getUsername());
+        } else {
+            userMapper.updateByExampleSelective(record, userEx);
         }
 
         // save record in s_user_account table
@@ -153,7 +155,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
         userAccount.setAccountid(record.getAccountId());
         userAccount.setIsaccountowner((record.getIsAccountOwner() == null) ? Boolean.FALSE : record.getIsAccountOwner());
 
-        if (record.getRoleid() ==  null || record.getRoleid() <= 0) {
+        if (record.getRoleid() == null || record.getRoleid() <= 0) {
             record.setRoleid(null);
             record.setIsAccountOwner(true);
         } else {

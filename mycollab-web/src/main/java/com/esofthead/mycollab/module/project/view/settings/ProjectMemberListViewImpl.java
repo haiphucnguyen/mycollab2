@@ -175,14 +175,12 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         String roleLink = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                 ProjectLinkGenerator.generateRolePreviewLink(member.getProjectid(), member.getProjectroleid()));
-        Label memberRole = new Label();
-        memberRole.setContentMode(ContentMode.HTML);
+        ELabel memberRole = new ELabel("", ContentMode.HTML).withWidth("100%").withStyleName(UIConstants.TEXT_ELLIPSIS);
         if (member.isProjectOwner()) {
             memberRole.setValue(roleLink + "style=\"color: #B00000;\">" + "Project Owner" + "</a>");
         } else {
             memberRole.setValue(roleLink + "style=\"color:gray;font-size:12px;\">" + member.getRoleName() + "</a>");
         }
-        memberRole.setSizeUndefined();
         memberInfo.addComponent(memberRole);
 
         Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),

@@ -64,6 +64,7 @@ Version 5.2.10
 * Form display badly when the field shows long text
 * Can not export pdf report at the first time
 * File management is more stable
+* Re-invite user does not update the latest user information
 
 Version 5.2.9
 -----------------------------

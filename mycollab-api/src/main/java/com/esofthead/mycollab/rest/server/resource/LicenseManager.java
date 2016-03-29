@@ -146,7 +146,7 @@ public class LicenseManager {
         info.setExpireDate(new LocalDate().plusDays(10).toDate());
         info.setIssueDate(new LocalDate().minusDays(30).toDate());
         info.setLicenseOrg("eSoftHead");
-        info.setMaxUsers(1);
+        info.setMaxUsers(10);
         LicenseManager generator = new LicenseManager();
         String str = generator.encode(info);
         System.out.println(str);
