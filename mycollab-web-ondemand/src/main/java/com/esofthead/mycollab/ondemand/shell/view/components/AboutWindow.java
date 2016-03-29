@@ -39,8 +39,6 @@ public class AboutWindow extends AbstractAboutWindow {
         Label versionLbl = new Label(String.format("MyCollab Cloud Edition %s", MyCollabVersion.getVersion()));
         versionLbl.addStyleName(ValoTheme.LABEL_H2);
         versionLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-        Label javaNameLbl = new Label(String.format("%s, %s", System.getProperty("java.vm.name"),
-                System.getProperty("java.runtime.version")));
         WebBrowser browser = Page.getCurrent().getWebBrowser();
         Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"),
                 browser.getBrowserApplication()));
@@ -51,7 +49,7 @@ public class AboutWindow extends AbstractAboutWindow {
         Label licenseLbl = new Label(licenseDiv.write(), ContentMode.HTML);
         Label copyRightLbl = new Label(String.format("&copy; %s - %s MyCollab Ltd. All rights reserved", "2011",
                 new GregorianCalendar().get(Calendar.YEAR) + ""), ContentMode.HTML);
-        rightPanel.with(versionLbl, javaNameLbl, osLbl, licenseLbl, copyRightLbl)
+        rightPanel.with(versionLbl, osLbl, licenseLbl, copyRightLbl)
                 .withAlign(copyRightLbl, Alignment.BOTTOM_LEFT);
         content.with(about, rightPanel).expand(rightPanel);
     }

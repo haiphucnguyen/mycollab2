@@ -91,7 +91,9 @@ public class Executor {
 
     Executor() {
         try {
-            File iniFile = new File(getUserDir(), "bin/mycollab.ini");
+            File jarFile = getUserDir();
+            System.setProperty("MYCOLLAB_APP_HOME", jarFile.getAbsolutePath());
+            File iniFile = new File(jarFile, "bin/mycollab.ini");
             LOG.info("Load config variables at " + iniFile.getAbsolutePath() + "--" + iniFile.exists());
             if (iniFile.exists()) {
                 Properties properties = new Properties();
@@ -113,12 +115,6 @@ public class Executor {
 
     private void runServer() throws Exception {
         LOG.info("Start MyCollab server process");
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                stopServer();
-            }
-        });
         final ServerSocket serverSocket = new ServerSocket(processPort);
         final MyCollabProcessRunner process = new MyCollabProcessRunner(processRunningPort, processPort, initialOptions);
         final ExecutorService clientProcessingPool = Executors.newSingleThreadExecutor();
@@ -147,8 +143,14 @@ public class Executor {
                                 String key = request.substring("STOP:".length());
                                 LOG.info(String.format("Request to terminate MyCollab server with key %s", key));
                                 if (stopKey.equals(key)) {
-                                    process.stop();
-                                    System.exit(-1);
+                                    try {
+                                        process.stop();
+                                    } finally {
+                                        LOG.info("Stop wrapper process");
+                                        System.exit(-1);
+                                    }
+                                } else {
+                                    LOG.info("Invalid stop key " + key + ". It should be " + stopKey);
                                 }
                             }
                         }
@@ -172,8 +174,9 @@ public class Executor {
             dataOutputStream.writeUTF("STOP:" + stopKey);
         } catch (Exception e) {
             LOG.error("Error while send RELOAD request to the host process", e);
+        } finally {
+            System.exit(-1);
         }
-        System.exit(-1);
     }
 
     public static void start(String[] args) throws Exception {
@@ -196,8 +199,6 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-        File jarFile = getUserDir();
-        System.setProperty("MYCOLLAB_APP_HOME", jarFile.getAbsolutePath());
         if (args.length > 0 && args[0].equals("--stop")) {
             new Executor().stopServer();
         } else {
