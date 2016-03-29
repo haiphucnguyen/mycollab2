@@ -103,13 +103,13 @@ public class RoleReadViewImpl extends AbstractPageView implements RoleReadView {
 
     protected ComponentContainer constructPermissionSectionView(String depotTitle, PermissionMap permissionMap,
                                                                 List<PermissionDefItem> defItems) {
-        GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size());
+        GridFormLayoutHelper formHelper = GridFormLayoutHelper.defaultFormLayoutHelper(2, defItems.size() / 2 + 1);
         FormContainer permissionsPanel = new FormContainer();
 
         for (int i = 0; i < defItems.size(); i++) {
             PermissionDefItem permissionDefItem = defItems.get(i);
             formHelper.addComponent(new Label(getValueFromPerPath(permissionMap,
-                    permissionDefItem.getKey())), permissionDefItem.getCaption(), 0, i);
+                    permissionDefItem.getKey())), permissionDefItem.getCaption(), i % 2, i / 2);
         }
         permissionsPanel.addSection(depotTitle, formHelper.getLayout());
         return permissionsPanel;

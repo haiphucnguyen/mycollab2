@@ -101,11 +101,9 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
     }
 
     private Component generateMemberBlock(final SimpleUser member) {
-        CssLayout memberBlock = new CssLayout();
-        memberBlock.addStyleName("member-block");
-
         VerticalLayout blockContent = new VerticalLayout();
-        blockContent.setWidth("100%");
+        blockContent.setWidth("350px");
+        blockContent.setStyleName("member-block");
         MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
         Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getAvatarid(), 100);
         blockTop.addComponent(memberAvatar);
@@ -163,10 +161,31 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         memberInfo.addComponent(memberLinkLbl);
         memberInfo.addComponent(ELabel.hr());
 
-        Label memberEmailLabel = new Label(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
-                member.getUsername()), ContentMode.HTML);
-        memberEmailLabel.addStyleName(UIConstants.LABEL_META_INFO);
-        memberEmailLabel.setWidth("100%");
+        if (member.getRoleid() != null) {
+            String memberRoleLinkPrefix = String.format("<a href=\"%s\"", AccountLinkBuilder.generatePreviewFullRoleLink(member.getRoleid()));
+            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS);
+            if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
+                memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">Account Owner</a>", memberRoleLinkPrefix));
+            } else {
+                memberRole.setValue(String.format("%sstyle=\"color:gray;font-size:12px;\">%s</a>",
+                        memberRoleLinkPrefix, member.getRoleName()));
+            }
+            memberInfo.addComponent(memberRole);
+            memberInfo.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
+        } else if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
+            Label memberRole = new Label("<a style=\"color: #B00000;\">Account Owner</a>", ContentMode.HTML);
+            memberRole.setSizeUndefined();
+            memberInfo.addComponent(memberRole);
+            memberInfo.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
+        } else {
+            Label lbl = new Label();
+            lbl.setHeight("10px");
+            memberInfo.addComponent(lbl);
+        }
+
+        Label memberEmailLabel = new ELabel(String.format("<a href='mailto:%s'>%s</a>", member.getUsername(),
+                member.getUsername()), ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS, UIConstants
+                .LABEL_META_INFO).withWidth("100%");
         memberInfo.addComponent(memberEmailLabel);
 
         ELabel memberSinceLabel = new ELabel("Member since: " + AppContext.formatPrettyTime(member.getRegisteredtime()))
@@ -216,30 +235,6 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         blockTop.with(memberInfo).expand(memberInfo);
         blockContent.addComponent(blockTop);
-
-        if (member.getRoleid() != null) {
-            String memberRoleLinkPrefix = String.format("<a href=\"%s\"", AccountLinkBuilder.generatePreviewFullRoleLink(member.getRoleid()));
-            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS);
-            if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
-                memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">Account Owner</a>", memberRoleLinkPrefix));
-            } else {
-                memberRole.setValue(String.format("%sstyle=\"color:gray;font-size:12px;\">%s</a>",
-                        memberRoleLinkPrefix, member.getRoleName()));
-            }
-            blockContent.addComponent(memberRole);
-            blockContent.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
-        } else if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
-            Label memberRole = new Label("<a style=\"color: #B00000;\">Account Owner</a>", ContentMode.HTML);
-            memberRole.setSizeUndefined();
-            blockContent.addComponent(memberRole);
-            blockContent.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
-        } else {
-            Label lbl = new Label();
-            lbl.setHeight("10px");
-            blockContent.addComponent(lbl);
-        }
-
-        memberBlock.addComponent(blockContent);
-        return memberBlock;
+        return blockContent;
     }
 }
