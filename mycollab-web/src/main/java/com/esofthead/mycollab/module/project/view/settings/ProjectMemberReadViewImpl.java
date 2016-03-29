@@ -53,7 +53,6 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MCssLayout;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -160,17 +159,14 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(beanItem.getMemberAvatarId(), 100);
             blockContent.addComponent(memberAvatar);
 
-            MVerticalLayout memberInfo = new MVerticalLayout().withStyleName("member-info")
-                    .withMargin(new MarginInfo(false, false, false, true));
+            MVerticalLayout memberInfo = new MVerticalLayout().withMargin(new MarginInfo(false, false, false, true));
 
-            ELabel memberLink = new ELabel(beanItem.getMemberFullName()).withWidth("100%").withStyleName(ValoTheme.LABEL_H3, ValoTheme.LABEL_NO_MARGIN);
+            ELabel memberLink = ELabel.h3(beanItem.getMemberFullName()).withWidth("100%");
             memberInfo.addComponent(memberLink);
 
             String memberRoleLinkPrefix = String.format("<a href=\"%s%s%s\"", AppContext.getSiteUrl(), GenericLinkUtils.URL_PREFIX_PARAM,
                     ProjectLinkGenerator.generateRolePreviewLink(beanItem.getProjectid(), beanItem.getProjectroleid()));
-            Label memberRole = new Label();
-            memberRole.setContentMode(ContentMode.HTML);
-            memberRole.setStyleName("member-role");
+            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.LABEL_META_INFO);
             if (Boolean.TRUE.equals(beanItem.getIsadmin()) || beanItem.getProjectroleid() == null) {
                 memberRole.setValue(memberRoleLinkPrefix + "style=\"color: #B00000;\">" + "Project Admin" + "</a>");
             } else {
@@ -186,9 +182,8 @@ public class ProjectMemberReadViewImpl extends AbstractProjectPageView implement
             memberInfo.addComponent(memberEmailLabel);
 
             ELabel memberSinceLabel = new ELabel(String.format("Member since: %s", AppContext.formatPrettyTime(beanItem.getJoindate())))
-                    .withDescription(AppContext.formatDateTime(beanItem.getJoindate()));
-            memberSinceLabel.addStyleName(UIConstants.LABEL_META_INFO);
-            memberSinceLabel.setWidth("100%");
+                    .withDescription(AppContext.formatDateTime(beanItem.getJoindate())).withStyleName(UIConstants
+                            .LABEL_META_INFO).withWidth("100%");
             memberInfo.addComponent(memberSinceLabel);
 
             if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(beanItem.getStatus())) {

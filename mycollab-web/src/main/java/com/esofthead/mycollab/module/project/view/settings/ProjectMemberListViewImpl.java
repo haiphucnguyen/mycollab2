@@ -111,14 +111,14 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
     }
 
     private Component generateMemberBlock(final SimpleProjectMember member) {
-        CssLayout memberBlock = new CssLayout();
-        memberBlock.addStyleName("member-block");
 
         VerticalLayout blockContent = new VerticalLayout();
+        blockContent.setStyleName("member-block");
+        blockContent.setWidth("350px");
+
         MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
         Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getMemberAvatarId(), 100);
         blockTop.addComponent(memberAvatar);
-
 
         MHorizontalLayout buttonControls = new MHorizontalLayout();
         Button editBtn = new Button("", FontAwesome.EDIT);
@@ -168,8 +168,7 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
 
         A memberLink = new A(ProjectLinkBuilder.generateProjectMemberFullLink(member.getProjectid(), member
                 .getUsername())).appendText(member.getMemberFullName()).setTitle(member.getMemberFullName());
-        ELabel memberNameLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3,
-                ValoTheme.LABEL_NO_MARGIN, UIConstants.TEXT_ELLIPSIS).withWidth("100%");
+        ELabel memberNameLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS).withWidth("100%");
 
         MVerticalLayout memberInfo = new MVerticalLayout().withMargin(false).with(memberNameLbl, ELabel.hr());
 
@@ -240,12 +239,9 @@ public class ProjectMemberListViewImpl extends AbstractPageView implements Proje
         memberInfo.addComponent(memberWorkStatus);
         memberInfo.setWidth("100%");
 
-        blockTop.addComponent(memberInfo);
-        blockTop.setExpandRatio(memberInfo, 1.0f);
+        blockTop.with(memberInfo).expand(memberInfo);
         blockContent.addComponent(blockTop);
-        blockContent.setWidth("100%");
 
-        memberBlock.addComponent(blockContent);
-        return memberBlock;
+        return blockContent;
     }
 }

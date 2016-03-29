@@ -45,12 +45,10 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,6 +105,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         memberBlock.addStyleName("member-block");
 
         VerticalLayout blockContent = new VerticalLayout();
+        blockContent.setWidth("100%");
         MHorizontalLayout blockTop = new MHorizontalLayout().withWidth("100%");
         Image memberAvatar = UserAvatarControlFactory.createUserAvatarEmbeddedComponent(member.getAvatarid(), 100);
         blockTop.addComponent(memberAvatar);
@@ -160,8 +159,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         A memberLink = new A(AccountLinkGenerator.generatePreviewFullUserLink(AppContext.getSiteUrl(),
                 member.getUsername())).appendText(member.getDisplayName());
-        ELabel memberLinkLbl = new ELabel(memberLink.write(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H3);
-        memberLinkLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        ELabel memberLinkLbl = ELabel.h3(memberLink.write()).withStyleName(UIConstants.TEXT_ELLIPSIS);
         memberInfo.addComponent(memberLinkLbl);
         memberInfo.addComponent(ELabel.hr());
 
@@ -172,9 +170,8 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
         memberInfo.addComponent(memberEmailLabel);
 
         ELabel memberSinceLabel = new ELabel("Member since: " + AppContext.formatPrettyTime(member.getRegisteredtime()))
-                .withDescription(AppContext.formatDateTime(member.getRegisteredtime()));
-        memberSinceLabel.addStyleName(UIConstants.LABEL_META_INFO);
-        memberSinceLabel.setWidth("100%");
+                .withDescription(AppContext.formatDateTime(member.getRegisteredtime())).withStyleName(UIConstants
+                        .LABEL_META_INFO).withWidth("100%");
         memberInfo.addComponent(memberSinceLabel);
 
         if (RegisterStatusConstants.SENT_VERIFICATION_EMAIL.equals(member.getRegisterstatus())) {
@@ -222,15 +219,13 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
 
         if (member.getRoleid() != null) {
             String memberRoleLinkPrefix = String.format("<a href=\"%s\"", AccountLinkBuilder.generatePreviewFullRoleLink(member.getRoleid()));
-            Label memberRole = new Label();
-            memberRole.setContentMode(ContentMode.HTML);
+            ELabel memberRole = new ELabel(ContentMode.HTML).withStyleName(UIConstants.TEXT_ELLIPSIS);
             if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
                 memberRole.setValue(String.format("%sstyle=\"color: #B00000;\">Account Owner</a>", memberRoleLinkPrefix));
             } else {
                 memberRole.setValue(String.format("%sstyle=\"color:gray;font-size:12px;\">%s</a>",
                         memberRoleLinkPrefix, member.getRoleName()));
             }
-            memberRole.setSizeUndefined();
             blockContent.addComponent(memberRole);
             blockContent.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
         } else if (Boolean.TRUE.equals(member.getIsAccountOwner())) {
@@ -243,7 +238,7 @@ public class UserListViewImpl extends AbstractPageView implements UserListView {
             lbl.setHeight("10px");
             blockContent.addComponent(lbl);
         }
-        blockContent.setWidth("100%");
+
         memberBlock.addComponent(blockContent);
         return memberBlock;
     }
