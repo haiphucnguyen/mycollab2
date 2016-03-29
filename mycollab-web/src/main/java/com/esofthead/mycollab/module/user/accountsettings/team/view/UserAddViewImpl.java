@@ -148,7 +148,6 @@ public class UserAddViewImpl extends AbstractPageView implements UserAddView {
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        setFormBuffered(false);
                         editUserForm.displayAdvancedForm(user);
                         setFormBuffered(true);
                     }
