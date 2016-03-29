@@ -7,19 +7,6 @@ rem
 rem Environment Variable Prerequisites
 rem
 rem   MYCOLLAB_HOME   May point at your MyCollab "build" directory.
-rem   MYCOLLAB_OUT    (Optional) Full path to a file where stdout and stderr
-rem                   will be redirected.
-rem                   Default is $CATALINA_BASE/logs/catalina.out
-rem   MYCOLLAB_PORT   Port of server to allow user access to server
-rem   MYCOLLAB_OPTS   (Optional) Java runtime options used when the "start",
-rem                    "stop" command is executed.
-rem                   Include here and not in JAVA_OPTS all options, that should
-rem                   only be used by MyCollab itself, not by the stop process,
-rem                   the version command etc.
-rem                   Examples are heap size, GC logging, JMX ports etc.
-rem
-rem   JAVA_HOME       Must point at your Java Development Kit installation.
-rem                   Required to run the with the "debug" argument.
 rem ---------------------------------------------------------------------------
 
 set _RUNJAVA=java
@@ -36,6 +23,7 @@ rem Use provided errorlevel
 set RETVAL=%ERRORLEVEL%
 del /Q "%TEMP%\%~nx0.Y" >NUL 2>&1
 exit /B %RETVAL%
+
 :mainEntry
 del /Q "%TEMP%\%~nx0.run" >NUL 2>&1
 
@@ -51,12 +39,10 @@ if exist "%MYCOLLAB_HOME%\bin\mycollab.bat" goto okHome
 echo The MYCOLLAB_HOME environment variable is not defined correctly
 echo This environment variable is needed to run this program
 goto end
+
 :okHome
-
 rem ----- Execute The Requested Command ---------------------------------------
-
 echo Using MYCOLLAB_HOME:   "%MYCOLLAB_HOME%"
-
 set _EXECJAVA=%_RUNJAVA%
 
 
@@ -86,7 +72,6 @@ shift
 goto execCmd
 
 :execCmd
-
 rem Execute Java with the applicable properties
 cd ..
 %_EXECJAVA% -jar executor.jar %*
