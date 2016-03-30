@@ -32,9 +32,8 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.resources.LazyStreamSource;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.PopupDateFieldExt;
-import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.esofthead.mycollab.vaadin.web.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable;
@@ -48,6 +47,8 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -74,7 +75,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     private ComboBox groupField, orderField;
 
     private Label totalHoursLoggingLabel;
-    private SplitButton exportButtonControl;
 
     private ItemTimeLoggingService itemTimeLoggingService;
 
@@ -150,40 +150,24 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         if (CollectionUtils.isNotEmpty(projects)) {
             itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
 
-            Label titleLbl = new Label(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() +
-                    " Time Tracking", ContentMode.HTML);
-            titleLbl.addStyleName(ValoTheme.LABEL_H2);
+            Label titleLbl = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.TIME).getHtml() + " Time Tracking");
 
-            MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, false, false))
-                    .withWidth("100%");
+            MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true,
+                    false)).withWidth("100%");
 
-            Button exportBtn = new Button("Export", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    exportButtonControl.setPopupVisible(true);
-                }
-            });
-            exportButtonControl = new SplitButton(exportBtn);
-            exportButtonControl.setWidthUndefined();
-            exportButtonControl.addStyleName(UIConstants.BUTTON_OPTION);
-            exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
-
-            OptionPopupContent popupButtonsControl = new OptionPopupContent();
-            exportButtonControl.setContent(popupButtonsControl);
-
-            Button exportPdfBtn = new Button("Pdf");
+            MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
+                    .BUTTON_OPTION).withDescription("Export to PDF");
             FileDownloader pdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
             pdfDownloader.extend(exportPdfBtn);
-            exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
-            popupButtonsControl.addOption(exportPdfBtn);
 
-            Button exportExcelBtn = new Button("Excel");
+            MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants
+                    .BUTTON_OPTION).withDescription("Export to Excel");
             FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
             excelDownloader.extend(exportExcelBtn);
-            exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
-            popupButtonsControl.addOption(exportExcelBtn);
+
+            ButtonGroup exportButtonControl = new ButtonGroup();
+            exportButtonControl.addButton(exportPdfBtn);
+            exportButtonControl.addButton(exportExcelBtn);
 
             headerWrapper.with(titleLbl, exportButtonControl).expand(titleLbl).alignAll(Alignment.MIDDLE_LEFT);
 
@@ -192,19 +176,14 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
             CssLayout contentWrapper = new CssLayout();
             contentWrapper.setWidth("100%");
 
-            MHorizontalLayout controlsPanel = new MHorizontalLayout().withWidth("100%");
+            MHorizontalLayout controlsPanel = new MHorizontalLayout().withWidth("100%").withStyleName(UIConstants.BOX);
             contentWrapper.addComponent(controlsPanel);
-
-            VerticalLayout selectionLayoutWrapper = new VerticalLayout();
-            selectionLayoutWrapper.setWidth("100%");
-            selectionLayoutWrapper.addStyleName("time-tracking-summary-search-panel");
-            controlsPanel.addComponent(selectionLayoutWrapper);
 
             GridLayout selectionLayout = new GridLayout(9, 2);
             selectionLayout.setSpacing(true);
             selectionLayout.setMargin(true);
             selectionLayout.setDefaultComponentAlignment(Alignment.TOP_RIGHT);
-            selectionLayoutWrapper.addComponent(selectionLayout);
+            controlsPanel.addComponent(selectionLayout);
 
             Label fromLb = new Label("From:");
             fromLb.setWidthUndefined();
@@ -310,7 +289,6 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
         }
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private void searchTimeReporting() {
         final ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
 

@@ -128,7 +128,7 @@ public class BugKanbanViewImpl extends AbstractPageView implements BugKanbanView
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-        viewButtons.setDefaultButton(kanbanBtn);
+        viewButtons.withDefaultButton(kanbanBtn);
         groupWrapLayout.addComponent(viewButtons);
 
         kanbanLayout = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withHeight("100%");

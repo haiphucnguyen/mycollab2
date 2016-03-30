@@ -292,7 +292,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         viewButtons.addButton(dailyBtn);
         viewButtons.addButton(weeklyBtn);
         viewButtons.addButton(monthlyBtn);
-        viewButtons.setDefaultButton(monthlyBtn);
+        viewButtons.withDefaultButton(monthlyBtn);
 
         MHorizontalLayout rightControls = new MHorizontalLayout().with(viewButtons);
 

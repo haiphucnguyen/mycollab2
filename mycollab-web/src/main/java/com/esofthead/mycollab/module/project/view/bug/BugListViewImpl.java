@@ -47,7 +47,9 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
-import com.esofthead.mycollab.vaadin.web.ui.*;
+import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;
+import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.web.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.web.ui.table.AbstractPagedBeanTable;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
@@ -57,6 +59,8 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -153,31 +157,21 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
 
         searchPanel.addHeaderRight(groupWrapLayout);
 
-        Button exportBtn = new Button("Export");
-        final SplitButton exportSplitBtn = new SplitButton(exportBtn);
-        exportBtn.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                exportSplitBtn.setPopupVisible(true);
-            }
-        });
-        exportSplitBtn.addStyleName(UIConstants.BUTTON_ACTION);
-        OptionPopupContent popupButtonsControl = new OptionPopupContent();
-
-        Button exportPdfBtn = new Button("PDF");
-        exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
+        MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
+                .BUTTON_OPTION).withDescription("Export to PDF");
         FileDownloader pdfFileDownloder = new FileDownloader(buildStreamSource(ReportExportType.PDF));
         pdfFileDownloder.extend(exportPdfBtn);
-        popupButtonsControl.addOption(exportPdfBtn);
 
-        Button exportExcelBtn = new Button("Excel");
-        exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
+        MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants
+                .BUTTON_OPTION).withDescription("Export to Excel");
         FileDownloader excelFileDownloader = new FileDownloader(buildStreamSource(ReportExportType.EXCEL));
         excelFileDownloader.extend(exportExcelBtn);
-        popupButtonsControl.addOption(exportExcelBtn);
 
-        exportSplitBtn.setContent(popupButtonsControl);
-        groupWrapLayout.with(exportSplitBtn);
+        ButtonGroup exportGroup = new ButtonGroup();
+        exportGroup.addButton(exportPdfBtn);
+        exportGroup.addButton(exportExcelBtn);
+
+        groupWrapLayout.with(exportGroup);
 
         Button newBugBtn = new Button(AppContext.getMessage(BugI18nEnum.BUTTON_NEW_BUG), new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -215,7 +209,7 @@ public class BugListViewImpl extends AbstractPageView implements BugListView {
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-        viewButtons.setDefaultButton(advanceDisplayBtn);
+        viewButtons.withDefaultButton(advanceDisplayBtn);
         groupWrapLayout.addComponent(viewButtons);
 
         MHorizontalLayout mainLayout = new MHorizontalLayout().withFullHeight().withFullWidth();

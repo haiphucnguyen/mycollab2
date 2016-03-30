@@ -166,7 +166,7 @@ public class TaskKanbanviewImpl extends AbstractPageView implements TaskKanbanvi
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(advanceDisplayBtn);
         viewButtons.addButton(kanbanBtn);
-        viewButtons.setDefaultButton(kanbanBtn);
+        viewButtons.withDefaultButton(kanbanBtn);
         groupWrapLayout.addComponent(viewButtons);
 
         kanbanLayout = new DDHorizontalLayout();

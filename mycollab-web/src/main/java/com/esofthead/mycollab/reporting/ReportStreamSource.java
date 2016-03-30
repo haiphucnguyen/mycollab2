@@ -46,6 +46,12 @@ public abstract class ReportStreamSource implements StreamResource.StreamSource 
         final PipedInputStream inStream = new PipedInputStream();
 
         InputStream in = new InputStream() {
+
+            @Override
+            public int read(byte[] b) throws IOException {
+                return inStream.read(b);
+            }
+
             @Override
             public int read() throws IOException {
                 return inStream.read();

@@ -280,7 +280,7 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 displayWeekView();
-                viewButtons.setDefaultButton(weekViewBtn);
+                viewButtons.withDefaultButton(weekViewBtn);
             }
         });
         final Button monthViewBtn = new Button("Month");
@@ -288,12 +288,12 @@ public class CalendarDashboardViewImpl extends AbstractPageView implements ICale
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 displayMonthView();
-                viewButtons.setDefaultButton(monthViewBtn);
+                viewButtons.withDefaultButton(monthViewBtn);
             }
         });
         viewButtons.addButton(weekViewBtn);
         viewButtons.addButton(monthViewBtn);
-        viewButtons.setDefaultButton(monthViewBtn);
+        viewButtons.withDefaultButton(monthViewBtn);
 
         header.with(titleWrapper, viewButtons).withAlign(titleWrapper, Alignment.MIDDLE_CENTER)
                 .withAlign(viewButtons, Alignment.MIDDLE_RIGHT);

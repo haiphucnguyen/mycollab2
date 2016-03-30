@@ -33,8 +33,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
-import com.esofthead.mycollab.vaadin.web.ui.SplitButton;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
@@ -48,6 +46,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 import java.util.*;
@@ -65,7 +65,6 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
     private ItemTimeLoggingSearchPanel searchPanel;
     private VerticalLayout timeTrackingWrapper;
-    private SplitButton exportButtonControl;
     private final ELabel lbTimeRange;
 
     private ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange> timeEntryChangeHandler = new
@@ -77,8 +76,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
             };
 
     public TimeTrackingListViewImpl() {
-        this.setMargin(false);
-        this.addStyleName("hdr-view");
+        this.withMargin(false).withStyleName("hdr-view");
         final MHorizontalLayout headerWrapper = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
 
         itemTimeLoggingService = ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class);
@@ -107,40 +105,26 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
         lbTimeRange = ELabel.h3("");
 
-        Button exportBtn = new Button("Export", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void buttonClick(ClickEvent event) {
-                exportButtonControl.setPopupVisible(true);
-            }
-        });
-        exportButtonControl = new SplitButton(exportBtn);
-        exportButtonControl.setWidthUndefined();
-        exportButtonControl.addStyleName(UIConstants.BUTTON_ACTION);
-        exportButtonControl.setIcon(FontAwesome.EXTERNAL_LINK);
-
-        OptionPopupContent popupButtonsControl = new OptionPopupContent();
-        exportButtonControl.setContent(popupButtonsControl);
-
-        Button exportPdfBtn = new Button("Pdf");
+        MButton exportPdfBtn = new MButton("").withIcon(FontAwesome.FILE_PDF_O).withStyleName(UIConstants
+                .BUTTON_OPTION).withDescription("Export to PDF");
         FileDownloader exportPdfDownloader = new FileDownloader(constructStreamResource(ReportExportType.PDF));
         exportPdfDownloader.extend(exportPdfBtn);
-        exportPdfBtn.setIcon(FontAwesome.FILE_PDF_O);
-        popupButtonsControl.addOption(exportPdfBtn);
 
-        Button exportExcelBtn = new Button("Excel");
+        MButton exportExcelBtn = new MButton("").withIcon(FontAwesome.FILE_EXCEL_O).withStyleName(UIConstants
+                .BUTTON_OPTION).withDescription("Export to Excel");
         FileDownloader excelDownloader = new FileDownloader(constructStreamResource(ReportExportType.EXCEL));
         excelDownloader.extend(exportExcelBtn);
-        exportExcelBtn.setIcon(FontAwesome.FILE_EXCEL_O);
-        popupButtonsControl.addOption(exportExcelBtn);
+
+        ButtonGroup exportButtonControl = new ButtonGroup();
+        exportButtonControl.addButton(exportPdfBtn);
+        exportButtonControl.addButton(exportExcelBtn);
 
         headerLayout.with(lbTimeRange, exportButtonControl).expand(lbTimeRange).withAlign(exportButtonControl, Alignment.MIDDLE_RIGHT);
         this.addComponent(headerWrapper);
 
         timeTrackingWrapper = new VerticalLayout();
         timeTrackingWrapper.setWidth("100%");
-        this.addComponent(timeTrackingWrapper);
+        this.with(timeTrackingWrapper).expand(timeTrackingWrapper);
     }
 
     @Override

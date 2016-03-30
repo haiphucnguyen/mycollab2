@@ -183,7 +183,7 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
         ToggleButtonGroup viewButtons = new ToggleButtonGroup();
         viewButtons.addButton(roadmapBtn);
         viewButtons.addButton(kanbanBtn);
-        viewButtons.setDefaultButton(kanbanBtn);
+        viewButtons.withDefaultButton(kanbanBtn);
         layout.with(viewButtons);
 
         return layout;
