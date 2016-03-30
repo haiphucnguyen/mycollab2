@@ -40,6 +40,19 @@ understanding in a matter of minutes.
 Last changelog
 ==============
 
+Version 5.2.11
+-----------------------------
+**Library Upgrades**
+
+* Joda Time 2.9.3
+* Mybatis spring 1.2.5
+* Other libraries
+
+**Improvements & New Features**
+
+**Bug Fixes**
+
+
 Version 5.2.10
 -----------------------------
 **Library Upgrades**
@@ -99,12 +112,14 @@ Version 5.2.9
 Version 5.2.8
 -----------------------------
 **Improvements & New Features**
+
 * [Premium] Revise the Calendar view
 * Support project template
 * Add 'Won't Fix' status to bug workflow
 * Other minor improvements
 
 **Bug Fixes**
+
 * [Premium] Export project timelog is failed
 * Delete the selected resource is failed
 
