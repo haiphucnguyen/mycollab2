@@ -99,7 +99,7 @@ public class Executor {
                 Properties properties = new Properties();
                 properties.load(new FileInputStream(iniFile));
                 initialOptions = properties.getProperty("MYCOLLAB_OPTS", "");
-                processRunningPort = Integer.parseInt(properties.getProperty("String initialOptions", "8080"));
+                processRunningPort = Integer.parseInt(properties.getProperty("port", "8080"));
                 processPort = Integer.parseInt(properties.getProperty("process_port", "12345"));
                 stopKey = properties.getProperty("stop_key", "mycollab");
                 LOG.info("Options in config file: " + initialOptions);
