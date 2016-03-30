@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 rem Guess MYCOLLAB_HOME if not defined
 set "CURRENT_DIR=%cd%"
@@ -27,7 +27,10 @@ IF NOT DEFINED EXT_INSTALL (
   goto end
 )
 
+set PR_DEPENDSON=MySQL56
+
 REM Service log configuration
+set PR_DESCRIPTION=MyCollab, project management and collaboration software
 set PR_LOGPREFIX=%SERVICE_NAME%
 set PR_LOGPATH=%MYCOLLAB_HOME%\logs
 set PR_STDOUTPUT=%MYCOLLAB_HOME%\logs\stdout.txt
@@ -51,11 +54,10 @@ set PR_STOPMETHOD=stop
 set PR_STOPPATH=%MYCOLLAB_HOME%
 
 REM JVM configuration
-set PR_JVMMS=256
+set PR_JVMMS=128
 set PR_JVMMX=1024
 set PR_JVMSS=4000
-set PR_JVMOPTIONS=
-
+set PR_JVMOPTIONS=-XX:NewSize=256m#-XX:MaxPermSize=256m#-XX:+DisableExplicitGC#-XX:+CMSClassUnloadingEnabled#-XX:+UseConcMarkSweepGC
 
 if ""%1"" == ""--install"" goto install
 if ""%1"" == ""--uninstall"" goto uninstall

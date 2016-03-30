@@ -125,7 +125,8 @@ public class Executor {
                     while (true) {
                         try (Socket socket = serverSocket.accept();
                              InputStream inputStream = socket.getInputStream();
-                             DataInputStream dataInputStream = new DataInputStream(inputStream)) {
+                             DataInputStream dataInputStream = new DataInputStream(inputStream);
+                             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream())) {
                             String request = dataInputStream.readUTF();
                             if (request.startsWith("RELOAD")) {
                                 String filePath = request.substring("RELOAD:".length());
@@ -145,6 +146,7 @@ public class Executor {
                                 if (stopKey.equals(key)) {
                                     try {
                                         process.stop();
+                                        dataOutputStream.writeUTF("Stop success");
                                     } finally {
                                         LOG.info("Stop wrapper process");
                                         System.exit(-1);
@@ -170,8 +172,10 @@ public class Executor {
         LOG.info("Kill MyCollab server process");
         try (Socket socket = new Socket("localhost", processPort);
              OutputStream outputStream = socket.getOutputStream();
-             DataOutputStream dataOutputStream = new DataOutputStream(outputStream)) {
+             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream())) {
             dataOutputStream.writeUTF("STOP:" + stopKey);
+            LOG.info("Result: " + dataInputStream.readUTF());
         } catch (Exception e) {
             LOG.error("Error while send RELOAD request to the host process", e);
         } finally {
