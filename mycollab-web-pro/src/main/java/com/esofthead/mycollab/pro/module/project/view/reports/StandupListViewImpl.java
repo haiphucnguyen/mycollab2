@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.db.query.DateParam;
 import com.esofthead.mycollab.core.db.query.VariableInjecter;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.eventmanager.EventBusFactory;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectLinkBuilder;
@@ -216,21 +217,9 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
         private static final long serialVersionUID = 1L;
 
         @Override
-        public Component generateRow(SimpleStandupReport obj, int rowIndex) {
-            final StandupReportBlock singleReport = new StandupReportBlock(obj);
-            if (rowIndex == 0) {
-                singleReport.addStyleName("first-report");
-            }
-            return singleReport;
-        }
-
-    }
-
-    static class StandupReportBlock extends HorizontalLayout {
-        private static final long serialVersionUID = 1L;
-
-        StandupReportBlock(SimpleStandupReport report) {
-            this.setStyleName("standup-block");
+        public Component generateRow(SimpleStandupReport report, int rowIndex) {
+            HorizontalLayout rowLayout = new HorizontalLayout();
+            rowLayout.setStyleName("standup-block");
 
             MVerticalLayout userInfo = new MVerticalLayout().withWidth("200px").withFullHeight().withStyleName(UIConstants
                     .HOVER_EFFECT_NOT_BOX);
@@ -239,7 +228,7 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             userInfo.addComponent(UserAvatarControlFactory.createUserAvatarEmbeddedComponent(report.getLogByAvatarId(), 100));
             Label memberLink = new Label(buildMemberLink(report), ContentMode.HTML);
             userInfo.with(memberLink).expand(memberLink).withAlign(memberLink, Alignment.TOP_CENTER);
-            this.addComponent(userInfo);
+            rowLayout.addComponent(userInfo);
 
             MVerticalLayout reportContent = new MVerticalLayout().withStyleName("report-content", UIConstants.HOVER_EFFECT_NOT_BOX);
 
@@ -264,18 +253,20 @@ public class StandupListViewImpl extends AbstractPageView implements StandupList
             whatProblemField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
             reportContent.addComponent(whatProblemField);
 
-            this.addComponent(reportContent);
-            this.setExpandRatio(reportContent, 1.0f);
+            rowLayout.addComponent(reportContent);
+            rowLayout.setExpandRatio(reportContent, 1.0f);
+            return rowLayout;
         }
 
         private String buildMemberLink(SimpleStandupReport report) {
             A userLink = new A().setId("tag" + TOOLTIP_ID).setHref(ProjectLinkBuilder.generateProjectMemberFullLink
                     (CurrentProjectVariables.getProjectId(), report.getLogby()))
-                    .appendText(com.esofthead.mycollab.core.utils.StringUtils.trim(report.getLogByFullName(), 30, true));
+                    .appendText(StringUtils.trim(report.getLogByFullName(), 30, true));
             userLink.setAttribute("onmouseover", TooltipHelper.userHoverJsFunction(report.getLogby()));
             userLink.setAttribute("onmouseleave", TooltipHelper.itemMouseLeaveJsFunction());
 
             return userLink.write();
         }
+
     }
 }
