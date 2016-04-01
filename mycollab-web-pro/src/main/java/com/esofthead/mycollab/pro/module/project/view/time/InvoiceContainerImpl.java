@@ -33,7 +33,6 @@ import com.vaadin.server.Page;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.jouni.restrain.Restrain;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -103,8 +102,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
     public void display() {
         removeAllComponents();
         if (CurrentProjectVariables.canRead(ProjectRolePermissionCollections.INVOICE)) {
-            ELabel invoiceIcon = ELabel.fontIcon(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE))
-                    .withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN).withWidthUndefined();
+            ELabel invoiceIcon = ELabel.h2(ProjectAssetsManager.getAsset(ProjectTypeConstants.INVOICE).getHtml()).withWidthUndefined();
 
             Component headerRightLayout = createHeaderRight();
             statusComboBox = new InvoiceStatusComboBox();

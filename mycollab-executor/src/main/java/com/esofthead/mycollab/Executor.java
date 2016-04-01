@@ -203,7 +203,7 @@ public class Executor {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length > 0 && args[0].equals("--stop")) {
+        if (args.length > 0 && (args[0].equals("stop") || args[0].equals("--stop"))) {
             new Executor().stopServer();
         } else {
             new Executor().runServer();

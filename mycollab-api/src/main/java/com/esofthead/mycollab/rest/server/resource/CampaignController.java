@@ -29,6 +29,9 @@ public class CampaignController {
     @Autowired
     private CommunityLeadMapper communityLeadMapper;
 
+    @Autowired
+    private EditionInfoResolver editionInfoResolver;
+
     @RequestMapping(method = RequestMethod.GET, path = "/linktobuy")
     public String getLinkToBuy() {
         return "https://www.mycollab.com/contact";
@@ -72,7 +75,7 @@ public class CampaignController {
             communityLeadMapper.insert(communityLead);
         }
         Map<String, String> result = new HashMap<>();
-        EditionInfo info = EditionInfoResolver.getEditionInfo();
+        EditionInfo info = editionInfoResolver.getEditionInfo();
         String name = String.format("MyCollab-All-%s.zip", info.getVersion());
         String link = info.getCommunityDownloadLink();
         String altLink = info.getAltCommunityDownloadLink();

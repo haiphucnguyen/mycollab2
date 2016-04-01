@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.MyCollabVersion;
 import com.esofthead.mycollab.shell.view.components.AbstractAboutWindow;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AssetResource;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.WebResourceIds;
 import com.hp.gagawa.java.elements.A;
@@ -15,7 +16,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -36,9 +36,7 @@ public class AboutWindow extends AbstractAboutWindow {
 
         Image about = new Image("", new AssetResource(WebResourceIds._about));
         MVerticalLayout rightPanel = new MVerticalLayout();
-        Label versionLbl = new Label(String.format("MyCollab Cloud Edition %s", MyCollabVersion.getVersion()));
-        versionLbl.addStyleName(ValoTheme.LABEL_H2);
-        versionLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        ELabel versionLbl = ELabel.h2(String.format("MyCollab Cloud Edition %s", MyCollabVersion.getVersion()));
         WebBrowser browser = Page.getCurrent().getWebBrowser();
         Label osLbl = new Label(String.format("%s, %s", System.getProperty("os.name"),
                 browser.getBrowserApplication()));

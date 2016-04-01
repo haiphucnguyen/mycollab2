@@ -50,6 +50,9 @@ Version 5.2.11
 
 **Improvements & New Features**
 
+* Optimize dependency libraries to reduce the distribution file
+* 
+
 **Bug Fixes**
 
 

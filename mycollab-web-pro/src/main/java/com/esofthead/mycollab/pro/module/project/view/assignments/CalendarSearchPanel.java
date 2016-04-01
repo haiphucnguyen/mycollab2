@@ -6,12 +6,11 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.DefaultGenericSearchPanel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.LocalDate;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 
@@ -38,11 +37,7 @@ public class CalendarSearchPanel extends DefaultGenericSearchPanel<ProjectGeneri
 
     @Override
     protected ComponentContainer buildSearchTitle() {
-        Label taskIcon = new Label(FontAwesome.HASHTAG.getHtml() + " Assignments", ContentMode.HTML);
-        taskIcon.addStyleName(ValoTheme.LABEL_H2);
-        taskIcon.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-        taskIcon.setWidthUndefined();
-        return new MHorizontalLayout(taskIcon);
+        return new MHorizontalLayout(ELabel.h2(FontAwesome.HASHTAG.getHtml() + " Assignments").withWidthUndefined());
     }
 
     @Override

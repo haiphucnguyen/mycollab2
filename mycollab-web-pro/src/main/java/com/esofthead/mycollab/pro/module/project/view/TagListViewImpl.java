@@ -19,12 +19,10 @@ import com.esofthead.mycollab.vaadin.web.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -60,11 +58,7 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         }
         MHorizontalLayout header = new MHorizontalLayout().withMargin(new MarginInfo(false, false, true, false))
                 .withWidth("100%");
-        Label headerLbl = new Label(FontAwesome.TAGS.getHtml() + " Tags", ContentMode.HTML);
-        headerLbl.setSizeUndefined();
-        headerLbl.setStyleName(ValoTheme.LABEL_H2);
-        headerLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-        header.with(headerLbl);
+        header.with(ELabel.h2(FontAwesome.TAGS.getHtml() + " Tags").withWidthUndefined());
 
         MHorizontalLayout contentWrapper = new MHorizontalLayout();
         assignmentList = new DefaultBeanPagedList<>(ApplicationContextUtil.getSpringBean(ProjectGenericItemService.class),
@@ -76,8 +70,8 @@ public class TagListViewImpl extends AbstractPageView implements ITagListView {
         MHorizontalLayout panelHeader = new MHorizontalLayout().withMargin(new MarginInfo(false, true,
                 false, true)).withWidth("100%");
         panelHeader.addStyleName("panel-header");
-        ELabel lbl = new ELabel("Tag Cloud").withStyleName(ValoTheme.LABEL_H3, ValoTheme.LABEL_NO_MARGIN);
-        panelHeader.with(lbl).alignAll(Alignment.MIDDLE_LEFT);
+
+        panelHeader.with(ELabel.h3("Tag Cloud")).alignAll(Alignment.MIDDLE_LEFT);
 
         TagCloudComp cloudComp = new TagCloudComp();
         cloudComp.displayTagItems();

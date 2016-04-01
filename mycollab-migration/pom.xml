@@ -47,11 +47,5 @@
             <artifactId>flyway-core</artifactId>
             <version>4.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.jcodec</groupId>
-            <artifactId>jcodec</artifactId>
-            <version>0.1.9</version>
-        </dependency>
     </dependencies>
 </project>

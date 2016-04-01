@@ -43,9 +43,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.collections.CollectionUtils;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 import org.vaadin.viritin.button.MButton;
@@ -261,10 +259,8 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
 
             selectionLayout.addComponent(queryBtn, 8, 0);
 
-            totalHoursLoggingLabel = new Label("Total Hours Logging: 0 Hrs", ContentMode.HTML);
-            totalHoursLoggingLabel.addStyleName(ValoTheme.LABEL_H2);
-            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false))
-                    .withWidth("100%");
+            totalHoursLoggingLabel = ELabel.h2("Total Hours Logging: 0 Hrs");
+            MHorizontalLayout loggingPanel = new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)).withWidth("100%");
             loggingPanel.with(totalHoursLoggingLabel).expand(totalHoursLoggingLabel);
             contentWrapper.addComponent(loggingPanel);
 

@@ -98,6 +98,22 @@
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-sass-compiler</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.flute</groupId>
+                    <artifactId>flute</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.streamhtmlparser</groupId>
+                    <artifactId>streamhtmlparser-jsilver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>javax.validation</groupId>
                     <artifactId>validation-api</artifactId>
                 </exclusion>
@@ -205,21 +221,6 @@
                             <outputDirectory>${installer.staging.dir}/lib</outputDirectory>
                             <excludeScope>provided</excludeScope>
                             <excludeGroupIds>com.esofthead.mycollab</excludeGroupIds>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <!-- copy izpack custom (custom panels, etc.)
-                            jars to izpack staging custom -->
-                        <id>copy-izpack-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${installer.staging.dir}/custom</outputDirectory>
-                            <includeArtifactIds>mycustompanels</includeArtifactIds>
-                            <!-- IMPORTANT: this causes *only* our
-                                custom panels to be copied -->
                         </configuration>
                     </execution>
                 </executions>

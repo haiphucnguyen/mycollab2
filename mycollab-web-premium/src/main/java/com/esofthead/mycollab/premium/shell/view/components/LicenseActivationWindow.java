@@ -7,10 +7,10 @@ import com.esofthead.mycollab.license.LicenseResolver;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AbstractLicenseActivationWindow;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.data.Property;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +43,7 @@ public class LicenseActivationWindow extends AbstractLicenseActivationWindow {
         this.setResizable(false);
         this.setWidth("600px");
         MVerticalLayout content = new MVerticalLayout();
-        Label titleLbl = new Label("MyCollab activated");
-        titleLbl.addStyleName(ValoTheme.LABEL_H2);
-        titleLbl.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+        ELabel titleLbl = ELabel.h2("MyCollab activated");
 
         content.with(titleLbl);
         final FlexibleOptionGroup optionGroup = new FlexibleOptionGroup();

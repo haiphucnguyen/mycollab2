@@ -253,8 +253,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     BugService bugService = ApplicationContextUtil.getSpringBean(BugService.class);
                     final SimpleBug bug = bugService.findById(assignment.getExtraTypeId(), AppContext.getAccountId());
                     if (bug != null) {
-                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                                + bug.getSummary(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme.LABEL_NO_MARGIN);
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + bug.getSummary());
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
                             public void buttonClick(Button.ClickEvent clickEvent) {
@@ -317,9 +316,8 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     final SimpleMilestone milestone = milestoneService.findById(Integer.parseInt(assignment.getTypeId()), AppContext
                             .getAccountId());
                     if (milestone != null) {
-                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                                + milestone.getName(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                                .LABEL_NO_MARGIN);
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
+                                + milestone.getName());
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override
@@ -383,9 +381,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                     final SimpleComponent component = componentService.findById(Integer.parseInt(assignment.getTypeId()),
                             AppContext.getAccountId());
                     if (component != null) {
-                        ELabel headerLbl = new ELabel(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " "
-                                + component.getComponentname(), ContentMode.HTML).withStyleName(ValoTheme.LABEL_H2, ValoTheme
-                                .LABEL_NO_MARGIN);
+                        ELabel headerLbl = ELabel.h2(ProjectAssetsManager.getAsset(assignment.getType()).getHtml() + " " + component.getComponentname());
 
                         Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
                             @Override

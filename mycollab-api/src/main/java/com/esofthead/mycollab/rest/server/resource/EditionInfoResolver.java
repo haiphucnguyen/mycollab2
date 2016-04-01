@@ -2,6 +2,8 @@ package com.esofthead.mycollab.rest.server.resource;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.FileUtils;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,10 +16,12 @@ import java.util.concurrent.TimeUnit;
  * @author MyCollab Ltd
  * @since 5.2.9
  */
-public class EditionInfoResolver {
-    private static EditionInfo editionInfo = new EditionInfo();
+@Service
+public class EditionInfoResolver implements InitializingBean {
+    private EditionInfo editionInfo = new EditionInfo();
 
-    public static void init() {
+    @Override
+    public void afterPropertiesSet() throws Exception {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +68,7 @@ public class EditionInfoResolver {
         }).start();
     }
 
-    private static void loadEditionInfo(File versionFile) throws IOException {
+    private void loadEditionInfo(File versionFile) throws IOException {
         Properties properties = new Properties();
         properties.load(new FileInputStream(versionFile));
         editionInfo.setVersion(properties.getProperty("version", "0"));
@@ -75,11 +79,7 @@ public class EditionInfoResolver {
         editionInfo.setPremiumUpgradeLink(properties.getProperty("premiumUpgradeLink", ""));
     }
 
-    public static EditionInfo getEditionInfo() {
+    public EditionInfo getEditionInfo() {
         return editionInfo;
-    }
-
-    public static void main(String[] args) {
-        init();
     }
 }

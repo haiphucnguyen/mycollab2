@@ -29,8 +29,8 @@ import com.esofthead.mycollab.pro.module.project.view.risk.RiskAddWindow;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
-import com.esofthead.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.view.AbstractLazyPageView;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.UIUtils;
 import com.esofthead.mycollab.vaadin.web.ui.ToggleButtonGroup;
@@ -44,7 +44,6 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents;
 import com.vaadin.ui.components.calendar.event.CalendarEventProvider;
 import com.vaadin.ui.components.calendar.handler.BasicEventMoveHandler;
 import com.vaadin.ui.components.calendar.handler.BasicEventResizeHandler;
-import com.vaadin.ui.themes.ValoTheme;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -88,7 +87,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         }
     };
 
-    private Label headerLbl, billableHoursLbl, nonBillableHoursLbl, assignMeLbl, assignOtherLbl, nonAssigneeLbl;
+    private ELabel headerLbl, billableHoursLbl, nonBillableHoursLbl, assignMeLbl, assignOtherLbl, nonAssigneeLbl;
     private Calendar calendar;
     private LocalDate baseDate, startDate, endDate;
     private CalendarMode mode = CalendarMode.MONTHLY;
@@ -255,8 +254,7 @@ public class CalendarViewImpl extends AbstractLazyPageView implements CalendarVi
         header.with(headerLeftContainer).withAlign(headerLeftContainer, Alignment.MIDDLE_LEFT);
 
         CssLayout titleWrapper = new CssLayout();
-        headerLbl = new Label();
-        headerLbl.setStyleName(ValoTheme.LABEL_H2);
+        headerLbl = ELabel.h2("");
         titleWrapper.addComponent(headerLbl);
 
         Button dailyBtn = new Button("Daily", new Button.ClickListener() {
