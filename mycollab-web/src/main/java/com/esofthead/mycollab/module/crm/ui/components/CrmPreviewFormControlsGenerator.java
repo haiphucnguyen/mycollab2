@@ -26,8 +26,8 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.peter.buttongroup.ButtonGroup;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 
 /**
  * @author MyCollab Ltd.
@@ -49,6 +49,7 @@ public class CrmPreviewFormControlsGenerator<T> {
         this.previewForm = editForm;
 
         layout = new MHorizontalLayout().withStyleName("control-buttons");
+        layout.setSizeUndefined();
 
         Button editButtons = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OPTION),
                 new Button.ClickListener() {
@@ -77,8 +78,6 @@ public class CrmPreviewFormControlsGenerator<T> {
     }
 
     public HorizontalLayout createButtonControls(int buttonEnableFlags, String permissionItem) {
-        layout.setSizeUndefined();
-
         boolean canRead = false;
         boolean canWrite = false;
         boolean canAccess = false;
@@ -88,82 +87,79 @@ public class CrmPreviewFormControlsGenerator<T> {
             canAccess = AppContext.canAccess(permissionItem);
         }
 
+        MHorizontalLayout editBtns = new MHorizontalLayout();
+        layout.addComponent(editBtns);
+
         OptionPopupContent popupButtonsControl = new OptionPopupContent();
 
         if ((buttonEnableFlags & ADD_BTN_PRESENTED) == ADD_BTN_PRESENTED) {
-            Button addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            optionBtn.setPopupVisible(false);
-                            T item = previewForm.getBean();
-                            previewForm.fireAddForm(item);
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    optionBtn.setPopupVisible(false);
+                    T item = previewForm.getBean();
+                    previewForm.fireAddForm(item);
+                }
+            });
             addBtn.setIcon(FontAwesome.PLUS);
             addBtn.setStyleName(UIConstants.BUTTON_ACTION);
             addBtn.setEnabled(canWrite);
-            layout.addComponent(addBtn);
+            editBtns.addComponent(addBtn);
         }
 
         if ((buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
-            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button editBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_EDIT), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            optionBtn.setPopupVisible(false);
-                            T item = previewForm.getBean();
-                            previewForm.fireEditForm(item);
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    optionBtn.setPopupVisible(false);
+                    T item = previewForm.getBean();
+                    previewForm.fireEditForm(item);
+                }
+            });
             editBtn.setIcon(FontAwesome.EDIT);
             editBtn.setStyleName(UIConstants.BUTTON_ACTION);
             editBtn.setEnabled(canWrite);
-            layout.addComponent(editBtn);
+            editBtns.addComponent(editBtn);
         }
 
         if ((buttonEnableFlags & DELETE_BTN_PRESENTED) == DELETE_BTN_PRESENTED) {
-            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button deleteBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_DELETE), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            T item = previewForm.getBean();
-                            previewForm.fireDeleteForm(item);
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    T item = previewForm.getBean();
+                    previewForm.fireDeleteForm(item);
+                }
+            });
             deleteBtn.setIcon(FontAwesome.TRASH_O);
             deleteBtn.setStyleName(UIConstants.BUTTON_DANGER);
-            layout.addComponent(deleteBtn);
             deleteBtn.setEnabled(canAccess);
+            editBtns.addComponent(deleteBtn);
         }
 
         if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
-            Button cloneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLONE),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+            Button cloneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLONE), new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(final ClickEvent event) {
-                            optionBtn.setPopupVisible(false);
-                            T item = previewForm.getBean();
-                            previewForm.fireCloneForm(item);
-                        }
-                    });
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    optionBtn.setPopupVisible(false);
+                    T item = previewForm.getBean();
+                    previewForm.fireCloneForm(item);
+                }
+            });
             cloneBtn.setIcon(FontAwesome.ROAD);
             popupButtonsControl.addOption(cloneBtn);
         }
 
         optionBtn.setContent(popupButtonsControl);
 
-        if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED
-                | (buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
-
+        if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED | (buttonEnableFlags & EDIT_BTN_PRESENTED) == EDIT_BTN_PRESENTED) {
             layout.addComponent(optionBtn);
         }
 
@@ -176,7 +172,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 
                 @Override
                 public void buttonClick(final ClickEvent event) {
-                     T item = previewForm.getBean();
+                    T item = previewForm.getBean();
                     previewForm.fireGotoPrevious(item);
                 }
             });

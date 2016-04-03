@@ -623,12 +623,6 @@ $v-line-height--header:1.5em;
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
       border-bottom: 1px solid $my-separator-color;
-      .addNewControl {
-        border-bottom: none;
-      }
-    }
-    .addNewControl {
-      @include margin-container(5px, 0px, 5px, 0px);
     }
   }
 
@@ -1355,9 +1349,6 @@ $v-line-height--header:1.5em;
       }
       &.v-margin-left {
         padding-left: 15px;
-      }
-      .control-buttons .v-horizontallayout-margin {
-        padding: 0px;
       }
     }
   }

@@ -89,7 +89,7 @@ public abstract class StandupReportFormLayoutFactory implements IFormLayoutFacto
         }
     }
 
-    protected abstract Layout createTopPanel();
+    protected abstract ComponentContainer createTopPanel();
 
     private static class StandupCustomField extends CustomComponent {
         private static final long serialVersionUID = 1L;

@@ -55,9 +55,10 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
         this.previewForm = editForm;
         layout = new MHorizontalLayout().withStyleName("control-buttons");
         layout.setSizeUndefined();
+        layout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         popupButtonsControl = new OptionPopupContent();
         editButtons = new MHorizontalLayout();
-        editButtons.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
+
     }
 
     public HorizontalLayout createButtonControls(int buttonEnableFlags, String permissionItem) {
@@ -78,6 +79,22 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
             boolean canWrite = CurrentProjectVariables.canWrite(permissionItem);
             boolean canAccess = CurrentProjectVariables.canAccess(permissionItem);
             boolean canRead = CurrentProjectVariables.canRead(permissionItem);
+
+            if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
+                Button assignBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ASSIGN), new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        T item = previewForm.getBean();
+                        previewForm.fireAssignForm(item);
+                    }
+                });
+                assignBtn.setIcon(FontAwesome.SHARE);
+                assignBtn.setStyleName(UIConstants.BUTTON_ACTION);
+                editButtons.addComponent(assignBtn);
+                assignBtn.setEnabled(canWrite);
+            }
 
             if ((buttonEnableFlags & ADD_BTN_PRESENTED) == ADD_BTN_PRESENTED) {
                 Button addBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ADD), new Button.ClickListener() {
@@ -129,22 +146,6 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 editButtons.addComponent(deleteBtn);
             }
 
-            if ((buttonEnableFlags & ASSIGN_BTN_PRESENTED) == ASSIGN_BTN_PRESENTED) {
-                Button assignBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_ASSIGN), new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(final ClickEvent event) {
-                        T item = previewForm.getBean();
-                        previewForm.fireAssignForm(item);
-                    }
-                });
-                assignBtn.setIcon(FontAwesome.SHARE);
-                assignBtn.setStyleName(UIConstants.BUTTON_ACTION);
-                editButtons.addComponent(assignBtn, 0);
-                assignBtn.setEnabled(canWrite);
-            }
-
             if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {
                 Button cloneBtn = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_CLONE), new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
@@ -161,12 +162,13 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 popupButtonsControl.addOption(cloneBtn);
             }
 
+            layout.with(editButtons);
+
             if (popupButtonsControl.getComponentCount() > 0) {
                 optionBtn.setContent(popupButtonsControl);
-                editButtons.addComponent(optionBtn);
+                layout.addComponent(optionBtn);
             }
 
-            layout.with(editButtons).withAlign(editButtons, Alignment.MIDDLE_RIGHT);
 
             if ((buttonEnableFlags & NAVIGATOR_BTN_PRESENTED) == NAVIGATOR_BTN_PRESENTED) {
                 ButtonGroup navigationBtns = new ButtonGroup();
@@ -199,10 +201,9 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 nextItemBtn.setStyleName(UIConstants.BUTTON_ACTION);
                 nextItemBtn.setDescription(AppContext.getMessage(GenericI18Enum.TOOLTIP_SHOW_NEXT_ITEM));
                 nextItemBtn.setEnabled(canRead);
-
                 navigationBtns.addButton(nextItemBtn);
+
                 layout.addComponent(navigationBtns);
-                layout.setComponentAlignment(navigationBtns, Alignment.MIDDLE_RIGHT);
             }
         }
 
@@ -213,7 +214,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
      * @param comp
      */
     public void insertToControlBlock(Component comp) {
-        editButtons.addComponent(comp, 0);
+        layout.addComponent(comp, 0);
     }
 
     public void addOptionButton(Button button) {

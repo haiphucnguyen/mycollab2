@@ -79,17 +79,7 @@
     border-radius: 0;
   }
 
-  .control-buttons {
-    @include margin-container(5px, 0px, 5px, 5px);
-  }
-
   div .addview-layout-body {
     border: none;
-    .control-buttons {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      border-bottom: 1px solid $my-separator-color;
-    }
   }
 }

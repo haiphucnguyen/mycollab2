@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.ui.AbstractBeanFieldGroupEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GenericBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.EditFormControlsGenerator;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
@@ -64,12 +65,12 @@ public class StandupAddViewImpl extends AbstractPageView implements StandupAddVi
             super(AppContext.getMessage(StandupI18nEnum.FORM_EDIT_TITLE, AppContext.formatDate(new GregorianCalendar().getTime())));
         }
 
-        private Layout createButtonControls() {
+        private ComponentContainer createButtonControls() {
             return (new EditFormControlsGenerator<>(editForm)).createButtonControls(true, false, true);
         }
 
         @Override
-        protected Layout createTopPanel() {
+        protected ComponentContainer createTopPanel() {
             return this.createButtonControls();
         }
     }
