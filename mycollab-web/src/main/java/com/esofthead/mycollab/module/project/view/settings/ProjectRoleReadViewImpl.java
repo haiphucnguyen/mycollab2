@@ -61,9 +61,6 @@ public class ProjectRoleReadViewImpl extends VerticalLayout implements ProjectRo
 
         previewForm = initPreviewForm();
         ComponentContainer actionControls = createButtonControls();
-        if (actionControls != null) {
-            actionControls.addStyleName("control-buttons");
-        }
 
         addHeaderRightContent(actionControls);
 

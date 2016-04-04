@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageView;
 import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.*;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -70,7 +71,8 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
         this.previewLayout = layout;
 
-        header = new MHorizontalLayout().withSpacing(false).withStyleName("hdr-view").withWidth("100%").withMargin(true);
+        header = new MHorizontalLayout().withSpacing(false).withStyleName("hdr-view").withWidth("100%").withMargin
+                (new MarginInfo(true, false, true, false));
         ((MHorizontalLayout) header).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {
@@ -104,7 +106,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         previewForm = initPreviewForm();
         ComponentContainer actionControls = createButtonControls();
         if (actionControls != null) {
-            actionControls.addStyleName("control-buttons");
             addHeaderRightContent(actionControls);
         }
 

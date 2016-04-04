@@ -48,7 +48,7 @@ public class CrmPreviewFormControlsGenerator<T> {
     public CrmPreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
 
-        layout = new MHorizontalLayout().withStyleName("control-buttons");
+        layout = new MHorizontalLayout();
         layout.setSizeUndefined();
 
         Button editButtons = new Button(AppContext.getMessage(GenericI18Enum.BUTTON_OPTION),

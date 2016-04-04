@@ -16,6 +16,9 @@
  */
 package com.esofthead.mycollab.reporting;
 
+import net.sf.dynamicreports.report.exception.DRException;
+
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
 import java.util.Map;
@@ -49,5 +52,5 @@ public abstract class ReportTemplateExecutor {
 
     abstract protected void fillReport();
 
-    abstract protected void outputReport(OutputStream outputStream);
+    abstract protected void outputReport(OutputStream outputStream) throws IOException, DRException;
 }

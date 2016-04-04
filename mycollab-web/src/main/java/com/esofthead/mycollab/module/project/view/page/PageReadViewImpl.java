@@ -17,7 +17,6 @@
 package com.esofthead.mycollab.module.project.view.page;
 
 import com.esofthead.mycollab.common.i18n.DayI18nEnum;
-import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.configuration.StorageFactory;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.html.DivLessFormatter;
@@ -53,10 +52,10 @@ import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +91,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private PageService pageService;
 
     public PageReadViewImpl() {
-        super(new MHorizontalLayout().withMargin(true), new PagePreviewFormLayout());
+        super(new MHorizontalLayout().withMargin(new MarginInfo(true, false, true, false)), new PagePreviewFormLayout());
         pageService = ApplicationContextUtil.getSpringBean(PageService.class);
         constructHeader();
     }

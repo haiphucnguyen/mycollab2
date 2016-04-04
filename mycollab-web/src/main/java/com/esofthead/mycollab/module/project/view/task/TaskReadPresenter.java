@@ -31,13 +31,14 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.*;
+import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
-import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UI;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -74,6 +75,12 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
             }
 
             @Override
+            public void onPrint(Object source, SimpleTask data) {
+                PrintButton btn = (PrintButton) source;
+                btn.doPrint(data);
+            }
+
+            @Override
             public void onDelete(final SimpleTask data) {
                 ConfirmDialogExt.show(UI.getCurrent(),
                         AppContext.getMessage(GenericI18Enum.DIALOG_DELETE_TITLE, AppContext.getSiteName()),
@@ -87,10 +94,8 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
                             public void onClose(
                                     final ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
-                                    ProjectTaskService taskService = ApplicationContextUtil.
-                                            getSpringBean(ProjectTaskService.class);
-                                    taskService.removeWithSession(data,
-                                            AppContext.getUsername(), AppContext.getAccountId());
+                                    ProjectTaskService taskService = ApplicationContextUtil.getSpringBean(ProjectTaskService.class);
+                                    taskService.removeWithSession(data, AppContext.getUsername(), AppContext.getAccountId());
                                     PageActionChain chain = new PageActionChain(new ProjectScreenData.Goto
                                             (CurrentProjectVariables.getProjectId()), new TaskScreenData.GotoDashboard());
                                     EventBusFactory.getInstance().post(new ProjectEvent.GotoMyProject(this, chain));

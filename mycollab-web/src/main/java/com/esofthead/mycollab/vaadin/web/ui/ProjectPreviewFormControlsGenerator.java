@@ -18,6 +18,7 @@ package com.esofthead.mycollab.vaadin.web.ui;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
@@ -43,6 +44,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
     public static final int CLONE_BTN_PRESENTED = 16;
     public static final int ASSIGN_BTN_PRESENTED = 32;
     public static final int NAVIGATOR_BTN_PRESENTED = 64;
+    public static final int PRINT_BTN_PRESENTED = 128;
 
     private AdvancedPreviewBeanForm<T> previewForm;
 
@@ -53,7 +55,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
     public ProjectPreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
-        layout = new MHorizontalLayout().withStyleName("control-buttons");
+        layout = new MHorizontalLayout();
         layout.setSizeUndefined();
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT);
         popupButtonsControl = new OptionPopupContent();
@@ -144,6 +146,23 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
                 deleteBtn.setStyleName(UIConstants.BUTTON_DANGER);
                 deleteBtn.setEnabled(canAccess);
                 editButtons.addComponent(deleteBtn);
+            }
+
+            if ((buttonEnableFlags & PRINT_BTN_PRESENTED) == PRINT_BTN_PRESENTED) {
+                final PrintButton printBtn = new PrintButton();
+                printBtn.addClickListener(new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(final ClickEvent event) {
+                        T item = previewForm.getBean();
+                        previewForm.firePrintForm(printBtn, item);
+                    }
+                });
+                printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+                printBtn.setDescription("Print");
+                printBtn.setEnabled(canRead);
+                editButtons.addComponent(printBtn);
             }
 
             if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {

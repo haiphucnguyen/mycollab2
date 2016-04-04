@@ -283,7 +283,6 @@ public abstract class TimeLogEditWindow<V extends ValuedBean> extends Window {
                     remainTimeLbl.setValue(remainTimeInputField.getValue() + "");
                     remainTimeInputField.setValue(0d);
                 }
-
             }
         });
 

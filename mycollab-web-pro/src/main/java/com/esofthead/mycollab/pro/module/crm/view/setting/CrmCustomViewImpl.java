@@ -84,7 +84,6 @@ public class CrmCustomViewImpl extends AbstractPageView implements ICrmCustomVie
         headerBox.addComponent(headerTitle);
 
         MHorizontalLayout controlLayout = new MHorizontalLayout();
-        controlLayout.addStyleName("control-buttons");
         moduleComboBox = new ModuleSelectionComboBox();
 
         Label moduleLbl = new Label("Module: ");

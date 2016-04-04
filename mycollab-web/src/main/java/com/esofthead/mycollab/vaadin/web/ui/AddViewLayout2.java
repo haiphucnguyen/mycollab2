@@ -81,7 +81,6 @@ public class AddViewLayout2 extends VerticalLayout {
     }
 
     public void addControlButtons(Component controlsBtn) {
-        controlsBtn.addStyleName("control-buttons");
         addHeaderRight(controlsBtn);
     }
 

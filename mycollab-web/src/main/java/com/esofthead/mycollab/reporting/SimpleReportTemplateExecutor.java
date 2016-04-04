@@ -16,7 +16,6 @@
  */
 package com.esofthead.mycollab.reporting;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
@@ -34,9 +33,11 @@ import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
+import net.sf.dynamicreports.report.exception.DRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.GregorianCalendar;
@@ -63,7 +64,6 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
         this.fieldBuilder = fieldBuilder;
         this.classType = classType;
     }
-
 
     @Override
     protected void initReport() throws Exception {
@@ -104,24 +104,20 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
     }
 
     @Override
-    protected void outputReport(OutputStream outputStream) {
-        try {
-            if (outputForm == ReportExportType.PDF) {
-                reportBuilder.toPdf(outputStream);
-            } else if (outputForm == ReportExportType.CSV) {
-                JasperCsvExporterBuilder csvExporter = export.csvExporter(outputStream);
-                reportBuilder.ignorePageWidth();
-                reportBuilder.toCsv(csvExporter);
-            } else if (outputForm == ReportExportType.EXCEL) {
-                JasperXlsxExporterBuilder xlsExporter = export.xlsxExporter(outputStream)
-                        .setDetectCellType(true).setIgnorePageMargins(true)
-                        .setWhitePageBackground(false).setRemoveEmptySpaceBetweenColumns(true);
-                reportBuilder.toXlsx(xlsExporter);
-            } else {
-                throw new IllegalArgumentException("Do not support output type " + outputForm);
-            }
-        } catch (Exception e) {
-            throw new MyCollabException("Error in reporting", e);
+    protected void outputReport(OutputStream outputStream) throws DRException, IOException {
+        if (outputForm == ReportExportType.PDF) {
+            reportBuilder.toPdf(outputStream);
+        } else if (outputForm == ReportExportType.CSV) {
+            JasperCsvExporterBuilder csvExporter = export.csvExporter(outputStream);
+            reportBuilder.ignorePageWidth();
+            reportBuilder.toCsv(csvExporter);
+        } else if (outputForm == ReportExportType.EXCEL) {
+            JasperXlsxExporterBuilder xlsExporter = export.xlsxExporter(outputStream)
+                    .setDetectCellType(true).setIgnorePageMargins(true)
+                    .setWhitePageBackground(false).setRemoveEmptySpaceBetweenColumns(true);
+            reportBuilder.toXlsx(xlsExporter);
+        } else {
+            throw new IllegalArgumentException("Do not support output type " + outputForm);
         }
     }
 
