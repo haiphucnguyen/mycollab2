@@ -13,6 +13,7 @@ import net.sf.dynamicreports.report.exception.DRException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
@@ -33,8 +34,9 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     }
 
     @Override
-    protected void fillReport() {
-
+    protected void fillReport() throws DRException {
+        Map<String, Object> parameters = reportBuilder.getJasperParameters();
+        B bean = (B) parameters.get("bean");
     }
 
     @Override

@@ -214,14 +214,14 @@ public class TaskReadViewImpl extends AbstractPreviewItemComp<SimpleTask> implem
         void displayTaskHeader(SimpleTask task) {
             if (task.getParenttaskid() == null) {
                 MHorizontalLayout header = new MHorizontalLayout().withWidth("100%");
-                titleLbl = ELabel.h2(task.getTaskname());
+                titleLbl = ELabel.h3(task.getTaskname());
                 header.with(titleLbl).expand(titleLbl);
                 this.addHeader(header);
             } else {
                 MVerticalLayout header = new MVerticalLayout().withMargin(false);
                 Label parentLabel = new Label(buildParentTaskLink(task), ContentMode.HTML);
 
-                titleLbl = ELabel.h2("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + task.getTaskname());
+                titleLbl = ELabel.h3("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + task.getTaskname());
                 header.with(parentLabel, titleLbl);
                 this.addHeader(header);
             }

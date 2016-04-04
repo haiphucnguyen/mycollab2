@@ -269,7 +269,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
 
         void displayBugHeader(final SimpleBug bug) {
             MVerticalLayout header = new MVerticalLayout().withWidth("100%").withMargin(false);
-            titleLbl = ELabel.h2(bug.getSummary());
+            titleLbl = ELabel.h3(bug.getSummary());
             header.with(titleLbl).expand(titleLbl);
             this.addHeader(header);
 

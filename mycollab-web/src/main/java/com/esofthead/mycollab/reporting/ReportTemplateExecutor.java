@@ -50,7 +50,7 @@ public abstract class ReportTemplateExecutor {
 
     abstract protected void initReport() throws Exception;
 
-    abstract protected void fillReport();
+    abstract protected void fillReport() throws DRException;
 
     abstract protected void outputReport(OutputStream outputStream) throws IOException, DRException;
 }

@@ -66,12 +66,12 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public AbstractPreviewItemComp(String headerText, FontAwesome iconResource, ReadViewLayout layout) {
-        ELabel headerLbl = ELabel.h3("");
+        ELabel headerLbl = ELabel.h2("");
         headerLbl.setSizeUndefined();
 
         this.previewLayout = layout;
 
-        header = new MHorizontalLayout().withSpacing(false).withStyleName("hdr-view").withWidth("100%").withMargin
+        header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%").withMargin
                 (new MarginInfo(true, false, true, false));
         ((MHorizontalLayout) header).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
@@ -132,7 +132,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
             bodyContainer.setSizeFull();
             bodyContainer.addStyleName("readview-body-wrap");
             bodyContent = new MVerticalLayout().withSpacing(false).withFullWidth().withMargin(false).with(previewForm);
-            bodyContainer.addComponent(bodyContent);
+            bodyContainer.addComponent(previewForm);
             previewLayout.addBody(bodyContainer);
         }
 
