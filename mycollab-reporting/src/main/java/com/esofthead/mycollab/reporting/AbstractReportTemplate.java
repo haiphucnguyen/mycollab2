@@ -21,8 +21,8 @@ import com.esofthead.mycollab.reporting.expression.CompBuilderValue;
 import com.esofthead.mycollab.reporting.expression.HyperlinkValue;
 import com.esofthead.mycollab.reporting.expression.MValue;
 import com.esofthead.mycollab.reporting.expression.SimpleFieldExpression;
-import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.component.LineBuilder;
 import net.sf.dynamicreports.report.builder.style.PaddingBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
@@ -30,7 +30,6 @@ import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
 import java.awt.*;
-import java.util.Locale;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
@@ -39,15 +38,18 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.*;
  * @since 4.1.2
  */
 public abstract class AbstractReportTemplate {
+    private Color borderColor = new Color(233, 233, 233);
+
     private StyleBuilder rootStyle;
     private StyleBuilder boldStyle;
     private StyleBuilder italicStyle;
     private StyleBuilder underlineStyle;
     private StyleBuilder boldCenteredStyle;
+    private StyleBuilder h2Style;
+    private StyleBuilder h3Style;
     private StyleBuilder columnTitleStyle;
     private StyleBuilder columnStyle;
     private StyleBuilder borderStyle;
-    private StyleBuilder formCaptionStyle;
     private StyleBuilder metaInfoStyle;
 
     public AbstractReportTemplate() {
@@ -56,10 +58,10 @@ public abstract class AbstractReportTemplate {
         italicStyle = stl.style(rootStyle).italic();
         underlineStyle = stl.style(rootStyle).underline();
         boldCenteredStyle = stl.style(boldStyle).setTextAlignment(HorizontalTextAlignment.LEFT, VerticalTextAlignment.MIDDLE);
-        borderStyle = stl.style(rootStyle).setBorder(stl.pen1Point().setLineColor(new Color(233, 233, 233)));
+        borderStyle = stl.style(rootStyle).setBorder(stl.pen1Point().setLineColor(borderColor));
         metaInfoStyle = stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153));
-        formCaptionStyle = stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153))
-                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
+        h2Style = stl.style(rootStyle).bold().setFontSize(15);
+        h3Style = stl.style(rootStyle).bold().setFontSize(13);
 
         PaddingBuilder padding = stl.padding().setLeft(8);
         columnStyle = stl.style(rootStyle).setVerticalTextAlignment(VerticalTextAlignment.MIDDLE);
@@ -89,7 +91,20 @@ public abstract class AbstractReportTemplate {
     }
 
     public StyleBuilder getFormCaptionStyle() {
-        return formCaptionStyle;
+        return stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153))
+                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
+    }
+
+    public StyleBuilder getH2Style() {
+        return h2Style;
+    }
+
+    public StyleBuilder getH3Style() {
+        return h3Style;
+    }
+
+    public Color getBorderColor() {
+        return borderColor;
     }
 
     public StyleBuilder getColumnTitleStyle() {
@@ -106,6 +121,10 @@ public abstract class AbstractReportTemplate {
         } else {
             throw new MyCollabException("Do not support mvalue type " + value);
         }
+    }
+
+    public LineBuilder line() {
+        return cmp.line().setPen(stl.pen().setLineColor(borderColor));
     }
 
     private ComponentBuilder buildHyperLink(HyperlinkValue hyperlink) {

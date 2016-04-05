@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.reporting;
 
-import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleComment;
@@ -93,6 +92,16 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         B bean = (B) parameters.get("bean");
         FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
         FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatter(formReportLayout.getModuleName());
+
+        try {
+            String titleValue = (String) PropertyUtils.getProperty(bean, formReportLayout.getTitleField());
+            HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(titleValue)
+                    .setStyle(reportTemplate.getH2Style()));
+            reportBuilder.title(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new MyCollabException("Error", e);
+        }
+
         DynaForm dynaForm = formReportLayout.getDynaForm();
         int sectionCount = dynaForm.getSectionCount();
         for (int i = 0; i < sectionCount; i++) {
@@ -187,13 +196,13 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         AuditLogService auditLogService = ApplicationContextUtil.getSpringBean(AuditLogService.class);
         final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
         logCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.PRJ));
         logCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
         logCriteria.setTypeId(StringSearchField.and(typeId + ""));
         final int logCount = auditLogService.getTotalCount(logCriteria);
         int totalNums = commentCount + logCount;
-        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + totalNums + ")"));
-        reportBuilder.title(historyHeader);
+        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + totalNums + ")")
+                .setStyle(reportTemplate.getH3Style()));
+        reportBuilder.title(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
 
         List<SimpleComment> comments = commentService.findPagableListByCriteria(new SearchRequest<>(commentCriteria, 0, Integer.MAX_VALUE));
         List<SimpleAuditLog> auditLogs = auditLogService.findPagableListByCriteria(new SearchRequest<>(logCriteria, 0, Integer.MAX_VALUE));
@@ -272,6 +281,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                 cmp.text(String.format("Generated at: %s",
                         DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss", timeZone))));
 
-        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(cmp.line()).newRow().add(cmp.verticalGap(10));
+        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportTemplate.line()).newRow().add(cmp
+                .verticalGap(10));
     }
 }
