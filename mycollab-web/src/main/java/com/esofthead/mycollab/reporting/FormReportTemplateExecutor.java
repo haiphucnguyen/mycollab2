@@ -54,6 +54,11 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
 
     @Override
     protected void fillReport() throws DRException {
+        printForm();
+        printActivities();
+    }
+
+    private void printForm() {
         Map<String, Object> parameters = this.getParameters();
         B bean = (B) parameters.get("bean");
         FieldGroupFormatter fieldGroupFormatter = (FieldGroupFormatter) parameters.get("formatter");
@@ -65,6 +70,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             if (section.isDeletedSection()) {
                 continue;
             }
+
             if (StringUtils.isNotBlank(section.getHeader())) {
 
             }
@@ -124,6 +130,15 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                 throw new MyCollabException("Does not support attachForm layout except 1 or 2 columns");
             }
         }
+    }
+
+    private void printActivities() {
+        Map<String, Object> parameters = this.getParameters();
+        B bean = (B) parameters.get("bean");
+        FieldGroupFormatter fieldGroupFormatter = (FieldGroupFormatter) parameters.get("formatter");
+        FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
+        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History"));
+        reportBuilder.title(historyHeader);
     }
 
     @Override

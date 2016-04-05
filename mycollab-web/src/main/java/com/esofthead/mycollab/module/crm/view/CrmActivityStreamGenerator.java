@@ -16,12 +16,15 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.ui.format.*;
-import com.esofthead.mycollab.utils.AuditLogPrinter;
+import com.esofthead.mycollab.utils.FieldGroupFormatter;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,31 +33,47 @@ import java.util.Map;
  */
 public class CrmActivityStreamGenerator {
 
-    private static final Map<String, AuditLogPrinter> auditPrinters;
+    private static final Map<String, FieldGroupFormatter> auditPrinters;
 
     static {
         auditPrinters = new HashMap<>();
-        auditPrinters.put(CrmTypeConstants.ACCOUNT, new AuditLogPrinter(AccountFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.CONTACT, new AuditLogPrinter(ContactFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.CAMPAIGN, new AuditLogPrinter(CampaignFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.LEAD, new AuditLogPrinter(LeadFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.OPPORTUNITY, new AuditLogPrinter(OpportunityFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.CASE, new AuditLogPrinter(CaseFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.MEETING, new AuditLogPrinter(MeetingFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.TASK, new AuditLogPrinter(AssignmentFieldFormatter.instance()));
-        auditPrinters.put(CrmTypeConstants.CALL, new AuditLogPrinter(CallFieldFormatter.instance()));
+        auditPrinters.put(CrmTypeConstants.ACCOUNT, AccountFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.CONTACT, ContactFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.CAMPAIGN, CampaignFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.LEAD, LeadFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.OPPORTUNITY, OpportunityFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.CASE, CaseFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.MEETING, MeetingFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.TASK, AssignmentFieldFormatter.instance());
+        auditPrinters.put(CrmTypeConstants.CALL, CallFieldFormatter.instance());
     }
 
-    public static String generatorDetailChangeOfActivity(
-            SimpleActivityStream activityStream) {
-
+    public static String generatorDetailChangeOfActivity(SimpleActivityStream activityStream) {
         if (activityStream.getAssoAuditLog() != null) {
-            AuditLogPrinter auditLogHandler = auditPrinters.get(activityStream.getType());
-            if (auditLogHandler != null) {
-                return auditLogHandler.generateChangeSet(activityStream.getAssoAuditLog());
-            }
-        }
+            FieldGroupFormatter groupFormatter = auditPrinters.get(activityStream.getType());
+            if (groupFormatter != null) {
+                StringBuffer str = new StringBuffer("");
+                boolean isAppended = false;
+                List<AuditChangeItem> changeItems = activityStream.getAssoAuditLog().getChangeItems();
+                if (CollectionUtils.isNotEmpty(changeItems)) {
+                    for (AuditChangeItem item : changeItems) {
+                        String fieldName = item.getField();
+                        FieldGroupFormatter.FieldDisplayHandler fieldDisplayHandler = groupFormatter.getFieldDisplayHandler(fieldName);
+                        if (fieldDisplayHandler != null) {
+                            isAppended = true;
+                            str.append(fieldDisplayHandler.generateLogItem(item));
+                        }
+                    }
 
+                }
+                if (isAppended) {
+                    str.insert(0, "<p>").insert(0, "<ul>");
+                    str.append("</ul>").append("</p>");
+                }
+                return str.toString();
+            }
+
+        }
         return "";
     }
 }
