@@ -24,7 +24,6 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.ui.ProjectAssetsManager;
 import com.esofthead.mycollab.module.project.ui.components.ProjectActivityComponent;
-import com.esofthead.mycollab.module.project.ui.format.*;
 import com.esofthead.mycollab.module.project.view.IFavoriteView;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.bug.BugPreviewForm;
@@ -270,8 +269,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         BugPreviewForm form = new BugPreviewForm();
                         form.setBean(bug);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, assignment.getProjectId(),
-                                BugFieldFormatter.instance());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG, assignment.getProjectId());
                         activityComponent.loadActivities("" + bug.getId());
                         addComponent(activityComponent);
                     }
@@ -302,8 +300,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         TaskPreviewForm form = new TaskPreviewForm();
                         form.setBean(task);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, assignment
-                                .getProjectId(), TaskFieldFormatter.instance());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.TASK, assignment.getProjectId());
                         activityComponent.loadActivities("" + task.getId());
                         addComponent(activityComponent);
                     }
@@ -335,8 +332,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         MilestonePreviewForm form = new MilestonePreviewForm();
                         form.setBean(milestone);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.MILESTONE, assignment.getProjectId(),
-                                MilestoneFieldFormatter.instance());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.MILESTONE, assignment.getProjectId());
                         activityComponent.loadActivities("" + milestone.getId());
                         addComponent(activityComponent);
                     }
@@ -367,8 +363,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         RiskPreviewForm form = new RiskPreviewForm();
                         form.setBean(risk);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, assignment
-                                .getProjectId(), RiskFieldFormatter.instance());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.RISK, assignment.getProjectId());
                         activityComponent.loadActivities("" + risk.getId());
                         addComponent(activityComponent);
                     }
@@ -399,8 +394,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         ComponentPreviewForm form = new ComponentPreviewForm();
                         form.setBean(component);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment
-                                .getProjectId(), ComponentFieldFormatter.instance());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_COMPONENT, assignment.getProjectId());
                         activityComponent.loadActivities("" + component.getId());
                         addComponent(activityComponent);
                     }
@@ -433,8 +427,7 @@ public class FavoriteViewImpl extends AbstractPageView implements IFavoriteView 
                         VersionPreviewForm form = new VersionPreviewForm();
                         form.setBean(version);
                         addComponent(form);
-                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment
-                                .getProjectId(), VersionFieldFormatter.instance());
+                        activityComponent = new ProjectActivityComponent(ProjectTypeConstants.BUG_VERSION, assignment.getProjectId());
                         activityComponent.loadActivities("" + version.getId());
                         addComponent(activityComponent);
                     }

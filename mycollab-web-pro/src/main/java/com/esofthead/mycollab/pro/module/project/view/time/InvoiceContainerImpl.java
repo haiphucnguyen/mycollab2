@@ -320,8 +320,7 @@ public class InvoiceContainerImpl extends AbstractPageView implements IInvoiceCo
             previewForm = new AdvancedPreviewBeanForm<>();
             addComponent(previewForm);
 
-            activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INVOICE, CurrentProjectVariables.getProjectId(),
-                    InvoiceFieldFormatter.instance());
+            activityComponent = new ProjectActivityComponent(ProjectTypeConstants.INVOICE, CurrentProjectVariables.getProjectId());
             addComponent(activityComponent);
 
             if (StringUtils.isBlank(invoice.getNote())) {
