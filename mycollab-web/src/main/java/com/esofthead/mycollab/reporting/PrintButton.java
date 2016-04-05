@@ -19,9 +19,8 @@ public class PrintButton extends Button {
         printWindowOpener.extend(this);
     }
 
-    public void doPrint(Object bean, FormReportLayout formReportLayout, FieldGroupFormatter fieldGroupFormatter) {
+    public void doPrint(Object bean, FormReportLayout formReportLayout) {
         formReportStreamSource.setBean(bean);
         formReportStreamSource.setFormLayout(formReportLayout);
-        formReportStreamSource.setFieldGroupFormatter(fieldGroupFormatter);
     }
 }

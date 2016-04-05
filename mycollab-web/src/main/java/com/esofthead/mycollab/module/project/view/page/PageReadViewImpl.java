@@ -98,12 +98,12 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private void constructHeader() {
         pageVersionsSelection = new PageVersionSelectionBox();
 
-        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH3(ProjectTypeConstants.PAGE, AppContext.getMessage
+        HeaderWithFontAwesome headerLbl = ComponentUtils.headerH2(ProjectTypeConstants.PAGE, AppContext.getMessage
                 (Page18InEnum.VIEW_READ_TITLE));
         headerLbl.setWidthUndefined();
 
-        ((MHorizontalLayout) header).addComponent(headerLbl, 0);
-        ((MHorizontalLayout) header).addComponent(pageVersionsSelection, 1);
+        header.addComponent(headerLbl, 0);
+        header.addComponent(pageVersionsSelection, 1);
         ((MHorizontalLayout) header).withWidth("100%").withStyleName("hdr-view").expand(pageVersionsSelection)
                 .alignAll(Alignment.MIDDLE_LEFT);
     }
@@ -116,8 +116,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     @Override
     protected void initRelatedComponents() {
         commentListComp = new ProjectActivityComponent(ProjectTypeConstants.PAGE, CurrentProjectVariables.getProjectId());
-        commentListComp.setWidth("100%");
-        commentListComp.setMargin(true);
     }
 
     @Override
@@ -203,7 +201,7 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
     private static class PagePreviewFormLayout extends ReadViewLayout {
         void displayPageInfo(Page beanItem) {
             MVerticalLayout header = new MVerticalLayout().withMargin(false);
-            ELabel titleLbl = ELabel.h2(beanItem.getSubject());
+            ELabel titleLbl = ELabel.h3(beanItem.getSubject());
             header.with(titleLbl);
             Div footer = new Div().setStyle("width:100%").setCSSClass(UIConstants.LABEL_META_INFO);
             Span lastUpdatedTimeTxt = new Span().appendText(AppContext.getMessage(DayI18nEnum.LAST_UPDATED_ON,
@@ -243,10 +241,6 @@ public class PageReadViewImpl extends AbstractPreviewItemComp<Page> implements P
         public PageVersionSelectionBox() {
             content = new HorizontalLayout();
             this.setCompositionRoot(content);
-        }
-
-        public PageVersionSelectionBox(Component compositionRoot) {
-            super(compositionRoot);
         }
 
         void displayVersions(String path) {

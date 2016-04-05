@@ -151,9 +151,8 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
                 cmp.image(
                         ReportTemplateFactory.class.getClassLoader().getResourceAsStream("images/logo.png"))
                         .setFixedDimension(150, 28), cmp.horizontalGap(10), cmp.verticalList(
-                        cmp.text(label).setStyle(reportTemplate.bold22CenteredStyle)
-                                .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
-                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.italicStyle).setHyperLink(link)),
+                        cmp.text(label).setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
+                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle()).setHyperLink(link)),
                 cmp.horizontalGap(20),
                 cmp.text(String.format("Generated at: %s",
                         DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss", timeZone))));

@@ -126,12 +126,16 @@ public final class StringUtils {
     }
 
     public static String trimHtmlTags(String value) {
+        return trimHtmlTags(value, 200);
+    }
+
+    public static String trimHtmlTags(String value, int limitedCharacters) {
         if (isBlank(value)) {
             return "";
         } else {
             String str = Jsoup.parse(value).text();
-            if (str.length() > 200) {
-                str = str.substring(0, 200);
+            if (str.length() > limitedCharacters) {
+                str = str.substring(0, limitedCharacters);
             }
             return str;
         }

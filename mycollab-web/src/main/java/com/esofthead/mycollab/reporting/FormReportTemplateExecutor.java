@@ -1,17 +1,33 @@
 package com.esofthead.mycollab.reporting;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.domain.SimpleAuditLog;
+import com.esofthead.mycollab.common.domain.SimpleComment;
+import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
+import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
+import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.SimpleLogging;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.core.utils.StringUtils;
 import com.esofthead.mycollab.form.view.builder.type.AbstractDynaField;
 import com.esofthead.mycollab.form.view.builder.type.DynaForm;
 import com.esofthead.mycollab.form.view.builder.type.DynaSection;
+import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.ui.registry.AuditLogRegistry;
+import com.google.common.collect.Ordering;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
+import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
@@ -22,9 +38,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
@@ -35,6 +50,18 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private static final int FORM_CAPTION = 100;
     private static final Logger LOG = LoggerFactory.getLogger(FormReportTemplateExecutor.class);
+    private static Ordering dateComparator = new Ordering() {
+        @Override
+        public int compare(Object o1, Object o2) {
+            try {
+                Date createTime1 = (Date) PropertyUtils.getProperty(o1, "createdtime");
+                Date createTime2 = (Date) PropertyUtils.getProperty(o2, "createdtime");
+                return createTime1.compareTo(createTime2);
+            } catch (Exception e) {
+                return 0;
+            }
+        }
+    };
     protected JasperReportBuilder reportBuilder;
 
     public FormReportTemplateExecutor(String reportTitle) {
@@ -61,8 +88,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private void printForm() {
         Map<String, Object> parameters = this.getParameters();
         B bean = (B) parameters.get("bean");
-        FieldGroupFormatter fieldGroupFormatter = (FieldGroupFormatter) parameters.get("formatter");
         FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
+        FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatter(formReportLayout.getModuleName());
         DynaForm dynaForm = formReportLayout.getDynaForm();
         int sectionCount = dynaForm.getSectionCount();
         for (int i = 0; i < sectionCount; i++) {
@@ -135,10 +162,63 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     private void printActivities() {
         Map<String, Object> parameters = this.getParameters();
         B bean = (B) parameters.get("bean");
-        FieldGroupFormatter fieldGroupFormatter = (FieldGroupFormatter) parameters.get("formatter");
+        Integer typeId;
+        try {
+            typeId = (Integer) PropertyUtils.getProperty(bean, "id");
+        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            LOG.error("Error", e);
+            return;
+        }
+
         FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
-        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History"));
+        FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatter(formReportLayout.getModuleName());
+
+        CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
+        final CommentSearchCriteria commentCriteria = new CommentSearchCriteria();
+        commentCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
+        commentCriteria.setTypeId(StringSearchField.and(typeId + ""));
+        final int commentCount = commentService.getTotalCount(commentCriteria);
+
+        AuditLogService auditLogService = ApplicationContextUtil.getSpringBean(AuditLogService.class);
+        final AuditLogSearchCriteria logCriteria = new AuditLogSearchCriteria();
+        logCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+        logCriteria.setModule(StringSearchField.and(ModuleNameConstants.PRJ));
+        logCriteria.setType(StringSearchField.and(formReportLayout.getModuleName()));
+        logCriteria.setTypeId(StringSearchField.and(typeId + ""));
+        final int logCount = auditLogService.getTotalCount(logCriteria);
+        int totalNums = commentCount + logCount;
+        HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + totalNums + ")"));
         reportBuilder.title(historyHeader);
+
+        List<SimpleComment> comments = commentService.findPagableListByCriteria(new SearchRequest<>(commentCriteria, 0, Integer.MAX_VALUE));
+        List<SimpleAuditLog> auditLogs = auditLogService.findPagableListByCriteria(new SearchRequest<>(logCriteria, 0, Integer.MAX_VALUE));
+        List activities = new ArrayList(commentCount + logCount);
+        activities.addAll(comments);
+        activities.addAll(auditLogs);
+        Collections.sort(activities, dateComparator.reverse());
+        for (Object activity : activities) {
+            if (activity instanceof SimpleComment) {
+                reportBuilder.title(buildCommentBlock((SimpleComment) activity));
+                reportBuilder.title(cmp.verticalGap(10));
+            } else if (activity instanceof SimpleAuditLog) {
+                reportBuilder.title(buildAuditBlock((SimpleAuditLog) activity));
+                reportBuilder.title(cmp.verticalGap(10));
+            } else {
+                SimpleLogging.error("Do not support activity " + activity);
+            }
+        }
+    }
+
+    private ComponentBuilder buildCommentBlock(SimpleComment comment) {
+        TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(AppContext.getMessage(GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
+                AppContext.formatPrettyTime(comment.getCreatedtime())), Integer.MAX_VALUE));
+        HorizontalListBuilder infoHeader = cmp.horizontalFlowList().add(authorField);
+        return cmp.verticalList(infoHeader, cmp.text(StringUtils.formatRichText(comment.getComment())))
+                .setStyle(reportTemplate.getBorderStyle());
+    }
+
+    private ComponentBuilder buildAuditBlock(SimpleAuditLog auditLog) {
+        return cmp.text("Audit");
     }
 
     @Override
@@ -152,9 +232,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                 cmp.image(
                         ReportTemplateFactory.class.getClassLoader().getResourceAsStream("images/logo.png"))
                         .setFixedDimension(150, 28), cmp.horizontalGap(10), cmp.verticalList(
-                        cmp.text(label).setStyle(reportTemplate.bold22CenteredStyle)
-                                .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
-                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.italicStyle).setHyperLink(link)),
+                        cmp.text(label).setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
+                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle()).setHyperLink(link)),
                 cmp.horizontalGap(20),
                 cmp.text(String.format("Generated at: %s",
                         DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss", timeZone))));

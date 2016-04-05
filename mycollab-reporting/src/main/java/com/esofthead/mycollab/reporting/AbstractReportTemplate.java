@@ -17,50 +17,51 @@
 package com.esofthead.mycollab.reporting;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.reporting.expression.SimpleFieldExpression;
 import com.esofthead.mycollab.reporting.expression.CompBuilderValue;
 import com.esofthead.mycollab.reporting.expression.HyperlinkValue;
 import com.esofthead.mycollab.reporting.expression.MValue;
+import com.esofthead.mycollab.reporting.expression.SimpleFieldExpression;
 import net.sf.dynamicreports.report.builder.ReportTemplateBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
+import net.sf.dynamicreports.report.builder.style.PaddingBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
+import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.hyperLink;
+import java.awt.*;
+import java.util.Locale;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 /**
  * @author MyCollab Ltd.
  * @since 4.1.2
  */
 public abstract class AbstractReportTemplate {
-    protected StyleBuilder rootStyle;
-    protected StyleBuilder boldStyle;
-    protected StyleBuilder italicStyle;
-    protected StyleBuilder underlineStyle;
-    protected StyleBuilder boldCenteredStyle;
-    protected StyleBuilder boldLeftStyle;
-    protected StyleBuilder bold18CenteredStyle;
-    protected StyleBuilder bold22CenteredStyle;
-    protected StyleBuilder bold12TitleStyle;
-    protected StyleBuilder bold18TitleStyle;
-    protected StyleBuilder columnTitleStyle;
-    protected StyleBuilder columnStyle;
-    protected StyleBuilder bold12CenteredStyle;
-    protected StyleBuilder groupStyle;
-    protected StyleBuilder subtotalStyle;
-    protected ReportTemplateBuilder reportTemplateBuilder;
+    private StyleBuilder rootStyle;
+    private StyleBuilder boldStyle;
+    private StyleBuilder italicStyle;
+    private StyleBuilder underlineStyle;
+    private StyleBuilder boldCenteredStyle;
+    private StyleBuilder columnTitleStyle;
+    private StyleBuilder columnStyle;
+    private StyleBuilder borderStyle;
 
-    public StyleBuilder getRootStyle() {
-        return rootStyle;
-    }
+    public AbstractReportTemplate() {
+        rootStyle = stl.style().setPadding(2);
+        boldStyle = stl.style(rootStyle).bold();
+        italicStyle = stl.style(rootStyle).italic();
+        underlineStyle = stl.style(rootStyle).underline();
+        boldCenteredStyle = stl.style(boldStyle).setTextAlignment(HorizontalTextAlignment.LEFT, VerticalTextAlignment.MIDDLE);
+        borderStyle = stl.style(rootStyle).setBorder(stl.pen1Point().setLineColor(new Color(249, 249, 249)));
 
-    public StyleBuilder getBoldStyle() {
-        return boldStyle;
-    }
+        PaddingBuilder padding = stl.padding().setLeft(8);
 
-    public StyleBuilder getItalicStyle() {
-        return italicStyle;
+        columnStyle = stl.style(rootStyle).setVerticalTextAlignment(VerticalTextAlignment.MIDDLE);
+        columnTitleStyle = stl.style(columnStyle).setBorder(stl.pen1Point())
+                .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)
+                .setBackgroundColor(Color.LIGHT_GRAY).setPadding(padding).bold();
     }
 
     public StyleBuilder getUnderlineStyle() {
@@ -71,51 +72,18 @@ public abstract class AbstractReportTemplate {
         return boldCenteredStyle;
     }
 
-    public StyleBuilder getBoldLeftStyle() {
-        return boldLeftStyle;
+    public StyleBuilder getItalicStyle() {
+        return italicStyle;
     }
 
-    public StyleBuilder getBold18CenteredStyle() {
-        return bold18CenteredStyle;
-    }
-
-    public StyleBuilder getBold22CenteredStyle() {
-        return bold22CenteredStyle;
-    }
-
-    public StyleBuilder getBold12TitleStyle() {
-        return bold12TitleStyle;
-    }
-
-    public StyleBuilder getBold18TitleStyle() {
-        return bold18TitleStyle;
+    public StyleBuilder getBorderStyle() {
+        return borderStyle;
     }
 
     public StyleBuilder getColumnTitleStyle() {
         return columnTitleStyle;
     }
 
-    public StyleBuilder getColumnStyle() {
-        return columnStyle;
-    }
-
-    public StyleBuilder getBold12CenteredStyle() {
-        return bold12CenteredStyle;
-    }
-
-    public StyleBuilder getGroupStyle() {
-        return groupStyle;
-    }
-
-    public StyleBuilder getSubtotalStyle() {
-        return subtotalStyle;
-    }
-
-    public ReportTemplateBuilder getReportTemplateBuilder() {
-        return reportTemplateBuilder;
-    }
-
-    @SuppressWarnings("rawtypes")
     public ComponentBuilder buildCompBuilder(MValue value) {
         if (value instanceof HyperlinkValue) {
             return buildHyperLink((HyperlinkValue) value);
@@ -128,7 +96,6 @@ public abstract class AbstractReportTemplate {
         }
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     private ComponentBuilder buildHyperLink(HyperlinkValue hyperlink) {
         ComponentBuilder compBuilder;
 
@@ -140,12 +107,10 @@ public abstract class AbstractReportTemplate {
         return compBuilder;
     }
 
-    @SuppressWarnings("rawtypes")
     private ComponentBuilder buildComp(CompBuilderValue compBuilder) {
         return compBuilder.getCompBuilder();
     }
 
-    @SuppressWarnings("rawtypes")
     private ComponentBuilder buildText(DRIExpression<String> expr) {
         return cmp.text(expr).setStyle(rootStyle);
     }
