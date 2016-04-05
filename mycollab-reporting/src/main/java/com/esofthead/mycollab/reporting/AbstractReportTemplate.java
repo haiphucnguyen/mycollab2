@@ -47,17 +47,21 @@ public abstract class AbstractReportTemplate {
     private StyleBuilder columnTitleStyle;
     private StyleBuilder columnStyle;
     private StyleBuilder borderStyle;
+    private StyleBuilder formCaptionStyle;
+    private StyleBuilder metaInfoStyle;
 
     public AbstractReportTemplate() {
-        rootStyle = stl.style().setPadding(2);
+        rootStyle = stl.style().setPadding(4);
         boldStyle = stl.style(rootStyle).bold();
         italicStyle = stl.style(rootStyle).italic();
         underlineStyle = stl.style(rootStyle).underline();
         boldCenteredStyle = stl.style(boldStyle).setTextAlignment(HorizontalTextAlignment.LEFT, VerticalTextAlignment.MIDDLE);
-        borderStyle = stl.style(rootStyle).setBorder(stl.pen1Point().setLineColor(new Color(249, 249, 249)));
+        borderStyle = stl.style(rootStyle).setBorder(stl.pen1Point().setLineColor(new Color(233, 233, 233)));
+        metaInfoStyle = stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153));
+        formCaptionStyle = stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153))
+                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
 
         PaddingBuilder padding = stl.padding().setLeft(8);
-
         columnStyle = stl.style(rootStyle).setVerticalTextAlignment(VerticalTextAlignment.MIDDLE);
         columnTitleStyle = stl.style(columnStyle).setBorder(stl.pen1Point())
                 .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)
@@ -78,6 +82,14 @@ public abstract class AbstractReportTemplate {
 
     public StyleBuilder getBorderStyle() {
         return borderStyle;
+    }
+
+    public StyleBuilder getMetaInfoStyle() {
+        return metaInfoStyle;
+    }
+
+    public StyleBuilder getFormCaptionStyle() {
+        return formCaptionStyle;
     }
 
     public StyleBuilder getColumnTitleStyle() {

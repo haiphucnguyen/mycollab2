@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.reporting;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
@@ -28,11 +29,13 @@ import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
+import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,18 +133,21 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
 
                         if (dynaField.isColSpan()) {
                             HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName
-                                    ()).setFixedWidth(FORM_CAPTION), cmp.text(fieldGroupFormatter.getFieldDisplayHandler
+                                    ()).setFixedWidth(FORM_CAPTION).setStyle
+                                    (reportTemplate.getFormCaptionStyle()), cmp.text(fieldGroupFormatter.getFieldDisplayHandler
                                     (dynaField.getFieldName()).getFormat().toString(value, false, "")));
                             reportBuilder.title(newRow);
                             columnIndex = 0;
                         } else {
                             if (columnIndex == 0) {
-                                tmpRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName()).setFixedWidth(FORM_CAPTION),
+                                tmpRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName()).setFixedWidth(FORM_CAPTION).setStyle
+                                                (reportTemplate.getFormCaptionStyle()),
                                         cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
                                                 .getFormat().toString(value, false, "")));
                                 reportBuilder.title(tmpRow);
                             } else {
-                                tmpRow.add(cmp.text(dynaField.getDisplayName()).setFixedWidth(FORM_CAPTION),
+                                tmpRow.add(cmp.text(dynaField.getDisplayName()).setFixedWidth(FORM_CAPTION).setStyle
+                                                (reportTemplate.getFormCaptionStyle()),
                                         cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
                                                 .getFormat().toString(value, false, "")));
                             }
@@ -171,7 +177,6 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         }
 
         FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
-        FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatter(formReportLayout.getModuleName());
 
         CommentService commentService = ApplicationContextUtil.getSpringBean(CommentService.class);
         final CommentSearchCriteria commentCriteria = new CommentSearchCriteria();
@@ -201,8 +206,11 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                 reportBuilder.title(buildCommentBlock((SimpleComment) activity));
                 reportBuilder.title(cmp.verticalGap(10));
             } else if (activity instanceof SimpleAuditLog) {
-                reportBuilder.title(buildAuditBlock((SimpleAuditLog) activity));
-                reportBuilder.title(cmp.verticalGap(10));
+                ComponentBuilder component = buildAuditBlock((SimpleAuditLog) activity);
+                if (component != null) {
+                    reportBuilder.title(component);
+                    reportBuilder.title(cmp.verticalGap(10));
+                }
             } else {
                 SimpleLogging.error("Do not support activity " + activity);
             }
@@ -211,14 +219,40 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
 
     private ComponentBuilder buildCommentBlock(SimpleComment comment) {
         TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(AppContext.getMessage(GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
-                AppContext.formatPrettyTime(comment.getCreatedtime())), Integer.MAX_VALUE));
+                AppContext.formatPrettyTime(comment.getCreatedtime())), Integer.MAX_VALUE)).setStyle(reportTemplate.getMetaInfoStyle());
         HorizontalListBuilder infoHeader = cmp.horizontalFlowList().add(authorField);
         return cmp.verticalList(infoHeader, cmp.text(StringUtils.formatRichText(comment.getComment())))
                 .setStyle(reportTemplate.getBorderStyle());
     }
 
     private ComponentBuilder buildAuditBlock(SimpleAuditLog auditLog) {
-        return cmp.text("Audit");
+        List<AuditChangeItem> changeItems = auditLog.getChangeItems();
+        FormReportLayout formReportLayout = (FormReportLayout) parameters.get("layout");
+        FieldGroupFormatter fieldGroupFormatter = AuditLogRegistry.getFieldGroupFormatter(formReportLayout.getModuleName());
+        if (CollectionUtils.isNotEmpty(changeItems)) {
+            TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(AppContext.getMessage(
+                    GenericI18Enum.EXT_MODIFIED_ITEM, auditLog.getPostedUserFullName(), AppContext.formatPrettyTime
+                            (auditLog.getPosteddate())), Integer.MAX_VALUE)).setStyle(reportTemplate.getMetaInfoStyle());
+            HorizontalListBuilder infoHeader = cmp.horizontalFlowList().add(authorField);
+            VerticalListBuilder block = cmp.verticalList().add(infoHeader).setStyle(reportTemplate.getBorderStyle());
+            for (int i = 0; i < changeItems.size(); i++) {
+                AuditChangeItem item = changeItems.get(i);
+                String fieldName = item.getField();
+
+                FieldGroupFormatter.FieldDisplayHandler fieldDisplayHandler = fieldGroupFormatter.getFieldDisplayHandler(fieldName);
+                if (fieldDisplayHandler != null) {
+                    HorizontalListBuilder changeBlock = cmp.horizontalFlowList();
+                    TextFieldBuilder<String> fieldLbl = cmp.text(AppContext.getMessage(fieldDisplayHandler
+                            .getDisplayName())).setStyle(reportTemplate.getMetaInfoStyle());
+                    TextFieldBuilder<String> oldValue = cmp.text(fieldDisplayHandler.getFormat().toString(item.getOldvalue(), false, ""));
+                    TextFieldBuilder<String> newValue = cmp.text(fieldDisplayHandler.getFormat().toString(item.getNewvalue(), false, ""));
+                    changeBlock.add(fieldLbl, oldValue, cmp.text(" -> "), newValue);
+                    block.add(changeBlock);
+                }
+            }
+            return block;
+        }
+        return null;
     }
 
     @Override
