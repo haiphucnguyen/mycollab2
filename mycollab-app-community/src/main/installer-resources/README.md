@@ -51,9 +51,13 @@ Version 5.2.11
 **Improvements & New Features**
 
 * Optimize dependency libraries to reduce the distribution file
-* 
+* Support print function
+* Other minor improvements
 
 **Bug Fixes**
+
+* Report still throws error in some machines due to the order of loading jar files. This version remove this issue 
+completely.
 
 
 Version 5.2.10
