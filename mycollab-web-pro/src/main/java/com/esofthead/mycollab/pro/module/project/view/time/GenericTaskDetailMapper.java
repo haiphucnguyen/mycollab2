@@ -66,7 +66,7 @@ public class GenericTaskDetailMapper {
             StandupReportService service = ApplicationContextUtil.getSpringBean(StandupReportService.class);
             SimpleStandupReport standup = service.findById(typeId, sAccountId);
             if (standup != null) {
-                name = Jsoup.parse(DateTimeUtils.converToStringWithUserTimeZone(
+                name = Jsoup.parse(DateTimeUtils.convertToStringWithUserTimeZone(
                         standup.getCreatedtime(), AppContext.getUserDateFormat().getDateTimeFormat(), timeZone)).html();
             }
         }

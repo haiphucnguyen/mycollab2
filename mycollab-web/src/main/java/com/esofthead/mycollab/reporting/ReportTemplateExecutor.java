@@ -48,6 +48,10 @@ public abstract class ReportTemplateExecutor {
         this.parameters = parameters;
     }
 
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
     abstract protected void initReport() throws Exception;
 
     abstract protected void fillReport() throws DRException;

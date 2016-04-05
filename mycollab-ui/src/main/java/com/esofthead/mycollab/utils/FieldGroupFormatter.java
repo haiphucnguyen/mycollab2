@@ -111,11 +111,16 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             String content;
             if (StringUtils.isNotBlank(value)) {
                 content = (value.length() > 200) ? (value.substring(0, 150) + "...") : value;
             } else {
-                content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                content = msgIfBlank;
             }
 
             return content;
@@ -126,13 +131,18 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             if (StringUtils.isNotBlank(value)) {
                 Date formatDate = DateTimeUtils.parseDateByW3C(value);
                 I lbl = new I().appendText(AppContext.formatPrettyTime(formatDate));
                 lbl.setTitle(AppContext.formatDate(formatDate));
                 return lbl.write();
             } else {
-                return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                return msgIfBlank;
             }
         }
     }
@@ -141,13 +151,18 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             if (StringUtils.isNotBlank(value)) {
                 Date formatDate = DateTimeUtils.parseDateByW3C(value);
                 I lbl = new I().appendText(AppContext.formatPrettyTime(formatDate));
                 lbl.setTitle(AppContext.formatDateTime(formatDate));
                 return lbl.write();
             } else {
-                return AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                return msgIfBlank;
             }
         }
     }
@@ -156,12 +171,17 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             String content;
             if (StringUtils.isNotBlank(value)) {
                 Date formatDate = DateTimeUtils.parseDateByW3C(value);
                 content = AppContext.formatDate(formatDate);
             } else {
-                content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                content = msgIfBlank;
             }
             return content;
         }
@@ -171,12 +191,17 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             String content;
             if (StringUtils.isNotBlank(value)) {
                 Date formatDate = DateTimeUtils.parseDateByW3C(value);
                 content = AppContext.formatDateTime(formatDate);
             } else {
-                content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                content = msgIfBlank;
             }
             return content;
         }
@@ -186,6 +211,11 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             String content;
             if (StringUtils.isNotBlank(value)) {
                 try {
@@ -195,10 +225,10 @@ public class FieldGroupFormatter {
                     content = currency.getSymbol();
                 } catch (Exception e) {
                     LOG.error("Error while get currency id" + value, e);
-                    content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                    content = msgIfBlank;
                 }
             } else {
-                content = AppContext.getMessage(GenericI18Enum.FORM_EMPTY);
+                content = msgIfBlank;
             }
 
             return content;
@@ -214,7 +244,12 @@ public class FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
-            return (StringUtils.isNotBlank(value)) ? AppContext.getMessage(enumCls, value) : "";
+            return toString(value, true, "");
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
+            return (StringUtils.isNotBlank(value)) ? AppContext.getMessage(enumCls, value) : msgIfBlank;
         }
     }
 }

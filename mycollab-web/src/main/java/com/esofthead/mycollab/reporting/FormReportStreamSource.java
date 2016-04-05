@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.reporting;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.esofthead.mycollab.vaadin.AppContext;
 
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import java.util.Map;
  */
 public class FormReportStreamSource<B> extends ReportStreamSource {
     private B bean;
+    private FormReportLayout formReportLayout;
+    private FieldGroupFormatter fieldGroupFormatter;
 
     public FormReportStreamSource(FormReportTemplateExecutor<B> templateExecutor) {
         super(templateExecutor);
@@ -25,6 +28,14 @@ public class FormReportStreamSource<B> extends ReportStreamSource {
         this.bean = bean;
     }
 
+    public void setFormLayout(FormReportLayout formReportLayout) {
+        this.formReportLayout = formReportLayout;
+    }
+
+    public void setFieldGroupFormatter(FieldGroupFormatter fieldGroupFormatter) {
+        this.fieldGroupFormatter = fieldGroupFormatter;
+    }
+
     @Override
     protected Map<String, Object> initReportParameters() {
         Map<String, Object> parameters = new HashMap<>();
@@ -35,6 +46,8 @@ public class FormReportStreamSource<B> extends ReportStreamSource {
             throw new MyCollabException("Bean must be not null");
         }
 
+        parameters.put("layout", formReportLayout);
+        parameters.put("formatter", fieldGroupFormatter);
         return parameters;
     }
 }

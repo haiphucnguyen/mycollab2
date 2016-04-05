@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.reporting;
 
+import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 
@@ -18,7 +19,9 @@ public class PrintButton extends Button {
         printWindowOpener.extend(this);
     }
 
-    public void doPrint(Object bean) {
+    public void doPrint(Object bean, FormReportLayout formReportLayout, FieldGroupFormatter fieldGroupFormatter) {
         formReportStreamSource.setBean(bean);
+        formReportStreamSource.setFormLayout(formReportLayout);
+        formReportStreamSource.setFieldGroupFormatter(fieldGroupFormatter);
     }
 }

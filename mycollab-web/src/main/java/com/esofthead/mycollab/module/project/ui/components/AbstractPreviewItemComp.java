@@ -48,7 +48,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
     protected AdvancedPreviewBeanForm<B> previewForm;
     protected ReadViewLayout previewLayout;
-    protected ComponentContainer header;
+    protected HorizontalLayout header;
     private MVerticalLayout sidebarContent;
     private MVerticalLayout bodyContent;
     private Button favoriteBtn;
@@ -57,7 +57,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         this(headerText, iconResource, null);
     }
 
-    public AbstractPreviewItemComp(ComponentContainer customHeader, ReadViewLayout layout) {
+    public AbstractPreviewItemComp(HorizontalLayout customHeader, ReadViewLayout layout) {
         this.header = customHeader;
         this.addComponent(header);
         isDisplaySideBar = false;
@@ -66,14 +66,12 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public AbstractPreviewItemComp(String headerText, FontAwesome iconResource, ReadViewLayout layout) {
-        ELabel headerLbl = ELabel.h2("");
-        headerLbl.setSizeUndefined();
-
+        ELabel headerLbl = ELabel.h2("").withWidthUndefined();
         this.previewLayout = layout;
 
         header = new MHorizontalLayout().withStyleName("hdr-view").withWidth("100%").withMargin
                 (new MarginInfo(true, false, true, false));
-        ((MHorizontalLayout) header).setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        header.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
 
         if (iconResource != null) {
             String title = iconResource.getHtml() + " " + headerText;
@@ -91,7 +89,6 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         });
 
         Label spaceLbl = new Label();
-
         ((MHorizontalLayout) header).with(headerLbl, favoriteBtn, spaceLbl).expand(spaceLbl);
 
         this.addComponent(header);

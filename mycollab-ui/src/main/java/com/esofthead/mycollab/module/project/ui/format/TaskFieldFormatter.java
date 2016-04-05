@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.project.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.project.i18n.TaskI18nEnum;
 import com.esofthead.mycollab.utils.FieldGroupFormatter;
 import com.esofthead.mycollab.utils.HistoryFieldFormat;
+import com.esofthead.mycollab.vaadin.AppContext;
 
 /**
  * @author MyCollab Ltd
@@ -56,6 +57,11 @@ public final class TaskFieldFormatter extends FieldGroupFormatter {
 
         @Override
         public String toString(String value) {
+            return toString(value, true, AppContext.getMessage(GenericI18Enum.FORM_EMPTY));
+        }
+
+        @Override
+        public String toString(String value, Boolean displayAsHtml, String msgIfBlank) {
             if (StringUtils.isNotBlank(value)) {
                 try {
                     long duration = Long.parseLong(value);
@@ -63,10 +69,10 @@ public final class TaskFieldFormatter extends FieldGroupFormatter {
                     return humanTime.getExactly();
                 } catch (Exception e) {
                     SimpleLogging.error("Parse value failed " + value, e);
-                    return "";
+                    return msgIfBlank;
                 }
             }
-            return "";
+            return msgIfBlank;
         }
     }
 
