@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.ui.format;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.i18n.ContactI18nEnum;
 import com.esofthead.mycollab.module.user.ui.format.UserHistoryFieldFormat;
 import com.esofthead.mycollab.utils.FieldGroupFormatter;
@@ -15,7 +16,6 @@ public class ContactFieldFormatter extends FieldGroupFormatter {
     private ContactFieldFormatter() {
         generateFieldDisplayHandler("firstname", ContactI18nEnum.FORM_FIRSTNAME);
         generateFieldDisplayHandler("lastname", ContactI18nEnum.FORM_LASTNAME);
-        generateFieldDisplayHandler("accountId", ContactI18nEnum.FORM_ACCOUNTS);
         generateFieldDisplayHandler("title", ContactI18nEnum.FORM_TITLE);
         generateFieldDisplayHandler("department", ContactI18nEnum.FORM_DEPARTMENT);
         generateFieldDisplayHandler("email", ContactI18nEnum.FORM_EMAIL);
@@ -26,7 +26,8 @@ public class ContactFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("mobile", ContactI18nEnum.FORM_MOBILE);
         generateFieldDisplayHandler("homephone", ContactI18nEnum.FORM_HOME_PHONE);
         generateFieldDisplayHandler("otherphone", ContactI18nEnum.FORM_OTHER_PHONE);
-        generateFieldDisplayHandler("birthday", ContactI18nEnum.FORM_BIRTHDAY, FieldGroupFormatter.DATE_FIELD);
+        generateFieldDisplayHandler("birthday", ContactI18nEnum.FORM_BIRTHDAY, DATE_FIELD);
+        generateFieldDisplayHandler(Contact.Field.fax.name(), ContactI18nEnum.FORM_FAX);
         generateFieldDisplayHandler("iscallable", ContactI18nEnum.FORM_IS_CALLABLE);
         generateFieldDisplayHandler("assignuser", GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
         generateFieldDisplayHandler("primaddress", ContactI18nEnum.FORM_PRIMARY_ADDRESS);
@@ -39,7 +40,8 @@ public class ContactFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("otherstate", ContactI18nEnum.FORM_OTHER_STATE);
         generateFieldDisplayHandler("otherpostalcode", ContactI18nEnum.FORM_OTHER_POSTAL_CODE);
         generateFieldDisplayHandler("othercountry", ContactI18nEnum.FORM_OTHER_COUNTRY);
-        generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION);
+        generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION, TRIM_HTMLS);
+        generateFieldDisplayHandler(Contact.Field.accountid.name(), ContactI18nEnum.FORM_ACCOUNTS, new AccountHistoryFieldFormat());
     }
 
     public static ContactFieldFormatter instance() {

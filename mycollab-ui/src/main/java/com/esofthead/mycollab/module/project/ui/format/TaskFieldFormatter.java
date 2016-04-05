@@ -36,9 +36,9 @@ public final class TaskFieldFormatter extends FieldGroupFormatter {
 
     private TaskFieldFormatter() {
         generateFieldDisplayHandler("taskname", TaskI18nEnum.FORM_TASK_NAME);
-        generateFieldDisplayHandler("startdate", TaskI18nEnum.FORM_START_DATE, FieldGroupFormatter.DATE_FIELD);
-        generateFieldDisplayHandler("enddate", TaskI18nEnum.FORM_END_DATE, FieldGroupFormatter.DATE_FIELD);
-        generateFieldDisplayHandler("deadline", TaskI18nEnum.FORM_DEADLINE, FieldGroupFormatter.DATE_FIELD);
+        generateFieldDisplayHandler("startdate", TaskI18nEnum.FORM_START_DATE, DATE_FIELD);
+        generateFieldDisplayHandler("enddate", TaskI18nEnum.FORM_END_DATE, DATE_FIELD);
+        generateFieldDisplayHandler("deadline", TaskI18nEnum.FORM_DEADLINE, DATE_FIELD);
         generateFieldDisplayHandler("priority", TaskI18nEnum.FORM_PRIORITY,
                 new I18nHistoryFieldFormat(OptionI18nEnum.TaskPriority.class));
         generateFieldDisplayHandler("status", TaskI18nEnum.FORM_STATUS,
@@ -49,7 +49,7 @@ public final class TaskFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("milestoneid", TaskI18nEnum.FORM_PHASE, new MilestoneHistoryFieldFormat());
         generateFieldDisplayHandler("percentagecomplete", TaskI18nEnum.FORM_PERCENTAGE_COMPLETE);
         generateFieldDisplayHandler("parenttaskid", TaskI18nEnum.FORM_PARENT_TASK, new TaskHistoryFieldFormat());
-        generateFieldDisplayHandler("notes", TaskI18nEnum.FORM_NOTES);
+        generateFieldDisplayHandler("notes", TaskI18nEnum.FORM_NOTES, TRIM_HTMLS);
         generateFieldDisplayHandler(Task.Field.duration.name(), TaskI18nEnum.FORM_DURATION, new DurationFieldFormat());
     }
 

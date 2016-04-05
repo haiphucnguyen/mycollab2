@@ -361,6 +361,7 @@ public class BugReadViewImpl extends AbstractPreviewItemComp<SimpleBug> implemen
                 ProjectPreviewFormControlsGenerator.ADD_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.DELETE_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.EDIT_BTN_PRESENTED
+                        | ProjectPreviewFormControlsGenerator.PRINT_BTN_PRESENTED
                         | ProjectPreviewFormControlsGenerator.CLONE_BTN_PRESENTED,
                 ProjectRolePermissionCollections.BUGS);
 

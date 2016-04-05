@@ -250,7 +250,7 @@ public class ProjectPreviewFormControlsGenerator<T> implements Serializable {
 
     public HorizontalLayout createButtonControls(String permissionItem) {
         return createButtonControls(ADD_BTN_PRESENTED | EDIT_BTN_PRESENTED
-                | DELETE_BTN_PRESENTED | CLONE_BTN_PRESENTED
+                | DELETE_BTN_PRESENTED | PRINT_BTN_PRESENTED | CLONE_BTN_PRESENTED
                 | NAVIGATOR_BTN_PRESENTED, permissionItem);
     }
 }

@@ -97,7 +97,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             String titleValue = (String) PropertyUtils.getProperty(bean, formReportLayout.getTitleField());
             HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(titleValue)
                     .setStyle(reportTemplate.getH2Style()));
-            reportBuilder.title(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
+            reportBuilder.title(historyHeader, cmp.verticalGap(10));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MyCollabException("Error", e);
         }
@@ -111,7 +111,9 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             }
 
             if (StringUtils.isNotBlank(section.getHeader())) {
-
+                HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(section.getHeader())
+                        .setStyle(reportTemplate.getH3Style()));
+                reportBuilder.title(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
             }
 
             if (section.isDeletedSection() || section.getFieldCount() == 0) {
@@ -119,7 +121,29 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             }
 
             if (section.getLayoutType() == DynaSection.LayoutType.ONE_COLUMN) {
-
+                for (int j = 0; j < section.getFieldCount(); j++) {
+                    AbstractDynaField dynaField = section.getField(j);
+                    if (!formReportLayout.getExcludeFields().contains(dynaField.getFieldName())) {
+                        String value = "";
+                        try {
+                            Object tmpVal = PropertyUtils.getProperty(bean, dynaField.getFieldName());
+                            if (tmpVal != null) {
+                                if (tmpVal instanceof Date) {
+                                    value = DateTimeUtils.formatDateToW3C((Date) tmpVal);
+                                } else {
+                                    value = String.valueOf(tmpVal);
+                                }
+                            }
+                        } catch (Exception e) {
+                            LOG.error("Error while getting property {}", dynaField.getFieldName(), e);
+                        }
+                        HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName())
+                                        .setFixedWidth(FORM_CAPTION).setStyle(reportTemplate.getFormCaptionStyle()),
+                                cmp.text(fieldGroupFormatter.getFieldDisplayHandler
+                                        (dynaField.getFieldName()).getFormat().toString(value, false, "")));
+                        reportBuilder.title(newRow);
+                    }
+                }
             } else if (section.getLayoutType() == DynaSection.LayoutType.TWO_COLUMN) {
                 int columnIndex = 0;
                 HorizontalListBuilder tmpRow = null;
@@ -140,11 +164,12 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                             LOG.error("Error while getting property {}", dynaField.getFieldName(), e);
                         }
 
+                        System.out.println("Field: " + dynaField.getFieldName() + "---" + value);
                         if (dynaField.isColSpan()) {
-                            HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName
-                                    ()).setFixedWidth(FORM_CAPTION).setStyle
-                                    (reportTemplate.getFormCaptionStyle()), cmp.text(fieldGroupFormatter.getFieldDisplayHandler
-                                    (dynaField.getFieldName()).getFormat().toString(value, false, "")));
+                            HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName())
+                                            .setFixedWidth(FORM_CAPTION).setStyle(reportTemplate.getFormCaptionStyle()),
+                                    cmp.text(fieldGroupFormatter.getFieldDisplayHandler
+                                            (dynaField.getFieldName()).getFormat().toString(value, false, "")));
                             reportBuilder.title(newRow);
                             columnIndex = 0;
                         } else {

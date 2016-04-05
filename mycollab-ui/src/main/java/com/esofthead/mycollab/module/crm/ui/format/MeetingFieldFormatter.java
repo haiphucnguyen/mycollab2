@@ -13,10 +13,8 @@ public class MeetingFieldFormatter extends FieldGroupFormatter {
     private MeetingFieldFormatter() {
         generateFieldDisplayHandler("subject", MeetingI18nEnum.FORM_SUBJECT);
         generateFieldDisplayHandler("status", MeetingI18nEnum.FORM_STATUS);
-        generateFieldDisplayHandler("startdate", MeetingI18nEnum.FORM_START_DATE_TIME,
-                FieldGroupFormatter.DATETIME_FIELD);
-        generateFieldDisplayHandler("enddate", MeetingI18nEnum.FORM_END_DATE_TIME,
-                FieldGroupFormatter.DATETIME_FIELD);
+        generateFieldDisplayHandler("startdate", MeetingI18nEnum.FORM_START_DATE_TIME, DATETIME_FIELD);
+        generateFieldDisplayHandler("enddate", MeetingI18nEnum.FORM_END_DATE_TIME, DATETIME_FIELD);
         generateFieldDisplayHandler("location", MeetingI18nEnum.FORM_LOCATION);
     }
 

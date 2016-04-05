@@ -15,7 +15,7 @@ public class CaseFieldFormatter extends FieldGroupFormatter {
     private CaseFieldFormatter() {
         generateFieldDisplayHandler("priority", CaseI18nEnum.FORM_PRIORITY);
         generateFieldDisplayHandler("status", CaseI18nEnum.FORM_STATUS);
-        generateFieldDisplayHandler("accountid", CaseI18nEnum.FORM_ACCOUNT);
+        generateFieldDisplayHandler("accountid", CaseI18nEnum.FORM_ACCOUNT, new AccountHistoryFieldFormat());
         generateFieldDisplayHandler("phonenumber", CaseI18nEnum.FORM_PHONE);
         generateFieldDisplayHandler("origin", CaseI18nEnum.FORM_ORIGIN);
         generateFieldDisplayHandler("type", CaseI18nEnum.FORM_TYPE);
@@ -23,8 +23,8 @@ public class CaseFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("subject", CaseI18nEnum.FORM_SUBJECT);
         generateFieldDisplayHandler("email", CaseI18nEnum.FORM_EMAIL);
         generateFieldDisplayHandler("assignuser", GenericI18Enum.FORM_ASSIGNEE, new UserHistoryFieldFormat());
-        generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION);
-        generateFieldDisplayHandler("resolution", CaseI18nEnum.FORM_RESOLUTION);
+        generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION, TRIM_HTMLS);
+        generateFieldDisplayHandler("resolution", CaseI18nEnum.FORM_RESOLUTION, TRIM_HTMLS);
     }
 
     public static CaseFieldFormatter instance() {

@@ -39,6 +39,7 @@ import static net.sf.dynamicreports.report.builder.DynamicReports.*;
  */
 public abstract class AbstractReportTemplate {
     private Color borderColor = new Color(233, 233, 233);
+    private Color metaColor = new Color(153, 153, 153);
 
     private StyleBuilder rootStyle;
     private StyleBuilder boldStyle;
@@ -48,6 +49,7 @@ public abstract class AbstractReportTemplate {
     private StyleBuilder h2Style;
     private StyleBuilder h3Style;
     private StyleBuilder columnTitleStyle;
+    private StyleBuilder formCaptionStyle;
     private StyleBuilder columnStyle;
     private StyleBuilder borderStyle;
     private StyleBuilder metaInfoStyle;
@@ -59,7 +61,9 @@ public abstract class AbstractReportTemplate {
         underlineStyle = stl.style(rootStyle).underline();
         boldCenteredStyle = stl.style(boldStyle).setTextAlignment(HorizontalTextAlignment.LEFT, VerticalTextAlignment.MIDDLE);
         borderStyle = stl.style(rootStyle).setBorder(stl.pen1Point().setLineColor(borderColor));
-        metaInfoStyle = stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153));
+        metaInfoStyle = stl.style(rootStyle).setForegroundColor(metaColor);
+        formCaptionStyle = stl.style(rootStyle).setForegroundColor(metaColor)
+                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT).setVerticalTextAlignment(VerticalTextAlignment.TOP);
         h2Style = stl.style(rootStyle).bold().setFontSize(15);
         h3Style = stl.style(rootStyle).bold().setFontSize(13);
 
@@ -91,8 +95,7 @@ public abstract class AbstractReportTemplate {
     }
 
     public StyleBuilder getFormCaptionStyle() {
-        return stl.style(rootStyle).setForegroundColor(new Color(153, 153, 153))
-                .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT);
+        return formCaptionStyle;
     }
 
     public StyleBuilder getH2Style() {

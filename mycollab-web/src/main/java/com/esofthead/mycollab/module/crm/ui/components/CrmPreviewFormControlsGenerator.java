@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.reporting.PrintButton;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.web.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.web.ui.OptionPopupContent;
@@ -40,6 +41,7 @@ public class CrmPreviewFormControlsGenerator<T> {
     public static final int CLONE_BTN_PRESENTED = 16;
     public static final int NAVIGATOR_BTN_PRESENTED = 32;
     public static final int ADD_BTN_PRESENTED = 64;
+    public static final int PRINT_BTN_PRESENTED = 128;
 
     private AdvancedPreviewBeanForm<T> previewForm;
     private SplitButton optionBtn;
@@ -73,7 +75,7 @@ public class CrmPreviewFormControlsGenerator<T> {
 
     public HorizontalLayout createButtonControls(final String permissionItem) {
         return createButtonControls(EDIT_BTN_PRESENTED | DELETE_BTN_PRESENTED
-                | CLONE_BTN_PRESENTED | NAVIGATOR_BTN_PRESENTED
+                | CLONE_BTN_PRESENTED | PRINT_BTN_PRESENTED | NAVIGATOR_BTN_PRESENTED
                 | ADD_BTN_PRESENTED, permissionItem);
     }
 
@@ -140,6 +142,23 @@ public class CrmPreviewFormControlsGenerator<T> {
             deleteBtn.setStyleName(UIConstants.BUTTON_DANGER);
             deleteBtn.setEnabled(canAccess);
             editBtns.addComponent(deleteBtn);
+        }
+
+        if ((buttonEnableFlags & PRINT_BTN_PRESENTED) == PRINT_BTN_PRESENTED) {
+            final PrintButton printBtn = new PrintButton();
+            printBtn.addClickListener(new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(final ClickEvent event) {
+                    T item = previewForm.getBean();
+                    previewForm.firePrintForm(printBtn, item);
+                }
+            });
+            printBtn.setStyleName(UIConstants.BUTTON_OPTION);
+            printBtn.setDescription("Print");
+            printBtn.setEnabled(canRead);
+            editBtns.addComponent(printBtn);
         }
 
         if ((buttonEnableFlags & CLONE_BTN_PRESENTED) == CLONE_BTN_PRESENTED) {

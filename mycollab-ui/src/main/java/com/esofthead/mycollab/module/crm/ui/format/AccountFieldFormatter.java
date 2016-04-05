@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.ui.format;
 
 import com.esofthead.mycollab.common.i18n.GenericI18Enum;
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.i18n.AccountI18nEnum;
 import com.esofthead.mycollab.module.crm.i18n.OptionI18nEnum;
 import com.esofthead.mycollab.module.user.ui.format.UserHistoryFieldFormat;
@@ -23,8 +24,7 @@ public class AccountFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("alternatephone", AccountI18nEnum.FORM_OTHER_PHONE);
         generateFieldDisplayHandler("industry", AccountI18nEnum.FORM_INDUSTRY);
         generateFieldDisplayHandler("email", AccountI18nEnum.FORM_EMAIL);
-        generateFieldDisplayHandler("type", AccountI18nEnum.FORM_TYPE, new I18nHistoryFieldFormat(
-                OptionI18nEnum.AccountType.class));
+        generateFieldDisplayHandler("type", AccountI18nEnum.FORM_TYPE, new I18nHistoryFieldFormat(OptionI18nEnum.AccountType.class));
         generateFieldDisplayHandler("ownership", AccountI18nEnum.FORM_OWNERSHIP);
         generateFieldDisplayHandler("annualrevenue", AccountI18nEnum.FORM_ANNUAL_REVENUE);
         generateFieldDisplayHandler("billingaddress", AccountI18nEnum.FORM_BILLING_ADDRESS);
@@ -35,7 +35,9 @@ public class AccountFieldFormatter extends FieldGroupFormatter {
         generateFieldDisplayHandler("shippingstate", AccountI18nEnum.FORM_SHIPPING_STATE);
         generateFieldDisplayHandler("postalcode", AccountI18nEnum.FORM_BILLING_POSTAL_CODE);
         generateFieldDisplayHandler("shippingpostalcode", AccountI18nEnum.FORM_SHIPPING_POSTAL_CODE);
-        generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION);
+        generateFieldDisplayHandler(Account.Field.billingcountry.name(), AccountI18nEnum.FORM_BILLING_COUNTRY);
+        generateFieldDisplayHandler(Account.Field.shippingcountry.name(), AccountI18nEnum.FORM_SHIPPING_COUNTRY);
+        generateFieldDisplayHandler("description", GenericI18Enum.FORM_DESCRIPTION, TRIM_HTMLS);
     }
 
     public static AccountFieldFormatter instance() {
