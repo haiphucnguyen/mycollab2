@@ -252,14 +252,23 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                Integer versionid = reportParameters.getFieldValue("id");
+                Integer versionId = reportParameters.getFieldValue("id");
                 Integer projectId = reportParameters.getFieldValue("projectid");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return ProjectLinkGenerator.generateBugVersionPreviewFullLink(siteUrl, projectId, versionid);
+                return ProjectLinkGenerator.generateBugVersionPreviewFullLink(siteUrl, projectId, versionId);
             }
         };
         map.put("versionname", new HyperlinkValue(summaryTitleExpr, summaryHrefExpr));
         map.put("duedate", new DateExpression("duedate"));
+        DRIExpression<Double> progressExpr = new AbstractSimpleExpression<Double>() {
+            @Override
+            public Double evaluate(ReportParameters reportParameters) {
+                Integer numOpenBugs = reportParameters.getFieldValue(SimpleVersion.Field.numOpenBugs.name());
+                Integer numBugs = reportParameters.getFieldValue(SimpleVersion.Field.numBugs.name());
+                return numBugs != null && numBugs != 0 ? (numOpenBugs / numBugs) * 1d : 0d;
+            }
+        };
+        map.put("id", null);
         return map;
     }
 
