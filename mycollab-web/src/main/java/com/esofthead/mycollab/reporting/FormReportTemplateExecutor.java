@@ -24,12 +24,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.registry.AuditLogRegistry;
 import com.google.common.collect.Ordering;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
-import net.sf.dynamicreports.report.builder.HyperLinkBuilder;
-import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
-import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
-import net.sf.dynamicreports.report.builder.component.TextFieldBuilder;
-import net.sf.dynamicreports.report.builder.component.VerticalListBuilder;
-import net.sf.dynamicreports.report.constant.HorizontalTextAlignment;
+import net.sf.dynamicreports.report.builder.component.*;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
 import net.sf.dynamicreports.report.exception.DRException;
@@ -64,7 +59,8 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             }
         }
     };
-    protected JasperReportBuilder reportBuilder;
+    private JasperReportBuilder reportBuilder;
+    private MultiPageListBuilder titleContent;
 
     public FormReportTemplateExecutor(String reportTitle) {
         super(AppContext.getUserTimezone(), AppContext.getUserLocale(), reportTitle, ReportExportType.PDF);
@@ -73,9 +69,11 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     @Override
     protected void initReport() throws Exception {
         reportBuilder = report();
+        titleContent = cmp.multiPageList();
+        titleContent.add(defaultTitleComponent());
         reportBuilder.setParameters(parameters);
         reportBuilder
-                .title(createTitleComponent(reportTitle))
+                .title(titleContent)
                 .setPageFormat(PageType.A4, PageOrientation.PORTRAIT)
                 .pageFooter(cmp.pageXofY().setStyle(reportTemplate.getBoldCenteredStyle()))
                 .setLocale(locale);
@@ -97,7 +95,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             String titleValue = (String) PropertyUtils.getProperty(bean, formReportLayout.getTitleField());
             HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(titleValue)
                     .setStyle(reportTemplate.getH2Style()));
-            reportBuilder.title(historyHeader, cmp.verticalGap(10));
+            titleContent.add(historyHeader, cmp.verticalGap(10));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new MyCollabException("Error", e);
         }
@@ -113,7 +111,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
             if (StringUtils.isNotBlank(section.getHeader())) {
                 HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text(section.getHeader())
                         .setStyle(reportTemplate.getH3Style()));
-                reportBuilder.title(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
+                titleContent.add(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
             }
 
             if (section.isDeletedSection() || section.getFieldCount() == 0) {
@@ -141,7 +139,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                                         .setFixedWidth(FORM_CAPTION).setStyle(reportTemplate.getFormCaptionStyle()),
                                 cmp.text(fieldGroupFormatter.getFieldDisplayHandler
                                         (dynaField.getFieldName()).getFormat().toString(value, false, "")));
-                        reportBuilder.title(newRow);
+                        titleContent.add(newRow);
                     }
                 }
             } else if (section.getLayoutType() == DynaSection.LayoutType.TWO_COLUMN) {
@@ -164,13 +162,12 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                             LOG.error("Error while getting property {}", dynaField.getFieldName(), e);
                         }
 
-                        System.out.println("Field: " + dynaField.getFieldName() + "---" + value);
                         if (dynaField.isColSpan()) {
                             HorizontalListBuilder newRow = cmp.horizontalList().add(cmp.text(dynaField.getDisplayName())
                                             .setFixedWidth(FORM_CAPTION).setStyle(reportTemplate.getFormCaptionStyle()),
                                     cmp.text(fieldGroupFormatter.getFieldDisplayHandler
                                             (dynaField.getFieldName()).getFormat().toString(value, false, "")));
-                            reportBuilder.title(newRow);
+                            titleContent.add(newRow);
                             columnIndex = 0;
                         } else {
                             if (columnIndex == 0) {
@@ -178,7 +175,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
                                                 (reportTemplate.getFormCaptionStyle()),
                                         cmp.text(fieldGroupFormatter.getFieldDisplayHandler(dynaField.getFieldName())
                                                 .getFormat().toString(value, false, "")));
-                                reportBuilder.title(tmpRow);
+                                titleContent.add(tmpRow);
                             } else {
                                 tmpRow.add(cmp.text(dynaField.getDisplayName()).setFixedWidth(FORM_CAPTION).setStyle
                                                 (reportTemplate.getFormCaptionStyle()),
@@ -227,7 +224,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         int totalNums = commentCount + logCount;
         HorizontalListBuilder historyHeader = cmp.horizontalList().add(cmp.text("History (" + totalNums + ")")
                 .setStyle(reportTemplate.getH3Style()));
-        reportBuilder.title(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
+        titleContent.add(historyHeader, reportTemplate.line(), cmp.verticalGap(10));
 
         List<SimpleComment> comments = commentService.findPagableListByCriteria(new SearchRequest<>(commentCriteria, 0, Integer.MAX_VALUE));
         List<SimpleAuditLog> auditLogs = auditLogService.findPagableListByCriteria(new SearchRequest<>(logCriteria, 0, Integer.MAX_VALUE));
@@ -237,13 +234,11 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         Collections.sort(activities, dateComparator.reverse());
         for (Object activity : activities) {
             if (activity instanceof SimpleComment) {
-                reportBuilder.title(buildCommentBlock((SimpleComment) activity));
-                reportBuilder.title(cmp.verticalGap(10));
+                titleContent.add(buildCommentBlock((SimpleComment) activity), cmp.verticalGap(10));
             } else if (activity instanceof SimpleAuditLog) {
                 ComponentBuilder component = buildAuditBlock((SimpleAuditLog) activity);
                 if (component != null) {
-                    reportBuilder.title(component);
-                    reportBuilder.title(cmp.verticalGap(10));
+                    titleContent.add(component, cmp.verticalGap(10));
                 }
             } else {
                 SimpleLogging.error("Do not support activity " + activity);
@@ -255,7 +250,7 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
         TextFieldBuilder<String> authorField = cmp.text(StringUtils.trimHtmlTags(AppContext.getMessage(GenericI18Enum.EXT_ADDED_COMMENT, comment.getOwnerFullName(),
                 AppContext.formatPrettyTime(comment.getCreatedtime())), Integer.MAX_VALUE)).setStyle(reportTemplate.getMetaInfoStyle());
         HorizontalListBuilder infoHeader = cmp.horizontalFlowList().add(authorField);
-        return cmp.verticalList(infoHeader, cmp.text(StringUtils.formatRichText(comment.getComment())))
+        return cmp.verticalList(infoHeader, cmp.text(StringUtils.trimHtmlTags(comment.getComment(), Integer.MAX_VALUE)))
                 .setStyle(reportTemplate.getBorderStyle());
     }
 
@@ -292,21 +287,5 @@ public class FormReportTemplateExecutor<B> extends ReportTemplateExecutor {
     @Override
     protected void outputReport(OutputStream outputStream) throws IOException, DRException {
         reportBuilder.toPdf(outputStream);
-    }
-
-    private ComponentBuilder<?, ?> createTitleComponent(String label) {
-        HyperLinkBuilder link = hyperLink("https://www.mycollab.com");
-        ComponentBuilder<?, ?> dynamicReportsComponent = cmp.horizontalList(
-                cmp.image(
-                        ReportTemplateFactory.class.getClassLoader().getResourceAsStream("images/logo.png"))
-                        .setFixedDimension(150, 28), cmp.horizontalGap(10), cmp.verticalList(
-                        cmp.text(label).setHorizontalTextAlignment(HorizontalTextAlignment.LEFT),
-                        cmp.text("https://www.mycollab.com").setStyle(reportTemplate.getItalicStyle()).setHyperLink(link)),
-                cmp.horizontalGap(20),
-                cmp.text(String.format("Generated at: %s",
-                        DateTimeUtils.formatDate(new GregorianCalendar().getTime(), "yyyy-MM-dd'T'HH:mm:ss", timeZone))));
-
-        return cmp.horizontalList().add(dynamicReportsComponent).newRow().add(reportTemplate.line()).newRow().add(cmp
-                .verticalGap(10));
     }
 }

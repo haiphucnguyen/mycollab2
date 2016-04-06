@@ -86,9 +86,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
 
             @Override
             public String evaluate(ReportParameters reportParameters) {
-                Integer accountid = reportParameters.getFieldValue("id");
+                Integer accountId = reportParameters.getFieldValue("id");
                 String siteUrl = reportParameters.getParameterValue("siteUrl");
-                return CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, accountid);
+                return CrmLinkGenerator.generateAccountPreviewFullLink(siteUrl, accountId);
             }
         };
         map.put(Account.Field.accountname.name(), new HyperlinkValue(accountTitleExpr, accountHrefExpr));
@@ -124,7 +124,7 @@ public class CrmColumnBuilderMapper implements InitializingBean {
             }
         };
         map.put("contactName", new HyperlinkValue(contactTitleExpr, contactHrefExpr));
-//
+
         DRIExpression<String> assigneeTitleExpr = new PrimityTypeFieldExpression("assignUserFullName");
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;

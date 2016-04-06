@@ -50,7 +50,6 @@ public abstract class AbstractReportTemplate {
     private StyleBuilder h3Style;
     private StyleBuilder columnTitleStyle;
     private StyleBuilder formCaptionStyle;
-    private StyleBuilder columnStyle;
     private StyleBuilder borderStyle;
     private StyleBuilder metaInfoStyle;
 
@@ -64,14 +63,13 @@ public abstract class AbstractReportTemplate {
         metaInfoStyle = stl.style(rootStyle).setForegroundColor(metaColor);
         formCaptionStyle = stl.style(rootStyle).setForegroundColor(metaColor)
                 .setHorizontalTextAlignment(HorizontalTextAlignment.RIGHT).setVerticalTextAlignment(VerticalTextAlignment.TOP);
-        h2Style = stl.style(rootStyle).bold().setFontSize(15);
-        h3Style = stl.style(rootStyle).bold().setFontSize(13);
+        h2Style = stl.style(rootStyle).setFontSize(18);
+        h3Style = stl.style(rootStyle).setFontSize(14);
 
         PaddingBuilder padding = stl.padding().setLeft(8);
-        columnStyle = stl.style(rootStyle).setVerticalTextAlignment(VerticalTextAlignment.MIDDLE);
-        columnTitleStyle = stl.style(columnStyle).setBorder(stl.pen1Point())
-                .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT)
-                .setBackgroundColor(Color.LIGHT_GRAY).setPadding(padding).bold();
+        columnTitleStyle = stl.style(rootStyle).setVerticalTextAlignment(VerticalTextAlignment.MIDDLE)
+                .setHorizontalTextAlignment(HorizontalTextAlignment.LEFT).setBorder(stl.pen1Point())
+                .setBackgroundColor(Color.LIGHT_GRAY);
     }
 
     public StyleBuilder getUnderlineStyle() {
@@ -131,9 +129,8 @@ public abstract class AbstractReportTemplate {
     }
 
     private ComponentBuilder buildHyperLink(HyperlinkValue hyperlink) {
-        ComponentBuilder compBuilder;
-
-        compBuilder = cmp.text(hyperlink.getTitle()).setHyperLink(hyperLink(hyperlink.getHref())).setStyle(underlineStyle);
+        ComponentBuilder compBuilder = cmp.text(hyperlink.getTitle()).setHyperLink(hyperLink(hyperlink.getHref()))
+                .setStyle(underlineStyle);
 
         if (hyperlink.getStyle() != null) {
             compBuilder.setStyle(hyperlink.getStyle());
