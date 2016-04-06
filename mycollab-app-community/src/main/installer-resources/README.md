@@ -50,6 +50,7 @@ Version 5.2.11
 
 **Improvements & New Features**
 
+* [Premium] Edit overtime field of time tracking
 * Optimize dependency libraries to reduce the distribution file
 * Support print function
 * Other minor improvements

@@ -36,6 +36,7 @@ import com.esofthead.mycollab.vaadin.web.ui.ConfirmDialogExt;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.web.ui.table.IPagedBeanTable.TableClickListener;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
@@ -69,6 +70,7 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
 
     private ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange> timeEntryChangeHandler = new
             ApplicationEventListener<TimeTrackingEvent.TimeLoggingEntryChange>() {
+                @Subscribe
                 @Override
                 public void handle(TimeTrackingEvent.TimeLoggingEntryChange event) {
                     displayTimeEntries();

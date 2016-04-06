@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.i18n.TimeTrackingI18nEnum;
-import com.esofthead.mycollab.module.project.ui.components.TimeLogEditWindow;
+import com.esofthead.mycollab.pro.module.project.ui.components.TimeLogEditWindow;
 import com.esofthead.mycollab.module.project.view.bug.BugTimeLogSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;

@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemberSelectionBox;
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
+import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.StyleCalendarFieldExp;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.data.Item;
@@ -27,13 +28,18 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Window;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author MyCollab Ltd.
@@ -45,6 +51,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private Date selectedDate;
     private StyleCalendarFieldExp weekSelectionCalendar;
     private CheckBox isBillableCheckBox;
+    private CheckBox isOvertimeCheckBox;
     private Table timeInputTable;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
@@ -70,12 +77,6 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
         grid.addComponent(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO)), 0, 0);
         grid.addComponent(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WEEK)), 1, 0);
-        HorizontalLayout isBillable = new HorizontalLayout();
-        isBillable.setSpacing(true);
-        isBillable.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-        Label billableTitle = new Label(
-                AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
-        isBillable.addComponent(billableTitle);
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         grid.addComponent(projectMemberSelectionBox, 0, 1);
@@ -95,21 +96,26 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         });
         grid.addComponent(weekSelectionCalendar, 1, 1);
 
+        MHorizontalLayout attrContainer = new MHorizontalLayout();
         isBillableCheckBox = new CheckBox();
-        isBillable.addComponent(isBillableCheckBox);
-        grid.addComponent(isBillable, 2, 1);
+        isOvertimeCheckBox = new CheckBox();
+        attrContainer.with(new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE)),
+                isBillableCheckBox, new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME)),
+                isOvertimeCheckBox);
+        grid.addComponent(attrContainer, 2, 1);
 
         timeInputTable = new Table();
         timeInputTable.setImmediate(true);
-        timeInputTable.addContainerProperty("Monday", Double.class, 0);
-        timeInputTable.addContainerProperty("Tuesday", Double.class, 0);
-        timeInputTable.addContainerProperty("Wednesday", Double.class, 0);
-        timeInputTable.addContainerProperty("Thursday", Double.class, 0);
-        timeInputTable.addContainerProperty("Friday", Double.class, 0);
-        timeInputTable.addContainerProperty("Saturday", Double.class, 0);
-        timeInputTable.addContainerProperty("Sunday", Double.class, 0);
+        timeInputTable.addContainerProperty("Monday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty("Tuesday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty("Wednesday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty("Thursday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty("Friday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty("Saturday", DoubleField.class, 0);
+        timeInputTable.addContainerProperty("Sunday", DoubleField.class, 0);
 
-        timeInputTable.addItem(new Double[]{0d, 0d, 0d, 0d, 0d, 0d, 0d}, "timeEntry");
+        timeInputTable.addItem(new DoubleField[]{new DoubleField(), new DoubleField(), new DoubleField(),
+                new DoubleField(), new DoubleField(), new DoubleField(), new DoubleField()}, "timeEntry");
         timeInputTable.setEditable(true);
         timeInputTable.setHeight("80px");
         updateTimeTableHeader();
@@ -125,7 +131,6 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         taskLayout = new MHorizontalLayout();
         taskLayout.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
         createLinkTaskButton();
-
         footer.addComponent(taskLayout);
 
         MHorizontalLayout controlsLayout = new MHorizontalLayout();
@@ -135,7 +140,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
 
             @Override
             public void buttonClick(ClickEvent event) {
-                AddTimeEntryWindow.this.close();
+                close();
             }
         });
         cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
@@ -146,7 +151,7 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
             @Override
             public void buttonClick(ClickEvent event) {
                 saveTimeLoggingItems();
-                AddTimeEntryWindow.this.close();
+                close();
             }
         });
         saveBtn.addStyleName(UIConstants.BUTTON_ACTION);
@@ -315,10 +320,10 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
         ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
         searchCriteria.setProjectIds(new SetSearchField<>(CurrentProjectVariables.getProjectId()));
         searchCriteria.setIsBillable(new BooleanSearchField(true));
-        double totalBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
+        Double totalBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
 
         searchCriteria.setIsBillable(new BooleanSearchField(false));
-        double totalNonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
+        Double totalNonBillableHours = itemTimeLoggingService.getTotalHoursByCriteria(searchCriteria);
         CurrentProjectVariables.getProject().setTotalBillableHours(totalBillableHours);
         CurrentProjectVariables.getProject().setTotalNonBillableHours(totalNonBillableHours);
     }
@@ -326,12 +331,14 @@ public class AddTimeEntryWindow extends Window implements AssignmentSelectableCo
     private ItemTimeLogging buildItemTimeLogging(String headerId, Calendar calendar, SimpleProjectMember logForMember) {
         Item timeEntries = timeInputTable.getItem("timeEntry");
         Property<?> itemProperty = timeEntries.getItemProperty(headerId);
-        Double timeVal = (Double) itemProperty.getValue();
+        DoubleField timeField = (DoubleField) itemProperty.getValue();
+        Double timeVal = timeField.getValue();
         if (timeVal == null || timeVal == 0) {
             return null;
         } else {
             ItemTimeLogging timeLogging = new ItemTimeLogging();
             timeLogging.setIsbillable(isBillableCheckBox.getValue());
+            timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
             timeLogging.setLoguser(logForMember.getUsername());
             timeLogging.setCreateduser(AppContext.getUsername());
             timeLogging.setLogforday(DateTimeUtils.trimHMSOfDate(calendar.getTime()));

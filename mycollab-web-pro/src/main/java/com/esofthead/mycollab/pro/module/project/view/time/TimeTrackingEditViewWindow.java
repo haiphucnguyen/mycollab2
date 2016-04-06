@@ -13,8 +13,8 @@ import com.esofthead.mycollab.module.project.view.settings.component.ProjectMemb
 import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.ui.DateFieldExt;
+import com.esofthead.mycollab.vaadin.web.ui.DoubleField;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
-import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
@@ -29,13 +29,14 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
     private static final long serialVersionUID = 1L;
 
     private CheckBox isBillableCheckBox;
+    private CheckBox isOvertimeCheckBox;
     private ProjectMemberSelectionBox projectMemberSelectionBox;
     private RichTextArea descArea;
     private ProjectGenericTask selectionTask;
     private MHorizontalLayout taskLayout;
     private DateFieldExt dateField;
+    private DoubleField timeField;
     private SimpleItemTimeLogging timeLogging;
-    private ObjectProperty<Double> property;
 
     public TimeTrackingEditViewWindow(TimeTrackingListView view, SimpleItemTimeLogging timeLogging) {
         this.timeLogging = timeLogging;
@@ -45,26 +46,24 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
         this.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.DIALOG_LOG_TIME_ENTRY_TITLE));
 
-        dateField = new DateFieldExt("Select date:", timeLogging.getLogforday());
+        dateField = new DateFieldExt("Select date", timeLogging.getLogforday());
 
-        property = new ObjectProperty<>(timeLogging.getLogvalue());
-        TextField timeField = new TextField("Hours:", property);
+        timeField = new DoubleField();
+        timeField.setCaption("Hours");
+        timeField.setValue(timeLogging.getLogvalue());
 
         projectMemberSelectionBox = new ProjectMemberSelectionBox(false);
         projectMemberSelectionBox.setValue(timeLogging.getLoguser());
         projectMemberSelectionBox.setCaption(AppContext.getMessage(TimeTrackingI18nEnum.FORM_WHO));
 
-        isBillableCheckBox = new CheckBox();
+        isBillableCheckBox = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
         isBillableCheckBox.setValue(timeLogging.getIsbillable());
 
-        MHorizontalLayout isBillableBox = new MHorizontalLayout();
-        isBillableBox.setDefaultComponentAlignment(Alignment.BOTTOM_LEFT);
-        Label billableTitle = new Label(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_BILLABLE));
-        isBillableBox.addComponent(billableTitle);
-        isBillableBox.addComponent(isBillableCheckBox);
+        isOvertimeCheckBox = new CheckBox(AppContext.getMessage(TimeTrackingI18nEnum.FORM_IS_OVERTIME));
+        isOvertimeCheckBox.setValue(timeLogging.getIsovertime());
 
         MHorizontalLayout grid = new MHorizontalLayout();
-        grid.with(projectMemberSelectionBox, dateField, timeField, isBillableBox);
+        grid.with(projectMemberSelectionBox, dateField, timeField, isBillableCheckBox, isOvertimeCheckBox);
 
         MVerticalLayout content = new MVerticalLayout();
         content.addComponent(grid);
@@ -100,7 +99,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
 
             @Override
             public void buttonClick(ClickEvent event) {
-                TimeTrackingEditViewWindow.this.close();
+                close();
             }
         });
         cancelBtn.addStyleName(UIConstants.BUTTON_OPTION);
@@ -112,7 +111,7 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             @Override
             public void buttonClick(ClickEvent event) {
                 saveTimeLoggingItems();
-                TimeTrackingEditViewWindow.this.close();
+                close();
             }
         });
         saveBtn.setIcon(FontAwesome.SAVE);
@@ -184,8 +183,9 @@ public class TimeTrackingEditViewWindow extends Window implements AssignmentSele
             timeLogging.setLogUserAvatarId(user.getMemberAvatarId());
         }
         timeLogging.setLogforday(dateField.getValue());
-        timeLogging.setLogvalue(property.getValue());
+        timeLogging.setLogvalue(timeField.getValue());
         timeLogging.setIsbillable(isBillableCheckBox.getValue());
+        timeLogging.setIsovertime(isOvertimeCheckBox.getValue());
         timeLogging.setNote(descArea.getValue());
         timeLogging.setSaccountid(AppContext.getAccountId());
         if (selectionTask != null) {
