@@ -48,7 +48,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
 
     protected AdvancedPreviewBeanForm<B> previewForm;
     protected ReadViewLayout previewLayout;
-    protected HorizontalLayout header;
+    protected MHorizontalLayout header;
     private MVerticalLayout sidebarContent;
     private MVerticalLayout bodyContent;
     private Button favoriteBtn;
@@ -57,7 +57,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         this(headerText, iconResource, null);
     }
 
-    public AbstractPreviewItemComp(HorizontalLayout customHeader, ReadViewLayout layout) {
+    public AbstractPreviewItemComp(MHorizontalLayout customHeader, ReadViewLayout layout) {
         this.header = customHeader;
         this.addComponent(header);
         isDisplaySideBar = false;
@@ -89,7 +89,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         });
 
         Label spaceLbl = new Label();
-        ((MHorizontalLayout) header).with(headerLbl, favoriteBtn, spaceLbl).expand(spaceLbl);
+        header.with(headerLbl, favoriteBtn, spaceLbl).expand(spaceLbl);
 
         this.addComponent(header);
         ComponentContainer extraComp;
@@ -103,6 +103,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
         previewForm = initPreviewForm();
         ComponentContainer actionControls = createButtonControls();
         if (actionControls != null) {
+            actionControls.setWidthUndefined();
             addHeaderRightContent(actionControls);
         }
 
@@ -207,7 +208,7 @@ public abstract class AbstractPreviewItemComp<B> extends VerticalLayout implemen
     }
 
     public void addHeaderRightContent(Component c) {
-        header.addComponent(c);
+        header.with(c).withAlign(c, Alignment.TOP_RIGHT);
     }
 
     public void addToSideBar(Component... components) {
