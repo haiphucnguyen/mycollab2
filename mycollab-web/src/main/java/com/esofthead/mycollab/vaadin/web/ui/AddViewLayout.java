@@ -66,6 +66,7 @@ public class AddViewLayout extends CustomLayoutExt {
 
     public void addHeaderRight(final ComponentContainer headerRight) {
         header.addComponent(headerRight);
+        header.setComponentAlignment(headerRight, Alignment.TOP_RIGHT);
     }
 
     public void setHeader(final String viewTitle) {
