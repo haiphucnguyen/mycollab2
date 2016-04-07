@@ -30,6 +30,7 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.ui.NotificationUtil;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.vaadin.server.FontAwesome;
@@ -81,7 +82,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
 
         topLayout.with(currentPlan).withAlign(currentPlan, Alignment.MIDDLE_CENTER).expand(currentPlan);
 
-        MVerticalLayout faqLayout = new MVerticalLayout();
+        MVerticalLayout faqLayout = new MVerticalLayout().withWidth("285px").withStyleName("faq-layout");
 
         if (AppContext.isAdmin()) {
             Button cancelBtn = new Button(AppContext.getMessage(BillingI18nEnum.BUTTON_CANCEL_ACCOUNT), new Button.ClickListener() {
@@ -94,27 +95,18 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
             faqLayout.addComponent(cancelBtn);
         }
 
-        faqLayout.setWidth("285px");
-        faqLayout.addStyleName("faq-layout");
-        Label header = new Label(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
-        header.addStyleName("faq-header");
+        ELabel header =  ELabel.h3(AppContext.getMessage(BillingI18nEnum.HELP_QUESTION));
         faqLayout.addComponent(header);
 
-        Label contentText = new Label(AppContext.getMessage(BillingI18nEnum.HELP_INFO), ContentMode.HTML);
-        contentText.addStyleName("faq-content");
-        faqLayout.addComponent(contentText);
+        faqLayout.addComponent(new Label(AppContext.getMessage(BillingI18nEnum.HELP_INFO), ContentMode.HTML));
 
-        topLayout.addComponent(faqLayout);
-        topLayout.setComponentAlignment(faqLayout, Alignment.MIDDLE_CENTER);
-
+        topLayout.with(faqLayout).withAlign(faqLayout, Alignment.TOP_RIGHT);
         layout.addComponent(topLayout);
 
-        HorizontalLayout plansList = new HorizontalLayout();
-        plansList.setWidth("100%");
-        plansList.addStyleName("billing-plan-list");
+        MHorizontalLayout plansList = new MHorizontalLayout().withSpacing(false).withWidth("100%").withStyleName
+                ("billing-plan-list");
 
-        List<BillingPlan> availablePlans = this.billingService
-                .getAvailablePlans();
+        List<BillingPlan> availablePlans = this.billingService.getAvailablePlans();
         int listSize = availablePlans.size();
 
         for (int i = 0; i < listSize; i++) {
@@ -132,22 +124,18 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
             billingType.addStyleName("billing-type");
             singlePlan.addComponent(billingType);
 
-            Label billingPrice = new Label("<span class='billing-price'>$"
-                    + plan.getPricing() + "</span>/month", ContentMode.HTML);
+            Label billingPrice = new Label("<span class='billing-price'>$" + plan.getPricing() + "</span>/month", ContentMode.HTML);
             billingPrice.addStyleName("billing-price-lbl");
             billingPrice.setWidthUndefined();
             singlePlan.addComponent(billingPrice);
 
-            Label billingUser = new Label("<span class='billing-user'>"
-                    + plan.getNumusers() + "</span>&nbsp;Users",
-                    ContentMode.HTML);
+            Label billingUser = new Label("<span class='billing-user'>" + plan.getNumusers() + "</span>&nbsp;Users", ContentMode.HTML);
             billingUser.setWidthUndefined();
             singlePlan.addComponent(billingUser);
 
             String planVolume = FileUtils.getVolumeDisplay(plan.getVolume());
 
-            Label billingStorage = new Label("<span class='billing-storage'>"
-                    + planVolume + "</span>&nbsp;Storage", ContentMode.HTML);
+            Label billingStorage = new Label("<span class='billing-storage'>" + planVolume + "</span>&nbsp;Storage", ContentMode.HTML);
             billingStorage.setWidthUndefined();
             singlePlan.addComponent(billingStorage);
 
@@ -167,8 +155,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
             selectThisPlan.addStyleName(UIConstants.BUTTON_ACTION);
             singlePlan.addComponent(selectThisPlan);
 
-            plansList.addComponent(singlePlan);
-            plansList.setExpandRatio(singlePlan, 1.0f);
+            plansList.with(singlePlan).expand(singlePlan);
         }
 
         layout.addComponent(plansList);
@@ -240,8 +227,7 @@ public class BillingSummaryViewImpl extends AbstractPageView implements BillingS
             this.setContent(contentLayout);
             initUI();
             this.center();
-            this.setCaption(AppContext
-                    .getMessage(BillingI18nEnum.VIEW_CHANGE_BILLING_PLAN_TITLE));
+            this.setCaption(AppContext.getMessage(BillingI18nEnum.VIEW_CHANGE_BILLING_PLAN_TITLE));
         }
 
         private void initUI() {

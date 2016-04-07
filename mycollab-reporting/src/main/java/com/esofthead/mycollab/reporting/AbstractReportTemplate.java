@@ -19,8 +19,8 @@ package com.esofthead.mycollab.reporting;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.reporting.expression.CompBuilderValue;
 import com.esofthead.mycollab.reporting.expression.HyperlinkValue;
-import com.esofthead.mycollab.reporting.expression.MValue;
 import com.esofthead.mycollab.reporting.expression.SimpleFieldExpression;
+import net.sf.dynamicreports.report.base.expression.AbstractSimpleExpression;
 import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
 import net.sf.dynamicreports.report.builder.component.LineBuilder;
 import net.sf.dynamicreports.report.builder.style.PaddingBuilder;
@@ -112,13 +112,13 @@ public abstract class AbstractReportTemplate {
         return columnTitleStyle;
     }
 
-    public ComponentBuilder buildCompBuilder(MValue value) {
+    public ComponentBuilder buildCompBuilder(Object value) {
         if (value instanceof HyperlinkValue) {
             return buildHyperLink((HyperlinkValue) value);
         } else if (value instanceof CompBuilderValue) {
             return buildComp((CompBuilderValue) value);
-        } else if (value instanceof SimpleFieldExpression) {
-            return buildText((SimpleFieldExpression) value);
+        } else if (value instanceof AbstractSimpleExpression) {
+            return buildText((AbstractSimpleExpression) value);
         } else {
             throw new MyCollabException("Do not support mvalue type " + value);
         }

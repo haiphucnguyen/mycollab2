@@ -33,7 +33,6 @@ import java.util.GregorianCalendar;
  */
 public abstract class DefaultCloudDriveOAuthWindow extends Window {
     private static final long serialVersionUID = 1L;
-
     private static final Logger LOG = LoggerFactory.getLogger(DefaultCloudDriveOAuthWindow.class);
 
     private TextField folderName;

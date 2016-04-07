@@ -58,10 +58,10 @@ public class CrmColumnBuilderMapper implements InitializingBean {
         ColumnBuilderClassMapper.put(SimpleCase.class, buildCaseMap());
     }
 
-    private Map<String, MValue> buildAccountMap() {
+    private Map<String, Object> buildAccountMap() {
         LOG.debug("Build report mapper for crm::account module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression(SimpleAccount.Field.assignUserFullName.name());
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -95,9 +95,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildContactMap() {
+    private Map<String, Object> buildContactMap() {
         LOG.debug("Build report mapper for crm::contact module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         DRIExpression<String> accountTitleExpr = new PrimaryTypeFieldExpression("accountName");
         DRIExpression<String> accountHrefExpr = new AbstractSimpleExpression<String>() {
@@ -145,9 +145,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildCampaignMap() {
+    private Map<String, Object> buildCampaignMap() {
         LOG.debug("Build report mapper for crm::campaign module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression<>("assignUserFullName");
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -182,9 +182,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildLeadMap() {
+    private Map<String, Object> buildLeadMap() {
         LOG.debug("Build report mapper for crm::lead module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression("assignUserFullName");
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -219,9 +219,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildOpportunityMap() {
+    private Map<String, Object> buildOpportunityMap() {
         LOG.debug("Build report mapper for crm::opportunity module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression("assignUserFullName");
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -289,9 +289,9 @@ public class CrmColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildCaseMap() {
+    private Map<String, Object> buildCaseMap() {
         LOG.debug("Build report mapper for crm::case module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> assigneeTitleExpr = new PrimaryTypeFieldExpression("assignUserFullName");
         DRIExpression<String> assigneeHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;

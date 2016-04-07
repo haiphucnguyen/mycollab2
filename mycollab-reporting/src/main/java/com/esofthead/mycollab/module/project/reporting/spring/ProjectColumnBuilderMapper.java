@@ -62,9 +62,9 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         ColumnBuilderClassMapper.put(FollowingTicket.class, buildTFollowingTicketMap());
     }
 
-    private Map<String, MValue> buildMilestoneMap() {
+    private Map<String, Object> buildMilestoneMap() {
         LOG.debug("Build report mapper for project::milestone module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> milestoneNameExpr = new PrimaryTypeFieldExpression<>(Milestone.Field.name.name());
         DRIExpression<String> milestoneHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -102,9 +102,9 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildTaskMap() {
+    private Map<String, Object> buildTaskMap() {
         LOG.debug("Build report mapper for project::task module");
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> taskNameTitleExpr = new PrimaryTypeFieldExpression<>(Task.Field.taskname.name());
         DRIExpression<String> taskNameHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -142,10 +142,10 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildBugMap() {
+    private Map<String, Object> buildBugMap() {
         LOG.debug("Build report mapper for project::bug module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("summary");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -204,10 +204,10 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildComponentMap() {
+    private Map<String, Object> buildComponentMap() {
         LOG.debug("Build report mapper for project::component module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("componentname");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -239,13 +239,22 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         };
 
         map.put("userLeadFullName", new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
+        DRIExpression<Double> progressExpr = new AbstractSimpleExpression<Double>() {
+            @Override
+            public Double evaluate(ReportParameters reportParameters) {
+                Integer numOpenBugs = reportParameters.getFieldValue(SimpleComponent.Field.numOpenBugs.name());
+                Integer numBugs = reportParameters.getFieldValue(SimpleComponent.Field.numBugs.name());
+                return numBugs != null && numBugs != 0 ? ((numBugs - numOpenBugs) * 1d / numBugs) * 100d : 0d;
+            }
+        };
+        map.put("id", progressExpr);
         return map;
     }
 
-    private Map<String, MValue> buildVersionMap() {
+    private Map<String, Object> buildVersionMap() {
         LOG.debug("Build report mapper for project::version module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("versionname");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -265,17 +274,17 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public Double evaluate(ReportParameters reportParameters) {
                 Integer numOpenBugs = reportParameters.getFieldValue(SimpleVersion.Field.numOpenBugs.name());
                 Integer numBugs = reportParameters.getFieldValue(SimpleVersion.Field.numBugs.name());
-                return numBugs != null && numBugs != 0 ? (numOpenBugs / numBugs) * 1d : 0d;
+                return numBugs != null && numBugs != 0 ? ((numBugs - numOpenBugs) * 1d / numBugs) * 100d : 0d;
             }
         };
-        map.put("id", null);
+        map.put("id", progressExpr);
         return map;
     }
 
-    private Map<String, MValue> buildRiskMap() {
+    private Map<String, Object> buildRiskMap() {
         LOG.debug("Build report mapper for project::risk module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>(Risk.Field.riskname.name());
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -340,10 +349,10 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildRoleMap() {
+    private Map<String, Object> buildRoleMap() {
         LOG.debug("Build report mapper for project::role module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("rolename");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -360,10 +369,10 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildTimeTrackingMap() {
+    private Map<String, Object> buildTimeTrackingMap() {
         LOG.debug("Build report mapper for project::timetracking module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> logUserTitleExpr = new PrimaryTypeFieldExpression<>("logUserFullName");
         DRIExpression<String> logUserHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;
@@ -447,10 +456,10 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         return map;
     }
 
-    private Map<String, MValue> buildTFollowingTicketMap() {
+    private Map<String, Object> buildTFollowingTicketMap() {
         LOG.debug("Build report mapper for project::following ticket module");
 
-        Map<String, MValue> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         DRIExpression<String> summaryTitleExpr = new PrimaryTypeFieldExpression<>("summary");
         DRIExpression<String> summaryHrefExpr = new AbstractSimpleExpression<String>() {
             private static final long serialVersionUID = 1L;

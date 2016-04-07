@@ -27,27 +27,25 @@ import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- * 
  * @author MyCollab Ltd.
  * @since 1.0
- * 
  */
 @ViewPermission(permissionId = RolePermissionCollections.ACCOUNT_BILLING, impliedPermissionVal = BooleanPermissionFlag.TRUE)
 public class CancelAccountPresenter extends AbstractPresenter<CancelAccountView> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CancelAccountPresenter() {
-		super(CancelAccountView.class);
-	}
+    public CancelAccountPresenter() {
+        super(CancelAccountView.class);
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		IBillingContainer accountContainer = (IBillingContainer) container;
-		accountContainer.removeAllComponents();
-		accountContainer.addComponent(view.getWidget());
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        IBillingContainer accountContainer = (IBillingContainer) container;
+        accountContainer.removeAllComponents();
+        accountContainer.addComponent(view.getWidget());
 
-		AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
-		breadcrumb.gotoCancelAccountPage();
-	}
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        breadcrumb.gotoCancelAccountPage();
+    }
 
 }

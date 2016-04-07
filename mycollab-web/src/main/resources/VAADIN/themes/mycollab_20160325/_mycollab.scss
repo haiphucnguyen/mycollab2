@@ -1015,26 +1015,11 @@ $v-line-height--header:1.5em;
   /* Billing Plan Setting */
 
   .billing-setting {
-    border-width: 1px;
-    border-style: solid;
-    border-color: $my-separator-color;
+    border: 1px solid $my-separator-color;
     border-radius: 3px;
     background-color: #F5F5F5;
     .faq-layout {
-      &.v-margin-left {
-        padding-left: 25px;
-      }
-      &.v-margin-right {
-        padding-right: 25px;
-      }
-      color: black;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
       border-left: 2px dotted $my-separator-color;
-      .faq-header {
-        font-weight: $my-font-weight-bold;
-      }
     }
   }
 
@@ -1257,10 +1242,6 @@ $v-line-height--header:1.5em;
     }
     .header-content {
       text-align: center;
-    }
-    .header-note {
-      font-size: $font-small;
-      color: rgb(137, 137, 137);
     }
   }
 

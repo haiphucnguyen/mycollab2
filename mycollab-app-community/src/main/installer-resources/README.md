@@ -46,6 +46,11 @@ Version 5.2.12
 
 **Improvements & New Features**
 
+* [Premium] Export timesheet into PDF and Excel
+* [Premium] Manage companies
+* [Premium] Print invoice and send to client
+* Other minor improvements
+
 **Bug Fixes**
 
 

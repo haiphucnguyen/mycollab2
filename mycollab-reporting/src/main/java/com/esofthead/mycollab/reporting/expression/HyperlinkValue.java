@@ -23,7 +23,7 @@ import net.sf.dynamicreports.report.definition.expression.DRIExpression;
  * @author MyCollab Ltd.
  * @since 4.3.1
  */
-public class HyperlinkValue implements MValue {
+public class HyperlinkValue {
     private DRIExpression title;
     private DRIExpression href;
     private StyleBuilder style;

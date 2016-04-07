@@ -19,7 +19,6 @@ package com.esofthead.mycollab.reporting;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.esofthead.mycollab.core.utils.ClassUtils;
-import com.esofthead.mycollab.reporting.expression.MValue;
 import com.esofthead.mycollab.vaadin.AppContext;
 import net.sf.dynamicreports.jasper.builder.JasperReportBuilder;
 import net.sf.dynamicreports.jasper.builder.export.JasperCsvExporterBuilder;
@@ -29,13 +28,11 @@ import net.sf.dynamicreports.report.builder.column.ComponentColumnBuilder;
 import net.sf.dynamicreports.report.builder.component.HorizontalListBuilder;
 import net.sf.dynamicreports.report.constant.PageOrientation;
 import net.sf.dynamicreports.report.constant.PageType;
-import net.sf.dynamicreports.report.constant.VerticalTextAlignment;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
@@ -82,11 +79,11 @@ public abstract class SimpleReportTemplateExecutor<T> extends ReportTemplateExec
         }
         List<TableViewFieldDecorator> fields = fieldBuilder.getFields();
 
-        Map<String, MValue> lstFieldBuilder = ColumnBuilderClassMapper.getListFieldBuilder(classType);
+        Map<String, Object> lstFieldBuilder = ColumnBuilderClassMapper.getListFieldBuilder(classType);
         if (lstFieldBuilder != null) {
             // build columns of report
             for (TableViewFieldDecorator field : fields) {
-                MValue columnFieldBuilder = lstFieldBuilder.get(field.getField());
+                Object columnFieldBuilder = lstFieldBuilder.get(field.getField());
                 if (columnFieldBuilder != null) {
                     field.setComponentBuilder(reportTemplate.buildCompBuilder(columnFieldBuilder));
                 }

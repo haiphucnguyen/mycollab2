@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.AppContext;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPageView;
 import com.esofthead.mycollab.vaadin.mvp.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.AssetResource;
+import com.esofthead.mycollab.vaadin.ui.ELabel;
 import com.esofthead.mycollab.vaadin.web.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.web.ui.WebResourceIds;
 import com.esofthead.mycollab.vaadin.web.ui.grid.GridFormLayoutHelper;
@@ -46,9 +47,7 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
     public CancelAccountViewImpl() {
         this.withSpacing(true).withMargin(true).withWidth("100%");
         HorizontalLayout header = createHeader();
-        this.addComponent(header);
-        this.setComponentAlignment(header, Alignment.TOP_CENTER);
-        this.addComponent(createBody());
+        this.with(header, createBody()).withAlign(header, Alignment.TOP_CENTER);
     }
 
     protected HorizontalLayout createHeader() {
@@ -69,8 +68,8 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         header.addComponent(headerMsg);
         header.setComponentAlignment(headerMsg, Alignment.MIDDLE_CENTER);
 
-        Label headerNote = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE));
-        headerNote.addStyleName("header-note");
+        ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE)).withStyleName
+                (UIConstants.LABEL_META_INFO);
         header.addComponent(headerNote);
         header.setComponentAlignment(headerNote, Alignment.MIDDLE_CENTER);
         layout.addComponent(header);

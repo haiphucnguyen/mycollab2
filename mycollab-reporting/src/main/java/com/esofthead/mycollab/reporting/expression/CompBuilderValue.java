@@ -22,7 +22,7 @@ import net.sf.dynamicreports.report.builder.component.ComponentBuilder;
  * @author MyCollab Ltd.
  * @since 4.3.1
  */
-public class CompBuilderValue implements MValue {
+public class CompBuilderValue {
 
     private ComponentBuilder compBuilder;
 
