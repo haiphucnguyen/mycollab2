@@ -1234,32 +1234,6 @@ $v-line-height--header:1.5em;
     }
   }
 
-  /* Cancel Account Page */
-
-  .cancelAccountHeader {
-    .first-line {
-      font-size: 20px;
-    }
-    .header-content {
-      text-align: center;
-    }
-  }
-
-  .cancelAccountBody {
-    > .v-csslayout-margin {
-      border-top: 15px solid rgb(34, 139, 201);
-      background-color: rgb(243, 243, 243);
-    }
-    .v-gridlayout {
-      > div > div > div {
-        padding: 8px;
-      }
-      .v-label {
-        text-align: right;
-      }
-    }
-  }
-
   .trialInformBox {
     cursor: pointer;
   }
@@ -1588,23 +1562,20 @@ $v-line-height--header:1.5em;
 
   div.v-csslayout.bean-block {
     display: inline-block;
-    background-color: #e9f2f7;
     margin-bottom: 15px;
-    font-size: $font-normal;
     vertical-align: top;
-    width: 290px;
-    margin-right: 11px;
-    border-width: 1px;
+    margin-right: 10px;
+    border: 1px solid $my-separator-color;
     border-radius: 2px;
-    border-style: solid;
     padding: 5px 5px 10px 15px;
-    border-color: #bebebe;
-  }
-
-  .bean-block .icon-wrap {
-    padding: 0px 10px 0px 0px;
-    .v-icon {
-      font-size: 48px;
+    &:hover {
+      @include hover-effect;
+    }
+    .icon-wrap {
+      padding: 0px 10px 0px 0px;
+      .v-icon {
+        font-size: 48px;
+      }
     }
   }
 

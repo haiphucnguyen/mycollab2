@@ -46,35 +46,23 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
 
     public CancelAccountViewImpl() {
         this.withSpacing(true).withMargin(true).withWidth("100%");
-        HorizontalLayout header = createHeader();
+        ComponentContainer header = createHeader();
         this.with(header, createBody()).withAlign(header, Alignment.TOP_CENTER);
     }
 
-    protected HorizontalLayout createHeader() {
-        MHorizontalLayout layout = new MHorizontalLayout();
-        layout.setSizeUndefined();
-        layout.addComponent(new Embedded(null, new AssetResource(WebResourceIds._sad_face)));
-        VerticalLayout header = new VerticalLayout();
-        header.setSpacing(true);
-        header.addStyleName("cancelAccountHeader");
+    protected ComponentContainer createHeader() {
+        MVerticalLayout header = new MVerticalLayout().withWidth("-1px");
+        header.setDefaultComponentAlignment(Alignment.TOP_CENTER);
 
-        Label headerTopLine = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE));
-        headerTopLine.addStyleName("first-line");
-        header.addComponent(headerTopLine);
-        header.setComponentAlignment(headerTopLine, Alignment.MIDDLE_CENTER);
+        ELabel headerTopLine = ELabel.h2(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_FIRST_LINE)).withWidthUndefined();
 
         Label headerMsg = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_MESSAGE), ContentMode.HTML);
-        headerMsg.addStyleName("header-content");
-        header.addComponent(headerMsg);
-        header.setComponentAlignment(headerMsg, Alignment.MIDDLE_CENTER);
 
-        ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE)).withStyleName
-                (UIConstants.LABEL_META_INFO);
-        header.addComponent(headerNote);
-        header.setComponentAlignment(headerNote, Alignment.MIDDLE_CENTER);
-        layout.addComponent(header);
+        ELabel headerNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_NOTE))
+                .withStyleName(UIConstants.LABEL_META_INFO).withWidthUndefined();
 
-        return layout;
+        header.with(new Image(null, new AssetResource(WebResourceIds._sad_face)), headerTopLine, headerMsg, headerNote);
+        return header;
     }
 
     protected CssLayout createBody() {
@@ -83,47 +71,51 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         layout.addStyleName("cancelAccountBody");
 
         MVerticalLayout innerLayout = new MVerticalLayout();
+        innerLayout.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+
+        ELabel helpNoteLbl = ELabel.h3("Your feedbacks are valuable to make us better").withWidthUndefined();
+        innerLayout.with(helpNoteLbl);
 
         GridFormLayoutHelper layoutHelper = GridFormLayoutHelper.defaultFormLayoutHelper(1, 4);
+        layoutHelper.getLayout().setSpacing(false);
+        layoutHelper.getLayout().setMargin(false);
+        layoutHelper.getLayout().setWidth("800px");
 
-        layoutHelper.addComponentNoWrapper(new TextField(), "Why are you leaving us?", 0, 0);
+        final TextArea whyLeaving = new TextArea();
+        layoutHelper.addComponent(whyLeaving, "Why are you leaving us?", 0, 0);
 
-        OptionGroup optionGroupField = new OptionGroup();
+        final OptionGroup optionGroupField = new OptionGroup();
         optionGroupField.addItem("I'm cancelling this account to join or open a new MyCollab account");
         optionGroupField.addItem("I'm missing an important integration");
         optionGroupField.addItem("MyCollab doesn't have all the features I'm looking for");
         optionGroupField.addItem("Too expensive");
         optionGroupField.addItem("None of the above");
 
-        final OptionGroup optionGroup = (OptionGroup) layoutHelper.addComponentNoWrapper(optionGroupField,
-                "Do any of these apply?", 0, 1);
+        layoutHelper.addComponent(optionGroupField, "Do any of these apply?", 0, 1);
 
-        final TextField alternativeTool = (TextField) layoutHelper.addComponentNoWrapper(new TextField(),
-                "Are you considering any other alternative tools?", 0, 2);
+        final TextArea alternativeTool = new TextArea();
+        layoutHelper.addComponent(alternativeTool, "Are you considering any other alternative tools?", 0, 2);
 
-        final TextArea reasonToBack = (TextArea) layoutHelper.addComponentNoWrapper(new TextArea(),
-                "What would it take to have you back?", 0, 3);
+        final TextArea reasonToBack = new TextArea();
+        layoutHelper.addComponent(reasonToBack, "What would it take to have you back?", 0, 3);
 
-        layoutHelper.getLayout().setWidth("800px");
-        layoutHelper.getLayout().setSpacing(true);
-        innerLayout.addComponent(layoutHelper.getLayout());
-        innerLayout.setComponentAlignment(layoutHelper.getLayout(), Alignment.MIDDLE_CENTER);
+        innerLayout.with(layoutHelper.getLayout());
 
         Button submitBtn = new Button("Submit and delete my account", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void buttonClick(ClickEvent event) {
-                // Save cancel account reason
                 CustomerFeedbackWithBLOBs feedback = new CustomerFeedbackWithBLOBs();
+                String whyLeavingMsg = whyLeaving.getValue();
                 feedback.setUsername(AppContext.getUsername());
                 feedback.setSaccountid(AppContext.getAccountId());
                 feedback.setOthertool(alternativeTool.getValue());
                 feedback.setReasontoback(reasonToBack.getValue());
-                if (optionGroup.getValue() != null) {
-                    feedback.setReasontoleave(optionGroup.getValue().toString());
+                if (optionGroupField.getValue() != null) {
+                    feedback.setReasontoleave(optionGroupField.getValue().toString() + ": " + whyLeavingMsg);
                 } else {
-                    feedback.setReasontoleave("");
+                    feedback.setReasontoleave(whyLeavingMsg);
                 }
 
                 BillingService billingService = ApplicationContextUtil.getSpringBean(BillingService.class);
@@ -143,17 +135,11 @@ public class CancelAccountViewImpl extends AbstractPageView implements CancelAcc
         });
         cancelBtn.addStyleName(UIConstants.BUTTON_ACTION);
 
-        MHorizontalLayout formControls = new MHorizontalLayout().withMargin(true);
-        formControls.setSizeUndefined();
-        formControls.with(submitBtn, cancelBtn);
+        innerLayout.with(new MHorizontalLayout(submitBtn, cancelBtn).withMargin(true));
 
-        innerLayout.addComponent(formControls);
-        innerLayout.setComponentAlignment(formControls, Alignment.MIDDLE_CENTER);
-
-        Label confirmNote = new Label(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE), ContentMode.HTML);
-        confirmNote.setWidth("600px");
-        innerLayout.addComponent(confirmNote);
-        innerLayout.setComponentAlignment(confirmNote, Alignment.TOP_CENTER);
+        ELabel confirmNote = new ELabel(AppContext.getMessage(UserI18nEnum.CANCEL_ACCOUNT_CONFIRM_NOTE), ContentMode
+                .HTML).withWidth("600px");
+        innerLayout.with(confirmNote);
         layout.addComponent(innerLayout);
         return layout;
     }
