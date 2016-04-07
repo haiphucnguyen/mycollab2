@@ -300,7 +300,6 @@ public class MilestoneListViewImpl extends AbstractLazyPageView implements Miles
     }
 
     private class MilestoneBox extends CssLayout {
-
         MilestoneBox(final SimpleMilestone milestone) {
             this.addStyleName(UIConstants.MILESTONE_BOX);
             this.setWidth("100%");

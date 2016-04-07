@@ -30,9 +30,7 @@ public class BillingSummaryPresenter extends
         accountContainer.addComponent(view.getWidget());
 
         view.loadCurrentPlan();
-        AccountSettingBreadcrumb breadcrumb = ViewManager
-                .getCacheComponent(AccountSettingBreadcrumb.class);
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
         breadcrumb.gotoBillingPage();
-
     }
 }

@@ -19,8 +19,10 @@ package com.esofthead.mycollab.premium.module.user.accountsettings.billing.view;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingContainer;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.IBillingPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.ui.SettingUIConstants;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.web.ui.AbstractPresenter;
 import com.vaadin.ui.ComponentContainer;
 
@@ -39,5 +41,9 @@ public class BillingPresenter extends AbstractPresenter<IBillingContainer> imple
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         AccountModule accountContainer = (AccountModule) container;
         accountContainer.gotoSubView(SettingUIConstants.BILLING);
+        ((BillingContainer)view).display();
+
+        AccountSettingBreadcrumb breadcrumb = ViewManager.getCacheComponent(AccountSettingBreadcrumb.class);
+        breadcrumb.gotoBillingPage();
     }
 }
