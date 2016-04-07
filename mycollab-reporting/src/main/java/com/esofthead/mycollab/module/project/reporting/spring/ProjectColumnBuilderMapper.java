@@ -99,6 +99,20 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
         };
 
         map.put(SimpleMilestone.Field.ownerFullName.name(), new HyperlinkValue(assigneeTitleExpr, assigneeHrefExpr));
+
+        DRIExpression<Double> progressExpr = new AbstractSimpleExpression<Double>() {
+            @Override
+            public Double evaluate(ReportParameters reportParameters) {
+                Integer numOpenBugs = reportParameters.getFieldValue(SimpleMilestone.Field.numOpenBugs.name());
+                Integer numBugs = reportParameters.getFieldValue(SimpleMilestone.Field.numBugs.name());
+                Integer numOpenTasks = reportParameters.getFieldValue(SimpleMilestone.Field.numOpenTasks.name());
+                Integer numTasks = reportParameters.getFieldValue(SimpleMilestone.Field.numTasks.name());
+                int openAssignments = numOpenBugs + numOpenTasks;
+                int totalAssignments = numBugs + numTasks;
+                return (totalAssignments > 0) ? ((totalAssignments - openAssignments) * 1d / totalAssignments) * 100d : 100d;
+            }
+        };
+        map.put(Milestone.Field.id.name(), progressExpr);
         return map;
     }
 
@@ -244,7 +258,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public Double evaluate(ReportParameters reportParameters) {
                 Integer numOpenBugs = reportParameters.getFieldValue(SimpleComponent.Field.numOpenBugs.name());
                 Integer numBugs = reportParameters.getFieldValue(SimpleComponent.Field.numBugs.name());
-                return numBugs != null && numBugs != 0 ? ((numBugs - numOpenBugs) * 1d / numBugs) * 100d : 0d;
+                return numBugs != null && numBugs != 0 ? ((numBugs - numOpenBugs) * 1d / numBugs) * 100d : 100d;
             }
         };
         map.put("id", progressExpr);
@@ -274,7 +288,7 @@ public class ProjectColumnBuilderMapper implements InitializingBean {
             public Double evaluate(ReportParameters reportParameters) {
                 Integer numOpenBugs = reportParameters.getFieldValue(SimpleVersion.Field.numOpenBugs.name());
                 Integer numBugs = reportParameters.getFieldValue(SimpleVersion.Field.numBugs.name());
-                return numBugs != null && numBugs != 0 ? ((numBugs - numOpenBugs) * 1d / numBugs) * 100d : 0d;
+                return numBugs != null && numBugs != 0 ? ((numBugs - numOpenBugs) * 1d / numBugs) * 100d : 100d;
             }
         };
         map.put("id", progressExpr);
