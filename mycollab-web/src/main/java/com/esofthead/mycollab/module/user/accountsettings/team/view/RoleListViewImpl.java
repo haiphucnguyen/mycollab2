@@ -73,21 +73,8 @@ public class RoleListViewImpl extends AbstractPageView implements RoleListView {
                 "selected", UIConstants.TABLE_CONTROL_WIDTH), Arrays.asList(
                 new TableViewField(RoleI18nEnum.FORM_NAME, "rolename", UIConstants.TABLE_EX_LABEL_WIDTH),
                 new TableViewField(GenericI18Enum.FORM_DESCRIPTION, "description", UIConstants.TABLE_EX_LABEL_WIDTH)));
-
-        tableItem.addTableListener(new TableClickListener() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void itemClick(final TableClickEvent event) {
-                final Role role = (Role) event.getData();
-                if ("rolename".equals(event.getFieldName())) {
-                    EventBusFactory.getInstance().post(new RoleEvent.GotoRead(RoleListViewImpl.this, role.getId()));
-                }
-            }
-        });
-
-        this.listLayout.addComponent(this.constructTableActionControls());
-        this.listLayout.addComponent(this.tableItem);
+        listLayout.addComponent(this.constructTableActionControls());
+        listLayout.addComponent(this.tableItem);
     }
 
     @Override

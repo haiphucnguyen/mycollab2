@@ -49,7 +49,7 @@ class ProjectGenericTaskSelectionWindow extends Window {
                 final ProjectGenericTask task = (ProjectGenericTask) event.getData();
                 if ("name".equals(event.getFieldName())) {
                     timeEntryWindow.updateLinkTask(task);
-                    ProjectGenericTaskSelectionWindow.this.close();
+                    close();
                 }
             }
         });
