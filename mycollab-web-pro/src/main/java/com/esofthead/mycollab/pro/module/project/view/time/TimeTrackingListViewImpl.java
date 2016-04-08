@@ -147,9 +147,9 @@ public class TimeTrackingListViewImpl extends AbstractPageView implements TimeTr
     private StreamResource constructStreamResource(ReportExportType exportType) {
         List fields = Arrays.asList(TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(), TimeTableFieldDef.logValue(),
                 TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time", new
-                RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, ApplicationContextUtil.getSpringBean
-                (ItemTimeLoggingService.class));
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Timesheet",
+                new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class,
+                ApplicationContextUtil.getSpringBean(ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
             protected Map<String, Object> initReportParameters() {

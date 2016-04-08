@@ -96,14 +96,16 @@ public class TimeTrackingViewImpl extends AbstractPageView implements ITimeTrack
     private StreamResource constructStreamResource(final ReportExportType exportType) {
         List fields = Arrays.asList(TimeTableFieldDef.project(), TimeTableFieldDef.summary(), TimeTableFieldDef.logUser(),
                 TimeTableFieldDef.logValue(), TimeTableFieldDef.billable(), TimeTableFieldDef.overtime(), TimeTableFieldDef.logForDate());
-        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Time", new
-                RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, ApplicationContextUtil.getSpringBean
+        SimpleReportTemplateExecutor reportTemplateExecutor = new SimpleReportTemplateExecutor.AllItems<>("Timesheet",
+                new RpFieldsBuilder(fields), exportType, SimpleItemTimeLogging.class, ApplicationContextUtil.getSpringBean
                 (ItemTimeLoggingService.class));
         ReportStreamSource streamSource = new ReportStreamSource(reportTemplateExecutor) {
             @Override
             protected Map<String, Object> initReportParameters() {
                 Map<String, Object> parameters = new HashMap<>();
                 parameters.put("siteUrl", AppContext.getSiteUrl());
+                searchCriteria.setOrderFields(Arrays.asList(new SearchCriteria.OrderField("projectName",
+                        SearchCriteria.ASC), new SearchCriteria.OrderField("logForDay", SearchCriteria.ASC)));
                 parameters.put(SimpleReportTemplateExecutor.CRITERIA, searchCriteria);
                 return parameters;
             }
